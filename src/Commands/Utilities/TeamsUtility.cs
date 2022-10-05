@@ -26,13 +26,13 @@ namespace PnP.PowerShell.Commands.Utilities
         #region Team
         public static async Task<List<Group>> GetGroupsWithTeamAsync(PnPConnection connection, string accessToken)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"beta/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
+            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"v1.0/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
             return collection.ToList();
         }
 
         public static async Task<Group> GetGroupWithTeamAsync(PnPConnection connection, string accessToken, string mailNickname)
         {
-            return await GraphHelper.GetAsync<Group>(connection, $"beta/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken);
+            return await GraphHelper.GetAsync<Group>(connection, $"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken);
         }
 
         public static async Task<List<Team>> GetTeamsAsync(string accessToken, PnPConnection connection)

@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Get-PnPAuthenticationRealm` cmdlet to use `HTTPClient` instead of `WebRequest`. [#2304](https://github.com/pnp/powershell/pull/2304)
 - Improved `Connect-PnPOnline` with ACS method. Replace the usage of `WebRequest` with `HTTPClient`. [#2352](https://github.com/pnp/powershell/pull/2352)
 - Improved `Remove-PnPFieldFromContentType` cmdlet to ensure proper null check for non-existing fields. It will now throw proper `Field not found` error. [#2407](https://github.com/pnp/powershell/pull/2407)
+- Improved Teams and Microsoft 365 Groups related cmdlet. They will now use the `v1.0` Microsoft Graph endpoints instead of beta.
 
 ### Removed
 - Marked `-Resource` parameter from `Get-PnPAccessToken` cmdlet as obsolete as it was not used anymore anyway. It will be removed in a future version. [#2182](https://github.com/pnp/powershell/pull/2182)
