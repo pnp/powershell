@@ -7,7 +7,7 @@ external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Copy-PnPTeamsTeam.html
 ---
  
-# Copy-PnPList
+# Copy-PnPTeamsTeam
 
 ## SYNOPSIS
 Creates a copy of a Microsoft Teams team
