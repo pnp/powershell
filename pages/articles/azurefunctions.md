@@ -75,116 +75,9 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
 
 ## Decide how you want to authenticate in your Azure Function
 
-### By using Credentials
-
-#### Create your credentials
-
-1. Navigate to `Configuration` under `Settings` and create a new Application Setting.
-2. Enter `tenant_user` and enter the username you want to authenticate with as the user
-3. Enter `tenant_pwd` and enter the password you want to use for that user
-
-#### Create the function
-
-Create a new function and replace the function code with following example:
-
-````powershell
-using namespace System.Net
-
-# Input bindings are passed in via param block.
-param($Request, $TriggerMetadata)
-
-# Write to the Azure Functions log stream.
-Write-Host "PowerShell HTTP trigger function processed a request."
-
-$script = {
-    $securePassword = ConvertTo-SecureString $env:tenant_pwd -AsPlainText -Force
-    $credentials = New-Object PSCredential ($env:tenant_user, $securePassword)
-
-    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -Credentials $credentials
-
-    $web = Get-PnPWeb;
-    $web.Title
-}
-
-$webTitle = Start-ThreadJob -Script $script | Receive-Job -Wait
-
-$body = "The title of the web is $($webTitle)"
-
-# Associate values to output bindings by calling 'Push-OutputBinding'.
-Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
-        StatusCode = [HttpStatusCode]::OK
-        Body = $body
-    })
-````
-
-In the example above we are retrieving the username and password from the settings as environment variables. We then create a new credentials object which we pass in to the `Connect-PnPOnline` cmdlet. After connecting to SharePoint we output the title of the web through the function.
-
-### By using a certificate
-
-#### Create your certificate
-
-In this following example we create a new Azure AD Application registration which creates your certificates. You can of course do all this work manually too with your own certificates.
-
-```powershell
-$password = Read-Host -Prompt "Enter certificate password" -AsSecureString
-Register-PnPAzureADApp -ApplicationName "MyDemoApp" -Tenant [yourtenant.onmicrosoft.com] -CertificatePassword $password -Interactive
-```
-
-You will be asked to authenticate. Log in using an account that has the permissions to create an app registration in your Azure Active Directory. After logging in, the following actions will automatically be taken:
-
-- An app registration will be created using the provided name
-- A self signed certificate will be generated which includes a pfx and a cer file (private/public key pair)
-- The public key of the certificate (cer) will be configured as a valid certificate to authenticate with for the app registration
-- A basic set of permissions will be assigned to the app registration. These can freely be changed at will at a later time.
-- Admin consent will be given to the given set of permissions
-
-Make a note of the clientid shown and proceed with the steps in the following section.
-
-#### Apply your certificate
-
-Once you have an Azure Active Directory application set up and the public key certificate uploaded to its registration, proceed with configuring the Azure Function to make use of the private key of this certificate pair:
-
-1. In your function app, navigate to `TLS/SSL Settings` and switch to the `Private Key Certificates (.pfx)` section.
-2. Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
-3. After the certificate has been uploaded, copy the thumbprint value shown.
-4. Navigate to `Configuration` and add a new Application Setting
-5. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See <https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code> for more information.
-6. Save the settings
-
-#### Create the Azure Function for certificate authentication
-
-Create a new function and replace the function code with the following example:
-
-```powershell
-using namespace System.Net
-
-# Input bindings are passed in via param block.
-param($Request, $TriggerMetadata)
-
-# Write to the Azure Functions log stream.
-Write-Host "PowerShell HTTP trigger function processed a request."
-
-$script = {
-    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -ClientId [the clientid created earlier] -Thumbprint [the thumbprint you copied] -Tenant [yourtenant.onmicrosoft.com]
-
-    $web = Get-PnPWeb;
-    $web.Title
-}
-
-$webTitle = Start-ThreadJob -Script $script | Receive-Job -Wait
-
-$body = "The title of the web is $($webTitle)"
-
-# Associate values to output bindings by calling 'Push-OutputBinding'.
-Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
-        StatusCode = [HttpStatusCode]::OK
-        Body = $body
-    })
-```
-
 ### By using a Managed Identity
 
-Yet another option is to use a [managed identity in Azure](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.
+The recommended option is to use a [managed identity in Azure](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.
 
 #### Enabling the managed identity for an Azure Function
 
@@ -269,3 +162,112 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 ```
 
 Notice the super clean and simple `Connect-PnPOnline`. No identifiers whatsoever need to be provided. Nothing that could fall into wrong hands, no client secret or certificate that could expire. Based on the permissions assigned to the managed identity, it will be able to authenticate and authorize access to the Microsoft Graph APIs used behind the cmdlet to fetch the data.
+
+### By using a certificate
+
+#### Create your certificate
+
+In this following example we create a new Azure AD Application registration which creates your certificates. You can also use a private/public certificate key pair you already have.
+
+```powershell
+$password = Read-Host -Prompt "Enter certificate password" -AsSecureString
+Register-PnPAzureADApp -ApplicationName "MyDemoApp" -Tenant [yourtenant.onmicrosoft.com] -CertificatePassword $password -Interactive
+```
+
+You will be asked to authenticate. Log in using an account that has the permissions to create an app registration in your Azure Active Directory. After logging in, the following actions will automatically be taken:
+
+- An app registration will be created using the provided name
+- A self signed certificate will be generated which includes a pfx and a cer file (private/public key pair)
+- The public key of the certificate (cer) will be configured as a valid certificate to authenticate with for the app registration
+- A basic set of permissions will be assigned to the app registration. These can freely be changed at will at a later time.
+- Admin consent will be given to the given set of permissions
+
+Make a note of the clientid shown and proceed with the steps in the following section.
+
+#### Apply your certificate
+
+Once you have an Azure Active Directory application set up and the public key certificate uploaded to its registration, proceed with configuring the Azure Function to make use of the private key of this certificate pair:
+
+1. In your function app, navigate to `TLS/SSL Settings` and switch to the `Private Key Certificates (.pfx)` section.
+2. Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
+3. After the certificate has been uploaded, copy the thumbprint value shown.
+4. Navigate to `Configuration` and add a new Application Setting
+5. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See <https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code> for more information.
+6. Save the settings
+
+#### Create the Azure Function for certificate authentication
+
+Create a new function and replace the function code with the following example:
+
+```powershell
+using namespace System.Net
+
+# Input bindings are passed in via param block.
+param($Request, $TriggerMetadata)
+
+# Write to the Azure Functions log stream.
+Write-Host "PowerShell HTTP trigger function processed a request."
+
+$script = {
+    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -ClientId [the clientid created earlier] -Thumbprint [the thumbprint you copied] -Tenant [yourtenant.onmicrosoft.com]
+
+    $web = Get-PnPWeb;
+    $web.Title
+}
+
+$webTitle = Start-ThreadJob -Script $script | Receive-Job -Wait
+
+$body = "The title of the web is $($webTitle)"
+
+# Associate values to output bindings by calling 'Push-OutputBinding'.
+Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
+        StatusCode = [HttpStatusCode]::OK
+        Body = $body
+    })
+```
+
+### By using Credentials
+
+This method is not recommended as it requires you to have an account without MFA of which its credentials will be stored in Azure.
+
+#### Create your credentials
+
+1. Navigate to `Configuration` under `Settings` and create a new Application Setting.
+2. Enter `tenant_user` and enter the username you want to authenticate with as the user
+3. Enter `tenant_pwd` and enter the password you want to use for that user
+
+#### Create the function
+
+Create a new function and replace the function code with following example:
+
+````powershell
+using namespace System.Net
+
+# Input bindings are passed in via param block.
+param($Request, $TriggerMetadata)
+
+# Write to the Azure Functions log stream.
+Write-Host "PowerShell HTTP trigger function processed a request."
+
+$script = {
+    $securePassword = ConvertTo-SecureString $env:tenant_pwd -AsPlainText -Force
+    $credentials = New-Object PSCredential ($env:tenant_user, $securePassword)
+
+    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -Credentials $credentials
+
+    $web = Get-PnPWeb;
+    $web.Title
+}
+
+$webTitle = Start-ThreadJob -Script $script | Receive-Job -Wait
+
+$body = "The title of the web is $($webTitle)"
+
+# Associate values to output bindings by calling 'Push-OutputBinding'.
+Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
+        StatusCode = [HttpStatusCode]::OK
+        Body = $body
+    })
+````
+
+In the example above we are retrieving the username and password from the settings as environment variables. We then create a new credentials object which we pass in to the `Connect-PnPOnline` cmdlet. After connecting to SharePoint we output the title of the web through the function.
