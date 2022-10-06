@@ -93,7 +93,7 @@
 <ol>
 <li><p>Create a new Function App</p>
 </li>
-<li><p>Choose runtime stack <code>PowerShell Core</code> and version <code>7.0</code></p>
+<li><p>Choose runtime stack <code>PowerShell Core</code> and version <code>7.0</code> (7.2 is not supported yet)</p>
 <p><img src="../images/azurefunctions/createfunctionappbasics.png" alt="Create function app basics"></p>
 </li>
 <li><p>Select <code>Windows</code> as the operating system or else you will not be able to perform the following steps from your browser.</p>
@@ -108,7 +108,7 @@
 </ol>
 <h3 id="specific-stable-version">Specific stable version</h3>
 <pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '1.9.0'
+    'PnP.PowerShell' = '1.11.0'
 }
 </code></pre>
 <p>The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.</p>
@@ -125,7 +125,7 @@
 <p>If you wish to use a specific prerelease/nightly build version, go to the <a href="https://www.powershellgallery.com/packages/PnP.PowerShell">overview of available versions</a> and literally copy/paste the version in the definition:</p>
 <pre><code>```powershell
 @{
-    'PnP.PowerShell' = '1.10.58-nightly'
+    'PnP.PowerShell' = '1.1.95-nightly'
  }
 ```   
 </code></pre>
@@ -235,8 +235,8 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
     })
 </code></pre>
 <h3 id="by-using-a-managed-identity">By using a Managed Identity</h3>
-<p>Yet another option is to use a <a href="https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">managed identity in Azure</a> to allow your Azure Function to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. There is a downside to this approach, however. At present, only permissions can be granted to the Microsoft Graph and not to the SharePoint APIs, which effectively means that most of the PnP PowerShell cmdlets will not work. Only those solely and directly communicating with the Microsoft Graph, will be authorized to work, such as, but not limited to: <code>Get-PnPAzureAdUser</code>, <code>Get-PnPMicrosoft365Group</code>, <code>Get-PnPTeamsTeam</code>.</p>
-<h4 id="enabling-the-managed-identity">Enabling the managed identity</h4>
+<p>Yet another option is to use a <a href="https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">managed identity in Azure</a> to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph and Microsoft SharePoint Online using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these resources, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Starting PnP PowerShell version 1.11.95-nightly, Managed Identities can be used both for SharePoint Online as well as Microsoft Graph backed cmdlets. Before this version, only Microsoft Graph was supported.</p>
+<h4 id="enabling-the-managed-identity">Enabling the managed identity on an Azure Function</h4>
 <ol>
 <li>In your Azure Function, in the left menu, go to Identity</li>
 <li>Ensure you are on the System assigned tab and flip the switch for Status to On</li>
