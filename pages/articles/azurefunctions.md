@@ -73,7 +73,7 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
 
    ![Disable the Az commands in profile](../images/azurefunctions/disableazinprofile.png)
 
-## Decide how you want to authenticate in your PowerShell Function
+## Decide how you want to authenticate in your Azure Function
 
 ### By using Credentials
 
