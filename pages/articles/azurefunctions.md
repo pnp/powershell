@@ -10,7 +10,7 @@ In this article we will setup an Azure Function to use PnP PowerShell
 As the UI in <https://portal.azure.com> changes every now and then, but the principles stay the same, follow the following steps:
 
 1. Create a new Function App
-1. Choose runtime stack `PowerShell Core` and version `7.0`
+1. Choose runtime stack `PowerShell Core` and version `7.0` (7.2 is not supported yet)
 
    ![Create function app basics](./../images/azurefunctions/createfunctionappbasics.png)
 
@@ -28,7 +28,7 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
 
    ```powershell
    @{
-       'PnP.PowerShell' = '1.9.0'
+       'PnP.PowerShell' = '1.11.0'
    }
    ```
 
@@ -52,7 +52,7 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
 
     ```powershell
     @{
-        'PnP.PowerShell' = '1.10.58-nightly'
+        'PnP.PowerShell' = '1.11.95-nightly'
      }
     ```   
 
@@ -184,11 +184,19 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 
 ### By using a Managed Identity
 
-Yet another option is to use a [managed identity in Azure](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) to allow your Azure Function to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. There is a downside to this approach, however. At present, only permissions can be granted to the Microsoft Graph and not to the SharePoint APIs, which effectively means that most of the PnP PowerShell cmdlets will not work. Only those solely and directly communicating with the Microsoft Graph, will be authorized to work, such as, but not limited to: `Get-PnPAzureAdUser`, `Get-PnPMicrosoft365Group`, `Get-PnPTeamsTeam`.
+Yet another option is to use a [managed identity in Azure](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.
 
-#### Enabling the managed identity
+#### Enabling the managed identity for an Azure Function
 
 1. In your Azure Function, in the left menu, go to Identity
+1. Ensure you are on the System assigned tab and flip the switch for Status to On
+1. Click the save button and confirm your action in the dialog box that will be shown
+
+A new entry will now automatically be created in your Azure Active Directory for this app having the same name as your Azure Function and the Object (principal) ID shown on this page. Take notice of the Object (principal) ID. We will need it in the next section to assign permissions to.
+
+#### Enabling the managed identity for an Azure Automation Runbook
+
+1. In your Azure Automation account, in the left menu, go to Identity under Account Settings
 1. Ensure you are on the System assigned tab and flip the switch for Status to On
 1. Click the save button and confirm your action in the dialog box that will be shown
 
