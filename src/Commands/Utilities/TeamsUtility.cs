@@ -948,6 +948,17 @@ namespace PnP.PowerShell.Commands.Utilities
             return tagInformation;
         }
 
+        public static async Task UpdateTagAsync(PnPConnection connection, string accessToken, string groupId, string tagId, string displayName)
+        {
+            var body = new { displayName = displayName };
+            await GraphHelper.PatchAsync(connection, accessToken, $"v1.0/teams/{groupId}/tags/{tagId}", body);
+        }
+
+        public static async Task<HttpResponseMessage> DeleteTagAsync(PnPConnection connection, string accessToken, string groupId, string tagId)
+        {
+            return await GraphHelper.DeleteAsync(connection, $"v1.0/teams/{groupId}/tags/{tagId}", accessToken);
+        }
+
 
         #endregion
     }
