@@ -7,9 +7,9 @@ external help file: PnP.PowerShell.dll-Help.xml
 title: Disable-PnPPowerShellTelemetry
 ---
   
-## Disable-PnPPowerShellTelemetry
+# Disable-PnPPowerShellTelemetry
 
-### SYNOPSIS
+## SYNOPSIS
 
 Disables telemetry collection by PnP PowerShell.
 

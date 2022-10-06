@@ -7,9 +7,9 @@ external help file: PnP.PowerShell.dll-Help.xml
 title: Enable-PnPPowerShellTelemetry
 ---
   
-## Enable-PnPPowerShellTelemetry
+# Enable-PnPPowerShellTelemetry
 
-### SYNOPSIS
+## SYNOPSIS
 
 Enables telemetry collection by PnP PowerShell.
 
