@@ -62,8 +62,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Import-PnPTermGroupFromXml` issue where a valid template was not working. [#2353](https://github.com/pnp/powershell/pull/2353)
 - Fixed `Set-PnPTenant` cmdlet not working when `-Force` parameter is specified. [#2373](https://github.com/pnp/powershell/pull/2373)
 - Fixed `Add-PnPTeamsTab` cmdlet not working with certain types when using dynamic parameters. [#2405](https://github.com/pnp/powershell/pull/2405)
+- Fixed issue with `Set-PnPTeamsChannel -IsFavoriteByDefault` throwing a `Nullable object must have a value` under certain circumstances [#2425](https://github.com/pnp/powershell/pull/2425)
 
 ### Contributors
+- Rob Lempens [RobLempens]
 - Marc Studer [Studermarc]
 - Giacomo Pozzoni [jackpoz]
 - Adam Wójcik [Adam-it]
