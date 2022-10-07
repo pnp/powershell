@@ -705,8 +705,6 @@ namespace PnP.PowerShell.Commands.Base
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var telemetryFile = System.IO.Path.Combine(userProfile, ".pnppowershelltelemetry");
 
-
-
             var enableTelemetry = true;
             if (Environment.GetEnvironmentVariable("PNP_DISABLETELEMETRY") != null)
             {
