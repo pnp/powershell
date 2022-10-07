@@ -1,39 +1,47 @@
 ﻿using PnP.Core.Model.SharePoint;
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
-using System.Text;
 using System.Text.Json;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Viva
 {
-    [Cmdlet(VerbsData.Update, "PnPVivaConnectionsDashboardACE")]
+    [Cmdlet(VerbsData.Update, "PnPVivaConnectionsDashboardACE", DefaultParameterSetName = ParameterSet_TYPEDPROPERTIES)]
     [OutputType(typeof(IVivaDashboard))]
     public class UpdateVivaConnectionsACE : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true)]
+        private const string ParameterSet_JSONProperties = "Update using JSON properties";
+        private const string ParameterSet_TYPEDPROPERTIES = "Update using typed properties";
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_JSONProperties)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TYPEDPROPERTIES)]
         public Guid Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_JSONProperties)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TYPEDPROPERTIES)]
         public string Title;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_JSONProperties)]
         public string PropertiesJSON;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TYPEDPROPERTIES)]
         public object Properties;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_JSONProperties)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TYPEDPROPERTIES)]
         public string Description;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_JSONProperties)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TYPEDPROPERTIES)]
         public string IconProperty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_JSONProperties)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TYPEDPROPERTIES)]
         public int Order;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_JSONProperties)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TYPEDPROPERTIES)]
         public CardSize CardSize = CardSize.Medium;
 
         protected override void ExecuteCmdlet()
@@ -60,8 +68,9 @@ namespace PnP.PowerShell.Commands.Viva
 
                     if (ParameterSpecified(nameof(Properties)))
                     {
-                        var test = JsonSerializer.Serialize(Properties as CardDesignerProps);
-                        aceToUpdate.Properties = test;
+                        // Serialize the properties object to JSON so that the JsonPropertyName attributes get applied for correct naming and casing and then assign the result back
+                        var serializedProperties = JsonSerializer.Serialize(Properties as CardDesignerProps);
+                        aceToUpdate.Properties = serializedProperties;
                         updateRequired = true;
                     }
 
