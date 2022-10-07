@@ -63,7 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Import-PnPTermGroupFromXml` issue where a valid template was not working. [#2353](https://github.com/pnp/powershell/pull/2353)
 - Fixed `Set-PnPTenant` cmdlet not working when `-Force` parameter is specified. [#2373](https://github.com/pnp/powershell/pull/2373)
 - Fixed `Add-PnPTeamsTab` cmdlet not working with certain types when using dynamic parameters. [#2405](https://github.com/pnp/powershell/pull/2405)
-- Fixed `Get-PnPVivaConnectionsDashboardACE` missing the `isVisible` property under `CardButtonActions`
+- Fixed `Get-PnPVivaConnectionsDashboardACE` missing the `isVisible` property under `CardButtonActions` causing using `Update-PnPVivaConnectionsDashboardACE` to hide card buttons
 
 ### Contributors
 - Marc Studer [Studermarc]
