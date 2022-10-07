@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Graph
                         teamChannel.Description = null;
                     }
 
-                    if (teamChannel.MembershipType.ToLower() == "standard" && ParameterSpecified(nameof(IsFavoriteByDefault)) && teamChannel.IsFavoriteByDefault.Value != IsFavoriteByDefault)
+                    if (teamChannel.MembershipType.ToLower() == "standard" && ParameterSpecified(nameof(IsFavoriteByDefault)) && teamChannel.IsFavoriteByDefault != IsFavoriteByDefault)
                     {
                         teamChannel.IsFavoriteByDefault = IsFavoriteByDefault;
                     }
