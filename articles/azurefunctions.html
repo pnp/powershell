@@ -125,7 +125,7 @@
 <p>If you wish to use a specific prerelease/nightly build version, go to the <a href="https://www.powershellgallery.com/packages/PnP.PowerShell">overview of available versions</a> and literally copy/paste the version in the definition:</p>
 <pre><code>```powershell
 @{
-    'PnP.PowerShell' = '1.1.95-nightly'
+    'PnP.PowerShell' = '1.11.95-nightly'
  }
 ```   
 </code></pre>
@@ -143,48 +143,77 @@
 <p><img src="../images/azurefunctions/disableazinprofile.png" alt="Disable the Az commands in profile"></p>
 </li>
 </ol>
-<h2 id="decide-how-you-want-to-authenticate-in-your-powershell-function">Decide how you want to authenticate in your PowerShell Function</h2>
-<h3 id="by-using-credentials">By using Credentials</h3>
-<h4 id="create-your-credentials">Create your credentials</h4>
+<h2 id="decide-how-you-want-to-authenticate-in-your-azure-function">Decide how you want to authenticate in your Azure Function</h2>
+<h3 id="by-using-a-managed-identity">By using a Managed Identity</h3>
+<p>The recommended option is to use a <a href="https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">managed identity in Azure</a> to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.</p>
+<h4 id="enabling-the-managed-identity-for-an-azure-function">Enabling the managed identity for an Azure Function</h4>
 <ol>
-<li>Navigate to <code>Configuration</code> under <code>Settings</code> and create a new Application Setting.</li>
-<li>Enter <code>tenant_user</code> and enter the username you want to authenticate with as the user</li>
-<li>Enter <code>tenant_pwd</code> and enter the password you want to use for that user</li>
+<li>In your Azure Function, in the left menu, go to Identity</li>
+<li>Ensure you are on the System assigned tab and flip the switch for Status to On</li>
+<li>Click the save button and confirm your action in the dialog box that will be shown</li>
 </ol>
-<h4 id="create-the-function">Create the function</h4>
-<p>Create a new function and replace the function code with following example:</p>
+<p>A new entry will now automatically be created in your Azure Active Directory for this app having the same name as your Azure Function and the Object (principal) ID shown on this page. Take notice of the Object (principal) ID. We will need it in the next section to assign permissions to.</p>
+<h4 id="enabling-the-managed-identity-for-an-azure-automation-runbook">Enabling the managed identity for an Azure Automation Runbook</h4>
+<ol>
+<li>In your Azure Automation account, in the left menu, go to Identity under Account Settings</li>
+<li>Ensure you are on the System assigned tab and flip the switch for Status to On</li>
+<li>Click the save button and confirm your action in the dialog box that will be shown</li>
+</ol>
+<p>A new entry will now automatically be created in your Azure Active Directory for this app having the same name as your Azure Function and the Object (principal) ID shown on this page. Take notice of the Object (principal) ID. We will need it in the next section to assign permissions to.</p>
+<h4 id="assigning-microsoft-graph-permissions-to-the-managed-identity">Assigning Microsoft Graph permissions to the managed identity</h4>
+<p>Next step is to assign permissions to this managed identity so it is authorized to access the Microsoft Graph.</p>
+<ol>
+<li><p>Ensure you're having the Azure PowerShell Resources PowerShell module installed on your environment. You can install it using:</p>
+<pre><code class="lang-powershell">Install-Module Az.Resources -Scope CurrentUser
+</code></pre>
+</li>
+<li><p>Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell</p>
+<pre><code class="lang-powershell">Connect-AzAccount -Tenant &lt;contoso&gt;.onmicrosoft.com
+</code></pre>
+</li>
+<li><p>Retrieve the Azure AD Service Principal instance for the Microsoft Graph (<code>00000003-0000-0000-c000-000000000000</code>) or SharePoint Online (<code>00000003-0000-0ff1-ce00-000000000000</code>).</p>
+<pre><code class="lang-powershell">$servicePrincipal = Get-AzADServicePrincipal -AppId &quot;00000003-0000-0000-c000-000000000000&quot; # Microsoft Graph
+$servicePrincipal = Get-AzADServicePrincipal -AppId &quot;00000003-0000-0ff1-ce00-000000000000&quot; # SharePoint Online
+</code></pre>
+</li>
+<li><p>Using the following PowerShell cmdlet you can list all the possible permissions you can give through the Managed Identity. This list will be long. Notice that we are specifically querying for application permissions. Delegate permissions cannot be utilized using a Managed Identity.</p>
+<pre><code class="lang-powershell">$servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; }
+</code></pre>
+</li>
+<li><p>Pick a permission which you would like to grant to the Managed Identity, i.e. <code>Group.Read.All</code>.</p>
+<pre><code class="lang-powershell">$appRole = $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; -and $_.Value -eq &quot;Group.Read.All&quot; }
+</code></pre>
+</li>
+<li><p>Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity in the steps above:</p>
+<pre><code class="lang-powershell">$managedIdentityId = &quot;&lt;Object (principal) ID of the Azure Function or Azure Automation Account generated in the previous section&gt;&quot;
+
+$body = &quot;{'principalId':'$($managedIdentityId)','resourceId':'$($servicePrincipal.Id)','appRoleId':'$($appRole.Id)'}&quot;
+
+$accessTokenResource = Get-AzAccessToken -ResourceTypeName MSGraph
+
+Invoke-WebRequest &quot;https://graph.microsoft.com/v1.0/servicePrincipals/$($managedIdentityId)/appRoleAssignments&quot; -Headers @{&quot;Authorization&quot; = &quot;Bearer $($accessTokenResource.Token)&quot;} -ContentType &quot;application/json&quot; -Body $body -Method Post
+
+</code></pre>
+</li>
+</ol>
+<h4 id="create-the-azure-function-for-managed-identity-authentication">Create the Azure Function for managed identity authentication</h4>
+<p>Create a new function and replace the function code with the following example:</p>
 <pre><code class="lang-powershell">using namespace System.Net
 
-# Input bindings are passed in via param block.
 param($Request, $TriggerMetadata)
 
-# Write to the Azure Functions log stream.
-Write-Host &quot;PowerShell HTTP trigger function processed a request.&quot;
+Connect-PnPOnline -ManagedIdentity
+Get-PnPMicrosoft365Group
 
-$script = {
-    $securePassword = ConvertTo-SecureString $env:tenant_pwd -AsPlainText -Force
-    $credentials = New-Object PSCredential ($env:tenant_user, $securePassword)
-
-    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -Credentials $credentials
-
-    $web = Get-PnPWeb;
-    $web.Title
-}
-
-$webTitle = Start-ThreadJob -Script $script | Receive-Job -Wait
-
-$body = &quot;The title of the web is $($webTitle)&quot;
-
-# Associate values to output bindings by calling 'Push-OutputBinding'.
 Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
-        StatusCode = [HttpStatusCode]::OK
-        Body = $body
-    })
+    StatusCode = [HttpStatusCode]::OK
+})
+
 </code></pre>
-<p>In the example above we are retrieving the username and password from the settings as environment variables. We then create a new credentials object which we pass in to the <code>Connect-PnPOnline</code> cmdlet. After connecting to SharePoint we output the title of the web through the function.</p>
+<p>Notice the super clean and simple <code>Connect-PnPOnline</code>. No identifiers whatsoever need to be provided. Nothing that could fall into wrong hands, no client secret or certificate that could expire. Based on the permissions assigned to the managed identity, it will be able to authenticate and authorize access to the Microsoft Graph APIs used behind the cmdlet to fetch the data.</p>
 <h3 id="by-using-a-certificate">By using a certificate</h3>
 <h4 id="create-your-certificate">Create your certificate</h4>
-<p>In this following example we create a new Azure AD Application registration which creates your certificates. You can of course do all this work manually too with your own certificates.</p>
+<p>In this following example we create a new Azure AD Application registration which creates your certificates. You can also use a private/public certificate key pair you already have.</p>
 <pre><code class="lang-powershell">$password = Read-Host -Prompt &quot;Enter certificate password&quot; -AsSecureString
 Register-PnPAzureADApp -ApplicationName &quot;MyDemoApp&quot; -Tenant [yourtenant.onmicrosoft.com] -CertificatePassword $password -Interactive
 </code></pre>
@@ -234,65 +263,45 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
         Body = $body
     })
 </code></pre>
-<h3 id="by-using-a-managed-identity">By using a Managed Identity</h3>
-<p>Yet another option is to use a <a href="https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">managed identity in Azure</a> to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph and Microsoft SharePoint Online using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these resources, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Starting PnP PowerShell version 1.11.95-nightly, Managed Identities can be used both for SharePoint Online as well as Microsoft Graph backed cmdlets. Before this version, only Microsoft Graph was supported.</p>
-<h4 id="enabling-the-managed-identity">Enabling the managed identity on an Azure Function</h4>
+<h3 id="by-using-credentials">By using Credentials</h3>
+<p>This method is not recommended as it requires you to have an account without MFA of which its credentials will be stored in Azure.</p>
+<h4 id="create-your-credentials">Create your credentials</h4>
 <ol>
-<li>In your Azure Function, in the left menu, go to Identity</li>
-<li>Ensure you are on the System assigned tab and flip the switch for Status to On</li>
-<li>Click the save button and confirm your action in the dialog box that will be shown</li>
+<li>Navigate to <code>Configuration</code> under <code>Settings</code> and create a new Application Setting.</li>
+<li>Enter <code>tenant_user</code> and enter the username you want to authenticate with as the user</li>
+<li>Enter <code>tenant_pwd</code> and enter the password you want to use for that user</li>
 </ol>
-<p>A new entry will now automatically be created in your Azure Active Directory for this app having the same name as your Azure Function and the Object (principal) ID shown on this page. Take notice of the Object (principal) ID. We will need it in the next section to assign permissions to.</p>
-<h4 id="assigning-microsoft-graph-permissions-to-the-managed-identity">Assigning Microsoft Graph permissions to the managed identity</h4>
-<p>Next step is to assign permissions to this managed identity so it is authorized to access the Microsoft Graph.</p>
-<ol>
-<li><p>Ensure you're having the Azure PowerShell management module installed on your environment. You can install it using:</p>
-<pre><code class="lang-powershell">Install-Module Az
-</code></pre>
-</li>
-<li><p>Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell</p>
-<pre><code class="lang-powershell">Connect-AzAccount -Tenant &lt;contoso&gt;.onmicrosoft.com
-</code></pre>
-</li>
-<li><p>Retrieve the Azure AD Service Principal instance for the Microsoft Graph. It should always be AppId 00000003-0000-0000-c000-000000000000.</p>
-<pre><code class="lang-powershell">$graphServicePrincipal = Get-AzADServicePrincipal -SearchString &quot;Microsoft Graph&quot; | Select-Object -First 1
-</code></pre>
-</li>
-<li><p>Using the following PowerShell cmdlet you can list all the possible Microsoft Graph permissions you can give your Azure Function through the Managed Identity. This list will be long. Notice that we are specifically querying for application permissions. Delegate permissions cannot be utilized using a Managed Identity.</p>
-<pre><code class="lang-powershell">$graphServicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; }
-</code></pre>
-</li>
-<li><p>Pick a permission which you would like to grant your Azure Function to have towards the Microsoft Graph, i.e. <code>Group.Read.All</code>.</p>
-<pre><code class="lang-powershell">$appRole = $graphServicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; -and $_.Value -eq &quot;Group.Read.All&quot; }
-</code></pre>
-</li>
-<li><p>Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity on the Azure Function in the steps above:</p>
-<pre><code class="lang-powershell">$managedIdentityId = &quot;&lt;Object (principal) ID of the Azure Function generated in the previous section&gt;&quot;
-
-$body = &quot;{'principalId':'$($managedIdentityId)','resourceId':'$($graphServicePrincipal.Id)','appRoleId':'$($appRole.Id)'}&quot;
-
-$accessTokenResource = Get-AzAccessToken -ResourceTypeName MSGraph
-
-Invoke-WebRequest &quot;https://graph.microsoft.com/v1.0/servicePrincipals/$($managedIdentityId)/appRoleAssignments&quot; -Headers @{&quot;Authorization&quot; = &quot;Bearer $($accessTokenResource.Token)&quot;} -ContentType &quot;application/json&quot; -Body $body -Method Post
-
-</code></pre>
-</li>
-</ol>
-<h4 id="create-the-azure-function-for-managed-identity-authentication">Create the Azure Function for managed identity authentication</h4>
-<p>Create a new function and replace the function code with the following example:</p>
+<h4 id="create-the-function">Create the function</h4>
+<p>Create a new function and replace the function code with following example:</p>
 <pre><code class="lang-powershell">using namespace System.Net
 
+# Input bindings are passed in via param block.
 param($Request, $TriggerMetadata)
 
-Connect-PnPOnline -ManagedIdentity
-Get-PnPMicrosoft365Group
+# Write to the Azure Functions log stream.
+Write-Host &quot;PowerShell HTTP trigger function processed a request.&quot;
 
+$script = {
+    $securePassword = ConvertTo-SecureString $env:tenant_pwd -AsPlainText -Force
+    $credentials = New-Object PSCredential ($env:tenant_user, $securePassword)
+
+    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -Credentials $credentials
+
+    $web = Get-PnPWeb;
+    $web.Title
+}
+
+$webTitle = Start-ThreadJob -Script $script | Receive-Job -Wait
+
+$body = &quot;The title of the web is $($webTitle)&quot;
+
+# Associate values to output bindings by calling 'Push-OutputBinding'.
 Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
-    StatusCode = [HttpStatusCode]::OK
-})
-
+        StatusCode = [HttpStatusCode]::OK
+        Body = $body
+    })
 </code></pre>
-<p>Notice the super clean and simple <code>Connect-PnPOnline</code>. No identifiers whatsoever need to be provided. Nothing that could fall into wrong hands, no client secret or certificate that could expire. Based on the permissions assigned to the managed identity, it will be able to authenticate and authorize access to the Microsoft Graph APIs used behind the cmdlet to fetch the data.</p>
+<p>In the example above we are retrieving the username and password from the settings as environment variables. We then create a new credentials object which we pass in to the <code>Connect-PnPOnline</code> cmdlet. After connecting to SharePoint we output the title of the web through the function.</p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

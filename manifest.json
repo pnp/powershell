@@ -42,7 +42,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/azurefunctions.html",
-          "hash": "UrbQupx4z5oh/43ilVsF9A=="
+          "hash": "Glz/rtN3HUwc4N/C8KoBHw=="
         }
       },
       "is_incremental": false,
@@ -537,7 +537,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPListItem.html",
-          "hash": "f8E8JUsnATvwPsesdIiHhQ=="
+          "hash": "lEVWWu4ua2GQN7fyVyM74g=="
         }
       },
       "is_incremental": false,
@@ -1377,7 +1377,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Copy-PnPTeamsTeam.html",
-          "hash": "QgpSp0+fX/wDOE6uqe7KJw=="
+          "hash": "pmHfdFt5ZjZIAlPr8SjwCQ=="
         }
       },
       "is_incremental": false,
@@ -1426,6 +1426,18 @@
         ".html": {
           "relative_path": "cmdlets/Disable-PnPPageScheduling.html",
           "hash": "ZVRDZEG0vXBYoPXwUoeYCA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Disable-PnPPowerShellTelemetry.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Disable-PnPPowerShellTelemetry.html",
+          "hash": "X8unn2Zllzkhnb3dTi5GPg=="
         }
       },
       "is_incremental": false,
@@ -1525,6 +1537,18 @@
         ".html": {
           "relative_path": "cmdlets/Enable-PnPPageScheduling.html",
           "hash": "PW6825wC1UXI56KgLwgp5w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Enable-PnPPowerShellTelemetry.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Enable-PnPPowerShellTelemetry.html",
+          "hash": "OM6JKabM/DX4/nRuqWj0+A=="
         }
       },
       "is_incremental": false,
@@ -3438,7 +3462,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTeamsTag.html",
-          "hash": "e80Bc08cgPSoU2I18DMkCw=="
+          "hash": "R8xfH1X6D64aIDort84rnw=="
         }
       },
       "is_incremental": false,
@@ -5337,7 +5361,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPOrgNewsSite.html",
-          "hash": "7YTISX+6/+a+MkIMs1sCYA=="
+          "hash": "PTNyhbdH45HMEJv+jfzPAQ=="
         }
       },
       "is_incremental": false,
@@ -5662,6 +5686,18 @@
         ".html": {
           "relative_path": "cmdlets/Remove-PnPTeamsTab.html",
           "hash": "tHv5ET6BzkoZkZKY+7OS6w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPTeamsTag.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPTeamsTag.html",
+          "hash": "GCe6qn668SV1zkVcKJE8LA=="
         }
       },
       "is_incremental": false,
@@ -7220,6 +7256,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPTeamsTag.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPTeamsTag.html",
+          "hash": "zlc8jwnzbBjVQCM0DKHfEA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPTeamsTeam.md",
       "output": {
         ".html": {
@@ -7788,7 +7836,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "Ceju06lbbqtsnC+hFcHN8g=="
+          "hash": "WoO5wXWw6kzjc0gAPjX/pw=="
         }
       },
       "is_incremental": false,
@@ -8010,7 +8058,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 646,
+          "total_file_count": 650,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

@@ -77,31 +77,35 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="enable-pnppowershelltelemetry">Enable-PnPPowerShellTelemetry</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Enables PnP PowerShell telemetry tracking.</p>
+<p>Enables sending of telemetry data.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Enable-PnPPowerShellTelemetry [-Force] [&lt;CommonParameters&gt;]
+<h3 id="enable-sending-of-telemetry-data-after-going-through-a-confirmation-question">Enable sending of telemetry data after going through a confirmation question.</h3>
+<pre><code class="lang-powershell">Enable-PnPPowerShellTelemetry
+</code></pre>
+<h3 id="enable-sending-of-telemetry-data-skipping-the-confirmation-question">Enable sending of telemetry data skipping the confirmation question.</h3>
+<pre><code class="lang-powershell">Enable-PnPPowerShellTelemetry -Force
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>In order to help to make PnP PowerShell better, we can track anonymous telemetry. We track the version of the cmdlets you are using, which cmdlet you are executing and which version of SharePoint you are connecting to. Use Disable-PnPPowerShellTelemetry to turn this off, alternative, use the -NoTelemetry switch on Connect-PnPOnline to turn it off for that session.</p>
+<p>This cmdlet Enables sending of telemetry data.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Enable-PnPPowerShellTelemetry
 </code></pre>
-<p>Will prompt you to confirm to enable telemetry tracking.</p>
+<p>Enables sending of telemetry data after answering the confirmation question.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Enable-PnPPowerShellTelemetry -Force
 </code></pre>
-<p>Will enable telemetry tracking without prompting.</p>
+<p>Enables sending of telemetry data skipping the confirmation question.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-force">-Force</h3>
-<p>Specifying the Force parameter will skip the confirmation question.</p>
+<p>Switch parameter which executes the cmdlet and skips the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -139,5 +143,12 @@ Accept wildcard characters: False
     
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
-    <script type="text/javascript" src="../styles/main.js"></script>  </body>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
 </html>

@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPTeamsTag | PnP PowerShell </title>
+    <title>Set-PnPTeamsTag | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPTeamsTag | PnP PowerShell ">
+    <meta name="title" content="Set-PnPTeamsTag | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,34 +81,41 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpteamstag">Get-PnPTeamsTag</h1>
+                    <h1 id="set-pnpteamstag">Set-PnPTeamsTag</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API : TeamWorkTag.Read, Group.Read.All</li>
+<li>Microsoft Graph API: TeamworkTag.ReadWrite, Group.Read.All</li>
 </ul>
-<p>Gets one or all tags in a team.</p>
+<p>Sets the Microsoft Teams Tag in a Team.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPTeamsTag -Team &lt;TeamsTeamPipeBind&gt; [-Identity &lt;string&gt;]
+<pre><code class="lang-powershell">Set-PnPTeamsTag -Team &lt;TeamsTeamPipeBind&gt; -Identity &lt;TeamsTagPipeBind&gt; -DisplayName &lt;String&gt;
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPTeamsTag -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5
+<pre><code class="lang-powershell">Set-PnPTeamsTag -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Identity &quot;ZmY1ZjdmMjctZDhiNy00MWRkLTk2ZDQtYzcyYmVhMWIwOGYxIyM3ZTVhNGRmZS1kNWNlLTRkOTAtODM4MC04ZDIxM2FkYzYzOGIjI3RiVlVpR01rcg==&quot; -DisplayName &quot;Updated Tag&quot;
 </code></pre>
-<p>Retrieves all the tags for the specified Microsoft Teams instance.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTeamsTag -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Identity &quot;ZmY1ZjdmMjctZDhiNy00MWRkLTk2ZDQtYzcyYmVhMWIwOGYxIyM3ZTVhNGRmZS1kNWNlLTRkOTAtODM4MC04ZDIxM2FkYzYzOGIjI3RiVlVpR01rcg==&quot;
-</code></pre>
-<p>Retrieves a tag with the specified Id from the specified team.</p>
+<p>Sets the Tag with the specified Id from the Teams team.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-identity">-Identity</h3>
-<p>Specify the id of the tag</p>
-<pre><code class="lang-yaml">Type: TeamsTagPipeBind
+<h3 id="-displayname">-DisplayName</h3>
+<p>The updated display name of the Teams tag</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>Specify the id of the Tag</p>
+<pre><code class="lang-yaml">Type: TeamsTagPipeBind
+Parameter Sets: (All)
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -122,7 +129,7 @@ Parameter Sets: (All)
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
