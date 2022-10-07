@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                if (Force || ShouldContinue($"Remove site collection {Identity.Url}?", "Confirm"))
+                if (Force || ShouldContinue($"Remove site collection {Identity.Url}?", Properties.Resources.Confirm))
                 {
                     SpoOperation spoOperation = Tenant.RemoveDeletedSite(Identity.Url);
                     ClientContext.Load(spoOperation);

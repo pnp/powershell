@@ -16,24 +16,24 @@ namespace PnP.PowerShell.Commands.Graph
         public TeamsTeamPipeBind Team;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
-        public string Identity;
+        public TeamsTagPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
-            var group = Team.GetGroupId(Connection, AccessToken);
-            if (string.IsNullOrEmpty(group))
+            var groupId = Team.GetGroupId(Connection, AccessToken);
+            if (string.IsNullOrEmpty(groupId))
             {
                 throw new PSArgumentException("Team not found");
             }
 
-            if (!string.IsNullOrEmpty(Identity))
+            if (ParameterSpecified(nameof(Identity)))
             {
-                var tags = TeamsUtility.GetTagsWithIdAsync(AccessToken, Connection, group, Identity).GetAwaiter().GetResult();
+                var tags = Identity.GetTag(Connection, AccessToken, groupId);
                 WriteObject(tags, false);
             }
             else
             {
-                var tags = TeamsUtility.GetTagsAsync(AccessToken, Connection, group).GetAwaiter().GetResult();
+                var tags = TeamsUtility.GetTagsAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult();
                 WriteObject(tags, true);
             }
         }
