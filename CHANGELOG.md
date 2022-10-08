@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPTeamsTag` cmdlet to delete a Team tag. [#2419](https://github.com/pnp/powershell/pull/2419)
 - Added `Disable-PnPPowerShellTelemetry` cmdlet to disable telemetry collection. [#2432](https://github.com/pnp/powershell/pull/2432)
 - Added `Enable-PnPPowerShellTelemetry` cmdlet to enable telemetry collection. [#2432](https://github.com/pnp/powershell/pull/2432)
+- Added `Get-PnPAzureADActivityReportSignIn` cmdlet to enable retrieving of Azure AD sign ins.
 
 ### Changed
 
