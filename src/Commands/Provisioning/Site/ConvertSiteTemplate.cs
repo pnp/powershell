@@ -51,6 +51,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             if (provisioningTemplate != null)
             {
                 ITemplateFormatter formatter = null;
+#pragma warning disable CS0618 // Type or member is obsolete
                 switch (ToSchema)
                 {
                     case XMLPnPSchemaVersion.LATEST:
@@ -79,6 +80,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                             break;
                         }
                 }
+#pragma warning restore CS0618 // Type or member is obsolete
 
                 if (!string.IsNullOrEmpty(Out))
                 {

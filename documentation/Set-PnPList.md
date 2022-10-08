@@ -335,7 +335,7 @@ Accept wildcard characters: False
 ```
 
 ### -MinorVersions
-Maximum minor versions to keep
+Maximum major versions for which to keep minor versions
 
 ```yaml
 Type: UInt32
