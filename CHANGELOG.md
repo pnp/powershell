@@ -74,7 +74,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPTeamsTab` cmdlet not working with certain types when using dynamic parameters. [#2405](https://github.com/pnp/powershell/pull/2405)
 - Fixed `Get-PnPVivaConnectionsDashboardACE` missing the `isVisible` property under `CardButtonActions` causing using `Update-PnPVivaConnectionsDashboardACE` to hide card buttons [#2433](https://github.com/pnp/powershell/pull/2433
 - Fixed issue with `Set-PnPTeamsChannel -IsFavoriteByDefault` throwing a `Nullable object must have a value` under certain circumstances [#2425](https://github.com/pnp/powershell/pull/2425)
-- Fixed `Register-PnPManagementShellAccess` for non-commercial cloud environment. Users must enter the tenant name if the environment is a non-commercial cloud environment.
+- Fixed `Register-PnPManagementShellAccess` for non-commercial cloud environment. Users must enter the tenant name if the environment is a non-commercial cloud environment. [#2437](https://github.com/pnp/powershell/pull/2437)
 
 ### Contributors
 
