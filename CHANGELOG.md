@@ -28,14 +28,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Force` option to `Set-PnPListem` to force it to update a list item even without changing something. Can be useful in i.e. triggering a webhook. [#2396](https://github.com/pnp/powershell/pull/2396)
 - Added `ImageUrl`, `PageImageAlignment`, `ImageHeight` and `ImageWidth` parameters to `Add-PnPPageTextPart` cmdlet so that users can add an inline image into a text webpart. [#2401](https://github.com/pnp/powershell/pull/2401)
 - Added `TextBeforeImage` and `TextAfterImage` parameters to `Add-PnPPageTextPart` cmdlet so that users can add before and after text for an inline image into a text webpart. [#2403](https://github.com/pnp/powershell/pull/2403)
-- Added `Add-PnPPageImageWebPart` cmdlet to allow users to easily add Image to a modern page.
+- Added `Add-PnPPageImageWebPart` cmdlet to allow users to easily add Image to a modern page. [#2406](https://github.com/pnp/powershell/pull/2406)
 - Added Managed Identity support for SharePoint Online cmdlets. [#2354](https://github.com/pnp/powershell/pull/2354)
 - Added `Get-PnPTeamsTag` cmdlet to retrieve Team tags information. [#2414](https://github.com/pnp/powershell/pull/2414)
-- Added `Properties` attribute to `Update-PnPVivaConnectionsDashboardACE` to allow for updating the properties of a Viva Connections dashboard ACE component using its typed properties [#2433](https://github.com/pnp/powershell/pull/2433
+- Added `Properties` attribute to `Update-PnPVivaConnectionsDashboardACE` to allow for updating the properties of a Viva Connections dashboard ACE component using its typed properties [#2433](https://github.com/pnp/powershell/pull/2433)
 - Added `Set-PnPTeamsTag` cmdlet to update Team tags information. [#2419](https://github.com/pnp/powershell/pull/2419)
 - Added `Remove-PnPTeamsTag` cmdlet to delete a Team tag. [#2419](https://github.com/pnp/powershell/pull/2419)
 - Added `Disable-PnPPowerShellTelemetry` cmdlet to disable telemetry collection. [#2432](https://github.com/pnp/powershell/pull/2432)
 - Added `Enable-PnPPowerShellTelemetry` cmdlet to enable telemetry collection. [#2432](https://github.com/pnp/powershell/pull/2432)
+- Added `Get-PnPAzureADActivityReportSignIn` cmdlet to enable retrieving of Azure AD sign ins. [#2436](https://github.com/pnp/powershell/pull/2436)
 
 ### Changed
 
