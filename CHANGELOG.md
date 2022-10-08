@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+
 - Added `-DisableGridEditing` option to `Set-PnPList` which allows gridview editing to be enabled or disabled on a list [#2188](https://github.com/pnp/powershell/pull/2188)
 - Added verbose logging for `Invoke-PnPSiteSwap`, `Restore-PnPTenantSite` and cmdlets which depend on `SpoOperation`. [#2207](https://github.com/pnp/powershell/pull/2207)
 - Added support for `DisplayNamesOfFileViewers` and `DisplayNamesOfFileViewersInSpo` properties in `Get-PnPTenant` and `Set-PnPTenant` cmdlets to show/hide viewers in property pane for a file. [#2271](https://github.com/pnp/powershell/pull/2271)
@@ -27,9 +28,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Force` option to `Set-PnPListem` to force it to update a list item even without changing something. Can be useful in i.e. triggering a webhook. [#2396](https://github.com/pnp/powershell/pull/2396)
 - Added `ImageUrl`, `PageImageAlignment`, `ImageHeight` and `ImageWidth` parameters to `Add-PnPPageTextPart` cmdlet so that users can add an inline image into a text webpart. [#2401](https://github.com/pnp/powershell/pull/2401)
 - Added `TextBeforeImage` and `TextAfterImage` parameters to `Add-PnPPageTextPart` cmdlet so that users can add before and after text for an inline image into a text webpart. [#2403](https://github.com/pnp/powershell/pull/2403)
-
+- Added `Add-PnPPageImageWebPart` cmdlet to allow users to easily add Image to a modern page. [#2406](https://github.com/pnp/powershell/pull/2406)
+- Added Managed Identity support for SharePoint Online cmdlets. [#2354](https://github.com/pnp/powershell/pull/2354)
+- Added `Get-PnPTeamsTag` cmdlet to retrieve Team tags information. [#2414](https://github.com/pnp/powershell/pull/2414)
+- Added `Properties` attribute to `Update-PnPVivaConnectionsDashboardACE` to allow for updating the properties of a Viva Connections dashboard ACE component using its typed properties [#2433](https://github.com/pnp/powershell/pull/2433)
+- Added `Set-PnPTeamsTag` cmdlet to update Team tags information. [#2419](https://github.com/pnp/powershell/pull/2419)
+- Added `Remove-PnPTeamsTag` cmdlet to delete a Team tag. [#2419](https://github.com/pnp/powershell/pull/2419)
+- Added `Disable-PnPPowerShellTelemetry` cmdlet to disable telemetry collection. [#2432](https://github.com/pnp/powershell/pull/2432)
+- Added `Enable-PnPPowerShellTelemetry` cmdlet to enable telemetry collection. [#2432](https://github.com/pnp/powershell/pull/2432)
+- Added `Get-PnPAzureADActivityReportSignIn` cmdlet to enable retrieving of Azure AD sign ins. [#2436](https://github.com/pnp/powershell/pull/2436)
 
 ### Changed
+
 - Changed to no longer require `https://` to be prefixed when using `Connect-PnPOnline -Url tenant.sharepoint.com` [#2139](https://github.com/pnp/powershell/pull/2139)
 - `Get-PnPAvailableSensitivityLabel` cmdlet now uses the non-deprecated Graph API to retrieve sensitivity label. [#2234](https://github.com/pnp/powershell/pull/2234)
 - Improved `Get-PnPMicrosoft365Group` cmdlet to better check the Id, DisplayName and MailNickname of Microsoft 365  Group. [#2258](https://github.com/pnp/powershell/pull/2258)
@@ -39,12 +49,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Creating private Teams channels formerly using  `Add-PnPTeamsChannel -Private` should now use `Add-PnPTeamsChannel -ChannelType Private` instead [#2308](https://github.com/pnp/powershell/pull/2308)
 - Improved `Get-PnPAuthenticationRealm` cmdlet to use `HTTPClient` instead of `WebRequest`. [#2304](https://github.com/pnp/powershell/pull/2304)
 - Improved `Connect-PnPOnline` with ACS method. Replace the usage of `WebRequest` with `HTTPClient`. [#2352](https://github.com/pnp/powershell/pull/2352)
+- Improved `Remove-PnPFieldFromContentType` cmdlet to ensure proper null check for non-existing fields. It will now throw proper `Field not found` error. [#2407](https://github.com/pnp/powershell/pull/2407)
+- Changed the Microsoft 365 Groups cmdlets to use the `v1.0` endpoint instead of the `beta` [#2426](https://github.com/pnp/powershell/pull/2426)
 
 ### Removed
+
 - Marked `-Resource` parameter from `Get-PnPAccessToken` cmdlet as obsolete as it was not used anymore anyway. It will be removed in a future version. [#2182](https://github.com/pnp/powershell/pull/2182)
 - Removed `-SystemUpdate` option from `Set-PnPListItem` as it has been deprecated two years ago. Use `-UpdateType SystemUpdate` instead [#2396](https://github.com/pnp/powershell/pull/2396)
 
 ### Fixed
+
 - Fixed issue where passing in `-Connection` to `Disconnect-PnPOnline` would throw an exception [#2093](https://github.com/pnp/powershell/pull/2093)
 - Fixed `Get-PnPSiteSearchQueryResults` throwing `Value cannot be null` exception [#2138](https://github.com/pnp/powershell/pull/2138)
 - Fixed `New-PnPUPABulkImportJob` not returing the job Id [#2144](https://github.com/pnp/powershell/pull/2144)
@@ -58,8 +72,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Add-PnPTaxonomyField`, it was throwing error when using `-TaxonomyItemId` parameter. [#2351](https://github.com/pnp/powershell/pull/2351)
 - Fixed `Import-PnPTermGroupFromXml` issue where a valid template was not working. [#2353](https://github.com/pnp/powershell/pull/2353)
 - Fixed `Set-PnPTenant` cmdlet not working when `-Force` parameter is specified. [#2373](https://github.com/pnp/powershell/pull/2373)
+- Fixed `Add-PnPTeamsTab` cmdlet not working with certain types when using dynamic parameters. [#2405](https://github.com/pnp/powershell/pull/2405)
+- Fixed `Get-PnPVivaConnectionsDashboardACE` missing the `isVisible` property under `CardButtonActions` causing using `Update-PnPVivaConnectionsDashboardACE` to hide card buttons [#2433](https://github.com/pnp/powershell/pull/2433
+- Fixed issue with `Set-PnPTeamsChannel -IsFavoriteByDefault` throwing a `Nullable object must have a value` under certain circumstances [#2425](https://github.com/pnp/powershell/pull/2425)
 
 ### Contributors
+
+- Rob Lempens [RobLempens]
 - Marc Studer [Studermarc]
 - Giacomo Pozzoni [jackpoz]
 - Adam Wójcik [Adam-it]
@@ -122,7 +141,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPListItemAttachment` cmdlet to provide ability to upload a file as an attachment to a SharePoint list item. [#1932](https://github.com/pnp/powershell/pull/1932)
 - Added `Remove-PnPListItemAttachment` cmdlet to provide ability to delete a list item attachment. [#1932](https://github.com/pnp/powershell/pull/1932)
 - Added `Get-PnPListItemAttachment` cmdlet to download the attachments from a list item. [#1932](https://github.com/pnp/powershell/pull/1932)
-- Added `-ReturnTyped` parameter to `Get-PnPField` cmdlet so that it returns specific type instead of the generic field type. [#1888] (https://github.com/pnp/powershell/pull/1888)
+- Added `-ReturnTyped` parameter to `Get-PnPField` cmdlet so that it returns specific type instead of the generic field type. [#1888](https://github.com/pnp/powershell/pull/1888)
 - Added `Add-PnPViewsFromXML` cmdlet to create one or more views in a list based on an XML string. [#1963](https://github.com/pnp/powershell/pull/1963)
 - Added `-ExemptFromBlockDownloadOfNonViewableFiles` parameter to `Set-PnPList` cmdlet to configure access capabilites for unmanaged devices at list level. [#1973](https://github.com/pnp/powershell/pull/1973)
 - Added `-PercentComplete`, `-Priority`, `-StartDateTime`, `-DueDateTime` and `-Description` to `Add-PnPPlannerTask` [#1964](https://github.com/pnp/powershell/pull/1964)
@@ -148,7 +167,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Changed `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory` to map users based on their Ids instead which should resolve some issues around user identities reporting not to exist. You can use the new `-IdType` option to switch it back to `PrincipalName` if needed.  [#1752](https://github.com/pnp/powershell/pull/1752)
-- Changed `Add-PnPField` now returns specific type taxonomy field type instead of the generic type. [#1888] (https://github.com/pnp/powershell/pull/1888)
+- Changed `Add-PnPField` now returns specific type taxonomy field type instead of the generic type. [#1888](https://github.com/pnp/powershell/pull/1888)
 - Changed `Get-PnPOrgAssetsLibrary` to return a proper value of the organisation assets libraries. [#1889](https://github.com/pnp/powershell/pull/1889)
 - Bumped .NET Framework version to 4.6.2 as the 4.6.1 is not supported anymore. [#1856](https://github.com/pnp/powershell/pull/1856)
 - Changed `Add-PnPDataRowsToSiteTemplate`, it will now export a datetime field value as UTC string. [#1900](https://github.com/pnp/powershell/pull/1900)
