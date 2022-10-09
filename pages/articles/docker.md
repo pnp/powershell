@@ -124,7 +124,7 @@ Mind you that in the case above, the container will have an isolated disk system
     docker run --rm -it -v ${pwd}:C:\workplace -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809
     ```
 
-In such container you can run `Get-ChildItems` and see the contents of the current directory.
+In such container you can run `Get-ChildItem` and see the contents of the current directory.
 
 The examples above start new container and allow you to interactively use container, running inline commands. In other cases however, you might want to just start a container for a short time (a few seconds maybe) and run a ps1 script unattededly and then automatically terminate the container. Here is how you can do it.
 
