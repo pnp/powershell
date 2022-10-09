@@ -115,13 +115,13 @@ Mind you that in the case above, the container will have an isolated disk system
     \<to be verified\>
 
     ```bash
-    docker run --rm -it -v $(pwd):/home -w /home m365pnp/powershell
+    docker run --rm -it -v "$(pwd):/home" -w /home m365pnp/powershell
     ```
 
 - Windows (run in PowerShell console):
 
     ```powershell
-    docker run --rm -it -v ${pwd}:C:\workplace -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809
+    docker run --rm -it -v "${pwd}:C:\workplace" -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809
     ```
 
 In such container you can run `Get-ChildItem` and see the contents of the current directory.
@@ -133,13 +133,13 @@ The examples above start new container and allow you to interactively use contai
     \<to be verified\>
 
     ```bash
-    docker run --rm -v $(pwd):/home -w /home m365pnp/powershell pwsh test.ps1
+    docker run --rm -v "$(pwd):/home" -w /home m365pnp/powershell pwsh test.ps1
     ```
 
 - Windows (run in PowerShell console):
 
     ```powershell
-    docker run --rm -v ${pwd}:C:\workplace -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809 pwsh test.ps1
+    docker run --rm -v "${pwd}:C:\workplace" -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809 pwsh test.ps1
     ```
 
 Finally, your scripts might have parametrization so that you can run the same code in different cases/environments. This is the way to provide variable values.
@@ -150,14 +150,14 @@ Finally, your scripts might have parametrization so that you can run the same co
 
     ```bash
     ParameterValue="test"
-    docker run --rm -v $(pwd):/home -w /home m365pnp/powershell pwsh -c "./test.ps1 -Parameter1 $ParameterValue"
+    docker run --rm -v "$(pwd):/home" -w /home m365pnp/powershell pwsh -c "./test.ps1 -Parameter1 $ParameterValue"
     ```
 
 - Windows (run in PowerShell console):
 
     ```powershell
     $ParameterValue="test"
-    docker run --rm -v ${pwd}:C:\workplace -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809 pwsh -c "./test.ps1 -Parameter1 $ParameterValue"
+    docker run --rm -v "${pwd}:C:\workplace" -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809 pwsh -c "./test.ps1 -Parameter1 $ParameterValue"
     ```
 
 Please see [Docker documentation](https://docs.docker.com/engine/reference/run/) to see arguments for `docker run` command.
