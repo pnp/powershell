@@ -45,21 +45,21 @@ Execute a GET request to get groups by filter and select.
 Invoke-PnPGraphMethod -Url "groups/{id}" -Method Delete
 ```
 
-delete the group with id.
+Delete the group with the specified id.
 
 ### Example 3
 ```powershell
 Invoke-PnPGraphMethod -Url "groups/{id}" -Method Patch -Content @{ displayName = "NewName" }
 ```
 
-set the displayName of the group with a Patch request.
+Set the new displayName of the group with a Patch request.
 
 ### Example 4
 ```powershell
 Invoke-PnPGraphMethod -Url "v1.0/users?$filter=accountEnabled ne true&$count=true" -Method Get -ConsistencyLevelEventual
 ```
 
-get users with advanced query capabilities. use of -ConsistencyLevelEventual.
+Get users with advanced query capabilities. Use of -ConsistencyLevelEventual.
 
 ## PARAMETERS
 
@@ -79,7 +79,7 @@ Accept wildcard characters: False
 ```
 
 ### -All
-retrieve all pages of results. this will loop through all @odata.nextLink. this flag will only be respected if the request is a GET request.
+Retrieve all pages of results. This will loop through all @odata.nextLink. This flag will only be respected if the request is a GET request.
 
 ```yaml
 Type: SwitchParameter
@@ -110,7 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -ConsistencyLevelEventual
-set the ConsistencyLevel header to eventual for advanced query capabilities on Azure AD directory objects
+Set the ConsistencyLevel header to eventual for advanced query capabilities on Azure AD directory objects
 
 
 ```yaml
@@ -156,7 +156,7 @@ Accept wildcard characters: False
 ```
 
 ### -Method
-The Http method to execute. Defaults to GET.
+The HTTP method to execute. Defaults to GET.
 
 ```yaml
 Type: HttpRequestMethod
@@ -187,7 +187,7 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-the graph endpoint to invoke
+The Graph endpoint to invoke.
 
 ```yaml
 Type: String

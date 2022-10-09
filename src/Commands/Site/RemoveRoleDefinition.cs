@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Site
             {
                 try
                 {
-                    if (Force || ShouldContinue($@"Remove Role Definition ""{roleDefinition.Name}""?", "Confirm"))
+                    if (Force || ShouldContinue($@"Remove Role Definition ""{roleDefinition.Name}""?", Properties.Resources.Confirm))
                     {
                         roleDefinition.DeleteObject();
                         ClientContext.ExecuteQueryRetry();

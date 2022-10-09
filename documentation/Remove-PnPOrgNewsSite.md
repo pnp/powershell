@@ -20,11 +20,11 @@ Removes a given site from the list of organizational news sites.
 ## SYNTAX
 
 ```powershell
-Remove-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Removes a given site from the list of organizational news sites based on its URL in your SharePoint Online Tenant.
+Removes a given site from the list of organizational news sites based on its URL in your SharePoint Online tenant.
 
 ## EXAMPLES
 
@@ -33,7 +33,7 @@ Removes a given site from the list of organizational news sites based on its URL
 Remove-PnPOrgNewsSite -OrgNewsSiteUrl "https://tenant.sharepoint.com/sites/mysite"
 ```
 
-This example removes the specified site from list of organization's news sites.
+This example removes the specified site from the list of organization's news sites.
 
 ## PARAMETERS
 
@@ -52,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -OrgNewsSiteUrl
-The site to be removed from list of organization's news sites
+The site to be removed from the list of organization's news sites.
 
 ```yaml
 Type: SitePipeBind

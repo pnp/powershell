@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                if (Force || ShouldContinue($"Restore site collection {Identity.Url}?", "Confirm"))
+                if (Force || ShouldContinue($"Restore site collection {Identity.Url}?", Properties.Resources.Confirm))
                 {
                     WriteVerbose($"Restoring site collection {Identity.Url}");
 

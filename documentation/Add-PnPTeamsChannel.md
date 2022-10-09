@@ -15,18 +15,23 @@ title: Add-PnPTeamsChannel
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Adds a channel to an existing Microsoft Teams instance.
+Adds a channel to an existing Microsoft Teams team.
 
 ## SYNTAX
 
-### Public channel
+### Standard channel
 ```powershell
-Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> [-Description <String>] [-IsFavoriteByDefault <Boolean>] [<CommonParameters>]
+Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> [-ChannelType Standard] [-Description <String>] [-IsFavoriteByDefault <Boolean>]
 ```
 
 ### Private channel
 ```powershell
-Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> -OwnerUPN <String> [-Description <String>] [-Private] [<CommonParameters>]
+Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> -ChannelType Private -OwnerUPN <String> [-Description <String>]
+```
+
+### Shared channel
+```powershell
+Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> -ChannelType Shared -OwnerUPN <String> [-Description <String>] [-IsFavoriteByDefault <Boolean>]
 ```
 
 ## DESCRIPTION
@@ -40,21 +45,28 @@ Allows to add channel to an existing team in Microsoft Teams. By using the `IsFa
 Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName "My Channel" -IsFavoriteByDefault $true
 ```
 
-Adds a new channel to the specified Teams instance and marks the channel as by default visible for members.
+Adds a new standard channel to the Team specified by its identifier and marks the channel as by default visible for members.
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPTeamsChannel -Team MyTeam -DisplayName "My Channel"
+Add-PnPTeamsChannel -Team "My Team" -DisplayName "My standard channel"
 ```
 
-Adds a new channel to the specified Teams instance
+Adds a new standard channel to the Team specified by its name.
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPTeamsChannel -Team MyTeam -DisplayName "My Channel" -Private -OwnerUPN user1@domain.com
+Add-PnPTeamsChannel -Team "HR" -DisplayName "My private channel" -ChannelType Private -OwnerUPN user1@domain.com
 ```
 
-Adds a new private channel to the specified Teams instance
+Adds a new private channel to the Team specified by its name and sets the provided user as the owner of the channel.
+
+### EXAMPLE 4
+```powershell
+Add-PnPTeamsChannel -Team "Logistical Department" -DisplayName "My shared channel" -ChannelType Shared -OwnerUPN user1@domain.com
+```
+
+Adds a new shared channel to the Team specified by its name and sets the provided user as the owner of the channel.
 
 ## PARAMETERS
 
@@ -73,7 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisplayName
-The display name of the new channel. Letters, numbers and spaces are allowed.
+The display name of the new channel. Letters, numbers, and spaces are allowed.
 
 ```yaml
 Type: String
@@ -91,7 +103,7 @@ Allows you to specify if the channel is by default visible for members
 
 ```yaml
 Type: Boolean
-Parameter Sets: Public channel
+Parameter Sets: Standard channel, Shared channel
 
 Required: False
 Position: Named
@@ -105,7 +117,7 @@ The User Principal Name (email) of the owner of the channel.
 
 ```yaml
 Type: String
-Parameter Sets: Private channel
+Parameter Sets: Private channel, Shared channel
 
 Required: True
 Position: Named
@@ -114,14 +126,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Private
-Specify to mark the channel as private.
+### -ChannelType
+Allows specifying the type of channel to be created. Possible values are Standard, Private, and Shared.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Private channel
+Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -145,5 +157,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

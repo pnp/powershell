@@ -14,8 +14,16 @@ Update the Adaptive card extension in the Viva connections dashboard page. This 
 
 ## SYNTAX
 
+### Update using typed properties (Default)
+
 ```powershell
-Update-PnPVivaConnectionsDashboardACE [-Identity <GUID>] [-Title <string>] [-PropertiesJSON <string>] [-Description <string>] [-IconProperty <string>] [-Order <Int>][-CardSize <CardSize>] [-Connection <PnPConnection>] [<CommonParameters>]
+Update-PnPVivaConnectionsDashboardACE -Identity <GUID> [-Title <string>] [-Properties <object>] [-Description <string>] [-IconProperty <string>] [-Order <Int>][-CardSize <CardSize>] [-Connection <PnPConnection>]
+```
+
+### Update using JSON properties
+
+```powershell
+Update-PnPVivaConnectionsDashboardACE -Identity <GUID> [-Title <string>] [-PropertiesJSON <string>] [-Description <string>] [-IconProperty <string>] [-Order <Int>][-CardSize <CardSize>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -52,6 +60,33 @@ Update-PnPVivaConnectionsDashboardACE -Identity "58108715-185e-4214-8786-01218e7
 
 Update the adaptive card extensions with Instance Id `58108715-185e-4214-8786-01218e7ab9ef` in the Viva connections dashboard page. It will update the CardSize to large.
 
+### EXAMPLE 5
+```powershell
+$ace = Get-PnPVivaConnectionsDashboardACE -Identity 58108715-185e-4214-8786-01218e7ab9ef
+$ace.Properties.QuickViews[0].Data = '{ 
+        "items": [ 
+            { "title": "Sample 1", "image": "https://contoso.sharepoint.com/SiteAssets/image1.png" }, 
+            { "title": "Sample 2", "image": "https://contoso.sharepoint.com/SiteAssets/image2.png" } 
+        ]}'
+Update-PnPVivaConnectionsDashboardACE -Identity $ace.InstanceId -Properties $ace.Properties
+```
+
+Update the default quickview data of the adaptive card extension with Instance Id `58108715-185e-4214-8786-01218e7ab9ef` in the Viva connections dashboard page to the provided JSON structure.
+
+### EXAMPLE 6
+```powershell
+$ace = Get-PnPVivaConnectionsDashboardACE -Identity 58108715-185e-4214-8786-01218e7ab9ef
+$ace.Properties.QuickViews[0].Template = '{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.3",
+    "body": [
+        ...
+    ]}'
+Update-PnPVivaConnectionsDashboardACE -Identity $ace.InstanceId -Properties $ace.Properties
+```
+
+Update the default quickview Adaptive Cards template of the adaptive card extension with Instance Id `58108715-185e-4214-8786-01218e7ab9ef` in the Viva connections dashboard page to the provided JSON structure.
 
 ## PARAMETERS
 
@@ -112,11 +147,25 @@ Accept wildcard characters: False
 ```
 
 ### -PropertiesJSON
-The properties of the Adaptive Card extension present on the Viva connections dashboard page.
+The properties of the Adaptive Card extension present on the Viva connections dashboard page in JSON format.
 
 ```yaml
 Type: string
-Parameter Sets: (All)
+Parameter Sets: Update using JSON properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Properties
+The typed properties of the Adaptive Card extension present on the Viva connections dashboard page. These can be retrieved and changed through the `Get-PnPVivaConnectionsDashboardACE` cmdlet and using its Properties property.
+
+```yaml
+Type: string
+Parameter Sets: Update using typed properties
 
 Required: False
 Position: Named
