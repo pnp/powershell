@@ -98,6 +98,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Marcus Blennegård [mblennegard]
 - Arleta Wanat [PowerShellScripts]
 - Koen Zomers [koenzomers]
+- Aleksandr Sapozhkov [shurick81]
 
 ## [1.11.0]
 
