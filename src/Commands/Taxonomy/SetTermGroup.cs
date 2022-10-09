@@ -1,11 +1,8 @@
-﻿using System;
-using System.Linq.Expressions;
-using System.Management.Automation;
-using System.Security.Cryptography;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
@@ -41,12 +38,19 @@ namespace PnP.PowerShell.Commands.Taxonomy
             if (termStore != null)
             {
                 var group = Identity.GetGroup(termStore);
-                ClientContext.Load(group);
-                ClientContext.ExecuteQueryRetry();
-
-                if (group.ServerObjectIsNull.Value != false)
+                try
                 {
-                    bool updateRequired = false;
+                    ClientContext.Load(group);
+                    ClientContext.ExecuteQueryRetry();
+                }
+                catch (Exception)
+                {
+                    throw new PSArgumentException("Group not found");
+                }
+
+                try
+                {
+                    var updateRequired = false;
                     if (ParameterSpecified(nameof(Name)))
                     {
                         group.Name = Name;
@@ -64,9 +68,9 @@ namespace PnP.PowerShell.Commands.Taxonomy
                     }
                     WriteObject(group);
                 }
-                else
+                catch (Exception e)
                 {
-                    throw new PSArgumentException("Group not found");
+                    throw new PSArgumentException(e.Message);
                 }
             }
         }

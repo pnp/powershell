@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPFileCheckedIn.ht
 # Set-PnPFileCheckedIn
 
 ## SYNOPSIS
-Checks in a file
+Checks in a file.
 
 ## SYNTAX
 
@@ -20,6 +20,7 @@ Set-PnPFileCheckedIn [-Url] <String> [-CheckinType <CheckinType>] [-Comment <Str
 ```
 
 ## DESCRIPTION
+This cmdlet checks in a single file, optionally with a comment.
 
 ## EXAMPLES
 
@@ -40,7 +41,7 @@ Checks in the file "Contract.docx" in the "Documents" library as a minor version
 ## PARAMETERS
 
 ### -Approve
-Approve file
+Approves the file.
 
 ```yaml
 Type: SwitchParameter
@@ -54,7 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -CheckinType
-The check in type to use. Defaults to Major
+The check in type to use. Defaults to MajorCheckIn.
 
 ```yaml
 Type: CheckinType
@@ -69,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -Comment
-The check in comment
+The check in comment.
 
 ```yaml
 Type: String
@@ -97,7 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-The server relative url of the file to check in
+The server relative url of the file to check in.
 
 ```yaml
 Type: String

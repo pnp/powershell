@@ -26,13 +26,13 @@ namespace PnP.PowerShell.Commands.Utilities
         #region Team
         public static async Task<List<Group>> GetGroupsWithTeamAsync(PnPConnection connection, string accessToken)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"beta/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
+            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"v1.0/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
             return collection.ToList();
         }
 
         public static async Task<Group> GetGroupWithTeamAsync(PnPConnection connection, string accessToken, string mailNickname)
         {
-            return await GraphHelper.GetAsync<Group>(connection, $"beta/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken);
+            return await GraphHelper.GetAsync<Group>(connection, $"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken);
         }
 
         public static async Task<List<Team>> GetTeamsAsync(string accessToken, PnPConnection connection)
@@ -602,18 +602,22 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.DeleteAsync(connection, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken);
         }
 
-        public static async Task<TeamChannel> AddChannelAsync(string accessToken, PnPConnection connection, string groupId, string displayName, string description, bool isPrivate, string ownerUPN, bool isFavoriteByDefault)
+        public static async Task<TeamChannel> AddChannelAsync(string accessToken, PnPConnection connection, string groupId, string displayName, string description, TeamsChannelType channelType, string ownerUPN, bool isFavoriteByDefault)
         {
             var channel = new TeamChannel()
             {
                 Description = description,
                 DisplayName = displayName,
             };
-            if (isPrivate)
+            if (channelType == TeamsChannelType.Private)
             {
                 channel.MembershipType = "private";
             }
-            if (isPrivate)
+            if(channelType == TeamsChannelType.Shared)
+            {
+                channel.MembershipType = "shared";
+            }
+            if (channelType == TeamsChannelType.Private || channelType == TeamsChannelType.Shared)
             {
                 channel.Type = "#Microsoft.Graph.channel";
                 var user = await GraphHelper.GetAsync<User>(connection, $"v1.0/{GetUserGraphUrlForUPN(ownerUPN)}", accessToken);
@@ -928,6 +932,34 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             return await GraphHelper.DeleteAsync(connection, $"v1.0/appCatalogs/teamsApps/{appId}", accessToken);
         }
+        #endregion
+
+        #region Tags
+
+        public static async Task<IEnumerable<TeamTag>> GetTagsAsync(string accessToken, PnPConnection connection, string groupId)
+        {
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamTag>(connection, $"beta/teams/{groupId}/tags", accessToken);
+            return collection;
+        }
+
+        public static async Task<TeamTag> GetTagsWithIdAsync(string accessToken, PnPConnection connection, string groupId, string tagId)
+        {
+            var tagInformation = await GraphHelper.GetAsync<TeamTag>(connection, $"beta/teams/{groupId}/tags/{tagId}", accessToken);
+            return tagInformation;
+        }
+
+        public static async Task UpdateTagAsync(PnPConnection connection, string accessToken, string groupId, string tagId, string displayName)
+        {
+            var body = new { displayName = displayName };
+            await GraphHelper.PatchAsync(connection, accessToken, $"v1.0/teams/{groupId}/tags/{tagId}", body);
+        }
+
+        public static async Task<HttpResponseMessage> DeleteTagAsync(PnPConnection connection, string accessToken, string groupId, string tagId)
+        {
+            return await GraphHelper.DeleteAsync(connection, $"v1.0/teams/{groupId}/tags/{tagId}", accessToken);
+        }
+
+
         #endregion
     }
 }

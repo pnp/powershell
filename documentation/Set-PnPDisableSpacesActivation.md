@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPDisableSpacesAct
 # Set-PnPDisableSpacesActivation
 
 ## SYNOPSIS
-Sets if SharePoint Spaces should be disabled
+Sets if SharePoint Spaces should be disabled.
 
 ## SYNTAX
 
@@ -19,27 +19,35 @@ Set-PnPDisableSpacesActivation -Disable <SwitchParameter> [-Scope <String>] [-Id
 ```
 
 ## DESCRIPTION
+This cmdlet disables or enables SharePoint Spaces for a specific site collection or entire SharePoint tenant.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPDisableSpacesActivation -Disable $true -Scope Tenant
+Set-PnPDisableSpacesActivation -Disable:$true -Scope Tenant
 ```
 
-Disables SharePoint Spaces on the entire tenant
+Disables SharePoint Spaces on the entire tenant.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPDisableSpacesActivation -Disable $true -Scope Site -Identity "https://contoso.sharepoint.com"
+Set-PnPDisableSpacesActivation -Disable -Scope Site -Identity "https://contoso.sharepoint.com"
 ```
 
 Disables SharePoint Spaces on https://contoso.sharepoint.com
 
+### EXAMPLE 3
+```powershell
+Set-PnPDisableSpacesActivation -Disable:$false -Scope Site -Identity "https://contoso.sharepoint.com"
+```
+
+Enables SharePoint Spaces on https://contoso.sharepoint.com
+
 ## PARAMETERS
 
 ### -Disable
-Sets if SharePoint Spaces should be enabled or disabled
+Sets if SharePoint Spaces should be enabled or disabled.
 
 ```yaml
 Type: SwitchParameter
@@ -67,7 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specifies the URL of the SharePoint Site on which SharePoint Spaces should be disabled. Must be provided if Scope is set to Tenant.
+Specifies the URL of the SharePoint Site on which SharePoint Spaces should be disabled. Must be provided if Scope is set to Site.
 
 ```yaml
 Type: SPOSitePipeBind
@@ -81,7 +89,7 @@ Accept wildcard characters: False
 ```
 
 ### -Scope
-Defines if SharePoint Spaces should be disabled for the entire tenant or for a specific site collection
+Defines if SharePoint Spaces should be disabled for the entire tenant or for a specific site collection.
 
 ```yaml
 Type: DisableSpacesScope

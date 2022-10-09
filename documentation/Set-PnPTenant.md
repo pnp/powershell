@@ -51,7 +51,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
  [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>] 
  [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>] [-AllowFilesWithKeepLabelToBeDeletedSPO <Boolean>]
- [-ExternalUserExpirationRequired <Boolean>] [-ExternalUserExpireInDays <Boolean>]
+ [-ExternalUserExpirationRequired <Boolean>] [-ExternalUserExpireInDays <Boolean>] [-OneDriveRequestFilesLinkEnabled <Boolean>]
  [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -1355,6 +1355,62 @@ When a value is set, it means that the access of the external user will expire i
 
 ```yaml
 Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisplayNamesOfFileViewers
+Allows configuring whether display name of people who view the file are visible in the property pane of the site in OneDrive for business sites.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisplayNamesOfFileViewersInSpo
+Allows configuring whether display name of people who view the file are visible in the property pane of the site in SharePoint site collection.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsLoopEnabled
+Allows configuring whether loop components are enabled or disabled in the tenant. If set to `$true`, loop components will be allowed to be created in the tenant. If set to `$false`, it will be disabled in the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveRequestFilesLinkEnabled
+Allows configuring whether users will be able to create anonymous requests for people to upload files regardless of the Share with anyone link configuration setting.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False

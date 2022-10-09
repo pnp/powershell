@@ -1,5 +1,4 @@
 ﻿using System.Management.Automation;
-
 using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Search
@@ -22,16 +21,18 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var queryCmdLet = new SubmitSearchQuery();
-            
-            queryCmdLet.StartRow = StartRow;
-            queryCmdLet.MaxResults = MaxResults;
-            queryCmdLet.All = All;
+            var queryCmdLet = new SubmitSearchQuery
+            {
+                Connection = Connection,
+                StartRow = StartRow,
+                MaxResults = MaxResults,
+                All = All
+            };
             
             var query = "contentclass:STS_Site";
             if (!string.IsNullOrEmpty(Query))
             {
-                query = query + " AND " + Query;
+                query = $"{query} AND {Query}";
             }
             queryCmdLet.Query = query;
 

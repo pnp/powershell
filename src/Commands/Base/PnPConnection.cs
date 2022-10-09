@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Base
         /// Connection instance which is set by connecting without -ReturnConnection
         /// </summary>
         public static PnPConnection Current { get; internal set; }
-        
+
         public ConnectionType ConnectionType { get; protected set; }
 
         /// <summary>
@@ -343,12 +343,36 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            //var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            //var accesstoken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, $"https://{AzureAuthHelper.GetGraphEndPoint(azureEnvironment)}/").GetAwaiter().GetResult();
-            var connection = new PnPConnection(PnPPSVersionTag, InitializationType.Graph, tenantAdminUrl);
-            return connection;
+            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            var resourceUri = new Uri(url);
+            var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
+            cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
+            var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource).GetAwaiter().GetResult();
+            
+            using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
+            {
+                PnPClientContext context = null;
+                ConnectionType connectionType = ConnectionType.O365;
+                if (url != null)
+                {
+                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                    context.ApplicationName = Resources.ApplicationName;
+                    context.DisableReturnValueCache = true;
+                    context.ExecutingWebRequest += (sender, e) =>
+                    {
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                    };
+                    if (IsTenantAdminSite(context))
+                    {
+                        connectionType = ConnectionType.TenantAdmin;
+                    }
+                }
+
+                var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.ManagedIdentity);
+                return connection;
+            }
         }
 
         internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
@@ -594,19 +618,8 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Url = (new Uri(url)).AbsoluteUri;
             }
-            ConnectionMethod = ConnectionMethod.Credentials;
+            ConnectionMethod = initializationType == InitializationType.ManagedIdentity ? ConnectionMethod.ManagedIdentity : ConnectionMethod.Credentials;
             ClientId = PnPManagementShellClientId;
-        }
-
-        private PnPConnection(string pnpVersionTag, InitializationType initializationType, string tenantAdminUrl)
-        {
-            InitializeTelemetry(null, initializationType);
-            var coreAssembly = Assembly.GetExecutingAssembly();
-            ConnectionType = ConnectionType.O365;
-            PnPVersionTag = pnpVersionTag;
-            TenantAdminUrl = tenantAdminUrl;
-            ConnectionMethod = ConnectionMethod.ManagedIdentity;
-            ManagedIdentity = true;
         }
 
         #endregion
@@ -620,8 +633,8 @@ namespace PnP.PowerShell.Commands.Base
 
         internal void CacheContext()
         {
-            if(Context == null) return;
-            
+            if (Context == null) return;
+
             var c = ContextCache.FirstOrDefault(cc => new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
             if (c == null)
             {
@@ -692,8 +705,6 @@ namespace PnP.PowerShell.Commands.Base
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             var telemetryFile = System.IO.Path.Combine(userProfile, ".pnppowershelltelemetry");
 
-
-
             var enableTelemetry = true;
             if (Environment.GetEnvironmentVariable("PNP_DISABLETELEMETRY") != null)
             {
@@ -754,44 +765,38 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static string GetRealmFromTargetUrl(Uri targetApplicationUri)
         {
-            WebRequest request = WebRequest.Create(targetApplicationUri + "/_vti_bin/client.svc");
-            request.Headers.Add("Authorization: Bearer ");
+            var client = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "");
 
-            try
+            var response = client.GetAsync(targetApplicationUri + "/_vti_bin/client.svc").GetAwaiter().GetResult();
+            if (response == null)
             {
-                using (request.GetResponse())
-                {
-                }
+                return null;
             }
-            catch (WebException e)
+            var bearerResponseHeaderValues = response.Headers.GetValues("WWW-Authenticate");
+            string bearerResponseHeader = string.Join("", bearerResponseHeaderValues);
+
+            if (string.IsNullOrEmpty(bearerResponseHeader))
             {
-                if (e.Response == null)
-                {
-                    return null;
-                }
+                return null;
+            }
 
-                string bearerResponseHeader = e.Response.Headers["WWW-Authenticate"];
-                if (string.IsNullOrEmpty(bearerResponseHeader))
-                {
-                    return null;
-                }
+            const string bearer = "Bearer realm=\"";
+            int bearerIndex = bearerResponseHeader.IndexOf(bearer, StringComparison.Ordinal);
+            if (bearerIndex < 0)
+            {
+                return null;
+            }
 
-                const string bearer = "Bearer realm=\"";
-                int bearerIndex = bearerResponseHeader.IndexOf(bearer, StringComparison.Ordinal);
-                if (bearerIndex < 0)
+            int realmIndex = bearerIndex + bearer.Length;
+            if (bearerResponseHeader.Length >= realmIndex + 36)
+            {
+                string targetRealm = bearerResponseHeader.Substring(realmIndex, 36);
+                if (Guid.TryParse(targetRealm, out _))
                 {
-                    return null;
-                }
-
-                int realmIndex = bearerIndex + bearer.Length;
-
-                if (bearerResponseHeader.Length >= realmIndex + 36)
-                {
-                    string targetRealm = bearerResponseHeader.Substring(realmIndex, 36);
-                    if (Guid.TryParse(targetRealm, out _))
-                    {
-                        return targetRealm;
-                    }
+                    return targetRealm;
                 }
             }
             return null;

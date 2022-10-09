@@ -26,6 +26,11 @@ namespace PnP.PowerShell.Commands.Enums
         /// <summary>
         /// Do not send out the out of the box welcome e-mail to members getting added to the Microsoft Teams team
         /// </summary>
-        WelcomeEmailDisabled
+        WelcomeEmailDisabled,
+
+        /// <summary>
+        /// Members are not subscribed to the group's calendar events in Outlook.
+        /// </summary>
+        SubscribeMembersToCalendarEventsDisabled
     }
 }

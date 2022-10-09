@@ -14,6 +14,7 @@ namespace PnP.PowerShell.Commands.Utilities
         public static ITemplateFormatter GetFormatter(XMLPnPSchemaVersion schema)
         {
             ITemplateFormatter formatter = null;
+#pragma warning disable CS0618 // Type or member is obsolete
             switch (schema)
             {
                 case XMLPnPSchemaVersion.LATEST:
@@ -42,6 +43,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         break;
                     }
             }
+#pragma warning restore CS0618 // Type or member is obsolete
             return formatter;
         }
 

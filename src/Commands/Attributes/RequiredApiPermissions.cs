@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Attributes
 {
-
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public sealed class RequiredMinimalApiPermissions : Attribute
     {
