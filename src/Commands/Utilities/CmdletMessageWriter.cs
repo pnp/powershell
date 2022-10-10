@@ -102,7 +102,7 @@ namespace PnP.PowerShell.Commands.Utilities
         
         internal static void WriteFormattedMessage(PSCmdlet cmdlet, Message message)
         {
-            if (cmdlet.Host.Name == "ConsoleHost")
+            if (cmdlet.Host.Name == "ConsoleHost" && cmdlet.Host.UI.RawUI.MaxWindowSize.Width > 8)
             {
                 var messageLines = new List<string>();
                 messageLines.AddRange(message.Text.Split(new[] { '\n' }));
