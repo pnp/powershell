@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             if (AzureEnvironment != AzureEnvironment.Production && string.IsNullOrEmpty(TenantName))
             {
-                WriteWarning("Please specify the Tenant name for non-commercial clouds, other the operation cannot proceed.");
+                WriteWarning("Please specify the Tenant name for non-commercial clouds, otherwise this operation will fail.");
             }
 
             Task.Factory.StartNew(() =>
