@@ -26,6 +26,8 @@ Remove-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> [-Role <String>] [-
 
 ## DESCRIPTION
 
+Allows to remove user from a team.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

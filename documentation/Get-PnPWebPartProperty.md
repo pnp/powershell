@@ -21,6 +21,8 @@ Get-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <Guid> [-Key <S
 
 ## DESCRIPTION
 
+Allows to retrieve web part property.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

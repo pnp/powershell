@@ -21,6 +21,8 @@ Move-PnPListItemToRecycleBin [-List] <ListPipeBind> -Identity <ListItemPipeBind>
 
 ## DESCRIPTION
 
+Allows to move an item to the recycle bin.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

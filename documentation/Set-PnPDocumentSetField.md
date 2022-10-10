@@ -22,6 +22,8 @@ Set-PnPDocumentSetField -DocumentSet <DocumentSetPipeBind> -Field <FieldPipeBind
 
 ## DESCRIPTION
 
+Allows to set a site column from the available content types to a document set.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

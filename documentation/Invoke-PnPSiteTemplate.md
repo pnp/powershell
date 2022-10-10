@@ -36,6 +36,8 @@ Invoke-PnPSiteTemplate [-TemplateId <String>] [-ResourceFolder <String>]
 
 ## DESCRIPTION
 
+Allows to apply a site template on a web.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

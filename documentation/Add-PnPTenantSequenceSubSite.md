@@ -21,6 +21,8 @@ Add-PnPTenantSequenceSubSite -SubSite <TeamNoGroupSubSite> -Site <SiteCollection
 
 ## DESCRIPTION
 
+Allows to add a tenant sequence sub site object to a tenant sequence site object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

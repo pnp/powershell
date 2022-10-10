@@ -20,6 +20,8 @@ Read-PnPTenantTemplate [-Path] <String>
 
 ## DESCRIPTION
 
+Allows to load a PnP tenant template from the file system to memory and return its instance object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

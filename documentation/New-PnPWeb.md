@@ -22,6 +22,8 @@ New-PnPWeb -Title <String> -Url <String> [-Description <String>] [-Locale <Int32
 
 ## DESCRIPTION
 
+Allows to create new subweb under the current web.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

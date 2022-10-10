@@ -20,6 +20,8 @@ Add-PnPVivaConnectionsDashboardACE [-Identity <DefaultACE>] [-Title <string>] [-
 
 ## DESCRIPTION
 
+Allows to add a new an Adaptive card extension in the Viva Home dashboard page. Before running the command it is required you are connect to a SharePoint Home site and have configured the Viva connections page. 
+
 ## EXAMPLES
 
 ### EXAMPLE 1

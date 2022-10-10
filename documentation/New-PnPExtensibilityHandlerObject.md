@@ -21,6 +21,8 @@ New-PnPExtensibilityHandlerObject [-Assembly] <String> -Type <String> [-Configur
 
 ## DESCRIPTION
 
+Allows to create an ExtensibilityHandler.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

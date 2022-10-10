@@ -26,6 +26,8 @@ Remove-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> -Users <S
 
 ## DESCRIPTION
 
+Allows to remove owners from a specified Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

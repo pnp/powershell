@@ -21,6 +21,8 @@ Set-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <Guid> -Key <St
 
 ## DESCRIPTION
 
+Allows to modify web part property.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

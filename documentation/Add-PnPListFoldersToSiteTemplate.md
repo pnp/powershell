@@ -22,6 +22,8 @@ Add-PnPListFoldersToSiteTemplate [-Path] <String> [-List] <ListPipeBind> [-Recur
 
 ## DESCRIPTION
 
+Allows to add folders to a list in a PnP Provisioning Template.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Remove-PnPPage [-Identity] <PagePipeBind> [-Force] [-Recycle]
 
 ## DESCRIPTION
 
+Allows to remove a page.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -28,6 +28,8 @@ Get-PnPSiteSearchQueryResults [[-Query] <String>] [-All] [-Connection <PnPConnec
 
 ## DESCRIPTION
 
+Allows to run a search query to retrieve indexed site collections.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

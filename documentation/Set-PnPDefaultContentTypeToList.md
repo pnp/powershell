@@ -21,6 +21,8 @@ Set-PnPDefaultContentTypeToList -List <ListPipeBind> -ContentType <ContentTypePi
 
 ## DESCRIPTION
 
+Allows to modify the default content type for a list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

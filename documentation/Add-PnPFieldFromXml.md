@@ -21,6 +21,8 @@ Add-PnPFieldFromXml [-List <ListPipeBind>] [-FieldXml] <String>
 
 ## DESCRIPTION
 
+Allows to add new field by specifying its definition in CAML/XML format to list or site columns.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

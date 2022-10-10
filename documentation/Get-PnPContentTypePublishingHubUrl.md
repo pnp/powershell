@@ -20,6 +20,8 @@ Get-PnPContentTypePublishingHubUrl [-Connection <PnPConnection>] [<CommonParamet
 
 ## DESCRIPTION
 
+Allows to retrieve the url of the Content Type Publishing Hub.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

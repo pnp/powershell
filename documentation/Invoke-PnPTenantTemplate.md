@@ -41,6 +41,8 @@ Invoke-PnPTenantTemplate [-Template] <ProvisioningHierarchy> [-SequenceId <Strin
 
 ## DESCRIPTION
 
+Allows to apply a tenant template on current tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

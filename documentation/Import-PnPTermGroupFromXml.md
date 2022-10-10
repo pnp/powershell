@@ -28,6 +28,8 @@ Import-PnPTermGroupFromXml [-Path <String>] [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
+Allows to import taxonomy term group from xml.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

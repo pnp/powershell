@@ -25,6 +25,8 @@ Set-PnPMessageCenterAnnouncementAsArchived [-Identity <Ids>] [<CommonParameters>
 
 ## DESCRIPTION
 
+Allows to mark message center announcements as archived.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

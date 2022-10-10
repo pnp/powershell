@@ -25,6 +25,8 @@ Get-PnPDeletedMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [<Common
 
 ## DESCRIPTION
 
+Allows to get list of deleted Microsoft 365 Groups. Use the `Identity` option to specify the exact group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

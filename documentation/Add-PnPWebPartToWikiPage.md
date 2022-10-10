@@ -28,6 +28,8 @@ Add-PnPWebPartToWikiPage -ServerRelativePageUrl <String> -Path <String> -Row <In
 
 ## DESCRIPTION
 
+Allows to add a web part a wiki page. Use the `Row` and `Column` option to specify the location of the web part.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

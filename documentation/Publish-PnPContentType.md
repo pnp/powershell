@@ -25,6 +25,8 @@ Publish-PnPContentType -ContentType <ContentTypePipeBind> [-Connection <PnPConne
 
 ## DESCRIPTION
 
+Allows to publish a content type present on content type hub site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

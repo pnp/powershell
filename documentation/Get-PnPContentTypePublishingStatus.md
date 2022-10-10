@@ -25,6 +25,8 @@ Get-PnPContentTypePublishingStatus -ContentType <ContentTypePipeBind> [-Connecti
 
 ## DESCRIPTION
 
+Allows to retrieve the publishing status of a content type present on content type hub site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

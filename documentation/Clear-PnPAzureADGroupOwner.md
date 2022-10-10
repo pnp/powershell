@@ -25,6 +25,8 @@ Clear-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to remove all current owners from specified Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
