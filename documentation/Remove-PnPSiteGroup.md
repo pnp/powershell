@@ -22,6 +22,8 @@ Remove-PnPSiteGroup -Identity <String> [-Site <SitePipeBind>]
 
 ## DESCRIPTION
 
+Allows to remove a group from specified site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Get-PnPPropertyBag [[-Key] <String>] [-Folder <String>] [-Connection <PnPConnect
 
 ## DESCRIPTION
 
+Allows to retrieve all property bag values. It is possible to get property bag values for a folder using `Folder` option or a specific property bag value using `Key` option.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

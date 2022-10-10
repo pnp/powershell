@@ -26,6 +26,8 @@ Get-PnPTenantId [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve id of tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

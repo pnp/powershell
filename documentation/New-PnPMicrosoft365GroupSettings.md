@@ -25,6 +25,8 @@ New-PnPMicrosoft365GroupSettings -Identity <Microsoft365GroupPipeBind> -DisplayN
 
 ## DESCRIPTION
 
+Allows to create a new Microsoft 365 Group setting for a specific group or the tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

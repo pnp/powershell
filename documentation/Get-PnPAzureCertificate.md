@@ -28,6 +28,8 @@ Get-PnPAzureCertificate -Path <String> [-Password <SecureString>] [<CommonParame
 
 ## DESCRIPTION
 
+Allows to PEM values and manifest settings for an existing certificate (.pfx) for use when using CSOM via an app-only ADAL application.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Get-PnPStorageEntity [-Key <String>] [-Scope <StorageEntityScope>] [-Connection 
 
 ## DESCRIPTION
 
+Allows to retrieve storage entities from either tenant app catalog or current site app catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

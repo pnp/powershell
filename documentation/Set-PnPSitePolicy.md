@@ -20,6 +20,8 @@ Set-PnPSitePolicy -Name <String> [-Connection <PnPConnection>] [<CommonParameter
 
 ## DESCRIPTION
 
+Allows to modify a site policy.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

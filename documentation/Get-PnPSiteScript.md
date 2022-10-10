@@ -26,6 +26,8 @@ Get-PnPSiteScript [[-Identity] <TenantSiteScriptPipeBind>] [[-SiteDesign] <Tenan
 
 ## DESCRIPTION
 
+Allows to retrieve site scripts registered on the current tenant. By using `Identity` option it is possible to retrieve specified site script
+
 ## EXAMPLES
 
 ### EXAMPLE 1

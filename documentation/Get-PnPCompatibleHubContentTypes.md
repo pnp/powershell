@@ -25,6 +25,8 @@ Returns the list of content types present in content type hub site that can be a
 
 ## DESCRIPTION
 
+Allows to retrieve list of content types present in content type hub site that are possible to be added to the current site or given list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

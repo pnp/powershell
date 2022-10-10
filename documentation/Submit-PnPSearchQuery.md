@@ -39,6 +39,8 @@ Submit-PnPSearchQuery [-Query] <String> [-All] [-TrimDuplicates <Boolean>] [-Pro
 
 ## DESCRIPTION
 
+Allows to run an arbitrary search query against the SharePoint search index.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

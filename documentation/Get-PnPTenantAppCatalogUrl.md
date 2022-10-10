@@ -20,6 +20,8 @@ Get-PnPTenantAppCatalogUrl [-Connection <PnPConnection>]   [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve the url of the tenant scoped app catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

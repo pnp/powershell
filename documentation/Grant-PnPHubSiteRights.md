@@ -26,6 +26,8 @@ Grant-PnPHubSiteRights [-Identity] <HubSitePipeBind> -Principals <String[]> [-Co
 
 ## DESCRIPTION
 
+Allows to add additional permissions to existing once to associate sites to Hub Sites for specified users.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

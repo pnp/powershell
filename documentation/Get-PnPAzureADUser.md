@@ -36,6 +36,8 @@ Get-PnPAzureADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [
 
 ## DESCRIPTION
 
+Allows to retrieve single or list of users from Azure Active Directory.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

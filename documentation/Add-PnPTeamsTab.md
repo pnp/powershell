@@ -26,6 +26,8 @@ Add-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Displ
 
 ## DESCRIPTION
 
+Allows to add a tab to an existing Channel. By using `ContentUrl` option you may specify the content of the tab.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Remove-PnPAlert [-User <UserPipeBind>] -Identity <AlertPipeBind> [-Force]
 
 ## DESCRIPTION
 
+Allows to remove an alert for a user.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

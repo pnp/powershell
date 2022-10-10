@@ -25,6 +25,8 @@ Remove-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind>  [<CommonParam
 
 ## DESCRIPTION
 
+Allows to remove Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

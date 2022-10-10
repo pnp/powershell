@@ -21,6 +21,8 @@ New-PnPTenantTemplate [-Author <String>] [-Description <String>] [-DisplayName <
 
 ## DESCRIPTION
 
+Allows to create a new tenant template object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

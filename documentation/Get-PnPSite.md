@@ -20,6 +20,8 @@ Get-PnPSite [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParamet
 
 ## DESCRIPTION
 
+Allows to retrieve current site collection from the context.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

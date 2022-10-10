@@ -25,6 +25,8 @@ Get-PnPMicrosoft365GroupSettings [-Identity <Microsoft365GroupPipeBind>] [<Commo
 
 ## DESCRIPTION
 
+Allows to retrieve tenant wide settings of Microsoft 365 Groups or by using `Identity` option you may specify the exact Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

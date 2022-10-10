@@ -26,6 +26,8 @@ Get-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeB
 
 ## DESCRIPTION
 
+Allows to retrieve messages from the specified channel.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

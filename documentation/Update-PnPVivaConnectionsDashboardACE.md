@@ -28,6 +28,8 @@ Update-PnPVivaConnectionsDashboardACE -Identity <GUID> [-Title <string>] [-Prope
 
 ## DESCRIPTION
 
+Allows to update the Adaptive card extension in the Viva connections dashboard page.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

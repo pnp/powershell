@@ -26,6 +26,8 @@ Get-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind
 
 ## DESCRIPTION
 
+Allows to retrieve list of members of the specified private channel.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

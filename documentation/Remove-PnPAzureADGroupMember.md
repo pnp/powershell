@@ -25,6 +25,8 @@ Remove-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> 
 
 ## DESCRIPTION
 
+Allows to remove members from Azure Active Directory group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

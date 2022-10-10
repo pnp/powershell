@@ -22,6 +22,8 @@ Get-PnPSearchCrawlLog [-LogLevel <LogLevel>] [-RowLimit <Int32>] [-Filter <Strin
 
 ## DESCRIPTION
 
+Allows to retrieve entries from the SharePoint search crawl log. To be able to use this command you need to grant access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

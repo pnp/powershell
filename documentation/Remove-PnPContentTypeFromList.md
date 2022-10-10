@@ -21,6 +21,8 @@ Remove-PnPContentTypeFromList -List <ListPipeBind> -ContentType <ContentTypePipe
 
 ## DESCRIPTION
 
+Allows to remove content type from list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

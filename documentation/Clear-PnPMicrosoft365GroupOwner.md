@@ -25,6 +25,8 @@ Clear-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> [<CommonPa
 
 ## DESCRIPTION
 
+Allows to remove all current owners from a specified Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

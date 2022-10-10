@@ -21,6 +21,8 @@ Add-PnPTenantSequenceSite -Site <ProvisioningSitePipeBind> -Sequence <Provisioni
 
 ## DESCRIPTION
 
+Allows to add a existing tenant sequence site object to a tenant template.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

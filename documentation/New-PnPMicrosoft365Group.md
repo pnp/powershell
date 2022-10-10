@@ -27,6 +27,8 @@ New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickna
 
 ## DESCRIPTION
 
+Allows to create a new Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

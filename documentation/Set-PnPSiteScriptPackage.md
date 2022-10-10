@@ -26,6 +26,8 @@ Set-PnPSiteScriptPackage -Identity <TenantSiteScriptPipeBind> [-Title <String>] 
 
 ## DESCRIPTION
 
+Allows to update an existing Site Script Package on the current tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

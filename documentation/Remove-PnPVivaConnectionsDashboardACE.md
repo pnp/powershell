@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPVivaConnectio
 # Remove-PnPVivaConnectionsDashboardACE
 
 ## SYNOPSIS
-Removes the Adaptive card extensions from the Viva connections dashboard page.  This requires that you connect to a SharePoint Home site and have configured the Viva connections page.
+Removes the Adaptive card extensions from the Viva connections dashboard page. This requires that you connect to a SharePoint Home site and have configured the Viva connections page.
 
 ## SYNTAX
 
@@ -19,6 +19,8 @@ Remove-PnPVivaConnectionsDashboardACE [-Identity <GUID>] [-Connection <PnPConnec
 ```
 
 ## DESCRIPTION
+
+Allows to remove Adaptive card extensions from the Viva connections dashboard page.
 
 ## EXAMPLES
 

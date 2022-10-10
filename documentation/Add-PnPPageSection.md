@@ -22,6 +22,8 @@ Add-PnPPageSection [-Page] <PagePipeBind> -SectionTemplate <CanvasSectionTemplat
 
 ## DESCRIPTION
 
+Allows to add a new section to a page.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

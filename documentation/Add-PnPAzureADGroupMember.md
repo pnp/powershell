@@ -25,6 +25,8 @@ Add-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> [-R
 
 ## DESCRIPTION
 
+Allows to add users to Azure Active Directory Group. This can be a security, distribution or Microsoft 365 group. By specifying `-RemoveExisting` option it is possible to first clear the group of all existing members.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -26,6 +26,8 @@ Get-PnPTeamsChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPipeBind>]
 
 ## DESCRIPTION
 
+Allows to retrieve list of channels for a specified team.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

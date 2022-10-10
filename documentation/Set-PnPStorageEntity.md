@@ -21,6 +21,8 @@ Set-PnPStorageEntity -Key <String> -Value <String> [-Comment <String>] [-Descrip
 
 ## DESCRIPTION
 
+Allows to set Storage Entities / Farm Properties in either the tenant scoped app catalog or the site collection app catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
