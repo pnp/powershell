@@ -22,6 +22,8 @@ Export-PnPListToSiteTemplate -List <System.Collections.Generic.List`1[System.Str
 
 ## DESCRIPTION
 
+Allows to export one or more lists to provisioning template.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

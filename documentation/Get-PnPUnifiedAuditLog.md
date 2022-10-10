@@ -26,6 +26,8 @@ Get-PnPUnifiedAuditLog [-ContentType <AuditContentType>] [-StartTime <DateTime>]
 
 ## DESCRIPTION
 
+Allows to retrieve unified audit logs from the Office 365 Management API.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

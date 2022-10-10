@@ -21,6 +21,8 @@ Get-PnPContentType [[-Identity] <ContentTypePipeBind>] [-List <ListPipeBind>] [-
 
 ## DESCRIPTION
 
+Allows to get single or list of content types from site or list. Use the `Identity` option to specify the exact content type.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

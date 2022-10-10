@@ -20,6 +20,8 @@ Set-PnPFileCheckedOut [-Url] <String> [-Connection <PnPConnection>] [<CommonPara
 
 ## DESCRIPTION
 
+Allows to check out a file.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

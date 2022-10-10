@@ -22,6 +22,8 @@ Export-PnPPage [-Identity] <PagePipeBind> [-PersistBrandingFiles] [-Out <String>
 
 ## DESCRIPTION
 
+Allows to export a Client Side Page to a PnP Provisioning Template.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

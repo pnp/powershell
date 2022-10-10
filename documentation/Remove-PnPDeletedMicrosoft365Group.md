@@ -26,6 +26,8 @@ Remove-PnPDeletedMicrosoft365Group -Identity <Microsoft365GroupPipeBind>
 
 ## DESCRIPTION
 
+Allows to permanently remove a deleted Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

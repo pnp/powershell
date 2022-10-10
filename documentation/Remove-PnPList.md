@@ -21,6 +21,8 @@ Remove-PnPList [-Identity] <ListPipeBind> [-Recycle] [-Force]
 
 ## DESCRIPTION
 
+Allows to remove a list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

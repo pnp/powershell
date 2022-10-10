@@ -34,6 +34,8 @@ Get-PnPTenantTemplate [-SiteUrl <String>] [-AsInstance] [-Configuration <Extract
 
 ## DESCRIPTION
 
+Allows to generate a provisioning tenant template from a site. If the site is a hubsite any connected site will be included.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -26,6 +26,8 @@ Revoke-PnPHubSiteRights [-Identity] <HubSitePipeBind> -Principals <String[]> [-C
 
 ## DESCRIPTION
 
+Allows to revoke permissions from existing once to associate sites to Hub Sites for specified users.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

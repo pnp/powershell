@@ -25,6 +25,8 @@ Remove-PnPAvailableSiteClassification -Classifications <System.Collections.Gener
 
 ## DESCRIPTION
 
+Allows to remove existing classic site classification values.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

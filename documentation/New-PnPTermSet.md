@@ -24,6 +24,8 @@ New-PnPTermSet -Name <String> [-Id <Guid>] [-Lcid <Int32>] -TermGroup <TermGroup
 
 ## DESCRIPTION
 
+Allows to create a taxonomy term set.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

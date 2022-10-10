@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPSiteTemplate.htm
 # New-PnPSiteTemplate
 
 ## SYNOPSIS
-Creates a new provisioning template object
+Creates a new provisioning site template object
 
 ## SYNTAX
 
@@ -19,6 +19,8 @@ New-PnPSiteTemplate [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
+Allows to create a new provisioning site template.
 
 ## EXAMPLES
 

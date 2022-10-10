@@ -21,6 +21,8 @@ Test-PnPTenantTemplate -Template <ProvisioningHierarchy> [-Connection <PnPConnec
 
 ## DESCRIPTION
 
+Allows to check if the tenant template has invalid references.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

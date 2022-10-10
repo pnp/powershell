@@ -21,6 +21,8 @@ Get-PnPAlert [[-List] <ListPipeBind>] [-User <UserPipeBind>] [-Title <String>] [
 
 ## DESCRIPTION
 
+Allows to retrieve all registered alerts for given users. Using `AllUsers` option will allow to retrieve all alerts in the current site, regardless of the user or list it belongs to.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

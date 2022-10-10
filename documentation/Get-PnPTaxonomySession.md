@@ -20,6 +20,8 @@ Get-PnPTaxonomySession [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve taxonomy session.
+
 ## EXAMPLES
 
 ## PARAMETERS

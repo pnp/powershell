@@ -25,6 +25,8 @@ Clear-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> [<CommonP
 
 ## DESCRIPTION
 
+Allows to remove all current members from a specified Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -25,6 +25,8 @@ New-PnPTeamsApp -Path <String>  [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to add an app to the Teams App Catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -25,6 +25,8 @@ Add-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> -Users <Stri
 
 ## DESCRIPTION
 
+Allows to add multiple users to Microsoft 365 Group as owners.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -20,6 +20,8 @@ Get-PnPAuditing [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to get the auditing setting of the site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

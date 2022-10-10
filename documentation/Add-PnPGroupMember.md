@@ -28,6 +28,8 @@ Add-PnPGroupMember -Group <GroupPipeBind> -EmailAddress <String> [-SendEmail] [-
 
 ## DESCRIPTION
 
+Allows to add new user to SharePoint group. The SharePoint group may be specified either by id, name or related object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

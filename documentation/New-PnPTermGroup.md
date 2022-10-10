@@ -22,6 +22,8 @@ New-PnPTermGroup -Name <String> [-Id <Guid>] [-Description <String>]
 
 ## DESCRIPTION
 
+Allows to create a taxonomy term group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

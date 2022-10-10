@@ -21,6 +21,8 @@ Remove-PnPFieldFromContentType -Field <FieldPipeBind> -ContentType <ContentTypeP
 
 ## DESCRIPTION
 
+Allows to remove a field from a content type.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
