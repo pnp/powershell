@@ -22,6 +22,8 @@ Add-PnPPublishingPageLayout -SourceFilePath <String> -Title <String> -Descriptio
 
 ## DESCRIPTION
 
+Allows to add a publishing page layout and associate it to a content type.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

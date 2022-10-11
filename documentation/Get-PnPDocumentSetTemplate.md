@@ -21,6 +21,8 @@ Get-PnPDocumentSetTemplate [-Identity] <DocumentSetPipeBind> [-Connection <PnPCo
 
 ## DESCRIPTION
 
+Allows to retrieve a document set template.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

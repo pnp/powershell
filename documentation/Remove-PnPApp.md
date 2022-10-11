@@ -21,6 +21,8 @@ Remove-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Con
 
 ## DESCRIPTION
 
+Allows to remove an app from the app catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

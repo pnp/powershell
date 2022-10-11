@@ -21,6 +21,8 @@ Remove-PnPWebhookSubscription [-Identity] <WebhookSubscriptionPipeBind> [-List <
 
 ## DESCRIPTION
 
+Allows to remove Webhook subscription from list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

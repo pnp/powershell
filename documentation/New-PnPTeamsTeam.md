@@ -51,6 +51,8 @@ New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <S
 
 ## DESCRIPTION
 
+Allows to create new team in Microsoft Teams or to teamify an existing Microsoft 365 Group. If the Microsoft 365 Group does not exist yet, it will create it first and then add a Microsoft Teams team to the group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

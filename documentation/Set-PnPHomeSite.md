@@ -25,6 +25,8 @@ Set-PnPHomeSite -HomeSiteUrl <String> [-Connection <PnPConnection>] [<CommonPara
 
 ## DESCRIPTION
 
+Allows to set the home site of the current tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

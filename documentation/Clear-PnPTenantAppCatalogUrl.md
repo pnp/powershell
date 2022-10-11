@@ -25,6 +25,8 @@ Clear-PnPTenantAppCatalogUrl [-Connection <PnPConnection>]   [<CommonParameters>
 
 ## DESCRIPTION
 
+Allows to remove the url of the tenant scoped app catalog. The app catalog site collection will not be removed.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

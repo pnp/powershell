@@ -25,6 +25,8 @@ Get-PnPMicrosoft365GroupSettingTemplates [-Identity <string>] [<CommonParameters
 
 ## DESCRIPTION
 
+Allows to retrieve available system wide template of settings for Microsoft 365 Groups.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

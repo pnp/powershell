@@ -25,6 +25,8 @@ Disable-PnPSiteClassification [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to disable site classifications for the tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

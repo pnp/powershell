@@ -21,6 +21,8 @@ Add-PnPListItemComment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-T
 
 ## DESCRIPTION
 
+Allows to add comment to the specified list item.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

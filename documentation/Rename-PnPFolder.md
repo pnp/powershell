@@ -21,6 +21,8 @@ Rename-PnPFolder -Folder <FolderPipeBind> -TargetFolderName <String> [-Connectio
 
 ## DESCRIPTION
 
+Allows to rename a folder.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Add-PnPWebhookSubscription [-List <ListPipeBind>] -NotificationUrl <String> [-Ex
 
 ## DESCRIPTION
 
+Allows to addd a new Webhook subscription to a list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

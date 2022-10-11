@@ -34,6 +34,8 @@ Remove-PnPNavigationNode [-All] [-Force] [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
+Allows to remove menu item from either the quicklaunch or top navigation.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

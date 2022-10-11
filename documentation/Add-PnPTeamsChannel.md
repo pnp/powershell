@@ -36,6 +36,8 @@ Add-PnPTeamsChannel -Team <TeamsTeamPipeBind> -DisplayName <String> -ChannelType
 
 ## DESCRIPTION
 
+Allows to add channel to an existing team in Microsoft Teams. By using the `IsFavoriteByDefault` it is possible to specify if the channel will be visible for members by default.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

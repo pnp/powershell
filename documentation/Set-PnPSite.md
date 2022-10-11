@@ -35,6 +35,8 @@ Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connecti
 
 ## DESCRIPTION
 
+Allows to modify a site properties.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

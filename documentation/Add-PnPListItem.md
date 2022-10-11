@@ -35,6 +35,8 @@ Add-PnPListItem [-List] <ListPipeBind> -Batch <PnPBatch> [-ContentType <ContentT
 
 ## DESCRIPTION
 
+Allows to add an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

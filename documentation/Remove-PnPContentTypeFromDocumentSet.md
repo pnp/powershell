@@ -21,6 +21,8 @@ Remove-PnPContentTypeFromDocumentSet -ContentType <ContentTypePipeBind> -Documen
 
 ## DESCRIPTION
 
+Allows to remove content type from document set.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

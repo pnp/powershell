@@ -24,6 +24,9 @@ Remove-PnPHubSiteAssociation -Site <SitePipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
+
+Allows to remove a hub site association from a site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

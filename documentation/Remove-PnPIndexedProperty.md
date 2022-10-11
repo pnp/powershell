@@ -21,6 +21,8 @@ Remove-PnPIndexedProperty [-Key] <String> [-List <ListPipeBind>]
 
 ## DESCRIPTION
 
+Allows to remove indexed property from the current web.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

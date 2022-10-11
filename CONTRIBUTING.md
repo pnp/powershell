@@ -24,7 +24,7 @@ To debug the cmdlets: launch PowerShell and attach Visual Studio to the powershe
 Before starting on any new submissions, please ensure your fork is up to date with the upstream repository. This avoids frustration and challenges for us to validate and test your submission. Steps on how to easily keep your fork up to date can be found [on this wiki page](https://github.com/pnp/PnP-PowerShell/wiki/Update-your-fork-with-the-latest-code).
 
 ## Code contributions
-In order to successfully compile the PnP PowerShell solution you will _also_ have to download *and build in Visual Studio* the [PnP-Framework](https://github.com/pnpframework) repository and make the dev branch available. **The PowerShell solution depends on it**. In order to successfully 
+In order to successfully compile the PnP PowerShell solution you will _also_ have to download *and build in Visual Studio* the [PnP-Framework](https://github.com/pnp/pnpframework) repository and make the dev branch available. **The PowerShell solution depends on it**. In order to successfully 
 compile it, make sure that PnP-Sites-Core is located at the same level as PnP-PowerShell and you open the solution file `pnpframework.sln` located in the Core subfolder of the sourcecode.
 
 So:

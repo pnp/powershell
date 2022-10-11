@@ -20,6 +20,8 @@ New-PnPTenantSequence [-Id <String>]   [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to create a new tenant sequence object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

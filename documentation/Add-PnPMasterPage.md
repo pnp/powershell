@@ -22,6 +22,8 @@ Add-PnPMasterPage -SourceFilePath <String> -Title <String> -Description <String>
 
 ## DESCRIPTION
 
+Allows to add Masterpage.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

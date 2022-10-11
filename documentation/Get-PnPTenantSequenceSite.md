@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantSequenceSi
 # Get-PnPTenantSequenceSite
 
 ## SYNOPSIS
-Returns one ore more sites from a tenant template
+Returns one or more sites from a tenant template
 
 ## SYNTAX
 
@@ -20,6 +20,8 @@ Get-PnPTenantSequenceSite -Sequence <ProvisioningSequence> [-Identity <Provision
 ```
 
 ## DESCRIPTION
+
+Allows to retrieve list of sites from tenant template sequence.
 
 ## EXAMPLES
 

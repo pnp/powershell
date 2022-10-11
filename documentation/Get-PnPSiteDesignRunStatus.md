@@ -26,6 +26,8 @@ Get-PnPSiteDesignRunStatus -Run <TenantSiteDesignRun> [-Connection <PnPConnectio
 
 ## DESCRIPTION
 
+Allows to retrieve a list of all site script actions executed for a specified site design applied to a site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -25,6 +25,8 @@ Remove-PnPHomeSite [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to remove a site which currently is set as home site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

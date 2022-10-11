@@ -25,6 +25,8 @@ Unpublish-PnPContentType -ContentType <ContentTypePipeBind> [-Connection <PnPCon
 
 ## DESCRIPTION
 
+Allows to unpublish a content type present on content type hub site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

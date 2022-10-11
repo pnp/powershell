@@ -20,6 +20,7 @@ Add-PnPDocumentSet -List <ListPipeBind> -Name <String> -ContentType <ContentType
 ```
 
 ## DESCRIPTION
+Allows to add new document set to library.
 
 ## EXAMPLES
 
