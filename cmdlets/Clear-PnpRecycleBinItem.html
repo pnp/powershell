@@ -95,6 +95,7 @@
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Allows to permanently delete items from recycle bin. By default the command will delete all items but it is allow to specify the items by using the <code>Identity</code> or <code>RowLimit</code> options.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem | Where-Object LeafName -like &quot;*.docx&quot; | Clear-PnpRecycleBinItem

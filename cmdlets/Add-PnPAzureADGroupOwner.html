@@ -93,6 +93,7 @@
 <pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &lt;AzureADGroupPipeBind&gt; -Users &lt;String[]&gt; [-RemoveExisting] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Allows to add users to owners of an Azure Active Directory Group. This can be a security, distribution or Microsoft 365 group. By specifying <code>-RemoveExisting</code> option it is possible to first clear the group of all existing members.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;

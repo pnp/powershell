@@ -100,6 +100,7 @@
 <pre><code class="lang-powershell">Add-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -DisplayName &lt;String&gt; -ChannelType Shared -OwnerUPN &lt;String&gt; [-Description &lt;String&gt;] [-IsFavoriteByDefault &lt;Boolean&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Allows to add channel to an existing team in Microsoft Teams. By using the <code>IsFavoriteByDefault</code> it is possible to specify if the channel will be visible for members by default.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName &quot;My Channel&quot; -IsFavoriteByDefault $true

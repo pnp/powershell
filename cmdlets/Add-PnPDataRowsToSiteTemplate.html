@@ -91,6 +91,7 @@
  [-TokenizeUrls] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Allows to add datarows to list inside a PnP Provisioning Template. The command allows to specify the fields which should be retrieved using <code>-Fields</code> option and filter the datarows to be used by using <code>-Query</code> option.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPDataRowsToSiteTemplate -Path template.pnp -List 'PnPTestList' -Fields 'Title','Choice'

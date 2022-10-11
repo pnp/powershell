@@ -93,6 +93,7 @@
 <pre><code class="lang-powershell">Add-PnPContentTypesFromContentTypeHub -ContentTypes List&lt;String&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Allows to add content types from content type hub site to current site. In case the same content type is already present on the current site then the latest published version will be used.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell"> Add-PnPContentTypesFromContentTypeHub -ContentTypes &quot;0x0101&quot;, &quot;0x01&quot;

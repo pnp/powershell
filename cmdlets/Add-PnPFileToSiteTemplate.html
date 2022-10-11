@@ -85,8 +85,6 @@
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a file to a PnP Provisioning Template package</p>
-<h2 id="description">Description</h2>
-<p>Allows adding a file to a PnP Provisioning Template package (.pnp) so that the file will get uploaded to the SharePoint Online site to which the template is being invoked. This allows the file to be referenced in i.e. a document template, site logo or any other component that references a file.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="local-file">Local File</h3>
 <pre><code class="lang-powershell">Add-PnPFileToSiteTemplate [-Path] &lt;String&gt; [-Source] &lt;String&gt; [-Folder] &lt;String&gt;
@@ -99,7 +97,8 @@
  [[-FileLevel] &lt;FileLevel&gt;] [-FileOverwrite] [[-TemplateProviderExtensions] &lt;ITemplateProviderExtension[]&gt;]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
-<h2 id="description-1">DESCRIPTION</h2>
+<h2 id="description">DESCRIPTION</h2>
+<p>Allows adding a file to a PnP Provisioning Template package (.pnp) so that the file will get uploaded to the SharePoint Online site to which the template is being invoked. This allows the file to be referenced in i.e. a document template, site logo or any other component that references a file.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPFileToSiteTemplate -Path template.pnp -Source &quot;Instructions.docx&quot; -Folder &quot;Shared Documents&quot;

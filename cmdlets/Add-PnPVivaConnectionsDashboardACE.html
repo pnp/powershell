@@ -89,6 +89,7 @@
 <pre><code class="lang-powershell">Add-PnPVivaConnectionsDashboardACE [-Identity &lt;DefaultACE&gt;] [-Title &lt;string&gt;] [-PropertiesJSON &lt;string&gt;] [-Description &lt;string&gt;] [-IconProperty &lt;string&gt;] [-Order &lt;Int&gt;][-CardSize &lt;CardSize&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Allows to add a new an Adaptive card extension in the Viva Home dashboard page. Before running the command it is required you are connect to a SharePoint Home site and have configured the Viva connections page.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPVivaConnectionsDashboardACE -Identity CardDesigner -Order 3 -Title &quot;Hello there&quot; -PropertiesJSON $myProperties -CardSize Large -Description &quot;ACE description&quot; -Iconproperty &quot;https://cdn.hubblecontent.osi.office.net/m365content/publish/002f8bf9-b8ee-4689-ae97-e411b756099d/691108002.jpg&quot;
