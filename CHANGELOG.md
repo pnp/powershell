@@ -77,9 +77,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Set-PnPTeamsChannel -IsFavoriteByDefault` throwing a `Nullable object must have a value` under certain circumstances [#2425](https://github.com/pnp/powershell/pull/2425]
 - Fixed `Register-PnPManagementShellAccess` for non-commercial cloud environment. Users must enter the tenant name if the environment is a non-commercial cloud environment. [#2437](https://github.com/pnp/powershell/pull/2437)
 - Fixed issue with writing warning or error messages in Azure automation or screens with small width. [#2438](https://github.com/pnp/powershell/pull/2438)
+- Fixed issue with `Enable-PnPTenantServicePrincipal` not respecting `-Force` parameter. [#2448](https://github.com/pnp/powershell/pull/2448)
 
 ### Contributors
 
+- Yannick Plenevaux [ypcode]
 - Rob Lempens [RobLempens]
 - Marc Studer [Studermarc]
 - Giacomo Pozzoni [jackpoz]
