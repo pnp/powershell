@@ -52,7 +52,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Connect-PnPOnline` with ACS method. Replace the usage of `WebRequest` with `HTTPClient`. [#2352](https://github.com/pnp/powershell/pull/2352)
 - Improved `Remove-PnPFieldFromContentType` cmdlet to ensure proper null check for non-existing fields. It will now throw proper `Field not found` error. [#2407](https://github.com/pnp/powershell/pull/2407)
 - Changed the Microsoft 365 Groups cmdlets to use the `v1.0` endpoint instead of the `beta` [#2426](https://github.com/pnp/powershell/pull/2426)
-- Improved `Add-PnPField`, `Add-PnPFieldFromXml` and `Get-PnPField` cmdlets to provide better support for the new Image column types.
+- Improved `Add-PnPField`, `Add-PnPFieldFromXml` and `Get-PnPField` cmdlets to provide better support for the new Image column types. [#2457](https://github.com/pnp/powershell/pull/2457)
 
 ### Removed
 
