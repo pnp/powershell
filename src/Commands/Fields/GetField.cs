@@ -120,6 +120,11 @@ namespace PnP.PowerShell.Commands.Fields
                                     WriteObject(ClientContext.CastTo<FieldNumber>(field));
                                     break;
                                 }
+                            case FieldType.Thumbnail:
+                                {
+                                    WriteObject(ClientContext.CastTo<FieldThumbnail>(field));
+                                    break;
+                                }
                             case FieldType.Invalid:
                                 {
                                     if (field.TypeAsString.StartsWith("TaxonomyFieldType"))
@@ -292,6 +297,11 @@ namespace PnP.PowerShell.Commands.Fields
                                     break;
                                 }
                                 goto default;
+                            }
+                        case FieldType.Thumbnail:
+                            {
+                                WriteObject(ClientContext.CastTo<FieldThumbnail>(field));
+                                break;
                             }
                         default:
                             {
