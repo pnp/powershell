@@ -938,13 +938,13 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task<IEnumerable<TeamTag>> GetTagsAsync(string accessToken, PnPConnection connection, string groupId)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<TeamTag>(connection, $"beta/teams/{groupId}/tags", accessToken);
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamTag>(connection, $"v1.0/teams/{groupId}/tags", accessToken);
             return collection;
         }
 
         public static async Task<TeamTag> GetTagsWithIdAsync(string accessToken, PnPConnection connection, string groupId, string tagId)
         {
-            var tagInformation = await GraphHelper.GetAsync<TeamTag>(connection, $"beta/teams/{groupId}/tags/{tagId}", accessToken);
+            var tagInformation = await GraphHelper.GetAsync<TeamTag>(connection, $"v1.0/teams/{groupId}/tags/{tagId}", accessToken);
             return tagInformation;
         }
 
