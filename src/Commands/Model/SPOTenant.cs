@@ -43,6 +43,7 @@ namespace PnP.PowerShell.Commands.Model
             this.displayNamesOfFileViewers = tenant.DisplayNamesOfFileViewers;
             this.displayNamesOfFileViewersInSpo = tenant.DisplayNamesOfFileViewersInSpo;
             this.isLoopEnabled = tenant.IsLoopEnabled;
+
             try
             {
                 this.enableGuestSignInAcceleration = tenant.EnableGuestSignInAcceleration;
@@ -388,6 +389,7 @@ namespace PnP.PowerShell.Commands.Model
             }
 
             this.disabledModernListTemplateIds = tenant.DisabledModernListTemplateIds;
+            this.restrictedAccessControl = tenant.EnableRestrictedAccessControl;
 
             try
             {
@@ -553,12 +555,13 @@ namespace PnP.PowerShell.Commands.Model
         public bool ExternalUserExpirationRequired => externalUserExpirationRequired;
 
         public int ExternalUserExpireInDays => externalUserExpireInDays;
-        
+
         public bool DisplayNamesOfFileViewers => displayNamesOfFileViewers;
-        
+
         public bool DisplayNamesOfFileViewersInSpo => displayNamesOfFileViewersInSpo;
         public bool IsLoopEnabled => isLoopEnabled;
         public Guid[] DisabledModernListTemplateIds => disabledModernListTemplateIds;
+        public bool RestrictedAccessControl => restrictedAccessControl;
 
         private bool hideDefaultThemes;
 
@@ -721,6 +724,8 @@ namespace PnP.PowerShell.Commands.Model
         private bool displayNamesOfFileViewersInSpo;
 
         private bool isLoopEnabled;
+
+        private bool restrictedAccessControl;
 
     }
 }

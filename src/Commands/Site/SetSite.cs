@@ -106,6 +106,9 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string ScriptSafeDomainName;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? RestrictedAccessControl;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 
@@ -322,18 +325,22 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.MediaTranscription = MediaTranscription.Value;
                     executeQueryRequired = true;
                 }
-                
+
                 if (RequestFilesLinkEnabled.HasValue)
                 {
                     siteProperties.RequestFilesLinkEnabled = RequestFilesLinkEnabled.Value;
                     executeQueryRequired = true;
-                }                
+                }
+                if (ParameterSpecified(nameof(RestrictedAccessControl)) && RestrictedAccessControl.HasValue)
+                {
+                    siteProperties.RestrictedAccessControl = RestrictedAccessControl.Value;
+                    executeQueryRequired = true;
+                }
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();
                     tenant.Context.ExecuteQueryRetry();
                 }
-
                 if (DisableSharingForNonOwners.IsPresent)
                 {
                     Office365Tenant office365Tenant = new Office365Tenant(context);
@@ -377,6 +384,7 @@ namespace PnP.PowerShell.Commands.Site
                 ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)) ||
                 LocaleId.HasValue ||
                 DisableCompanyWideSharingLinks.HasValue ||
-                MediaTranscription.HasValue;
+                MediaTranscription.HasValue ||
+                RestrictedAccessControl.HasValue;
     }
 }
