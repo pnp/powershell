@@ -203,8 +203,7 @@ See <a href="http://aka.ms/sharepoint/modernization/pages">http://aka.ms/sharepo
 <pre><code>Connect-PnPOnline -ManagedIdentity
 Get-PnPTeamsTeam
 </code></pre>
-<p>Using this way of connecting only works with environments that support managed identies: Azure Functions and the Azure Cloud Shell.
-You cannot access SharePoint artifacts using this connection method: only the cmdlets that use the Microsoft Graph or Azure AD resources behind the scenes will work: Teams cmdlets, Flow cmdlets, Planner cmdlets and the Microsoft 365 Group cmdlets.</p>
+<p>Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on <a href="https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity">this article</a> how it can be used.</p>
 <h3 id="example-13">EXAMPLE 13</h3>
 <pre><code>Connect-PnPOnline -Url contoso.sharepoint.com -AccessToken $token
 </code></pre>
@@ -537,10 +536,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-managedidentity">-ManagedIdentity</h3>
-<p>For use with Azure Functions (if configured to use a managed identity) or Azure Cloud Shell only.
-This method will acquire a token using the built-in endpoints in the Azure Cloud Shell and Azure Functions.
-Notice that using this connection method will not allow you to access SharePoint artifacts due to limitations of token acquisition.
-It will however allow you to use the Teams cmdlets, Flow cmdlets, Planner cmdlets and Microsoft 365 Group cmdlets.</p>
+<p>For use with Azure Functions, Azure Automation Runbooks (if configured to use a managed identity) or Azure Cloud Shell only.
+This method will acquire a token using the built-in endpoints in the Azure Cloud Shell, Azure Automation Runbooks and Azure Functions.
+Read up on <a href="https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity">the documentation</a> on how to make use of this option.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Managed Identity
 Aliases:
