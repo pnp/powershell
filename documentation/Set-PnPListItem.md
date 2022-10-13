@@ -231,8 +231,6 @@ Choice: -Values @{"ChoiceField" = "Value 1"}
 
 Number: -Values @{"NumberField" = "10"}
 
-Currency: -Values @{"NumberField" = "10"}
-
 Currency: -Values @{"CurrencyField" = "10"}
 
 Date and Time: -Values @{"DateAndTimeField" = "03/13/2015 14:16"}
