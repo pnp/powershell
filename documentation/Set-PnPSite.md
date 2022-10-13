@@ -486,6 +486,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RestrictedAccessControl
+To enable restricted access control on a group-connected or Teams-connected site
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Wait
 Wait for the operation to complete
 

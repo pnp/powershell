@@ -263,6 +263,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? OneDriveRequestFilesLinkEnabled;
 
         [Parameter(Mandatory = false)]
+        public bool? RestrictedAccessControl;
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
@@ -930,7 +933,7 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if(DisplayNamesOfFileViewers.HasValue)
+            if (DisplayNamesOfFileViewers.HasValue)
             {
                 Tenant.DisplayNamesOfFileViewers = DisplayNamesOfFileViewers.Value;
                 modified = true;
@@ -951,6 +954,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (OneDriveRequestFilesLinkEnabled.HasValue)
             {
                 Tenant.OneDriveRequestFilesLinkEnabled = OneDriveRequestFilesLinkEnabled.Value;
+                modified = true;
+            }
+
+            if (RestrictedAccessControl.HasValue)
+            {
+                Tenant.EnableRestrictedAccessControl = RestrictedAccessControl.Value;
                 modified = true;
             }
 
