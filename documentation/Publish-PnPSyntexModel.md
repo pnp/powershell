@@ -11,9 +11,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Publish-PnPSyntexModel.
 
 ## SYNOPSIS
 
-Publishes a SharePoint Syntex models to a list.
+Publishes a Microsoft Syntex models to a list.
 
-This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.
+This cmdlet only works when you've connected to a Microsoft Syntex Content Center site.
 
 <a href="https://pnp.github.io/powershell/articles/batching.html">
 <img src="https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png" alt="Supports Batching">
@@ -37,7 +37,7 @@ Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -Tar
 
 ## DESCRIPTION
 
-This command publishes a SharePoint Syntex content understanding models to a list.
+This command publishes a Microsoft Syntex content understanding models to a list.
 
 ## EXAMPLES
 
@@ -76,7 +76,7 @@ Accept wildcard characters: False
 
 ### -Model
 
-The name or id of the SharePoint Syntex model.
+The name or id of the Microsoft Syntex model.
 
 ```yaml
 Type: SyntexModelPipeBind
