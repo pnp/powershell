@@ -50,6 +50,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return items;
         }
+
         internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and id eq '{groupId}'", accessToken);
@@ -101,6 +102,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return null;
         }
+
         internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
         {
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (displayName eq '{displayName}' or mailNickName eq '{displayName}')", accessToken);
@@ -123,6 +125,55 @@ namespace PnP.PowerShell.Commands.Utilities
                 return group;
             }
             return null;
+        }
+
+        internal static async Task<IEnumerable<Microsoft365Group>> GetExpiringGroupsAsync(PnPConnection connection, string accessToken, int limit, bool includeSiteUrl, bool includeOwners)
+        {
+            var items = new List<Microsoft365Group>();
+
+            var dateLimit = DateTime.UtcNow;
+            var dateStr = dateLimit.AddDays(limit).ToString("yyyy-MM-ddTHH:mm:ssZ");
+
+            // This query requires ConsistencyLevel header to be set.
+            var additionalHeaders = new Dictionary<string, string>();
+            additionalHeaders.Add("ConsistencyLevel", "eventual");
+
+            // $count=true needs to be here for reasons
+            // see this for some additional details: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties
+            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and expirationDateTime le {dateStr}&$count=true", accessToken, additionalHeaders:additionalHeaders);
+            if (result != null && result.Any())
+            {
+                items.AddRange(result);
+            }
+            if (includeSiteUrl || includeOwners)
+            {
+                var chunks = BatchUtility.Chunk(items.Select(g => g.Id.ToString()), 20);
+                if (includeOwners)
+                {
+                    foreach (var chunk in chunks)
+                    {
+                        var ownerResults = await BatchUtility.GetObjectCollectionBatchedAsync<Microsoft365User>(connection, accessToken, chunk.ToArray(), "/groups/{0}/owners");
+                        foreach (var ownerResult in ownerResults)
+                        {
+                            items.First(i => i.Id.ToString() == ownerResult.Key).Owners = ownerResult.Value;
+                        }
+                    }
+                }
+
+                if (includeSiteUrl)
+                {
+                    foreach (var chunk in chunks)
+                    {
+                        var results = await BatchUtility.GetPropertyBatchedAsync(connection, accessToken, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
+                        //var results = await GetSiteUrlBatchedAsync(connection, accessToken, chunk.ToArray());
+                        foreach (var batchResult in results)
+                        {
+                            items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
+                        }
+                    }
+                }
+            }
+            return items;
         }
 
         internal static async Task<Microsoft365Group> GetDeletedGroupAsync(PnPConnection connection, Guid groupId, string accessToken)
@@ -168,7 +219,6 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static string GetUserGraphUrlForUPN(string upn)
         {
-
             var escapedUpn = upn.Replace("#", "%23");
 
             if (escapedUpn.StartsWith("$")) return $"users('{escapedUpn}')";
