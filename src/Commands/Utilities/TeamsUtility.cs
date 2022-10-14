@@ -24,9 +24,17 @@ namespace PnP.PowerShell.Commands.Utilities
         private const int PageSize = 100;
 
         #region Team
-        public static async Task<List<Group>> GetGroupsWithTeamAsync(PnPConnection connection, string accessToken)
+        public static async Task<List<Group>> GetGroupsWithTeamAsync(PnPConnection connection, string accessToken, string filter = null)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"v1.0/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
+            if (String.IsNullOrEmpty(filter))
+            {
+                filter = "resourceProvisioningOptions/Any(x:x eq 'Team')";
+            }
+            else
+            {
+                filter = $"({filter}) and resourceProvisioningOptions/Any(x:x eq 'Team')";
+            }
+            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"v1.0/groups?$filter={filter}&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
             return collection.ToList();
         }
 
@@ -35,11 +43,11 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.GetAsync<Group>(connection, $"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken);
         }
 
-        public static async Task<List<Team>> GetTeamsAsync(string accessToken, PnPConnection connection)
+        public static async Task<List<Team>> GetTeamsAsync(string accessToken, PnPConnection connection, String filter)
         {
             List<Team> teams = new List<Team>();
 
-            var groups = await GetGroupsWithTeamAsync(connection, accessToken);
+            var groups = await GetGroupsWithTeamAsync(connection, accessToken, filter);
             foreach (var group in groups)
             {
                 Team team = await ParseTeamJsonAsync(accessToken, connection, group.Id);
