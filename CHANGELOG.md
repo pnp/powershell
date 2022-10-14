@@ -39,7 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPAzureADActivityReportSignIn` cmdlet to enable retrieving of Azure AD sign ins. [#2436](https://github.com/pnp/powershell/pull/2436)
 - Added support to remove the site collection app catalog by using Id of the site collection in `Remove-PnPSiteCollectionAppCatalog` cmdlet. [#2452](https://github.com/pnp/powershell/pull/2452)
 - Added support for `RestrictedAccessControl` parameter to `Set-PnPTenant` and `Set-PnPSite` cmdlets to restrict site access to members of a Microsoft 365 group. [#2462](https://github.com/pnp/powershell/pull/2462)
-- Added `Set-PnPImageListItemColumn` cmdlet to support setting of the new image/thumbnail value for a SharePoint list item.
+- Added `Set-PnPImageListItemColumn` cmdlet to support setting of the new image/thumbnail value for a SharePoint list item.[#2468](https://github.com/pnp/powershell/pull/2468)
 
 ### Changed
 
