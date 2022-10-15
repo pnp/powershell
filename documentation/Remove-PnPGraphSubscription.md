@@ -20,6 +20,8 @@ Remove-PnPGraphSubscription -Identity <GraphSubscriptionPipeBind>  [<CommonParam
 
 ## DESCRIPTION
 
+Allows to remove an existing Microsoft Graph subscription.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

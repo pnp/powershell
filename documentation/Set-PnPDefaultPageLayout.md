@@ -28,6 +28,8 @@ Set-PnPDefaultPageLayout [-InheritFromParentSite] [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
+Allows to set the default page layout for a publishing site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

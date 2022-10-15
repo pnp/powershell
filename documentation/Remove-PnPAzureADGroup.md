@@ -25,6 +25,8 @@ Remove-PnPAzureADGroup -Identity <AzureADGroupPipeBind>  [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to remove Azure Active Directory group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -28,6 +28,8 @@ Clear-PnPRecycleBinItem -Identity <RecycleBinItemPipeBind> [-Force] [-Connection
 
 ## DESCRIPTION
 
+Allows to permanently delete items from recycle bin. By default the command will delete all items but it is allow to specify the items by using the `Identity` or `RowLimit` options.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

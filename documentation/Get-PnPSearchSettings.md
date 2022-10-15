@@ -20,6 +20,8 @@ Get-PnPSearchSettings [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve search settings for a site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -26,6 +26,8 @@ Set-PnPTeamsTeamArchivedState -Identity <TeamsTeamPipeBind> -Archived <Boolean>
 
 ## DESCRIPTION
 
+Allows to update the archived state of a team.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

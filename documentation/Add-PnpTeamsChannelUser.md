@@ -25,6 +25,8 @@ Add-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind
 
 ## DESCRIPTION
 
+Allows to add a user to a private channel in Microsoft Teams.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

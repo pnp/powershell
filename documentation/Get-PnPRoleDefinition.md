@@ -20,6 +20,8 @@ Get-PnPRoleDefinition [[-Identity] <RoleDefinitionPipeBind>] [-Connection <PnPCo
 
 ## DESCRIPTION
 
+Allows to retrieve Role Definitions of a site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

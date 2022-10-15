@@ -21,6 +21,8 @@ Install-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Wa
 
 ## DESCRIPTION
 
+Allows to install an available app from the app catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

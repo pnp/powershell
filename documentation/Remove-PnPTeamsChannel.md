@@ -26,6 +26,8 @@ Remove-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind
 
 ## DESCRIPTION
 
+Allows to remove a channel from specified team.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

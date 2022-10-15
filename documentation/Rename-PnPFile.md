@@ -28,6 +28,8 @@ Rename-PnPFile [-SiteRelativeUrl] <String> [-TargetFileName] <String> [-Overwrit
 
 ## DESCRIPTION
 
+Allows to rename a file.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -38,6 +38,8 @@ Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-PromotedResults
 
 ## DESCRIPTION
 
+Allows to retrieve search configuration.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

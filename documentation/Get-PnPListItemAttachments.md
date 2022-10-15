@@ -21,6 +21,8 @@ Get-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> 
 
 ## DESCRIPTION
 
+Allows to download the list item attachments to a specified path. Use `Force` option in order to skip the confirmation question and overwrite the files on the local disk, if they already exist.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

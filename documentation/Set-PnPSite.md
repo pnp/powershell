@@ -35,6 +35,8 @@ Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connecti
 
 ## DESCRIPTION
 
+Allows to modify a site properties.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
@@ -475,6 +477,20 @@ Allow contributors to insert iframes only from the specified domains only
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedAccessControl
+To enable restricted access control on a group-connected or Teams-connected site
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False

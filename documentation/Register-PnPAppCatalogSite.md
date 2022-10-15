@@ -26,6 +26,8 @@ Register-PnPAppCatalogSite -Url <String> -Owner <String> -TimeZoneId <Int32> [-F
 
 ## DESCRIPTION
 
+Allows to create a new App Catalog Site and sets this site as the Tenant App Catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

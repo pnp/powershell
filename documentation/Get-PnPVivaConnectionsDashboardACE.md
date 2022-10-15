@@ -20,6 +20,8 @@ Get-PnPVivaConnectionsDashboardACE [-Identity <GUID>] [-Connection <PnPConnectio
 
 ## DESCRIPTION
 
+Allows to retrieve the adaptive card extensions from the Viva connections dashboard page.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

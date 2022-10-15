@@ -21,6 +21,8 @@ Get-PnPSiteDesignTask [-Identity <TenantSiteDesignTaskPipeBind>] [-WebUrl <Strin
 
 ## DESCRIPTION
 
+Allows to retrieve a scheduled site design script.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -22,6 +22,8 @@ Add-PnPView [-List] <ListPipeBind> -Title <String> [-Query <String>] -Fields <St
 
 ## DESCRIPTION
 
+Allows to add a new view to a list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

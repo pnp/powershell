@@ -21,6 +21,8 @@ Add-PnPSiteDesignTask -SiteDesignId <Guid> [-WebUrl <String>] [-Connection <PnPC
 
 ## DESCRIPTION
 
+Allows to apply a site design to a specified site collection. This command is intended to be used when you need to apply a large number of actions or multiple site scripts.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

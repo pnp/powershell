@@ -20,10 +20,12 @@ Gets one Microsoft Teams Team or a list of Teams.
 ## SYNTAX
 
 ```powershell
-Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>]  [<CommonParameters>]
+Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>] [-Filter <String>]  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+
+Allows to retrieve list of Microsoft Teams teams. By using `Identity` it is possible to retrieve a specific team, and by using `Filter` you can supply simple filter queries.
 
 ## EXAMPLES
 
@@ -48,6 +50,13 @@ Get-PnPTeamsTeam -Identity "baba9192-55be-488a-9fb7-2e2e76edbef2"
 
 Retrieves a specific Microsoft Teams instance using group id.
 
+### EXAMPLE 4
+```powershell
+Get-PnPTeamsTeam -Filter "startswith(mailNickName, 'contoso')"
+```
+
+Retrieves all Microsoft Teams instances with MailNickName starting with "contoso". 
+
 ## PARAMETERS
 
 ### -Identity
@@ -63,6 +72,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Filter
+Specify the query to pass to Graph API in $filter.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ## RELATED LINKS
 

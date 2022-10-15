@@ -28,6 +28,8 @@ Add-PnPSiteDesign -Title <String> -SiteScriptIds <Guid[]> [-Description <String>
 
 ## DESCRIPTION
 
+Allows to add a new Site Design on the current tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

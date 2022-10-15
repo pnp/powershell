@@ -10,9 +10,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
 # Get-PnPSyntexModel
 
 ## SYNOPSIS
-Returns SharePoint Syntex models from a SharePoint Syntex Content Center.
+Returns Microsoft Syntex models from a Microsoft Syntex Content Center.
 
-This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.
+This cmdlet only works when you've connected to a Microsoft Syntex Content Center site.
 
 ## SYNTAX
 
@@ -22,7 +22,7 @@ Get-PnPSyntexModel [-Identity] <SyntexModelPipeBind> [-Connection <PnPConnection
 ```
 
 ## DESCRIPTION
-This command allows the retrieval of a SharePoint Syntex content understanding models defined in the connected SharePoint Syntex Content Center site.
+This command allows the retrieval of a Microsoft Syntex content understanding models defined in the connected Microsoft Syntex Content Center site.
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ This command allows the retrieval of a SharePoint Syntex content understanding m
 Get-PnPSyntexModel 
 ```
 
-Lists all the content understanding models in the connected SharePoint Syntex Content Center site.
+Lists all the content understanding models in the connected Microsoft Syntex Content Center site.
 
 ### EXAMPLE 2
 ```powershell
@@ -64,7 +64,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name or id of the SharePoint Syntex model.
+The name or id of the Microsoft Syntex model.
 
 ```yaml
 Type: SyntexModelPipeBind

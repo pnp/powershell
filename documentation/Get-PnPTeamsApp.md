@@ -25,6 +25,8 @@ Get-PnPTeamsApp [-Identity <TeamsAppPipeBind>]  [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve Microsoft Teams apps. By using `Identity` option it is possible to retrieve a specific app.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

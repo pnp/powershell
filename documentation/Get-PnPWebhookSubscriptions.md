@@ -21,6 +21,8 @@ Get-PnPWebhookSubscriptions [-List <ListPipeBind>] [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
+Allows to retrieve Webhook subscriptions of specified list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Uninstall-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-
 
 ## DESCRIPTION
 
+Allows to uninstall an available add-in from the site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

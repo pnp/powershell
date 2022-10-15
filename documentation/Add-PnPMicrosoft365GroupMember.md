@@ -25,6 +25,8 @@ Add-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <Str
 
 ## DESCRIPTION
 
+Allows to add multiple users to Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

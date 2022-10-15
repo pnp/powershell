@@ -20,6 +20,8 @@ Add-PnPSiteTemplate -SiteTemplate <SiteTemplate> -TenantTemplate <ProvisioningHi
 
 ## DESCRIPTION
 
+Allows to add PnP Site Template object to a tenant template.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Get-PnPPublishingImageRendition [[-Identity] <ImageRenditionPipeBind>]
 
 ## DESCRIPTION
 
+Allows to retrieve all image renditions or a specific one when `Identity` option is used.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

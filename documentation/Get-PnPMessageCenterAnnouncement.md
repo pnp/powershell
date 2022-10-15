@@ -25,6 +25,8 @@ Get-PnPMessageCenterAnnouncement [-Identity <Id>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve the available message center announcements.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

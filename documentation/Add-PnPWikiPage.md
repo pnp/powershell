@@ -28,6 +28,8 @@ Add-PnPWikiPage -ServerRelativePageUrl <String> -Layout <WikiPageLayout>
 
 ## DESCRIPTION
 
+Allows to add a wiki page.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

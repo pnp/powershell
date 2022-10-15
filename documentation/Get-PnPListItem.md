@@ -41,6 +41,8 @@ Get-PnPListItem [-List] <ListPipeBind> [-Query <String>] [-FolderServerRelativeU
 
 ## DESCRIPTION
 
+Allows to retrieve list items.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

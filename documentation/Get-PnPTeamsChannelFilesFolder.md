@@ -26,6 +26,8 @@ Get-PnPTeamsChannel [-Team <TeamsTeamPipeBind>] [-Channel <TeamsChannelPipeBind>
 
 ## DESCRIPTION
 
+Allows to retrieve folder metadata for specified channel.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

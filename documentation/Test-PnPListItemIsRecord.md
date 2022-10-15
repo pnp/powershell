@@ -21,6 +21,8 @@ Test-PnPListItemIsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind>
 
 ## DESCRIPTION
 
+Allows to check if the specified list item is a record.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

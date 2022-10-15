@@ -25,6 +25,8 @@ Set-PnPMessageCenterAnnouncementAsRead [-Identity <Ids>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to mark message center announcements as read.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

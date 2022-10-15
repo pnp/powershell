@@ -33,6 +33,8 @@ Set-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-DisplayName <String>] [-Descrip
 
 ## DESCRIPTION
 
+Allows to update team settings.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

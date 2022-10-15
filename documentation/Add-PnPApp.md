@@ -21,6 +21,8 @@ Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Overwrite] [-Timeout <I
 
 ## DESCRIPTION
 
+Allows to upload an app to the app catalog at tenant or site collection level. By specifying `-Publish` option it is possible to deploy/trust it at the same time.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
