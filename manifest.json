@@ -6632,6 +6632,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPImageListItemColumn.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPImageListItemColumn.html",
+          "hash": "msBpAPr4/VEnVynDEN4fmQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPInPlaceRecordsManagement.md",
       "output": {
         ".html": {
@@ -7848,7 +7860,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "f7M5KcERVtnpghFBAM8GLA=="
+          "hash": "B8OKnibOQ33nh7pRJyAJUQ=="
         }
       },
       "is_incremental": false,
@@ -8070,7 +8082,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 651,
+          "total_file_count": 652,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
