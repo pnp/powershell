@@ -8,9 +8,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
-    [Cmdlet(VerbsCommon.Get, "PnPExpiringMicrosoft365Groups")]
+    [Cmdlet(VerbsCommon.Get, "PnPExpiringMicrosoft365Group")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
-    public class GetExpiringMicrosoft365Groups : PnPGraphCmdlet
+    public class GetExpiringMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeSiteUrl;
@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         
         protected override void ExecuteCmdlet()
         {       
-            var expiringGroups = Microsoft365GroupsUtility.GetExpiringGroupsAsync(Connection, AccessToken, Limit, IncludeSiteUrl, IncludeOwners).GetAwaiter().GetResult();
+            var expiringGroups = Microsoft365GroupsUtility.GetExpiringGroupAsync(Connection, AccessToken, Limit, IncludeSiteUrl, IncludeOwners).GetAwaiter().GetResult();
 
             WriteObject(expiringGroups.OrderBy(p => p.DisplayName), true);
         }

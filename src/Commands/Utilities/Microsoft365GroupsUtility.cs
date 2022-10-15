@@ -127,7 +127,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static async Task<IEnumerable<Microsoft365Group>> GetExpiringGroupsAsync(PnPConnection connection, string accessToken, int limit, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<IEnumerable<Microsoft365Group>> GetExpiringGroupAsync(PnPConnection connection, string accessToken, int limit, bool includeSiteUrl, bool includeOwners)
         {
             var items = new List<Microsoft365Group>();
 
