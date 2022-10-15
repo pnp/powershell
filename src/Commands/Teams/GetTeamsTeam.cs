@@ -13,6 +13,14 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false)]
         public TeamsTeamPipeBind Identity;
 
+        /// <summary>
+        /// Filter supports whatever you can pass to $filter. 
+        /// For details on which operators are supported for which properties, see this:
+        /// https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties
+        /// </summary>
+        [Parameter(Mandatory = false)]
+        public string Filter = null;
+
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(Identity)))
@@ -25,7 +33,7 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, Connection).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, Connection, Filter).GetAwaiter().GetResult(), true);
             }
         }
     }
