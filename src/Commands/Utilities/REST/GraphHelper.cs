@@ -103,6 +103,10 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 while (!string.IsNullOrEmpty(request.NextLink))
                 {
                     request = await GetAsync<RestResultCollection<T>>(connection, request.NextLink, accessToken, camlCasePolicy, propertyNameCaseInsensitive, additionalHeaders);
+                    if (request.Items.Any())
+                    {
+                        results.AddRange(request.Items);
+                    }
                 }
             }
 
