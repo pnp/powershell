@@ -2618,6 +2618,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPMicrosoft365ExpiringGroup.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPMicrosoft365ExpiringGroup.html",
+          "hash": "T7TPJQdieypI/zRSXnFbPQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPMicrosoft365Group.md",
       "output": {
         ".html": {
@@ -3486,7 +3498,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTeamsTeam.html",
-          "hash": "3O3lNwGk/W4eeRdz9ogbjg=="
+          "hash": "1x6K784EID8YLohguzB6fA=="
         }
       },
       "is_incremental": false,
@@ -7860,7 +7872,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "B8OKnibOQ33nh7pRJyAJUQ=="
+          "hash": "3f5Wp8qTFAfNmalkBZjhNw=="
         }
       },
       "is_incremental": false,
@@ -8082,7 +8094,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 652,
+          "total_file_count": 653,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

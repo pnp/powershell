@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPTeamsTeam | PnP PowerShell </title>
+    <title>Get-PnPMicrosoft365ExpiringGroup | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPTeamsTeam | PnP PowerShell ">
+    <meta name="title" content="Get-PnPMicrosoft365ExpiringGroup | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,55 +77,36 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpteamsteam">Get-PnPTeamsTeam</h1>
+                    <h1 id="get-pnpmicrosoft365expiringgroup">Get-PnPMicrosoft365ExpiringGroup</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API : One of Group.Read.All, Group.ReadWrite.All</li>
+<li>Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, Group.Read.All, Group.ReadWrite.All, GroupMember.Read.All, GroupMember.ReadWrite.All</li>
 </ul>
-<p>Gets one Microsoft Teams Team or a list of Teams.</p>
+<p>Gets all expiring Microsoft 365 Groups.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPTeamsTeam [-Identity &lt;TeamsTeamPipeBind&gt;] [-Filter &lt;String&gt;]  [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPMicrosoft365ExpiringGroup [-Limit &lt;Int32&gt;]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to retrieve list of Microsoft Teams teams. By using <code>Identity</code> it is possible to retrieve a specific team, and by using <code>Filter</code> you can supply simple filter queries.</p>
+<p>This command returns all expiring Microsoft 365 Groups within certain time. By default, groups expiring in the next 31 days are return (in accordance with SharePoint/OneDrive's retention period's 31-day months).</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPTeamsTeam
+<pre><code class="lang-powershell">Get-PnPMicrosoft365ExpiringGroup
 </code></pre>
-<p>Retrieves all the Microsoft Teams instances</p>
+<p>Returns all Groups expiring within 31 days (roughly 1 month).</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTeamsTeam -Identity &quot;PnP PowerShell&quot;
+<pre><code class="lang-powershell">Get-PnPMicrosoft365ExpiringGroup -Limit 93
 </code></pre>
-<p>Retrieves a specific Microsoft Teams instance using display name.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPTeamsTeam -Identity &quot;baba9192-55be-488a-9fb7-2e2e76edbef2&quot;
-</code></pre>
-<p>Retrieves a specific Microsoft Teams instance using group id.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPTeamsTeam -Filter &quot;startswith(mailNickName, 'contoso')&quot;
-</code></pre>
-<p>Retrieves all Microsoft Teams instances with MailNickName starting with &quot;contoso&quot;.</p>
+<p>Returns all Microsoft 365 Groups expiring in 93 days (roughly 3 months)</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-identity">-Identity</h3>
-<p>Specify the group id, mailNickname or display name of the team to use.</p>
-<pre><code class="lang-yaml">Type: TeamsTeamPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-filter">-Filter</h3>
-<p>Specify the query to pass to Graph API in $filter.</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-limit">-Limit</h3>
+<p>Limits Groups to be returned to Groups expiring in as many days.</p>
+<pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
 Required: False
