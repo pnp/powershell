@@ -40,7 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support to remove the site collection app catalog by using Id of the site collection in `Remove-PnPSiteCollectionAppCatalog` cmdlet. [#2452](https://github.com/pnp/powershell/pull/2452)
 - Added support for `RestrictedAccessControl` parameter to `Set-PnPTenant` and `Set-PnPSite` cmdlets to restrict site access to members of a Microsoft 365 group. [#2462](https://github.com/pnp/powershell/pull/2462)
 - Added `Set-PnPImageListItemColumn` cmdlet to support setting of the new image/thumbnail value for a SharePoint list item.[#2468](https://github.com/pnp/powershell/pull/2468)
-- Added `-Filter` parameter to `Get-PnPTeamsTeam` cmdlet to retrieve specific teams based on filter conditions. [#2467](https://github.com/pnp/powershell/pull/2467)
+- Added `-Filter` parameter to `Get-PnPTeamsTeam` cmdlet to retrieve specific teams based on filter conditions. It supports simple and advanced queries. [#2467](https://github.com/pnp/powershell/pull/2467) , [#2474](https://github.com/pnp/powershell/pull/2474)
 - Added `Get-PnPMicrosoft365ExpiringGroup` cmdlet to retrieve Microsoft 365 groups which are nearing expiration.[#2466](https://github.com/pnp/powershell/pull/2466)
 
 ### Changed
