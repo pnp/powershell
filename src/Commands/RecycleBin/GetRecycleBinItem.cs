@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
+using System.Net;
+using System.Web;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Utilities;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
@@ -44,7 +48,6 @@ namespace PnP.PowerShell.Commands.RecycleBin
             }
             else
             {
-
                 if (ParameterSpecified(nameof(RowLimit)))
                 {
                     RecycleBinItemState recycleBinStage;
@@ -61,51 +64,31 @@ namespace PnP.PowerShell.Commands.RecycleBin
                             break;
                     }
 
-                    if (FirstStage.IsPresent || SecondStage.IsPresent)
-                    {
-                        RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, recycleBinStage);
-                        ClientContext.Load(items);
-                        ClientContext.ExecuteQueryRetry();
-
-                        List<RecycleBinItem> recycleBinItemList = items.ToList();
-                        WriteObject(recycleBinItemList, true);
-                    }
-                    else
-                    {
-                        ClientContext.Site.Context.Load(ClientContext.Site.RecycleBin, r => r.IncludeWithDefaultProperties(RetrievalExpressions));
-                        ClientContext.Site.Context.ExecuteQueryRetry();
-
-                        List<RecycleBinItem> recycleBinItemList = ClientContext.Site.RecycleBin.ToList();
-                        recycleBinItemList = recycleBinItemList.Take(RowLimit).ToList();
-                        WriteObject(recycleBinItemList, true);
-                    }
-
-
+                    List<RecycleBinItem> recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, recycleBinStage);
+                    WriteObject(recycleBinItemList, true);
                 }
                 else
                 {
-                    ClientContext.Site.Context.Load(ClientContext.Site.RecycleBin, r => r.IncludeWithDefaultProperties(RetrievalExpressions));
-                    ClientContext.Site.Context.ExecuteQueryRetry();
-
-                    List<RecycleBinItem> recycleBinItemList = ClientContext.Site.RecycleBin.ToList();
-
+                    List<RecycleBinItem> recycleBinItemList;
                     switch (ParameterSetName)
                     {
                         case ParameterSet_FIRSTSTAGE:
-                            WriteObject(
-                                recycleBinItemList.Where(i => i.ItemState == RecycleBinItemState.FirstStageRecycleBin), true);
+                            recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, RecycleBinItemState.FirstStageRecycleBin);
+                            WriteObject(recycleBinItemList, true);
                             break;
                         case ParameterSet_SECONDSTAGE:
-                            WriteObject(
-                                recycleBinItemList.Where(i => i.ItemState == RecycleBinItemState.SecondStageRecycleBin),
-                                true);
+                            recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit, RecycleBinItemState.SecondStageRecycleBin);
+                            WriteObject(recycleBinItemList, true);
                             break;
                         default:
+                            recycleBinItemList = RecycleBinUtility.GetRecycleBinItems(ClientContext, RowLimit);
                             WriteObject(recycleBinItemList, true);
                             break;
                     }
                 }
             }
         }
+
+
     }
 }
