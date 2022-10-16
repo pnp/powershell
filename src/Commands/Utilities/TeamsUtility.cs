@@ -26,15 +26,30 @@ namespace PnP.PowerShell.Commands.Utilities
         #region Team
         public static async Task<List<Group>> GetGroupsWithTeamAsync(PnPConnection connection, string accessToken, string filter = null)
         {
+            Dictionary<string, string> additionalHeaders = null;
+            string requestUrl;
+
             if (String.IsNullOrEmpty(filter))
             {
                 filter = "resourceProvisioningOptions/Any(x:x eq 'Team')";
+
+                requestUrl = $"v1.0/groups?$filter={filter}&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}";
+
             }
             else
             {
                 filter = $"({filter}) and resourceProvisioningOptions/Any(x:x eq 'Team')";
+             
+                // This query requires ConsistencyLevel header to be set, since "Filter" could have some advanced queries supplied by the user.
+                additionalHeaders = new Dictionary<string, string>();
+                additionalHeaders.Add("ConsistencyLevel", "eventual");
+
+                // $count=true needs to be here for reasons
+                // see this for some additional details: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties
+                requestUrl = $"v1.0/groups?$filter={filter}&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}&$count=true";
             }
-            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"v1.0/groups?$filter={filter}&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
+            
+            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, requestUrl, accessToken, additionalHeaders: additionalHeaders);
             return collection.ToList();
         }
 
