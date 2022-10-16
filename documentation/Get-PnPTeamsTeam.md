@@ -25,7 +25,7 @@ Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>]  [<CommonParameters>]
 
 ## DESCRIPTION
 
-Allows to retrieve list of Microsoft Teams teams. By using `Identity` it is possible to retrieve a specifi team.
+Allows to retrieve list of Microsoft Teams teams. By using `Identity` it is possible to retrieve a specific team.
 
 ## EXAMPLES
 
