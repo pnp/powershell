@@ -14,9 +14,11 @@ namespace PnP.PowerShell.Commands.Utilities
             var recycleBinItems = new List<RecycleBinItem>();
             string pagingInfo = null;
             RecycleBinItemCollection items;
-            ctx.Load(ctx.Site.RecycleBin);
-            ctx.ExecuteQueryRetry();
-            var totalRecyclebinContentsCount = ctx.Site.RecycleBin.Count;
+
+            // This part is only here to make debugging easier if you ever run into issues with this code :)
+            //ctx.Load(ctx.Site.RecycleBin);
+            //ctx.ExecuteQueryRetry();
+            //var totalRecyclebinContentsCount = ctx.Site.RecycleBin.Count;
 
             do
             {
@@ -54,12 +56,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
 
                 // Paging magic (if needed)
+                // Based on this work our good friends at Portiva did ❤
+                // https://www.portiva.nl/portiblog/blogs-cat/paging-through-sharepoint-recycle-bin
                 if (items.Count > 0)
                 {
                     var nextId = items.Last().Id;
                     //var nextTitle = items.Last().Title;
                     var nextTitle = WebUtility.UrlEncode(items.Last().Title);
-                    var deletionTime = items.Last().DeletedDate;
+                    //var deletionTime = items.Last().DeletedDate;
                     pagingInfo = $"id={nextId}&title={nextTitle}"; // &searchValue=${deletionTime}
                 }
             }
