@@ -28,7 +28,7 @@ Get-PnPNavigationNode [-Id <Int32>] [-Tree] [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
-Allows to retrieve all navigation nodes or a specifi on by using `Id` option.
+Allows to retrieve all navigation nodes or a specific on by using `Id` option.
 
 ## EXAMPLES
 
