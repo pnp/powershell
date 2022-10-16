@@ -1,15 +1,9 @@
-﻿using System;
+﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Utilities;
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
-using System.Net;
-using System.Web;
-using Microsoft.AspNetCore.Http.Extensions;
-using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Utilities;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.RecycleBin
 {
