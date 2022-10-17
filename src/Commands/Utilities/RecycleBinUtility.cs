@@ -1,4 +1,4 @@
-﻿using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class RecycleBinUtility
     {
-        internal static List<RecycleBinItem> GetRecycleBinItems(ClientContext ctx, int? rowLimit = null, RecycleBinItemState? recycleBinStage = null)
+        internal static List<RecycleBinItem> GetRecycleBinItems(ClientContext ctx, int? rowLimit = null, RecycleBinItemState recycleBinStage = RecycleBinItemState.None)
         {
             var recycleBinItems = new List<RecycleBinItem>();
             string pagingInfo = null;
@@ -39,21 +39,11 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     iterationRowLimit = 5000;
                 }
-
-                if (recycleBinStage.HasValue)
-                {
-                    items = ctx.Site.GetRecycleBinItems(pagingInfo, iterationRowLimit, false, RecycleBinOrderBy.DefaultOrderBy, recycleBinStage.Value);
-                    ctx.Load(items);
-                    ctx.ExecuteQueryRetry();
-                    recycleBinItems.AddRange(items.ToList());
-                }
-                else
-                {
-                    items = ctx.Site.GetRecycleBinItems(pagingInfo, iterationRowLimit, false, RecycleBinOrderBy.DefaultOrderBy, RecycleBinItemState.None);
-                    ctx.Load(items);
-                    ctx.ExecuteQueryRetry();
-                    recycleBinItems.AddRange(items.ToList());
-                }
+                
+                items = ctx.Site.GetRecycleBinItems(pagingInfo, iterationRowLimit, false, RecycleBinOrderBy.DefaultOrderBy, recycleBinStage);
+                ctx.Load(items);
+                ctx.ExecuteQueryRetry();
+                recycleBinItems.AddRange(items.ToList());                                
 
                 // Paging magic (if needed)
                 // Based on this work our good friends at Portiva did ❤
