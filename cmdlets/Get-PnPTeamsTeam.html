@@ -93,7 +93,7 @@
 <pre><code class="lang-powershell">Get-PnPTeamsTeam [-Identity &lt;TeamsTeamPipeBind&gt;] [-Filter &lt;String&gt;]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to retrieve list of Microsoft Teams teams. By using <code>Identity</code> it is possible to retrieve a specific team, and by using <code>Filter</code> you can supply simple filter queries.</p>
+<p>Allows to retrieve list of Microsoft Teams teams. By using <code>Identity</code> it is possible to retrieve a specific team, and by using <code>Filter</code> you can supply any filter queries supported by the Graph API.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTeamsTeam
@@ -111,6 +111,10 @@
 <pre><code class="lang-powershell">Get-PnPTeamsTeam -Filter &quot;startswith(mailNickName, 'contoso')&quot;
 </code></pre>
 <p>Retrieves all Microsoft Teams instances with MailNickName starting with &quot;contoso&quot;.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPTeamsTeam -Filter &quot;startswith(description, 'contoso')&quot;
+</code></pre>
+<p>Retrieves all Microsoft Teams instances with Description starting with &quot;contoso&quot;. This example demonstrates using Advanced Query capabilities (see: <a href="https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties">https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties</a>).</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
 <p>Specify the group id, mailNickname or display name of the team to use.</p>

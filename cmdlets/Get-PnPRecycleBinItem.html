@@ -84,8 +84,11 @@
                     <h1 id="get-pnprecyclebinitem">Get-PnPRecycleBinItem</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Required Permissions * SharePoint: Site Collection Administrator. SharePoint Tenant Admin alone is not enough
-Returns the items in the recycle bin from the context</p>
+<p>** Required Permissions **</p>
+<ul>
+<li>SharePoint: Site Collection Administrator. SharePoint Tenant Admin alone is not enough</li>
+</ul>
+<p>Returns one or more items from the Recycle Bin.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all-default">All (Default)</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem [-RowLimit &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
@@ -109,23 +112,23 @@ Returns the items in the recycle bin from the context</p>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem
 </code></pre>
-<p>Returns all items in both the first and the second stage recycle bins in the current site collection</p>
+<p>Returns all items in both the first and the second stage recycle bins in the current site collection.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem -Identity f3ef6195-9400-4121-9d1c-c997fb5b86c2
 </code></pre>
-<p>Returns all a specific recycle bin item by id</p>
+<p>Returns a specific recycle bin item by id.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem -FirstStage
 </code></pre>
-<p>Returns all items in only the first stage recycle bin in the current site collection</p>
+<p>Returns all items in only the first stage recycle bin in the current site collection.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem -SecondStage
 </code></pre>
-<p>Returns all items in only the second stage recycle bin in the current site collection</p>
+<p>Returns all items in only the second stage recycle bin in the current site collection.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem -RowLimit 10000
 </code></pre>
-<p>Returns items in recycle bin limited by number of results</p>
+<p>Returns items in recycle bin limited by number of results.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -150,7 +153,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Returns a recycle bin item with a specific identity</p>
+<p>Returns a recycle bin item with a specific identity.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: Identity
 
@@ -172,7 +175,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-secondstage">-SecondStage</h3>
-<p>Return all items in the second stage recycle bin</p>
+<p>Return all items in the second stage recycle bin.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: SecondStage
 
