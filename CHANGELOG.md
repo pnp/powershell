@@ -84,6 +84,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Register-PnPManagementShellAccess` for non-commercial cloud environment. Users must enter the tenant name if the environment is a non-commercial cloud environment. [#2437](https://github.com/pnp/powershell/pull/2437)
 - Fixed issue with writing warning or error messages in Azure automation or screens with small width. [#2438](https://github.com/pnp/powershell/pull/2438)
 - Fixed issue with `Enable-PnPTenantServicePrincipal` not respecting `-Force` parameter. [#2448](https://github.com/pnp/powershell/pull/2448)
+- Fixed issue with `Get-PnPRecycleBinItem` not working when there are large number of items in recycle bin.[#2472](https://github.com/pnp/powershell/pull/2472)
 
 ### Contributors
 
