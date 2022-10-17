@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPImageListItemColumn` cmdlet to support setting of the new image/thumbnail value for a SharePoint list item.[#2468](https://github.com/pnp/powershell/pull/2468)
 - Added `-Filter` parameter to `Get-PnPTeamsTeam` cmdlet to retrieve specific teams based on filter conditions. It supports simple and advanced queries. [#2467](https://github.com/pnp/powershell/pull/2467) , [#2474](https://github.com/pnp/powershell/pull/2474)
 - Added `Get-PnPMicrosoft365ExpiringGroup` cmdlet to retrieve Microsoft 365 groups which are nearing expiration.[#2466](https://github.com/pnp/powershell/pull/2466)
+- Added additional parameters to `Set-PnPContentType` cmdlet to support SPFx form customizer related properties.[#2456](https://github.com/pnp/powershell/pull/2456)
 
 ### Changed
 
@@ -86,6 +87,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Martin Lingstuyl [martinlingstuyl]
 - Antti K. Koskela [koskila]
 - Dan Toft [tandddant]
 - Yannick Plenevaux [ypcode]
