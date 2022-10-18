@@ -92,17 +92,17 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         /// <param name="camlCasePolicy">Policy indicating the CamlCase that should be applied when mapping results to typed objects</param>
         /// <param name="propertyNameCaseInsensitive">Indicates if the response be mapped to the typed object ignoring different casing</param>
         /// <returns>List with objects of type T returned by the request</returns>
-        public static async Task<IEnumerable<T>> GetResultCollectionAsync<T>(PnPConnection connection, string url, string accessToken, bool camlCasePolicy = true, bool propertyNameCaseInsensitive = false)
+        public static async Task<IEnumerable<T>> GetResultCollectionAsync<T>(PnPConnection connection, string url, string accessToken, bool camlCasePolicy = true, bool propertyNameCaseInsensitive = false, IDictionary<string, string> additionalHeaders = null)
         {
             var results = new List<T>();
-            var request = await GetAsync<RestResultCollection<T>>(connection, url, accessToken, camlCasePolicy, propertyNameCaseInsensitive);
+            var request = await GetAsync<RestResultCollection<T>>(connection, url, accessToken, camlCasePolicy, propertyNameCaseInsensitive, additionalHeaders);
 
             if (request.Items.Any())
             {
                 results.AddRange(request.Items);
                 while (!string.IsNullOrEmpty(request.NextLink))
                 {
-                    request = await GetAsync<RestResultCollection<T>>(connection, request.NextLink, accessToken, camlCasePolicy, propertyNameCaseInsensitive);
+                    request = await GetAsync<RestResultCollection<T>>(connection, request.NextLink, accessToken, camlCasePolicy, propertyNameCaseInsensitive, additionalHeaders);
                     if (request.Items.Any())
                     {
                         results.AddRange(request.Items);
@@ -123,9 +123,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         /// <param name="camlCasePolicy">Policy indicating the CamlCase that should be applied when mapping results to typed objects</param>
         /// <param name="propertyNameCaseInsensitive">Indicates if the response be mapped to the typed object ignoring different casing</param>
         /// <returns>List with objects of type T returned by the request</returns>
-        public static async Task<T> GetAsync<T>(PnPConnection connection, string url, string accessToken, bool camlCasePolicy = true, bool propertyNameCaseInsensitive = false)
+        public static async Task<T> GetAsync<T>(PnPConnection connection, string url, string accessToken, bool camlCasePolicy = true, bool propertyNameCaseInsensitive = false, IDictionary<string, string> additionalHeaders = null)
         {
-            var stringContent = await GetAsync(connection, url, accessToken);
+            var stringContent = await GetAsync(connection, url, accessToken, additionalHeaders);
             if (stringContent != null)
             {
                 var options = new JsonSerializerOptions { IgnoreNullValues = true };

@@ -25,6 +25,8 @@ Get-PnPTenantInstance
 
 ## DESCRIPTION
 
+Allows to retrieve list of all instances of the tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

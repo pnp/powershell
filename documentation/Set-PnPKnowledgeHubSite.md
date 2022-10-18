@@ -25,6 +25,8 @@ Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl <String> [-Connection <PnPConnectio
 
 ## DESCRIPTION
 
+Allows to set Knowledge Hub Site of the current tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

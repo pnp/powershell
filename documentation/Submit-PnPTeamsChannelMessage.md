@@ -26,6 +26,8 @@ Submit-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPi
 
 ## DESCRIPTION
 
+Allows to send a message to a Microsoft Teams Channel.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

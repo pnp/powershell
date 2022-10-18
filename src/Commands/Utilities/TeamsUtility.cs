@@ -24,9 +24,32 @@ namespace PnP.PowerShell.Commands.Utilities
         private const int PageSize = 100;
 
         #region Team
-        public static async Task<List<Group>> GetGroupsWithTeamAsync(PnPConnection connection, string accessToken)
+        public static async Task<List<Group>> GetGroupsWithTeamAsync(PnPConnection connection, string accessToken, string filter = null)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"v1.0/groups?$filter=resourceProvisioningOptions/Any(x:x eq 'Team')&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
+            Dictionary<string, string> additionalHeaders = null;
+            string requestUrl;
+
+            if (String.IsNullOrEmpty(filter))
+            {
+                filter = "resourceProvisioningOptions/Any(x:x eq 'Team')";
+
+                requestUrl = $"v1.0/groups?$filter={filter}&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}";
+
+            }
+            else
+            {
+                filter = $"({filter}) and resourceProvisioningOptions/Any(x:x eq 'Team')";
+             
+                // This query requires ConsistencyLevel header to be set, since "Filter" could have some advanced queries supplied by the user.
+                additionalHeaders = new Dictionary<string, string>();
+                additionalHeaders.Add("ConsistencyLevel", "eventual");
+
+                // $count=true needs to be here for reasons
+                // see this for some additional details: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties
+                requestUrl = $"v1.0/groups?$filter={filter}&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}&$count=true";
+            }
+            
+            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, requestUrl, accessToken, additionalHeaders: additionalHeaders);
             return collection.ToList();
         }
 
@@ -35,11 +58,11 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.GetAsync<Group>(connection, $"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility", accessToken);
         }
 
-        public static async Task<List<Team>> GetTeamsAsync(string accessToken, PnPConnection connection)
+        public static async Task<List<Team>> GetTeamsAsync(string accessToken, PnPConnection connection, String filter)
         {
             List<Team> teams = new List<Team>();
 
-            var groups = await GetGroupsWithTeamAsync(connection, accessToken);
+            var groups = await GetGroupsWithTeamAsync(connection, accessToken, filter);
             foreach (var group in groups)
             {
                 Team team = await ParseTeamJsonAsync(accessToken, connection, group.Id);
@@ -938,13 +961,13 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task<IEnumerable<TeamTag>> GetTagsAsync(string accessToken, PnPConnection connection, string groupId)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<TeamTag>(connection, $"beta/teams/{groupId}/tags", accessToken);
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamTag>(connection, $"v1.0/teams/{groupId}/tags", accessToken);
             return collection;
         }
 
         public static async Task<TeamTag> GetTagsWithIdAsync(string accessToken, PnPConnection connection, string groupId, string tagId)
         {
-            var tagInformation = await GraphHelper.GetAsync<TeamTag>(connection, $"beta/teams/{groupId}/tags/{tagId}", accessToken);
+            var tagInformation = await GraphHelper.GetAsync<TeamTag>(connection, $"v1.0/teams/{groupId}/tags/{tagId}", accessToken);
             return tagInformation;
         }
 

@@ -25,6 +25,8 @@ Get-PnPAzureADGroup [-Identity <AzureADGroupPipeBind>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifing `Identity` option it is possible to get single group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

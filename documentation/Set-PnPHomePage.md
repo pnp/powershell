@@ -21,6 +21,8 @@ Set-PnPHomePage [-RootFolderRelativeUrl] <String> [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
+Allows to set the home page of the current site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

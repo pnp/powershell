@@ -22,6 +22,8 @@ Add-PnPHtmlPublishingPageLayout -SourceFilePath <String> -Title <String> -Descri
 
 ## DESCRIPTION
 
+Allows to add a HTML based publishing page layout.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

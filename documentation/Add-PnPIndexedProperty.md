@@ -21,6 +21,8 @@ Add-PnPIndexedProperty [-Key] <String> [-List <ListPipeBind>]
 
 ## DESCRIPTION
 
+Allows to set search index on propertybag key.
+
 ## EXAMPLES
 
 ## PARAMETERS

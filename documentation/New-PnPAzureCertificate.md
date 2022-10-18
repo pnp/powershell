@@ -30,6 +30,8 @@ New-PnPAzureCertificate [-CommonName <String>] [-Country <String>] [-State <Stri
 
 ## DESCRIPTION
 
+Allows to create a self-signed certificate and manifest settings to be used with CSOM via an app-only ADAL application.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

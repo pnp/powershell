@@ -1420,6 +1420,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RestrictedAccessControl
+To enable restricted access control in SharePoint. You need to wait approximately 1 hour before managing restricted access control for a site collection.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Force
 If provided, no confirmation will be requested and the action will be performed
 

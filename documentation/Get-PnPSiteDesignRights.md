@@ -26,6 +26,8 @@ Get-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> [-Connection <PnP
 
 ## DESCRIPTION
 
+Allows to retrieve the principals with design rights on a specific Site Design.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

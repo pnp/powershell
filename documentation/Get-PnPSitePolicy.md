@@ -21,6 +21,8 @@ Get-PnPSitePolicy [-AllAvailable] [-Name <String>] [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
+Allows to retrieve site policies.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

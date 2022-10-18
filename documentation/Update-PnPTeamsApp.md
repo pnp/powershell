@@ -25,6 +25,8 @@ Update-PnPTeamsApp -Identity <TeamsAppPipeBind> -Path <String>  [<CommonParamete
 
 ## DESCRIPTION
 
+Allows to update an existing app in the Teams App Catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

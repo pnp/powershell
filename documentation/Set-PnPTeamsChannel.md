@@ -26,6 +26,8 @@ Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [
 
 ## DESCRIPTION
 
+Allows to update an existing Teams Channel.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

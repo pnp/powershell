@@ -33,6 +33,8 @@ Find-PnPFile [-Match] <String> -Folder <FolderPipeBind> [-Connection <PnPConnect
 
 ## DESCRIPTION
 
+Allows to find a file in the virtual file system of the web.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

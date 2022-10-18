@@ -22,6 +22,8 @@ Set-PnPSearchSettings [-SearchBoxInNavBar <SearchBoxInNavBarType>] [-SearchPageU
 
 ## DESCRIPTION
 
+Allows to modify search settings for a site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

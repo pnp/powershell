@@ -21,6 +21,8 @@ Remove-PnPPublishingImageRendition [-Identity] <ImageRenditionPipeBind> [-Force]
 
 ## DESCRIPTION
 
+Allows to remove an existing image rendition.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

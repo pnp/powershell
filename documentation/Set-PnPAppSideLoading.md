@@ -27,6 +27,8 @@ Set-PnPAppSideLoading [-Off] [-Connection <PnPConnection>] [<CommonParameters>]
 ## DESCRIPTION
 This cmdlet enables or disables the app sideloading feature on the site.
 
+Allows to enable the App SideLoading Feature on a site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

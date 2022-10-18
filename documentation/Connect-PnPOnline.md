@@ -187,8 +187,7 @@ Connect-PnPOnline -ManagedIdentity
 Get-PnPTeamsTeam
 ```
 
-Using this way of connecting only works with environments that support managed identies: Azure Functions and the Azure Cloud Shell.
-You cannot access SharePoint artifacts using this connection method: only the cmdlets that use the Microsoft Graph or Azure AD resources behind the scenes will work: Teams cmdlets, Flow cmdlets, Planner cmdlets and the Microsoft 365 Group cmdlets.
+Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
 
 ### EXAMPLE 13
 ```
@@ -599,10 +598,9 @@ Accept wildcard characters: False
 ```
 
 ### -ManagedIdentity
-For use with Azure Functions (if configured to use a managed identity) or Azure Cloud Shell only.
-This method will acquire a token using the built-in endpoints in the Azure Cloud Shell and Azure Functions.
-Notice that using this connection method will not allow you to access SharePoint artifacts due to limitations of token acquisition.
-It will however allow you to use the Teams cmdlets, Flow cmdlets, Planner cmdlets and Microsoft 365 Group cmdlets.
+For use with Azure Functions, Azure Automation Runbooks (if configured to use a managed identity) or Azure Cloud Shell only.
+This method will acquire a token using the built-in endpoints in the Azure Cloud Shell, Azure Automation Runbooks and Azure Functions.
+Read up on [the documentation](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) on how to make use of this option.
 
 ```yaml
 Type: SwitchParameter

@@ -21,6 +21,8 @@ Enable-PnPFeature [-Identity] <Guid> [-Force] [-Scope <FeatureScope>] [-Sandboxe
 
 ## DESCRIPTION
 
+Allows to enable to feature.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

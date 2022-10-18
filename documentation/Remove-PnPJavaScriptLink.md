@@ -21,6 +21,8 @@ Remove-PnPJavaScriptLink [[-Identity] <UserCustomActionPipeBind>] [-Force] [-Sco
 
 ## DESCRIPTION
 
+Allows to remove JavaScript link or block from a web or sitecollection.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

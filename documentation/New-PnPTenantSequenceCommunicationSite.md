@@ -22,6 +22,8 @@ New-PnPTenantSequenceCommunicationSite -Url <String> -Title <String> [-Language 
 
 ## DESCRIPTION
 
+Allows to create a new communication site object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

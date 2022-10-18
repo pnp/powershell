@@ -25,6 +25,8 @@ Remove-PnPTeamsApp -Identity <TeamsAppPipeBind> [-Force]  [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to remove an app from the Teams AppCatalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

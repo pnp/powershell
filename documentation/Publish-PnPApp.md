@@ -21,6 +21,8 @@ Publish-PnPApp [-Identity] <AppMetadataPipeBind> [-SkipFeatureDeployment] [-Scop
 
 ## DESCRIPTION
 
+Allows to deploy/trust an available app in the app catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -31,6 +31,8 @@ Get-PnPSiteTemplate [[-Out] <String>] [[-Schema] <XMLPnPSchemaVersion>] [-Includ
 
 ## DESCRIPTION
 
+Allows to generate a provisioning site template from a web.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

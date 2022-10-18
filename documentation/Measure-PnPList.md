@@ -21,6 +21,8 @@ Measure-PnPList [-Identity] <ListPipeBind> [-ItemLevel] [-BrokenPermissions]
 
 ## DESCRIPTION
 
+Allows to retrieve statistics on specified list. The command may fail on lists larger than the list view threshold.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

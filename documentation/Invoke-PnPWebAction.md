@@ -32,6 +32,8 @@ Invoke-PnPWebAction [-ListName <String>] [-Webs <Web[]>]
 
 ## DESCRIPTION
 
+Allows to execute operations on web, lists and list items.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Remove-PnPGroup [[-Identity] <GroupPipeBind>] [-Force] [-Connection <PnPConnecti
 
 ## DESCRIPTION
 
+Allows to remove a group from web.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

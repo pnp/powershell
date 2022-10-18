@@ -21,6 +21,8 @@ Remove-PnPContentType [-Identity] <ContentTypePipeBind> [-Force]
 
 ## DESCRIPTION
 
+Allows to remove content type from web.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

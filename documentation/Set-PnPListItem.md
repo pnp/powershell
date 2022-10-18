@@ -35,6 +35,8 @@ Set-PnPListItem [-List <ListPipeBind>] -Identity <ListItemPipeBind> -Batch <PnPB
 
 ## DESCRIPTION
 
+Allows to modify a list item.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
@@ -228,8 +230,6 @@ Rich text: -Values @{"MultiTextField" = "&lt;strong&gt;New&lt;/strong&gt; text"}
 Choice: -Values @{"ChoiceField" = "Value 1"}
 
 Number: -Values @{"NumberField" = "10"}
-
-Currency: -Values @{"NumberField" = "10"}
 
 Currency: -Values @{"CurrencyField" = "10"}
 

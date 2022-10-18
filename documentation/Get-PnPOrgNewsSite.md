@@ -25,6 +25,8 @@ Get-PnPOrgNewsSite [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve list of all the configured organizational news sites.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

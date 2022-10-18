@@ -52,6 +52,22 @@ Set-PnPContentType -Identity "Project Document" -List "Projects" -Name "Project 
 
 This will update a content type called "Project Document" in the list called "Projects" in the current web and rename it to "Project Documentation" and change its description to "Documentation for projects".
 
+### EXAMPLE 4
+
+```powershell
+Set-PnPContentType -Identity "Project Document" -List "Projects" -FormClientSideComponentId "dfed9a30-ec25-4aaf-ae9f-a68f3598f13a" -FormClientSideComponentProperties '{ "someKey": "some value" }'
+```
+
+This will update a content type called "Project Document" in the list called "Projects" in the current web and connect an SPFx Form Customizer to it for form customization purposes. It updates the display, new item and edit item forms all at the same time.
+
+### EXAMPLE 5
+
+```powershell
+Set-PnPContentType -Identity "Project Document" -List "Projects" -DisplayFormClientSideComponentId "dfed9a30-ec25-4aaf-ae9f-a68f3598f13a" -DisplayFormClientSideComponentProperties '{ "someKey": "some value" }'
+```
+
+This will update a content type called "Project Document" in the list called "Projects" in the current web and connect an SPFx Form Customizer to it for form customization purposes. It only updates the display form, leaving the new item and edit item forms as they are.
+
 ## PARAMETERS
 
 ### -Connection
@@ -151,6 +167,126 @@ The updated description of the content type.
 ```yaml
 Type: String
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisplayFormClientSideComponentId
+
+The component ID of an SPFx Form Customizer to connect to this content type for usage with display forms.
+
+```yaml
+Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisplayFormClientSideComponentProperties
+
+The component properties of an SPFx Form Customizer to connect to this content type for usage with display forms.
+
+```yaml
+Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NewFormClientSideComponentId
+
+The component ID of an SPFx Form Customizer to connect to this content type for usage with new item forms.
+
+```yaml
+Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NewFormClientSideComponentProperties
+
+The component properties of an SPFx Form Customizer to connect to this content type for usage with new item forms.
+
+```yaml
+Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EditFormClientSideComponentId
+
+The component ID of an SPFx Form Customizer to connect to this content type for usage with edit item forms.
+
+```yaml
+Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EditFormClientSideComponentProperties
+
+The component properties of an SPFx Form Customizer to connect to this content type for usage with edit item forms.
+
+```yaml
+Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FormClientSideComponentId
+
+Convenience option to set the component ID of an SPFx Form Customizer to connect to this content type for usage with new, edit and display forms.
+
+```yaml
+Type: String
+Parameter Sets: Form Customizers Convenience Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FormClientSideComponentProperties
+
+Convenience option to set the component properties of an SPFx Form Customizer to connect to this content type for usage with new, edit and display forms.
+
+```yaml
+Type: String
+Parameter Sets: Form Customizers Convenience Options
 
 Required: False
 Position: Named

@@ -20,6 +20,8 @@ Remove-PnPStorageEntity -Key <String> [-Scope <StorageEntityScope>] [-Connection
 
 ## DESCRIPTION
 
+Allows to remove Storage Entities / Farm Properties from either the tenant scoped app catalog or the current site collection app catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

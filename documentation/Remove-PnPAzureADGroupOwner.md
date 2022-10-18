@@ -26,6 +26,8 @@ Remove-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]>
 
 ## DESCRIPTION
 
+Allows to remove owners from Azure Active Directory group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

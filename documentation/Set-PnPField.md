@@ -21,6 +21,8 @@ Set-PnPField [-List <ListPipeBind>] [-Identity] <FieldPipeBind> -Values <Hashtab
 
 ## DESCRIPTION
 
+Allows to modify a field in a specific list or for site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

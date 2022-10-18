@@ -27,6 +27,8 @@ Get-PnPTeamsChannelMessageReply -Team <TeamsTeamPipeBind> -Channel <TeamsChannel
 
 ## DESCRIPTION
 
+Allows to retrieve replies from the specified channel message.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
