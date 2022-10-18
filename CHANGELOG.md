@@ -89,6 +89,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- James Eccles [jameseccles]
 - Martin Lingstuyl [martinlingstuyl]
 - Antti K. Koskela [koskila]
 - Dan Toft [tandddant]
