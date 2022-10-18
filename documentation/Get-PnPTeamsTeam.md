@@ -71,7 +71,7 @@ Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
-Parameter Sets: (All)
+Parameter Sets: Identity
 
 Required: False
 Position: Named
@@ -85,7 +85,7 @@ Specify the query to pass to Graph API in $filter.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Filter
 
 Required: False
 Position: Named
