@@ -12,7 +12,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
 ## SYNOPSIS
 Returns the libraries to which a Microsoft Syntex model was published.
 
-This cmdlet only works when you've connected to a Microsoft Syntex Content Center site.
+This cmdlet only works when you've connected to a Syntex Content Center site.
 
 ## SYNTAX
 
@@ -22,7 +22,7 @@ Get-PnPSyntexModelPublications -Model <SyntexModelPipeBind> [-Connection <PnPCon
 ```
 
 ## DESCRIPTION
-This command returns the libraries to which a Microsoft Syntex content understanding model defined in the connected Microsoft Syntex Content Center site was published.
+This command returns the libraries to which a Syntex document processing model defined in the connected Syntex Content Center site was published.
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ This command returns the libraries to which a Microsoft Syntex content understan
 Get-PnPSyntexModelPublication -Identity "Invoice model"
 ```
 
-Gets the libraries to which the content understanding model named "Invoice model" was published.
+Gets the libraries to which the document processing model named "Invoice model" was published.
 
 ## PARAMETERS
 
@@ -50,7 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -Model
-The name or id of the Microsoft Syntex model.
+The name or id of the Syntex model.
 
 ```yaml
 Type: SyntexModelPipeBind
