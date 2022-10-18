@@ -28,7 +28,7 @@ Add-PnPWebPartToWebPartPage -ServerRelativePageUrl <String> -Path <String> -Zone
 
 ## DESCRIPTION
 
-Allows to add a web part to a web part page. Use the `ZoneIndex` option to specifi the zone.
+Allows to add a web part to a web part page. Use the `ZoneIndex` option to specify the zone.
 
 ## EXAMPLES
 

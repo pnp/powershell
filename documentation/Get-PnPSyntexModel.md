@@ -14,6 +14,7 @@ Returns Microsoft Syntex models from a Syntex Content Center.
 
 This cmdlet only works when you've connected to a Syntex Content Center site.
 
+
 ## SYNTAX
 
 ```powershell
