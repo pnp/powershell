@@ -106,6 +106,14 @@
 <pre><code class="lang-powershell">Set-PnPContentType -Identity &quot;Project Document&quot; -List &quot;Projects&quot; -Name &quot;Project Documentation&quot; -Description &quot;Documentation for projects&quot;
 </code></pre>
 <p>This will update a content type called &quot;Project Document&quot; in the list called &quot;Projects&quot; in the current web and rename it to &quot;Project Documentation&quot; and change its description to &quot;Documentation for projects&quot;.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Set-PnPContentType -Identity &quot;Project Document&quot; -List &quot;Projects&quot; -FormClientSideComponentId &quot;dfed9a30-ec25-4aaf-ae9f-a68f3598f13a&quot; -FormClientSideComponentProperties '{ &quot;someKey&quot;: &quot;some value&quot; }'
+</code></pre>
+<p>This will update a content type called &quot;Project Document&quot; in the list called &quot;Projects&quot; in the current web and connect an SPFx Form Customizer to it for form customization purposes. It updates the display, new item and edit item forms all at the same time.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Set-PnPContentType -Identity &quot;Project Document&quot; -List &quot;Projects&quot; -DisplayFormClientSideComponentId &quot;dfed9a30-ec25-4aaf-ae9f-a68f3598f13a&quot; -DisplayFormClientSideComponentProperties '{ &quot;someKey&quot;: &quot;some value&quot; }'
+</code></pre>
+<p>This will update a content type called &quot;Project Document&quot; in the list called &quot;Projects&quot; in the current web and connect an SPFx Form Customizer to it for form customization purposes. It only updates the display form, leaving the new item and edit item forms as they are.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -177,6 +185,94 @@ Accept wildcard characters: False
 <p>The updated description of the content type.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-displayformclientsidecomponentid">-DisplayFormClientSideComponentId</h3>
+<p>The component ID of an SPFx Form Customizer to connect to this content type for usage with display forms.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-displayformclientsidecomponentproperties">-DisplayFormClientSideComponentProperties</h3>
+<p>The component properties of an SPFx Form Customizer to connect to this content type for usage with display forms.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-newformclientsidecomponentid">-NewFormClientSideComponentId</h3>
+<p>The component ID of an SPFx Form Customizer to connect to this content type for usage with new item forms.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-newformclientsidecomponentproperties">-NewFormClientSideComponentProperties</h3>
+<p>The component properties of an SPFx Form Customizer to connect to this content type for usage with new item forms.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-editformclientsidecomponentid">-EditFormClientSideComponentId</h3>
+<p>The component ID of an SPFx Form Customizer to connect to this content type for usage with edit item forms.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-editformclientsidecomponentproperties">-EditFormClientSideComponentProperties</h3>
+<p>The component properties of an SPFx Form Customizer to connect to this content type for usage with edit item forms.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Form Customizers Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-formclientsidecomponentid">-FormClientSideComponentId</h3>
+<p>Convenience option to set the component ID of an SPFx Form Customizer to connect to this content type for usage with new, edit and display forms.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Form Customizers Convenience Options
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-formclientsidecomponentproperties">-FormClientSideComponentProperties</h3>
+<p>Convenience option to set the component properties of an SPFx Form Customizer to connect to this content type for usage with new, edit and display forms.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Form Customizers Convenience Options
 
 Required: False
 Position: Named
