@@ -49,6 +49,13 @@ Get-PnPAzureADApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
 
 This returns the Azure AD App registration with the app id specified or the id specified.
 
+### Example 4
+```powershell
+Get-PnPAzureADApp -Filter "startswith(description, 'contoso')"
+```
+
+This returns the Azure AD App registrations with the description starting with "contoso". This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties)
+
 ## PARAMETERS
 
 ### -Identity
@@ -56,8 +63,22 @@ Specify the display name, id or app id.
 
 ```yaml
 Type: AzureADAppPipeBind
-Parameter Sets: (All)
+Parameter Sets: Identity
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Filter
+Specify the query to pass to Graph API in $filter.
+
+```yaml
+Type: String
+Parameter Sets: Filter
 
 Required: False
 Position: Named
