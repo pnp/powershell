@@ -44,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPMicrosoft365ExpiringGroup` cmdlet to retrieve Microsoft 365 groups which are nearing expiration.[#2466](https://github.com/pnp/powershell/pull/2466)
 - Added additional parameters to `Set-PnPContentType` cmdlet to support SPFx form customizer related properties.[#2456](https://github.com/pnp/powershell/pull/2456)
 - Added `-Filter` parameter to `Get-PnPAzureADApp` cmdlet to retrieve specific Azure AD apps based on filter conditions. It suppports simple and advanced queries. [#2477](https://github.com/pnp/powershell/pull/2477)
+- Added `Get-PnPDeletedTeam` cmdlet to retrieve all deleted Microsoft Teams teams [#2487](https://github.com/pnp/powershell/pull/2487)
 
 ### Changed
 
