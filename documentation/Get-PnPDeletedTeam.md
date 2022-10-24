@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPDeletedTeam.html
 
   * Microsoft Graph API : Team.ReadBasic.All
 
-Gets list of deleted Teams team.
+Gets list of deleted Teams teams.
 
 ## SYNTAX
 
@@ -25,7 +25,7 @@ Get-PnPDeletedTeam
 
 ## DESCRIPTION
 
-Allows to retrieve list of deleted Microsoft Teams teams
+Allows to retrieve a list of deleted Microsoft Teams teams
 
 ## EXAMPLES
 
@@ -34,7 +34,7 @@ Allows to retrieve list of deleted Microsoft Teams teams
 Get-PnPDeletedTeam
 ```
 
-Retrieves all the deleted Microsoft Teams.
+Retrieves all the deleted Microsoft Teams teams.
 
 ## PARAMETERS
 
