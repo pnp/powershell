@@ -7,6 +7,7 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPDeletedTeam")]
     [RequiredMinimalApiPermissions("Team.ReadBasic.All")]
+    [OutputType(typeof(Model.Teams.DeletedTeam))]
     public class GetDeletedTeamsTeam : PnPGraphCmdlet
     {
         protected override void ExecuteCmdlet()
