@@ -44,7 +44,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPMicrosoft365ExpiringGroup` cmdlet to retrieve Microsoft 365 groups which are nearing expiration.[#2466](https://github.com/pnp/powershell/pull/2466)
 - Added additional parameters to `Set-PnPContentType` cmdlet to support SPFx form customizer related properties.[#2456](https://github.com/pnp/powershell/pull/2456)
 - Added `-Filter` parameter to `Get-PnPAzureADApp` cmdlet to retrieve specific Azure AD apps based on filter conditions. It suppports simple and advanced queries. [#2477](https://github.com/pnp/powershell/pull/2477)
-- Added [Documentation of using PnP.PowerShell with Docker](https://pnp.github.io/powershell/articles/docker.html). [#2008](https://github.com/pnp/powershell/pull/2008)
 
 ### Changed
 
@@ -90,7 +89,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
-- Aleksandr Sapozhkov [shurick81]
 - James Eccles [jameseccles]
 - Martin Lingstuyl [martinlingstuyl]
 - Antti K. Koskela [koskila]
