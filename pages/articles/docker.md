@@ -30,8 +30,6 @@ After that you can start running commands like `Connect-PnPOnline`.
 
 ## Installing Docker locally
 
-\<to be verified\>
-
 - Mac OS:
 
     1. Install
@@ -94,8 +92,6 @@ Sometimes you want to run inline PnP.PowerShell commands.
 
 - Linux/WSL/Mac OS:
 
-    \<to be verified\>
-
     ```bash
     docker run --rm -it m365pnp/powershell
     ```
@@ -111,8 +107,6 @@ After that you can start running commands like `Connect-PnPOnline`.
 Mind you that in the case above, the container will have an isolated disk system so the commands that you run inside the container will not be able to access files from your host machine. However, sometimes you might want to run a script or use some files from your host OS (for example, when you have a ps1 file in a git repository that you cloned to your laptop). In this case you will need to mount a directory on your host as a volume inside the container. See the following examples.
 
 - Linux/WSL/Mac OS:
-
-    \<to be verified\>
 
     ```bash
     docker run --rm -it -v "$(pwd):/home" -w /home m365pnp/powershell
@@ -130,8 +124,6 @@ The examples above start new container and allow you to interactively use contai
 
 - Linux/WSL/Mac OS:
 
-    \<to be verified\>
-
     ```bash
     docker run --rm -v "$(pwd):/home" -w /home m365pnp/powershell pwsh test.ps1
     ```
@@ -145,8 +137,6 @@ The examples above start new container and allow you to interactively use contai
 Finally, your scripts might have parametrization so that you can run the same code in different cases/environments. This is the way to provide variable values.
 
 - Linux/WSL/Mac OS:
-
-    \<to be verified\>
 
     ```bash
     ParameterValue="test"
