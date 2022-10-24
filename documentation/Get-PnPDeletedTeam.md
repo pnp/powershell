@@ -53,4 +53,5 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/teamwork-list-deletedteams)
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
