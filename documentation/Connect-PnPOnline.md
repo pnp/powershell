@@ -70,12 +70,12 @@ Connect-PnPOnline -Url <String> -TransformationOnPrem [-CurrentCredential]
 
 ### Access Token
 ```
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-AzureEnvironment <AzureEnvironment>] -AccessToken <String> [<CommonParameters>]
+Connect-PnPOnline -Url <String> -AccessToken <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### Managed Identity
 ```
-Connect-PnPOnline [-UserAssignedManagedIdentityObjectId <String>] [-NoTelemetry] [<CommonParameters>]
+Connect-PnPOnline -Url <String> [-UserAssignedManagedIdentityObjectId <String>]
 ```
 
 ## DESCRIPTION
