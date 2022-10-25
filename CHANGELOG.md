@@ -29,7 +29,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `ImageUrl`, `PageImageAlignment`, `ImageHeight` and `ImageWidth` parameters to `Add-PnPPageTextPart` cmdlet so that users can add an inline image into a text webpart. [#2401](https://github.com/pnp/powershell/pull/2401)
 - Added `TextBeforeImage` and `TextAfterImage` parameters to `Add-PnPPageTextPart` cmdlet so that users can add before and after text for an inline image into a text webpart. [#2403](https://github.com/pnp/powershell/pull/2403)
 - Added `Add-PnPPageImageWebPart` cmdlet to allow users to easily add Image to a modern page. [#2406](https://github.com/pnp/powershell/pull/2406)
-- Added Managed Identity support for SharePoint Online cmdlets. [#2354](https://github.com/pnp/powershell/pull/2354)
+- Added system assigned Managed Identity support for SharePoint Online cmdlets. [#2354](https://github.com/pnp/powershell/pull/2354)
+- Added user assigned Managed Identity support for Microsoft Graph and SharePoint Online cmdlets. [#2491](https://github.com/pnp/powershell/pull/2491)
 - Added `Get-PnPTeamsTag` cmdlet to retrieve Team tags information. [#2414](https://github.com/pnp/powershell/pull/2414)
 - Added `Properties` attribute to `Update-PnPVivaConnectionsDashboardACE` to allow for updating the properties of a Viva Connections dashboard ACE component using its typed properties [#2433](https://github.com/pnp/powershell/pull/2433)
 - Added `Set-PnPTeamsTag` cmdlet to update Team tags information. [#2419](https://github.com/pnp/powershell/pull/2419)
@@ -44,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPMicrosoft365ExpiringGroup` cmdlet to retrieve Microsoft 365 groups which are nearing expiration.[#2466](https://github.com/pnp/powershell/pull/2466)
 - Added additional parameters to `Set-PnPContentType` cmdlet to support SPFx form customizer related properties.[#2456](https://github.com/pnp/powershell/pull/2456)
 - Added `-Filter` parameter to `Get-PnPAzureADApp` cmdlet to retrieve specific Azure AD apps based on filter conditions. It suppports simple and advanced queries. [#2477](https://github.com/pnp/powershell/pull/2477)
+- Added `Get-PnPDeletedTeam` cmdlet to retrieve all deleted Microsoft Teams teams [#2487](https://github.com/pnp/powershell/pull/2487)
 
 ### Changed
 
@@ -86,6 +88,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with writing warning or error messages in Azure automation or screens with small width. [#2438](https://github.com/pnp/powershell/pull/2438)
 - Fixed issue with `Enable-PnPTenantServicePrincipal` not respecting `-Force` parameter. [#2448](https://github.com/pnp/powershell/pull/2448)
 - Fixed issue with `Get-PnPRecycleBinItem` not working when there are large number of items in recycle bin.[#2472](https://github.com/pnp/powershell/pull/2472)
+- Fixed Microsoft Graph based cmdlets not showing detailed error results when a call fails [#2490](https://github.com/pnp/powershell/pull/2490)
 
 ### Contributors
 
