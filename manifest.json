@@ -42,7 +42,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/azurefunctions.html",
-          "hash": "Glz/rtN3HUwc4N/C8KoBHw=="
+          "hash": "e0oNJ0WDY487QUUhOXxCJg=="
         }
       },
       "is_incremental": false,
@@ -2107,6 +2107,18 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPDeletedMicrosoft365Group.html",
           "hash": "qKyhDxAnFF7/4ZqrXFNzhw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPDeletedTeam.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPDeletedTeam.html",
+          "hash": "AOe/1STh9BFw0t2kpd06JA=="
         }
       },
       "is_incremental": false,
@@ -7872,7 +7884,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "3f5Wp8qTFAfNmalkBZjhNw=="
+          "hash": "j5/YV/CdWVfZr8+bm6awSQ=="
         }
       },
       "is_incremental": false,
@@ -8094,7 +8106,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 653,
+          "total_file_count": 654,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
