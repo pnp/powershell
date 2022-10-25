@@ -15,17 +15,17 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPOrgAssetsLibr
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Removes a given document library as a organizational asset source
+Removes a given document library as an organizational asset source.
 
 ## SYNTAX
 
 ```powershell
 Remove-PnPOrgAssetsLibrary -LibraryUrl <String> [-ShouldRemoveFromCdn <Boolean>] [-CdnType <SPOTenantCdnType>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Removes a given document library as a organizational asset source based on its server relative URL in your SharePoint Online Tenant. It will not remove the document library itself. It may take some time before this change will be reflected in the webinterface.
+Removes a given document library as an organizational asset source based on its server relative URL in your SharePoint Online tenant. It will not remove the document library itself. It may take some time before this change will be reflected in the web interface.
 
 ## EXAMPLES
 
@@ -34,21 +34,21 @@ Removes a given document library as a organizational asset source based on its s
 Remove-PnPOrgAssetsLibrary -LibraryUrl "sites/branding/logos"
 ```
 
-This example removes the document library with the url "logos" residing in the sitecollection with the url "sites/branding/logos" from the list with organizational assets keeping it as an Office 365 CDN source
+This example removes the document library with the url "logos" residing in the site collection with the url "sites/branding" from the list with organizational assets keeping it as an Office 365 CDN source.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPOrgAssetsLibrary -LibraryUrl "sites/branding/logos" -ShouldRemoveFromCdn $true
 ```
 
-This example removes the document library with the url "logos" residing in the sitecollection with the url "sites/branding/logos" from the list with organizational assets also removing it as a Public Office 365 CDN source
+This example removes the document library with the url "logos" residing in the site collection with the url "sites/branding" from the list with organizational assets also removing it as a Public Office 365 CDN source.
 
 ### EXAMPLE 3
 ```powershell
 Remove-PnPOrgAssetsLibrary -LibraryUrl "sites/branding/logos" -ShouldRemoveFromCdn $true -CdnType Private
 ```
 
-This example removes the document library with the url "logos" residing in the sitecollection with the url "sites/branding/logos" from the list with organizational assets also removing it as a Private Office 365 CDN source
+This example removes the document library with the url "logos" residing in the site collection with the url "sites/branding" from the list with organizational assets also removing it as a Private Office 365 CDN source.
 
 ## PARAMETERS
 
@@ -62,7 +62,7 @@ Accepted values: Public, Private
 
 Required: False
 Position: Named
-Default value: None
+Default value: Public
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -96,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShouldRemoveFromCdn
-Boolean indicating if the document library that will no longer be flagged as an organizational asset also needs to be removed as an Office 365 CDN source
+Boolean indicating if the document library that will no longer be flagged as an organizational asset also needs to be removed as an Office 365 CDN source.
 
 ```yaml
 Type: Boolean
@@ -104,7 +104,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
