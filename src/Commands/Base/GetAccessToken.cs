@@ -32,12 +32,10 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter Decoded;
         protected override void ExecuteCmdlet()
         {
-            var accessTokenValue = AccessToken;
+            string accessTokenValue = null;
 
             if (ParameterSetName == ResourceTypeParam)
             {
-                accessTokenValue = null;
-
                 switch (ResourceTypeName)
                 {
                     case ResourceTypeName.Graph:
@@ -60,6 +58,11 @@ namespace PnP.PowerShell.Commands.Base
             else if (ParameterSetName == ResourceUrlParam)
             {
                 accessTokenValue = TokenHandler.GetAccessToken(null, ResourceUrl, Connection);
+            }
+
+            if(accessTokenValue == null)
+            {
+                WriteError(new PSArgumentException("Unable to retrieve access token"), ErrorCategory.InvalidResult);
             }
 
             if (Decoded.IsPresent)

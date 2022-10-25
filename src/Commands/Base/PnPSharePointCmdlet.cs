@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands
         public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
         /// <summary>
-        /// The current Bearer access token for SharePoitn Online
+        /// The current Bearer access token for SharePoint Online
         /// </summary>
         protected string AccessToken
         {
@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands
                     {
                         var resourceUri = new Uri(Connection.Url);
                         var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
-                        return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, defaultResource).GetAwaiter().GetResult();
+                        return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, defaultResource, Connection.UserAssignedManagedIdentityObjectId).GetAwaiter().GetResult();
                     }
                     else
                     {

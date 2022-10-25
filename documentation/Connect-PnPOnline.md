@@ -75,7 +75,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-AzureEnvironment <AzureE
 
 ### Managed Identity
 ```
-Connect-PnPOnline [-NoTelemetry] [<CommonParameters>]
+Connect-PnPOnline [-UserAssignedManagedIdentityObjectId <String>] [-NoTelemetry] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -183,13 +183,21 @@ See http://aka.ms/sharepoint/modernization/pages for more details on page transf
 
 ### EXAMPLE 12
 ```
-Connect-PnPOnline -ManagedIdentity
+Connect-PnPOnline -Url contoso.sharepoint.com -ManagedIdentity
 Get-PnPTeamsTeam
 ```
 
-Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
+Connects using a system assigned managed identity to Microsoft Graph. Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
 
 ### EXAMPLE 13
+```
+Connect-PnPOnline -Url contoso.sharepoint.com -ManagedIdentity -UserAssignedManagedIdentityObjectId 363c1b31-6872-47fd-a616-574d3aec2a51
+Get-PnPList
+```
+
+Connects using an user assigned managed identity with object/principal ID 363c1b31-6872-47fd-a616-574d3aec2a51 to SharePoint Online. Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
+
+### EXAMPLE 14
 ```
 Connect-PnPOnline -Url contoso.sharepoint.com -AccessToken $token
 ```
@@ -598,12 +606,27 @@ Accept wildcard characters: False
 ```
 
 ### -ManagedIdentity
-For use with Azure Functions, Azure Automation Runbooks (if configured to use a managed identity) or Azure Cloud Shell only.
+Connects using an Azure Managed Identity. For use with Azure Functions, Azure Automation Runbooks (if configured to use a managed identity) or Azure Cloud Shell only.
 This method will acquire a token using the built-in endpoints in the Azure Cloud Shell, Azure Automation Runbooks and Azure Functions.
 Read up on [the documentation](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) on how to make use of this option.
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: Managed Identity
+Aliases:
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserAssignedManagedIdentityObjectId
+Can be used in combination with `-ManagedIdentity` to specify the object/principal id of the user assigned managed identity to use. If not provided, a system assigned managed identity will be used.
+
+```yaml
+Type: String
 Parameter Sets: Managed Identity
 Aliases:
 
