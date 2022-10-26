@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Remove-PnPOrgAssetsLibrary | PnP PowerShell </title>
+    <title>Docker with Linux/Mac OS/WSL: | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Remove-PnPOrgAssetsLibrary | PnP PowerShell ">
+    <meta name="title" content="Docker with Linux/Mac OS/WSL: | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -79,83 +79,34 @@
             <article class="content wrap" id="_content" data-uid="">
                 
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/building-documentation.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="remove-pnporgassetslibrary">Remove-PnPOrgAssetsLibrary</h1>
+                    <h1 id="docker-with-linuxmac-oswsl">Docker with Linux/Mac OS/WSL:</h1>
 
-<h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
-</ul>
-<p>Removes a given document library as an organizational asset source.</p>
-<h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPOrgAssetsLibrary -LibraryUrl &lt;String&gt; [-ShouldRemoveFromCdn &lt;Boolean&gt;] [-CdnType &lt;SPOTenantCdnType&gt;]
- [-Connection &lt;PnPConnection&gt;]
+<h2 id="build-documentation">Build Documentation</h2>
+<pre><code class="lang-bash">docker run --rm -it -v $(pwd):/home mono:6.12.0.182 sh -c &quot;apt update &amp;&amp; apt upgrade -y &amp;&amp; apt install wget unzip -y; \
+    wget https://github.com/dotnet/docfx/releases/download/v2.51/docfx.zip; \
+    unzip docfx.zip -d /usr/local/lib/docfx; \
+    chmod +x /usr/local/lib/docfx/docfx.exe; \
+    /usr/bin/mono /usr/local/lib/docfx/docfx.exe build /home/pages/docfx.json;&quot;
 </code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<p>Removes a given document library as an organizational asset source based on its server relative URL in your SharePoint Online tenant. It will not remove the document library itself. It may take some time before this change will be reflected in the web interface.</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPOrgAssetsLibrary -LibraryUrl &quot;sites/branding/logos&quot;
+<h2 id="clean-documentation">Clean documentation</h2>
+<pre><code class="lang-bash">rm -rf ./pages/_site
 </code></pre>
-<p>This example removes the document library &quot;logos&quot; residing in the site collection with the url &quot;sites/branding&quot; from the list with organizational assets keeping it as an Office 365 CDN source.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPOrgAssetsLibrary -LibraryUrl &quot;sites/branding/logos&quot; -ShouldRemoveFromCdn $true
+<h1 id="docker-with-windows-cmd">Docker with Windows CMD</h1>
+<h2 id="build-documentation-1">Build Documentation</h2>
+<pre><code class="lang-bat">docker run --rm -it -v %cd%:C:\workplace mcr.microsoft.com/windows/servercore:10.0.17763.2366-amd64 powershell -c $ProgressPreference = 'SilentlyContinue'; ^
+    Invoke-WebRequest https://github.com/dotnet/docfx/releases/download/v2.51/docfx.zip -OutFile $env:TEMP\docfx.zip; ^
+    Expand-Archive $env:TEMP\docfx.zip $env:TEMP\docfx; ^
+    Start-Process -NoNewWindow -FilePath $env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\pages\docfx.json -Wait
 </code></pre>
-<p>This example removes the document library &quot;logos&quot; residing in the site collection with the url &quot;sites/branding&quot; from the list with organizational assets also removing it as a Public Office 365 CDN source.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Remove-PnPOrgAssetsLibrary -LibraryUrl &quot;sites/branding/logos&quot; -ShouldRemoveFromCdn $true -CdnType Private
+<h1 id="docker-with-windows-powershell">Docker with Windows PowerShell</h1>
+<h2 id="build-documentation-2">Build Documentation</h2>
+<pre><code class="lang-powershell">docker run --rm -it -v ${pwd}:C:\workplace mcr.microsoft.com/windows/servercore:10.0.17763.2366-amd64 powershell -c &quot;`$ProgressPreference = 'SilentlyContinue'; `
+    Invoke-WebRequest https://github.com/dotnet/docfx/releases/download/v2.51/docfx.zip -OutFile `$env:TEMP\docfx.zip; `
+    Expand-Archive `$env:TEMP\docfx.zip `$env:TEMP\docfx; `
+    Start-Process -NoNewWindow -FilePath `$env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\pages\docfx.json -Wait&quot;
 </code></pre>
-<p>This example removes the document library &quot;logos&quot; residing in the site collection with the url &quot;sites/branding&quot; from the list with organizational assets also removing it as a Private Office 365 CDN source.</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-cdntype">-CdnType</h3>
-<p>Indicates what type of Office 365 CDN source the document library that will no longer be flagged as an organizational asset was of</p>
-<pre><code class="lang-yaml">Type: SPOTenantCdnType
-Parameter Sets: (All)
-Accepted values: Public, Private
-
-Required: False
-Position: Named
-Default value: Public
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-libraryurl">-LibraryUrl</h3>
-<p>The server relative url of the document library flagged as organizational asset which you want to remove, i.e. &quot;sites/branding/logos&quot;</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-shouldremovefromcdn">-ShouldRemoveFromCdn</h3>
-<p>Boolean indicating if the document library that will no longer be flagged as an organizational asset also needs to be removed as an Office 365 CDN source.</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

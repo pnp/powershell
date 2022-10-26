@@ -62,6 +62,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/building-documentation.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/building-documentation.html",
+          "hash": "LEEIvsxqZUTj8q7Ckal2Nw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/buildingsource.md",
       "output": {
         ".html": {
@@ -113,6 +125,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/docker.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/docker.html",
+          "hash": "5xa0N+AYJ+QYE5HFWjciJg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/index.md",
       "output": {
         ".html": {
@@ -153,7 +177,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "H8hTywwbnjZ67tgDmc4R3g=="
+          "hash": "/i8jhxV3MNcZfShGFo8Umw=="
         }
       },
       "is_incremental": false,
@@ -1269,7 +1293,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Connect-PnPOnline.html",
-          "hash": "wn2q0A7LAw9+jW3a11xRVw=="
+          "hash": "Od33oCx3voyCdPydm5kTqw=="
         }
       },
       "is_incremental": false,
@@ -5385,7 +5409,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPOrgAssetsLibrary.html",
-          "hash": "ERubhqUlm9ndF/dKVZzyUQ=="
+          "hash": "RcvYxLr0fgxRp2UY3Atgxg=="
         }
       },
       "is_incremental": false,
@@ -8058,6 +8082,17 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/docker/dockercontainers.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/docker/dockercontainers.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/logo.svg",
       "output": {
         "resource": {
@@ -8073,7 +8108,7 @@
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "59+YOH8fsX7FpLLP6CkvPA=="
+          "hash": "ycR5AvQxX8OFjJJ/115oKA=="
         }
       },
       "is_incremental": false,
@@ -8106,7 +8141,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 654,
+          "total_file_count": 656,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
