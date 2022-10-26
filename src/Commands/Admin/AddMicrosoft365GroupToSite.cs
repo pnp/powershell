@@ -4,7 +4,6 @@ using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using PnP.Framework.Sites;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -12,7 +11,7 @@ namespace PnP.PowerShell.Commands.Admin
     [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupToSite")]
     public class AddMicrosoft365GroupToSite: PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         public string Url;
 
         [Parameter(Mandatory = true)]
@@ -54,6 +53,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (ParameterSpecified(nameof(HubSiteId)))
             {
                 groupifyInformation.HubSiteId = HubSiteId;
+            }
+
+            if (!ParameterSpecified(nameof(Url)))
+            {
+                Url = Connection.Url;
             }
 
             Tenant.GroupifySite(Url, groupifyInformation);
