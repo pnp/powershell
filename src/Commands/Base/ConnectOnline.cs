@@ -180,6 +180,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
         public SwitchParameter ManagedIdentity;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
+        public string UserAssignedManagedIdentityObjectId;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         public SwitchParameter TransformationOnPrem;
 
@@ -556,7 +559,7 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectManagedIdentity()
         {
             WriteVerbose("Connecting using Managed Identity");
-            return PnPConnection.CreateWithManagedIdentity(this, Url, TenantAdminUrl);
+            return PnPConnection.CreateWithManagedIdentity(this, Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId);
         }
 
         private PnPConnection ConnectWebLogin()

@@ -33,6 +33,8 @@ docker run -it m365pnp/powershell
 
 See the [articles](/powershell/articles) section for more information on authentication and configuration. All [cmdlets](/powershell/cmdlets/Add-PnPAlert.html) have been documented too.
 
+See [Using PnP PowerShell in Docker containers](/powershell/articles/docker.html) article for information how to run PnP.PowerShell without installing it.
+
 # I've found a bug, where do I need to log an issue or create a PR
 
 You can create an issue at https://github.com/pnp/powershell/issues, but please consider first if asking a question at https://github.com/pnp/powershell/discussions is more appropriate. We would like to focus the issues on actual bugs whereas PnP PowerShell related questions can be asked in the discussions section.
