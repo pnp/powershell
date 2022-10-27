@@ -84,43 +84,42 @@
                     <h1 id="remove-pnpnavigationnode">Remove-PnPNavigationNode</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a menu item from either the quicklaunch or top navigation</p>
+<p>Removes a menu item from either the quick launch or top navigation.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="remove-a-node-by-id-default">Remove a node by ID (Default)</h3>
 <pre><code class="lang-powershell">Remove-PnPNavigationNode [-Identity] &lt;NavigationNodePipeBind&gt; [-Force] 
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="remove-node-by-title">Remove node by Title</h3>
 <pre><code class="lang-powershell">Remove-PnPNavigationNode [-Location] &lt;NavigationType&gt; -Title &lt;String&gt; [-Header &lt;String&gt;] [-Force]
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="all-nodes">All Nodes</h3>
 <pre><code class="lang-powershell">Remove-PnPNavigationNode [-All] [-Force] [-Connection &lt;PnPConnection&gt;] 
-  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to remove menu item from either the quicklaunch or top navigation.</p>
+<p>Allows to remove menu item from either the quick launch or top navigation.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPNavigationNode -Identity 1032
 </code></pre>
-<p>Removes the navigation node with the specified id</p>
+<p>Removes the navigation node with the specified id.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPNavigationNode -Location Footer | Select-Object -First 1 | Remove-PnPNavigationNode -Force
 </code></pre>
-<p>Removes the first node of the footer navigation without asking for confirmation</p>
+<p>Removes the first node of the footer navigation without asking for confirmation.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Remove-PnPNavigationNode -Title Recent -Location QuickLaunch
 </code></pre>
-<p>Will remove the recent navigation node from the quick launch in the current web after confirmation has been given that it should be deleted</p>
+<p>Removes the recent navigation node from the quick launch in the current web after confirmation has been given that it should be deleted.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Remove-PnPNavigationNode -Title Home -Location TopNavigationBar -Force
 </code></pre>
-<p>Will remove the home navigation node from the top navigation bar without prompting for a confirmation in the current web</p>
+<p>Removes the home navigation node from the top navigation bar in the current web without prompting for a confirmation.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Get-PnPNavigationNode -Location QuickLaunch | Remove-PnPNavigationNode -Force
 </code></pre>
-<p>Will remove all the navigation nodes from the quick launch bar without prompting for a confirmation in the current web</p>
+<p>Removes all the navigation nodes from the quick launch bar in the current web without prompting for a confirmation.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-all">-All</h3>
 <p>Specifying the All parameter will remove all the nodes from specified Location.</p>
@@ -128,18 +127,6 @@
 Parameter Sets: All Nodes
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -168,7 +155,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-header">-Header</h3>
-<p>{{ Fill Header Description }}</p>
+<p>Obsolete.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Remove node by Title
 
@@ -179,7 +166,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The Id or node object to delete</p>
+<p>The Id or node object to delete.</p>
 <pre><code class="lang-yaml">Type: NavigationNodePipeBind
 Parameter Sets: Remove a node by ID
 
@@ -190,7 +177,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-location">-Location</h3>
-<p>{{ Fill Location Description }}</p>
+<p>Obsolete.</p>
 <pre><code class="lang-yaml">Type: NavigationType
 Parameter Sets: Remove node by Title
 Accepted values: TopNavigationBar, QuickLaunch, SearchNav, Footer
@@ -202,23 +189,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-title">-Title</h3>
-<p>{{ Fill Title Description }}</p>
+<p>Obsolete.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Remove node by Title
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -100,7 +100,11 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPMicrosoft365GroupToSite -Url &quot;https://contoso.sharepoint.com/sites/FinanceTeamsite&quot; -Alias &quot;FinanceTeamsite&quot; -DisplayName &quot;My finance team site group&quot;
 </code></pre>
-<p>This will groupify the FinanceTeamsite</p>
+<p>This will groupify the FinanceTeamsite at the provided URL</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPMicrosoft365GroupToSite -Alias &quot;HRTeamsite&quot; -DisplayName &quot;My HR team site group&quot;
+</code></pre>
+<p>This will groupify the currently connected to site</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-alias">-Alias</h3>
 <p>Specifies the alias of the group. Cannot contain spaces.</p>
@@ -202,11 +206,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-url">-Url</h3>
-<p>Url of the site to be connected to an Microsoft 365 Group</p>
+<p>Url of the site to be connected to an Microsoft 365 Group. When not provided, the site currently being connected to will be used.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

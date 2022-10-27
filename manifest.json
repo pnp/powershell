@@ -633,7 +633,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPMicrosoft365GroupToSite.html",
-          "hash": "0hL9NERtyj479gRtcWA1tQ=="
+          "hash": "1WAX0XjYO55aC6RwO208Qg=="
         }
       },
       "is_incremental": false,
@@ -5397,7 +5397,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPNavigationNode.html",
-          "hash": "Kh3jVVSDq1l0Orr8bE8K3g=="
+          "hash": "S7EIxvZuZSiHfzc7JmcMZA=="
         }
       },
       "is_incremental": false,
