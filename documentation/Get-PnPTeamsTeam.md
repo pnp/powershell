@@ -25,7 +25,7 @@ Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>] [-Filter <String>]  [<CommonPar
 
 ## DESCRIPTION
 
-Allows to retrieve list of Microsoft Teams teams. By using `Identity` it is possible to retrieve a specific team, and by using `Filter` you can supply simple filter queries.
+Allows to retrieve list of Microsoft Teams teams. By using `Identity` it is possible to retrieve a specific team, and by using `Filter` you can supply any filter queries supported by the Graph API.
 
 ## EXAMPLES
 
@@ -57,6 +57,13 @@ Get-PnPTeamsTeam -Filter "startswith(mailNickName, 'contoso')"
 
 Retrieves all Microsoft Teams instances with MailNickName starting with "contoso". 
 
+### EXAMPLE 5
+```powershell
+Get-PnPTeamsTeam -Filter "startswith(description, 'contoso')"
+```
+
+Retrieves all Microsoft Teams instances with Description starting with "contoso". This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties).
+
 ## PARAMETERS
 
 ### -Identity
@@ -64,7 +71,7 @@ Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
-Parameter Sets: (All)
+Parameter Sets: Identity
 
 Required: False
 Position: Named
@@ -78,7 +85,7 @@ Specify the query to pass to Graph API in $filter.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Filter
 
 Required: False
 Position: Named

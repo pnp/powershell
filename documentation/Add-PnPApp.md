@@ -30,14 +30,14 @@ Allows to upload an app to the app catalog at tenant or site collection level. B
 Add-PnPApp -Path ./myapp.sppkg
 ```
 
-This will upload the specified app package to the app catalog
+This will upload the specified app package to the tenant app catalog
 
 ### EXAMPLE 2
 ```powershell
 Add-PnPApp -Path ./myapp.sppkg -Publish
 ```
 
-This will upload the specified app package to the app catalog and deploy/trust it at the same time.
+This will upload the specified app package to the tenant app catalog and deploy/trust it at the same time.
 
 ### EXAMPLE 3
 ```powershell
@@ -45,6 +45,13 @@ Add-PnPApp -Path ./myapp.sppkg -Scope Site -Publish
 ```
 
 This will upload the specified app package to the site collection app catalog and deploy/trust it at the same time.
+
+### EXAMPLE 4
+```powershell
+Add-PnPApp -Path ./myapp.sppkg -Publish -SkipFeatureDeployment
+```
+
+This will upload the specified app package to the tenant app catalog, deploy/trust it and make it globally available on all site collections.
 
 ## PARAMETERS
 
@@ -62,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -Overwrite
-Overwrites the existing app package if it already exists
+When provided, it will overwrite the existing app package if it already exists
 
 ```yaml
 Type: SwitchParameter
@@ -75,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
-Specifies the Id or an actual app metadata instance
+The path to the app package to deploy to the App Catalog
 
 ```yaml
 Type: String
@@ -88,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -Publish
-This will deploy/trust an app into the app catalog
+This will deploy/trust an app into the App Catalog
 
 ```yaml
 Type: SwitchParameter
@@ -101,7 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -Scope
-Defines which app catalog to use. Defaults to Tenant
+Defines which app catalog to use: the site collection scoped App Catalog or the tenant wide App Catalog. Defaults to Tenant.
 
 ```yaml
 Type: AppCatalogScope
@@ -115,6 +122,7 @@ Accept wildcard characters: False
 ```
 
 ### -SkipFeatureDeployment
+When provided, the solution will be globally deployed, meaning one does not have to go into every site to add it as an app to have its components available. Instead they will be available rightaway.
 
 ```yaml
 Type: SwitchParameter
@@ -142,5 +150,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

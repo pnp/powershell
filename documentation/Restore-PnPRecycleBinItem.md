@@ -26,14 +26,14 @@ This cmdlet restores the specified item from the recycle bin to its original loc
 
 ### EXAMPLE 1
 ```powershell
-Restore-PnpRecycleBinItem -Identity 72e4d749-d750-4989-b727-523d6726e442
+Restore-PnPRecycleBinItem -Identity 72e4d749-d750-4989-b727-523d6726e442
 ```
 
 Restores the recycle bin item with Id 72e4d749-d750-4989-b727-523d6726e442 to its original location.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPRecycleBinItem | ? -Property LeafName -like "*.docx" | Restore-PnpRecycleBinItem
+Get-PnPRecycleBinItem | ? -Property LeafName -like "*.docx" | Restore-PnPRecycleBinItem
 ```
 
 Restores all the items of which the filename ends with the .docx extension from the first and second stage recycle bins to their original location. 
@@ -82,7 +82,7 @@ Id of the recycle bin item or the recycle bin item object itself to restore.
 Type: RecycleBinItemPipeBind
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)

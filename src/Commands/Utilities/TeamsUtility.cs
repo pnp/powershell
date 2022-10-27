@@ -26,15 +26,30 @@ namespace PnP.PowerShell.Commands.Utilities
         #region Team
         public static async Task<List<Group>> GetGroupsWithTeamAsync(PnPConnection connection, string accessToken, string filter = null)
         {
+            Dictionary<string, string> additionalHeaders = null;
+            string requestUrl;
+
             if (String.IsNullOrEmpty(filter))
             {
                 filter = "resourceProvisioningOptions/Any(x:x eq 'Team')";
+
+                requestUrl = $"v1.0/groups?$filter={filter}&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}";
+
             }
             else
             {
                 filter = $"({filter}) and resourceProvisioningOptions/Any(x:x eq 'Team')";
+
+                // This query requires ConsistencyLevel header to be set, since "Filter" could have some advanced queries supplied by the user.
+                additionalHeaders = new Dictionary<string, string>();
+                additionalHeaders.Add("ConsistencyLevel", "eventual");
+
+                // $count=true needs to be here for reasons
+                // see this for some additional details: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties
+                requestUrl = $"v1.0/groups?$filter={filter}&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}&$count=true";
             }
-            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"v1.0/groups?$filter={filter}&$select=Id,DisplayName,MailNickName,Description,Visibility&$top={PageSize}", accessToken);
+
+            var collection = await GraphHelper.GetResultCollectionAsync<Group>(connection, requestUrl, accessToken, additionalHeaders: additionalHeaders);
             return collection.ToList();
         }
 
@@ -88,12 +103,14 @@ namespace PnP.PowerShell.Commands.Utilities
         }
         public static async Task<HttpResponseMessage> CloneTeamAsync(string accessToken, PnPConnection connection, string groupId, TeamCloneInformation teamClone)
         {
-            StringContent content = new StringContent(JsonSerializer.Serialize( new { displayName = teamClone.DisplayName , 
-                    classification = teamClone.Classification , 
-                    description = teamClone.Description, 
-                    mailNickname= teamClone.MailNickName , 
-                    visibility = teamClone.Visibility.ToString(),
-                    partsToClone = String.Join(",", teamClone.PartsToClone)
+            StringContent content = new StringContent(JsonSerializer.Serialize(new
+            {
+                displayName = teamClone.DisplayName,
+                classification = teamClone.Classification,
+                description = teamClone.Description,
+                mailNickname = teamClone.MailNickName,
+                visibility = teamClone.Visibility.ToString(),
+                partsToClone = String.Join(",", teamClone.PartsToClone)
             }));
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             return await GraphHelper.PostAsync(connection, $"v1.0/teams/{groupId}/clone", accessToken, content);
@@ -219,7 +236,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     foreach (var member in members)
                     {
                         teamOwnersAndMembers.Add(new TeamChannelMember { Roles = new List<string>(), UserIdentifier = $"https://{connection.GraphEndPoint}/v1.0/users('{member}')" });
-                    }                    
+                    }
                 }
 
                 if (teamOwnersAndMembers.Count > 0)
@@ -320,7 +337,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 group.ResourceBehaviorOptions = teamResourceBehaviorOptionsValue;
             }
 
-            if (sensitivityLabels!= null && sensitivityLabels.Length > 0)
+            if (sensitivityLabels != null && sensitivityLabels.Length > 0)
             {
                 var assignedLabels = new List<AssignedLabels>();
                 foreach (var label in sensitivityLabels)
@@ -331,7 +348,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             labelId = label.ToString()
                         });
-                    }                    
+                    }
                 }
 
                 group.AssignedLabels = assignedLabels;
@@ -420,6 +437,17 @@ namespace PnP.PowerShell.Commands.Utilities
                 return await GraphHelper.PostAsync(connection, $"v1.0/teams/{groupId}/unarchive", accessToken, content);
             }
         }
+
+        public static async Task<IEnumerable<DeletedTeam>> GetDeletedTeamAsync(string accessToken, PnPConnection connection)
+        {
+            // get the deleted team
+            var deletedTeams = await GraphHelper.GetResultCollectionAsync<DeletedTeam>(connection, $"beta/teamwork/deletedTeams", accessToken);
+            if (deletedTeams != null && deletedTeams.Any())
+            {
+                return deletedTeams;
+            }
+            return null;
+        }
         #endregion
 
         #region Users
@@ -444,7 +472,7 @@ namespace PnP.PowerShell.Commands.Utilities
         public static async Task AddUsersAsync(PnPConnection connection, string accessToken, string groupId, string[] upn, string role)
         {
             var teamChannelMember = new List<TeamChannelMember>();
-            if(upn != null && upn.Length > 0)
+            if (upn != null && upn.Length > 0)
             {
                 foreach (var user in upn)
                 {
@@ -458,7 +486,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         await GraphHelper.PostAsync(connection, $"v1.0/teams/{groupId}/members/add", new { values = chunk.ToList() }, accessToken);
                     }
                 }
-            }            
+            }
         }
 
         public static async Task<List<User>> GetUsersAsync(PnPConnection connection, string accessToken, string groupId, string role)
@@ -573,7 +601,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 email = t.email,
                 UserId = t.UserId
             }).ToList();
-            
+
             return teamUserWithDisplayName;
         }
 
@@ -588,7 +616,7 @@ namespace PnP.PowerShell.Commands.Utilities
             var updateUserEndpoint = $"v1.0/teams/{groupId}/members/{teamMemberId}";
 
             var result = await GraphHelper.PatchAsync(connection, accessToken, updateUserEndpoint, teamUser);
-            
+
             return result;
         }
 
@@ -621,7 +649,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 channel.MembershipType = "private";
             }
-            if(channelType == TeamsChannelType.Shared)
+            if (channelType == TeamsChannelType.Shared)
             {
                 channel.MembershipType = "shared";
             }

@@ -10,8 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPRecycleBinItem.h
 # Get-PnPRecycleBinItem
 
 ## SYNOPSIS
-Required Permissions * SharePoint: Site Collection Administrator. SharePoint Tenant Admin alone is not enough
-Returns the items in the recycle bin from the context
+
+** Required Permissions ** 
+
+* SharePoint: Site Collection Administrator. SharePoint Tenant Admin alone is not enough
+
+Returns one or more items from the Recycle Bin.
 
 ## SYNTAX
 
@@ -49,35 +53,35 @@ This command will return all the items in the recycle bin for the SharePoint sit
 Get-PnPRecycleBinItem
 ```
 
-Returns all items in both the first and the second stage recycle bins in the current site collection
+Returns all items in both the first and the second stage recycle bins in the current site collection.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPRecycleBinItem -Identity f3ef6195-9400-4121-9d1c-c997fb5b86c2
 ```
 
-Returns all a specific recycle bin item by id
+Returns a specific recycle bin item by id.
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPRecycleBinItem -FirstStage
 ```
 
-Returns all items in only the first stage recycle bin in the current site collection
+Returns all items in only the first stage recycle bin in the current site collection.
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPRecycleBinItem -SecondStage
 ```
 
-Returns all items in only the second stage recycle bin in the current site collection
+Returns all items in only the second stage recycle bin in the current site collection.
 
 ### EXAMPLE 5
 ```powershell
 Get-PnPRecycleBinItem -RowLimit 10000
 ```
 
-Returns items in recycle bin limited by number of results
+Returns items in recycle bin limited by number of results.
 
 ## PARAMETERS
 
@@ -110,7 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Returns a recycle bin item with a specific identity
+Returns a recycle bin item with a specific identity.
 
 ```yaml
 Type: Guid
@@ -138,7 +142,7 @@ Accept wildcard characters: False
 ```
 
 ### -SecondStage
-Return all items in the second stage recycle bin
+Return all items in the second stage recycle bin.
 
 ```yaml
 Type: SwitchParameter

@@ -35,7 +35,14 @@ This command allows you to add a Microsoft 365 Unified group to an existing clas
 Add-PnPMicrosoft365GroupToSite -Url "https://contoso.sharepoint.com/sites/FinanceTeamsite" -Alias "FinanceTeamsite" -DisplayName "My finance team site group"
 ```
 
-This will groupify the FinanceTeamsite
+This will groupify the FinanceTeamsite at the provided URL
+
+### EXAMPLE 2
+```powershell
+Add-PnPMicrosoft365GroupToSite -Alias "HRTeamsite" -DisplayName "My HR team site group"
+```
+
+This will groupify the currently connected to site
 
 ## PARAMETERS
 
@@ -166,13 +173,13 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-Url of the site to be connected to an Microsoft 365 Group
+Url of the site to be connected to an Microsoft 365 Group. When not provided, the site currently being connected to will be used.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -182,5 +189,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
