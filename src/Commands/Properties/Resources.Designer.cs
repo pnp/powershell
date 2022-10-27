@@ -725,6 +725,15 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore {0} items from recycle bin to their original locations?.
+        /// </summary>
+        internal static string Restore0RecycleBinItems {
+            get {
+                return ResourceManager.GetString("Restore0RecycleBinItems", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restore the file &apos;{0}&apos; from the recycle bin to its original location?.
         /// </summary>
         internal static string RestoreRecycleBinItem {
