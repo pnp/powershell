@@ -15,7 +15,7 @@ title: Revoke-PnPAzureADAppSitePermission
 
   * Microsoft Graph API: Sites.FullControl.All
 
-Revokes a permissions for a given app.
+Revokes permissions for a given app.
 
 ## SYNTAX
 
@@ -25,16 +25,16 @@ Revoke-PnPAzureADAppSitePermission -PermissionId <String> [-Site <SitePipeBind>]
 
 ## DESCRIPTION
 
-This cmdlets updates permissions for a given app in a site.
+This cmdlets revokes permissions for a given app in a site.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions Read
+Revoke-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa 
 ```
 
-Updates the app with the specific permission id and sets the rights to 'Read' access.
+Revoke permission specified with the Id.
 
 ## PARAMETERS
 
@@ -46,21 +46,6 @@ Type: String
 Parameter Sets: (All)
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Permissions
-Specifies the permissions to set for the app. 
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Accepted values: Write, Read
 Position: Named
 Default value: None
 Accept pipeline input: False
