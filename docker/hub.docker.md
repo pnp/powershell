@@ -24,39 +24,7 @@ Last version | Last nightly version
 
 ## About this image
 
-## Features
-
-* Runs on any OS
-  * Linux
-  * MacOS
-  * Windows
-* Run on any shell
-  * Azure Cloud Shell
-  * PowerShell
-* Unified login
-  * Access all your Microsoft 365 workloads
-* Supported workloads
-  * Azure Active Directory
-  * Microsoft Teams
-  * OneDrive
-  * Planner
-  * Power Automate
-  * Power Apps
-  * SharePoint Online
-  * Yammer
-  * Microsoft Project
-  * Security & Compliance
-* Supported authentication methods
-  * Azure Managed Identity
-  * Certificate
-  * Client Secret
-  * Device Code
-  * Username and Password
-  * WebLogin
-  * SPO Management Shell
-  * Access Token
-
-> Follow our [Twitter](https://twitter.com/pnppowershell) account to keep yourself updated about new features, improvements, and bug fixes.
+**PnP PowerShell** is a .NET Core 3.1/ .NET Framework 4.6.2 based PowerShell Module providing over 600 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Azure Active Directory, and more.
 
 ## Usage examples
 
@@ -64,21 +32,21 @@ Last version | Last nightly version
 
 Starting an isolated container with PnP.PowerShell module installed:
 
-```
-docker run --rm -it m365pnp/powershell:1.10.0-nanoserver-1809
+```powershell
+docker run --rm -it m365pnp/powershell:1.11.0-nanoserver-1809
 ```
 
 Starting a PnP.PowerShell container with the current directory mounted:
 
-```PowerShell
-docker run --rm -it -v ${PWD}:c:/app -w c:/app m365pnp/powershell:1.10.0-nanoserver-1809
+```powerShell
+docker run --rm -it -v ${PWD}:c:/app -w c:/app m365pnp/powershell:1.11.0-nanoserver-1809
 ```
 
 ### Linux-container
 
 Starting an isolated container with PnP.PowerShell module installed:
 
-```
+```powershell
 docker run --rm -it m365pnp/powershell
 ```
 
@@ -105,8 +73,10 @@ Tag name examples:
 * 1.8.0-nanoserver-ltsc2022
 * 1.9.0-nanoserver-ltsc2022
 * 1.10.0-nanoserver-1809
+* 1.10.0-alpine-3.14
+* 1.10.26-nightly-nanoserver-ltsc2022
 * 1.11.0-alpine-3.14
-* 1.11.76-nightly-nanoserver-ltsc2022
+* 1.11.0-nanoserver-ltsc2022
 
 To find the version numbers please visit <https://www.powershellgallery.com/packages/PnP.PowerShell>
 
@@ -120,7 +90,7 @@ Checkout our [Wiki](https://pnp.github.io/powershell/articles/buildingsource.htm
 
 ## Microsoft 365 Platform Community
 
-PnP PowerShell is a [Microsoft 365 Platform Community](https://pnp.github.io) (PnP) project. Microsoft 365 Platform Community is a virtual team consisting of Microsoft employees and community members focused on helping the community make the best use of Microsoft products. PnP PowerShell is an open-source project not affiliated with Microsoft and not covered by Microsoft support. If you experience any issues using PnP PowerShell, please submit an issue in the [issues list](https://github.com/pnp/powershell/issues/new/choose).
+PnP PowerShell is a [Microsoft 365 Platform Community](https://pnp.github.io) (PnP) project. Microsoft 365 Platform Community is a virtual team consisting of Microsoft employees and community members focused on helping the community make the best use of Microsoft products. PnP PowerShell is an open-source project not affiliated with Microsoft and not covered by Microsoft support. If you experience any issues using PnP PowerShell, please submit an issue or open a discussion in the [issues list or discussion forum](https://github.com/pnp/powershell/issues/new/choose).
 
 ## Disclaimer
 
