@@ -61,6 +61,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Remove-PnPFieldFromContentType` cmdlet to ensure proper null check for non-existing fields. It will now throw proper `Field not found` error. [#2407](https://github.com/pnp/powershell/pull/2407)
 - Changed the Microsoft 365 Groups cmdlets to use the `v1.0` endpoint instead of the `beta` [#2426](https://github.com/pnp/powershell/pull/2426)
 - Changed `Add-PnPMicrosoft365GroupToSite` to longer require the `-Url` parameter to be specified. If its not provided, the currently connected to site will be groupified. [#2496](https://github.com/pnp/powershell/pull/2496)
+- Changed `Restore-PnPRecycleBinItem` , made `-Identity` parameter as non-mandatory. [#2499](https://github.com/pnp/powershell/pull/2499)
 
 ### Removed
 
@@ -90,6 +91,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Enable-PnPTenantServicePrincipal` not respecting `-Force` parameter. [#2448](https://github.com/pnp/powershell/pull/2448)
 - Fixed issue with `Get-PnPRecycleBinItem` not working when there are large number of items in recycle bin.[#2472](https://github.com/pnp/powershell/pull/2472)
 - Fixed Microsoft Graph based cmdlets not showing detailed error results when a call fails [#2490](https://github.com/pnp/powershell/pull/2490)
+- Fixed `Restore-PnPRecycleBinItem` cmdlet not working with `-RowLimit` parameter. [#2499](https://github.com/pnp/powershell/pull/2499)
 
 ### Contributors
 
