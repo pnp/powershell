@@ -2,7 +2,7 @@
 
 ![PnP PowerShell](https://repository-images.githubusercontent.com/296298081/933a6d00-072b-11eb-839d-56df16c29588)
 
-**PnP PowerShell** is a .NET Core 3.1 / .NET Framework 4.6.2 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Azure Active Directory, and more.
+**PnP PowerShell** is a .NET 6 / .NET Framework 4.6.2 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security & Compliance, Azure Active Directory, and more.
 
 Last version | Last nightly version
 -------------|---------------------
@@ -32,13 +32,13 @@ Last version | Last nightly version
 
 Starting an isolated container with PnP.PowerShell module installed:
 
-```
+```powershell
 docker run --rm -it m365pnp/powershell:1.11.0-nanoserver-1809
 ```
 
 Starting a PnP.PowerShell container with the current directory mounted:
 
-```PowerShell
+```powerShell
 docker run --rm -it -v ${PWD}:c:/app -w c:/app m365pnp/powershell:1.11.0-nanoserver-1809
 ```
 
@@ -46,7 +46,7 @@ docker run --rm -it -v ${PWD}:c:/app -w c:/app m365pnp/powershell:1.11.0-nanoser
 
 Starting an isolated container with PnP.PowerShell module installed:
 
-```
+```powershell
 docker run --rm -it m365pnp/powershell
 ```
 
@@ -78,7 +78,19 @@ Tag name examples:
 * 1.11.0-alpine-3.14
 * 1.11.0-nanoserver-ltsc2022
 
-PnP PowerShell is a [Microsoft 365 Platform Community](https://pnp.github.io) (PnP) project. Microsoft 365 Platform Community is a virtual team consisting of Microsoft employees and community members focused on helping the community make the best use of Microsoft products. PnP PowerShell is an open-source project not affiliated with Microsoft and not covered by Microsoft support. If you experience any issues using PnP PowerShell, please submit an issue in the [issues list](https://github.com/pnp/powershell/issues/new/choose).
+To find the version numbers please visit <https://www.powershellgallery.com/packages/PnP.PowerShell>
+
+## Contribute
+
+We love to accept contributions.
+
+If you want to get involved with helping us grow PnP PowerShell, whether that is suggesting or adding a new cmdlet, extending an existing cmdlet or updating our documentation, we would love to hear from you.
+
+Checkout our [Wiki](https://pnp.github.io/powershell/articles/buildingsource.html) for guides on how to contribute to this project.
+
+## Microsoft 365 Platform Community
+
+PnP PowerShell is a [Microsoft 365 Platform Community](https://pnp.github.io) (PnP) project. Microsoft 365 Platform Community is a virtual team consisting of Microsoft employees and community members focused on helping the community make the best use of Microsoft products. PnP PowerShell is an open-source project not affiliated with Microsoft and not covered by Microsoft support. If you experience any issues using PnP PowerShell, please submit an issue or open a discussion in the [issues list or discussion forum](https://github.com/pnp/powershell/issues/new/choose).
 
 ## Disclaimer
 
