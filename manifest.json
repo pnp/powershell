@@ -225,7 +225,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPApp.html",
-          "hash": "sbIgYn4wM5EBXZGzcAr05Q=="
+          "hash": "nx12g8Kbd6UGLYiHZU+UnQ=="
         }
       },
       "is_incremental": false,
@@ -4961,18 +4961,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Remove-PnPAzureADAppSitePermission.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Remove-PnPAzureADAppSitePermission.html",
-          "hash": "LXjDA2ehYvesnVt0J5Z22w=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPAzureADGroup.md",
       "output": {
         ".html": {
@@ -6201,7 +6189,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Restore-PnPRecycleBinItem.html",
-          "hash": "FWUlpWM7iIcUsLgZdoeM3A=="
+          "hash": "FNFrBqESlfgH8a2uyWiE8w=="
         }
       },
       "is_incremental": false,
@@ -6226,6 +6214,18 @@
         ".html": {
           "relative_path": "cmdlets/Restore-PnPTenantSite.html",
           "hash": "AnME5D3oPX6tjgoMjTSEfQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Revoke-PnPAzureADAppSitePermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Revoke-PnPAzureADAppSitePermission.html",
+          "hash": "eD0y//9nWOpPg5PWTmbqpQ=="
         }
       },
       "is_incremental": false,
@@ -7908,7 +7908,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "j5/YV/CdWVfZr8+bm6awSQ=="
+          "hash": "VDSFF40Szonlk577VntGKQ=="
         }
       },
       "is_incremental": false,
