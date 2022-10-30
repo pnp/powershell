@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.Framework;
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;
@@ -16,6 +17,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYURL)]
         public string TenantUrl;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYURL)]
+        public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FROMCONNECTION, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
         public PnPConnection Connection = null;
 
@@ -31,11 +35,20 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (string.IsNullOrEmpty(TenantUrl) && Connection != null)
                 {
-                    WriteObject(TenantExtensions.GetTenantIdByUrl(Connection.Url));
+                    WriteObject(TenantExtensions.GetTenantIdByUrl(Connection.Url, Connection.AzureEnvironment));
                 }
                 else if (!string.IsNullOrEmpty(TenantUrl))
                 {
-                    WriteObject(TenantExtensions.GetTenantIdByUrl(TenantUrl));
+                    if(!TenantUrl.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        TenantUrl = $"https://{TenantUrl}";
+                    }
+                    if(TenantUrl.IndexOf(".sharepoint.", StringComparison.InvariantCultureIgnoreCase) == -1)
+                    {
+                        throw new InvalidOperationException($"Please provide the sharepoint domain, e.g. https://contoso.sharepoint.com");    
+                    }
+
+                    WriteObject(TenantExtensions.GetTenantIdByUrl(TenantUrl, AzureEnvironment));
                 }
                 else
                 {
