@@ -39,7 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Enable-PnPPowerShellTelemetry` cmdlet to enable telemetry collection. [#2432](https://github.com/pnp/powershell/pull/2432)
 - Added `Get-PnPAzureADActivityReportSignIn` cmdlet to enable retrieving of Azure AD sign ins. [#2436](https://github.com/pnp/powershell/pull/2436)
 - Added support to remove the site collection app catalog by using Id of the site collection in `Remove-PnPSiteCollectionAppCatalog` cmdlet. [#2452](https://github.com/pnp/powershell/pull/2452)
-- Added support for `RestrictedAccessControl` parameter to `Set-PnPTenant` and `Set-PnPSite` cmdlets to restrict site access to members of a Microsoft 365 group. [#2462](https://github.com/pnp/powershell/pull/2462)
+- Added support for the `EnableRestrictedAccessControl` parameter to `Set-PnPTenant` and `RestrictedAccessControl` for `Set-PnPSite` to restrict site access to members of a Microsoft 365 group. [#2462](https://github.com/pnp/powershell/pull/2462)
 - Added `Set-PnPImageListItemColumn` cmdlet to support setting of the new image/thumbnail value for a SharePoint list item.[#2468](https://github.com/pnp/powershell/pull/2468)
 - Added `-Filter` parameter to `Get-PnPTeamsTeam` cmdlet to retrieve specific teams based on filter conditions. It supports simple and advanced queries. [#2467](https://github.com/pnp/powershell/pull/2467) , [#2474](https://github.com/pnp/powershell/pull/2474)
 - Added `Get-PnPMicrosoft365ExpiringGroup` cmdlet to retrieve Microsoft 365 groups which are nearing expiration.[#2466](https://github.com/pnp/powershell/pull/2466)
@@ -93,6 +93,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Get-PnPRecycleBinItem` not working when there are large number of items in recycle bin.[#2472](https://github.com/pnp/powershell/pull/2472)
 - Fixed Microsoft Graph based cmdlets not showing detailed error results when a call fails [#2490](https://github.com/pnp/powershell/pull/2490)
 - Fixed `Restore-PnPRecycleBinItem` cmdlet not working with `-RowLimit` parameter. [#2499](https://github.com/pnp/powershell/pull/2499)
+- Fixed cmdlets throwing error when `-ErrorAction SilentlyContinue` was specified. [#2510](https://github.com/pnp/powershell/pull/2510)
 
 ### Contributors
 
