@@ -87,41 +87,57 @@
 <p>Returns the Tenant ID</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-tenanturl">By TenantUrl</h3>
-<pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl &lt;String&gt; [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;]
 </code></pre>
 <h3 id="by-connection">By connection</h3>
-<pre><code class="lang-powershell">Get-PnPTenantId [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPTenantId [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to retrieve id of tenant.</p>
+<p>Allows to retrieve id of tenant. This does not require an active connection to that tenant.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTenantId
 </code></pre>
 <p>Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required either as a current connection or by providing it using the -Connection parameter.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl &quot;https://contoso.sharepoint.com&quot;
+<pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl contoso.sharepoint.com
 </code></pre>
 <p>Returns the Tenant ID for the specified tenant. Can be executed without an active PnP Connection.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl contoso.sharepoint.us -AzureEnvironment USGovernment
+</code></pre>
+<p>Returns the Tenant ID for the specified US Government tenant. Can be executed without an active PnP Connection.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-tenanturl">-TenantUrl</h3>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: By URL
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
+<h3 id="-azureenvironment">-AzureEnvironment</h3>
+<p>The Azure environment to use for the tenant lookup. It defaults to 'Production' which is the main Azure environment.</p>
+<pre><code class="lang-yaml">Type: AzureEnvironment
+Parameter Sets: By URL
+Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD
 
 Required: False
 Position: Named
-Default value: None
+Default value: Production
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection. If not specified, the current connection will be used.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: From connection
+
+Required: False
+Position: Named
+Default value: Current connection
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

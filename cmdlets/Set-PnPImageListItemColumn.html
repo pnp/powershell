@@ -86,16 +86,25 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Updates the image column value of a list item</p>
 <h2 id="syntax">SYNTAX</h2>
+<h3 id="upload-an-image-and-set-it-as-thumbnail">Upload an image and set it as thumbnail</h3>
 <pre><code class="lang-powershell">Set-PnPImageListItemColumn [-List &lt;ListPipeBind&gt;] -Identity &lt;ListItemPipeBind&gt; [-Field &lt;FieldPipeBind&gt;]
  [-Path &lt;string&gt;] [-UpdateType &lt;UpdateType&gt;] [-Connection &lt;PnPConnection&gt;] 
+</code></pre>
+<h3 id="use-an-already-uploaded-image-and-set-it-as-thumbnail">Use an already uploaded image and set it as thumbnail</h3>
+<pre><code class="lang-powershell">Set-PnPImageListItemColumn [-List &lt;ListPipeBind&gt;] -Identity &lt;ListItemPipeBind&gt; [-Field &lt;FieldPipeBind&gt;]
+ [-ServerRelativePath &lt;string&gt;] [-UpdateType &lt;UpdateType&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows setting the Image/Thumbnail column value of a list item.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPImageListItemColumn -List &quot;Demo List&quot; -Identity 1 -Field &quot;Thumbnail&quot; -Path &quot;/sites/contoso/SiteAssets/test.png&quot;
+<pre><code class="lang-powershell">Set-PnPImageListItemColumn -List &quot;Demo List&quot; -Identity 1 -Field &quot;Thumbnail&quot; -ServerRelativePath &quot;/sites/contoso/SiteAssets/test.png&quot;
 </code></pre>
 <p>Sets the image/thumbnail field value in the list item with ID 1 in the &quot;Demo List&quot;. Notice, use the internal names of fields.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPImageListItemColumn -List &quot;Demo List&quot; -Identity 1 -Field &quot;Thumbnail&quot; -Path sample.png
+</code></pre>
+<p>Sets the image/thumbnail field value in the list item with ID 1 in the &quot;Demo List&quot;. Notice, use the internal names of fields. Here, we upload the file to a folder in Site Assets library. In this scenario, ensure that the user has contribute rights to the Site Assets library.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -141,10 +150,21 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-path">-Path</h3>
+<h3 id="-serverrelativepath">-ServerRelativePath</h3>
 <p>Use the server relative path of an existing image in your SharePoint document library.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: (ParameterSet_ASServerRelativeUrl)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-path">-Path</h3>
+<p>Use the path from the local file system</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (ParameterSet_ASPath)
 
 Required: True
 Position: Named

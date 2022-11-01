@@ -88,7 +88,7 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Sets organization-level site collection properties</p>
+<p>Sets organization-level tenant properties</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPTenant [-SpecialCharactersStateInFileFolderNames &lt;SpecialCharactersState&gt;]
  [-MinCompatibilityLevel &lt;Int32&gt;] [-MaxCompatibilityLevel &lt;Int32&gt;] [-ExternalServicesEnabled &lt;Boolean&gt;]
@@ -122,11 +122,11 @@
  [-DisableBackToClassic &lt;Boolean&gt;] [-InformationBarriersSuspension &lt;Boolean&gt;] 
  [-AllowFilesWithKeepLabelToBeDeletedODB &lt;Boolean&gt;] [-AllowFilesWithKeepLabelToBeDeletedSPO &lt;Boolean&gt;]
  [-ExternalUserExpirationRequired &lt;Boolean&gt;] [-ExternalUserExpireInDays &lt;Boolean&gt;] [-OneDriveRequestFilesLinkEnabled &lt;Boolean&gt;]
- [-Force] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-EnableRestrictedAccessControl &lt;Boolean&gt;]
+ [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
-ResourceQuotaAllocated, and SiteCreationMode.</p>
+<p>Sets organization-level tenant properties which impact the entire tenant.</p>
 <p>You must have the SharePoint Online admin or Global admin role to run the cmdlet.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
@@ -1160,8 +1160,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-restrictedaccesscontrol">-RestrictedAccessControl</h3>
-<p>To enable restricted access control in SharePoint. You need to wait approximately 1 hour before managing restricted access control for a site collection.</p>
+<h3 id="-enablerestrictedaccesscontrol">-EnableRestrictedAccessControl</h3>
+<p>To enable restricted access control in SharePoint Online. You need to wait approximately 1 hour before managing restricted access control for a site collection.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
