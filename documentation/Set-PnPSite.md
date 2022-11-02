@@ -258,6 +258,7 @@ Accept wildcard characters: False
 
 ### -DisableSharingForNonOwners
 Specifies whether non-owners should be prevented from inviting new users to the site.
+Setting this will also disable Access Request Emails.
 
 ```yaml
 Type: SwitchParameter
