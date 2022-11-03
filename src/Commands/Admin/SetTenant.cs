@@ -263,7 +263,7 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? OneDriveRequestFilesLinkEnabled;
 
         [Parameter(Mandatory = false)]
-        public bool? RestrictedAccessControl;
+        public bool? EnableRestrictedAccessControl;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
@@ -957,9 +957,9 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if (RestrictedAccessControl.HasValue)
+            if (EnableRestrictedAccessControl.HasValue)
             {
-                Tenant.EnableRestrictedAccessControl = RestrictedAccessControl.Value;
+                Tenant.EnableRestrictedAccessControl = EnableRestrictedAccessControl.Value;
                 modified = true;
             }
 
