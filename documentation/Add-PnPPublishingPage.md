@@ -21,6 +21,8 @@ Add-PnPPublishingPage -PageName <String> [-FolderPath <String>] -PageTemplateNam
 
 ## DESCRIPTION
 
+Allows to add a publishing page.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

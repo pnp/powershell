@@ -24,9 +24,9 @@ Set-PnPHideDefaultThemes -HideDefaultThemes <Boolean> [-Connection <PnPConnectio
 ```
 
 ## DESCRIPTION
-Use this cmdlet to hide or show the default themes to users as an option to change the look to of their site
+Use this cmdlet to hide or show the default themes to users as an option to change the look of their site.
 
-You must be a SharePoint Online global administrator to run the cmdlet.
+You must be a SharePoint Online Administrator to run the cmdlet.
 
 ## EXAMPLES
 
@@ -35,14 +35,14 @@ You must be a SharePoint Online global administrator to run the cmdlet.
 Set-PnPHideDefaultThemes -HideDefaultThemes $true
 ```
 
-The out of the box themes will be hidden
+The out of the box themes will be hidden.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPHideDefaultThemes -HideDefaultThemes $false
 ```
 
-The out of the box themes will be shown
+The out of the box themes will be shown.
 
 ## PARAMETERS
 
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -HideDefaultThemes
-Defines if the default themes should be visible or hidden
+Defines if the default themes should be visible or hidden.
 
 ```yaml
 Type: Boolean

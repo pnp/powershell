@@ -25,6 +25,8 @@ Get-PnPOrgAssetsLibrary [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve list of all the configured organizational asset libraries.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

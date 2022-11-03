@@ -21,6 +21,8 @@ Reset-PnPFileVersion -ServerRelativeUrl <String> [-CheckinType <CheckinType>] [-
 
 ## DESCRIPTION
 
+Allows to rolback a file to its previous version.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

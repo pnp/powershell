@@ -43,5 +43,53 @@ namespace PnP.PowerShell.Commands.Base
                 throw new InvalidOperationException(Properties.Resources.NoConnection);
             }
         }
+
+        protected override void ProcessRecord()
+        {
+            try
+            {
+                ExecuteCmdlet();
+            }
+            catch (PipelineStoppedException)
+            {
+                // Don't swallow pipeline stopped exception, it makes select-object work weird
+                throw;
+            }
+            catch (Exception ex)
+            {
+                string errorMessage;
+                switch (ex)
+                {
+                    case PnP.PowerShell.Commands.Model.Graph.GraphException gex:
+                        errorMessage = gex.Error.Message;
+                        break;
+
+                    case PnP.Core.SharePointRestServiceException rex:
+                        errorMessage = (rex.Error as PnP.Core.SharePointRestError).Message;
+                        break;
+
+                    default:
+                        errorMessage = ex.Message;
+                        break;
+                }
+
+                // For backwards compatibility we will throw the exception as a PSInvalidOperationException if -ErrorAction:Stop has NOT been specified                
+                if (!ParameterSpecified("ErrorAction") || (MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant() != "stop" && MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant() != "silentlycontinue"))
+                {
+                    throw new PSInvalidOperationException(errorMessage);
+                }
+
+                Connection.RestoreCachedContext(Connection.Url);
+                ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
+                ex.Data["TimeStampUtc"] = DateTime.UtcNow;
+                var errorDetails = new ErrorDetails(errorMessage);
+
+                errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
+                var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
+                errorRecord.ErrorDetails = errorDetails;
+
+                WriteError(errorRecord);
+            }
+        }
     }
 }

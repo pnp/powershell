@@ -13,7 +13,9 @@ title: Add-PnPListItem
 
 Adds an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.
 
-[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
+<a href="https://pnp.github.io/powershell/articles/batching.html">
+<img src="https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png" alt="Supports Batching">
+</a>
 
 ## SYNTAX
 
@@ -32,6 +34,8 @@ Add-PnPListItem [-List] <ListPipeBind> -Batch <PnPBatch> [-ContentType <ContentT
 ```
 
 ## DESCRIPTION
+
+Allows to add an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.
 
 ## EXAMPLES
 
@@ -190,7 +194,7 @@ Multiple lines of text: -Values @{"MultiText" = "New text\n\nMore text"}
 Rich text: -Values @{"MultiText" = "&lt;strong&gt;New&lt;/strong&gt; text"}
 
 Choice: -Values @{"Choice" = "Choice 1"}
-Choice: -Values @{"Choice" = "Choice 1;#Choice 2"}
+Multi-Choice: -Values @{"MultiChoice" = "Choice 1","Choice 2"}
 
 Number: -Values @{"Number" = "10"}
 

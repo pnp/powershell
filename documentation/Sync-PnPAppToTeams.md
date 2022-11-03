@@ -20,6 +20,8 @@ Sync-PnPAppToTeams [-Identity] <AppMetadataPipeBind> [-Connection <PnPConnection
 
 ## DESCRIPTION
 
+Allows to Synchronize an app from the tenant app catalog to the Microsoft Teams app catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

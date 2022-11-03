@@ -21,6 +21,8 @@ Get-PnPLabel [-List <ListPipeBind>] [-Raw] [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
+Allows to retrieve all retention labels for current site or list. Use `Raw` option if you want will include more detailed information regarding labels.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

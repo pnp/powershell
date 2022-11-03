@@ -21,6 +21,8 @@ Remove-PnPCustomAction [[-Identity] <UserCustomActionPipeBind>] [-Scope <CustomA
 
 ## DESCRIPTION
 
+Allows to remove custom action.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

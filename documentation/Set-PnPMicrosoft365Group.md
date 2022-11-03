@@ -28,6 +28,8 @@ Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <St
 
 ## DESCRIPTION
 
+Allows to modify Microsoft 365 Group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

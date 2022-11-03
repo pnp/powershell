@@ -20,8 +20,9 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-Hidden <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
- [-EnableModeration <Boolean>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] 
+ [-Path <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -70,6 +71,13 @@ Set-PnPList -Identity "Demo List" -EnableAttachments $true
 ```
 
 Turns on attachments on a list
+
+### EXAMPLE 7
+```powershell
+Set-PnPList -Identity "Demo List" -Title "Demo List 2" -Path "Lists/DemoList2"
+```
+
+Rename a list, including its' URL.
 
 ## PARAMETERS
 
@@ -227,6 +235,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DraftVersionVisibility
+Specify which users should be able to view drafts in this list.
+
+```yaml
+Type: DraftVisibilityType
+Parameter Sets: (All)
+Accepted values: Approver, Author, Reader
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -EnableVersioning
 Enable or disable versioning. Set to $true to enable, $false to disable.
 
@@ -313,7 +335,7 @@ Accept wildcard characters: False
 ```
 
 ### -MinorVersions
-Maximum minor versions to keep
+Maximum major versions for which to keep minor versions
 
 ```yaml
 Type: UInt32
@@ -387,6 +409,34 @@ Allows to configure access capabilities for unmanaged devices for the list. If s
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableGridEditing
+Enable or disable whether edit grid editing is enabled for the list. Set to $true to disable, $false to enable.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Path
+The new URL path of the list. The parent folder must exist and be in the same site/web. I.e. lists\newname.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False

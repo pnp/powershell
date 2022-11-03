@@ -27,6 +27,8 @@ Grant-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <St
 
 ## DESCRIPTION
 
+Allows to grant permission to use the site design for specified principal.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Remove-PnPFileFromSiteTemplate [-Path] <String> [-FilePath] <String>
 
 ## DESCRIPTION
 
+Allows to remove a file from a PnP Provisioning Template.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

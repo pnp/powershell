@@ -1,6 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using System.Management.Automation;
@@ -14,7 +13,7 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = true)]
         public string Url;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true)]
         public FileVersionPipeBind Identity;
 
         [Parameter(Mandatory = false)]
@@ -35,30 +34,50 @@ namespace PnP.PowerShell.Commands.Files
                 serverRelativeUrl = Url;
             }
 
-            File file;
-
-            file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+            WriteVerbose($"Looking up file at {serverRelativeUrl}");
+            File file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 
             ClientContext.Load(file, f => f.Exists, f => f.Versions.IncludeWithDefaultProperties(i => i.CreatedBy));
             ClientContext.ExecuteQueryRetry();
 
             if (file.Exists)
             {
+                WriteVerbose($"File has been found and has {file.Versions.Count} versions");
+
                 var versions = file.Versions;
 
-                if (Force || ShouldContinue("Restoring a previous version will overwrite the current version.", Resources.Confirm))
+                if (Force || ShouldContinue("Restoring a previous version will overwrite the current version. Are you sure you wish to continue?", Resources.Confirm))
                 {
                     if (!string.IsNullOrEmpty(Identity.Label))
                     {
-                        versions.RestoreByLabel(Identity.Label);
-                        ClientContext.ExecuteQueryRetry();
-                        WriteObject("Version restored");
+                        WriteVerbose($"Trying to restore to version with label '{Identity.Label}'");
+
+                        try
+                        {
+                            versions.RestoreByLabel(Identity.Label);
+                            ClientContext.ExecuteQueryRetry();
+
+                            WriteObject("Version restored");
+                        }
+                        catch (ServerException e) when (e.ServerErrorTypeName.Equals("System.IO.DirectoryNotFoundException"))
+                        {
+                            throw new PSArgumentException($"Version with label '{Identity.Label}' does not exist", e);
+                        }                        
                     }
                     else if (Identity.Id != -1)
                     {
-                        var version = versions.GetById(Identity.Id);
+                        WriteVerbose($"Looking up version with id '{Identity.Id}'");
+
+                        FileVersion version = versions.GetById(Identity.Id);
                         ClientContext.Load(version);
                         ClientContext.ExecuteQueryRetry();
+
+                        if(version == null || !version.IsPropertyAvailable("VersionLabel"))
+                        {
+                            throw new PSArgumentException($"Version with id '{Identity.Id}' does not exist", nameof(Identity));
+                        }
+
+                        WriteVerbose($"Trying to restore to version with label '{version.VersionLabel}'");
 
                         versions.RestoreByLabel(version.VersionLabel);
                         ClientContext.ExecuteQueryRetry();
@@ -73,5 +92,3 @@ namespace PnP.PowerShell.Commands.Files
         }
     }
 }
-
-

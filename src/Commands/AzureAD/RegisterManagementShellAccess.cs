@@ -31,18 +31,23 @@ namespace PnP.PowerShell.Commands.AzureAD
         public SwitchParameter ShowConsentUrl;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SHOWURL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_REGISTER)]
         public string TenantName;
 
         protected override void ProcessRecord()
         {
             source = new CancellationTokenSource();
             var messageWriter = new CmdletMessageWriter(this);
-            CancellationToken cancellationToken = source.Token;
 
             var endPoint = string.Empty;
             using (var authManager = new AuthenticationManager())
             {
                 endPoint = authManager.GetAzureADLoginEndPoint(AzureEnvironment);
+            }
+
+            if (AzureEnvironment != AzureEnvironment.Production && string.IsNullOrEmpty(TenantName))
+            {
+                WriteWarning("Please specify the Tenant name for non-commercial clouds, otherwise this operation will fail.");
             }
 
             Task.Factory.StartNew(() =>
@@ -55,11 +60,11 @@ namespace PnP.PowerShell.Commands.AzureAD
                      },
                     successMessageHtml: $"You successfully consented the PnP Management Shell Application for use by PnP PowerShell. Feel free to close this window.",
                     failureMessageHtml: $"You did not consent for the PnP Management Shell Application for use by PnP PowerShell. Feel free to close this browser window.",
-                    azureEnvironment: AzureEnvironment))
+                    azureEnvironment: AzureEnvironment, tenantId: TenantName))
                     {
                         try
                         {
-                            authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, cancellationToken, Microsoft.Identity.Client.Prompt.Consent).GetAwaiter().GetResult();
+                            authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, source.Token, Microsoft.Identity.Client.Prompt.Consent).GetAwaiter().GetResult();
                         }
                         catch (Microsoft.Identity.Client.MsalException)
                         {
@@ -71,7 +76,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 {
                     if (!string.IsNullOrEmpty(TenantName))
                     {
-                        messageWriter.WriteMessage($"Share the following URL with a person that has appropriate access rights on the Azure AD to grant consent for Application Registrations:\n\nhttps://login.microsoftonline.com/{TenantName}/adminconsent?client_id={PnPConnection.PnPManagementShellClientId}");
+                        messageWriter.WriteMessage($"Share the following URL with a person that has appropriate access rights on the Azure AD to grant consent for Application Registrations:\n\n{endPoint}/{TenantName}/adminconsent?client_id={PnPConnection.PnPManagementShellClientId}");
                     }
                     else
                     {
@@ -87,7 +92,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                             var accessToken = string.Empty;
                             try
                             {
-                                accessToken = authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, cancellationToken).GetAwaiter().GetResult();
+                                accessToken = authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, source.Token).GetAwaiter().GetResult();
                             }
                             catch (Microsoft.Identity.Client.MsalException)
                             {
@@ -123,7 +128,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                                     }
                                 }
                             }
-                            messageWriter.WriteMessage($"Share the following URL with a person that has appropriate access rights on the Azure AD to grant consent for Application Registrations:\n\nhttps://login.microsoftonline.com/{tenantId}/adminconsent?client_id={PnPConnection.PnPManagementShellClientId}");
+                            messageWriter.WriteMessage($"Share the following URL with a person that has appropriate access rights on the Azure AD to grant consent for Application Registrations:\n\n{endPoint}/{tenantId}/adminconsent?client_id={PnPConnection.PnPManagementShellClientId}");
                             if (tenantId == "{M365-Tenant-Id}")
                             {
                                 messageWriter.WriteMessage($"To get M365-Tenant-Id value, use the Get-PnPTenantId cmdlet:\nhttps://pnp.github.io/powershell/cmdlets/Get-PnPTenantId.html");
@@ -132,7 +137,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     }
                 }
                 messageWriter.Finished = true;
-            }, cancellationToken);
+            }, source.Token);
             messageWriter.Start();
         }
 

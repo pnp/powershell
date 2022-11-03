@@ -10,16 +10,16 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPRoleDefinitio
 # Remove-PnPRoleDefinition
 
 ## SYNOPSIS
-Remove a Role Definition from a site
+Removes a role definition from a site.
 
 ## SYNTAX
 
 ```powershell
 Remove-PnPRoleDefinition [-Identity] <RoleDefinitionPipeBind> [-Force] [-Connection <PnPConnection>]
- [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet removes the specified role definition from a site collection.
 
 ## EXAMPLES
 
@@ -28,7 +28,7 @@ Remove-PnPRoleDefinition [-Identity] <RoleDefinitionPipeBind> [-Force] [-Connect
 Remove-PnPRoleDefinition -Identity MyRoleDefinition
 ```
 
-Removes the specified Role Definition (Permission Level) from the current site
+Removes the specified role definition (permission level) from the current site.
 
 ## PARAMETERS
 
@@ -47,7 +47,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Do not ask for confirmation to delete the role definition
+Do not ask for confirmation to delete the role definition.
 
 ```yaml
 Type: SwitchParameter
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The identity of the role definition, either a RoleDefinition object or a the name of roledefinition
+The identity of the role definition, either a RoleDefinition object or the name of role definition.
 
 ```yaml
 Type: RoleDefinitionPipeBind

@@ -95,7 +95,7 @@ namespace PnP.PowerShell.Tests.Lists
 				var enableMinorVersions = "";
 				// From Cmdlet Help: Maximum major versions to keep
 				var majorVersions = "";
-				// From Cmdlet Help: Maximum minor versions to keep
+				// From Cmdlet Help: Maximum major versions for which to keep minor versions
 				var minorVersions = "";
 				// From Cmdlet Help: Enable or disable whether content approval is enabled for the list. Set to $true to enable, $false to disable.
 				var enableModeration = "";

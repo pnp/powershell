@@ -21,6 +21,8 @@ Add-PnPContentTypeToList -List <ListPipeBind> -ContentType <ContentTypePipeBind>
 
 ## DESCRIPTION
 
+Allows to add content type to list. By specifying `-DefaultContentType` option it is possible set the newly added content type as default.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

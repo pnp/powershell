@@ -10,16 +10,16 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPPlannerRoster
 # Remove-PnPPlannerRosterMember
 
 ## SYNOPSIS
-Removes a member from a Microsoft Planner Roster
+Removes a member from a Microsoft Planner Roster.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPPlannerRosterMember -Identity <PlannerRosterPipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPPlannerRosterMember -Identity <PlannerRosterPipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Removes a member from a Microsoft Planner Roster
+Removes a member from a Microsoft Planner Roster.
 
 ## EXAMPLES
 
@@ -28,15 +28,26 @@ Removes a member from a Microsoft Planner Roster
 Remove-PnPPlannerRosterMember -Identity "6519868f-868f-6519-8f86-19658f861965" -User "johndoe@contoso.onmicrosoft.com"
 ```
 
-Removes the provided user from the Microsoft Planner Roster with the provided identifier
+Removes the provided user from the Microsoft Planner Roster with the provided identifier.
 
 ## PARAMETERS
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Identity
-Identity of the Microsoft Planner Roster to remove the member from
+Identity of the Microsoft Planner Roster to remove the member from.
 
 ```yaml
 Type: PlannerRosterPipeBind
@@ -50,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -User
-User principal name of the user to remove from being a member
+User principal name of the user to remove from being a member.
 
 ```yaml
 Type: String

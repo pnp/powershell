@@ -21,6 +21,8 @@ Add-PnPFolder -Name <String> -Folder <FolderPipeBind> [-Connection <PnPConnectio
 
 ## DESCRIPTION
 
+Allows to add a new folder.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

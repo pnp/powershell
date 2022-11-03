@@ -26,6 +26,8 @@ Get-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Iden
 
 ## DESCRIPTION
 
+Allows to retrieve tabs in channel. By using `Identity` it is possible to retrieve a specific single tab.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

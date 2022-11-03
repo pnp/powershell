@@ -12,10 +12,6 @@ title: Add-PnPFileToSiteTemplate
 ## SYNOPSIS
 Adds a file to a PnP Provisioning Template package
 
-## Description
-
-Allows adding a file to a PnP Provisioning Template package (.pnp) so that the file will get uploaded to the SharePoint Online site to which the template is being invoked. This allows the file to be referenced in i.e. a document template, site logo or any other component that references a file.
-
 ## SYNTAX
 
 ### Local File
@@ -34,6 +30,8 @@ Add-PnPFileToSiteTemplate [-Path] <String> [-SourceUrl] <String> [[-Container] <
 ```
 
 ## DESCRIPTION
+
+Allows adding a file to a PnP Provisioning Template package (.pnp) so that the file will get uploaded to the SharePoint Online site to which the template is being invoked. This allows the file to be referenced in i.e. a document template, site logo or any other component that references a file.
 
 ## EXAMPLES
 

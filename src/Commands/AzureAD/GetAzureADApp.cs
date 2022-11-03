@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
@@ -9,12 +8,18 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAzureADApp")]
+    [Cmdlet(VerbsCommon.Get, "PnPAzureADApp", DefaultParameterSetName = ParameterSet_Identity)]
     [RequiredMinimalApiPermissions("Application.Read.All")]
     public class GetAzureADApp : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false)]
+        private const string ParameterSet_Identity = "Identity";
+        private const string ParameterSet_Filter = "Filter";
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Identity)]
         public AzureADAppPipeBind Identity;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Filter)]
+        public string Filter = null;
 
         protected override void ExecuteCmdlet()
         {
@@ -24,8 +29,18 @@ namespace PnP.PowerShell.Commands.AzureAD
             }
             else
             {
-                List<AzureADApp> apps = new List<AzureADApp>();
-                var result = GraphHelper.GetResultCollectionAsync<AzureADApp>(Connection, "/v1.0/applications", AccessToken).GetAwaiter().GetResult();
+                Dictionary<string, string> additionalHeaders = null;
+                string requestUrl = "/v1.0/applications";
+                if (!string.IsNullOrEmpty(Filter))
+                {
+                    requestUrl = $"{requestUrl}?$filter=({Filter})";
+
+                    additionalHeaders = new Dictionary<string, string>
+                    {
+                        { "ConsistencyLevel", "eventual" }
+                    };
+                }
+                var result = GraphHelper.GetResultCollectionAsync<AzureADApp>(Connection, requestUrl, AccessToken, additionalHeaders: additionalHeaders).GetAwaiter().GetResult();
                 WriteObject(result, true);
             }
         }

@@ -25,6 +25,9 @@ Set-PnPAppSideLoading [-Off] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet enables or disables the app sideloading feature on the site.
+
+Allows to enable the App SideLoading Feature on a site.
 
 ## EXAMPLES
 
@@ -33,14 +36,14 @@ Set-PnPAppSideLoading [-Off] [-Connection <PnPConnection>] [<CommonParameters>]
 Set-PnPAppSideLoading -On
 ```
 
-This will turn on App side loading
+This will turn on App side loading.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPAppSideLoading -Off
 ```
 
-This will turn off App side loading
+This will turn off App side loading.
 
 ## PARAMETERS
 
@@ -59,6 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Off
+Turns the feature off.
 
 ```yaml
 Type: SwitchParameter
@@ -72,6 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -On
+Turns the feature on.
 
 ```yaml
 Type: SwitchParameter

@@ -10,16 +10,16 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPPageComponent
 # Remove-PnPPageComponent
 
 ## SYNOPSIS
-Removes a page component from a page
+Removes a page component from a page.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> [-Force]
- [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
+This cmdlet removes specified page component from a page.
 
 ## EXAMPLES
 
@@ -28,7 +28,7 @@ Remove-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> [-Force]
 Remove-PnPPageComponent -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82
 ```
 
-Removes the control specified from the page.
+Removes the specified control from the page.
 
 ### EXAMPLE 2
 ```powershell
@@ -36,7 +36,7 @@ $webpart = Get-PnPPageComponent -Page "Home" | Where-Object { $_.Title -eq "Site
 Remove-PnPPageComponent -Page "Home" -InstanceId $webpart.InstanceId -Force
 ```
 
-Finds a web part with the Title "Site activity" on the Home.aspx page, then removes it from the page
+Finds a web part with the title "Site activity" on the Home.aspx page, then removes it from the page.
 
 ## PARAMETERS
 
@@ -55,7 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-If specified you will not receive the confirmation question
+If specified you will not receive the confirmation question.
 
 ```yaml
 Type: SwitchParameter
@@ -69,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -InstanceId
-The instance id of the component
+The instance id of the component.
 
 ```yaml
 Type: Guid
@@ -83,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -Page
-The name of the page
+The name of the page.
 
 ```yaml
 Type: PagePipeBind

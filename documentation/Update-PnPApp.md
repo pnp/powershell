@@ -21,6 +21,8 @@ Update-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Con
 
 ## DESCRIPTION
 
+Allows to update an available app from the app catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -21,6 +21,8 @@ Get-PnPListInformationRightsManagement -List <ListPipeBind> [-Connection <PnPCon
 
 ## DESCRIPTION
 
+Allows to get the site closure status of the current site or list which has a site policy applied.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

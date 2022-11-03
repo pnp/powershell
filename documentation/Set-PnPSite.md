@@ -24,7 +24,7 @@ Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-Lo
  [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>] [-DisableSharingForNonOwners]
  [-LocaleId <UInt32>] [-RestrictedToGeo <RestrictedToRegion>] [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays <Int32>] [-OverrideTenantAnonymousLinkExpirationPolicy]
- [-MediaTranscription <MediaTranscriptionPolicyType>] [-SensitivityLabel <Guid>]
+ [-MediaTranscription <MediaTranscriptionPolicyType>] [-SensitivityLabel <Guid>] [-RequestFilesLinkEnabled <Boolean>] [-ScriptSafeDomainName <string>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -34,6 +34,8 @@ Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connecti
 ```
 
 ## DESCRIPTION
+
+Allows to modify a site properties.
 
 ## EXAMPLES
 
@@ -256,6 +258,7 @@ Accept wildcard characters: False
 
 ### -DisableSharingForNonOwners
 Specifies whether non-owners should be prevented from inviting new users to the site.
+Setting this will also disable Access Request Emails.
 
 ```yaml
 Type: SwitchParameter
@@ -448,6 +451,48 @@ When the feature is enabled, videos can have transcripts generated on demand or 
 Type: MediaTranscriptionPolicyType
 Parameter Sets: Set Properties
 Accepted values: Enabled, Disabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RequestFilesLinkEnabled
+Allows configuring whether users will be able to create anonymous requests for people to upload files regardless of the Share with anyone link configuration setting for this particular site collection.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ScriptSafeDomainName
+Allow contributors to insert iframes only from the specified domains only
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedAccessControl
+To enable restricted access control on a group-connected or Teams-connected site
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
 
 Required: False
 Position: Named

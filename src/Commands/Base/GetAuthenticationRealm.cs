@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Management.Automation;
-
 using System.Net;
 using Microsoft.SharePoint.Client;
 
@@ -10,7 +9,6 @@ namespace PnP.PowerShell.Commands
     [OutputType(typeof(string))]
     public class GetAuthenticationRealm : PnPSharePointCmdlet
     {
-
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public string Url;
 
@@ -20,38 +18,32 @@ namespace PnP.PowerShell.Commands
             {
                 Url = ClientContext.Url;
             }
-            WebRequest request = WebRequest.Create(new Uri(Url) + "/_vti_bin/client.svc");
-            request.Headers.Add("Authorization: Bearer ");
 
-            try
+            var client = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "");            
+            
+            var response = client.GetAsync(Url).GetAwaiter().GetResult();
+
+            var bearerResponseHeaderValues = response.Headers.GetValues("WWW-Authenticate");
+            string bearerResponseHeader = string.Join("", bearerResponseHeaderValues);
+            const string bearer = "Bearer realm=\"";
+            var bearerIndex = bearerResponseHeader.IndexOf(bearer, StringComparison.Ordinal);
+
+            var realmIndex = bearerIndex + bearer.Length;
+            if (bearerResponseHeader.Length >= realmIndex + 36)
             {
-                using (request.GetResponse())
+                var targetRealm = bearerResponseHeader.Substring(realmIndex, 36);
+
+                Guid realmGuid;
+
+                if (Guid.TryParse(targetRealm, out realmGuid))
                 {
-                }
-            }
-            catch (WebException e)
-            {
-                var bearerResponseHeader = e.Response.Headers["WWW-Authenticate"];
-
-                const string bearer = "Bearer realm=\"";
-                var bearerIndex = bearerResponseHeader.IndexOf(bearer, StringComparison.Ordinal);
-
-                var realmIndex = bearerIndex + bearer.Length;
-
-                if (bearerResponseHeader.Length >= realmIndex + 36)
-                {
-                    var targetRealm = bearerResponseHeader.Substring(realmIndex, 36);
-
-                    Guid realmGuid;
-
-                    if (Guid.TryParse(targetRealm, out realmGuid))
-                    {
-                        WriteObject(targetRealm);
-                    }
+                    WriteObject(targetRealm);
                 }
             }
         }
-
-
     }
 }
+

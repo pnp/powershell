@@ -13,6 +13,7 @@
         DeviceLogin,
         Graph,
         GraphDeviceLogin,
-        SPOManagementShell
+        SPOManagementShell,
+        ManagedIdentity
     }
 }

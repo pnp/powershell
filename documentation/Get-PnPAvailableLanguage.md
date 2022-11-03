@@ -21,6 +21,8 @@ Get-PnPAvailableLanguage [[-Identity] <WebPipeBind>] [-Connection <PnPConnection
 
 ## DESCRIPTION
 
+Allows to retrieve available languages from the current site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

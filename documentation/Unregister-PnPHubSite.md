@@ -24,6 +24,9 @@ Unregister-PnPHubSite -Site <SitePipeBind> [-Connection <PnPConnection>] [<Commo
 ```
 
 ## DESCRIPTION
+
+Allows to unregister a site as a hubsite.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

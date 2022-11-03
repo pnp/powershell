@@ -21,6 +21,8 @@ Get-PnPApp [[-Identity] <AppMetadataPipeBind>] [-Scope <AppCatalogScope>] [-Conn
 
 ## DESCRIPTION
 
+Allows to retrieve available apps from the app catalog. In order to get apps from site collection scoped app catalog set `Scope` option to `Site`.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

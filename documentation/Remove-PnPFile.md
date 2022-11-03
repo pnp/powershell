@@ -28,6 +28,8 @@ Remove-PnPFile [-SiteRelativeUrl] <String> [-Recycle] [-Force]
 
 ## DESCRIPTION
 
+Allows to remove a file.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

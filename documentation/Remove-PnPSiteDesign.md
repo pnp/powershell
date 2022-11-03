@@ -15,16 +15,16 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPSiteDesign.ht
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Removes a Site Design
+Removes a site design.
 
 ## SYNTAX
 
 ```powershell
 Remove-PnPSiteDesign [-Identity] <TenantSiteDesignPipeBind> [-Force] [-Connection <PnPConnection>] 
-  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
+This cmdlet removes the specified site design.
 
 ## EXAMPLES
 
@@ -33,24 +33,17 @@ Remove-PnPSiteDesign [-Identity] <TenantSiteDesignPipeBind> [-Force] [-Connectio
 Remove-PnPSiteDesign -Identity 5c73382d-9643-4aa0-9160-d0cba35e40fd
 ```
 
-Removes the specified site design
+Removes the specified site design.
+
+### EXAMPLE 2
+```powershell
+$siteDesign = Get-PnPSiteDesign -Identity c234b254-b51a-4ca8-8ba3-939659a66832
+Remove-PnPSiteDesign -Identity $siteDesign
+```
+
+Removes the specified site design.
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -67,7 +60,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-If specified you will not be asked to confirm removing the specified Site Design
+If specified you will not be asked to confirm removing the specified site design.
 
 ```yaml
 Type: SwitchParameter
@@ -81,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The ID of the site design to remove
+The ID of the site design to remove.
 
 ```yaml
 Type: TenantSiteDesignPipeBind
@@ -94,20 +87,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

@@ -21,6 +21,8 @@ Remove-PnPView [-Identity] <ViewPipeBind> [-List] <ListPipeBind> [-Force]
 
 ## DESCRIPTION
 
+Allows to remove view from a list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

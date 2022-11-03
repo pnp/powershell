@@ -25,6 +25,8 @@ Add-PnPSiteScript -Title <String> [-Description <String>] -Content <String> [-Co
 
 ## DESCRIPTION
 
+Allows to add a Site Script on the current tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

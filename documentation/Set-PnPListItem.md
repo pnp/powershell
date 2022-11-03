@@ -13,25 +13,29 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListItem.html
 
 Updates a list item
 
-[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
+<a href="https://pnp.github.io/powershell/articles/batching.html">
+<img src="https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png" alt="Supports Batching">
+</a>
 
 ## SYNTAX
 
 ### Single
 
 ```powershell
-Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Connection <PnPConnection>]
+Set-PnPListItem [-List <ListPipeBind>] -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
+ [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Force] [-Connection <PnPConnection>] 
 ```
 
 ### Batched
 
 ```powershell
-Set-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-UpdateType <UpdateType> [-UpdateOverwriteVersion] [-Connection <PnPConnection>]
+Set-PnPListItem [-List <ListPipeBind>] -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
+ [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
+
+Allows to modify a list item.
 
 ## EXAMPLES
 
@@ -198,21 +202,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UpdateOverwriteVersion
-
-Update the item without creating a new version. It will not trigger events registered on the list.
-
-```yaml
-Type: UpdateType
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: Update
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ClearLabel
 
 Clears the retention label of the item.
@@ -242,8 +231,6 @@ Choice: -Values @{"ChoiceField" = "Value 1"}
 
 Number: -Values @{"NumberField" = "10"}
 
-Currency: -Values @{"NumberField" = "10"}
-
 Currency: -Values @{"CurrencyField" = "10"}
 
 Date and Time: -Values @{"DateAndTimeField" = "03/13/2015 14:16"}
@@ -272,6 +259,21 @@ Hyperlink or Picture: -Values @{"HyperlinkField" = "https://pnp.github.com/power
 
 ```yaml
 Type: Hashtable
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+
+Forces update of the list item even if there are no value changes. This can be useful for triggering webhooks, event receivers, Flows, etc.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

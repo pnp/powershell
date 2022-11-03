@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPFolderPermission
 # Set-PnPFolderPermission
 
 ## SYNOPSIS
-Sets or clears permissions on folders within SharePoint Online
+Sets or clears permissions on folders within SharePoint Online.
 
 ## SYNTAX
 
@@ -44,33 +44,33 @@ Sets or clears permissions on folders within SharePoint Online. Use Get-PnPRoleD
 Set-PnPFolderPermission -List 'Shared Documents' -Identity 'Shared Documents\Folder' -User 'user@contoso.com' -AddRole 'Contribute'
 ```
 
-Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents'
+Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents'.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPFolderPermission -List 'AnotherDocumentLibrary' -Identity 'AnotherDocumentLibrary\Folder\Subfolder' -User 'user@contoso.com' -RemoveRole 'Contribute'
 ```
 
-Removes the 'Contribute' permission from the user 'user@contoso.com' for the folder named 'Subfolder' located in the folder 'Folder' which is located in the root of the library 'AnotherDocumentLibrary'
+Removes the 'Contribute' permission from the user 'user@contoso.com' for the folder named 'Subfolder' located in the folder 'Folder' which is located in the root of the library 'AnotherDocumentLibrary'.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPFolderPermission -List 'Shared Documents' -Identity 'Shared Documents\Folder' -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting
 ```
 
-Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents' and removes all other permissions
+Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents' and removes all other permissions.
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPFolder -Url 'Shared Documents\Folder' | Set-PnPFolderPermission -List 'Shared Documents' -InheritPermissions
 ```
 
-Resets permissions for the folder named 'Folder' located in the root of the library 'Shared Documents' to inherit permissions from the library 'Shared Documents'
+Resets permissions for the folder named 'Folder' located in the root of the library 'Shared Documents' to inherit permissions from the library 'Shared Documents'.
 
 ## PARAMETERS
 
 ### -AddRole
-The role that must be assigned to the group or user
+The role that must be assigned to the group or user.
 
 ```yaml
 Type: String
@@ -84,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -ClearExisting
-Clears all existing permissions
+Clears all existing permissions.
 
 ```yaml
 Type: SwitchParameter
@@ -98,7 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
-The ID, name or instance of a SharePoint Group to add or remove permissions to/from
+The ID, name or instance of a SharePoint Group to add or remove permissions to/from.
 
 ```yaml
 Type: GroupPipeBind
@@ -112,7 +112,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The ID of the folder, the server relative URL to the folder or actual Folder object
+The ID of the folder, the server relative URL to the folder or actual Folder object.
 
 ```yaml
 Type: FolderPipeBind
@@ -126,7 +126,7 @@ Accept wildcard characters: False
 ```
 
 ### -InheritPermissions
-Inherit permissions from the parent, removing unique permissions
+Inherit permissions from the parent, removing unique permissions.
 
 ```yaml
 Type: SwitchParameter
@@ -140,7 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-The ID, Title or Url of the list the folder is part of
+The ID, Title or Url of the list the folder is part of.
 
 ```yaml
 Type: ListPipeBind
@@ -154,7 +154,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemoveRole
-The role that must be removed from the group or user
+The role that must be removed from the group or user.
 
 ```yaml
 Type: String
@@ -168,7 +168,7 @@ Accept wildcard characters: False
 ```
 
 ### -SystemUpdate
-Update the folder permissions without creating a new version or triggering Microsoft Power Automate Flow
+Update the folder permissions without creating a new version or triggering Microsoft Power Automate Flow.
 
 ```yaml
 Type: SwitchParameter
@@ -182,6 +182,7 @@ Accept wildcard characters: False
 ```
 
 ### -User
+A valid login name of a user (e.g. john@doe.com).
 
 ```yaml
 Type: String

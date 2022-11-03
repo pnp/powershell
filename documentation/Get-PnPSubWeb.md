@@ -21,6 +21,8 @@ Get-PnPSubWeb [[-Identity] <WebPipeBind>] [-Recurse] [-Connection <PnPConnection
 
 ## DESCRIPTION
 
+Allows to retrieve subwebs of the current web.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

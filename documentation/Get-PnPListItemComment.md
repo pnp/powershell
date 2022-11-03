@@ -7,7 +7,7 @@ external help file: PnP.PowerShell.dll-Help.xml
 title: Get-PnPListItemComment
 ---
   
-# Get-PnPListItem
+# Get-PnPListItemComment
 
 ## SYNOPSIS
 Retrieves all comments from the list item in the specified list.

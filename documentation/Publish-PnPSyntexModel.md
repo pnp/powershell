@@ -11,11 +11,13 @@ online version: https://pnp.github.io/powershell/cmdlets/Publish-PnPSyntexModel.
 
 ## SYNOPSIS
 
-Publishes a SharePoint Syntex models to a list.
+Publishes Microsoft Syntex models to a list.
 
-This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.
+This cmdlet only works when you've connected to a Syntex Content Center site.
 
-[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
+<a href="https://pnp.github.io/powershell/articles/batching.html">
+<img src="https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png" alt="Supports Batching">
+</a>
 
 ## SYNTAX
 
@@ -35,7 +37,7 @@ Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -Tar
 
 ## DESCRIPTION
 
-This command publishes a SharePoint Syntex content understanding models to a list.
+This command publishes Syntex document processing models to a list.
 
 ## EXAMPLES
 
@@ -45,7 +47,7 @@ This command publishes a SharePoint Syntex content understanding models to a lis
 Publish-PnPSyntexModel -Model "Invoice model" -ListWebUrl "https://contoso.sharepoint.com/sites/finance" -List "Documents"
 ```
 
-Publishes the content understanding model named "Invoice model" to the list named "Documents" in the /sites/finance web.
+Publishes the document processing model named "Invoice model" to the list named "Documents" in the /sites/finance web.
 
 ### EXAMPLE 2
 
@@ -53,7 +55,7 @@ Publishes the content understanding model named "Invoice model" to the list name
 Publish-PnPSyntexModel -Model "Invoice model" -TargetSiteUrl "https://contoso.sharepoint.com/sites/finance" -TargetWebServerRelativeUrl "/sites/finance" -TargetLibraryServerRelativeUrl "/sites/finance/shared%20documents" -Batch $batch
 ```
 
-Adds the publishing of the content understanding model named "Invoice model" to the "Shared Documents" library into the PnPBatch $batch. Use `Invoke-PnPBatch -Batch $batch` to execute the batch, use `$batch = New-PnPBatch` to create a batch.
+Adds the publishing of the document processing model named "Invoice model" to the "Shared Documents" library into the PnPBatch $batch. Use `Invoke-PnPBatch -Batch $batch` to execute the batch, use `$batch = New-PnPBatch` to create a batch.
 
 ## PARAMETERS
 
@@ -74,7 +76,7 @@ Accept wildcard characters: False
 
 ### -Model
 
-The name or id of the SharePoint Syntex model.
+The name or id of the Syntex model.
 
 ```yaml
 Type: SyntexModelPipeBind

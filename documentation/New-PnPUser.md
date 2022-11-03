@@ -20,6 +20,8 @@ New-PnPUser -LoginName <String> [-Connection <PnPConnection>] [<CommonParameters
 
 ## DESCRIPTION
 
+Allows to add a user to current site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

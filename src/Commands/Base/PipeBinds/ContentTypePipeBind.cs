@@ -309,6 +309,15 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return ct;
         }
 
+        internal PnP.Core.Model.SharePoint.IContentType GetContentTypeOrWarn(Cmdlet cmdlet, PnPBatch batch, PnP.Core.Model.SharePoint.IList list)
+        {
+            var ct = GetContentType(batch, list);
+            if (ct is null)
+                cmdlet.WriteWarning(NotFoundMessage(list));
+
+            return ct;
+        }
+
         private string NotFoundMessage(bool searchInSiteHierarchy)
             => $"Content type '{this}' not found in site{(searchInSiteHierarchy ? " hierarchy" : "")}.";
 

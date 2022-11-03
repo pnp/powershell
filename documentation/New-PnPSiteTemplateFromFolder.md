@@ -23,6 +23,8 @@ New-PnPSiteTemplateFromFolder [[-Out] <String>] [[-Folder] <String>] [[-TargetFo
 
 ## DESCRIPTION
 
+Allows to create a new provisioning site template based on a given folder, including files present in it.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

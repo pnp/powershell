@@ -445,7 +445,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingAllowedDomainList
-Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, "contoso.com fabrikam.com". Effective when SharingDomainRestrictionMode is set to AllowList.
+Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the "," (comma) character as the delimiter for entering multiple values. For example, "contoso.com, fabrikam.com". Effective when SharingDomainRestrictionMode is set to AllowList.
 
 ```yaml
 Type: String

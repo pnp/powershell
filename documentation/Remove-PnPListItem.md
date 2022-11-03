@@ -13,7 +13,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPListItem.html
 
 Deletes an item from a list
 
-[![Supports Batching](../images/batching/Batching.png)](../articles/batching.html)
+<a href="https://pnp.github.io/powershell/articles/batching.html">
+<img src="https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png" alt="Supports Batching">
+</a>
 
 ## SYNTAX
 
@@ -30,6 +32,8 @@ Remove-PnPListItem [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Batch <P
 ```
 
 ## DESCRIPTION
+
+Allows to remove a list item.
 
 ## EXAMPLES
 

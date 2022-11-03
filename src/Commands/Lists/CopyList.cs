@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             // Execute site script on destination site so the list will be created
             WriteVerbose($"Executing site script to site at {DestinationWebUrl}");
-            var actionResults = RestHelper.PostAsync<RestResultCollection<InvokeSiteScriptActionResponse>>(Connection.HttpClient, $"{Connection.Url}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", ClientContext, new { script = script}).GetAwaiter().GetResult();
+            var actionResults = RestHelper.PostAsync<RestResultCollection<InvokeSiteScriptActionResponse>>(Connection.HttpClient, $"{DestinationWebUrl}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", ClientContext, new { script = script}).GetAwaiter().GetResult();
             
             // Ensure site script actions have been executed
             if(actionResults.Items.Count() == 0)
@@ -117,7 +117,7 @@ namespace PnP.PowerShell.Commands.Lists
             WriteVerbose($"Retrieving newly created list hosted in {DestinationWebUrl} with ID {newListId}");
             var createdList = destinationContext.Web.Lists.GetById(Guid.Parse(newListId));
             destinationContext.Load(createdList, l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl);
-            destinationContext.ExecuteQuery();
+            destinationContext.ExecuteQueryRetry();
 
             // Return the new list
             WriteObject(createdList);

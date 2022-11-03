@@ -21,6 +21,7 @@ Add-PnPDataRowsToSiteTemplate [-Path] <String> -List <ListPipeBind> [-Query <Str
 ```
 
 ## DESCRIPTION
+Allows to add datarows to list inside a PnP Provisioning Template. The command allows to specify the fields which should be retrieved using `-Fields` option and filter the datarows to be used by using `-Query` option.
 
 ## EXAMPLES
 

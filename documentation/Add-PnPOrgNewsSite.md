@@ -25,6 +25,8 @@ Add-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>] 
 
 ## DESCRIPTION
 
+Allows to add site as an organization news source in your tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

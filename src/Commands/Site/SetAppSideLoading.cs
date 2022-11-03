@@ -1,11 +1,13 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using PnP.Framework;
 
+using Microsoft.SharePoint.Client;
+
+using PnP.Framework;
 
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPAppSideLoading")]
+    [OutputType(typeof(void))]
     public class SetAppSideLoading : PnPSharePointCmdlet
     {
         [Parameter(ParameterSetName = "On", Mandatory = true)]
@@ -24,6 +26,5 @@ namespace PnP.PowerShell.Commands.Site
                 ClientContext.Site.DeactivateFeature(Constants.FeatureId_Site_AppSideLoading);
             }
         }
-
     }
 }

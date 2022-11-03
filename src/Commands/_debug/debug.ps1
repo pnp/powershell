@@ -9,7 +9,7 @@ if ($PSEdition -eq 'Core') {
   $netversion = "netcoreapp3.1"
 }
 else {
-  $netversion = "net461"
+  $netversion = "net462"
 }
 
 $BinPath = "$BinPath\$netversion"

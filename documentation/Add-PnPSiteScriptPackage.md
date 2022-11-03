@@ -25,6 +25,8 @@ Add-PnPSiteScriptPackage -Title <String> [-Description <String>] -ContentPath <S
 
 ## DESCRIPTION
 
+Allows to add a new Site Script Package on the current tenant
+
 ## EXAMPLES
 
 ### EXAMPLE 1
