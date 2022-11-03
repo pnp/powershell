@@ -95,7 +95,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed Microsoft Graph based cmdlets not showing detailed error results when a call fails [#2490](https://github.com/pnp/powershell/pull/2490)
 - Fixed `Restore-PnPRecycleBinItem` cmdlet not working with `-RowLimit` parameter. [#2499](https://github.com/pnp/powershell/pull/2499)
 - Fixed cmdlets throwing error when `-ErrorAction SilentlyContinue` was specified. [#2510](https://github.com/pnp/powershell/pull/2510)
-- Fixed `Get-PnPAzureADAppSitePermission` not returning the roles assigned to each permission
+- Fixed `Get-PnPAzureADAppSitePermission` not returning the roles assigned to each permission [#2523](https://github.com/pnp/powershell/pull/2523)
 
 ### Contributors
 
