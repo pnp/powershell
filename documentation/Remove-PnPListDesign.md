@@ -26,6 +26,8 @@ Remove-PnPListDesign [-Identity] <TenantListDesignPipeBind> [-Force] [-Connectio
 
 ## DESCRIPTION
 
+Allows to remove a list design.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

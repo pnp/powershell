@@ -11,9 +11,9 @@ online version: https://pnp.github.io/powershell/cmdlets/UnPublish-PnPSyntexMode
 
 ## SYNOPSIS
 
-Unpublishes a SharePoint Syntex model from a list.
+Unpublishes a Microsoft Syntex model from a list.
 
-This cmdlet only works when you've connected to a SharePoint Syntex Content Center site.
+This cmdlet only works when you've connected to a Syntex Content Center site.
 
 <a href="https://pnp.github.io/powershell/articles/batching.html">
 <img src="https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png" alt="Supports Batching">
@@ -37,7 +37,7 @@ Unpublish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -T
 
 ## DESCRIPTION
 
-This command unpublishes a SharePoint Syntex content understanding models from a list.
+This command unpublishes a Syntex content understanding models from a list.
 
 ## EXAMPLES
 
@@ -55,7 +55,7 @@ Unpublishes the content understanding model named "Invoice model" from the list 
 Unpublish-PnPSyntexModel -Model "Invoice model" -TargetSiteUrl "https://contoso.sharepoint.com/sites/finance" -TargetWebServerRelativeUrl "/sites/finance" -TargetLibraryServerRelativeUrl "/sites/finance/shared%20documents" -Batch $batch
 ```
 
-Adds the unpublishing of the content understanding model named "Invoice model" from the "Shared Documents" library into the PnPBatch $batch. Use `Invoke-PnPBatch -Batch $batch` to execute the batch, use `$batch = New-PnPBatch` to create a batch.
+Adds the unpublishing of the document processing model named "Invoice model" from the "Shared Documents" library into the PnPBatch $batch. Use `Invoke-PnPBatch -Batch $batch` to execute the batch, use `$batch = New-PnPBatch` to create a batch.
 
 ## PARAMETERS
 
@@ -76,7 +76,7 @@ Accept wildcard characters: False
 
 ### -Model
 
-The name or id of the SharePoint Syntex model.
+The name or id of the Syntex model.
 
 ```yaml
 Type: SyntexModelPipeBind

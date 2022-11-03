@@ -21,6 +21,8 @@ New-PnPList -Title <String> -Template <ListTemplateType> [-Url <String>] [-Hidde
 
 ## DESCRIPTION
 
+Allows to create a new list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

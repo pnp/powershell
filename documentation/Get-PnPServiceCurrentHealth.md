@@ -25,6 +25,8 @@ Get-PnPServiceCurrentHealth [-Identity <Office365Workload>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve current service status of the Office 365 Services from the Microsoft Graph API.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

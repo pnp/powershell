@@ -84,7 +84,16 @@ namespace PnP.PowerShell.Commands.Base
             return null;
         }
 
-        internal static async Task<string> GetManagedIdentityTokenAsync(Cmdlet cmdlet, HttpClient httpClient, string defaultResource)
+        /// <summary>
+        /// Returns an access token based on a Managed Identity. Only works within Azure components supporting managed identities such as Azure Functions and Azure Runbooks.
+        /// </summary>
+        /// <param name="cmdlet">The cmdlet scope in which this code runs. Used to write logging to.</param>
+        /// <param name="httpClient">The HttpClient that will be reused to fetch the token to avoid port exhaustion</param>
+        /// <param name="defaultResource">If the cmdlet being executed does not have an attribute to indicate the required permissions, this permission will be requested instead. Optional.</param>
+        /// <param name="userAssignedManagedIdentityObjectId">The object/principal Id of the user assigned managed identity to be used. If omitted, a system assigned managed identity will be used.</param>
+        /// <returns>Access token</returns>
+        /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
+        internal static async Task<string> GetManagedIdentityTokenAsync(Cmdlet cmdlet, HttpClient httpClient, string defaultResource, string userAssignedManagedIdentityObjectId = null)
         {
             string requiredScope = null;
             var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
@@ -100,14 +109,22 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     requiredScope = defaultResource;
                 }
+
+                cmdlet.WriteVerbose($"Using scope {requiredScope} for managed identity token coming from the cmdlet permission attribute");
             }
             else
             {
                 requiredScope = defaultResource;
+
+                cmdlet.WriteVerbose($"Using scope {requiredScope} for managed identity token coming from the passed in default resource");
             }
 
             var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
+            cmdlet.WriteVerbose($"Using identity endpoint: {endPoint}");
+
             var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
+            cmdlet.WriteVerbose($"Using identity header: {identityHeader}");
+
             if (string.IsNullOrEmpty(endPoint))
             {
                 endPoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
@@ -115,22 +132,41 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (!string.IsNullOrEmpty(endPoint))
             {
-                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"{endPoint}?resource={requiredScope}&api-version=2019-08-01"))
+                var tokenRequestUrl = $"{endPoint}?resource={requiredScope}&api-version=2019-08-01";
+
+                // Check if we're using a user assigned managed identity
+                if(!string.IsNullOrEmpty(userAssignedManagedIdentityObjectId))
+                {
+                    // User assigned managed identity will be used, provide the object/pricipal Id of the user assigned managed identity to use
+                    cmdlet.WriteVerbose($"Using the user assigned managed identity with object/principal ID: {userAssignedManagedIdentityObjectId}");
+                    tokenRequestUrl += $"&principal_id={userAssignedManagedIdentityObjectId}";
+                }
+                else
+                {
+                    cmdlet.WriteVerbose("Using the system assigned managed identity");
+                }
+
+                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, tokenRequestUrl))
                 {
                     requestMessage.Headers.Add("Metadata", "true");
                     if (!string.IsNullOrEmpty(identityHeader))
                     {
                         requestMessage.Headers.Add("X-IDENTITY-HEADER", identityHeader);
-
                     }
+                    
+                    cmdlet.WriteVerbose($"Sending token request to {tokenRequestUrl}");
+
                     var response = await httpClient.SendAsync(requestMessage).ConfigureAwait(false);
+
                     if (response.IsSuccessStatusCode)
                     {
                         var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
                         var responseElement = JsonSerializer.Deserialize<JsonElement>(responseContent);
                         if (responseElement.TryGetProperty("access_token", out JsonElement accessTokenElement))
                         {
-                            return accessTokenElement.GetString();
+                            var accessToken = accessTokenElement.GetString();
+                            return accessToken;
                         }
                     }
                     else

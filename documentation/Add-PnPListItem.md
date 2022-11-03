@@ -35,6 +35,8 @@ Add-PnPListItem [-List] <ListPipeBind> -Batch <PnPBatch> [-ContentType <ContentT
 
 ## DESCRIPTION
 
+Allows to add an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
@@ -192,7 +194,7 @@ Multiple lines of text: -Values @{"MultiText" = "New text\n\nMore text"}
 Rich text: -Values @{"MultiText" = "&lt;strong&gt;New&lt;/strong&gt; text"}
 
 Choice: -Values @{"Choice" = "Choice 1"}
-Choice: -Values @{"Choice" = "Choice 1;#Choice 2"}
+Multi-Choice: -Values @{"MultiChoice" = "Choice 1","Choice 2"}
 
 Number: -Values @{"Number" = "10"}
 

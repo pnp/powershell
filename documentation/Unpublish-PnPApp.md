@@ -21,6 +21,8 @@ Unpublish-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-
 
 ## DESCRIPTION
 
+Allows to unpublish an available add-in from the site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

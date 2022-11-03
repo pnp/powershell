@@ -25,6 +25,8 @@ Set-PnPTemporarilyDisableAppBar -Enabled <Boolean> [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to disable/enable SharePoint Online App Bar.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

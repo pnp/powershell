@@ -21,6 +21,8 @@ Clear-PnPListItemAsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind>
 
 ## DESCRIPTION
 
+Allows to undeclare a list item in a list as a record.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

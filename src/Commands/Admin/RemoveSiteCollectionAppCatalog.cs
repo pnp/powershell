@@ -10,7 +10,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteCollectionAppCatalog")]
-    public class RemoveSiteCollectionAppCatalog: PnPAdminCmdlet
+    public class RemoveSiteCollectionAppCatalog : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public SitePipeBind Site;
@@ -18,17 +18,31 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             string url = null;
-            if(Site.Site != null)
+            Guid? id = null;
+            if (Site.Site != null)
             {
                 Site.Site.EnsureProperty(s => s.Url);
                 url = Site.Site.Url;
-            } else if(!string.IsNullOrEmpty(Site.Url))
+            }
+            else if (!string.IsNullOrEmpty(Site.Url))
             {
                 url = Site.Url;
             }
-            
-            Tenant.GetSiteByUrl(url).RootWeb.TenantAppCatalog.SiteCollectionAppCatalogsSites.Remove(url);
-            ClientContext.ExecuteQueryRetry();
+            else if (Site.Id != Guid.Empty)
+            {
+                id = Site.Id;
+            }
+
+            if (!string.IsNullOrEmpty(url))
+            {
+                ClientContext.Web.TenantAppCatalog.SiteCollectionAppCatalogsSites.Remove(url);
+                ClientContext.ExecuteQueryRetry();
+            }
+            else if (id != null)
+            {
+                ClientContext.Web.TenantAppCatalog.SiteCollectionAppCatalogsSites.RemoveById(id.Value);
+                ClientContext.ExecuteQueryRetry();
+            }
         }
     }
 }

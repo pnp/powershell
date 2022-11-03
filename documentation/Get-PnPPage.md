@@ -10,13 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
 # Get-PnPPage
 
 ## SYNOPSIS
-Returns a page
+Returns a modern page
 
 ## SYNTAX
 
 ```powershell
-Get-PnPPage [-Identity] <PagePipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+Get-PnPPage -Identity <PagePipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION

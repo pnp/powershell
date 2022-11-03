@@ -21,6 +21,8 @@ Get-PnPView [-List] <ListPipeBind> [-Identity <ViewPipeBind>]
 
 ## DESCRIPTION
 
+Allows to retrieve list of views from a list. By using `Identity` option it is possible to retrieve a specific view.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -20,6 +20,8 @@ Get-PnPRequestAccessEmails [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve request access e-mail addresses.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

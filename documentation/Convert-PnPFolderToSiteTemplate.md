@@ -20,6 +20,8 @@ Convert-PnPFolderToSiteTemplate [-Out] <String> [[-Folder] <String>] [-Force] [<
 
 ## DESCRIPTION
 
+Allows to convert the current folder together with all files, to a pnp package file of and existing template xml.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

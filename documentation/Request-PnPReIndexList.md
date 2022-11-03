@@ -21,6 +21,8 @@ Request-PnPReIndexList [-Identity] <ListPipeBind> [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
+Allows to mark the list for full indexing during the next incremental crawl.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

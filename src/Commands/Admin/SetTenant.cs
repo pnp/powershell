@@ -263,6 +263,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? OneDriveRequestFilesLinkEnabled;
 
         [Parameter(Mandatory = false)]
+        public bool? EnableRestrictedAccessControl;
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
@@ -347,7 +350,7 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.ProvisionSharedWithEveryoneFolder = ProvisionSharedWithEveryoneFolder.Value;
                 modified = true;
             }
-            if (SignInAccelerationDomain != null && (Force || ShouldContinue($@"Please confirm that ""{SignInAccelerationDomain}"" is correct, and you have federated sign-in configured for that domain. Otherwise, your users will no longer be able to sign in. Do you want to continue?", "Confirm")))
+            if (SignInAccelerationDomain != null && (Force || ShouldContinue($@"Please confirm that ""{SignInAccelerationDomain}"" is correct, and you have federated sign-in configured for that domain. Otherwise, your users will no longer be able to sign in. Do you want to continue?", Properties.Resources.Confirm)))
             {
                 Tenant.SignInAccelerationDomain = SignInAccelerationDomain;
                 modified = true;
@@ -358,7 +361,7 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw new InvalidOperationException("This setting cannot be changed until you set the SignInAcceleration Domain.");
                 }
-                if (Force || ShouldContinue("Make sure that your federated sign-in supports guest users. If it doesn’t, your guest users will no longer be able to sign in after you set EnableGuestSignInAcceleration to $true.", "Confirm"))
+                if (Force || ShouldContinue("Make sure that your federated sign-in supports guest users. If it doesn’t, your guest users will no longer be able to sign in after you set EnableGuestSignInAcceleration to $true.", Properties.Resources.Confirm))
                 {
                     Tenant.EnableGuestSignInAcceleration = EnableGuestSignInAcceleration.Value;
                     modified = true;
@@ -376,7 +379,7 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.UsePersistentCookiesForExplorerView = UsePersistentCookiesForExplorerView.Value;
                 modified = true;
             }
-            if (BccExternalSharingInvitations.HasValue && (!BccExternalSharingInvitations.Value || (BccExternalSharingInvitations.Value && (Force || ShouldContinue("The recipients listed in BccExternalSharingInvitationsList will be blind copied on all external sharing invitations. Do you want to continue?", "Confirm")))))
+            if (BccExternalSharingInvitations.HasValue && (!BccExternalSharingInvitations.Value || (BccExternalSharingInvitations.Value && (Force || ShouldContinue("The recipients listed in BccExternalSharingInvitationsList will be blind copied on all external sharing invitations. Do you want to continue?", Properties.Resources.Confirm)))))
             {
                 Tenant.BccExternalSharingInvitations = BccExternalSharingInvitations.Value;
                 modified = true;
@@ -485,7 +488,7 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw new ArgumentException("OrphanedPersonalSitesRetentionPeriod must have a value between 30 and 3650");
                 }
-                if (Force || ShouldContinue("This will update the Retention Policy for All Orphaned OneDrive for Business sites.", "Confirm"))
+                if (Force || ShouldContinue("This will update the Retention Policy for All Orphaned OneDrive for Business sites.", Properties.Resources.Confirm))
                 {
                     try
                     {
@@ -548,7 +551,7 @@ namespace PnP.PowerShell.Commands.Admin
             if (OneDriveForGuestsEnabled.HasValue)
             {
                 string message = OneDriveForGuestsEnabled.Value ? "This will enable all users, including guests, to create OneDrive for Business sites. You must first assign OneDrive for Business licenses to the guests before they can create their OneDrive for Business sites." : "Guests will no longer be able to create new OneDrive for Business sites. Existing sites won’t be impacted.";
-                if (Force || ShouldContinue(message, "Confirm"))
+                if (Force || ShouldContinue(message, Properties.Resources.Confirm))
                 {
                     Tenant.OneDriveForGuestsEnabled = OneDriveForGuestsEnabled.Value;
                     modified = true;
@@ -738,7 +741,7 @@ namespace PnP.PowerShell.Commands.Admin
                             WriteWarning("Users will not be able to download files that can't be viewed on the web. To allow download of files that can't be viewed on the web, run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
                         }
                     }
-                    else if (Force || ShouldContinue("To set this parameter, you need to set the Set-PnPTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", "Confirm"))
+                    else if (Force || ShouldContinue("To set this parameter, you need to set the Set-PnPTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", Properties.Resources.Confirm))
                     {
                         Tenant.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
                         Tenant.AllowDownloadingNonWebViewableFiles = AllowDownloadingNonWebViewableFiles.Value;
@@ -764,7 +767,7 @@ namespace PnP.PowerShell.Commands.Admin
                         Tenant.AllowEditing = AllowEditing.Value;
                         modified = true;
                     }
-                    else if (Force || ShouldContinue("To set this parameter, you need to set the Set-PnPTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", "Confirm"))
+                    else if (Force || ShouldContinue("To set this parameter, you need to set the Set-PnPTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", Properties.Resources.Confirm))
                     {
                         Tenant.ConditionalAccessPolicy = SPOConditionalAccessPolicyType.AllowLimitedAccess;
                         Tenant.AllowEditing = AllowEditing.Value;
@@ -930,7 +933,7 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if(DisplayNamesOfFileViewers.HasValue)
+            if (DisplayNamesOfFileViewers.HasValue)
             {
                 Tenant.DisplayNamesOfFileViewers = DisplayNamesOfFileViewers.Value;
                 modified = true;
@@ -951,6 +954,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (OneDriveRequestFilesLinkEnabled.HasValue)
             {
                 Tenant.OneDriveRequestFilesLinkEnabled = OneDriveRequestFilesLinkEnabled.Value;
+                modified = true;
+            }
+
+            if (EnableRestrictedAccessControl.HasValue)
+            {
+                Tenant.EnableRestrictedAccessControl = EnableRestrictedAccessControl.Value;
                 modified = true;
             }
 

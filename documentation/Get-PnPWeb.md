@@ -21,6 +21,8 @@ Get-PnPWeb [[-Identity] <WebPipeBind>] [-Connection <PnPConnection>] [-Includes 
 
 ## DESCRIPTION
 
+Allows to retrieve the current web.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

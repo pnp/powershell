@@ -25,6 +25,8 @@ Get-PnPServiceHealthIssue [-Identity <Id>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve current service health issues of the Office 365 Services from the Microsoft Graph API.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

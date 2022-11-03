@@ -26,6 +26,8 @@ Enable-PnPSiteClassification -Classifications <System.Collections.Generic.List`1
 
 ## DESCRIPTION
 
+Allows to enable site classifications for the tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

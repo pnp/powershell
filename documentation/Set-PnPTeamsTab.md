@@ -26,6 +26,8 @@ Set-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Iden
 
 ## DESCRIPTION
 
+Allows to update Teams Tab settings.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

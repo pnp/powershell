@@ -25,6 +25,8 @@ Add-PnPSiteCollectionAppCatalog [-Site <SitePipeBind>] [-Connection <PnPConnecti
 
 ## DESCRIPTION
 
+Allows to add Site Collection scoped App Catalog.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

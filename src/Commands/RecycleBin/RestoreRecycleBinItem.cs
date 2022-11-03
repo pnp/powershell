@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.RecycleBin
     [OutputType(typeof(void))]
     public class RestoreRecycleBinItem : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public RecycleBinItemPipeBind Identity;
 
         [Parameter(Mandatory = false)]
@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.RecycleBin
             {
                 if (ParameterSpecified(nameof(RowLimit)))
                 {
-                    if (Force || ShouldContinue(Resources.RestoreRecycleBinItems, Resources.Confirm))
+                    if (Force || ShouldContinue(string.Format(Resources.Restore0RecycleBinItems, RowLimit), Resources.Confirm))
                     {
                         RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, RecycleBinItemState.None);
                         ClientContext.Load(items);

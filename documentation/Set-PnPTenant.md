@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTenant.html
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Sets organization-level site collection properties
+Sets organization-level tenant properties
 
 ## SYNTAX
 
@@ -52,12 +52,12 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>] 
  [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>] [-AllowFilesWithKeepLabelToBeDeletedSPO <Boolean>]
  [-ExternalUserExpirationRequired <Boolean>] [-ExternalUserExpireInDays <Boolean>] [-OneDriveRequestFilesLinkEnabled <Boolean>]
- [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-EnableRestrictedAccessControl <Boolean>]
+ [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Sets organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
-ResourceQuotaAllocated, and SiteCreationMode.
+Sets organization-level tenant properties which impact the entire tenant.
 
 You must have the SharePoint Online admin or Global admin role to run the cmdlet.
 
@@ -1408,6 +1408,20 @@ Accept wildcard characters: False
 
 ### -OneDriveRequestFilesLinkEnabled
 Allows configuring whether users will be able to create anonymous requests for people to upload files regardless of the Share with anyone link configuration setting.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableRestrictedAccessControl
+To enable restricted access control in SharePoint Online. You need to wait approximately 1 hour before managing restricted access control for a site collection.
 
 ```yaml
 Type: Boolean

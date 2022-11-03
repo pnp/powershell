@@ -21,6 +21,8 @@ Get-PnPListRecordDeclaration -List <ListPipeBind> [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 
+Allows to retrieve the record declaration settings for given list.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

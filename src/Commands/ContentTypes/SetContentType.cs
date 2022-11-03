@@ -7,6 +7,9 @@ namespace PnP.PowerShell.Commands.ContentTypes
     [Cmdlet(VerbsCommon.Set, "PnPContentType")]
     public class SetContentType : PnPWebCmdlet
     {
+        private const string ParameterSet_FormCustomizersConvenienceParams = "Form Customizers Convenience Options";
+        private const string ParameterSet_FormCustomizersParams = "Form Customizers Options";
+
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public ContentTypePipeBind Identity;
 
@@ -37,6 +40,30 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
         [Parameter(Mandatory = false, ValueFromPipeline = false)]
         public bool Sealed;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        public string FormClientSideComponentId;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        public string FormClientSideComponentProperties;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
+        public string DisplayFormClientSideComponentId;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
+        public string DisplayFormClientSideComponentProperties;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
+        public string NewFormClientSideComponentId;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
+        public string NewFormClientSideComponentProperties;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
+        public string EditFormClientSideComponentId;
+
+        [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
+        public string EditFormClientSideComponentProperties;
 
         protected override void ExecuteCmdlet()
         {
@@ -89,6 +116,58 @@ namespace PnP.PowerShell.Commands.ContentTypes
                 if (ParameterSpecified(nameof(Sealed)))
                 {
                     ct.Sealed = Sealed;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(FormClientSideComponentId)))
+                {
+                    ct.DisplayFormClientSideComponentId = FormClientSideComponentId;
+                    ct.NewFormClientSideComponentId = FormClientSideComponentId;
+                    ct.EditFormClientSideComponentId = FormClientSideComponentId;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(FormClientSideComponentProperties)))
+                {
+                    ct.DisplayFormClientSideComponentProperties = FormClientSideComponentProperties;
+                    ct.NewFormClientSideComponentProperties = FormClientSideComponentProperties;
+                    ct.EditFormClientSideComponentProperties = FormClientSideComponentProperties;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(DisplayFormClientSideComponentId)))
+                {
+                    ct.DisplayFormClientSideComponentId = DisplayFormClientSideComponentId;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(DisplayFormClientSideComponentProperties)))
+                {
+                    ct.DisplayFormClientSideComponentProperties = DisplayFormClientSideComponentProperties;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(NewFormClientSideComponentId)))
+                {
+                    ct.NewFormClientSideComponentId = NewFormClientSideComponentId;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(NewFormClientSideComponentProperties)))
+                {
+                    ct.NewFormClientSideComponentProperties = NewFormClientSideComponentProperties;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(EditFormClientSideComponentId)))
+                {
+                    ct.EditFormClientSideComponentId = EditFormClientSideComponentId;
+                    updateRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(EditFormClientSideComponentProperties)))
+                {
+                    ct.EditFormClientSideComponentProperties = EditFormClientSideComponentProperties;
                     updateRequired = true;
                 }
 

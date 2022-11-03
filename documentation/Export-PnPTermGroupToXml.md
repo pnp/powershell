@@ -21,6 +21,8 @@ Export-PnPTermGroupToXml [-Identity <TermGroupPipeBind>] [-Out <String>] [-FullT
 
 ## DESCRIPTION
 
+Allows to export a taxonomy TermGroup to either the output or to an XML file.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

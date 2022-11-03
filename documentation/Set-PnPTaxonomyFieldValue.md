@@ -34,6 +34,8 @@ Set-PnPTaxonomyFieldValue -ListItem <ListItem> -InternalFieldName <String> [-Ter
 
 ## DESCRIPTION
 
+Allows to update taxonomy term value in a listitem field.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

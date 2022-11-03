@@ -21,6 +21,8 @@ Remove-PnPFolder -Name <String> -Folder <FolderPipeBind> [-Recycle] [-Force]
 
 ## DESCRIPTION
 
+Allows to remove a folder.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

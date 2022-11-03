@@ -24,6 +24,8 @@ Reset-PnPMicrosoft365GroupExpiration -Identity <Microsoft365GroupPipeBind>
 
 ## DESCRIPTION
 
+Allows to extend the Microsoft 365 Group expiration date by the number of days defined in the group expiration policy.
+
 ## EXAMPLES
 
 ### ------------------EXAMPLE 1------------------

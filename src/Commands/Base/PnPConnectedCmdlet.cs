@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Base
                 switch (ex)
                 {
                     case PnP.PowerShell.Commands.Model.Graph.GraphException gex:
-                        errorMessage = gex.Message;
+                        errorMessage = gex.Error.Message;
                         break;
 
                     case PnP.Core.SharePointRestServiceException rex:
@@ -73,8 +73,8 @@ namespace PnP.PowerShell.Commands.Base
                         break;
                 }
 
-                // For backwards compatibility we will throw the exception as a PSInvalidOperationException if -ErrorAction:Stop has NOT been specified
-                if (!ParameterSpecified("ErrorAction") || MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant() != "stop")
+                // For backwards compatibility we will throw the exception as a PSInvalidOperationException if -ErrorAction:Stop has NOT been specified                
+                if (!ParameterSpecified("ErrorAction") || (MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant() != "stop" && MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant() != "silentlycontinue"))
                 {
                     throw new PSInvalidOperationException(errorMessage);
                 }

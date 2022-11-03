@@ -28,6 +28,8 @@ Set-PnPSiteDesign -Identity <TenantSiteDesignPipeBind> [-Title <String>] [-SiteS
 
 ## DESCRIPTION
 
+Allows to update a Site Design on the current tenant.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

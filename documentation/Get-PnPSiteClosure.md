@@ -20,6 +20,8 @@ Get-PnPSiteClosure [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve current site closure status of the site which has a site policy applied.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

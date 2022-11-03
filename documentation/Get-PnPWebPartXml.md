@@ -21,6 +21,8 @@ Get-PnPWebPartXml -ServerRelativePageUrl <String> -Identity <WebPartPipeBind>
 
 ## DESCRIPTION
 
+Allows to retrieve web part XML defintion.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

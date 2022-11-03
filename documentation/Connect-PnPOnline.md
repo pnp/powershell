@@ -70,12 +70,12 @@ Connect-PnPOnline -Url <String> -TransformationOnPrem [-CurrentCredential]
 
 ### Access Token
 ```
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-AzureEnvironment <AzureEnvironment>] -AccessToken <String> [<CommonParameters>]
+Connect-PnPOnline -Url <String> -AccessToken <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
 ### Managed Identity
 ```
-Connect-PnPOnline [-NoTelemetry] [<CommonParameters>]
+Connect-PnPOnline -Url <String> [-UserAssignedManagedIdentityObjectId <String>]
 ```
 
 ## DESCRIPTION
@@ -183,14 +183,21 @@ See http://aka.ms/sharepoint/modernization/pages for more details on page transf
 
 ### EXAMPLE 12
 ```
-Connect-PnPOnline -ManagedIdentity
+Connect-PnPOnline -Url contoso.sharepoint.com -ManagedIdentity
 Get-PnPTeamsTeam
 ```
 
-Using this way of connecting only works with environments that support managed identies: Azure Functions and the Azure Cloud Shell.
-You cannot access SharePoint artifacts using this connection method: only the cmdlets that use the Microsoft Graph or Azure AD resources behind the scenes will work: Teams cmdlets, Flow cmdlets, Planner cmdlets and the Microsoft 365 Group cmdlets.
+Connects using a system assigned managed identity to Microsoft Graph. Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
 
 ### EXAMPLE 13
+```
+Connect-PnPOnline -Url contoso.sharepoint.com -ManagedIdentity -UserAssignedManagedIdentityObjectId 363c1b31-6872-47fd-a616-574d3aec2a51
+Get-PnPList
+```
+
+Connects using an user assigned managed identity with object/principal ID 363c1b31-6872-47fd-a616-574d3aec2a51 to SharePoint Online. Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
+
+### EXAMPLE 14
 ```
 Connect-PnPOnline -Url contoso.sharepoint.com -AccessToken $token
 ```
@@ -599,13 +606,27 @@ Accept wildcard characters: False
 ```
 
 ### -ManagedIdentity
-For use with Azure Functions (if configured to use a managed identity) or Azure Cloud Shell only.
-This method will acquire a token using the built-in endpoints in the Azure Cloud Shell and Azure Functions.
-Notice that using this connection method will not allow you to access SharePoint artifacts due to limitations of token acquisition.
-It will however allow you to use the Teams cmdlets, Flow cmdlets, Planner cmdlets and Microsoft 365 Group cmdlets.
+Connects using an Azure Managed Identity. For use with Azure Functions, Azure Automation Runbooks (if configured to use a managed identity) or Azure Cloud Shell only.
+This method will acquire a token using the built-in endpoints in the Azure Cloud Shell, Azure Automation Runbooks and Azure Functions.
+Read up on [the documentation](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) on how to make use of this option.
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: Managed Identity
+Aliases:
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserAssignedManagedIdentityObjectId
+Can be used in combination with `-ManagedIdentity` to specify the object/principal id of the user assigned managed identity to use. If not provided, a system assigned managed identity will be used.
+
+```yaml
+Type: String
 Parameter Sets: Managed Identity
 Aliases:
 

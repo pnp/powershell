@@ -23,6 +23,8 @@ Get-PnPTermGroup
 
 ## DESCRIPTION
 
+Allows to retrieve a taxonomy term group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
