@@ -23,7 +23,7 @@
 		<RepositoryUrl>https://github.com/pnp/powershell</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/pnp/powershell</PackageProjectUrl>
 		<PackageTags>Microsoft 365; PowerShell; SharePoint; Teams; Graph; Azure AD</PackageTags>
-		<Description>PnP PowerShell is a .NET 6/ .NET Framework 4.6.2 based PowerShell Module providing nearly 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
+		<Description>PnP PowerShell is a .NET 6/ .NET Framework 4.6.2 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
 		<PackageIcon>nugeticon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
@@ -159,7 +159,6 @@
 	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
-		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.0" />
