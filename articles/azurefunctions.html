@@ -177,7 +177,7 @@ $servicePrincipal = Get-AzADServicePrincipal -AppId &quot;00000003-0000-0ff1-ce0
 </code></pre>
 </li>
 <li><p>Using the following PowerShell cmdlet you can list all the possible permissions you can give through the Managed Identity. This list will be long. Notice that we are specifically querying for application permissions. Delegate permissions cannot be utilized using a Managed Identity.</p>
-<pre><code class="lang-powershell">$servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; }
+<pre><code class="lang-powershell">$servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; } | Sort-Object Value | Select-Object Value, Description
 </code></pre>
 </li>
 <li><p>Pick a permission which you would like to grant to the Managed Identity, i.e. <code>Group.Read.All</code>.</p>
