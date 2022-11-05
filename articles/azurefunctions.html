@@ -181,7 +181,7 @@ $servicePrincipal = Get-AzADServicePrincipal -AppId &quot;00000003-0000-0ff1-ce0
 </code></pre>
 </li>
 <li><p>Pick a permission which you would like to grant to the Managed Identity, i.e. <code>Group.Read.All</code>.</p>
-<pre><code class="lang-powershell">$appRole = $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; -and $_.Value -eq &quot;Group.Read.All&quot; } | Format-List
+<pre><code class="lang-powershell">$appRole = $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; -and $_.Value -eq &quot;Group.Read.All&quot; }
 </code></pre>
 </li>
 <li><p>Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity in the steps above:</p>
