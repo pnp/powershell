@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Admin
         private const string ParameterSet_BYURL = "By URL";
         private const string ParameterSet_FROMCONNECTION = "From connection";
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYURL)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYURL)]
         public string TenantUrl;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYURL)]
@@ -39,13 +39,17 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 else if (!string.IsNullOrEmpty(TenantUrl))
                 {
+                    if(!TenantUrl.Contains("."))
+                    {
+                        TenantUrl = $"https://{TenantUrl}.sharepoint.com";
+                    }
                     if(!TenantUrl.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase))
                     {
                         TenantUrl = $"https://{TenantUrl}";
                     }
                     if(TenantUrl.IndexOf(".sharepoint.", StringComparison.InvariantCultureIgnoreCase) == -1)
                     {
-                        throw new InvalidOperationException($"Please provide the sharepoint domain, e.g. https://contoso.sharepoint.com");    
+                        throw new InvalidOperationException($"Please provide the sharepoint domain, e.g. contoso.sharepoint.com");    
                     }
 
                     WriteObject(TenantExtensions.GetTenantIdByUrl(TenantUrl, AzureEnvironment));

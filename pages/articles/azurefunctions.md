@@ -121,13 +121,13 @@ Next step is to assign permissions to this managed identity so it is authorized 
 1. Using the following PowerShell cmdlet you can list all the possible permissions you can give through the Managed Identity. This list will be long. Notice that we are specifically querying for application permissions. Delegate permissions cannot be utilized using a Managed Identity.
 
    ```powershell
-   $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" }
+   $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" } | Sort-Object Value | Select-Object Value, Description
    ```
 
 1. Pick a permission which you would like to grant to the Managed Identity, i.e. `Group.Read.All`.
 
    ```powershell
-   $appRole = $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" -and $_.Value -eq "Group.Read.All" } | Format-List
+   $appRole = $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" -and $_.Value -eq "Group.Read.All" }
    ```
 
 1. Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity in the steps above:

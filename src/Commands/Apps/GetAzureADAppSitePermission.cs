@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
@@ -46,19 +47,29 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 if (!ParameterSpecified(nameof(PermissionId)))
                 {
-                    // all permissions
-                    var results = GraphHelper.GetResultCollectionAsync<AzureADAppPermissionInternal>(Connection, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken).GetAwaiter().GetResult();
-                    if (results.Any())
+                    // Cache the access token so it will not be requested for every following request in this cmdlet
+                    var accessToken = AccessToken;
+
+                    // All permissions, first fetch just the Ids as the API works in a weird way that requesting all permissions does not reveal their roles, so we will request all permissions and then request each permission individually so we will also have the roles
+                    var permissions = GraphHelper.GetResultCollectionAsync<AzureADAppPermissionInternal>(Connection, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions?$select=Id", accessToken).GetAwaiter().GetResult();
+                    if (permissions.Any())
                     {
-                        var convertedResults = results.Select(i => i.Convert());
+                        var results = new List<AzureADAppPermission>();
+                        foreach (var permission in permissions)
+                        {
+                            // Request the permission individually so it will include the roles
+                            var detailedApp = GraphHelper.GetAsync<AzureADAppPermissionInternal>(Connection, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{permission.Id}", accessToken).GetAwaiter().GetResult();
+                            results.Add(detailedApp.Convert());
+                        }
+
                         if (ParameterSpecified(nameof(AppIdentity)))
                         {
-                            var filteredResults = convertedResults.Where(p => p.Apps.Any(a => a.DisplayName == AppIdentity || a.Id == AppIdentity));
+                            var filteredResults = results.Where(p => p.Apps.Any(a => a.DisplayName == AppIdentity || a.Id == AppIdentity));
                             WriteObject(filteredResults, true);
                         }
                         else
                         {
-                            WriteObject(convertedResults, true);
+                            WriteObject(results, true);
                         }
                     }
                 }
