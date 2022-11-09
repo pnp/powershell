@@ -39,6 +39,10 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 else if (!string.IsNullOrEmpty(TenantUrl))
                 {
+                    if(!TenantUrl.Contains("."))
+                    {
+                        TenantUrl = $"https://{TenantUrl}.sharepoint.com";
+                    }
                     if(!TenantUrl.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase))
                     {
                         TenantUrl = $"https://{TenantUrl}";
