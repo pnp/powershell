@@ -1,11 +1,13 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Remove, "PnPRoleDefinition")]
+    [OutputType(typeof(void))]
     public class RemoveRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -21,7 +23,7 @@ namespace PnP.PowerShell.Commands.Site
             {
                 try
                 {
-                    if (Force || ShouldContinue($@"Remove Role Definition ""{roleDefinition.Name}""?", "Confirm"))
+                    if (Force || ShouldContinue($@"Remove Role Definition ""{roleDefinition.Name}""?", Properties.Resources.Confirm))
                     {
                         roleDefinition.DeleteObject();
                         ClientContext.ExecuteQueryRetry();

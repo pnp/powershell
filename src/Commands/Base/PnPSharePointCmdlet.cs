@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands
         public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
         /// <summary>
-        /// The current Bearer access token for SharePoitn Online
+        /// The current Bearer access token for SharePoint Online
         /// </summary>
         protected string AccessToken
         {
@@ -41,15 +41,24 @@ namespace PnP.PowerShell.Commands
             {
                 if (Connection != null)
                 {
-                    if (Connection.Context != null)
+                    if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                     {
-                        var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(Connection.Context);
-                        if (settings != null)
+                        var resourceUri = new Uri(Connection.Url);
+                        var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
+                        return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, defaultResource, Connection.UserAssignedManagedIdentityObjectId).GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        if (Connection.Context != null)
                         {
-                            var authManager = settings.AuthenticationManager;
-                            if (authManager != null)
+                            var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(Connection.Context);
+                            if (settings != null)
                             {
-                                return authManager.GetAccessTokenAsync(Connection.Context.Url).GetAwaiter().GetResult();
+                                var authManager = settings.AuthenticationManager;
+                                if (authManager != null)
+                                {
+                                    return authManager.GetAccessTokenAsync(Connection.Context.Url).GetAwaiter().GetResult();
+                                }
                             }
                         }
                     }
@@ -102,44 +111,14 @@ namespace PnP.PowerShell.Commands
 
         protected override void ProcessRecord()
         {
-            try
+            var tag = Connection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
+            if (tag.Length > 32)
             {
-                var tag = Connection.PnPVersionTag + ":" + MyInvocation.MyCommand.Name;
-                if (tag.Length > 32)
-                {
-                    tag = tag.Substring(0, 32);
-                }
-                ClientContext.ClientTag = tag;
+                tag = tag.Substring(0, 32);
+            }
+            ClientContext.ClientTag = tag;
 
-                ExecuteCmdlet();
-            }
-            catch (PipelineStoppedException)
-            {
-                //don't swallow pipeline stopped exception
-                //it makes select-object work weird
-                throw;
-            }
-            catch (PnP.Core.SharePointRestServiceException ex)
-            {
-                throw new PSInvalidOperationException((ex.Error as PnP.Core.SharePointRestError).Message);
-            }
-            catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
-            {
-                throw new PSInvalidOperationException((gex.Message));
-            }
-            catch (Exception ex)
-            {
-                Connection.RestoreCachedContext(Connection.Url);
-                ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
-                ex.Data["TimeStampUtc"] = DateTime.UtcNow;
-                var errorDetails = new ErrorDetails(ex.Message);
-
-                errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
-                var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
-                errorRecord.ErrorDetails = errorDetails;
-
-                WriteError(errorRecord);
-            }
+            base.ProcessRecord();
         }
 
         protected override void EndProcessing()
@@ -147,26 +126,36 @@ namespace PnP.PowerShell.Commands
             base.EndProcessing();
         }
 
+        /// <summary>
+        /// Waits for the SpoOperation to complete
+        /// </summary>
+        /// <param name="spoOperation">The operation to wait for to be completed</param>
+        /// <exception cref="TimeoutException">Exception thrown when the waiting operation takes too long and times out</exception>
         protected void PollOperation(SpoOperation spoOperation)
         {
             while (true)
             {
-                if (!spoOperation.IsComplete)
+                if (spoOperation.IsComplete)
                 {
-                    if (spoOperation.HasTimedout)
-                    {
-                        throw new TimeoutException("SharePoint Operation Timeout");
-                    }
-                    Thread.Sleep(spoOperation.PollingInterval);
-                    if (Stopping)
-                    {
-                        break;
-                    }
-                    ClientContext.Load(spoOperation);
-                    ClientContext.ExecuteQueryRetry();
-                    continue;
+                    WriteVerbose("Operation completed");
+                    return;
                 }
-                return;
+                if (spoOperation.HasTimedout)
+                {
+                    WriteVerbose("Operation timed out");
+                    throw new TimeoutException("SharePoint Operation Timeout");
+                }
+
+                Thread.Sleep(spoOperation.PollingInterval);
+
+                if (Stopping)
+                {
+                    break;
+                }
+
+                WriteVerbose("Checking for operation status");
+                ClientContext.Load(spoOperation);
+                ClientContext.ExecuteQueryRetry();
             }
             WriteWarning("SharePoint Operation Wait Interrupted");
         }

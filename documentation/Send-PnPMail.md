@@ -21,6 +21,8 @@ Send-PnPMail [-Server <String>] [-From <String>] [-Password <String>] -To <Strin
 
 ## DESCRIPTION
 
+Allows to send an email using the Office 365 SMTP Service or SharePoin.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

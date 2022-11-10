@@ -20,6 +20,8 @@ Get-PnPMasterPage [-Connection <PnPConnection>] [<CommonParameters>]
 
 ## DESCRIPTION
 
+Allows to retrieve urls of the default Master Page and custom Master Page of the current site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

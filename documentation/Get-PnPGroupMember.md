@@ -19,7 +19,7 @@ Get-PnPGroupMember -Group <GroupPipeBind> [-User String]
 ```
 
 ## DESCRIPTION
-This command will return all the users or a specific user that are members of the provided SharePoint group
+This command will return all the users (or a specific user) that are members of the provided SharePoint group
 
 ## EXAMPLES
 
@@ -28,7 +28,7 @@ This command will return all the users or a specific user that are members of th
 Get-PnPGroupMember -Group "Marketing Site Members"
 ```
 
-Returns all the users that are a member of the group "Marketing Site Members" in the current sitecollection
+Returns all the users that are a member of the group "Marketing Site Members" in the current site collection
 
 ### EXAMPLE 2
 ```powershell
@@ -42,14 +42,14 @@ Will return a user if the user "manager@domain.com" is a member of the specified
 Get-PnPGroup | Get-PnPGroupMember
 ```
 
-Returns all the users that are a member of any of the groups in the current sitecollection
+Returns all the users that are a member of any of the groups in the current site collection
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPGroup | ? Title -Like 'Marketing*' | Get-PnPGroupMember
 ```
 
-Returns all the users that are a member of any of the groups of which their name starts with the word 'Marketing' in the current sitecollection
+Returns all the users that are a member of any of the groups of which their name starts with the word 'Marketing' in the current site collection
 
 ## PARAMETERS
 

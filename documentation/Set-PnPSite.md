@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSite.html
 # Set-PnPSite
 
 ## SYNOPSIS
-Sets Site Collection properties.
+Sets site collection properties.
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-Lo
  [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>] [-DisableSharingForNonOwners]
  [-LocaleId <UInt32>] [-RestrictedToGeo <RestrictedToRegion>] [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays <Int32>] [-OverrideTenantAnonymousLinkExpirationPolicy]
- [-MediaTranscription <MediaTranscriptionPolicyType>] [-SensitivityLabel <Guid>]
+ [-MediaTranscription <MediaTranscriptionPolicyType>] [-SensitivityLabel <Guid>] [-RequestFilesLinkEnabled <Boolean>] [-ScriptSafeDomainName <string>]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -34,6 +34,8 @@ Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connecti
 ```
 
 ## DESCRIPTION
+
+Allows to modify a site properties.
 
 ## EXAMPLES
 
@@ -82,7 +84,7 @@ Allows custom script on a specific site. See [Allow or prevent custom script](ht
 ## PARAMETERS
 
 ### -AllowSelfServiceUpgrade
-Specifies if the site administrator can upgrade the site collection
+Specifies if the site administrator can upgrade the site collection.
 
 ```yaml
 Type: SwitchParameter
@@ -96,7 +98,9 @@ Accept wildcard characters: False
 ```
 
 ### -AnonymousLinkExpirationInDays
-{{ Fill AnonymousLinkExpirationInDays Description }}
+Specifies all anonymous/anyone links that have been created (or will be created) will expire after the set number of days. Only applies if OverrideTenantAnonymousLinkExpirationPolicy is set to true. 
+
+To remove the expiration requirement, set the value to zero (0).
 
 ```yaml
 Type: Int32
@@ -114,7 +118,7 @@ The classification tag to set. This is the old classification/labeling method. S
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
@@ -128,7 +132,7 @@ The Microsoft Purview sensitivity label to set. This is the new classification/l
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
@@ -138,7 +142,7 @@ Accept wildcard characters: False
 ```
 
 ### -CommentsOnSitePagesDisabled
-Specifies if comments on site pages are enabled or disabled
+Specifies if comments on site pages are enabled or disabled.
 
 ```yaml
 Type: SwitchParameter
@@ -209,6 +213,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisableAppViews
+Determines whether the App Views feature is disabled in the site collection.
 
 ```yaml
 Type: AppViewsPolicy
@@ -223,6 +228,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisableCompanyWideSharingLinks
+Determines whether company-wide sharing links are disabled in collection.
 
 ```yaml
 Type: CompanyWideSharingLinksPolicy
@@ -237,7 +243,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisableFlows
-Disables Microsoft Flow for this site
+Disables Microsoft Flow for this site.
 
 ```yaml
 Type: SwitchParameter
@@ -251,7 +257,8 @@ Accept wildcard characters: False
 ```
 
 ### -DisableSharingForNonOwners
-Specifies to prevent non-owners from inviting new users to the site
+Specifies whether non-owners should be prevented from inviting new users to the site.
+Setting this will also disable Access Request Emails.
 
 ```yaml
 Type: SwitchParameter
@@ -265,6 +272,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
+The url of the site collection.
 
 ```yaml
 Type: String
@@ -293,7 +301,7 @@ Accept wildcard characters: False
 ```
 
 ### -LockState
-Sets the lockstate of a site
+Sets the lockstate of a site collection.
 
 ```yaml
 Type: SiteLockState
@@ -308,7 +316,7 @@ Accept wildcard characters: False
 ```
 
 ### -LogoFilePath
-Sets the logo of the site if it concerns a modern team site. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl.
+Sets the logo of the site if it is a modern team site. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl.
 
 ```yaml
 Type: String
@@ -337,7 +345,7 @@ Accept wildcard characters: False
 ```
 
 ### -OverrideTenantAnonymousLinkExpirationPolicy
-{{ Fill OverrideTenantAnonymousLinkExpirationPolicy Description }}
+Specifies whether to use company-wide or a site collection level anonymous links expiration policy. Set it to true to get advantage of AnonymousLinkExpirationInDays.
 
 ```yaml
 Type: SwitchParameter
@@ -395,7 +403,7 @@ Accept wildcard characters: False
 ```
 
 ### -SocialBarOnSitePagesDisabled
-Disables or enables the Social Bar for Site Collection.
+Disables or enables the Social Bar for site collection.
 
 ```yaml
 Type: SwitchParameter
@@ -437,11 +445,55 @@ Accept wildcard characters: False
 ```
 
 ### -MediaTranscription
-When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video. Possible values: `Enabled, Disabled`
+When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video.
 
 ```yaml
 Type: MediaTranscriptionPolicyType
+Parameter Sets: Set Properties
+Accepted values: Enabled, Disabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RequestFilesLinkEnabled
+Allows configuring whether users will be able to create anonymous requests for people to upload files regardless of the Share with anyone link configuration setting for this particular site collection.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ScriptSafeDomainName
+Allow contributors to insert iframes only from the specified domains only
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedAccessControl
+To enable restricted access control on a group-connected or Teams-connected site
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None

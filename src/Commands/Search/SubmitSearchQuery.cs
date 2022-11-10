@@ -3,7 +3,6 @@ using System.Collections;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Query;
-
 using System.Collections.Generic;
 using System.Linq;
 
@@ -304,4 +303,3 @@ namespace PnP.PowerShell.Commands.Search
         }
     }
 }
-

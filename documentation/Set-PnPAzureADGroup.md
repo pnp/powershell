@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPAzureADGroup.htm
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Sets the properties of a specicic Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Sets the properties of a specific Azure Active Directory group.
 
 ## SYNTAX
 
@@ -27,6 +27,7 @@ Set-PnPAzureADGroup -Identity <AzureADGroupPipeBind> [-DisplayName <String>] [-D
 ```
 
 ## DESCRIPTION
+This cmdlet sets the properties of a specific Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
 
 ## EXAMPLES
 
@@ -35,26 +36,26 @@ Set-PnPAzureADGroup -Identity <AzureADGroupPipeBind> [-DisplayName <String>] [-D
 Set-PnPAzureADGroup -Identity $group -DisplayName "My Displayname"
 ```
 
-Sets the display name of the group where $group is a Group entity
+Sets the display name of the group where $group is a Group entity.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPAzureADGroup -Identity $groupId -Descriptions "My Description" -DisplayName "My DisplayName"
 ```
 
-Sets the display name and description of a group based upon its ID
+Sets the display name and description of a group based upon its ID.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPAzureADGroup -Identity $group -Owners demo@contoso.com
 ```
 
-Sets demo@contoso.com as owner of the group
+Sets demo@contoso.com as the owner of the group.
 
 ## PARAMETERS
 
 ### -SecurityEnabled
-Sets the Azure Active Directory group to be allowed to be used for setting permissions
+Sets the Azure Active Directory group to be allowed to be used for setting permissions.
 
 ```yaml
 Type: SwitchParameter
@@ -68,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -MailEnabled
-Sets the Azure Active Directory group to be allowed to be used for sreceiving e-mail
+Sets the Azure Active Directory group to be allowed to be used for receiving e-mail.
 
 ```yaml
 Type: SwitchParameter
@@ -82,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -Description
-The Description of the group to set
+The description of the group to set.
 
 ```yaml
 Type: String
@@ -96,7 +97,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisplayName
-The DisplayName of the group to set
+The display name of the group to set.
 
 ```yaml
 Type: String
@@ -138,7 +139,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Identity of the Azure Active Directory group
+The identity of the Azure Active Directory group.
 
 ```yaml
 Type: AzureADGroupPipeBind

@@ -9,13 +9,12 @@ title: Save-PnPPageConversionLog
 # Save-PnPPageConversionLog
 
 ## SYNOPSIS
-Persists the current client side page conversion log data to the loggers linked to the last used page transformation run. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPPage cmdlet
+Persists the current client side page conversion log data to the loggers linked to the last used page transformation run. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPPage cmdlet.
 
 ## SYNTAX 
 
 ```powershell
-Save-PnPPageConversionLog 
-                                    [-Connection <PnPConnection>]
+Save-PnPPageConversionLog  [-Connection <PnPConnection>]
 ```
 
 ## EXAMPLES
@@ -25,7 +24,7 @@ Save-PnPPageConversionLog
 Save-PnPPageConversionLog
 ```
 
-Persists the current client side page conversion log data to the loggers linked to the last used page transformation run. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPPage cmdlet
+Persists the current client side page conversion log data to the loggers linked to the last used page transformation run. Needs to be used in conjunction with the -LogSkipFlush flag on the ConvertTo-PnPPage cmdlet.
 
 ## PARAMETERS
 

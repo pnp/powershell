@@ -10,13 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPPropertyBagVa
 # Remove-PnPPropertyBagValue
 
 ## SYNOPSIS
-Removes a value from the property bag
+Removes a value from the property bag.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPPropertyBagValue [-Key] <String> [-Folder <String>] [-Force] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Remove-PnPPropertyBagValue [-Key] <String> [-Folder <String>] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -29,21 +28,21 @@ Removes a value from the property bag. If working with a modern SharePoint Onlin
 Remove-PnPPropertyBagValue -Key MyKey
 ```
 
-This will remove the value with key MyKey from the current web property bag
+This will remove the value with key MyKey from the current web property bag.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPPropertyBagValue -Key MyKey -Folder /MyFolder
 ```
 
-This will remove the value with key MyKey from the folder MyFolder which is located in the root folder of the current web
+This will remove the value with key MyKey from the folder MyFolder which is located in the root folder of the current web.
 
 ### EXAMPLE 3
 ```powershell
 Remove-PnPPropertyBagValue -Key MyKey -Folder /
 ```
 
-This will remove the value with key MyKey from the root folder of the current web
+This will remove the value with key MyKey from the root folder of the current web.
 
 ## PARAMETERS
 
@@ -76,6 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
+If provided, no confirmation will be asked to remove the value from the property bag.
 
 ```yaml
 Type: SwitchParameter
@@ -89,7 +89,7 @@ Accept wildcard characters: False
 ```
 
 ### -Key
-Key of the property bag value to be removed
+Key of the property bag value to be removed.
 
 ```yaml
 Type: String
@@ -105,4 +105,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

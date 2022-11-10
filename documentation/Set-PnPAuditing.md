@@ -34,6 +34,8 @@ Set-PnPAuditing [-RetentionTime <Int32>] [-TrimAuditLog] [-EditItems] [-CheckOut
 
 ## DESCRIPTION
 
+Allows to modify Auditing setting for a site.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

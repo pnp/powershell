@@ -46,16 +46,23 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, Connection.HttpClient, $"https://{Connection.GraphEndPoint}/").GetAwaiter().GetResult();
+                    WriteVerbose("Acquiring token for resource " + Connection.GraphEndPoint + " using Managed Identity");
+                    var accessToken = TokenHandler.GetManagedIdentityTokenAsync(this, Connection.HttpClient, $"https://{Connection.GraphEndPoint}/", Connection.UserAssignedManagedIdentityObjectId).GetAwaiter().GetResult();
+                    
+                    return accessToken;
                 }
                 else
                 {
                     if (Connection?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
+                        WriteVerbose("Acquiring token for default permissions on resource " + Connection.GraphEndPoint + " using the current context");
+                        var accessToken = TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
+                        WriteVerbose("Access token acquired through the current context: " + accessToken);
+                        return accessToken;
                     }
                 }
 
+                WriteVerbose("Unable to acquire token for resource " + Connection.GraphEndPoint);
                 return null;
             }
         }

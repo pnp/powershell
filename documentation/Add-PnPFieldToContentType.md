@@ -21,6 +21,8 @@ Add-PnPFieldToContentType -Field <FieldPipeBind> -ContentType <ContentTypePipeBi
 
 ## DESCRIPTION
 
+Allows to add a field from site columns to an existing content type.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

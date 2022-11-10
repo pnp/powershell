@@ -1,10 +1,8 @@
 ﻿using PnP.Core.Model.SharePoint;
-using PnP.PowerShell.Commands.Base;
+
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Viva
 {

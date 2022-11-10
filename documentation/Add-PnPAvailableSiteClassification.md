@@ -25,6 +25,8 @@ Add-PnPAvailableSiteClassification -Classifications <System.Collections.Generic.
 
 ## DESCRIPTION
 
+Allows to add classic site classification values
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 throw new PSInvalidOperationException($"Failed to create sync job. Ensure you're providing users to sync and that the mapping is correct.");
             }
 
-            WriteVerbose($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
+            WriteVerbose($"Job initiated with {(job.JobId.HasValue ? $"Id {job.JobId} and ": "")}status {job.State} for file {job.SourceUri}");
 
             // Check if we should wait with finalzing this cmdlet execution until the user profile import operation has completed
             if (Wait.ToBool() && !WhatIf.ToBool())

@@ -6,12 +6,23 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTeamsTeam")]
+    [Cmdlet(VerbsCommon.Get, "PnPTeamsTeam", DefaultParameterSetName = ParameterSet_Identity)]
     [RequiredMinimalApiPermissions("Group.Read.All")]
     public class GetTeamsTeam : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false)]
+        private const string ParameterSet_Identity = "Identity";
+        private const string ParameterSet_Filter = "Filter";
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Identity)]
         public TeamsTeamPipeBind Identity;
+
+        /// <summary>
+        /// Filter supports whatever you can pass to $filter. 
+        /// For details on which operators are supported for which properties, see this:
+        /// https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties
+        /// </summary>
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Filter)]
+        public string Filter = null;
 
         protected override void ExecuteCmdlet()
         {
@@ -25,7 +36,7 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, Connection).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, Connection, Filter).GetAwaiter().GetResult(), true);
             }
         }
     }

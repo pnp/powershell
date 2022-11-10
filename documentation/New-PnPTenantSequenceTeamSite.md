@@ -22,6 +22,8 @@ New-PnPTenantSequenceTeamSite -Alias <String> -Title <String> [-Description <Str
 
 ## DESCRIPTION
 
+Allows to create a new team site object.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

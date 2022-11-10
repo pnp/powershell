@@ -21,6 +21,8 @@ Remove-PnPGroupMember -LoginName <String> -Group <GroupPipeBind>
 
 ## DESCRIPTION
 
+Allows to remove a user from group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

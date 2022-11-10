@@ -22,6 +22,8 @@ Set-PnPWebhookSubscription [-Subscription] <WebhookSubscriptionPipeBind> [-List 
 
 ## DESCRIPTION
 
+Allows to update Webhook subscription.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

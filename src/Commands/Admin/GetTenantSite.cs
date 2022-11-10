@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands
                 {
                     var office365Tenant = new Office365Tenant(ClientContext);
                     var clientResult = office365Tenant.IsSharingDisabledForNonOwnersOfSite(Identity.Url);
-                    ClientContext.ExecuteQuery();
+                    ClientContext.ExecuteQueryRetry();
                     site = new Model.SPOSite(siteProperties, clientResult.Value);
                 }
                 else

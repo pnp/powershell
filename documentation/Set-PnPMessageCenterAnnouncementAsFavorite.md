@@ -25,6 +25,8 @@ Set-PnPMessageCenterAnnouncementAsFavorite [-Identity <Ids>] [<CommonParameters>
 
 ## DESCRIPTION
 
+Allows to mark message center announcements as favorite.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

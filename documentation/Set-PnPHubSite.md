@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPHubSite.html
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Sets hub site properties
+Sets hub site properties.
 
 ## SYNTAX
 
@@ -26,7 +26,7 @@ Set-PnPHubSite [-Identity] <HubSitePipeBind> [-Title <String>] [-LogoUrl <String
 ```
 
 ## DESCRIPTION
-Allows configuring a hub site
+Allows configuring a hub site.
 
 ## EXAMPLES
 
@@ -35,35 +35,41 @@ Allows configuring a hub site
 Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -Title "My New Title"
 ```
 
-Sets the title of the hub site
+Sets the title of the hub site.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -Description "My updated description"
 ```
 
-Sets the description of the hub site
+Sets the description of the hub site.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -SiteDesignId df8a3ef1-9603-44c4-abd9-541aea2fa745
 ```
 
-Sets the site design which should be applied to sites joining the the hub site
+Sets the site design which should be applied to sites joining the hub site.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -LogoUrl "https://tenant.sharepoint.com/SiteAssets/Logo.png"
 ```
 
-Sets the logo of the hub site
+Sets the logo of the hub site.
 
 ### EXAMPLE 5
 ```powershell
 Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -EnablePermissionsSync
 ```
 
-Sync hub permissions to associated sites
+Syncs hub permissions to associated sites.
+
+### EXAMPLE 6
+```powershell
+Set-PnPHubSite -Identity "https://tenant.sharepoint.com/sites/myhubsite" -RequiresJoinApproval:$false
+```
+Disables the join approval requirement.
 
 ## PARAMETERS
 
@@ -96,7 +102,7 @@ Accept wildcard characters: False
 ```
 
 ### -HideNameInNavigation
-
+Hides the name of the hub site in the navigation.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
@@ -138,6 +144,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequiresJoinApproval
+Requires new associated sites to obtain approval to join the hub site. Note that if set to `$true`, sites will be able to join the hub only if there is an active approval flow available.
 
 ```yaml
 Type: SwitchParameter
@@ -151,7 +158,7 @@ Accept wildcard characters: False
 ```
 
 ### -SiteDesignId
-GUID of the SharePoint Site Design which should be applied when a site joins the hub site
+GUID of the SharePoint Site Design which should be applied when a site joins the hub site.
 
 ```yaml
 Type: Guid
@@ -179,7 +186,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnablePermissionsSync
-Sync hub permissions to associated sites
+Sync hub permissions to associated sites.
 
 ```yaml
 Type: SwitchParameter

@@ -33,6 +33,7 @@ Remove-PnPFileVersion -Url <String> [-Identity <FileVersionPipeBind>] [-Recycle]
 ```
 
 ## DESCRIPTION
+This cmdlet removes all versions or one specific version for the specified file.
 
 ## EXAMPLES
 
@@ -41,25 +42,26 @@ Remove-PnPFileVersion -Url <String> [-Identity <FileVersionPipeBind>] [-Recycle]
 Remove-PnPFileVersion -Url Documents/MyDocument.docx -Identity 512
 ```
 
-Removes the file version with Id 512
+Removes the file version with Id 512.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPFileVersion -Url Documents/MyDocument.docx -Identity "Version 1.0"
 ```
 
-Removes the file version with label "Version 1.0"
+Removes the file version with label "Version 1.0".
 
 ### EXAMPLE 3
 ```powershell
 Remove-PnPFileVersion -Url Documents/MyDocument.docx -All
 ```
 
-Removes all file versions
+Removes all file versions.
 
 ## PARAMETERS
 
 ### -All
+Specifies whether all file versions should be removed.
 
 ```yaml
 Type: SwitchParameter
@@ -87,7 +89,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-If provided, no confirmation will be requested and the action will be performed
+If provided, no confirmation will be requested and the action will be performed.
 
 ```yaml
 Type: SwitchParameter
@@ -101,6 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
+The identity of the version. Use ID or label.
 
 ```yaml
 Type: FileVersionPipeBind
@@ -114,6 +117,7 @@ Accept wildcard characters: False
 ```
 
 ### -Recycle
+Specifies whether the version(s) should go to the recycle bin.
 
 ```yaml
 Type: SwitchParameter
@@ -127,7 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -Url
-
+Server relative url or site relative url of the file.
 ```yaml
 Type: String
 Parameter Sets: (All)

@@ -21,6 +21,8 @@ Set-PnPListItemAsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-De
 
 ## DESCRIPTION
 
+Allows to set a list item as a record.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
@@ -28,14 +30,14 @@ Set-PnPListItemAsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-De
 Set-PnPListItemAsRecord -List "Documents" -Identity 4
 ```
 
-Declares the document in the documents library with id 4 as a record
+Declares the document in the documents library with id 4 as a record.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPListItemAsRecord -List "Documents" -Identity 4 -DeclarationDate $date
 ```
 
-Declares the document in the documents library with id as a record
+Declares the document in the documents library with id 4 as a record.
 
 ## PARAMETERS
 
@@ -54,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -DeclarationDate
-The declaration date
+The declaration date.
 
 ```yaml
 Type: DateTime
@@ -68,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The ID of the listitem, or actual ListItem object
+The ID of the listitem, or actual ListItem object.
 
 ```yaml
 Type: ListItemPipeBind

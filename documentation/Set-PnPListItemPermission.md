@@ -39,6 +39,8 @@ Set-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-
 
 ## DESCRIPTION
 
+Allows to modify list item permissions.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
@@ -122,6 +124,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
+A group object, an ID or a name of a group.
 
 ```yaml
 Type: GroupPipeBind
@@ -205,6 +208,7 @@ Accept wildcard characters: False
 ```
 
 ### -User
+A valid login name of a user (e.g. john@doe.com).
 
 ```yaml
 Type: String

@@ -10,23 +10,24 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPSearchConfigu
 # Remove-PnPSearchConfiguration
 
 ## SYNOPSIS
-Remove the search configuration
+Removes the search configuration.
 
 ## SYNTAX
 
 ### Config
 ```powershell
 Remove-PnPSearchConfiguration -Configuration <String> [-Scope <SearchConfigurationScope>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>]
 ```
 
 ### Path
 ```powershell
 Remove-PnPSearchConfiguration -Path <String> [-Scope <SearchConfigurationScope>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
+This cmdlet removes the search configuration from a single web, site collection or a tenant, using path or a configuration string.
 
 ## EXAMPLES
 
@@ -35,33 +36,33 @@ Remove-PnPSearchConfiguration -Path <String> [-Scope <SearchConfigurationScope>]
 Remove-PnPSearchConfiguration -Configuration $config
 ```
 
-Remove the search configuration for the current web (does not remove managed property mappings)
+Removes the search configuration for the current web (does not remove managed property mappings).
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPSearchConfiguration -Configuration $config -Scope Site
 ```
 
-Remove the search configuration for the current site collection (does not remove managed property mappings)
+Removes the search configuration for the current site collection (does not remove managed property mappings).
 
 ### EXAMPLE 3
 ```powershell
 Remove-PnPSearchConfiguration -Configuration $config -Scope Subscription
 ```
 
-Remove the search configuration for the current tenant (does not remove managed property mappings)
+Removes the search configuration for the current tenant (does not remove managed property mappings).
 
 ### EXAMPLE 4
 ```powershell
 Remove-PnPSearchConfiguration -Path searchconfig.xml -Scope Subscription
 ```
 
-Reads the search configuration from the specified XML file and remove it for the current tenant (does not remove managed property mappings)
+Reads the search configuration from the specified XML file and removes it for the current tenant (does not remove managed property mappings).
 
 ## PARAMETERS
 
 ### -Configuration
-Search configuration string
+Search configuration string.
 
 ```yaml
 Type: String
@@ -89,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
-Path to a search configuration
+Path to the search configuration.
 
 ```yaml
 Type: String
@@ -103,6 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -Scope
+Scope to remove the configuration from. The default is Web.
 
 ```yaml
 Type: SearchConfigurationScope
@@ -117,8 +119,6 @@ Accept wildcard characters: False
 ```
 
 
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

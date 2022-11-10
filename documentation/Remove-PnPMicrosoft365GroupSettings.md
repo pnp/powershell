@@ -25,6 +25,8 @@ Remove-PnPMicrosoft365GroupSettings -Identity <string> -Group <Microsoft365Group
 
 ## DESCRIPTION
 
+Allows to remove Microsoft 365 Group settings from the tenant or the specified group.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

@@ -28,6 +28,8 @@ Remove-PnPWebPart -Title <String> -ServerRelativePageUrl <String>
 
 ## DESCRIPTION
 
+Allows to remove web part from a page.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

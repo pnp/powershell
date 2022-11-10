@@ -1,6 +1,7 @@
-﻿using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Enums;
+using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -31,19 +32,23 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter Decoded;
         protected override void ExecuteCmdlet()
         {
-            var accessTokenValue = AccessToken;
+            string accessTokenValue = null;
 
             if (ParameterSetName == ResourceTypeParam)
             {
-                accessTokenValue = null;
-
                 switch (ResourceTypeName)
                 {
                     case ResourceTypeName.Graph:
                         accessTokenValue = AccessToken;
                         break;
                     case ResourceTypeName.SharePoint:
-                        accessTokenValue = TokenHandler.GetAccessToken(null, Connection?.Context?.Url?.TrimEnd('/') + "/.default", Connection);
+                        var currentUrl = Connection?.Context?.Url?.TrimEnd('/');
+                        if (string.IsNullOrEmpty(currentUrl))
+                        {
+                            throw new PSArgumentException("No connection found, please login first.");
+                        }
+                        var rootUrl = new Uri(currentUrl).GetLeftPart(UriPartial.Authority);
+                        accessTokenValue = TokenHandler.GetAccessToken(null, rootUrl + "/.default", Connection);
                         break;
                     case ResourceTypeName.ARM:
                         accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default", Connection);
@@ -53,6 +58,11 @@ namespace PnP.PowerShell.Commands.Base
             else if (ParameterSetName == ResourceUrlParam)
             {
                 accessTokenValue = TokenHandler.GetAccessToken(null, ResourceUrl, Connection);
+            }
+
+            if(accessTokenValue == null)
+            {
+                WriteError(new PSArgumentException("Unable to retrieve access token"), ErrorCategory.InvalidResult);
             }
 
             if (Decoded.IsPresent)

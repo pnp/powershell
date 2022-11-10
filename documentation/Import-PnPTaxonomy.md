@@ -28,6 +28,8 @@ Import-PnPTaxonomy -Path <String> [-Lcid <Int32>] [-TermStoreName <String>] [-De
 
 ## DESCRIPTION
 
+Allows to import taxonomy terms from array or file.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

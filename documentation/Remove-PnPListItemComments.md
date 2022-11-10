@@ -26,6 +26,8 @@ Remove-PnPListItemComment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> 
 
 ## DESCRIPTION
 
+Allows to remove comments from list item.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

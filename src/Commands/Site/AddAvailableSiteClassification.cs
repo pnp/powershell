@@ -1,6 +1,6 @@
-﻿
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Site
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     [Alias("Add-PnPSiteClassification")]
     [WriteAliasWarning("Please use 'Add-PnPAvailableSiteClassification'. The alias 'Add-PnPSiteClassification' will be removed in a future release.")]
+    [OutputType(typeof(void))]
     public class AddSiteClassification : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -40,7 +41,8 @@ namespace PnP.PowerShell.Commands.Site
                 if (ex.Message == @"Missing DirectorySettingTemplate for ""Group.Unified""")
                 {
                     WriteError(new ErrorRecord(new InvalidOperationException("Site Classification is not enabled for this tenant"), "SITECLASSIFICATION_NOT_ENABLED", ErrorCategory.ResourceUnavailable, null));
-                } else
+                }
+                else
                 {
                     throw;
                 }

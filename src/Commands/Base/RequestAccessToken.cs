@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.Base
         public string ClientId = PnPConnection.PnPManagementShellClientId; // defaults to PnPManagementShell
 
         [Parameter(Mandatory = false)]
+        [Obsolete("Resource is deprecated, use Scopes instead.")]
         public string Resource;
 
         [Parameter(Mandatory = false)]
@@ -37,7 +38,6 @@ namespace PnP.PowerShell.Commands.Base
             Uri tenantUri = null;
             if (string.IsNullOrEmpty(TenantUrl) && Connection != null)
             {
-
                 var uri = new Uri(Connection.Url);
                 var uriParts = uri.Host.Split('.');
                 if (uriParts[0].ToLower().EndsWith("-admin"))

@@ -27,6 +27,8 @@ Get-PnPTeamsUser -Team <TeamsTeamPipeBind> [-Channel <TeamsChannelPipeBind>] [-R
 
 ## DESCRIPTION
 
+Allows to retrieve list of owners, members or guests from a team.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

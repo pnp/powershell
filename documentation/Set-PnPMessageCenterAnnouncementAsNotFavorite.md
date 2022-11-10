@@ -25,6 +25,8 @@ Set-PnPMessageCenterAnnouncementAsNotFavorite [-Identity <Ids>] [<CommonParamete
 
 ## DESCRIPTION
 
+Allows to mark message center announcements as not favorite.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

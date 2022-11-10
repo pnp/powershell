@@ -26,23 +26,34 @@ namespace PnP.PowerShell.Commands.ContentTypes
             Field field = Field.Field;
             if (field == null)
             {
-                if (Field.Id != Guid.Empty)
+                try
                 {
-                    field = CurrentWeb.Fields.GetById(Field.Id);
+                    if (Field.Id != Guid.Empty)
+                    {
+                        field = CurrentWeb.Fields.GetById(Field.Id);
+                    }
+                    else if (!string.IsNullOrEmpty(Field.Name))
+                    {
+                        field = CurrentWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                    }
+                    ClientContext.Load(field);
+                    ClientContext.ExecuteQueryRetry();
                 }
-                else if (!string.IsNullOrEmpty(Field.Name))
+                catch
                 {
-                    field = CurrentWeb.Fields.GetByInternalNameOrTitle(Field.Name);
+                    // Swallow exception in case we fail to retrieve the field. It will be handled by the null-check.
+                    field = null;
                 }
-                ClientContext.Load(field);
-                ClientContext.ExecuteQueryRetry();
             }
+            
             if (field is null)
             {
                 throw new PSArgumentException("Field not found", nameof(Field));
             }
+            
             var ct = ContentType.GetContentTypeOrThrow(nameof(ContentType), CurrentWeb, true);
             ct.EnsureProperty(c => c.FieldLinks);
+            
             var fieldLink = ct.FieldLinks.FirstOrDefault(f => f.Id == field.Id);
             if (fieldLink is null)
             {
@@ -51,9 +62,6 @@ namespace PnP.PowerShell.Commands.ContentTypes
             fieldLink.DeleteObject();
             ct.Update(!DoNotUpdateChildren);
             ClientContext.ExecuteQueryRetry();
-
         }
-
-
     }
 }

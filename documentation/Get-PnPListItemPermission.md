@@ -23,6 +23,8 @@ Get-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind>
 
 ## DESCRIPTION
 
+Allows to retrieve list item permissions.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

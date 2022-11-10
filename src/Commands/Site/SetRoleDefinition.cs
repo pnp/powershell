@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Management.Automation;
+
 using Microsoft.SharePoint.Client;
+
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPRoleDefinition")]
+    [OutputType(typeof(RoleDefinition))]
     public class SetRoleDefinition : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -44,7 +47,7 @@ namespace PnP.PowerShell.Commands.Site
                     WriteWarning("Cannot SelectAll and ClearAll permissions at the same time");
                     return;
                 }
-                
+
                 if (ParameterSpecified(nameof(NewRoleName)))
                 {
                     roleDefinition.Name = NewRoleName;

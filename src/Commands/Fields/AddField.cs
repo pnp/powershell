@@ -122,6 +122,7 @@ namespace PnP.PowerShell.Commands.Fields
                     }
                     if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
                     {
+                        EnsureDynamicParameters(choiceFieldParameters);
                         f = list.CreateField<FieldChoice>(fieldCI);
                         ((FieldChoice)f).Choices = choiceFieldParameters.Choices;
                         f.Update();
@@ -129,6 +130,8 @@ namespace PnP.PowerShell.Commands.Fields
                     }
                     else if (Type == FieldType.Calculated)
                     {
+                        EnsureDynamicParameters(calculatedFieldParameters);
+
                         // Either set the ResultType as input parameter or set it to the default Text
                         if (!string.IsNullOrEmpty(calculatedFieldParameters.ResultType))
                         {
@@ -231,6 +234,7 @@ namespace PnP.PowerShell.Commands.Fields
 
                 if (Type == FieldType.Choice || Type == FieldType.MultiChoice)
                 {
+                    EnsureDynamicParameters(choiceFieldParameters);
                     f = CurrentWeb.CreateField<FieldChoice>(fieldCI);
                     ((FieldChoice)f).Choices = choiceFieldParameters.Choices;
                     f.Update();
@@ -238,6 +242,7 @@ namespace PnP.PowerShell.Commands.Fields
                 }
                 else if (Type == FieldType.Calculated)
                 {
+                    EnsureDynamicParameters(calculatedFieldParameters);
                     f = CurrentWeb.CreateField<FieldCalculated>(fieldCI);
                     ((FieldCalculated)f).Formula = calculatedFieldParameters.Formula;
                     f.Update();
@@ -335,6 +340,14 @@ namespace PnP.PowerShell.Commands.Fields
                             break;
                         }
                 }
+            }
+        }
+
+        private void EnsureDynamicParameters(object dynamicParameters)
+        {
+            if (dynamicParameters == null)
+            {
+                throw new PSArgumentException($"Please specify the parameter -{nameof(Type)} when invoking this cmdlet", nameof(Type));
             }
         }
 

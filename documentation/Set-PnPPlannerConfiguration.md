@@ -13,7 +13,7 @@ schema: 2.0.0
 
 * Azure: tasks.office.com
 
-Allows the Microsoft Planner configuration of the tenant to be set
+Allows the Microsoft Planner configuration of the tenant to be set.
 
 ## SYNTAX
 
@@ -22,7 +22,7 @@ Set-PnPPlannerConfiguration [-IsPlannerAllowed <boolean>] [-AllowRosterCreation 
 ```
 
 ## DESCRIPTION
-This cmdlet allows the Microsoft Planner tenant configuration to be changed
+This cmdlet allows the Microsoft Planner tenant configuration to be changed.
 
 ## EXAMPLES
 
@@ -30,12 +30,18 @@ This cmdlet allows the Microsoft Planner tenant configuration to be changed
 ```powershell
 Set-PnPPlannerConfiguration -AllowRosterCreation:$false -IsPlannerAllowed:$true
 ```
-Configures Microsoft Planner to be enabled and disallow roster plans to be created
+This example configures Microsoft Planner to be enabled and disallows roster plans to be created.
+
+### Example 2
+```powershell
+Set-PnPPlannerConfiguration -AllowPlannerMobilePushNotifications $false
+```
+This example disallows direct push notifications.
 
 ## PARAMETERS
 
 ### -IsPlannerAllowed
-Allows configuring if Microsoft Planner is enabled on the tenant
+Allows configuring if Microsoft Planner is enabled on the tenant.
 
 ```yaml
 Type: Boolean
@@ -50,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -AllowRosterCreation
-Allows configuring whether the creation of Roster containers (Planner plans without Microsoft 365 Groups) is allowed
+Allows configuring whether the creation of Roster containers (Planner plans without Microsoft 365 Groups) is allowed.
 
 ```yaml
 Type: Boolean
@@ -65,7 +71,7 @@ Accept wildcard characters: False
 ```
 
 ### -AllowTenantMoveWithDataLoss
-Allows configuring whether a tenant move into a new region is currently authorized
+Allows configuring whether a tenant move into a new region is currently authorized.
 
 ```yaml
 Type: Boolean
@@ -80,7 +86,7 @@ Accept wildcard characters: False
 ```
 
 ### -AllowTenantMoveWithDataMigration
-Allows configuring whether a tenant move with data migration is authorized
+Allows configuring whether a tenant move with data migration is authorized.
 
 ```yaml
 Type: Boolean
@@ -95,7 +101,7 @@ Accept wildcard characters: False
 ```
 
 ### -AllowPlannerMobilePushNotifications
-Allows configuring whether the direct push notifications are enabled where contents of the push notification are being sent directly through Apple's or Google's services to get to the iOS or Android client
+Allows configuring whether the direct push notifications are enabled where contents of the push notification are being sent directly through Apple's or Google's services to get to the iOS or Android client.
 
 ```yaml
 Type: Boolean
@@ -110,7 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -AllowCalendarSharing
-Allows configuring whether Outlook calendar sync is enabled
+Allows configuring whether Outlook calendar sync is enabled.
 
 ```yaml
 Type: Boolean

@@ -23,6 +23,8 @@ Set-PnPSiteTemplateMetadata [-Path] <String> [-TemplateDisplayName <String>]
 
 ## DESCRIPTION
 
+Allows to modify metadata of a provisioning template.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
