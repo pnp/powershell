@@ -100,22 +100,27 @@
 </code></pre>
 <p>Returns the current Tenant Id. A valid connection with Connect-PnPOnline is required either as a current connection or by providing it using the -Connection parameter.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPTenantId contoso
+</code></pre>
+<p>Returns the Tenant ID for the tenant contoso.sharepoint.com. Can be executed without an active PnP Connection.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl contoso.sharepoint.com
 </code></pre>
 <p>Returns the Tenant ID for the specified tenant. Can be executed without an active PnP Connection.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPTenantId -TenantUrl contoso.sharepoint.us -AzureEnvironment USGovernment
 </code></pre>
 <p>Returns the Tenant ID for the specified US Government tenant. Can be executed without an active PnP Connection.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-tenanturl">-TenantUrl</h3>
+<p>The name of the tenant to retrieve the id for. If not specified, the currently connected to tenant will be used. You can use either just the tenant name, i.e. consoto or the full SharePoint URL, i.e. contoso.sharepoint.com.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: By URL
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-azureenvironment">-AzureEnvironment</h3>

@@ -89,12 +89,12 @@
 <pre><code class="lang-powershell">Get-PnPGroupMember -Group &lt;GroupPipeBind&gt; [-User String]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command will return all the users or a specific user that are members of the provided SharePoint group</p>
+<p>This command will return all the users (or a specific user) that are members of the provided SharePoint group</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPGroupMember -Group &quot;Marketing Site Members&quot;
 </code></pre>
-<p>Returns all the users that are a member of the group &quot;Marketing Site Members&quot; in the current sitecollection</p>
+<p>Returns all the users that are a member of the group &quot;Marketing Site Members&quot; in the current site collection</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPGroupMember -Group &quot;Marketing Site Members&quot; -User &quot;manager@domain.com&quot;
 </code></pre>
@@ -102,11 +102,11 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPGroup | Get-PnPGroupMember
 </code></pre>
-<p>Returns all the users that are a member of any of the groups in the current sitecollection</p>
+<p>Returns all the users that are a member of any of the groups in the current site collection</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPGroup | ? Title -Like 'Marketing*' | Get-PnPGroupMember
 </code></pre>
-<p>Returns all the users that are a member of any of the groups of which their name starts with the word 'Marketing' in the current sitecollection</p>
+<p>Returns all the users that are a member of any of the groups of which their name starts with the word 'Marketing' in the current site collection</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
