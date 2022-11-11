@@ -43,11 +43,12 @@
 
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" Version="0.14.0" />
-		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.0.3.0" />
 		<PackageReference Include="Microsoft.Graph" Version="3.33.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.36.1" />
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="3.0.3.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.0.3.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
 		
 		<PackageReference Include="PnP.Framework" Version="1.11.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
