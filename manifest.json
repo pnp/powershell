@@ -693,7 +693,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPPageImageWebPart.html",
-          "hash": "IqV5QXhu/DJ3pGSKCp9R8w=="
+          "hash": "v0ZWOSH5C6Shh/gBiNvcpg=="
         }
       },
       "is_incremental": false,
@@ -1401,7 +1401,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Copy-PnPTeamsTeam.html",
-          "hash": "pmHfdFt5ZjZIAlPr8SjwCQ=="
+          "hash": "yBx0iTbIKlR2nhaQQPv7gA=="
         }
       },
       "is_incremental": false,
@@ -1461,7 +1461,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Disable-PnPPowerShellTelemetry.html",
-          "hash": "X8unn2Zllzkhnb3dTi5GPg=="
+          "hash": "T0z0ylrDLwbCHyOf5ukPIA=="
         }
       },
       "is_incremental": false,
@@ -1572,7 +1572,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Enable-PnPPowerShellTelemetry.html",
-          "hash": "OM6JKabM/DX4/nRuqWj0+A=="
+          "hash": "z8lGQdto9K/RtQ1O/vlbgQ=="
         }
       },
       "is_incremental": false,
@@ -1866,7 +1866,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPAzureADActivityReportDirectoryAudit.html",
-          "hash": "7nyXZDd7cFycl9HX55tENQ=="
+          "hash": "faZDI31azbFweq1OxO/+Sg=="
         }
       },
       "is_incremental": false,
@@ -1878,7 +1878,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPAzureADActivityReportSignIn.html",
-          "hash": "op6am63fjDs7eeQKFOaS8A=="
+          "hash": "uEYtDj68B0mssKWnQ6PziA=="
         }
       },
       "is_incremental": false,
@@ -2142,7 +2142,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPDeletedTeam.html",
-          "hash": "AOe/1STh9BFw0t2kpd06JA=="
+          "hash": "5JMry5PcV5SKpFw6pF8spA=="
         }
       },
       "is_incremental": false,
@@ -2658,7 +2658,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPMicrosoft365ExpiringGroup.html",
-          "hash": "T7TPJQdieypI/zRSXnFbPQ=="
+          "hash": "/Ma60g1BurxJr8zO2i/KFg=="
         }
       },
       "is_incremental": false,
@@ -3522,7 +3522,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTeamsTag.html",
-          "hash": "R8xfH1X6D64aIDort84rnw=="
+          "hash": "MXWXgdGYjFULyTSK9b+0XQ=="
         }
       },
       "is_incremental": false,
@@ -5745,7 +5745,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPTeamsTag.html",
-          "hash": "GCe6qn668SV1zkVcKJE8LA=="
+          "hash": "BrjoKYQWQeLv72wHjEICQw=="
         }
       },
       "is_incremental": false,
@@ -6213,7 +6213,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Restore-PnPTenantSite.html",
-          "hash": "AnME5D3oPX6tjgoMjTSEfQ=="
+          "hash": "f7r5hp1LUjB9gUh5Dqt9vg=="
         }
       },
       "is_incremental": false,
@@ -6225,7 +6225,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Revoke-PnPAzureADAppSitePermission.html",
-          "hash": "eD0y//9nWOpPg5PWTmbqpQ=="
+          "hash": "6+gz+pfdXvDNy6kh9zJQzg=="
         }
       },
       "is_incremental": false,
@@ -6684,7 +6684,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPImageListItemColumn.html",
-          "hash": "rb1aoUvnt9LFnl2PvIWN7w=="
+          "hash": "BwfBlPsi7rgV4vn4fbzVLw=="
         }
       },
       "is_incremental": false,
@@ -7332,7 +7332,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTeamsTag.html",
-          "hash": "zlc8jwnzbBjVQCM0DKHfEA=="
+          "hash": "fdTLGzcPV8shiDChfGXnRw=="
         }
       },
       "is_incremental": false,
