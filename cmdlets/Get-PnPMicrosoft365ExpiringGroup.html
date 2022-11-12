@@ -88,12 +88,12 @@
 <ul>
 <li>Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, Group.Read.All, Group.ReadWrite.All, GroupMember.Read.All, GroupMember.ReadWrite.All</li>
 </ul>
-<p>Gets all expiring Microsoft 365 Groups.</p>
+<p>Gets all soon to expire Microsoft 365 Groups.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPMicrosoft365ExpiringGroup [-Limit &lt;Int32&gt;]  [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPMicrosoft365ExpiringGroup [-Limit &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command returns all expiring Microsoft 365 Groups within certain time. By default, groups expiring in the next 31 days are return (in accordance with SharePoint/OneDrive's retention period's 31-day months).</p>
+<p>This command returns all soon to expire Microsoft 365 Groups. By default, groups expiring in the next 31 days are returned (in accordance with SharePoint/OneDrive's retention period's 31-day months). The <code>-Limit</code> parameter can be used to specify a different time period.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPMicrosoft365ExpiringGroup
@@ -108,6 +108,19 @@
 <p>Limits Groups to be returned to Groups expiring in as many days.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 31
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
