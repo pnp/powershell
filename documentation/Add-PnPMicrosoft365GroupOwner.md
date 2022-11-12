@@ -15,7 +15,7 @@ title: Add-PnPMicrosoft365GroupOwner
 
   *  Microsoft Graph API: All of Group.ReadWrite.All, User.ReadWrite.All
 
-Adds members to a owners of a Microsoft 365 Group
+Adds users to a Microsoft 365 Group as Owners.
 
 ## SYNTAX
 
