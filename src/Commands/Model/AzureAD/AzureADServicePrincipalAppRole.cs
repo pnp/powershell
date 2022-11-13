@@ -25,5 +25,8 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
 
         [JsonPropertyName("allowedMemberTypes")]
         public string[] AllowedMemberTypes { get; set; } 
+
+        [JsonIgnore]
+        public AzureADServicePrincipal ServicePrincipal { get; set; }
     }
 }

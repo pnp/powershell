@@ -3,10 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.AzureAD
 {
-    public class AzureADServicePrincipalAppRoleCreatedConfirmation
+    public class AzureADServicePrincipalAppRoleAssignment
     {
         [JsonPropertyName("appRoleId")]
         public Guid? AppRoleId { get; set; }
+
+        [JsonIgnore]
+        public string AppRoleName { get; set; } 
 
         [JsonPropertyName("createdDateTime")]
         public DateTime? CreatedDateTime { get; set; }
@@ -30,6 +33,6 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
         public string ResourceDisplayName { get; set; }
 
         [JsonPropertyName("resourceId")]
-        public Guid? ResourceId { get; set; }        
+        public Guid? ResourceId { get; set; }
     }
 }

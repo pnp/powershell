@@ -2,6 +2,8 @@ using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Apps
@@ -10,17 +12,24 @@ namespace PnP.PowerShell.Commands.Apps
     [RequiredMinimalApiPermissions("AppRoleAssignment.ReadWrite.All", "Application.Read.All")]
     public class AddAzureADServicePrincipalAppRole : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        private const string ParameterSet_BYRESOURCE = "By resource";
+        private const string ParameterSet_BYBUILTINTYPE = "By built in type";
+
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYRESOURCE)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYBUILTINTYPE)]
         [ValidateNotNull]
         public ServicePrincipalPipeBind Principal;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYRESOURCE)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYBUILTINTYPE)]
         [ValidateNotNull]
-        public ServicePrincipalAppRoleBind AppRole;
+        public ServicePrincipalAvailableAppRoleBind AppRole;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        [ValidateNotNull]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYRESOURCE)]
         public ServicePrincipalPipeBind Resource;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYBUILTINTYPE)]
+        public ServicePrincipalBuiltInType BuiltInType;  
 
         protected override void ExecuteCmdlet()
         {
@@ -33,17 +42,23 @@ namespace PnP.PowerShell.Commands.Apps
 
             WriteVerbose($"Adding app role to service principal {principal.DisplayName}");
 
-            var resource = Resource.GetServicePrincipal(Connection, AccessToken);
+            AzureADServicePrincipalAppRole appRole;
 
-            if(resource == null)
+            if (AppRole.AppRole == null)
             {
-                throw new PSArgumentException("Resource not found", nameof(Resource));
+                var resource = ParameterSetName == ParameterSet_BYBUILTINTYPE ? ServicePrincipalUtility.GetServicePrincipalByBuiltInType(Connection, AccessToken, BuiltInType) : Resource.GetServicePrincipal(Connection, AccessToken);
+
+                if (resource == null)
+                {
+                    throw new PSArgumentException("Resource not found", nameof(resource));
+                }
+                appRole = AppRole.GetAvailableAppRole(Connection, AccessToken, resource);
             }
-
-            WriteVerbose($"Adding app role for resource {resource.DisplayName}");
-
-            var appRole = AppRole.GetAppRole(Connection, AccessToken, resource);
-
+            else
+            {
+                appRole = AppRole.AppRole;
+            }
+            
             if(appRole == null)
             {
                 throw new PSArgumentException("AppRole not found", nameof(AppRole));
@@ -51,7 +66,7 @@ namespace PnP.PowerShell.Commands.Apps
 
             WriteVerbose($"Adding app role {appRole.Value}: {appRole.DisplayName}");
 
-            var response = ServicePrincipalUtility.AddServicePrincipalRoleAssignment(Connection, AccessToken, principal, resource, appRole);
+            var response = ServicePrincipalUtility.AddServicePrincipalRoleAssignment(Connection, AccessToken, principal, appRole);
             WriteObject(response, false);
         }
     }
