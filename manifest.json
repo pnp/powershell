@@ -42,7 +42,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/azurefunctions.html",
-          "hash": "66VzuyLAzyhDAK86aKJNdQ=="
+          "hash": "iJGydLwr/6GIgkfFgStr6g=="
         }
       },
       "is_incremental": false,
@@ -274,6 +274,18 @@
         ".html": {
           "relative_path": "cmdlets/Add-PnPAzureADGroupOwner.html",
           "hash": "10iRkC5q/x3OJahjXcdtgA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPAzureADServicePrincipalAppRole.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPAzureADServicePrincipalAppRole.html",
+          "hash": "m8b0QGVwHwOoBWV0wNXisA=="
         }
       },
       "is_incremental": false,
@@ -1958,6 +1970,45 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAzureADServicePrincipal.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAzureADServicePrincipal.html",
+          "hash": "dnvHW9oJc5mCz4mtgYUD6w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAzureADServicePrincipalAssignedAppRole.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAzureADServicePrincipalAssignedAppRole.html",
+          "hash": "jGy8whRx0A1gzLmsfJ6Iag=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPAzureADServicePrincipalAvailableAppRole.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPAzureADServicePrincipalAvailableAppRole.html",
+          "hash": "+7IgT0AdxRpsb63xZJLyOQ=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPAzureADUser.md",
       "output": {
         ".html": {
@@ -2562,7 +2613,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPListItem.html",
-          "hash": "4T1bRKvmY3PeCaYS9Dq1EA=="
+          "hash": "DEI2/tWTNGgkOJb7bh8igw=="
         }
       },
       "is_incremental": false,
@@ -4990,6 +5041,18 @@
         ".html": {
           "relative_path": "cmdlets/Remove-PnPAzureADGroupOwner.html",
           "hash": "PYA1ORW7tMyJuxQp2/lKGA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAzureADServicePrincipalAssignedAppRole.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAzureADServicePrincipalAssignedAppRole.html",
+          "hash": "6JwKIfcFfKYjBSDz76YdeQ=="
         }
       },
       "is_incremental": false,
@@ -7908,7 +7971,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "VDSFF40Szonlk577VntGKQ=="
+          "hash": "9D5nwxW6E4OFDuXKusmBmA=="
         }
       },
       "is_incremental": false,
@@ -8141,7 +8204,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 656,
+          "total_file_count": 661,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

@@ -160,39 +160,17 @@
 <li>Click the save button and confirm your action in the dialog box that will be shown</li>
 </ol>
 <p>A new entry will now automatically be created in your Azure Active Directory for this app having the same name as your Azure Function and the Object (principal) ID shown on this page. Take notice of the Object (principal) ID. We will need it in the next section to assign permissions to.</p>
-<h4 id="assigning-microsoft-graph-permissions-to-the-managed-identity">Assigning Microsoft Graph permissions to the managed identity</h4>
-<p>Next step is to assign permissions to this managed identity so it is authorized to access the Microsoft Graph.</p>
+<h4 id="assigning-permissions-to-the-managed-identity">Assigning permissions to the managed identity</h4>
+<p>Next step is to assign permissions to this managed identity so it is authorized to access the Microsoft Graph and/or SharePoint Online.</p>
 <ol>
-<li><p>Ensure you're having the Azure PowerShell Resources PowerShell module installed on your environment. You can install it using:</p>
-<pre><code class="lang-powershell">Install-Module Az.Resources -Scope CurrentUser
+<li><p>If you don't know which permissions exist yet, you can use the below sample to get a list of all available permissions:</p>
+<pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPAzureADServicePrincipalAvailableAppRole
+Get-PnPAzureADServicePrincipal -BuiltInType SharePointOnline | Get-PnPAzureADServicePrincipalAvailableAppRole
 </code></pre>
 </li>
-<li><p>Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell</p>
-<pre><code class="lang-powershell">Connect-AzAccount -Tenant &lt;contoso&gt;.onmicrosoft.com
-</code></pre>
-</li>
-<li><p>Retrieve the Azure AD Service Principal instance for the Microsoft Graph (<code>00000003-0000-0000-c000-000000000000</code>) or SharePoint Online (<code>00000003-0000-0ff1-ce00-000000000000</code>).</p>
-<pre><code class="lang-powershell">$servicePrincipal = Get-AzADServicePrincipal -AppId &quot;00000003-0000-0000-c000-000000000000&quot; # Microsoft Graph
-$servicePrincipal = Get-AzADServicePrincipal -AppId &quot;00000003-0000-0ff1-ce00-000000000000&quot; # SharePoint Online
-</code></pre>
-</li>
-<li><p>Using the following PowerShell cmdlet you can list all the possible permissions you can give through the Managed Identity. This list will be long. Notice that we are specifically querying for application permissions. Delegate permissions cannot be utilized using a Managed Identity.</p>
-<pre><code class="lang-powershell">$servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; } | Sort-Object Value | Select-Object Value, Description
-</code></pre>
-</li>
-<li><p>Pick a permission which you would like to grant to the Managed Identity, i.e. <code>Group.Read.All</code>.</p>
-<pre><code class="lang-powershell">$appRole = $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq &quot;Application&quot; -and $_.Value -eq &quot;Group.Read.All&quot; }
-</code></pre>
-</li>
-<li><p>Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity in the steps above:</p>
-<pre><code class="lang-powershell">$managedIdentityId = &quot;&lt;Object (principal) ID of the Azure Function or Azure Automation Account generated in the previous section&gt;&quot;
-
-$body = &quot;{'principalId':'$($managedIdentityId)','resourceId':'$($servicePrincipal.Id)','appRoleId':'$($appRole.Id)'}&quot;
-
-$accessTokenResource = Get-AzAccessToken -ResourceTypeName MSGraph
-
-Invoke-WebRequest &quot;https://graph.microsoft.com/v1.0/servicePrincipals/$($managedIdentityId)/appRoleAssignments&quot; -Headers @{&quot;Authorization&quot; = &quot;Bearer $($accessTokenResource.Token)&quot;} -ContentType &quot;application/json&quot; -Body $body -Method Post
-
+<li><p>Once you know which permissions you would like to assign, you can use the below samples. Note that the Principal requires the object Id (not the application/client id) or the application name.</p>
+<pre><code class="lang-powershell">Add-PnPAzureADServicePrincipalAppRole -Principal &quot;62614f96-cb78-4534-bf12-1f6693e8237c&quot; -AppRole &quot;Group.Read.All&quot; -BuiltInType MicrosoftGraph
+Add-PnPAzureADServicePrincipalAppRole -Principal &quot;mymanagedidentity&quot; -AppRole &quot;Sites.FullControl.All&quot; -BuiltInType SharePointOnline
 </code></pre>
 </li>
 </ol>
