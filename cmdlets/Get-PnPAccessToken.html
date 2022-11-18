@@ -87,10 +87,10 @@
 <p>Returns the current Microsoft Graph OAuth Access token.
 If a Resource Type Name or Resource URL is specified, it will fetch the access token of the specified resource.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options. To retrieve the SharePoint Online access token, instead use <code>Get-PnPAppAuthAccessToken</code>.</p>
+<p>Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options. To retrieve the SharePoint Online access token, you can also use <code>Get-PnPAppAuthAccessToken</code>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAccessToken
@@ -139,7 +139,7 @@ Accept wildcard characters: False
 <h3 id="-decoded">-Decoded</h3>
 <p>Returns the details from the access token in a decoded manner</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Default (decoded), Resource Type Name (decoded), Resource Url (decoded)
+Parameter Sets: Resource Type Name (decoded), Resource Url (decoded)
 
 Required: False
 Position: Named
