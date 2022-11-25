@@ -24,6 +24,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- Fixed issue with -CreateDrive on `Connect-PnPOnline` throwing exception on non-existing context
+- Fixed issue with non-existing ItemProxy cmdlet aliases being registered
+
 ### Contributors
 
 - Marc Studer [studermarc]
