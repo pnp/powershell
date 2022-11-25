@@ -18,8 +18,8 @@ namespace PnP.PowerShell.Commands.Provider.SPOProxy
         internal static void AddAlias(SessionState sessionState)
         {
             //Set-Alias -Name Copy-Item -Value Copy-PnPItemProxy -Scope 1            
-            sessionState.InvokeCommand.InvokeScript($@"Set-Alias -Name Copy-Item -Value {SPOProxyCopyItem.CmdletVerb}-PnP{SPOProxyCmdletBase.CmdletNoun} -Scope Global", false, PipelineResultTypes.None, null, null);
-            sessionState.InvokeCommand.InvokeScript($@"Set-Alias -Name Move-Item -Value {SPOProxyMoveItem.CmdletVerb}-PnP{SPOProxyCmdletBase.CmdletNoun} -Scope Global", false, PipelineResultTypes.None, null, null);
+            sessionState.InvokeCommand.InvokeScript($@"Set-Alias -Name Copy-Item -Value {SPOProxyCopyItem.CmdletVerb}-{SPOProxyCmdletBase.CmdletNoun} -Scope Global", false, PipelineResultTypes.None, null, null);
+            sessionState.InvokeCommand.InvokeScript($@"Set-Alias -Name Move-Item -Value {SPOProxyMoveItem.CmdletVerb}-{SPOProxyCmdletBase.CmdletNoun} -Scope Global", false, PipelineResultTypes.None, null, null);
         }
 
         internal static void RemoveAlias(SessionState sessionState)
