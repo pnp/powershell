@@ -10,13 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPList.html
 # Remove-PnPList
 
 ## SYNOPSIS
-Deletes a list
+Deletes a list.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPList [-Identity] <ListPipeBind> [-Recycle] [-Force] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Remove-PnPList [-Identity] <ListPipeBind> [-Recycle] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -44,24 +43,9 @@ Removes the list named 'Announcements' without asking for confirmation.
 Remove-PnPList -Identity Announcements -Recycle
 ```
 
-Removes the list named 'Announcements' and saves to the Recycle Bin
+Removes the list named 'Announcements' and saves to the Recycle Bin.
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -111,23 +95,6 @@ Defines if the list should be moved to recycle bin or directly deleted.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named
