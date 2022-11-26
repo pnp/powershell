@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added default table formatted output for `Get-PnPVivaConnectionsDashboardACE`
 - Added `Get-PnPAzureADServicePrincipal` which allows for service principals/application registrations to be retrieved from Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
 - Added `Get-PnPAzureADServicePrincipalAssignedAppRole` which allows for the assigned app roles of a service principal/application registration to be retrieved from Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
 - Added `Get-PnPAzureADServicePrincipalAvailableAppRole` which allows for the available app roles of a service principal/application registration to be retrieved from Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
