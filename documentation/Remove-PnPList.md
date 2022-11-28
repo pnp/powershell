@@ -43,7 +43,7 @@ Removes the list named 'Announcements' without asking for confirmation.
 Remove-PnPList -Identity Announcements -Recycle
 ```
 
-Removes the list named 'Announcements' and saves to the Recycle Bin.
+Removes the list named 'Announcements' and moves it to the Recycle Bin.
 
 ## PARAMETERS
 
@@ -90,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -Recycle
-Defines if the list should be moved to recycle bin or directly deleted.
+When provided, the list will be moved to recycle bin. If omitted, the list will directly be deleted.
 
 ```yaml
 Type: SwitchParameter
@@ -98,7 +98,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -106,4 +106,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
