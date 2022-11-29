@@ -210,7 +210,10 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                ListItemHelper.UpdateListItem(item, UpdateType);
+                if (Force)
+                {
+                    ListItemHelper.UpdateListItem(item, UpdateType);
+                }
             }
 
             ClientContext.ExecuteQueryRetry();
