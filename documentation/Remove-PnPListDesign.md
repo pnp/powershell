@@ -20,7 +20,7 @@ Removes a list design.
 ## SYNTAX
 
 ```powershell
-Remove-PnPListDesign [-Identity] <TenantListDesignPipeBind> [-Force] [-Connection <PnPConnection>] 
+Remove-PnPListDesign -Identity <TenantListDesignPipeBind> [-Force] [-WhatIf] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -80,8 +80,34 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
