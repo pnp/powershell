@@ -19,7 +19,9 @@
 - name: Using PnP PowerShell in Azure Cloud Shell
   href: azurecloudshell.md  
 - name: Using PnP PowerShell in Docker containers
-  href: docker.md  
+  href: docker.md
+- name: Using PnP PowerShell in Visual Studio Development Containers
+  href: dev-containers.md
 - name: For Developers
   items:
     - name: Building the project
