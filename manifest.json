@@ -66,7 +66,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/building-documentation.html",
-          "hash": "LEEIvsxqZUTj8q7Ckal2Nw=="
+          "hash": "Zs6Bf1T60uyLhFCCHsFa5A=="
         }
       },
       "is_incremental": false,
@@ -118,6 +118,18 @@
         ".html": {
           "relative_path": "articles/credentialmanagement.html",
           "hash": "oATthZEaz0eb7cc8J5spRw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/dev-containers.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/dev-containers.html",
+          "hash": "0U7jGehXfCkOTQN0sYwBKg=="
         }
       },
       "is_incremental": false,
@@ -177,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "/i8jhxV3MNcZfShGFo8Umw=="
+          "hash": "/sc4yGvtsZ066V3xjUehAQ=="
         }
       },
       "is_incremental": false,
@@ -5352,7 +5364,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPListDesign.html",
-          "hash": "MWgEtOBbrMdTLKYOS8slMw=="
+          "hash": "zqOg6kbeG5nrZ0pl1F1Ncg=="
         }
       },
       "is_incremental": false,
@@ -5364,7 +5376,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPListItem.html",
-          "hash": "1qljSQ63H5rtcqRFQ2sbkw=="
+          "hash": "wfus9sNHQFQxatnjpNI8ZA=="
         }
       },
       "is_incremental": false,
@@ -8145,6 +8157,61 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/dev-containers/VScorner.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/dev-containers/VScorner.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/dev-containers/architecture-containers.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/dev-containers/architecture-containers.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/dev-containers/github-code.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/dev-containers/github-code.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/dev-containers/github-create-space.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/dev-containers/github-create-space.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/dev-containers/vs-containers-selector.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/dev-containers/vs-containers-selector.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/docker/dockercontainers.png",
       "output": {
         "resource": {
@@ -8204,7 +8271,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 661,
+          "total_file_count": 662,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

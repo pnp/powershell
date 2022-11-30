@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Using PnP.PowerShell in Visual Studio Development Containers | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Using PnP.PowerShell in Visual Studio Development Containers | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/dev-containers.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="using-pnppowershell-in-visual-studio-development-containers">Using PnP.PowerShell in Visual Studio Development Containers</h1>
+
+<p>Visual Studio Code development containers allows you to work with PnP.PowerShell commands in containers that Visual Studio will run automatically for you so you don't need to care running <code>docker run</code>. In this way it is also easier to make sure that all members of the project are using the same development environment, with the same versions of the prerequisites installed.</p>
+<p><img src="../images/dev-containers/architecture-containers.png" alt="VS bottom left corner"></p>
+<p>If you want to learn more about this Visual Studio Code feature, you can start <a href="https://code.visualstudio.com/docs/devcontainers/containers">here</a>.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>There might be two options of using Visual Studio Code development containers with PnP.PowerShell:</p>
+<ul>
+<li>Using locally installed Docker, on your desktop/laptop.</li>
+<li>Running containers in cloud using GitHub Codespaces (requires a paid GitHub plan)</li>
+</ul>
+<p>When you run in a development container in GitHub Codespaces, you do NOT need to install any version of the PnP.PowerShell directly on your laptop/desktop.</p>
+<p>What you will need locally is only Visual Studio Code!</p>
+<h3 id="locally-installed-docker">Locally Installed Docker</h3>
+<p>For using that option you need to have locally installed the following software:</p>
+<ul>
+<li>Visual Studio Code</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers">Visual Studio Code extension, Remote - Containers</a></li>
+<li>Docker Engine. Kindly use <a href="dev-containers.html"><code>Installing Docker locally</code> section of the <code>Using PnP PowerShell in Docker containers</code> arcticle</a> for installation instructions.</li>
+</ul>
+<h3 id="github-codespaces">GitHub Codespaces</h3>
+<p>This option requires the following:</p>
+<ul>
+<li>Git repository in a <a href="https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/enabling-github-codespaces-for-your-organization">GitHub organization with enabled Codespaces</a></li>
+</ul>
+<h2 id="defining-development-containers-for-the-project">Defining Development Containers for the Project</h2>
+<ol>
+<li><p>In the root folder of the source code, create the folder called <code>.devcontainer</code>.</p>
+</li>
+<li><p>In this folder, create the <code>devcontainer.json</code> file with the following contents:</p>
+</li>
+</ol>
+<pre><code class="lang-json">{
+	&quot;name&quot;: &quot;PnP 1.11.0&quot;,
+	&quot;image&quot;: &quot;m365pnp/powershell:1.11.0-alpine-3.14&quot;,
+	&quot;customizations&quot;: {
+		&quot;vscode&quot;: {
+			&quot;settings&quot;: {
+				&quot;terminal.integrated.defaultProfile.linux&quot;: &quot;pwsh&quot;
+			},
+			&quot;extensions&quot;: [
+				&quot;ms-vscode.powershell&quot;
+			]
+		}
+	},
+	&quot;extensions&quot;: [
+		&quot;editorconfig.editorconfig&quot;,
+		&quot;dbaeumer.vscode-eslint&quot;,
+		&quot;ms-vscode.PowerShell&quot;
+	],
+	&quot;postCreateCommand&quot;: &quot;apk add git; git config --global --add safe.directory /workspaces&quot;
+}
+</code></pre>
+<h2 id="starting-working-with-pnppowershell-when-you-run-docker-locally">Starting working with PnP.PowerShell when you run Docker locally</h2>
+<ol>
+<li>Open the folder in Visual Studio Code</li>
+<li>Click in the bottom left corner:</li>
+</ol>
+<p><img src="../images/dev-containers/VScorner.png" alt="VS bottom left corner"></p>
+<ol start="3">
+<li>Select <code>Reopen in Container</code>:</li>
+</ol>
+<p><img src="../images/dev-containers/vs-containers-selector.png" alt="Reopen in Container menu"></p>
+<ol start="4">
+<li>Open a new Visual Studio terminal and run <code>Connect-PnPOnline -Url https://&lt;your-tenant-name&gt;.sharepoint.com</code></li>
+</ol>
+<p>The command should work even if you don't have PnP.PowerShell module installed locally on your laptop.</p>
+<h2 id="starting-working-with-pnppowershell-when-you-run-containers-remotely-in-github-codespaces">Starting working with PnP.PowerShell when you run containers remotely in GitHub Codespaces</h2>
+<ol>
+<li>Open the project in GitHub site.</li>
+<li>Click <code>Code</code> button:</li>
+</ol>
+<p><img src="../images/dev-containers/github-code.png" alt="GitHub Code Button"></p>
+<ol start="3">
+<li>Click <code>Create codespace on ...</code> button:</li>
+</ol>
+<p><img src="../images/dev-containers/github-create-space.png" alt="GitHub Create codespace Button"></p>
+<ol start="4">
+<li>Run <code>Connect-PnPOnline -Url https://&lt;your-tenant-name&gt;.sharepoint.com</code> in the Visual Studio Code terminal</li>
+</ol>
+<p>The command should work even if you don't have PnP.PowerShell module installed locally on your laptop.</p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>
