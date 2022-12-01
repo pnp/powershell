@@ -1,39 +1,62 @@
 # Docker with Linux/Mac OS/WSL:
 
+## Build a Docker Image
+
+```bash
+docker build . -f ./pages/Dockerfile-Linux -t pnp.powershell-pages-build
+```
+
 ## Build Documentation
 
 ```bash
-docker run --rm -it -v $(pwd):/home mono:6.12.0.182 sh -c "apt update && apt upgrade -y && apt install wget unzip -y; \
-    wget https://github.com/dotnet/docfx/releases/download/v2.51/docfx.zip; \
-    unzip docfx.zip -d /usr/local/lib/docfx; \
-    chmod +x /usr/local/lib/docfx/docfx.exe; \
-    /usr/bin/mono /usr/local/lib/docfx/docfx.exe build /home/pages/docfx.json;"
+docker run --rm -it -v $(pwd)/pages:/home pnp.powershell-pages-build /usr/bin/mono /usr/local/lib/docfx/docfx.exe build /home/docfx.json
 ```
 
 ## Clean documentation
 
 ```bash
-rm -rf ./pages/_site
+sudo rm -rf ./pages/_site
+sudo rm -rf ./pages/obj
 ```
 
 # Docker with Windows CMD
 
+## Build a Docker Image
+
+```bash
+docker build . -f ./pages/Dockerfile-Windows -t pnp.powershell-pages-build
+```
+
 ## Build Documentation
 
 ```bat
-docker run --rm -it -v %cd%:C:\workplace mcr.microsoft.com/windows/servercore:10.0.17763.2366-amd64 powershell -c $ProgressPreference = 'SilentlyContinue'; ^
-    Invoke-WebRequest https://github.com/dotnet/docfx/releases/download/v2.51/docfx.zip -OutFile $env:TEMP\docfx.zip; ^
-    Expand-Archive $env:TEMP\docfx.zip $env:TEMP\docfx; ^
-    Start-Process -NoNewWindow -FilePath $env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\pages\docfx.json -Wait
+docker run --rm -it -v %cd%\pages:C:\workplace pnp.powershell-pages-build powershell -c Start-Process -NoNewWindow -FilePath $env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\docfx.json -Wait
+```
+
+## Clean documentation
+
+```
+rmdir /s /q pages\_site
+rmdir /s /q pages\obj
 ```
 
 # Docker with Windows PowerShell
 
+## Build a Docker Image
+
+```bash
+docker build . -f ./pages/Dockerfile-Windows -t pnp.powershell-pages-build
+```
+
 ## Build Documentation
 
 ```powershell
-docker run --rm -it -v ${pwd}:C:\workplace mcr.microsoft.com/windows/servercore:10.0.17763.2366-amd64 powershell -c "`$ProgressPreference = 'SilentlyContinue'; `
-    Invoke-WebRequest https://github.com/dotnet/docfx/releases/download/v2.51/docfx.zip -OutFile `$env:TEMP\docfx.zip; `
-    Expand-Archive `$env:TEMP\docfx.zip `$env:TEMP\docfx; `
-    Start-Process -NoNewWindow -FilePath `$env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\pages\docfx.json -Wait"
+docker run --rm -it -v ${pwd}\pages:C:\workplace pnp.powershell-pages-build powershell -c "Start-Process -NoNewWindow -FilePath `$env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\docfx.json -Wait"
+```
+
+## Clean documentation
+
+```powershell
+Remove-Item pages\_site -Recurse
+Remove-Item pages\obj -Recurse
 ```

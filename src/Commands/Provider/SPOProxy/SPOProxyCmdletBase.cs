@@ -57,6 +57,6 @@ namespace PnP.PowerShell.Commands.Provider.SPOProxy
 
         internal virtual string CmdletType { get; }
 
-        public const string CmdletNoun = "ItemProxy";
+        public const string CmdletNoun = "PnPItemProxy";
     }
 }

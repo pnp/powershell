@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
-        public SwitchParameter ValidateConnection;        
+        public SwitchParameter ValidateConnection;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
@@ -236,7 +236,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Url = Url.TrimEnd('/');
 
-                if(!Url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) && !Url.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
+                if (!Url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) && !Url.StartsWith("http://", StringComparison.OrdinalIgnoreCase))
                 {
                     Url = $"https://{Url}";
                 }
@@ -298,21 +298,7 @@ namespace PnP.PowerShell.Commands.Base
 #else
             WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version})");
 #endif
-            
-            if (CreateDrive && connection.Context != null)
-            {
-                var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
-                if (provider != null)
-                {
-                    if (provider.Drives.Any(d => d.Name.Equals(DriveName, StringComparison.InvariantCultureIgnoreCase)))
-                    {
-                        SessionState.Drive.Remove(DriveName, true, "Global");
-                    }
 
-                    var drive = new PSDriveInfo(DriveName, provider, string.Empty, Url, null);
-                    SessionState.Drive.New(drive, "Global");
-                }
-            }
 
             if (connection.Url != null)
             {
@@ -337,7 +323,7 @@ namespace PnP.PowerShell.Commands.Base
                     connection.Context.ExecuteQueryRetry();
                     WriteVerbose($"Site at {Url} exists");
                 }
-                catch(System.Net.WebException e) when (e.Message.Contains("404"))
+                catch (System.Net.WebException e) when (e.Message.Contains("404"))
                 {
                     WriteVerbose($"Site at {Url} does not exist");
                     throw new PSInvalidOperationException($"The specified site {Url} does not exist", e);
@@ -352,6 +338,21 @@ namespace PnP.PowerShell.Commands.Base
             {
                 PnPConnection.Current = connection;
             }
+            if (CreateDrive && connection.Context != null)
+            {
+                var provider = SessionState.Provider.GetAll().FirstOrDefault(p => p.Name.Equals(SPOProvider.PSProviderName, StringComparison.InvariantCultureIgnoreCase));
+                if (provider != null)
+                {
+                    if (provider.Drives.Any(d => d.Name.Equals(DriveName, StringComparison.InvariantCultureIgnoreCase)))
+                    {
+                        SessionState.Drive.Remove(DriveName, true, "Global");
+                    }
+
+                    var drive = new PSDriveInfo(DriveName, provider, string.Empty, Url, null);
+                    SessionState.Drive.New(drive, "Global");
+                }
+            }
+
         }
 
         #region Connect Types
@@ -428,7 +429,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 catch (Exception ex)
                 {
-                    messageWriter.WriteWarning(ex.Message,false);
+                    messageWriter.WriteWarning(ex.Message, false);
                     messageWriter.Finished = true;
                 }
             }, cancellationTokenSource.Token);

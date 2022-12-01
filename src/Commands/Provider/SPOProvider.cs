@@ -39,22 +39,22 @@ namespace PnP.PowerShell.Commands.Provider
         {
             WriteVerbose($"SPOProvider::NewDrive (Drive.Name = ’{drive.Name}’, Drive.Root = ’{drive.Root}’)");
 
-            var spoParametes = DynamicParameters as SPODriveParameters;
+            var spoParameters = DynamicParameters as SPODriveParameters;
             Web web = null;
 
-            if (spoParametes?.Context != null)
+            if (spoParameters?.Context != null)
             {
-                var webUrl = spoParametes.Url ?? spoParametes.Context.Url;
-                web = spoParametes.Context.Clone(webUrl).Web;
+                var webUrl = spoParameters.Url ?? spoParameters.Context.Url;
+                web = spoParameters.Context.Clone(webUrl).Web;
             }
-            else if (spoParametes?.Web != null)
+            else if (spoParameters?.Web != null)
             {
-                var webUrl = spoParametes.Url ?? spoParametes.Web.EnsureProperty(w => w.Url);
-                web = spoParametes.Web.Context.Clone(webUrl).Web;
+                var webUrl = spoParameters.Url ?? spoParameters.Web.EnsureProperty(w => w.Url);
+                web = spoParameters.Web.Context.Clone(webUrl).Web;
             }
             else if (PnPConnection.Current != null)
             {
-                var webUrl = spoParametes?.Url ?? PnPConnection.Current.Context.Web.EnsureProperty(w => w.Url);
+                var webUrl = spoParameters?.Url ?? PnPConnection.Current.Context.Web.EnsureProperty(w => w.Url);
                 web = PnPConnection.Current.Context.Clone(webUrl).Web;
             }
             else
@@ -67,8 +67,8 @@ namespace PnP.PowerShell.Commands.Provider
 #if DEBUG
                 SetCounter(web.Context);
 #endif
-                var itemTimeout = (spoParametes != null && spoParametes.ItemCacheTimeout != default(int)) ? spoParametes.ItemCacheTimeout : DefaultItemCacheTimeout;
-                var webTimeout = (spoParametes != null && spoParametes.WebCacheTimeout != default(int)) ? spoParametes.WebCacheTimeout : DefaultWebCacheTimeout;
+                var itemTimeout = (spoParameters != null && spoParameters.ItemCacheTimeout != default(int)) ? spoParameters.ItemCacheTimeout : DefaultItemCacheTimeout;
+                var webTimeout = (spoParameters != null && spoParameters.WebCacheTimeout != default(int)) ? spoParameters.WebCacheTimeout : DefaultWebCacheTimeout;
                 var normalizePath = NormalizePath(IsPropertyAvailable(web, "ServerRelativeUrl") ? web.ServerRelativeUrl : web.EnsureProperty(w => w.ServerRelativeUrl));
 
                 //Set root to host root and current location to normalized path
@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands.Provider
                 });
 
                 //Add proxy aliases
-                if (spoParametes == null || !spoParametes.NoProxyCmdLets)
+                if (spoParameters == null || !spoParameters.NoProxyCmdLets)
                 {
                     SPOProxyImplementation.AddAlias(SessionState);
 

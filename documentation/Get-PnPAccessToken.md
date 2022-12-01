@@ -10,17 +10,17 @@ title: Get-PnPAccessToken
 # Get-PnPAccessToken
 
 ## SYNOPSIS
-Returns the current Microsoft Graph OAuth Access token. 
+Returns the current Microsoft Graph OAuth Access token.
 If a Resource Type Name or Resource URL is specified, it will fetch the access token of the specified resource.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options. To retrieve the SharePoint Online access token, instead use `Get-PnPAppAuthAccessToken`.
+Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options. To retrieve the SharePoint Online access token, you can also use `Get-PnPAppAuthAccessToken`.
 
 ## EXAMPLES
 
@@ -95,7 +95,7 @@ Returns the details from the access token in a decoded manner
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Default (decoded), Resource Type Name (decoded), Resource Url (decoded)
+Parameter Sets: Resource Type Name (decoded), Resource Url (decoded)
 
 Required: False
 Position: Named

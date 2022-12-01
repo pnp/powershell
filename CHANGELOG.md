@@ -10,11 +10,33 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added default table formatted output for `Get-PnPVivaConnectionsDashboardACE`
+- Added `Get-PnPAzureADServicePrincipal` which allows for service principals/application registrations to be retrieved from Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
+- Added `Get-PnPAzureADServicePrincipalAssignedAppRole` which allows for the assigned app roles of a service principal/application registration to be retrieved from Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
+- Added `Get-PnPAzureADServicePrincipalAvailableAppRole` which allows for the available app roles of a service principal/application registration to be retrieved from Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
+- Added `Add-PnPAzureADServicePrincipalAppRole` which allows for app roles to be assigned to a service principal/application registration in Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
+- Added `Remove-PnPAzureADServicePrincipalAppRole` which allows for app roles to be removed from a service principal/application registration in Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
+- Added latest added SharePoint Online Site Templates to `Set-PnPBuiltInSiteTemplateSettings` allowing them to be hidden or shown [#2586](https://github.com/pnp/powershell/pull/2586)
+
 ### Changed
+
+- Made PropertiesJSON an optional parameter on Add-PnPVivaConnectionsDashboardACE as it is not always required when adding an ACE
+- Added a 10 second timeout on the new version check on `Connect-PnPOnline` to prevent the cmdlet from hanging when the connection is slow, GitHub being blocked by a firewall or GitHub being unavailable [#2550](https://github.com/pnp/powershell/pull/2550)
 
 ### Removed
 
 ### Fixed
+
+- Fixed issue with -CreateDrive on `Connect-PnPOnline` throwing exception on non-existing context
+- Fixed issue with non-existing ItemProxy cmdlet aliases being registered
+
+### Contributors
+
+- Arleta Wanat [PowershellScripts]
+- Erwin van Hunen [erwinvanhunen]
+- Marc Studer [studermarc]
+- [vin-ol]
+- Koen Zomers [koenzomers]
 
 ## [1.12.0]
 ### Added
