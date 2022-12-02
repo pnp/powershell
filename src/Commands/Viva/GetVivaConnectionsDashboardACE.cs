@@ -1,5 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
-
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Viva
     public class GetVivaConnectionsDashboard : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
-        public Guid Identity;
+        public VivaACEPipeBind Identity;
         protected override void ExecuteCmdlet()
         {
             if (PnPContext.Site.IsHomeSite())
@@ -20,14 +20,14 @@ namespace PnP.PowerShell.Commands.Viva
 
                 if (ParameterSpecified(nameof(Identity)))
                 {
-                    var aceToRetrieve = dashboard.ACEs.FirstOrDefault(p => p.InstanceId == Identity);
+                    var aceToRetrieve = Identity.GetACE(dashboard, this);
                     if (aceToRetrieve != null)
                     {
                         WriteObject(aceToRetrieve);
                     }
                     else
                     {
-                        WriteWarning("ACE with specified Instance Id not found");
+                        WriteWarning("ACE with specified identifier not found");
                     }
                 }
                 else

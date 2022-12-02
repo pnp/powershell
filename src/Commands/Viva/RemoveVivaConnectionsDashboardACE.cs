@@ -1,4 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,22 +13,22 @@ namespace PnP.PowerShell.Commands.Viva
     public class RemoveVivaConnectionsACE : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
-        public Guid Identity;
+        public VivaACEPipeBind Identity;
         protected override void ExecuteCmdlet()
         {
             if (PnPContext.Site.IsHomeSite())
             {
                 IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
-                var aceToRemove = dashboard.ACEs.FirstOrDefault(p => p.InstanceId == Identity);
+                var aceToRemove = Identity.GetACE(dashboard, this);
 
                 if (aceToRemove != null)
                 {
                     dashboard.RemoveACE(aceToRemove.InstanceId);
-                    dashboard.Save();                   
+                    dashboard.Save();
                 }
                 else
                 {
-                    WriteWarning("ACE with specified instance Id not found");
+                    WriteWarning("ACE with specified identifier not found");
                 }
             }
             else

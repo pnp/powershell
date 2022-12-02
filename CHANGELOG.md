@@ -20,7 +20,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- Made PropertiesJSON an optional parameter on Add-PnPVivaConnectionsDashboardACE as it is not always required when adding an ACE
+- `Update-PnPVivaConnectionsDashboardACE` is now called `Set-PnPVivaConnectionsDashboardACE` but `Update-PnPVivaConnectionsDashboardACE` will still work as an alias.
+- All `Set|Get|Remove-PnPVivaConnectionsDashboardACE` cmdlets now take either the InstanceId (preferred), Title, the Id, or an actual ACE for the Identity property. If multiple ACEs of the same id or with the same title are found a warning will be shown if Id or Title is used to find the ACE.
+- Made PropertiesJSON an optional parameter on `Add-PnPVivaConnectionsDashboardACE` as it is not always required when adding an ACE
 - Added a 10 second timeout on the new version check on `Connect-PnPOnline` to prevent the cmdlet from hanging when the connection is slow, GitHub being blocked by a firewall or GitHub being unavailable [#2550](https://github.com/pnp/powershell/pull/2550)
 
 ### Removed
