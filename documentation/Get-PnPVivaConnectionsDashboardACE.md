@@ -15,7 +15,7 @@ Returns the Adaptive card extensions from the Viva connections dashboard page. T
 ## SYNTAX
 
 ```powershell
-Get-PnPVivaConnectionsDashboardACE [-Identity <GUID>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPVivaConnectionsDashboardACE [-Identity <VivaACEPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -42,10 +42,10 @@ Returns the adaptive card extensions with specified Instance Id from the Viva Co
 ## PARAMETERS
 
 ### -Identity
-The instance Id of the Adaptive Card extension present on the Viva connections dashboard page. You can retrieve the value for this parameter by executing `Get-PnPVivaConnectionsDashboardACE` cmdlet
+The instance Id of the Adaptive Card extension present on the Viva connections dashboard page. This parameter takes either the Instance Id, the Id or the Title property. But as the latter two are not necessarily unique within the dashboard, the preferred value is to use the Instance Id of the ACE.
 
 ```yaml
-Type: GUID
+Type: VivaACEPipeBind
 Parameter Sets: (All)
 
 Required: False
