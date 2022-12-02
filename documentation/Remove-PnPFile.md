@@ -16,19 +16,17 @@ Removes a file.
 
 ### Server Relative
 ```powershell
-Remove-PnPFile [-ServerRelativeUrl] <String> [-Recycle] [-Force] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Remove-PnPFile [-ServerRelativeUrl] <String> [-Recycle] [-Force] [-Connection <PnPConnection>] 
 ```
 
 ### Site Relative
 ```powershell
-Remove-PnPFile [-SiteRelativeUrl] <String> [-Recycle] [-Force] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Remove-PnPFile [-SiteRelativeUrl] <String> [-Recycle] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to remove a file.
+This cmdlet removes the specified file based on the site-relative or server-relative url.
 
 ## EXAMPLES
 
@@ -37,21 +35,21 @@ Allows to remove a file.
 Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
 ```
 
-Removes the file company.spcolor
+Removes the file company.spcolor.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor
 ```
 
-Removes the file company.spcolor
+Removes the file company.spcolor.
 
 ### EXAMPLE 3
 ```powershell
 Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle
 ```
 
-Removes the file company.spcolor and saves it to the Recycle Bin
+Removes the file company.spcolor and saves it to the Recycle Bin.
 
 ## PARAMETERS
 
@@ -84,6 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -Recycle
+When provided, the file will be moved to recycle bin. If omitted, the file will be deleted directly.
 
 ```yaml
 Type: SwitchParameter
@@ -97,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServerRelativeUrl
-Server relative URL to the file
+Server relative URL of the file.
 
 ```yaml
 Type: String
@@ -111,7 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -SiteRelativeUrl
-Site relative URL to the file
+Site relative URL of the file.
 
 ```yaml
 Type: String
