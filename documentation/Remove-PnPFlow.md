@@ -20,7 +20,7 @@ Removes the specified flow
 
 ```
 Remove-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin]
- [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Force] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -100,7 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-If specified the no confirmation question will be asked.
+If specified, no confirmation question will be asked.
 
 ```yaml
 Type: SwitchParameter
