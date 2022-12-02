@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Base
                 switch (ex)
                 {
                     case PnP.PowerShell.Commands.Model.Graph.GraphException gex:
-                        errorMessage = gex.Error.Message;
+                        errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {gex.Error.Message}";
                         break;
 
                     case PnP.Core.SharePointRestServiceException rex:
