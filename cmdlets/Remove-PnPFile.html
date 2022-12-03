@@ -87,28 +87,26 @@
 <p>Removes a file.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="server-relative">Server Relative</h3>
-<pre><code class="lang-powershell">Remove-PnPFile [-ServerRelativeUrl] &lt;String&gt; [-Recycle] [-Force] 
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPFile [-ServerRelativeUrl] &lt;String&gt; [-Recycle] [-Force] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="site-relative">Site Relative</h3>
-<pre><code class="lang-powershell">Remove-PnPFile [-SiteRelativeUrl] &lt;String&gt; [-Recycle] [-Force] 
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPFile [-SiteRelativeUrl] &lt;String&gt; [-Recycle] [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to remove a file.</p>
+<p>This cmdlet removes the specified file based on the site-relative or server-relative url.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPFile -ServerRelativeUrl /sites/project/_catalogs/themes/15/company.spcolor
 </code></pre>
-<p>Removes the file company.spcolor</p>
+<p>Removes the file company.spcolor.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor
 </code></pre>
-<p>Removes the file company.spcolor</p>
+<p>Removes the file company.spcolor.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Remove-PnPFile -SiteRelativeUrl _catalogs/themes/15/company.spcolor -Recycle
 </code></pre>
-<p>Removes the file company.spcolor and saves it to the Recycle Bin</p>
+<p>Removes the file company.spcolor and saves it to the Recycle Bin.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -133,6 +131,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-recycle">-Recycle</h3>
+<p>When provided, the file will be moved to recycle bin. If omitted, the file will be deleted directly.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -143,7 +142,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-serverrelativeurl">-ServerRelativeUrl</h3>
-<p>Server relative URL to the file</p>
+<p>Server relative URL of the file.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Server Relative
 
@@ -154,7 +153,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-siterelativeurl">-SiteRelativeUrl</h3>
-<p>Site relative URL to the file</p>
+<p>Site relative URL of the file.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Site Relative
 

@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Removes the Adaptive card extensions from the Viva connections dashboard page. This requires that you connect to a SharePoint Home site and have configured the Viva connections page.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPVivaConnectionsDashboardACE [-Identity &lt;GUID&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPVivaConnectionsDashboardACE [-Identity &lt;VivaACEPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to remove Adaptive card extensions from the Viva connections dashboard page.</p>
@@ -97,8 +97,8 @@
 <p>Removes the adaptive card extensions with Instance Id <code>58108715-185e-4214-8786-01218e7ab9ef</code> from the Viva connections dashboard page</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
-<p>The instance Id of the Adaptive Card extension present on the Viva connections dashboard page. You can retrieve the value for this parameter by executing <code>Get-PnPVivaConnectionsDashboardACE</code> cmdlet</p>
-<pre><code class="lang-yaml">Type: GUID
+<p>The instance Id of the Adaptive Card extension present on the Viva connections dashboard page. You can retrieve the value for this parameter by executing <code>Get-PnPVivaConnectionsDashboardACE</code> cmdlet. This parameter takes either the Instance Id, the Id or the Title property. But as the latter two are not necessarily unique within the dashboard, the preferred value is to use the Instance Id of the ACE.</p>
+<pre><code class="lang-yaml">Type: VivaACEPipeBind
 Parameter Sets: (All)
 
 Required: True

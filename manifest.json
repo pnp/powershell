@@ -3993,7 +3993,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPVivaConnectionsDashboardACE.html",
-          "hash": "9bMA4HxQQpXPl9lN5rPFqQ=="
+          "hash": "TXL41q+AdRdrHi+mNytUtw=="
         }
       },
       "is_incremental": false,
@@ -5184,7 +5184,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPFile.html",
-          "hash": "obdtQ+EkVFRVXlwWLNljQg=="
+          "hash": "H5mGscbQI4qz5gi7a42KEg=="
         }
       },
       "is_incremental": false,
@@ -5220,7 +5220,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPFlow.html",
-          "hash": "fWcZBWIDYU36cnzTd3TEYA=="
+          "hash": "udCV5HSuy9rDEcgCtcy6Wg=="
         }
       },
       "is_incremental": false,
@@ -6000,7 +6000,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPVivaConnectionsDashboardACE.html",
-          "hash": "VvQU0U2fx46B0rUtPCMR3A=="
+          "hash": "UmQCx14rEUwCdMZK3238nw=="
         }
       },
       "is_incremental": false,
@@ -7631,6 +7631,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPVivaConnectionsDashboardACE.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPVivaConnectionsDashboardACE.html",
+          "hash": "2pHikjzfip7Mp8r36TbC3A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPWeb.md",
       "output": {
         ".html": {
@@ -7966,24 +7978,12 @@
       "version": ""
     },
     {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Update-PnPVivaConnectionsDashboardACE.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Update-PnPVivaConnectionsDashboardACE.html",
-          "hash": "Q0vFrce2Xu37ETD7Upzonw=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
       "type": "Toc",
       "source_relative_path": "cmdlets/toc.yml",
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "9D5nwxW6E4OFDuXKusmBmA=="
+          "hash": "burAmVtuOchIRQuzoVZEQw=="
         }
       },
       "is_incremental": false,
