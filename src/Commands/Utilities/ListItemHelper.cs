@@ -114,10 +114,10 @@ namespace PnP.PowerShell.Commands.Utilities
                                     {
                                         TaxonomyItem taxonomyItem;
                                         Guid termGuid;
-                                        if (!Guid.TryParse(arrayItem as string, out termGuid))
+                                        if (!Guid.TryParse(arrayItem?.ToString(), out termGuid))
                                         {
                                             // Assume it's a TermPath
-                                            taxonomyItem = clonedContext.Site.GetTaxonomyItemByPath(arrayItem as string);
+                                            taxonomyItem = clonedContext.Site.GetTaxonomyItemByPath(arrayItem?.ToString());
                                         }
                                         else
                                         {
