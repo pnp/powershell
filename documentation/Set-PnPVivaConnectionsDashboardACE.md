@@ -7,7 +7,7 @@ external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Update-PnPVivaConnectionsDashboardACE.html
 ---
  
-# Update-PnPVivaConnectionsDashboardACE
+# Set-PnPVivaConnectionsDashboardACE
 
 ## SYNOPSIS
 Update the Adaptive card extension in the Viva connections dashboard page. This requires that you connect to a SharePoint Home site and have configured the Viva connections page.
@@ -17,13 +17,13 @@ Update the Adaptive card extension in the Viva connections dashboard page. This 
 ### Update using typed properties (Default)
 
 ```powershell
-Update-PnPVivaConnectionsDashboardACE -Identity <GUID> [-Title <string>] [-Properties <object>] [-Description <string>] [-IconProperty <string>] [-Order <Int>][-CardSize <CardSize>] [-Connection <PnPConnection>]
+Update-PnPVivaConnectionsDashboardACE -Identity <VivaACEPipeBind> [-Title <string>] [-Properties <object>] [-Description <string>] [-IconProperty <string>] [-Order <Int>][-CardSize <CardSize>] [-Connection <PnPConnection>]
 ```
 
 ### Update using JSON properties
 
 ```powershell
-Update-PnPVivaConnectionsDashboardACE -Identity <GUID> [-Title <string>] [-PropertiesJSON <string>] [-Description <string>] [-IconProperty <string>] [-Order <Int>][-CardSize <CardSize>] [-Connection <PnPConnection>]
+Update-PnPVivaConnectionsDashboardACE -Identity <VivaACEPipeBind> [-Title <string>] [-PropertiesJSON <string>] [-Description <string>] [-IconProperty <string>] [-Order <Int>][-CardSize <CardSize>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -34,28 +34,28 @@ Allows to update the Adaptive card extension in the Viva connections dashboard p
 
 ### EXAMPLE 1
 ```powershell
-Update-PnPVivaConnectionsDashboardACE -Identity "58108715-185e-4214-8786-01218e7ab9ef" -Title "Update title" -Description "Update Description" -IconProperty "https://cdn.hubblecontent.osi.office.net/m365content/publish/002f8bf9-b8ee-4689-ae97-e411b756099d/691108002.jpg" -Order 4 -CardSize Large -PropertiesJSON $myProperties
+Set-PnPVivaConnectionsDashboardACE -Identity "58108715-185e-4214-8786-01218e7ab9ef" -Title "Update title" -Description "Update Description" -IconProperty "https://cdn.hubblecontent.osi.office.net/m365content/publish/002f8bf9-b8ee-4689-ae97-e411b756099d/691108002.jpg" -Order 4 -CardSize Large -PropertiesJSON $myProperties
 ```
 
 Update the adaptive card extensions with Instance Id `58108715-185e-4214-8786-01218e7ab9ef` in the Viva connections dashboard page. It will update the Title, Description, IconProperty, Order , CardSize and PropertiesJSON of the ACE.
 
 ### EXAMPLE 2
 ```powershell
-Update-PnPVivaConnectionsDashboardACE -Identity "58108715-185e-4214-8786-01218e7ab9ef" -Title "Update title" -Description "Update Description"
+Set-PnPVivaConnectionsDashboardACE -Identity "58108715-185e-4214-8786-01218e7ab9ef" -Title "Update title" -Description "Update Description"
 ```
 
 Update the adaptive card extensions with Instance Id `58108715-185e-4214-8786-01218e7ab9ef` in the Viva connections dashboard page. It will update the Title and Description of the ACE.
 
 ### EXAMPLE 3
 ```powershell
-Update-PnPVivaConnectionsDashboardACE -Identity "58108715-185e-4214-8786-01218e7ab9ef" -IconProperty "https://cdn.hubblecontent.osi.office.net/m365content/publish/002f8bf9-b8ee-4689-ae97-e411b756099d/691108002.jpg" -Order 4
+Set-PnPVivaConnectionsDashboardACE -Identity "58108715-185e-4214-8786-01218e7ab9ef" -IconProperty "https://cdn.hubblecontent.osi.office.net/m365content/publish/002f8bf9-b8ee-4689-ae97-e411b756099d/691108002.jpg" -Order 4
 ```
 
 Update the adaptive card extensions with Instance Id `58108715-185e-4214-8786-01218e7ab9ef` in the Viva connections dashboard page. It will update the IconProperty and Order of the ACE.
 
 ### EXAMPLE 4
 ```powershell
-Update-PnPVivaConnectionsDashboardACE -Identity "58108715-185e-4214-8786-01218e7ab9ef" -CardSize Large
+Set-PnPVivaConnectionsDashboardACE -Identity "58108715-185e-4214-8786-01218e7ab9ef" -CardSize Large
 ```
 
 Update the adaptive card extensions with Instance Id `58108715-185e-4214-8786-01218e7ab9ef` in the Viva connections dashboard page. It will update the CardSize to large.
@@ -83,7 +83,7 @@ $ace.Properties.QuickViews[0].Template = '{
     "body": [
         ...
     ]}'
-Update-PnPVivaConnectionsDashboardACE -Identity $ace.InstanceId -Properties $ace.Properties
+Set-PnPVivaConnectionsDashboardACE -Identity $ace.InstanceId -Properties $ace.Properties
 ```
 
 Update the default quickview Adaptive Cards template of the adaptive card extension with Instance Id `58108715-185e-4214-8786-01218e7ab9ef` in the Viva connections dashboard page to the provided JSON structure.
@@ -91,10 +91,10 @@ Update the default quickview Adaptive Cards template of the adaptive card extens
 ## PARAMETERS
 
 ### -Identity
-The instance Id of the Adaptive Card extension present on the Viva connections dashboard page. You can retrieve the value for this parameter by executing `Get-PnPVivaConnectionsDashboardACE` cmdlet
+The instance Id of the Adaptive Card extension present on the Viva connections dashboard page. You can retrieve the value for this parameter by executing `Get-PnPVivaConnectionsDashboardACE` cmdlet. This parameter takes either the Instance Id, the Id or the Title property. But as the latter two are not necessarily unique within the dashboard, the preferred value is to use the Instance Id of the ACE.
 
 ```yaml
-Type: GUID
+Type: VivaACEPipeBind
 Parameter Sets: (All)
 
 Required: True

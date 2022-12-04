@@ -4,19 +4,21 @@ using System;
 using System.Linq;
 using System.Text.Json;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Viva
 {
-    [Cmdlet(VerbsData.Update, "PnPVivaConnectionsDashboardACE", DefaultParameterSetName = ParameterSet_TYPEDPROPERTIES)]
+    [Cmdlet(VerbsCommon.Set, "PnPVivaConnectionsDashboardACE", DefaultParameterSetName = ParameterSet_TYPEDPROPERTIES)]
+    [Alias("Update-PnPVivaConnectionsDashboardACE")]
     [OutputType(typeof(IVivaDashboard))]
-    public class UpdateVivaConnectionsACE : PnPWebCmdlet
+    public class SetVivaConnectionsACE : PnPWebCmdlet
     {
         private const string ParameterSet_JSONProperties = "Update using JSON properties";
         private const string ParameterSet_TYPEDPROPERTIES = "Update using typed properties";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_JSONProperties)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TYPEDPROPERTIES)]
-        public Guid Identity;
+        public VivaACEPipeBind Identity;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_JSONProperties)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TYPEDPROPERTIES)]
@@ -49,7 +51,8 @@ namespace PnP.PowerShell.Commands.Viva
             if (PnPContext.Site.IsHomeSite())
             {
                 IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
-                var aceToUpdate = dashboard.ACEs.FirstOrDefault(p => p.InstanceId == Identity);
+
+                var aceToUpdate = Identity.GetACE(dashboard, this);
 
                 if (aceToUpdate != null)
                 {
@@ -111,7 +114,7 @@ namespace PnP.PowerShell.Commands.Viva
                 }
                 else
                 {
-                    WriteWarning("ACE with specified instance ID not found");
+                    WriteWarning("ACE with specified identifier not found");
                 }
             }
             else
