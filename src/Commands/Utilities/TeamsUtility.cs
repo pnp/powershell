@@ -11,6 +11,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 using Team = PnP.PowerShell.Commands.Model.Teams.Team;
@@ -954,7 +955,12 @@ namespace PnP.PowerShell.Commands.Utilities
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
             var response = await GraphHelper.PostAsync(connection, "v1.0/appCatalogs/teamsApps", accessToken, byteArrayContent);
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            return JsonSerializer.Deserialize<TeamApp>(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+#if NETFRAMEWORK
+            var options = new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+#else
+            var options = new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+#endif
+            return JsonSerializer.Deserialize<TeamApp>(content, options);
         }
 
         public static async Task<HttpResponseMessage> UpdateAppAsync(PnPConnection connection, string accessToken, byte[] bytes, string appId)

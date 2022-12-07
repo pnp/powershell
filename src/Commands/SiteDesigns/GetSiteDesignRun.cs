@@ -35,7 +35,12 @@ namespace PnP.PowerShell.Commands.SiteDesigns
                         ThrowTerminatingError(new ErrorRecord(new System.Exception("Invalid URL"), "INVALIDURL", ErrorCategory.InvalidArgument, WebUrl));
                     }
                 }
-                var designRun = tenant.GetSiteDesignRun(webUrl, SiteDesignId != null ? SiteDesignId : Guid.Empty);
+                var siteDesignRunGuid = Guid.Empty;
+                if (ParameterSpecified(nameof(SiteDesignId)))
+                {
+                    siteDesignRunGuid = SiteDesignId;
+                }
+                var designRun = tenant.GetSiteDesignRun(webUrl, siteDesignRunGuid);
                 tenantContext.Load(designRun);
                 tenantContext.ExecuteQueryRetry();
                 WriteObject(designRun, true);

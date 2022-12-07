@@ -182,7 +182,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         private bool HasUniqueId()
         {
-            return UniqueId != null && UniqueId != Guid.Empty;
+            return ParameterSpecified(nameof(UniqueId)) && UniqueId != Guid.Empty;
         }
 
         private bool HasCamlQuery()

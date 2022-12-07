@@ -152,7 +152,12 @@ namespace PnP.PowerShell.Commands.Pages
         {
             get
             {
+                var executingAssembly = Assembly.GetExecutingAssembly();
+#if NETFRAMEWORK
                 string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+#else
+                string codeBase = executingAssembly.Location;
+#endif
                 UriBuilder uri = new UriBuilder(codeBase);
                 string path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
