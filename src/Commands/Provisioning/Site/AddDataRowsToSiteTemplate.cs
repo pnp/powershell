@@ -44,6 +44,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = false)]
         public SwitchParameter TokenizeUrls;
 
+        [Parameter(Mandatory = false)]
+        [ValidateNotNullOrEmpty]
+        public string KeyColumn;
+
         private readonly static FieldType[] _unsupportedFieldTypes =
         {
             FieldType.Attachments,
@@ -77,6 +81,11 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             if (listInstance == null)
             {
                 throw new ApplicationException("List does not exist in the template file!");
+            }
+
+            if (string.IsNullOrEmpty(KeyColumn))
+            {
+                listInstance.DataRows.KeyColumn = KeyColumn;
             }
 
             ClientContext.Load(ClientContext.Web, w => w.Url, w => w.ServerRelativeUrl, w => w.Id);
