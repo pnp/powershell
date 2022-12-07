@@ -8,8 +8,6 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsData.Save, "PnPPageConversionLog")]
-    [Alias("Save-PnPClientSidePageConversionLog")]
-    [WriteAliasWarning("Please use 'Save-PnPPageConversionLog'. The alias 'Save-PnPClientSidePageConversionLog' will be removed in the 1.5.0 release")]
 
     public class SavePageConversionLog : PnPWebCmdlet
     {
