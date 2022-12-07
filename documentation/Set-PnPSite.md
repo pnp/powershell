@@ -72,7 +72,7 @@ Enables Microsoft Flow for this site
 Set-PnPSite -LogoFilePath c:\images\mylogo.png
 ```
 
-Sets the logo if the site is a modern team site
+Sets the logo if the site is a modern team site without a Microsoft 365 Group behind it. Check the [notes below](#-logofilepath) for options for other types of sites.
 
 ### EXAMPLE 6
 ```powershell
@@ -316,7 +316,11 @@ Accept wildcard characters: False
 ```
 
 ### -LogoFilePath
-Sets the logo of the site if it is a modern team site. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl.
+Sets the logo of the site if it is a modern team site without a Microsoft 365 Group behind it. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint.
+
+If you want to set the logo for a classic site, use [Set-PnPWeb -SiteLogoUrl](https://pnp.github.io/powershell/cmdlets/Set-PnPWeb.html#-sitelogourl) instead.
+
+If the modern site has a Microsoft 365 Group behind it, use [Set-PnPWebHeader -SiteLogoUrl](https://pnp.github.io/powershell/cmdlets/Set-PnPWebHeader.html#-sitelogourl) instead.
 
 ```yaml
 Type: String
