@@ -123,7 +123,7 @@
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPSite -LogoFilePath c:\images\mylogo.png
 </code></pre>
-<p>Sets the logo if the site is a modern team site</p>
+<p>Sets the logo if the site is a modern team site without a Microsoft 365 Group behind it. Check the <a href="#-logofilepath">notes below</a> for options for other types of sites.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Set-PnPSite -NoScriptSite $false
 </code></pre>
@@ -313,7 +313,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-logofilepath">-LogoFilePath</h3>
-<p>Sets the logo of the site if it is a modern team site. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl.</p>
+<p>Sets the logo of the site if it is a modern team site without a Microsoft 365 Group behind it. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint.</p>
+<p>If you want to set the logo for a classic site, use <a href="https://pnp.github.io/powershell/cmdlets/Set-PnPWeb.html#-sitelogourl">Set-PnPWeb -SiteLogoUrl</a> instead.</p>
+<p>If the modern site has a Microsoft 365 Group behind it, use <a href="https://pnp.github.io/powershell/cmdlets/Set-PnPWebHeader.html#-sitelogourl">Set-PnPWebHeader -SiteLogoUrl</a> instead.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Set Properties
 
