@@ -10,18 +10,17 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPField.html
 # Remove-PnPField
 
 ## SYNOPSIS
-Removes a field from a list or a site
+Removes a field from a list or a site.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPField [-Identity] <FieldPipeBind> [[-List] <ListPipeBind>] [-Force] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Remove-PnPField [-Identity] <FieldPipeBind> [[-List] <ListPipeBind>] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to remove a field from list or site.
+Allows to remove a field from a list or a site.
 
 ## EXAMPLES
 
@@ -30,31 +29,16 @@ Allows to remove a field from list or site.
 Remove-PnPField -Identity "Speakers"
 ```
 
-Removes the speakers field from the site columns
+Removes the "Speakers" field from the site columns.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPField -List "Demo list" -Identity "Speakers"
 ```
 
-Removes the speakers field from the list Demo list
+Removes the speakers field from the list "Demo list".
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -85,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The field object or name to remove
+The field object or name to remove.
 
 ```yaml
 Type: FieldPipeBind
@@ -99,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-The list object or name where to remove the field from
+The list object or name where to remove the field from.
 
 ```yaml
 Type: ListPipeBind
@@ -109,23 +93,6 @@ Required: False
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
