@@ -32,7 +32,12 @@ namespace PnP.PowerShell.Commands.Pages
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                var executingAssembly = Assembly.GetExecutingAssembly();
+#if NETFRAMEWORK
+                string codeBase = executingAssembly.CodeBase;
+#else
+                string codeBase = executingAssembly.Location;
+#endif
                 UriBuilder uri = new UriBuilder(codeBase);
                 string path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
