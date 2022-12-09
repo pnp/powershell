@@ -479,7 +479,7 @@ namespace PnP.PowerShell.Commands.Pages
             {
                 var executingAssembly = Assembly.GetExecutingAssembly();
 #if NETFRAMEWORK
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                string codeBase = executingAssembly.CodeBase;
 #else
                 string codeBase = executingAssembly.Location;
 #endif
