@@ -112,7 +112,7 @@ namespace PnP.PowerShell.Commands.Fields
                         fieldCI.FieldOptions |= AddFieldOptions.AddToAllContentTypes;
                     }
 
-                    if (ParameterSpecified(nameof(ClientSideComponentId)))
+                    if (ClientSideComponentId != Guid.Empty)
                     {
                         fieldCI.ClientSideComponentId = ClientSideComponentId;
                     }
@@ -223,7 +223,7 @@ namespace PnP.PowerShell.Commands.Fields
                     AddToDefaultView = AddToDefaultView
                 };
 
-                if (ParameterSpecified(nameof(ClientSideComponentId)))
+                if (ClientSideComponentId != Guid.Empty)
                 {
                     fieldCI.ClientSideComponentId = ClientSideComponentId;
                 }

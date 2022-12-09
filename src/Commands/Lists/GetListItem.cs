@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands.Lists
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(listItem);
             }
-            else if (HasUniqueId())
+            else if (UniqueId != Guid.Empty)
             {
                 CamlQuery query = new CamlQuery();
                 var viewFieldsStringBuilder = new StringBuilder();
@@ -178,11 +178,6 @@ namespace PnP.PowerShell.Commands.Lists
         private bool HasId()
         {
             return Id != -1;
-        }
-
-        private bool HasUniqueId()
-        {
-            return ParameterSpecified(nameof(UniqueId)) && UniqueId != Guid.Empty;
         }
 
         private bool HasCamlQuery()
