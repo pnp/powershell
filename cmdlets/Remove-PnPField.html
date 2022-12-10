@@ -84,35 +84,22 @@
                     <h1 id="remove-pnpfield">Remove-PnPField</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a field from a list or a site</p>
+<p>Removes a field from a list or a site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPField [-Identity] &lt;FieldPipeBind&gt; [[-List] &lt;ListPipeBind&gt;] [-Force] 
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPField [-Identity] &lt;FieldPipeBind&gt; [[-List] &lt;ListPipeBind&gt;] [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to remove a field from list or site.</p>
+<p>Allows to remove a field from a list or a site.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPField -Identity &quot;Speakers&quot;
 </code></pre>
-<p>Removes the speakers field from the site columns</p>
+<p>Removes the &quot;Speakers&quot; field from the site columns.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Remove-PnPField -List &quot;Demo list&quot; -Identity &quot;Speakers&quot;
 </code></pre>
-<p>Removes the speakers field from the list Demo list</p>
+<p>Removes the speakers field from the list &quot;Demo list&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -136,7 +123,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The field object or name to remove</p>
+<p>The field object or name to remove.</p>
 <pre><code class="lang-yaml">Type: FieldPipeBind
 Parameter Sets: (All)
 
@@ -147,7 +134,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
-<p>The list object or name where to remove the field from</p>
+<p>The list object or name where to remove the field from.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 
@@ -155,18 +142,6 @@ Required: False
 Position: 1
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
