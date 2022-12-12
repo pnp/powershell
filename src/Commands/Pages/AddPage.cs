@@ -139,7 +139,14 @@ namespace PnP.PowerShell.Commands.Pages
                     {
                         var translationLanguagesList = new List<int>(TranslationLanguageCodes);
 
-                        PnPContext.Web.EnsureMultilingual(translationLanguagesList);
+                        try
+                        {
+                            PnPContext.Web.EnsureMultilingual(translationLanguagesList);
+                        }
+                        catch
+                        {
+                            // swallow exception, assumes multilingual features is activated                            
+                        }                        
 
                         foreach (int i in TranslationLanguageCodes)
                         {
