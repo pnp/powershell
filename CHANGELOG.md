@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added latest added SharePoint Online Site Templates to `Set-PnPBuiltInSiteTemplateSettings` allowing them to be hidden or shown [#2586](https://github.com/pnp/powershell/pull/2586)
 - Added support for `.NET 6.0` since `.NET Core 3.1` support is getting deprecated. We have **removed** support for .NET Core 3.1, so users will have to update from `PowerShell 7.0.x` to `PowerShell 7.2.x or later`  [#2292](https://github.com/pnp/powershell/pull/2292)
 - Added `-ShowInFiltersPane` to `Set-PnPField` which allows fields to be shown or hidden in the filters pane [#2623](https://github.com/pnp/powershell/pull/2632)
+- Added `-KeyColumn` to `Add-PnPDataRowsToSiteTemplate` which allows for overwriting existing list items in a site template [#2616](https://github.com/pnp/powershell/pull/2616)
 
 ### Changed
 
@@ -37,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Rohit Varghese [rohitvarghese96]
 - Arleta Wanat [PowershellScripts]
 - Erwin van Hunen [erwinvanhunen]
 - Marc Studer [studermarc]
