@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added support for `.NET 6.0` since `.NET Core 3.1` support is getting deprecated. We have **removed** support for .NET Core 3.1, so users will have to update from `PowerShell 7.0.x` to `PowerShell 7.2.x or later`  [#2292](https://github.com/pnp/powershell/pull/2292)
 - Added default table formatted output for `Get-PnPVivaConnectionsDashboardACE`
 - Added `Get-PnPAzureADServicePrincipal` which allows for service principals/application registrations to be retrieved from Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
 - Added `Get-PnPAzureADServicePrincipalAssignedAppRole` which allows for the assigned app roles of a service principal/application registration to be retrieved from Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
@@ -17,7 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPAzureADServicePrincipalAppRole` which allows for app roles to be assigned to a service principal/application registration in Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
 - Added `Remove-PnPAzureADServicePrincipalAppRole` which allows for app roles to be removed from a service principal/application registration in Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
 - Added latest added SharePoint Online Site Templates to `Set-PnPBuiltInSiteTemplateSettings` allowing them to be hidden or shown [#2586](https://github.com/pnp/powershell/pull/2586)
-- Added support for `.NET 6.0` since `.NET Core 3.1` support is getting deprecated. We have **removed** support for .NET Core 3.1, so users will have to update from `PowerShell 7.0.x` to `PowerShell 7.2.x or later`  [#2292](https://github.com/pnp/powershell/pull/2292)
+- Added `-EnableAzureADB2BIntegration` and `-SyncAadB2BManagementPolicy` parameters to `Set-PnPTenant` [#2631](https://github.com/pnp/powershell/pull/2631)
 - Added `-ShowInFiltersPane` to `Set-PnPField` which allows fields to be shown or hidden in the filters pane [#2623](https://github.com/pnp/powershell/pull/2632)
 - Added `-KeyColumn` to `Add-PnPDataRowsToSiteTemplate` which allows for overwriting existing list items in a site template [#2616](https://github.com/pnp/powershell/pull/2616)
 
