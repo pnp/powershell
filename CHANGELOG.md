@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPAzureADServicePrincipalAppRole` which allows for app roles to be assigned to a service principal/application registration in Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
 - Added `Remove-PnPAzureADServicePrincipalAppRole` which allows for app roles to be removed from a service principal/application registration in Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
 - Added latest added SharePoint Online Site Templates to `Set-PnPBuiltInSiteTemplateSettings` allowing them to be hidden or shown [#2586](https://github.com/pnp/powershell/pull/2586)
+- Added support for `.NET 6.0` since `.NET Core 3.1` support is getting deprecated. We have **removed** support for .NET Core 3.1, so users will have to update from `PowerShell 7.0.x` to `PowerShell 7.2.x or later`  [#2292](https://github.com/pnp/powershell/pull/2292)
 
 ### Changed
 
@@ -24,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - All `Set|Get|Remove-PnPVivaConnectionsDashboardACE` cmdlets now take either the InstanceId (preferred), Title, the Id, or an actual ACE for the Identity property. If multiple ACEs of the same id or with the same title are found a warning will be shown if Id or Title is used to find the ACE.
 - Made PropertiesJSON an optional parameter on `Add-PnPVivaConnectionsDashboardACE` as it is not always required when adding an ACE
 - Added a 10 second timeout on the new version check on `Connect-PnPOnline` to prevent the cmdlet from hanging when the connection is slow, GitHub being blocked by a firewall or GitHub being unavailable [#2550](https://github.com/pnp/powershell/pull/2550)
+- Improved `Add-PnPField`, `Get-PnPListItem` and `Get-PnPSiteDesignRun` cmdlets by improving null checks based on warnings from compiler. [#PR1](https://github.com/pnp/powershell/commit/791b031d5fa844f1e6961b1136df9f79f19bfdcd) and [#PR2](https://github.com/pnp/powershell/commit/d56f3cd497be79170f68b29be490b222bf042aaa)
 
 ### Removed
 

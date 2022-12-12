@@ -85,7 +85,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
             AllowTeamMentions = team.MessagingSettings.AllowTeamMentions;
             AllowChannelMentions = team.MessagingSettings.AllowChannelMentions;
             ShowInTeamsSearchAndSuggestions = team.DiscoverySettings.ShowInTeamsSearchAndSuggestions;
-            AllowCreatePrivateChannels = team.MemberSettings.AllowCreatePrivateChannels;            
+            AllowCreatePrivateChannels = team.MemberSettings.AllowCreatePrivateChannels;
         }
 
         public Team ToTeam(GroupVisibility groupVisibility)
@@ -131,11 +131,20 @@ namespace PnP.PowerShell.Commands.Model.Teams
 
         public string ToJsonString()
         {
+#if NETFRAMEWORK
             return JsonSerializer.Serialize(this, new JsonSerializerOptions()
             {
                 IgnoreNullValues = true,
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase
             });
+        
+#else
+            return JsonSerializer.Serialize(this, new JsonSerializerOptions()
+            {
+                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            });
+#endif
         }
     }
 }
