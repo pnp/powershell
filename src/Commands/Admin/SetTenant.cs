@@ -266,6 +266,12 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? EnableRestrictedAccessControl;
 
         [Parameter(Mandatory = false)]
+        public bool? EnableAzureADB2BIntegration;
+
+        [Parameter(Mandatory = false)]
+        public bool? SyncAadB2BManagementPolicy;
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
@@ -960,6 +966,18 @@ namespace PnP.PowerShell.Commands.Admin
             if (EnableRestrictedAccessControl.HasValue)
             {
                 Tenant.EnableRestrictedAccessControl = EnableRestrictedAccessControl.Value;
+                modified = true;
+            }
+
+            if (SyncAadB2BManagementPolicy.HasValue)
+            {
+                Tenant.SyncAadB2BManagementPolicy = SyncAadB2BManagementPolicy.Value;
+                modified = true;
+            }
+
+            if (EnableAzureADB2BIntegration.HasValue)
+            {
+                Tenant.EnableAzureADB2BIntegration = EnableAzureADB2BIntegration.Value;
                 modified = true;
             }
 
