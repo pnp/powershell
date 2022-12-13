@@ -27,8 +27,8 @@ namespace PnP.PowerShell.Commands.Utilities
 #if NETFRAMEWORK
             var param = ((RSACryptoServiceProvider)certificate.PrivateKey).ExportParameters(true);
 #else
-            RSAParameters param = new RSAParameters();
-            switch (certificate.PrivateKey)
+            RSAParameters param = new RSAParameters();            
+            switch (certificate.GetRSAPrivateKey())
             {
                 case RSACng rsaCNGKey:
                     {
@@ -388,7 +388,9 @@ namespace PnP.PowerShell.Commands.Utilities
             IntPtr certStore = IntPtr.Zero;
             IntPtr storeCertContext = IntPtr.Zero;
             IntPtr passwordPtr = IntPtr.Zero;
+#if NETFRAMEWORK
             RuntimeHelpers.PrepareConstrainedRegions();
+#endif
             try
             {
                 Check(NativeMethods.CryptAcquireContextW(
@@ -714,7 +716,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 int flags);
         }
 
-        #endregion
+#endregion
     }
 
     internal class CertificateDistinguishedName
