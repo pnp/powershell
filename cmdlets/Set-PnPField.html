@@ -84,13 +84,12 @@
                     <h1 id="set-pnpfield">Set-PnPField</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Changes one or more properties of a field in a specific list or for the whole web</p>
+<p>Changes one or more properties of a field in a specific list or for the whole site</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPField [-List &lt;ListPipeBind&gt;] [-Identity] &lt;FieldPipeBind&gt; -Values &lt;Hashtable&gt; [-UpdateExistingLists]
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPField [-List &lt;ListPipeBind&gt;] [-Identity &lt;FieldPipeBind&gt;] [-Values &lt;Hashtable&gt;] [-ShowInFiltersPane &lt;ShowInFiltersPaneStatus&gt;] [-UpdateExistingLists] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to modify a field in a specific list or for site.</p>
+<p>Allows to modify a field in a specific list or for the whole site.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPField -Identity AssignedTo -Values @{JSLink=&quot;customrendering.js&quot;;Group=&quot;My fields&quot;}
@@ -154,9 +153,21 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-showinfilterspane">-ShowInFiltersPane</h3>
+<p>Allows configuring a field to either always be shown (Pinned), never be shown (Removed) or have SharePoint define if it should be shown (Auto = default).</p>
+<pre><code class="lang-yaml">Type: Commands.Enums.ShowInFiltersPaneStatus
+Parameter Sets: (All)
+Accepted values: Auto, Removed, Pinned
+
+Required: False
+Position: Named
+Default value: Auto
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

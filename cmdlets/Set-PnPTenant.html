@@ -91,38 +91,79 @@
 <p>Sets organization-level tenant properties</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPTenant [-SpecialCharactersStateInFileFolderNames &lt;SpecialCharactersState&gt;]
- [-MinCompatibilityLevel &lt;Int32&gt;] [-MaxCompatibilityLevel &lt;Int32&gt;] [-ExternalServicesEnabled &lt;Boolean&gt;]
- [-NoAccessRedirectUrl &lt;String&gt;] [-SharingCapability &lt;SharingCapabilities&gt;]
- [-DisplayStartASiteOption &lt;Boolean&gt;] [-StartASiteFormUrl &lt;String&gt;] [-ShowEveryoneClaim &lt;Boolean&gt;]
- [-ShowAllUsersClaim &lt;Boolean&gt;] [-ShowEveryoneExceptExternalUsersClaim &lt;Boolean&gt;]
- [-SearchResolveExactEmailOrUPN &lt;Boolean&gt;] [-OfficeClientADALDisabled &lt;Boolean&gt;]
- [-LegacyAuthProtocolsEnabled &lt;Boolean&gt;] [-RequireAcceptingAccountMatchInvitedAccount &lt;Boolean&gt;]
- [-ProvisionSharedWithEveryoneFolder &lt;Boolean&gt;] [-SignInAccelerationDomain &lt;String&gt;]
- [-EnableGuestSignInAcceleration &lt;Boolean&gt;] [-UsePersistentCookiesForExplorerView &lt;Boolean&gt;]
- [-BccExternalSharingInvitations &lt;Boolean&gt;] [-BccExternalSharingInvitationsList &lt;String&gt;]
- [-UserVoiceForFeedbackEnabled &lt;Boolean&gt;] [-PublicCdnEnabled &lt;Boolean&gt;] [-PublicCdnAllowedFileTypes &lt;String&gt;]
- [-RequireAnonymousLinksExpireInDays &lt;Int32&gt;] [-SharingAllowedDomainList &lt;String&gt;]
- [-SharingBlockedDomainList &lt;String&gt;] [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;]
- [-OneDriveStorageQuota &lt;Int64&gt;] [-OneDriveForGuestsEnabled &lt;Boolean&gt;] [-IPAddressEnforcement &lt;Boolean&gt;]
- [-IPAddressAllowList &lt;String&gt;] [-IPAddressWACTokenLifetime &lt;Int32&gt;] [-UseFindPeopleInPeoplePicker &lt;Boolean&gt;]
- [-DefaultSharingLinkType &lt;SharingLinkType&gt;] [-ODBMembersCanShare &lt;SharingState&gt;]
- [-ODBAccessRequests &lt;SharingState&gt;] [-PreventExternalUsersFromResharing &lt;Boolean&gt;]
- [-ShowPeoplePickerSuggestionsForGuestUsers &lt;Boolean&gt;] [-FileAnonymousLinkType &lt;AnonymousLinkType&gt;]
- [-FolderAnonymousLinkType &lt;AnonymousLinkType&gt;] [-NotifyOwnersWhenItemsReshared &lt;Boolean&gt;]
- [-NotifyOwnersWhenInvitationsAccepted &lt;Boolean&gt;] [-NotificationsInOneDriveForBusinessEnabled &lt;Boolean&gt;]
- [-NotificationsInSharePointEnabled &lt;Boolean&gt;] [-OwnerAnonymousNotification &lt;Boolean&gt;]
- [-CommentsOnSitePagesDisabled &lt;Boolean&gt;] [-SocialBarOnSitePagesDisabled &lt;Boolean&gt;]
- [-OrphanedPersonalSitesRetentionPeriod &lt;Int32&gt;] [-DisallowInfectedFileDownload &lt;Boolean&gt;]
- [-DefaultLinkPermission &lt;SharingPermissionType&gt;] [-ConditionalAccessPolicy &lt;SPOConditionalAccessPolicyType&gt;]
- [-AllowDownloadingNonWebViewableFiles &lt;Boolean&gt;] [-AllowEditing &lt;Boolean&gt;]
- [-ApplyAppEnforcedRestrictionsToAdHocRecipients &lt;Boolean&gt;] [-FilePickerExternalImageSearchEnabled &lt;Boolean&gt;]
- [-EmailAttestationRequired &lt;Boolean&gt;] [-EmailAttestationReAuthDays &lt;Int32&gt;] [-HideDefaultThemes &lt;Boolean&gt;]
- [-DisabledWebPartIds &lt;Guid[]&gt;] [-EnableAIPIntegration &lt;Boolean&gt;] [-DisableCustomAppAuthentication &lt;Boolean&gt;] 
- [-EnableAutoNewsDigest &lt;Boolean&gt;] [-CommentsOnListItemsDisabled &lt;Boolean&gt;] [-CommentsOnFilesDisabled &lt;Boolean&gt;]
- [-DisableBackToClassic &lt;Boolean&gt;] [-InformationBarriersSuspension &lt;Boolean&gt;] 
- [-AllowFilesWithKeepLabelToBeDeletedODB &lt;Boolean&gt;] [-AllowFilesWithKeepLabelToBeDeletedSPO &lt;Boolean&gt;]
- [-ExternalUserExpirationRequired &lt;Boolean&gt;] [-ExternalUserExpireInDays &lt;Boolean&gt;] [-OneDriveRequestFilesLinkEnabled &lt;Boolean&gt;]
+ [-MinCompatibilityLevel &lt;Int32&gt;]
+ [-MaxCompatibilityLevel &lt;Int32&gt;]
+ [-ExternalServicesEnabled &lt;Boolean&gt;]
+ [-NoAccessRedirectUrl &lt;String&gt;]
+ [-SharingCapability &lt;SharingCapabilities&gt;]
+ [-DisplayStartASiteOption &lt;Boolean&gt;]
+ [-StartASiteFormUrl &lt;String&gt;] [-ShowEveryoneClaim &lt;Boolean&gt;]
+ [-ShowAllUsersClaim &lt;Boolean&gt;]
+ [-ShowEveryoneExceptExternalUsersClaim &lt;Boolean&gt;]
+ [-SearchResolveExactEmailOrUPN &lt;Boolean&gt;]
+ [-OfficeClientADALDisabled &lt;Boolean&gt;]
+ [-LegacyAuthProtocolsEnabled &lt;Boolean&gt;]
+ [-RequireAcceptingAccountMatchInvitedAccount &lt;Boolean&gt;]
+ [-ProvisionSharedWithEveryoneFolder &lt;Boolean&gt;]
+ [-SignInAccelerationDomain &lt;String&gt;]
+ [-EnableGuestSignInAcceleration &lt;Boolean&gt;]
+ [-UsePersistentCookiesForExplorerView &lt;Boolean&gt;]
+ [-BccExternalSharingInvitations &lt;Boolean&gt;]
+ [-BccExternalSharingInvitationsList &lt;String&gt;]
+ [-UserVoiceForFeedbackEnabled &lt;Boolean&gt;]
+ [-PublicCdnEnabled &lt;Boolean&gt;]
+ [-PublicCdnAllowedFileTypes &lt;String&gt;]
+ [-RequireAnonymousLinksExpireInDays &lt;Int32&gt;]
+ [-SharingAllowedDomainList &lt;String&gt;]
+ [-SharingBlockedDomainList &lt;String&gt;]
+ [-SharingDomainRestrictionMode &lt;SharingDomainRestrictionModes&gt;]
+ [-OneDriveStorageQuota &lt;Int64&gt;]
+ [-OneDriveForGuestsEnabled &lt;Boolean&gt;]
+ [-IPAddressEnforcement &lt;Boolean&gt;]
+ [-IPAddressAllowList &lt;String&gt;]
+ [-IPAddressWACTokenLifetime &lt;Int32&gt;]
+ [-UseFindPeopleInPeoplePicker &lt;Boolean&gt;]
+ [-DefaultSharingLinkType &lt;SharingLinkType&gt;]
+ [-ODBMembersCanShare &lt;SharingState&gt;]
+ [-ODBAccessRequests &lt;SharingState&gt;]
+ [-PreventExternalUsersFromResharing &lt;Boolean&gt;]
+ [-ShowPeoplePickerSuggestionsForGuestUsers &lt;Boolean&gt;]
+ [-FileAnonymousLinkType &lt;AnonymousLinkType&gt;]
+ [-FolderAnonymousLinkType &lt;AnonymousLinkType&gt;]
+ [-NotifyOwnersWhenItemsReshared &lt;Boolean&gt;]
+ [-NotifyOwnersWhenInvitationsAccepted &lt;Boolean&gt;]
+ [-NotificationsInOneDriveForBusinessEnabled &lt;Boolean&gt;]
+ [-NotificationsInSharePointEnabled &lt;Boolean&gt;]
+ [-OwnerAnonymousNotification &lt;Boolean&gt;]
+ [-CommentsOnSitePagesDisabled &lt;Boolean&gt;]
+ [-SocialBarOnSitePagesDisabled &lt;Boolean&gt;]
+ [-OrphanedPersonalSitesRetentionPeriod &lt;Int32&gt;]
+ [-DisallowInfectedFileDownload &lt;Boolean&gt;]
+ [-DefaultLinkPermission &lt;SharingPermissionType&gt;]
+ [-ConditionalAccessPolicy &lt;SPOConditionalAccessPolicyType&gt;]
+ [-AllowDownloadingNonWebViewableFiles &lt;Boolean&gt;]
+ [-AllowEditing &lt;Boolean&gt;]
+ [-ApplyAppEnforcedRestrictionsToAdHocRecipients &lt;Boolean&gt;]
+ [-FilePickerExternalImageSearchEnabled &lt;Boolean&gt;]
+ [-EmailAttestationRequired &lt;Boolean&gt;]
+ [-EmailAttestationReAuthDays &lt;Int32&gt;]
+ [-HideDefaultThemes &lt;Boolean&gt;]
+ [-DisabledWebPartIds &lt;Guid[]&gt;]
+ [-EnableAIPIntegration &lt;Boolean&gt;]
+ [-DisableCustomAppAuthentication &lt;Boolean&gt;] 
+ [-EnableAutoNewsDigest &lt;Boolean&gt;]
+ [-CommentsOnListItemsDisabled &lt;Boolean&gt;]
+ [-CommentsOnFilesDisabled &lt;Boolean&gt;]
+ [-DisableBackToClassic &lt;Boolean&gt;]
+ [-InformationBarriersSuspension &lt;Boolean&gt;] 
+ [-AllowFilesWithKeepLabelToBeDeletedODB &lt;Boolean&gt;]
+ [-AllowFilesWithKeepLabelToBeDeletedSPO &lt;Boolean&gt;]
+ [-ExternalUserExpirationRequired &lt;Boolean&gt;]
+ [-ExternalUserExpireInDays &lt;Boolean&gt;]
+ [-OneDriveRequestFilesLinkEnabled &lt;Boolean&gt;]
  [-EnableRestrictedAccessControl &lt;Boolean&gt;]
+ [-SyncAadB2BManagementPolicy &lt;Boolean&gt;]
+ [-EnableAzureADB2BIntegration &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -1162,6 +1203,28 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-enablerestrictedaccesscontrol">-EnableRestrictedAccessControl</h3>
 <p>To enable restricted access control in SharePoint Online. You need to wait approximately 1 hour before managing restricted access control for a site collection.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enableazureadb2bintegration">-EnableAzureADB2BIntegration</h3>
+<p>Allows enablement of SharePoint and OneDrive integrartion with Azure AD B2B. See [this article]](<a href="https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration">https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration</a>) for more information.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-syncaadb2bmanagementpolicy">-SyncAadB2BManagementPolicy</h3>
+<p>Allows enablement of Azure B2B Management Policies to be synced. See <a href="https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration">this article</a> for more information.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
