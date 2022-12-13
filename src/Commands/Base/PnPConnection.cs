@@ -812,11 +812,16 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (Utilities.OperatingSystem.IsWindows())
             {
-                var privateKey = (certificate.PrivateKey as RSACng)?.Key;
+                var privateKey = (certificate.GetRSAPrivateKey() as RSACng)?.Key;
                 if (privateKey == null)
                     return;
 
                 string uniqueKeyContainerName = privateKey.UniqueName;
+                if (uniqueKeyContainerName == null)
+                {
+                    RSACryptoServiceProvider rsaCSP = certificate.GetRSAPrivateKey() as RSACryptoServiceProvider;
+                    uniqueKeyContainerName = rsaCSP.CspKeyContainerInfo.KeyContainerName;
+                }
                 certificate.Reset();
 
                 var programDataPath = Environment.GetEnvironmentVariable("ProgramData");
