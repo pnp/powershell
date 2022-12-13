@@ -19,21 +19,15 @@ Allows retrieval of storage metrics for a folder in SharePoint Online
 Get-PnPFolderStorageMetric [-FolderSiteRelativeUrl <String>] [-Connection <PnPConnection>]
 ```
 
-Retrieves the storage metrics of the current root folder or the site relative folder specified
-
 ### Folder via pipebind
 ```powershell
 Get-PnPFolderStorageMetric -List <ListPipeBind> [-Connection <PnPConnection>]
 ```
 
-Retrieves the storage metrics of the provided list
-
 ### Folder via list
 ```powershell
 Get-PnPFolderStorageMetric -Identity <FolderPipeBind> [-Connection <PnPConnection>]
 ```
-
-Retrieves the storage metrics of the provided folder
 
 ## DESCRIPTION
 Allows retrieval of storage metrics for a folder in SharePoint Online. It will reveal the true storage usage, similar to what will be shown through storman.aspx, the date and time the folder was last modified, the amount of files inside the folder and more.
