@@ -1,60 +1,60 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Extensions;
-using PnP.PowerShell.Commands.Provisioning.Site;
-using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFolderStorageMetric")]
+    [Cmdlet(VerbsCommon.Get, "PnPFolderStorageMetric", DefaultParameterSetName = ParameterSet_BYSITRERELATIVEURL)]
+    [OutputType(typeof(Model.SharePoint.FolderStorageMetric))]
     public class GetFolderStorageMetric : PnPWebCmdlet
-    {
-        private const string ParameterSet_FOLDERSBYPIPE = "Folder via pipebind";
-        private const string ParameterSet_FOLDERBYURL = "Folder via url";
-        private const string ParameterSet_LISTNAME = "Folder via listName";
+    {        
+        private const string ParameterSet_BYSITRERELATIVEURL = "Folder via site relative URL";
+        private const string ParameterSet_BYLIST = "Folder via list";
+        private const string ParameterSet_BYFOLDER = "Folder via pipebind";
 
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERBYURL)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYSITRERELATIVEURL)]
         public string FolderSiteRelativeUrl;
 
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_LISTNAME)]
-        public string ListName;
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYLIST)]
+        [ValidateNotNullOrEmpty]
+        public ListPipeBind List;
 
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_FOLDERSBYPIPE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYFOLDER)]
+        [ValidateNotNullOrEmpty]
         public FolderPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
             Folder targetFolder = null;
-            if (ParameterSetName == ParameterSet_FOLDERSBYPIPE && Identity != null)
+            switch (ParameterSetName)
             {
-                targetFolder = Identity.GetFolder(CurrentWeb);
-            }
-            if (ParameterSetName == ParameterSet_LISTNAME && ListName != null)
-            {
-                var list = CurrentWeb.GetListByTitle(ListName);
-                if (list != null)
-                {
-                    targetFolder = list.RootFolder;
-                }
-            }
-            else
-            {
-                string serverRelativeUrl = null;
-                if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
-                {
-                    var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
-                    serverRelativeUrl = UrlUtility.Combine(webUrl, FolderSiteRelativeUrl);
-                }
+                case ParameterSet_BYFOLDER:
+                    targetFolder = Identity.GetFolder(CurrentWeb);
+                    break;
+                case ParameterSet_BYLIST:
+                    var list = List.GetList(CurrentWeb);
+                    if (list != null)
+                    {
+                        targetFolder = list.RootFolder;
+                    }
+                    break;
 
-                targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? CurrentWeb.RootFolder : CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                case ParameterSet_BYSITRERELATIVEURL:
+                    string serverRelativeUrl = null;
+                    if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
+                    {
+                        var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                        serverRelativeUrl = UrlUtility.Combine(webUrl, FolderSiteRelativeUrl);
+                    }
+
+                    targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? CurrentWeb.RootFolder : CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                    break;
+                
+                default:
+                    throw new NotImplementedException($"Parameter set {ParameterSetName} not implemented");
             }
 
             if (targetFolder != null)
@@ -65,7 +65,13 @@ namespace PnP.PowerShell.Commands.Files
                 IFolder folderWithStorageMetrics = PnPContext.Web.GetFolderByServerRelativeUrlAsync(targetFolder.ServerRelativeUrl, f => f.StorageMetrics).GetAwaiter().GetResult();
                 var storageMetrics = folderWithStorageMetrics.StorageMetrics;
 
-                WriteObject(storageMetrics);
+                WriteObject(new Model.SharePoint.FolderStorageMetric
+                {
+                    LastModified = storageMetrics.LastModified,
+                    TotalFileCount = storageMetrics.TotalFileCount,
+                    TotalFileStreamSize = storageMetrics.TotalFileStreamSize,
+                    TotalSize = storageMetrics.TotalSize
+                });
             }
             else
             {
