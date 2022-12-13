@@ -68,14 +68,11 @@
 		<PackageReference Include="PnP.Core.Admin" Version="1.8.*-*" Condition="'$(IsRelease)' == '1'" />
 
 		<!-- currently for the following packages we only refer to the nightlies -->
-		<!-- <PackageReference Include="PnP.Core.Transformation" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Transformation" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
+		<PackageReference Include="PnP.Core.Transformation" Version="1.8.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Transformation" Version="1.8.*-*" Condition="'$(IsRelease)' == '1'" />
 
-		<PackageReference Include="PnP.Core.Transformation" Version="1.8.*-*" />
-		
-		<!-- <PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
-		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.8.*-*" />		
+		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.8.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.8.*-*" Condition="'$(IsRelease)' == '1'" />
 
 		<PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
 		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
