@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Management.Automation;
+using System.IO;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -58,11 +59,19 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         LogFile = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogFile);
                     }
+                    Console.WriteLine("LogFile path is : " + LogFile);
                     // Create DelimitedListTraceListener in case Delimiter parameter has been specified, if not create TextWritterTraceListener
+#if !NETFRAMEWORK
+                    var fileStreamOptions = new FileStreamOptions { Mode = FileMode.Append, BufferSize = AutoFlush ? 0 : 4096, Access = FileAccess.Write, Options = AutoFlush ? FileOptions.WriteThrough : FileOptions.None };
+                    var fileStream = File.Open(LogFile, fileStreamOptions);
+                    TraceListener listener = !string.IsNullOrEmpty(Delimiter) ?
+                        new DelimitedListTraceListener(fileStream) { Delimiter = Delimiter, TraceOutputOptions = TraceOptions.DateTime } :
+                        new TextWriterTraceListener(fileStream);
+#else
                     TraceListener listener = !string.IsNullOrEmpty(Delimiter) ?
                         new DelimitedListTraceListener(LogFile) { Delimiter = Delimiter, TraceOutputOptions = TraceOptions.DateTime } :
                         new TextWriterTraceListener(LogFile);
-
+#endif
                     listener.Name = FileListenername;
                     Trace.Listeners.Add(listener);
                     PnP.Framework.Diagnostics.Log.LogLevel = Level;
