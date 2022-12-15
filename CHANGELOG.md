@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-EnableAzureADB2BIntegration` and `-SyncAadB2BManagementPolicy` parameters to `Set-PnPTenant` [#2631](https://github.com/pnp/powershell/pull/2631)
 - Added `-ShowInFiltersPane` to `Set-PnPField` which allows fields to be shown or hidden in the filters pane [#2623](https://github.com/pnp/powershell/pull/2632)
 - Added `-KeyColumn` to `Add-PnPDataRowsToSiteTemplate` which allows for overwriting existing list items in a site template [#2616](https://github.com/pnp/powershell/pull/2616)
+- Added `IsTeamsConnected`, `IsTeamsChannelConnected` and `TeamChannelType` to be returned when `Get-PnPTenantSite` cmdlet is executed. [#2656](https://github.com/pnp/powershell/pull/2656)
 
 ### Changed
 
