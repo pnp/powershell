@@ -77,174 +77,44 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
                     <h1 id="copy-pnpitemproxy">Copy-PnPItemProxy</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Proxy cmdlet for using Copy-Item between SharePoint provider and FileSystem provider</p>
+<p>Copies an item from one location to another. It is an alias of the <code>Copy-Item</code> cmdlet.</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="path-default">Path (Default)</h3>
-<pre><code class="lang-powershell">Copy-PnPItemProxy [-Recurse] [-Path] &lt;String[]&gt; [[-Destination] &lt;String&gt;] [-Container] [-Force]
- [-Filter &lt;String&gt;] [-Include &lt;String[]&gt;] [-Exclude &lt;String[]&gt;] [-PassThru] [-Credential &lt;PSCredential&gt;]
-   [&lt;CommonParameters&gt;]
-</code></pre>
-<h3 id="literalpath">LiteralPath</h3>
-<pre><code class="lang-powershell">Copy-PnPItemProxy [-Recurse] [-LiteralPath] &lt;String[]&gt; [[-Destination] &lt;String&gt;] [-Container] [-Force]
- [-Filter &lt;String&gt;] [-Include &lt;String[]&gt;] [-Exclude &lt;String[]&gt;] [-PassThru] [-Credential &lt;PSCredential&gt;]
-   [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Copy-Item
+    [-Path] &lt;String[]&gt;
+    [[-Destination] &lt;String&gt;]
+    [-Container]
+    [-Force]
+    [-Filter &lt;String&gt;]
+    [-Include &lt;String[]&gt;]
+    [-Exclude &lt;String[]&gt;]
+    [-Recurse]
+    [-PassThru]
+    [-Credential &lt;PSCredential&gt;]
+    [-WhatIf]
+    [-Confirm]
+    [-FromSession &lt;PSSession&gt;]
+    [-ToSession &lt;PSSession&gt;]
+    [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p><strong>This cmdlet is an alias of the <code>Copy-Item</code> cmdlet that is natively available with PowerShell</strong>.</p>
+<p>The <code>Copy-PnPItemProxy</code> cmdlet copies an item from one location to another location in the same namespace. For instance, it can copy a file to a folder, but it can't copy a file to a certificate drive.</p>
+<p>This cmdlet doesn't cut or delete the items being copied. The particular items that the cmdlet can copy depend on the PowerShell provider that exposes the item. For instance, it can copy files and directories in a file system drive and registry keys and entries in the registry drive.</p>
+<p>This cmdlet can copy and rename items in the same command. To rename an item, enter the new name in the value of the Destination parameter. To rename an item and not copy it, use the Rename-Item cmdlet.</p>
+<p>For more information and details, please refer to the official PowerShell documentation <a href="https://learn.microsoft.com/powershell/module/microsoft.powershell.management/copy-item">here</a>.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Copy-PnPItemProxy &quot;C:\Users\Admin\seattle.master&quot; -Destination &quot;C:\Presentation&quot;
 </code></pre>
-<h3 id="-container">-Container</h3>
-<p>{{ Fill Container Description }}</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-credential">-Credential</h3>
-<p>{{ Fill Credential Description }}</p>
-<pre><code class="lang-yaml">Type: PSCredential
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-destination">-Destination</h3>
-<p>{{ Fill Destination Description }}</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-exclude">-Exclude</h3>
-<p>{{ Fill Exclude Description }}</p>
-<pre><code class="lang-yaml">Type: String[]
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-filter">-Filter</h3>
-<p>{{ Fill Filter Description }}</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-force">-Force</h3>
-<p>{{ Fill Force Description }}</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-include">-Include</h3>
-<p>{{ Fill Include Description }}</p>
-<pre><code class="lang-yaml">Type: String[]
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-literalpath">-LiteralPath</h3>
-<p>{{ Fill LiteralPath Description }}</p>
-<pre><code class="lang-yaml">Type: String[]
-Parameter Sets: LiteralPath
-Aliases: PSPath
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByPropertyName)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-passthru">-PassThru</h3>
-<p>{{ Fill PassThru Description }}</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-path">-Path</h3>
-<p>{{ Fill Path Description }}</p>
-<pre><code class="lang-yaml">Type: String[]
-Parameter Sets: Path
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByPropertyName, ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-recurse">-Recurse</h3>
-<p>{{ Fill Recurse Description }}</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
+<p>This example copies the <code>seattle.master</code> file to the <code>C:\Presentation</code> directory. The original file isn't deleted.
+For more examples, please refer to the link mentioned above.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>

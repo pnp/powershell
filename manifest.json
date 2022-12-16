@@ -42,7 +42,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/azurefunctions.html",
-          "hash": "iJGydLwr/6GIgkfFgStr6g=="
+          "hash": "80+KCH8bHszp3FyG66uX+Q=="
         }
       },
       "is_incremental": false,
@@ -1402,6 +1402,18 @@
         ".html": {
           "relative_path": "cmdlets/Copy-PnPFolder.html",
           "hash": "gJofQ3rt+VnZdjc6ePehng=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Copy-PnPItemProxy.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Copy-PnPItemProxy.html",
+          "hash": "ZPoYJHIAhU7c1L/uDfhfzw=="
         }
       },
       "is_incremental": false,
@@ -5136,7 +5148,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPEventReceiver.html",
-          "hash": "0Rqwii/tz2+r636Guj4Zdg=="
+          "hash": "UbSCfu/DWKyYvj2ftkNDEw=="
         }
       },
       "is_incremental": false,
@@ -7983,7 +7995,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "burAmVtuOchIRQuzoVZEQw=="
+          "hash": "/YSs53dmnhj63662vfX69A=="
         }
       },
       "is_incremental": false,
@@ -8271,7 +8283,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 662,
+          "total_file_count": 663,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

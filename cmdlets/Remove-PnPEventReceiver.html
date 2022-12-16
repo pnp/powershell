@@ -84,63 +84,51 @@
                     <h1 id="remove-pnpeventreceiver">Remove-PnPEventReceiver</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Remove an eventreceiver</p>
+<p>Remove an event receiver.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Remove-PnPEventReceiver -Identity &lt;EventReceiverPipeBind&gt; [-List &lt;ListPipeBind&gt;] [-Scope &lt;EventReceiverScope&gt;] [-Force] 
- [-Connection &lt;PnPConnection&gt;]  [&lt;CommonParameters&gt;]
+[-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Removes/unregisters a specific eventreceiver</p>
+<p>Removes/unregisters a specific event receiver.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPEventReceiver -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
 </code></pre>
-<p>This will remove the event receiver with ReceiverId &quot;fb689d0e-eb99-4f13-beb3-86692fd39f22&quot; from the current web</p>
+<p>This will remove the event receiver with ReceiverId &quot;fb689d0e-eb99-4f13-beb3-86692fd39f22&quot; from the current web.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Remove-PnPEventReceiver -List ProjectList -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
 </code></pre>
-<p>This will remove the event receiver with ReceiverId &quot;fb689d0e-eb99-4f13-beb3-86692fd39f22&quot; from the &quot;ProjectList&quot; list</p>
+<p>This will remove the event receiver with ReceiverId &quot;fb689d0e-eb99-4f13-beb3-86692fd39f22&quot; from the &quot;ProjectList&quot; list.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Remove-PnPEventReceiver -List ProjectList -Identity MyReceiver
 </code></pre>
-<p>This will remove the event receiver with ReceiverName &quot;MyReceiver&quot; from the &quot;ProjectList&quot; list</p>
+<p>This will remove the event receiver with ReceiverName &quot;MyReceiver&quot; from the &quot;ProjectList&quot; list.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Remove-PnPEventReceiver -List ProjectList
 </code></pre>
-<p>This will remove all event receivers from the &quot;ProjectList&quot; list</p>
+<p>This will remove all event receivers from the &quot;ProjectList&quot; list.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Remove-PnPEventReceiver
 </code></pre>
-<p>This will remove all event receivers from the current site</p>
+<p>This will remove all event receivers from the current web.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Get-PnPEventReceiver | ? ReceiverUrl -Like &quot;*azurewebsites.net*&quot; | Remove-PnPEventReceiver
 </code></pre>
-<p>This will remove all event receivers from the current site which are pointing to a service hosted on Azure Websites</p>
+<p>This will remove all event receivers from the current web which are pointing to a service hosted on Azure Websites.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Remove-PnPEventReceiver -Scope Site
 </code></pre>
-<p>This will remove all the event receivers defined on the current site collection</p>
+<p>This will remove all the event receivers defined on the current site collection.</p>
 <h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">Remove-PnPEventReceiver -Scope Web
 </code></pre>
-<p>This will remove all the event receivers defined on the current site</p>
+<p>This will remove all the event receivers defined on the current web.</p>
 <h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">Remove-PnPEventReceiver -Scope All
 </code></pre>
-<p>This will remove all the event receivers defined on the current site and web</p>
+<p>This will remove all the event receivers defined on the current site and web.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -153,7 +141,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>Specifying the Force parameter will skip the confirmation question</p>
+<p>Specifying the Force parameter will skip the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -164,18 +152,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The Guid of the event receiver on the list</p>
+<p>The Guid or name of the event receiver.</p>
 <pre><code class="lang-yaml">Type: EventReceiverPipeBind
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
-<p>The list object from where to remove the event receiver object</p>
+<p>The list object from where to remove the event receiver object.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 
@@ -186,7 +174,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-scope">-Scope</h3>
-<p>The scope of the EventReceivers to remove</p>
+<p>The scope of the event receivers to remove.</p>
 <pre><code class="lang-yaml">Type: EventReceiverScope
 Parameter Sets: Scope
 Accepted values: Web, Site, All
@@ -194,18 +182,6 @@ Accepted values: Web, Site, All
 Required: False
 Position: Named
 Default value: Web
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

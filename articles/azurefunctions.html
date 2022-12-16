@@ -89,17 +89,21 @@
 <p>Notice that the Azure Function scripts in this article run in a separate thread/job. We do this because of possible conflicts between assemblies of already loaded PowerShell modules and PnP PowerShell (for instance, the Az cmdlets that get loaded by default use some of the same assemblies as PnP PowerShell but in different versions which can cause conflicts). By running the script in a separate thread we will not have these conflicts. If PnP PowerShell is the only module currently being used and loaded in your Azure Function you don't need the Start-ThreadJob construct and you can simply write the script as usual.</p>
 </div>
 <h2 id="create-the-function-app">Create the function app</h2>
-<p>As the UI in <a href="https://portal.azure.com">https://portal.azure.com</a> changes every now and then, but the principles stay the same, follow the following steps:</p>
+<p>As the UI in <a href="https://portal.azure.com">the Azure Portal</a> changes every now and then, but the principles stay the same, follow the following steps:</p>
 <ol>
-<li><p>Create a new Function App</p>
+<li><p><a href="https://portal.azure.com/#create/Microsoft.FunctionApp">Create a new Function App</a></p>
 </li>
-<li><p>Choose runtime stack <code>PowerShell Core</code> and version <code>7.0</code> (7.2 is not supported yet)</p>
+<li><p>Choose runtime stack <code>PowerShell Core</code> and version <code>7.2</code> (7.0 is not longer an option as of December 3rd, 2022)</p>
 <p><img src="../images/azurefunctions/createfunctionappbasics.png" alt="Create function app basics"></p>
 </li>
 <li><p>Select <code>Windows</code> as the operating system or else you will not be able to perform the following steps from your browser.</p>
 <p><img src="../images/azurefunctions/createfunctionapphosting.png" alt="Create function app hosting"></p>
 </li>
+<li><p>Complete the creation of the Azure Functon</p>
+</li>
 </ol>
+<h2 id="temporary-workaround-for-a-bug-in-azure-functions">Temporary workaround for a bug in Azure Functions</h2>
+<p>Because of a bug in Azure Functions v4 with PowerShell 7.2 support, you need to perform the following steps to make sure that the Azure Function will work as expected with PnP PowerShell: <a href="https://github.com/pnp/powershell/issues/2136#issuecomment-1344710434">https://github.com/pnp/powershell/issues/2136#issuecomment-1344710434</a></p>
 <h2 id="make-pnp-powershell-available-to-all-functions-in-the-app">Make PnP PowerShell available to all functions in the app</h2>
 <ol>
 <li>Navigate to <code>App files</code> which is located the left side menu of the function app under the <code>Functions</code> header.</li>
@@ -108,12 +112,12 @@
 </ol>
 <h3 id="specific-stable-version">Specific stable version</h3>
 <pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '1.11.0'
+    'PnP.PowerShell' = '1.12.0'
 }
 </code></pre>
 <p>The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.</p>
 <h3 id="latest-stable-version">Latest stable version</h3>
-<p>If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version:</p>
+<p>If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):</p>
 <pre><code>```powershell
 @{
     'PnP.PowerShell' = '1.*'
