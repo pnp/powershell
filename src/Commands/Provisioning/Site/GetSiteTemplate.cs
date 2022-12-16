@@ -120,6 +120,12 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = false)]
         public ExtractConfigurationPipeBind Configuration;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter UseFileStreams;
+
+        [Parameter(Mandatory = false, Position = 0)]
+        public string PnPFilesPath;
+
         protected override void ExecuteCmdlet()
         {
             ExtractConfiguration extractConfiguration = null;
@@ -201,7 +207,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var fileSystemConnector = new FileSystemConnector(path, "");
             if (extension == ".pnp")
             {
-                creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector);
+                creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector, null, null, null, UseFileStreams, PnPFilesPath);
             }
             else if (extension == ".md")
             {
