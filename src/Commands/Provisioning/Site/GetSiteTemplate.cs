@@ -124,7 +124,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         public SwitchParameter UseFileStreams;
 
         [Parameter(Mandatory = false, Position = 0)]
-        public string PnPFilesPath;
+        public string PnPTempFilesPath;
 
         protected override void ExecuteCmdlet()
         {
@@ -207,7 +207,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var fileSystemConnector = new FileSystemConnector(path, "");
             if (extension == ".pnp")
             {
-                creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector, null, null, null, UseFileStreams, PnPFilesPath);
+                creationInformation.FileConnector = new OpenXMLConnector(packageName, fileSystemConnector, null, null, null, UseFileStreams, PnPTempFilesPath);
             }
             else if (extension == ".md")
             {
