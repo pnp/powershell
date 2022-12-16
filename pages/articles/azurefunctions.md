@@ -7,16 +7,22 @@ In this article we will setup an Azure Function to use PnP PowerShell
 
 ## Create the function app
 
-As the UI in <https://portal.azure.com> changes every now and then, but the principles stay the same, follow the following steps:
+As the UI in [the Azure Portal](https://portal.azure.com) changes every now and then, but the principles stay the same, follow the following steps:
 
-1. Create a new Function App
-1. Choose runtime stack `PowerShell Core` and version `7.0` (7.2 is not supported yet)
+1. [Create a new Function App](https://portal.azure.com/#create/Microsoft.FunctionApp)
+1. Choose runtime stack `PowerShell Core` and version `7.2` (7.0 is not longer an option as of December 3rd, 2022)
 
    ![Create function app basics](./../images/azurefunctions/createfunctionappbasics.png)
 
 1. Select `Windows` as the operating system or else you will not be able to perform the following steps from your browser.
 
    ![Create function app hosting](./../images/azurefunctions/createfunctionapphosting.png)
+
+1. Complete the creation of the Azure Functon
+
+## Temporary workaround for a bug in Azure Functions
+
+Because of a bug in Azure Functions v4 with PowerShell 7.2 support, you need to perform the following steps to make sure that the Azure Function will work as expected with PnP PowerShell: https://github.com/pnp/powershell/issues/2136#issuecomment-1344710434
 
 ## Make PnP PowerShell available to all functions in the app
 
@@ -28,7 +34,7 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
 
    ```powershell
    @{
-       'PnP.PowerShell' = '1.11.0'
+       'PnP.PowerShell' = '1.12.0'
    }
    ```
 
@@ -36,7 +42,7 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
 
 ### Latest stable version
 
-   If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version:
+   If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):
 
     ```powershell
     @{
