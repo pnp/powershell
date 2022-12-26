@@ -30,6 +30,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Made PropertiesJSON an optional parameter on `Add-PnPVivaConnectionsDashboardACE` as it is not always required when adding an ACE
 - Added a 10 second timeout on the new version check on `Connect-PnPOnline` to prevent the cmdlet from hanging when the connection is slow, GitHub being blocked by a firewall or GitHub being unavailable [#2550](https://github.com/pnp/powershell/pull/2550)
 - Improved `Add-PnPField`, `Get-PnPListItem` and `Get-PnPSiteDesignRun` cmdlets by improving null checks based on warnings from compiler. [#PR1](https://github.com/pnp/powershell/commit/791b031d5fa844f1e6961b1136df9f79f19bfdcd) and [#PR2](https://github.com/pnp/powershell/commit/d56f3cd497be79170f68b29be490b222bf042aaa)
+- Improved `Register-PnPAzureADApp` and `Register-PnPManagementShellAccess` cmdlets to reuse existing HTTP client instead of creating a new one. [#2682](https://github.com/pnp/powershell/pull/2682)
+- Improved `Register-PnPAzureADApp` cmdlet based on compiler warnings. [#2682](https://github.com/pnp/powershell/pull/2682)
 
 ### Removed
 
