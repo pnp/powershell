@@ -68,7 +68,6 @@ namespace PnP.PowerShell.Commands.AzureAD
                         }
                         catch (Microsoft.Identity.Client.MsalException)
                         {
-
                         }
                     }
                 }
@@ -96,32 +95,29 @@ namespace PnP.PowerShell.Commands.AzureAD
                             }
                             catch (Microsoft.Identity.Client.MsalException)
                             {
-
                             }
 
                             if (!string.IsNullOrEmpty(accessToken))
                             {
-                                using (var httpClient = new HttpClient())
+                                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+                                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://{GetGraphEndPoint()}/v1.0/organization"))
                                 {
-                                    using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://{GetGraphEndPoint()}/v1.0/organization"))
+                                    requestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
+                                    requestMessage.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                                    var response = httpClient.SendAsync(requestMessage).GetAwaiter().GetResult();
+                                    if (response.IsSuccessStatusCode)
                                     {
-                                        requestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
-                                        requestMessage.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                                        var response = httpClient.SendAsync(requestMessage).GetAwaiter().GetResult();
-                                        if (response.IsSuccessStatusCode)
+                                        var responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                                        var responseJson = JsonSerializer.Deserialize<JsonElement>(responseContent);
+                                        if (responseJson.TryGetProperty("value", out JsonElement valueElement))
                                         {
-                                            var responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                                            var responseJson = JsonSerializer.Deserialize<JsonElement>(responseContent);
-                                            if (responseJson.TryGetProperty("value", out JsonElement valueElement))
+                                            foreach (var organization in valueElement.EnumerateArray())
                                             {
-                                                foreach (var organization in valueElement.EnumerateArray())
+                                                if (organization.TryGetProperty("id", out JsonElement idElement))
                                                 {
-                                                    if (organization.TryGetProperty("id", out JsonElement idElement))
-                                                    {
-                                                        tenantId = idElement.GetString();
+                                                    tenantId = idElement.GetString();
 
-                                                        break;
-                                                    }
+                                                    break;
                                                 }
                                             }
                                         }
