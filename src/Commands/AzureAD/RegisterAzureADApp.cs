@@ -195,25 +195,24 @@ namespace PnP.PowerShell.Commands.AzureAD
             if (!string.IsNullOrEmpty(token))
             {
                 var cert = GetCertificate(record);
+                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
-                using (var httpClient = new HttpClient())
+                if (!AppExists(ApplicationName, httpClient, token))
                 {
-                    if (!AppExists(ApplicationName, httpClient, token))
-                    {
-                        var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri, scopes);
+                    var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri, scopes);
 
-                        record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
-                        record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
-                        byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
-                        var base64String = Convert.ToBase64String(certPfxData);
-                        record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
-                        StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter, scopes);
-                    }
-                    else
-                    {
-                        throw new PSInvalidOperationException($"The application with name {ApplicationName} already exists.");
-                    }
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
+                    byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
+                    var base64String = Convert.ToBase64String(certPfxData);
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
+                    StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter, scopes);
                 }
+                else
+                {
+                    throw new PSInvalidOperationException($"The application with name {ApplicationName} already exists.");
+                }
+
             }
         }
 
@@ -452,7 +451,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         private X509Certificate2 GetCertificate(PSObject record)
         {
-            var cert = new X509Certificate2();
+            X509Certificate2 cert;
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
             {
                 if (!Path.IsPathRooted(CertificatePath))
@@ -518,7 +517,6 @@ namespace PnP.PowerShell.Commands.AzureAD
             }
             var pfxPath = string.Empty;
             var cerPath = string.Empty;
-
 
             if (Directory.Exists(OutPath))
             {
@@ -592,7 +590,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     }
                 },
                 requiredResourceAccess = scopesPayload
-            };            
+            };
 
             var azureApp = RestHelper.PostAsync<AzureADApp>(httpClient, $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", token, payload).GetAwaiter().GetResult();
             if (azureApp != null)
