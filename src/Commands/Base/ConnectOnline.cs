@@ -14,6 +14,7 @@ using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
@@ -614,12 +615,7 @@ namespace PnP.PowerShell.Commands.Base
             string password = Environment.GetEnvironmentVariable("AZURE_PASSWORD");
             string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
             string azureCertificatePath = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH");
-            string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD");
-
-            if (string.IsNullOrEmpty(azureClientId))
-            {
-                azureClientId = PnPConnection.PnPManagementShellClientId;
-            }
+            string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD");            
 
             if (!string.IsNullOrEmpty(azureCertificatePath) && !string.IsNullOrEmpty(azureCertPassword))
             {
@@ -632,7 +628,25 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new FileNotFoundException("Certificate not found");
                 }
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(azureCertificatePath, CertificatePassword);
+
+                if (string.IsNullOrEmpty(azureClientId))
+                {
+                    throw new PSInvalidOperationException("Unable to connect using avaiable environment variables. Please provide necessary value for AZURE_CLIENT_ID environment variable");
+                }
+
+                if (!ParameterSpecified(nameof(Tenant)))
+                {
+                    throw new ArgumentNullException($"{nameof(Tenant)} must be provided when trying to authenticate using Azure environment credentials for Service principal with certificate method.");
+                }
+
+                SecureString secPassword = new SecureString();
+                foreach (char ch in azureCertPassword)
+                {
+                    secPassword.AppendChar(ch);
+                }
+                secPassword.MakeReadOnly();
+
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(azureCertificatePath, secPassword);
                 if (PnPConnection.Current?.ClientId == azureClientId &&
                     PnPConnection.Current?.Tenant == Tenant &&
                     PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
@@ -642,8 +656,13 @@ namespace PnP.PowerShell.Commands.Base
                 return PnPConnection.CreateWithCert(new Uri(Url), azureClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
             }
 
-            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+            else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
             {
+                if (string.IsNullOrEmpty(azureClientId))
+                {
+                    azureClientId = PnPConnection.PnPManagementShellClientId;
+                }
+
                 SecureString secPassword = new SecureString();
                 foreach (char ch in password)
                 {

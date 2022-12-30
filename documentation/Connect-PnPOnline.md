@@ -214,11 +214,21 @@ Using this method PnP PowerShell will not acquire tokens dynamically and if the 
 
 ### EXAMPLE 15
 ```
+Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable -Tenant 'contoso.onmicrosoft.com'
+```
+
+This method assumes you have the necessary environment variables available. For more information the required environment variables, please refer to this article, [Azure.Identity Environment Variables](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables) here. We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used.
+
+This example uses the `AZURE_CLIENT_CERTIFICATE_PATH` and `AZURE_CLIENT_CERTIFICATE_PASSWORD` environment variable values to authenticate. The `AZURE_CLIENT_ID` environment variable must be present and `Tenant` parameter value must be provided.
+
+### EXAMPLE 16
+```
 Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable
 ```
 
 This method assumes you have the necessary environment variables available. For more information the required environment variables, please refer to this article, [Azure.Identity Environment Variables](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables) here. We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used.
 
+This example uses the `AZURE_USERNAME` and `AZURE_PASSWORD` environment variables as credentials to authenticate. If `AZURE_CLIENT_ID` is not present, then it will use the default `PnP Management Shell Azure AD app` as fallback and attempt to authenticate.
 
 ## PARAMETERS
 
