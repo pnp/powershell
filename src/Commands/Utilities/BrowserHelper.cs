@@ -277,6 +277,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     string requestUrl = string.Format("{0}/_api/contextinfo", siteUrl.TrimEnd('/'));
                     HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, requestUrl);
+                    request.Version = new Version(2, 0);
                     request.Headers.Add("accept", "application/json;odata=nometadata");
                     HttpResponseMessage response = await httpClient.SendAsync(request);
 

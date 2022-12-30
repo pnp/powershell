@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
+using System;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
@@ -122,6 +123,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                                     var packageLink = valueElement.GetString();
                                     using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, packageLink))
                                     {
+                                        requestMessage.Version = new Version(2, 0);
                                         //requestMessage.Headers.Add("Authorization", $"Bearer {AccessToken}");
                                         var response = Connection.HttpClient.SendAsync(requestMessage).GetAwaiter().GetResult();
                                         var byteArray = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();

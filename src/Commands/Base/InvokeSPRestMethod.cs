@@ -1,17 +1,11 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using PnP.Framework.Http;
 using PnP.Framework.Utilities;
-
 using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Utilities.JSON;
-
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Runtime.InteropServices;
@@ -84,6 +78,7 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     request.Headers.Add("IF-MATCH", "*");
                 }
+                request.Version = new Version(2, 0);
 
                 PnPHttpClient.AuthenticateRequestAsync(request, ClientContext).GetAwaiter().GetResult();
 
