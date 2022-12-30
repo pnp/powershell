@@ -255,7 +255,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<string> PostAsync(HttpClient httpClient, string url, string accessToken, object payload, string accept = "application/json")
         {
-            HttpRequestMessage message = null;            
+            HttpRequestMessage message = null;
             if (payload != null)
             {
 #if NETFRAMEWORK
@@ -276,7 +276,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<string> PostAsync(HttpClient httpClient, string url, ClientContext clientContext, object payload, string accept = "application/json")
         {
-            HttpRequestMessage message = null;            
+            HttpRequestMessage message = null;
             if (payload != null)
             {
 #if NETFRAMEWORK
@@ -616,7 +616,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 url += $"?{string.Join("&", restparams)}";
             }
 
-            var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();            
+            var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
