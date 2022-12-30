@@ -14,7 +14,6 @@ using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
-using static System.Formats.Asn1.AsnWriter;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
@@ -439,7 +438,6 @@ namespace PnP.PowerShell.Commands.Base
                         clientId = ClientId;
                     }
 
-
                     var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
                     connection = returnedConnection;
                     messageWriter.Finished = true;
@@ -615,7 +613,7 @@ namespace PnP.PowerShell.Commands.Base
             string password = Environment.GetEnvironmentVariable("AZURE_PASSWORD");
             string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
             string azureCertificatePath = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH");
-            string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD");            
+            string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD");
 
             if (!string.IsNullOrEmpty(azureCertificatePath) && !string.IsNullOrEmpty(azureCertPassword))
             {
@@ -624,6 +622,7 @@ namespace PnP.PowerShell.Commands.Base
                     azureCertificatePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
                                azureCertificatePath);
                 }
+
                 if (!File.Exists(azureCertificatePath))
                 {
                     throw new FileNotFoundException("Certificate not found");
@@ -631,7 +630,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 if (string.IsNullOrEmpty(azureClientId))
                 {
-                    throw new PSInvalidOperationException("Unable to connect using avaiable environment variables. Please provide necessary value for AZURE_CLIENT_ID environment variable");
+                    throw new ArgumentNullException("Unable to connect using available environment variables. Please provide necessary value for AZURE_CLIENT_ID environment variable");
                 }
 
                 if (!ParameterSpecified(nameof(Tenant)))
@@ -639,12 +638,7 @@ namespace PnP.PowerShell.Commands.Base
                     throw new ArgumentNullException($"{nameof(Tenant)} must be provided when trying to authenticate using Azure environment credentials for Service principal with certificate method.");
                 }
 
-                SecureString secPassword = new SecureString();
-                foreach (char ch in azureCertPassword)
-                {
-                    secPassword.AppendChar(ch);
-                }
-                secPassword.MakeReadOnly();
+                SecureString secPassword = StringToSecureString(azureCertPassword);
 
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(azureCertificatePath, secPassword);
                 if (PnPConnection.Current?.ClientId == azureClientId &&
@@ -663,12 +657,7 @@ namespace PnP.PowerShell.Commands.Base
                     azureClientId = PnPConnection.PnPManagementShellClientId;
                 }
 
-                SecureString secPassword = new SecureString();
-                foreach (char ch in password)
-                {
-                    secPassword.AppendChar(ch);
-                }
-                secPassword.MakeReadOnly();
+                SecureString secPassword = StringToSecureString(password);
                 var credentials = new PSCredential(username, secPassword);
 
                 if (PnPConnection.Current?.ClientId == azureClientId)
@@ -775,6 +764,18 @@ namespace PnP.PowerShell.Commands.Base
         {
             var contextSettings = PnPConnection.Current.Context?.GetContextSettings();
             PnPConnection.CachedAuthenticationManager = contextSettings?.AuthenticationManager;
+        }
+
+        private SecureString StringToSecureString(string inputString)
+        {
+            SecureString secPassword = new SecureString();
+            foreach (char ch in inputString)
+            {
+                secPassword.AppendChar(ch);
+            }
+            secPassword.MakeReadOnly();
+
+            return secPassword;
         }
         #endregion
     }
