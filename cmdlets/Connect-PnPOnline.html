@@ -90,38 +90,37 @@
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Credentials &lt;CredentialPipeBind&gt;] [-CurrentCredentials]
  [-CreateDrive] [-DriveName &lt;String&gt;] [-ClientId &lt;String&gt;] [-RedirectUri &lt;String&gt;]
  [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-TransformationOnPrem] [-ValidateConnection] [&lt;CommonParameters&gt;]
+ [-TransformationOnPrem] [-ValidateConnection]
 </code></pre>
 <h3 id="sharepoint-acs-legacy-app-only">SharePoint ACS (Legacy) App Only</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Realm &lt;String&gt;] -ClientSecret &lt;String&gt; [-CreateDrive]
  [-DriveName &lt;String&gt;] -ClientId &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-ValidateConnection] [&lt;CommonParameters&gt;]
+ [-ValidateConnection]
 </code></pre>
 <h3 id="app-only-with-azure-active-directory">App-Only with Azure Active Directory</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
  -Tenant &lt;String&gt; [-CertificatePath &lt;String&gt;] [-CertificateBase64Encoded &lt;String&gt;]
  [-CertificatePassword &lt;SecureString&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-ValidateConnection] [&lt;CommonParameters&gt;]
+ [-ValidateConnection]
 </code></pre>
 <h3 id="app-only-with-azure-active-directory-using-a-certificate-from-the-windows-certificate-management-store-by-thumbprint">App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
  -Tenant &lt;String&gt; -Thumbprint &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-ValidateConnection] [&lt;CommonParameters&gt;]
+ [-ValidateConnection]
 </code></pre>
 <h3 id="pnp-management-shell--devicelogin">PnP Management Shell / DeviceLogin</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-DeviceLogin]
  [-LaunchBrowser] [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] 
- [-ValidateConnection] [&lt;CommonParameters&gt;]
+ [-ValidateConnection]
 </code></pre>
 <h3 id="web-login-for-multi-factor-authentication">Web Login for Multi Factor Authentication</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;]
  [-TenantAdminUrl &lt;String&gt;] [-UseWebLogin] [-ForceAuthentication]
- [-ValidateConnection] [&lt;CommonParameters&gt;]
+ [-ValidateConnection]
 </code></pre>
 <h3 id="interactive-for-multi-factor-authentication">Interactive for Multi Factor Authentication</h3>
 <pre><code>Connect-PnPOnline -Interactive [-ReturnConnection] -Url &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-LaunchBrowser]
  [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection]
- [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="on-premises-login-for-page-transformation-from-on-premises-sharepoint-to-sharepoint-online">On-premises login for page transformation from on-premises SharePoint to SharePoint Online</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &lt;String&gt; -TransformationOnPrem [-CurrentCredential]
@@ -131,6 +130,12 @@
 </code></pre>
 <h3 id="managed-identity">Managed Identity</h3>
 <pre><code>Connect-PnPOnline -Url &lt;String&gt; [-UserAssignedManagedIdentityObjectId &lt;String&gt;]
+</code></pre>
+<h3 id="environment-variable">Environment Variable</h3>
+<pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-EnvironmentVariable] [-CurrentCredentials]
+ [-CreateDrive] [-DriveName &lt;String&gt;] [-RedirectUri &lt;String&gt;]
+ [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
+ [-TransformationOnPrem] [-ValidateConnection]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets.
@@ -214,6 +219,18 @@ Get-PnPList
 </code></pre>
 <p>This method assumes you have acquired a valid OAuth2 access token from Azure AD with the correct audience and permissions set.
 Using this method PnP PowerShell will not acquire tokens dynamically and if the token expires (typically after 1 hour) cmdlets will fail to work using this method.</p>
+<h3 id="example-15">EXAMPLE 15</h3>
+<pre><code>Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable -Tenant 'contoso.onmicrosoft.com'
+</code></pre>
+<p>This example uses the <code>AZURE_CLIENT_CERTIFICATE_PATH</code> and <code>AZURE_CLIENT_CERTIFICATE_PASSWORD</code> environment variable values to authenticate. The <code>AZURE_CLIENT_ID</code> environment variable must be present and <code>Tenant</code> parameter value must be provided.</p>
+<h3 id="example-16">EXAMPLE 16</h3>
+<pre><code>Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable
+</code></pre>
+<p>This example uses the <code>AZURE_USERNAME</code> and <code>AZURE_PASSWORD</code> environment variables as credentials to authenticate. If <code>AZURE_CLIENT_ID</code> is not present, then it will try to use the default <code>PnP Management Shell Azure AD app</code> as fallback and attempt to authenticate.</p>
+<p>This method assumes you have the necessary environment variables available. For more information about the required environment variables, please refer to this article, <a href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables">Azure.Identity Environment Variables</a> here.</p>
+<p>So, when using <code>-EnvironmentVariable</code> method for authenticating, we will require <code>AZURE_CLIENT_CERTIFICATE_PATH</code>, <code>AZURE_CLIENT_CERTIFICATE_PASSWORD</code> and <code>AZURE_CLIENT_ID</code> environment variables for using the service principal with certificate method for authentication.</p>
+<p>If <code>AZURE_USERNAME</code>, <code>AZURE_PASSWORD</code> and <code>AZURE_CLIENT_ID</code>, we will use these environment variables and authenticate using credentials flow.</p>
+<p>We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-accesstoken">-AccessToken</h3>
 <p>Using this parameter you can provide your own access token.
@@ -233,7 +250,7 @@ Accept wildcard characters: False
 <h3 id="-azureenvironment">-AzureEnvironment</h3>
 <p>The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.</p>
 <pre><code class="lang-yaml">Type: AzureEnvironment
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive, Access Token
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive, Access Token, Environment Variable
 Aliases:
 Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD
 
@@ -304,7 +321,7 @@ Accept wildcard characters: False
 <h3 id="-createdrive">-CreateDrive</h3>
 <p>If you want to create a PSDrive connected to the URL</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
 Aliases:
 
 Required: False
@@ -343,7 +360,7 @@ Accept wildcard characters: False
 <h3 id="-drivename">-DriveName</h3>
 <p>Name of the PSDrive to create (default: SPO)</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
 Aliases:
 
 Required: False
@@ -416,7 +433,7 @@ Accept wildcard characters: False
 <h3 id="-returnconnection">-ReturnConnection</h3>
 <p>Returns the connection for use with the -Connection parameter on cmdlets. It will not touch the current connection which can be established by omitting this parameter.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable
 Aliases:
 
 Required: False
@@ -428,7 +445,7 @@ Accept wildcard characters: False
 <h3 id="-tenant">-Tenant</h3>
 <p>The Azure Active Directory tenant name, e.g. mycompany.onmicrosoft.com or mycompany.com if you have added custom domains to your tenant</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
+Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Environment Variable
 Aliases:
 
 Required: True
@@ -441,7 +458,7 @@ Accept wildcard characters: False
 <p>The url to the Tenant Admin site.
 If not specified, the cmdlets will assume to connect automatically to https://[tenantname]-admin.sharepoint.com where appropriate.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
 Aliases:
 
 Required: False
@@ -465,7 +482,7 @@ Accept wildcard characters: False
 <h3 id="-url">-Url</h3>
 <p>The Url of the site collection or subsite to connect to, i.e. tenant.sharepoint.com, <a href="https://tenant.sharepoint.com">https://tenant.sharepoint.com</a>, tenant.sharepoint.com/sites/hr, etc.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable
 Aliases:
 
 Required: True
@@ -477,7 +494,7 @@ Accept wildcard characters: False
 <h3 id="-validateconnection">-ValidateConnection</h3>
 <p>When provided, the cmdlet will check to ensure the SharePoint Online site specified through <code>-Url</code> exists and if not, will throw an exception. If you omit this flag or set it to $false, it will blindly set up a connection without validating that the site actually exists. Making use of this option does make one extra call on the connection attempt, so it is recommended to only use it in scenarios where you know the site you're trying to connect o may not exist and would like to have feedback on this during the connect.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable
 Aliases:
 
 Required: False
@@ -489,7 +506,7 @@ Accept wildcard characters: False
 <p>If you want to the use page transformation cmdlets, setting this switch will allow you to connect to an on-prem server.
 Notice that this -only- applies to Transformation cmdlets.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Credentials
+Parameter Sets: Credentials, Environment Variable
 Aliases:
 
 Required: False
@@ -582,6 +599,17 @@ Accept wildcard characters: False
 <p>When provided, additional debug statements will be shown while going through setting up a connection.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-environmentvariable">-EnvironmentVariable</h3>
+<p>Connects using the necessary environment variables. For more information the required environment variables, please refer to this article, <a href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables">Azure.Identity Environment Variables</a> here. We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used. By default, it will use the <code>-ClientId</code> specified in <code>AZURE_CLIENT_ID</code> environment variable. If that value is empty, it will fallback to the PnP Management Shell Azure AD App.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Environment Variable
 
 Required: False
 Position: Named
