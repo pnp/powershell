@@ -10,18 +10,18 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPCustomAction.
 # Remove-PnPCustomAction
 
 ## SYNOPSIS
-Removes a custom action
+Removes a custom action.
 
 ## SYNTAX
 
 ```powershell
 Remove-PnPCustomAction [[-Identity] <UserCustomActionPipeBind>] [-Scope <CustomActionScope>] [-Force]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
 
-Allows to remove custom action.
+Allows to remove a custom action.
 
 ## EXAMPLES
 
@@ -51,24 +51,9 @@ Removes the custom action with the id 'aa66f67e-46c0-4474-8a82-42bf467d07f2' wit
 Get-PnPCustomAction -Scope All | ? Location -eq ScriptLink | Remove-PnPCustomAction
 ```
 
-Removes all custom actions that are ScriptLinks
+Removes all custom actions that are ScriptLinks.
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -85,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Use the -Force flag to bypass the confirmation question
+Use the -Force flag to bypass the confirmation question.
 
 ```yaml
 Type: SwitchParameter
@@ -99,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The id or name of the CustomAction that needs to be removed or a CustomAction instance itself
+The id or name of the CustomAction that needs to be removed or a CustomAction instance itself.
 
 ```yaml
 Type: UserCustomActionPipeBind
@@ -122,24 +107,7 @@ Accepted values: Web, Site, All
 
 Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
+Default value: Web
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
