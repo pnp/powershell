@@ -15,7 +15,7 @@ Removes a content type from a web.
 ## SYNTAX
 
 ```powershell
-Remove-PnPContentType [-Identity] <ContentTypePipeBind> [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPContentType [-Identity] <ContentTypePipeBind> [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
