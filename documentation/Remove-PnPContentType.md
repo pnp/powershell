@@ -10,18 +10,17 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPContentType.h
 # Remove-PnPContentType
 
 ## SYNOPSIS
-Removes a content type from a web
+Removes a content type from a web.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPContentType [-Identity] <ContentTypePipeBind> [-Force] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPContentType [-Identity] <ContentTypePipeBind> [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to remove content type from web.
+This cmdlet allows to remove a content type from the current web.
 
 ## EXAMPLES
 
@@ -30,14 +29,14 @@ Allows to remove content type from web.
 Remove-PnPContentType -Identity "Project Document"
 ```
 
-This will remove a content type called "Project Document" from the current web
+This will remove a content type called "Project Document" from the current web.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPContentType -Identity "Project Document" -Force
 ```
 
-This will remove a content type called "Project Document" from the current web with force
+This will remove a content type called "Project Document" from the current web without asking for confirmation.
 
 ## PARAMETERS
 
@@ -70,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name or ID of the content type to remove
+The name or ID of the content type to remove.
 
 ```yaml
 Type: ContentTypePipeBind
