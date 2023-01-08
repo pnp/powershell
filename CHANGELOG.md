@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Add-PnPField`, `Get-PnPListItem` and `Get-PnPSiteDesignRun` cmdlets by improving null checks based on warnings from compiler. [#PR1](https://github.com/pnp/powershell/commit/791b031d5fa844f1e6961b1136df9f79f19bfdcd) and [#PR2](https://github.com/pnp/powershell/commit/d56f3cd497be79170f68b29be490b222bf042aaa)
 - Improved `Register-PnPAzureADApp` and `Register-PnPManagementShellAccess` cmdlets to reuse existing HTTP client instead of creating a new one. [#2682](https://github.com/pnp/powershell/pull/2682)
 - Improved `Register-PnPAzureADApp` cmdlet based on compiler warnings. [#2682](https://github.com/pnp/powershell/pull/2682)
+- `Connect-PnPOnline` will now throw a much clearer error message if the site to be connected doesn't exist when using the legacy Client Id with Secret (ACS) authentication mode. [#2707](https://github.com/pnp/powershell/pull/2707)
 
 ### Removed
 
