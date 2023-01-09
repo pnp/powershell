@@ -84,18 +84,17 @@
                     <h1 id="remove-pnpcontenttypefromlist">Remove-PnPContentTypeFromList</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a content type from a list</p>
+<p>Removes a content type from a list.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPContentTypeFromList -List &lt;ListPipeBind&gt; -ContentType &lt;ContentTypePipeBind&gt; 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPContentTypeFromList -List &lt;ListPipeBind&gt; -ContentType &lt;ContentTypePipeBind&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to remove content type from list.</p>
+<p>Allows to remove a content type from a list.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPContentTypeFromList -List &quot;Documents&quot; -ContentType &quot;Project Document&quot;
 </code></pre>
-<p>This will remove a content type called &quot;Project Document&quot; from the &quot;Documents&quot; list</p>
+<p>This will remove a content type called &quot;Project Document&quot; from the &quot;Documents&quot; list.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -120,7 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
-<p>The name of the list, its ID or an actual list object from where the content type needs to be removed from</p>
+<p>The name of the list, its ID or an actual list object the content type needs to be removed from.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 

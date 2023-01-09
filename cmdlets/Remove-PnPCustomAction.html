@@ -84,13 +84,13 @@
                     <h1 id="remove-pnpcustomaction">Remove-PnPCustomAction</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a custom action</p>
+<p>Removes a custom action.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Remove-PnPCustomAction [[-Identity] &lt;UserCustomActionPipeBind&gt;] [-Scope &lt;CustomActionScope&gt;] [-Force]
- [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to remove custom action.</p>
+<p>Allows to remove a custom action.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPCustomAction -Identity aa66f67e-46c0-4474-8a82-42bf467d07f2
@@ -107,20 +107,8 @@
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPCustomAction -Scope All | ? Location -eq ScriptLink | Remove-PnPCustomAction
 </code></pre>
-<p>Removes all custom actions that are ScriptLinks</p>
+<p>Removes all custom actions that are ScriptLinks.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -133,7 +121,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>Use the -Force flag to bypass the confirmation question</p>
+<p>Use the -Force flag to bypass the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -144,7 +132,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The id or name of the CustomAction that needs to be removed or a CustomAction instance itself</p>
+<p>The id or name of the CustomAction that needs to be removed or a CustomAction instance itself.</p>
 <pre><code class="lang-yaml">Type: UserCustomActionPipeBind
 Parameter Sets: (All)
 
@@ -162,19 +150,7 @@ Accepted values: Web, Site, All
 
 Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
+Default value: Web
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

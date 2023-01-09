@@ -5088,7 +5088,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPContentType.html",
-          "hash": "BU3jBzIIIUUYGdo43ls+lQ=="
+          "hash": "GWkXnt/PcW5n0hZ+91knRw=="
         }
       },
       "is_incremental": false,
@@ -5100,7 +5100,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPContentTypeFromDocumentSet.html",
-          "hash": "zbaAKZ/dVRdLb9np+8nELQ=="
+          "hash": "vob+zEOhQaQkemTahm8UPw=="
         }
       },
       "is_incremental": false,
@@ -5112,7 +5112,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPContentTypeFromList.html",
-          "hash": "5voGt3RVoCVmMSWG4s9BOw=="
+          "hash": "6u/iGnWZgcF3G0yNXCpDag=="
         }
       },
       "is_incremental": false,
@@ -5124,7 +5124,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPCustomAction.html",
-          "hash": "/VJH2eyvKAud3LBl8n01oQ=="
+          "hash": "IDohrV9hK3aJOBG7v8Q2Vw=="
         }
       },
       "is_incremental": false,
