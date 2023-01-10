@@ -20,7 +20,7 @@ Gets one Microsoft 365 Group or a list of Microsoft 365 Groups
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-IncludeSiteUrl] [-IncludeOwners] [<CommonParameters>]
+Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-IncludeSiteUrl] [-IncludeOwners] [-Filter <string>]
 ```
 
 ## DESCRIPTION
@@ -79,6 +79,13 @@ $g[0].Owners
 
 Retrieves all Microsoft 365 Groups in this tenant and retrieves the owners for each group. The owners are available in the "Owners" property of the returned objects.
 
+### EXAMPLE 8
+```powershell
+$groups = Get-PnPMicrosoft365Group -Filter "startswith(description, 'contoso')"
+```
+
+Retrieves all Microsoft 365 Groups in this tenant with description starting with Contoso. This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties).
+
 ## PARAMETERS
 
 ### -IncludeSiteUrl
@@ -123,6 +130,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Filter
+Specify the query to pass to Graph API in $filter.
+
+```yaml
+Type: String
+Parameter Sets: Filter
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
