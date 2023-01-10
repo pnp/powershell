@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Files
         [ValidateNotNullOrEmpty]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYFOLDER)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYFOLDER)]
         [ValidateNotNullOrEmpty]
         public FolderPipeBind Identity;
 
@@ -59,8 +59,22 @@ namespace PnP.PowerShell.Commands.Files
 
             if (targetFolder != null)
             {
-                ClientContext.Load(targetFolder, t => t.ServerRelativeUrl);
-                ClientContext.ExecuteQueryRetry();
+                try
+                {
+                    ClientContext.Load(targetFolder, t => t.ServerRelativeUrl);
+                    ClientContext.ExecuteQueryRetry();
+                }
+                catch(Microsoft.SharePoint.Client.ServerException e)
+                {
+                    if (e.ServerErrorTypeName == "System.IO.FileNotFoundException")
+                    {
+                        throw new PSArgumentException("The provided list or folder does not exist");
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
 
                 IFolder folderWithStorageMetrics = PnPContext.Web.GetFolderByServerRelativeUrlAsync(targetFolder.ServerRelativeUrl, f => f.StorageMetrics).GetAwaiter().GetResult();
                 var storageMetrics = folderWithStorageMetrics.StorageMetrics;

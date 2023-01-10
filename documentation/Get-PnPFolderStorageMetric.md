@@ -30,7 +30,9 @@ Get-PnPFolderStorageMetric -Identity <FolderPipeBind> [-Connection <PnPConnectio
 ```
 
 ## DESCRIPTION
-Allows retrieval of storage metrics for a folder in SharePoint Online. It will reveal the true storage usage, similar to what will be shown through storman.aspx, the date and time the folder was last modified, the amount of files inside the folder and more.
+Allows retrieval of storage metrics for a folder in SharePoint Online. It will reveal the true storage usage, similar to what will be shown through storman.aspx, the date and time the folder was last modified and the amount of files inside the folder.
+
+Please note that there is a delay of typically just a few minutes between making changes to files on a site and this cmdlet returning updated values.
 
 ## EXAMPLES
 
@@ -63,7 +65,7 @@ Retrieves the storage metrics of the folder using the identity parameter
 ## PARAMETERS
 
 ### -FolderSiteRelativeUrl
-Name for the local file
+The path to the folder to query for its storage consumption, relative to the SharePoint Online site to which the connection has been made, i.e. "Shared Documents\Subfolder"
 
 ```yaml
 Type: String
@@ -77,7 +79,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-Name for the local file
+Id, name or instance of a list to query for its storage consumption
 
 ```yaml
 Type: ListPipeBind
@@ -91,10 +93,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Name for the local file
+Id, name or instance of a folder to query for its storage consumption
 
 ```yaml
-Type: Identity
+Type: FolderPipeBind
 Parameter Sets: Folder via pipebind
 
 Required: False
