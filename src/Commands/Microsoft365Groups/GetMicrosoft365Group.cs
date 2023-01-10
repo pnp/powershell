@@ -33,6 +33,9 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Obsolete("HasTeam is always included")]
         public SwitchParameter IncludeHasTeam;
 
+        [Parameter(Mandatory = false)]        
+        public string Filter;
+
         protected override void ExecuteCmdlet()
         {
 #pragma warning disable 0618
@@ -46,7 +49,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
             else
             {
-                var groups = Microsoft365GroupsUtility.GetGroupsAsync(Connection, AccessToken, includeSiteUrl, IncludeOwners).GetAwaiter().GetResult();
+                var groups = Microsoft365GroupsUtility.GetGroupsAsync(Connection, AccessToken, includeSiteUrl, IncludeOwners, Filter).GetAwaiter().GetResult();
 
                 WriteObject(groups.OrderBy(p => p.DisplayName), true);
             }
