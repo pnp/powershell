@@ -10,18 +10,17 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPContentTypeFr
 # Remove-PnPContentTypeFromList
 
 ## SYNOPSIS
-Removes a content type from a list
+Removes a content type from a list.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPContentTypeFromList -List <ListPipeBind> -ContentType <ContentTypePipeBind> 
- [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPContentTypeFromList -List <ListPipeBind> -ContentType <ContentTypePipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to remove content type from list.
+Allows to remove a content type from a list.
 
 ## EXAMPLES
 
@@ -30,7 +29,7 @@ Allows to remove content type from list.
 Remove-PnPContentTypeFromList -List "Documents" -ContentType "Project Document"
 ```
 
-This will remove a content type called "Project Document" from the "Documents" list
+This will remove a content type called "Project Document" from the "Documents" list.
 
 ## PARAMETERS
 
@@ -63,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-The name of the list, its ID or an actual list object from where the content type needs to be removed from
+The name of the list, its ID or an actual list object the content type needs to be removed from.
 
 ```yaml
 Type: ListPipeBind

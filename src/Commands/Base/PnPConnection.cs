@@ -196,6 +196,11 @@ namespace PnP.PowerShell.Commands.Base
                     if (realm == null)
                     {
                         realm = GetRealmFromTargetUrl(url);
+
+                        if(realm == null)
+                        {
+                            throw new Exception($"Could not determine realm for the target site '{url}'. Please validate that a site exists at this URL.");
+                        }
                     }
 
                     if (url.DnsSafeHost.Contains("spoppe.com"))
@@ -772,7 +777,7 @@ namespace PnP.PowerShell.Commands.Base
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "");
 
             var response = client.GetAsync(targetApplicationUri + "/_vti_bin/client.svc").GetAwaiter().GetResult();
-            if (response == null)
+            if (response == null || response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 return null;
             }
@@ -812,11 +817,16 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (Utilities.OperatingSystem.IsWindows())
             {
-                var privateKey = (certificate.PrivateKey as RSACng)?.Key;
+                var privateKey = (certificate.GetRSAPrivateKey() as RSACng)?.Key;
                 if (privateKey == null)
                     return;
 
                 string uniqueKeyContainerName = privateKey.UniqueName;
+                if (uniqueKeyContainerName == null)
+                {
+                    RSACryptoServiceProvider rsaCSP = certificate.GetRSAPrivateKey() as RSACryptoServiceProvider;
+                    uniqueKeyContainerName = rsaCSP.CspKeyContainerInfo.KeyContainerName;
+                }
                 certificate.Reset();
 
                 var programDataPath = Environment.GetEnvironmentVariable("ProgramData");

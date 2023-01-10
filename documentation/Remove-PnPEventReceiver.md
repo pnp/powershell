@@ -10,17 +10,17 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPEventReceiver
 # Remove-PnPEventReceiver
 
 ## SYNOPSIS
-Remove an eventreceiver
+Remove an event receiver.
 
 ## SYNTAX
 
 ```powershell
 Remove-PnPEventReceiver -Identity <EventReceiverPipeBind> [-List <ListPipeBind>] [-Scope <EventReceiverScope>] [-Force] 
- [-Connection <PnPConnection>]  [<CommonParameters>]
+[-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Removes/unregisters a specific eventreceiver
+Removes/unregisters a specific event receiver.
 
 ## EXAMPLES
 
@@ -29,80 +29,65 @@ Removes/unregisters a specific eventreceiver
 Remove-PnPEventReceiver -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
 ```
 
-This will remove the event receiver with ReceiverId "fb689d0e-eb99-4f13-beb3-86692fd39f22" from the current web
+This will remove the event receiver with ReceiverId "fb689d0e-eb99-4f13-beb3-86692fd39f22" from the current web.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPEventReceiver -List ProjectList -Identity fb689d0e-eb99-4f13-beb3-86692fd39f22
 ```
 
-This will remove the event receiver with ReceiverId "fb689d0e-eb99-4f13-beb3-86692fd39f22" from the "ProjectList" list
+This will remove the event receiver with ReceiverId "fb689d0e-eb99-4f13-beb3-86692fd39f22" from the "ProjectList" list.
 
 ### EXAMPLE 3
 ```powershell
 Remove-PnPEventReceiver -List ProjectList -Identity MyReceiver
 ```
 
-This will remove the event receiver with ReceiverName "MyReceiver" from the "ProjectList" list
+This will remove the event receiver with ReceiverName "MyReceiver" from the "ProjectList" list.
 
 ### EXAMPLE 4
 ```powershell
 Remove-PnPEventReceiver -List ProjectList
 ```
 
-This will remove all event receivers from the "ProjectList" list
+This will remove all event receivers from the "ProjectList" list.
 
 ### EXAMPLE 5
 ```powershell
 Remove-PnPEventReceiver
 ```
 
-This will remove all event receivers from the current site
+This will remove all event receivers from the current web.
 
 ### EXAMPLE 6
 ```powershell
 Get-PnPEventReceiver | ? ReceiverUrl -Like "*azurewebsites.net*" | Remove-PnPEventReceiver
 ```
 
-This will remove all event receivers from the current site which are pointing to a service hosted on Azure Websites
+This will remove all event receivers from the current web which are pointing to a service hosted on Azure Websites.
 
 ### EXAMPLE 7
 ```powershell
 Remove-PnPEventReceiver -Scope Site
 ```
 
-This will remove all the event receivers defined on the current site collection
+This will remove all the event receivers defined on the current site collection.
 
 ### EXAMPLE 8
 ```powershell
 Remove-PnPEventReceiver -Scope Web
 ```
 
-This will remove all the event receivers defined on the current site
+This will remove all the event receivers defined on the current web.
 
 ### EXAMPLE 9
 ```powershell
 Remove-PnPEventReceiver -Scope All
 ```
 
-This will remove all the event receivers defined on the current site and web
+This will remove all the event receivers defined on the current site and web.
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -119,7 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Specifying the Force parameter will skip the confirmation question
+Specifying the Force parameter will skip the confirmation question.
 
 ```yaml
 Type: SwitchParameter
@@ -133,13 +118,13 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Guid of the event receiver on the list
+The Guid or name of the event receiver.
 
 ```yaml
 Type: EventReceiverPipeBind
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
@@ -147,7 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-The list object from where to remove the event receiver object
+The list object from where to remove the event receiver object.
 
 ```yaml
 Type: ListPipeBind
@@ -161,7 +146,7 @@ Accept wildcard characters: False
 ```
 
 ### -Scope
-The scope of the EventReceivers to remove
+The scope of the event receivers to remove.
 
 ```yaml
 Type: EventReceiverScope
@@ -175,20 +160,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

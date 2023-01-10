@@ -14,6 +14,7 @@
         Graph,
         GraphDeviceLogin,
         SPOManagementShell,
-        ManagedIdentity
+        ManagedIdentity,
+        EnvironmentVariable
     }
 }
