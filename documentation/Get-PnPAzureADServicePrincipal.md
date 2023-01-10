@@ -88,7 +88,7 @@ Retrieves the application registration with the name "My application" from Azure
 Get-PnPAzureADServicePrincipal -Filter "startswith(description, 'contoso')"
 ```
 
-Retrieves the application registration with the description starting with "contoso" from Azure Active Directory. This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties).
+Retrieves the application registration with the description starting with "contoso" from Azure Active Directory. This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties).
 
 ## PARAMETERS
 
