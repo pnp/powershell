@@ -1,23 +1,14 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using PnP.Framework.Http;
 using PnP.Framework.Utilities;
-
 using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Utilities.JSON;
-
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -52,6 +43,10 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public SwitchParameter Raw;
 
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
+        public string ResponseHeadersVariable;
+
         protected override void ExecuteCmdlet()
         {
             if (Url.StartsWith("/"))
@@ -65,6 +60,8 @@ namespace PnP.PowerShell.Commands.Admin
             var httpClient = PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
             var requestUrl = Url;
+
+            bool isResponseHeaderRequired = !string.IsNullOrEmpty(ResponseHeadersVariable);
 
             using (HttpRequestMessage request = new HttpRequestMessage(method, requestUrl))
             {
@@ -99,10 +96,12 @@ namespace PnP.PowerShell.Commands.Admin
                     request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(ContentType);
                 }
                 HttpResponseMessage response = httpClient.SendAsync(request, new System.Threading.CancellationToken()).Result;
+                Dictionary<string, string> responseHeaders = response?.Content?.Headers?.ToDictionary(a => a.Key, a => string.Join(";", a.Value));
 
                 if (response.IsSuccessStatusCode)
                 {
                     var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
                     if (responseString != null)
                     {
                         if (!Raw)
@@ -121,7 +120,6 @@ namespace PnP.PowerShell.Commands.Admin
                                 {
                                     formattedObject.Properties.Add(new PSNoteProperty("odata.nextLink", nextLink));
                                 }
-
                                 WriteObject(formattedObject, true);
                             }
                             else
@@ -134,100 +132,21 @@ namespace PnP.PowerShell.Commands.Admin
                             WriteObject(responseString);
                         }
                     }
+                    if (isResponseHeaderRequired)
+                    {
+                        SessionState.PSVariable.Set(ResponseHeadersVariable, responseHeaders.ToList());
+                    }
                 }
                 else
                 {
+                    if (isResponseHeaderRequired)
+                    {
+                        SessionState.PSVariable.Set(ResponseHeadersVariable, responseHeaders.ToList());
+                    }
                     // Something went wrong...
                     throw new Exception(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
                 }
             }
-        }
-
-        private void SetAuthenticationCookies(HttpClientHandler handler, ClientContext context)
-        {
-            context.Web.EnsureProperty(w => w.Url);
-            //if (context.Credentials is SharePointOnlineCredentials spCred)
-            //{
-            //    handler.Credentials = context.Credentials;
-            //    handler.CookieContainer.SetCookies(new Uri(context.Web.Url), spCred.GetAuthenticationCookie(new Uri(context.Web.Url)));
-            //}
-            //else if (context.Credentials == null)
-            //{
-            var cookieString = CookieReader.GetCookie(context.Web.Url).Replace("; ", ",").Replace(";", ",");
-            var authCookiesContainer = new System.Net.CookieContainer();
-            // Get FedAuth and rtFa cookies issued by ADFS when accessing claims aware applications.
-            // - or get the EdgeAccessCookie issued by the Web Application Proxy (WAP) when accessing non-claims aware applications (Kerberos).
-            IEnumerable<string> authCookies = null;
-            if (Regex.IsMatch(cookieString, "FedAuth", RegexOptions.IgnoreCase))
-            {
-                authCookies = cookieString.Split(',').Where(c => c.StartsWith("FedAuth", StringComparison.InvariantCultureIgnoreCase) || c.StartsWith("rtFa", StringComparison.InvariantCultureIgnoreCase));
-            }
-            else if (Regex.IsMatch(cookieString, "EdgeAccessCookie", RegexOptions.IgnoreCase))
-            {
-                authCookies = cookieString.Split(',').Where(c => c.StartsWith("EdgeAccessCookie", StringComparison.InvariantCultureIgnoreCase));
-            }
-            if (authCookies != null)
-            {
-                authCookiesContainer.SetCookies(new Uri(context.Web.Url), string.Join(",", authCookies));
-            }
-            handler.CookieContainer = authCookiesContainer;
-            //}
-        }
-    }
-
-    //Taken from "Remote Authentication in SharePoint Online Using the Client Object Model"
-    //https://code.msdn.microsoft.com/Remote-Authentication-in-b7b6f43c
-
-    /// <summary>
-    /// WinInet.dll wrapper
-    /// </summary>
-    internal static class CookieReader
-    {
-        /// <summary>
-        /// Enables the retrieval of cookies that are marked as "HTTPOnly". 
-        /// Do not use this flag if you expose a scriptable interface, 
-        /// because this has security implications. It is imperative that 
-        /// you use this flag only if you can guarantee that you will never 
-        /// expose the cookie to third-party code by way of an 
-        /// extensibility mechanism you provide. 
-        /// Version:  Requires Internet Explorer 8.0 or later.
-        /// </summary>
-        private const int INTERNET_COOKIE_HTTPONLY = 0x00002000;
-
-        /// <summary>
-        /// Returns cookie contents as a string
-        /// </summary>
-        /// <param name="url">Url to get cookie</param>
-        /// <returns>Returns Cookie contents as a string</returns>
-        public static string GetCookie(string url)
-        {
-            int size = 512;
-            StringBuilder sb = new StringBuilder(size);
-            if (!NativeMethods.InternetGetCookieEx(url, null, sb, ref size, INTERNET_COOKIE_HTTPONLY, IntPtr.Zero))
-            {
-                if (size < 0)
-                {
-                    return null;
-                }
-                sb = new StringBuilder(size);
-                if (!NativeMethods.InternetGetCookieEx(url, null, sb, ref size, INTERNET_COOKIE_HTTPONLY, IntPtr.Zero))
-                {
-                    return null;
-                }
-            }
-            return sb.ToString();
-        }
-
-        private static class NativeMethods
-        {
-            [DllImport("wininet.dll", EntryPoint = "InternetGetCookieEx", CharSet = CharSet.Unicode, SetLastError = true)]
-            public static extern bool InternetGetCookieEx(
-                string url,
-                string cookieName,
-                StringBuilder cookieData,
-                ref int size,
-                int flags,
-                IntPtr pReserved);
         }
     }
 }
