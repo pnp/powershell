@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Files
         [ValidateNotNullOrEmpty]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYFOLDER)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_BYFOLDER)]
         [ValidateNotNullOrEmpty]
         public FolderPipeBind Identity;
 
@@ -46,8 +46,15 @@ namespace PnP.PowerShell.Commands.Files
                     string serverRelativeUrl = null;
                     if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
                     {
-                        var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
-                        serverRelativeUrl = UrlUtility.Combine(webUrl, FolderSiteRelativeUrl);
+                        if(FolderSiteRelativeUrl == "Microsoft.SharePoint.Client.Folder")
+                        {
+                            throw new PSArgumentException($"Please pass in a Folder instance using the -{nameof(Identity)} parameter instead of piping it to this cmdlet");
+                        }
+                        else
+                        {
+                            var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+                            serverRelativeUrl = UrlUtility.Combine(webUrl, FolderSiteRelativeUrl);
+                        }
                     }
 
                     targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? CurrentWeb.RootFolder : CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
