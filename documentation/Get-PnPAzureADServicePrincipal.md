@@ -22,7 +22,7 @@ Gets service principal/application registrations in Azure Active Directory.
 ### All
 
 ```powershell
-Get-PnPAzureADServicePrincipal [-Connection <PnPConnection>]
+Get-PnPAzureADServicePrincipal [-Filter <string>] [-Connection <PnPConnection>]
 ```
 
 ### By App Id
@@ -83,6 +83,13 @@ Get-PnPAzureADServicePrincipal -AppName "My application"
 
 Retrieves the application registration with the name "My application" from Azure Active Directory
 
+### EXAMPLE 5
+```powershell
+Get-PnPAzureADServicePrincipal -Filter "startswith(description, 'contoso')"
+```
+
+Retrieves the application registration with the description starting with "contoso" from Azure Active Directory. This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties).
+
 ## PARAMETERS
 
 ### -AppId
@@ -133,6 +140,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Filter
+Specify the query to pass to Graph API in $filter.
+
+```yaml
+Type: String
+Parameter Sets: Filter
 
 Required: False
 Position: Named
