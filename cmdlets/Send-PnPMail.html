@@ -93,9 +93,9 @@
 <p>Allows to send an email using the Office 365 SMTP Service or SharePoin.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Send-PnPMail -To address@tenant.sharepointonline.com -Subject test -Body test
+<pre><code class="lang-powershell">Send-PnPMail -To address@tenant.microsoftonline.com -Subject test -Body test
 </code></pre>
-<p>Sends an e-mail using the SharePoint SendEmail method using the current context. E-mail is sent from the system account and can only be sent to accounts in the same tenant</p>
+<p>Sends an e-mail using the SharePoint SendEmail method using the current context. E-mail is sent from the system account and can only be sent to accounts in the same tenant.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Send-PnPMail -To address@contoso.com -Subject test -Body test -From me@tenant.onmicrosoft.com -Password xyz
 </code></pre>
@@ -182,7 +182,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-to">-To</h3>
-<p>List of recipients</p>
+<p>List of recipients as a string array</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 

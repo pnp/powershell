@@ -91,7 +91,7 @@
 <p>Gets service principal/application registrations in Azure Active Directory.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all">All</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal [-Filter &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="by-app-id">By App Id</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -AppId &lt;Guid&gt; [-Connection &lt;PnPConnection&gt;]
@@ -124,6 +124,10 @@
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -AppName &quot;My application&quot;
 </code></pre>
 <p>Retrieves the application registration with the name &quot;My application&quot; from Azure Active Directory</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -Filter &quot;startswith(description, 'contoso')&quot;
+</code></pre>
+<p>Retrieves the application registration with the description starting with &quot;contoso&quot; from Azure Active Directory. This example demonstrates using Advanced Query capabilities (see: <a href="https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties">https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties</a>).</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-appid">-AppId</h3>
 <p>The guid of the application registration its App Id/Client Id to retrieve</p>
@@ -162,6 +166,17 @@ Accept wildcard characters: False
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-filter">-Filter</h3>
+<p>Specify the query to pass to Graph API in $filter.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Filter
 
 Required: False
 Position: Named
