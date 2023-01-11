@@ -104,6 +104,9 @@ namespace PnP.PowerShell.Commands.Site
         public bool? RequestFilesLinkEnabled;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? RequestFilesLinkExpirationInDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string ScriptSafeDomainName;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -331,6 +334,18 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.RequestFilesLinkEnabled = RequestFilesLinkEnabled.Value;
                     executeQueryRequired = true;
                 }
+                
+                if (RequestFilesLinkExpirationInDays.HasValue)
+                {
+                    if (RequestFilesLinkExpirationInDays.Value < 0 || RequestFilesLinkExpirationInDays > 730)
+                    {
+                        throw new PSArgumentException($"{RequestFilesLinkExpirationInDays} must have a value between 0 and 730", nameof(RequestFilesLinkExpirationInDays));
+                    }
+
+                    siteProperties.RequestFilesLinkExpirationInDays = RequestFilesLinkExpirationInDays.Value;
+                    executeQueryRequired = true;
+                }
+
                 if (ParameterSpecified(nameof(RestrictedAccessControl)) && RestrictedAccessControl.HasValue)
                 {
                     siteProperties.RestrictedAccessControl = RestrictedAccessControl.Value;

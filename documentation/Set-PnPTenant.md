@@ -94,6 +94,9 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableRestrictedAccessControl <Boolean>]
  [-SyncAadB2BManagementPolicy <Boolean>]
  [-EnableAzureADB2BIntegration <Boolean>]
+ [-CoreRequestFilesLinkEnabled <Boolean>]
+ [-CoreRequestFilesLinkExpirationInDays <Boolean>]
+ [-LabelMismatchEmailHelpLink <String>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -1494,6 +1497,50 @@ Allows enablement of Azure B2B Management Policies to be synced. See [this artic
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreRequestFilesLinkEnabled
+Enable or disable the Request files link on the core partition for all SharePoint sites (not including OneDrive sites). If this value is not set, Request files will only show for OneDrives with Anyone links enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreRequestFilesLinkExpirationInDays
+Specifies the number of days before a Request files link expires for all SharePoint sites (not including OneDrive sites).
+
+The value can be from 0 to 730 days.
+
+```yaml
+Type: Integer
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LabelMismatchEmailHelpLink
+This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False
