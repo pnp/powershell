@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Register-PnPAzureADApp` and `Register-PnPManagementShellAccess` cmdlets to reuse existing HTTP client instead of creating a new one. [#2682](https://github.com/pnp/powershell/pull/2682)
 - Improved `Register-PnPAzureADApp` cmdlet based on compiler warnings. [#2682](https://github.com/pnp/powershell/pull/2682)
 - `Connect-PnPOnline` will now throw a much clearer error message if the site to be connected doesn't exist when using the legacy Client Id with Secret (ACS) authentication mode. [#2707](https://github.com/pnp/powershell/pull/2707)
+- Properties of `Get-PnPAzureADServicePrincipal` are now all typed instead of some of them returning unparsed JSON fragments 
 
 ### Removed
 
