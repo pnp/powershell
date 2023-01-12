@@ -39,7 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Register-PnPAzureADApp` cmdlet based on compiler warnings. [#2682](https://github.com/pnp/powershell/pull/2682)
 - `Connect-PnPOnline` will now throw a much clearer error message if the site to be connected doesn't exist when using the legacy Client Id with Secret (ACS) authentication mode. [#2707](https://github.com/pnp/powershell/pull/2707)
 - Properties of `Get-PnPAzureADServicePrincipal` are now all typed instead of some of them returning unparsed JSON fragments 
-- Marked `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` as obsolete as the implementation behind these feates has been changed in SharePoint Online causing them no longer to work. At present there's no alternative for this that we can call into thus we will have to remove these in a future version.
+- Marked `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` as obsolete as the implementation behind these feates has been changed in SharePoint Online causing them no longer to work. At present there's no alternative for this that we can call into thus we will have to remove these in a future version. [#2720](https://github.com/pnp/powershell/pull/2720)
 
 ### Removed
 
