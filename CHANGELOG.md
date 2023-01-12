@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `ResponseHeadersVariable` parameter to the `Invoke-PnPSPRestMethod` which if specified will store the response headers values in the PowerShell variable name that is specified. [#2711](https://github.com/pnp/powershell/pull/2711)
 - Added `-Filter` parameter to `Get-PnPAzureADServicePrincipal` cmdlet to retrieve specific application registrations based on filter conditions. It supports simple and advanced queries. [#2710](https://github.com/pnp/powershell/pull/2710)
 - Added `-Filter` parameter to `Get-PnPMicrosoft365Group` cmdlet to retrieve specific M365 groups based on filter conditions. It supports simple and advanced queries.
+- Added `-CoreRequestFilesLinkExpirationInDays` and `-CoreRequestFilesLinkEnabled` to `Set-PnPTenant` and `-RequestFilesLinkExpirationInDays` to `Set-PnPSite` to allow configuration of the new receive files to SharePoint Online folder feature [#2719](https://github.com/pnp/powershell/pull/2719)
 
 ### Changed
 
@@ -38,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Register-PnPAzureADApp` and `Register-PnPManagementShellAccess` cmdlets to reuse existing HTTP client instead of creating a new one. [#2682](https://github.com/pnp/powershell/pull/2682)
 - Improved `Register-PnPAzureADApp` cmdlet based on compiler warnings. [#2682](https://github.com/pnp/powershell/pull/2682)
 - `Connect-PnPOnline` will now throw a much clearer error message if the site to be connected doesn't exist when using the legacy Client Id with Secret (ACS) authentication mode. [#2707](https://github.com/pnp/powershell/pull/2707)
+- Properties of `Get-PnPAzureADServicePrincipal` are now all typed instead of some of them returning unparsed JSON fragments 
 
 ### Removed
 
