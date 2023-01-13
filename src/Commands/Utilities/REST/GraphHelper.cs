@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             try
             {
-                exception = JsonSerializer.Deserialize<GraphException>(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                exception = JsonSerializer.Deserialize<GraphException>(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 return true;
             }
             catch
@@ -128,7 +128,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var stringContent = await GetAsync(connection, url, accessToken, additionalHeaders);
             if (stringContent != null)
             {
-                var options = new JsonSerializerOptions { IgnoreNullValues = true };
+                var options = new JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
                 options.Converters.Add(new JsonStringEnumConverter());
                 if (camlCasePolicy)
                 {
@@ -179,7 +179,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
                 if (stringContent != null)
                 {
-                    var options = new JsonSerializerOptions() { IgnoreNullValues = true };
+                    var options = new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
                     if (camlCasePolicy)
                     {
                         options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -201,18 +201,14 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         #region PATCH
         public static async Task<T> PatchAsync<T>(PnPConnection connection, string accessToken, string url, T content, IDictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
         {
-            var serializerSettings = new JsonSerializerOptions() { IgnoreNullValues = true };
+            var serializerSettings = new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
             if (camlCasePolicy)
             {
                 serializerSettings.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             }
             var requestContent = new StringContent(JsonSerializer.Serialize(content, serializerSettings));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-#if NETFRAMEWORK
-            var message = GetMessage(url, new HttpMethod("PATCH"), connection, accessToken, requestContent, additionalHeaders);
-#else
             var message = GetMessage(url, HttpMethod.Patch, connection, accessToken, requestContent, additionalHeaders);
-#endif
             var returnValue = await SendMessageAsync(connection, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
@@ -226,11 +222,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<T> PatchAsync<T>(PnPConnection connection, string accessToken, string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
-#if NETFRAMEWORK
-            var message = GetMessage(url, new HttpMethod("PATCH"), connection, accessToken, content, additionalHeaders);
-#else
             var message = GetMessage(url, HttpMethod.Patch, connection, accessToken, content, additionalHeaders);
-#endif
             var returnValue = await SendMessageAsync(connection, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
@@ -244,11 +236,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<HttpResponseMessage> PatchAsync(PnPConnection connection, string accessToken, HttpContent content, string url, IDictionary<string, string> additionalHeaders = null)
         {
-#if NETFRAMEWORK
-            var message = GetMessage(url, new HttpMethod("PATCH"), connection, accessToken, content, additionalHeaders);
-#else
             var message = GetMessage(url, HttpMethod.Patch, connection, accessToken, content, additionalHeaders);
-#endif
             return await GetResponseMessageAsync(connection, message);
         }
 
@@ -279,7 +267,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<T> PostAsync<T>(PnPConnection connection, string url, T content, string accessToken)
         {
-            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
             return await PostInternalAsync<T>(connection, url, accessToken, requestContent);
@@ -298,7 +286,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 try
                 {
-                    return JsonSerializer.Deserialize<T>(stringContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, PropertyNameCaseInsensitive = propertyNameCaseInsensitive });
+                    return JsonSerializer.Deserialize<T>(stringContent, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, PropertyNameCaseInsensitive = propertyNameCaseInsensitive });
                 }
                 catch
                 {
@@ -310,13 +298,13 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<T> PutAsync<T>(PnPConnection connection, string url, T content, string accessToken)
         {
-            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var message = GetMessage(url, HttpMethod.Put, connection, accessToken, requestContent);
             var returnValue = await SendMessageAsync(connection, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
-                return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             }
             else
             {
@@ -348,7 +336,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 exception.AccessToken = accessToken;
                 exception.HttpResponse = response;
                 

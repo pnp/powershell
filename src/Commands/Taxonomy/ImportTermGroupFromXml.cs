@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
         protected override void ExecuteCmdlet()
         {
             var template = new ProvisioningTemplate();
-            
+
             template.Id = "TAXONOMYPROVISIONING";
 
             var outputStream = XMLPnPSchemaFormatter.LatestFormatter.ToFormattedTemplate(template);
@@ -33,7 +33,6 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
             var document = XDocument.Parse(fullXml);
 
-#if !NETFRAMEWORK
 
             XElement preferencesElement = document.Root.Descendants(document.Root.GetNamespaceOfPrefix("pnp") + "Preferences").FirstOrDefault();
             if (preferencesElement != null && preferencesElement.PreviousNode != null)
@@ -41,8 +40,6 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 preferencesElement.PreviousNode.AddBeforeSelf(preferencesElement);
                 preferencesElement.Remove();
             }
-
-#endif
 
             XElement termGroupsElement;
             if (ParameterSpecified(nameof(Xml)))

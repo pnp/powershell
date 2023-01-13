@@ -110,17 +110,14 @@ namespace PnP.PowerShell.Commands.Utilities
                     var ctx = new ClientContext(siteUrl);
                     
                     ctx.DisableReturnValueCache = true;
-#if !NETFRAMEWORK
                     // We only have to add a request digest when running in dotnet core
                     var requestDigestInfo = GetRequestDigestAsync(siteUrl, authCookiesContainer).GetAwaiter().GetResult();
                     requestDigestInfos.AddOrUpdate(siteUrl, requestDigestInfo, (key, oldValue) => requestDigestInfo);
 
                     //expiresOn = requestDigestInfo.expiresOn;
-#endif
                     ctx.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.CookieContainer = authCookiesContainer;
-#if !NETFRAMEWORK
                         var hostUrl = $"https://{e.WebRequestExecutor.WebRequest.Host}";
                         var requestUri = e.WebRequestExecutor.WebRequest.RequestUri;
                         if (requestUri.LocalPath.Contains("/sites/") || requestUri.LocalPath.Contains("/teams/"))
@@ -147,7 +144,6 @@ namespace PnP.PowerShell.Commands.Utilities
                             requestDigestInfos.AddOrUpdate(hostUrl, requestDigestInfo, (key, oldValue) => requestDigestInfo);
                             e.WebRequestExecutor.WebRequest.Headers.Add("X-RequestDigest", requestDigestInfo.digestToken);
                         }
-#endif
                     };
 
                     var settings = new PnP.Framework.Utilities.Context.ClientContextSettings();
@@ -229,11 +225,8 @@ namespace PnP.PowerShell.Commands.Utilities
                                         matched = navigatedUrl.EndsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
                                         break;
                                     case UrlMatchType.Contains:
-#if NETFRAMEWORK
-                                        matched = navigatedUrl.Contains(closeUrl.url);
-#else
+
                                         matched = navigatedUrl.Contains(closeUrl.url, StringComparison.OrdinalIgnoreCase);
-#endif
                                         break;
                                 }
                                 if (matched)

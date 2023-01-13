@@ -3,6 +3,10 @@
 	<Import Project="Sdk.targets" Condition="'$(OS)' != 'Windows_NT'" />
 
 	<PropertyGroup>
+		<LangVersion>10</LangVersion>
+	 </PropertyGroup>
+	 
+	<PropertyGroup>
 		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
 		<AssemblyName>PnP.PowerShell</AssemblyName>
 		<RootNamespace>PnP.PowerShell.Commands</RootNamespace>
@@ -38,10 +42,7 @@
 		<DefineConstants>Linux</DefineConstants>
 	</PropertyGroup>
 
-	<PropertyGroup Condition="'$(TargetFramework)' == 'net462'">
-		<DefineConstants>TRACE;$(DefineConstants);NETFRAMEWORK</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+		<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
 		<DefineConstants>TRACE;$(DefineConstants);DEBUG</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
@@ -97,18 +98,8 @@
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net462'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
 		<Reference Include="PnP.Core.Auth" Condition="'$(TargetFramework)' == 'net6.0-windows'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core.Auth\bin\Debug\net6.0\PnP.Core.Auth.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-		<Reference Include="PnP.Core.Auth" Condition="'$(TargetFramework)' == 'net462'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Auth\bin\Debug\netstandard2.0\PnP.Core.Auth.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
@@ -117,18 +108,8 @@
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Admin" Condition="'$(TargetFramework)' == 'net462'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\netstandard2.0\PnP.Core.Admin.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
 		<Reference Include="PnP.Core.Transformation" Condition="'$(TargetFramework)' == 'net6.0-windows'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation\bin\Debug\net6.0\PnP.Core.Transformation.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-		<Reference Include="PnP.Core.Transformation" Condition="'$(TargetFramework)' == 'net462'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation\bin\Debug\netstandard2.0\PnP.Core.Transformation.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
@@ -137,21 +118,11 @@
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Transformation.SharePoint" Condition="'$(TargetFramework)' == 'net462'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation.SharePoint\bin\Debug\netstandard2.0\PnP.Core.Transformation.SharePoint.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
 		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net6.0-windows'">
 			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\net6.0\PnP.Framework.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net462'">
-			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
@@ -170,22 +141,6 @@
 		<PackageReference Include="System.Text.Json" Version="6.0.7" />
 		<PackageReference Include="TextCopy" Version="6.1.0" />
 		
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />		
-		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.7.0" />
-		<PackageReference Include="System.Security.Cryptography.OpenSsl" Version="4.7.0" />
-		<PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
-		<PackageReference Include="System.Text.Json" Version="4.7.2" />
-		<PackageReference Include="TextCopy" Version="4.3.1" />
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net462'">
-		<Compile Remove="Base\DependencyAssemblyLoadContext.cs" />
 	</ItemGroup>
 
 	<ItemGroup>

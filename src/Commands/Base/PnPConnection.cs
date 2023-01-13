@@ -812,7 +812,8 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (Utilities.OperatingSystem.IsWindows())
             {
-                var privateKey = (certificate.PrivateKey as RSACng)?.Key;
+                var privateKey = (certificate.GetRSAPrivateKey() as RSACng)?.Key;
+                // var privateKey = (certificate.PrivateKey as RSACng)?.Key;
                 if (privateKey == null)
                     return;
 
