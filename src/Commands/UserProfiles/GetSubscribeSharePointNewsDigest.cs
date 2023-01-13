@@ -5,11 +5,13 @@ using System.Linq;
 
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
+using System;
 
 namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPSubscribeSharePointNewsDigest")]
     [OutputType(typeof(SubscribeSharePointNewsDigestStatus))]
+    [Obsolete("The implementation behind this feature has changed in SharePoint Online making it impossible at the moment to call this using PnP PowerShell. This cmdlet therefore no longer works and will be removed in a future version.")]
     public class GetSubscribeSharePointNewsDigest : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

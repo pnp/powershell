@@ -19,6 +19,8 @@ You must connect to the tenant admin website (https://tenant-admin.sharepoint.co
 
 Enables or disables the SharePoint News Digest mails for a particular user. Note that the disabling option is still experimental and may not work and may be removed again in the future.
 
+Note: The implementation behind this in SharePoint Online has changed causing this cmdlet to no longer work. Unfortunately there's no alternative way to call into this functionality from PnP PowerShell. We therefore have to remove this cmdlet in a future version. At present it does not work anymore.
+
 ## SYNTAX
 
 ```powershell
