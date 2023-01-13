@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
         public string Id { get; set; }
 
         [JsonPropertyName("deletedDateTime")]
-        public object DeletedDateTime { get; set; }
+        public DateTime? DeletedDateTime { get; set; }
 
         [JsonPropertyName("accountEnabled")]
         public bool AccountEnabled { get; set; }
@@ -19,58 +19,58 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
         public List<string> AlternativeNames { get; set; }
 
         [JsonPropertyName("appDisplayName")]
-        public object AppDisplayName { get; set; }
+        public string AppDisplayName { get; set; }
 
         [JsonPropertyName("appDescription")]
-        public object AppDescription { get; set; }
+        public string AppDescription { get; set; }
 
         [JsonPropertyName("appId")]
         public string AppId { get; set; }
 
         [JsonPropertyName("applicationTemplateId")]
-        public object ApplicationTemplateId { get; set; }
+        public string ApplicationTemplateId { get; set; }
 
         [JsonPropertyName("appOwnerOrganizationId")]
-        public object AppOwnerOrganizationId { get; set; }
+        public string AppOwnerOrganizationId { get; set; }
 
         [JsonPropertyName("appRoleAssignmentRequired")]
-        public bool AppRoleAssignmentRequired { get; set; }
+        public bool? AppRoleAssignmentRequired { get; set; }
 
         [JsonPropertyName("createdDateTime")]
-        public DateTime CreatedDateTime { get; set; }
+        public DateTime? CreatedDateTime { get; set; }
 
         [JsonPropertyName("description")]
-        public object Description { get; set; }
+        public string Description { get; set; }
 
         [JsonPropertyName("disabledByMicrosoftStatus")]
-        public object DisabledByMicrosoftStatus { get; set; }
+        public string DisabledByMicrosoftStatus { get; set; }
 
         [JsonPropertyName("displayName")]
         public string DisplayName { get; set; }
 
         [JsonPropertyName("homepage")]
-        public object Homepage { get; set; }
+        public string Homepage { get; set; }
 
         [JsonPropertyName("loginUrl")]
-        public object LoginUrl { get; set; }
+        public string LoginUrl { get; set; }
 
         [JsonPropertyName("logoutUrl")]
-        public object LogoutUrl { get; set; }
+        public string LogoutUrl { get; set; }
 
         [JsonPropertyName("notes")]
-        public object Notes { get; set; }
+        public string Notes { get; set; }
 
         [JsonPropertyName("notificationEmailAddresses")]
-        public List<object> NotificationEmailAddresses { get; set; }
+        public List<string> NotificationEmailAddresses { get; set; }
 
         [JsonPropertyName("preferredSingleSignOnMode")]
-        public object PreferredSingleSignOnMode { get; set; }
+        public string PreferredSingleSignOnMode { get; set; }
 
         [JsonPropertyName("preferredTokenSigningKeyThumbprint")]
-        public object PreferredTokenSigningKeyThumbprint { get; set; }
+        public string PreferredTokenSigningKeyThumbprint { get; set; }
 
         [JsonPropertyName("replyUrls")]
-        public List<object> ReplyUrls { get; set; }
+        public List<string> ReplyUrls { get; set; }
 
         [JsonPropertyName("servicePrincipalNames")]
         public List<string> ServicePrincipalNames { get; set; }
@@ -79,16 +79,16 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
         public string ServicePrincipalType { get; set; }
 
         [JsonPropertyName("signInAudience")]
-        public object SignInAudience { get; set; }
+        public string SignInAudience { get; set; }
 
         [JsonPropertyName("tags")]
-        public List<object> Tags { get; set; }
+        public List<string> Tags { get; set; }
 
         [JsonPropertyName("tokenEncryptionKeyId")]
-        public object TokenEncryptionKeyId { get; set; }
+        public string TokenEncryptionKeyId { get; set; }
 
         [JsonPropertyName("info")]
-        public object Info { get; set; }
+        public AzureADServicePrincipalInfo Info { get; set; }
 
         [JsonPropertyName("samlSingleSignOnSettings")]
         public object SamlSingleSignOnSettings { get; set; }
@@ -103,13 +103,13 @@ namespace PnP.PowerShell.Commands.Model.AzureAD
         public List<AzureADServicePrincipalKeyCredential> KeyCredentials { get; set; }
 
         [JsonPropertyName("oauth2PermissionScopes")]
-        public List<object> Oauth2PermissionScopes { get; set; }
+        public List<AzureADServicePrincipalOauth2PermissionScopes> Oauth2PermissionScopes { get; set; }
 
         [JsonPropertyName("passwordCredentials")]
-        public List<object> PasswordCredentials { get; set; }
+        public List<AzureADServicePrincipalPasswordCredentials> PasswordCredentials { get; set; }
 
         [JsonPropertyName("resourceSpecificApplicationPermissions")]
-        public List<object> ResourceSpecificApplicationPermissions { get; set; }
+        public List<AzureADServicePrincipalResourceSpecificApplicationPermissions> ResourceSpecificApplicationPermissions { get; set; }
 
         [JsonPropertyName("verifiedPublisher")]
         public AzureADServicePrincipalVerifiedPublisher VerifiedPublisher { get; set; }

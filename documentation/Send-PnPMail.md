@@ -27,10 +27,10 @@ Allows to send an email using the Office 365 SMTP Service or SharePoin.
 
 ### EXAMPLE 1
 ```powershell
-Send-PnPMail -To address@tenant.sharepointonline.com -Subject test -Body test
+Send-PnPMail -To address@tenant.microsoftonline.com -Subject test -Body test
 ```
 
-Sends an e-mail using the SharePoint SendEmail method using the current context. E-mail is sent from the system account and can only be sent to accounts in the same tenant
+Sends an e-mail using the SharePoint SendEmail method using the current context. E-mail is sent from the system account and can only be sent to accounts in the same tenant.
 
 ### EXAMPLE 2
 ```powershell
@@ -146,7 +146,7 @@ Accept wildcard characters: False
 ```
 
 ### -To
-List of recipients
+List of recipients as a string array
 
 ```yaml
 Type: String[]
@@ -159,9 +159,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

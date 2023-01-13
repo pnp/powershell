@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Principals
         protected override void ExecuteCmdlet()
         {
             var siteUrl = Connection.Url;
-            if(ParameterSpecified(Site))
+            if (ParameterSpecified(nameof(Site)))
             {
                 siteUrl = Site;
             }
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 hostUrl = hostUrl.Substring(0, hostUrl.Length - 1);
             }
-            var site = this.Tenant.GetSiteByUrl(siteUrl);
+            var site = Tenant.GetSiteByUrl(siteUrl);
             ClientContext.Load(site);
             ClientContext.ExecuteQueryRetry();
             var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");

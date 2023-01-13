@@ -21,9 +21,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-EnableAzureADB2BIntegration` and `-SyncAadB2BManagementPolicy` parameters to `Set-PnPTenant` [#2631](https://github.com/pnp/powershell/pull/2631)
 - Added `-ShowInFiltersPane` to `Set-PnPField` which allows fields to be shown or hidden in the filters pane [#2623](https://github.com/pnp/powershell/pull/2632)
 - Added `-KeyColumn` to `Add-PnPDataRowsToSiteTemplate` which allows for overwriting existing list items in a site template [#2616](https://github.com/pnp/powershell/pull/2616)
+- Added `Get-PnPFolderStorageMetric` which allows storage usage of a specific folder to be retrieved [#2646](https://github.com/pnp/powershell/pull/2646)
 - Added `IsTeamsConnected`, `IsTeamsChannelConnected` and `TeamChannelType` to be returned when `Get-PnPTenantSite` cmdlet is executed. [#2656](https://github.com/pnp/powershell/pull/2656)
 - Added `HTTP/2` support for all HTTP requests to improve performance for HTTP requests. [#2687](https://github.com/pnp/powershell/pull/2687)
 - Added `-EnvironmentVariable` parameter to `Connect-PnPOnline` to connect using Azure environment variables. [#2681](https://github.com/pnp/powershell/pull/2681)
+- Added `ResponseHeadersVariable` parameter to the `Invoke-PnPSPRestMethod` which if specified will store the response headers values in the PowerShell variable name that is specified. [#2711](https://github.com/pnp/powershell/pull/2711)
+- Added `-Filter` parameter to `Get-PnPAzureADServicePrincipal` cmdlet to retrieve specific application registrations based on filter conditions. It supports simple and advanced queries. [#2710](https://github.com/pnp/powershell/pull/2710)
+- Added `-Filter` parameter to `Get-PnPMicrosoft365Group` cmdlet to retrieve specific M365 groups based on filter conditions. It supports simple and advanced queries. [#2709](https://github.com/pnp/powershell/pull/2709)
+- Added `-CoreRequestFilesLinkExpirationInDays` and `-CoreRequestFilesLinkEnabled` to `Set-PnPTenant` and `-RequestFilesLinkExpirationInDays` to `Set-PnPSite` to allow configuration of the new receive files to SharePoint Online folder feature [#2719](https://github.com/pnp/powershell/pull/2719)
 
 ### Changed
 
@@ -34,6 +39,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Add-PnPField`, `Get-PnPListItem` and `Get-PnPSiteDesignRun` cmdlets by improving null checks based on warnings from compiler. [#PR1](https://github.com/pnp/powershell/commit/791b031d5fa844f1e6961b1136df9f79f19bfdcd) and [#PR2](https://github.com/pnp/powershell/commit/d56f3cd497be79170f68b29be490b222bf042aaa)
 - Improved `Register-PnPAzureADApp` and `Register-PnPManagementShellAccess` cmdlets to reuse existing HTTP client instead of creating a new one. [#2682](https://github.com/pnp/powershell/pull/2682)
 - Improved `Register-PnPAzureADApp` cmdlet based on compiler warnings. [#2682](https://github.com/pnp/powershell/pull/2682)
+- `Connect-PnPOnline` will now throw a much clearer error message if the site to be connected doesn't exist when using the legacy Client Id with Secret (ACS) authentication mode. [#2707](https://github.com/pnp/powershell/pull/2707)
+- Properties of `Get-PnPAzureADServicePrincipal` are now all typed instead of some of them returning unparsed JSON fragments. [#2717](https://github.com/pnp/powershell/pull/2717)
+- Marked `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` as obsolete as the implementation behind these features has been changed in SharePoint Online causing them no longer to work. At present, there's no alternative for this that we can call into thus we will have to remove these in a future version. [#2720](https://github.com/pnp/powershell/pull/2720)
 
 ### Removed
 
@@ -42,9 +50,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with -CreateDrive on `Connect-PnPOnline` throwing exception on non-existing context
 - Fixed issue with non-existing ItemProxy cmdlet aliases being registered
 - Fixed issue with `-TranslationLanguageCode` failures in `Add-PnPPage` and `Set-PnpPage` cmdlets. [#2634](https://github.com/pnp/powershell/pull/2634)
+- Fixed issue with `Export-PnPUserInfo` and `Remove-PnPUserInfo` cmdlets not working due to issue with parameter validation. [#2688](https://github.com/pnp/powershell/pull/2688)
 
 ### Contributors
 
+- Robin Meure [robinmeure]
 - Rohit Varghese [rohitvarghese96]
 - Arleta Wanat [PowershellScripts]
 - Erwin van Hunen [erwinvanhunen]

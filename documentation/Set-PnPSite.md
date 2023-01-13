@@ -16,16 +16,35 @@ Sets site collection properties.
 
 ### Set Properties
 ```powershell
-Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-LogoFilePath <String>]
- [-Sharing <SharingCapabilities>] [-StorageMaximumLevel <Int64>] [-StorageWarningLevel <Int64>]
- [-AllowSelfServiceUpgrade] [-NoScriptSite] [-Owners <System.Collections.Generic.List`1[System.String]>]
- [-CommentsOnSitePagesDisabled] [-DefaultLinkPermission <SharingPermissionType>]
- [-DefaultSharingLinkType <SharingLinkType>] [-DefaultLinkToExistingAccess <Boolean>] [-DefaultLinkToExistingAccessReset] [-DisableAppViews <AppViewsPolicy>]
- [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>] [-DisableSharingForNonOwners]
- [-LocaleId <UInt32>] [-RestrictedToGeo <RestrictedToRegion>] [-SocialBarOnSitePagesDisabled]
- [-AnonymousLinkExpirationInDays <Int32>] [-OverrideTenantAnonymousLinkExpirationPolicy]
- [-MediaTranscription <MediaTranscriptionPolicyType>] [-SensitivityLabel <Guid>] [-RequestFilesLinkEnabled <Boolean>] [-ScriptSafeDomainName <string>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPSite [-Identity <String>]
+[-Classification <String>]
+[-DisableFlows]
+[-LogoFilePath <String>]
+ [-Sharing <SharingCapabilities>]
+ [-StorageMaximumLevel <Int64>]
+ [-StorageWarningLevel <Int64>]
+ [-AllowSelfServiceUpgrade]
+ [-NoScriptSite]
+ [-Owners <System.Collections.Generic.List<[System.String]>]
+ [-CommentsOnSitePagesDisabled]
+ [-DefaultLinkPermission <SharingPermissionType>]
+ [-DefaultSharingLinkType <SharingLinkType>]
+ [-DefaultLinkToExistingAccess <Boolean>]
+ [-DefaultLinkToExistingAccessReset]
+ [-DisableAppViews <AppViewsPolicy>]
+ [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
+ [-DisableSharingForNonOwners]
+ [-LocaleId <UInt32>]
+ [-RestrictedToGeo <RestrictedToRegion>]
+ [-SocialBarOnSitePagesDisabled]
+ [-AnonymousLinkExpirationInDays <Int32>]
+ [-RequestFilesLinkExpirationInDays <Int32>]
+ [-OverrideTenantAnonymousLinkExpirationPolicy]
+ [-MediaTranscription <MediaTranscriptionPolicyType>]
+ [-SensitivityLabel <Guid>]
+ [-RequestFilesLinkEnabled <Boolean>]
+ [-ScriptSafeDomainName <string>]
+ [-Connection <PnPConnection>]
 ```
 
 ### Set Lock State
@@ -101,6 +120,22 @@ Accept wildcard characters: False
 Specifies all anonymous/anyone links that have been created (or will be created) will expire after the set number of days. Only applies if OverrideTenantAnonymousLinkExpirationPolicy is set to true. 
 
 To remove the expiration requirement, set the value to zero (0).
+
+```yaml
+Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RequestFilesLinkExpirationInDays
+Specifies the number of days before a Request Files link expires for the site.
+
+The value can be from 0 to 730 days.
 
 ```yaml
 Type: Int32
