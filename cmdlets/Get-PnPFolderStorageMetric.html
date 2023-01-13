@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPAzureADApp | PnP PowerShell </title>
+    <title>Get-PnPFolderStorageMetric | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPAzureADApp | PnP PowerShell ">
+    <meta name="title" content="Get-PnPFolderStorageMetric | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,50 +77,50 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="get-pnpazureadapp">Get-PnPAzureADApp</h1>
+                    <h1 id="get-pnpfolderstoragemetric">Get-PnPFolderStorageMetric</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API: Application.Read.All</li>
-</ul>
-<p>Returns Azure AD App registrations</p>
+<p>Allows retrieval of storage metrics for a folder in SharePoint Online</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="filter">Filter</h3>
-<pre><code>Get-PnPAzureADApp [-Identity &lt;AzureADAppPipeBind&gt;]
+<h3 id="folder-via-site-relative-url-default">Folder via site relative URL (Default)</h3>
+<pre><code class="lang-powershell">Get-PnPFolderStorageMetric [-FolderSiteRelativeUrl &lt;String&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
-<h3 id="identity-default">Identity (Default)</h3>
-<pre><code>Get-PnPAzureADApp -Filter &lt;string&gt;
+<h3 id="folder-via-pipebind">Folder via pipebind</h3>
+<pre><code class="lang-powershell">Get-PnPFolderStorageMetric -List &lt;ListPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="folder-via-list">Folder via list</h3>
+<pre><code class="lang-powershell">Get-PnPFolderStorageMetric -Identity &lt;FolderPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlets returns all app registrations, a specific one or ones matching a provided filter.</p>
+<p>Allows retrieval of storage metrics for a folder in SharePoint Online. It will reveal the true storage usage, similar to what will be shown through storman.aspx, the date and time the folder was last modified and the amount of files inside the folder.</p>
+<p>Please note that there is a delay of typically just a few minutes between making changes to files on a site and this cmdlet returning updated values.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADApp
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPFolderStorageMetric
 </code></pre>
-<p>This returns all Azure AD App registrations</p>
-<h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADApp -Identity MyApp
+<p>Retrieves the storage metrics of the current site/web</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPFolderStorageMetric -List &quot;Documents&quot;
 </code></pre>
-<p>This returns the Azure AD App registration with the display name as 'MyApp'</p>
-<h3 id="example-3">Example 3</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
+<p>Retrieves the storage metrics of the specified document library</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPFolderStorageMetric -FolderSiteRelativeUrl &quot;Shared Documents&quot;
 </code></pre>
-<p>This returns the Azure AD App registration with the app id specified or the id specified.</p>
-<h3 id="example-4">Example 4</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADApp -Filter &quot;startswith(description, 'contoso')&quot;
+<p>Retrieves the storage metrics of the folder using the server-relative Url</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">$folder = Get-PnPFolder -Url &quot;Shared Documents&quot;
+Get-PnPFolderStorageMetric -Identity $folder
 </code></pre>
-<p>This returns the Azure AD App registrations with the description starting with &quot;contoso&quot;. This example demonstrates using Advanced Query capabilities (see: <a href="https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties">https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties</a>)</p>
+<p>Retrieves the storage metrics of the folder using the identity parameter</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-identity">-Identity</h3>
-<p>Specify the display name, id or app id.</p>
-<pre><code class="lang-yaml">Type: AzureADAppPipeBind
-Parameter Sets: Identity
-Aliases:
+<h3 id="-foldersiterelativeurl">-FolderSiteRelativeUrl</h3>
+<p>The path to the folder to query for its storage consumption, relative to the SharePoint Online site to which the connection has been made, i.e. &quot;Shared Documents\Subfolder&quot;</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Folder via site relative URL
 
 Required: False
 Position: Named
@@ -128,10 +128,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-filter">-Filter</h3>
-<p>Specify the query to pass to Graph API in $filter.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Filter
+<h3 id="-list">-List</h3>
+<p>Id, name or instance of a list to query for its storage consumption</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: Folder via list
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>Id, name or instance of a folder to query for its storage consumption</p>
+<pre><code class="lang-yaml">Type: FolderPipeBind
+Parameter Sets: Folder via pipebind
 
 Required: False
 Position: Named

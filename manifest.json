@@ -1926,7 +1926,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPAzureADApp.html",
-          "hash": "EncbeWMu70NnKIEzR7p1Vg=="
+          "hash": "5/aK5C751hsceBrQZQqhaw=="
         }
       },
       "is_incremental": false,
@@ -2386,6 +2386,18 @@
         ".html": {
           "relative_path": "cmdlets/Get-PnPFolderItem.html",
           "hash": "Vgh86kSSYq/zmXWgpIdQsA=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFolderStorageMetric.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFolderStorageMetric.html",
+          "hash": "VI3tuVYUfx4J1VDrGJ0ONg=="
         }
       },
       "is_incremental": false,
@@ -7197,7 +7209,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSite.html",
-          "hash": "qRtp+BNyT/gglg6cgjelxw=="
+          "hash": "HfnC/cuUCd+/fxZiEcM1Ew=="
         }
       },
       "is_incremental": false,
@@ -7479,7 +7491,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenant.html",
-          "hash": "sgNsGsxqMREuHPV5VuNHmg=="
+          "hash": "2+KcxEdI8/cAjbpNfAYxIw=="
         }
       },
       "is_incremental": false,
@@ -7995,7 +8007,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "/YSs53dmnhj63662vfX69A=="
+          "hash": "XzJhkLZy3p3jjDgomrpw8g=="
         }
       },
       "is_incremental": false,
@@ -8283,7 +8295,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 663,
+          "total_file_count": 664,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

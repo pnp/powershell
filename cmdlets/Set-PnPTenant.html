@@ -164,6 +164,9 @@
  [-EnableRestrictedAccessControl &lt;Boolean&gt;]
  [-SyncAadB2BManagementPolicy &lt;Boolean&gt;]
  [-EnableAzureADB2BIntegration &lt;Boolean&gt;]
+ [-CoreRequestFilesLinkEnabled &lt;Boolean&gt;]
+ [-CoreRequestFilesLinkExpirationInDays &lt;Boolean&gt;]
+ [-LabelMismatchEmailHelpLink &lt;String&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -1226,6 +1229,40 @@ Accept wildcard characters: False
 <h3 id="-syncaadb2bmanagementpolicy">-SyncAadB2BManagementPolicy</h3>
 <p>Allows enablement of Azure B2B Management Policies to be synced. See <a href="https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration">this article</a> for more information.</p>
 <pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-corerequestfileslinkenabled">-CoreRequestFilesLinkEnabled</h3>
+<p>Enable or disable the Request files link on the core partition for all SharePoint sites (not including OneDrive sites). If this value is not set, Request files will only show for OneDrives with Anyone links enabled.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-corerequestfileslinkexpirationindays">-CoreRequestFilesLinkExpirationInDays</h3>
+<p>Specifies the number of days before a Request files link expires for all SharePoint sites (not including OneDrive sites).</p>
+<p>The value can be from 0 to 730 days.</p>
+<pre><code class="lang-yaml">Type: Integer
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-labelmismatchemailhelplink">-LabelMismatchEmailHelpLink</h3>
+<p>This parameter allows tenant admins to customize the &quot;Help Link&quot; in email with the subject &quot;Incompatible sensitivity label detected.&quot; When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
