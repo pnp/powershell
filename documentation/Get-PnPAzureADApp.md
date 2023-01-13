@@ -19,12 +19,18 @@ Returns Azure AD App registrations
 
 ## SYNTAX
 
+### Filter
 ```
 Get-PnPAzureADApp [-Identity <AzureADAppPipeBind>]
 ```
 
+### Identity (Default)
+```
+Get-PnPAzureADApp -Filter <string>
+```
+
 ## DESCRIPTION
-This cmdlets returns all app registrations or a specific one.
+This cmdlets returns all app registrations, a specific one or ones matching a provided filter.
 
 ## EXAMPLES
 
@@ -54,7 +60,7 @@ This returns the Azure AD App registration with the app id specified or the id s
 Get-PnPAzureADApp -Filter "startswith(description, 'contoso')"
 ```
 
-This returns the Azure AD App registrations with the description starting with "contoso". This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties)
+This returns the Azure AD App registrations with the description starting with "contoso". This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties)
 
 ## PARAMETERS
 
