@@ -3453,7 +3453,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSubscribeSharePointNewsDigest.html",
-          "hash": "v9ir2x42wO5ZY1gvR7s/1Q=="
+          "hash": "ke4p3V+QnF8JOofOvUtPaQ=="
         }
       },
       "is_incremental": false,
@@ -7371,7 +7371,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSubscribeSharePointNewsDigest.html",
-          "hash": "+D3Rwrgrl2Q8KzjZ+wc9IA=="
+          "hash": "EZBkDMYk9t6T2GzWTdmfgQ=="
         }
       },
       "is_incremental": false,

@@ -90,6 +90,7 @@
 </ul>
 <p>You must connect to the tenant admin website (<a href="https://tenant-admin.sharepoint.com">https://tenant-admin.sharepoint.com</a>) with Connect-PnPOnline in order to use this cmdlet.</p>
 <p>Retrieves if the SharePoint News Digest mails are enabled or disabled for a particular user.</p>
+<p>Note: The implementation behind this in SharePoint Online has changed causing this cmdlet to no longer work. Unfortunately there's no alternative way to call into this functionality from PnP PowerShell. We therefore have to remove this cmdlet in a future version. At present it does not work anymore.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPSubscribeSharePointNewsDigest -Account &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
