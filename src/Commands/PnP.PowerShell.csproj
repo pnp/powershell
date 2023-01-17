@@ -47,6 +47,9 @@
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
 		<DefineConstants>TRACE;$(DefineConstants);DEBUG</DefineConstants>
 	</PropertyGroup>
+	<ItemGroup>
+	  <None Remove="Resources\parker.ico" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AngleSharp" Version="0.14.0" />
@@ -86,6 +89,7 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\GraphPermissions.json" />
+		<EmbeddedResource Include="Resources\parker.ico" />
 		<EmbeddedResource Include="Resources\SharePointPermissions.json" />
 		<EmbeddedResource Include="Resources\O365ManagementPermissions.json" />
 	</ItemGroup>
