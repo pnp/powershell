@@ -132,8 +132,9 @@ namespace PnP.PowerShell.Commands.Utilities
             
             // Deliberately lowering timeout as the version check is not critical so in case of a slower or blocked internet connection, this should not block the cmdlet for too long
             httpClient.Timeout = TimeSpan.FromSeconds(VersionCheckTimeOut);
-
-            var response = httpClient.SendAsync(new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckUrl : ReleaseVersionCheckUrl)).GetAwaiter().GetResult();
+            var request = new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckUrl : ReleaseVersionCheckUrl);
+            request.Version = new Version(2, 0);
+            var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
             {
                 var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();

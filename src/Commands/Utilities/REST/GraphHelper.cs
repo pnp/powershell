@@ -55,6 +55,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
 
             var message = new HttpRequestMessage();
+            message.Version = new Version(2, 0);
             message.Method = method;
             message.Headers.TryAddWithoutValidation("Accept", "application/json");
             message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://{connection.GraphEndPoint}/{url}") : new Uri(url);

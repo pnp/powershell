@@ -102,6 +102,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
                                 using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://{GetGraphEndPoint()}/v1.0/organization"))
                                 {
+                                    requestMessage.Version = new System.Version(2, 0);
                                     requestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
                                     requestMessage.Headers.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
                                     var response = httpClient.SendAsync(requestMessage).GetAwaiter().GetResult();

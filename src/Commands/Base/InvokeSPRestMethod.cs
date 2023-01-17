@@ -81,6 +81,7 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     request.Headers.Add("IF-MATCH", "*");
                 }
+                request.Version = new Version(2, 0);
 
                 PnPHttpClient.AuthenticateRequestAsync(request, ClientContext).GetAwaiter().GetResult();
 

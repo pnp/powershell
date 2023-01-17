@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-KeyColumn` to `Add-PnPDataRowsToSiteTemplate` which allows for overwriting existing list items in a site template [#2616](https://github.com/pnp/powershell/pull/2616)
 - Added `Get-PnPFolderStorageMetric` which allows storage usage of a specific folder to be retrieved [#2646](https://github.com/pnp/powershell/pull/2646)
 - Added `IsTeamsConnected`, `IsTeamsChannelConnected` and `TeamChannelType` to be returned when `Get-PnPTenantSite` cmdlet is executed. [#2656](https://github.com/pnp/powershell/pull/2656)
+- Added `HTTP/2` support for all HTTP requests to improve performance for HTTP requests. [#2687](https://github.com/pnp/powershell/pull/2687)
 - Added `-EnvironmentVariable` parameter to `Connect-PnPOnline` to connect using Azure environment variables. [#2681](https://github.com/pnp/powershell/pull/2681)
 - Added `ResponseHeadersVariable` parameter to the `Invoke-PnPSPRestMethod` which if specified will store the response headers values in the PowerShell variable name that is specified. [#2711](https://github.com/pnp/powershell/pull/2711)
 - Added `-Filter` parameter to `Get-PnPAzureADServicePrincipal` cmdlet to retrieve specific application registrations based on filter conditions. It supports simple and advanced queries. [#2710](https://github.com/pnp/powershell/pull/2710)
