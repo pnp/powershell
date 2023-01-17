@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     public class PnPPowerShellModuleInitializer : IModuleAssemblyInitializer
     {
-        private static string s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location),".."));
+        private static string s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ".."));
 
         private static string s_binCommonPath = Path.Combine(s_binBasePath, "Common");
 
