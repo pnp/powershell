@@ -382,17 +382,10 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             clone.Content = req.Content;
             clone.Version = req.Version;
 
-#if NETFRAMEWORK
-            foreach (KeyValuePair<string, object> prop in req.Properties)
-            {
-                clone.Properties.Add(prop);
-            }
-#else
             foreach (KeyValuePair<string, object> prop in req.Options)
             {
                 clone.Options.Set(new HttpRequestOptionsKey<object>(prop.Key), prop.Value);
             }
-#endif
 
             foreach (KeyValuePair<string, IEnumerable<string>> header in req.Headers)
             {
