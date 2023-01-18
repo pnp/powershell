@@ -148,6 +148,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, tokenRequestUrl))
                 {
+                    requestMessage.Version = new Version(2, 0);
                     requestMessage.Headers.Add("Metadata", "true");
                     if (!string.IsNullOrEmpty(identityHeader))
                     {

@@ -33,6 +33,7 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_WEBLOGIN = "Web Login for Multi Factor Authentication";
         private const string ParameterSet_MANAGEDIDENTITY = "Managed Identity";
         private const string ParameterSet_INTERACTIVE = "Interactive login for Multi Factor Authentication";
+        private const string ParameterSet_ENVIRONMENTVARIABLE = "Environment Variable";
 
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
@@ -46,6 +47,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -57,6 +59,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
         public SwitchParameter ValidateConnection;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -69,6 +72,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MANAGEDIDENTITY, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -84,7 +88,6 @@ namespace PnP.PowerShell.Commands.Base
         public string Realm;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACSAPPONLY)]
-
         public string ClientSecret;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -95,6 +98,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public SwitchParameter CreateDrive;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -105,6 +109,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public string DriveName = "SPO";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
@@ -127,12 +132,14 @@ namespace PnP.PowerShell.Commands.Base
         public string ClientId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public string RedirectUri;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public string Tenant;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
@@ -154,6 +161,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
@@ -167,6 +175,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public string TenantAdminUrl;
 
         [Parameter(Mandatory = false)]
@@ -184,6 +193,7 @@ namespace PnP.PowerShell.Commands.Base
         public string UserAssignedManagedIdentityObjectId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public SwitchParameter TransformationOnPrem;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN)]
@@ -198,6 +208,9 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN)]
         public string AccessToken;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        public SwitchParameter EnvironmentVariable;
 
         protected override void ProcessRecord()
         {
@@ -282,6 +295,9 @@ namespace PnP.PowerShell.Commands.Base
                     break;
                 case ParameterSet_INTERACTIVE:
                     connection = ConnectInteractive();
+                    break;
+                case ParameterSet_ENVIRONMENTVARIABLE:
+                    connection = ConnectEnvironmentVariable();
                     break;
             }
 
@@ -416,7 +432,6 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         clientId = ClientId;
                     }
-
 
                     var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
                     connection = returnedConnection;
@@ -587,6 +602,80 @@ namespace PnP.PowerShell.Commands.Base
             return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant);
         }
 
+        private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
+        {
+            string username = Environment.GetEnvironmentVariable("AZURE_USERNAME");
+            string password = Environment.GetEnvironmentVariable("AZURE_PASSWORD");
+            string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+            string azureCertificatePath = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH");
+            string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD");
+
+            if (!string.IsNullOrEmpty(azureCertificatePath) && !string.IsNullOrEmpty(azureCertPassword))
+            {
+                if (!Path.IsPathRooted(azureCertificatePath))
+                {
+                    azureCertificatePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
+                               azureCertificatePath);
+                }
+
+                if (!File.Exists(azureCertificatePath))
+                {
+                    throw new FileNotFoundException("Certificate not found");
+                }
+
+                if (string.IsNullOrEmpty(azureClientId))
+                {
+                    throw new ArgumentNullException("Unable to connect using available environment variables. Please provide necessary value for AZURE_CLIENT_ID environment variable");
+                }
+
+                if (!ParameterSpecified(nameof(Tenant)))
+                {
+                    throw new ArgumentNullException($"{nameof(Tenant)} must be provided when trying to authenticate using Azure environment credentials for Service principal with certificate method.");
+                }
+
+                SecureString secPassword = StringToSecureString(azureCertPassword);
+
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(azureCertificatePath, secPassword);
+                if (PnPConnection.Current?.ClientId == azureClientId &&
+                    PnPConnection.Current?.Tenant == Tenant &&
+                    PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
+                {
+                    ReuseAuthenticationManager();
+                }
+                return PnPConnection.CreateWithCert(new Uri(Url), azureClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
+            }
+
+            else if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
+            {
+                if (string.IsNullOrEmpty(azureClientId))
+                {
+                    azureClientId = PnPConnection.PnPManagementShellClientId;
+                }
+
+                SecureString secPassword = StringToSecureString(password);
+                var credentials = new PSCredential(username, secPassword);
+
+                if (PnPConnection.Current?.ClientId == azureClientId)
+                {
+                    if (credentials != null && PnPConnection.Current?.PSCredential?.UserName == credentials.UserName &&
+                       PnPConnection.Current?.PSCredential.GetNetworkCredential().Password == credentials.GetNetworkCredential().Password)
+                    {
+                        ReuseAuthenticationManager();
+                    }
+                }
+
+                return PnPConnection.CreateWithCredentials(this, new Uri(Url),
+                                                                   credentials,
+                                                                   CurrentCredentials,
+                                                                   TenantAdminUrl,
+                                                                   AzureEnvironment,
+                                                                   azureClientId,
+                                                                   RedirectUri, TransformationOnPrem, initializationType);
+            }
+
+            return null;
+        }
+
         #endregion
 
         #region Helper methods
@@ -661,7 +750,6 @@ namespace PnP.PowerShell.Commands.Base
             return currentUri.Host == previousUri.Host;
         }
 
-
         protected override void StopProcessing()
         {
             cancellationTokenSource.Cancel();
@@ -671,6 +759,18 @@ namespace PnP.PowerShell.Commands.Base
         {
             var contextSettings = PnPConnection.Current.Context?.GetContextSettings();
             PnPConnection.CachedAuthenticationManager = contextSettings?.AuthenticationManager;
+        }
+
+        private SecureString StringToSecureString(string inputString)
+        {
+            SecureString secPassword = new SecureString();
+            foreach (char ch in inputString)
+            {
+                secPassword.AppendChar(ch);
+            }
+            secPassword.MakeReadOnly();
+
+            return secPassword;
         }
         #endregion
     }

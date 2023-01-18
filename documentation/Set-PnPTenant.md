@@ -21,38 +21,82 @@ Sets organization-level tenant properties
 
 ```powershell
 Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>]
- [-MinCompatibilityLevel <Int32>] [-MaxCompatibilityLevel <Int32>] [-ExternalServicesEnabled <Boolean>]
- [-NoAccessRedirectUrl <String>] [-SharingCapability <SharingCapabilities>]
- [-DisplayStartASiteOption <Boolean>] [-StartASiteFormUrl <String>] [-ShowEveryoneClaim <Boolean>]
- [-ShowAllUsersClaim <Boolean>] [-ShowEveryoneExceptExternalUsersClaim <Boolean>]
- [-SearchResolveExactEmailOrUPN <Boolean>] [-OfficeClientADALDisabled <Boolean>]
- [-LegacyAuthProtocolsEnabled <Boolean>] [-RequireAcceptingAccountMatchInvitedAccount <Boolean>]
- [-ProvisionSharedWithEveryoneFolder <Boolean>] [-SignInAccelerationDomain <String>]
- [-EnableGuestSignInAcceleration <Boolean>] [-UsePersistentCookiesForExplorerView <Boolean>]
- [-BccExternalSharingInvitations <Boolean>] [-BccExternalSharingInvitationsList <String>]
- [-UserVoiceForFeedbackEnabled <Boolean>] [-PublicCdnEnabled <Boolean>] [-PublicCdnAllowedFileTypes <String>]
- [-RequireAnonymousLinksExpireInDays <Int32>] [-SharingAllowedDomainList <String>]
- [-SharingBlockedDomainList <String>] [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>]
- [-OneDriveStorageQuota <Int64>] [-OneDriveForGuestsEnabled <Boolean>] [-IPAddressEnforcement <Boolean>]
- [-IPAddressAllowList <String>] [-IPAddressWACTokenLifetime <Int32>] [-UseFindPeopleInPeoplePicker <Boolean>]
- [-DefaultSharingLinkType <SharingLinkType>] [-ODBMembersCanShare <SharingState>]
- [-ODBAccessRequests <SharingState>] [-PreventExternalUsersFromResharing <Boolean>]
- [-ShowPeoplePickerSuggestionsForGuestUsers <Boolean>] [-FileAnonymousLinkType <AnonymousLinkType>]
- [-FolderAnonymousLinkType <AnonymousLinkType>] [-NotifyOwnersWhenItemsReshared <Boolean>]
- [-NotifyOwnersWhenInvitationsAccepted <Boolean>] [-NotificationsInOneDriveForBusinessEnabled <Boolean>]
- [-NotificationsInSharePointEnabled <Boolean>] [-OwnerAnonymousNotification <Boolean>]
- [-CommentsOnSitePagesDisabled <Boolean>] [-SocialBarOnSitePagesDisabled <Boolean>]
- [-OrphanedPersonalSitesRetentionPeriod <Int32>] [-DisallowInfectedFileDownload <Boolean>]
- [-DefaultLinkPermission <SharingPermissionType>] [-ConditionalAccessPolicy <SPOConditionalAccessPolicyType>]
- [-AllowDownloadingNonWebViewableFiles <Boolean>] [-AllowEditing <Boolean>]
- [-ApplyAppEnforcedRestrictionsToAdHocRecipients <Boolean>] [-FilePickerExternalImageSearchEnabled <Boolean>]
- [-EmailAttestationRequired <Boolean>] [-EmailAttestationReAuthDays <Int32>] [-HideDefaultThemes <Boolean>]
- [-DisabledWebPartIds <Guid[]>] [-EnableAIPIntegration <Boolean>] [-DisableCustomAppAuthentication <Boolean>] 
- [-EnableAutoNewsDigest <Boolean>] [-CommentsOnListItemsDisabled <Boolean>] [-CommentsOnFilesDisabled <Boolean>]
- [-DisableBackToClassic <Boolean>] [-InformationBarriersSuspension <Boolean>] 
- [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>] [-AllowFilesWithKeepLabelToBeDeletedSPO <Boolean>]
- [-ExternalUserExpirationRequired <Boolean>] [-ExternalUserExpireInDays <Boolean>] [-OneDriveRequestFilesLinkEnabled <Boolean>]
+ [-MinCompatibilityLevel <Int32>]
+ [-MaxCompatibilityLevel <Int32>]
+ [-ExternalServicesEnabled <Boolean>]
+ [-NoAccessRedirectUrl <String>]
+ [-SharingCapability <SharingCapabilities>]
+ [-DisplayStartASiteOption <Boolean>]
+ [-StartASiteFormUrl <String>] [-ShowEveryoneClaim <Boolean>]
+ [-ShowAllUsersClaim <Boolean>]
+ [-ShowEveryoneExceptExternalUsersClaim <Boolean>]
+ [-SearchResolveExactEmailOrUPN <Boolean>]
+ [-OfficeClientADALDisabled <Boolean>]
+ [-LegacyAuthProtocolsEnabled <Boolean>]
+ [-RequireAcceptingAccountMatchInvitedAccount <Boolean>]
+ [-ProvisionSharedWithEveryoneFolder <Boolean>]
+ [-SignInAccelerationDomain <String>]
+ [-EnableGuestSignInAcceleration <Boolean>]
+ [-UsePersistentCookiesForExplorerView <Boolean>]
+ [-BccExternalSharingInvitations <Boolean>]
+ [-BccExternalSharingInvitationsList <String>]
+ [-UserVoiceForFeedbackEnabled <Boolean>]
+ [-PublicCdnEnabled <Boolean>]
+ [-PublicCdnAllowedFileTypes <String>]
+ [-RequireAnonymousLinksExpireInDays <Int32>]
+ [-SharingAllowedDomainList <String>]
+ [-SharingBlockedDomainList <String>]
+ [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>]
+ [-OneDriveStorageQuota <Int64>]
+ [-OneDriveForGuestsEnabled <Boolean>]
+ [-IPAddressEnforcement <Boolean>]
+ [-IPAddressAllowList <String>]
+ [-IPAddressWACTokenLifetime <Int32>]
+ [-UseFindPeopleInPeoplePicker <Boolean>]
+ [-DefaultSharingLinkType <SharingLinkType>]
+ [-ODBMembersCanShare <SharingState>]
+ [-ODBAccessRequests <SharingState>]
+ [-PreventExternalUsersFromResharing <Boolean>]
+ [-ShowPeoplePickerSuggestionsForGuestUsers <Boolean>]
+ [-FileAnonymousLinkType <AnonymousLinkType>]
+ [-FolderAnonymousLinkType <AnonymousLinkType>]
+ [-NotifyOwnersWhenItemsReshared <Boolean>]
+ [-NotifyOwnersWhenInvitationsAccepted <Boolean>]
+ [-NotificationsInOneDriveForBusinessEnabled <Boolean>]
+ [-NotificationsInSharePointEnabled <Boolean>]
+ [-OwnerAnonymousNotification <Boolean>]
+ [-CommentsOnSitePagesDisabled <Boolean>]
+ [-SocialBarOnSitePagesDisabled <Boolean>]
+ [-OrphanedPersonalSitesRetentionPeriod <Int32>]
+ [-DisallowInfectedFileDownload <Boolean>]
+ [-DefaultLinkPermission <SharingPermissionType>]
+ [-ConditionalAccessPolicy <SPOConditionalAccessPolicyType>]
+ [-AllowDownloadingNonWebViewableFiles <Boolean>]
+ [-AllowEditing <Boolean>]
+ [-ApplyAppEnforcedRestrictionsToAdHocRecipients <Boolean>]
+ [-FilePickerExternalImageSearchEnabled <Boolean>]
+ [-EmailAttestationRequired <Boolean>]
+ [-EmailAttestationReAuthDays <Int32>]
+ [-HideDefaultThemes <Boolean>]
+ [-DisabledWebPartIds <Guid[]>]
+ [-EnableAIPIntegration <Boolean>]
+ [-DisableCustomAppAuthentication <Boolean>] 
+ [-EnableAutoNewsDigest <Boolean>]
+ [-CommentsOnListItemsDisabled <Boolean>]
+ [-CommentsOnFilesDisabled <Boolean>]
+ [-DisableBackToClassic <Boolean>]
+ [-InformationBarriersSuspension <Boolean>] 
+ [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>]
+ [-AllowFilesWithKeepLabelToBeDeletedSPO <Boolean>]
+ [-ExternalUserExpirationRequired <Boolean>]
+ [-ExternalUserExpireInDays <Boolean>]
+ [-OneDriveRequestFilesLinkEnabled <Boolean>]
  [-EnableRestrictedAccessControl <Boolean>]
+ [-SyncAadB2BManagementPolicy <Boolean>]
+ [-EnableAzureADB2BIntegration <Boolean>]
+ [-CoreRequestFilesLinkEnabled <Boolean>]
+ [-CoreRequestFilesLinkExpirationInDays <Boolean>]
+ [-LabelMismatchEmailHelpLink <String>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -1425,6 +1469,78 @@ To enable restricted access control in SharePoint Online. You need to wait appro
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableAzureADB2BIntegration
+Allows enablement of SharePoint and OneDrive integrartion with Azure AD B2B. See [this article]](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SyncAadB2BManagementPolicy
+Allows enablement of Azure B2B Management Policies to be synced. See [this article](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreRequestFilesLinkEnabled
+Enable or disable the Request files link on the core partition for all SharePoint sites (not including OneDrive sites). If this value is not set, Request files will only show for OneDrives with Anyone links enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreRequestFilesLinkExpirationInDays
+Specifies the number of days before a Request files link expires for all SharePoint sites (not including OneDrive sites).
+
+The value can be from 0 to 730 days.
+
+```yaml
+Type: Integer
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LabelMismatchEmailHelpLink
+This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False

@@ -196,6 +196,11 @@ namespace PnP.PowerShell.Commands.Base
                     if (realm == null)
                     {
                         realm = GetRealmFromTargetUrl(url);
+
+                        if (realm == null)
+                        {
+                            throw new Exception($"Could not determine realm for the target site '{url}'. Please validate that a site exists at this URL.");
+                        }
                     }
 
                     if (url.DnsSafeHost.Contains("spoppe.com"))
@@ -350,7 +355,7 @@ namespace PnP.PowerShell.Commands.Base
             var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
             cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
             var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource, userAssignedManagedIdentityObjectId).GetAwaiter().GetResult();
-            
+
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
                 PnPClientContext context = null;
@@ -746,10 +751,39 @@ namespace PnP.PowerShell.Commands.Base
                 var coreAssembly = Assembly.GetExecutingAssembly();
                 var operatingSystem = Utilities.OperatingSystem.GetOSString();
 
-                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem);
+                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem, PSVersion);
                 ApplicationInsights.TrackEvent("Connect-PnPOnline");
             }
         }
+
+        private static string PSVersion => (PSVersionLazy.Value);
+
+        private static readonly Lazy<string> PSVersionLazy = new Lazy<string>(
+            () =>
+
+        {
+            var caller = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == "System.Management.Automation");
+            //var caller = Assembly.GetCallingAssembly();
+            var psVersionType = caller.GetType("System.Management.Automation.PSVersionInfo");
+            if (null != psVersionType)
+            {
+                PropertyInfo propInfo = psVersionType.GetProperty("PSVersion");
+                if (null == propInfo)
+                {
+                    propInfo = psVersionType.GetProperty("PSVersion", BindingFlags.NonPublic | BindingFlags.Static);
+                }
+                var getter = propInfo.GetGetMethod(true);
+                var version = getter.Invoke(null, new object[] { });
+
+                if (null != version)
+                {
+                    var versionType = version.GetType();
+                    var versionProperty = versionType.GetProperty("Major");
+                    return ((int)versionProperty.GetValue(version)).ToString();
+                }
+            }
+            return "";
+        });
 
         private static string PnPPSVersionTag => (PnPPSVersionTagLazy.Value);
 
@@ -772,7 +806,7 @@ namespace PnP.PowerShell.Commands.Base
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "");
 
             var response = client.GetAsync(targetApplicationUri + "/_vti_bin/client.svc").GetAwaiter().GetResult();
-            if (response == null)
+            if (response == null || response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 return null;
             }
@@ -818,6 +852,11 @@ namespace PnP.PowerShell.Commands.Base
                     return;
 
                 string uniqueKeyContainerName = privateKey.UniqueName;
+                if (uniqueKeyContainerName == null)
+                {
+                    RSACryptoServiceProvider rsaCSP = certificate.GetRSAPrivateKey() as RSACryptoServiceProvider;
+                    uniqueKeyContainerName = rsaCSP.CspKeyContainerInfo.KeyContainerName;
+                }
                 certificate.Reset();
 
                 var programDataPath = Environment.GetEnvironmentVariable("ProgramData");

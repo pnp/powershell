@@ -30,12 +30,15 @@ namespace PnP.PowerShell.Commands.Apps
         public string AppName;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYBUILTINTYPE)]
-        public ServicePrincipalBuiltInType BuiltInType;        
+        public ServicePrincipalBuiltInType BuiltInType;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
+        public string Filter;
 
         protected override void ExecuteCmdlet()
         {
             AzureADServicePrincipal servicePrincipal = null;
-            switch(ParameterSetName)
+            switch (ParameterSetName)
             {
                 case ParameterSet_BYAPPID:
                     servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByAppId(Connection, AccessToken, AppId);
@@ -50,12 +53,12 @@ namespace PnP.PowerShell.Commands.Apps
                     servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByBuiltInType(Connection, AccessToken, BuiltInType);
                     break;
                 case ParameterSet_ALL:
-                    var servicePrincipals = ServicePrincipalUtility.GetServicePrincipals(Connection, AccessToken);
+                    var servicePrincipals = ServicePrincipalUtility.GetServicePrincipals(Connection, AccessToken, Filter);
                     WriteObject(servicePrincipals, true);
                     return;
             }
 
-            if(servicePrincipal == null)
+            if (servicePrincipal == null)
             {
                 throw new PSArgumentException("Service principal not found");
             }

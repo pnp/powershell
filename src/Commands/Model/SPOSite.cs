@@ -10,24 +10,25 @@ namespace PnP.PowerShell.Commands.Model
         public bool AllowSelfServiceUpgrade { get; set; }
         public int AnonymousLinkExpirationInDays { get; set; }
         public Microsoft.Online.SharePoint.TenantManagement.BlockDownloadLinksFileTypes BlockDownloadLinksFileType { get; set; }
-
         public bool CommentsOnSitePagesDisabled { get; set; }
         public int CompatibilityLevel { get; set; }
         public Microsoft.Online.SharePoint.TenantManagement.SPOConditionalAccessPolicyType ConditionalAccessPolicy { get; set; }
         public Microsoft.Online.SharePoint.TenantManagement.SharingPermissionType DefaultLinkPermission { get; set; }
         public bool DefaultLinkToExistingAccess { get; set; }
         public Microsoft.Online.SharePoint.TenantManagement.SharingLinkType DefaultSharingLinkType { get; set; }
-        public Microsoft.Online.SharePoint.TenantAdministration.DenyAddAndCustomizePagesStatus DenyAddAndCustomizePages { get; set; }
+        public DenyAddAndCustomizePagesStatus DenyAddAndCustomizePages { get; set; }
         public string Description { get; set; }
-        public Microsoft.Online.SharePoint.TenantAdministration.AppViewsPolicy DisableAppViews { get; set; }
-        public Microsoft.Online.SharePoint.TenantAdministration.CompanyWideSharingLinksPolicy DisableCompanyWideSharingLinks { get; set; }
-        public Microsoft.Online.SharePoint.TenantAdministration.FlowsPolicy DisableFlows { get; set; }
+        public AppViewsPolicy DisableAppViews { get; set; }
+        public CompanyWideSharingLinksPolicy DisableCompanyWideSharingLinks { get; set; }
+        public FlowsPolicy DisableFlows { get; set; }
         public bool? DisableSharingForNonOwnersStatus { get; set; }
         public int ExternalUserExpirationInDays { get; set; }
         public Guid GroupId { get; set; }
         public Guid HubSiteId { get; }
         public Guid[] InformationSegment { get; set; }
         public bool IsHubSite { get; }
+        public bool IsTeamsChannelConnected { get; }
+        public bool IsTeamsConnected { get; }
         public DateTime LastContentModifiedDate { get; }
         public Microsoft.Online.SharePoint.TenantManagement.SPOLimitedAccessFileType LimitedAccessFileType { get; set; }
         public UInt32 LocaleId { get; set; }
@@ -40,14 +41,14 @@ namespace PnP.PowerShell.Commands.Model
         public string OwnerLoginName { get; }
         public string OwnerName { get; }
         public string ProtectionLevelName { get; set; }
-        public Microsoft.Online.SharePoint.TenantAdministration.PWAEnabledStatus PWAEnabled { get; set; }
+        public PWAEnabledStatus PWAEnabled { get; set; }
         public Guid RelatedGroupId { get; }
         public double ResourceQuota { get; set; }
         public double ResourceQuotaWarningLevel { get; set; }
         public double ResourceUsageAverage { get; set; }
         public double ResourceUsageCurrent { get; set; }
-        public Microsoft.Online.SharePoint.TenantAdministration.RestrictedToRegion RestrictedToGeo { get; set; }
-        public Microsoft.Online.SharePoint.TenantAdministration.SandboxedCodeActivationCapabilities SandboxedCodeActivationCapability { get; set; }
+        public RestrictedToRegion RestrictedToGeo { get; set; }
+        public SandboxedCodeActivationCapabilities SandboxedCodeActivationCapability { get; set; }
         public string SensitivityLabel { get; set; }
         public string SharingAllowedDomainList { get; set; }
         public string SharingBlockedDomainList { get; set; }
@@ -61,6 +62,7 @@ namespace PnP.PowerShell.Commands.Model
         public string StorageQuotaType { get; set; }
         public long StorageQuotaWarningLevel { get; set; }
         public long StorageUsageCurrent { get; set; }
+        public TeamsChannelTypeValue TeamsChannelType { get; set; }
         public string Template { get; set; }
         public string Title { get; set; }
         public string Url { get; set; }
@@ -88,6 +90,8 @@ namespace PnP.PowerShell.Commands.Model
             GroupId = props.GroupId;
             HubSiteId = props.HubSiteId;
             IsHubSite = props.IsHubSite;
+            IsTeamsChannelConnected = props.IsTeamsChannelConnected;
+            IsTeamsConnected = props.IsTeamsConnected;
             LastContentModifiedDate = props.LastContentModifiedDate;
             LimitedAccessFileType = props.LimitedAccessFileType;
             LocaleId = props.Lcid;
@@ -120,10 +124,11 @@ namespace PnP.PowerShell.Commands.Model
             StorageQuotaType = props.StorageQuotaType;
             StorageQuotaWarningLevel = props.StorageWarningLevel;
             StorageUsageCurrent = props.StorageUsage;
+            TeamsChannelType = props.TeamsChannelType;
             Template = props.Template;
-            Title = props.Title;
+            Title = props.Title;            
             WebsCount = props.WebsCount;
-            Url = props.Url;
+            Url = props.Url;            
         }
 
     }

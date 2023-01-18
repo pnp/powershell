@@ -185,7 +185,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         Dock = System.Windows.Forms.DockStyle.Fill
                     };
                     var assembly = typeof(BrowserHelper).Assembly;
-                    form.Icon = null;
+                    form.Icon = new  System.Drawing.Icon(assembly.GetManifestResourceStream("PnP.PowerShell.Commands.Resources.parker.ico"));
                     form.SuspendLayout();
                     form.Width = 1024;
                     form.Height = 768;
@@ -270,6 +270,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     string requestUrl = string.Format("{0}/_api/contextinfo", siteUrl.TrimEnd('/'));
                     HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, requestUrl);
+                    request.Version = new Version(2, 0);
                     request.Headers.Add("accept", "application/json;odata=nometadata");
                     HttpResponseMessage response = await httpClient.SendAsync(request);
 
@@ -310,7 +311,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (OperatingSystem.IsWindows() && usePopup)
                 {
-                    BrowserHelper.GetWebBrowserPopup(url, "Please login", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource, cancelOnClose: true, scriptErrorsSuppressed: false);
+                    BrowserHelper.GetWebBrowserPopup(url, "Please login for PnP PowerShell", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource, cancelOnClose: true, scriptErrorsSuppressed: false);
                 }
                 else
                 {

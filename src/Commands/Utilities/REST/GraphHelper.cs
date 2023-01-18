@@ -50,6 +50,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
 
             var message = new HttpRequestMessage();
+            message.Version = new Version(2, 0);
             message.Method = method;
             message.Headers.TryAddWithoutValidation("Accept", "application/json");
             message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://{connection.GraphEndPoint}/{url}") : new Uri(url);
@@ -163,7 +164,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await GetResponseMessageAsync(connection, message);
         }
 
-        #region DELETE
+#region DELETE
         public static async Task<HttpResponseMessage> DeleteAsync(PnPConnection connection, string url, string accessToken, IDictionary<string, string> additionalHeaders = null)
         {
             var message = GetMessage(url, HttpMethod.Delete, connection, accessToken, null, additionalHeaders);
@@ -196,9 +197,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             return default(T);
         }
-        #endregion
+#endregion
 
-        #region PATCH
+#region PATCH
         public static async Task<T> PatchAsync<T>(PnPConnection connection, string accessToken, string url, T content, IDictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
         {
             var serializerSettings = new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
@@ -240,7 +241,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await GetResponseMessageAsync(connection, message);
         }
 
-        #endregion
+#endregion
 
         public static async Task<T> PostAsync<T>(PnPConnection connection, string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
@@ -381,10 +382,17 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             clone.Content = req.Content;
             clone.Version = req.Version;
 
+#if NETFRAMEWORK
             foreach (KeyValuePair<string, object> prop in req.Properties)
             {
                 clone.Properties.Add(prop);
             }
+#else
+            foreach (KeyValuePair<string, object> prop in req.Options)
+            {
+                clone.Options.Set(new HttpRequestOptionsKey<object>(prop.Key), prop.Value);
+            }
+#endif
 
             foreach (KeyValuePair<string, IEnumerable<string>> header in req.Headers)
             {

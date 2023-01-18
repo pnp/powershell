@@ -12,10 +12,26 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class Microsoft365GroupsUtility
     {
-        internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(PnPConnection connection, string accessToken, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(PnPConnection connection, string accessToken, bool includeSiteUrl, bool includeOwners, string filter = null)
         {
             var items = new List<Microsoft365Group>();
-            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(connection, "v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified')", accessToken);
+            string requestUrl = "v1.0/groups";
+            Dictionary<string, string> additionalHeaders = null;
+            if (string.IsNullOrEmpty(filter))
+            {
+                filter = "groupTypes/any(c:c+eq+'Unified')";
+                requestUrl = $"v1.0/groups?$filter={filter}";
+            }
+            else
+            {
+                filter = $"({filter}) and groupTypes/any(c:c+eq+'Unified')";
+                requestUrl = $"v1.0/groups?$filter={filter}";
+                additionalHeaders = new Dictionary<string, string>
+                    {
+                        { "ConsistencyLevel", "eventual" }
+                    };
+            }
+            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(connection, requestUrl, accessToken, additionalHeaders: additionalHeaders);
             if (result != null && result.Any())
             {
                 items.AddRange(result);
@@ -140,7 +156,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             // $count=true needs to be here for reasons
             // see this for some additional details: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties
-            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and expirationDateTime le {dateStr}&$count=true", accessToken, additionalHeaders:additionalHeaders);
+            var result = await GraphHelper.GetResultCollectionAsync<Microsoft365Group>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and expirationDateTime le {dateStr}&$count=true", accessToken, additionalHeaders: additionalHeaders);
             if (result != null && result.Any())
             {
                 items.AddRange(result);

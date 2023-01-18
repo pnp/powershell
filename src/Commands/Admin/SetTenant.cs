@@ -9,7 +9,6 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
-
     public class SetTenant : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -264,6 +263,21 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? EnableRestrictedAccessControl;
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableAzureADB2BIntegration;
+
+        [Parameter(Mandatory = false)]
+        public bool? SyncAadB2BManagementPolicy;
+
+        [Parameter(Mandatory = false)]
+        public bool? CoreRequestFilesLinkEnabled;
+
+        [Parameter(Mandatory = false)]
+        public int? CoreRequestFilesLinkExpirationInDays;
+
+        [Parameter(Mandatory = false)]
+        public string LabelMismatchEmailHelpLink;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
@@ -960,6 +974,41 @@ namespace PnP.PowerShell.Commands.Admin
             if (EnableRestrictedAccessControl.HasValue)
             {
                 Tenant.EnableRestrictedAccessControl = EnableRestrictedAccessControl.Value;
+                modified = true;
+            }
+
+            if (SyncAadB2BManagementPolicy.HasValue)
+            {
+                Tenant.SyncAadB2BManagementPolicy = SyncAadB2BManagementPolicy.Value;
+                modified = true;
+            }
+
+            if (EnableAzureADB2BIntegration.HasValue)
+            {
+                Tenant.EnableAzureADB2BIntegration = EnableAzureADB2BIntegration.Value;
+                modified = true;
+            }
+
+            if (CoreRequestFilesLinkEnabled.HasValue)
+            {
+                Tenant.CoreRequestFilesLinkEnabled = CoreRequestFilesLinkEnabled.Value;
+                modified = true;
+            }
+
+            if (CoreRequestFilesLinkExpirationInDays.HasValue)
+            {
+                if (CoreRequestFilesLinkExpirationInDays.Value < 0 || CoreRequestFilesLinkExpirationInDays > 730)
+                {
+                    throw new PSArgumentException($"{CoreRequestFilesLinkExpirationInDays} must have a value between 0 and 730", nameof(CoreRequestFilesLinkExpirationInDays));
+                }
+
+                Tenant.CoreRequestFilesLinkExpirationInDays = CoreRequestFilesLinkExpirationInDays.Value;
+                modified = true;
+            }
+
+            if (LabelMismatchEmailHelpLink != null)
+            {
+                Tenant.LabelMismatchEmailHelpLink = LabelMismatchEmailHelpLink;
                 modified = true;
             }
 

@@ -11,6 +11,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 using Team = PnP.PowerShell.Commands.Model.Teams.Team;
