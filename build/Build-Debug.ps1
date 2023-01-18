@@ -53,7 +53,9 @@ if ($LocalPnPFramework) {
 	$pnpFrameworkAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll"
 	$pnpFrameworkAssembly = [System.IO.Path]::GetFullPath($pnpFrameworkAssembly)
 	if (Test-Path $pnpFrameworkAssembly -PathType Leaf) {
-		$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\`""
+		$pnpFrameworkPath = $pnpFrameworkAssembly.Substring(0, $pnpFrameworkAssembly.IndexOf("PnP.Framework"))
+		Write-Host -Message "PnPFrameworkPath: $pnpFrameworkPath"
+		$buildCmd += " -p:PnPFrameworkPath=`"$pnpFrameworkPath`""
 	}
  else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework"
@@ -66,7 +68,9 @@ if ($LocalPnPCore) {
 	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll"
 	$pnpCoreAssembly = [System.IO.Path]::GetFullPath($pnpCoreAssembly)
 	if (Test-Path $pnpCoreAssembly -PathType Leaf) {
-		$buildCmd += " -p:PnPCoreSdkPath=`"..\..\..\pnpcore\src\sdk\`""
+		$pnpCoreSdkPath = $pnpCoreAssembly.Substring(0, $pnpCoreAssembly.IndexOf("PnP.Core"))
+		Write-Host -Message "PnPCoreSdkPath: $pnpCoreSdkPath"
+		$buildCmd += " -p:PnPCoreSdkPath=`"$pnpCoreSdkPath`""
 	}
  else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore"
