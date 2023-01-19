@@ -10,13 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html
 # Send-PnPMail
 
 ## SYNOPSIS
-Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified. See detailed help for more information.
+Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified.
 
 ## SYNTAX
 
 ```powershell
-Send-PnPMail [-Server <String>] [-From <String>] [-Password <String>] -To <String[]> [-Cc <String[]>]
- -Subject <String> -Body <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Send-PnPMail [-Server <String>] [-From <String>] [-Password <String>] -To <String[]> [-Cc <String[]>] [-Bcc <String[]>] -Subject <String> -Body <String> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -64,6 +63,20 @@ Accept wildcard characters: False
 
 ### -Cc
 List of recipients on CC
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Bcc
+List of recipients on BCC
 
 ```yaml
 Type: String[]
