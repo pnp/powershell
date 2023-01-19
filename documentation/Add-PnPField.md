@@ -42,7 +42,7 @@ Adds a field (a column) to a list or as a site column. To add a column of type M
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPField -Type Calculated -InternalName "C1" -DisplayName "C1" -Formula ="[Title]"
+Add-PnPField -Type Calculated -InternalName "C1" -DisplayName "C1" -Formula "=[Title]"
 ```
 
 Adds a new calculated site column with the formula specified
@@ -298,10 +298,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
