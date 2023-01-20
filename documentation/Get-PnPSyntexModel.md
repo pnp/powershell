@@ -39,14 +39,14 @@ Lists all the document processing models in the connected Syntex Content Center 
 Get-PnPSyntexModel -Identity 1
 ```
 
-Gets the content understanding model with id 1.
+Gets the document processing model with the id 1.
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPSyntexModel -Identity "Invoice model"
 ```
 
-Gets the content understanding model named "Invoice model".
+Gets the document processing model named "Invoice model".
 
 ## PARAMETERS
 
