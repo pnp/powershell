@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-CoreRequestFilesLinkExpirationInDays` and `-CoreRequestFilesLinkEnabled` to `Set-PnPTenant` and `-RequestFilesLinkExpirationInDays` to `Set-PnPSite` to allow configuration of the new receive files to SharePoint Online folder feature [#2719](https://github.com/pnp/powershell/pull/2719)
 - Added `PSVersion` tracking, which tracks the PowerShell version being used. [#Commit](https://github.com/pnp/powershell/commit/1c6c787883cb45f65c217f7fc68969e44ec73283)
 - Added `-Bcc` option to `Send-PnPMail` [#2726](https://github.com/pnp/powershell/pull/2726)
+- Added `-AudienceIds` option to `Add-PnPNavitationNode` to allow setting the audience for a navigation node
 
 ### Changed
 
@@ -53,6 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with non-existing ItemProxy cmdlet aliases being registered
 - Fixed issue with `-TranslationLanguageCode` failures in `Add-PnPPage` and `Set-PnpPage` cmdlets. [#2634](https://github.com/pnp/powershell/pull/2634)
 - Fixed issue with `Export-PnPUserInfo` and `Remove-PnPUserInfo` cmdlets not working due to issue with parameter validation. [#2688](https://github.com/pnp/powershell/pull/2688)
+- Fixed issue with `Add-PnPNavigationNode` not always showing the new navigation node without requiring a manual edit and save of the menu first
 
 ### Contributors
 

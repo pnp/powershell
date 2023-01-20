@@ -15,8 +15,7 @@ Adds an item to a navigation element
 ## SYNTAX
 
 ```powershell
-Add-PnPNavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Parent <Int32>] [-First]
- [-External] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPNavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Parent <Int32>] [-First] [-External] [-AudienceIds <Guid[]>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -167,10 +166,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -AudienceIds
+The Guids of the groups to which the navigation node should be visible. Leave empty to make the node visible to all users.
 
+```yaml
+Type: Guid array
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
