@@ -84,10 +84,9 @@
                     <h1 id="send-pnpmail">Send-PnPMail</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified. See detailed help for more information.</p>
+<p>Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Send-PnPMail [-Server &lt;String&gt;] [-From &lt;String&gt;] [-Password &lt;String&gt;] -To &lt;String[]&gt; [-Cc &lt;String[]&gt;]
- -Subject &lt;String&gt; -Body &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Send-PnPMail [-Server &lt;String&gt;] [-From &lt;String&gt;] [-Password &lt;String&gt;] -To &lt;String[]&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] -Subject &lt;String&gt; -Body &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to send an email using the Office 365 SMTP Service or SharePoin.</p>
@@ -118,6 +117,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-cc">-Cc</h3>
 <p>List of recipients on CC</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-bcc">-Bcc</h3>
+<p>List of recipients on BCC</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 

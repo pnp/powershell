@@ -405,7 +405,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPField.html",
-          "hash": "qRZNqsrqa5vyYVhrXwdFnQ=="
+          "hash": "4+DMMYFXHBZ1DgV2Wmv4SQ=="
         }
       },
       "is_incremental": false,
@@ -6408,7 +6408,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Send-PnPMail.html",
-          "hash": "XNA7yBU6u5peQ63oew118g=="
+          "hash": "Bojcda7BNdQzRV/GoMQrlw=="
         }
       },
       "is_incremental": false,
