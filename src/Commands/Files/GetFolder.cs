@@ -44,6 +44,7 @@ namespace PnP.PowerShell.Commands.Files
                     foreach(ListItem listItem in listItems)
                     {
                         var folder = listItem.Folder;
+                        folder.EnsureProperties(RetrievalExpressions);
                         folders.Add(folder);
                     }
 
