@@ -37,7 +37,7 @@ Unpublish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -T
 
 ## DESCRIPTION
 
-This command unpublishes a Syntex content understanding models from a list.
+This command unpublishes a Syntex document processing model from a list.
 
 ## EXAMPLES
 
@@ -47,7 +47,7 @@ This command unpublishes a Syntex content understanding models from a list.
 Unpublish-PnPSyntexModel -Model "Invoice model" -ListWebUrl "https://contoso.sharepoint.com/sites/finance" -List "Documents"
 ```
 
-Unpublishes the content understanding model named "Invoice model" from the list named "Documents" in the /sites/finance web.
+Unpublishes the Syntex document processing model named "Invoice model" from the list named "Documents" in the /sites/finance web.
 
 ### EXAMPLE 2
 
