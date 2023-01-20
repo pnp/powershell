@@ -59,6 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Leon Armston [LeonArmston]
 - Robin Meure [robinmeure]
 - Rohit Varghese [rohitvarghese96]
 - Arleta Wanat [PowershellScripts]
