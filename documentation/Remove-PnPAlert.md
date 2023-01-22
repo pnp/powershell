@@ -10,13 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAlert.html
 # Remove-PnPAlert
 
 ## SYNOPSIS
-Removes an alert for a user
+Removes an alert for a user.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPAlert [-User <UserPipeBind>] -Identity <AlertPipeBind> [-Force] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPAlert [-User <UserPipeBind>] -Identity <AlertPipeBind> [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -30,14 +29,14 @@ Allows to remove an alert for a user.
 Remove-PnPAlert -Identity 641ac67f-0ce0-4837-874a-743c8f8572a7
 ```
 
-Removes the alert with the specified ID for the current user
+Removes the alert with the specified ID for the current user.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPAlert -Identity 641ac67f-0ce0-4837-874a-743c8f8572a7 -User "i:0#.f|membership|Alice@contoso.onmicrosoft.com"
 ```
 
-Removes the alert with the specified ID for the user specified
+Removes the alert with the specified ID for the specified user.
 
 ## PARAMETERS
 
@@ -84,7 +83,7 @@ Accept wildcard characters: False
 ```
 
 ### -User
-User to remove the alert for (User ID, login name or actual User object). Skip this parameter to use the current user. Note: Only site owners can remove alerts for other users.
+User to remove the alert for. Accepts User ID, login name or actual User object. Skip this parameter to use the current user. Note: Only site owners can remove alerts for other users.
 
 ```yaml
 Type: UserPipeBind
