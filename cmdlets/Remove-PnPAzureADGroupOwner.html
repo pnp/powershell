@@ -90,8 +90,7 @@
 </ul>
 <p>Removes owners from a particular Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPAzureADGroupOwner -Identity &lt;AzureADGroupPipeBind&gt; -Users &lt;String[]&gt;
-  [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Remove-PnPAzureADGroupOwner -Identity &lt;AzureADGroupPipeBind&gt; -Users &lt;String[]&gt; [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to remove owners from Azure Active Directory group.</p>
@@ -99,10 +98,10 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Remove-PnPAzureADGroupOwner -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
 </code></pre>
-<p>Removes the provided two users as owners from the Azure Active Directory group named &quot;Project Team&quot;</p>
+<p>Removes the provided two users as owners from the Azure Active Directory group named &quot;Project Team&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
-<p>The Identity of the zure Active Directory group to remove owners from</p>
+<p>The Identity of the Azure Active Directory group to remove owners from.</p>
 <pre><code class="lang-yaml">Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
@@ -113,7 +112,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-users">-Users</h3>
-<p>The UPN(s) of the user(s) to remove as owners from the Azure Active Directory group</p>
+<p>The UPN(s) of the user(s) to remove as owners from the Azure Active Directory group.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
