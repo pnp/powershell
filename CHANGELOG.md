@@ -58,6 +58,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Arleta Wanat [PowershellScripts]
 - Leon Armston [LeonArmston]
 - Robin Meure [robinmeure]
 - Rohit Varghese [rohitvarghese96]
