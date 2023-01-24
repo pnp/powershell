@@ -4,7 +4,7 @@ schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Add-PnPPlannerBucket.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: add-pnpplannerbucket
+title: Add-PnPPlannerBucket
 ---
   
 # Add-PnPPlannerBucket

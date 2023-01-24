@@ -25,9 +25,9 @@ Use this cmdlet to retrieve the current configuration values for Idle session si
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPBrowserIdleSignOut
+Get-PnPBrowserIdleSignout
 ```
-This example retrieves the current configuration values for Idle session sign-out
+This example retrieves the current configuration values for Idle session sign-out.
 
 ## RELATED LINKS
 
