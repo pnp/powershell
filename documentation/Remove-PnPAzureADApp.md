@@ -4,7 +4,7 @@ Module Name: PnP.PowerShell
 online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAzureADApp.html
 schema: 2.0.0
 applicable: SharePoint Online
-title: Remove-PnPAzureADAppPermission
+title: Remove-PnPAzureADApp
 ---
 
 # Remove-PnPAzureADApp
@@ -15,7 +15,7 @@ title: Remove-PnPAzureADAppPermission
 
   * Microsoft Graph API: Application.ReadWrite.All
 
-Removes an Azure AD App registration
+Removes an Azure AD App registration.
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Remove-PnPAzureADApp [-Identity] <AzureADAppPipeBind> [-Force]
 ```
 
 ## DESCRIPTION
-This cmdlet remove an Azure AD App registration
+This cmdlet removes an Azure AD App registration.
 
 ## EXAMPLES
 
@@ -33,14 +33,14 @@ This cmdlet remove an Azure AD App registration
 Remove-PnPAzureADApp -Identity MyApp
 ```
 
-Removes the specified app
+Removes the specified app.
 
-### Example 1
+### Example 2
 ```powershell
 Remove-PnPAzureADApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
 ```
 
-Removes the specified app
+Removes the specified app.
 
 ## PARAMETERS
 
