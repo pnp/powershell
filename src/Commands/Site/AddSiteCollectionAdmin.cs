@@ -13,36 +13,28 @@ namespace PnP.PowerShell.Commands.Site
         public List<UserPipeBind> Owners;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter MakePrimarySiteCollectionAdmin;
+        public UserPipeBind PrimarySiteCollectionAdmin;
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(nameof(MakePrimarySiteCollectionAdmin)) && MakePrimarySiteCollectionAdmin.ToBool())
+            if (ParameterSpecified(nameof(PrimarySiteCollectionAdmin)) && PrimarySiteCollectionAdmin != null)
             {
-                if (Owners?.Count > 1)
-                {
-                    throw new PSArgumentException("Only one owner can be set as primary site collection admin", nameof(Owners));
-                }
-                else
-                {
-                    AddAsPrimarySiteCollectionAdmin();
-                }
+                SetPrimarySiteCollectionAdmin();
             }
-            else
+
+            if (ParameterSpecified(nameof(Owners)) && Owners != null)
             {
-                AddAsSecondarySiteCollectionAdmin();
+                AddSecondarySiteCollectionAdmins();
             }
         }
 
         /// <summary>
-        /// Adds the first owner as a primary site collection admin
+        /// Sets the primary site collection admin
         /// </summary>
-        private void AddAsPrimarySiteCollectionAdmin()
+        private void SetPrimarySiteCollectionAdmin()
         {
-            var owner = Owners[0];
-
             WriteVerbose("Retrieving details of user so it can set as the primary site collection admin");
-            User user = owner.GetUser(ClientContext, true);
+            User user = PrimarySiteCollectionAdmin.GetUser(ClientContext, true);
 
             if (user != null)
             {
@@ -69,7 +61,7 @@ namespace PnP.PowerShell.Commands.Site
         /// <summary>
         /// Adds all the owners as secondary site collection admins
         /// </summary>
-        private void AddAsSecondarySiteCollectionAdmin()
+        private void AddSecondarySiteCollectionAdmins()
         {
             WriteVerbose($"Adding {Owners.Count} users as secondary site collection admins");
 

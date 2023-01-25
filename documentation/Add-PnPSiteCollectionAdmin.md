@@ -15,7 +15,7 @@ Adds one or more users as site collection administrators to the site collection 
 ## SYNTAX
 
 ```powershell
-Add-PnPSiteCollectionAdmin -Owners <System.Collections.Generic.List<[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]>> [-MakePrimarySiteCollectionAdmin] [-Verbose] [-Connection <PnPConnection>]
+Add-PnPSiteCollectionAdmin [-Owners <System.Collections.Generic.List<[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]>>] [-PrimarySiteCollectionAdmin <PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind>] [-Verbose] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -46,7 +46,7 @@ This will add all users with their title ending with "Doe" as additional seconda
 
 ### EXAMPLE 4
 ```powershell
-Add-PnPSiteCollectionAdmin -Owners "user@contoso.onmicrosoft.com" -MakePrimarySiteCollectionAdmin
+Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdminrs "user@contoso.onmicrosoft.com"
 ```
 
 This will set user@contoso.onmicrosoft.com as the primary site collection administrator of the site collection in the current context
@@ -68,9 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owners
-Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators to the site in the current context. Existing administrators will stay. Can be both users and groups.
-
-When also passing in -MakePrimarySiteCollectionAdmin, only one Owner can be passed in.
+Specifies owner(s) to add as site collection administrators. They will be added as additional secondary site collection administrators to the site in the current context. Existing administrators will stay. Can be both users and groups.
 
 ```yaml
 Type: System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]
@@ -83,11 +81,11 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -MakePrimarySiteCollectionAdmin
-When provided, the owner passed in through -Owners will be set as the primary site collection administrator. When not provided or provided as $false, the -Owners will be added as secondary site collection administrators.
+### -PrimarySiteCollectionAdmin
+The user to set as the primary site collection administrator. This will replace the current primary site collection administrator. To add additional site collection administrators, use the -Owners parameter.
 
 ```yaml
-Type: SwitchParameter
+Type: PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind
 Parameter Sets: (All)
 
 Required: False
