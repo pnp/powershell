@@ -2016,7 +2016,7 @@
     "Id": 336
   },
   {
-    "Command": "Get-PnPAzureADAppSitePermissions -Site https://contoso.sharepoint.com/sites/projects",
+    "Command": "Get-PnPAzureADAppSitePermission -Site https://contoso.sharepoint.com/sites/projects",
     "CommandName": "Get-PnPAzureADAppSitePermission",
     "Rank": 2,
     "Id": 337
@@ -2226,7 +2226,7 @@
     "Id": 371
   },
   {
-    "Command": "Get-PnPBrowserIdleSignOut",
+    "Command": "Get-PnPBrowserIdleSignout",
     "CommandName": "Get-PnPBrowserIdleSignout",
     "Rank": 1,
     "Id": 372
