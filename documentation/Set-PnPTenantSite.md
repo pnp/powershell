@@ -22,6 +22,7 @@ Updates settings of a site collection
 ### Set Properties
 ```powershell
 Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-AllowSelfServiceUpgrade]
+ [-PrimarySiteCollectionAdmin <String>]
  [-Owners <String[]>] [-DenyAddAndCustomizePages]
  [-SharingCapability <SharingCapabilities>] [-StorageQuota <Int64>] [-StorageQuotaWarningLevel <Int64>] [-StorageQuotaReset] [-BlockDownloadLinksFileType <BlockDownloadLinksFileTypes>]
  [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-EnablePWA <Boolean>]
@@ -402,8 +403,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -PrimarySiteCollectionAdmin
+Specifies the user to set as the primary site collection administrator. Will replace the current primary site collection administrator. To add additional site collection administrators, use the -Owners parameter.
+
+```yaml
+Type: PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Owners
-Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators. Existing administrators will stay. Can be both users and groups.
+Specifies owner(s) to add as secondary site collection administrators. They will be added as additional secondary site collection administrators. Existing administrators will stay. Can be both users and groups.
 
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
