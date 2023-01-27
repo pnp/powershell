@@ -35,7 +35,7 @@ Get-PnPSiteCollectionAppCatalog -CurrentSite
 ```
 Will return the site collection app catalog for the currently connected to site, if it has one. Otherwise it will yield no result.
 
-### EXAMPLE 2
+### EXAMPLE 3
 ```powershell
 Get-PnPSiteCollectionAppCatalog -ExcludeDeletedSites
 ```
