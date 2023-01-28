@@ -86,25 +86,27 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds one or more users as site collection administrators to the site collection in the current context</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPSiteCollectionAdmin
- -Owners &lt;System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]&gt;
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPSiteCollectionAdmin [-Owners &lt;System.Collections.Generic.List&lt;[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]&gt;&gt;] [-PrimarySiteCollectionAdmin &lt;PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove existing site collection administrators. You must be a Site Collection Admin to run this command. Use <code>Set-PnPTenantSite -Owners</code> if you are not an Admin for the site but have the SharePoint admin role.</p>
+<p>This command allows adding one to many users as site collection administrators to the site collection in the current context. It does not replace or remove existing site collection administrators. You must be a Site Collection Admin to run this command. Use <code>Set-PnPTenantSite -Owners</code> if you are not an Admin for the site but have the SharePoint Online admin role.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPSiteCollectionAdmin -Owners &quot;user@contoso.onmicrosoft.com&quot;
 </code></pre>
-<p>This will add user@contoso.onmicrosoft.com as an additional site collection owner to the site collection in the current context</p>
+<p>This will add user@contoso.onmicrosoft.com as an additional secondary site collection administrator to the site collection in the current context</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPSiteCollectionAdmin -Owners @(&quot;user1@contoso.onmicrosoft.com&quot;, &quot;user2@contoso.onmicrosoft.com&quot;)
 </code></pre>
-<p>This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional site collection owners to the site collection in the current context</p>
+<p>This will add user1@contoso.onmicrosoft.com and user2@contoso.onmicrosoft.com as additional secondary site collection administrator to the site collection in the current context</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPUser | Where-Object Title -Like &quot;*Doe&quot; | Add-PnPSiteCollectionAdmin
 </code></pre>
-<p>This will add all users with their title ending with &quot;Doe&quot; as additional site collection owners to the site collection in the current context</p>
+<p>This will add all users with their title ending with &quot;Doe&quot; as additional secondary site collection administrators to the site collection in the current context</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdminrs &quot;user@contoso.onmicrosoft.com&quot;
+</code></pre>
+<p>This will set user@contoso.onmicrosoft.com as the primary site collection administrator of the site collection in the current context</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -118,7 +120,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-owners">-Owners</h3>
-<p>Specifies owner(s) to add as site collection administrators. They will be added as additional site collection administrators to the site in the current context. Existing administrators will stay. Can be both users and groups.</p>
+<p>Specifies owner(s) to add as site collection administrators. They will be added as additional secondary site collection administrators to the site in the current context. Existing administrators will stay. Can be both users and groups.</p>
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]
 Parameter Sets: (All)
 
@@ -126,6 +128,17 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-primarysitecollectionadmin">-PrimarySiteCollectionAdmin</h3>
+<p>The user to set as the primary site collection administrator. This will replace the current primary site collection administrator. To add additional site collection administrators, use the -Owners parameter.</p>
+<pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

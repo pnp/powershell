@@ -861,7 +861,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPSiteCollectionAdmin.html",
-          "hash": "4viPgPB61GUqmX3b4kt9gg=="
+          "hash": "nJukgi09F1MCp3TbgTfTTw=="
         }
       },
       "is_incremental": false,
@@ -7527,7 +7527,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenantSite.html",
-          "hash": "fq4r5nxGhPKQkkdQqqWbww=="
+          "hash": "o9AvVs+Sx8L+88bh1oaj5Q=="
         }
       },
       "is_incremental": false,
