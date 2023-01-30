@@ -295,6 +295,22 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await SendMessageAsync(httpClient, message);
         }
 
+        public static async Task<string> PostAsync(HttpClient httpClient, string url, ClientContext clientContext, string payload, string contentType = "application/json", string accept = "application/json")
+        {
+            HttpRequestMessage message = null;
+            if (payload != null)
+            {
+                var content = new StringContent(payload);
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType ?? "application/json");
+                message = GetMessage(url, HttpMethod.Post, clientContext, accept, content);
+            }
+            else
+            {
+                message = GetMessage(url, HttpMethod.Post, clientContext, accept);
+            }
+            return await SendMessageAsync(httpClient, message);
+        }        
+
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, string accessToken, object payload, bool camlCasePolicy = true)
         {
             var stringContent = await PostAsync(httpClient, url, accessToken, payload);
