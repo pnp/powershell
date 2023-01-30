@@ -33,7 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Bcc` option to `Send-PnPMail` [#2726](https://github.com/pnp/powershell/pull/2726)
 - Added `-PrimarySiteCollectionAdmin` to `Add-PnPSiteCollectionAdmin` to allow for the primary site collection admin to be set on the current site [#2750](https://github.com/pnp/powershell/pull/2750)
 - Added `-PrimarySiteCollectionAdmin` to `Set-PnPTenantSite` to allow for the primary site collection admin to be set on a provided site [#2750](https://github.com/pnp/powershell/pull/2750)
-- Added additional fallback logic for retrieving tokens in Azure VM scenario using well-know endpoint when using Managed Identity authentication.
+- Added additional fallback logic for retrieving tokens in Azure VM scenario using well-know endpoint when using Managed Identity authentication. [#2761](https://github.com/pnp/powershell/pull/2761)
 
 ### Changed
 
