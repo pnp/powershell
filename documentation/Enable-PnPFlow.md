@@ -1,8 +1,10 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPFlow.html
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPFlow.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Enable-PnPFlow
 ---
   
 # Enable-PnPFlow
