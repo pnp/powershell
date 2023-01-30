@@ -4,7 +4,7 @@ title: Get-PnPSyntexModel
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSyntexModel.html
 ---
  
 # Get-PnPSyntexModel

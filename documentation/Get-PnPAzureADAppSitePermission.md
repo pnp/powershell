@@ -49,7 +49,7 @@ Returns the apps that have permissions for the currently connected to site. Note
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADAppSitePermissions -Site https://contoso.sharepoint.com/sites/projects
+Get-PnPAzureADAppSitePermission -Site https://contoso.sharepoint.com/sites/projects
 ```
 
 Returns the apps that have permissions for the site specified. Note that you required to have the SharePoint Administrator role in your tenant to be able to use this command.
