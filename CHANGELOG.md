@@ -57,6 +57,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Export-PnPUserInfo` and `Remove-PnPUserInfo` cmdlets not working due to issue with parameter validation. [#2688](https://github.com/pnp/powershell/pull/2688)
 - Fixed issue with `Get-PnPFolder` ignoring `-Includes` parameter when passing in a specific list through `-List` [#2735](https://github.com/pnp/powershell/pull/2735)
 - Fixed the handling of `-ErrorAction` so it follows the standard PowerShell behavior [#2741](https://github.com/pnp/powershell/pull/2741)
+- Fixed issue with `Set-PnPContentType` not allowing you to update basic properties of a content type [#2760](https://github.com/pnp/powershell/pull/2760)
 
 ### Contributors
 
