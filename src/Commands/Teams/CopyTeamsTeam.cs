@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Teams
         * However the mailNickname is still required by the payload so to deliver better user experience
         * the CLI generates mailNickname for the user 
         * so the user does not have to specify something that will be ignored.
-        * For more see: https://docs.microsoft.com/en-us/graph/api/team-clone?view=graph-rest-1.0#request-data
+        * For more see: https://learn.microsoft.com/en-us/graph/api/team-clone?view=graph-rest-1.0#request-data
         * This method has to be removed once the graph team fixes the issue and then the actual value
         * of the mailNickname would have to be specified by the CLI user.
         *  [Parameter(Mandatory = true)]

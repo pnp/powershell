@@ -297,7 +297,7 @@ Accept wildcard characters: False
 ```
 
 ### -Handlers
-Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://docs.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers
+Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://learn.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers
 
 ```yaml
 Type: Handlers
@@ -644,4 +644,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Encoding documentation](https://docs.microsoft.com/dotnet/api/system.text.encoding?view=net-6.0)
+[Encoding documentation](https://learn.microsoft.com/dotnet/api/system.text.encoding?view=net-6.0)

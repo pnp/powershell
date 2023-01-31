@@ -63,6 +63,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://docs.microsoft.com/graph/api/groupsetting-get)
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/groupsetting-get)
 
 

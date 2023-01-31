@@ -67,9 +67,9 @@ namespace PnP.PowerShell.Tests.Site
 				var roleName = "";
 				// From Cmdlet Help: An existing permission level or the name of an permission level to clone as base template.
 				var clone = "";
-				// From Cmdlet Help: Specifies permission flags(s) to enable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
+				// From Cmdlet Help: Specifies permission flags(s) to enable. Please visit https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
 				var include = "";
-				// From Cmdlet Help: Specifies permission flags(s) to disable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
+				// From Cmdlet Help: Specifies permission flags(s) to disable. Please visit https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
 				var exclude = "";
 				// From Cmdlet Help: Optional description for the new permission level.
 				var description = "";

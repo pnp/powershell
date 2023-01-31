@@ -86,6 +86,6 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 
-[Microsoft 365 Information Governance](https://docs.microsoft.com/en-us/microsoft-365/compliance/manage-information-governance?view=o365-worldwide)
+[Microsoft 365 Information Governance](https://learn.microsoft.com/en-us/microsoft-365/compliance/manage-information-governance?view=o365-worldwide)
 
-[Adaptive policy scopes](https://docs.microsoft.com/en-us/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention)
+[Adaptive policy scopes](https://learn.microsoft.com/en-us/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention)

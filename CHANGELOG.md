@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-CoreRequestFilesLinkExpirationInDays` and `-CoreRequestFilesLinkEnabled` to `Set-PnPTenant` and `-RequestFilesLinkExpirationInDays` to `Set-PnPSite` to allow configuration of the new receive files to SharePoint Online folder feature [#2719](https://github.com/pnp/powershell/pull/2719)
 - Added `PSVersion` tracking, which tracks the PowerShell version being used. [#Commit](https://github.com/pnp/powershell/commit/1c6c787883cb45f65c217f7fc68969e44ec73283)
 - Added `-Bcc` option to `Send-PnPMail` [#2726](https://github.com/pnp/powershell/pull/2726)
+- Added `-AudienceIds` option to `Add-PnPNavitationNode` to allow setting the audience for a navigation node [#2736](https://github.com/pnp/powershell/pull/2736)
 - Added `-PrimarySiteCollectionAdmin` to `Add-PnPSiteCollectionAdmin` to allow for the primary site collection admin to be set on the current site [#2750](https://github.com/pnp/powershell/pull/2750)
 - Added `-PrimarySiteCollectionAdmin` to `Set-PnPTenantSite` to allow for the primary site collection admin to be set on a provided site [#2750](https://github.com/pnp/powershell/pull/2750)
 - Added additional fallback logic for retrieving tokens in Azure VM scenario using well-know endpoint when using Managed Identity authentication. [#2761](https://github.com/pnp/powershell/pull/2761)
@@ -56,6 +57,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with non-existing ItemProxy cmdlet aliases being registered
 - Fixed issue with `-TranslationLanguageCode` failures in `Add-PnPPage` and `Set-PnpPage` cmdlets. [#2634](https://github.com/pnp/powershell/pull/2634)
 - Fixed issue with `Export-PnPUserInfo` and `Remove-PnPUserInfo` cmdlets not working due to issue with parameter validation. [#2688](https://github.com/pnp/powershell/pull/2688)
+- Fixed issue with `Add-PnPNavigationNode` not always showing the new navigation node without requiring a manual edit and save of the menu first [#2736](https://github.com/pnp/powershell/pull/2736)
 - Fixed issue with `Get-PnPFolder` ignoring `-Includes` parameter when passing in a specific list through `-List` [#2735](https://github.com/pnp/powershell/pull/2735)
 - Fixed the handling of `-ErrorAction` so it follows the standard PowerShell behavior [#2741](https://github.com/pnp/powershell/pull/2741)
 - Fixed issue with `Set-PnPContentType` not allowing you to update basic properties of a content type [#2760](https://github.com/pnp/powershell/pull/2760)

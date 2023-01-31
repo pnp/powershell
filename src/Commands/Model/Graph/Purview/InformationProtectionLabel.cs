@@ -5,7 +5,7 @@ namespace PnP.PowerShell.Commands.Model.Graph.Purview
     /// <summary>
     /// Describes the information protection label that details how to properly apply a sensitivity label to information. The informationProtectionLabel resource describes the configuration of sensitivity labels that apply to a user or tenant.
     /// </summary>
-    /// <seealso cref="https://docs.microsoft.com/graph/api/resources/informationprotectionlabel"/>
+    /// <seealso cref="https://learn.microsoft.com/graph/api/resources/informationprotectionlabel"/>
     public class InformationProtectionLabel
     {
         /// <summary>
