@@ -955,12 +955,7 @@ namespace PnP.PowerShell.Commands.Utilities
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
             var response = await GraphHelper.PostAsync(connection, "v1.0/appCatalogs/teamsApps", accessToken, byteArrayContent);
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-#if NETFRAMEWORK
-            var options = new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-#else
-            var options = new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-#endif
-            return JsonSerializer.Deserialize<TeamApp>(content, options);
+            return JsonSerializer.Deserialize<TeamApp>(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
 
         public static async Task<HttpResponseMessage> UpdateAppAsync(PnPConnection connection, string accessToken, byte[] bytes, string appId)

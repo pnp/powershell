@@ -156,22 +156,13 @@ if ($runPublish -eq $true) {
 
 		Write-Host "Writing PSD1" -ForegroundColor Yellow
 		$manifest = "@{
-	NestedModules =  if (`$PSEdition -eq 'Core')
-	{
-		'Core/PnP.PowerShell.dll'
-	}
-	else
-	{
-		'Framework/PnP.PowerShell.dll'
-	}
+	NestedModules =  'Core/PnP.PowerShell.dll'
 	ModuleVersion = '$version'
 	Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
 	GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @(`"Core`",`"Desktop`")
-	PowerShellVersion = '5.1'
-	DotNetFrameworkVersion = '4.6.2'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)

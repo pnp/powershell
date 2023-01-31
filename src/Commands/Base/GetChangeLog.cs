@@ -40,11 +40,7 @@ namespace PnP.PowerShell.Commands
                     url = "https://raw.githubusercontent.com/pnp/powershell/dev/CHANGELOG.md";
                 }
                 var assembly = Assembly.GetExecutingAssembly();
-#if !NETFRAMEWORK
                 var currentVersion = new SemanticVersion(assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
-#else
-            var currentVersion = new System.Version(((AssemblyFileVersionAttribute)assembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version);
-#endif
                 var response = client.GetAsync(url).GetAwaiter().GetResult();
                 if (response.IsSuccessStatusCode)
                 {
