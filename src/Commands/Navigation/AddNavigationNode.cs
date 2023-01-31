@@ -1,8 +1,8 @@
 using System;
+using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Enums;
-
 
 namespace PnP.PowerShell.Commands.Branding
 {
@@ -27,6 +27,9 @@ namespace PnP.PowerShell.Commands.Branding
 
         [Parameter(Mandatory = false)]
         public SwitchParameter External;
+
+        [Parameter(Mandatory = false)]
+        public List<Guid> AudienceIds;
 
         protected override void ExecuteCmdlet()
         {
@@ -70,15 +73,31 @@ namespace PnP.PowerShell.Commands.Branding
                 }
                 if (nodeCollection != null)
                 {
-                    var addedNode = nodeCollection.Add(new NavigationNodeCreationInformation()
+                    var addedNode = nodeCollection.Add(new NavigationNodeCreationInformation
                     {
                         Title = Title,
                         Url = Url,
                         IsExternal = External.IsPresent,
                         AsLastNode = !First.IsPresent
                     });
+
+                    if (ParameterSpecified(nameof(AudienceIds)))
+                    {
+                        addedNode.AudienceIds = AudienceIds;
+                        addedNode.Update();
+                    }
+
                     ClientContext.Load(addedNode);
                     ClientContext.ExecuteQueryRetry();
+
+                    if(Location == NavigationType.QuickLaunch)
+                    {
+                        // Retrieve the menu definition and save it back again. This step is needed to enforce some properties of the menu to be shown, such as the audience targeting.
+                        CurrentWeb.EnsureProperties(w => w.Url);
+                        var menuState = Utilities.REST.RestHelper.GetAsync(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/MenuState", ClientContext, "application/json;odata=nometadata").GetAwaiter().GetResult();
+                        Utilities.REST.RestHelper.PostAsync(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/SaveMenuState", ClientContext, @"{ ""menuState"": " + menuState + "}", "application/json", "application/json;odata=nometadata").GetAwaiter().GetResult();
+                    }
+
                     WriteObject(addedNode);
                 }
                 else
