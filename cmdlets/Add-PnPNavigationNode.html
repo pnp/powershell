@@ -86,8 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds an item to a navigation element</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPNavigationNode -Location &lt;NavigationType&gt; -Title &lt;String&gt; [-Url &lt;String&gt;] [-Parent &lt;Int32&gt;] [-First]
- [-External] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Add-PnPNavigationNode -Location &lt;NavigationType&gt; -Title &lt;String&gt; [-Url &lt;String&gt;] [-Parent &lt;Int32&gt;] [-First] [-External] [-AudienceIds &lt;Guid[]&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Adds a menu item to either the quicklaunch, top navigation, search navigation or the footer</p>
@@ -187,6 +186,17 @@ Accept wildcard characters: False
 <h3 id="-url">-Url</h3>
 <p>The url to navigate to when clicking the new menu item. This can either be absolute or relative to the Web. Fragments are not supported.</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-audienceids">-AudienceIds</h3>
+<p>The Guids of the groups to which the navigation node should be visible. Leave empty to make the node visible to all users.</p>
+<pre><code class="lang-yaml">Type: Guid array
 Parameter Sets: (All)
 
 Required: False

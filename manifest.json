@@ -669,7 +669,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPNavigationNode.html",
-          "hash": "mneWVsnXmJjbYdZOLc8oUw=="
+          "hash": "HBHd0Dw/fcOIlZIzP+DuZg=="
         }
       },
       "is_incremental": false,
@@ -4848,7 +4848,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Publish-PnPCompanyApp.html",
-          "hash": "1CYVE6g6hfFK9IJ4Ir2fUQ=="
+          "hash": "yZHdlutPVJE9N8ahcD0qkQ=="
         }
       },
       "is_incremental": false,
