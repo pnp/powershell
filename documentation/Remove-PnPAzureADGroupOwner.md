@@ -20,8 +20,7 @@ Removes owners from a particular Azure Active Directory group. This can be a sec
 ## SYNTAX
 
 ```powershell
-Remove-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]>
-  [<CommonParameters>]
+Remove-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -35,12 +34,12 @@ Allows to remove owners from Azure Active Directory group.
 Remove-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
 ```
 
-Removes the provided two users as owners from the Azure Active Directory group named "Project Team"
+Removes the provided two users as owners from the Azure Active Directory group named "Project Team".
 
 ## PARAMETERS
 
 ### -Identity
-The Identity of the zure Active Directory group to remove owners from
+The Identity of the Azure Active Directory group to remove owners from.
 
 ```yaml
 Type: AzureADGroupPipeBind
@@ -54,7 +53,7 @@ Accept wildcard characters: False
 ```
 
 ### -Users
-The UPN(s) of the user(s) to remove as owners from the Azure Active Directory group
+The UPN(s) of the user(s) to remove as owners from the Azure Active Directory group.
 
 ```yaml
 Type: String[]

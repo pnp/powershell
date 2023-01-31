@@ -22,6 +22,9 @@ namespace PnP.PowerShell.Commands.Utilities
         [Parameter(Mandatory = false)]
         public string[] Cc;
 
+        [Parameter(Mandatory = false)]
+        public string[] Bcc;        
+
         [Parameter(Mandatory = true)]
         public string Subject;
 
@@ -32,11 +35,11 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             if (string.IsNullOrWhiteSpace(Password) && string.IsNullOrWhiteSpace(From))
             {
-                MailUtility.SendEmail(ClientContext, To, Cc, Subject, Body);
+                MailUtility.SendEmail(ClientContext, To, Cc, Bcc, Subject, Body);
             }
             else
             {
-                MailUtility.SendEmail(Server, From, Password, To, Cc, Subject, Body);
+                MailUtility.SendEmail(Server, From, Password, To, Cc, Bcc, Subject, Body);
             }
         }
     }

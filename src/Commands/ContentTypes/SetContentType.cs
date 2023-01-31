@@ -4,41 +4,51 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-    [Cmdlet(VerbsCommon.Set, "PnPContentType")]
+    [Cmdlet(VerbsCommon.Set, "PnPContentType", DefaultParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
     public class SetContentType : PnPWebCmdlet
     {
         private const string ParameterSet_FormCustomizersConvenienceParams = "Form Customizers Convenience Options";
         private const string ParameterSet_FormCustomizersParams = "Form Customizers Options";
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FormCustomizersParams)]
         public ContentTypePipeBind Identity;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_FormCustomizersParams)]
         [ValidateNotNullOrEmpty]
         public ListPipeBind List;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
         public SwitchParameter InSiteHierarchy;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
         public SwitchParameter UpdateChildren;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
         public string Name;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
         public string Description;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
         public string Group;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
         public bool Hidden;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
         public bool ReadOnly;
 
-        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersParams)]
         public bool Sealed;
 
         [Parameter(Mandatory = false, ValueFromPipeline = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]

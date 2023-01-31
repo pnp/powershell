@@ -130,6 +130,13 @@ namespace PnP.PowerShell.Commands.Base
                 endPoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
                 identityHeader = Environment.GetEnvironmentVariable("MSI_SECRET");
             }
+            if (string.IsNullOrEmpty(endPoint))
+            {
+                // additional fallback
+                // using well-known endpoint for Instance Metadata Service, useful in Azure VM scenario.
+                // https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
+                endPoint = "http://169.254.169.254/metadata/identity/oauth2/token";
+            }
             if (!string.IsNullOrEmpty(endPoint))
             {
                 var tokenRequestUrl = $"{endPoint}?resource={requiredScope}&api-version=2019-08-01";
