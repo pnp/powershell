@@ -15,7 +15,7 @@ Removes a taxonomy term group and all its term sets.
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPTermGroup -Identity <TaxonomyTermGroupPipeBind> [-TermStore <TaxonomyTermStorePipeBind>] [-Force]
 ```
 

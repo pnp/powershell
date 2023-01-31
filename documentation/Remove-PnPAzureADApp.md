@@ -19,7 +19,7 @@ Removes an Azure AD App registration.
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPAzureADApp [-Identity] <AzureADAppPipeBind> [-Force]
 ```
 
