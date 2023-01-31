@@ -3,7 +3,7 @@
     /// <summary>
     /// The types of workloads available within Office 365
     /// </summary>
-    /// <remarks>Documented at https://docs.microsoft.com/office/office-365-management-api/office-365-service-communications-api-reference </remarks>
+    /// <remarks>Documented at https://learn.microsoft.com/office/office-365-management-api/office-365-service-communications-api-reference </remarks>
     public enum Office365Workload : int
     {
         Bookings,

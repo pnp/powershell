@@ -21,7 +21,7 @@ SOFTWARE.
 
     References: 
         https://pnp.github.io/powershell/cmdlets/nightly/Register-PnPAzureADApp.html
-        https://docs.microsoft.com/powershell/module/az.automation/New-AzAutomationCredential?view=azps-4.4.0
+        https://learn.microsoft.com/powershell/module/az.automation/New-AzAutomationCredential?view=azps-4.4.0
 
  ----------------------------------------------------------------------------
 #>

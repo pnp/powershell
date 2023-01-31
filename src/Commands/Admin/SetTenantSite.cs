@@ -35,6 +35,9 @@ namespace PnP.PowerShell.Commands
         public SwitchParameter AllowSelfServiceUpgrade;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public UserPipeBind PrimarySiteCollectionAdmin;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public List<string> Owners;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -542,6 +545,19 @@ namespace PnP.PowerShell.Commands
                     Tenant.ConnectSiteToHubSite(Identity.Url, hubsiteProperties.SiteUrl);
                 }
                 ClientContext.ExecuteQueryRetry();
+            }
+
+            if(PrimarySiteCollectionAdmin != null)
+            {
+                using (var siteContext = Tenant.Context.Clone(Identity.Url))
+                {
+                    var spAdmin = PrimarySiteCollectionAdmin.GetUser(siteContext, true);                   
+                    siteContext.Load(spAdmin);
+                    siteContext.ExecuteQueryRetry();
+
+                    siteContext.Site.Owner = spAdmin;
+                    siteContext.ExecuteQueryRetry();
+                }
             }
 
             if (Owners != null && Owners.Count > 0)

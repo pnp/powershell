@@ -206,7 +206,7 @@ namespace PnP.PowerShell.Tests.Admin
 				var hideDefaultThemes = "";
 				// From Cmdlet Help: Guids of out of the box modern web part id's to hide
 				var disabledWebPartIds = "";
-				// From Cmdlet Help: Boolean indicating if Azure Information Protection (AIP) should be enabled on the tenant. For more information, see https://docs.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels
+				// From Cmdlet Help: Boolean indicating if Azure Information Protection (AIP) should be enabled on the tenant. For more information, see https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels
 				var enableAIPIntegration = "";
 
                 var results = scope.ExecuteCommand("Set-PnPTenant",

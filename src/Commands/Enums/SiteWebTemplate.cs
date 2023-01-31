@@ -1,7 +1,7 @@
 ﻿namespace PnP.PowerShell.Commands.Enums
 {
     /// <summary>
-    /// The different types of sites for which a Site Design can be created. See https://docs.microsoft.com/sharepoint/dev/declarative-customization/customize-default-site-design#apply-a-site-script-to-a-default-site-template.
+    /// The different types of sites for which a Site Design can be created. See https://learn.microsoft.com/sharepoint/dev/declarative-customization/customize-default-site-design#apply-a-site-script-to-a-default-site-template.
     /// </summary>
     public enum SiteWebTemplate
     {

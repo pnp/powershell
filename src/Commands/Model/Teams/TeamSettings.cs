@@ -128,23 +128,5 @@ namespace PnP.PowerShell.Commands.Model.Teams
                 Visibility = groupVisibility
             };
         }
-
-        public string ToJsonString()
-        {
-#if NETFRAMEWORK
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions()
-            {
-                IgnoreNullValues = true,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-        
-#else
-            return JsonSerializer.Serialize(this, new JsonSerializerOptions()
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-            });
-#endif
-        }
     }
 }

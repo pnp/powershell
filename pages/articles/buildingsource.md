@@ -45,7 +45,7 @@ The pages folder contains the structure which is published to https://pnp.github
 The resources folder contains an XML file which is copied into the output folder of the build. This file defines how PowerShell should parse and render the objects shown as output from the PnP PowerShell cmdlets
 
 ### src/ALC
-Due to possible conflicts with already loaded assemblies in PowerShell we create an Assembly Load Context for a specific assembly. See https://docs.microsoft.com/dotnet/core/dependency-loading/understanding-assemblyloadcontext for more information about ALCs.
+Due to possible conflicts with already loaded assemblies in PowerShell we create an Assembly Load Context for a specific assembly. See https://learn.microsoft.com/dotnet/core/dependency-loading/understanding-assemblyloadcontext for more information about ALCs.
 
 ### src/Commands
 This is the main location of all the cmdlet code.
