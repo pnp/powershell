@@ -94,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -FieldOptions
-Specifies the control settings while adding a field. See https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee542202(v=office.15) for details
+Specifies the control settings while adding a field. See https://learn.microsoft.com/previous-versions/office/sharepoint-server/ee542202(v=office.15) for details
 
 ```yaml
 Type: AddFieldOptions

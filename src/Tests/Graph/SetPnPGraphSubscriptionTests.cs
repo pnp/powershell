@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Tests.Graph
 				// From Cmdlet Help: The unique id or an instance of a Microsoft Graph Subscription
 				var identity = "";
 				// This is a mandatory parameter
-				// From Cmdlet Help: Date and time to set the expiration to. Take notice of the maximum allowed lifetime of the subscription endponts as documented at https://docs.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type
+				// From Cmdlet Help: Date and time to set the expiration to. Take notice of the maximum allowed lifetime of the subscription endponts as documented at https://learn.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type
 				var expirationDate = "";
 
                 var results = scope.ExecuteCommand("Set-PnPGraphSubscription",

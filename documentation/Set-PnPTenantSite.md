@@ -86,7 +86,7 @@ This will enable script support for the site 'https://contoso.sharepoint.com/sit
 ## PARAMETERS
 
 ### -AddInformationSegment
-This parameter allows you to add a segment to a SharePoint site. This parameter is only applicable for tenants who have enabled Microsoft 365 Information barriers capability. Please read https://docs.microsoft.com/sharepoint/information-barriers documentation to understand Information barriers in SharePoint Online.
+This parameter allows you to add a segment to a SharePoint site. This parameter is only applicable for tenants who have enabled Microsoft 365 Information barriers capability. Please read https://learn.microsoft.com/sharepoint/information-barriers documentation to understand Information barriers in SharePoint Online.
 
 ```yaml
 Type: Guid[]
@@ -577,7 +577,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemoveInformationSegment
-This parameter allows you to remove a segment from a SharePoint site. This parameter is only applicable for tenants who have enabled Microsoft 365 Information barriers capability. Please read https://docs.microsoft.com/sharepoint/information-barriers documentation to understand Information barriers with SharePoint Online.
+This parameter allows you to remove a segment from a SharePoint site. This parameter is only applicable for tenants who have enabled Microsoft 365 Information barriers capability. Please read https://learn.microsoft.com/sharepoint/information-barriers documentation to understand Information barriers with SharePoint Online.
 
 ```yaml
 Type: Guid[]
@@ -619,7 +619,7 @@ Accept wildcard characters: False
 ```
 
 ### -InformationBarriersMode
-Specifies the information barrier mode which helps strengthen access, sharing, and membership of a site based on its information barrier mode and segments associated with the site. Expected values are `Open`, `OwnerModerated` , `Implicit` and `Explicit`. For more information, see https://docs.microsoft.com/sharepoint/information-barriers#information-barriers-modes-and-sharepoint-sites
+Specifies the information barrier mode which helps strengthen access, sharing, and membership of a site based on its information barrier mode and segments associated with the site. Expected values are `Open`, `OwnerModerated` , `Implicit` and `Explicit`. For more information, see https://learn.microsoft.com/sharepoint/information-barriers#information-barriers-modes-and-sharepoint-sites
 
 ```yaml
 Type: InformationBarriersMode

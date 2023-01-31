@@ -67,7 +67,7 @@ Returns the default configuration for the built into SharePoint Online site temp
 ## PARAMETERS
 
 ### -Identity
-Id of the built into SharePoint Online site template to return configuration settings for. If no configuration has been set previously for a template, no configuration for it will be returned, meaning it will be visible. See https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description for the full list of available types.
+Id of the built into SharePoint Online site template to return configuration settings for. If no configuration has been set previously for a template, no configuration for it will be returned, meaning it will be visible. See https://learn.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description for the full list of available types.
 
 ```yaml
 Type: Guid

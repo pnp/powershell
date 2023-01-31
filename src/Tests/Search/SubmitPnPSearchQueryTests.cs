@@ -91,7 +91,7 @@ namespace PnP.PowerShell.Tests.Search
 				var rankingModelId = "";
 				// From Cmdlet Help: Specifies the name of the client which issued the query.
 				var clientType = "";
-				// From Cmdlet Help: Limit the number of items per the collapse specification. See https://docs.microsoft.com/sharepoint/dev/general-development/customizing-search-results-in-sharepoint#collapse-similar-search-results-using-the-collapsespecification-property for more information.
+				// From Cmdlet Help: Limit the number of items per the collapse specification. See https://learn.microsoft.com/sharepoint/dev/general-development/customizing-search-results-in-sharepoint#collapse-similar-search-results-using-the-collapsespecification-property for more information.
 				var collapseSpecification = "";
 				// From Cmdlet Help: The keyword query’s hidden constraints.
 				var hiddenConstraints = "";

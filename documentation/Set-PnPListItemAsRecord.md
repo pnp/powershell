@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListItemAsRecord
 # Set-PnPListItemAsRecord
 
 ## SYNOPSIS
-Declares a list item as a record, for more information, see https://docs.microsoft.com/sharepoint/governance/records-management-in-sharepoint-server
+Declares a list item as a record, for more information, see https://learn.microsoft.com/sharepoint/governance/records-management-in-sharepoint-server
 
 ## SYNTAX
 

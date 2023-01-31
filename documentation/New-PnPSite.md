@@ -392,7 +392,7 @@ Accept wildcard characters: False
 
 ### -TimeZone
 Specifies the timezone of the site to create.
-To get the full list of timezone that you can select, you can visit [https://docs.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone](https://docs.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone)
+To get the full list of timezone that you can select, you can visit [https://learn.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone](https://learn.microsoft.com/dotnet/api/officedevpnp.core.enums.timezone)
 
 ```yaml
 Type: Framework.Enums.TimeZone
