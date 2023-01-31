@@ -1,7 +1,7 @@
 namespace PnP.PowerShell.Commands.Enums
 {
     /// <summary>
-    /// Defines all the built in SharePoint Online Site Template types. See https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description
+    /// Defines all the built in SharePoint Online Site Template types. See https://learn.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description
     /// </summary>
     public enum BuiltInSiteTemplates
     {

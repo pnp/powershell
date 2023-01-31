@@ -408,7 +408,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableAIPIntegration
-Boolean indicating if Azure Information Protection (AIP) should be enabled on the tenant. For more information, see https://docs.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels
+Boolean indicating if Azure Information Protection (AIP) should be enabled on the tenant. For more information, see https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-onedrive-files#use-powershell-to-enable-support-for-sensitivity-labels
 
 ```yaml
 Type: Boolean
@@ -991,7 +991,7 @@ The valid values are:
 ExternalUserAndGuestSharing (default) - External user sharing (share by email) and guest link sharing are both enabled. Disabled - External user sharing (share by email) and guest link sharing are both disabled.
 ExternalUserSharingOnly - External user sharing (share by email) is enabled, but guest link sharing is disabled.
 
-For more information about sharing, see Manage external sharing for your SharePoint online environment (https://docs.microsoft.com/sharepoint/turn-external-sharing-on-or-off).
+For more information about sharing, see Manage external sharing for your SharePoint online environment (https://learn.microsoft.com/sharepoint/turn-external-sharing-on-or-off).
 
 ```yaml
 Type: SharingCapabilities
@@ -1269,7 +1269,7 @@ Accept wildcard characters: False
 ```
 
 ### -InformationBarriersSuspension
-Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see https://docs.microsoft.com/sharepoint/information-barriers.
+Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see https://learn.microsoft.com/sharepoint/information-barriers.
 
 ```yaml
 Type: Boolean

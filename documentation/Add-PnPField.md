@@ -284,7 +284,7 @@ Accept wildcard characters: False
 ```
 
 ### -Type
-The type of the field like Choice, Note, MultiChoice. For a complete list of field types visit https://docs.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype
+The type of the field like Choice, Note, MultiChoice. For a complete list of field types visit https://learn.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype
 
 ```yaml
 Type: FieldType

@@ -98,7 +98,7 @@ Sets the logo if the site is a modern team site without a Microsoft 365 Group be
 Set-PnPSite -NoScriptSite $false
 ```
 
-Allows custom script on a specific site. See [Allow or prevent custom script](https://docs.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
+Allows custom script on a specific site. See [Allow or prevent custom script](https://learn.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
 
 ## PARAMETERS
 
@@ -369,7 +369,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoScriptSite
-Specifies if a site allows custom script or not. See [Allow or prevent custom script](https://docs.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
+Specifies if a site allows custom script or not. See [Allow or prevent custom script](https://learn.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
 
 ```yaml
 Type: SwitchParameter

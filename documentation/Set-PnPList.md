@@ -405,7 +405,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExemptFromBlockDownloadOfNonViewableFiles
-Allows to configure access capabilities for unmanaged devices for the list. If set to $true, the list will be accessible by unmanaged devices as well. For more information, see [SharePoint and OneDrive unmanaged device access controls for administrators](https://docs.microsoft.com/sharepoint/control-access-from-unmanaged-devices).
+Allows to configure access capabilities for unmanaged devices for the list. If set to $true, the list will be accessible by unmanaged devices as well. For more information, see [SharePoint and OneDrive unmanaged device access controls for administrators](https://learn.microsoft.com/sharepoint/control-access-from-unmanaged-devices).
 
 ```yaml
 Type: Boolean

@@ -96,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoDefaultOrigins
-If specified, the default origins for the specified CDN type will not be provisioned. See [Default CDN origins](https://docs.microsoft.com/microsoft-365/enterprise/use-microsoft-365-cdn-with-spo?view=o365-worldwide#default-cdn-origins) for information about the origins that are provisioned by default when you enable the Office 365 CDN, and the potential impact of skipping the setup of default origins.
+If specified, the default origins for the specified CDN type will not be provisioned. See [Default CDN origins](https://learn.microsoft.com/microsoft-365/enterprise/use-microsoft-365-cdn-with-spo?view=o365-worldwide#default-cdn-origins) for information about the origins that are provisioned by default when you enable the Office 365 CDN, and the potential impact of skipping the setup of default origins.
 
 ```yaml
 Type: SwitchParameter

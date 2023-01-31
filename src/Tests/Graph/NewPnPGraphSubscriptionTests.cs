@@ -69,9 +69,9 @@ namespace PnP.PowerShell.Tests.Graph
 				// From Cmdlet Help: The URL that should be called when an event matching this subscription occurs
 				var notificationUrl = "";
 				// This is a mandatory parameter
-				// From Cmdlet Help: The resource to monitor for changes. See https://docs.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples for the list with supported options.
+				// From Cmdlet Help: The resource to monitor for changes. See https://learn.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples for the list with supported options.
 				var resource = "";
-				// From Cmdlet Help: The datetime defining how long this subscription should stay alive before which it needs to get extended to stay alive. See https://docs.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type for the supported maximum lifetime of the subscriber endpoints.
+				// From Cmdlet Help: The datetime defining how long this subscription should stay alive before which it needs to get extended to stay alive. See https://learn.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type for the supported maximum lifetime of the subscriber endpoints.
 				var expirationDateTime = "";
 				// From Cmdlet Help: Specifies the value of the clientState property sent by the service in each notification. The maximum length is 128 characters. The client can check that the notification came from the service by comparing the value of the clientState property sent with the subscription with the value of the clientState property received with each notification.
 				var clientState = "";
