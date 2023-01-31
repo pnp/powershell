@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPBrowserIdleSignout
+title: Set-PnPBrowserIdleSignOut
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPBrowserIdleSignout.html
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPBrowserIdleSignOut.html
 ---
  
-# Set-PnPBrowserIdleSignout
+# Set-PnPBrowserIdleSignOut
 
 ## SYNOPSIS
 Sets the current configuration values for Idle session sign-out policy.

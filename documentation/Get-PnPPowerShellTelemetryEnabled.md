@@ -28,7 +28,7 @@ In order to help to make PnP PowerShell better, we can track anonymous telemetry
 Get-PnPPowerShellTelemetryEnabled
 ```
 
-Will return true of false.
+Will return true or false.
 
 ## PARAMETERS
 
