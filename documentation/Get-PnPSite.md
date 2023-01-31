@@ -36,7 +36,7 @@ Gets the current site
 Get-PnPSite -Includes RootWeb,ServerRelativeUrl
 ```
 
-Gets the current site specifying to include RootWeb and ServerRelativeUrl properties. For the full list of properties see https://docs.microsoft.com/previous-versions/office/sharepoint-server/ee538579(v%3doffice.15)
+Gets the current site specifying to include RootWeb and ServerRelativeUrl properties. For the full list of properties see https://learn.microsoft.com/previous-versions/office/sharepoint-server/ee538579(v%3doffice.15)
 
 ## PARAMETERS
 

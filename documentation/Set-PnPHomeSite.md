@@ -69,4 +69,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Set up a home site for your organization](https://docs.microsoft.com/sharepoint/home-site)
+[Set up a home site for your organization](https://learn.microsoft.com/sharepoint/home-site)

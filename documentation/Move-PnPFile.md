@@ -21,7 +21,7 @@ Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-AllowSch
 ## DESCRIPTION
 Allows moving a file or folder to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection. If you move a file to a different site or subweb you cannot specify a target filename.
 
-Moving files and folders is bound to some restrictions. You can find more on it here: https://docs.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites
+Moving files and folders is bound to some restrictions. You can find more on it here: https://learn.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites
 
 ## EXAMPLES
 

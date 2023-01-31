@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
     public class BuiltInSiteTemplateSettings
     {
         /// <summary>
-        /// Contains all mappings between the built in SharePoint Online site templates and their matching GUIDs. See https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description
+        /// Contains all mappings between the built in SharePoint Online site templates and their matching GUIDs. See https://learn.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description
         /// </summary>
         public static System.Collections.Generic.Dictionary<Guid, BuiltInSiteTemplates> BuiltInSiteTemplateMappings = new System.Collections.Generic.Dictionary<Guid, BuiltInSiteTemplates>
         {

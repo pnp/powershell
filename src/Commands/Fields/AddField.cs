@@ -245,6 +245,15 @@ namespace PnP.PowerShell.Commands.Fields
                     EnsureDynamicParameters(calculatedFieldParameters);
                     f = CurrentWeb.CreateField<FieldCalculated>(fieldCI);
                     ((FieldCalculated)f).Formula = calculatedFieldParameters.Formula;
+
+                    if(!string.IsNullOrEmpty(calculatedFieldParameters.ResultType) && Enum.TryParse<FieldType>(calculatedFieldParameters.ResultType, out FieldType resultType))
+                    {
+                        ((FieldCalculated)f).OutputType = resultType;
+                    }
+                    else
+                    {
+                        ((FieldCalculated)f).OutputType = FieldType.Text;
+                    }
                     f.Update();
                     ClientContext.ExecuteQueryRetry();
                 }

@@ -144,7 +144,7 @@ Accept wildcard characters: False
 ```
 
 ### -Filter
-Specifies the script block of the server-side filter to apply. See https://docs.microsoft.com/powershell/module/sharepoint-online/get-sposite?view=sharepoint-ps#:~:text=SharePoint%20Online-,%2DFilter,-Specifies%20the%20script.
+Specifies the script block of the server-side filter to apply. See https://learn.microsoft.com/powershell/module/sharepoint-online/get-sposite?view=sharepoint-ps#:~:text=SharePoint%20Online-,%2DFilter,-Specifies%20the%20script.
 
 ```yaml
 Type: String

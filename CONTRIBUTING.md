@@ -56,4 +56,4 @@ var context = SelectedWeb.Context;
 The verb of a cmdlet (get-, add-, etc.) should follow acceptable cmdlet standards and should be part of one of the built in verbs classes (VerbsCommon, VerbsData, etc.):
 
 ## Documentation contributions
-The PowerShell documentation is located on https://docs.microsoft.com/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps
+The PowerShell documentation is located on https://learn.microsoft.com/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps

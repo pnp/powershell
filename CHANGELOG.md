@@ -61,6 +61,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Get-PnPFolder` ignoring `-Includes` parameter when passing in a specific list through `-List` [#2735](https://github.com/pnp/powershell/pull/2735)
 - Fixed the handling of `-ErrorAction` so it follows the standard PowerShell behavior [#2741](https://github.com/pnp/powershell/pull/2741)
 - Fixed issue with `Set-PnPContentType` not allowing you to update basic properties of a content type [#2760](https://github.com/pnp/powershell/pull/2760)
+- Fixed `Add-PnPField` not supporting a ReturnType to be set for calculated fields when created on the site level [#2765](https://github.com/pnp/powershell/pull/2765)
 
 ### Contributors
 
