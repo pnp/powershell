@@ -149,8 +149,7 @@ if ($runPublish -eq $true) {
 	Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
 	GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
 	Author = 'Microsoft 365 Patterns and Practices'
-	CompanyName = 'Microsoft 365 Patterns and Practices'
-	CompatiblePSEditions = @(`"Core`")
+	CompanyName = 'Microsoft 365 Patterns and Practices'	
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)
