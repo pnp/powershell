@@ -10,11 +10,11 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTermGroup.html
 # Set-PnPTermGroup
 
 ## SYNOPSIS
-Updates an existing term group
+Updates an existing term group.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTermGroup -Identity <TaxonomyTermGroupPipeBind> [-Name <String>] [-Description <String>] 
  [-TermStore <TaxonomyTermStorePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -29,13 +29,13 @@ The cmdles allows you to update an existing term group.
 Set-PnPTermGroup -Identity "Departments" -Name "Company Units"
 ```
 
-Renames the Departments termgroup to "Company Units"
+Renames the Departments termgroup to "Company Units".
 
 ## PARAMETERS
 
 
 ### -Description
-Optional description of the term group
+Optional description of the term group.
 
 ```yaml
 Type: String
