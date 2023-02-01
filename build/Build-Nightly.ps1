@@ -88,8 +88,7 @@ if ($runPublish -eq $true) {
 	}
 
 	$corePath = "$destinationFolder/Core"
-	$commonPath = "$destinationFolder/Common"
-	$frameworkPath = "$destinationFolder/Framework"
+	$commonPath = "$destinationFolder/Common"	
 
 	$assemblyExceptions = @("System.Memory.dll");
 
@@ -104,19 +103,13 @@ if ($runPublish -eq $true) {
 		New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
 		New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
 		New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
-		if (!$IsLinux -and !$IsMacOs) {
-			New-Item -Path "$destinationFolder\Framework" -ItemType Directory -Force | Out-Null
-		}
 
 		Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
 		Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
 		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/netstandard2.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net6.0-windows" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
-		if (!$IsLinux -and !$IsMacOs) {
-			Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net462" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $frameworkPath }
-		}
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net6.0-windows" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }		
 	}
 	Catch {
 		Write-Host "Error: Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
@@ -138,14 +131,9 @@ if ($runPublish -eq $true) {
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 			}
-			if($PSVersionTable.PSVersion.Major -eq 5)
-			{
-				Write-Host "Importing Framework version of assembly" -ForegroundColor Yellow
-				Import-Module -Name "$destinationFolder/Framework/PnP.PowerShell.dll" -DisableNameChecking
-			} else {
-				Write-Host "Importing dotnet core version of assembly" -ForegroundColor Yellow
-				Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
-			}
+			Write-Host "Importing dotnet core version of assembly" -ForegroundColor Yellow
+			Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
+
 			Write-Host "Getting cmdlet info" -ForegroundColor Yellow
 			$cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
