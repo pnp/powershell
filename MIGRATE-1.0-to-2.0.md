@@ -12,17 +12,17 @@ The 2.x version of PnP PowerShell is based exclusively on .NET 6.0, which means 
 
 ## Steps to update from 1.x to 2.x
 
-- Download and install the PowerShell version from [this link](https://aka.ms/powershell-release?tag=lts)
+- Download and install the PowerShell version from [this GitHub releases link](https://aka.ms/powershell-release?tag=lts)
 
 Or
 
-- For Windows environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2) as a guide
+- For Windows environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-windows?view=powershell-7.2)
 
-- For Linux based environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2) as a guide
+- For Linux based environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2)
 
-- For Mac OS envoronments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2) as a guide
+- For Mac OS envoronments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2)
 
-Once PowerShell is downloaded and installed in the environment, you can install the PnP PowerShell module like you normally do.
+Once the PowerShell 7.2.x or later is downloaded and installed in the environment, you can install the PnP PowerShell module like you normally do.
 
 ```powershell
 Install-Module -Name "PnP.PowerShell"
@@ -45,7 +45,7 @@ Recommend referring to these 2 links:
 
 ## Changes needed in Azure Functions
 
-If you are using PnP PowerShell in Azure functions, you might be required to change the PnP PowerShell version used.
+Using PnP PowerShell in Azure functions ? You might be required to change the PnP PowerShell version used.
 
 - If the Azure function is based on PowerShell 7.0 runtime, then you should keep using PnP PowerShell 1.x versions. The latest version is 1.12.0. The PowerShell 7.0 based runtime is deprecated and not supported anymore by Microsoft. You should consider updating to the 7.2 based runtime.
 
