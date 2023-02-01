@@ -451,7 +451,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         private X509Certificate2 GetCertificate(PSObject record)
         {
-            X509Certificate2 cert;
+            X509Certificate2 cert = null;
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
             {
                 if (!Path.IsPathRooted(CertificatePath))
@@ -481,31 +481,6 @@ namespace PnP.PowerShell.Commands.AzureAD
             }
             else
             {
-#if NETFRAMEWORK
-                var x500Values = new List<string>();
-                if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
-                {
-                    CommonName = ApplicationName;
-                }
-                if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
-                if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
-                if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
-                if (!string.IsNullOrWhiteSpace(Locality)) x500Values.Add($"L={Locality}");
-                if (!string.IsNullOrWhiteSpace(Organization)) x500Values.Add($"O={Organization}");
-                if (!string.IsNullOrWhiteSpace(OrganizationUnit)) x500Values.Add($"OU={OrganizationUnit}");
-
-                string x500 = string.Join("; ", x500Values);
-
-                if (ValidYears < 1 || ValidYears > 30)
-                {
-                    ValidYears = 10;
-                }
-                DateTime validFrom = DateTime.Today;
-                DateTime validTo = validFrom.AddYears(ValidYears);
-
-                byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
-                cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
-#else
                 if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
                 {
                     CommonName = ApplicationName;
@@ -513,7 +488,6 @@ namespace PnP.PowerShell.Commands.AzureAD
                 DateTime validFrom = DateTime.Today;
                 DateTime validTo = validFrom.AddYears(ValidYears);
                 cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
-#endif
             }
             var pfxPath = string.Empty;
             var cerPath = string.Empty;
@@ -613,7 +587,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 var waitTime = 60;
                 // CmdletMessageWriter.WriteFormattedWarning(this, $"Waiting {waitTime} seconds to launch the consent flow in a popup window.\n\nThis wait is required to make sure that Azure AD is able to initialize all required artifacts. You can always navigate to the consent page manually:\n\n{consentUrl}");
 
-                var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to launch the consent flow in a popup window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
+                var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to update the Azure AD and launch the consent flow in a popup window.");
 
                 for (var i = 0; i < waitTime; i++)
                 {

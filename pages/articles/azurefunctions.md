@@ -83,7 +83,7 @@ Because of a bug in Azure Functions v4 with PowerShell 7.2 support, you need to 
 
 ### By using a Managed Identity
 
-The recommended option is to use a [managed identity in Azure](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.
+The recommended option is to use a [managed identity in Azure](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.
 
 #### Enabling the managed identity for an Azure Function
 
@@ -168,7 +168,7 @@ Once you have an Azure Active Directory application set up and the public key ce
 2. Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
 3. After the certificate has been uploaded, copy the thumbprint value shown.
 4. Navigate to `Configuration` and add a new Application Setting
-5. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See <https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code> for more information.
+5. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See <https://learn.microsoft.com/azure/app-service/configure-ssl-certificate-in-code> for more information.
 6. Save the settings
 
 #### Create the Azure Function for certificate authentication

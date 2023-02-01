@@ -13,7 +13,7 @@ This cmdlet publishes a new company app to Microsoft Teams.
 
 ## SYNTAX
 
-```
+```powershell
 Publish-PnPCompanyApp -PortalUrl <String> -AppName <String> [-Description <String>] [-LongDescription <String>]
  [-PrivacyPolicyUrl <String>] [-TermsAndUsagePolicyUrl <String>] -CompanyName <String>
  -CompanyWebSiteUrl <String> -ColoredIconPath <String> -OutlineIconPath <String>
@@ -35,7 +35,7 @@ This will create a new zip file called "Contoso Portal.zip" and it will upload t
 ## PARAMETERS
 
 ### -AppName
-The name of the app as you want to it to appear in Teams.
+The name of the app as you want it to appear in Teams.
 
 ```yaml
 Type: String
@@ -50,7 +50,7 @@ Accept wildcard characters: False
 ```
 
 ### -ColoredIconPath
-The path to the color icon (192x192px)
+The path to the color icon (192x192px).
 
 ```yaml
 Type: String
@@ -95,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -Description
-A short description for the app (less than 80 characters)
+A short description for the app (less than 80 characters).
 
 ```yaml
 Type: String
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -LongDescription
-A longer description for the app (less than 4000 characters)
+A longer description for the app (less than 4000 characters).
 
 ```yaml
 Type: String
@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -OutlineIconPath
-The path to the outline icon (32x32 px)
+The path to the outline icon (32x32 px).
 
 ```yaml
 Type: String

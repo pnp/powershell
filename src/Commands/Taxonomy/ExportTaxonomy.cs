@@ -74,6 +74,11 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 }
 
                 System.Text.Encoding textEncoding = System.Text.Encoding.Unicode;
+                if(Encoding == Encoding.UTF7)
+                {
+                    WriteWarning("UTF-7 Encoding is no longer supported. Defaulting to UTF-8");
+                    Encoding = Encoding.UTF8;
+                }
                 switch (Encoding)
                 {
                     case Encoding.ASCII:
@@ -90,11 +95,6 @@ namespace PnP.PowerShell.Commands.Taxonomy
                     case Encoding.UTF32:
                         {
                             textEncoding = System.Text.Encoding.UTF32;
-                            break;
-                        }
-                    case Encoding.UTF7:
-                        {
-                            textEncoding = System.Text.Encoding.UTF7;
                             break;
                         }
                     case Encoding.UTF8:
