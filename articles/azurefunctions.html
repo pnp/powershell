@@ -149,7 +149,7 @@
 </ol>
 <h2 id="decide-how-you-want-to-authenticate-in-your-azure-function">Decide how you want to authenticate in your Azure Function</h2>
 <h3 id="by-using-a-managed-identity">By using a Managed Identity</h3>
-<p>The recommended option is to use a <a href="https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">managed identity in Azure</a> to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.</p>
+<p>The recommended option is to use a <a href="https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">managed identity in Azure</a> to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.</p>
 <h4 id="enabling-the-managed-identity-for-an-azure-function">Enabling the managed identity for an Azure Function</h4>
 <ol>
 <li>In your Azure Function, in the left menu, go to Identity</li>
@@ -215,7 +215,7 @@ Register-PnPAzureADApp -ApplicationName &quot;MyDemoApp&quot; -Tenant [yourtenan
 <li>Click <code>Upload Certificate</code> and select the &quot;MyDemoApp.pfx&quot; file that has been created for you. Enter the password you used in the script above.</li>
 <li>After the certificate has been uploaded, copy the thumbprint value shown.</li>
 <li>Navigate to <code>Configuration</code> and add a new Application Setting</li>
-<li>Call the setting <code>WEBSITE_LOAD_CERTIFICATES</code> and set the thumbprint as a value. To make all the certificates you uploaded available use <code>*</code> as the value. See <a href="https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code">https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code</a> for more information.</li>
+<li>Call the setting <code>WEBSITE_LOAD_CERTIFICATES</code> and set the thumbprint as a value. To make all the certificates you uploaded available use <code>*</code> as the value. See <a href="https://learn.microsoft.com/azure/app-service/configure-ssl-certificate-in-code">https://learn.microsoft.com/azure/app-service/configure-ssl-certificate-in-code</a> for more information.</li>
 <li>Save the settings</li>
 </ol>
 <h4 id="create-the-azure-function-for-certificate-authentication">Create the Azure Function for certificate authentication</h4>

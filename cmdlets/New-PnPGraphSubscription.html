@@ -91,7 +91,7 @@
  [-LatestSupportedTlsVersion &lt;GraphSubscriptionTlsVersion&gt;]  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Creates a new Microsof Graph Subscription. The required Azure Active Directory application permission depends on the resource creating the subscription for, see <a href="https://docs.microsoft.com/graph/api/subscription-post-subscriptions#permissions">https://docs.microsoft.com/graph/api/subscription-post-subscriptions#permissions</a>. For a sample ASP.NET WebApi webhook implementation to receive the notifications from Microsoft Graph, see <a href="https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51">https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51</a>.</p>
+<p>Creates a new Microsof Graph Subscription. The required Azure Active Directory application permission depends on the resource creating the subscription for, see <a href="https://learn.microsoft.com/graph/api/subscription-post-subscriptions#permissions">https://learn.microsoft.com/graph/api/subscription-post-subscriptions#permissions</a>. For a sample ASP.NET WebApi webhook implementation to receive the notifications from Microsoft Graph, see <a href="https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51">https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51</a>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPGraphSubscription -ChangeType Create -NotificationUrl https://mywebapiservice/notifications -Resource &quot;me/mailFolders('Inbox')/messages&quot; -ExpirationDateTime (Get-Date).AddDays(1) -ClientState [Guid]::NewGuid().ToString()
@@ -126,7 +126,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-expirationdatetime">-ExpirationDateTime</h3>
-<p>The datetime defining how long this subscription should stay alive before which it needs to get extended to stay alive. See <a href="https://docs.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type">https://docs.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type</a> for the supported maximum lifetime of the subscriber endpoints.</p>
+<p>The datetime defining how long this subscription should stay alive before which it needs to get extended to stay alive. See <a href="https://learn.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type">https://learn.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type</a> for the supported maximum lifetime of the subscriber endpoints.</p>
 <pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
 
@@ -160,7 +160,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-resource">-Resource</h3>
-<p>The resource to monitor for changes. See <a href="https://docs.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples">https://docs.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples</a> for the list with supported options.</p>
+<p>The resource to monitor for changes. See <a href="https://learn.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples">https://learn.microsoft.com/graph/api/subscription-post-subscriptions#resources-examples</a> for the list with supported options.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

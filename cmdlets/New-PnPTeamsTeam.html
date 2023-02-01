@@ -410,7 +410,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-owners">-Owners</h3>
-<p>The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the <a href="https://docs.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits">Microsoft 365 Groups limits</a>. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.</p>
+<p>The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the <a href="https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits">Microsoft 365 Groups limits</a>. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
@@ -421,7 +421,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-members">-Members</h3>
-<p>The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the <a href="https://docs.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits">Microsoft 365 Groups limits</a>. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.</p>
+<p>The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the <a href="https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits">Microsoft 365 Groups limits</a>. Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 Required: False
@@ -443,7 +443,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-sensitivitylabels">-SensitivityLabels</h3>
-<p>The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve the sensitivity label you need to use the Graph API mentioned <a href="https://docs.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&amp;tabs=http">here</a>.</p>
+<p>The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve the sensitivity label you need to use the Graph API mentioned <a href="https://learn.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&amp;tabs=http">here</a>.</p>
 <pre><code class="lang-yaml">Type: GUID[]
 Parameter Sets: For a new group
 Required: False

@@ -89,8 +89,7 @@
 <h3 id="add-field-to-list-default">Add field to list (Default)</h3>
 <pre><code class="lang-powershell">Add-PnPField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -Type &lt;FieldType&gt;
  [-Id &lt;Guid&gt;] [-Formula &lt;String&gt;] [-Choices &lt;String&gt;] [-AddToDefaultView] [-Required] [-Group &lt;String&gt;] [-ClientSideComponentId &lt;Guid&gt;]
- [-ClientSideComponentProperties &lt;String&gt;] [-AddToAllContentTypes] [-Connection &lt;PnPConnection&gt;]
- [&lt;CommonParameters&gt;]
+ [-ClientSideComponentProperties &lt;String&gt;] [-AddToAllContentTypes] [-ReturnType &lt;String&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="add-field-reference-to-list">Add field reference to list</h3>
 <pre><code class="lang-powershell">Add-PnPField -List &lt;ListPipeBind&gt; -Field &lt;FieldPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
@@ -98,8 +97,8 @@
 </code></pre>
 <h3 id="add-field-to-web">Add field to web</h3>
 <pre><code class="lang-powershell">Add-PnPField -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -Type &lt;FieldType&gt; [-Id &lt;Guid&gt;] [-Formula &lt;String&gt;] [-Choices &lt;String&gt;]
- [-ClientSideComponentId &lt;Guid&gt;] [-ClientSideComponentProperties &lt;String&gt;] 
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-ClientSideComponentId &lt;Guid&gt;] [-ClientSideComponentProperties &lt;String&gt;] [-ReturnType &lt;String&gt;]
+ [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Adds a field (a column) to a list or as a site column. To add a column of type Managed Metadata use the Add-PnPTaxonomyField cmdlet.</p>
@@ -124,6 +123,10 @@
 <pre><code class="lang-powershell">Add-PnPField -Type Choice -Choices &quot;PnP&quot;,&quot;Parker&quot;,&quot;Sharing Is Caring&quot; -DisplayName &quot;My Test Column&quot; -InternalName &quot;MyTestCol&quot;
 </code></pre>
 <p>This will add a site column of type Choice (only one choice value can be chosen at the same time) called &quot;My Test Column&quot; with three choice values.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Add-PnPField -Type Calculated -ResultType Number -DisplayName &quot;My Calculated Column&quot; -InternalName &quot;MyCalcCol&quot; -Formula &quot;=Today()&quot;
+</code></pre>
+<p>This will add a site column of type Caulculated called &quot;My Calculated Column&quot; which contains todays date.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-addtodefaultview">-AddToDefaultView</h3>
 <p>Switch Parameter if this field must be added to the default view</p>
@@ -289,7 +292,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-type">-Type</h3>
-<p>The type of the field like Choice, Note, MultiChoice. For a complete list of field types visit <a href="https://docs.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype">https://docs.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype</a></p>
+<p>The type of the field like Choice, Note, Calculate, MultiChoice. For a complete list of field types visit <a href="https://learn.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype">https://learn.microsoft.com/dotnet/api/microsoft.sharepoint.client.fieldtype</a></p>
 <pre><code class="lang-yaml">Type: FieldType
 Parameter Sets: Add field to list, Add field to web
 Accepted values: Invalid, Integer, Text, Note, DateTime, Counter, Choice, Lookup, Boolean, Number, Currency, URL, Computed, Threading, Guid, MultiChoice, GridChoice, Calculated, File, Attachments, User, Recurrence, CrossProjectLink, ModStat, Error, ContentTypeId, PageSeparator, ThreadIndex, WorkflowStatus, AllDayEvent, WorkflowEventType, Geolocation, OutcomeChoice, Location, Thumbnail, MaxItems
@@ -297,6 +300,18 @@ Accepted values: Invalid, Integer, Text, Note, DateTime, Counter, Choice, Lookup
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-returntype">-ReturnType</h3>
+<p>The return type of the calculated field. Only valid when Type Calculated is chosen.</p>
+<pre><code class="lang-yaml">Type: FieldType
+Parameter Sets: Add field to list, Add field to web
+Accepted values: Integer, Text, DateTime, Boolean, Number, Currency
+
+Required: False
+Position: Named
+Default value: Text
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
