@@ -15,7 +15,7 @@ Deletes a list.
 ## SYNTAX
 
 ```powershell
-Remove-PnPList [-Identity] <ListPipeBind> [-Recycle] [-Force] [-Connection <PnPConnection>]
+Remove-PnPList [-Identity] <ListPipeBind> [-Recycle] [-LargeList] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +44,14 @@ Remove-PnPList -Identity Announcements -Recycle
 ```
 
 Removes the list named 'Announcements' and moves it to the Recycle Bin.
+
+### EXAMPLE 4
+```powershell
+Remove-PnPList -Identity Announcements -Recycle -LargeList
+```
+
+Removes the large list named 'Announcements' and moves it to the Recycle Bin.
+
 
 ## PARAMETERS
 
@@ -91,6 +99,20 @@ Accept wildcard characters: False
 
 ### -Recycle
 When provided, the list will be moved to recycle bin. If omitted, the list will directly be deleted.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LargeList
+When provided, the large list will be moved to recycle bin through a timer job. It must be paired with the Recycle Parameter.
 
 ```yaml
 Type: SwitchParameter
