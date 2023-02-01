@@ -14,17 +14,17 @@ schema: 2.0.0
 
 * Azure: management.azure.com
 
-Removes the specified flow
+Removes the specified flow.
 
 ## SYNTAX
 
-```
+```powershell
 Remove-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin]
  [-Force] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-This cmdlet removes the specified flow
+This cmdlet removes the specified flow.
 
 ## EXAMPLES
 
@@ -39,7 +39,7 @@ This removes the specified flow.
 ## PARAMETERS
 
 ### -AsAdmin
-If specified removes the flow as an administrator
+If specified removes the flow as an administrator.
 
 ```yaml
 Type: SwitchParameter
