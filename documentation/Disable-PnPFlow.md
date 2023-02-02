@@ -19,7 +19,7 @@ Disables a specific flow
 
 ## SYNTAX
 
-```
+```powershell
 Disable-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -34,12 +34,12 @@ $environment = Get-PnPFlowEnvironment
 Disable-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 
-Disables the specified flow
+Disables the specified flow.
 
 ## PARAMETERS
 
 ### -AsAdmin
-Disable the flow as an adminstrator
+Disable the flow as an adminstrator.
 
 ```yaml
 Type: SwitchParameter
@@ -85,7 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Identity of the flow to disable
+Identity of the flow to disable.
 
 ```yaml
 Type: PowerAutomateFlowPipeBind

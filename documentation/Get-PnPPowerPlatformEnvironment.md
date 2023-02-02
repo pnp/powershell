@@ -19,7 +19,7 @@ Retrieves the Microsoft Power Platform environments for the current tenant.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPPowerPlatformEnvironment [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
