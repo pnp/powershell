@@ -19,7 +19,7 @@ Returns the Microsoft Planner configuration of the tenant
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPPlannerConfiguration [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

@@ -14,7 +14,7 @@ Creates a taxonomy term
 
 ## SYNTAX
 
-```
+```powershell
 New-PnPTerm -Name <String> [-Id <Guid>] [-Lcid <Int32>] [-TermSet] <TaxonomyTermSetPipeBind>
  -TermGroup <TaxonomyTermGroupPipeBind> [-Description <String>] [-CustomProperties <Hashtable>]
  [-LocalCustomProperties <Hashtable>] [-TermStore <TaxonomyTermStorePipeBind>]

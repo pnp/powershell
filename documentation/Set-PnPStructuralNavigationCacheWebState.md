@@ -14,7 +14,7 @@ Enable or disable caching for all webs in a site collection.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPStructuralNavigationCacheWebState -IsEnabled <Boolean> [-WebUrl <String>]
 ```
 
