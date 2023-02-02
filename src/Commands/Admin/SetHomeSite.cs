@@ -20,13 +20,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (ParameterSpecified(nameof(VivaConnectionsDefaultStart)))
             {
                 Tenant.SetSPHSiteWithConfigurations(HomeSiteUrl, VivaConnectionsDefaultStart);
-                ClientContext.ExecuteQueryRetry();
             }
             else
             {
                 Tenant.SetSPHSite(HomeSiteUrl);
-                ClientContext.ExecuteQueryRetry();
             }
+            ClientContext.ExecuteQueryRetry();
         }
     }
 }
