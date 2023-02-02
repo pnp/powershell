@@ -19,7 +19,7 @@ Returns the Microsoft Planner user policy for a specific user
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPPlannerUserPolicy -Identity <string> [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

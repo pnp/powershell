@@ -14,7 +14,7 @@ This cmdlets receives Copy or Move job status which is being returned by Copy-Pn
 
 ## SYNTAX
 
-```
+```powershell
 Receive-PnPCopyMoveJobStatus -Job <CopyMigrationInfo> [-Wait]
 ```
 
