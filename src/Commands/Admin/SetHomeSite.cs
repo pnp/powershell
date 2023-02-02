@@ -13,13 +13,13 @@ namespace PnP.PowerShell.Commands.Admin
         public string HomeSiteUrl;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter VivaConnectionsDefaultStart;
+        public bool VivaConnectionsDefaultStart;
 
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(VivaConnectionsDefaultStart)))
             {
-                Tenant.SetSPHSiteWithConfigurations(HomeSiteUrl,VivaConnectionsDefaultStart);
+                Tenant.SetSPHSiteWithConfigurations(HomeSiteUrl, VivaConnectionsDefaultStart);
                 ClientContext.ExecuteQueryRetry();
             }
             else
