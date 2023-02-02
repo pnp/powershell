@@ -36,6 +36,13 @@ Set-PnPHomeSite -HomeSiteUrl "https://yourtenant.sharepoint.com/sites/myhome"
 
 Sets the home site to the provided site collection url
 
+### EXAMPLE 2
+```powershell
+Set-PnPHomeSite -HomeSiteUrl "https://yourtenant.sharepoint.com/sites/myhome" -VivaConnectionsDefaultStart $true
+```
+
+Sets the home site to the provided site collection url and keeps the Viva Connections landing experience to the SharePoint home site.
+
 ## PARAMETERS
 
 ### -Connection
