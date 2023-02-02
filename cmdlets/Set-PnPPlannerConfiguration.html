@@ -90,7 +90,7 @@
 </ul>
 <p>Allows the Microsoft Planner configuration of the tenant to be set.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Set-PnPPlannerConfiguration [-IsPlannerAllowed &lt;boolean&gt;] [-AllowRosterCreation &lt;boolean&gt;] [-AllowTenantMoveWithDataLoss &lt;boolean&gt;] [-AllowTenantMoveWithDataMigration &lt;boolean&gt;] [-AllowPlannerMobilePushNotifications &lt;boolean&gt;] [-AllowCalendarSharing &lt;boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPPlannerConfiguration [-IsPlannerAllowed &lt;boolean&gt;] [-AllowRosterCreation &lt;boolean&gt;] [-AllowTenantMoveWithDataLoss &lt;boolean&gt;] [-AllowTenantMoveWithDataMigration &lt;boolean&gt;] [-AllowPlannerMobilePushNotifications &lt;boolean&gt;] [-AllowCalendarSharing &lt;boolean&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows the Microsoft Planner tenant configuration to be changed.</p>
@@ -98,7 +98,7 @@
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Set-PnPPlannerConfiguration -AllowRosterCreation:$false -IsPlannerAllowed:$true
 </code></pre>
-<p>This example configures Microsoft Planner to be enabled and disallows roster plans to be created.</p>
+<p>This example configures Microsoft Planner to be enabled and disallows Roster plans to be created.</p>
 <h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">Set-PnPPlannerConfiguration -AllowPlannerMobilePushNotifications $false
 </code></pre>

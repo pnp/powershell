@@ -90,7 +90,7 @@
 </ul>
 <p>Returns the Microsoft Planner user policy for a specific user</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Get-PnPPlannerUserPolicy -Identity &lt;string&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPPlannerUserPolicy -Identity &lt;string&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet returns the Microsoft Planner user policy for the provided user. If a Microsoft Planner user policy has never been set yet on a tenant, this cmdlet may return a '403 Forbidden: Access is denied' error. Set a policy once first to enable the background configuration to be done so this cmdlet can succeed from thereon.</p>

@@ -88,28 +88,28 @@
 <ul>
 <li>Microsoft Graph API : Group.Read.All</li>
 </ul>
-<p>Returns the Microsoft Teams team behind a particular Microsoft 365 Group</p>
+<p>Returns the Microsoft Teams team behind a particular Microsoft 365 Group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPMicrosoft365GroupTeam -Identity &lt;Microsoft365GroupPipeBind&gt; [-Connection] [-Verbose] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPMicrosoft365GroupTeam -Identity &lt;Microsoft365GroupPipeBind&gt; [-Connection] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet allows retrieval of details on the Microsoft Teams team connected to a Microsoft 365 Group</p>
+<p>This cmdlet allows retrieval of details on the Microsoft Teams team connected to a Microsoft 365 Group.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-2">EXAMPLE 2</h3>
+<h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPMicrosoft365GroupTeam
 </code></pre>
-<p>Retrieves the Microsoft Teams team details behind the Microsoft 365 Group of the currently connected to site</p>
-<h3 id="example-2-1">EXAMPLE 2</h3>
+<p>Retrieves the Microsoft Teams team details behind the Microsoft 365 Group of the currently connected to site.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPMicrosoft365GroupTeam -Identity &quot;IT Team&quot;
 </code></pre>
-<p>Retrieves the Microsoft Teams team details behind the Microsoft 365 Group named &quot;IT Team&quot;</p>
+<p>Retrieves the Microsoft Teams team details behind the Microsoft 365 Group named &quot;IT Team&quot;.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPMicrosoft365GroupTeam -Identity e6212531-7f09-4c3b-bc2e-12cae26fb409
 </code></pre>
-<p>Retrieves the Microsoft Teams team details behind the Microsoft 365 Group with the provided Id</p>
+<p>Retrieves the Microsoft Teams team details behind the Microsoft 365 Group with the provided Id.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
-<p>The Identity of the Microsoft 365 Group</p>
+<p>The Identity of the Microsoft 365 Group.</p>
 <pre><code class="lang-yaml">Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
 

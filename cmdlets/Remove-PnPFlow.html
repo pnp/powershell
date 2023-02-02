@@ -88,13 +88,13 @@
 <ul>
 <li>Azure: management.azure.com</li>
 </ul>
-<p>Removes the specified flow</p>
+<p>Removes the specified flow.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Remove-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin]
+<pre><code class="lang-powershell">Remove-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin]
  [-Force] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet removes the specified flow</p>
+<p>This cmdlet removes the specified flow.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">$environment = Get-PnPFlowEnvironment
@@ -103,7 +103,7 @@ Remove-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c
 <p>This removes the specified flow.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-asadmin">-AsAdmin</h3>
-<p>If specified removes the flow as an administrator</p>
+<p>If specified removes the flow as an administrator.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:

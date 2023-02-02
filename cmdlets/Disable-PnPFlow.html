@@ -90,7 +90,7 @@
 </ul>
 <p>Disables a specific flow</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Disable-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Disable-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet disables a specific flow</p>
@@ -99,10 +99,10 @@
 <pre><code class="lang-powershell">$environment = Get-PnPFlowEnvironment
 Disable-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>Disables the specified flow</p>
+<p>Disables the specified flow.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-asadmin">-AsAdmin</h3>
-<p>Disable the flow as an adminstrator</p>
+<p>Disable the flow as an adminstrator.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -139,7 +139,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Identity of the flow to disable</p>
+<p>Identity of the flow to disable.</p>
 <pre><code class="lang-yaml">Type: PowerAutomateFlowPipeBind
 Parameter Sets: (All)
 Aliases:
