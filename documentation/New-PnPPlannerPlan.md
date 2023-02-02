@@ -1,6 +1,6 @@
 ---
 Module Name: PnP.PowerShell
-title: new-pnpplannerplan
+title: New-PnPPlannerPlan
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml

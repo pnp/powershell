@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-#if !NETFRAMEWORK
 using System.Web;
-#endif
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -35,20 +33,12 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static string UrlEncode(string urlToEncode)
         {
-#if NETFRAMEWORK
-            return System.Net.WebUtility.UrlEncode(urlToEncode);
-#else
             return HttpUtility.UrlEncode(urlToEncode);
-#endif
         }
 
         public static string UrlDecode(string urlToEncode)
         {
-#if NETFRAMEWORK
-            return System.Net.WebUtility.UrlDecode(urlToEncode);
-#else
             return HttpUtility.UrlDecode(urlToEncode);
-#endif
         }        
 
         public static bool IsPersonalSiteUrl(string url)

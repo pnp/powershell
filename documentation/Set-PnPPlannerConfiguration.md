@@ -1,8 +1,10 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerConfiguration.html
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPPlannerConfiguration
 schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerConfiguration.html
 ---
   
 # Set-PnPPlannerConfiguration
@@ -17,7 +19,7 @@ Allows the Microsoft Planner configuration of the tenant to be set.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPPlannerConfiguration [-IsPlannerAllowed <boolean>] [-AllowRosterCreation <boolean>] [-AllowTenantMoveWithDataLoss <boolean>] [-AllowTenantMoveWithDataMigration <boolean>] [-AllowPlannerMobilePushNotifications <boolean>] [-AllowCalendarSharing <boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -30,7 +32,7 @@ This cmdlet allows the Microsoft Planner tenant configuration to be changed.
 ```powershell
 Set-PnPPlannerConfiguration -AllowRosterCreation:$false -IsPlannerAllowed:$true
 ```
-This example configures Microsoft Planner to be enabled and disallows roster plans to be created.
+This example configures Microsoft Planner to be enabled and disallows Roster plans to be created.
 
 ### Example 2
 ```powershell

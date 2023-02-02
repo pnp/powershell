@@ -309,12 +309,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Connection has been established
-#if !NETFRAMEWORK
             WriteVerbose($"PnP PowerShell Cmdlets ({new SemanticVersion(Assembly.GetExecutingAssembly().GetName().Version)})");
-#else
-            WriteVerbose($"PnP PowerShell Cmdlets ({Assembly.GetExecutingAssembly().GetName().Version})");
-#endif
-
 
             if (connection.Url != null)
             {
