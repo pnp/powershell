@@ -103,7 +103,7 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     var responseString = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                    if (responseString != null)
+                    if (!string.IsNullOrEmpty(responseString))
                     {
                         if (!Raw)
                         {
