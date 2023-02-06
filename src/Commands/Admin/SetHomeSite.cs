@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Admin
         public string HomeSiteUrl;
 
         [Parameter(Mandatory = false)]
-        public bool VivaConnectionsDefaultStart;
+        public SwitchParameter VivaConnectionsDefaultStart;
 
         protected override void ExecuteCmdlet()
         {
