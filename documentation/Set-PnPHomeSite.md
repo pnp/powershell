@@ -20,7 +20,7 @@ Sets the home site for your tenant. The home site needs to be a communication si
 ## SYNTAX
 
 ```powershell
-Set-PnPHomeSite -HomeSiteUrl <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPHomeSite -HomeSiteUrl <String> [VivaConnectionsDefaultStart <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 When set to $true, the VivaConnectionsDefaultStart parameter will keep the Viva Connections landing experience to the SharePoint home site. If set to $false the Viva Connections home experience will be used. 
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Required: False
 Position: Named
