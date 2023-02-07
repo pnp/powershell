@@ -35,6 +35,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-PrimarySiteCollectionAdmin` to `Add-PnPSiteCollectionAdmin` to allow for the primary site collection admin to be set on the current site [#2750](https://github.com/pnp/powershell/pull/2750)
 - Added `-PrimarySiteCollectionAdmin` to `Set-PnPTenantSite` to allow for the primary site collection admin to be set on a provided site [#2750](https://github.com/pnp/powershell/pull/2750)
 - Added additional fallback logic for retrieving tokens in Azure VM scenario using well-know endpoint when using Managed Identity authentication. [#2761](https://github.com/pnp/powershell/pull/2761)
+- Added `-IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled` parameter to `Get-PnPHomeSite` which returns information on whether Viva Connections landing experience is set to the SharePoint home site. [#2779](https://github.com/pnp/powershell/pull/2779)
+- Added `-VivaConnectionsDefaultStart` parameter to `Set-PnPHomeSite` which sets the home site to the provided site collection url and keeps the Viva Connections landing experience to the SharePoint home site. [#2779](https://github.com/pnp/powershell/pull/2779)
 
 ### Changed
 
@@ -62,9 +64,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed the handling of `-ErrorAction` so it follows the standard PowerShell behavior [#2741](https://github.com/pnp/powershell/pull/2741)
 - Fixed issue with `Set-PnPContentType` not allowing you to update basic properties of a content type [#2760](https://github.com/pnp/powershell/pull/2760)
 - Fixed `Add-PnPField` not supporting a ReturnType to be set for calculated fields when created on the site level [#2765](https://github.com/pnp/powershell/pull/2765)
+- Fixed issue with `Invoke-PnPSPRestMethod` throwing error when the response string is empty. [#2784](https://github.com/pnp/powershell/pull/2784)
 
 ### Contributors
 
+- Reshmee Auckloo [reshmee011]
 - Arleta Wanat [PowershellScripts]
 - Leon Armston [LeonArmston]
 - Robin Meure [robinmeure]
