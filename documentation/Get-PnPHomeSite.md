@@ -20,7 +20,7 @@ Returns the home site url for your tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPHomeSite [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPHomeSite [IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -61,7 +61,7 @@ Accept wildcard characters: False
 When specified, it retrieves whether Viva Connections landing experience is set to the SharePoint home site.
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
 Parameter Sets: (All)
 Required: False
 Position: Named
