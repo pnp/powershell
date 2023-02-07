@@ -34,6 +34,13 @@ Get-PnPHomeSite
 
 Returns the home site url for your tenant
 
+### EXAMPLE 2
+```powershell
+Get-PnPHomeSite -IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled
+```
+
+Returns whether Viva Connections landing experience is set to the SharePoint home site.
+
 ## PARAMETERS
 
 ### -Connection
@@ -43,6 +50,19 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 Type: PnPConnection
 Parameter Sets: (All)
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled
+When specified, it retrieves whether Viva Connections landing experience is set to the SharePoint home site.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None

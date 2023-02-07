@@ -36,6 +36,13 @@ Set-PnPHomeSite -HomeSiteUrl "https://yourtenant.sharepoint.com/sites/myhome"
 
 Sets the home site to the provided site collection url
 
+### EXAMPLE 2
+```powershell
+Set-PnPHomeSite -HomeSiteUrl "https://yourtenant.sharepoint.com/sites/myhome" -VivaConnectionsDefaultStart:$true
+```
+
+Sets the home site to the provided site collection url and keeps the Viva Connections landing experience to the SharePoint home site.
+
 ## PARAMETERS
 
 ### -Connection
@@ -66,7 +73,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -VivaConnectionsDefaultStart
+When set to $true, the VivaConnectionsDefaultStart parameter will keep the Viva Connections landing experience to the SharePoint home site. If set to $false the Viva Connections home experience will be used. 
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: true
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 [Set up a home site for your organization](https://learn.microsoft.com/sharepoint/home-site)
+[Customize and edit the Viva Connections home experience](https://learn.microsoft.com/en-us/viva/connections/edit-viva-home)
