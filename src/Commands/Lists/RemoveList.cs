@@ -24,6 +24,9 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter LargeList;
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(CurrentWeb);
@@ -33,9 +36,18 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     if (Recycle)
                     {
-                        var recycleResult = list.Recycle();
-                        ClientContext.ExecuteQueryRetry();
-                        WriteObject(new RecycleResult { RecycleBinItemId = recycleResult.Value });
+                        if (LargeList)
+                        {
+                            var operationId = list.StartRecycle();
+                            ClientContext.ExecuteQueryRetry();
+                            WriteObject($"Large List Operation Job {operationId.Value} initiated. It may take a while for this job to complete.");
+                        }
+                        else
+                        { 
+                            var recycleResult = list.Recycle();
+                            ClientContext.ExecuteQueryRetry();
+                            WriteObject(new RecycleResult { RecycleBinItemId = recycleResult.Value });
+                        }
                     }
                     else
                     {
