@@ -19,7 +19,7 @@ Returns app permissions for Microsoft SharePoint and Microsoft Graph
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPAzureADAppPermission [-Identity <AzureADAppPipeBind>]
 ```
 

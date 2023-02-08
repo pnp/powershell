@@ -1,8 +1,10 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformEnvironment.html
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformEnvironment.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPPowerPlatformEnvironment
 ---
   
 # Get-PnPPowerPlatformEnvironment
@@ -17,7 +19,7 @@ Retrieves the Microsoft Power Platform environments for the current tenant.
 
 ## SYNTAX
 
-```
+```powershell
 Get-PnPPowerPlatformEnvironment [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

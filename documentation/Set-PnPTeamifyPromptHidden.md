@@ -10,16 +10,16 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamifyPromptHid
 # Set-PnPTeamifyPromptHidden
 
 ## SYNOPSIS
-Hides the teamify prompt for a site
+Hides the teamify prompt for a site.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTeamifyPromptHidden [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-This cmdlet hides the teamify prompt for the current site
+This cmdlet hides the teamify prompt for the current site.
 
 ## EXAMPLES
 
@@ -28,7 +28,7 @@ This cmdlet hides the teamify prompt for the current site
 Set-PnPTeamifyPromptHidden
 ```
 
-This example hides the teamify prompt for the currently connected to site.
+This example hides the teamify prompt for the currently connected site.
 
 ## PARAMETERS
 

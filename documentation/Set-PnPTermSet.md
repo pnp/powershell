@@ -13,7 +13,7 @@ Updates an existing term set.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTermSet -Identity <TaxonomyTermSetPipeBind> [-TermGroup] <TaxonomyTermGroupPipeBind>
  [-TermStore <TaxonomyTermStorePipeBind>] [-Name <String>] [-Description <String>] [-Owner <String>]
  [-Contact <String>] [-CustomProperties <Hashtable>] [-StakeholderToAdd <String>]

@@ -19,7 +19,7 @@ Updates an existing task.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPPlannerTask -TaskId <String> [-Title <String>] [-Bucket <PlannerBucketPipeBind>]
  [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
  [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>]
