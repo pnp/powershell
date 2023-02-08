@@ -15,18 +15,19 @@ namespace PnP.PowerShell.Commands.Lists
         public const string ParameterSet_Delete = "Delete";
         public const string ParameterSet_Recycle = "Recycle";
 
-        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]        
         [ValidateNotNull]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Recycle)]
         public SwitchParameter Recycle;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false)]        
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Recycle)]
         public SwitchParameter LargeList;
+        
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(CurrentWeb);
@@ -40,7 +41,8 @@ namespace PnP.PowerShell.Commands.Lists
                         {
                             var operationId = list.StartRecycle();
                             ClientContext.ExecuteQueryRetry();
-                            WriteObject($"Large List Operation Job {operationId.Value} initiated. It may take a while for this job to complete.");
+                            WriteVerbose($"Large List Operation Job {operationId.Value} initiated. It may take a while for this job to complete.");
+                            WriteObject(new RecycleResult { RecycleBinItemId = operationId.Value });
                         }
                         else
                         { 
