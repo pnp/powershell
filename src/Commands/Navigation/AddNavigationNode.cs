@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands.Branding
                     ClientContext.Load(addedNode);
                     ClientContext.ExecuteQueryRetry();
 
-                    if(Location == NavigationType.QuickLaunch)
+                    if (Location == NavigationType.QuickLaunch)
                     {
                         // Retrieve the menu definition and save it back again. This step is needed to enforce some properties of the menu to be shown, such as the audience targeting.
                         CurrentWeb.EnsureProperties(w => w.Url);
@@ -104,7 +104,6 @@ namespace PnP.PowerShell.Commands.Branding
                 {
                     throw new Exception("Navigation Node Collection is null");
                 }
-#pragma warning restore CS0618 // Type or member is obsolete
             }
         }
     }

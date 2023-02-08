@@ -95,10 +95,6 @@ namespace PnP.PowerShell.Commands
         public string SharingBlockedDomainList;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        [Obsolete("Use AllowDownloadingNonWebViewableFiles")]
-        public SwitchParameter BlockDownloadOfNonViewableFiles;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool AllowDownloadingNonWebViewableFiles;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -297,10 +293,10 @@ namespace PnP.PowerShell.Commands
                 props.DefaultLinkToExistingAccessReset = true;
                 updateRequired = true;
             }
-#pragma warning disable CS0618
-            if (ParameterSpecified(nameof(BlockDownloadOfNonViewableFiles)) || ParameterSpecified(nameof(AllowDownloadingNonWebViewableFiles)))
+
+            if (ParameterSpecified(nameof(AllowDownloadingNonWebViewableFiles)))
             {
-                var value = ParameterSpecified(nameof(BlockDownloadLinksFileTypes)) ? !BlockDownloadOfNonViewableFiles : AllowDownloadingNonWebViewableFiles;
+                var value = AllowDownloadingNonWebViewableFiles;
                 if (ConditionalAccessPolicy == PnPConditionalAccessPolicyType.AllowLimitedAccess)
                 {
                     props.AllowDownloadingNonWebViewableFiles = value;
@@ -324,7 +320,6 @@ namespace PnP.PowerShell.Commands
                     }
                 }
             }
-#pragma warning restore CS0618
 
             if (ParameterSpecified(nameof(CommentsOnSitePagesDisabled)))
             {

@@ -178,14 +178,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public string TenantAdminUrl;
 
-        [Parameter(Mandatory = false)]
-        [Obsolete("Set the environment variable 'PNP_DISABLETELEMETRY' to 'true' instead of using this switch.")]
-        public SwitchParameter NoTelemetry;
-
-        [Parameter(Mandatory = false)]
-        [Obsolete("Set the environment variable 'PNPPOWERSHELL_UPDATECHECK' to 'false' instead of using this switch.")]
-        public SwitchParameter NoVersionCheck;
-
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
         public SwitchParameter ManagedIdentity;
 
@@ -216,17 +208,6 @@ namespace PnP.PowerShell.Commands.Base
         {
             cancellationTokenSource = new CancellationTokenSource();
             CancellationToken token = cancellationTokenSource.Token;
-
-#pragma warning disable CS0618 // NoTelemetry and NoVersionCheck needs to be set through environment variables now
-            if (NoTelemetry)
-            {
-                Environment.SetEnvironmentVariable("PNP_DISABLETELEMETRY", "true");
-            }
-            if (NoVersionCheck)
-            {
-                Environment.SetEnvironmentVariable("PNPPOWERSHELL_UPDATECHECK", "false");
-            }
-#pragma warning restore CS6018
 
             VersionChecker.CheckVersion(this);
             try

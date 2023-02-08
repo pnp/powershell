@@ -93,10 +93,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false)]
-        [Obsolete("Use of this method is generally not required/recommended")]
-        public SwitchParameter NoBaseTemplate;
-
-        [Parameter(Mandatory = false)]
         public System.Text.Encoding Encoding = System.Text.Encoding.Unicode;
 
         [Parameter(Mandatory = false)]
@@ -271,16 +267,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 creationInformation.ExtensibilityHandlers = ExtensibilityHandlers.ToList();
             }
 
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (NoBaseTemplate)
-            {
-                creationInformation.BaseTemplate = null;
-            }
-            else
-            {
-                creationInformation.BaseTemplate = CurrentWeb.GetBaseTemplate();
-            }
-#pragma warning restore CS0618 // Type or member is obsolete
+            creationInformation.BaseTemplate = CurrentWeb.GetBaseTemplate();
 
             creationInformation.ProgressDelegate = (message, step, total) =>
             {

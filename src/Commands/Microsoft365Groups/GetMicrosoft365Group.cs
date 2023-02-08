@@ -16,31 +16,17 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public Microsoft365GroupPipeBind Identity;
 
         [Parameter(Mandatory = false)]
-        [Obsolete("The site url is now excluded by default. Use IncludeSiteUrl instead to include the site url of the underlying SharePoint site.")]
-        public SwitchParameter ExcludeSiteUrl;
-
-        [Parameter(Mandatory = false)]
         public SwitchParameter IncludeSiteUrl;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeOwners;
 
         [Parameter(Mandatory = false)]
-        [Obsolete("Classification is always included")]
-        public SwitchParameter IncludeClassification;
-
-        [Parameter(Mandatory = false)]
-        [Obsolete("HasTeam is always included")]
-        public SwitchParameter IncludeHasTeam;
-
-        [Parameter(Mandatory = false)]        
         public string Filter;
 
         protected override void ExecuteCmdlet()
         {
-#pragma warning disable 0618
-            var includeSiteUrl = ParameterSpecified(nameof(ExcludeSiteUrl)) ? !ExcludeSiteUrl.ToBool() : IncludeSiteUrl.ToBool();
-#pragma warning restore 0618
+            var includeSiteUrl = IncludeSiteUrl.ToBool();
 
             if (Identity != null)
             {
