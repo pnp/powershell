@@ -90,7 +90,7 @@
 </ul>
 <p>Sets the home site for your tenant. The home site needs to be a communication site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPHomeSite -HomeSiteUrl &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPHomeSite -HomeSiteUrl &lt;String&gt; [VivaConnectionsDefaultStart &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to set the home site of the current tenant.</p>
@@ -99,6 +99,10 @@
 <pre><code class="lang-powershell">Set-PnPHomeSite -HomeSiteUrl &quot;https://yourtenant.sharepoint.com/sites/myhome&quot;
 </code></pre>
 <p>Sets the home site to the provided site collection url</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPHomeSite -HomeSiteUrl &quot;https://yourtenant.sharepoint.com/sites/myhome&quot; -VivaConnectionsDefaultStart:$true
+</code></pre>
+<p>Sets the home site to the provided site collection url and keeps the Viva Connections landing experience to the SharePoint home site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -122,9 +126,20 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-vivaconnectionsdefaultstart">-VivaConnectionsDefaultStart</h3>
+<p>When set to $true, the VivaConnectionsDefaultStart parameter will keep the Viva Connections landing experience to the SharePoint home site. If set to $false the Viva Connections home experience will be used.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: true
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
-<a href="https://learn.microsoft.com/sharepoint/home-site">Set up a home site for your organization</a></p>
+<a href="https://learn.microsoft.com/sharepoint/home-site">Set up a home site for your organization</a>
+<a href="https://learn.microsoft.com/en-us/viva/connections/edit-viva-home">Customize and edit the Viva Connections home experience</a></p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

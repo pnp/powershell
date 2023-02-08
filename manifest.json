@@ -2493,7 +2493,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPHomeSite.html",
-          "hash": "EctWwpiRFPCB8g0UKermEA=="
+          "hash": "Nv4hh2iKQhDuZ7e3lk6R/w=="
         }
       },
       "is_incremental": false,
@@ -6747,7 +6747,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPHomeSite.html",
-          "hash": "7eygvfgqWhQGTmL6T/Dvcw=="
+          "hash": "sdVcIoGEJCn+Ob21D2E1PQ=="
         }
       },
       "is_incremental": false,
