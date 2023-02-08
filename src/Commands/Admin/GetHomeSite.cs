@@ -11,9 +11,10 @@ namespace PnP.PowerShell.Commands.Admin
     {
         [Parameter(Mandatory = false)]
         public SwitchParameter IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled;
+        
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(nameof(IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled)))
+            if (IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled)
             {
                 var results  = Tenant.IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled();
                 ClientContext.ExecuteQueryRetry();
