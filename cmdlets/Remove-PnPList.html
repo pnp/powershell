@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Deletes a list.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPList [-Identity] &lt;ListPipeBind&gt; [-Recycle] [-Force] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Remove-PnPList [-Identity] &lt;ListPipeBind&gt; [-Recycle] [-LargeList] [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to remove a list.</p>
@@ -103,6 +103,10 @@
 <pre><code class="lang-powershell">Remove-PnPList -Identity Announcements -Recycle
 </code></pre>
 <p>Removes the list named 'Announcements' and moves it to the Recycle Bin.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Remove-PnPList -Identity Announcements -Recycle -LargeList
+</code></pre>
+<p>Removes the large list named 'Announcements' and moves it to the Recycle Bin.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -139,6 +143,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-recycle">-Recycle</h3>
 <p>When provided, the list will be moved to recycle bin. If omitted, the list will directly be deleted.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-largelist">-LargeList</h3>
+<p>When provided, the large list will be moved to recycle bin through a timer job. It must be paired with the Recycle Parameter.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
