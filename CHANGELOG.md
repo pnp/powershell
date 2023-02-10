@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added additional fallback logic for retrieving tokens in Azure VM scenario using well-know endpoint when using Managed Identity authentication. [#2761](https://github.com/pnp/powershell/pull/2761)
 - Added `-IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled` parameter to `Get-PnPHomeSite` which returns information on whether Viva Connections landing experience is set to the SharePoint home site. [#2779](https://github.com/pnp/powershell/pull/2779)
 - Added `-VivaConnectionsDefaultStart` parameter to `Set-PnPHomeSite` which sets the home site to the provided site collection url and keeps the Viva Connections landing experience to the SharePoint home site. [#2779](https://github.com/pnp/powershell/pull/2779)
+- Added `-LargeList` parameter to `Remove-PnPList` cmdlet which improves the list recycling experience for Lists containing huge number of items. [#2778](https://github.com/pnp/powershell/pull/2778)
 
 ### Changed
 
@@ -65,9 +66,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Set-PnPContentType` not allowing you to update basic properties of a content type [#2760](https://github.com/pnp/powershell/pull/2760)
 - Fixed `Add-PnPField` not supporting a ReturnType to be set for calculated fields when created on the site level [#2765](https://github.com/pnp/powershell/pull/2765)
 - Fixed issue with `Invoke-PnPSPRestMethod` throwing error when the response string is empty. [#2784](https://github.com/pnp/powershell/pull/2784)
+- Fixed issue with `Add-PnPListItem` and `Set-PnPListItem` not correctly setting the Purview `Unlocked by default`. [#2800](https://github.com/pnp/powershell/pull/2800)
 
 ### Contributors
 
+- [lilealdai]
+- Martin Lingstuyl [martinlingstuyl]
 - Reshmee Auckloo [reshmee011]
 - Arleta Wanat [PowershellScripts]
 - Leon Armston [LeonArmston]
