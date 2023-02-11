@@ -307,7 +307,7 @@ The Client ID of the Azure AD Application
 ```yaml
 Type: String
 Parameter Sets: Credentials, PnP Management Shell / DeviceLogin, Interactive
-Aliases:
+Aliases: ApplicationId
 
 Required: False
 Position: Named
