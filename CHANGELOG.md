@@ -66,7 +66,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Set-PnPContentType` not allowing you to update basic properties of a content type [#2760](https://github.com/pnp/powershell/pull/2760)
 - Fixed `Add-PnPField` not supporting a ReturnType to be set for calculated fields when created on the site level [#2765](https://github.com/pnp/powershell/pull/2765)
 - Fixed issue with `Invoke-PnPSPRestMethod` throwing error when the response string is empty. [#2784](https://github.com/pnp/powershell/pull/2784)
-- Fixed issue with `Invoke-PnPSPRestMethod` and `Invoke-PnPGraphMethod` throwing error when passing complex JSON object as payload.
+- Fixed issue with `Invoke-PnPSPRestMethod` and `Invoke-PnPGraphMethod` throwing error when passing complex JSON object as payload. [#2802](https://github.com/pnp/powershell/pull/2802)
 - Fixed issue with `Add-PnPListItem` and `Set-PnPListItem` not correctly setting the Purview `Unlocked by default`. [#2800](https://github.com/pnp/powershell/pull/2800)
 
 ### Contributors
