@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -104,7 +105,7 @@ namespace PnP.PowerShell.Commands.Base
                     ContentType = "application/json";
                 }
                 var contentString = Content is string ? Content.ToString() :
-                    JsonSerializer.Serialize(Content);
+                    JsonSerializer.Serialize(Content, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, WriteIndented = true });
 
                 HttpContent httpContent = new StringContent(contentString, System.Text.Encoding.UTF8);
                 httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse(ContentType);
