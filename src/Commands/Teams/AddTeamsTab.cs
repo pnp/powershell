@@ -19,16 +19,15 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public TeamsChannelPipeBind Channel;
 
-
         [Parameter(Mandatory = true)]
         public string DisplayName;
 
         [Parameter(Mandatory = true)]
         public TeamTabType Type;
 
-
         private OfficeFileParameters officeFileParameters;
         private DocumentLibraryParameters documentLibraryParameters;
+        private SharePointPageAndListParameters sharePointPageAndListParameters;
         private CustomParameters customParameters;
         public object GetDynamicParameters()
         {
@@ -47,6 +46,11 @@ namespace PnP.PowerShell.Commands.Graph
                     {
                         documentLibraryParameters = new DocumentLibraryParameters();
                         return documentLibraryParameters;
+                    }
+                case TeamTabType.SharePointPageAndList:
+                    {
+                        sharePointPageAndListParameters= new SharePointPageAndListParameters();
+                        return sharePointPageAndListParameters;
                     }
                 case TeamTabType.Custom:
                     {
@@ -90,6 +94,13 @@ namespace PnP.PowerShell.Commands.Graph
                                 {
                                     EnsureDynamicParameters(documentLibraryParameters);
                                     contentUrl = documentLibraryParameters.ContentUrl;
+                                    break;
+                                }
+                            case TeamTabType.SharePointPageAndList:
+                                {
+                                    EnsureDynamicParameters(sharePointPageAndListParameters);
+                                    contentUrl = sharePointPageAndListParameters.ContentUrl;
+                                    webSiteUrl = sharePointPageAndListParameters.WebSiteUrl;
                                     break;
                                 }
                             case TeamTabType.Custom:
@@ -167,6 +178,15 @@ namespace PnP.PowerShell.Commands.Graph
             public string RemoveUrl;
 
             [Parameter(Mandatory = false)]
+            public string WebSiteUrl;
+        }
+
+        public class SharePointPageAndListParameters
+        {
+            [Parameter(Mandatory = true)]
+            public string ContentUrl;
+
+            [Parameter(Mandatory = true)]
             public string WebSiteUrl;
         }
     }

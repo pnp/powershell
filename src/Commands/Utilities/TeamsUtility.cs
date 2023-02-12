@@ -933,6 +933,9 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.SharePointPageAndList:
                     {
                         tab.TeamsAppId = "2a527703-1f6f-4559-a332-d8a7d288cd88";
+                        tab.Configuration = new TeamTabConfiguration();
+                        tab.Configuration.ContentUrl = contentUrl;
+                        tab.Configuration.WebsiteUrl = websiteUrl;
                         break;
                     }
             }

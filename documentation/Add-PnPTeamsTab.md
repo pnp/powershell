@@ -44,6 +44,13 @@ Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name"
 
 Adds the specified PDF file from the "Documents" library as a tab.
 
+### EXAMPLE 3
+```powershell
+Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name" -Type SharePointPageAndList -WebSiteUrl "https://contoso.sharepoint.com/sites/Marketing/SitePages/Home.aspx" -ContentUrl "https://contoso.sharepoint.com/sites/Marketing/_layouts/15/teamslogon.aspx?spfx=true&dest=https%3A%2F%2Fcontoso.sharepoint.com%2Fsites%2FMarketing%2FSitePages%2FHome.aspx"
+```
+
+Adds the specified SharePoint page as a tab in Teams.
+
 ## PARAMETERS
 
 ### -Channel
@@ -67,7 +74,21 @@ Specifies the Url to add
 Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WebsiteUrl
+Specifies the URL for showing tab contents outside of Teams.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -117,8 +138,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RemoveUrl
+Specifies the URL to be called by Teams client when a Tab is removed using the Teams Client.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EntityId
+Specifies the Identifier for the entity hosted by the tab provider.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
