@@ -16,21 +16,21 @@ Uploads a file to Web
 
 ### Upload file
 ```powershell
-Add-PnPFile -Path <String> -Folder <FolderPipeBind> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>]
+Add-PnPFile -Path <String> -Folder <FolderPipeBind> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>] [-CheckinType <CheckinType>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
  [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Upload file from stream
 ```powershell
-Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>]
+Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>] [-CheckinType <CheckinType>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
  [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ### Create or update file from text
 ```powershell
-Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Content <text> [-Checkout] [-CheckInComment <String>]
+Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Content <text> [-Checkout] [-CheckInComment <String>] [-CheckinType <CheckinType>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
  [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
@@ -136,6 +136,20 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CheckinType
+Specifies the type of check-in for a file.
+
+```yaml
+Type: Enum (Microsoft.SharePoint.Client.CheckinType)
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: MinorCheckIn
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
