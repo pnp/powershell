@@ -137,6 +137,11 @@ namespace PnP.PowerShell.Commands.Base
         /// If applicable, will return the object/principal ID of the User Assigned Managed Identity that is being used for this connection
         /// </summary>
         public string UserAssignedManagedIdentityObjectId { get; set; }
+        
+        /// <summary>
+        /// If applicable, will return the client ID of the User Assigned Managed Identity that is being used for this connection
+        /// </summary>
+        public string UserAssignedManagedIdentityClientId { get; set; }
 
         /// <summary>
         /// Type of Azure cloud to connect to
@@ -348,13 +353,13 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null)
+        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null)
         {
             var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             var resourceUri = new Uri(url);
             var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
             cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
-            var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource, userAssignedManagedIdentityObjectId).GetAwaiter().GetResult();
+            var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource, userAssignedManagedIdentityObjectId, userAssignedManagedIdentityClientId).GetAwaiter().GetResult();
 
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
@@ -377,6 +382,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.ManagedIdentity);
                 connection.UserAssignedManagedIdentityObjectId = userAssignedManagedIdentityObjectId;
+                connection.UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId;
                 return connection;
             }
         }

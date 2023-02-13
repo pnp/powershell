@@ -653,7 +653,23 @@ Accept wildcard characters: False
 ```
 
 ### -UserAssignedManagedIdentityObjectId
-Can be used in combination with `-ManagedIdentity` to specify the object/principal id of the user assigned managed identity to use. If not provided, a system assigned managed identity will be used.
+Can be used in combination with `-ManagedIdentity` to specify the object/principal id of the user assigned managed identity to use. Alternative to UserAssignedManagedIdentityClientId. If both are not provided, a system assigned managed identity will be used.
+
+```yaml
+Type: String
+Parameter Sets: Managed Identity
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+
+### -UserAssignedManagedIdentityClientId
+Can be used in combination with `-ManagedIdentity` to specify the client id of the user assigned managed identity to use. Alternative to UserAssignedManagedIdentityObjectId. If both are not provided, a system assigned managed identity will be used.
 
 ```yaml
 Type: String
