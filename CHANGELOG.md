@@ -70,6 +70,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` cmdlet as the implementation behind these features has been changed in SharePoint Online causing them no longer to work. At present, there's no alternative for this that we can call into.
 - Fixed issue with `Invoke-PnPSPRestMethod` and `Invoke-PnPGraphMethod` throwing error when passing complex JSON object as payload. [#2802](https://github.com/pnp/powershell/pull/2802)
 - Fixed issue with `Add-PnPListItem` and `Set-PnPListItem` not correctly setting the Purview `Unlocked by default`. [#2800](https://github.com/pnp/powershell/pull/2800)
+- Fixed issue with `Get-PnPListItem` cmdlet not respecting `RowLimit` in the CAML query.
 
 ### Contributors
 
