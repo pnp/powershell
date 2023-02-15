@@ -61,7 +61,6 @@ namespace PnP.PowerShell.Commands.Graph
             return null;
         }
 
-
         protected override void ExecuteCmdlet()
         {
             var groupId = Team.GetGroupId(Connection, AccessToken);
@@ -137,7 +136,6 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 throw new PSArgumentException("Group not found");
             }
-
         }
 
         private void EnsureDynamicParameters(object dynamicParameters)
