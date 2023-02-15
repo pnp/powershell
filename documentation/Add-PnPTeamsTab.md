@@ -68,7 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -ContentUrl
-Specifies the Url to add
+The Url to use to render the content inside the tab within Microsoft Teams
 
 ```yaml
 Type: String
@@ -82,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -WebsiteUrl
-Specifies the URL for showing tab contents outside of Teams.
+The Url to use when the user clicks on the dropdown of the tab in Microsoft Teams and clicks on "Go to website"
 
 ```yaml
 Type: String
