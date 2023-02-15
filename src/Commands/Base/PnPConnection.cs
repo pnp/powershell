@@ -144,6 +144,11 @@ namespace PnP.PowerShell.Commands.Base
         public string UserAssignedManagedIdentityClientId { get; set; }
 
         /// <summary>
+        /// If applicable, will return the Azure Resource ID of the User Assigned Managed Identity that is being used for this connection
+        /// </summary>
+        public string UserAssignedManagedIdentityAzureResourceId { get; set; }        
+
+        /// <summary>
         /// Type of Azure cloud to connect to
         /// </summary>
         public AzureEnvironment AzureEnvironment { get; set; } = AzureEnvironment.Production;
@@ -353,13 +358,23 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null)
+        /// <summary>
+        /// Creates a PnPConnection using a Managed Identity
+        /// </summary>
+        /// <param name="cmdlet">PowerShell instance hosting this execution</param>
+        /// <param name="url">Url to the SharePoint Online site to connect to</param>
+        /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
+        /// <param name="userAssignedManagedIdentityObjectId">The Object/Principal ID of the User Assigned Managed Identity to use (optional)</param>
+        /// <param name="userAssignedManagedIdentityClientId">The Client ID of the User Assigned Managed Identity to use (optional)</param>
+        /// <param name="userAssignedManagedIdentityAzureResourceId">The Azure Resource ID of the User Assigned Managed Identity to use (optional)</param>
+        /// <returns>Instantiated PnPConnection</returns>
+        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
         {
             var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
             var resourceUri = new Uri(url);
             var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
             cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
-            var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource, userAssignedManagedIdentityObjectId, userAssignedManagedIdentityClientId).GetAwaiter().GetResult();
+            var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource, userAssignedManagedIdentityObjectId, userAssignedManagedIdentityClientId, userAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
 
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
