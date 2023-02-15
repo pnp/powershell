@@ -33,11 +33,12 @@ namespace PnP.PowerShell.Commands.Graph
         public string Description;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
-        [Obsolete("Use TeamMembershipType instead.")]
+        [Obsolete($"Use {nameof(ChannelType)} instead.")]
         public SwitchParameter Private;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSET_STANDARD)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_SPECIFIC)]
-        public TeamsChannelType ChannelType;
+        public TeamsChannelType ChannelType = TeamsChannelType.Standard;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_SPECIFIC)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
@@ -55,15 +56,9 @@ namespace PnP.PowerShell.Commands.Graph
                 throw new PSArgumentException("Group not found");
             }
 
-            switch (ParameterSetName)
+            if(ChannelType != TeamsChannelType.Standard && !ParameterSpecified(nameof(OwnerUPN)))
             {
-                case ParameterSET_PRIVATE:
-                    ChannelType = TeamsChannelType.Private;
-                    break;
-
-                case ParameterSET_STANDARD:
-                    ChannelType = TeamsChannelType.Standard;
-                    break;
+                throw new PSArgumentException("OwnerUPN is required when using the non standard channel type", nameof(OwnerUPN));
             }
 
             try
