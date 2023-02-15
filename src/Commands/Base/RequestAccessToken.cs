@@ -12,6 +12,7 @@ namespace PnP.PowerShell.Commands.Base
     public class RequestAccessToken : PnPConnectedCmdlet
     {
         [Parameter(Mandatory = false)]
+        [Alias("ApplicationId")]
         public string ClientId = PnPConnection.PnPManagementShellClientId; // defaults to PnPManagementShell
 
         [Parameter(Mandatory = false)]
