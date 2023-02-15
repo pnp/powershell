@@ -170,7 +170,10 @@ namespace PnP.PowerShell.Commands.Lists
                         ScriptBlock.Invoke(listItems);
                     }
 
-                    query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+                    if (HasPageSize())
+                    {
+                        query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+                    }
                 } while (query.ListItemCollectionPosition != null);
             }
         }

@@ -36,13 +36,13 @@ namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate
         {
             get { return !string.IsNullOrWhiteSpace(StateRaw) && Enum.TryParse<Enums.FlowState>(StateRaw, true, out var result) ? result : (Enums.FlowState?)null; }
             set { StateRaw = value.ToString(); }
-        }          
+        }
 
         /// <summary>
         /// Raw information on how the Flow has been shared. Returns NULL if the Flow is not shared.
         /// </summary>        
         [JsonPropertyName("sharingType")]
-        public string SharingTypeRaw { get; set; }  
+        public string SharingTypeRaw { get; set; }
 
         /// <summary>
         /// Information on how the Flow has been shared as an enum. Returns NULL if the Flow is not shared.
@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate
         {
             get { return !string.IsNullOrWhiteSpace(SharingTypeRaw) && Enum.TryParse<Enums.FlowSharingType>(SharingTypeRaw, true, out var result) ? result : (Enums.FlowSharingType?)null; }
             set { SharingTypeRaw = value.ToString(); }
-        }       
+        }
 
         /// <summary>
         /// Date and time at which this Flow has been created
@@ -103,28 +103,15 @@ namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate
         public string WorkflowEntityId { get; set; }
 
         /// <summary>
-        /// This property is not used by Microsoft Power Automate Flow. The user type can be found under Properties.Creator.UserType instead.
-        /// </summary>
-        [Obsolete("This property is not used by Microsoft Power Automate Flow. The user type can be found under Properties.Creator.UserType instead.")]
-        public string UserType { get; set; }
-
-        /// <summary>
-        /// Details on the Power Platform environment the Flow runs on
-        /// </summary>
-        [Obsolete("Please use EnvironmentDetails instead. This property will be removed in the future.")]
-        [JsonIgnore]
-        public Dictionary<string, string> Environment { get; set; }
-
-        /// <summary>
         /// The environment the Flow runs in
         /// </summary>
         [JsonPropertyName("environment")]
-        public Environment.Environment EnvironmentDetails { get; set; }  
+        public Environment.Environment EnvironmentDetails { get; set; }
 
         /// <summary>
         /// Unique identifier of the template used to build this Flow
         /// </summary>
         [JsonPropertyName("templateName")]
-        public string TemplateId { get; set; }              
+        public string TemplateId { get; set; }
     }
 }

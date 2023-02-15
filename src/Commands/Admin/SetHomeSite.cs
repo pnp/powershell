@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            if (ParameterSpecified(nameof(VivaConnectionsDefaultStart)))
+            if (VivaConnectionsDefaultStart)
             {
                 Tenant.SetSPHSiteWithConfigurations(HomeSiteUrl, VivaConnectionsDefaultStart);
             }
