@@ -36,10 +36,11 @@ namespace PnP.PowerShell.Commands.Graph
         [Obsolete($"Use {nameof(ChannelType)} instead.")]
         public SwitchParameter Private;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSET_STANDARD)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_SPECIFIC)]
         public TeamsChannelType ChannelType;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSET_SPECIFIC)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSET_SPECIFIC)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
         public string OwnerUPN;
 
