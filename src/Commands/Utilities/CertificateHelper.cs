@@ -133,10 +133,21 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static X509Certificate2 GetCertificateFromPath(string certificatePath, SecureString certificatePassword)
+        /// <summary>
+        /// Opens the X509Certificate2 at the provided path using the provided certificate password
+        /// </summary>
+        /// <param name="cmdlet">Cmdlet executing this function</param>
+        /// <param name="certificatePath">Path to the private key certificate file</param>
+        /// <param name="certificatePassword">Password to open the certificate or NULL if no password set on the certificate</param>
+        /// <returns>X509Certificate2 instance</returns>
+        /// <exception cref="PSArgumentException">Thrown if the certificate cannot be read</exception>
+        /// <exception cref="FileNotFoundException">Thrown if the certificate cannot be found at the provided path</exception>
+        internal static X509Certificate2 GetCertificateFromPath(Cmdlet cmdlet, string certificatePath, SecureString certificatePassword)
         {
             if (System.IO.File.Exists(certificatePath))
             {
+                cmdlet.WriteVerbose($"Reading certificate from file '{certificatePath}'");
+
                 var certFile = System.IO.File.OpenRead(certificatePath);
                 if (certFile.Length == 0)
                 {
@@ -146,6 +157,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var certificateBytes = new byte[certFile.Length];
                 certFile.Read(certificateBytes, 0, (int)certFile.Length);
 
+                cmdlet.WriteVerbose($"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
                 try
                 {
                     var certificate = new X509Certificate2(

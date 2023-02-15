@@ -446,7 +446,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new FileNotFoundException("Certificate not found");
                 }
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(CertificatePath, CertificatePassword);
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword);
                 if (PnPConnection.Current?.ClientId == ClientId &&
                     PnPConnection.Current?.Tenant == Tenant &&
                     PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
@@ -617,7 +617,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 SecureString secPassword = StringToSecureString(azureCertPassword);
 
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(azureCertificatePath, secPassword);
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, azureCertificatePath, secPassword);
                 if (PnPConnection.Current?.ClientId == azureClientId &&
                     PnPConnection.Current?.Tenant == Tenant &&
                     PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
