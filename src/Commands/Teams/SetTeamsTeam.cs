@@ -147,7 +147,7 @@ namespace PnP.PowerShell.Commands.Graph
                         teamCI.Classification = ParameterSpecified(nameof(Classification)) ? Classification : null;
                         teamCI.AllowCreatePrivateChannels = ParameterSpecified(nameof(AllowCreatePrivateChannels)) ? AllowCreatePrivateChannels : null;                        
 
-                        var updated = TeamsUtility.UpdateTeamAsync(Connection, AccessToken, groupId, teamCI.ToTeam(group.Visibility)).GetAwaiter().GetResult();
+                        var updated = TeamsUtility.UpdateTeamAsync(Connection, AccessToken, groupId, teamCI.ToTeam(group.Visibility.Value)).GetAwaiter().GetResult();
                         WriteObject(updated);
                     }
                 }
