@@ -171,12 +171,9 @@ namespace PnP.PowerShell.Commands.Provisioning
             // Get the Files Element
 
             XNamespace pnp;
-#pragma warning disable CS0618 // Type or member is obsolete
+
             switch (Schema)
             {
-                case XMLPnPSchemaVersion.V201903:
-                    pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03;
-                    break;
                 case XMLPnPSchemaVersion.V201909:
                     pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_09;
                     break;
@@ -190,7 +187,6 @@ namespace PnP.PowerShell.Commands.Provisioning
                     pnp = XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2021_03;
                     break;
             }
-#pragma warning restore CS0618 // Type or member is obsolete
 
             var filesElement = xElement.Descendants(pnp + "Files").FirstOrDefault();
             if (filesElement != null)
