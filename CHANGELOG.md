@@ -71,6 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Ronald Mavarez [ronaldmavarez]
 - [lilealdai]
 - Martin Lingstuyl [martinlingstuyl]
 - Reshmee Auckloo [reshmee011]
