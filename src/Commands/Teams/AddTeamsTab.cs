@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model.Graph;
+using System.Text.RegularExpressions;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -98,7 +99,9 @@ namespace PnP.PowerShell.Commands.Graph
                             case TeamTabType.SharePointPageAndList:
                                 {
                                     EnsureDynamicParameters(sharePointPageAndListParameters);
-                                    contentUrl = sharePointPageAndListParameters.ContentUrl;
+                                    // Using a Regular Expression we'll define the URL to use within Teams allowing for automatic logon to the SharePoint Online component. Result will be a syntax similar to:
+                                    // https://contoso.sharepoint.com/sites/Marketing/_layouts/15/teamslogon.aspx?spfx=true&dest=https%3A%2F%2Fcontoso.sharepoint.com%2Fsites%2FMarketing%2FSitePages%2FHome.aspx
+                                    contentUrl = string.Concat(Regex.Replace(sharePointPageAndListParameters.WebsiteUrl, @"^(.*?://.*?/(?:(?:sites|teams)/.*?/)?)(.*)", "$1", RegexOptions.IgnoreCase), "_layouts/15/teamslogon.aspx?spfx=true&dest=", UrlUtilities.UrlEncode(sharePointPageAndListParameters.WebsiteUrl));
                                     webSiteUrl = sharePointPageAndListParameters.WebsiteUrl;
                                     break;
                                 }
@@ -181,9 +184,6 @@ namespace PnP.PowerShell.Commands.Graph
 
         public class SharePointPageAndListParameters
         {
-            [Parameter(Mandatory = true)]
-            public string ContentUrl;
-
             [Parameter(Mandatory = true)]
             public string WebsiteUrl;
         }

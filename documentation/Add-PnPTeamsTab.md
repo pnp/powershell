@@ -46,10 +46,10 @@ Adds the specified PDF file from the "Documents" library as a tab.
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name" -Type SharePointPageAndList -WebSiteUrl "https://contoso.sharepoint.com/sites/Marketing/SitePages/Home.aspx" -ContentUrl "https://contoso.sharepoint.com/sites/Marketing/_layouts/15/teamslogon.aspx?spfx=true&dest=https%3A%2F%2Fcontoso.sharepoint.com%2Fsites%2FMarketing%2FSitePages%2FHome.aspx"
+Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name" -Type SharePointPageAndList -WebSiteUrl "https://contoso.sharepoint.com/sites/Marketing/SitePages/Home.aspx"
 ```
 
-Adds the specified SharePoint page as a tab in Teams.
+Adds the specified SharePoint page as a tab in Teams. Note that the ContentUrl will automatically be generated and cannot be specified.
 
 ## PARAMETERS
 
@@ -68,7 +68,9 @@ Accept wildcard characters: False
 ```
 
 ### -ContentUrl
-The Url to use to render the content inside the tab within Microsoft Teams
+The Url to use to render the content inside the tab within Microsoft Teams.
+
+When using Type SharePointPageAndList, the ContentUrl will automatically be generated and cannot be specified.
 
 ```yaml
 Type: String
@@ -82,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -WebsiteUrl
-The Url to use when the user clicks on the dropdown of the tab in Microsoft Teams and clicks on "Go to website"
+The Url to use when the user clicks on the dropdown of the tab in Microsoft Teams and clicks on "Go to website".
 
 ```yaml
 Type: String
