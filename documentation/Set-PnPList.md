@@ -21,7 +21,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] 
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>]
  [-Path <String>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -78,6 +78,13 @@ Set-PnPList -Identity "Demo List" -Title "Demo List 2" -Path "Lists/DemoList2"
 ```
 
 Rename a list, including its' URL.
+
+### EXAMPLE 8
+```powershell
+Set-PnPList -Identity "Demo List" -DefaultSensitivityLabelForLibrary "Confidential"
+```
+
+Sets the default sensitivity label for a document library to Confidential.
 
 ## PARAMETERS
 
@@ -156,6 +163,20 @@ The description of the list
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultSensitivityLabelForLibrary
+The instance, Id or name of the sensitivity label to set as the default for the library. If $null is provided, the default label will be removed.
+
+```yaml
+Type: SensitivityLabelPipeBind
 Parameter Sets: (All)
 
 Required: False
