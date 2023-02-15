@@ -13,10 +13,6 @@ namespace PnP.PowerShell.Commands
     {
         private Web _currentWeb;
 
-        [Parameter(Mandatory = false)]
-        [Obsolete("The -Web parameter will be removed in a future release. Use Connect-PnPOnline -Url [subweburl] instead to connect to a subweb.")]
-        public WebPipeBind Web = new WebPipeBind();
-
         protected Web CurrentWeb
         {
             get
@@ -32,26 +28,15 @@ namespace PnP.PowerShell.Commands
         private Web GetWeb()
         {
             Web web = ClientContext.Web;
-
-#pragma warning disable CS0618
-            if (ParameterSpecified(nameof(Web)))
+            
+            // Validate that our ClientContext and PnPConnection are both for the same site
+            if (Connection.Context.Url != Connection.Url)
             {
-                var subWeb = Web.GetWeb(ClientContext);
-                subWeb.EnsureProperty(w => w.Url);
-                Connection.CloneContext(subWeb.Url);
-                web = Connection.Context.Web;
+                // ClientContext is for a different site than our PnPConnection, try to make the connection match the ClientContext URL
+                Connection.RestoreCachedContext(Connection.Context.Url);
             }
-#pragma warning restore CS0618
-            else
-            {
-                // Validate that our ClientContext and PnPConnection are both for the same site
-                if (Connection.Context.Url != Connection.Url)
-                {
-                    // ClientContext is for a different site than our PnPConnection, try to make the connection match the ClientContext URL
-                    Connection.RestoreCachedContext(Connection.Context.Url);
-                }
-                web = ClientContext.Web;
-            }
+            web = ClientContext.Web;
+            
 
             Connection.Context.ExecuteQueryRetry();
 

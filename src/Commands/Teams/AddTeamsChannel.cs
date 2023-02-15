@@ -30,11 +30,7 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_STANDARD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_PRIVATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_SPECIFIC)]
-        public string Description;
-
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
-        [Obsolete($"Use {nameof(ChannelType)} instead.")]
-        public SwitchParameter Private;
+        public string Description;        
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_STANDARD)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_SPECIFIC)]
