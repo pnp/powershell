@@ -139,17 +139,27 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 var certFile = System.IO.File.OpenRead(certificatePath);
                 if (certFile.Length == 0)
+                {
                     throw new PSArgumentException($"The specified certificate path '{certificatePath}' points to an empty file");
+                }
 
                 var certificateBytes = new byte[certFile.Length];
                 certFile.Read(certificateBytes, 0, (int)certFile.Length);
-                var certificate = new X509Certificate2(
-                    certificateBytes,
-                    certificatePassword,
-                    X509KeyStorageFlags.Exportable |
-                    X509KeyStorageFlags.MachineKeySet |
-                    X509KeyStorageFlags.PersistKeySet);
-                return certificate;
+
+                try
+                {
+                    var certificate = new X509Certificate2(
+                        certificateBytes,
+                        certificatePassword,
+                        X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet);
+                    return certificate;
+                }
+                catch (CryptographicException e)
+                {
+                    throw new PSArgumentException($"The specified certificate at '{certificatePath}' could not be read. The certificate could be corrupt or it may require a password which has not been provided or is incorrect.", e);
+                }
             }
             else if (System.IO.Directory.Exists(certificatePath))
             {
@@ -160,8 +170,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 throw new FileNotFoundException($"The specified certificate path '{certificatePath}' does not exist", certificatePath);
             }
         }
-
-
 
         #region certificate manipulation
         private static void EncodeLength(BinaryWriter stream, int length)
