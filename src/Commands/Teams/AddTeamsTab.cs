@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.Graph
                                 {
                                     EnsureDynamicParameters(sharePointPageAndListParameters);
                                     contentUrl = sharePointPageAndListParameters.ContentUrl;
-                                    webSiteUrl = sharePointPageAndListParameters.WebSiteUrl;
+                                    webSiteUrl = sharePointPageAndListParameters.WebsiteUrl;
                                     break;
                                 }
                             case TeamTabType.Custom:
@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.Graph
                                     entityId = customParameters.EntityId;
                                     contentUrl = customParameters.ContentUrl;
                                     removeUrl = customParameters.RemoveUrl;
-                                    webSiteUrl = customParameters.WebSiteUrl;
+                                    webSiteUrl = customParameters.WebsiteUrl;
                                     teamsAppId = customParameters.TeamsAppId;
                                     break;
                                 }
@@ -176,7 +176,7 @@ namespace PnP.PowerShell.Commands.Graph
             public string RemoveUrl;
 
             [Parameter(Mandatory = false)]
-            public string WebSiteUrl;
+            public string WebsiteUrl;
         }
 
         public class SharePointPageAndListParameters
@@ -185,7 +185,7 @@ namespace PnP.PowerShell.Commands.Graph
             public string ContentUrl;
 
             [Parameter(Mandatory = true)]
-            public string WebSiteUrl;
+            public string WebsiteUrl;
         }
     }
 }
