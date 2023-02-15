@@ -13,7 +13,6 @@ namespace PnP.PowerShell.Commands.Base
     {
         protected override void ProcessRecord()
         {
-
             if (PnPConnection.Current == null)
             {
                 throw new InvalidOperationException(Properties.Resources.NoConnectionToDisconnect);
