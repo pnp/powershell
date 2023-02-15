@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Graph
         public string Description;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
-        [Obsolete("Use ChannelType instead.")]
+        [Obsolete($"Use {nameof(ChannelType)} instead.")]
         public SwitchParameter Private;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_SPECIFIC)]
