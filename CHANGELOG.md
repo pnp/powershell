@@ -54,6 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Properties of `Get-PnPAzureADServicePrincipal` are now all typed instead of some of them returning unparsed JSON fragments. [#2717](https://github.com/pnp/powershell/pull/2717)
 - Marked `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` as obsolete as the implementation behind these features has been changed in SharePoint Online causing them no longer to work. At present, there's no alternative for this that we can call into thus we will have to remove these in a future version. [#2720](https://github.com/pnp/powershell/pull/2720)
 - Changed `Add-PnPTeamsChannel` to no longer require an `-OwnerUPN` to be provided when specifying `-ChannelType Standard` [#2786](https://github.com/pnp/powershell/pull/2786)
+- Changed `Add-PnPFile` by default to upload a file as a draft with a minor version now instead of publishing it as a major version. `-CheckinType MajorCheckIn` can be used to still upload the file as a major published version [#2806](https://github.com/pnp/powershell/pull/2806)
 
 ### Removed
 
