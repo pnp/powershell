@@ -65,10 +65,8 @@ namespace PnP.PowerShell.Commands
                 creationInformation.Title = _communicationSiteParameters.Title;
                 creationInformation.Url = _communicationSiteParameters.Url;
                 creationInformation.Description = _communicationSiteParameters.Description;
-                creationInformation.Classification = _communicationSiteParameters.Classification;
-#pragma warning disable CS0618 // Type or member is obsolete
+                creationInformation.Classification = _communicationSiteParameters.Classification;                
                 creationInformation.ShareByEmailEnabled = _communicationSiteParameters.ShareByEmailEnabled;
-#pragma warning restore CS0618 // Type or member is obsolete
                 creationInformation.Lcid = _communicationSiteParameters.Lcid;
                 if (ParameterSpecified(nameof(HubSiteId)))
                 {
@@ -163,10 +161,8 @@ namespace PnP.PowerShell.Commands
                 creationInformation.Title = _teamSiteWithoutMicrosoft365GroupParameters.Title;
                 creationInformation.Url = _teamSiteWithoutMicrosoft365GroupParameters.Url;
                 creationInformation.Description = _teamSiteWithoutMicrosoft365GroupParameters.Description;
-                creationInformation.Classification = _teamSiteWithoutMicrosoft365GroupParameters.Classification;
-#pragma warning disable CS0618 // Type or member is obsolete
+                creationInformation.Classification = _teamSiteWithoutMicrosoft365GroupParameters.Classification;                
                 creationInformation.ShareByEmailEnabled = _teamSiteWithoutMicrosoft365GroupParameters.ShareByEmailEnabled;
-#pragma warning restore CS0618 // Type or member is obsolete
                 creationInformation.Lcid = _teamSiteWithoutMicrosoft365GroupParameters.Lcid;
                 if (ParameterSpecified(nameof(HubSiteId)))
                 {

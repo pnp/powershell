@@ -38,6 +38,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled` parameter to `Get-PnPHomeSite` which returns information on whether Viva Connections landing experience is set to the SharePoint home site. [#2779](https://github.com/pnp/powershell/pull/2779)
 - Added `-VivaConnectionsDefaultStart` parameter to `Set-PnPHomeSite` which sets the home site to the provided site collection url and keeps the Viva Connections landing experience to the SharePoint home site. [#2779](https://github.com/pnp/powershell/pull/2779)
 - Added `-LargeList` parameter to `Remove-PnPList` cmdlet which improves the list recycling experience for Lists containing huge number of items. [#2778](https://github.com/pnp/powershell/pull/2778)
+- Added support for specifying the ContentUrl and WebsiteUrl configuration in `Add-PnPTeamsTab` cmdlet when trying to add a SharePoint page or list as a tab in Teams channel. [#2807](https://github.com/pnp/powershell/pull/2807)
+- Added `-CheckinType` parameter to `Add-PnPFile` cmdlet which provides the option to specify the checkin type for a file. The default value is set to `MinorCheckIn`. [#2806](https://github.com/pnp/powershell/pull/2806)
+- Added `-ApplicationId` as alias for `-ClientId` in `Connect-PnPOnline` and `Request-PnPAccessToken` cmdlets.
 
 ### Changed
 
@@ -51,6 +54,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Connect-PnPOnline` will now throw a much clearer error message if the site to be connected doesn't exist when using the legacy Client Id with Secret (ACS) authentication mode. [#2707](https://github.com/pnp/powershell/pull/2707)
 - Properties of `Get-PnPAzureADServicePrincipal` are now all typed instead of some of them returning unparsed JSON fragments. [#2717](https://github.com/pnp/powershell/pull/2717)
 - Marked `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` as obsolete as the implementation behind these features has been changed in SharePoint Online causing them no longer to work. At present, there's no alternative for this that we can call into thus we will have to remove these in a future version. [#2720](https://github.com/pnp/powershell/pull/2720)
+- Changed `Add-PnPTeamsChannel` to no longer require an `-OwnerUPN` to be provided when specifying `-ChannelType Standard` [#2786](https://github.com/pnp/powershell/pull/2786)
+- Changed `Add-PnPFile` by default to upload a file as a draft with a minor version now instead of publishing it as a major version. `-CheckinType MajorCheckIn` can be used to still upload the file as a major published version [#2806](https://github.com/pnp/powershell/pull/2806)
 
 ### Removed
 
@@ -66,8 +71,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Set-PnPContentType` not allowing you to update basic properties of a content type [#2760](https://github.com/pnp/powershell/pull/2760)
 - Fixed `Add-PnPField` not supporting a ReturnType to be set for calculated fields when created on the site level [#2765](https://github.com/pnp/powershell/pull/2765)
 - Fixed issue with `Invoke-PnPSPRestMethod` throwing error when the response string is empty. [#2784](https://github.com/pnp/powershell/pull/2784)
+- Removed `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` cmdlet as the implementation behind these features has been changed in SharePoint Online causing them no longer to work. At present, there's no alternative for this that we can call into.
 - Fixed issue with `Invoke-PnPSPRestMethod` and `Invoke-PnPGraphMethod` throwing error when passing complex JSON object as payload. [#2802](https://github.com/pnp/powershell/pull/2802)
 - Fixed issue with `Add-PnPListItem` and `Set-PnPListItem` not correctly setting the Purview `Unlocked by default`. [#2800](https://github.com/pnp/powershell/pull/2800)
+- Fixed issue with `Get-PnPListItem` cmdlet not respecting `RowLimit` in the CAML query.
 
 ### Contributors
 
@@ -146,6 +153,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Marked `-Resource` parameter from `Get-PnPAccessToken` cmdlet as obsolete as it was not used anymore anyway. It will be removed in a future version. [#2182](https://github.com/pnp/powershell/pull/2182)
 - Removed `-SystemUpdate` option from `Set-PnPListItem` as it has been deprecated two years ago. Use `-UpdateType SystemUpdate` instead [#2396](https://github.com/pnp/powershell/pull/2396)
+- Removed `-Force` parameter from `New-PnPTenantSite`. It was marked obsolete and not used anymore in the code.
+- Removed `-BlockDownloadOfNonViewableFiles` parameter from `Set-PnPTenantSite` cmdlet. It was marked obsolete. Instead use `-AllowDownloadingNonWebViewableFiles` parameter.
+- Removed `-NoTelemetry` and `-NoVersionCheck` parameters from `Connect-PnPOnline` cmdlet. They were marked obsolete. Instead you need to specify `PNP_DISABLETELEMETRY` and `PNPPOWERSHELL_UPDATECHECK` as environment variable.
+- Removed `-Connection` parameter from `Disconnect-PnPOnline` cmdlet. For more information on how to deal with this, please read [this documentation](https://pnp.github.io/powershell/cmdlets/Disconnect-PnPOnline.html).
+- Removed `-Web` parameter support for cmdlets that are currently using it. Instead you should use `Connect-PnPOnline` to connect to a specific Web instance like a sub-site or a site under a sub-site.
+- Removed `-Resource` parameter from `Get-PnPAccessToken` cmdlet. It was marked as obsolete and not used anymore.
+- Removed `-SkipSourceFolderName` parameter from `Copy-PnPFile` cmdlet. It was marked as obsolete and not used anymore.
+- Removed `-ExcludeSiteUrl` , `-IncludeClassification` and `-IncludeHasTeam` parameters from `Get-PnPMicrosoft365Group` cmdlet. They were marked as obsolete. The site URL(s) are excluded by default, instead use `-IncludeSiteUrl` parameter if you want to retrieve site URL(s). The classification will always be retrieved. The `HasTeam` value is always retrieved.
+- The `UserType` and `Environment` properties will not be retrieved when using `Get-PnPFlow` and `Remove-PnPFlow` cmdlets. They were marked as obsolete. You should used `Properties.Creator.UserType` and `EnvironmentDetails` instead.
+- The `OnlyAllowMembersViewMembership` and `SetAssociatedGroup` parameters have been removed. They were already marked as obsolete. You should use `-DisallowMembersViewMembership` parameter to disallow group members viewing membership and use `Set-PnPGroup` cmdlet to set groups as associated groups.
+- Removed `-Owner` paramter from `New-PnPTeamsTeam` cmdlet. It was marked as obsolete. You should instead use `-Owners` parameter.
+- Removed support for `2019-03` version of the PnP Provisioning Schema from `Convert-PnPSiteTemplate` , `New-PnPSiteTemplateFromFolder` and other cmdlets which are using this schema. It was already marked as deprecated in the PnP Provisioning engine. You should use a newer version of the schema.
+- Removed `-NoBaseTemplate` parameter from `Get-PnPSiteTemplate` cmdlet. It was marked as obsolete. It will not use the default web base template of the connected site.
+- Removed `-Private` parameter from `Add-PnPTeamsChannel` cmdlet. It was marked as obsolete. You should use `TeamMembershipType` parameter instead.
+
 
 ### Fixed
 

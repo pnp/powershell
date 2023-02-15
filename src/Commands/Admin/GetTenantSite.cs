@@ -75,9 +75,7 @@ namespace PnP.PowerShell.Commands
                 {
                     IncludePersonalSite = IncludeOneDriveSites.IsPresent ? PersonalSiteFilter.Include : PersonalSiteFilter.UseServerDefault,
                     IncludeDetail = Detailed,
-#pragma warning disable CS0618 // Type or member is obsolete
                     Template = Template,
-#pragma warning restore CS0618 // Type or member is obsolete
                     Filter = Filter,
                 };
 
