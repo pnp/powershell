@@ -40,7 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-LargeList` parameter to `Remove-PnPList` cmdlet which improves the list recycling experience for Lists containing huge number of items. [#2778](https://github.com/pnp/powershell/pull/2778)
 - Added support for specifying the ContentUrl and WebsiteUrl configuration in `Add-PnPTeamsTab` cmdlet when trying to add a SharePoint page or list as a tab in Teams channel. [#2807](https://github.com/pnp/powershell/pull/2807)
 - Added `-CheckinType` parameter to `Add-PnPFile` cmdlet which provides the option to specify the checkin type for a file. The default value is set to `MinorCheckIn`. [#2806](https://github.com/pnp/powershell/pull/2806)
-- Added `-ApplicationId` as alias for `-ClientId` in `Connect-PnPOnline` and `Request-PnPAccessToken` cmdlets.
+- Added `-ApplicationId` as alias for `-ClientId` in `Connect-PnPOnline` and `Request-PnPAccessToken` cmdlets. [#2805](https://github.com/pnp/powershell/pull/2805)
 - Added `-Connection` option to `Connect-PnPOnline` which allows of reusing an authenticated connection to connect to a different site [#2821](https://github.com/pnp/powershell/pull/2821)
 - Added `-UserAssignedManagedIdentityAzureResourceId` and `-UserAssignedManagedIdentityClientId` as alternatives to `-UserAssignedManagedIdentityObjectId` for `Connect-PnPOnline -ManagedIdentity` to provide an user managed identity to authenticate with. [#2813](https://github.com/pnp/powershell/pull/2813)
 
@@ -77,6 +77,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Invoke-PnPSPRestMethod` and `Invoke-PnPGraphMethod` throwing error when passing complex JSON object as payload. [#2802](https://github.com/pnp/powershell/pull/2802)
 - Fixed issue with `Add-PnPListItem` and `Set-PnPListItem` not correctly setting the Purview `Unlocked by default`. [#2800](https://github.com/pnp/powershell/pull/2800)
 - Fixed issue with `Get-PnPListItem` cmdlet not respecting `RowLimit` in the CAML query.
+- Fixed `Connect-PnPOnline -ManagedIdentity -UserAssignedManagedIdentityClientId` not working in Azure Automation Runbooks as it required usage of the object_id parameter instead of the principal_id to get an access token. [#2813](https://github.com/pnp/powershell/pull/2813)
 
 ### Contributors
 
