@@ -3,13 +3,13 @@
 You can run the following commands to install the latest stable PowerShell cmdlets:
 
 ```powershell
-Install-Module -Name "PnP.PowerShell"
+Install-Module -Name "PnP.PowerShell" -Scope CurrentUser
 ```
 
 If you want to install or update to the latest nightly built prerelease of PnP PowerShell, run:
 
 ```powershell
-Install-Module -Name "PnP.PowerShell" -AllowPrerelease
+Install-Module -Name "PnP.PowerShell" -AllowPrerelease -Scope CurrentUser
 ```
 
 This will work on Windows / Linux / MacOS.
