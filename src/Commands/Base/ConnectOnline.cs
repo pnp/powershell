@@ -304,7 +304,7 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID:
                 case ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID:
                 case ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID:
-                    connection = ConnectManagedIdentity();
+                    newConnection = ConnectManagedIdentity();
                     break;
                 case ParameterSet_WEBLOGIN:
                     newConnection = ConnectWebLogin();
