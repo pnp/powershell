@@ -441,7 +441,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPFile.html",
-          "hash": "b1MSTUMW9C1aqtJdypg7RQ=="
+          "hash": "rhWo6QDe4XCOABOVJgxy7Q=="
         }
       },
       "is_incremental": false,
@@ -993,7 +993,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPTeamsTab.html",
-          "hash": "XLVvK+2Q8SzSUeKvtWoRtw=="
+          "hash": "3OFRaxtzbY/R8CLhQ6W5Tg=="
         }
       },
       "is_incremental": false,
@@ -1317,7 +1317,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Connect-PnPOnline.html",
-          "hash": "PXVSAlrxmsLYCAhbBJ5zVw=="
+          "hash": "Oo8MMQvENlS2GLhjuMqhxw=="
         }
       },
       "is_incremental": false,
@@ -2493,7 +2493,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPHomeSite.html",
-          "hash": "Nv4hh2iKQhDuZ7e3lk6R/w=="
+          "hash": "zvkAIjjOgckecwMKvFIXxQ=="
         }
       },
       "is_incremental": false,
@@ -6120,7 +6120,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Request-PnPAccessToken.html",
-          "hash": "3qxc9rxcdKrN08TBFqUzJQ=="
+          "hash": "2Nq1WD2L/chqPGITR3WQYg=="
         }
       },
       "is_incremental": false,
@@ -6408,7 +6408,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Send-PnPMail.html",
-          "hash": "Bojcda7BNdQzRV/GoMQrlw=="
+          "hash": "Eqy1y55kqP8RnpXqhrEDfQ=="
         }
       },
       "is_incremental": false,

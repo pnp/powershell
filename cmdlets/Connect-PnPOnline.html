@@ -90,28 +90,28 @@
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Credentials &lt;CredentialPipeBind&gt;] [-CurrentCredentials]
  [-CreateDrive] [-DriveName &lt;String&gt;] [-ClientId &lt;String&gt;] [-RedirectUri &lt;String&gt;]
  [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-TransformationOnPrem] [-ValidateConnection]
+ [-TransformationOnPrem] [-ValidateConnection] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="sharepoint-acs-legacy-app-only">SharePoint ACS (Legacy) App Only</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-Realm &lt;String&gt;] -ClientSecret &lt;String&gt; [-CreateDrive]
  [-DriveName &lt;String&gt;] -ClientId &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-ValidateConnection]
+ [-ValidateConnection] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="app-only-with-azure-active-directory">App-Only with Azure Active Directory</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
  -Tenant &lt;String&gt; [-CertificatePath &lt;String&gt;] [-CertificateBase64Encoded &lt;String&gt;]
  [-CertificatePassword &lt;SecureString&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-ValidateConnection]
+ [-ValidateConnection] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="app-only-with-azure-active-directory-using-a-certificate-from-the-windows-certificate-management-store-by-thumbprint">App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] -ClientId &lt;String&gt;
  -Tenant &lt;String&gt; -Thumbprint &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-ValidateConnection]
+ [-ValidateConnection] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="pnp-management-shell--devicelogin">PnP Management Shell / DeviceLogin</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-DeviceLogin]
  [-LaunchBrowser] [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] 
- [-ValidateConnection]
+ [-ValidateConnection] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="web-login-for-multi-factor-authentication">Web Login for Multi Factor Authentication</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;]
@@ -120,7 +120,7 @@
 </code></pre>
 <h3 id="interactive-for-multi-factor-authentication">Interactive for Multi Factor Authentication</h3>
 <pre><code>Connect-PnPOnline -Interactive [-ReturnConnection] -Url &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-LaunchBrowser]
- [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection]
+ [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="on-premises-login-for-page-transformation-from-on-premises-sharepoint-to-sharepoint-online">On-premises login for page transformation from on-premises SharePoint to SharePoint Online</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &lt;String&gt; -TransformationOnPrem [-CurrentCredential]
@@ -135,7 +135,7 @@
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-EnvironmentVariable] [-CurrentCredentials]
  [-CreateDrive] [-DriveName &lt;String&gt;] [-RedirectUri &lt;String&gt;]
  [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;]
- [-TransformationOnPrem] [-ValidateConnection]
+ [-TransformationOnPrem] [-ValidateConnection] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets.
@@ -288,7 +288,7 @@ Accept wildcard characters: False
 <p>The Client ID of the Azure AD Application</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Credentials, PnP Management Shell / DeviceLogin, Interactive
-Aliases:
+Aliases: ApplicationId
 
 Required: False
 Position: Named
@@ -315,6 +315,17 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be reused by the new connection. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable
+
+Required: False
+Position: Named
+Default value: PnPConnection.Current
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

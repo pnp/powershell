@@ -104,6 +104,10 @@
 <pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Tab Name&quot; -Type PDF -ContentUrl &quot;https://contoso.sharepoint.com/sites/Marketing/Shared Documents/General/MyFile.pdf&quot; -EntityId &quot;null&quot;
 </code></pre>
 <p>Adds the specified PDF file from the &quot;Documents&quot; library as a tab.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Tab Name&quot; -Type SharePointPageAndList -WebSiteUrl &quot;https://contoso.sharepoint.com/sites/Marketing/SitePages/Home.aspx&quot;
+</code></pre>
+<p>Adds the specified SharePoint page as a tab in Teams. Note that the ContentUrl will automatically be generated and cannot be specified.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-channel">-Channel</h3>
 <p>Specify the channel id or name of the team to retrieve.</p>
@@ -117,11 +121,23 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-contenturl">-ContentUrl</h3>
-<p>Specifies the Url to add</p>
+<p>The Url to use to render the content inside the tab within Microsoft Teams.</p>
+<p>When using Type SharePointPageAndList, the ContentUrl will automatically be generated and cannot be specified.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-websiteurl">-WebsiteUrl</h3>
+<p>The Url to use when the user clicks on the dropdown of the tab in Microsoft Teams and clicks on &quot;Go to website&quot;.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -156,6 +172,28 @@ Parameter Sets: (All)
 Accepted values: WebSite, DocumentLibrary, Wiki, Planner, MicrosoftStream, MicrosoftForms, Word, Excel, PowerPoint, PDF, OneNote, PowerBI, SharePointPageAndList, Custom
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-removeurl">-RemoveUrl</h3>
+<p>Specifies the URL to be called by Teams client when a Tab is removed using the Teams Client.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-entityid">-EntityId</h3>
+<p>Specifies the Identifier for the entity hosted by the tab provider.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

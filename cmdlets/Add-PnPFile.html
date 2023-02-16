@@ -87,17 +87,17 @@
 <p>Uploads a file to Web</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="upload-file">Upload file</h3>
-<pre><code class="lang-powershell">Add-PnPFile -Path &lt;String&gt; -Folder &lt;FolderPipeBind&gt; [-NewFileName &lt;String&gt;] [-Checkout] [-CheckInComment &lt;String&gt;]
+<pre><code class="lang-powershell">Add-PnPFile -Path &lt;String&gt; -Folder &lt;FolderPipeBind&gt; [-NewFileName &lt;String&gt;] [-Checkout] [-CheckInComment &lt;String&gt;] [-CheckinType &lt;CheckinType&gt;]
  [-Approve] [-ApproveComment &lt;String&gt;] [-Publish] [-PublishComment &lt;String&gt;] [-UseWebDav] [-Values &lt;Hashtable&gt;]
  [-ContentType &lt;ContentTypePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="upload-file-from-stream">Upload file from stream</h3>
-<pre><code class="lang-powershell">Add-PnPFile -Folder &lt;FolderPipeBind&gt; -FileName &lt;String&gt; -Stream &lt;Stream&gt; [-Checkout] [-CheckInComment &lt;String&gt;]
+<pre><code class="lang-powershell">Add-PnPFile -Folder &lt;FolderPipeBind&gt; -FileName &lt;String&gt; -Stream &lt;Stream&gt; [-Checkout] [-CheckInComment &lt;String&gt;] [-CheckinType &lt;CheckinType&gt;]
  [-Approve] [-ApproveComment &lt;String&gt;] [-Publish] [-PublishComment &lt;String&gt;] [-UseWebDav] [-Values &lt;Hashtable&gt;]
  [-ContentType &lt;ContentTypePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h3 id="create-or-update-file-from-text">Create or update file from text</h3>
-<pre><code class="lang-powershell">Add-PnPFile -Folder &lt;FolderPipeBind&gt; -FileName &lt;String&gt; -Content &lt;text&gt; [-Checkout] [-CheckInComment &lt;String&gt;]
+<pre><code class="lang-powershell">Add-PnPFile -Folder &lt;FolderPipeBind&gt; -FileName &lt;String&gt; -Content &lt;text&gt; [-Checkout] [-CheckInComment &lt;String&gt;] [-CheckinType &lt;CheckinType&gt;]
  [-Approve] [-ApproveComment &lt;String&gt;] [-Publish] [-PublishComment &lt;String&gt;] [-UseWebDav] [-Values &lt;Hashtable&gt;]
  [-ContentType &lt;ContentTypePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
@@ -167,6 +167,17 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-checkintype">-CheckinType</h3>
+<p>Specifies the type of check-in for a file.</p>
+<pre><code class="lang-yaml">Type: Enum (Microsoft.SharePoint.Client.CheckinType)
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: MinorCheckIn
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
