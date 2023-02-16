@@ -153,8 +153,9 @@ namespace PnP.PowerShell.Commands.Base
                 else if (!string.IsNullOrEmpty(userAssignedManagedIdentityObjectId))
                 {
                     // User assigned managed identity will be used, provide the object/pricipal Id of the user assigned managed identity to use
+                    // Note 16-02-2023: principal_id is an alias of object_id, but does not work on Azure Automation at the time of writing, while object_id works on both.
                     cmdlet.WriteVerbose($"Using the user assigned managed identity with object/principal ID: {userAssignedManagedIdentityObjectId}");
-                    tokenRequestUrl += $"&principal_id={userAssignedManagedIdentityObjectId}";
+                    tokenRequestUrl += $"&object_id={userAssignedManagedIdentityObjectId}";
                 }
                 else if (!string.IsNullOrEmpty(userAssignedManagedIdentityAzureResourceId))
                 {
