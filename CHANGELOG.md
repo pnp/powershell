@@ -60,6 +60,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Removed
 
+- Removed support for PowerShell 5, only PowerShell 7.2 and later will be supported from here onwards
 - Removed `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` as the implementation behind these features has been changed in SharePoint Online causing them no longer to work. At present, there's no alternative for this that we can call into thus we will have to remove these in a future version. There is a Design Change Request open with the Program Group to add back APIs for doing this. If that will be accepted and implemented, we will add these back again. [#2720](https://github.com/pnp/powershell/pull/2720)
 - 
 ### Fixed
