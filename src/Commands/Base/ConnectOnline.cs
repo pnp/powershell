@@ -31,7 +31,10 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
         private const string ParameterSet_WEBLOGIN = "Web Login for Multi Factor Authentication";
-        private const string ParameterSet_MANAGEDIDENTITY = "Managed Identity";
+        private const string ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY = "System Assigned Managed Identity";
+        private const string ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID = "User Assigned Managed Identity by Client Id";
+        private const string ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID = "User Assigned Managed Identity by Principal Id";
+        private const string ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID = "User Assigned Managed Identity by Azure Resource Id";
         private const string ParameterSet_INTERACTIVE = "Interactive login for Multi Factor Authentication";
         private const string ParameterSet_ENVIRONMENTVARIABLE = "Environment Variable";
 
@@ -48,6 +51,10 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]        
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -71,7 +78,10 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_MANAGEDIDENTITY, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
         public string Url;
 
@@ -189,11 +199,22 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public string TenantAdminUrl;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
+
         public SwitchParameter ManagedIdentity;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_MANAGEDIDENTITY)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
+        [Alias("UserAssignedManagedIdentityPrincipalId")]
         public string UserAssignedManagedIdentityObjectId;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
+        public string UserAssignedManagedIdentityClientId;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
+        public string UserAssignedManagedIdentityAzureResourceId;        
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
@@ -279,7 +300,10 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_CREDENTIALS:
                     newConnection = ConnectCredentials(credentials);
                     break;
-                case ParameterSet_MANAGEDIDENTITY:
+                case ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY:
+                case ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID:
+                case ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID:
+                case ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID:
                     newConnection = ConnectManagedIdentity();
                     break;
                 case ParameterSet_WEBLOGIN:
@@ -562,7 +586,7 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectManagedIdentity()
         {
             WriteVerbose("Connecting using Managed Identity");
-            return PnPConnection.CreateWithManagedIdentity(this, Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId);
+            return PnPConnection.CreateWithManagedIdentity(this, Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId);
         }
 
         private PnPConnection ConnectWebLogin()

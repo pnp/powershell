@@ -74,9 +74,24 @@ Connect-PnPOnline -Url <String> -TransformationOnPrem [-CurrentCredential]
 Connect-PnPOnline -Url <String> -AccessToken <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
-### Managed Identity
+### System Assigned Managed Identity
 ```
-Connect-PnPOnline -Url <String> [-UserAssignedManagedIdentityObjectId <String>]
+Connect-PnPOnline -Url <String> -ManagedIdentity [-ReturnConnection]
+```
+
+### User Assigned Managed Identity by Client Id
+```
+Connect-PnPOnline -Url <String> -ManagedIdentity -UserAssignedManagedIdentityClientId <String> [-ReturnConnection]
+```
+
+### User Assigned Managed Identity by Principal Id
+```
+Connect-PnPOnline -Url <String> -ManagedIdentity -UserAssignedManagedIdentityObjectId <String> [-ReturnConnection]
+```
+
+### User Assigned Managed Identity by Azure Resource Id
+```
+Connect-PnPOnline -Url <String> -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId <String> [-ReturnConnection]
 ```
 
 ### Environment Variable
@@ -656,7 +671,7 @@ Read up on [the documentation](https://pnp.github.io/powershell/articles/azurefu
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Managed Identity
+Parameter Sets: System Assigned Managed Identity, User Assigned Managed Identity by Client Id, User Assigned Managed Identity by Principal Id, User Assigned Managed Identity by Azure Resource Id
 Aliases:
 
 Required: True
@@ -667,11 +682,41 @@ Accept wildcard characters: False
 ```
 
 ### -UserAssignedManagedIdentityObjectId
-Can be used in combination with `-ManagedIdentity` to specify the object/principal id of the user assigned managed identity to use. If not provided, a system assigned managed identity will be used.
+Can be used in combination with `-ManagedIdentity` to specify the object/principal id of the user assigned managed identity to use.
 
 ```yaml
 Type: String
-Parameter Sets: Managed Identity
+Parameter Sets: User Assigned Managed Identity by Principal Id
+Aliases: UserAssignedManagedIdentityPrincipalId
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserAssignedManagedIdentityClientId
+Can be used in combination with `-ManagedIdentity` to specify the client id of the user assigned managed identity to use.
+
+```yaml
+Type: String
+Parameter Sets: User Assigned Managed Identity by Client Id
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserAssignedManagedIdentityAzureResourceId
+Can be used in combination with `-ManagedIdentity` to specify the Azure Resource ID of the user assigned managed identity to use.
+
+```yaml
+Type: String
+Parameter Sets: User Assigned Managed Identity by Azure Resource Id
 Aliases:
 
 Required: False
