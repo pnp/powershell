@@ -51,6 +51,14 @@ Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name"
 
 Adds the specified SharePoint page as a tab in Teams. Note that the ContentUrl will automatically be generated and cannot be specified, and the `-WebsiteUrl` parameter is only available from version `2.x` onwards.
 
+### EXAMPLE 4
+```powershell
+Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Excel Tab" -Type Excel -ContentUrl "https://contoso.sharepoint.com/sites/Marketing/Shared Documents/My Excel File.csv" -EntityId 6
+```
+
+Adds the "My Excel file.csv" with ID 6 as a tab from the Marketing site.
+
+
 ## PARAMETERS
 
 ### -Channel
