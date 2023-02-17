@@ -19,14 +19,14 @@ Connect to a SharePoint site
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Credentials <CredentialPipeBind>] [-CurrentCredentials]
  [-CreateDrive] [-DriveName <String>] [-ClientId <String>] [-RedirectUri <String>]
  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [-TransformationOnPrem] [-ValidateConnection]
+ [-TransformationOnPrem] [-ValidateConnection] [-Connection <PnPConnection>]
 ```
 
 ### SharePoint ACS (Legacy) App Only
 ```
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientSecret <String> [-CreateDrive]
  [-DriveName <String>] -ClientId <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [-ValidateConnection]
+ [-ValidateConnection] [-Connection <PnPConnection>]
 ```
 
 ### App-Only with Azure Active Directory
@@ -34,21 +34,21 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Realm <String>] -ClientS
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> [-CertificatePath <String>] [-CertificateBase64Encoded <String>]
  [-CertificatePassword <SecureString>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [-ValidateConnection]
+ [-ValidateConnection] [-Connection <PnPConnection>]
 ```
 
 ### App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint
 ```
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] -ClientId <String>
  -Tenant <String> -Thumbprint <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [-ValidateConnection]
+ [-ValidateConnection] [-Connection <PnPConnection>]
 ```
 
 ### PnP Management Shell / DeviceLogin
 ```
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] [-DeviceLogin]
  [-LaunchBrowser] [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] 
- [-ValidateConnection]
+ [-ValidateConnection] [-Connection <PnPConnection>]
 ```
 
 ### Web Login for Multi Factor Authentication
@@ -61,7 +61,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 ### Interactive for Multi Factor Authentication
 ```
 Connect-PnPOnline -Interactive [-ReturnConnection] -Url <String> [-CreateDrive] [-DriveName <String>] [-LaunchBrowser]
- [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection]
+ [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-Connection <PnPConnection>]
 ```
 
 ### On-premises login for page transformation from on-premises SharePoint to SharePoint Online
@@ -74,9 +74,24 @@ Connect-PnPOnline -Url <String> -TransformationOnPrem [-CurrentCredential]
 Connect-PnPOnline -Url <String> -AccessToken <String> [-AzureEnvironment <AzureEnvironment>] [-ReturnConnection]
 ```
 
-### Managed Identity
+### System Assigned Managed Identity
 ```
-Connect-PnPOnline -Url <String> [-UserAssignedManagedIdentityObjectId <String>]
+Connect-PnPOnline -Url <String> -ManagedIdentity [-ReturnConnection]
+```
+
+### User Assigned Managed Identity by Client Id
+```
+Connect-PnPOnline -Url <String> -ManagedIdentity -UserAssignedManagedIdentityClientId <String> [-ReturnConnection]
+```
+
+### User Assigned Managed Identity by Principal Id
+```
+Connect-PnPOnline -Url <String> -ManagedIdentity -UserAssignedManagedIdentityObjectId <String> [-ReturnConnection]
+```
+
+### User Assigned Managed Identity by Azure Resource Id
+```
+Connect-PnPOnline -Url <String> -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId <String> [-ReturnConnection]
 ```
 
 ### Environment Variable
@@ -84,7 +99,7 @@ Connect-PnPOnline -Url <String> [-UserAssignedManagedIdentityObjectId <String>]
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-EnvironmentVariable] [-CurrentCredentials]
  [-CreateDrive] [-DriveName <String>] [-RedirectUri <String>]
  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
- [-TransformationOnPrem] [-ValidateConnection]
+ [-TransformationOnPrem] [-ValidateConnection] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -339,6 +354,20 @@ Aliases:
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be reused by the new connection. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable
+
+Required: False
+Position: Named
+Default value: PnPConnection.Current
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -642,7 +671,7 @@ Read up on [the documentation](https://pnp.github.io/powershell/articles/azurefu
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Managed Identity
+Parameter Sets: System Assigned Managed Identity, User Assigned Managed Identity by Client Id, User Assigned Managed Identity by Principal Id, User Assigned Managed Identity by Azure Resource Id
 Aliases:
 
 Required: True
@@ -653,11 +682,41 @@ Accept wildcard characters: False
 ```
 
 ### -UserAssignedManagedIdentityObjectId
-Can be used in combination with `-ManagedIdentity` to specify the object/principal id of the user assigned managed identity to use. If not provided, a system assigned managed identity will be used.
+Can be used in combination with `-ManagedIdentity` to specify the object/principal id of the user assigned managed identity to use.
 
 ```yaml
 Type: String
-Parameter Sets: Managed Identity
+Parameter Sets: User Assigned Managed Identity by Principal Id
+Aliases: UserAssignedManagedIdentityPrincipalId
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserAssignedManagedIdentityClientId
+Can be used in combination with `-ManagedIdentity` to specify the client id of the user assigned managed identity to use.
+
+```yaml
+Type: String
+Parameter Sets: User Assigned Managed Identity by Client Id
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserAssignedManagedIdentityAzureResourceId
+Can be used in combination with `-ManagedIdentity` to specify the Azure Resource ID of the user assigned managed identity to use.
+
+```yaml
+Type: String
+Parameter Sets: User Assigned Managed Identity by Azure Resource Id
 Aliases:
 
 Required: False
