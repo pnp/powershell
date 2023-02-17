@@ -1,3 +1,4 @@
+using System;
 using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.Graph.Purview
@@ -12,7 +13,7 @@ namespace PnP.PowerShell.Commands.Model.Graph.Purview
         /// The label ID is a globally unique identifier (GUID)
         /// </summary>
         [JsonPropertyName("id")]
-        public string Id { get; set; }
+        public Guid? Id { get; set; }
 
         /// <summary>
         /// The plaintext name of the label.
