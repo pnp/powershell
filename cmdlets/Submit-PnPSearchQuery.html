@@ -124,6 +124,10 @@
 <pre><code class="lang-powershell">Submit-PnPSearchQuery -Query &quot;Title:Intranet*&quot; -Refiners &quot;contentclass,FileType(filter=6/0/*)&quot;
 </code></pre>
 <p>Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Submit-PnPSearchQuery -Query &quot;contentclass:STS_ListItem_DocumentLibrary&quot; -SelectProperties ComplianceTag,InformationProtectionLabelId -All
+</code></pre>
+<p>Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and instructs explicitly to return the managed properties InformationProtectionLabelId and ComplianceTag which will give insight into the sensitivity and retention labels assigned to the documents</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-all">-All</h3>
 <p>Automatically page results until the end to get more than 500. Use with caution!</p>
@@ -302,7 +306,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-refinementfilters">-RefinementFilters</h3>
-<p>The set of refinement filters used.</p>
+<p>The set of refinement filters used, separated by a comma.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
@@ -335,7 +339,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-selectproperties">-SelectProperties</h3>
-<p>The list of properties to return in the search results.</p>
+<p>The list of properties to return in the search results, separated by a comma. I.e. ComplianceTag,InformationProtectionLabelId.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
