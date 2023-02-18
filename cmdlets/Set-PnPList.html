@@ -92,7 +92,7 @@
  [-EnableAttachments &lt;Boolean&gt;] [-EnableFolderCreation &lt;Boolean&gt;] [-EnableVersioning &lt;Boolean&gt;]
  [-EnableMinorVersions &lt;Boolean&gt;] [-MajorVersions &lt;UInt32&gt;] [-MinorVersions &lt;UInt32&gt;]
  [-EnableModeration &lt;Boolean&gt;] [-DraftVersionVisibility &lt;DraftVisibilityType&gt;] [-ReadSecurity &lt;ListReadSecurity&gt;] [-WriteSecurity &lt;ListWriteSecurity&gt;]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles &lt;Boolean&gt;] [-DisableGridEditing &lt;Boolean&gt;] 
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles &lt;Boolean&gt;] [-DisableGridEditing &lt;Boolean&gt;] [-DefaultSensitivityLabelForLibrary &lt;SensitivityLabelPipeBind&gt;]
  [-Path &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -126,6 +126,10 @@
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -Title &quot;Demo List 2&quot; -Path &quot;Lists/DemoList2&quot;
 </code></pre>
 <p>Rename a list, including its' URL.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -DefaultSensitivityLabelForLibrary &quot;Confidential&quot;
+</code></pre>
+<p>Sets the default sensitivity label for a document library to Confidential.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-breakroleinheritance">-BreakRoleInheritance</h3>
 <p>If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using <a href="Set-PnPListPermission.html">Set-PnPListPermission</a>.</p>
@@ -185,6 +189,17 @@ Accept wildcard characters: False
 <h3 id="-description">-Description</h3>
 <p>The description of the list</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultsensitivitylabelforlibrary">-DefaultSensitivityLabelForLibrary</h3>
+<p>The instance, Id or name of the sensitivity label to set as the default for the library. If $null is provided, the default label will be removed.</p>
+<pre><code class="lang-yaml">Type: SensitivityLabelPipeBind
 Parameter Sets: (All)
 
 Required: False

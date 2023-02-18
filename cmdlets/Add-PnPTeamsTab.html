@@ -107,7 +107,11 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Tab Name&quot; -Type SharePointPageAndList -WebSiteUrl &quot;https://contoso.sharepoint.com/sites/Marketing/SitePages/Home.aspx&quot;
 </code></pre>
-<p>Adds the specified SharePoint page as a tab in Teams. Note that the ContentUrl will automatically be generated and cannot be specified.</p>
+<p>Adds the specified SharePoint page as a tab in Teams. Note that the ContentUrl will automatically be generated and cannot be specified, and the <code>-WebsiteUrl</code> parameter is only available from version <code>2.x</code> onwards.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Excel Tab&quot; -Type Excel -ContentUrl &quot;https://contoso.sharepoint.com/sites/Marketing/Shared Documents/My Excel File.csv&quot; -EntityId 6
+</code></pre>
+<p>Adds the &quot;My Excel file.csv&quot; with ID 6 as a tab from the Marketing site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-channel">-Channel</h3>
 <p>Specify the channel id or name of the team to retrieve.</p>
