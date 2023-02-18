@@ -59,8 +59,6 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 | Set-PnPTenantSite | BlockDownloadOfNonViewableFiles | AllowDownloadingNonWebViewableFiles | The parameter was obsolete and hence removed. Use `AllowDownloadingNonWebViewableFiles` |
 | Connect-PnPOnline | NoTelemetry | - | The parameter was obsolete and hence removed. Use `$env:PNP_DISABLETELEMETRY` environment variable or `Disable-PnPTelemetry/Enable-PnPTelemetry` cmdlet |
 | Connect-PnPOnline | NoVersionCheck | - | The parameter was obsolete and hence removed. Use `$env:PNPPOWERSHELL_UPDATECHECK` environment variable |
-| Connect-PnPOnline | NoVersionCheck | - | The parameter was obsolete and hence removed. Use `$env:PNPPOWERSHELL_UPDATECHECK` environment variable |
-| Connect-PnPOnline | NoVersionCheck | - | The parameter was obsolete and hence removed. Use `$env:PNPPOWERSHELL_UPDATECHECK` environment variable |
 | Disconnect-PnPOnline | Connection | - | The parameter was obsolete and hence removed. |
 | Request-PnPAccessToken | Resource | Scopes | The parameter was obsolete and hence removed. Use `Scopes` instead |
 | Copy-PnPFile | SkipSourceFolderName | - | The parameter was obsolete and has no effect currently nor was it used |
@@ -73,7 +71,6 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 | Get-PnPSiteTemplate | NoBaseTemplate | - | The parameter was obsolete and hence removed. Use of this parameter is generally not required/recommended. It will use the connected web template |
 | New-PnPSiteTemplateFromFolder | NoBaseTemplate | - | We have removed support for `2019-03` provisioning schema. Use `2019-09` or later versions |
 | Add-PnPTeamsChannel | Private | ChannelType | The parameter was obsolete and hence removed. Use `-ChannelType` instead |
-| New-PnPTeamsTeam | Owner | Owners | The parameter was obsolete and hence removed. Use `-Owners` instead which supports setting multiple owner of a Teams team |
 | New-PnPTeamsTeam | Owner | Owners | The parameter was obsolete and hence removed. Use `-Owners` instead which supports setting multiple owner of a Teams team |
 | Export-PnPTaxonomy | - | - | The cmdlet does not support export of taxonomy using `UTF-7` encoding. If `UTF-7` is specified, it will switch to `UTF-8` encoding |
 
