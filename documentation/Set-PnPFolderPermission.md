@@ -41,28 +41,28 @@ Sets or clears permissions on folders within SharePoint Online. Use Get-PnPRoleD
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPFolderPermission -List 'Shared Documents' -Identity 'Shared Documents\Folder' -User 'user@contoso.com' -AddRole 'Contribute'
+Set-PnPFolderPermission -List 'Shared Documents' -Identity 'Shared Documents/Folder' -User 'user@contoso.com' -AddRole 'Contribute'
 ```
 
 Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents'.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPFolderPermission -List 'AnotherDocumentLibrary' -Identity 'AnotherDocumentLibrary\Folder\Subfolder' -User 'user@contoso.com' -RemoveRole 'Contribute'
+Set-PnPFolderPermission -List 'AnotherDocumentLibrary' -Identity 'AnotherDocumentLibrary/Folder/Subfolder' -User 'user@contoso.com' -RemoveRole 'Contribute'
 ```
 
 Removes the 'Contribute' permission from the user 'user@contoso.com' for the folder named 'Subfolder' located in the folder 'Folder' which is located in the root of the library 'AnotherDocumentLibrary'.
 
 ### EXAMPLE 3
 ```powershell
-Set-PnPFolderPermission -List 'Shared Documents' -Identity 'Shared Documents\Folder' -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting
+Set-PnPFolderPermission -List 'Shared Documents' -Identity 'Shared Documents/Folder' -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting
 ```
 
 Adds the 'Contribute' permission to the user 'user@contoso.com' for the folder named 'Folder' located in the root of the library 'Shared Documents' and removes all other permissions.
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPFolder -Url 'Shared Documents\Folder' | Set-PnPFolderPermission -List 'Shared Documents' -InheritPermissions
+Get-PnPFolder -Url 'Shared Documents/Folder' | Set-PnPFolderPermission -List 'Shared Documents' -InheritPermissions
 ```
 
 Resets permissions for the folder named 'Folder' located in the root of the library 'Shared Documents' to inherit permissions from the library 'Shared Documents'.
