@@ -28,7 +28,7 @@ Invoke-PnPGraphMethod -Url <String>
 ```
 
 ## DESCRIPTION
-Invokes a REST request towards the Microsoft Graph API
+Invokes a REST request towards the Microsoft Graph API. It will take care of potential throttling retries that are needed to retrieve the data.
 
 ## EXAMPLES
 
