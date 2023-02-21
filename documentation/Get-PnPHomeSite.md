@@ -20,7 +20,7 @@ Returns the home site url for your tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPHomeSite [IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPHomeSite [-IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
