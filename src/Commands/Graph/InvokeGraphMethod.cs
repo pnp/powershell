@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Base
     [Cmdlet(VerbsLifecycle.Invoke, "PnPGraphMethod")]
     public class InvokeGraphMethod : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0)]
+        [Parameter(Mandatory = false)]
         public HttpRequestMethod Method = HttpRequestMethod.Get;
 
         private string _url;
