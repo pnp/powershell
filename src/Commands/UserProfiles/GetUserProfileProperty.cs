@@ -13,6 +13,9 @@ namespace PnP.PowerShell.Commands.UserProfiles
         [Parameter(Mandatory = true, Position = 0)]
         public string[] Account;
 
+        [Parameter(Mandatory = false)]
+        public string[] Properties;
+
         protected override void ExecuteCmdlet()
         {
             var peopleManager = new PeopleManager(ClientContext);
@@ -24,10 +27,23 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 ClientContext.ExecuteQueryRetry();
                 currentAccount = result.Value;
 
-                var properties = peopleManager.GetPropertiesFor(currentAccount);
-                ClientContext.Load(properties);
-                ClientContext.ExecuteQueryRetry();
-                WriteObject(properties);
+                if (ParameterSpecified(nameof(Properties)) && Properties != null && Properties.Length > 0)
+                {
+                    UserProfilePropertiesForUser userProfilePropertiesForUser = new UserProfilePropertiesForUser(ClientContext, currentAccount, Properties);
+                    var properties = peopleManager.GetUserProfilePropertiesFor(userProfilePropertiesForUser);
+                    ClientContext.Load(userProfilePropertiesForUser);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(properties, true);
+
+                }
+                else
+                {
+                    var userProfileProperties = peopleManager.GetPropertiesFor(currentAccount);
+                    ClientContext.Load(userProfileProperties);
+                    ClientContext.ExecuteQueryRetry();
+                    WriteObject(userProfileProperties);
+                }
+
             }
         }
     }

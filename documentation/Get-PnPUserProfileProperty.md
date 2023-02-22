@@ -20,7 +20,7 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
 ## SYNTAX
 
 ```powershell
-Get-PnPUserProfileProperty [-Account] <String[]> [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPUserProfileProperty [-Account] <String[]> [-Properties] <Stringp[]> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -42,6 +42,13 @@ Get-PnPUserProfileProperty -Account 'user@domain.com','user2@domain.com'
 
 Returns the profile properties for the specified users
 
+### EXAMPLE 3
+```powershell
+Get-PnPUserProfileProperty -Account 'user@domain.com' -Properties 'FirstName','LastName'
+```
+
+Returns the FirstName and LastName profile properties for the specified user
+
 ## PARAMETERS
 
 ### -Account
@@ -53,6 +60,20 @@ Parameter Sets: (All)
 
 Required: True
 Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Properties
+The user profile properties that are requested for the user e.g. FirstName, LastName etc.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -75,4 +96,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
