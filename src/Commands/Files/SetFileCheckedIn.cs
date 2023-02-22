@@ -21,6 +21,9 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
+            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
+            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
+            
             CurrentWeb.CheckInFile(Url, CheckinType, Comment);
             if (Approve)
                 CurrentWeb.ApproveFile(Url, Comment);
