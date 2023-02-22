@@ -44,6 +44,21 @@ Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name"
 
 Adds the specified PDF file from the "Documents" library as a tab.
 
+### EXAMPLE 3
+```powershell
+Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Tab Name" -Type SharePointPageAndList -WebSiteUrl "https://contoso.sharepoint.com/sites/Marketing/SitePages/Home.aspx"
+```
+
+Adds the specified SharePoint page as a tab in Teams. Note that the ContentUrl will automatically be generated and cannot be specified, and the `-WebsiteUrl` parameter is only available from version `2.x` onwards.
+
+### EXAMPLE 4
+```powershell
+Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Excel Tab" -Type Excel -ContentUrl "https://contoso.sharepoint.com/sites/Marketing/Shared Documents/My Excel File.csv" -EntityId 6
+```
+
+Adds the "My Excel file.csv" with ID 6 as a tab from the Marketing site.
+
+
 ## PARAMETERS
 
 ### -Channel
@@ -61,13 +76,29 @@ Accept wildcard characters: False
 ```
 
 ### -ContentUrl
-Specifies the Url to add
+The Url to use to render the content inside the tab within Microsoft Teams.
+
+When using Type SharePointPageAndList, the ContentUrl will automatically be generated and cannot be specified.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WebsiteUrl
+The Url to use when the user clicks on the dropdown of the tab in Microsoft Teams and clicks on "Go to website".
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -117,8 +148,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RemoveUrl
+Specifies the URL to be called by Teams client when a Tab is removed using the Teams Client.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EntityId
+Specifies the Identifier for the entity hosted by the tab provider.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

@@ -90,10 +90,12 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="cmdlet">The cmdlet scope in which this code runs. Used to write logging to.</param>
         /// <param name="httpClient">The HttpClient that will be reused to fetch the token to avoid port exhaustion</param>
         /// <param name="defaultResource">If the cmdlet being executed does not have an attribute to indicate the required permissions, this permission will be requested instead. Optional.</param>
-        /// <param name="userAssignedManagedIdentityObjectId">The object/principal Id of the user assigned managed identity to be used. If omitted, a system assigned managed identity will be used.</param>
+        /// <param name="userAssignedManagedIdentityObjectId">The object/principal Id of the user assigned managed identity to be used. If userAssignedManagedIdentityObjectId. userAssignedManagedIdentityClientId and userAssignedManagedIdentityAzureResourceId are omitted, a system assigned managed identity will be used.</param>
+        /// <param name="userAssignedManagedIdentityClientId">The client Id of the user assigned managed identity to be used. If userAssignedManagedIdentityObjectId, userAssignedManagedIdentityClientId and userAssignedManagedIdentityAzureResourceId are omitted, a system assigned managed identity will be used.</param>
+        /// <param name="userAssignedManagedIdentityAzureResourceId">The Azure Resource Id of the user assigned managed identity to be used. If userAssignedManagedIdentityObjectId, userAssignedManagedIdentityClientId and userAssignedManagedIdentityAzureResourceId are omitted, a system assigned managed identity will be used.</param>
         /// <returns>Access token</returns>
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
-        internal static async Task<string> GetManagedIdentityTokenAsync(Cmdlet cmdlet, HttpClient httpClient, string defaultResource, string userAssignedManagedIdentityObjectId = null)
+        internal static async Task<string> GetManagedIdentityTokenAsync(Cmdlet cmdlet, HttpClient httpClient, string defaultResource, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
         {
             string requiredScope = null;
             var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
@@ -142,12 +144,25 @@ namespace PnP.PowerShell.Commands.Base
                 var tokenRequestUrl = $"{endPoint}?resource={requiredScope}&api-version=2019-08-01";
 
                 // Check if we're using a user assigned managed identity
-                if(!string.IsNullOrEmpty(userAssignedManagedIdentityObjectId))
+                if (!string.IsNullOrEmpty(userAssignedManagedIdentityClientId))
+                {
+                    // User assigned managed identity will be used, provide the client Id of the user assigned managed identity to use
+                    cmdlet.WriteVerbose($"Using the user assigned managed identity with client ID: {userAssignedManagedIdentityClientId}");
+                    tokenRequestUrl += $"&client_id={userAssignedManagedIdentityClientId}";
+                }
+                else if (!string.IsNullOrEmpty(userAssignedManagedIdentityObjectId))
                 {
                     // User assigned managed identity will be used, provide the object/pricipal Id of the user assigned managed identity to use
+                    // Note 16-02-2023: principal_id is an alias of object_id, but does not work on Azure Automation at the time of writing, while object_id works on both.
                     cmdlet.WriteVerbose($"Using the user assigned managed identity with object/principal ID: {userAssignedManagedIdentityObjectId}");
-                    tokenRequestUrl += $"&principal_id={userAssignedManagedIdentityObjectId}";
+                    tokenRequestUrl += $"&object_id={userAssignedManagedIdentityObjectId}";
                 }
+                else if (!string.IsNullOrEmpty(userAssignedManagedIdentityAzureResourceId))
+                {
+                    // User assigned managed identity will be used, provide the Azure Resource Id of the user assigned managed identity to use
+                    cmdlet.WriteVerbose($"Using the user assigned managed identity with Azure Resource ID: {userAssignedManagedIdentityAzureResourceId}");
+                    tokenRequestUrl += $"&mi_res_id={userAssignedManagedIdentityAzureResourceId}";
+                }                
                 else
                 {
                     cmdlet.WriteVerbose("Using the system assigned managed identity");

@@ -12,11 +12,8 @@ namespace PnP.PowerShell.Commands.Base
     public class RequestAccessToken : PnPConnectedCmdlet
     {
         [Parameter(Mandatory = false)]
+        [Alias("ApplicationId")]
         public string ClientId = PnPConnection.PnPManagementShellClientId; // defaults to PnPManagementShell
-
-        [Parameter(Mandatory = false)]
-        [Obsolete("Resource is deprecated, use Scopes instead.")]
-        public string Resource;
 
         [Parameter(Mandatory = false)]
         public string[] Scopes = new string[] { "AllSites.FullControl" };
@@ -95,7 +92,6 @@ namespace PnP.PowerShell.Commands.Base
 
             if (Decoded.IsPresent)
             {
-
                 WriteObject(new JwtSecurityToken(token));
             }
             else

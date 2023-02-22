@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
 
@@ -67,6 +68,23 @@ namespace PnP.PowerShell.Commands.Base
 
                     case PnP.Core.SharePointRestServiceException rex:
                         errorMessage = (rex.Error as PnP.Core.SharePointRestError).Message;
+                        break;
+
+                    case System.Reflection.TargetInvocationException tex:
+                        Exception innermostException = tex;
+                        while (innermostException.InnerException != null) innermostException = innermostException.InnerException;
+
+                        if (innermostException is System.Net.WebException wex)
+                        {                            
+                            using(var streamReader = new StreamReader (wex.Response.GetResponseStream()))
+                            {
+                                errorMessage = $"{wex.Status}: {wex.Message} Response received: {streamReader.ReadToEnd()}";
+                            }
+                        }
+                        else
+                        {
+                            errorMessage = innermostException.Message;
+                        }
                         break;
 
                     default:

@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Model.Graph
         public string Description { get; set; }
 
         [JsonConverter(typeof(JsonStringEnumConverter))]
-        public GroupVisibility Visibility { get; set; }
+        public GroupVisibility? Visibility { get; set; }
 
         [JsonPropertyName("owners@odata.bind")]
         public List<string> Owners { get; set; }

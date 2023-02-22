@@ -133,23 +133,45 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static X509Certificate2 GetCertificateFromPath(string certificatePath, SecureString certificatePassword)
+        /// <summary>
+        /// Opens the X509Certificate2 at the provided path using the provided certificate password
+        /// </summary>
+        /// <param name="cmdlet">Cmdlet executing this function</param>
+        /// <param name="certificatePath">Path to the private key certificate file</param>
+        /// <param name="certificatePassword">Password to open the certificate or NULL if no password set on the certificate</param>
+        /// <returns>X509Certificate2 instance</returns>
+        /// <exception cref="PSArgumentException">Thrown if the certificate cannot be read</exception>
+        /// <exception cref="FileNotFoundException">Thrown if the certificate cannot be found at the provided path</exception>
+        internal static X509Certificate2 GetCertificateFromPath(Cmdlet cmdlet, string certificatePath, SecureString certificatePassword)
         {
             if (System.IO.File.Exists(certificatePath))
             {
+                cmdlet.WriteVerbose($"Reading certificate from file '{certificatePath}'");
+
                 var certFile = System.IO.File.OpenRead(certificatePath);
                 if (certFile.Length == 0)
+                {
                     throw new PSArgumentException($"The specified certificate path '{certificatePath}' points to an empty file");
+                }
 
                 var certificateBytes = new byte[certFile.Length];
                 certFile.Read(certificateBytes, 0, (int)certFile.Length);
-                var certificate = new X509Certificate2(
-                    certificateBytes,
-                    certificatePassword,
-                    X509KeyStorageFlags.Exportable |
-                    X509KeyStorageFlags.MachineKeySet |
-                    X509KeyStorageFlags.PersistKeySet);
-                return certificate;
+
+                cmdlet.WriteVerbose($"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
+                try
+                {
+                    var certificate = new X509Certificate2(
+                        certificateBytes,
+                        certificatePassword,
+                        X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet);
+                    return certificate;
+                }
+                catch (CryptographicException e)
+                {
+                    throw new PSArgumentException($"The specified certificate at '{certificatePath}' could not be read. The certificate could be corrupt or it may require a password which has not been provided or is incorrect.", e);
+                }
             }
             else if (System.IO.Directory.Exists(certificatePath))
             {
@@ -160,8 +182,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 throw new FileNotFoundException($"The specified certificate path '{certificatePath}' does not exist", certificatePath);
             }
         }
-
-
 
         #region certificate manipulation
         private static void EncodeLength(BinaryWriter stream, int length)
