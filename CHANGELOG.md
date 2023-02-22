@@ -45,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Connection` option to `Connect-PnPOnline` which allows of reusing an authenticated connection to connect to a different site [#2821](https://github.com/pnp/powershell/pull/2821)
 - Added `-UserAssignedManagedIdentityAzureResourceId` and `-UserAssignedManagedIdentityClientId` as alternatives to `-UserAssignedManagedIdentityObjectId` for `Connect-PnPOnline -ManagedIdentity` to provide an user managed identity to authenticate with. [#2813](https://github.com/pnp/powershell/pull/2813)
 - Added clearer error message when connecting using an expired client secret and trying to execute a command.[#2828](https://github.com/pnp/powershell/pull/2828)
+- Added `Undo-PnPFileCheckedOut` which allows a checked out file to discard its changes and revert to the last checked in version. [#2837](https://github.com/pnp/powershell/pull/2837)
 
 ### Changed
 
@@ -85,6 +86,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Arnaud Rompen [rompenar]
 - [reusto]
 - Ronald Mavarez [ronaldmavarez]
 - [lilealdai]
