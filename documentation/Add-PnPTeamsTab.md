@@ -58,6 +58,27 @@ Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Excel Tab
 
 Adds the "My Excel file.csv" with ID 6 as a tab from the Marketing site.
 
+### EXAMPLE 5
+```powershell
+$PlannerPlan = Get-PnPPlannerPlan -Group $groupId -Identity $PlannerName -Connection $conn
+if(-not $PlannerPlan)
+{
+    $PlannerPlan = New-PnPPlannerPlan -Group $groupId -Title $PlannerName     -Connection $conn
+}
+$bucket = Add-PnPPlannerBucket -Group $groupId -Plan $PlannerPlan.Id -Name "Tasks" -Connection $conn
+Add-PnPPlannerTask -Group $groupId -Plan $PlannerPlan.Id  -Bucket $bucket.Id  -Title "plannertaskA" -Connection $conn
+Add-PnPPlannerTask -Group $groupId -Plan $PlannerPlan.Id  -Bucket $bucket.Id  -Title "plannertaskB" -Connection $conn
+Add-PnPPlannerTask -Group $groupId -Plan $PlannerPlan.Id  -Bucket $bucket.Id  -Title "plannertaskC" -Connection $conn
+Add-PnPPlannerTask -Group $groupId -Plan $PlannerPlan.Id  -Bucket $bucket.Id  -Title "plannertaskD" -Connection $conn
+
+$teamsChannel = Get-PnPTeamsChannel -Team $groupId -Connection $conn | Where-Object {$_.DisplayName -eq "Test"}
+
+$teamsTab = Add-PnPTeamsTab -Team $groupId -Channel $teamsChannel -DisplayName "test1" -Type Custom -TeamsAppId "com.microsoft.teamspace.tab.planner" -Connection $conn -ContentUrl "https://tasks.office.com/tcwlv.onmicrosoft.com/Home/PlannerFrame?page=7&planId=$($PlannerPlan.Id)"
+
+```
+
+Gets the existing Planner if one exists in the Group, otherwise creates a new. Adds a new bucket and creates a few new Tasks. Finally creates a Tab in the channel named "Test" 
+
 
 ## PARAMETERS
 
