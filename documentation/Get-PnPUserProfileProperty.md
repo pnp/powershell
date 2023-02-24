@@ -20,7 +20,7 @@ You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint
 ## SYNTAX
 
 ```powershell
-Get-PnPUserProfileProperty [-Account] <String[]> [-Properties] <Stringp[]> [-Connection <PnPConnection>]
+Get-PnPUserProfileProperty [-Account] <String[]> [-Properties] <String[]> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
