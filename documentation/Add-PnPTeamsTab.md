@@ -73,11 +73,11 @@ Add-PnPPlannerTask -Group $groupId -Plan $PlannerPlan.Id  -Bucket $bucket.Id  -T
 
 $teamsChannel = Get-PnPTeamsChannel -Team $groupId -Connection $conn | Where-Object {$_.DisplayName -eq "Test"}
 
-$teamsTab = Add-PnPTeamsTab -Team $groupId -Channel $teamsChannel -DisplayName "test1" -Type Custom -TeamsAppId "com.microsoft.teamspace.tab.planner" -Connection $conn -ContentUrl "https://tasks.office.com/tcwlv.onmicrosoft.com/Home/PlannerFrame?page=7&planId=$($PlannerPlan.Id)"
+$teamsTab = Add-PnPTeamsTab -Team $groupId -Channel $teamsChannel -DisplayName "My Tabs Name" -Type Planner -Connection $conn -ContentUrl "https://tasks.office.com/[MyTenant].onmicrosoft.com/Home/PlannerFrame?page=7&planId=$($PlannerPlan.Id)"
 
 ```
 
-Gets the existing Planner if one exists in the Group, otherwise creates a new. Adds a new bucket and creates a few new Tasks. Finally creates a Tab in the channel named "Test" 
+Gets the existing Planner if one exists in the Group, otherwise creates a new. Adds a new bucket and creates a few new Tasks. Finally creates a Tab in the channel named "My Tabs Name" 
 
 
 ## PARAMETERS
