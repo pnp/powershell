@@ -82,6 +82,8 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 
 ## Changes to output type
 
+- When using `Add-PnPTeamsTab` cmdlet, if you specify the `-Type SharePointPageAndList`, then `-WebSiteUrl` is mandatory.
+- When using `Add-PnPTeamsTab` cmdlet, if you specify the `-Type Planner`, then `-ContentUrl` is mandatory.
 - The output type of `Get-PnPAzureADGroupOwner` has changed to `PnP.PowerShell.Commands.Model.Microsoft365User`
 - The output type of `Get-PnPAzureADGroupMember` has changed to `PnP.PowerShell.Commands.Model.Microsoft365User`
 - The output type of `Get-PnPAzureADGroup` has changed to `PnP.PowerShell.Commands.Model.Graph.Group`
