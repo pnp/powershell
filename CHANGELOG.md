@@ -46,7 +46,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-UserAssignedManagedIdentityAzureResourceId` and `-UserAssignedManagedIdentityClientId` as alternatives to `-UserAssignedManagedIdentityObjectId` for `Connect-PnPOnline -ManagedIdentity` to provide an user managed identity to authenticate with. [#2813](https://github.com/pnp/powershell/pull/2813)
 - Added clearer error message when connecting using an expired client secret and trying to execute a command.[#2828](https://github.com/pnp/powershell/pull/2828)
 - Added `Undo-PnPFileCheckedOut` which allows a checked out file to discard its changes and revert to the last checked in version. [#2837](https://github.com/pnp/powershell/pull/2837)
-- Added `-Properties` parameter to `Get-PnPUserProfileProperty` cmdlet which allows retrieval of specific properties if specified.
+- Added `-Properties` parameter to `Get-PnPUserProfileProperty` cmdlet which allows retrieval of specific properties if specified. [#2840](https://github.com/pnp/powershell/pull/2840)
+- Added support for specifying the `-ContentUrl` configuration in `Add-PnPTeamsTab` cmdlet when trying to add a Planner as a tab in Teams channel. [#2850](https://github.com/pnp/powershell/pull/2850)
 
 ### Changed
 
@@ -87,6 +88,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Markus Hanisch[m-hanisch]
+- Kasper Larsen [kasperbolarsen]
 - Arnaud Rompen [rompenar]
 - [reusto]
 - Ronald Mavarez [ronaldmavarez]

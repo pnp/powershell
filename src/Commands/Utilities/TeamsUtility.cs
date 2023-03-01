@@ -908,6 +908,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.Planner:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.planner";
+                        tab.Configuration = new TeamTabConfiguration();                        
+                        tab.Configuration.ContentUrl = contentUrl;
                         break;
                     }
                 case TeamTabType.MicrosoftStream:

@@ -58,6 +58,26 @@ Add-PnPTeamsTab -Team "My Team" -Channel "My Channel" -DisplayName "My Excel Tab
 
 Adds the "My Excel file.csv" with ID 6 as a tab from the Marketing site.
 
+### EXAMPLE 5
+```powershell
+$PlannerPlan = Get-PnPPlannerPlan -Group $groupId -Identity $PlannerName
+if(-not $PlannerPlan)
+{
+    $PlannerPlan = New-PnPPlannerPlan -Group $groupId -Title $PlannerName
+}
+$bucket = Add-PnPPlannerBucket -Group $groupId -Plan $PlannerPlan.Id -Name "Tasks"
+Add-PnPPlannerTask -Group $groupId -Plan $PlannerPlan.Id -Bucket $bucket.Id -Title "plannertaskA"
+
+$teamsChannel = Get-PnPTeamsChannel -Team $groupId -Identity "General"
+
+$tenant = "contoso.onmicrosoft.com"
+
+$teamsTab = Add-PnPTeamsTab -Team $groupId -Channel $teamsChannel -DisplayName "My Tab Name" -Type Planner -ContentUrl "https://tasks.office.com/$tenant/Home/PlannerFrame?page=7&planId=$($PlannerPlan.Id)"
+
+```
+
+Gets the existing Planner if one exists in the Group, otherwise creates a new. Adds a new bucket and creates a few new Tasks. Finally creates a Tab in the channel named "My Tab Name" 
+
 
 ## PARAMETERS
 
