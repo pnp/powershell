@@ -112,6 +112,23 @@
 <pre><code class="lang-powershell">Add-PnPTeamsTab -Team &quot;My Team&quot; -Channel &quot;My Channel&quot; -DisplayName &quot;My Excel Tab&quot; -Type Excel -ContentUrl &quot;https://contoso.sharepoint.com/sites/Marketing/Shared Documents/My Excel File.csv&quot; -EntityId 6
 </code></pre>
 <p>Adds the &quot;My Excel file.csv&quot; with ID 6 as a tab from the Marketing site.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">$PlannerPlan = Get-PnPPlannerPlan -Group $groupId -Identity $PlannerName
+if(-not $PlannerPlan)
+{
+    $PlannerPlan = New-PnPPlannerPlan -Group $groupId -Title $PlannerName
+}
+$bucket = Add-PnPPlannerBucket -Group $groupId -Plan $PlannerPlan.Id -Name &quot;Tasks&quot;
+Add-PnPPlannerTask -Group $groupId -Plan $PlannerPlan.Id -Bucket $bucket.Id -Title &quot;plannertaskA&quot;
+
+$teamsChannel = Get-PnPTeamsChannel -Team $groupId -Identity &quot;General&quot;
+
+$tenant = &quot;contoso.onmicrosoft.com&quot;
+
+$teamsTab = Add-PnPTeamsTab -Team $groupId -Channel $teamsChannel -DisplayName &quot;My Tab Name&quot; -Type Planner -ContentUrl &quot;https://tasks.office.com/$tenant/Home/PlannerFrame?page=7&amp;planId=$($PlannerPlan.Id)&quot;
+
+</code></pre>
+<p>Gets the existing Planner if one exists in the Group, otherwise creates a new. Adds a new bucket and creates a few new Tasks. Finally creates a Tab in the channel named &quot;My Tab Name&quot;</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-channel">-Channel</h3>
 <p>Specify the channel id or name of the team to retrieve.</p>
