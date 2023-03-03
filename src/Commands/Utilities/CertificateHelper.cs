@@ -25,22 +25,28 @@ namespace PnP.PowerShell.Commands.Utilities
 
             var a = certificate.GetRSAPrivateKey();
             
-            switch (certificate.PrivateKey)
+            //switch (certificate.GetRSAPrivateKey())
+
+            using(var rsa = MakeExportable(a))
             {
-                case RSACng rsaCNGKey:
-                    {
-                        using (var rsa = MakeExportable(rsaCNGKey))
-                        {
-                            param = rsa.ExportParameters(true);
-                        }
-                        break;
-                    }
-                case System.Security.Cryptography.RSAOpenSsl rsaOpenSslKey:
-                    {
-                        param = rsaOpenSslKey.ExportParameters(true);
-                        break;
-                    }
+                param = rsa.ExportParameters(true);
             }
+            // switch(a)
+            // {
+            //     case RSACng rsaCNGKey:
+            //         {ı
+            //             using (var rsa = MakeExportable(rsaCNGKey))
+            //             {
+            //                 param = rsa.ExportParameters(true);
+            //             }
+            //             break;
+            //         }
+            //     case System.Security.Cryptography.RSAOpenSsl rsaOpenSslKey:
+            //         {
+            //             param = rsaOpenSslKey.ExportParameters(true);
+            //             break;
+            //         }
+            // }
             string base64String;
             using (var stream = new MemoryStream())
             {
