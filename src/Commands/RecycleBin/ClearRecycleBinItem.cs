@@ -2,6 +2,7 @@
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.RecycleBin
@@ -45,15 +46,10 @@ namespace PnP.PowerShell.Commands.RecycleBin
                     if (ParameterSpecified(nameof(RowLimit)))
                     {
                         if (Force || ShouldContinue(SecondStageOnly ? Resources.ClearSecondStageRecycleBin : Resources.ClearBothRecycleBins, Resources.Confirm))
-                        { 
+                        {
                             RecycleBinItemState recycleBinStage = SecondStageOnly ? RecycleBinItemState.SecondStageRecycleBin : RecycleBinItemState.None;
 
-                            RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, recycleBinStage);
-                            ClientContext.Load(items);
-                            ClientContext.ExecuteQueryRetry();
-
-                            items.DeleteAll();
-                            ClientContext.ExecuteQueryRetry();
+                            RecycleBinUtility.RestoreOrClearRecycleBinItems(ClientContext, RowLimit, recycleBinStage, false);
                         }
                     }
                     else

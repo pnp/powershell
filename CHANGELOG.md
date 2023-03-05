@@ -61,6 +61,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Properties of `Get-PnPAzureADServicePrincipal` are now all typed instead of some of them returning unparsed JSON fragments. [#2717](https://github.com/pnp/powershell/pull/2717)
 - Changed `Add-PnPTeamsChannel` to no longer require an `-OwnerUPN` to be provided when specifying `-ChannelType Standard` [#2786](https://github.com/pnp/powershell/pull/2786)
 - Changed `Add-PnPFile` by default to upload a file as a draft with a minor version now instead of publishing it as a major version. `-CheckinType MajorCheckIn` can be used to still upload the file as a major published version [#2806](https://github.com/pnp/powershell/pull/2806)
+- Improved `Restore-PnPRecycleBinItem` and `Clear-PnPRecycleBinItem` cmdlets to better work with large items in recycle bin.
 
 ### Removed
 
@@ -87,7 +88,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
-- Markus Hanisch[m-hanisch]
+- Markus Hanisch [m-hanisch]
 - Kasper Larsen [kasperbolarsen]
 - Arnaud Rompen [rompenar]
 - [reusto]

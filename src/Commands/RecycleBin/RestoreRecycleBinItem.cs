@@ -3,6 +3,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.RecycleBin
@@ -24,7 +25,6 @@ namespace PnP.PowerShell.Commands.RecycleBin
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-
                 var recycleBinItem = Identity.GetRecycleBinItem(ClientContext.Site);
 
                 if (Force || ShouldContinue(string.Format(Resources.RestoreRecycleBinItem, recycleBinItem.LeafName), Resources.Confirm))
@@ -39,12 +39,7 @@ namespace PnP.PowerShell.Commands.RecycleBin
                 {
                     if (Force || ShouldContinue(string.Format(Resources.Restore0RecycleBinItems, RowLimit), Resources.Confirm))
                     {
-                        RecycleBinItemCollection items = ClientContext.Site.GetRecycleBinItems(null, RowLimit, false, RecycleBinOrderBy.DeletedDate, RecycleBinItemState.None);
-                        ClientContext.Load(items);
-                        ClientContext.ExecuteQueryRetry();
-
-                        items.RestoreAll();
-                        ClientContext.ExecuteQueryRetry();
+                        RecycleBinUtility.RestoreOrClearRecycleBinItems(ClientContext, RowLimit, RecycleBinItemState.None, true);
                     }
                 }
                 else
