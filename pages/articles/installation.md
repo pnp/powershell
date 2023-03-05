@@ -9,14 +9,14 @@ Install-Module PnP.PowerShell -Scope CurrentUser
 If you want to install or update to the latest nightly built prerelease of PnP PowerShell for the current user, run:
 
 ```powershell
-Install-ModulePnP.PowerShell -Scope CurrentUser -AllowPrerelease
+Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease
 ```
 
 This will work on Windows / Linux / MacOS.
 
 # Uninstalling PnP PowerShell
 
-In case you would like to remove PnP PowerShell again, you can run:
+In case you would like to remove PnP PowerShell, you can run:
 
 ```powershell
 Uninstall-Module PnP.PowerShell
@@ -26,7 +26,7 @@ Uninstall-Module PnP.PowerShell
 
 Open the Azure Cloud Shell at https://shell.azure.com
 
-Select PowerShell as your shell and enter
+Select PowerShell as your shell and run:
 
 ```powershell
 Install-Module PnP.PowerShell
