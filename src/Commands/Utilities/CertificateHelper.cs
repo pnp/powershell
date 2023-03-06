@@ -310,4 +310,5 @@ namespace PnP.PowerShell.Commands.Utilities
 
             return rsa;
         }
+    }
 }
