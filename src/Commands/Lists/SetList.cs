@@ -316,11 +316,11 @@ namespace PnP.PowerShell.Commands.Lists
 
                 switch(OpenDocumentsIn)
                 {
-                    case DocumentLibraryOpenDocumentsInMode.InBrowser:
+                    case DocumentLibraryOpenDocumentsInMode.Browser:
                         list.DefaultItemOpenInBrowser = true;
                         break;
 
-                    case DocumentLibraryOpenDocumentsInMode.InClientApplication:
+                    case DocumentLibraryOpenDocumentsInMode.ClientApplication:
                         list.DefaultItemOpenInBrowser = false;
                         break;
                 }

@@ -8,11 +8,11 @@
         /// <summary>
         /// Opens the document in the client application, i.e. Word, Excel, PowerPoint, etc. on the local desktop
         /// </summary>
-        InClientApplication = 0,
+        ClientApplication = 0,
 
         /// <summary>
         /// Opens the document in the browser
         /// </summary>
-        InBrowser = 1
+        Browser = 1
     }
 }

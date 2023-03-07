@@ -370,11 +370,12 @@ Accept wildcard characters: False
 ```
 
 ### -OpenDocumentsIn
-Allows configuring the opening documents in the browser advanced setting on document libraries. Set to InClientApplication to have documents being opened in the locally installed Word, PowerPoint or Excel client or set to InBrowser to have documents being opened in the browser. It is not possible to set it to "Use the server default mode".
+Allows configuring the opening documents in the browser advanced setting on document libraries. Set to ClientApplication to have documents being opened in the locally installed Word, PowerPoint or Excel client or set to Browser to have documents being opened in the browser. It is not possible to set it to "Use the server default mode".
 
 ```yaml
 Type: DocumentLibraryOpenDocumentsInMode
 Parameter Sets: (All)
+Accepted values: ClientApplication, Browser
 
 Required: False
 Position: Named
