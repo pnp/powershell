@@ -87,7 +87,10 @@ namespace PnP.PowerShell.Commands.Lists
         public string Path;
 
         [Parameter(Mandatory = false)]
-        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;        
+        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;
+
+        [Parameter(Mandatory = false)]
+        public DocumentLibraryOpenDocumentsInMode OpenDocumentsIn;
 
         protected override void ExecuteCmdlet()
         {
@@ -305,6 +308,23 @@ namespace PnP.PowerShell.Commands.Lists
                         }
                     }
                 }
+            }
+
+            if(ParameterSpecified(nameof(OpenDocumentsIn)))
+            {
+                WriteVerbose($"Configuring library to use default open mode to be '{OpenDocumentsIn}'");
+
+                switch(OpenDocumentsIn)
+                {
+                    case DocumentLibraryOpenDocumentsInMode.InBrowser:
+                        list.DefaultItemOpenInBrowser = true;
+                        break;
+
+                    case DocumentLibraryOpenDocumentsInMode.InClientApplication:
+                        list.DefaultItemOpenInBrowser = false;
+                        break;
+                }
+                updateRequired = true;
             }
 
             if (updateRequired)

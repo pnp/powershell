@@ -22,7 +22,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
  [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>]
- [-Path <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Path <String>] [-OpenDocumentsIn <DocumentLibraryOpenDocumentsInMode>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -360,6 +360,20 @@ Maximum major versions for which to keep minor versions
 
 ```yaml
 Type: UInt32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OpenDocumentsIn
+Allows configuring the opening documents in the browser advanced setting on document libraries. Set to InClientApplication to have documents being opened in the locally installed Word, PowerPoint or Excel client or set to InBrowser to have documents being opened in the browser. It is not possible to set it to "Use the server default mode".
+
+```yaml
+Type: DocumentLibraryOpenDocumentsInMode
 Parameter Sets: (All)
 
 Required: False
