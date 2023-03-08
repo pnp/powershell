@@ -22,7 +22,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
  [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>]
- [-Path <String>] [-OpenDocumentsIn <DocumentLibraryOpenDocumentsInMode>] [-Connection <PnPConnection>]
+ [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -369,7 +369,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -OpenDocumentsIn
+### -OpenDocumentsMode
 Allows configuring the opening documents in the browser advanced setting on document libraries. Set to ClientApplication to have documents being opened in the locally installed Word, PowerPoint or Excel client or set to Browser to have documents being opened in the browser. It is not possible to set it to "Use the server default mode".
 
 ```yaml

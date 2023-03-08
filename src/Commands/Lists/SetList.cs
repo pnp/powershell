@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands.Lists
         public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;
 
         [Parameter(Mandatory = false)]
-        public DocumentLibraryOpenDocumentsInMode OpenDocumentsIn;
+        public DocumentLibraryOpenDocumentsInMode OpenDocumentsMode;
 
         protected override void ExecuteCmdlet()
         {
@@ -310,11 +310,11 @@ namespace PnP.PowerShell.Commands.Lists
                 }
             }
 
-            if(ParameterSpecified(nameof(OpenDocumentsIn)))
+            if(ParameterSpecified(nameof(OpenDocumentsMode)))
             {
-                WriteVerbose($"Configuring library to use default open mode to be '{OpenDocumentsIn}'");
+                WriteVerbose($"Configuring library to use default open mode to be '{OpenDocumentsMode}'");
 
-                switch(OpenDocumentsIn)
+                switch(OpenDocumentsMode)
                 {
                     case DocumentLibraryOpenDocumentsInMode.Browser:
                         list.DefaultItemOpenInBrowser = true;
