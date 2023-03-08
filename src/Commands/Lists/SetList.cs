@@ -243,7 +243,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list.EnableVersioning)
             {
-                // list or doclib?
+                // Is this for a list or a document library
                 if (list.BaseType == BaseType.DocumentLibrary)
                 {
                     if (ParameterSpecified(nameof(MajorVersions)))
@@ -312,7 +312,27 @@ namespace PnP.PowerShell.Commands.Lists
 
             if(ParameterSpecified(nameof(OpenDocumentsMode)))
             {
-                WriteVerbose($"Configuring library to use default open mode to be '{OpenDocumentsMode}'");
+                // Is this for a list or a document library
+                if (list.BaseType == BaseType.DocumentLibrary)
+                {
+                    WriteVerbose($"Configuring document library to use default open mode to be '{OpenDocumentsMode}'");
+
+                    switch(OpenDocumentsMode)
+                    {
+                        case DocumentLibraryOpenDocumentsInMode.Browser:
+                            list.DefaultItemOpenInBrowser = true;
+                            break;
+
+                        case DocumentLibraryOpenDocumentsInMode.ClientApplication:
+                            list.DefaultItemOpenInBrowser = false;
+                            break;
+                    }
+                    updateRequired = true;
+                }
+                else
+                {
+                    WriteWarning($"{nameof(OpenDocumentsMode)} is only supported for document libraries");
+                }
 
                 switch(OpenDocumentsMode)
                 {
