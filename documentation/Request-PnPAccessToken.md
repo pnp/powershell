@@ -59,6 +59,7 @@ The Azure Application Client Id to use to retrieve the token. Defaults to the Pn
 ```yaml
 Type: String
 Parameter Sets: (All)
+Aliases: ApplicationId
 
 Required: False
 Position: Named

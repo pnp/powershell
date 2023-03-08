@@ -14,17 +14,11 @@ namespace PnP.PowerShell.Commands.Utilities
         public static ITemplateFormatter GetFormatter(XMLPnPSchemaVersion schema)
         {
             ITemplateFormatter formatter = null;
-#pragma warning disable CS0618 // Type or member is obsolete
             switch (schema)
             {
                 case XMLPnPSchemaVersion.LATEST:
                     {
                         formatter = XMLPnPSchemaFormatter.LatestFormatter;
-                        break;
-                    }
-                case XMLPnPSchemaVersion.V201903:
-                    {
-                        formatter = XMLPnPSchemaFormatter.GetSpecificFormatter(XMLConstants.PROVISIONING_SCHEMA_NAMESPACE_2019_03);
                         break;
                     }
                 case XMLPnPSchemaVersion.V201909:
@@ -43,7 +37,6 @@ namespace PnP.PowerShell.Commands.Utilities
                         break;
                     }
             }
-#pragma warning restore CS0618 // Type or member is obsolete
             return formatter;
         }
 
@@ -128,7 +121,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 throw new ArgumentNullException(nameof(stream), "Stream must be provided");
             }
 
-            if(stream.CanSeek)
+            if (stream.CanSeek)
             {
                 stream.Position = 0;
             }

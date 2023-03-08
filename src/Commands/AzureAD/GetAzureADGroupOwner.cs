@@ -1,12 +1,11 @@
-﻿using PnP.Framework.Entities;
-using PnP.Framework.Graph;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Model.AzureAD;
-using System.Collections.Generic;
+using PnP.PowerShell.Commands.Utilities;
+using System;
 using System.Linq;
 using System.Management.Automation;
+using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -19,21 +18,18 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            AzureADGroup group = null;
+            Group group = null;
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(AccessToken);
+                group = Identity.GetGroup(Connection, AccessToken);
             }
 
             if (group != null)
             {
-                // Get Owners of the group
-                List<GroupUser> owners = GroupsUtility.GetGroupOwners(group.Convert(), AccessToken);
-                if (owners != null && owners.Any())
-                {
-                    WriteObject(owners.Select(o => AzureADGroupUser.CreateFrom(o)), true);
-                }
+                // Get Owners of the group                
+                var owners = Microsoft365GroupsUtility.GetOwnersAsync(Connection, new Guid(group.Id), AccessToken).GetAwaiter().GetResult();
+                WriteObject(owners?.OrderBy(m => m.DisplayName), true);
             }
         }
     }

@@ -52,10 +52,6 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSetName_Wait)]
         public SwitchParameter Wait;
 
-        [Obsolete("The Force parameter has been deprecated and is no longer required to be provided. It will be removed in a future version.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public SwitchParameter Force;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSetName_Wait)]
         public SharingCapabilities? SharingCapability;
 

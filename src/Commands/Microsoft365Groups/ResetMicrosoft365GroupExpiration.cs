@@ -1,6 +1,4 @@
-﻿using PnP.Framework.Graph;
-using PnP.PowerShell.Commands.Attributes;
-
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
