@@ -47,7 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added clearer error message when connecting using an expired client secret and trying to execute a command.[#2828](https://github.com/pnp/powershell/pull/2828)
 - Added `Undo-PnPFileCheckedOut` which allows a checked out file to discard its changes and revert to the last checked in version. [#2837](https://github.com/pnp/powershell/pull/2837)
 - Added support for specifying the `-ContentUrl` configuration in `Add-PnPTeamsTab` cmdlet when trying to add a Planner as a tab in Teams channel.
-- Added `-OpenDocumentsIn` option to `Set-PnPList` which allows configuring if documents should be opened in the browser or in the local client [#2873](https://github.com/pnp/powershell/pull/2873)
+- Added `-OpenDocumentsMode` option to `Set-PnPList` which allows configuring if documents should be opened in the browser or in the local client [#2873](https://github.com/pnp/powershell/pull/2873)
 
 ### Changed
 
