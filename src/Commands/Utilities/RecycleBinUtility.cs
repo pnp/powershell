@@ -60,10 +60,11 @@ namespace PnP.PowerShell.Commands.Utilities
             return recycleBinItems;
         }
 
-        internal static void RestoreOrClearRecycleBinItems(ClientContext ctx, int? rowLimit = null, RecycleBinItemState recycleBinItemState = RecycleBinItemState.None, bool restore = true)
+        internal static List<RecycleBinItemCollection> GetRecycleBinItemCollection(ClientContext ctx, int? rowLimit = null, RecycleBinItemState recycleBinItemState = RecycleBinItemState.None)
         {
             string pagingInfo = null;
             RecycleBinItemCollection items;
+            var recycleBinItems = new List<RecycleBinItemCollection>();
 
             do
             {
@@ -88,26 +89,18 @@ namespace PnP.PowerShell.Commands.Utilities
                 items = ctx.Site.GetRecycleBinItems(pagingInfo, iterationRowLimit, false, RecycleBinOrderBy.DefaultOrderBy, recycleBinItemState);
                 ctx.Load(items);
                 ctx.ExecuteQueryRetry();
+                recycleBinItems.Add(items);
 
                 if (items.Count > 0)
                 {
                     var nextId = items.Last().Id;
                     var nextTitle = WebUtility.UrlEncode(items.Last().Title);
                     pagingInfo = $"id={nextId}&title={nextTitle}";
-
-                    if (restore)
-                    {
-                        items.RestoreAll();
-                        ctx.ExecuteQueryRetry();
-                    }
-                    else
-                    {
-                        items.DeleteAll();
-                        ctx.ExecuteQueryRetry();
-                    }
                 }
             }
             while (items?.Count == 5000);
+            
+            return recycleBinItems;
         }
     }
 }

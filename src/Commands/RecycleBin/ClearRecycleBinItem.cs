@@ -49,7 +49,13 @@ namespace PnP.PowerShell.Commands.RecycleBin
                         {
                             RecycleBinItemState recycleBinStage = SecondStageOnly ? RecycleBinItemState.SecondStageRecycleBin : RecycleBinItemState.None;
 
-                            RecycleBinUtility.RestoreOrClearRecycleBinItems(ClientContext, RowLimit, recycleBinStage, false);
+                            var recycleBinItemCollection = RecycleBinUtility.GetRecycleBinItemCollection(ClientContext, RowLimit, recycleBinStage);
+                            for (var i = 0; i < recycleBinItemCollection.Count; i++)
+                            {
+                                var recycleBinItems = recycleBinItemCollection[i];
+                                recycleBinItems.DeleteAll();
+                                ClientContext.ExecuteQueryRetry();
+                            }
                         }
                     }
                     else
