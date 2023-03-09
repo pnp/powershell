@@ -87,6 +87,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Aimery Thomas [a1mery]
 - Ganesh Sanap [ganesh-sanap]
 - Markus Hanisch [m-hanisch]
 - Kasper Larsen [kasperbolarsen]
