@@ -30,7 +30,7 @@ This library is open-source and community provided library with active community
 ---
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-<img src="https://pnptelemetry.azurewebsites.net/pnp-powershell/readme" /> 
+<img src="https://m365-visitor-stats.azurewebsites.net/pnp-powershell/readme" /> 
 
 ## Updating from 1.x to 2.x
 
