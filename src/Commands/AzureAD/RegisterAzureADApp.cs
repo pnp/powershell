@@ -1,6 +1,4 @@
 ﻿using PnP.Framework;
-using PnP.Framework.Utilities;
-
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
@@ -9,17 +7,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Management.Automation.Host;
 using System.Net.Http;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.AzureAD
@@ -487,34 +482,32 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 DateTime validFrom = DateTime.Today;
                 DateTime validTo = validFrom.AddYears(ValidYears);
-                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
-            }
-            var pfxPath = string.Empty;
-            var cerPath = string.Empty;
+                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);                
 
-            if (Directory.Exists(OutPath))
-            {
-                pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
-                cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
-                byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
-                File.WriteAllBytes(pfxPath, certPfxData);
-                record.Properties.Add(new PSVariableProperty(new PSVariable("Pfx file", pfxPath)));
-
-                byte[] certCerData = cert.Export(X509ContentType.Cert);
-                File.WriteAllBytes(cerPath, certCerData);
-                record.Properties.Add(new PSVariableProperty(new PSVariable("Cer file", cerPath)));
-            }
-            if (ParameterSpecified(nameof(Store)))
-            {
-                if (OperatingSystem.IsWindows())
+                if (Directory.Exists(OutPath))
                 {
-                    using (var store = new X509Store("My", Store))
+                    string pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
+                    string cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
+                    byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
+                    File.WriteAllBytes(pfxPath, certPfxData);
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Pfx file", pfxPath)));
+
+                    byte[] certCerData = cert.Export(X509ContentType.Cert);
+                    File.WriteAllBytes(cerPath, certCerData);
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Cer file", cerPath)));
+                }
+                if (ParameterSpecified(nameof(Store)))
+                {
+                    if (OperatingSystem.IsWindows())
                     {
-                        store.Open(OpenFlags.ReadWrite);
-                        store.Add(cert);
-                        store.Close();
+                        using (var store = new X509Store("My", Store))
+                        {
+                            store.Open(OpenFlags.ReadWrite);
+                            store.Add(cert);
+                            store.Close();
+                        }
+                        Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
                     }
-                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
                 }
             }
             return cert;
