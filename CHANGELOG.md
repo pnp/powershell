@@ -46,7 +46,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-UserAssignedManagedIdentityAzureResourceId` and `-UserAssignedManagedIdentityClientId` as alternatives to `-UserAssignedManagedIdentityObjectId` for `Connect-PnPOnline -ManagedIdentity` to provide an user managed identity to authenticate with. [#2813](https://github.com/pnp/powershell/pull/2813)
 - Added clearer error message when connecting using an expired client secret and trying to execute a command.[#2828](https://github.com/pnp/powershell/pull/2828)
 - Added `Undo-PnPFileCheckedOut` which allows a checked out file to discard its changes and revert to the last checked in version. [#2837](https://github.com/pnp/powershell/pull/2837)
-- Added support for specifying the `-ContentUrl` configuration in `Add-PnPTeamsTab` cmdlet when trying to add a Planner as a tab in Teams channel.
+- Added `-Properties` parameter to `Get-PnPUserProfileProperty` cmdlet which allows retrieval of specific properties if specified. [#2840](https://github.com/pnp/powershell/pull/2840)
+- Added support for specifying the `-ContentUrl` configuration in `Add-PnPTeamsTab` cmdlet when trying to add a Planner as a tab in Teams channel. [#2850](https://github.com/pnp/powershell/pull/2850)
 
 ### Changed
 
@@ -62,6 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Add-PnPTeamsChannel` to no longer require an `-OwnerUPN` to be provided when specifying `-ChannelType Standard` [#2786](https://github.com/pnp/powershell/pull/2786)
 - Changed `Add-PnPFile` by default to upload a file as a draft with a minor version now instead of publishing it as a major version. `-CheckinType MajorCheckIn` can be used to still upload the file as a major published version [#2806](https://github.com/pnp/powershell/pull/2806)
 - Improved `Restore-PnPRecycleBinItem` and `Clear-PnPRecycleBinItem` cmdlets to better work with large items in recycle bin. [#2866] (https://github.com/pnp/powershell/pull/2866)
+- Changed `Get-PnPUserProfileProperty` to no longer return additional user profile properties under UserProfileProperties but instead directly on the returned instance. [#2840](https://github.com/pnp/powershell/pull/2840)
 
 ### Removed
 
@@ -88,6 +90,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Aimery Thomas [a1mery]
 - Ganesh Sanap [ganesh-sanap]
 - Markus Hanisch [m-hanisch]
 - Kasper Larsen [kasperbolarsen]
