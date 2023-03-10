@@ -252,7 +252,7 @@ namespace PnP.PowerShell.Commands.Lists
                     {
                         if (EnableAutoExpirationVersionTrim)
                         {
-                            list.VersionPolicies.VersionPolicyDefaultTrimMode = VersionPolicyTrimMode.AutoExpiration;
+                            list.VersionPolicies.DefaultTrimMode = VersionPolicyTrimMode.AutoExpiration;
                         }
                         else
                         {
@@ -268,11 +268,11 @@ namespace PnP.PowerShell.Commands.Lists
 
                             if (ExpireVersionsAfterDays == 0)
                             {
-                                list.VersionPolicies.VersionPolicyDefaultTrimMode = VersionPolicyTrimMode.NoExpiration;
+                                list.VersionPolicies.DefaultTrimMode = VersionPolicyTrimMode.NoExpiration;
                             }
                             else if (ExpireVersionsAfterDays >= 30)
                             {
-                                list.VersionPolicies.VersionPolicyDefaultTrimMode = VersionPolicyTrimMode.ExpireAfter;
+                                list.VersionPolicies.DefaultTrimMode = VersionPolicyTrimMode.ExpireAfter;
                             }
                             else
                             {
@@ -285,18 +285,18 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (ParameterSpecified(nameof(ExpireVersionsAfterDays)) && (int)ExpireVersionsAfterDays >= 30)
                     {
-                        if (list.VersionPolicies.VersionPolicyDefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                        if (list.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
                         {
                             throw new PSArgumentException("The parameter ExpireVersionsAfterDays can't be set when AutoExpiration is enabled");
                         }
 
-                        list.VersionPolicies.VersionPolicyDefaultExpireAfterDays = (int)ExpireVersionsAfterDays;
+                        list.VersionPolicies.DefaultExpireAfterDays = (int)ExpireVersionsAfterDays;
                         updateRequired = true;
                     }
 
                     if (ParameterSpecified(nameof(MajorVersions)))
                     {
-                        if (list.VersionPolicies.VersionPolicyDefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                        if (list.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
                         {
                             throw new PSArgumentException("The parameter MajorVersions can't be set when AutoExpiration is enabled");
                         }
@@ -307,7 +307,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (ParameterSpecified(nameof(MinorVersions)) && list.EnableMinorVersions)
                     {
-                        if (list.VersionPolicies.VersionPolicyDefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                        if (list.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
                         {
                             throw new PSArgumentException("The parameter MinorVersions can't be set when AutoExpiration is enabled");
                         }
