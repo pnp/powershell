@@ -87,7 +87,10 @@ namespace PnP.PowerShell.Commands.Lists
         public string Path;
 
         [Parameter(Mandatory = false)]
-        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;        
+        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;
+
+        [Parameter(Mandatory = false)]
+        public DocumentLibraryOpenDocumentsInMode OpenDocumentsMode;
 
         protected override void ExecuteCmdlet()
         {
@@ -240,7 +243,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list.EnableVersioning)
             {
-                // list or doclib?
+                // Is this for a list or a document library
                 if (list.BaseType == BaseType.DocumentLibrary)
                 {
                     if (ParameterSpecified(nameof(MajorVersions)))
@@ -305,6 +308,43 @@ namespace PnP.PowerShell.Commands.Lists
                         }
                     }
                 }
+            }
+
+            if(ParameterSpecified(nameof(OpenDocumentsMode)))
+            {
+                // Is this for a list or a document library
+                if (list.BaseType == BaseType.DocumentLibrary)
+                {
+                    WriteVerbose($"Configuring document library to use default open mode to be '{OpenDocumentsMode}'");
+
+                    switch(OpenDocumentsMode)
+                    {
+                        case DocumentLibraryOpenDocumentsInMode.Browser:
+                            list.DefaultItemOpenInBrowser = true;
+                            break;
+
+                        case DocumentLibraryOpenDocumentsInMode.ClientApplication:
+                            list.DefaultItemOpenInBrowser = false;
+                            break;
+                    }
+                    updateRequired = true;
+                }
+                else
+                {
+                    WriteWarning($"{nameof(OpenDocumentsMode)} is only supported for document libraries");
+                }
+
+                switch(OpenDocumentsMode)
+                {
+                    case DocumentLibraryOpenDocumentsInMode.Browser:
+                        list.DefaultItemOpenInBrowser = true;
+                        break;
+
+                    case DocumentLibraryOpenDocumentsInMode.ClientApplication:
+                        list.DefaultItemOpenInBrowser = false;
+                        break;
+                }
+                updateRequired = true;
             }
 
             if (updateRequired)
