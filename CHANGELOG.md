@@ -47,7 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added clearer error message when connecting using an expired client secret and trying to execute a command.[#2828](https://github.com/pnp/powershell/pull/2828)
 - Added `Undo-PnPFileCheckedOut` which allows a checked out file to discard its changes and revert to the last checked in version. [#2837](https://github.com/pnp/powershell/pull/2837)
 - Added support for specifying the `-ContentUrl` configuration in `Add-PnPTeamsTab` cmdlet when trying to add a Planner as a tab in Teams channel.
-- Added option for sending e-mail using Microsoft Graph and through a SMTP server of choice in the `Send-PnPMail` cmdlet
+- Added option for sending e-mail using Microsoft Graph and through a SMTP server of choice in the `Send-PnPMail` cmdlet [#2880](https://github.com/pnp/powershell/pull/2880)
 
 ### Changed
 
@@ -85,7 +85,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Add-PnPListItem` and `Set-PnPListItem` not correctly setting the Purview `Unlocked by default`. [#2800](https://github.com/pnp/powershell/pull/2800)
 - Fixed issue with `Get-PnPListItem` cmdlet not respecting `RowLimit` in the CAML query. [#2804](https://github.com/pnp/powershell/pull/2804)
 - Fixed `Connect-PnPOnline -ManagedIdentity -UserAssignedManagedIdentityClientId` not working in Azure Automation Runbooks as it required usage of the object_id parameter instead of the principal_id to get an access token. [#2813](https://github.com/pnp/powershell/pull/2813)
-- Fixed issue with `Send-PnPMail` not being able to send out e-mail due to the deprecation of basic authentication on Exchange Online
+- Fixed issue with `Send-PnPMail` not being able to send out e-mail due to the deprecation of basic authentication on Exchange Online [#2880](https://github.com/pnp/powershell/pull/2880)
 
 ### Contributors
 
