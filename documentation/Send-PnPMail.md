@@ -130,6 +130,7 @@ Allows defining what type of content is in the Body parameter. Defaults to HTML.
 ```yaml
 Type: MessageBodyContentType
 Parameter Sets: Send through Microsoft Graph, Send through SMTP
+Accepted values: Html, Text
 
 Required: False
 Position: Named
@@ -186,7 +187,7 @@ Allows defining what the importance of the e-mail is. Defaults to Normal.
 ```yaml
 Type: MessageImportanceType
 Parameter Sets: Send through Microsoft Graph, Send through SMTP
-Allowed values: Low, Normal, High
+Accepted values: Low, Normal, High
 
 Required: False
 Position: Named
