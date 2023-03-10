@@ -213,7 +213,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Restore-PnPRecycleBinItem` cmdlet not working with `-RowLimit` parameter. [#2499](https://github.com/pnp/powershell/pull/2499)
 - Fixed cmdlets throwing error when `-ErrorAction SilentlyContinue` was specified. [#2510](https://github.com/pnp/powershell/pull/2510)
 - Fixed `Get-PnPAzureADAppSitePermission` not returning the roles assigned to each permission [#2523](https://github.com/pnp/powershell/pull/2523)
-- Fixed `Add-PnPListItem` cmdlet issue when using `-Batch` cmdlet, we were not able to set the SharePoint group in people or group fields. 
+- Fixed `Add-PnPListItem` cmdlet issue when using `-Batch` cmdlet, we were not able to set the SharePoint group in people or group fields. [#2879] (https://github.com/pnp/powershell/pull/2879)
 
 ### Contributors
 
