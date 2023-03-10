@@ -21,9 +21,9 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] 
- [-Path <String>] [-EnableAutoExpirationVersionTrim <Boolean>][-ExpireVersionsAfterDays <UInt32>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-EnableAutoExpirationVersionTrim <Boolean>][-ExpireVersionsAfterDays <UInt32>]
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>]
+ [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -100,6 +100,11 @@ Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -Expir
 ```
 
 Enable NoExpiration file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
+=======
+Set-PnPList -Identity "Demo List" -DefaultSensitivityLabelForLibrary "Confidential"
+```
+
+Sets the default sensitivity label for a document library to Confidential.
 
 ## PARAMETERS
 
@@ -178,6 +183,20 @@ The description of the list
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultSensitivityLabelForLibrary
+The instance, Id or name of the sensitivity label to set as the default for the library. If $null is provided, the default label will be removed.
+
+```yaml
+Type: SensitivityLabelPipeBind
 Parameter Sets: (All)
 
 Required: False
@@ -362,6 +381,21 @@ Maximum major versions for which to keep minor versions
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OpenDocumentsMode
+Allows configuring the opening documents in the browser advanced setting on document libraries. Set to ClientApplication to have documents being opened in the locally installed Word, PowerPoint or Excel client or set to Browser to have documents being opened in the browser. It is not possible to set it to "Use the server default mode".
+
+```yaml
+Type: DocumentLibraryOpenDocumentsInMode
+Parameter Sets: (All)
+Accepted values: ClientApplication, Browser
 
 Required: False
 Position: Named

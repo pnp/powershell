@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Purview
                     throw new PSArgumentException($"No Microsoft Purview sensitivity label with the provided name '{Identity}' could be found", nameof(Identity));
                 }
 
-                sensitivityLabelId = label.ElementAt(0).Id;
+                sensitivityLabelId = label.ElementAt(0).Id?.ToString();
                 WriteVerbose($"Microsoft Purview label with name '{Identity}' successfully resolved to Id '{sensitivityLabelId}'");                    
             }
             else

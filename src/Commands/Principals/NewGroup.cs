@@ -29,18 +29,10 @@ namespace PnP.PowerShell.Commands.Principals
         public SwitchParameter AllowMembersEditMembership;
 
         [Parameter(Mandatory = false)]
-        [Obsolete("This is done by default. Use DisallowMembersViewMembership to disallow group members viewing membership")]
-        public SwitchParameter OnlyAllowMembersViewMembership;
-
-        [Parameter(Mandatory = false)]
         public SwitchParameter DisallowMembersViewMembership;
 
         [Parameter(Mandatory = false)]
         public string RequestToJoinEmail;
-
-        [Parameter(Mandatory = false)] // Not promoted to use anymore. Use Set-PnPGroup
-        [Obsolete("Use Set-PnPGroup.")]
-        public AssociatedGroupType SetAssociatedGroup = AssociatedGroupType.None;
 
         protected override void ExecuteCmdlet()
         {
@@ -68,13 +60,6 @@ namespace PnP.PowerShell.Commands.Principals
             if (AllowMembersEditMembership)
             {
                 group.AllowMembersEditMembership = true;
-                dirty = true;
-            }
-#pragma warning disable 618
-            if (OnlyAllowMembersViewMembership)
-#pragma warning restore 618
-            {
-                group.OnlyAllowMembersViewMembership = true;
                 dirty = true;
             }
             if (DisallowMembersViewMembership)
@@ -113,32 +98,6 @@ namespace PnP.PowerShell.Commands.Principals
                     ClientContext.ExecuteQueryRetry();
                 }
             }
-
-
-#pragma warning disable CS0618 // Type or member is obsolete
-            if (SetAssociatedGroup != AssociatedGroupType.None)
-
-            {
-                switch (SetAssociatedGroup)
-                {
-                    case AssociatedGroupType.Visitors:
-                        {
-                            web.AssociateDefaultGroups(null, null, group);
-                            break;
-                        }
-                    case AssociatedGroupType.Members:
-                        {
-                            web.AssociateDefaultGroups(null, group, null);
-                            break;
-                        }
-                    case AssociatedGroupType.Owners:
-                        {
-                            web.AssociateDefaultGroups(group, null, null);
-                            break;
-                        }
-                }
-            }
-#pragma warning restore CS0618 // Type or member is obsolete
 
             ClientContext.ExecuteQueryRetry();
             WriteObject(group);

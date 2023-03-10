@@ -2,7 +2,7 @@
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
-
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Lists
@@ -91,6 +91,12 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false)]
         public int ExpireVersionsAfterDays;
+        
+        [Parameter(Mandatory = false)]
+        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;        
+
+        [Parameter(Mandatory = false)]
+        public DocumentLibraryOpenDocumentsInMode OpenDocumentsMode;
 
         protected override void ExecuteCmdlet()
         {
@@ -243,7 +249,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list.EnableVersioning)
             {
-                // list or doclib?
+                // Is this for a list or a document library
                 if (list.BaseType == BaseType.DocumentLibrary)
                 {
                     list.EnsureProperties(l => l.VersionPolicies);
@@ -324,6 +330,85 @@ namespace PnP.PowerShell.Commands.Lists
                         updateRequired = true;
                     }
                 }
+            }
+
+            if(ParameterSpecified(nameof(DefaultSensitivityLabelForLibrary)))
+            {
+                if(DefaultSensitivityLabelForLibrary == null)
+                {
+                    WriteVerbose("Removing sensitivity label from library");
+                    list.DefaultSensitivityLabelForLibrary = null;
+                    updateRequired = true;
+                }
+                else
+                {
+                    if (DefaultSensitivityLabelForLibrary.LabelId.HasValue)
+                    {
+                        WriteVerbose($"Setting provided sensitivity label id '{DefaultSensitivityLabelForLibrary.LabelId}' as the default sensitivity label for the library");
+                        list.DefaultSensitivityLabelForLibrary = DefaultSensitivityLabelForLibrary.LabelId.ToString();
+                        updateRequired = true;
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(DefaultSensitivityLabelForLibrary.LabelName))
+                        {
+                            WriteVerbose($"Looking up sensitivity label id by label name '{DefaultSensitivityLabelForLibrary.LabelName}'");
+                            var label = DefaultSensitivityLabelForLibrary.GetLabelByNameThroughGraph(Connection, GraphAccessToken);
+
+                            if (label == null || !label.Id.HasValue)
+                            {
+                                throw new ArgumentException($"Unable to find a sensitivity label with the provided name '{DefaultSensitivityLabelForLibrary.LabelName}'", nameof(DefaultSensitivityLabelForLibrary));
+                            }
+                            else
+                            {
+                                WriteVerbose($"Provided sensitivity label name '{DefaultSensitivityLabelForLibrary.LabelName}' resolved to sensitivity label id '{label.Id.Value}' and will be set as the default sensitivity label for the library");
+                                list.DefaultSensitivityLabelForLibrary = label.Id.Value.ToString();
+                                updateRequired = true;
+                            }
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Unable set the default sensitivity label for the library as there's no label name or label Id", nameof(DefaultSensitivityLabelForLibrary));
+                        }
+                    }
+                }
+            }
+
+            if(ParameterSpecified(nameof(OpenDocumentsMode)))
+            {
+                // Is this for a list or a document library
+                if (list.BaseType == BaseType.DocumentLibrary)
+                {
+                    WriteVerbose($"Configuring document library to use default open mode to be '{OpenDocumentsMode}'");
+
+                    switch(OpenDocumentsMode)
+                    {
+                        case DocumentLibraryOpenDocumentsInMode.Browser:
+                            list.DefaultItemOpenInBrowser = true;
+                            break;
+
+                        case DocumentLibraryOpenDocumentsInMode.ClientApplication:
+                            list.DefaultItemOpenInBrowser = false;
+                            break;
+                    }
+                    updateRequired = true;
+                }
+                else
+                {
+                    WriteWarning($"{nameof(OpenDocumentsMode)} is only supported for document libraries");
+                }
+
+                switch(OpenDocumentsMode)
+                {
+                    case DocumentLibraryOpenDocumentsInMode.Browser:
+                        list.DefaultItemOpenInBrowser = true;
+                        break;
+
+                    case DocumentLibraryOpenDocumentsInMode.ClientApplication:
+                        list.DefaultItemOpenInBrowser = false;
+                        break;
+                }
+                updateRequired = true;
             }
 
             if (updateRequired)

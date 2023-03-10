@@ -9,6 +9,7 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -92,7 +93,7 @@ namespace PnP.PowerShell.Commands.Admin
                         ContentType = "application/json";
                     }
                     var contentString = Content is string ? Content.ToString() :
-                        JsonSerializer.Serialize(Content);
+                        JsonSerializer.Serialize(Content, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, WriteIndented = true });
                     request.Content = new StringContent(contentString, System.Text.Encoding.UTF8);
                     request.Content.Headers.ContentType = MediaTypeHeaderValue.Parse(ContentType);
                 }

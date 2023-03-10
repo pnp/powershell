@@ -71,6 +71,13 @@ Submit-PnPSearchQuery -Query "Title:Intranet*" -Refiners "contentclass,FileType(
 
 Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties
 
+### EXAMPLE 5
+```powershell
+Submit-PnPSearchQuery -Query "contentclass:STS_ListItem_DocumentLibrary" -SelectProperties ComplianceTag,InformationProtectionLabelId -All
+```
+
+Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and instructs explicitly to return the managed properties InformationProtectionLabelId and ComplianceTag which will give insight into the sensitivity and retention labels assigned to the documents
+
 ## PARAMETERS
 
 ### -All
@@ -298,7 +305,7 @@ Accept wildcard characters: False
 ```
 
 ### -RefinementFilters
-The set of refinement filters used.
+The set of refinement filters used, separated by a comma.
 
 ```yaml
 Type: String[]
@@ -340,7 +347,7 @@ Accept wildcard characters: False
 ```
 
 ### -SelectProperties
-The list of properties to return in the search results.
+The list of properties to return in the search results, separated by a comma. I.e. ComplianceTag,InformationProtectionLabelId.
 
 ```yaml
 Type: String[]
