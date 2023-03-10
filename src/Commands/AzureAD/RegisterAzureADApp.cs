@@ -1,6 +1,4 @@
 ﻿using PnP.Framework;
-using PnP.Framework.Utilities;
-
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
@@ -9,17 +7,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Management.Automation.Host;
 using System.Net.Http;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.AzureAD
@@ -89,6 +84,9 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Interactive;
+
+        [Parameter(Mandatory = false)]
+        public string LogoFilePath;
 
         protected override void ProcessRecord()
         {
@@ -207,6 +205,11 @@ namespace PnP.PowerShell.Commands.AzureAD
                     var base64String = Convert.ToBase64String(certPfxData);
                     record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
                     StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter, scopes);
+
+                    if (ParameterSpecified(nameof(LogoFilePath)) && !string.IsNullOrEmpty(LogoFilePath))
+                    {
+                        SetLogo(azureApp, token);
+                    }
                 }
                 else
                 {
@@ -555,7 +558,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         key = Convert.ToBase64String(cert.GetRawCertData()),
                         displayName = cert.Subject,
                     }
-                },
+                },                
                 publicClient = new
                 {
                     redirectUris = new[] {
@@ -642,6 +645,53 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
                 WriteObject(record);
+            }
+        }
+
+        private void SetLogo(AzureADApp azureApp, string token)
+        {
+            if (!Path.IsPathRooted(LogoFilePath))
+            {
+                LogoFilePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
+            }
+            if (File.Exists(LogoFilePath))
+            {
+                try
+                {
+                    WriteVerbose("Setting the logo for the Azure AD app");
+
+                    var endpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications/{azureApp.Id}/logo";
+
+                    var bytes = File.ReadAllBytes(LogoFilePath);
+                    var byteArrayContent = new ByteArrayContent(bytes);
+
+                    var mimeType = "";
+                    if (LogoFilePath.EndsWith("gif", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        mimeType = "image/gif";
+                    }
+                    if (LogoFilePath.EndsWith("jpg", StringComparison.InvariantCultureIgnoreCase) || LogoFilePath.EndsWith("jpeg", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        mimeType = "image/jpeg";
+                    }
+                    if (LogoFilePath.EndsWith("png", StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        mimeType = "image/png";
+                    }
+
+                    byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mimeType);
+                    GraphHelper.PutAsync(PnPConnection.Current, endpoint, token, byteArrayContent).GetAwaiter().GetResult();
+
+                    WriteVerbose("Successfully set the logo for the Azure AD app");
+                }
+                catch (Exception ex)
+                {
+                    WriteWarning("Something went wrong setting the logo " + ex.Message);
+                }
+            }
+            else
+            {
+                WriteWarning("Logo File does not exist, ignoring setting the logo");
             }
         }
     }
