@@ -164,7 +164,7 @@ Sets the page header layout type
 ```yaml
 Type: PageHeaderLayoutType
 Parameter Sets: (All)
-Accepted values: None, Default, Custom
+Accepted values: ColorBlock, CutInShape, FullWidthImage, NoImage
 
 Required: False
 Position: Named
