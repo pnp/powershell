@@ -32,7 +32,6 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-
             Guid siteId = Guid.Empty;
             if (ParameterSpecified(nameof(Site)))
             {
@@ -48,7 +47,7 @@ namespace PnP.PowerShell.Commands.Apps
                 var payload = new
                 {
                     roles = Permissions.Select(p => p.ToLower()).ToArray(),
-                    grantedToIdentities = new[] {
+                    grantedToIdentitiesV2 = new[] {
                             new {
                                 application = new {
                                     id = AppId.ToString(),
