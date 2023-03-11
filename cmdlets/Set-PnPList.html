@@ -93,7 +93,7 @@
  [-EnableMinorVersions &lt;Boolean&gt;] [-MajorVersions &lt;UInt32&gt;] [-MinorVersions &lt;UInt32&gt;]
  [-EnableModeration &lt;Boolean&gt;] [-DraftVersionVisibility &lt;DraftVisibilityType&gt;] [-ReadSecurity &lt;ListReadSecurity&gt;] [-WriteSecurity &lt;ListWriteSecurity&gt;]
  [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles &lt;Boolean&gt;] [-DisableGridEditing &lt;Boolean&gt;] [-DefaultSensitivityLabelForLibrary &lt;SensitivityLabelPipeBind&gt;]
- [-Path &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Path &lt;String&gt;] [-OpenDocumentsMode &lt;DocumentLibraryOpenDocumentsInMode&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows the configuration of a specific SharePoint Online list to be set.</p>
@@ -345,6 +345,18 @@ Accept wildcard characters: False
 <p>Maximum major versions for which to keep minor versions</p>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-opendocumentsmode">-OpenDocumentsMode</h3>
+<p>Allows configuring the opening documents in the browser advanced setting on document libraries. Set to ClientApplication to have documents being opened in the locally installed Word, PowerPoint or Excel client or set to Browser to have documents being opened in the browser. It is not possible to set it to &quot;Use the server default mode&quot;.</p>
+<pre><code class="lang-yaml">Type: DocumentLibraryOpenDocumentsInMode
+Parameter Sets: (All)
+Accepted values: ClientApplication, Browser
 
 Required: False
 Position: Named
