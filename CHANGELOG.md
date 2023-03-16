@@ -221,6 +221,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Valeras Narbutas [ValerasNarbutas]
 - Russell Gove [russgove]
 - Jasper Beerens
 - Aleksandr Sapozhkov [shurick81]
