@@ -85,7 +85,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Identity of the SharePoint Framework client side extension application customizer to return. Omit to return all SharePoint Frameworkclient side extension application customizer.
+Identity of the SharePoint Framework client side extension application customizer to return. Omit to return all SharePoint Framework client side extension application customizer.
 
 ```yaml
 Type: Guid
@@ -114,7 +114,7 @@ Accept wildcard characters: False
 ```
 
 ### -ThrowExceptionIfCustomActionNotFound
-Switch parameter if an exception should be thrown if the requested SharePoint Frameworkclient side extension application customizer does not exist (true) or if omitted, nothing will be returned in case the SharePoint Framework client side extension application customizer does not exist
+Switch parameter if an exception should be thrown if the requested SharePoint Framework client side extension application customizer does not exist (true) or if omitted, nothing will be returned in case the SharePoint Framework client side extension application customizer does not exist
 
 ```yaml
 Type: SwitchParameter

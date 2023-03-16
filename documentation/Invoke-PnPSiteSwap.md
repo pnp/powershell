@@ -32,9 +32,9 @@ If the target is the root site at https://tenant-name.sharepoint.com, then the f
 
 1. Any Featured links defined in SharePoint Start Page at https://tenant-name.sharepoint.com/_layouts/15/sharepoint.aspx will not be displayed after performing the swap. If required, the Featured links should be documented so they can be manually recreated after the swap.
 1. Functionality such as external sharing and application interfaces are dependent on the policies and permissions defined at the root site. Review the source site to ensure that it has the required policies and permissions as per the existing root site. This includes external sharing settings as well as site permissions.
-1. Larger tenants that have more than ~10,000 licenses may also need to run the Page Diagnostic Tool against the source site. Any analysis results that have the category Attention required (Red) or Improvement opprtunities (Orange) will need to be remediated before performing the swap.
+1. Larger tenants that have more than ~10,000 licenses may also need to run the Page Diagnostic Tool against the source site. Any analysis results that have the category Attention required (Red) or Improvement opportunities (Orange) will need to be remediated before performing the swap.
 
-The source and target sites can't be connected to an Office 365 group. They also can't be hub sites or associated with a hub. If a site is a hub site, unregister it as a hub site, swap the root site, and then register the site as a hub site. If a site is associated with a hub, disassociate the site, swap the root site, and then reassociate the site.
+The source and target sites can't be connected to an Office 365 group. They also can't be hub sites or associated with a hub. If a site is a hub site, unregister it as a hub site, swap the root site, and then register the site as a hub site. If a site is associated with a hub, disassociate the site, swap the root site, and then re-associate the site.
 
 ## EXAMPLES
 
