@@ -21,7 +21,7 @@ Add-PnPApplicationCustomizer [-Title <String>] [-Description <String>] [-Sequenc
 ```
 
 ## DESCRIPTION
-Adds a SharePoint Framework client side extension application customizer by registering a user custom action to a web or sitecollection. This can be useful in the scenario where you have a SPFx Application Customizer whcih you decide to deploy to the global app catalog, checking the box to deploy it to the entire tenant. If you then go to the Tenant Wide Extensions list inside the tenant app catalog and set the SPFx Application Customizer its Disabled property to be Yes, you can use this cmdlet to add the functionality of that SPFx component to specific site collections manually. This voids having to add it as an app to every site colllection and it being visible in the site contents, yet you having full control over where it should be ran and where not.
+Adds a SharePoint Framework client side extension application customizer by registering a user custom action to a web or sitecollection. This can be useful in the scenario where you have a SPFx Application Customizer whcih you decide to deploy to the global app catalog, checking the box to deploy it to the entire tenant. If you then go to the Tenant Wide Extensions list inside the tenant app catalog and set the SPFx Application Customizer its Disabled property to be Yes, you can use this cmdlet to add the functionality of that SPFx component to specific site collections manually. This voids having to add it as an app to every site collection and it being visible in the site contents, yet you having full control over where it should be ran and where not.
 
 ## EXAMPLES
 
