@@ -30,21 +30,21 @@ For retrieval of the available classic Site Classification, use [Get-PnPAvailabl
 Get-PnPAvailableSensitivityLabel
 ```
 
-Returns all the Microsoft Purview sensitivitiy labels that exist on the tenant
+Returns all the Microsoft Purview sensitivity labels that exist on the tenant
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPAvailableSensitivityLabel -User johndoe@tenant.onmicrosoft.com
 ```
 
-Returns all Microsoft Purview sensitivitiy labels which are available to the provided user
+Returns all Microsoft Purview sensitivity labels which are available to the provided user
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPAvailableSensitivityLabel -Identity 47e66706-8627-4979-89f1-fa7afeba2884
 ```
 
-Returns a specific Microsoft Purview sensitivitiy label by its id
+Returns a specific Microsoft Purview sensitivity label by its id
 
 ## PARAMETERS
 
