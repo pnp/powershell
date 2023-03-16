@@ -20,7 +20,7 @@ Remove-PnPEventReceiver -Identity <EventReceiverPipeBind> [-List <ListPipeBind>]
 ```
 
 ## DESCRIPTION
-Removes/unregisters a specific event receiver.
+Removes/unregister a specific event receiver.
 
 ## EXAMPLES
 

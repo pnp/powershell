@@ -6,7 +6,7 @@ There are currently two settings that can be set to control the behavior of PnP 
 
 ### Disable or Enable version checks
 
-Setting the environment variable `PNPPOWERSHELL_UPDATECHECK` to `false` or `off`, i.e. by using `$env:PNPPOWERSHELL_UPDATECHECK=off`, will disable the version check which is occuring when executing `Connect-PnPOnline`. Setting it to any other value will enable it. Notice that this version check will only occur once during a PowerShell session. If you close PowerShell and reopen it, the version will be checked again.
+Setting the environment variable `PNPPOWERSHELL_UPDATECHECK` to `false` or `off`, i.e. by using `$env:PNPPOWERSHELL_UPDATECHECK=off`, will disable the version check which is occurring when executing `Connect-PnPOnline`. Setting it to any other value will enable it. Notice that this version check will only occur once during a PowerShell session. If you close PowerShell and reopen it, the version will be checked again.
 
 ### Disable or Enable telemetry
 

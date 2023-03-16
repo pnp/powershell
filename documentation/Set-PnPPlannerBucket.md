@@ -38,10 +38,10 @@ This cmdlet updates an existing Planner bucket.
 
 ### Example 1
 ```powershell
-Set-PnPPlannerBucket -Bucket "Todos" -Group "Marketing" -Plan "Conference Plan" -Name "Pre-conf Todos"
+Set-PnPPlannerBucket -Bucket "Todos" -Group "Marketing" -Plan "Conference Plan" -Name "Pre-conf Todo's"
 ```
 
-This example renames the bucket called "Todos" to "Pre-conf Todos"
+This example renames the bucket called "Todos" to "Pre-conf Todo's"
 
 ## PARAMETERS
 

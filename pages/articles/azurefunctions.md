@@ -18,7 +18,7 @@ As the UI in [the Azure Portal](https://portal.azure.com) changes every now and 
 
    ![Create function app hosting](./../images/azurefunctions/createfunctionapphosting.png)
 
-1. Complete the creation of the Azure Functon
+1. Complete the creation of the Azure Function
 
 ## Temporary workaround for a bug in Azure Functions
 

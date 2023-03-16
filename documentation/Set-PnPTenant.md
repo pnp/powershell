@@ -56,11 +56,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-DefaultSharingLinkType <SharingLinkType>]
  [-ODBMembersCanShare <SharingState>]
  [-ODBAccessRequests <SharingState>]
- [-PreventExternalUsersFromResharing <Boolean>]
+ [-PreventExternalUsersFromReSharing <Boolean>]
  [-ShowPeoplePickerSuggestionsForGuestUsers <Boolean>]
  [-FileAnonymousLinkType <AnonymousLinkType>]
  [-FolderAnonymousLinkType <AnonymousLinkType>]
- [-NotifyOwnersWhenItemsReshared <Boolean>]
+ [-NotifyOwnersWhenItemsReShared <Boolean>]
  [-NotifyOwnersWhenInvitationsAccepted <Boolean>]
  [-NotificationsInOneDriveForBusinessEnabled <Boolean>]
  [-NotificationsInSharePointEnabled <Boolean>]
@@ -231,7 +231,7 @@ Accept wildcard characters: False
 ```
 
 ### -ConditionalAccessPolicy
-Blocks or limits access to SharePoint and OneDrive content from unmanaged devices.
+Blocks or limits access to SharePoint and OneDrive content from un-managed devices.
 
 ```yaml
 Type: SPOConditionalAccessPolicyType
@@ -324,7 +324,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisabledWebPartIds
-Guids of out of the box modern web part id's to disallow from being added to pages and remove from pages where they already have been used. Currently only the following web parts can be disabled in such a way:
+Guid's of out of the box modern web part id's to disallow from being added to pages and remove from pages where they already have been used. Currently only the following web parts can be disabled in such a way:
 
 Amazon Kindle: 46698648-fcd5-41fc-9526-c7f7b2ace919
 YouTube: 544dd15b-cf3c-441b-96da-004d5a8cea1d
@@ -440,11 +440,11 @@ Accept wildcard characters: False
 
 ### -ExternalServicesEnabled
 Enables external services for a tenant.
-External services are defined as services that are not in the Office 365 datacenters.
+External services are defined as services that are not in the Office 365 data centers.
 
 The valid values are:
 True (default) - External services are enabled for the tenant.
-False - External services that are outside of the Office 365 datacenters cannot interact with SharePoint.
+False - External services that are outside of the Office 365 data centers cannot interact with SharePoint.
 
 ```yaml
 Type: Boolean
@@ -681,7 +681,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -NotifyOwnersWhenItemsReshared
+### -NotifyOwnersWhenItemsReShared
 When this parameter is set to $true and another user re-shares a document from a user's OneDrive for Business, the OneDrive for Business owner is notified by e-mail.
 
 For additional information about how to configure notifications for external sharing, see Configure notifications for external sharing for OneDrive for Business.
@@ -833,8 +833,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PreventExternalUsersFromResharing
-Prevents external users from resharing files, folders, and sites that they do not own.
+### -PreventExternalUsersFromReSharing
+Prevents external users from reSharing files, folders, and sites that they do not own.
 
 ```yaml
 Type: Boolean
@@ -1353,7 +1353,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisabledModernListTemplateIds
-Guids of out of the box modern list templates to hide when creating a new list
+Guid's of out of the box modern list templates to hide when creating a new list
 
 ```yaml
 Type: Guid[]
@@ -1367,7 +1367,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableModernListTemplateIds
-Guids of out of the box modern list templates to show when creating a new list
+Guid'ss of out of the box modern list templates to show when creating a new list
 
 ```yaml
 Type: Guid[]
@@ -1479,7 +1479,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableAzureADB2BIntegration
-Allows enablement of SharePoint and OneDrive integrartion with Azure AD B2B. See [this article]](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
+Allows enablement of SharePoint and OneDrive integration with Azure AD B2B. See [this article]](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
 
 ```yaml
 Type: Boolean

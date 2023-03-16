@@ -70,7 +70,7 @@ Sets the current site classification tag to HBI
 Set-PnPSite -Classification $null
 ```
 
-Unsets the current site classification tag
+Un-sets the current site classification tag
 
 ### EXAMPLE 3
 ```powershell
@@ -235,7 +235,7 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultLinkToExistingAccess
-When set to $true, the DefaultSharingLinkType will be overriden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
+When set to $true, the DefaultSharingLinkType will be overridden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
 
 ```yaml
 Type: Boolean
@@ -336,7 +336,7 @@ Accept wildcard characters: False
 ```
 
 ### -LockState
-Sets the lockstate of a site collection.
+Sets the lockState of a site collection.
 
 ```yaml
 Type: SiteLockState
@@ -513,7 +513,7 @@ Accept wildcard characters: False
 ```
 
 ### -ScriptSafeDomainName
-Allow contributors to insert iframes only from the specified domains only
+Allow contributors to insert iframe only from the specified domains only
 
 ```yaml
 Type: String

@@ -55,7 +55,7 @@ Sets the default classification value to "LBI". This value needs to be present i
 Update-PnPAvailableSiteClassification -UsageGuidelinesUrl https://aka.ms/m365pnp
 ```
 
-sets the usage guideliness URL to the specified URL
+sets the usage guidelines URL to the specified URL
 
 ## PARAMETERS
 

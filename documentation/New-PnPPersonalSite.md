@@ -25,7 +25,7 @@ New-PnPPersonalSite [-Email] <String[]> [-Connection <PnPConnection>] [<CommonPa
 
 Creates a OneDrive For Business site for the provided user(s)
 
-If you want to use this cmdlet in an automated script not requiring manual authentication, you *must* assign the following permisson to your application registration from either Azure Active Directory or done through https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx with the following permission through https://tenant-admin.sharepoint.com/_layouts/appinv.aspx:
+If you want to use this cmdlet in an automated script not requiring manual authentication, you *must* assign the following permission to your application registration from either Azure Active Directory or done through https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx with the following permission through https://tenant-admin.sharepoint.com/_layouts/appinv.aspx:
 
 `
 <AppPermissionRequests AllowAppOnlyPolicy="true">

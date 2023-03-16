@@ -21,9 +21,9 @@ Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMappi
 
 ## DESCRIPTION
 
-This cmdlet allows synchronizing user profiles from Azure Active Directory to their SharePoint Online User Profile equivallents. Note that certain properties are already synced by default. A list of these can be found here: https://learn.microsoft.com/sharepoint/user-profile-sync#properties-that-are-synced-into-sharepoint-user-profiles
+This cmdlet allows synchronizing user profiles from Azure Active Directory to their SharePoint Online User Profile equivalents. Note that certain properties are already synced by default. A list of these can be found here: https://learn.microsoft.com/sharepoint/user-profile-sync#properties-that-are-synced-into-sharepoint-user-profiles
 
-For other properties not listed on this page, you can use this cmdlet to synchronize them. You can provide the property name(s) in Azure Active Directory and specify its equivallent property in SharePoint Online for the values to be mapped to.
+For other properties not listed on this page, you can use this cmdlet to synchronize them. You can provide the property name(s) in Azure Active Directory and specify its equivalent property in SharePoint Online for the values to be mapped to.
 
 Note that SharePoint Online User Profile properties you wish to sync to *must* have the checkbox unchecked for "Allow users to edit values for this property" in the user profile property in the SharePoint User Profile service application. It also *must* have "User can override" checked under Policy Settings of the user profile property in the SharePoint User Profile service application.
 

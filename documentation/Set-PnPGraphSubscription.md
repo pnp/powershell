@@ -35,7 +35,7 @@ Updates the Microsoft Graph subscription with the id 'bc204397-1128-4911-9d70-1d
 ## PARAMETERS
 
 ### -ExpirationDate
-Date and time to set the expiration to. Take notice of the maximum allowed lifetime of the subscription endponts as documented at https://learn.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type
+Date and time to set the expiration to. Take notice of the maximum allowed lifetime of the subscription endpoints as documented at https://learn.microsoft.com/graph/api/resources/subscription#maximum-length-of-subscription-per-resource-type
 
 ```yaml
 Type: DateTime
