@@ -58,7 +58,7 @@ Retrieves all subsites of the subsite Team1 and all of its nested child subsites
 Get-PnPSubWeb -Identity Team1 -Recurse -IncludeRootWeb
 ```
 
-Retrieves the rootweb, all subsites of the subsite Team1 and all of its nested child subsites
+Retrieves the root web, all subsites of the subsite Team1 and all of its nested child subsites
 
 ## PARAMETERS
 
@@ -105,7 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -IncludeRootWeb
-If provided, the results will also contain the rootweb
+If provided, the results will also contain the root web
 
 ```yaml
 Type: SwitchParameter
