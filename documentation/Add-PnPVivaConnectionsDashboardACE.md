@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -Title
-The Tite of the Adaptive Card extension.
+The Title of the Adaptive Card extension.
 
 ```yaml
 Type: string

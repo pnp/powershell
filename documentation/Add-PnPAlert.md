@@ -52,7 +52,7 @@ Adds a new alert for user "Alice" to the "Demo List". Note: Only site owners and
 Add-PnPAlert -Title "Alert for user" -List "Demo List" -User "i:0#.f|membership|Alice@contoso.onmicrosoft.com" -Frequency Daily -Time ((Get-Date).AddDays(1))
 ```
 
-Adds a new weekly alert for user "Alice" to the "Demo List". The moment the alert will be sent out is based on the Date passed in through -Time. It will take the date and time you pass in and make that the day and time of the week to send out the alert. I.e. if today is a Friday at it is 5.00 PM and you provide (Get-Date).AddDays(1), it will schedule the alert to be sent out on Saturdays at 5.00 PM. Through the web interface of SharePoint Online, the date and time shown with the alert will be converted to its equivallent in PST (Redmond time zone), regardless of the region configuration of the site.
+Adds a new weekly alert for user "Alice" to the "Demo List". The moment the alert will be sent out is based on the Date passed in through -Time. It will take the date and time you pass in and make that the day and time of the week to send out the alert. I.e. if today is a Friday at it is 5.00 PM and you provide (Get-Date).AddDays(1), it will schedule the alert to be sent out on Saturdays at 5.00 PM. Through the web interface of SharePoint Online, the date and time shown with the alert will be converted to its equivalent in PST (Redmond time zone), regardless of the region configuration of the site.
 
 ## PARAMETERS
 
@@ -120,7 +120,7 @@ Alert frequency
 
 For daily: Use the -Time parameter to specify the time of the day the alert should be sent out. I.e. pass in -Time (Get-Date -Hour 11 -Minute 00 -Second 00) to have the alerts sent every day at 11 AM.
 
-For weekly: It will take the date and time you pass in and make that the day and time of the week to send out the alert. I.e. if today is a Friday at it is 5.00 PM and you provide (Get-Date).AddDays(1), it will schedule the alert to be sent out on Saturdays at 5.00 PM. Through the web interface of SharePoint Online, the date and time shown with the alert will be converted to its equivallent in PST (Redmond time zone), regardless of the region configuration of the site.
+For weekly: It will take the date and time you pass in and make that the day and time of the week to send out the alert. I.e. if today is a Friday at it is 5.00 PM and you provide (Get-Date).AddDays(1), it will schedule the alert to be sent out on Saturdays at 5.00 PM. Through the web interface of SharePoint Online, the date and time shown with the alert will be converted to its equivalent in PST (Redmond time zone), regardless of the region configuration of the site.
 
 ```yaml
 Type: AlertFrequency
