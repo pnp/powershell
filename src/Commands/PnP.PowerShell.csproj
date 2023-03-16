@@ -53,7 +53,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="AngleSharp" Version="1.0.1" />
+		<PackageReference Include="AngleSharp" Version="0.17.0" />
 
 		<PackageReference Include="Microsoft.Graph" Version="3.33.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.50.0" />
