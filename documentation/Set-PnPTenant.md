@@ -324,7 +324,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisabledWebPartIds
-Guid's of out of the box modern web part id's to disallow from being added to pages and remove from pages where they already have been used. Currently only the following web parts can be disabled in such a way:
+Guids of out of the box modern web part id's to disallow from being added to pages and remove from pages where they already have been used. Currently only the following web parts can be disabled in such a way:
 
 Amazon Kindle: 46698648-fcd5-41fc-9526-c7f7b2ace919
 YouTube: 544dd15b-cf3c-441b-96da-004d5a8cea1d
@@ -834,7 +834,7 @@ Accept wildcard characters: False
 ```
 
 ### -PreventExternalUsersFromReSharing
-Prevents external users from reSharing files, folders, and sites that they do not own.
+Prevents external users from resharing files, folders, and sites that they do not own.
 
 ```yaml
 Type: Boolean
@@ -1353,7 +1353,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisabledModernListTemplateIds
-Guid's of out of the box modern list templates to hide when creating a new list
+Guids of out of the box modern list templates to hide when creating a new list
 
 ```yaml
 Type: Guid[]
@@ -1367,7 +1367,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableModernListTemplateIds
-Guid'ss of out of the box modern list templates to show when creating a new list
+Guids of out of the box modern list templates to show when creating a new list
 
 ```yaml
 Type: Guid[]

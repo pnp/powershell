@@ -141,7 +141,7 @@ Accept wildcard characters: False
 ```
 
 ### -SiteScriptIds
-An array of guid's of site scripts
+An array of guids of site scripts
 
 ```yaml
 Type: Guid[]

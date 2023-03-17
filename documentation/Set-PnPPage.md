@@ -193,7 +193,7 @@ Sets the layout type of the page. (Default = Article)
 ```yaml
 Type: PageLayoutType
 Parameter Sets: (All)
-Accepted values: Article, Home, SingleWebPartAppPage, RePostPage, HeadlessSearchResults, Spaces, Topic
+Accepted values: Article, Home, SingleWebPartAppPage,  RepostPage, HeaderlessSearchResults, Spaces, Topic
 
 Required: False
 Position: Named
