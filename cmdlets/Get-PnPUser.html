@@ -126,7 +126,7 @@
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Get-PnPUser -WithRightsAssignedDetailed
 </code></pre>
-<p>Returns all users who have been granted explicit access to the current site, lists and listitems</p>
+<p>Returns all users who have been granted explicit access to the current site, lists and list items</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -162,7 +162,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-withrightsassigneddetailed">-WithRightsAssignedDetailed</h3>
-<p>If provided, only users that currently have any specific kind of access rights assigned to the current site, lists or listitems/documents will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.</p>
+<p>If provided, only users that currently have any specific kind of access rights assigned to the current site, lists or list items/documents will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: With rights assigned detailed
 

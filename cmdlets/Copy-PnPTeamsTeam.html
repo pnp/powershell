@@ -97,7 +97,7 @@ channels – Copies the channel structure (but not the messages in the channel).
 members – Copies the members and owners of the group.
 settings – Copies all settings within the team, along with key group settings.
 tabs – Copies the tabs within channels.</p>
-<p>When tabs are cloned, they are put into an unconfigured state -- they are displayed on the tab bar in Microsoft Teams, and the first time you open them, you'll go through the configuration screen. If the person opening the tab does not have permission to configure apps, they will see a message explaining that the tab hasn't been configured.</p>
+<p>When tabs are cloned, they are put into an un configured state -- they are displayed on the tab bar in Microsoft Teams, and the first time you open them, you'll go through the configuration screen. If the person opening the tab does not have permission to configure apps, they will see a message explaining that the tab hasn't been configured.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Copy-PnPTeamsTeam -Identity ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e -DisplayName &quot;Library Assist&quot; -PartsToClone apps,tabs,settings,channels,members
@@ -110,11 +110,11 @@ tabs – Copies the tabs within channels.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Copy-PnPTeamsTeam -Identity &quot;Team 12&quot; -DisplayName &quot;Library Assist&quot; -PartsToClone apps,tabs,settings,channels,members -Description &quot;Self help community for library&quot; -Classification &quot;Library&quot; -Visibility public
 </code></pre>
-<p>Creates a clone of a Microsoft Teams team named &quot;Library Assist&quot; from Microsoft Teams team  &quot;Team 12&quot; with the apps,tabs,settings,channels and members setting the classication to &quot;Library&quot;, Visibility to public and Description to &quot;Self help community for library&quot;</p>
+<p>Creates a clone of a Microsoft Teams team named &quot;Library Assist&quot; from Microsoft Teams team  &quot;Team 12&quot; with the apps,tabs,settings,channels and members setting the classification to &quot;Library&quot;, Visibility to public and Description to &quot;Self help community for library&quot;</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Copy-PnPTeamsTeam -Identity &quot;Team 12&quot; -DisplayName &quot;Library Assist&quot; -PartsToClone settings,channels -Description &quot;Self help community for library&quot; -Classification &quot;Library&quot; -Visibility public
 </code></pre>
-<p>Creates a clone of a Microsoft Teams team named &quot;Library Assist&quot; from Microsoft Teams team  &quot;Team 12&quot; with the settings and channels setting the classication to &quot;Library&quot;, Visibility to public and Description to &quot;Self help community for library&quot;</p>
+<p>Creates a clone of a Microsoft Teams team named &quot;Library Assist&quot; from Microsoft Teams team  &quot;Team 12&quot; with the settings and channels setting the classification to &quot;Library&quot;, Visibility to public and Description to &quot;Self help community for library&quot;</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

@@ -198,7 +198,7 @@ See <a href="https://learn.microsoft.com/sharepoint/dev/solution-guidance/securi
 Notice this type of authentication is limited in its functionality.
 We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work.
 Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason.
-The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected.
+The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will disappear immediately, this is expected.
 Use -ForceAuthentication to reset the authentication cookies and force a new login.
 See example 10 for a full support for interactive logins using MFA and the ability to acquire Graph tokens.</p>
 <h3 id="example-10">EXAMPLE 10</h3>
@@ -217,12 +217,12 @@ See <a href="http://aka.ms/sharepoint/modernization/pages">http://aka.ms/sharepo
 <pre><code>Connect-PnPOnline -Url contoso.sharepoint.com -ManagedIdentity
 Get-PnPTeamsTeam
 </code></pre>
-<p>Connects using a system assigned managed identity to Microsoft Graph. Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on <a href="https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity">this article</a> how it can be used.</p>
+<p>Connects using a system assigned managed identity to Microsoft Graph. Using this way of connecting only works with environments that support managed identities: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on <a href="https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity">this article</a> how it can be used.</p>
 <h3 id="example-13">EXAMPLE 13</h3>
 <pre><code>Connect-PnPOnline -Url contoso.sharepoint.com -ManagedIdentity -UserAssignedManagedIdentityObjectId 363c1b31-6872-47fd-a616-574d3aec2a51
 Get-PnPList
 </code></pre>
-<p>Connects using an user assigned managed identity with object/principal ID 363c1b31-6872-47fd-a616-574d3aec2a51 to SharePoint Online. Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on <a href="https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity">this article</a> how it can be used.</p>
+<p>Connects using an user assigned managed identity with object/principal ID 363c1b31-6872-47fd-a616-574d3aec2a51 to SharePoint Online. Using this way of connecting only works with environments that support managed identities: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on <a href="https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity">this article</a> how it can be used.</p>
 <h3 id="example-14">EXAMPLE 14</h3>
 <pre><code>Connect-PnPOnline -Url contoso.sharepoint.com -AccessToken $token
 </code></pre>
@@ -540,7 +540,7 @@ Accept wildcard characters: False
 Notice this type of authentication is limited in its functionality.
 We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work.
 Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason.
-The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected.
+The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will disappear immediately, this is expected.
 Use -ForceAuthentication to reset the authentication cookies and force a new login.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter 
 Parameter Sets: Web Login for Multi Factor Authentication
