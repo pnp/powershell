@@ -1,36 +1,34 @@
 ---
 Module Name: PnP.PowerShell
+title: Undo-PnPFileCheckedOut
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPListItemAsRecord.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Clear-PnPListItemAsRecord
+online version: https://pnp.github.io/powershell/cmdlets/Undo-PnPFileCheckedOut.html
 ---
-  
-# Clear-PnPListItemAsRecord
+ 
+# Undo-PnPFileCheckedOut
 
 ## SYNOPSIS
-Un declares a list item as a record
+Discards changes to a file.
 
 ## SYNTAX
 
 ```powershell
-Clear-PnPListItemAsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind> 
- [-Connection <PnPConnection>] [<CommonParameters>]
+Undo-PnPFileCheckedOut [-Url] <String> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-
-Allows to un declares a list item in a list as a record.
+This cmdlet discards changes to a single file.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Clear-PnPListItemAsRecord -List "Documents" -Identity 4
+Undo-PnPFileCheckedOut -Url "/sites/PnP/Shared Documents/Contract.docx"
 ```
 
-Un declares the document in the documents library with id 4 as a record
+Discards changes in the file "Contract.docx" in the "Documents" library
 
 ## PARAMETERS
 
@@ -48,25 +46,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
-The ID of the listitem, or actual ListItem object
+### -Url
+The server relative url of the file to discard changes.
 
 ```yaml
-Type: ListItemPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -List
-The ID, Title or Url of the list.
-
-```yaml
-Type: ListPipeBind
+Type: String
 Parameter Sets: (All)
 
 Required: True
@@ -76,10 +60,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

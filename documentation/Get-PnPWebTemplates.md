@@ -51,7 +51,7 @@ Returns all webtemplates for the compatibility level 15
 ## PARAMETERS
 
 ### -CompatibilityLevel
-The compatibily level of SharePoint where 14 is SharePoint 2010, 15 is SharePoint 2013 and 16 is SharePoint 2016 and later including SharePoint Online
+The compatibly level of SharePoint where 14 is SharePoint 2010, 15 is SharePoint 2013 and 16 is SharePoint 2016 and later including SharePoint Online
 
 ```yaml
 Type: Int32

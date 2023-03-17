@@ -10,7 +10,7 @@ title: Add-PnPRoleDefinition
 # Add-PnPRoleDefinition
 
 ## SYNOPSIS
-Adds a Role Defintion (Permission Level) to the site collection in the current context
+Adds a Role Definition (Permission Level) to the site collection in the current context
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Add-PnPRoleDefinition -RoleName <String> [-Clone <RoleDefinitionPipeBind>] [-Inc
 ```
 
 ## DESCRIPTION
-This command allows adding a custom Role Defintion (Permission Level) to the site collection in the current context. It does not replace or remove existing Role Definitions.
+This command allows adding a custom Role Definition (Permission Level) to the site collection in the current context. It does not replace or remove existing Role Definitions.
 
 ## EXAMPLES
 

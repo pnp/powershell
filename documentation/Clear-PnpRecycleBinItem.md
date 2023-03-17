@@ -34,7 +34,7 @@ Allows to permanently delete items from recycle bin. By default the command will
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPRecycleBinItem | Where-Object LeafName -like "*.docx" | Clear-PnpRecycleBinItem
+Get-PnPRecycleBinItem | Where-Object LeafName -like "*.docx" | Clear-PnPRecycleBinItem
 ```
 
 Permanently deletes all the items in the first and second stage recycle bins of which the file names have the .docx extension
