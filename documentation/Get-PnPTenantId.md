@@ -61,7 +61,7 @@ Returns the Tenant ID for the specified US Government tenant. Can be executed wi
 ## PARAMETERS
 
 ### -TenantUrl
-The name of the tenant to retrieve the id for. If not specified, the currently connected to tenant will be used. You can use either just the tenant name, i.e. consoto or the full SharePoint URL, i.e. contoso.sharepoint.com.
+The name of the tenant to retrieve the id for. If not specified, the currently connected to tenant will be used. You can use either just the tenant name, i.e. contoso or the full SharePoint URL, i.e. contoso.sharepoint.com.
 
 ```yaml
 Type: String

@@ -42,7 +42,7 @@ Enables Site Classifications for your tenant and provides three classification v
 Enable-PnPSiteClassification -Classifications "HBI","LBI","Top Secret" -UsageGuidelinesUrl https://aka.ms/m365pnp
 ```
 
-Enables Site Classifications for your tenant and provides three classification values. The usage guideliness will be set to the specified URL.
+Enables Site Classifications for your tenant and provides three classification values. The usage guidelines will be set to the specified URL.
 
 ## PARAMETERS
 

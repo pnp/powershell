@@ -25,7 +25,7 @@ Get-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> [-AsAdmin] [-Identit
 ```
 
 ## DESCRIPTION
-This cmdlet returns the flows for a given enviroment.
+This cmdlet returns the flows for a given environment.
 
 ## EXAMPLES
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Enums;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
@@ -81,11 +80,11 @@ namespace PnP.PowerShell.Commands.Search
                 }
                 if (hasSearchPageUrl)
                 {
-                    ClientContext.Web.SetSiteCollectionSearchCenterUrl(SearchPageUrl);
+                    ClientContext.Web.SetSiteCollectionSearchCenterUrl(SearchPageUrl, Connection.TenantAdminUrl);
                 }
                 if (hasSearchPlaceholderText)
                 {
-                    ClientContext.Site.SetSearchBoxPlaceholderText(SearchBoxPlaceholderText);
+                    ClientContext.Site.SetSearchBoxPlaceholderText(SearchBoxPlaceholderText, Connection.TenantAdminUrl);
                 }
                 if (SearchScope.HasValue && ClientContext.Site.RootWeb.SearchScope != SearchScope.Value)
                 {
@@ -102,11 +101,11 @@ namespace PnP.PowerShell.Commands.Search
                 }
                 if (hasSearchPageUrl)
                 {
-                    ClientContext.Web.SetWebSearchCenterUrl(SearchPageUrl);
+                    ClientContext.Web.SetWebSearchCenterUrl(SearchPageUrl, Connection.TenantAdminUrl);
                 }
                 if (hasSearchPlaceholderText)
                 {
-                    ClientContext.Web.SetSearchBoxPlaceholderText(SearchBoxPlaceholderText);
+                    ClientContext.Web.SetSearchBoxPlaceholderText(SearchBoxPlaceholderText, Connection.TenantAdminUrl);
                 }
                 if (SearchScope.HasValue && ClientContext.Web.SearchScope != SearchScope.Value)
                 {

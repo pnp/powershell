@@ -58,7 +58,7 @@ Accept wildcard characters: False
 
 ### -Force
 
-Once a batch has been executed you cannot execute it again. Using -Force will allow you to reexecute the batch again.
+Once a batch has been executed you cannot execute it again. Using -Force will allow you to re-execute the batch again.
 
 ```yaml
 Type: SwitchParameter

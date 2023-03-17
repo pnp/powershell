@@ -39,7 +39,7 @@ Disables the specified flow.
 ## PARAMETERS
 
 ### -AsAdmin
-Disable the flow as an adminstrator.
+Disable the flow as an administrator.
 
 ```yaml
 Type: SwitchParameter

@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResolveUserDisplayNames
-Will resolve userids to usernames
+Will resolve user id's to usernames
 
 ```yaml
 Type: SwitchParameter

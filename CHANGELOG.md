@@ -93,6 +93,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Connect-PnPOnline -ManagedIdentity -UserAssignedManagedIdentityClientId` not working in Azure Automation Runbooks as it required usage of the object_id parameter instead of the principal_id to get an access token. [#2813](https://github.com/pnp/powershell/pull/2813)
 - Fixed issue with `Send-PnPMail` not being able to send out e-mail due to the deprecation of basic authentication on Exchange Online [#2880](https://github.com/pnp/powershell/pull/2880)
 - Fixed `Register-PnPAzureADApp` cmdlet to not change or generate certificate if `-CertificatePath` parameter is already specified. [#2878](https://github.com/pnp/powershell/pull/2878)
+- Fixed `New-PnPSite` cmdlet to work with non-commercial cloud environments.
+- Fixed `Set-PnPSearchSettings` cmdlet not working with vanity domain tenants [#2884](https://github.com/pnp/powershell/pull/2884)
 
 ### Contributors
 
@@ -224,6 +226,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Valeras Narbutas [ValerasNarbutas]
 - Russell Gove [russgove]
 - Jasper Beerens
 - Aleksandr Sapozhkov [shurick81]
