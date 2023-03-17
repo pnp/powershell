@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         {
             if (_powerapp != null)
             {
-                return _powerapp.name;
+                return _powerapp.Name;
             }
             return _name;
         }

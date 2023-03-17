@@ -10,32 +10,32 @@ namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerApp
         /// <summary>
         /// Name of the app as its GUID
         /// </summary>
-        public string name { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Unique identifier of this app. Use <see cref="Properties.displayName" /> instead to see the friendly name of the app as shown through apps.powerapps.com.
         /// </summary>
-        public string id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// Type of object, typically Microsoft.PowerApps/apps
         /// </summary>
-        public string type { get; set; }
-        public Tags tags { get; set; }
+        public string Type { get; set; }
+        public PowerAppTags Tags { get; set; }
         /// <summary>
         /// Additional information on the App
         /// </summary>
         [JsonPropertyName("properties")]
-        public PowerAppProperties properties { get; set; }
+        public PowerAppProperties Properties { get; set; }
         /// <summary>
         /// Location of the app
         /// </summary>
-        public string appLocation { get; set; }
+        public string AppLocation { get; set; }
         /// <summary>
         /// Flag if the app is component library or normal app
         /// </summary>
-        public bool isAppComponentLibrary { get; set; }
+        public bool IsAppComponentLibrary { get; set; }
         /// <summary>
         /// Type of App - CanvasClassicApp/AppComponentLibrary
         /// </summary>
-        public string appType { get; set; }
+        public string AppType { get; set; }
     }
 }
