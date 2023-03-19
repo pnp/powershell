@@ -85,7 +85,7 @@ namespace PnP.PowerShell.Commands.Files
                     }
                     catch (Exception ex)
                     {
-                        WriteWarning(ex.Message);
+                        WriteVerbose(ex.Message);
                     }
                     if (isFolder)
                     {
