@@ -9,7 +9,7 @@ title: Export-PnPPageMapping
 # Export-PnPPageMapping
 
 ## SYNOPSIS
-Get's the built-in maping files or a custom mapping file for your publishing portal page layouts. These mapping files are used to tailor the page transformation experience.
+Get's the built-in mapping files or a custom mapping file for your publishing portal page layouts. These mapping files are used to tailor the page transformation experience.
 
 ## SYNTAX 
 
@@ -112,7 +112,7 @@ Accept pipeline input: False
 ```
 
 ### -Logging
-Outputs analyser logging to the console
+Outputs analyzer logging to the console
 
 ```yaml
 Type: SwitchParameter

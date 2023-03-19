@@ -4,6 +4,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands
 {
@@ -129,7 +130,7 @@ namespace PnP.PowerShell.Commands
 
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
-                    var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken);
+                    var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
                     if (ParameterSpecified(nameof(TimeZone)))
                     {
                         returnedContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
