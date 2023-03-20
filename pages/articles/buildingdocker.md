@@ -1,4 +1,6 @@
-# Docker with Linux/Mac OS/WSL:
+# Docker with Linux/Mac OS/WSL
+
+Use this guidance if you plan on using docker containers to work with PnP PowerShell.
 
 ## Build a Docker Image
 
