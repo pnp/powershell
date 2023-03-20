@@ -32,13 +32,13 @@ When you run the cmdlet above you will be asked to navigate to the shown url and
 It also returns the private key certificate encoded in base64 encoding. As it spans multiple lines, it is recommended to assign the outcome of `Register-PnPAzureAdApp` to a variable so you have access to this value more easily. The Base64 encoded private key certificate can be used in your Connect-PnPOnline voiding the need to have access to the physical file:
 
 ```powershell
-Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] -Tenant [yourtenant.onmicrosoft.com] -CertificateBase64Encoded [pfx base64 encoded]
+Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -CertificateBase64Encoded [pfx base64 encoded]
 ```
 
 The cmdlet will also save both the CER and PFX files to the location specified with the -Outpath parameter. The names of the files will be matching the -ApplicationName parameter, e.g. in the example above the files will be called `PnP Rocks.cer` and `PnP Rocks.pfx`. The output of the cmdlet will show the clientid. After all is set up and consent has been provided you can login using:
 
 ```powershell
-Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] -Tenant [yourtenant.onmicrosoft.com] -CertificatePath [certificate.pfx]
+Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -CertificatePath [certificate.pfx]
 ```
 
 ## Authenticating with Credentials
@@ -46,7 +46,7 @@ Connect-PnPOnline -Url "https://yourtenant.sharepoint.com" -ClientId [clientid] 
 Enter
 
 ```powershell
-Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Credential)
+Connect-PnPOnline [yourtenant].sharepoint.com -Credentials (Get-Credential)
 ```
 
 and you will be prompted for credentials. Using this method you're required to have granted the PnP Management Shell multi-tenant application access rights. You can however register your own application using `Register-PnPAzureAzureApp` and then provide the `-ClientId` parameter with the client id/app id of your custom application.
@@ -60,20 +60,20 @@ Add-PnPStoredCredential -Name "yourlabel" -Username youruser@domain.com
 You will be prompted to provide a password. After that you can login using:
 
 ```powershell
-Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials "yourlabel"
+Connect-PnPOnline [yourtenant].sharepoint.com -Credentials "yourlabel"
 ```
 When you create the stored credentials (with Add-PnPStoredCredential or any other tool) if the Name you give it is the URL for your tenant you can omit the -Credentials parameter with Connect-PnPOnline. Using the example above create your stored credential with this command:
 
 ```powershell
-Add-PnPStoredCredential -Name "https://contoso.sharepoint.com" -Username youruser@contoso.com
+Add-PnPStoredCredential -Name "https://[yourtenant].sharepoint.com" -Username youruser@contoso.com
 ```
-When connecting to https://contoso.sharepoint.com you can use this command:
+When connecting to https://yourtenant.sharepoint.com you can use this command:
 ```powershell
-Connect-PnPOnline -Url https://contoso.sharepoint.com 
+Connect-PnPOnline [yourtenant].sharepoint.com 
 ```
-Connect-PnPOnline will look through the Windows Credential Manager for a credential matching the URL. If it finds one it will use it. It will also match that credential with deeper connection URLs like https://contoso.sharepoint.com/sites/IT. You can create additional stored credentials for deeper sites if you routinely connect to them with different credentials. If you want to connect with a different set of credentials you can use the -Credentials parameter to specify them. A stored credential can be used for other URLs, like the Admin site:
+Connect-PnPOnline will look through the Windows Credential Manager for a credential matching the URL. If it finds one it will use it. It will also match that credential with deeper connection URLs like https://yourtenant.sharepoint.com/sites/IT. You can create additional stored credentials for deeper sites if you routinely connect to them with different credentials. If you want to connect with a different set of credentials you can use the -Credentials parameter to specify them. A stored credential can be used for other URLs, like the Admin site:
 ```powershell
-Connect-PnPOnline -Url https://contoso-admin.sharepoint.com -Credentials https://contoso.sharepoint.com 
+Connect-PnPOnline [yourtenant]-admin.sharepoint.com -Credentials https://[yourtenant].sharepoint.com 
 ```
 
 ## Authenticating with pre-stored credentials using the Secrets Management Module from Microsoft (Multi-Platform)
@@ -96,13 +96,13 @@ For more information about these cmdlets, check out the github repositories: htt
 After you set up the vault and you added a credential
 
 ```powershell
-Connect-PnPOnline -Url https://contoso.sharepoint.com -Credentials (Get-Secret -Name "yourlabel")
+Connect-PnPOnline [yourtenant].sharepoint.com -Credentials (Get-Secret -Name "yourlabel")
 ```
 
 ## Authentication in case you have Multi-Factor authentication enabled
 
 ```powershell
-Connect-PnPOnline -Url https://contoso.sharepoint.com -Interactive
+Connect-PnPOnline[yourtenant].sharepoint.com -Interactive
 ```
 
 This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow.
@@ -152,6 +152,6 @@ Permission | Permission type | Id | Type
 
 ### Connect
 ```powershell
-Connect-PnPOnline -Url [yoursite] -Interactive -ClientId [clientid of the app] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
 ```
 The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.
