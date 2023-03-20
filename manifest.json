@@ -204,7 +204,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/installation.html",
-          "hash": "p7O9Tq1bkVtCmL9S0havig=="
+          "hash": "usSeK58toDmzI0kKh4hw/Q=="
         }
       },
       "is_incremental": false,
@@ -223,12 +223,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Toc",
       "source_relative_path": "articles/toc.yml",
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "xLf96xYMRql9GV4f9Uek7A=="
+          "hash": "JMY1j6F461TGff2IeM4TtQ=="
         }
       },
       "is_incremental": false,
