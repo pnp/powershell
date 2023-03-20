@@ -268,7 +268,6 @@ Thanks for contributing!
 1. Now execute the following command to reset your local dev branch to the upstream dev branch:
 
     ```powershell
-    git fetch upstream
     git checkout dev
     git reset --hard upstream/dev
     git push origin dev --force 
