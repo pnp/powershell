@@ -21,7 +21,3 @@ In case you would like to remove PnP PowerShell, you can run:
 ```powershell
 Uninstall-Module PnP.PowerShell
 ```
-
-## Using PnP PowerShell in Azure
-
-See the various options in the menu on the left to install and use PnP Powershell in Azure components.
