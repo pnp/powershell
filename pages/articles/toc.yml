@@ -24,9 +24,11 @@
   href: dev-containers.md
 - name: For Developers
   items:
+    - name: Getting started
+      href: gettingstartedcontributing.md
     - name: Building the project
       href: buildingsource.md
-    - name: Running the tests
+    - name: Running unit tests
       href: runningtests.md
-    - name: Building the documentation
-      href: building-documentation.md
+    - name: Building using docker
+      href: buildingdocker.md      
