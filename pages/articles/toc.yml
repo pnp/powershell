@@ -16,6 +16,8 @@
   href: upgrading.md
 - name: Using PnP PowerShell in Azure Functions
   href: azurefunctions.md
+- name: Using PnP PowerShell in Azure Runbooks
+  href: azureautomationrunbook.md
 - name: Using PnP PowerShell in Azure Cloud Shell
   href: azurecloudshell.md  
 - name: Using PnP PowerShell in Docker containers
