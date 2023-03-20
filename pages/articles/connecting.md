@@ -61,13 +61,13 @@ Allows using an Azure Active Directory app registration from your own Azure Acti
 The following will generate an Azure AD Application registration and create a certificate containing a public and private key.
 
 ```powershell
-Register-PnPAzureADApp -ApplicationName "PnPPowerShell" -Tenant tenant.onmicrosoft.com -Password (ConvertTo-SecureString -String "password" -AsPlainText -Force)
+Register-PnPAzureADApp -ApplicationName "PnPPowerShell" -Tenant [tenant].onmicrosoft.com -Password (ConvertTo-SecureString -String "password" -AsPlainText -Force)
 ```
 
 You will be asked to authenticate. After that the cmdlet will generate two files, PnPPowerShell.pfx and PnPPowerShell.cer and a new Azure AD Application will be registered with the specified name. The public key/CER file will be uploaded and registered with the newly create application registration. You will have to use the .pfx file to connect. Notice that the `Register-PnPAzureADApp` cmdlet only have to be executed once per tenant/application.
 
 ```powershell
-Connect-PnPOnline [tenant].sharepoint.com -ClientId [clientid] -Tenant tenant.onmicrosoft.com -CertificatePath '.\PnPPowerShell.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText -Force "password")
+Connect-PnPOnline [tenant].sharepoint.com -ClientId [clientid] -Tenant [tenant].onmicrosoft.com -CertificatePath '.\PnPPowerShell.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText -Force "password")
 ```
 
 ## Connect using a ClientId and PFX certificate stored in the Windows Certificate Management Store
