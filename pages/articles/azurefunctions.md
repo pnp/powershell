@@ -73,7 +73,7 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
    > [!Important]
    > There's currently no stable PnP PowerShell version that works with Azure Functions. Use the [latest nightly build](#specific-prerelease-version) instead.
 
-   ```powershell
+   ```json
    @{
        'PnP.PowerShell' = '1.12.0'
    }
@@ -88,11 +88,11 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
    If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):
 
-    ```powershell
-    @{
-        'PnP.PowerShell' = '1.*'
-     }
-    ```
+   ```json
+   @{
+       'PnP.PowerShell' = '1.*'
+    }
+   ```
 
    This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.
 
@@ -100,11 +100,11 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
    If you wish to use a specific prerelease/nightly build version, go to the [overview of available versions](https://www.powershellgallery.com/packages/PnP.PowerShell) and literally copy/paste the version in the definition:  
 
-    ```powershell
-    @{
-        'PnP.PowerShell' = '2.0.45-nightly'
-     }
-    ```   
+   ```json
+   @{
+       'PnP.PowerShell' = '2.0.45-nightly'
+    }
+   ```   
 
    ![Adding PnP PowerShell to the requirements.psd1 file in an Azure Function](./../images/azurefunctions/addpnpposhtoappfilerequirements.png)
 
