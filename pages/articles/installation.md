@@ -22,14 +22,6 @@ In case you would like to remove PnP PowerShell, you can run:
 Uninstall-Module PnP.PowerShell
 ```
 
-## Using PnP PowerShell in the Azure Cloud Shell
+## Using PnP PowerShell in Azure
 
-Open the Azure Cloud Shell at https://shell.azure.com
-
-Select PowerShell as your shell and run:
-
-```powershell
-Install-Module PnP.PowerShell
-```
-
-As the Azure Cloud Shell retains its settings and installed modules, the next time you open the Azure Cloud Shell PnP PowerShell will be available for you to use.
+See the various options in the menu on the left to install and use PnP Powershell in Azure components.
