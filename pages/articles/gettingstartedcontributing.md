@@ -60,13 +60,13 @@ To contribute to a GitHub project, what you do first, is create a thing called a
 
 1. If it shows you a notice like this, you already have a fork. Continue with the next paragraph.
 
-  ![Fork already exists](./../images/contributing/forkalreadyexists.png)
+   ![Fork already exists](./../images/contributing/forkalreadyexists.png)
 
-  If it instead shows something like this, click on **Create fork** to create your own fork. You can leave all the defaults.
+   If it instead shows something like this, click on **Create fork** to create your own fork. You can leave all the defaults.
 
-  ![Fork does not exist yet](./../images/contributing/createnewfork.png)
+   ![Fork does not exist yet](./../images/contributing/createnewfork.png)
 
-  ![Fork does not exist yet](./../images/contributing/forkbeingcreated.png)
+   ![Fork does not exist yet](./../images/contributing/forkbeingcreated.png)
 
 ## Updating your Fork
 
