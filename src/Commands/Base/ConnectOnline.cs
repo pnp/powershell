@@ -240,7 +240,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             cancellationTokenSource = new CancellationTokenSource();
             CancellationToken token = cancellationTokenSource.Token;
-
+// TEST
             VersionChecker.CheckVersion(this);
             try
             {
