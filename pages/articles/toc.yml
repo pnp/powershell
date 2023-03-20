@@ -28,6 +28,8 @@
       href: gettingstartedcontributing.md
     - name: Folder structure
       href: buildingfolderstructure.md
+    - name: Using a local version of PnP Core/Framework
+      href: buildinglocalpnpbuild.md
     - name: Running unit tests
       href: runningtests.md
     - name: Building using docker
