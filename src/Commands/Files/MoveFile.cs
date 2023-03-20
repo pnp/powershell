@@ -85,22 +85,22 @@ namespace PnP.PowerShell.Commands.Files
                     }
                     catch (Exception ex)
                     {
-                        WriteVerbose(ex.Message);
+                        WriteVerbose($"Error occurred while trying to check if the target URL {TargetUrl} is a folder. This could happen if the target folder does not exist yet. It may still work well. Exception: {ex.Message}");
                     }
                     if (isFolder)
                     {
+                        WriteVerbose($"Moving file or folder from {sourceUri} to {targetUri}");
                         Move(currentContextUri, sourceUri, targetUri, SourceUrl, TargetUrl, true);
                     }
                     else
                     {
-
+                        WriteVerbose($"Moving file or folder from {SourceUrl} to {TargetUrl}");
                         var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(SourceUrl));
                         file.MoveToUsingPath(ResourcePath.FromDecodedUrl(TargetUrl), Overwrite ? MoveOperations.Overwrite : MoveOperations.None);
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
             }
-
         }
 
         private string EncodePath(string path)
