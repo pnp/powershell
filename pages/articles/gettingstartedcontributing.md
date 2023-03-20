@@ -205,13 +205,7 @@ If you have only updated documentation, so called .md files, there's no need to 
 
 1. Back in Visual Studio Code, hit `F5`
 
-1. If it asks you to install the `coreclr` component, click **Cancel** as it won't work like this. If it doesn't show this dialog, you can skip this step.
-
-   ![Installing the coreclr component](./../images/contributing/vscodeinstallcoreclr.png)
-
-   Instead go to the extensions tab on the left in Visual Studio, use the search box to search for `c#`, click on the result that states **C# for Visual Studio Code (powered by OmniSharp)** and then click **Install**. Hit `F5` again once its done installing to proceed.
-
-   ![Installing the c# component](./../images/contributing/vscodeinstallcsharp.png)
+1. If it asks you to install the `coreclr` component, follow [these steps](#visual-studio-shows-a-dialog-asking-to-install-the-coreclr-component).
 
 1. In Visual Studio Code, at the top a flyout menu should appear with the currently running processes on your machine. Start typing in the process ID you revealed in the step above and select the process that matches your PowerShell 7 session.
 
@@ -233,16 +227,7 @@ Once you're done making and testing your changes, you need to submit them for re
 
    ![No staged changes dialog](./../images/contributing/vscodestagechanges.png)
 
-1. If Visual Studio Code shows a dialog mentioning `Make sure you configure your "user.name" and "user.email" in git.`, click **Cancel** and open a PowerShell 7 window and execute the following commands, replacing the values with your information:
-
-    ```powershell
-    git config --global user.name "John Doe"
-    git config --global user.email "johndoe@outlook.com"
-    ```
-
-    ![Configuring git](./../images/contributing/pwshsetuser.png)
-
-    Once done, go back to Visual Studio Code and click **Commit** again.
+1. If Visual Studio Code shows a dialog mentioning `Make sure you configure your "user.name" and "user.email" in git.`, follow [these steps](#visual-studio-code-shows-a-dialog-mentioning-make-sure-you-configure-your-username-and-useremail-in-git).
 
 1. Now click the **Publish Branch** option that should appear under the Source Control section of Visual Studio Code to push your branch to GitHub.
 
