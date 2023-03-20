@@ -85,7 +85,7 @@ Now that you have your own fork, you need to make sure it's up to date with the 
    ![Updating your fork](./../images/contributing/updatebranch.png)
 
 1. It should now show the above message that your branch is up to date. You can now continue with the next paragraph.
-   If it instead shows that you're a certain number of comits ahead, it means your dev branch got polluted by changes you have pushed to it and you need to reset it first. Read up under (Troubleshooting)[#my-local-fork-is-ahead-of-pnpdev] for more information on how to resolve this situation.
+   If it instead shows that you're a certain number of comits ahead, it means your dev branch got polluted by changes you have pushed to it and you need to reset it first. Read up under [Troubleshooting](#my-local-fork-is-ahead-of-pnpdev) for more information on how to resolve this situation.
 
 ## Cloning the repository to your local file system
 
