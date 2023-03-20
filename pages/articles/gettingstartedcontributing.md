@@ -318,7 +318,7 @@ $PID
 Alternatively, if you wish the process ID to be shown in the title of the window to make it a little easier to find the process ID, in a PowerShell 7 window, type the following command:
 
 ```powershell
-notepad $pfofile
+notepad $profile
 ```
 
 ![Opening the profile file](./../images/contributing/pwshprofile.png)
