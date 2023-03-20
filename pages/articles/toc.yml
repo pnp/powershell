@@ -22,12 +22,10 @@
   href: docker.md
 - name: Using PnP PowerShell in Visual Studio Development Containers
   href: dev-containers.md
-- name: For Developers
+- name: How to contribute
   items:
     - name: Getting started
       href: gettingstartedcontributing.md
-    - name: Building the project
-      href: buildingsource.md
     - name: Running unit tests
       href: runningtests.md
     - name: Building using docker
