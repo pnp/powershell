@@ -88,10 +88,14 @@
 <h5>Important</h5>
 <p>Notice that the Azure Function scripts in this article run in a separate thread/job. We do this because of possible conflicts between assemblies of already loaded PowerShell modules and PnP PowerShell (for instance, the Az cmdlets that get loaded by default use some of the same assemblies as PnP PowerShell but in different versions which can cause conflicts). By running the script in a separate thread we will not have these conflicts. If PnP PowerShell is the only module currently being used and loaded in your Azure Function you don't need the Start-ThreadJob construct and you can simply write the script as usual.</p>
 </div>
-<h2 id="create-the-function-app">Create the function app</h2>
+<h2 id="create-the-azure-function-app">Create the Azure Function App</h2>
 <p>As the UI in <a href="https://portal.azure.com">the Azure Portal</a> changes every now and then, but the principles stay the same, follow the following steps:</p>
 <ol>
-<li><p><a href="https://portal.azure.com/#create/Microsoft.FunctionApp">Create a new Function App</a></p>
+<li><p>Go to the <a href="https://portal.azure.com">Azure Portal</a> and login with your Azure credentials</p>
+</li>
+<li><p>Create a new Function App using the <strong>Create a resource</strong> button and searching for <strong>Function App</strong> or use this <a href="https://portal.azure.com/#create/Microsoft.FunctionApp">direct link</a> to locate it</p>
+<p><img src="../images/azurefunctions/createresource.png" alt="Creating an Azure resource"></p>
+<p><img src="../images/azurefunctions/createfunctionappresource.png" alt="Creating a function app resource"></p>
 </li>
 <li><p>Choose runtime stack <code>PowerShell Core</code> and version <code>7.2</code> (7.0 is not longer an option as of December 3rd, 2022)</p>
 <p><img src="../images/azurefunctions/createfunctionappbasics.png" alt="Create function app basics"></p>
@@ -101,43 +105,19 @@
 </li>
 <li><p>Complete the creation of the Azure Functon</p>
 </li>
-</ol>
-<h2 id="temporary-workaround-for-a-bug-in-azure-functions">Temporary workaround for a bug in Azure Functions</h2>
-<p>Because of a bug in Azure Functions v4 with PowerShell 7.2 support, you need to perform the following steps to make sure that the Azure Function will work as expected with PnP PowerShell: <a href="https://github.com/pnp/powershell/issues/2136#issuecomment-1344710434">https://github.com/pnp/powershell/issues/2136#issuecomment-1344710434</a></p>
-<h2 id="make-pnp-powershell-available-to-all-functions-in-the-app">Make PnP PowerShell available to all functions in the app</h2>
-<ol>
-<li>Navigate to <code>App files</code> which is located the left side menu of the function app under the <code>Functions</code> header.</li>
-<li>In the dropdown presented, select <code>requirements.psd1</code>. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the <code>Az</code> entry presented commented out.</li>
-<li>Add a new entry or replace the whole contents of the file with:</li>
-</ol>
-<h3 id="specific-stable-version">Specific stable version</h3>
-<pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '1.12.0'
-}
-</code></pre>
-<p>The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.</p>
-<h3 id="latest-stable-version">Latest stable version</h3>
-<p>If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):</p>
-<pre><code>```powershell
-@{
-    'PnP.PowerShell' = '1.*'
- }
-```
-</code></pre>
-<p>This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.</p>
-<h3 id="specific-prerelease-version">Specific prerelease version</h3>
-<p>If you wish to use a specific prerelease/nightly build version, go to the <a href="https://www.powershellgallery.com/packages/PnP.PowerShell">overview of available versions</a> and literally copy/paste the version in the definition:</p>
-<pre><code>```powershell
-@{
-    'PnP.PowerShell' = '1.11.95-nightly'
- }
-```   
-</code></pre>
-<p><img src="../images/azurefunctions/addpnpposhtoappfilerequirements.png" alt="Adding PnP PowerShell to the requirements.psd1 file in an Azure Function"></p>
-<ol>
-<li><p>Save the <code>requirements.psd1</code> file</p>
+<li><p>Once the resource has been created, click on <strong>Go to resource</strong> to open the Azure Function</p>
+<p><img src="../images/azurefunctions/createfunctionappcompleted.png" alt="Go to resource"></p>
 </li>
-<li><p>If you decide to keep the Az cmdlets commented out, save and edit the <code>profile.psd</code> file. Mark out the following block in the file as follows, if not already done:</p>
+</ol>
+<h2 id="configure-the-azure-function">Configure the Azure Function</h2>
+<p>Now your Azure Function has been created, proceed with the next paragraphs to configure it for using PnP PowerShell.</p>
+<h3 id="disable-the-azure-cmdlets-in-the-azure-function">Disable the Azure cmdlets in the Azure Function</h3>
+<p>The Azure Function comes with the Azure cmdlets pre-installed. If you don't need them, you can disable them to save some memory and processing time. It will also avoid version conflicts with PnP PowerShell, so it is highly recommended to disable them.</p>
+<ol>
+<li><p>Navigate to <code>App files</code> which is located the left side menu of the function app under the <code>Functions</code> header.</p>
+<p><img src="../images/azurefunctions/functionappappfilesmenu.png" alt="Navigate to App files"></p>
+</li>
+<li><p>To disable the Az cmdlets, save and edit the <code>profile.psd</code> file. Mark out the following block in the file as follows, if not already done:</p>
 <pre><code class="lang-powershell"># if ($env:MSI_SECRET) {
 #     Disable-AzContextAutosave -Scope Process | Out-Null     
 #     Connect-AzAccount -Identity
@@ -147,21 +127,56 @@
 <p><img src="../images/azurefunctions/disableazinprofile.png" alt="Disable the Az commands in profile"></p>
 </li>
 </ol>
+<h3 id="make-pnp-powershell-available-to-all-functions-in-the-azure-function-app">Make PnP PowerShell available to all functions in the Azure function App</h3>
+<ol>
+<li><p>Navigate to <code>App files</code> which is located the left side menu of the function app under the <code>Functions</code> header.</p>
+<p><img src="../images/azurefunctions/functionappappfilesmenu.png" alt="Navigate to App files"></p>
+</li>
+<li><p>In the dropdown presented near the top, select <code>requirements.psd1</code>. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the <code>Az</code> entry presented commented out.</p>
+<p><img src="../images/azurefunctions/functionappappfilesdropdown.png" alt="Navigate to requirements.psd1"></p>
+</li>
+<li><p>Add a new entry or replace the whole contents of the file with one of the following and remember to save the <code>requirements.psd1</code> file:</p>
+</li>
+</ol>
+<h4 id="specific-stable-version">Specific stable version</h4>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>There's currently no stable PnP PowerShell version that works with Azure Functions. Use the <a href="#specific-prerelease-version">latest nightly build</a> instead.</p>
+</div>
+<pre><code class="lang-powershell">@{
+    'PnP.PowerShell' = '1.12.0'
+}
+</code></pre>
+<p>The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.</p>
+<h4 id="latest-stable-version">Latest stable version</h4>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>There's currently no stable PnP PowerShell version that works with Azure Functions. Use the <a href="#specific-prerelease-version">latest nightly build</a> instead.</p>
+</div>
+<p>If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):</p>
+<pre><code class="lang-powershell">@{
+    'PnP.PowerShell' = '1.*'
+ }
+</code></pre>
+<p>This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.</p>
+<h4 id="specific-prerelease-version">Specific prerelease version</h4>
+<p>If you wish to use a specific prerelease/nightly build version, go to the <a href="https://www.powershellgallery.com/packages/PnP.PowerShell">overview of available versions</a> and literally copy/paste the version in the definition, i.e.:</p>
+<pre><code class="lang-powershell">@{
+    'PnP.PowerShell' = '2.0.45-nightly'
+ }
+</code></pre>
+<p><img src="../images/azurefunctions/addpnpposhtoappfilerequirements.png" alt="Adding PnP PowerShell to the requirements.psd1 file in an Azure Function"></p>
 <h2 id="decide-how-you-want-to-authenticate-in-your-azure-function">Decide how you want to authenticate in your Azure Function</h2>
 <h3 id="by-using-a-managed-identity">By using a Managed Identity</h3>
-<p>The recommended option is to use a <a href="https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">managed identity in Azure</a> to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.</p>
+<p>The recommended option is to use a <a href="https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview">managed identity in Azure</a> to allow your Azure Function to connect to Microsoft Graph or SharePoint Online using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.</p>
 <h4 id="enabling-the-managed-identity-for-an-azure-function">Enabling the managed identity for an Azure Function</h4>
 <ol>
-<li>In your Azure Function, in the left menu, go to Identity</li>
-<li>Ensure you are on the System assigned tab and flip the switch for Status to On</li>
-<li>Click the save button and confirm your action in the dialog box that will be shown</li>
-</ol>
-<p>A new entry will now automatically be created in your Azure Active Directory for this app having the same name as your Azure Function and the Object (principal) ID shown on this page. Take notice of the Object (principal) ID. We will need it in the next section to assign permissions to.</p>
-<h4 id="enabling-the-managed-identity-for-an-azure-automation-runbook">Enabling the managed identity for an Azure Automation Runbook</h4>
-<ol>
-<li>In your Azure Automation account, in the left menu, go to Identity under Account Settings</li>
-<li>Ensure you are on the System assigned tab and flip the switch for Status to On</li>
-<li>Click the save button and confirm your action in the dialog box that will be shown</li>
+<li><p>In your Azure Function, in the left menu, go to Identity</p>
+</li>
+<li><p>Ensure you are on the System assigned tab and flip the switch for Status to On</p>
+</li>
+<li><p>Click the save button and confirm your action in the dialog box that will be shown</p>
+</li>
 </ol>
 <p>A new entry will now automatically be created in your Azure Active Directory for this app having the same name as your Azure Function and the Object (principal) ID shown on this page. Take notice of the Object (principal) ID. We will need it in the next section to assign permissions to.</p>
 <h4 id="assigning-permissions-to-the-managed-identity">Assigning permissions to the managed identity</h4>
@@ -184,7 +199,7 @@ Add-PnPAzureADServicePrincipalAppRole -Principal &quot;mymanagedidentity&quot; -
 
 param($Request, $TriggerMetadata)
 
-Connect-PnPOnline -ManagedIdentity
+Connect-PnPOnline tenant.sharepoint.com -ManagedIdentity
 Get-PnPMicrosoft365Group
 
 Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
@@ -192,7 +207,7 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 })
 
 </code></pre>
-<p>Notice the super clean and simple <code>Connect-PnPOnline</code>. No identifiers whatsoever need to be provided. Nothing that could fall into wrong hands, no client secret or certificate that could expire. Based on the permissions assigned to the managed identity, it will be able to authenticate and authorize access to the Microsoft Graph APIs used behind the cmdlet to fetch the data.</p>
+<p>Notice the super clean and simple <code>Connect-PnPOnline</code>. Nothing that could fall into wrong hands, no client secret or certificate that could expire. Based on the permissions assigned to the managed identity, it will be able to authenticate and authorize access to the Microsoft Graph APIs used behind the cmdlet to fetch the data.</p>
 <h3 id="by-using-a-certificate">By using a certificate</h3>
 <h4 id="create-your-certificate">Create your certificate</h4>
 <p>In this following example we create a new Azure AD Application registration which creates your certificates. You can also use a private/public certificate key pair you already have.</p>
@@ -229,9 +244,9 @@ param($Request, $TriggerMetadata)
 Write-Host &quot;PowerShell HTTP trigger function processed a request.&quot;
 
 $script = {
-    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -ClientId [the clientid created earlier] -Thumbprint [the thumbprint you copied] -Tenant [yourtenant.onmicrosoft.com]
+    Connect-PnPOnline tenant.sharepoint.com/sites/demo -ClientId [the clientid created earlier] -Thumbprint [the thumbprint you copied] -Tenant [tenant.onmicrosoft.com]
 
-    $web = Get-PnPWeb;
+    $web = Get-PnPWeb
     $web.Title
 }
 
@@ -267,9 +282,9 @@ $script = {
     $securePassword = ConvertTo-SecureString $env:tenant_pwd -AsPlainText -Force
     $credentials = New-Object PSCredential ($env:tenant_user, $securePassword)
 
-    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -Credentials $credentials
+    Connect-PnPOnline yourtenant.sharepoint.com/sites/demo -Credentials $credentials
 
-    $web = Get-PnPWeb;
+    $web = Get-PnPWeb
     $web.Title
 }
 

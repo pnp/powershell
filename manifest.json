@@ -25,12 +25,27 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/azureautomationrunbook.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/azureautomationrunbook.html",
+          "hash": "9nNB9ymXCJaKCFqAtN6Wcg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "articles/azurecloudshell.md",
       "output": {
         ".html": {
           "relative_path": "articles/azurecloudshell.html",
-          "hash": "ICDGiLdc+6ocxH7VHV3dEw=="
+          "hash": "Ptpl/bcRQlL0gujfxeAXDQ=="
         }
       },
       "is_incremental": false,
@@ -42,7 +57,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/azurefunctions.html",
-          "hash": "aaswrL8Ywb3LWge1Bi+hPw=="
+          "hash": "RR3/MxqnDshWBW38+PImow=="
         }
       },
       "is_incremental": false,
@@ -90,7 +105,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/buildinglocalpnpbuild.html",
-          "hash": "ZUNFBkYx1yFjy6dyePaTwg=="
+          "hash": "P/p7Sijq9TsysE59xT5ekQ=="
         }
       },
       "is_incremental": false,
@@ -213,7 +228,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "Mx86wsmzMi3H3RaO0wu6KA=="
+          "hash": "xLf96xYMRql9GV4f9Uek7A=="
         }
       },
       "is_incremental": false,
@@ -8062,6 +8077,270 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/azureautomation/addmodulefromgallery.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/addmodulefromgallery.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/addmodulefromgallerycustombuild.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/addmodulefromgallerycustombuild.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/addmodulefromgallerycustombuildimport.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/addmodulefromgallerycustombuildimport.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/addmodulefromgallerycustombuildnupkg.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/addmodulefromgallerycustombuildnupkg.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationaccountmodulesmenu.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationaccountmodulesmenu.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationaddmodule.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationaddmodule.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationaddmodulepnpposh.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationaddmodulepnpposh.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhconfirm.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationaddmodulepnpposhconfirm.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhcustombuildstatus.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationaddmodulepnpposhcustombuildstatus.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhcustomdone.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationaddmodulepnpposhcustomdone.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhdone.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationaddmodulepnpposhdone.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhimport.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationaddmodulepnpposhimport.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationaddmodulepnpposhstatus.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationaddmodulepnpposhstatus.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/automationcreateinstance.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/automationcreateinstance.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/azureportaladdrunbookmenuitem.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/azureportaladdrunbookmenuitem.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/azureportaladdrunbookoption.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/azureportaladdrunbookoption.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/azureportalcreaterunbook.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/azureportalcreaterunbook.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/azureportaleditrunbookps.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/azureportaleditrunbookps.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/azureportaltestrunbook.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/azureportaltestrunbook.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/createautomationgotoresource.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/createautomationgotoresource.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/createautomationresource.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/createautomationresource.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/createresource.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/createresource.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/explorerzipcustombuild.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/explorerzipcustombuild.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azureautomation/pwshdownloadcustombuild.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azureautomation/pwshdownloadcustombuild.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/azurecloudshell/devicelogin.png",
       "output": {
         "resource": {
@@ -8172,6 +8451,17 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/azurefunctions/createfunctionappcompleted.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/createfunctionappcompleted.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/azurefunctions/createfunctionapphosting.png",
       "output": {
         "resource": {
@@ -8183,10 +8473,54 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/azurefunctions/createfunctionappresource.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/createfunctionappresource.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/createresource.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/createresource.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/azurefunctions/disableazinprofile.png",
       "output": {
         "resource": {
           "relative_path": "images/azurefunctions/disableazinprofile.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/functionappappfilesdropdown.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/functionappappfilesdropdown.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/functionappappfilesmenu.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/functionappappfilesmenu.png"
         }
       },
       "is_incremental": false,
@@ -8546,6 +8880,28 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/contributing/vscodebuildlocalcore.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodebuildlocalcore.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodebuildlocalframework.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodebuildlocalframework.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/contributing/vscodebuildsucceeded.png",
       "output": {
         "resource": {
@@ -8872,7 +9228,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 666,
+          "total_file_count": 667,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
