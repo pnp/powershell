@@ -16,6 +16,8 @@ We'll be using the command line Git Tools to complete the steps. If you prefer u
 
    ![Downloading Git Tools](./../images/contributing/downloadgittools.png)
 
+   And click on the **Click here to download** link
+
    ![Downloading Git Tools](./../images/contributing/downloadgittools2.png)
 
 2. There will be a scary amount of questions asked during the installer. Just use all defaults and next-next-finish through the installation process
