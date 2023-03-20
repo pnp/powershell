@@ -1,5 +1,9 @@
 # Contribution guidance
 
+Please have a look at [our documentation](https://pnp.github.io/powershell/articles/buildingsource.html) to learn how you can contribute to PnP PowerShell!
+
+# Contribution guidance
+
 All PnP repositories are following up on the standard PnP process on getting started and contribute. 
 
 See following PnP wiki page from the main repository for additional details. 
