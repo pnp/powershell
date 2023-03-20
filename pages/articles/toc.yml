@@ -1,29 +1,36 @@
 - name: Installation
   href: installation.md
-- name: Update notifications
-  href: updatenotifications.md
 - name: Authentication
   href: authentication.md
 - name: Credential Management
   href: credentialmanagement.md
 - name: Connecting to SharePoint
   href: connecting.md
-- name: Configure PnP PowerShell
-  href: configuration.md
 - name: Batching in PnP PowerShell
   href: batching.md
 - name: Upgrading from the Legacy version
-  href: upgrading.md
-- name: Using PnP PowerShell in Azure Functions
-  href: azurefunctions.md
-- name: Using PnP PowerShell in Azure Runbooks
-  href: azureautomationrunbook.md
-- name: Using PnP PowerShell in Azure Cloud Shell
-  href: azurecloudshell.md  
-- name: Using PnP PowerShell in Docker containers
-  href: docker.md
-- name: Using PnP PowerShell in Visual Studio Development Containers
-  href: dev-containers.md
+  href: upgrading.md  
+- name: Configure PnP PowerShell
+  items:
+    - name: Version checks
+      href: versionchecks.md
+    - name: Update notifications
+      href: updatenotifications.md
+
+- name: Using PnP PowerShell in Azure
+  items:  
+    - name: Azure Functions
+      href: azurefunctions.md
+    - name: Azure Automation Runbooks
+      href: azureautomationrunbook.md
+    - name: Azure Cloud Shell
+      href: azurecloudshell.md
+- name: Using PnP PowerShell in Containers
+  items:      
+    - name: Docker containers
+      href: docker.md
+    - name: Visual Studio Development Containers
+      href: dev-containers.md
 - name: How to contribute
   items:
     - name: Getting started
