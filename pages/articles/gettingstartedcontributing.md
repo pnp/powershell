@@ -14,9 +14,9 @@ We'll be using the command line Git Tools to complete the steps. If you prefer u
 
 1. If you haven't got them already, install the Git Tools for your environment. They're available for Windows, Linux and Mac. Simply download the latest installer from: https://git-scm.com/downloads
 
-  ![Downloading Git Tools](./../images/contributing/downloadgittools.png)
+   ![Downloading Git Tools](./../images/contributing/downloadgittools.png)
 
-  ![Downloading Git Tools](./../images/contributing/downloadgittools2.png)
+   ![Downloading Git Tools](./../images/contributing/downloadgittools2.png)
 
 1. There will be a scary amount of questions asked during the installer. Just use all defaults and next-next-finish through the installation process
    
