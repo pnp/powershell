@@ -26,6 +26,8 @@
   items:
     - name: Getting started
       href: gettingstartedcontributing.md
+    - name: Folder structure
+      href: buildingfolderstructure.md
     - name: Running unit tests
       href: runningtests.md
     - name: Building using docker
