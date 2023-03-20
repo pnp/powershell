@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Running the Unit Tests | PnP PowerShell </title>
+    <title>Running against a local copy of the PnP Framework | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Running the Unit Tests | PnP PowerShell ">
+    <meta name="title" content="Running against a local copy of the PnP Framework | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -76,36 +76,26 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="">
+            <article class="content wrap" id="_content" data-uid="buildinglocalpnpbuild">
                 
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/runningtests.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/buildinglocalpnpbuild.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="running-the-unit-tests">Running the Unit Tests</h1>
+                    <h1 id="running-against-a-local-copy-of-the-pnp-framework">Running against a local copy of the PnP Framework</h1>
 
-<p>Effectively the unit tests are not unit tests but should be more thought of as an integration test as we run the cmdlets against an actual site.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>These unit tests are not actively being used at the moment. Please ensure you test your cmdlets manually before submitting a PR. We do have a build process that verifies if your PR will compile, but it will not test if your submission leads to the expected result.</p>
-</div>
-<h2 id="setting-up-your-environment">Setting up your environment</h2>
-<p>Create a (modern) site collection at any location in your tenant. This site collection will be used for testing.</p>
-<h2 id="running-the-test-script">Running the test script</h2>
-<p>In the build folder of this project you'll find a <code>Run-Tests.ps1</code> file. This script allows you to run the tests</p>
-<h3 id="with-a-stored-credential-recommended">With a Stored Credential (Recommended)</h3>
-<p>You can use a stored credential to authenticate to your site. We recommend using the <code>Microsoft.PowerShell.SecretsManagement</code> module. For more information about setting that one up see <a href="authentication.html">Authentication</a></p>
-<pre><code class="lang-powershell">./Run-Tests.ps1 -SiteUrl &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot; -CredentialManagerLabel &quot;yourlabel&quot;
+<p>If your code changes require changes to the PnP Framework you might want to use a local version of the PnP Framework which you modified. In order to do this you will need to have both the PnP.PowerShell repository (<a href="https://github.com/pnp/powershell">https://github.com/pnp/powershell</a>) and the PnP.Framework repository (<a href="https://github.com/pnp/pnpframework">https://github.com/pnp/pnpframework</a>) locally on your computer. Make sure that both repositories are located at the same folder level. E.g.:</p>
+<pre><code class="lang-console">c:\repos\powershell
+c:\repos\pnpframework
 </code></pre>
-<h3 id="with-credentials">With credentials</h3>
-<pre><code class="lang-powershell">$password = ConvertTo-SecureString &quot;P@ssW0rD!&quot; -AsPlainText -Force
-$username = &quot;yourname@domain.com&quot;
-./Run-Tests.ps1 -SiteUrl &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot; -Username $username -Password $password
+<p>Now, build the PnP Framework by navigating to the <code>build</code> folder in the <code>pnpframework</code> folder and run <code>Build-Debug.ps1</code>. This will compile the PnP Framework.</p>
+<p>Next, navigate to the <code>build</code> folder of the <code>powershell</code> folder and run <code>Build-Debug.ps1 -LocalPnPFramework</code>. This will compile PnP PowerShell and refer to the -locally- compiled version of the PnP Framework. If you do not specify the <code>-LocalPnPFramework</code> switch it will refer to the latest nightly build available on NuGet.org instead.</p>
+<h1 id="running-against-a-local-copy-of-the-pnp-core-sdk">Running against a local copy of the PnP Core SDK</h1>
+<p>If your code changes require changes to the PnP Core SDK (meaning any of the PnP Core SDK libraries like: PnP.Core, PnP.Core.Auth, PnP.Core.Admin, PnP.Core.Transformation, or PnP.Core.Transformation.SharePoint) you might want to use a local version of the PnP Core SDK which you modified. In order to do this you will need to have both the PnP.PowerShell repository (<a href="https://github.com/pnp/powershell">https://github.com/pnp/powershell</a>) and the PnP.Core repository (<a href="https://github.com/pnp/pnpcore">https://github.com/pnp/pnpcore</a>) locally on your computer. Make sure that both repositories are located at the same folder level. E.g.:</p>
+<pre><code class="lang-console">c:\repos\powershell
+c:\repos\pnpcore
 </code></pre>
-<p>If you do not specify the password parameter you will be prompted to enter the password:</p>
-<pre><code class="lang-powershell">$username = &quot;yourname@domain.com&quot;
-./Run-Tests.ps1 -SiteUrl &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot; -Username $username
-Enter password: 
-</code></pre>
+<p>Now, build the PnP Core SDK by navigating to the <code>build</code> folder in the <code>pnpcore</code> folder and run <code>Build-Debug.ps1</code>. This will compile the whole PnP Core SDK solution, including PnP.Core.Auth, PnP.Core.Admin, PnP.Core.Transformation, and PnP.Core.Transformation.SharePoint.</p>
+<p>Next, navigate to the <code>build</code> folder of the <code>powershell</code> folder and run <code>Build-Debug.ps1 -LocalPnPCore</code>. This will compile PnP PowerShell and refer to the -locally- compiled version of the PnP Core SDK. If you do not specify the <code>-LocalPnPCore</code> switch it will refer to the latest nightly build available on NuGet.org instead.</p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

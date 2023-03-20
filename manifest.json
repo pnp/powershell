@@ -62,11 +62,11 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "articles/building-documentation.md",
+      "source_relative_path": "articles/buildingdocker.md",
       "output": {
         ".html": {
-          "relative_path": "articles/building-documentation.html",
-          "hash": "Zs6Bf1T60uyLhFCCHsFa5A=="
+          "relative_path": "articles/buildingdocker.html",
+          "hash": "IgAlZH/DXZ9MM2Ub+E6NIw=="
         }
       },
       "is_incremental": false,
@@ -74,11 +74,23 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "articles/buildingsource.md",
+      "source_relative_path": "articles/buildingfolderstructure.md",
       "output": {
         ".html": {
-          "relative_path": "articles/buildingsource.html",
-          "hash": "bc8o0i5X4WexKqQnSOPodA=="
+          "relative_path": "articles/buildingfolderstructure.html",
+          "hash": "NKDp56h9cU0bnNWHpjcq1w=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/buildinglocalpnpbuild.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/buildinglocalpnpbuild.html",
+          "hash": "ZUNFBkYx1yFjy6dyePaTwg=="
         }
       },
       "is_incremental": false,
@@ -149,6 +161,18 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/gettingstartedcontributing.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/gettingstartedcontributing.html",
+          "hash": "8njG+fESuv79+wiUc1Lw6A=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/index.md",
       "output": {
         ".html": {
@@ -177,7 +201,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/runningtests.html",
-          "hash": "J6ptVAlH3Mvp/QiCTJagyg=="
+          "hash": "FSdnaWtMp6CzCNStDoOPLA=="
         }
       },
       "is_incremental": false,
@@ -189,7 +213,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/toc.html",
-          "hash": "/sc4yGvtsZ066V3xjUehAQ=="
+          "hash": "Mx86wsmzMi3H3RaO0wu6KA=="
         }
       },
       "is_incremental": false,
@@ -4368,7 +4392,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Move-PnPFile.html",
-          "hash": "0L0Axq3rypT379CeDSoUfg=="
+          "hash": "xqyB4Cjdr5dIxY99wCItzg=="
         }
       },
       "is_incremental": false,
@@ -8181,6 +8205,556 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/contributing/commitsahead.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/commitsahead.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/copyrepourl.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/copyrepourl.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/createfork.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/createfork.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/createnewfork.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/createnewfork.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/dotnetsdk.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/dotnetsdk.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/downloadgittools.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/downloadgittools.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/downloadgittools2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/downloadgittools2.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/downloadgittools3.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/downloadgittools3.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/forkalreadyexists.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/forkalreadyexists.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/forkbehind.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/forkbehind.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/forkbeingcreated.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/forkbeingcreated.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/forkuptodate.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/forkuptodate.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/gitaddupstream.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/gitaddupstream.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/gitclone.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/gitclone.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/gitfetchupstream.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/gitfetchupstream.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/githubcreatepr.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/githubcreatepr.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/githubprdetails.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/githubprdetails.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/githubprdone.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/githubprdone.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/gitreset.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/gitreset.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/installps7.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/installps7.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/installps7done.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/installps7done.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/localcode.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/localcode.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/pwshconnect.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/pwshconnect.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/pwshpid.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/pwshpid.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/pwshpidintitle.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/pwshpidintitle.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/pwshprofile.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/pwshprofile.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/pwshprofileaddpidtotitle.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/pwshprofileaddpidtotitle.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/pwshprofilecreate.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/pwshprofilecreate.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/pwshsetuser.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/pwshsetuser.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/updatebranch.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/updatebranch.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodebuildfailed.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodebuildfailed.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodebuildsucceeded.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodebuildsucceeded.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodebuildwithnugets.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodebuildwithnugets.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodecommit.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodecommit.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodecreatenewbranch.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodecreatenewbranch.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodedebugging.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodedebugging.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodeenterpid.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodeenterpid.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodefileopenfolder.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodefileopenfolder.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodefindcmdlet.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodefindcmdlet.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodefinddocumentation.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodefinddocumentation.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodeinstallcoreclr.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodeinstallcoreclr.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodeinstallcsharp.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodeinstallcsharp.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodenewbranchcreated.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodenewbranchcreated.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodenewbranchname.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodenewbranchname.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodeopenpowershellfolder.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodeopenpowershellfolder.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodepublishbranch.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodepublishbranch.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodepublishbranchpickorigin.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodepublishbranchpickorigin.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodesetusername.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodesetusername.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodestagechanges.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodestagechanges.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/contributing/vscodetrustfolder.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/contributing/vscodetrustfolder.png"
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/dev-containers/VScorner.png",
       "output": {
         "resource": {
@@ -8257,12 +8831,15 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "JY/kymN+ulWKRy2WjZ6fuQ=="
+          "hash": "u0f6rqsXHXAf1QHnQHopLA=="
         }
       },
       "is_incremental": false,
@@ -8295,7 +8872,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 664,
+          "total_file_count": 666,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {

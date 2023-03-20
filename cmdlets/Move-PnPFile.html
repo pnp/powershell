@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Moves a file or folder to a different location</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Move-PnPFile [-SourceUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-Overwrite] [-AllowSchemaMismatch] [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-NoWait] [-Force] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Move-PnPFile [-SourceUrl] &lt;String&gt; [-TargetUrl] &lt;String&gt; [-Overwrite] [-AllowSchemaMismatch] [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-NoWait] [-Force] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows moving a file or folder to a different location inside the same document library, such as in a subfolder, to a different document library on the same site collection or to a document library on another site collection. If you move a file to a different site or subweb you cannot specify a target filename.</p>
@@ -208,6 +208,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-nowait">-NoWait</h3>
 <p>If specified the task will return immediately after creating the move job. The cmdlet will return a job object which can be used with Receive-PnPCopyMoveJobStatus to retrieve the status of the job.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements might be shown while executing the cmdlet.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 

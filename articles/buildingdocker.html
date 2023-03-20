@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Running the Unit Tests | PnP PowerShell </title>
+    <title>Docker with Linux/Mac OS/WSL | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Running the Unit Tests | PnP PowerShell ">
+    <meta name="title" content="Docker with Linux/Mac OS/WSL | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -79,32 +79,42 @@
             <article class="content wrap" id="_content" data-uid="">
                 
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/runningtests.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/buildingdocker.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="running-the-unit-tests">Running the Unit Tests</h1>
+                    <h1 id="docker-with-linuxmac-oswsl">Docker with Linux/Mac OS/WSL</h1>
 
-<p>Effectively the unit tests are not unit tests but should be more thought of as an integration test as we run the cmdlets against an actual site.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>These unit tests are not actively being used at the moment. Please ensure you test your cmdlets manually before submitting a PR. We do have a build process that verifies if your PR will compile, but it will not test if your submission leads to the expected result.</p>
-</div>
-<h2 id="setting-up-your-environment">Setting up your environment</h2>
-<p>Create a (modern) site collection at any location in your tenant. This site collection will be used for testing.</p>
-<h2 id="running-the-test-script">Running the test script</h2>
-<p>In the build folder of this project you'll find a <code>Run-Tests.ps1</code> file. This script allows you to run the tests</p>
-<h3 id="with-a-stored-credential-recommended">With a Stored Credential (Recommended)</h3>
-<p>You can use a stored credential to authenticate to your site. We recommend using the <code>Microsoft.PowerShell.SecretsManagement</code> module. For more information about setting that one up see <a href="authentication.html">Authentication</a></p>
-<pre><code class="lang-powershell">./Run-Tests.ps1 -SiteUrl &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot; -CredentialManagerLabel &quot;yourlabel&quot;
+<p>Use this guidance if you plan on using docker containers to work with PnP PowerShell.</p>
+<h2 id="build-a-docker-image">Build a Docker Image</h2>
+<pre><code class="lang-bash">docker build . -f ./pages/Dockerfile-Linux -t pnp.powershell-pages-build
 </code></pre>
-<h3 id="with-credentials">With credentials</h3>
-<pre><code class="lang-powershell">$password = ConvertTo-SecureString &quot;P@ssW0rD!&quot; -AsPlainText -Force
-$username = &quot;yourname@domain.com&quot;
-./Run-Tests.ps1 -SiteUrl &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot; -Username $username -Password $password
+<h2 id="build-documentation">Build Documentation</h2>
+<pre><code class="lang-bash">docker run --rm -it -v $(pwd)/pages:/home pnp.powershell-pages-build /usr/bin/mono /usr/local/lib/docfx/docfx.exe build /home/docfx.json
 </code></pre>
-<p>If you do not specify the password parameter you will be prompted to enter the password:</p>
-<pre><code class="lang-powershell">$username = &quot;yourname@domain.com&quot;
-./Run-Tests.ps1 -SiteUrl &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot; -Username $username
-Enter password: 
+<h2 id="clean-documentation">Clean documentation</h2>
+<pre><code class="lang-bash">sudo rm -rf ./pages/_site
+sudo rm -rf ./pages/obj
+</code></pre>
+<h1 id="docker-with-windows-cmd">Docker with Windows CMD</h1>
+<h2 id="build-a-docker-image-1">Build a Docker Image</h2>
+<pre><code class="lang-bash">docker build . -f ./pages/Dockerfile-Windows -t pnp.powershell-pages-build
+</code></pre>
+<h2 id="build-documentation-1">Build Documentation</h2>
+<pre><code class="lang-bat">docker run --rm -it -v %cd%\pages:C:\workplace pnp.powershell-pages-build powershell -c Start-Process -NoNewWindow -FilePath $env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\docfx.json -Wait
+</code></pre>
+<h2 id="clean-documentation-1">Clean documentation</h2>
+<pre><code>rmdir /s /q pages\_site
+rmdir /s /q pages\obj
+</code></pre>
+<h1 id="docker-with-windows-powershell">Docker with Windows PowerShell</h1>
+<h2 id="build-a-docker-image-2">Build a Docker Image</h2>
+<pre><code class="lang-bash">docker build . -f ./pages/Dockerfile-Windows -t pnp.powershell-pages-build
+</code></pre>
+<h2 id="build-documentation-2">Build Documentation</h2>
+<pre><code class="lang-powershell">docker run --rm -it -v ${pwd}\pages:C:\workplace pnp.powershell-pages-build powershell -c &quot;Start-Process -NoNewWindow -FilePath `$env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\docfx.json -Wait&quot;
+</code></pre>
+<h2 id="clean-documentation-2">Clean documentation</h2>
+<pre><code class="lang-powershell">Remove-Item pages\_site -Recurse
+Remove-Item pages\obj -Recurse
 </code></pre>
 </article>
           </div>

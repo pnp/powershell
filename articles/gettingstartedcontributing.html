@@ -1,0 +1,361 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Contribution guidance | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Contribution guidance | PnP PowerShell ">
+    <meta name="generator" content="docfx 2.51.0.0">
+    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    <meta property="docfx:rel" content="../">
+    <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+        
+        <div id="search-results">
+          <div class="search-list"></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/gettingstartedcontributing.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+                    <h1 id="contribution-guidance">Contribution guidance</h1>
+
+<p>Sharing is caring! All contributions to this repository are very welcome. This guidance should help you getting started contributing to PnP PowerShell by just following some easy steps.</p>
+<p>There are various ways to accomplish the same goal. We'll go through a process here that should be easy to follow and accomplish for anyone. If you prefer using other tools over the ones mentioned here, such as using the cloning feature within Visual Studio, of course, feel free to use that instead.</p>
+<h2 id="getting-started">Getting started</h2>
+<p>Follow the paragraphs below to get yourself started with contributing to PnP PowerShell.</p>
+<h2 id="installing-git-tools">Installing Git Tools</h2>
+<p>We'll be using the command line Git Tools to complete the steps. If you prefer using other tools, such as Visual Studio or the desktop client of Git, feel free to use that instead.</p>
+<ol>
+<li><p>If you haven't got them already, install the Git Tools for your environment. They're available for Windows, Linux and Mac. Simply download the latest installer from: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></p>
+<p><img src="../images/contributing/downloadgittools.png" alt="Downloading Git Tools"></p>
+<p>And click on the <strong>Click here to download</strong> link</p>
+<p><img src="../images/contributing/downloadgittools2.png" alt="Downloading Git Tools"></p>
+</li>
+<li><p>There will be a scary amount of questions asked during the installer. Just use all defaults and next-next-finish through the installation process</p>
+<p><img src="../images/contributing/downloadgittools3.png" alt="Downloading Git Tools"></p>
+</li>
+</ol>
+<h2 id="installing-powershell-7">Installing PowerShell 7</h2>
+<p>PnP PowerShell only runs on PowerShell 7. If you don't have it installed yet, follow the steps below to install it. If you already have it installed, you can skip to the next paragraph.</p>
+<ol>
+<li><p>Navigate to the <a href="https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell">PowerShell 7 download page</a> and download the latest version of PowerShell 7. It is available for Windows, Linux and Mac.</p>
+<p><img src="../images/contributing/installps7.png" alt="Installing PowerShell 7"></p>
+</li>
+<li><p>You can accept all the defaults and just do a next-next-finish installation.</p>
+<p><img src="../images/contributing/installps7done.png" alt="Installation of PowerShell 7 done"></p>
+</li>
+</ol>
+<h2 id="installing-the-net-sdk-6">Installing the .NET SDK 6</h2>
+<p>To be able to compile the PnP PowerShell code, you need to have the .NET SDK 6 installed. If you don't have it installed yet, follow the steps below to install it. If you already have it installed, you can skip to the next paragraph.</p>
+<ol>
+<li><p>Navigate to the <a href="https://dotnet.microsoft.com/download/dotnet/6.0">.NET SDK 6 download page</a> and download the latest version of the .NET SDK 6. It is available for Windows, Linux and Mac.</p>
+<p><img src="../images/contributing/dotnetsdk.png" alt="Installing .NET SDK 6"></p>
+</li>
+<li><p>You can accept all the defaults and just do a next-next-finish installation.</p>
+</li>
+</ol>
+<h2 id="create-your-own-fork">Create your own Fork</h2>
+<p>To contribute to a GitHub project, what you do first, is create a thing called a fork. Basically it means you will get your own copy of the sourcecode. To do so, follow the steps below.</p>
+<ol>
+<li><p>Go to the <a href="https://github.com/pnp/powershell">PnP PowerShell repository</a> on GitHub</p>
+</li>
+<li><p>Make sure you're logged on to GitHub. If you dont have a GitHub account yet, create one and log on first before you continue.</p>
+</li>
+<li><p>Click the <strong>Fork</strong> button in the top right corner of the page or use this <a href="https://github.com/pnp/powershell/fork">direct link</a> instead</p>
+<p><img src="../images/contributing/createfork.png" alt="Forking the repository"></p>
+</li>
+<li><p>If it shows you a notice like this, you already have a fork. Continue with the next paragraph.</p>
+<p><img src="../images/contributing/forkalreadyexists.png" alt="Fork already exists"></p>
+<p>If it instead shows something like this, click on <strong>Create fork</strong> to create your own fork. You can leave all the defaults.</p>
+<p><img src="../images/contributing/createnewfork.png" alt="Fork does not exist yet"></p>
+<p><img src="../images/contributing/forkbeingcreated.png" alt="Fork does not exist yet"></p>
+</li>
+</ol>
+<h2 id="updating-your-fork">Updating your Fork</h2>
+<p>Now that you have your own fork, you need to make sure it's up to date with the latest changes from the main repository. Do this every time before you start working on a change. If you don't do so, it will become much harder for us to review and merge your changes. To update your fork, follow the steps below.</p>
+<ol>
+<li><p>First identify if your fork is already up to date. If it is, it will show you a message like this and you're good to continue with the next paragraph.</p>
+<p><img src="../images/contributing/forkuptodate.png" alt="Fork is up to date"></p>
+<p>If it instead shows something like this, showing that you're a certain amount of commits behind on pnp:dev, you need to update your fork first by continueing with the next step.</p>
+<p><img src="../images/contributing/forkbehind.png" alt="Fork is not up to date"></p>
+<p>Click on the <strong>Sync fork</strong> button and in the flyout that appears click on <strong>Update branch</strong></p>
+<p><img src="../images/contributing/updatebranch.png" alt="Updating your fork"></p>
+</li>
+<li><p>It should now show the above message that your branch is up to date. You can now continue with the next paragraph.
+If it instead shows that you're a certain number of comits ahead, it means your dev branch got polluted by changes you have pushed to it and you need to reset it first. Read up under <a href="#my-local-fork-is-ahead-of-pnpdev">Troubleshooting</a> for more information on how to resolve this situation.</p>
+</li>
+</ol>
+<h2 id="cloning-the-repository-to-your-local-file-system">Cloning the repository to your local file system</h2>
+<p>The next step is to download, or clone, your copy/fork of the repository to your local machine so you can work on updating it. Follow these steps to do so.</p>
+<ol>
+<li><p>Open a command prompt or PowerShell window and navigate to the folder where you want to clone the repository to. For example, if you want to clone it to your <code>C:\Source</code> folder, you would do the following:</p>
+<pre><code class="lang-powershell">cd C:\Source
+</code></pre>
+</li>
+<li><p>Look up the URL of your fork. You can find it by clicking on the <strong>Code</strong> button on your forked repository on GitHub</p>
+<p><img src="../images/contributing/copyrepourl.png" alt="Lookup up the repo URL"></p>
+</li>
+<li><p>In the command prompt or PowerShell window, type the following command and replace the URL with the URL of your fork:</p>
+<pre><code class="lang-powershell">git clone &lt;URL of repository&gt;
+</code></pre>
+<p><img src="../images/contributing/gitclone.png" alt="Cloning the code"></p>
+<p>It may be that it asks you to log on to GitHub. If so, do so and it will continue with the clone.</p>
+</li>
+<li><p>You should now have a copy of the PnP PowerShell code on your local machine in the subfolder named similarly to your fork name, typically <code>powershell</code>. If you want to read up on an explanation what each of these folders are for, read the <a href="buildingfolderstructure.html">folder structure</a> article.</p>
+<p><img src="../images/contributing/localcode.png" alt="Local code"></p>
+</li>
+<li><p>Add a reference to the upstream repository. This will allow you to pull in changes from the main repository to your local copy. To do so, type the command below. This time you can execute it exactly as shown here, you don't need to replace it with the URL of your own repository.</p>
+<pre><code class="lang-powershell">git remote add upstream https://github.com/pnp/powershell.git
+</code></pre>
+<p>You can validate if the upstream has been added successfully by executing:</p>
+<pre><code class="lang-powershell">git remote -v
+</code></pre>
+<p>If it shows entries for upstream, it worked.</p>
+<p><img src="../images/contributing/gitaddupstream.png" alt="Adding the upstream repository"></p>
+</li>
+</ol>
+<h2 id="making-changes-to-the-code">Making changes to the code</h2>
+<p>You are now ready to start making changes to the code! Use your favorite code editor to make changes to the code. If you don't have a favorite code editor yet, we recommend you use <a href="https://code.visualstudio.com/">Visual Studio Code</a>. It's free, open source and cross platform. It's also the editor some of us use ourselves. You can also use the full version of Visual Studio. The next steps will assume Visual Studio Code has been installed and will be used.</p>
+<ol>
+<li><p>Open Visual Studio Code and using the <strong>File</strong> menu go to <strong>Open Folder...</strong></p>
+<p><img src="../images/contributing/vscodefileopenfolder.png" alt="Opening a folder in Visual Studio Code"></p>
+</li>
+<li><p>Navigate to the folder where you cloned the repository to and select the folder named <code>powershell</code>. Click <strong>Select Folder</strong> to open the folder in Visual Studio Code.</p>
+<p><img src="../images/contributing/vscodeopenpowershellfolder.png" alt="Selecting the folder in Visual Studio Code"></p>
+</li>
+<li><p>If a dialog pops up asking if you trust the authors of the files in the folder, click <strong>Yes, I trust the authors</strong>.</p>
+<p><img src="../images/contributing/vscodetrustfolder.png" alt="Trusting the authors of the files"></p>
+</li>
+<li><p>Before starting to make changes, to avoid polution your dev branch as it needs to stay up to date with the PnP PowerShell dev branch, create a new branch for your changes. To do so, click on <strong>dev</strong> at the bottom left and in the flyout menu that appears on the top, click on <strong>Create new branch...</strong></p>
+<p><img src="../images/contributing/vscodecreatenewbranch.png" alt="Opening the create new branch menu"></p>
+</li>
+<li><p>Enter any name for the new branch you would like. It helps giving it a distinctive name that makes it easy to identify the changes you're making. For example, if you're going to be working on a new cmdlet which allows to retrieve sites, you could name it <code>RetrieveFilesCmdlet</code>. Hit enter to create the new branch.</p>
+<p><img src="../images/contributing/vscodenewbranchname.png" alt="Creating a new branch"></p>
+</li>
+<li><p>At the bottom left of Visual Studio Code, it should now show the new branch name you have created. You're now good to go and start making your changes to the code. Once you're done making your changes, proceed with the next paragraph on how to test your changes.</p>
+<p><img src="../images/contributing/vscodenewbranchcreated.png" alt="New branch name shown"></p>
+</li>
+</ol>
+<p>Some hints on how to work with Visual Studio Code to find the files in PnP PowerShell more easily:</p>
+<ul>
+<li><p>Use <code>CTRL+P</code> to easily search for existing files. If you're looking for an existing cmdlet to update, you can type its name without -PnP to find it easily. I.e. for <code>Get-PnPSite</code>, type  <code>GetSite</code> and it will show you the file where the cmdlet is defined. You can then open that file by hitting enter and make your changes.</p>
+<p><img src="../images/contributing/vscodefindcmdlet.png" alt="Looking for cmdlet code"></p>
+</li>
+<li><p>You can also use <code>CTRL+P</code> to easily search for existing documentation on cmdlets. This time you will enter the full cmdlet name to find the documentation. I.e. for <code>Get-PnPSite</code>, type  <code>Get-PnPSite</code> and it will show you the file where the documentation for the cmdlet is defined. You can then open that file by hitting enter and make your changes.</p>
+<p><img src="../images/contributing/vscodefinddocumentation.png" alt="Looking for cmdlet documentation"></p>
+</li>
+<li><p>Its easier to copy than to reinvent! If you're going to add a new cmdlet, look for one that does something close to what you want to do and make a copy of it to function as a starter. You can then rename the cmdlet and update the code to do what you want it to do.</p>
+</li>
+<li><p>Please only submit one (type of) change per pull request. If you want to submit multiple changes, please submit them as separate pull requests. This makes it easier for us to review, understand and merge your changes.</p>
+</li>
+</ul>
+<h2 id="testing-your-changes">Testing your changes</h2>
+<p>If you have only updated documentation, so called .md files, there's no need to test your changes. Just read up on your changes once more to ensure there are no typos. If you have updated code, you need to test your changes to make sure they work as expected. To do so, you need to build the code and then test your changes. Follow these steps to do so.</p>
+<ol>
+<li><p>Ensure you do not have any PowerShell window open on your machine in which you have loaded PnP PowerShell. If you do, close them all before proceeding.</p>
+</li>
+<li><p>In Visual Studio Code, hit <code>CTRL+SHIFT+B</code> to open the build menu. In the menu that appears on the top, choose the option <strong>Build with nugets</strong>.</p>
+<p><img src="../images/contributing/vscodebuildwithnugets.png" alt="Opening the build menu"></p>
+</li>
+<li><p>In the terminal window that appears at the bottom, you should see the build process start. It might take a few minutes to complete. Once it's done, you should see a message that the build succeeded. Be sure that it shows <strong>Build succeeded</strong> and no errors around copying the files to your local PowerShell modules folder.</p>
+<p><img src="../images/contributing/vscodebuildsucceeded.png" alt="Build succeeded"></p>
+<p>If it instead shows error like the one below, it means you still have a PowerShell session open somewhere your machine which has PnP PowerShell loaded and which blocks the build process to update the files. It can be frustrating at times to find the PowerShell session that is blocking the build process. If you're not sure which session is blocking the build process, you can try to close all PowerShell sessions and try again. If that doesn't work, you can try restarting Visual Studio Code.</p>
+<p><img src="../images/contributing/vscodebuildfailed.png" alt="Build failed"></p>
+</li>
+<li><p>You can now use PnP PowerShell as normal, but this time it will use your own build instead of the official PnP PowerShell build. To test your changes, you can use the cmdlets you have created or updated. Ensure you will use a PowerShell 7 session and not a PowerShell 5 session.</p>
+<p><img src="../images/contributing/pwshconnect.png" alt="Connecting to PnP PowerShell"></p>
+</li>
+<li><p>If you wish to step through your code debugging it, in your PowerShell 7 window, type the following command to reveal the process ID it runs under:</p>
+<pre><code class="lang-powershell">$PID
+</code></pre>
+<p><img src="../images/contributing/pwshpid.png" alt="Revealing the process ID"></p>
+</li>
+<li><p>Back in Visual Studio Code, hit <code>F5</code></p>
+</li>
+<li><p>If it asks you to install the <code>coreclr</code> component, follow <a href="#visual-studio-shows-a-dialog-asking-to-install-the-coreclr-component">these steps</a>.</p>
+</li>
+<li><p>In Visual Studio Code, at the top a flyout menu should appear with the currently running processes on your machine. Start typing in the process ID you revealed in the step above and select the process that matches your PowerShell 7 session.</p>
+<p><img src="../images/contributing/vscodeenterpid.png" alt="Selecting the PowerShell 7 process"></p>
+</li>
+<li><p>You can now set breakpoints as you are used to in your code and use the PowerShell 7 session you connected to to run the cmdlet and hit the breakpoints you have set.</p>
+<p><img src="../images/contributing/vscodedebugging.png" alt="Htting a breakpoint in code"></p>
+</li>
+</ol>
+<h2 id="submitting-your-changes-for-review">Submitting your changes for review</h2>
+<p>Once you're done making and testing your changes, you need to submit them for review and submission in what we call a Pull Request, or PR in short. Follow these steps to do so.</p>
+<ol>
+<li><p>Within Visual Studio Code, go to the Source Control section on the left. You will see all of the changes you have made. Once again, ensure with the branch name at the bottom, in this case <code>MyAwesomeUpdate</code> that you are working off of your own branch and not the dev branch. Enter a meaningful commit message in which you very briefly describe what you have changed. Then click the <strong>Commit</strong> button to commit your changes.</p>
+<p><img src="../images/contributing/vscodecommit.png" alt="Commit changes"></p>
+</li>
+<li><p>If Visual Studio Code shows a dialog mentioning that there are no staged changes to commit, just proceed by clicking <strong>Yes</strong> or <strong>Always</strong> based on your personal preference.</p>
+<p><img src="../images/contributing/vscodestagechanges.png" alt="No staged changes dialog"></p>
+</li>
+<li><p>If Visual Studio Code shows a dialog mentioning <code>Make sure you configure your &quot;user.name&quot; and &quot;user.email&quot; in git.</code>, follow <a href="#visual-studio-code-shows-a-dialog-mentioning-make-sure-you-configure-your-username-and-useremail-in-git">these steps</a>.</p>
+</li>
+<li><p>Now click the <strong>Publish Branch</strong> option that should appear under the Source Control section of Visual Studio Code to push your branch to GitHub.</p>
+<p><img src="../images/contributing/vscodepublishbranch.png" alt="Publishing branch"></p>
+</li>
+<li><p>If it asks for the remote to publish it to, pick <strong>Origin</strong>.</p>
+<p><img src="../images/contributing/vscodepublishbranchpickorigin.png" alt="Selecting the remote"></p>
+</li>
+<li><p>Open your browser and go to the <a href="https://github.com/pnp/powershell">PnP PowerShell repository on GitHub</a>. You should see a message that you have pushed a new branch to your fork. Click the <strong>Compare &amp; pull request</strong> button to proceed.</p>
+<p><img src="../images/contributing/githubcreatepr.png" alt="Comparing and creating a pull request"></p>
+</li>
+<li><p>Provide a meaningful title for your pull request and a description that explains what you have changed and why. Then click the <strong>Create pull request</strong> button. Please ensure you leave the <strong>Allow edits from maintainers</strong> option checked so we can provide you with feedback on your pull request.</p>
+<p><img src="../images/contributing/githubprdetails.png" alt="Creating a pull request"></p>
+</li>
+<li><p>Your pull request has now been created! Please be patient while someone from the PnP PowerShell team will review your suggested changes and potentially provide you with feedback. This may take some time, as all of us are doing this in our spare time.</p>
+<p><img src="../images/contributing/githubprdone.png" alt="Pull request created"></p>
+</li>
+</ol>
+<p>Thanks for contributing!</p>
+<h2 id="troubleshooting">Troubleshooting</h2>
+<h3 id="my-local-fork-is-ahead-of-pnpdev">My local fork is ahead of pnp:dev</h3>
+<ol>
+<li><p>First proceed with the steps in the <a href="#cloning-the-repository-to-your-local-file-system">Cloning the repository to your local file system</a> section to make sure you have a local copy of your version of the code.</p>
+</li>
+<li><p>After you've set up a local copy of the code, in a command prompt or PowerShell window, navigate to the folder where you cloned the repository to and execute the following command:</p>
+<pre><code class="lang-powershell">git fetch upstream
+</code></pre>
+<p><img src="../images/contributing/gitfetchupstream.png" alt="Fetching from upstream branch"></p>
+</li>
+<li><p>Now execute the following command to reset your local dev branch to the upstream dev branch:</p>
+<pre><code class="lang-powershell">git checkout dev
+git reset --hard upstream/dev
+git push origin dev --force 
+</code></pre>
+<p><img src="../images/contributing/gitreset.png" alt="Resetting to upstream"></p>
+</li>
+<li><p>If you now return to GitHub in your webbrowser into your own fork, it should show that your dev branch is up to date with the upstream dev branch.</p>
+<p><img src="../images/contributing/forkuptodate.png" alt="Fork is up to date"></p>
+</li>
+</ol>
+<h3 id="how-do-i-build-against-a-local-version-of-pnp-core-andor-pnp-framework">How do I build against a local version of PnP Core and/or PnP Framework?</h3>
+<p>If your change also requires updates to PnP Core and/or PnP Framework, you need to build PnP PowerShell against your locally built version of PnP Core and/or PnP Framework. To do so, follow the steps in <a href="buildinglocalpnpbuild.html">this article</a>. If your changes just require updates to PnP PowerShell, you don't need to do this and can just follow the steps outlined on this page.</p>
+<h3 id="visual-studio-code-shows-a-dialog-mentioning-make-sure-you-configure-your-username-and-useremail-in-git">Visual Studio Code shows a dialog mentioning <code>Make sure you configure your &quot;user.name&quot; and &quot;user.email&quot; in git.</code></h3>
+<p>If Visual Studio Code shows a dialog mentioning <code>Make sure you configure your &quot;user.name&quot; and &quot;user.email&quot; in git.</code>, click <strong>Cancel</strong> in that dialog and open a PowerShell 7 window and execute the following commands, replacing the values with your information:</p>
+<pre><code class="lang-powershell">git config --global user.name &quot;John Doe&quot;
+git config --global user.email &quot;johndoe@outlook.com&quot;
+</code></pre>
+<p><img src="../images/contributing/pwshsetuser.png" alt="Configuring git"></p>
+<p>You only need to do this once on your machine.</p>
+<h3 id="visual-studio-shows-a-dialog-asking-to-install-the-coreclr-component">Visual Studio shows a dialog asking to install the <code>coreclr</code> component</h3>
+<p>If Visual Studio Code asks you to install the <code>coreclr</code> component, click <strong>Cancel</strong> as it won't work trying to install from that dialog.</p>
+<p><img src="../images/contributing/vscodeinstallcoreclr.png" alt="Installing the coreclr component"></p>
+<p>Instead go to the extensions tab on the left in Visual Studio, use the search box to search for <code>c#</code>, click on the result that states <strong>C# for Visual Studio Code (powered by OmniSharp)</strong> and then click <strong>Install</strong>.</p>
+<p><img src="../images/contributing/vscodeinstallcsharp.png" alt="Installing the c# component"></p>
+<h3 id="how-do-i-know-the-process-id-to-attach-to-for-debugging">How do I know the process ID to attach to for debugging?</h3>
+<p>If you wish to step through your code debugging it, in your PowerShell 7 window, type the following command to reveal the process ID it runs under:</p>
+<pre><code class="lang-powershell">$PID
+</code></pre>
+<p>Alternatively, if you wish the process ID to be shown in the title of the window to make it a little easier to find the process ID, in a PowerShell 7 window, type the following command:</p>
+<pre><code class="lang-powershell">notepad $profile
+</code></pre>
+<p><img src="../images/contributing/pwshprofile.png" alt="Opening the profile file"></p>
+<p>If it states it cannot find the file and asks you if it should create a new file, answer with <strong>Yes</strong>.</p>
+<p><img src="../images/contributing/pwshprofilecreate.png" alt="Creating a new profile file"></p>
+<p>In the profile file, add the following line:</p>
+<pre><code class="lang-powershell">$Host.UI.RawUI.WindowTitle = &quot;[PID: $PID] : PowerShell $($PSVersionTable.PSVersion)&quot;
+</code></pre>
+<p><img src="../images/contributing/pwshprofileaddpidtotitle.png" alt="Adding PID to the title"></p>
+<p>Save notepad and open a new PowerShell 7 window. It should now show the process ID in the title of the window.</p>
+<p><img src="../images/contributing/pwshpidintitle.png" alt="Showing the PID in the title"></p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://telemetry.sharepointpnp.com/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>

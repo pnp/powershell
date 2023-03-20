@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Running the Unit Tests | PnP PowerShell </title>
+    <title>Folder Structure | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Running the Unit Tests | PnP PowerShell ">
+    <meta name="title" content="Folder Structure | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -76,36 +76,40 @@
         </div>
         <div class="article row grid-right">
           <div class="col-md-10">
-            <article class="content wrap" id="_content" data-uid="">
+            <article class="content wrap" id="_content" data-uid="buildingsourcecode">
                 
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/runningtests.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/buildingfolderstructure.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="running-the-unit-tests">Running the Unit Tests</h1>
+                    <h1 id="folder-structure">Folder Structure</h1>
 
-<p>Effectively the unit tests are not unit tests but should be more thought of as an integration test as we run the cmdlets against an actual site.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>These unit tests are not actively being used at the moment. Please ensure you test your cmdlets manually before submitting a PR. We do have a build process that verifies if your PR will compile, but it will not test if your submission leads to the expected result.</p>
-</div>
-<h2 id="setting-up-your-environment">Setting up your environment</h2>
-<p>Create a (modern) site collection at any location in your tenant. This site collection will be used for testing.</p>
-<h2 id="running-the-test-script">Running the test script</h2>
-<p>In the build folder of this project you'll find a <code>Run-Tests.ps1</code> file. This script allows you to run the tests</p>
-<h3 id="with-a-stored-credential-recommended">With a Stored Credential (Recommended)</h3>
-<p>You can use a stored credential to authenticate to your site. We recommend using the <code>Microsoft.PowerShell.SecretsManagement</code> module. For more information about setting that one up see <a href="authentication.html">Authentication</a></p>
-<pre><code class="lang-powershell">./Run-Tests.ps1 -SiteUrl &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot; -CredentialManagerLabel &quot;yourlabel&quot;
+<p>Once you have gone through the <a href="gettingstartedcontributing.html">steps to setup your development environment</a>, you will see a folder structure cloned to your machine. In this folder you'll find the following folder structure:</p>
+<pre><code>- build
+- documentation
+- pages
+- resources
+- samples
+- src/ALC
+     /Commands
+     /Resources
+     /Tests
 </code></pre>
-<h3 id="with-credentials">With credentials</h3>
-<pre><code class="lang-powershell">$password = ConvertTo-SecureString &quot;P@ssW0rD!&quot; -AsPlainText -Force
-$username = &quot;yourname@domain.com&quot;
-./Run-Tests.ps1 -SiteUrl &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot; -Username $username -Password $password
-</code></pre>
-<p>If you do not specify the password parameter you will be prompted to enter the password:</p>
-<pre><code class="lang-powershell">$username = &quot;yourname@domain.com&quot;
-./Run-Tests.ps1 -SiteUrl &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot; -Username $username
-Enter password: 
-</code></pre>
+<h3 id="build-folder">Build folder</h3>
+<p>The build folder contains scripts used to build the project, build the Helpfile, etc. While debugging locally the <code>Build-Debug.ps1</code> script is the script to use to build the project and copy the correct files to the correct location on your machine. The other build scripts are used in GitHub actions to automate the nightly builds etc.</p>
+<h3 id="documentation-folder">Documentation folder</h3>
+<p>The documentation folder contains the markdown files all describing every single cmdlet available. If you create a new cmdlet we <em>require</em> you to also provide a documentation file. Notice that the documentation files <em>require</em> a front-matters yaml header as specified in the other files. Updated accordingly.</p>
+<h3 id="pages-folder">Pages folder</h3>
+<p>The pages folder contains the structure which is published to <a href="https://pnp.github.io/powershell">https://pnp.github.io/powershell</a>. We automatically copy the cmdlet documentation in there at build time, but you can create PRs on the 'articles' folder if you want.</p>
+<h3 id="resources">Resources</h3>
+<p>The resources folder contains an XML file which is copied into the output folder of the build. This file defines how PowerShell should parse and render the objects shown as output from the PnP PowerShell cmdlets</p>
+<h3 id="srcalc">src/ALC</h3>
+<p>Due to possible conflicts with already loaded assemblies in PowerShell we create an Assembly Load Context for a specific assembly. See <a href="https://learn.microsoft.com/dotnet/core/dependency-loading/understanding-assemblyloadcontext">https://learn.microsoft.com/dotnet/core/dependency-loading/understanding-assemblyloadcontext</a> for more information about ALCs.</p>
+<h3 id="srccommands">src/Commands</h3>
+<p>This is the main location of all the cmdlet code.</p>
+<h3 id="srcresources">src/Resources</h3>
+<p>Any resources used by cmdlets go into this folder</p>
+<h3 id="srctests">src/Tests</h3>
+<p>This is where the the unit/integration tests reside. See <a href="runningtests.html">Running test</a> for more information.</p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
