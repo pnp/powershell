@@ -64,7 +64,7 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
 1. In the dropdown presented near the top, select `requirements.psd1`. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the `Az` entry presented commented out.
 
-   ![Navigate to requirements.psd1](./../images/azurefunctions/functionappfilesdropdown.png)
+   ![Navigate to requirements.psd1](./../images/azurefunctions/functionappappfilesdropdown.png)
 
 1. Add a new entry or replace the whole contents of the file with one of the following and remember to save the `requirements.psd1` file:
 
@@ -73,7 +73,7 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
    > [!Important]
    > There's currently no stable PnP PowerShell version that works with Azure Functions. Use the [latest nightly build](#specific-prerelease-version) instead.
 
-   ```json
+   ```powershell
    @{
        'PnP.PowerShell' = '1.12.0'
    }
@@ -88,7 +88,7 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
    If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):
 
-   ```json
+   ```powershell
    @{
        'PnP.PowerShell' = '1.*'
     }
@@ -98,9 +98,9 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
 #### Specific prerelease version
 
-   If you wish to use a specific prerelease/nightly build version, go to the [overview of available versions](https://www.powershellgallery.com/packages/PnP.PowerShell) and literally copy/paste the version in the definition:  
+   If you wish to use a specific prerelease/nightly build version, go to the [overview of available versions](https://www.powershellgallery.com/packages/PnP.PowerShell) and literally copy/paste the version in the definition, i.e.:  
 
-   ```json
+   ```powershell
    @{
        'PnP.PowerShell' = '2.0.45-nightly'
     }
