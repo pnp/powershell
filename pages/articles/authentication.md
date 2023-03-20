@@ -23,7 +23,7 @@ During execution of the cmdlet you will be talked through the consent flow. This
 PnP PowerShell has a cmdlet that allows you to register a new Azure AD App, and optionally generate the certificates for you to use to login with that app. 
 
 ```powershell
-$result = Register-PnPAzureADApp -ApplicationName "PnP Rocks" -Tenant mytenant.onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
+$result = Register-PnPAzureADApp -ApplicationName "PnP Rocks" -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
 $result
 ```
 
