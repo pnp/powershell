@@ -74,15 +74,15 @@ Now that you have your own fork, you need to make sure it's up to date with the 
 
 1. First identify if your fork is already up to date. If it is, it will show you a message like this and you're good to continue with the next paragraph.
 
-  ![Fork is up to date](./../images/contributing/forkuptodate.png)
+   ![Fork is up to date](./../images/contributing/forkuptodate.png)
 
-  If it instead shows something like this, showing that you're a certain amount of commits behind on pnp:dev, you need to update your fork first by continueing with the next step.
+   If it instead shows something like this, showing that you're a certain amount of commits behind on pnp:dev, you need to update your fork first by continueing with the next step.
 
-  ![Fork is not up to date](./../images/contributing/forkbehind.png)
+   ![Fork is not up to date](./../images/contributing/forkbehind.png)
 
-  Click on the **Sync fork** button and in the flyout that appears click on **Update branch**
+   Click on the **Sync fork** button and in the flyout that appears click on **Update branch**
 
-  ![Updating your fork](./../images/contributing/updatebranch.png)
+   ![Updating your fork](./../images/contributing/updatebranch.png)
 
 1. It should now show the above message that your branch is up to date. You can now continue with the next paragraph.
    If it instead shows that you're a certain number of comits ahead, it means your dev branch got polluted by changes you have pushed to it and you need to reset it first. Read up under (Troubleshooting)[#my-local-fork-is-ahead-of-pnpdev] for more information on how to resolve this situation.
@@ -93,9 +93,9 @@ The next step is to download, or clone, your copy/fork of the repository to your
 
 1. Open a command prompt or PowerShell window and navigate to the folder where you want to clone the repository to. For example, if you want to clone it to your `C:\Source` folder, you would do the following:
 
-  ```powershell
-  cd C:\Source
-  ```
+   ```powershell
+   cd C:\Source
+   ```
 
 1. Look up the URL of your fork. You can find it by clicking on the **Code** button on your forked repository on GitHub
    
