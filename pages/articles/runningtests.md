@@ -1,6 +1,9 @@
 # Running the Unit Tests
 
-Effectively the unit tests are not unit tests but should be more thought of as an integration test as we run the cmdlets against an actual site.
+Effectively the unit tests are not unit tests but should be more thought of as an integration test as we run the cmdlets against an actual site. 
+
+> [!NOTE] 
+> These unit tests are not actively being used at the moment. Please ensure you test your cmdlets manually before submitting a PR. We do have a build process that verifies if your PR will compile, but it will not test if your submission leads to the expected result.
 
 ## Setting up your environment
 

@@ -183,7 +183,7 @@ Connects to SharePoint using legacy cookie based authentication.
 Notice this type of authentication is limited in its functionality.
 We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work.
 Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason.
-The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected.
+The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will disappear immediately, this is expected.
 Use -ForceAuthentication to reset the authentication cookies and force a new login.
 See example 10 for a full support for interactive logins using MFA and the ability to acquire Graph tokens.
 
@@ -211,7 +211,7 @@ Connect-PnPOnline -Url contoso.sharepoint.com -ManagedIdentity
 Get-PnPTeamsTeam
 ```
 
-Connects using a system assigned managed identity to Microsoft Graph. Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
+Connects using a system assigned managed identity to Microsoft Graph. Using this way of connecting only works with environments that support managed identities: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
 
 ### EXAMPLE 13
 ```
@@ -219,7 +219,7 @@ Connect-PnPOnline -Url contoso.sharepoint.com -ManagedIdentity -UserAssignedMana
 Get-PnPList
 ```
 
-Connects using an user assigned managed identity with object/principal ID 363c1b31-6872-47fd-a616-574d3aec2a51 to SharePoint Online. Using this way of connecting only works with environments that support managed identies: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
+Connects using an user assigned managed identity with object/principal ID 363c1b31-6872-47fd-a616-574d3aec2a51 to SharePoint Online. Using this way of connecting only works with environments that support managed identities: Azure Functions, Azure Automation Runbooks and the Azure Cloud Shell. Read up on [this article](https://pnp.github.io/powershell/articles/azurefunctions.html#by-using-a-managed-identity) how it can be used.
 
 ### EXAMPLE 14
 ```
@@ -618,7 +618,7 @@ Windows only: Connects to SharePoint using legacy cookie based authentication.
 Notice this type of authentication is limited in its functionality.
 We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work.
 Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason.
-The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will dissappear immediately, this is expected.
+The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will disappear immediately, this is expected.
 Use -ForceAuthentication to reset the authentication cookies and force a new login.
 
 ```yaml

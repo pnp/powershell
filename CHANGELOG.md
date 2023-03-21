@@ -50,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Properties` parameter to `Get-PnPUserProfileProperty` cmdlet which allows retrieval of specific properties if specified. [#2840](https://github.com/pnp/powershell/pull/2840)
 - Added support for specifying the `-ContentUrl` configuration in `Add-PnPTeamsTab` cmdlet when trying to add a Planner as a tab in Teams channel. [#2850](https://github.com/pnp/powershell/pull/2850)
 - Added `-LogoFilePath` parameter to `Register-PnPAzureADApp` cmdlet to allow setting the logo for the Azure AD app. [#2881](https://github.com/pnp/powershell/pull/2881)
+- Added support for `-Verbose` in `Move-PnPFile` which will show if it has problems determining if the destination location is a folder or a file [#2888](https://github.com/pnp/powershell/pull/2888)
 
 ### Changed
 
@@ -91,9 +92,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Get-PnPListItem` cmdlet not respecting `RowLimit` in the CAML query. [#2804](https://github.com/pnp/powershell/pull/2804)
 - Fixed `Connect-PnPOnline -ManagedIdentity -UserAssignedManagedIdentityClientId` not working in Azure Automation Runbooks as it required usage of the object_id parameter instead of the principal_id to get an access token. [#2813](https://github.com/pnp/powershell/pull/2813)
 - Fixed `Register-PnPAzureADApp` cmdlet to not change or generate certificate if `-CertificatePath` parameter is already specified. [#2878](https://github.com/pnp/powershell/pull/2878)
+- Fixed `New-PnPSite` cmdlet to work with non-commercial cloud environments.
+- Fixed `Set-PnPSearchSettings` cmdlet not working with vanity domain tenants [#2884](https://github.com/pnp/powershell/pull/2884)
 
 ### Contributors
 
+- Chris R. [ChrisRo89]
 - Aimery Thomas [a1mery]
 - Ganesh Sanap [ganesh-sanap]
 - Markus Hanisch [m-hanisch]
@@ -222,6 +226,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Valeras Narbutas [ValerasNarbutas]
 - Russell Gove [russgove]
 - Jasper Beerens
 - Aleksandr Sapozhkov [shurick81]

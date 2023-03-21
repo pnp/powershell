@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The object id, name or instance of the application role to retrieve from the currently assigned approles of the service principal/application registration. If nothing returns, it means this specific role is currently not assigned to the service principal/application registration.
+The object id, name or instance of the application role to retrieve from the currently assigned app roles of the service principal/application registration. If nothing returns, it means this specific role is currently not assigned to the service principal/application registration.
 
 ```yaml
 Type: ServicePrincipalAppRoleBind
