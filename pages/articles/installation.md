@@ -18,6 +18,20 @@ If you want to install or update to the latest nightly built prerelease of PnP P
 Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease
 ```
 
+## Use in Docker
+
+To use PnP.PowerShell in a Windows container:
+
+```
+docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
+```
+
+To use PnP.PowerShell in a Linux container:
+
+```
+docker run -it m365pnp/powershell
+```
+
 # Uninstalling PnP PowerShell
 
 In case you would like to remove PnP PowerShell, you can run:
