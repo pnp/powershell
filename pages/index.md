@@ -20,7 +20,7 @@ Before you start to work on code change consider starting a discussion in the re
 
 ## Contributing to PnP PowerShell
 
-Follow the [getting started contributing](articles/gettingstartedcontributing.md) guidelines to help out. Sharing is caring!
+Follow the [getting started contributing](/powershell/articles/gettingstartedcontributing.md) guidelines to help out. Sharing is caring!
 
 ## Supportability and SLA
 
