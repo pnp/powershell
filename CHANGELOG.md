@@ -49,6 +49,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-OpenDocumentsMode` option to `Set-PnPList` which allows configuring if documents should be opened in the browser or in the local client [#2873](https://github.com/pnp/powershell/pull/2873)
 - Added `-Properties` parameter to `Get-PnPUserProfileProperty` cmdlet which allows retrieval of specific properties if specified. [#2840](https://github.com/pnp/powershell/pull/2840)
 - Added support for specifying the `-ContentUrl` configuration in `Add-PnPTeamsTab` cmdlet when trying to add a Planner as a tab in Teams channel. [#2850](https://github.com/pnp/powershell/pull/2850)
+- Added `Get-PnPSharePointAddIn` cmdlet to retrive list of SharePoint addins installed in the site collection.
+- Added `Get-PnPAzureACSPrincipal` cmdlet to retrieve list of installed Azure ACS Principals in the site collection or tenant.
 
 ### Changed
 
