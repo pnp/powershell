@@ -1,18 +1,22 @@
 # Installing PnP PowerShell
 
+You need PowerShell 7.2 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be [installed through here](https://learn.microsoft.com/powershell/scripting/install/installing-powershell).
+
+## Stable build
+
 You can run the following commands to install the latest stable PowerShell cmdlets for the current user:
 
 ```powershell
 Install-Module PnP.PowerShell -Scope CurrentUser
 ```
 
+## Nightly build
+
 If you want to install or update to the latest nightly built prerelease of PnP PowerShell for the current user, run:
 
 ```powershell
 Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease
 ```
-
-This will work on Windows / Linux / MacOS.
 
 # Uninstalling PnP PowerShell
 
