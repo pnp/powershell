@@ -32,7 +32,7 @@ members – Copies the members and owners of the group.
 settings – Copies all settings within the team, along with key group settings.
 tabs – Copies the tabs within channels.
 
-When tabs are cloned, they are put into an unconfigured state -- they are displayed on the tab bar in Microsoft Teams, and the first time you open them, you'll go through the configuration screen. If the person opening the tab does not have permission to configure apps, they will see a message explaining that the tab hasn't been configured.
+When tabs are cloned, they are put into an un configured state -- they are displayed on the tab bar in Microsoft Teams, and the first time you open them, you'll go through the configuration screen. If the person opening the tab does not have permission to configure apps, they will see a message explaining that the tab hasn't been configured.
 
 ## EXAMPLES
 
@@ -54,14 +54,14 @@ Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft 
 ```powershell
 Copy-PnPTeamsTeam -Identity "Team 12" -DisplayName "Library Assist" -PartsToClone apps,tabs,settings,channels,members -Description "Self help community for library" -Classification "Library" -Visibility public
 ```
-Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team  "Team 12" with the apps,tabs,settings,channels and members setting the classication to "Library", Visibility to public and Description to "Self help community for library"
+Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team  "Team 12" with the apps,tabs,settings,channels and members setting the classification to "Library", Visibility to public and Description to "Self help community for library"
 
 ### EXAMPLE 4
 
 ```powershell
 Copy-PnPTeamsTeam -Identity "Team 12" -DisplayName "Library Assist" -PartsToClone settings,channels -Description "Self help community for library" -Classification "Library" -Visibility public
 ```
-Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team  "Team 12" with the settings and channels setting the classication to "Library", Visibility to public and Description to "Self help community for library"
+Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team  "Team 12" with the settings and channels setting the classification to "Library", Visibility to public and Description to "Self help community for library"
 
 ## PARAMETERS
 

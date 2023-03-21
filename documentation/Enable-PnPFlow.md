@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -AsAdmin
-Enable the flow as an adminstrator
+Enable the flow as an administrator
 
 ```yaml
 Type: SwitchParameter

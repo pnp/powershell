@@ -82,7 +82,7 @@ Returns only those users from the User Information List of the current site coll
 Get-PnPUser -WithRightsAssignedDetailed
 ```
 
-Returns all users who have been granted explicit access to the current site, lists and listitems
+Returns all users who have been granted explicit access to the current site, lists and list items
 
 ## PARAMETERS
 
@@ -131,7 +131,7 @@ Accept wildcard characters: False
 ```
 
 ### -WithRightsAssignedDetailed
-If provided, only users that currently have any specific kind of access rights assigned to the current site, lists or listitems/documents will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.
+If provided, only users that currently have any specific kind of access rights assigned to the current site, lists or list items/documents will be returned. Otherwise all users, even those who previously had rights assigned, but not anymore at the moment, will be returned as the information is pulled from the User Information List. Only works if you don't provide an -Identity.
 
 ```yaml
 Type: SwitchParameter

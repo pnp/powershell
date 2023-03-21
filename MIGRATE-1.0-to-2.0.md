@@ -73,6 +73,7 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 | Add-PnPTeamsChannel | Private | ChannelType | The parameter was obsolete and hence removed. Use `-ChannelType` instead |
 | New-PnPTeamsTeam | Owner | Owners | The parameter was obsolete and hence removed. Use `-Owners` instead which supports setting multiple owner of a Teams team |
 | Export-PnPTaxonomy | - | - | The cmdlet does not support export of taxonomy using `UTF-7` encoding. If `UTF-7` is specified, it will switch to `UTF-8` encoding |
+| Get-PnPField | ReturnTyped | - | The cmdlet will always return the typed object of the field. |
 | Get-PnPUserProfileProperty | - | - | Additional user profile properties are no longer returned under UserProfileProperties but instead will be directly under the returned instance |
 
 ## Other notable changes

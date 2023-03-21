@@ -128,7 +128,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExtensibilityHandlers
-Allows you to specify ExtensbilityHandlers to execute while applying a template
+Allows you to specify ExtensibilityHandlers to execute while applying a template
 
 ```yaml
 Type: ExtensibilityHandler[]

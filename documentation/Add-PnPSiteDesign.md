@@ -51,7 +51,7 @@ Adds a new Site Design, with the specified title, description and logo to be sho
 Add-PnPSiteDesign -Title "My Company Design" -SiteScriptIds "e84dcb46-3ab9-4456-a136-66fc6ae3d3c5","6def687f-0e08-4f1e-999c-791f3af9a600" -Description "My description" -WebTemplate TeamSite -ThumbnailUrl "https://contoso.sharepoint.com/sites/templates/my images/logo.png"
 ```
 
-Adds a new Site Design, with the specified title, description and logo to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. The WebTemplate parameter specifies that this design applies to modern Team Sites. Notice that when the location for the TumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.
+Adds a new Site Design, with the specified title, description and logo to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. The WebTemplate parameter specifies that this design applies to modern Team Sites. Notice that when the location for the ThumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.
 
 ## PARAMETERS
 

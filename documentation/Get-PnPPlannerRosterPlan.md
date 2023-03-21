@@ -25,7 +25,7 @@ Get-PnPPlannerRosterPlan [-Identity <PlannerRosterPipeBind>] [-User <string>] [<
 ```
 
 ## DESCRIPTION
-This cmdlet returns Microsft Planner roster plans for a specific Microsoft Planner Roster or a specific user
+This cmdlet returns Microsoft Planner roster plans for a specific Microsoft Planner Roster or a specific user
 
 ## EXAMPLES
 
