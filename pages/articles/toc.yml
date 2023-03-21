@@ -4,7 +4,7 @@
   href: authentication.md
 - name: Credential Management
   href: credentialmanagement.md
-- name: Connecting to SharePoint
+- name: Connecting
   href: connecting.md
 - name: Batching in PnP PowerShell
   href: batching.md
