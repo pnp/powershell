@@ -1,32 +1,45 @@
 - name: Installation
   href: installation.md
-- name: Update notifications
-  href: updatenotifications.md
 - name: Authentication
   href: authentication.md
 - name: Credential Management
   href: credentialmanagement.md
-- name: Connecting to SharePoint
+- name: Connecting
   href: connecting.md
-- name: Configure PnP PowerShell
-  href: configuration.md
 - name: Batching in PnP PowerShell
   href: batching.md
 - name: Upgrading from the Legacy version
-  href: upgrading.md
-- name: Using PnP PowerShell in Azure Functions
-  href: azurefunctions.md
-- name: Using PnP PowerShell in Azure Cloud Shell
-  href: azurecloudshell.md  
-- name: Using PnP PowerShell in Docker containers
-  href: docker.md
-- name: Using PnP PowerShell in Visual Studio Development Containers
-  href: dev-containers.md
-- name: For Developers
+  href: upgrading.md  
+- name: Configure PnP PowerShell
   items:
-    - name: Building the project
-      href: buildingsource.md
-    - name: Running the tests
+    - name: Telemetry
+      href: telemetry.md
+    - name: Version checks
+      href: updatenotifications.md
+
+- name: Using PnP PowerShell in Azure
+  items:  
+    - name: Azure Functions
+      href: azurefunctions.md
+    - name: Azure Automation Runbooks
+      href: azureautomationrunbook.md
+    - name: Azure Cloud Shell
+      href: azurecloudshell.md
+- name: Using PnP PowerShell in Containers
+  items:      
+    - name: Docker containers
+      href: docker.md
+    - name: Visual Studio Development Containers
+      href: dev-containers.md
+- name: How to contribute
+  items:
+    - name: Getting started
+      href: gettingstartedcontributing.md
+    - name: Folder structure
+      href: buildingfolderstructure.md
+    - name: Using a local version of PnP Core/Framework
+      href: buildinglocalpnpbuild.md
+    - name: Running unit tests
       href: runningtests.md
-    - name: Building the documentation
-      href: building-documentation.md
+    - name: Building using docker
+      href: buildingdocker.md      
