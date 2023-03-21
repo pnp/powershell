@@ -12,9 +12,9 @@
   href: upgrading.md  
 - name: Configure PnP PowerShell
   items:
+    - name: Telemetry
+      href: telemetry.md
     - name: Version checks
-      href: versionchecks.md
-    - name: Update notifications
       href: updatenotifications.md
 
 - name: Using PnP PowerShell in Azure
