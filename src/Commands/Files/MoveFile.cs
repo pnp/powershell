@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Files
         private const string ParameterSet_SERVER = "Server Relative";
         private const string ParameterSet_SITE = "Site Relative";
         private const string ParameterSet_OTHERSITE = "Other Site Collection";
-
+        
         [Parameter(Mandatory = true)]
         [Alias("ServerRelativeUrl", "SiteRelativeUrl")]
         public string SourceUrl = string.Empty;
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false)] 
         public SwitchParameter NoWait;
 
         protected override void ExecuteCmdlet()
@@ -64,9 +64,9 @@ namespace PnP.PowerShell.Commands.Files
 
             Uri currentContextUri = new Uri(ClientContext.Url);
             Uri sourceUri = new Uri(currentContextUri, EncodePath(sourceFolder));
-            Uri sourceWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, sourceUri);
+            Uri sourceWebUri = Web.WebUrlFromFolderUrlDirect(ClientContext, sourceUri);
             Uri targetUri = new Uri(currentContextUri, EncodePath(targetFolder));
-            Uri targetWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
+            Uri targetWebUri = Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
 
             if (Force || ShouldContinue(string.Format(Resources.MoveFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
             {
@@ -83,23 +83,24 @@ namespace PnP.PowerShell.Commands.Files
                         var folderServerRelativePath = folder.EnsureProperty(f => f.ServerRelativePath);
                         isFolder = folderServerRelativePath.DecodedUrl == ResourcePath.FromDecodedUrl(TargetUrl).DecodedUrl;
                     }
-                    catch
+                    catch (Exception ex)
                     {
+                        WriteVerbose($"Error occurred while trying to check if the target URL {TargetUrl} is a folder. This could happen if the target folder does not exist yet. It may still work well. Exception: {ex.Message}");
                     }
                     if (isFolder)
                     {
+                        WriteVerbose($"Moving file or folder from {sourceUri} to {targetUri}");
                         Move(currentContextUri, sourceUri, targetUri, SourceUrl, TargetUrl, true);
                     }
                     else
                     {
-
+                        WriteVerbose($"Moving file or folder from {SourceUrl} to {TargetUrl}");
                         var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(SourceUrl));
                         file.MoveToUsingPath(ResourcePath.FromDecodedUrl(TargetUrl), Overwrite ? MoveOperations.Overwrite : MoveOperations.None);
                         ClientContext.ExecuteQueryRetry();
                     }
                 }
             }
-
         }
 
         private string EncodePath(string path)
