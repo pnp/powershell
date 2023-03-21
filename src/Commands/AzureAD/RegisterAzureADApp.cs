@@ -490,7 +490,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 DateTime validFrom = DateTime.Today;
                 DateTime validTo = validFrom.AddYears(ValidYears);
-                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);                
+                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
 
                 if (Directory.Exists(OutPath))
                 {
@@ -556,7 +556,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         key = Convert.ToBase64String(cert.GetRawCertData()),
                         displayName = cert.Subject,
                     }
-                },                
+                },
                 publicClient = new
                 {
                     redirectUris = new[] {
@@ -661,26 +661,42 @@ namespace PnP.PowerShell.Commands.AzureAD
                     var endpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications/{azureApp.Id}/logo";
 
                     var bytes = File.ReadAllBytes(LogoFilePath);
-                    var byteArrayContent = new ByteArrayContent(bytes);
 
-                    var mimeType = "";
-                    if (LogoFilePath.EndsWith("gif", StringComparison.InvariantCultureIgnoreCase))
+                    var fileInfo = new FileInfo(LogoFilePath);
+
+                    var mediaType = string.Empty;
+                    switch (fileInfo.Extension.ToLower())
                     {
-                        mimeType = "image/gif";
-                    }
-                    if (LogoFilePath.EndsWith("jpg", StringComparison.InvariantCultureIgnoreCase) || LogoFilePath.EndsWith("jpeg", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        mimeType = "image/jpeg";
-                    }
-                    if (LogoFilePath.EndsWith("png", StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        mimeType = "image/png";
+                        case ".jpg":
+                        case ".jpeg":
+                            {
+                                mediaType = "image/jpeg";
+                                break;
+                            }
+                        case ".gif":
+                            {
+                                mediaType = "image/gif";
+                                break;
+                            }
+                        case ".png":
+                            {
+                                mediaType = "image/png";
+                                break;
+                            }
                     }
 
-                    byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mimeType);
-                    GraphHelper.PutAsync(PnPConnection.Current, endpoint, token, byteArrayContent).GetAwaiter().GetResult();
+                    if (!string.IsNullOrEmpty(mediaType))
+                    {
+                        var byteArrayContent = new ByteArrayContent(bytes);
+                        byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
+                        GraphHelper.PutAsync(PnPConnection.Current, endpoint, token, byteArrayContent).GetAwaiter().GetResult();
 
-                    WriteVerbose("Successfully set the logo for the Azure AD app");
+                        WriteVerbose("Successfully set the logo for the Azure AD app");
+                    }
+                    else
+                    {
+                        throw new Exception("Unrecognized image format. Supported formats are .png, .jpg, .jpeg and .gif");
+                    }
                 }
                 catch (Exception ex)
                 {
