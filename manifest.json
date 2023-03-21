@@ -112,21 +112,6 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
-      "type": "Conceptual",
-      "source_relative_path": "articles/configuration.md",
-      "output": {
-        ".html": {
-          "relative_path": "articles/configuration.html",
-          "hash": "QJKvlcKc/I5sPnECykAEgA=="
-        }
-      },
-      "is_incremental": false,
-      "version": ""
-    },
-    {
       "type": "Conceptual",
       "source_relative_path": "articles/connecting.md",
       "output": {
@@ -226,24 +211,39 @@
       "log_codes": [
         "InvalidFileLink"
       ],
-      "type": "Toc",
-      "source_relative_path": "articles/toc.yml",
+      "type": "Conceptual",
+      "source_relative_path": "articles/telemetry.md",
       "output": {
         ".html": {
-          "relative_path": "articles/toc.html",
-          "hash": "JMY1j6F461TGff2IeM4TtQ=="
+          "relative_path": "articles/telemetry.html",
+          "hash": "LYW8V8FQlaw4ee3gVNweIg=="
         }
       },
       "is_incremental": false,
       "version": ""
     },
     {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".html": {
+          "relative_path": "articles/toc.html",
+          "hash": "zKqpoiMQoNHK+ZqdEzu1sg=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "articles/updatenotifications.md",
       "output": {
         ".html": {
           "relative_path": "articles/updatenotifications.html",
-          "hash": "DmYH7h1ezdtegij+1YgqwQ=="
+          "hash": "PL+XtpmVoP02w8O5wIqJfA=="
         }
       },
       "is_incremental": false,
