@@ -85,6 +85,9 @@ namespace PnP.PowerShell.Commands.AzureAD
         [Parameter(Mandatory = false)]
         public SwitchParameter Interactive;
 
+        [Parameter(Mandatory = false)]
+        public string LogoFilePath;
+
         protected override void ProcessRecord()
         {
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
@@ -202,6 +205,11 @@ namespace PnP.PowerShell.Commands.AzureAD
                     var base64String = Convert.ToBase64String(certPfxData);
                     record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
                     StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter, scopes);
+
+                    if (ParameterSpecified(nameof(LogoFilePath)) && !string.IsNullOrEmpty(LogoFilePath))
+                    {
+                        SetLogo(azureApp, token);
+                    }
                 }
                 else
                 {
@@ -482,7 +490,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 DateTime validFrom = DateTime.Today;
                 DateTime validTo = validFrom.AddYears(ValidYears);
-                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);                
+                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
 
                 if (Directory.Exists(OutPath))
                 {
@@ -635,6 +643,69 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
                 WriteObject(record);
+            }
+        }
+
+        private void SetLogo(AzureADApp azureApp, string token)
+        {
+            if (!Path.IsPathRooted(LogoFilePath))
+            {
+                LogoFilePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
+            }
+            if (File.Exists(LogoFilePath))
+            {
+                try
+                {
+                    WriteVerbose("Setting the logo for the Azure AD app");
+
+                    var endpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications/{azureApp.Id}/logo";
+
+                    var bytes = File.ReadAllBytes(LogoFilePath);
+
+                    var fileInfo = new FileInfo(LogoFilePath);
+
+                    var mediaType = string.Empty;
+                    switch (fileInfo.Extension.ToLower())
+                    {
+                        case ".jpg":
+                        case ".jpeg":
+                            {
+                                mediaType = "image/jpeg";
+                                break;
+                            }
+                        case ".gif":
+                            {
+                                mediaType = "image/gif";
+                                break;
+                            }
+                        case ".png":
+                            {
+                                mediaType = "image/png";
+                                break;
+                            }
+                    }
+
+                    if (!string.IsNullOrEmpty(mediaType))
+                    {
+                        var byteArrayContent = new ByteArrayContent(bytes);
+                        byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
+                        GraphHelper.PutAsync(PnPConnection.Current, endpoint, token, byteArrayContent).GetAwaiter().GetResult();
+
+                        WriteVerbose("Successfully set the logo for the Azure AD app");
+                    }
+                    else
+                    {
+                        throw new Exception("Unrecognized image format. Supported formats are .png, .jpg, .jpeg and .gif");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    WriteWarning("Something went wrong setting the logo " + ex.Message);
+                }
+            }
+            else
+            {
+                WriteWarning("Logo File does not exist, ignoring setting the logo");
             }
         }
     }
