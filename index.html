@@ -76,46 +76,25 @@
                   </div>
                     <h1 id="pnp-powershell">PnP PowerShell</h1>
 
-<p>PnP PowerShell is a <strong>cross-platform</strong> PowerShell Module providing over 600 cmdlets that work with Microsoft 365 environments and more specifically SharePoint Online, Microsoft Teams, Microsoft Planner and Microsoft Flow.</p>
-<div class="NOTE">
-<h5>Note</h5>
-<p>This module is a successor of the <a href="https://github.com/pnp/pnp-powershell">SharePointPnPPowerShellOnline</a> module, which is now regarded legacy and not maintained anymore. This newer version of the PowerShell module is cross-platform (e.g. it works on Windows, MacOS and Linux) however will only support SharePoint Online. Going forward will only be actively maintaining the cross-platform PnP PowerShell module.</p>
-</div>
-<h1 id="getting-up-and-running">Getting up and running</h1>
-<p>It is recommended to use PowerShell 7.x, which can be installed by following <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows">these instructions</a>. Most of the cmdlets should work under PowerShell 5.x as well, though.</p>
-<p>To install PnP PowerShell:</p>
-<pre><code class="lang-powershell">Install-Module -Name PnP.PowerShell
-</code></pre>
-<p>To install a nightly build of PnP PowerShell:</p>
-<pre><code class="lang-powershell">Install-Module -Name PnP.PowerShell -AllowPrerelease -SkipPublisherCheck -AllowClobber
-</code></pre>
-<p>To use PnP.PowerShell in a Windows container:</p>
-<pre><code>docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
-</code></pre>
-<p>To use PnP.PowerShell in a Linux container:</p>
-<pre><code>docker run -it m365pnp/powershell
-</code></pre>
+<p>PnP PowerShell is a cross-platform PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments and products such as SharePoint Online, Microsoft Teams, Microsoft Planner, Microsoft Flow and more. It runs on Windows, Linux and MacOS.</p>
+<h2 id="getting-up-and-running">Getting up and running</h2>
+<p>Follow the <a href="/powershell/articles/installation.html">installation steps</a> to get up and running in minutes.</p>
 <p>See the <a href="/powershell/articles">articles</a> section for more information on authentication and configuration. All <a href="/powershell/cmdlets/Add-PnPAlert.html">cmdlets</a> have been documented too.</p>
 <p>See <a href="/powershell/articles/docker.html">Using PnP PowerShell in Docker containers</a> article for information how to run PnP.PowerShell without installing it.</p>
-<h1 id="ive-found-a-bug-where-do-i-need-to-log-an-issue-or-create-a-pr">I've found a bug, where do I need to log an issue or create a PR</h1>
+<h2 id="ive-found-a-bug-where-do-i-need-to-log-an-issue-or-create-a-pr">I've found a bug, where do I need to log an issue or create a PR</h2>
 <p>You can create an issue at <a href="https://github.com/pnp/powershell/issues">https://github.com/pnp/powershell/issues</a>, but please consider first if asking a question at <a href="https://github.com/pnp/powershell/discussions">https://github.com/pnp/powershell/discussions</a> is more appropriate. We would like to focus the issues on actual bugs whereas PnP PowerShell related questions can be asked in the discussions section.</p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>As some of the code being PnP PowerShell is actually coming from other PnP repositories, we can move your issue over to that specific repository. You will be notified by email about that.</p>
 </div>
 <p>Before you start to work on code change consider starting a discussion in the repository first. It could potentially save you a lot of time if someone is about to submit a change with exactly the same functionality. It will also allow you to discuss a possible change with the maintainers of the repository before you start to work on it.</p>
-<h2 id="pnp-powershell-roadmap-status">PnP PowerShell roadmap status</h2>
-<p>We have shipped the version now both PnP PowerShell for classic PowerShell and PnP PowerShell for PowerShell 7</p>
-<p><img src="images/PnP_PowerShell_Roadmap.png" alt="PnP PowerShell RoadMap"></p>
-<h2 id="building-the-source-code">Building the source code</h2>
-<p>Make a clone of the repository, navigate to the build folder in the repository and run Build-Debug.ps1. See more details <a href="articles/buildingsource.md">here</a>.</p>
+<h2 id="contributing-to-pnp-powershell">Contributing to PnP PowerShell</h2>
+<p>Follow the <a href="/powershell/articles/gettingstartedcontributing.md">getting started contributing</a> guidelines to help out. Sharing is caring!</p>
 <h2 id="supportability-and-sla">Supportability and SLA</h2>
 <p>This library is open-source and community provided library with active community providing support for it. This is not Microsoft provided module so there's no SLA or direct support for this open-source component from Microsoft. Please report any issues using the <a href="https://github.com/pnp/powershell/issues">issues list</a>.</p>
-<h2 id="updating-the-documentation">Updating the documentation</h2>
-<p>All cmdlet documentation has been moved to the <a href="https://github.com/pnp/powershell/tree/dev/documentation">https://github.com/pnp/powershell/tree/dev/documentation</a> folder. If you want to make changes, make sure to follow the format as used in the other files present there. These files follow a specific schema which allows us to generate the correct files. You can also make changes directly to the documention at <a href="https://learn.microsoft.com/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps">https://learn.microsoft.com/powershell/sharepoint/sharepoint-pnp/sharepoint-pnp-cmdlets?view=sharepoint-ps</a>. Notice that the documentation there is currently NOT reflecting this library: the documentation applies to the Windows Only version of PnP PowerShell.</p>
 <hr>
 <p>This project has adopted the <a href="https://opensource.microsoft.com/codeofconduct/">Microsoft Open Source Code of Conduct</a>. For more information see the <a href="https://opensource.microsoft.com/codeofconduct/faq/">Code of Conduct FAQ</a> or contact <a href="mailto:opencode@microsoft.com">opencode@microsoft.com</a> with any additional questions or comments.</p>
-<img src="https://telemetry.sharepointpnp.com/pnp-powershell/readme"> 
+<img src="https://m365-visitor-stats.azurewebsites.net/pnp-powershell/readme"> 
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">

@@ -189,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/installation.html",
-          "hash": "ZkuawkL+xgZ0++dy5I1+JQ=="
+          "hash": "i8EK5Hg0wnIbjirt+x77WQ=="
         }
       },
       "is_incremental": false,
@@ -9190,15 +9190,12 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "index.md",
       "output": {
         ".html": {
           "relative_path": "index.html",
-          "hash": "3It9a1LhxgExeKMxm1DupQ=="
+          "hash": "Cbm+g60OkUTJZzW6F2tTDw=="
         }
       },
       "is_incremental": false,

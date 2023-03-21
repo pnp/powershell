@@ -83,13 +83,22 @@
                   </div>
                     <h1 id="installing-pnp-powershell">Installing PnP PowerShell</h1>
 
+<p>You need PowerShell 7.2 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">installed through here</a>.</p>
+<h2 id="stable-build">Stable build</h2>
 <p>You can run the following commands to install the latest stable PowerShell cmdlets for the current user:</p>
 <pre><code class="lang-powershell">Install-Module PnP.PowerShell -Scope CurrentUser
 </code></pre>
+<h2 id="nightly-build">Nightly build</h2>
 <p>If you want to install or update to the latest nightly built prerelease of PnP PowerShell for the current user, run:</p>
 <pre><code class="lang-powershell">Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease
 </code></pre>
-<p>This will work on Windows / Linux / MacOS.</p>
+<h2 id="use-in-docker">Use in Docker</h2>
+<p>To use PnP.PowerShell in a Windows container:</p>
+<pre><code>docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
+</code></pre>
+<p>To use PnP.PowerShell in a Linux container:</p>
+<pre><code>docker run -it m365pnp/powershell
+</code></pre>
 <h1 id="uninstalling-pnp-powershell">Uninstalling PnP PowerShell</h1>
 <p>In case you would like to remove PnP PowerShell, you can run:</p>
 <pre><code class="lang-powershell">Uninstall-Module PnP.PowerShell
