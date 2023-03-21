@@ -1,8 +1,5 @@
 # PnP PowerShell
-PnP PowerShell is a **cross-platform** PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments and products such as SharePoint Online, Microsoft Teams, Microsoft Planner, Microsoft Flow and more.
-
-> [!NOTE]
-> This module is a successor of the [SharePointPnPPowerShellOnline](https://github.com/pnp/pnp-powershell) module, which is now regarded legacy and not maintained anymore. This newer version of the PowerShell module is cross-platform (e.g. it works on Windows, MacOS and Linux) however will only support SharePoint Online. Going forward will only be actively maintaining the cross-platform PnP PowerShell module.
+PnP PowerShell is a cross-platform PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments and products such as SharePoint Online, Microsoft Teams, Microsoft Planner, Microsoft Flow and more. It runs on Windows, Linux and MacOS.
 
 ## Getting up and running
 
