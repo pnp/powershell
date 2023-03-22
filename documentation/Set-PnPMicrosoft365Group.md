@@ -217,7 +217,7 @@ Accept wildcard characters: False
 ```
 
 ### -SensitivityLabels
-The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://learn.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http).
+The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label Ids you can use [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.md).
 
 ```yaml
 Type: GUID[]
