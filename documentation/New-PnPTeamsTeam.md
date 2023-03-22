@@ -352,7 +352,7 @@ Accept wildcard characters: False
 ```
 
 ### -GiphyContentRating
-Setting that determines the level of sensitivity of giphy usage that is allowed in the team. Accepted values are "Strict" or "Moderate"
+Setting that determines the level of sensitivity of gify usage that is allowed in the team. Accepted values are "Strict" or "Moderate"
 
 ```yaml
 Type: TeamGiphyContentRating

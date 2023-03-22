@@ -94,7 +94,7 @@ In some scenarios it might be easier to have the PFX file being encoded as a str
 Connect-PnPOnline [tenant].sharepoint.com -ClientId [clientid] -Tenant [tenant].onmicrosoft.com -CertificateBase64Encoded $encodedPfx
 ```
 
-If you wish to convert a PFX file to its Base64 encoded equivallent, you can use:
+If you wish to convert a PFX file to its Base64 encoded equivalent, you can use:
 
 ```PowerShell
 $bytes = Get-Content '.\PnPPowerShell.pfx' -AsByteStream

@@ -34,7 +34,7 @@ Allows to modify Microsoft 365 Group.
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPMicrosoft365Group -Identity $group -DisplayName "My Displayname"
+Set-PnPMicrosoft365Group -Identity $group -DisplayName "My DisplayName"
 ```
 
 Sets the display name of the group where $group is a Group entity

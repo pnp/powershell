@@ -21,7 +21,7 @@ Remove-PnPAdaptiveScopeProperty [-Key] <String> [-Force]
 
 ## DESCRIPTION
 
-This cmdlet is used to remove a property bag value. Executing this cmdlet removes a value from the current web property bag just like  `Remove-PnPPropertyBagValue` would do, but also takes care of toggling the noscript value to allow for this to be possible in one cmdlet. Using this cmdlet does therefore require having the SharePoint Online Admin role or equivallent app permissions.
+This cmdlet is used to remove a property bag value. Executing this cmdlet removes a value from the current web property bag just like  `Remove-PnPPropertyBagValue` would do, but also takes care of toggling the noscript value to allow for this to be possible in one cmdlet. Using this cmdlet does therefore require having the SharePoint Online Admin role or equivalent app permissions.
 
 ## EXAMPLES
 

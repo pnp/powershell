@@ -237,7 +237,7 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultLinkToExistingAccess
-When set to $true, the DefaultSharingLinkType will be overriden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
+When set to $true, the DefaultSharingLinkType will be overridden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
 
 ```yaml
 Type: Boolean
@@ -375,7 +375,7 @@ Accept wildcard characters: False
 ```
 
 ### -LockState
-Sets the lockstate of a site
+Sets the lockState of a site
 
 ```yaml
 Type: SiteLockState
