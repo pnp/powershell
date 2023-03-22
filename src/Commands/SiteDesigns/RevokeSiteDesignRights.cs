@@ -17,8 +17,8 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            Tenant.RevokeSiteDesignRights(ClientContext, Identity.Id, Principals);
-            ClientContext.ExecuteQueryRetry();
+            Tenant.RevokeSiteDesignRights(AdminContext, Identity.Id, Principals);
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

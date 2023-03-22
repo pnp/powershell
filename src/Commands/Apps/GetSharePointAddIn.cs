@@ -18,14 +18,14 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            var tenantAdminSiteUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
+            var tenantAdminSiteUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(AdminContext.Url);
 
             VanityUrlOptions vanityUrlOptions = new()
             {
                 AdminCenterUri = new Uri(tenantAdminSiteUrl)
             };
 
-            using var context = ClientContext.Clone(Connection.Url);
+            using var context = AdminContext.Clone(Connection.Url);
 
             // need to retrieve PnPContext for the connected site not the admin site
             using var pnpContext = Framework.PnPCoreSdk.Instance.GetPnPContext(context);

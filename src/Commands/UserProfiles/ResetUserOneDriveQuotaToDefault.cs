@@ -1,7 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.UserProfiles;
-
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.UserProfiles
@@ -15,9 +14,9 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
         protected override void ExecuteCmdlet()
         {
-            var peopleManager = new PeopleManager(ClientContext);
+            var peopleManager = new PeopleManager(AdminContext);
             var result = peopleManager.ResetUserOneDriveQuotaToDefault(Account);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             WriteObject(result);
         }
     }

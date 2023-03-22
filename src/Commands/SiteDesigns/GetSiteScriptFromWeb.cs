@@ -63,10 +63,10 @@ namespace PnP.PowerShell.Commands
 
             if(IncludeAllLists || IncludeAll)
             {
-                SiteContext.Load(SiteContext.Web.Lists, lists => lists.Where(list => !list.Hidden && !list.IsCatalog && !list.IsSystemList && !list.IsPrivate && !list.IsApplicationList && !list.IsSiteAssetsLibrary && !list.IsEnterpriseGalleryLibrary).Include(list => list.RootFolder.ServerRelativeUrl));
-                SiteContext.ExecuteQueryRetry();
+                ClientContext.Load(ClientContext.Web.Lists, lists => lists.Where(list => !list.Hidden && !list.IsCatalog && !list.IsSystemList && !list.IsPrivate && !list.IsApplicationList && !list.IsSiteAssetsLibrary && !list.IsEnterpriseGalleryLibrary).Include(list => list.RootFolder.ServerRelativeUrl));
+                ClientContext.ExecuteQueryRetry();
 
-                Lists = SiteContext.Web.Lists.Select(l => System.Text.RegularExpressions.Regex.Replace(l.RootFolder.ServerRelativeUrl, @"\/(?:sites|teams)\/.*?\/", string.Empty)).ToArray();
+                Lists = ClientContext.Web.Lists.Select(l => System.Text.RegularExpressions.Regex.Replace(l.RootFolder.ServerRelativeUrl, @"\/(?:sites|teams)\/.*?\/", string.Empty)).ToArray();
             }
             
             var tenantSiteScriptSerializationInfo = new TenantSiteScriptSerializationInfo
@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands
                 IncludeTheme = IncludeTheme || IncludeAll
             };
             var script = Tenant.GetSiteScriptFromSite(Url, tenantSiteScriptSerializationInfo);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             WriteObject(script.Value.JSON);
         }
     }

@@ -18,15 +18,15 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
         protected override void ExecuteCmdlet()
         {
-            var peopleManager = new PeopleManager(ClientContext);
+            var peopleManager = new PeopleManager(AdminContext);
 
             var result = Tenant.EncodeClaim(Account);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             Account = result.Value;
 
             var properties = peopleManager.GetPropertiesFor(Account);
-            ClientContext.Load(properties);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(properties);
+            AdminContext.ExecuteQueryRetry();
 
             var personalSiteUrl = properties.PersonalUrl;
 

@@ -3,10 +3,7 @@ using System.Linq;
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using System;
-using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands
 {
@@ -84,7 +81,7 @@ namespace PnP.PowerShell.Commands
                 IncludeTheme = IncludeTheme || IncludeAll
             };
             var generatedSiteScript = Tenant.GetSiteScriptFromSite(Url, tenantSiteScriptSerializationInfo);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
 
             var siteScript = generatedSiteScript.Value.JSON;
 
@@ -109,10 +106,10 @@ namespace PnP.PowerShell.Commands
                 // Update an existing site script
                 try
                 {
-                    var script = Tenant.GetSiteScript(ClientContext, siteDesign.SiteScriptIds.First());
+                    var script = Tenant.GetSiteScript(AdminContext, siteDesign.SiteScriptIds.First());
                     script.Content = siteScript;
                     Tenant.UpdateSiteScript(script);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                 }
                 catch(Microsoft.SharePoint.Client.ServerException e) when (e.ServerErrorTypeName == "System.IO.FileNotFoundException")
                 {
@@ -139,13 +136,13 @@ namespace PnP.PowerShell.Commands
                 };
 
                 var addedSiteScript = Tenant.CreateSiteScript(siteScriptCreationInfo);
-                ClientContext.Load(addedSiteScript);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(addedSiteScript);
+                AdminContext.ExecuteQueryRetry();
 
                 // Connect the site script to the site design
                 siteDesign.SiteScriptIds = new[] { addedSiteScript.Id };
                 Tenant.UpdateSiteDesign(siteDesign);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             } 
 
             WriteObject(siteDesign);

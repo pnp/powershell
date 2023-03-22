@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 Tenant.SetSPHSite(HomeSiteUrl);
             }
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

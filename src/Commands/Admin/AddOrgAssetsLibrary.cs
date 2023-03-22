@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             Tenant.AddToOrgAssetsLibAndCdnWithType(CdnType, LibraryUrl, ThumbnailUrl, OrgAssetType);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

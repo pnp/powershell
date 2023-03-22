@@ -1,8 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 
@@ -20,7 +18,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
         protected override void ExecuteCmdlet()
         {
-            var hostUrl = ClientContext.Url;
+            var hostUrl = AdminContext.Url;
             if (hostUrl.EndsWith("/"))
             {
                 hostUrl = hostUrl.Substring(0, hostUrl.Length - 1);
@@ -29,11 +27,11 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             if (!ParameterSpecified(nameof(UserId)))
             {
-                RestHelper.PostAsync(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a)?@a='{normalizedUserName}'", ClientContext).GetAwaiter().GetResult();
+                RestHelper.PostAsync(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a)?@a='{normalizedUserName}'", AdminContext).GetAwaiter().GetResult();
             }
             else
             {
-                RestHelper.PostAsync(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a,userId='{UserId}')?@a='{normalizedUserName}'", ClientContext).GetAwaiter().GetResult();
+                RestHelper.PostAsync(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a,userId='{UserId}')?@a='{normalizedUserName}'", AdminContext).GetAwaiter().GetResult();
             }
 
             WriteVerbose($"Completed deletion of user profile {LoginName}");

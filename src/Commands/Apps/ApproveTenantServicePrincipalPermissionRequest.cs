@@ -20,11 +20,11 @@ namespace PnP.PowerShell.Commands.Apps
         {
             if (Force || ShouldContinue($"Approve request {RequestId}?", "Continue"))
             {
-                var servicePrincipal = new SPOWebAppServicePrincipal(ClientContext);
+                var servicePrincipal = new SPOWebAppServicePrincipal(AdminContext);
                 var request = servicePrincipal.PermissionRequests.GetById(RequestId);
                 var grant = request.Approve();
-                ClientContext.Load(grant);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(grant);
+                AdminContext.ExecuteQueryRetry();
                 WriteObject(new TenantServicePrincipalPermissionGrant(grant));
             }
         }
