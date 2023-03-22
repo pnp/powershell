@@ -1,6 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using Microsoft.SharePoint.Client.Taxonomy;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Fields
@@ -22,7 +22,6 @@ namespace PnP.PowerShell.Commands.Fields
             if (List != null)
             {
                 List list = List.GetList(CurrentWeb);
-
                 f = list.CreateField(FieldXml);
             }
             else
@@ -31,6 +30,7 @@ namespace PnP.PowerShell.Commands.Fields
             }
             ClientContext.Load(f);
             ClientContext.ExecuteQueryRetry();
+
             switch (f.FieldTypeKind)
             {
                 case FieldType.DateTime:
@@ -93,6 +93,15 @@ namespace PnP.PowerShell.Commands.Fields
                     {
                         WriteObject(ClientContext.CastTo<FieldNumber>(f));
                         break;
+                    }
+                case FieldType.Invalid:
+                    {
+                        if (f.TypeAsString.StartsWith("TaxonomyFieldType"))
+                        {
+                            WriteObject(ClientContext.CastTo<TaxonomyField>(f));
+                            break;
+                        }
+                        goto default;
                     }
                 default:
                     {
