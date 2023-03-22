@@ -1,5 +1,8 @@
 ﻿namespace PnP.PowerShell.Commands.Enums
 {
+    /// <summary>
+    /// Possible scopes to retrieve ACS Principals of
+    /// </summary>
     public enum AzureACSPrincipalScope
     {
         /// <summary>
