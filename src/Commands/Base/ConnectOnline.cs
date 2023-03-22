@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]        
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -214,7 +214,7 @@ namespace PnP.PowerShell.Commands.Base
         public string UserAssignedManagedIdentityClientId;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
-        public string UserAssignedManagedIdentityAzureResourceId;        
+        public string UserAssignedManagedIdentityAzureResourceId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
@@ -235,6 +235,26 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public SwitchParameter EnvironmentVariable;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        public string MicrosoftGraphEndPoint;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        public string AzureADLoginEndPoint;
 
         protected override void ProcessRecord()
         {
@@ -274,6 +294,11 @@ namespace PnP.PowerShell.Commands.Base
             if (Credentials != null)
             {
                 credentials = Credentials.Credential;
+            }
+
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                SetCustomEndpoints();
             }
 
             // Connect using the used set parameters
@@ -480,7 +505,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new FileNotFoundException("Certificate not found");
                 }
-                
+
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword);
                 if (PnPConnection.Current?.ClientId == ClientId &&
                     PnPConnection.Current?.Tenant == Tenant &&
@@ -789,6 +814,19 @@ namespace PnP.PowerShell.Commands.Base
 
             return secPassword;
         }
+
+        private void SetCustomEndpoints()
+        {
+            if (!string.IsNullOrWhiteSpace(MicrosoftGraphEndPoint))
+            {
+                Environment.SetEnvironmentVariable("MicrosoftGraphEndPoint", MicrosoftGraphEndPoint, EnvironmentVariableTarget.Process);
+            }
+            if (!string.IsNullOrWhiteSpace(AzureADLoginEndPoint))
+            {
+                Environment.SetEnvironmentVariable("AzureADLoginEndPoint", AzureADLoginEndPoint, EnvironmentVariableTarget.Process);
+            }
+        }
+
         #endregion
     }
 }
