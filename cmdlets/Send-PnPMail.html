@@ -84,25 +84,44 @@
                     <h1 id="send-pnpmail">Send-PnPMail</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sends an email using the Office 365 SMTP Service or SharePoint, depending on the parameters specified.</p>
+<p>Allows sending an e-mail</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Send-PnPMail [-Server &lt;String&gt;] [-From &lt;String&gt;] [-Password &lt;String&gt;] -To &lt;String[]&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] -Subject &lt;String&gt; -Body &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
+<h3 id="send-through-microsoft-graph">Send through Microsoft Graph</h3>
+<pre><code class="lang-powershell">Send-PnPMail -From &lt;String&gt; -To &lt;String[]&gt; -Subject &lt;String&gt; -Body &lt;String&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] [-ReplyTo &lt;String[]&gt;] [-Importance &lt;MessageImportanceType&gt;] [-BodyContentType &lt;MessageBodyContentType&gt;] [-SaveToSentItems &lt;bool&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
+</code></pre>
+<h3 id="send-through-sharepoint-online-default">Send through SharePoint Online (Default)</h3>
+<pre><code class="lang-powershell">Send-PnPMail -To &lt;String[]&gt; -Subject &lt;String&gt; -Body &lt;String&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
+</code></pre>
+<h3 id="send-through-smtp">Send through SMTP</h3>
+<pre><code class="lang-powershell">Send-PnPMail -Server &lt;String&gt; -From &lt;String&gt; -To &lt;String[]&gt; -Subject &lt;String&gt; -Body &lt;String&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] [-Importance &lt;MessageImportanceType&gt;] [-BodyContentType &lt;MessageBodyContentType&gt;] [-ServerPort &lt;short&gt;] [-EnableSsl &lt;bool&gt;] [-Username &lt;String&gt;] [-Password &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to send an email using the Office 365 SMTP Service or SharePoint.</p>
+<p>Allows sending an e-mail through SharePoint Online, SMTP or Microsoft Graph. Sending e-mail through Microsoft Graph requires the Mail.Send permission.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Send-PnPMail -To address@tenant.microsoftonline.com -Subject test -Body test
+<pre><code class="lang-powershell">Send-PnPMail -From &quot;user@contoso.onmicrosoft.com&quot; -To &quot;recipient@contoso.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot;
 </code></pre>
-<p>Sends an e-mail using the SharePoint SendEmail method using the current context. E-mail is sent from the system account and can only be sent to accounts in the same tenant.</p>
+<p>Sends an e-mail using Microsoft Graph to one recipient. E-mail is sent from the user specified in the From parameter and can be sent to both internal and external addresses. A copy of the sent e-mail will be stored in the mailbox of the user specified in the From parameter.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Send-PnPMail -To address@contoso.com -Subject test -Body test -From me@tenant.onmicrosoft.com -Password xyz
+<pre><code class="lang-powershell">Send-PnPMail -From &quot;sharedmailbox@contoso.onmicrosoft.com&quot; -To &quot;recipient1@contoso.com&quot;,&quot;recipient2@contoso.com&quot;,&quot;recipient3@contoso.com&quot; -Cc &quot;recipient4@contoso.com&quot; -Bcc &quot;recipient5@contoso.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot; -Importance Low
 </code></pre>
-<p>Sends an e-mail via Office 365 SMTP and requires a from address and password. E-mail is sent from the from user and can be sent to both internal and external addresses.</p>
+<p>Sends an e-mail using Microsoft Graph from a shared mailbox to multiple recipients. E-mail is sent from the shared mailbox specified in the From parameter and can be sent to both internal and external addresses. A copy of the sent e-mail will be stored in the shared mailbox.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Send-PnPMail -To address@contoso.com -Subject test -Body test -From me@server.net -Password xyz -Server yoursmtp.server.net
+<pre><code class="lang-powershell">Send-PnPMail -To &quot;address@tenant.microsoftonline.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot;
 </code></pre>
-<p>Sends an e-mail via a custom SMTP server and requires a from address and password. E-mail is sent from the from user.</p>
+<p>Sends an e-mail using the SharePoint Online SendEmail method using the current context. E-mail is sent from the SharePoint Online no-reply e-mail address and can only be sent to accounts in the same tenant. The from address will show the title of the site you are connected with along with the e-mail address no-reply@sharepointonline.com.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Send-PnPMail -From &quot;user@contoso.onmicrosoft.com&quot; -To &quot;recipient@contoso.onmicrosoft.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot; -Server contoso.mail.protection.outlook.com
+</code></pre>
+<p>Sends an e-mail via the SMTP service belonging to a specific tenant. E-mail is sent from the user specified in the From parameter and can be sent only to addresses residing in the tenant you address through the Server parameter, in this case contoso.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Send-PnPMail -From &quot;user@contoso.onmicrosoft.com&quot; -To &quot;recipient@contoso.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot; -Server smtp.myisp.com 
+</code></pre>
+<p>Sends an e-mail via a custom SMTP server of your Internet Service Provider which does not require authentication and uses port TCP 25. E-mail is sent from the user specified in the From parameter and can be sent to both internal and external addresses.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Send-PnPMail -From &quot;user@contoso.onmicrosoft.com&quot; -To &quot;recipient@contoso.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot; -Server smtp.myisp.com -Port 587 -EnableSsl:$true -Username &quot;userxyz&quot; -Password &quot;password123&quot;
+</code></pre>
+<p>Sends an e-mail via a custom SMTP server of your Internet Service Provider which requires authentication and uses SSL over port TCP 587. E-mail is sent from the user specified in the From parameter and can be sent to both internal and external addresses.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-body">-Body</h3>
 <p>Body of the email. Accepts simple HTML as <code>&amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;</code>, <code>&amp;lt;br/&amp;gt;</code> etc.</p>
@@ -137,6 +156,18 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-bodycontenttype">-BodyContentType</h3>
+<p>Allows defining what type of content is in the Body parameter. Defaults to HTML.</p>
+<pre><code class="lang-yaml">Type: MessageBodyContentType
+Parameter Sets: Send through Microsoft Graph, Send through SMTP
+Accepted values: Html, Text
+
+Required: False
+Position: Named
+Default value: Html
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -148,10 +179,44 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-enablessl">-EnableSsl</h3>
+<p>Allows you to specify if SSL should be used when connecting to the SMTP server. Only used when the Server parameter is specified.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Send through SMTP
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-from">-From</h3>
-<p>If using from address, you also have to provide a password</p>
+<p>The sender of the e-mail. When Microsoft Graph is used, this can be a user or a shared mailbox.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: Send through SMTP, Send through Microsoft Graph
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-importance">-Importance</h3>
+<p>Allows defining what the importance of the e-mail is. Defaults to Normal.</p>
+<pre><code class="lang-yaml">Type: MessageImportanceType
+Parameter Sets: Send through Microsoft Graph, Send through SMTP
+Accepted values: Low, Normal, High
+
+Required: False
+Position: Named
+Default value: Normal
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-username">-Username</h3>
+<p>Username to use to authenticate to the outbound mailserver. Only used when the Server parameter is specified and if not provided, an anonymous connection will be made with the SMTP server specified through Server.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Send through SMTP
 
 Required: False
 Position: Named
@@ -160,9 +225,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-password">-Password</h3>
-<p>If using a password, you also have to provide the associated from address</p>
+<p>Password to use to authenticate to the outbound mailserver. Only used when the Server parameter is specified and if not provided, an anonymous connection will be made with the SMTP server specified through Server.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: Send through SMTP
 
 Required: False
 Position: Named
@@ -170,9 +235,43 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-replyto">-ReplyTo</h3>
+<p>List of return addresses to use for the e-mail</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Send through Microsoft Graph
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-savetosentitems">-SaveToSentItems</h3>
+<p>Allows indicating if the sent e-mail should be stored in the Sent Items of the mailbox used to send out the e-mail.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Send through Microsoft Graph
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-server">-Server</h3>
+<p>SMTP server to use to send the e-mail. You can use the SMTP server of your Internet Service Provider or the SMTP server of your tenant by using tenant.mail.protection.outlook.com where you replace tenant with your own tenant name. This allows you to send e-mail without requiring any authentication, but only to recipients in that tenant. Use a custom SMTP server if you want to send e-mail to various external recipients or go for the Microsoft Graph option in which case you don't specify a server.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: Send through SMTP
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-serverport">-ServerPort</h3>
+<p>SMTP server port to use to send the e-mail. Used in combination with the Server parameter. Defaults to 25.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Send through SMTP
 
 Required: False
 Position: Named

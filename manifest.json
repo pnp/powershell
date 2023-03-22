@@ -4974,7 +4974,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Register-PnPAzureADApp.html",
-          "hash": "PTpRsZt4SoduHjxQIwZMaQ=="
+          "hash": "wyYZp/VnD7F1TEz19DRgyA=="
         }
       },
       "is_incremental": false,
@@ -6450,7 +6450,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Send-PnPMail.html",
-          "hash": "FTrwOgKnz+XuaEjG0vakVg=="
+          "hash": "wBn5vnlgYkGlQrYEq3y9Dg=="
         }
       },
       "is_incremental": false,
