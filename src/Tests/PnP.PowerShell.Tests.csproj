@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>PnP.PowerShell.Tests</AssemblyName>
     <RootNamespace>PnP.PowerShell.Tests</RootNamespace>
     <PackageId>PnP.PowerShell.Tests</PackageId>
@@ -17,7 +17,7 @@
     <PackageReference Include="AngleSharp" Version="0.17.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
     <PackageReference Include="Microsoft.Graph" Version="3.33.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.0" />
     <PackageReference Include="Microsoft.PowerShell.ConsoleHost" Version="7.2.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
@@ -34,7 +34,7 @@
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
     <PackageReference Include="System.Management.Automation" Version="7.2.0" />    
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
     <Reference Include="PnP.Framework" Condition="'$(LocalPnPFramework)' == 'true'">
       <HintPath>..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
       <Private>true</Private>

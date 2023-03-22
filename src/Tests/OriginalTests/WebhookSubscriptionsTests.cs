@@ -1,7 +1,7 @@
 ﻿#if !ONPREMISES
 using Microsoft.SharePoint.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using OfficeDevPnP.Core.Entities;
+using PnP.Framework.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

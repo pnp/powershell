@@ -3,9 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.SharePoint.Client;
 using System.Linq;
 using System.Management.Automation.Runspaces;
-using OfficeDevPnP.Core.Framework.Provisioning.Model;
-using OfficeDevPnP.Core.Framework.Provisioning.Providers.Xml;
 using System.Collections.Generic;
+using PnP.Framework.Provisioning.Model;
+using PnP.Framework.Provisioning.Providers.Xml;
 
 namespace PnP.PowerShell.Tests
 {
@@ -240,7 +240,7 @@ namespace PnP.PowerShell.Tests
 
                     var template = GetTemplateFromXmlFile(filePath);
                     Assert.AreEqual(10, template.Lists[0].Folders.Count);
-                    OfficeDevPnP.Core.Framework.Provisioning.Model.Folder f = template.Lists[0].Folders.Find(fld => fld.Name == "TestFolder0");
+                    var f = template.Lists[0].Folders.Find(fld => fld.Name == "TestFolder0");
                     Assert.AreEqual(0, f.Security.RoleAssignments.Count);
                     Assert.AreEqual(5, f.Folders.Count);
                 }
@@ -269,7 +269,7 @@ namespace PnP.PowerShell.Tests
                     var template = GetTemplateFromXmlFile(filePath);
                     Assert.AreEqual(10, template.Lists[0].Folders.Count);
 
-                    OfficeDevPnP.Core.Framework.Provisioning.Model.Folder f = template.Lists[0].Folders.Find(fld => fld.Name == "TestFolder0");
+                    var f = template.Lists[0].Folders.Find(fld => fld.Name == "TestFolder0");
                     Assert.IsTrue(f.Security.RoleAssignments.Count > 0);
                     Assert.AreEqual(0, f.Folders.Count);
                 }
@@ -298,7 +298,7 @@ namespace PnP.PowerShell.Tests
                     var template = GetTemplateFromXmlFile(filePath);
                     Assert.AreEqual(10, template.Lists[0].Folders.Count);
 
-                    OfficeDevPnP.Core.Framework.Provisioning.Model.Folder f = template.Lists[0].Folders.Find(fld => fld.Name == "TestFolder0");
+                    var f = template.Lists[0].Folders.Find(fld => fld.Name == "TestFolder0");
 
                     Assert.IsTrue(f.Security.RoleAssignments.Count > 0);
                     Assert.AreEqual(5, f.Folders.Count);
