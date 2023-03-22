@@ -1,17 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PnP.PowerShell.Commands.Enums
+﻿namespace PnP.PowerShell.Commands.Enums
 {
     public enum AzureACSPrincipalScope
     {
+        /// <summary>
+        /// Retrieves the list scoped Azure ACS principal
+        /// </summary>
         List,
+        /// <summary>
+        /// Retrieves the web scoped Azure ACS principal
+        /// </summary>
         Web,
+        /// <summary>
+        /// Retrieves the site collection scoped Azure ACS principal
+        /// </summary>
         Site,
+        /// <summary>
+        /// Retrieves the Tenant scoped Azure ACS principal
+        /// </summary>
         Tenant,
+        /// <summary>
+        /// Retrieves the all Azure ACS principals
+        /// </summary>
         All
     }
 }

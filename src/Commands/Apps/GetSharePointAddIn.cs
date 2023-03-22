@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPSharePointAddIn")]
     [OutputType(typeof(List<ISharePointAddIn>))]
-    public class GetAddIns : PnPAdminCmdlet
+    public class GetSharePointAddIn : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeSubsites;
