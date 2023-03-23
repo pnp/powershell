@@ -277,7 +277,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owner
-Specifies a Site Collection Administator for the new site. Can be used when Communication Site is being created or Teams Site should not get a corresponding Microsoft 365 group.  Requires user object. If this parameter is skipped or a group object is provided, the user running New-PnPSite command will be set as a site owner. Required in case of the app-only connection.
+Specifies a Site Collection Administrator for the new site. Can be used when Communication Site is being created or Teams Site should not get a corresponding Microsoft 365 group.  Requires user object. If this parameter is skipped or a group object is provided, the user running New-PnPSite command will be set as a site owner. Required in case of the app-only connection.
 
 ```yaml
 Type: String
@@ -348,7 +348,7 @@ Accept wildcard characters: False
 ```
 
 ### -SiteDesign
-Allows to specify an OOTB site design
+Allows to specify an OOTB (out of the box) site design
 
 ```yaml
 Type: SwitchParameter

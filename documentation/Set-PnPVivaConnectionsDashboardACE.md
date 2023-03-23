@@ -105,7 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -Title
-The Tite of the Adaptive Card extension present on the Viva connections dashboard page.
+The Title of the Adaptive Card extension present on the Viva connections dashboard page.
 
 ```yaml
 Type: string

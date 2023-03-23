@@ -15,7 +15,7 @@ Checks in a file.
 ## SYNTAX
 
 ```powershell
-Set-PnPFileCheckedIn [-Url] <String> [-CheckinType <CheckinType>] [-Comment <String>] [-Approve]
+Set-PnPFileCheckedIn [-Url] <String> [-CheckInType <CheckInType>] [-Comment <String>] [-Approve]
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
@@ -33,7 +33,7 @@ Checks in the file "Contract.docx" in the "Documents" library
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPFileCheckedIn -Url "/Documents/Contract.docx" -CheckinType MinorCheckin -Comment "Smaller changes"
+Set-PnPFileCheckedIn -Url "/Documents/Contract.docx" -CheckInType MinorCheckIn -Comment "Smaller changes"
 ```
 
 Checks in the file "Contract.docx" in the "Documents" library as a minor version and adds the check in comment "Smaller changes"
@@ -54,11 +54,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -CheckinType
+### -CheckInType
 The check in type to use. Defaults to MajorCheckIn.
 
 ```yaml
-Type: CheckinType
+Type: CheckInType
 Parameter Sets: (All)
 Accepted values: MinorCheckIn, MajorCheckIn, OverwriteCheckIn
 

@@ -106,7 +106,7 @@ namespace PnP.PowerShell.Tests
                 var results = scope.ExecuteCommand("Get-PnPContext");
 
                 Assert.IsTrue(results.Count == 1);
-                Assert.IsTrue(results[0].BaseObject.GetType() == typeof(OfficeDevPnP.Core.PnPClientContext));
+                Assert.IsTrue(results[0].BaseObject.GetType() == typeof(ClientContext));
 
             }
         }
@@ -167,7 +167,7 @@ namespace PnP.PowerShell.Tests
                 using (var ctx = TestCommon.CreateClientContext())
                 {
                     var results = scope.ExecuteCommand("Get-PnPAppAuthAccessToken");
-                    if (TestCommon.AppOnlyTesting())
+                    if (ctx.IsAppOnly())
                     {
                         Assert.IsTrue(results.Any());
                     }

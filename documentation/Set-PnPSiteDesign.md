@@ -52,7 +52,7 @@ Updates an existing Site Design and sets a new title.
 Set-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7821e -Title "My Company Design" -Description "My description" -ThumbnailUrl "https://contoso.sharepoint.com/sites/templates/my images/logo.png"
 ```
 
-Updates an existing Site Design, providing a new title, description and logo to be shown in the template picker. Notice that when the location for the TumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.
+Updates an existing Site Design, providing a new title, description and logo to be shown in the template picker. Notice that when the location for the ThumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.
 
 ## PARAMETERS
 
