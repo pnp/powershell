@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands
                 {
                     if (Connection?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
+                        return TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
                     }
                 }
 

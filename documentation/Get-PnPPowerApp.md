@@ -20,8 +20,8 @@ Returns the Power Apps for a given environment
 ## SYNTAX
 
 ```powershell
-Get-PnPPowerApp -Environment <PowerPlatformEnvironmentPipeBind> [-AsAdmin] [-Identity <PowerAppPipeBind>] 
-[-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPPowerApp [-Environment <PowerPlatformEnvironmentPipeBind>] [-AsAdmin] [-Identity <PowerAppPipeBind>] 
+[-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -53,10 +53,10 @@ Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 
@@ -106,8 +106,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
