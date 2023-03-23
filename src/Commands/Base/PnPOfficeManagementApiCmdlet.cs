@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (Connection?.Context != null)
                 {
-                    return TokenHandler.GetAccessToken(GetType(), "https://manage.office.com/.default", Connection);
+                    return TokenHandler.GetAccessToken(this, "https://manage.office.com/.default", Connection);
                 }
                 return null;
             }

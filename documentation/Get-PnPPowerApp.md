@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFlow.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerApp.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPFlow
+title: Get-PnPPowerApp
 ---
   
-# Get-PnPFlow
+# Get-PnPPowerApp
 
 ## SYNOPSIS
 
@@ -15,54 +15,56 @@ title: Get-PnPFlow
 
 * Azure: management.azure.com
 
-Returns the flows for a given environment
+Returns the Power Apps for a given environment
 
 ## SYNTAX
 
 ```powershell
-Get-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] [-AsAdmin] [-Identity <PowerPlatformPipeBind>] 
+Get-PnPPowerApp [-Environment <PowerPlatformEnvironmentPipeBind>] [-AsAdmin] [-Identity <PowerAppPipeBind>] 
 [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
-This cmdlet returns the flows for a given environment.
+This cmdlet returns the Power Apps for a given enviroment.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Get-PnPPowerPlatformEnvironment -Identity "MyOrganization (default)" | Get-PnPFlow
+$environment = Get-PnPPowerPlatformEnvironment
+Get-PnPPowerApp -Environment $environment
 ```
-This returns all the flows for a given Power Platform environment
+This returns all the apps for a given Power Platform environment
 
 ### Example 2
 ```powershell
-Get-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+$environment = Get-PnPPowerPlatformEnvironment
+Get-PnPPowerApp -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
-This returns a specific flow from the default environment
+This returns a specific app
 
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment object to retrieve the available flows for.
+The name of the Power Platform environment or an Environment object to retrieve the available Power Apps for.
 
 ```yaml
-Type: PowerAutomateEnvironmentPipeBind
+Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: Named
 Default value: The default environment
-Accept pipeline input: False
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 
 ### -Identity
-The Name/Id of the flow to retrieve.
+The Id of the app to retrieve.
 
 ```yaml
-Type: PowerPlatformPipeBind
+Type: PowerAppPipeBind
 Parameter Sets: (All)
 Aliases:
 
@@ -74,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -AsAdmin
-If specified returns all the flows as admin. If not specified only the flows for the current user will be returned.
+If specified returns all the Power Apps as admin. If not specified only the apps for the current user will be returned.
 
 ```yaml
 Type: SwitchParameter

@@ -5,10 +5,11 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
+namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFlow")]
-    public class GetFlow : PnPAzureManagementApiCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPPowerApp")]
+    [OutputType(typeof(Model.PowerPlatform.PowerApp.PowerApp))]
+    public class GetPowerApp : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public PowerPlatformEnvironmentPipeBind Environment;
@@ -17,7 +18,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         public SwitchParameter AsAdmin;
 
         [Parameter(Mandatory = false)]
-        public PowerAutomateFlowPipeBind Identity;
+        public PowerAppPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
@@ -43,19 +44,20 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                var flowName = Identity.GetName();
+                var appName = Identity.GetName();
 
-                WriteVerbose($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
+                WriteVerbose($"Retrieving specific PowerApp with the provided name '{appName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerApp.PowerApp>(Connection, $"https://api.powerapps.com/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                 
                 WriteObject(result, false);
             }
             else
             {
-                WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'");
+                WriteVerbose($"Retrieving all PowerApps within environment '{environmentName}'");
 
-                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
-                WriteObject(flows, true);
+                var apps = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerApp.PowerApp>(Connection, $"https://api.powerapps.com/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'", AccessToken).GetAwaiter().GetResult();
+                WriteObject(apps, true);
             }
         }
     }
