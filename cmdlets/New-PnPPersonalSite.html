@@ -93,7 +93,7 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Creates a OneDrive For Business site for the provided user(s)</p>
-<p>If you want to use this cmdlet in an automated script not requiring manual authentication, you <em>must</em> assign the following permisson to your application registration from either Azure Active Directory or done through <a href="https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx">https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx</a> with the following permission through <a href="https://tenant-admin.sharepoint.com/_layouts/appinv.aspx">https://tenant-admin.sharepoint.com/_layouts/appinv.aspx</a>:</p>
+<p>If you want to use this cmdlet in an automated script not requiring manual authentication, you <em>must</em> assign the following permission to your application registration from either Azure Active Directory or done through <a href="https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx">https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx</a> with the following permission through <a href="https://tenant-admin.sharepoint.com/_layouts/appinv.aspx">https://tenant-admin.sharepoint.com/_layouts/appinv.aspx</a>:</p>
 <p><code>&lt;AppPermissionRequests AllowAppOnlyPolicy=&quot;true&quot;&gt; &lt;AppPermissionRequest Scope=&quot;http://sharepoint/social/tenant&quot; Right=&quot;FullControl&quot; /&gt; &lt;/AppPermissionRequests&gt;</code></p>
 <p>You then <em>must</em> connect using:</p>
 <p><code>Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -ClientId &lt;clientid&gt; -ClientSecret &lt;clientsecret&gt;</code></p>

@@ -99,7 +99,7 @@
 <p>Allows to modify Microsoft 365 Group.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $group -DisplayName &quot;My Displayname&quot;
+<pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $group -DisplayName &quot;My DisplayName&quot;
 </code></pre>
 <p>Sets the display name of the group where $group is a Group entity</p>
 <h3 id="example-2">EXAMPLE 2</h3>
@@ -234,7 +234,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-sensitivitylabels">-SensitivityLabels</h3>
-<p>The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label you need to use the Graph API mentioned <a href="https://learn.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&amp;tabs=http">here</a>.</p>
+<p>The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label Ids you can use <a href="Get-PnPAvailableSensitivityLabel.html">Get-PnPAvailableSensitivityLabel</a>.</p>
 <pre><code class="lang-yaml">Type: GUID[]
 Parameter Sets: (All)
 Required: False

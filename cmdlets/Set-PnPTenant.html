@@ -126,11 +126,11 @@
  [-DefaultSharingLinkType &lt;SharingLinkType&gt;]
  [-ODBMembersCanShare &lt;SharingState&gt;]
  [-ODBAccessRequests &lt;SharingState&gt;]
- [-PreventExternalUsersFromResharing &lt;Boolean&gt;]
+ [-PreventExternalUsersFromReSharing &lt;Boolean&gt;]
  [-ShowPeoplePickerSuggestionsForGuestUsers &lt;Boolean&gt;]
  [-FileAnonymousLinkType &lt;AnonymousLinkType&gt;]
  [-FolderAnonymousLinkType &lt;AnonymousLinkType&gt;]
- [-NotifyOwnersWhenItemsReshared &lt;Boolean&gt;]
+ [-NotifyOwnersWhenItemsReShared &lt;Boolean&gt;]
  [-NotifyOwnersWhenInvitationsAccepted &lt;Boolean&gt;]
  [-NotificationsInOneDriveForBusinessEnabled &lt;Boolean&gt;]
  [-NotificationsInSharePointEnabled &lt;Boolean&gt;]
@@ -264,7 +264,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-conditionalaccesspolicy">-ConditionalAccessPolicy</h3>
-<p>Blocks or limits access to SharePoint and OneDrive content from unmanaged devices.</p>
+<p>Blocks or limits access to SharePoint and OneDrive content from un-managed devices.</p>
 <pre><code class="lang-yaml">Type: SPOConditionalAccessPolicyType
 Parameter Sets: (All)
 Accepted values: AllowFullAccess, AllowLimitedAccess, BlockAccess, ProtectionLevel
@@ -426,10 +426,10 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-externalservicesenabled">-ExternalServicesEnabled</h3>
 <p>Enables external services for a tenant.
-External services are defined as services that are not in the Office 365 datacenters.</p>
+External services are defined as services that are not in the Office 365 data centers.</p>
 <p>The valid values are:
 True (default) - External services are enabled for the tenant.
-False - External services that are outside of the Office 365 datacenters cannot interact with SharePoint.</p>
+False - External services that are outside of the Office 365 data centers cannot interact with SharePoint.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -610,7 +610,7 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-notifyownerswhenitemsreshared">-NotifyOwnersWhenItemsReshared</h3>
+<h3 id="-notifyownerswhenitemsreshared">-NotifyOwnersWhenItemsReShared</h3>
 <p>When this parameter is set to $true and another user re-shares a document from a user's OneDrive for Business, the OneDrive for Business owner is notified by e-mail.</p>
 <p>For additional information about how to configure notifications for external sharing, see Configure notifications for external sharing for OneDrive for Business.</p>
 <p>The values are $true and $false.</p>
@@ -720,7 +720,7 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-preventexternalusersfromresharing">-PreventExternalUsersFromResharing</h3>
+<h3 id="-preventexternalusersfromresharing">-PreventExternalUsersFromReSharing</h3>
 <p>Prevents external users from resharing files, folders, and sites that they do not own.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
@@ -1216,7 +1216,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-enableazureadb2bintegration">-EnableAzureADB2BIntegration</h3>
-<p>Allows enablement of SharePoint and OneDrive integrartion with Azure AD B2B. See [this article]](<a href="https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration">https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration</a>) for more information.</p>
+<p>Allows enablement of SharePoint and OneDrive integration with Azure AD B2B. See [this article]](<a href="https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration">https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration</a>) for more information.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 

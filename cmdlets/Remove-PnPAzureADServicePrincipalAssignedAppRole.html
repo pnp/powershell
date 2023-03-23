@@ -96,7 +96,7 @@
 <h3 id="by-assigned-app-role">By assigned app role</h3>
 <pre><code class="lang-powershell">Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal &lt;ServicePrincipalPipeBind&gt; [-Identity &lt;ServicePrincipalAssignedAppRoleBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
-<h3 id="by-approle-name">By approle name</h3>
+<h3 id="by-app-role-name">By app role name</h3>
 <pre><code class="lang-powershell">Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal &lt;ServicePrincipalPipeBind&gt; -AppRoleName &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -126,7 +126,7 @@
 <h3 id="-principal">-Principal</h3>
 <p>The object id, name or instance of the service principal/application registration to remove app roles for</p>
 <pre><code class="lang-yaml">Type: ServicePrincipalPipeBind
-Parameter Sets: By assigned app role, By approle name
+Parameter Sets: By assigned app role, By app role name
 
 Required: True
 Position: Named
@@ -148,7 +148,7 @@ Accept wildcard characters: False
 <h3 id="-approlename">-AppRoleName</h3>
 <p>The name of the permission to remove, i.e. Sites.Read.All</p>
 <pre><code class="lang-yaml">Type: ServicePrincipalAssignedAppRoleBind
-Parameter Sets: By approle name
+Parameter Sets: By app role name
 
 Required: True
 Position: Named

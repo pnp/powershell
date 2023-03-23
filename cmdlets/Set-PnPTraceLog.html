@@ -94,7 +94,7 @@
 <pre><code class="lang-powershell">Set-PnPTraceLog [-Off] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets, uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off. Notice that basically only the Provisioning Engine writes to the tracelog which means that cmdlets related to the engine will produce output.</p>
+<p>Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets, uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off. Notice that basically only the Provisioning Engine writes to the trace log which means that cmdlets related to the engine will produce output.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPTraceLog -On -LogFile traceoutput.txt
@@ -136,7 +136,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-indentsize">-IndentSize</h3>
-<p>Indents in the tracelog will be with this amount of characters. Defaults to 4.</p>
+<p>Indents in the trace log will be with this amount of characters. Defaults to 4.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: On
 

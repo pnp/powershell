@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Rename-PnPTenantSite | PnP PowerShell </title>
+    <title>Get-PnPAzureACSPrincipal | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Rename-PnPTenantSite | PnP PowerShell ">
+    <meta name="title" content="Get-PnPAzureACSPrincipal | PnP PowerShell ">
     <meta name="generator" content="docfx 2.51.0.0">
     <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,28 +77,39 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="rename-pnptenantsite">Rename-PnPTenantSite</h1>
+                    <h1 id="get-pnpazureacsprincipal">Get-PnPAzureACSPrincipal</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Starts a rename of a site on a SharePoint Online site.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+</ul>
+<p>Returns the list of Azure ACS Principals</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Rename-PnPTenantSite [[-Identity] &lt;SPOSitePipeBind&gt;] [[-NewSiteUrl] &lt;String&gt;] [[-NewSiteTitle] &lt;string&gt;]
-[[-SuppressMarketplaceAppCheck] [&lt;SwitchParameter&gt;]] [[-SuppressWorkflow2013Check] [&lt;SwitchParameter&gt;]] [[-SuppressBcsCheck] [&lt;SwitchParameter&gt;]] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureACSPrincipal [-Scope &lt;AzureACSPrincipalScope&gt;] [-IncludeSubsites &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet starts a rename of a site on a SharePoint Online site. You can change the URL, and optionally the site title along with changing the URL.</p>
-<p>This will not work between Multi-geo environments.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">$currentSiteUrl = &quot;https://&lt;tenant&gt;.sharepoint.com/site/samplesite&quot;
-$updatedSiteUrl = &quot;https://&lt;tenant&gt;.sharepoint.com/site/renamed&quot;
-Rename-PnPTenantSite -Identity $currentSiteUrl -NewSiteUrl $updatedSiteUrl
+<pre><code class="lang-powershell">Get-PnPAzureACSPrincipal
 </code></pre>
-<p>Starts the rename of the SharePoint Online site with name &quot;samplesite&quot; to &quot;renamed&quot; without modifying the title.</p>
+<p>Returns the Azure ACS principals</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPAzureACSPrincipal -IncludeSubsites
+</code></pre>
+<p>Returns the lists of Azure ACS principals installed in your site collection as well as the subsites.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPAzureACSPrincipal -Scope Tenant
+</code></pre>
+<p>Returns the lists of Azure ACS principals installed in your Tenant.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPAzureACSPrincipal -Scope All -IncludeSubsites
+</code></pre>
+<p>Returns the lists of all Azure ACS principals installed in your Tenant including subsites. This a very heavy operation, so it might take some time before we get the results.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -111,77 +122,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>Specifies the full URL of the SharePoint Online site collection that needs to be renamed.</p>
-<pre><code class="lang-yaml">Type: SPOSitePipeBind
+<h3 id="-scope">-Scope</h3>
+<p>When specified, it determines the scope of the Azure ACS principals.
+Supported values are <code>List, Web, Site, Tenant , All</code>.</p>
+<pre><code class="lang-yaml">Type: Enum (AzureACSPrincipalScope)
 Parameter Sets: (All)
-
 Required: False
 Position: Named
-Default value: None
-Accept pipeline input: True
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-newsiteurl">-NewSiteUrl</h3>
-<p>Specifies the full URL of the SharePoint Online site collection to which it needs to be renamed.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
+Default value: List
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-newsitetitle">-NewSiteTitle</h3>
-<p>Specifies the new title of the SharePoint Site.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-suppressmarketplaceappcheck">-SuppressMarketplaceAppCheck</h3>
-<p>Suppress checking compatibility of marketplace SharePoint Add-ins deployed to the associated site.</p>
+<h3 id="-includesubsites">-IncludeSubsites</h3>
+<p>When specified, it determines whether we should use also search the subsites of the connected site collection and lists the Azure ACS principals.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-suppressworkflow2013check">-SuppressWorkflow2013Check</h3>
-<p>Suppress checking compatibility of SharePoint 2013 Workflows deployed to the associated site.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-suppressbcscheck">-SuppressBcsCheck</h3>
-<p>Suppress checking compatibility of BCS connections deployed to the associated site.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-wait">-Wait</h3>
-<p>Wait till the renaming of the new site collection is successful. If not specified, a job will be created which you can use to check for its status.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None

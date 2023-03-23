@@ -131,7 +131,7 @@ Register-PnPAzureADApp -ApplicationName &quot;PnPPowerShell&quot; -Tenant [tenan
 <p>In some scenarios it might be easier to have the PFX file being encoded as a string using Base64 as opposed to having to store the physical PFX file somewhere. If you have the PFX encoded using Base64 encoding, you can connect using:</p>
 <pre><code class="lang-PowerShell">Connect-PnPOnline [tenant].sharepoint.com -ClientId [clientid] -Tenant [tenant].onmicrosoft.com -CertificateBase64Encoded $encodedPfx
 </code></pre>
-<p>If you wish to convert a PFX file to its Base64 encoded equivallent, you can use:</p>
+<p>If you wish to convert a PFX file to its Base64 encoded equivalent, you can use:</p>
 <pre><code class="lang-PowerShell">$bytes = Get-Content '.\PnPPowerShell.pfx' -AsByteStream
 $encodedPfx = [System.Convert]::ToBase64String($bytes)
 </code></pre>

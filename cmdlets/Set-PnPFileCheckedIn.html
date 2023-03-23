@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Checks in a file.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPFileCheckedIn [-Url] &lt;String&gt; [-CheckinType &lt;CheckinType&gt;] [-Comment &lt;String&gt;] [-Approve]
+<pre><code class="lang-powershell">Set-PnPFileCheckedIn [-Url] &lt;String&gt; [-CheckInType &lt;CheckInType&gt;] [-Comment &lt;String&gt;] [-Approve]
  [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -97,7 +97,7 @@
 </code></pre>
 <p>Checks in the file &quot;Contract.docx&quot; in the &quot;Documents&quot; library</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPFileCheckedIn -Url &quot;/Documents/Contract.docx&quot; -CheckinType MinorCheckin -Comment &quot;Smaller changes&quot;
+<pre><code class="lang-powershell">Set-PnPFileCheckedIn -Url &quot;/Documents/Contract.docx&quot; -CheckInType MinorCheckIn -Comment &quot;Smaller changes&quot;
 </code></pre>
 <p>Checks in the file &quot;Contract.docx&quot; in the &quot;Documents&quot; library as a minor version and adds the check in comment &quot;Smaller changes&quot;</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -112,9 +112,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-checkintype">-CheckinType</h3>
+<h3 id="-checkintype">-CheckInType</h3>
 <p>The check in type to use. Defaults to MajorCheckIn.</p>
-<pre><code class="lang-yaml">Type: CheckinType
+<pre><code class="lang-yaml">Type: CheckInType
 Parameter Sets: (All)
 Accepted values: MinorCheckIn, MajorCheckIn, OverwriteCheckIn
 

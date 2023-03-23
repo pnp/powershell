@@ -83,7 +83,7 @@
                   </div>
                     <h1 id="using-pnp-powershell-in-docker-containers">Using PnP PowerShell in Docker containers</h1>
 
-<p>Using Docker allows you to use any software inside virtual envirionments, without having to install this software directly on your laptop or server. These virtual environments are containers, which might be imagined as lightweight virtual machines. Having their own virtual disks, memory and processes, containers are rationally isolated from your laptop operating system, providing you a great way of experimenting and using any version of PnP.PowerShell without installing it.</p>
+<p>Using Docker allows you to use any software inside virtual environments, without having to install this software directly on your laptop or server. These virtual environments are containers, which might be imagined as lightweight virtual machines. Having their own virtual disks, memory and processes, containers are rationally isolated from your laptop operating system, providing you a great way of experimenting and using any version of PnP.PowerShell without installing it.</p>
 <p><img src="../images/docker/dockercontainers.png" alt="Using software in virtual environments, called containers"></p>
 <p>The good news is that you will not even need to install PnP.PowerShell in containers by your own: PnP team is already publishing Docker container images for each supported and nightly release, <a href="https://hub.docker.com/r/m365pnp/powershell">here</a>. You will however need to install docker runtime.</p>
 <p>If you use Windows, we would recommend you using Linux containers with help of WSL. Alternatively, even though it is not the most common way, you might want to run PnP.PowerShell in Windows containers. Mind you that some use cases might be limited when using Windows containers. If you use Mac OS or Linux, the easiest way is to use Linux containers.</p>
@@ -182,7 +182,7 @@ choco install -y docker-engine
 </li>
 </ul>
 <p>In such container you can run <code>Get-ChildItem</code> and see the contents of the current directory.</p>
-<p>The examples above start new container and allow you to interactively use container, running inline commands. In other cases however, you might want to just start a container for a short time (a few seconds maybe) and run a ps1 script unattededly and then automatically terminate the container. Here is how you can do it.</p>
+<p>The examples above start new container and allow you to interactively use container, running inline commands. In other cases however, you might want to just start a container for a short time (a few seconds maybe) and run a ps1 script unattended and then automatically terminate the container. Here is how you can do it.</p>
 <ul>
 <li><p>Linux/WSL/Mac OS:</p>
 <pre><code class="lang-bash">docker run --rm -v &quot;$(pwd):/home&quot; -w /home m365pnp/powershell pwsh test.ps1
