@@ -7,6 +7,7 @@ using Core = PnP.Framework;
 using System.Threading;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Tests
 {
@@ -20,6 +21,8 @@ namespace PnP.PowerShell.Tests
         #endregion
 
         public static Configuration Configuration { get; set; }
+
+        public static string WebHookTestUrl { get; set; }
 
         private static PSTestScope testScope;
         public static PSTestScope GetTestScope()
@@ -35,6 +38,12 @@ namespace PnP.PowerShell.Tests
         public static ClientContext CreateClientContext()
         {
             return CreateContext(Configuration.SiteUrl, Configuration.Credentials);
+        }
+
+        public static ClientContext CreateTenantClientContext()
+        {
+            var tenantUrl = UrlUtilities.GetTenantAdministrationUrl(Configuration.SiteUrl);
+            return CreateContext(tenantUrl, Configuration.Credentials);
         }
 
         public static ClientContext CreateClientContext(string siteUrl)

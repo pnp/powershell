@@ -22,7 +22,7 @@ New-PnPTerm -Name <String> [-Id <Guid>] [-Lcid <Int32>] [-TermSet] <TaxonomyTerm
 ```
 
 ## DESCRIPTION
-This cmdlet adds a new taxonony term to a given termset.
+This cmdlet adds a new taxonomy term to a given termset.
 
 ## EXAMPLES
 

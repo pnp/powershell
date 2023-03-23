@@ -38,10 +38,10 @@ This cmdlet removes a Planner bucket.
 
 ### Example 1
 ```powershell
-Remove-PnPPlannerBucket -Group "Marketing" -Plan "Conference" -Identity "Preconference Todos"
+Remove-PnPPlannerBucket -Group "Marketing" -Plan "Conference" -Identity "Pre-conference Todos"
 ```
 
-This removes the "Preconference Todos" bucket from the specified plan.
+This removes the "Pre-conference Todos" bucket from the specified plan.
 
 ## PARAMETERS
 

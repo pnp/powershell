@@ -21,7 +21,7 @@ Reset-PnPFileVersion -ServerRelativeUrl <String> [-CheckinType <CheckinType>] [-
 
 ## DESCRIPTION
 
-Allows to rolback a file to its previous version.
+Allows to rollback a file to its previous version.
 
 ## EXAMPLES
 
@@ -38,7 +38,7 @@ Reset-PnPFileVersion -ServerRelativeUrl "/sites/test/office365.png" -CheckinType
 ## PARAMETERS
 
 ### -CheckInComment
-The comment added to the checkin. Defaults to 'Restored to previous version'.
+The comment added to the check-in. Defaults to 'Restored to previous version'.
 
 ```yaml
 Type: String
