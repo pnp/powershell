@@ -26,7 +26,7 @@ Set-PnPSiteSensitivityLabel -Identity <String> [-Connection <PnPConnection>] [-V
 ## DESCRIPTION
 This cmdlet allows for setting a Microsoft Purview sensitivity label on the currently connected to site. If the site has a Microsoft 365 Group behind it, the label will be placed on the Microsoft 365 Group and will require either Group.ReadWrite.All or Directory.ReadWrite.All delegate permissions on Microsoft Graph. This currently cannot be done using App Only permissions due to a limitation in Microsoft Graph. If it does not have a Microsoft 365 Group behind it, it will set the label on the SharePoint Online site and will not require Microsoft Graph permissions and will work with both delegate as well as app only logins.
 
-It may take up to a few minutes for a change to the sensitity label to become visible in SharePoint Online and Azure Active Directory.
+It may take up to a few minutes for a change to the sensitivity label to become visible in SharePoint Online and Azure Active Directory.
 
 Use [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.html) to get an overview of the available Microsoft Purview sensitivity labels on the tenant.
 

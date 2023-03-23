@@ -61,7 +61,7 @@ Accept wildcard characters: False
 
 
 ### -TemplateId
-The unqiue identifier for the template used to create this group of settings. To fetch the values of available templates, use `Get-PnPMicrosoft365GroupSettingTemplates`.
+The unique identifier for the template used to create this group of settings. To fetch the values of available templates, use `Get-PnPMicrosoft365GroupSettingTemplates`.
 
 ```yaml
 Type: String

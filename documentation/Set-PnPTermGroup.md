@@ -20,7 +20,7 @@ Set-PnPTermGroup -Identity <TaxonomyTermGroupPipeBind> [-Name <String>] [-Descri
 ```
 
 ## DESCRIPTION
-The cmdles allows you to update an existing term group.
+The cmdlet allows you to update an existing term group.
 
 ## EXAMPLES
 

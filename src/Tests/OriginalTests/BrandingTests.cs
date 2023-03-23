@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 using Microsoft.SharePoint.Client;
 using System.Linq;
-using OfficeDevPnP.Core.Enums;
+using PnP.Framework.Enums;
 
 namespace PnP.PowerShell.Tests
 {
@@ -543,7 +543,7 @@ namespace PnP.PowerShell.Tests
             bool isActive = false;
             using (var context = TestCommon.CreateClientContext())
             {
-                isActive = context.Web.IsFeatureActive(OfficeDevPnP.Core.Constants.FeatureId_Web_MinimalDownloadStrategy);
+                isActive = context.Web.IsFeatureActive(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy);
 
                 using (var scope = new PSTestScope(true))
                 {
@@ -564,16 +564,16 @@ namespace PnP.PowerShell.Tests
             }
             using (var context = TestCommon.CreateClientContext())
             {
-                var featureActive = context.Web.IsFeatureActive(OfficeDevPnP.Core.Constants.FeatureId_Web_MinimalDownloadStrategy);
+                var featureActive = context.Web.IsFeatureActive(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy);
                 if (isActive)
                 {
                     Assert.IsFalse(featureActive);
-                    context.Web.ActivateFeature(OfficeDevPnP.Core.Constants.FeatureId_Web_MinimalDownloadStrategy);
+                    context.Web.ActivateFeature(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy);
                 }
                 else
                 {
                     Assert.IsTrue(featureActive);
-                    context.Web.DeactivateFeature(OfficeDevPnP.Core.Constants.FeatureId_Web_MinimalDownloadStrategy);
+                    context.Web.DeactivateFeature(PnP.Framework.Constants.FeatureId_Web_MinimalDownloadStrategy);
                 }
             }
         }

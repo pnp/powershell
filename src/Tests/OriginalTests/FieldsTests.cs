@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 using Microsoft.SharePoint.Client;
 using System.Linq;
-using OfficeDevPnP.Core.Entities;
+using PnP.Framework.Entities;
 
 namespace PnP.PowerShell.Tests
 {

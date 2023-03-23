@@ -15,7 +15,7 @@ Install-Module -Name "PnP.PowerShell"
 
 The way PnP PowerShell authenticates you to your tenant has changed. We now use OAuth behind the scenes to authenticate you. We support username/password auth, device code auth and app-only authentication.
 
-If you were using `Connect-PnPOnline` with the `-Credentials` you will have to register first an Azure AD application on your tenant. This is very straightfoward and simple:
+If you were using `Connect-PnPOnline` with the `-Credentials` you will have to register first an Azure AD application on your tenant. This is very straightforward and simple:
 
 ```powershell
 Register-PnPManagementShellAccess
@@ -105,8 +105,8 @@ Check your scripts. As this is a major release, we have deprecated cmdlets, rena
 |`Connect-PnPOnline`|`MinimalHealthScore`|Removed. Not applicable anymore|
 |`Connect-PnPOnline`|`SkipTenantAdminCheck`|Removed.|
 |`Remove-PnPTenantSite`|`FromRecycleBin`|Use `Clear-PnPTenantRecycleBinItem`|
-|`Set-PnPTenantSite`|`UserCodeMaximumLevel`|Sandboxed solutions have been deprecated, no more applicable|
-|`Set-PnPTenantSite`|`UserCodeWarningLevel`|Sandboxed solutions have been deprecated, no more applicable|
+|`Set-PnPTenantSite`|`UserCodeMaximumLevel`|Sandbox solutions have been deprecated, no more applicable|
+|`Set-PnPTenantSite`|`UserCodeWarningLevel`|Sandbox solutions have been deprecated, no more applicable|
 |`New-PnPAzureCertificate`|`Out`|Use `OutPfx` instead|
 |`Get-PnPAvailableLanguage`|`Identity`|Removed as it does not apply to SharePoint Online|
 

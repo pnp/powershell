@@ -42,7 +42,7 @@ Archives the team as identified.
 Set-PnPTeamsTeamArchivedState -Identity "My Team" -Archived $false
 ```
 
-Unarchives the team as identified.
+Un-archives the team as identified.
 
 ### EXAMPLE 3
 ```powershell

@@ -15,7 +15,7 @@ Removes Software-Defined Networking (SDN) Support in your SharePoint Online tena
 ## SYNTAX
 
 ```powershell
-Remove-PnPSdnProviderr [-Confirm] [-WhatIf]
+Remove-PnPSdnProvider [-Confirm] [-WhatIf]
 ```
 
 ## DESCRIPTION

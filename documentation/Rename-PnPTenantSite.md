@@ -136,7 +136,7 @@ Accept wildcard characters: False
 ```
 
 ### -Wait
-Wait till the renaming of the new site collection is successfull. If not specified, a job will be created which you can use to check for its status.
+Wait till the renaming of the new site collection is successful. If not specified, a job will be created which you can use to check for its status.
 
 ```yaml
 Type: SwitchParameter

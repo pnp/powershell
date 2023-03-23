@@ -53,7 +53,7 @@ Changes the order in which the permission level is displayed.
 ## PARAMETERS
 
 ### -Identity
-The identity of the role definition, either a RoleDefinition object or the name of the roledefinition.
+The identity of the role definition, either a RoleDefinition object or the name of the RoleDefinition.
 
 ```yaml
 Type: RoleDefinitionPipeBind

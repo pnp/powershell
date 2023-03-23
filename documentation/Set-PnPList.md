@@ -16,7 +16,7 @@ Updates list settings
 
 ```powershell
 Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRoleInheritance]
- [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubscopes] [-Title <String>] [-Description <String>]
+ [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubScopes] [-Title <String>] [-Description <String>]
  [-Hidden <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
@@ -116,7 +116,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ClearSubscopes
+### -ClearSubScopes
 If used the unique permissions are cleared from child objects and they can inherit role assignments from this object
 
 ```yaml
@@ -441,7 +441,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExemptFromBlockDownloadOfNonViewableFiles
-Allows to configure access capabilities for unmanaged devices for the list. If set to $true, the list will be accessible by unmanaged devices as well. For more information, see [SharePoint and OneDrive unmanaged device access controls for administrators](https://learn.microsoft.com/sharepoint/control-access-from-unmanaged-devices).
+Allows to configure access capabilities for un-managed devices for the list. If set to $true, the list will be accessible by un-managed devices as well. For more information, see [SharePoint and OneDrive un-managed device access controls for administrators](https://learn.microsoft.com/sharepoint/control-access-from-unmanaged-devices).
 
 ```yaml
 Type: Boolean
