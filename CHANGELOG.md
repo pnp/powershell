@@ -81,6 +81,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` as the implementation behind these features has been changed in SharePoint Online causing them no longer to work. At present, there's no alternative for this that we can call into thus we will have to remove these in a future version. There is a Design Change Request open with the Program Group to add back APIs for doing this. If that will be accepted and implemented, we will add these back again. [#2720](https://github.com/pnp/powershell/pull/2720)
 - Removed `-ReturnTyped` parameter from the `Get-PnPField` cmdlet. The retrieved fields will always be returned by their `TypeKind`. [#2849](https://github.com/pnp/powershell/pull/2849)
 - Removed alias `Get-PnPFlowEnvironment` from `Get-PnPPowerPlatformEnvironment`. Please use the latter going forward. [#2794](https://github.com/pnp/powershell/pull/2794)
+- Marked `BlockEdit` and `BlockDeletion` parameters as obsolete in `Set-PnPLabel` cmdlet. [#2934](https://github.com/pnp/powershell/pull/2934)
 
 ### Fixed
 
