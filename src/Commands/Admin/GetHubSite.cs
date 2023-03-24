@@ -17,15 +17,15 @@ namespace PnP.PowerShell.Commands.Admin
             if (Identity != null)
             {
                 var hubSiteProperties = Identity.GetHubSite(Tenant);
-                ClientContext.Load(hubSiteProperties);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(hubSiteProperties);
+                AdminContext.ExecuteQueryRetry();
                 WriteObject(hubSiteProperties);
             }
             else
             {
                 var hubSitesProperties = base.Tenant.GetHubSitesProperties();
-                ClientContext.Load(hubSitesProperties);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(hubSitesProperties);
+                AdminContext.ExecuteQueryRetry();
                 WriteObject(hubSitesProperties, true);
             }
         }

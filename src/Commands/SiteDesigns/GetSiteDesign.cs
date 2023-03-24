@@ -30,8 +30,8 @@ namespace PnP.PowerShell.Commands
             else
             {
                 var designs = Tenant.GetSiteDesigns();
-                ClientContext.Load(designs);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(designs);
+                AdminContext.ExecuteQueryRetry();
 
                 WriteObject(designs.ToList(), true);
             }

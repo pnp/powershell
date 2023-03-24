@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using Microsoft.Online.SharePoint.TenantAdministration;
 
@@ -11,8 +10,8 @@ namespace PnP.PowerShell.Commands
     {
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(Tenant, t => t.DisableSpacesActivation);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(Tenant, t => t.DisableSpacesActivation);
+            AdminContext.ExecuteQueryRetry();
 
             WriteObject(Tenant.DisableSpacesActivation, false);
         }

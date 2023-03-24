@@ -284,8 +284,8 @@ namespace PnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(Tenant);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(Tenant);
+            AdminContext.ExecuteQueryRetry();
 
             bool modified = false;
             if (MinCompatibilityLevel != 0 && MaxCompatibilityLevel != 0)
@@ -901,13 +901,13 @@ namespace PnP.PowerShell.Commands.Admin
             }
             if (AllowFilesWithKeepLabelToBeDeletedSPO.HasValue)
             {
-                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetAllowFilesWithKeepLabelToBeDeletedSPO(ClientContext, AllowFilesWithKeepLabelToBeDeletedSPO.Value);
+                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetAllowFilesWithKeepLabelToBeDeletedSPO(AdminContext, AllowFilesWithKeepLabelToBeDeletedSPO.Value);
                 modified = true;
             }
 
             if (AllowFilesWithKeepLabelToBeDeletedODB.HasValue)
             {
-                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetAllowFilesWithKeepLabelToBeDeletedODB(ClientContext, AllowFilesWithKeepLabelToBeDeletedODB.Value);
+                Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetAllowFilesWithKeepLabelToBeDeletedODB(AdminContext, AllowFilesWithKeepLabelToBeDeletedODB.Value);
                 modified = true;
             }
 
@@ -1014,7 +1014,7 @@ namespace PnP.PowerShell.Commands.Admin
 
             if (modified)
             {
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
 
             if (EnableModernListTemplateIds != null && EnableModernListTemplateIds.Length > 0)
@@ -1031,7 +1031,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
 
                 Tenant.DisabledModernListTemplateIds = disabledListTemplateIds.ToArray();
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
         }
     }

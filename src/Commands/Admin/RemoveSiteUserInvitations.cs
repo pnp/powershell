@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Admin
                 url = Site.Url;
             }
             var invitations = Tenant.RemoveSPOTenantSiteUserInvitations(url, EmailAddress, CountOnly);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             WriteObject(invitations, true);
         }
     }

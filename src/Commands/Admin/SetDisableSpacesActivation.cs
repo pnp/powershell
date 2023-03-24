@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands
                 }
                 Tenant.DisableSpacesActivationOnSite(Identity.Url, Disable.ToBool());
             }
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

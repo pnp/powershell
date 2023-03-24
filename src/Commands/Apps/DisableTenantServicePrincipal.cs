@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration.Internal;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 
@@ -16,11 +15,11 @@ namespace PnP.PowerShell.Commands.Apps
         {
             if (ShouldContinue("Do you want to disable the Tenant Service Principal?", "Continue?"))
             {
-                var servicePrincipal = new SPOWebAppServicePrincipal(ClientContext);
+                var servicePrincipal = new SPOWebAppServicePrincipal(AdminContext);
                 servicePrincipal.AccountEnabled = false;
                 servicePrincipal.Update();
-                ClientContext.Load(servicePrincipal);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(servicePrincipal);
+                AdminContext.ExecuteQueryRetry();
                 WriteObject(servicePrincipal);
             }
         }

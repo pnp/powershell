@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Admin
             if (ShouldProcess("Removes a SDN Provider"))
             {
                 this.Tenant.RemoveSdnProvider();
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
         }
     }
