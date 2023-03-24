@@ -21,8 +21,7 @@ Creates a new Microsoft 365 Group
 
 ```powershell
 New-PnPMicrosoft365Group -DisplayName <String> -Description <String> -MailNickname <String>
- [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-Force] [-SensitivityLabels <GUID[]>]
-  [<CommonParameters>]
+ [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam] [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>] [-Force] [-SensitivityLabels <GUID[]>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -231,12 +230,12 @@ Accept wildcard characters: False
 
 ### -ResourceBehaviorOptions
 
-Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group.
+Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group. Documentation on what each of these options do and default to if not provided can be found here: https://learn.microsoft.com/graph/group-set-options#configure-groups
 
 ```yaml
 Type: TeamResourceBehaviorOptions
 Parameter Sets: (All)
-Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled
+Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled, CalendarMemberReadOnly, ConnectorsDisabled
 
 Required: False
 Position: Named
