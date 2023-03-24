@@ -1,7 +1,5 @@
 ﻿using PnP.Framework.ALM;
 using PnP.Framework.Enums;
-
-using PnP.PowerShell.Commands.Enums;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
@@ -9,7 +7,6 @@ namespace PnP.PowerShell.Commands.Apps
     [Cmdlet(VerbsCommon.Add, "PnPApp")]
     public class AddApp : PnPSharePointCmdlet
     {
-
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Path;
 
@@ -52,7 +49,6 @@ namespace PnP.PowerShell.Commands.Apps
                     {
                         result = manager.GetAvailable(result.Id, Scope);
                     }
-
                 }
                 WriteObject(result);
             }

@@ -54,6 +54,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPAzureACSPrincipal` cmdlet to retrieve list of installed Azure ACS Principals in the site collection or tenant. [#2920](https://github.com/pnp/powershell/pull/2920)
 - Added `-LogoFilePath` parameter to `Register-PnPAzureADApp` cmdlet to allow setting the logo for the Azure AD app. [#2881](https://github.com/pnp/powershell/pull/2881)
 - Added support for `-Verbose` in `Move-PnPFile` which will show if it has problems determining if the destination location is a folder or a file [#2888](https://github.com/pnp/powershell/pull/2888)
+- Added `CalendarMemberReadOnly` and `ConnectorsDisabled` as `-ResourceBehaviorOptions` to `New-PnPMicrosoft365Group` [#2929](https://github.com/pnp/powershell/pull/2929)
+- Added `-Identity` option to `Get-PnPPowerPlatformEnvironment` which allows retrieval of one specific environment by its displayname or id. [#2794](https://github.com/pnp/powershell/pull/2794)
+- Added `Get-PnPPowerApp` which allows PowerApps to be retrieved [#2794](https://github.com/pnp/powershell/pull/2794)
 
 ### Changed
 
@@ -77,6 +80,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed support for PowerShell 5, only PowerShell 7.2 and later will be supported from here onwards [#2764](https://github.com/pnp/powershell/pull/2764)
 - Removed `Get-PnPSubscribeSharePointNewsDigest` and `Set-PnPSubscribeSharePointNewsDigest` as the implementation behind these features has been changed in SharePoint Online causing them no longer to work. At present, there's no alternative for this that we can call into thus we will have to remove these in a future version. There is a Design Change Request open with the Program Group to add back APIs for doing this. If that will be accepted and implemented, we will add these back again. [#2720](https://github.com/pnp/powershell/pull/2720)
 - Removed `-ReturnTyped` parameter from the `Get-PnPField` cmdlet. The retrieved fields will always be returned by their `TypeKind`. [#2849](https://github.com/pnp/powershell/pull/2849)
+- Removed alias `Get-PnPFlowEnvironment` from `Get-PnPPowerPlatformEnvironment`. Please use the latter going forward. [#2794](https://github.com/pnp/powershell/pull/2794)
 
 ### Fixed
 
