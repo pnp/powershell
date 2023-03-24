@@ -90,22 +90,20 @@
 </ul>
 <p>Returns the flows for a given environment</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; [-AsAdmin] [-Identity &lt;PowerPlatformPipeBind&gt;] 
-[-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] [-AsAdmin] [-Identity &lt;PowerPlatformPipeBind&gt;] 
+[-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet returns the flows for a given environment.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment
+<pre><code class="lang-powershell">Get-PnPPowerPlatformEnvironment -Identity &quot;MyOrganization (default)&quot; | Get-PnPFlow
 </code></pre>
 <p>This returns all the flows for a given Power Platform environment</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">Get-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>This returns a specific flow</p>
+<p>This returns a specific flow from the default environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
 <p>The name of the Power Platform environment or an Environment object to retrieve the available flows for.</p>
@@ -113,9 +111,9 @@ Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
+Default value: The default environment
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -149,6 +147,17 @@ Retrieve the value for this parameter by either specifying -ReturnConnection on 
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named

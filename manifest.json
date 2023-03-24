@@ -2391,7 +2391,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPFlow.html",
-          "hash": "RQclZC+akXHzBi/8WbfIOA=="
+          "hash": "qe3uVQSHgGGJswAqSmw1cA=="
         }
       },
       "is_incremental": false,
@@ -3035,11 +3035,23 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPowerApp.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPowerApp.html",
+          "hash": "E9JT92j3Z36Aj+xM+HnPRw=="
+        }
+      },
+      "is_incremental": false,
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPPowerPlatformEnvironment.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPPowerPlatformEnvironment.html",
-          "hash": "mtG/xKMbN6AMJp+W9REe9w=="
+          "hash": "y6w4ScuiBVVGftbZHJjdKA=="
         }
       },
       "is_incremental": false,
@@ -8073,7 +8085,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/toc.html",
-          "hash": "AAs4Y2DMxeuqwG/mkFS88A=="
+          "hash": "4gYxas3j9uK2QvNRKiivEw=="
         }
       },
       "is_incremental": false,
@@ -9252,7 +9264,7 @@
         "ConceptualDocumentProcessor": {
           "can_incremental": false,
           "incrementalPhase": "build",
-          "total_file_count": 669,
+          "total_file_count": 670,
           "skipped_file_count": 0
         },
         "ResourceDocumentProcessor": {
