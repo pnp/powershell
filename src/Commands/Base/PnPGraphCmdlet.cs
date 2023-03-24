@@ -54,10 +54,8 @@ namespace PnP.PowerShell.Commands.Base
                 else
                 {
                     if (Connection?.Context != null)
-                    {
-                        WriteVerbose("Acquiring token for default permissions on resource " + Connection.GraphEndPoint + " using the current context");
-                        var accessToken = TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
-                        WriteVerbose("Access token acquired through the current context: " + accessToken);
+                    {                        
+                        var accessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);                        
                         return accessToken;
                     }
                 }

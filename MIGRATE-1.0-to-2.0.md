@@ -75,6 +75,7 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 | Export-PnPTaxonomy | - | - | The cmdlet does not support export of taxonomy using `UTF-7` encoding. If `UTF-7` is specified, it will switch to `UTF-8` encoding |
 | Get-PnPField | ReturnTyped | - | The cmdlet will always return the typed object of the field. |
 | Get-PnPUserProfileProperty | - | - | Additional user profile properties are no longer returned under UserProfileProperties but instead will be directly under the returned instance |
+| Get-PnPFlowEnvironment | - | - | The alias on the cmdlet has been removed. Use `PnPPowerPlatformEnvironment` instead. |
 
 ## Other notable changes
 

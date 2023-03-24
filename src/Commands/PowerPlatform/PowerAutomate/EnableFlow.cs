@@ -1,5 +1,4 @@
-﻿using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
@@ -7,8 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPFlow")]
-    [RequiredMinimalApiPermissions("https://management.azure.com/.default")]
-    public class EnableFlow : PnPGraphCmdlet
+    public class EnableFlow : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = true)]
         public PowerPlatformEnvironmentPipeBind Environment;
