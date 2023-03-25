@@ -127,6 +127,10 @@
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -IncludeAllLists
 </code></pre>
 <p>Returns the generated Site Script JSON containing all lists from the currently connected to site</p>
+<h3 id="example-5-1">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -IncludeAllLists | Add-PnPSiteScript -Title &quot;My Site Script&quot; | Add-PnPSiteDesign -Title &quot;My Site Design&quot; -WebTemplate TeamSite
+</code></pre>
+<p>Creates a new site script and site design based on the currently connected to site</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-includeall">-IncludeAll</h3>
 <p>If specified will include all supported components into the Site Script including all self lists, branding, navigation links, regional settings, external sharing capability and theme.</p>

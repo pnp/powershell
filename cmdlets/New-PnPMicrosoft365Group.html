@@ -91,8 +91,7 @@
 <p>Creates a new Microsoft 365 Group</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt;
- [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;]
-  [&lt;CommonParameters&gt;]
+ [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to create a new Microsoft 365 Group.</p>
@@ -244,10 +243,10 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-resourcebehavioroptions">-ResourceBehaviorOptions</h3>
-<p>Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group.</p>
+<p>Allows providing ResourceBehaviorOptions which accepts multiple values that specify group behaviors for a Microsoft 365 Group. Documentation on what each of these options do and default to if not provided can be found here: <a href="https://learn.microsoft.com/graph/group-set-options#configure-groups">https://learn.microsoft.com/graph/group-set-options#configure-groups</a></p>
 <pre><code class="lang-yaml">Type: TeamResourceBehaviorOptions
 Parameter Sets: (All)
-Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled
+Accepted values: AllowOnlyMembersToPost, HideGroupInOutlook, SubscribeNewGroupMembers, WelcomeEmailDisabled, CalendarMemberReadOnly, ConnectorsDisabled
 
 Required: False
 Position: Named

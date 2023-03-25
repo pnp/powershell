@@ -100,13 +100,9 @@
 <pre><code class="lang-powershell">Set-PnPLabel -List &quot;Demo List&quot; -Label &quot;Project Documentation&quot; -SyncToItems $true
 </code></pre>
 <p>This sets an O365 label on the specified list or library and sets the label to all the items in the list and library as well.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Set-PnPLabel -List &quot;Demo List&quot; -Label &quot;Project Documentation&quot; -BlockDelete $true -BlockEdit $true
-</code></pre>
-<p>This sets an O365 label on the specified list or library. Next, it also blocks the ability to either edit or delete the item.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-blockdeletion">-BlockDeletion</h3>
-<p>Block deletion of items in the library</p>
+<p>Block deletion of items in the library. This parameter has been deprecated because overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -117,7 +113,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-blockedit">-BlockEdit</h3>
-<p>Block editing of items in the library</p>
+<p>Block editing of items in the library. This parameter has been deprecated because overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 

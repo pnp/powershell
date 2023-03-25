@@ -90,10 +90,15 @@
 </ul>
 <p>Creates a new Site Design on the current tenant</p>
 <h2 id="syntax">SYNTAX</h2>
+<h3 id="by-sitescript-instance-default">By SiteScript Instance (Default)</h3>
+<pre><code class="lang-powershell">Add-PnPSiteDesign -Title &lt;String&gt; -SiteScript &lt;TenantSiteScriptPipeBind&gt; [-Description &lt;String&gt;] [-IsDefault]
+ [-PreviewImageAltText &lt;String&gt;] [-PreviewImageUrl &lt;String&gt;] [-WebTemplate &lt;SiteWebTemplate&gt;]
+ [-ThumbnailUrl &lt;String&gt;] [-DesignPackageId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="by-sitescript-ids">By SiteScript Ids</h3>
 <pre><code class="lang-powershell">Add-PnPSiteDesign -Title &lt;String&gt; -SiteScriptIds &lt;Guid[]&gt; [-Description &lt;String&gt;] [-IsDefault]
  [-PreviewImageAltText &lt;String&gt;] [-PreviewImageUrl &lt;String&gt;] [-WebTemplate &lt;SiteWebTemplate&gt;]
- [-ThumbnailUrl &lt;String&gt;] [-DesignPackageId &lt;Guid&gt;]
- [-Connection &lt;PnPConnection&gt;]
+ [-ThumbnailUrl &lt;String&gt;] [-DesignPackageId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to add a new Site Design on the current tenant.</p>
@@ -110,6 +115,10 @@
 <pre><code class="lang-powershell">Add-PnPSiteDesign -Title &quot;My Company Design&quot; -SiteScriptIds &quot;e84dcb46-3ab9-4456-a136-66fc6ae3d3c5&quot;,&quot;6def687f-0e08-4f1e-999c-791f3af9a600&quot; -Description &quot;My description&quot; -WebTemplate TeamSite -ThumbnailUrl &quot;https://contoso.sharepoint.com/sites/templates/my images/logo.png&quot;
 </code></pre>
 <p>Adds a new Site Design, with the specified title, description and logo to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. The WebTemplate parameter specifies that this design applies to modern Team Sites. Notice that when the location for the ThumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -IncludeAll | Add-PnPSiteScript -Title &quot;My Site Script&quot; | Add-PnPSiteDesign -Title &quot;My Site Design&quot; -WebTemplate TeamSite
+</code></pre>
+<p>Adds a new Site Design based on the currently connected to site, with the specified title to be shown in the template picker.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-confirm">-Confirm</h3>
 <p>Prompts you for confirmation before running the cmdlet.</p>
@@ -178,10 +187,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-sitescript">-SiteScript</h3>
+<p>An instance, id or title of a site script to use for the site design</p>
+<pre><code class="lang-yaml">Type: TenantSiteScriptPipeBind
+Parameter Sets: By SiteScript Instance
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-sitescriptids">-SiteScriptIds</h3>
-<p>An array of guids of site scripts</p>
+<p>An array of guids of site scripts to use for the site design</p>
 <pre><code class="lang-yaml">Type: Guid[]
-Parameter Sets: (All)
+Parameter Sets: By SiteScript Ids
 
 Required: True
 Position: Named

@@ -603,7 +603,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPListDesign.html",
-          "hash": "WlId6fMbJKD+k6VlobH3Jg=="
+          "hash": "pMWmKLx3ERbCwQdZPr1UGQ=="
         }
       },
       "is_incremental": false,
@@ -927,7 +927,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPSiteDesign.html",
-          "hash": "qfIQ9SOehtQMS0MrQsvmUw=="
+          "hash": "EjevqTuds7zQG9Ks7NW5QQ=="
         }
       },
       "is_incremental": false,
@@ -3387,7 +3387,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSiteScriptFromList.html",
-          "hash": "lBnyVzF5gO+makUFpIyXJA=="
+          "hash": "kshnnZd/FrMZca+YGI2ciw=="
         }
       },
       "is_incremental": false,
@@ -3399,7 +3399,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSiteScriptFromWeb.html",
-          "hash": "9TCkeKpbS+/Rzi7EXZyb9w=="
+          "hash": "VIl6X7ds7JaFpgr65UvDOw=="
         }
       },
       "is_incremental": false,
@@ -4602,7 +4602,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPMicrosoft365Group.html",
-          "hash": "mkNJkPrWOcGbPftDof4IeQ=="
+          "hash": "E3uunuUfWbmrMRY4NUriTg=="
         }
       },
       "is_incremental": false,
@@ -6897,7 +6897,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPLabel.html",
-          "hash": "ggW34kAzXfF5ZOG7mG6afg=="
+          "hash": "Kaqyxf912xecRCYnwQu+JA=="
         }
       },
       "is_incremental": false,

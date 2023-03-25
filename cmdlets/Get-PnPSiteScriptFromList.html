@@ -90,16 +90,28 @@
 </ul>
 <p>Generates a Site Script from an existing list</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromList -Url &lt;String&gt; [-Connection &lt;PnPConnection&gt;]   [&lt;CommonParameters&gt;]
+<h3 id="by-list-default">By List (Default)</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromList -Identity &lt;ListPipeBind&gt; [-Connection &lt;PnPConnection&gt;] [-Verbose]
+</code></pre>
+<h3 id="by-url">By Url</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromList -Url &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows a Site Script to be generated off of an existing list on your tenant. Connect to your SharePoint Online Admin site before executing this command.</p>
+<p>This command allows a Site Script to be generated off of an existing list on your tenant. The script will return the JSON syntax with the definition of the list, including fields, views, content types, and some of the list settings. The script can then be used with <a href="Add-PnPSiteScript.html">Add-PnPSiteScript</a> and <a href="Add-PnPListDesign.html">Add-PnPListDesign</a> to allow lists with the same configuration as the original list to be created by end users.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromList -List &quot;MyList&quot;
+</code></pre>
+<p>Returns the generated Site Script JSON from the list &quot;MyList&quot; in the currently connected to site</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPList -Identity &quot;MyList&quot; | Get-PnPSiteScriptFromList | Add-PnPSiteScript -Title &quot;MyListScript&quot; | Add-PnPListDesign -Title &quot;MyListDesign&quot;
+</code></pre>
+<p>Returns the generated Site Script JSON from the list &quot;MyList&quot; in the currently connected to site and registers it as a new Site Script with the title &quot;MyListScript&quot; and uses that Site Script to register a new List Design with the title &quot;MyListDesign&quot;</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromList -Url &quot;https://contoso.sharepoint.com/sites/teamsite/lists/MyList&quot;
 </code></pre>
 <p>Returns the generated Site Script JSON from the list &quot;MyList&quot; at the provided Url</p>
-<h3 id="example-2">EXAMPLE 2</h3>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromList -Url &quot;https://contoso.sharepoint.com/sites/teamsite/Shared Documents&quot;
 </code></pre>
 <p>Returns the generated Site Script JSON from the default document library at the provided Url</p>
@@ -127,15 +139,37 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-url">-Url</h3>
-<p>Specifies the URL of the list to generate a Site Script from</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+<h3 id="-identity">-Identity</h3>
+<p>Specifies an instance, Id or, title of the list to generate a Site Script from</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: By List
 
 Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-url">-Url</h3>
+<p>Specifies the full URL of the list to generate a Site Script from. I.e. <a href="https://contoso.sharepoint.com/sites/teamsite/lists/MyList">https://contoso.sharepoint.com/sites/teamsite/lists/MyList</a></p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By Url
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-whatif">-WhatIf</h3>

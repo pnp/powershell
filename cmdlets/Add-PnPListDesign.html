@@ -90,6 +90,12 @@
 </ul>
 <p>Creates a new List Design on the current tenant</p>
 <h2 id="syntax">SYNTAX</h2>
+<h3 id="by-sitescript-instance-default">By SiteScript Instance (Default)</h3>
+<pre><code class="lang-powershell">Add-PnPListDesign -Title &lt;String&gt; -SiteScript &lt;TenantSiteScriptPipeBind&gt; [-Description &lt;String&gt;] 
+ [-ListColor&lt;TenantListDesignIcon&gt;] [-ListIcon &lt;TenantListDesignColor&gt;] [-ThumbnailUrl &lt;String&gt;] 
+ [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="by-sitescript-ids">By SiteScript Ids</h3>
 <pre><code class="lang-powershell">Add-PnPListDesign -Title &lt;String&gt; -SiteScriptIds &lt;Guid[]&gt; [-Description &lt;String&gt;] 
  [-ListColor&lt;TenantListDesignIcon&gt;] [-ListIcon &lt;TenantListDesignColor&gt;] [-ThumbnailUrl &lt;String&gt;] 
  [-Connection &lt;PnPConnection&gt;]
@@ -105,6 +111,14 @@
 <pre><code class="lang-powershell">Add-PnPListDesign -Title &quot;My Company Design&quot; -SiteScriptIds &quot;6def687f-0e08-4f1e-999c-791f3af9a600&quot; -Description &quot;My description&quot; -ListColor Orange -ListIcon BullseyeTarget -ThumbnailUrl &quot;https://contoso.sharepoint.com/SiteAssets/site-thumbnail.png&quot;
 </code></pre>
 <p>Adds a new List Design, with the specified title, description and list color, list icon and thumbnail to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPSiteScript -Identity &quot;My List Script&quot; | Add-PnPListDesign -Title &quot;My Custom List&quot;
+</code></pre>
+<p>Adds a new List Design, with the specified title based on a site script with the title &quot;My List Script&quot;</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPList -Identity &quot;My List&quot; | Get-PnPSiteScriptFromList | Add-PnPSiteScript -Title &quot;My List Script&quot; | Add-PnPListDesign -Title &quot;My List&quot;
+</code></pre>
+<p>Adds a new List Design and site script based on a list with the title &quot;My List&quot;</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -128,10 +142,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-sitescript">-SiteScript</h3>
+<p>An instance, id or title of a site script to use for the list design</p>
+<pre><code class="lang-yaml">Type: TenantSiteScriptPipeBind
+Parameter Sets: By SiteScript Instance
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-sitescriptids">-SiteScriptIds</h3>
-<p>An array of guids of site scripts</p>
+<p>An array of guids of site scripts to use for the list design</p>
 <pre><code class="lang-yaml">Type: Guid[]
-Parameter Sets: (All)
+Parameter Sets: By SiteScript Ids
 
 Required: True
 Position: Named
