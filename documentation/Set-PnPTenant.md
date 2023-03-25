@@ -1479,7 +1479,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableAzureADB2BIntegration
-Allows enablement of SharePoint and OneDrive integration with Azure AD B2B. See [this article]](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
+Allows enablement of SharePoint and OneDrive integration with Azure AD B2B. See [this article](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
 
 ```yaml
 Type: Boolean
