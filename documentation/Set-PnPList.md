@@ -21,7 +21,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>]
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DisableCommenting <Boolean>] [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>]
  [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Connection <PnPConnection>]
 ```
 
@@ -456,6 +456,20 @@ Accept wildcard characters: False
 
 ### -DisableGridEditing
 Enable or disable whether edit grid editing is enabled for the list. Set to $true to disable, $false to enable.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableCommenting
+Enable or disable whether commenting is enabled for the list. Set to $true to disable, $false to enable.
 
 ```yaml
 Type: Boolean
