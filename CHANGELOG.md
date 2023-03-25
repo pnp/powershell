@@ -57,6 +57,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `CalendarMemberReadOnly` and `ConnectorsDisabled` as `-ResourceBehaviorOptions` to `New-PnPMicrosoft365Group` [#2929](https://github.com/pnp/powershell/pull/2929)
 - Added `-Identity` option to `Get-PnPPowerPlatformEnvironment` which allows retrieval of one specific environment by its displayname or id. [#2794](https://github.com/pnp/powershell/pull/2794)
 - Added `Get-PnPPowerApp` which allows PowerApps to be retrieved [#2794](https://github.com/pnp/powershell/pull/2794)
+- Added `-DisableCommenting` to `Set-PnPList` which allows enabling or disabling commenting on a list. [#2939](https://github.com/pnp/powershell/pull/2939)
 
 ### Changed
 
@@ -107,7 +108,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPFieldFromXml` cmdlet. It will now return the correct typed field if the added field was of type `Taxonomy`. [#2926](https://github.com/pnp/powershell/pull/2926)
 
 ### Contributors
-
+- Ganesh Sanap [ganesh-sanap]
 - Chris R. [ChrisRo89]
 - Aimery Thomas [a1mery]
 - Ganesh Sanap [ganesh-sanap]
