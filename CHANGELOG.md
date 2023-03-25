@@ -108,6 +108,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPFieldFromXml` cmdlet. It will now return the correct typed field if the added field was of type `Taxonomy`. [#2926](https://github.com/pnp/powershell/pull/2926)
 
 ### Contributors
+- [enthusol]
 - Ganesh Sanap [ganesh-sanap]
 - Chris R. [ChrisRo89]
 - Aimery Thomas [a1mery]
