@@ -35,7 +35,7 @@ Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> [-Inhe
 ```
 
 ## DESCRIPTION
-Sets or clears permissions on folders within SharePoint Online. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.
+Sets or clears permissions on folders within SharePoint Online. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet. It also breaks inheritance of folder without disrupting the existing users.
 
 ## EXAMPLES
 
