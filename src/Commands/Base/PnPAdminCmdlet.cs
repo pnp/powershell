@@ -99,7 +99,9 @@ namespace PnP.PowerShell.Commands.Base
                 else
                 {
                     // The current connection has been made to the SharePoint Online Admin Center URL already, we can use it as is
+                    WriteVerbose($"Already connect to the SharePoint Online Admin Center at '{ClientContext.Url}'");
                     _baseUri = new Uri($"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}{(uriParts.Length > 1 ? $".{string.Join(".", uriParts.Skip(1))}" : string.Empty)}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
+                    AdminContext = ClientContext;
                     return;
                 }
             }
