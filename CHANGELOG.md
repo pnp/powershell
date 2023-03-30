@@ -58,6 +58,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Identity` option to `Get-PnPPowerPlatformEnvironment` which allows retrieval of one specific environment by its displayname or id. [#2794](https://github.com/pnp/powershell/pull/2794)
 - Added `Get-PnPPowerApp` which allows PowerApps to be retrieved [#2794](https://github.com/pnp/powershell/pull/2794)
 - Added `-DisableCommenting` to `Set-PnPList` which allows enabling or disabling commenting on a list. [#2939](https://github.com/pnp/powershell/pull/2939)
+- Added `-EnableAutoExpirationVersionTrim` and `-ExpireVersionsAfterDays` to `Set-PnPList` which allows enabling or disabling auto expiration of versions on a list or library based on the days passed. [#2869](https://github.com/pnp/powershell/pull/2869)
 
 ### Changed
 
@@ -110,6 +111,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - Sumit Kumar [sumitkumar0608]
+- [msjennywu]
 - [enthusol]
 - Ganesh Sanap [ganesh-sanap]
 - Chris R. [ChrisRo89]
