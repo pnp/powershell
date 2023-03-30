@@ -79,6 +79,13 @@ Get-PnPSiteScriptFromWeb -IncludeAllLists
 
 Returns the generated Site Script JSON containing all lists from the currently connected to site
 
+### EXAMPLE 5
+```powershell
+Get-PnPSiteScriptFromWeb -IncludeAllLists | Add-PnPSiteScript -Title "My Site Script" | Add-PnPSiteDesign -Title "My Site Design" -WebTemplate TeamSite
+```
+
+Creates a new site script and site design based on the currently connected to site
+
 ## PARAMETERS
 
 ### -IncludeAll

@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Site
                 url = WebUrl;
             }
             this.Tenant.SetSPOStructuralNavigationCacheWebState(url,IsEnabled);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
 
             var result = this.Tenant.SetIdleSessionSignOutForUnmanagedDevices(Enabled,WarnAfter,SignoutAfter);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

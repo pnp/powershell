@@ -61,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The id, externalid or display name of the app.
+The id, external id or display name of the app.
 
 ```yaml
 Type: TeamsAppPipeBind

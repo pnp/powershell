@@ -16,9 +16,9 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             bool switchBack = false;
-            var siteProps = Tenant.GetSitePropertiesByUrl(SiteContext.Url, false);
-            ClientContext.Load(siteProps, s => s.DenyAddAndCustomizePages);
-            ClientContext.ExecuteQueryRetry();
+            var siteProps = Tenant.GetSitePropertiesByUrl(ClientContext.Url, false);
+            AdminContext.Load(siteProps, s => s.DenyAddAndCustomizePages);
+            AdminContext.ExecuteQueryRetry();
 
             if (Force || ShouldContinue($"Remove {Key}?", Properties.Resources.Confirm))
             {
@@ -26,18 +26,18 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     siteProps.DenyAddAndCustomizePages = Microsoft.Online.SharePoint.TenantAdministration.DenyAddAndCustomizePagesStatus.Disabled;
                     siteProps.Update();
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                     switchBack = true;
                 }
 
-                SiteContext.Web.RemovePropertyBagValue(Key);
-                SiteContext.Web.RemoveIndexedPropertyBagKey(Key);
+                ClientContext.Web.RemovePropertyBagValue(Key);
+                ClientContext.Web.RemoveIndexedPropertyBagKey(Key);
 
                 if (switchBack)
                 {
                     siteProps.DenyAddAndCustomizePages = Microsoft.Online.SharePoint.TenantAdministration.DenyAddAndCustomizePagesStatus.Enabled;
                     siteProps.Update();
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                 }
             }
         }

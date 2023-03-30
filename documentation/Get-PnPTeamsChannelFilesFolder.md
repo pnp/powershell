@@ -32,14 +32,14 @@ Allows to retrieve folder metadata for specified channel.
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPTeamsChannelFilesFolder -Team "Sales Team" -Identity "Test Channel"
+Get-PnPTeamsChannelFilesFolder -Team "Sales Team" -Channel "Test Channel"
 ```
 
 Retrieves the folder metadata for the channel called 'Test Channel' located in the Team named 'Sales Team'
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPTeamsChannelFilesFolder -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity "19:796d063b63e34497aeaf092c8fb9b44e@thread.skype"
+Get-PnPTeamsChannelFilesFolder -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Channel "19:796d063b63e34497aeaf092c8fb9b44e@thread.skype"
 ```
 
 Retrieves the folder metadata for the channel specified by its channel id

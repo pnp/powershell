@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Principals
             group.Update();
             if (ParameterSpecified(nameof(PermissionLevelsToAdd)))
             {
-                var roleDefCollection = new RoleDefinitionBindingCollection(ClientContext);
+                var roleDefCollection = new RoleDefinitionBindingCollection(AdminContext);
                 foreach (var permissionToAdd in PermissionLevelsToAdd)
                 {
                     if (!roleDefinitions.Contains(permissionToAdd))
@@ -79,17 +79,17 @@ namespace PnP.PowerShell.Commands.Principals
                 roleAssignment.Update();
             }
             rootWeb.Update();
-            ClientContext.Load(group, g => g.Title, g => g.LoginName, g => g.Users, g => g.Owner.LoginName, g => g.OwnerTitle);
-            ClientContext.ExecuteQueryRetry();
-            var siteGroup = new SiteGroup(ClientContext, Tenant, group, rootWeb);
+            AdminContext.Load(group, g => g.Title, g => g.LoginName, g => g.Users, g => g.Owner.LoginName, g => g.OwnerTitle);
+            AdminContext.ExecuteQueryRetry();
+            var siteGroup = new SiteGroup(AdminContext, Tenant, group, rootWeb);
             WriteObject(siteGroup);
         }
 
         private HashSet<string> GetRoleDefinitions(Web web)
         {
             RoleDefinitionCollection roleDefinitions = web.RoleDefinitions;
-            ClientContext.Load(roleDefinitions);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(roleDefinitions);
+            AdminContext.ExecuteQueryRetry();
             var hashSet = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var roleDef in roleDefinitions)
             {

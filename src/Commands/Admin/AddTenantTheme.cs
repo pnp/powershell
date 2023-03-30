@@ -1,9 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
-using PnP.Framework.Sites;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using PnP.PowerShell.Commands.Model;
@@ -32,14 +30,14 @@ namespace PnP.PowerShell.Commands.Admin
             var theme = new SPOTheme(Identity.Name, Palette.ThemePalette, IsInverted);
 
             var themes = Tenant.GetAllTenantThemes();
-            ClientContext.Load(themes);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(themes);
+            AdminContext.ExecuteQueryRetry();
             if (themes.FirstOrDefault(t => t.Name == Identity.Name) != null)
             {
                 if (Overwrite.ToBool())
                 {
                     Tenant.UpdateTenantTheme(Identity.Name, JsonSerializer.Serialize(theme));
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                 }
                 else
                 {
@@ -49,7 +47,7 @@ namespace PnP.PowerShell.Commands.Admin
             else
             {
                 Tenant.AddTenantTheme(Identity.Name, JsonSerializer.Serialize(theme));
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
         }
     }

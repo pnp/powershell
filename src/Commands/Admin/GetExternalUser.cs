@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 
@@ -29,9 +28,9 @@ namespace PnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            var office365Tenant = new Office365Tenant(ClientContext);
-            ClientContext.Load(office365Tenant);
-            ClientContext.ExecuteQueryRetry();
+            var office365Tenant = new Office365Tenant(AdminContext);
+            AdminContext.Load(office365Tenant);
+            AdminContext.ExecuteQueryRetry();
             GetExternalUsers(office365Tenant);
         }
 
@@ -46,8 +45,8 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 results = tenant.GetExternalUsers(Position, PageSize, Filter, SortOrder);
             }
-            ClientContext.Load(results, r => r.TotalUserCount, r => r.UserCollectionPosition, r => r.ExternalUserCollection.Include(u => u.DisplayName, u => u.InvitedAs, u => u.UniqueId, u => u.AcceptedAs, u => u.WhenCreated, u => u.InvitedBy));
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(results, r => r.TotalUserCount, r => r.UserCollectionPosition, r => r.ExternalUserCollection.Include(u => u.DisplayName, u => u.InvitedAs, u => u.UniqueId, u => u.AcceptedAs, u => u.WhenCreated, u => u.InvitedBy));
+            AdminContext.ExecuteQueryRetry();
             foreach(var externalUser in results.ExternalUserCollection)
             {
                 if(!ShowOnlyUsersWithAcceptingAccountNotMatchInvitedAccount)

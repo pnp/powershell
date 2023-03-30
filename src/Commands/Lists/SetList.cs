@@ -82,6 +82,9 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false)]
         public bool DisableGridEditing;
+        
+        [Parameter(Mandatory = false)]
+        public bool DisableCommenting;
 
         [Parameter(Mandatory = false)]
         public string Path;
@@ -119,7 +122,7 @@ namespace PnP.PowerShell.Commands.Lists
                 list = newIdentity.GetList(CurrentWeb);
             }
 
-            list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles, l => l.DisableGridEditing);
+            list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles, l => l.DisableGridEditing, l => l.DisableCommenting);
 
             var enableVersioning = list.EnableVersioning;
             var enableMinorVersions = list.EnableMinorVersions;
@@ -239,6 +242,12 @@ namespace PnP.PowerShell.Commands.Lists
                 updateRequired = true;
             }
 
+            if (ParameterSpecified(nameof(DisableCommenting)))
+            {
+                list.DisableCommenting = DisableCommenting;
+                updateRequired = true;
+            }
+ 
             if (updateRequired)
             {
                 list.Update();

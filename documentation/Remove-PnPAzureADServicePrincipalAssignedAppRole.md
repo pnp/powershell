@@ -30,7 +30,7 @@ Remove-PnPAzureADServicePrincipalAssignedAppRole -Identity <ServicePrincipalAssi
 Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> [-Identity <ServicePrincipalAssignedAppRoleBind>] [-Connection <PnPConnection>]
 ```
 
-### By approle name
+### By app role name
 ```powershell
 Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> -AppRoleName <String> [-Connection <PnPConnection>]
 ```
@@ -83,7 +83,7 @@ The object id, name or instance of the service principal/application registratio
 
 ```yaml
 Type: ServicePrincipalPipeBind
-Parameter Sets: By assigned app role, By approle name
+Parameter Sets: By assigned app role, By app role name
 
 Required: True
 Position: Named
@@ -111,7 +111,7 @@ The name of the permission to remove, i.e. Sites.Read.All
 
 ```yaml
 Type: ServicePrincipalAssignedAppRoleBind
-Parameter Sets: By approle name
+Parameter Sets: By app role name
 
 Required: True
 Position: Named

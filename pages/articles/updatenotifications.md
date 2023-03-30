@@ -17,7 +17,7 @@ See [Configure PnP PowerShell](configuration.md) for more information on the env
 
 If the major version of your current version is lower than the currently available major version.
 
-If the major versions are the same, but the minor version is lower than the currently avialable minor version.
+If the major versions are the same, but the minor version is lower than the currently available minor version.
 
 ### If you are running a nightly build on PowerShell 7
 

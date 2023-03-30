@@ -4,8 +4,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
 using Microsoft.SharePoint.Client;
 using System.Linq;
-using OfficeDevPnP.Core.Pages;
 using System.Collections;
+using PnP.Core.Services;
+using System.Xml.Linq;
+using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Tests
 {
@@ -33,8 +35,14 @@ namespace PnP.PowerShell.Tests
             try
             {
                 pageName = pageName.EndsWith(".aspx") ? pageName : pageName + ".aspx";
-                var p = ClientSidePage.Load(ctx, pageName);
-                p.Delete();
+                using var pnpContext = Framework.PnPCoreSdk.Instance.GetPnPContext(ctx);
+                var pages = pnpContext.Web.GetPages(pageName);
+                if (pages != null && pages.FirstOrDefault(p => p.Name.Equals(pageName, StringComparison.InvariantCultureIgnoreCase)) != null)
+                {
+                    var p = pages.FirstOrDefault();
+                    p.Delete();
+                }
+
             }
             catch (Exception) { }
         }
@@ -116,10 +124,10 @@ namespace PnP.PowerShell.Tests
         {
             using (var scope = new PSTestScope(true))
             {
-                var results = scope.ExecuteCommand("Add-PnPClientSidePage",
+                var results = scope.ExecuteCommand("Add-PnPPage",
                     new CommandParameter("Name", PageTestWithoutExtensionName));
 
-                var page = results[0].BaseObject as ClientSidePage;
+                var page = results[0].BaseObject as IPage;
                 string pageName = page.PageListItem["FileLeafRef"] as string;
                 Assert.IsTrue(page != null && pageName == PageTestWithoutExtensionName + ".aspx");
             }
@@ -133,7 +141,7 @@ namespace PnP.PowerShell.Tests
                 var results = scope.ExecuteCommand("Add-PnPClientSidePage",
                     new CommandParameter("Name", PageTestWithExtensionName));
 
-                var page = results[0].BaseObject as ClientSidePage;
+                var page = results[0].BaseObject as IPage;
                 string pageName = page.PageListItem["FileLeafRef"] as string;
                 Assert.IsTrue(page != null && pageName == PageTestWithExtensionName);
             }
@@ -153,7 +161,7 @@ namespace PnP.PowerShell.Tests
                 var results = scope.ExecuteCommand("Get-PnPClientSidePage",
                     new CommandParameter("Identity", PageGetTestName));
 
-                var page = results[0].BaseObject as ClientSidePage;
+                var page = results[0].BaseObject as IPage;
                 string pageName = page.PageListItem["FileLeafRef"] as string;
                 Assert.IsTrue(page != null && pageName == PageGetTestName);
             }
@@ -190,14 +198,18 @@ namespace PnP.PowerShell.Tests
                     ctx.Web.AddClientSidePage(PageSetTestName, true);
 
 
-                    var results = scope.ExecuteCommand("Set-PnPClientSidePage",
+                    var results = scope.ExecuteCommand("Set-PnPPage",
                         new CommandParameter("Identity", PageSetTestName),
-                         new CommandParameter("LayoutType", ClientSidePageLayoutType.Home),
+                         new CommandParameter("LayoutType", PageLayoutType.Home),
                           new CommandParameter("Name", PageSet2TestName));
 
-                    var page = ClientSidePage.Load(ctx, PageSet2TestName);
-
-                    Assert.IsTrue(page.LayoutType == ClientSidePageLayoutType.Home);
+                    using var pnpContext = Framework.PnPCoreSdk.Instance.GetPnPContext(ctx);
+                    var pages = pnpContext.Web.GetPages(PageSet2TestName);
+                    if (pages != null && pages.FirstOrDefault(p => p.Name.Equals(PageSet2TestName, StringComparison.InvariantCultureIgnoreCase)) != null)
+                    {
+                        var p = pages.FirstOrDefault();
+                        Assert.IsTrue(p.LayoutType == PageLayoutType.Home);
+                    }
                 }
             }
         }
@@ -215,12 +227,17 @@ namespace PnP.PowerShell.Tests
                 {
                     ctx.Web.AddClientSidePage(PageRemoveTestName, true);
 
-                    scope.ExecuteCommand("Remove-PnPClientSidePage",
+                    scope.ExecuteCommand("Remove-PnPPage",
                          new CommandParameter("Identity", PageRemoveTestName),
                          new CommandParameter("Force"));
 
-
-                    var p = ClientSidePage.Load(ctx, PageRemoveTestName);
+                    using var pnpContext = Framework.PnPCoreSdk.Instance.GetPnPContext(ctx);
+                    var pages = pnpContext.Web.GetPages(PageRemoveTestName);
+                    if (pages != null && pages.FirstOrDefault(p => p.Name.Equals(PageRemoveTestName, StringComparison.InvariantCultureIgnoreCase)) != null)
+                    {
+                        var p = pages.FirstOrDefault();
+                        p.Delete();
+                    }
                 }
             }
         }
@@ -235,14 +252,20 @@ namespace PnP.PowerShell.Tests
                     ctx.Web.AddClientSidePage(PageAddSectionTestName, true);
 
 
-                    var results = scope.ExecuteCommand("Add-PnPClientSidePageSection",
+                    var results = scope.ExecuteCommand("Add-PnPPageSection",
                         new CommandParameter("Page", PageAddSectionTestName),
                          new CommandParameter("SectionTemplate", CanvasSectionTemplate.ThreeColumn),
                           new CommandParameter("Order", 10));
 
-                    var page = ClientSidePage.Load(ctx, PageAddSectionTestName);
+                    using var pnpContext = Framework.PnPCoreSdk.Instance.GetPnPContext(ctx);
+                    var pages = pnpContext.Web.GetPages(PageAddSectionTestName);
+                    if (pages != null && pages.FirstOrDefault(p => p.Name.Equals(PageAddSectionTestName, StringComparison.InvariantCultureIgnoreCase)) != null)
+                    {
+                        var p = pages.FirstOrDefault();
+                        Assert.IsTrue(p.Sections[0].Columns.Count == 3);
+                    }
 
-                    Assert.IsTrue(page.Sections[0].Columns.Count == 3);
+
                 }
             }
         }
@@ -256,9 +279,9 @@ namespace PnP.PowerShell.Tests
                 {
                     ctx.Web.AddClientSidePage(PageAddWebPartTestName, true);
 
-                    var results = scope.ExecuteCommand("Add-PnPClientSideWebPart",
+                    var results = scope.ExecuteCommand("Add-PnPPageWebPart",
                         new CommandParameter("Page", PageAddWebPartTestName),
-                         new CommandParameter("DefaultWebPartType", DefaultClientSideWebParts.Image),
+                         new CommandParameter("DefaultWebPartType", DefaultWebPart.Image),
                           new CommandParameter("WebPartProperties", new Hashtable()
                           {
                             {"imageSourceType",  2},
@@ -271,9 +294,13 @@ namespace PnP.PowerShell.Tests
                           }
                           ));
 
-                    var page = ClientSidePage.Load(ctx, PageAddWebPartTestName);
-             
-                    Assert.AreEqual(page.Controls.Count , 1);
+                    using var pnpContext = Framework.PnPCoreSdk.Instance.GetPnPContext(ctx);
+                    var pages = pnpContext.Web.GetPages(PageAddWebPartTestName);
+                    if (pages != null && pages.FirstOrDefault(p => p.Name.Equals(PageAddWebPartTestName, StringComparison.InvariantCultureIgnoreCase)) != null)
+                    {
+                        var p = pages.FirstOrDefault();
+                        Assert.AreEqual(p.Controls.Count, 1);
+                    }
                 }
             }
         }

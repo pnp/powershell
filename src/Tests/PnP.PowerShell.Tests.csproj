@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net6.0-windows</TargetFramework>
-    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>PnP.PowerShell.Tests</AssemblyName>
     <RootNamespace>PnP.PowerShell.Tests</RootNamespace>
     <PackageId>PnP.PowerShell.Tests</PackageId>
@@ -14,28 +14,27 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="AngleSharp" Version="0.14.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Graph" Version="3.19.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
-    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.0.3" />
-    <PackageReference Include="Microsoft.PowerShell.ConsoleHost" Version="7.0.3" />
+    <PackageReference Include="AngleSharp" Version="0.17.0" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Graph" Version="3.33.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="Microsoft.PowerShell.SDK" Version="7.2.0" />
+    <PackageReference Include="Microsoft.PowerShell.ConsoleHost" Version="7.2.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
-    <PackageReference Include="PnP.Framework" Version="0.1.*-*" Condition="'$(LocalDebug)' != 'true'" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.7.0" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="PnP.Framework" Version="1.11.*-*" Condition="'$(LocalDebug)' != 'true'" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
-    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="5.0.0" />
-    <PackageReference Include="System.Text.Encodings.Web" Version="4.7.2" />
-    <PackageReference Include="System.Text.Json" Version="4.7.2" />
-    <PackageReference Include="TextCopy" Version="4.2.0" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="6.0.0" />
+    <PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
+    <PackageReference Include="System.Text.Json" Version="6.0.7" />
+    <PackageReference Include="TextCopy" Version="6.1.0" />
     <ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-    <PackageReference Include="System.Management.Automation" Version="7.0.3" />
-    <PackageReference Include="NewtonSoft.Json" Version="12.0.3" />
+    <PackageReference Include="System.Management.Automation" Version="7.2.0" />    
     <PackageReference Include="MSTest.TestAdapter" Version="1.1.18" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.1.18" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
     <Reference Include="PnP.Framework" Condition="'$(LocalPnPFramework)' == 'true'">
       <HintPath>..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll</HintPath>
       <Private>true</Private>

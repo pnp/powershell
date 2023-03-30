@@ -103,7 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsUseableOnce
-Allows defining if the access token can only be used once to log on after which it will directly expire. This takes presedence over the `-LifeTimeInMinutes` option. If not provided, the configured default in Azure Active Directory will be used.
+Allows defining if the access token can only be used once to log on after which it will directly expire. This takes precedence over the `-LifeTimeInMinutes` option. If not provided, the configured default in Azure Active Directory will be used.
 
 ```yaml
 Type: SwitchParameter
