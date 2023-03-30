@@ -49,7 +49,7 @@ Update-Module PnP.PowerShell -Scope CurrentUser
 If you want to update to the latest nightly built prerelease of PnP PowerShell for the current user, run:
 
 ```powershell
-Update-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisherCheck
+Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -Force
 ```
 
 # Uninstalling PnP PowerShell
