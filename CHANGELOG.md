@@ -106,6 +106,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPSite` cmdlet to work with non-commercial cloud environments.
 - Fixed `Set-PnPSearchSettings` cmdlet not working with vanity domain tenants [#2884](https://github.com/pnp/powershell/pull/2884)
 - Fixed `Add-PnPFieldFromXml` cmdlet. It will now return the correct typed field if the added field was of type `Taxonomy`. [#2926](https://github.com/pnp/powershell/pull/2926)
+- Fixed `New-PnPSitetemplateFromFolder` removing the first character of filenames [#2944](https://github.com/pnp/powershell/pull/2944)
 
 ### Contributors
 - [enthusol]
