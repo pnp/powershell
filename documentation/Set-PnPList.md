@@ -22,6 +22,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
  [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DisableCommenting <Boolean>] 
+ [-EnableAutoExpirationVersionTrim <Boolean>] [-ExpireVersionsAfterDays <UInt32>]
  [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>] [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Connection <PnPConnection>]
 ```
 
