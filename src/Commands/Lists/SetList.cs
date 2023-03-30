@@ -90,7 +90,13 @@ namespace PnP.PowerShell.Commands.Lists
         public string Path;
 
         [Parameter(Mandatory = false)]
-        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;
+        public bool EnableAutoExpirationVersionTrim;
+
+        [Parameter(Mandatory = false)]
+        public int ExpireVersionsAfterDays;
+        
+        [Parameter(Mandatory = false)]
+        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;        
 
         [Parameter(Mandatory = false)]
         public DocumentLibraryOpenDocumentsInMode OpenDocumentsMode;
@@ -255,14 +261,72 @@ namespace PnP.PowerShell.Commands.Lists
                 // Is this for a list or a document library
                 if (list.BaseType == BaseType.DocumentLibrary)
                 {
+                    list.EnsureProperties(l => l.VersionPolicies);
+
+                    if (ParameterSpecified(nameof(EnableAutoExpirationVersionTrim)))
+                    {
+                        if (EnableAutoExpirationVersionTrim)
+                        {
+                            list.VersionPolicies.DefaultTrimMode = VersionPolicyTrimMode.AutoExpiration;
+                        }
+                        else
+                        {
+                            if (!ParameterSpecified(nameof(MajorVersions)) || !ParameterSpecified(nameof(ExpireVersionsAfterDays)))
+                            {
+                                throw new PSArgumentException($"You must specify a value for {nameof(ExpireVersionsAfterDays)} and {nameof(MajorVersions)}", nameof(ExpireVersionsAfterDays));
+                            }
+
+                            if (!ParameterSpecified(nameof(MinorVersions)) && list.EnableMinorVersions)
+                            {
+                                throw new PSArgumentException($"You must specify a value for {nameof(MinorVersions)} if it is enabled.", nameof(MinorVersions));
+                            }
+
+                            if (ExpireVersionsAfterDays == 0)
+                            {
+                                list.VersionPolicies.DefaultTrimMode = VersionPolicyTrimMode.NoExpiration;
+                            }
+                            else if (ExpireVersionsAfterDays >= 30)
+                            {
+                                list.VersionPolicies.DefaultTrimMode = VersionPolicyTrimMode.ExpireAfter;
+                            }
+                            else
+                            {
+                                throw new PSArgumentException($"You must specify {nameof(ExpireVersionsAfterDays)} to be 0 for NoExpiration or greater equal 30 for ExpireAfter.", nameof(ExpireVersionsAfterDays));
+                            }
+                        }
+
+                        updateRequired = true;
+                    }
+
+                    if (ParameterSpecified(nameof(ExpireVersionsAfterDays)) && (int)ExpireVersionsAfterDays >= 30)
+                    {
+                        if (list.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                        {
+                            throw new PSArgumentException($"The parameter {nameof(ExpireVersionsAfterDays)} can't be set when AutoExpiration is enabled");
+                        }
+
+                        list.VersionPolicies.DefaultExpireAfterDays = (int)ExpireVersionsAfterDays;
+                        updateRequired = true;
+                    }
+
                     if (ParameterSpecified(nameof(MajorVersions)))
                     {
+                        if (list.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                        {
+                            throw new PSArgumentException($"The parameter {nameof(MajorVersions)} can't be set when AutoExpiration is enabled", nameof(MajorVersions));
+                        }
+
                         list.MajorVersionLimit = (int)MajorVersions;
                         updateRequired = true;
                     }
 
                     if (ParameterSpecified(nameof(MinorVersions)) && list.EnableMinorVersions)
                     {
+                        if (list.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                        {
+                            throw new PSArgumentException($"The parameter {nameof(MinorVersions)} can't be set when AutoExpiration is enabled", nameof(MinorVersions));
+                        }
+
                         list.MajorWithMinorVersionsLimit = (int)MinorVersions;
                         updateRequired = true;
                     }
