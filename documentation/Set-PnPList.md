@@ -99,7 +99,9 @@ Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -Expir
 ```
 
 Enable NoExpiration file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
-=======
+
+### EXAMPLE 11
+```powershell
 Set-PnPList -Identity "Demo List" -DefaultSensitivityLabelForLibrary "Confidential"
 ```
 
