@@ -16,7 +16,7 @@ Updates list settings
 
 ```powershell
  Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRoleInheritance]
- [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubscopes] [-Title <String>] [-Description <String>]
+ [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubScopes] [-Title <String>] [-Description <String>]
  [-Hidden <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
