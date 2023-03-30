@@ -57,5 +57,5 @@ Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -Force
 In case you would like to remove PnP PowerShell, you can run:
 
 ```powershell
-Uninstall-Module PnP.PowerShell
+Uninstall-Module PnP.PowerShell -AllVersions
 ```
