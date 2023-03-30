@@ -15,7 +15,7 @@ Install-Module PnP.PowerShell -Scope CurrentUser
 If you want to install the latest nightly built prerelease of PnP PowerShell for the current user, run:
 
 ```powershell
-Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease
+Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisherCheck
 ```
 
 ## Use in Docker
@@ -49,7 +49,7 @@ Update-Module PnP.PowerShell -Scope CurrentUser
 If you want to update to the latest nightly built prerelease of PnP PowerShell for the current user, run:
 
 ```powershell
-Update-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease
+Update-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisherCheck
 ```
 
 # Uninstalling PnP PowerShell
