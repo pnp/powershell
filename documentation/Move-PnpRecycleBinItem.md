@@ -35,7 +35,7 @@ Moves all the items in the first stage recycle bin of the current site collectio
 Move-PnPRecycleBinItem -Identity 26ffff29-b526-4451-9b6f-7f0e56ba7125
 ```
 
-Moves the item with the provided ID in the first stage recycle bin of the current site collection to the second stage recycle bin without asking for confirmation first
+Moves the item with the provided ID in the first stage recycle bin of the current site collection to the second stage recycle bin
 
 ### EXAMPLE 3
 ```powershell
