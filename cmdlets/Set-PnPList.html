@@ -92,8 +92,9 @@
  [-EnableAttachments &lt;Boolean&gt;] [-EnableFolderCreation &lt;Boolean&gt;] [-EnableVersioning &lt;Boolean&gt;]
  [-EnableMinorVersions &lt;Boolean&gt;] [-MajorVersions &lt;UInt32&gt;] [-MinorVersions &lt;UInt32&gt;]
  [-EnableModeration &lt;Boolean&gt;] [-DraftVersionVisibility &lt;DraftVisibilityType&gt;] [-ReadSecurity &lt;ListReadSecurity&gt;] [-WriteSecurity &lt;ListWriteSecurity&gt;]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles &lt;Boolean&gt;] [-DisableGridEditing &lt;Boolean&gt;] [-DisableCommenting &lt;Boolean&gt;] [-DefaultSensitivityLabelForLibrary &lt;SensitivityLabelPipeBind&gt;]
- [-Path &lt;String&gt;] [-OpenDocumentsMode &lt;DocumentLibraryOpenDocumentsInMode&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles &lt;Boolean&gt;] [-DisableGridEditing &lt;Boolean&gt;] [-DisableCommenting &lt;Boolean&gt;] 
+ [-EnableAutoExpirationVersionTrim &lt;Boolean&gt;] [-ExpireVersionsAfterDays &lt;UInt32&gt;]
+ [-DefaultSensitivityLabelForLibrary &lt;SensitivityLabelPipeBind&gt;] [-Path &lt;String&gt;] [-OpenDocumentsMode &lt;DocumentLibraryOpenDocumentsInMode&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows the configuration of a specific SharePoint Online list to be set.</p>
@@ -127,6 +128,18 @@
 </code></pre>
 <p>Rename a list, including its' URL.</p>
 <h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableAutoExpirationVersionTrim $true
+</code></pre>
+<p>Enable AutoExpiration file version trim mode on a doccument library.</p>
+<h3 id="example-9">EXAMPLE 9</h3>
+<pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVerions 500
+</code></pre>
+<p>Enable ExpireAfter file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.</p>
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVerions 500
+</code></pre>
+<p>Enable NoExpiration file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.</p>
+<h3 id="example-11">EXAMPLE 11</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -DefaultSensitivityLabelForLibrary &quot;Confidential&quot;
 </code></pre>
 <p>Sets the default sensitivity label for a document library to Confidential.</p>
@@ -444,6 +457,31 @@ Accept wildcard characters: False
 <h3 id="-path">-Path</h3>
 <p>The new URL path of the list. The parent folder must exist and be in the same site/web. I.e. lists\newname.</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enableautoexpirationversiontrim">-EnableAutoExpirationVersionTrim</h3>
+<p>Enable or disable AutoExpiration version trim for the document library. Set to $true to enable, $false to disable.</p>
+<p>Parameter ExpireVersionsAfterDays is required when EnableAutoExpirationVersionTrim is false. Set ExpireVersionsAfterDays to 0 for NoExpiration, set it to greater or equal 30 for ExpireAfter.</p>
+<p>Parameter MajorVersions is required when EnableAutoExpirationVersionTrim is false.
+Parameter MinorVersions is required when EnableAutoExpirationVersionTrim is false and minor version is enabled.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-expireversionsafterdays">-ExpireVersionsAfterDays</h3>
+<p>Work with parameter EnableAutoExpirationVersionTrim. Please see description in EnableAutoExpirationVersionTrim.</p>
+<pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
 
 Required: False

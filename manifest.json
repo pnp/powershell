@@ -165,7 +165,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/gettingstartedcontributing.html",
-          "hash": "/8pBbDuBd+VDEWH6avtgzg=="
+          "hash": "ssQ8r/yBKGjY+/VOsiKa/g=="
         }
       },
       "is_incremental": false,
@@ -189,7 +189,7 @@
       "output": {
         ".html": {
           "relative_path": "articles/installation.html",
-          "hash": "i8EK5Hg0wnIbjirt+x77WQ=="
+          "hash": "z+KLw+IrWJbMcMDmW8Z1mw=="
         }
       },
       "is_incremental": false,
@@ -6741,7 +6741,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPFolderPermission.html",
-          "hash": "mNS1I94n9ls6Xhft0HpBgQ=="
+          "hash": "2Aruu65zGbCwNQdPebZlHA=="
         }
       },
       "is_incremental": false,
@@ -6912,7 +6912,7 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPList.html",
-          "hash": "3hZvegVwMTRZzYkBLSfa4w=="
+          "hash": "Tk9lQpaZesOEDjLeJ5YVHQ=="
         }
       },
       "is_incremental": false,
