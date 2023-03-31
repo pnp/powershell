@@ -25,9 +25,9 @@ namespace PnP.PowerShell.Commands
         {
             WriteVerbose("Retrieving all site collection App Catalogs from SharePoint Online");
 
-            var appCatalogsCsom = ClientContext.Web.TenantAppCatalog.SiteCollectionAppCatalogsSites;
-            ClientContext.Load(appCatalogsCsom);
-            ClientContext.ExecuteQueryRetry();
+            var appCatalogsCsom = AdminContext.Web.TenantAppCatalog.SiteCollectionAppCatalogsSites;
+            AdminContext.Load(appCatalogsCsom);
+            AdminContext.ExecuteQueryRetry();
 
             var appCatalogsLocalModel = appCatalogsCsom.Select(ac =>
                 new SiteCollectionAppCatalog
@@ -42,16 +42,16 @@ namespace PnP.PowerShell.Commands
 
             if (CurrentSite.ToBool())
             {
-                SiteContext.Site.EnsureProperties(s => s.Id);
+                ClientContext.Site.EnsureProperties(s => s.Id);
 
-                WriteVerbose($"Filtering down to only the current site at {Connection.Url} with ID {SiteContext.Site.Id}");
-                var currentSite = appCatalogsLocalModel.FirstOrDefault(a => a.SiteID.HasValue && a.SiteID.Value == SiteContext.Site.Id);
+                WriteVerbose($"Filtering down to only the current site at {Connection.Url} with ID {ClientContext.Site.Id}");
+                var currentSite = appCatalogsLocalModel.FirstOrDefault(a => a.SiteID.HasValue && a.SiteID.Value == ClientContext.Site.Id);
 
                 appCatalogsLocalModel.Clear();
 
                 if (currentSite == null)
                 {
-                    WriteVerbose($"Current site at {Connection.Url} with ID {SiteContext.Site.Id} does not have a site collection App Catalog on it");
+                    WriteVerbose($"Current site at {Connection.Url} with ID {ClientContext.Site.Id} does not have a site collection App Catalog on it");
                     return;
                 }
 

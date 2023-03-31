@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             try
             {
-                exception = JsonSerializer.Deserialize<GraphException>(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                exception = JsonSerializer.Deserialize<GraphException>(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 return true;
             }
             catch
@@ -50,6 +50,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
 
             var message = new HttpRequestMessage();
+            message.Version = new Version(2, 0);
             message.Method = method;
             message.Headers.TryAddWithoutValidation("Accept", "application/json");
             message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://{connection.GraphEndPoint}/{url}") : new Uri(url);
@@ -128,7 +129,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var stringContent = await GetAsync(connection, url, accessToken, additionalHeaders);
             if (stringContent != null)
             {
-                var options = new JsonSerializerOptions { IgnoreNullValues = true };
+                var options = new JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
                 options.Converters.Add(new JsonStringEnumConverter());
                 if (camlCasePolicy)
                 {
@@ -163,7 +164,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await GetResponseMessageAsync(connection, message);
         }
 
-        #region DELETE
+#region DELETE
         public static async Task<HttpResponseMessage> DeleteAsync(PnPConnection connection, string url, string accessToken, IDictionary<string, string> additionalHeaders = null)
         {
             var message = GetMessage(url, HttpMethod.Delete, connection, accessToken, null, additionalHeaders);
@@ -179,7 +180,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
                 if (stringContent != null)
                 {
-                    var options = new JsonSerializerOptions() { IgnoreNullValues = true };
+                    var options = new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
                     if (camlCasePolicy)
                     {
                         options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
@@ -196,23 +197,19 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             return default(T);
         }
-        #endregion
+#endregion
 
-        #region PATCH
+#region PATCH
         public static async Task<T> PatchAsync<T>(PnPConnection connection, string accessToken, string url, T content, IDictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
         {
-            var serializerSettings = new JsonSerializerOptions() { IgnoreNullValues = true };
+            var serializerSettings = new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
             if (camlCasePolicy)
             {
                 serializerSettings.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
             }
             var requestContent = new StringContent(JsonSerializer.Serialize(content, serializerSettings));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-#if NETFRAMEWORK
-            var message = GetMessage(url, new HttpMethod("PATCH"), connection, accessToken, requestContent, additionalHeaders);
-#else
             var message = GetMessage(url, HttpMethod.Patch, connection, accessToken, requestContent, additionalHeaders);
-#endif
             var returnValue = await SendMessageAsync(connection, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
@@ -226,11 +223,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<T> PatchAsync<T>(PnPConnection connection, string accessToken, string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
-#if NETFRAMEWORK
-            var message = GetMessage(url, new HttpMethod("PATCH"), connection, accessToken, content, additionalHeaders);
-#else
             var message = GetMessage(url, HttpMethod.Patch, connection, accessToken, content, additionalHeaders);
-#endif
             var returnValue = await SendMessageAsync(connection, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
@@ -244,15 +237,11 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<HttpResponseMessage> PatchAsync(PnPConnection connection, string accessToken, HttpContent content, string url, IDictionary<string, string> additionalHeaders = null)
         {
-#if NETFRAMEWORK
-            var message = GetMessage(url, new HttpMethod("PATCH"), connection, accessToken, content, additionalHeaders);
-#else
             var message = GetMessage(url, HttpMethod.Patch, connection, accessToken, content, additionalHeaders);
-#endif
             return await GetResponseMessageAsync(connection, message);
         }
 
-        #endregion
+#endregion
 
         public static async Task<T> PostAsync<T>(PnPConnection connection, string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
@@ -279,7 +268,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<T> PostAsync<T>(PnPConnection connection, string url, T content, string accessToken)
         {
-            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
             return await PostInternalAsync<T>(connection, url, accessToken, requestContent);
@@ -298,7 +287,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 try
                 {
-                    return JsonSerializer.Deserialize<T>(stringContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, PropertyNameCaseInsensitive = propertyNameCaseInsensitive });
+                    return JsonSerializer.Deserialize<T>(stringContent, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, PropertyNameCaseInsensitive = propertyNameCaseInsensitive });
                 }
                 catch
                 {
@@ -310,13 +299,13 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static async Task<T> PutAsync<T>(PnPConnection connection, string url, T content, string accessToken)
         {
-            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var message = GetMessage(url, HttpMethod.Put, connection, accessToken, requestContent);
             var returnValue = await SendMessageAsync(connection, message, accessToken);
             if (!string.IsNullOrEmpty(returnValue))
             {
-                return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                return JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             }
             else
             {
@@ -348,7 +337,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             else
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
-                var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+                var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 exception.AccessToken = accessToken;
                 exception.HttpResponse = response;
                 
@@ -393,9 +382,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             clone.Content = req.Content;
             clone.Version = req.Version;
 
-            foreach (KeyValuePair<string, object> prop in req.Properties)
+            foreach (KeyValuePair<string, object> prop in req.Options)
             {
-                clone.Properties.Add(prop);
+                clone.Options.Set(new HttpRequestOptionsKey<object>(prop.Key), prop.Value);
             }
 
             foreach (KeyValuePair<string, IEnumerable<string>> header in req.Headers)

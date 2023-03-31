@@ -5,28 +5,26 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = DefaultParam)]
+    [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = ResourceTypeParam)]
     [RequiredMinimalApiPermissions("https://graph.microsoft.com/.default")]
-    [OutputType(typeof(System.IdentityModel.Tokens.Jwt.JwtSecurityToken), ParameterSetName = new[] { DefaultParam_Decoded, ResourceTypeParam_Decoded, ResourceUrlParam_Decoded })]
-    [OutputType(typeof(string), ParameterSetName = new[] { DefaultParam, ResourceTypeParam, ResourceUrlParam })]
+    [OutputType(typeof(System.IdentityModel.Tokens.Jwt.JwtSecurityToken), ParameterSetName = new[] { ResourceTypeParam_Decoded, ResourceUrlParam_Decoded })]
+    [OutputType(typeof(string), ParameterSetName = new[] { ResourceTypeParam, ResourceUrlParam })]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
-        private const string DefaultParam = "Default";
         private const string ResourceTypeParam = "Resource Type Name";
         private const string ResourceUrlParam = "Resource Url";
-        private const string DefaultParam_Decoded = "Default (decoded)";
         private const string ResourceTypeParam_Decoded = "Resource Type Name (decoded)";
         private const string ResourceUrlParam_Decoded = "Resource Url (decoded)";
 
-        [Parameter(Mandatory = true, ParameterSetName = ResourceTypeParam)]
-        [Parameter(Mandatory = true, ParameterSetName = ResourceTypeParam_Decoded)]
+        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam)]
+        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam_Decoded)]
         public ResourceTypeName ResourceTypeName = ResourceTypeName.Graph;
 
         [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam)]
         [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam_Decoded)]
+        [ValidateNotNullOrEmpty]
         public string ResourceUrl;
 
-        [Parameter(Mandatory = true, ParameterSetName = DefaultParam_Decoded)]
         [Parameter(Mandatory = true, ParameterSetName = ResourceTypeParam_Decoded)]
         [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam_Decoded)]
         public SwitchParameter Decoded;
@@ -34,7 +32,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             string accessTokenValue = null;
 
-            if (ParameterSetName == ResourceTypeParam)
+            if (ParameterSetName == ResourceTypeParam || ParameterSetName == ResourceTypeParam_Decoded)
             {
                 switch (ResourceTypeName)
                 {
@@ -55,12 +53,12 @@ namespace PnP.PowerShell.Commands.Base
                         break;
                 }
             }
-            else if (ParameterSetName == ResourceUrlParam)
+            else if (ParameterSetName == ResourceUrlParam || ParameterSetName == ResourceUrlParam_Decoded)
             {
                 accessTokenValue = TokenHandler.GetAccessToken(null, ResourceUrl, Connection);
             }
 
-            if(accessTokenValue == null)
+            if (accessTokenValue == null)
             {
                 WriteError(new PSArgumentException("Unable to retrieve access token"), ErrorCategory.InvalidResult);
             }

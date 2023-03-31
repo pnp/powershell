@@ -91,7 +91,7 @@ namespace PnP.PowerShell.Commands.Planner
             if (ParameterSpecified(nameof(AssignedTo)))
             {
                 newTask.Assignments = new Dictionary<string, TaskAssignment>();
-                var chunks = AssignedTo.Chunk(20);
+                var chunks = BatchUtility.Chunk(AssignedTo, 20);
                 foreach (var chunk in chunks)
                 {
                     var userIds = BatchUtility.GetPropertyBatchedAsync(Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id").GetAwaiter().GetResult();

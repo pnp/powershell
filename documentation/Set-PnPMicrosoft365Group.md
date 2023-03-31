@@ -34,7 +34,7 @@ Allows to modify Microsoft 365 Group.
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPMicrosoft365Group -Identity $group -DisplayName "My Displayname"
+Set-PnPMicrosoft365Group -Identity $group -DisplayName "My DisplayName"
 ```
 
 Sets the display name of the group where $group is a Group entity
@@ -217,7 +217,7 @@ Accept wildcard characters: False
 ```
 
 ### -SensitivityLabels
-The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://docs.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http).
+The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label Ids you can use [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.md).
 
 ```yaml
 Type: GUID[]
@@ -232,4 +232,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://docs.microsoft.com/graph/api/group-update)
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/group-update)

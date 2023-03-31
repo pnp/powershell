@@ -352,7 +352,7 @@ Accept wildcard characters: False
 ```
 
 ### -GiphyContentRating
-Setting that determines the level of sensitivity of giphy usage that is allowed in the team. Accepted values are "Strict" or "Moderate"
+Setting that determines the level of sensitivity of gify usage that is allowed in the team. Accepted values are "Strict" or "Moderate"
 
 ```yaml
 Type: TeamGiphyContentRating
@@ -440,7 +440,7 @@ Accept wildcard characters: False
 ```
 
 ### -Owners
-The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the [Microsoft 365 Groups limits](https://docs.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
+The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as owners. If omitted and the cmdlet is run using a token containing a user identity, such as when logging on with -Interactive or -DeviceLogin, the user used to authenticate with would become the owner. You can provide as many owners as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
 
 ```yaml
 Type: String[]
@@ -454,7 +454,7 @@ Accept wildcard characters: False
 ```
 
 ### -Members
-The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the [Microsoft 365 Groups limits](https://docs.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
+The User Principal Name(s) of the user(s) to be added to the Microsoft 365 Group as members. You can provide as many members as you want, as long as you stay within the [Microsoft 365 Groups limits](https://learn.microsoft.com/microsoft-365/admin/create-groups/office-365-groups?view=o365-worldwide#group-limits). Notice that e-mail addresses are not accepted, if they differ from the User Principal Name on the same account.
 
 ```yaml
 Type: String[]
@@ -483,7 +483,7 @@ Accept wildcard characters: False
 ```
 
 ### -SensitivityLabels
-The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://docs.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http).
+The Sensitivity label to be set to the Microsoft 365 Group and Team. To retrieve the sensitivity label you need to use the Graph API mentioned [here](https://learn.microsoft.com/en-us/graph/api/informationprotectionlabel-get?view=graph-rest-beta&tabs=http).
 
 ```yaml
 Type: GUID[]

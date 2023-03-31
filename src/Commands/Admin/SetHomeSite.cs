@@ -12,10 +12,20 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = true)]
         public string HomeSiteUrl;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter VivaConnectionsDefaultStart;
+
         protected override void ExecuteCmdlet()
         {
-            Tenant.SetSPHSite(HomeSiteUrl);
-            ClientContext.ExecuteQueryRetry();
+            if (VivaConnectionsDefaultStart)
+            {
+                Tenant.SetSPHSiteWithConfigurations(HomeSiteUrl, VivaConnectionsDefaultStart);
+            }
+            else
+            {
+                Tenant.SetSPHSite(HomeSiteUrl);
+            }
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

@@ -27,10 +27,6 @@ namespace PnP.PowerShell.Commands.Files
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false)]
-        [Obsolete("This parameter is obsolete and has no effect currently.")]
-        public SwitchParameter SkipSourceFolderName;
-
-        [Parameter(Mandatory = false)]
         public SwitchParameter IgnoreVersionHistory;
 
         [Parameter(Mandatory = false)]

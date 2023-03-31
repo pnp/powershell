@@ -33,7 +33,7 @@ This cmdlet sets the properties of a specific Azure Active Directory group. This
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPAzureADGroup -Identity $group -DisplayName "My Displayname"
+Set-PnPAzureADGroup -Identity $group -DisplayName "My DisplayName"
 ```
 
 Sets the display name of the group where $group is a Group entity.
@@ -183,4 +183,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://docs.microsoft.com/graph/api/group-update)
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/group-update)

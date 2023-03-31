@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
@@ -27,7 +26,7 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            var script = Tenant.GetSiteScript(ClientContext, Identity.Id);
+            var script = Tenant.GetSiteScript(AdminContext, Identity.Id);
             script.EnsureProperties(s => s.Content, s => s.Title, s => s.Id, s => s.Version, s => s.Description);
             if (script != null)
             {
@@ -56,7 +55,7 @@ namespace PnP.PowerShell.Commands
                 if (isDirty)
                 {
                     Tenant.UpdateSiteScript(script);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                     WriteObject(script);
                 }
             }

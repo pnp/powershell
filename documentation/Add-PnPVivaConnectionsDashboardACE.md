@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -Title
-The Tite of the Adaptive Card extension.
+The Title of the Adaptive Card extension.
 
 ```yaml
 Type: string
@@ -118,7 +118,7 @@ The properties of the Adaptive Card extension. You can get the properties by exe
 Type: string
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

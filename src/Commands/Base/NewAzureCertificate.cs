@@ -60,23 +60,7 @@ namespace PnP.PowerShell.Commands.Base
             DateTime validFrom = DateTime.Today;
             DateTime validTo = validFrom.AddYears(ValidYears);
 
-
-#if NETFRAMEWORK
-            var x500Values = new List<string>();
-            if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
-            if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
-            if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
-            if (!string.IsNullOrWhiteSpace(Locality)) x500Values.Add($"L={Locality}");
-            if (!string.IsNullOrWhiteSpace(Organization)) x500Values.Add($"O={Organization}");
-            if (!string.IsNullOrWhiteSpace(OrganizationUnit)) x500Values.Add($"OU={OrganizationUnit}");
-
-            string x500 = string.Join("; ", x500Values);
-
-            byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
-            X509Certificate2 certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
-#else
             X509Certificate2 certificate = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
-#endif
 
             if (!string.IsNullOrWhiteSpace(OutPfx))
             {

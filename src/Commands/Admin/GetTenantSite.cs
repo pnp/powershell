@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             if (ParameterSpecified(nameof(Identity)))
             {
                 SiteProperties siteProperties;
@@ -52,15 +52,15 @@ namespace PnP.PowerShell.Commands
                 else
                 {
                     siteProperties = Tenant.GetSitePropertiesByUrl(Identity.Url, Detailed);
-                    ClientContext.Load(siteProperties);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.Load(siteProperties);
+                    AdminContext.ExecuteQueryRetry();
                 }
                 Model.SPOSite site = null;
                 if (ParameterSpecified(nameof(DisableSharingForNonOwnersStatus)))
                 {
-                    var office365Tenant = new Office365Tenant(ClientContext);
+                    var office365Tenant = new Office365Tenant(AdminContext);
                     var clientResult = office365Tenant.IsSharingDisabledForNonOwnersOfSite(Identity.Url);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                     site = new Model.SPOSite(siteProperties, clientResult.Value);
                 }
                 else
@@ -75,13 +75,11 @@ namespace PnP.PowerShell.Commands
                 {
                     IncludePersonalSite = IncludeOneDriveSites.IsPresent ? PersonalSiteFilter.Include : PersonalSiteFilter.UseServerDefault,
                     IncludeDetail = Detailed,
-#pragma warning disable CS0618 // Type or member is obsolete
                     Template = Template,
-#pragma warning restore CS0618 // Type or member is obsolete
                     Filter = Filter,
                 };
 
-                if (ClientContext.ServerVersion >= new Version(16, 0, 7708, 1200))
+                if (AdminContext.ServerVersion >= new Version(16, 0, 7708, 1200))
                 {
                     if (ParameterSpecified(nameof(GroupIdDefined)))
                     {

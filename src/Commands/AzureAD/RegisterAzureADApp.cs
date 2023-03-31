@@ -1,6 +1,4 @@
 ﻿using PnP.Framework;
-using PnP.Framework.Utilities;
-
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
@@ -9,17 +7,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Management.Automation.Host;
 using System.Net.Http;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.AzureAD
@@ -89,6 +84,9 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Interactive;
+
+        [Parameter(Mandatory = false)]
+        public string LogoFilePath;
 
         protected override void ProcessRecord()
         {
@@ -195,25 +193,29 @@ namespace PnP.PowerShell.Commands.AzureAD
             if (!string.IsNullOrEmpty(token))
             {
                 var cert = GetCertificate(record);
+                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
-                using (var httpClient = new HttpClient())
+                if (!AppExists(ApplicationName, httpClient, token))
                 {
-                    if (!AppExists(ApplicationName, httpClient, token))
-                    {
-                        var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri, scopes);
+                    var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri, scopes);
 
-                        record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
-                        record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
-                        byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
-                        var base64String = Convert.ToBase64String(certPfxData);
-                        record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
-                        StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter, scopes);
-                    }
-                    else
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
+                    byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
+                    var base64String = Convert.ToBase64String(certPfxData);
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
+                    StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter, scopes);
+
+                    if (ParameterSpecified(nameof(LogoFilePath)) && !string.IsNullOrEmpty(LogoFilePath))
                     {
-                        throw new PSInvalidOperationException($"The application with name {ApplicationName} already exists.");
+                        SetLogo(azureApp, token);
                     }
                 }
+                else
+                {
+                    throw new PSInvalidOperationException($"The application with name {ApplicationName} already exists.");
+                }
+
             }
         }
 
@@ -452,7 +454,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         private X509Certificate2 GetCertificate(PSObject record)
         {
-            var cert = new X509Certificate2();
+            X509Certificate2 cert = null;
             if (ParameterSetName == ParameterSet_EXISTINGCERT)
             {
                 if (!Path.IsPathRooted(CertificatePath))
@@ -482,31 +484,6 @@ namespace PnP.PowerShell.Commands.AzureAD
             }
             else
             {
-#if NETFRAMEWORK
-                var x500Values = new List<string>();
-                if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
-                {
-                    CommonName = ApplicationName;
-                }
-                if (!string.IsNullOrWhiteSpace(CommonName)) x500Values.Add($"CN={CommonName}");
-                if (!string.IsNullOrWhiteSpace(Country)) x500Values.Add($"C={Country}");
-                if (!string.IsNullOrWhiteSpace(State)) x500Values.Add($"S={State}");
-                if (!string.IsNullOrWhiteSpace(Locality)) x500Values.Add($"L={Locality}");
-                if (!string.IsNullOrWhiteSpace(Organization)) x500Values.Add($"O={Organization}");
-                if (!string.IsNullOrWhiteSpace(OrganizationUnit)) x500Values.Add($"OU={OrganizationUnit}");
-
-                string x500 = string.Join("; ", x500Values);
-
-                if (ValidYears < 1 || ValidYears > 30)
-                {
-                    ValidYears = 10;
-                }
-                DateTime validFrom = DateTime.Today;
-                DateTime validTo = validFrom.AddYears(ValidYears);
-
-                byte[] certificateBytes = CertificateHelper.CreateSelfSignCertificatePfx(x500, validFrom, validTo, CertificatePassword);
-                cert = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
-#else
                 if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
                 {
                     CommonName = ApplicationName;
@@ -514,35 +491,31 @@ namespace PnP.PowerShell.Commands.AzureAD
                 DateTime validFrom = DateTime.Today;
                 DateTime validTo = validFrom.AddYears(ValidYears);
                 cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
-#endif
-            }
-            var pfxPath = string.Empty;
-            var cerPath = string.Empty;
 
-
-            if (Directory.Exists(OutPath))
-            {
-                pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
-                cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
-                byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
-                File.WriteAllBytes(pfxPath, certPfxData);
-                record.Properties.Add(new PSVariableProperty(new PSVariable("Pfx file", pfxPath)));
-
-                byte[] certCerData = cert.Export(X509ContentType.Cert);
-                File.WriteAllBytes(cerPath, certCerData);
-                record.Properties.Add(new PSVariableProperty(new PSVariable("Cer file", cerPath)));
-            }
-            if (ParameterSpecified(nameof(Store)))
-            {
-                if (OperatingSystem.IsWindows())
+                if (Directory.Exists(OutPath))
                 {
-                    using (var store = new X509Store("My", Store))
+                    string pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
+                    string cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
+                    byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
+                    File.WriteAllBytes(pfxPath, certPfxData);
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Pfx file", pfxPath)));
+
+                    byte[] certCerData = cert.Export(X509ContentType.Cert);
+                    File.WriteAllBytes(cerPath, certCerData);
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Cer file", cerPath)));
+                }
+                if (ParameterSpecified(nameof(Store)))
+                {
+                    if (OperatingSystem.IsWindows())
                     {
-                        store.Open(OpenFlags.ReadWrite);
-                        store.Add(cert);
-                        store.Close();
+                        using (var store = new X509Store("My", Store))
+                        {
+                            store.Open(OpenFlags.ReadWrite);
+                            store.Add(cert);
+                            store.Close();
+                        }
+                        Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
                     }
-                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
                 }
             }
             return cert;
@@ -592,7 +565,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     }
                 },
                 requiredResourceAccess = scopesPayload
-            };            
+            };
 
             var azureApp = RestHelper.PostAsync<AzureADApp>(httpClient, $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", token, payload).GetAwaiter().GetResult();
             if (azureApp != null)
@@ -615,7 +588,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 var waitTime = 60;
                 // CmdletMessageWriter.WriteFormattedWarning(this, $"Waiting {waitTime} seconds to launch the consent flow in a popup window.\n\nThis wait is required to make sure that Azure AD is able to initialize all required artifacts. You can always navigate to the consent page manually:\n\n{consentUrl}");
 
-                var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to launch the consent flow in a popup window. This wait is required to make sure that Azure AD is able to initialize all required artifacts.");
+                var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to update the Azure AD and launch the consent flow in a popup window.");
 
                 for (var i = 0; i < waitTime; i++)
                 {
@@ -670,6 +643,69 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
                 WriteObject(record);
+            }
+        }
+
+        private void SetLogo(AzureADApp azureApp, string token)
+        {
+            if (!Path.IsPathRooted(LogoFilePath))
+            {
+                LogoFilePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoFilePath);
+            }
+            if (File.Exists(LogoFilePath))
+            {
+                try
+                {
+                    WriteVerbose("Setting the logo for the Azure AD app");
+
+                    var endpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications/{azureApp.Id}/logo";
+
+                    var bytes = File.ReadAllBytes(LogoFilePath);
+
+                    var fileInfo = new FileInfo(LogoFilePath);
+
+                    var mediaType = string.Empty;
+                    switch (fileInfo.Extension.ToLower())
+                    {
+                        case ".jpg":
+                        case ".jpeg":
+                            {
+                                mediaType = "image/jpeg";
+                                break;
+                            }
+                        case ".gif":
+                            {
+                                mediaType = "image/gif";
+                                break;
+                            }
+                        case ".png":
+                            {
+                                mediaType = "image/png";
+                                break;
+                            }
+                    }
+
+                    if (!string.IsNullOrEmpty(mediaType))
+                    {
+                        var byteArrayContent = new ByteArrayContent(bytes);
+                        byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
+                        GraphHelper.PutAsync(PnPConnection.Current, endpoint, token, byteArrayContent).GetAwaiter().GetResult();
+
+                        WriteVerbose("Successfully set the logo for the Azure AD app");
+                    }
+                    else
+                    {
+                        throw new Exception("Unrecognized image format. Supported formats are .png, .jpg, .jpeg and .gif");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    WriteWarning("Something went wrong setting the logo " + ex.Message);
+                }
+            }
+            else
+            {
+                WriteWarning("Logo File does not exist, ignoring setting the logo");
             }
         }
     }

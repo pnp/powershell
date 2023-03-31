@@ -13,13 +13,13 @@ Updates an existing term set.
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPTermSet -Identity <TaxonomyTermSetPipeBind> [-TermGroup] <TaxonomyTermGroupPipeBind>
  [-TermStore <TaxonomyTermStorePipeBind>] [-Name <String>] [-Description <String>] [-Owner <String>]
  [-Contact <String>] [-CustomProperties <Hashtable>] [-StakeholderToAdd <String>]
  [-StakeholderToDelete <String>] [-IsAvailableForTagging <Boolean>] [-IsOpenForTermCreation <Boolean>]
  [-UseForSiteNavigation <Boolean>] [-UseForFacetedNavigation <Boolean>] [-SetTargetPageForTerms <String>]
- [-RemoveTargetPageforTerms] [-SetCatalogItemPageForCategories <String>] [-RemoveCatalogItemPageForCategories]
+ [-RemoveTargetPageForTerms] [-SetCatalogItemPageForCategories <String>] [-RemoveCatalogItemPageForCategories]
  [<CommonParameters>]
 ```
 
@@ -187,7 +187,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RemoveTargetPageforTerms
+### -RemoveTargetPageForTerms
 Removes target page settings for the term set.
 
 ```yaml

@@ -10,13 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPList.html
 # Remove-PnPList
 
 ## SYNOPSIS
-Deletes a list
+Deletes a list.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPList [-Identity] <ListPipeBind> [-Recycle] [-Force] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+Remove-PnPList [-Identity] <ListPipeBind> [-Recycle] [-LargeList] [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -44,24 +43,17 @@ Removes the list named 'Announcements' without asking for confirmation.
 Remove-PnPList -Identity Announcements -Recycle
 ```
 
-Removes the list named 'Announcements' and saves to the Recycle Bin
+Removes the list named 'Announcements' and moves it to the Recycle Bin.
+
+### EXAMPLE 4
+```powershell
+Remove-PnPList -Identity Announcements -Recycle -LargeList
+```
+
+Removes the large list named 'Announcements' and moves it to the Recycle Bin.
+
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -106,7 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -Recycle
-Defines if the list should be moved to recycle bin or directly deleted.
+When provided, the list will be moved to recycle bin. If omitted, the list will directly be deleted.
 
 ```yaml
 Type: SwitchParameter
@@ -114,24 +106,21 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+### -LargeList
+When provided, the large list will be moved to recycle bin through a timer job. It must be paired with the Recycle Parameter.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -139,4 +128,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

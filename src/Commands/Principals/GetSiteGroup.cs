@@ -27,20 +27,20 @@ namespace PnP.PowerShell.Commands.Principals
             var site = this.Tenant.GetSiteByUrl(url);
             if (!ParameterSpecified(nameof(Group)))
             {
-                var groups = ClientContext.LoadQuery(site.RootWeb.SiteGroups.IncludeWithDefaultProperties(g => g.Users, g => g.Title, g => g.OwnerTitle, g => g.Owner.LoginName, g => g.LoginName));
-                ClientContext.ExecuteQueryRetry();
+                var groups = AdminContext.LoadQuery(site.RootWeb.SiteGroups.IncludeWithDefaultProperties(g => g.Users, g => g.Title, g => g.OwnerTitle, g => g.Owner.LoginName, g => g.LoginName));
+                AdminContext.ExecuteQueryRetry();
                 foreach (var group in groups)
                 {
-                    var siteGroup = new SiteGroup(ClientContext, Tenant, group, site.RootWeb);
+                    var siteGroup = new SiteGroup(AdminContext, Tenant, group, site.RootWeb);
                     WriteObject(siteGroup);
                 }
             }
             else
             {
                 var group = site.RootWeb.SiteGroups.GetByName(Group);
-                ClientContext.Load(group, g => g.Users, g => g.Title, g => g.OwnerTitle, g => g.Owner.LoginName, g => g.LoginName);
-                ClientContext.ExecuteQueryRetry();
-                var siteGroup = new SiteGroup(ClientContext, Tenant, group, site.RootWeb);
+                AdminContext.Load(group, g => g.Users, g => g.Title, g => g.OwnerTitle, g => g.Owner.LoginName, g => g.LoginName);
+                AdminContext.ExecuteQueryRetry();
+                var siteGroup = new SiteGroup(AdminContext, Tenant, group, site.RootWeb);
                 WriteObject(siteGroup);
             }
         }

@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Tests
                 _site2Url = $"{TestCommon.GetTenantRootUrl(ctx)}{_site2RelativeUrl}";
 
 
-                using (var site1Ctx = OfficeDevPnP.Core.Sites.SiteCollection.CreateAsync(ctx, new OfficeDevPnP.Core.Sites.CommunicationSiteCollectionCreationInformation()
+                using (var site1Ctx = Framework.Sites.SiteCollection.CreateAsync(ctx, new Framework.Sites.CommunicationSiteCollectionCreationInformation()
                 {
                     Url = _site1Url,
                     Lcid = 1033,
@@ -121,7 +121,7 @@ namespace PnP.PowerShell.Tests
 
                     site1Ctx.ExecuteQueryRetry();
                 }
-                OfficeDevPnP.Core.Sites.SiteCollection.CreateAsync(ctx, new OfficeDevPnP.Core.Sites.CommunicationSiteCollectionCreationInformation()
+                Framework.Sites.SiteCollection.CreateAsync(ctx, new Framework.Sites.CommunicationSiteCollectionCreationInformation()
                 {
                     Url = _site2Url,
                     Lcid = 1033,

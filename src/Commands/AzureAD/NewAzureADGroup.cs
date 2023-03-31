@@ -1,10 +1,15 @@
-﻿using PnP.Framework.Graph;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Properties;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Net.Http;
+using System.Text.Json;
+using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -13,19 +18,19 @@ namespace PnP.PowerShell.Commands.Graph
     public class NewAzureADGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
-        public String DisplayName;
+        public string DisplayName;
 
         [Parameter(Mandatory = true)]
-        public String Description;
+        public string Description;
 
         [Parameter(Mandatory = true)]
-        public String MailNickname;
+        public string MailNickname;
 
         [Parameter(Mandatory = false)]
-        public String[] Owners;
+        public string[] Owners;
 
         [Parameter(Mandatory = false)]
-        public String[] Members;
+        public string[] Members;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IsSecurityEnabled;
@@ -46,11 +51,9 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (!Force)
             {
-                var existingGroup = GroupsUtility.GetGroups(AccessToken,
-                    mailNickname: MailNickname,
-                    endIndex: 1).Any();
+                var existingGroup = AzureADGroupsUtility.GetGroupAsync(Connection, MailNickname, AccessToken).GetAwaiter().GetResult();
 
-                forceCreation = !existingGroup || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
+                forceCreation = existingGroup == null || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
             }
             else
             {
@@ -59,17 +62,27 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (forceCreation)
             {
-                var group = GroupsUtility.CreateGroup(
-                    displayName: DisplayName,
-                    description: Description,
-                    mailNickname: MailNickname,
-                    accessToken: AccessToken,
-                    owners: Owners,
-                    members: Members,
-                    securityEnabled: IsSecurityEnabled,
-                    mailEnabled: IsMailEnabled);
+                var ownerData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(Connection, AccessToken, Owners).GetAwaiter().GetResult();
+                var memberData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(Connection, AccessToken, Members).GetAwaiter().GetResult();
 
-                WriteObject(group);
+                var postData = new Dictionary<string, object>() {
+                    { "description" , string.IsNullOrEmpty(Description) ? null : Description },
+                    { "displayName" , DisplayName },
+                    { "groupTypes", new List<string>(){} },
+                    { "mailEnabled", IsMailEnabled.ToBool() },
+                    { "mailNickname" , MailNickname },
+                    { "securityEnabled", IsSecurityEnabled.ToBool() },
+                    { "owners@odata.bind", ownerData },
+                    { "members@odata.bind", memberData },
+                };
+
+                var data = JsonSerializer.Serialize(postData);
+                var stringContent = new StringContent(data);
+                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                var groupResult = GraphHelper.PostAsync<Group>(Connection, $"v1.0/groups", stringContent, AccessToken).GetAwaiter().GetResult();
+
+                WriteObject(groupResult);
             }
         }
     }

@@ -137,6 +137,16 @@ namespace PnP.PowerShell.Commands.Base
         /// If applicable, will return the object/principal ID of the User Assigned Managed Identity that is being used for this connection
         /// </summary>
         public string UserAssignedManagedIdentityObjectId { get; set; }
+        
+        /// <summary>
+        /// If applicable, will return the client ID of the User Assigned Managed Identity that is being used for this connection
+        /// </summary>
+        public string UserAssignedManagedIdentityClientId { get; set; }
+
+        /// <summary>
+        /// If applicable, will return the Azure Resource ID of the User Assigned Managed Identity that is being used for this connection
+        /// </summary>
+        public string UserAssignedManagedIdentityAzureResourceId { get; set; }        
 
         /// <summary>
         /// Type of Azure cloud to connect to
@@ -196,6 +206,11 @@ namespace PnP.PowerShell.Commands.Base
                     if (realm == null)
                     {
                         realm = GetRealmFromTargetUrl(url);
+
+                        if (realm == null)
+                        {
+                            throw new Exception($"Could not determine realm for the target site '{url}'. Please validate that a site exists at this URL.");
+                        }
                     }
 
                     if (url.DnsSafeHost.Contains("spoppe.com"))
@@ -343,14 +358,29 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null)
+        /// <summary>
+        /// Creates a PnPConnection using a Managed Identity
+        /// </summary>
+        /// <param name="cmdlet">PowerShell instance hosting this execution</param>
+        /// <param name="url">Url to the SharePoint Online site to connect to</param>
+        /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
+        /// <param name="userAssignedManagedIdentityObjectId">The Object/Principal ID of the User Assigned Managed Identity to use (optional)</param>
+        /// <param name="userAssignedManagedIdentityClientId">The Client ID of the User Assigned Managed Identity to use (optional)</param>
+        /// <param name="userAssignedManagedIdentityAzureResourceId">The Azure Resource ID of the User Assigned Managed Identity to use (optional)</param>
+        /// <returns>Instantiated PnPConnection</returns>
+        internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
         {
             var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            var resourceUri = new Uri(url);
-            var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
+            string defaultResource = "https://graph.microsoft.com";
+            if(url != null)
+            {
+                var resourceUri = new Uri(url);
+                defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
+            }
+
             cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
-            var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource, userAssignedManagedIdentityObjectId).GetAwaiter().GetResult();
-            
+            var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource, userAssignedManagedIdentityObjectId, userAssignedManagedIdentityClientId, userAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
+
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
                 PnPClientContext context = null;
@@ -372,6 +402,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.ManagedIdentity);
                 connection.UserAssignedManagedIdentityObjectId = userAssignedManagedIdentityObjectId;
+                connection.UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId;
                 return connection;
             }
         }
@@ -746,10 +777,39 @@ namespace PnP.PowerShell.Commands.Base
                 var coreAssembly = Assembly.GetExecutingAssembly();
                 var operatingSystem = Utilities.OperatingSystem.GetOSString();
 
-                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem);
+                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem, PSVersion);
                 ApplicationInsights.TrackEvent("Connect-PnPOnline");
             }
         }
+
+        private static string PSVersion => (PSVersionLazy.Value);
+
+        private static readonly Lazy<string> PSVersionLazy = new Lazy<string>(
+            () =>
+
+        {
+            var caller = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == "System.Management.Automation");
+            //var caller = Assembly.GetCallingAssembly();
+            var psVersionType = caller.GetType("System.Management.Automation.PSVersionInfo");
+            if (null != psVersionType)
+            {
+                PropertyInfo propInfo = psVersionType.GetProperty("PSVersion");
+                if (null == propInfo)
+                {
+                    propInfo = psVersionType.GetProperty("PSVersion", BindingFlags.NonPublic | BindingFlags.Static);
+                }
+                var getter = propInfo.GetGetMethod(true);
+                var version = getter.Invoke(null, new object[] { });
+
+                if (null != version)
+                {
+                    var versionType = version.GetType();
+                    var versionProperty = versionType.GetProperty("Major");
+                    return ((int)versionProperty.GetValue(version)).ToString();
+                }
+            }
+            return "";
+        });
 
         private static string PnPPSVersionTag => (PnPPSVersionTagLazy.Value);
 
@@ -772,7 +832,7 @@ namespace PnP.PowerShell.Commands.Base
             client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", "");
 
             var response = client.GetAsync(targetApplicationUri + "/_vti_bin/client.svc").GetAwaiter().GetResult();
-            if (response == null)
+            if (response == null || response.StatusCode == System.Net.HttpStatusCode.NotFound)
             {
                 return null;
             }
@@ -812,11 +872,17 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (Utilities.OperatingSystem.IsWindows())
             {
-                var privateKey = (certificate.PrivateKey as RSACng)?.Key;
+                var privateKey = (certificate.GetRSAPrivateKey() as RSACng)?.Key;
+                // var privateKey = (certificate.PrivateKey as RSACng)?.Key;
                 if (privateKey == null)
                     return;
 
                 string uniqueKeyContainerName = privateKey.UniqueName;
+                if (uniqueKeyContainerName == null)
+                {
+                    RSACryptoServiceProvider rsaCSP = certificate.GetRSAPrivateKey() as RSACryptoServiceProvider;
+                    uniqueKeyContainerName = rsaCSP.CspKeyContainerInfo.KeyContainerName;
+                }
                 certificate.Reset();
 
                 var programDataPath = Environment.GetEnvironmentVariable("ProgramData");

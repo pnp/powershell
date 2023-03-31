@@ -1,6 +1,6 @@
 ---
 Module Name: PnP.PowerShell
-title: get-pnpplannertask
+title: Get-PnPPlannerTask
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
@@ -155,7 +155,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResolveUserDisplayNames
-Will resolve userids to usernames
+Will resolve user id's to usernames
 
 ```yaml
 Type: SwitchParameter

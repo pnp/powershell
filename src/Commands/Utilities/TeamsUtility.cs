@@ -11,6 +11,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 using Team = PnP.PowerShell.Commands.Model.Teams.Team;
@@ -71,7 +72,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     team.DisplayName = group.DisplayName;
                     team.MailNickname = group.MailNickname;
-                    team.Visibility = group.Visibility;
+                    team.Visibility = group.Visibility.Value;
                     teams.Add(team);
                 }
             }
@@ -88,7 +89,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 team.DisplayName = group.DisplayName;
                 team.MailNickname = group.MailNickname;
-                team.Visibility = group.Visibility;
+                team.Visibility = group.Visibility.Value;
                 return team;
             }
             else
@@ -189,12 +190,12 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     throw new PSArgumentException($"Cannot find group with id {groupId}");
                 }
-                teamCI.Visibility = group.Visibility;
+                teamCI.Visibility = group.Visibility.Value;
                 teamCI.Description = group.Description;
             }
             if (group != null)
             {
-                Team team = teamCI.ToTeam(group.Visibility);
+                Team team = teamCI.ToTeam(group.Visibility.Value);
                 var retry = true;
                 var iteration = 0;
                 while (retry)
@@ -907,6 +908,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.Planner:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.planner";
+                        tab.Configuration = new TeamTabConfiguration();                        
+                        tab.Configuration.ContentUrl = contentUrl;
                         break;
                     }
                 case TeamTabType.MicrosoftStream:
@@ -932,6 +935,9 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.SharePointPageAndList:
                     {
                         tab.TeamsAppId = "2a527703-1f6f-4559-a332-d8a7d288cd88";
+                        tab.Configuration = new TeamTabConfiguration();
+                        tab.Configuration.ContentUrl = contentUrl;
+                        tab.Configuration.WebsiteUrl = websiteUrl;
                         break;
                     }
             }
@@ -954,7 +960,7 @@ namespace PnP.PowerShell.Commands.Utilities
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
             var response = await GraphHelper.PostAsync(connection, "v1.0/appCatalogs/teamsApps", accessToken, byteArrayContent);
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            return JsonSerializer.Deserialize<TeamApp>(content, new JsonSerializerOptions() { IgnoreNullValues = true, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            return JsonSerializer.Deserialize<TeamApp>(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
 
         public static async Task<HttpResponseMessage> UpdateAppAsync(PnPConnection connection, string accessToken, byte[] bytes, string appId)

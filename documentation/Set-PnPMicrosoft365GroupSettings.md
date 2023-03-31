@@ -26,7 +26,7 @@ Set-PnPMicrosoft365GroupSettings -Identity <string> [-Values <Hashtable>] [-Grou
 
 ## DESCRIPTION
 
-Allows to modify Microsoft 365 Group settings for tenat or specified group.
+Allows to modify Microsoft 365 Group settings for tenant or specified group.
 
 ## EXAMPLES
 
@@ -91,4 +91,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://docs.microsoft.com/graph/api/groupsetting-update)
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/groupsetting-update)

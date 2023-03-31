@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
@@ -61,11 +63,28 @@ namespace PnP.PowerShell.Commands.Base
                 switch (ex)
                 {
                     case PnP.PowerShell.Commands.Model.Graph.GraphException gex:
-                        errorMessage = gex.Error.Message;
+                        errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {gex.Error.Message}";
                         break;
 
                     case PnP.Core.SharePointRestServiceException rex:
                         errorMessage = (rex.Error as PnP.Core.SharePointRestError).Message;
+                        break;
+
+                    case System.Reflection.TargetInvocationException tex:
+                        Exception innermostException = tex;
+                        while (innermostException.InnerException != null) innermostException = innermostException.InnerException;
+
+                        if (innermostException is System.Net.WebException wex)
+                        {                            
+                            using(var streamReader = new StreamReader (wex.Response.GetResponseStream()))
+                            {
+                                errorMessage = $"{wex.Status}: {wex.Message} Response received: {streamReader.ReadToEnd()}";
+                            }
+                        }
+                        else
+                        {
+                            errorMessage = innermostException.Message;
+                        }
                         break;
 
                     default:
@@ -73,22 +92,27 @@ namespace PnP.PowerShell.Commands.Base
                         break;
                 }
 
-                // For backwards compatibility we will throw the exception as a PSInvalidOperationException if -ErrorAction:Stop has NOT been specified                
-                if (!ParameterSpecified("ErrorAction") || (MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant() != "stop" && MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant() != "silentlycontinue"))
+                // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
+                if (!ParameterSpecified("ErrorAction") || !(new [] { "stop", "ignore", "silentlycontinue" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant())))
                 {
                     throw new PSInvalidOperationException(errorMessage);
                 }
 
                 Connection.RestoreCachedContext(Connection.Url);
-                ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
-                ex.Data["TimeStampUtc"] = DateTime.UtcNow;
-                var errorDetails = new ErrorDetails(errorMessage);
 
-                errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
-                var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
-                errorRecord.ErrorDetails = errorDetails;
+                // With ErrorAction:Ignore, the $Error variable should not be populated with the error, otherwise it should
+                if (!ParameterSpecified("ErrorAction") || !(new[] { "ignore" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant())))
+                {
+                    ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
+                    ex.Data["TimeStampUtc"] = DateTime.UtcNow;
+                    var errorDetails = new ErrorDetails(errorMessage);
 
-                WriteError(errorRecord);
+                    errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
+                    var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
+                    errorRecord.ErrorDetails = errorDetails;
+
+                    WriteError(errorRecord);
+                }
             }
         }
     }

@@ -174,7 +174,7 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     try
                     {
-                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock, false);
+                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock, tag.UnlockedAsDefault);
                         ClientContext.ExecuteQueryRetry();
                     }
                     catch (System.Exception error)
@@ -210,7 +210,10 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                ListItemHelper.UpdateListItem(item, UpdateType);
+                if (Force)
+                {
+                    ListItemHelper.UpdateListItem(item, UpdateType);
+                }
             }
 
             ClientContext.ExecuteQueryRetry();

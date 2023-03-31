@@ -16,16 +16,35 @@ Sets site collection properties.
 
 ### Set Properties
 ```powershell
-Set-PnPSite [-Identity <String>] [-Classification <String>] [-DisableFlows] [-LogoFilePath <String>]
- [-Sharing <SharingCapabilities>] [-StorageMaximumLevel <Int64>] [-StorageWarningLevel <Int64>]
- [-AllowSelfServiceUpgrade] [-NoScriptSite] [-Owners <System.Collections.Generic.List`1[System.String]>]
- [-CommentsOnSitePagesDisabled] [-DefaultLinkPermission <SharingPermissionType>]
- [-DefaultSharingLinkType <SharingLinkType>] [-DefaultLinkToExistingAccess <Boolean>] [-DefaultLinkToExistingAccessReset] [-DisableAppViews <AppViewsPolicy>]
- [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>] [-DisableSharingForNonOwners]
- [-LocaleId <UInt32>] [-RestrictedToGeo <RestrictedToRegion>] [-SocialBarOnSitePagesDisabled]
- [-AnonymousLinkExpirationInDays <Int32>] [-OverrideTenantAnonymousLinkExpirationPolicy]
- [-MediaTranscription <MediaTranscriptionPolicyType>] [-SensitivityLabel <Guid>] [-RequestFilesLinkEnabled <Boolean>] [-ScriptSafeDomainName <string>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPSite [-Identity <String>]
+[-Classification <String>]
+[-DisableFlows]
+[-LogoFilePath <String>]
+ [-Sharing <SharingCapabilities>]
+ [-StorageMaximumLevel <Int64>]
+ [-StorageWarningLevel <Int64>]
+ [-AllowSelfServiceUpgrade]
+ [-NoScriptSite]
+ [-Owners <System.Collections.Generic.List<[System.String]>]
+ [-CommentsOnSitePagesDisabled]
+ [-DefaultLinkPermission <SharingPermissionType>]
+ [-DefaultSharingLinkType <SharingLinkType>]
+ [-DefaultLinkToExistingAccess <Boolean>]
+ [-DefaultLinkToExistingAccessReset]
+ [-DisableAppViews <AppViewsPolicy>]
+ [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
+ [-DisableSharingForNonOwners]
+ [-LocaleId <UInt32>]
+ [-RestrictedToGeo <RestrictedToRegion>]
+ [-SocialBarOnSitePagesDisabled]
+ [-AnonymousLinkExpirationInDays <Int32>]
+ [-RequestFilesLinkExpirationInDays <Int32>]
+ [-OverrideTenantAnonymousLinkExpirationPolicy]
+ [-MediaTranscription <MediaTranscriptionPolicyType>]
+ [-SensitivityLabel <Guid>]
+ [-RequestFilesLinkEnabled <Boolean>]
+ [-ScriptSafeDomainName <string>]
+ [-Connection <PnPConnection>]
 ```
 
 ### Set Lock State
@@ -51,7 +70,7 @@ Sets the current site classification tag to HBI
 Set-PnPSite -Classification $null
 ```
 
-Unsets the current site classification tag
+Un-sets the current site classification tag
 
 ### EXAMPLE 3
 ```powershell
@@ -72,14 +91,14 @@ Enables Microsoft Flow for this site
 Set-PnPSite -LogoFilePath c:\images\mylogo.png
 ```
 
-Sets the logo if the site is a modern team site
+Sets the logo if the site is a modern team site without a Microsoft 365 Group behind it. Check the [notes below](#-logofilepath) for options for other types of sites.
 
 ### EXAMPLE 6
 ```powershell
 Set-PnPSite -NoScriptSite $false
 ```
 
-Allows custom script on a specific site. See [Allow or prevent custom script](https://docs.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
+Allows custom script on a specific site. See [Allow or prevent custom script](https://learn.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
 
 ## PARAMETERS
 
@@ -101,6 +120,22 @@ Accept wildcard characters: False
 Specifies all anonymous/anyone links that have been created (or will be created) will expire after the set number of days. Only applies if OverrideTenantAnonymousLinkExpirationPolicy is set to true. 
 
 To remove the expiration requirement, set the value to zero (0).
+
+```yaml
+Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RequestFilesLinkExpirationInDays
+Specifies the number of days before a Request Files link expires for the site.
+
+The value can be from 0 to 730 days.
 
 ```yaml
 Type: Int32
@@ -200,7 +235,7 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultLinkToExistingAccess
-When set to $true, the DefaultSharingLinkType will be overriden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
+When set to $true, the DefaultSharingLinkType will be overridden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
 
 ```yaml
 Type: Boolean
@@ -301,7 +336,7 @@ Accept wildcard characters: False
 ```
 
 ### -LockState
-Sets the lockstate of a site collection.
+Sets the lockState of a site collection.
 
 ```yaml
 Type: SiteLockState
@@ -316,7 +351,11 @@ Accept wildcard characters: False
 ```
 
 ### -LogoFilePath
-Sets the logo of the site if it is a modern team site. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint. If you want to set the logo for a classic site, use Set-PnPWeb -SiteLogoUrl.
+Sets the logo of the site if it is a modern team site without a Microsoft 365 Group behind it. Provide a full path to a local image file on your disk which you want to use as the site logo. The logo will be uploaded automatically to SharePoint.
+
+If you want to set the logo for a classic site, use [Set-PnPWeb -SiteLogoUrl](https://pnp.github.io/powershell/cmdlets/Set-PnPWeb.html#-sitelogourl) instead.
+
+If the modern site has a Microsoft 365 Group behind it, use [Set-PnPWebHeader -SiteLogoUrl](https://pnp.github.io/powershell/cmdlets/Set-PnPWebHeader.html#-sitelogourl) instead.
 
 ```yaml
 Type: String
@@ -330,7 +369,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoScriptSite
-Specifies if a site allows custom script or not. See [Allow or prevent custom script](https://docs.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
+Specifies if a site allows custom script or not. See [Allow or prevent custom script](https://learn.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
 
 ```yaml
 Type: SwitchParameter
@@ -474,7 +513,7 @@ Accept wildcard characters: False
 ```
 
 ### -ScriptSafeDomainName
-Allow contributors to insert iframes only from the specified domains only
+Allow contributors to insert iframe only from the specified domains only
 
 ```yaml
 Type: String

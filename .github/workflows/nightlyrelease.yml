@@ -16,6 +16,8 @@ jobs:
         dotnet-version: | 
           3.1.301
           5.x
+          6.x
+          7.x
     - uses: actions/checkout@v2
       with:
         ref: dev

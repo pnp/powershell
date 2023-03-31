@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Admin
         {
 
             var isValidCommSite = Tenant.IsValidCommSite(PortalUrl);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             if (!isValidCommSite.Value)
             {
                 throw new PSInvalidOperationException("The site specified is not a Communication Site");

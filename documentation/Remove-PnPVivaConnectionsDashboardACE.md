@@ -15,7 +15,7 @@ Removes the Adaptive card extensions from the Viva connections dashboard page. T
 ## SYNTAX
 
 ```powershell
-Remove-PnPVivaConnectionsDashboardACE [-Identity <GUID>] [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPVivaConnectionsDashboardACE [-Identity <VivaACEPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -35,10 +35,10 @@ Removes the adaptive card extensions with Instance Id `58108715-185e-4214-8786-0
 ## PARAMETERS
 
 ### -Identity
-The instance Id of the Adaptive Card extension present on the Viva connections dashboard page. You can retrieve the value for this parameter by executing `Get-PnPVivaConnectionsDashboardACE` cmdlet
+The instance Id of the Adaptive Card extension present on the Viva connections dashboard page. You can retrieve the value for this parameter by executing `Get-PnPVivaConnectionsDashboardACE` cmdlet. This parameter takes either the Instance Id, the Id or the Title property. But as the latter two are not necessarily unique within the dashboard, the preferred value is to use the Instance Id of the ACE.
 
 ```yaml
-Type: GUID
+Type: VivaACEPipeBind
 Parameter Sets: (All)
 
 Required: True

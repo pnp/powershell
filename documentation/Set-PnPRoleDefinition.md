@@ -53,7 +53,7 @@ Changes the order in which the permission level is displayed.
 ## PARAMETERS
 
 ### -Identity
-The identity of the role definition, either a RoleDefinition object or the name of the roledefinition.
+The identity of the role definition, either a RoleDefinition object or the name of the RoleDefinition.
 
 ```yaml
 Type: RoleDefinitionPipeBind
@@ -137,7 +137,7 @@ Accept wildcard characters: False
 ```
 
 ### -Select
-Specifies permission flag(s) to enable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum.
+Specifies permission flag(s) to enable. Please visit https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum.
 
 ```yaml
 Type: PermissionKind[]
@@ -152,7 +152,7 @@ Accept wildcard characters: False
 ```
 
 ### -Clear
-Specifies permission flag(s) to disable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum.
+Specifies permission flag(s) to disable. Please visit https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum.
 
 ```yaml
 Type: PermissionKind[]

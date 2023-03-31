@@ -33,10 +33,6 @@ namespace PnP.PowerShell.Commands.Graph
         [ValidateLength(0, 1024)]
         public string Description;
 
-        [Obsolete("Please use the -Owners parameter instead. The -Owner parameter has been deprecated and will be removed in a future version.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public string Owner;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowAddRemoveApps;
 
@@ -140,14 +136,6 @@ namespace PnP.PowerShell.Commands.Graph
                 Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()),
                 AllowCreatePrivateChannels = AllowCreatePrivateChannels
             };
-
-#pragma warning disable 612, 618 // Disables the obsolete warning for the compiler output
-            if (!string.IsNullOrWhiteSpace(Owner))
-            {
-                // Adding Owner parameter to the Owners array for backwards compatibility
-                Owners = Owners != null ? Owners.Concat(new[] { Owner }).ToArray() : new[] { Owner };
-            }
-#pragma warning restore 612, 618
 
             var contextSettings = Connection.Context.GetContextSettings();
             if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)

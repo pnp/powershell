@@ -10,18 +10,17 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPField.html
 # Set-PnPField
 
 ## SYNOPSIS
-Changes one or more properties of a field in a specific list or for the whole web
+Changes one or more properties of a field in a specific list or for the whole site
 
 ## SYNTAX
 
 ```powershell
-Set-PnPField [-List <ListPipeBind>] [-Identity] <FieldPipeBind> -Values <Hashtable> [-UpdateExistingLists]
- [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPField [-List <ListPipeBind>] [-Identity <FieldPipeBind>] [-Values <Hashtable>] [-ShowInFiltersPane <ShowInFiltersPaneStatus>] [-UpdateExistingLists] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to modify a field in a specific list or for site.
+Allows to modify a field in a specific list or for the whole site.
 
 ## EXAMPLES
 
@@ -111,16 +110,28 @@ Hashtable of properties to update on the field. Use the syntax @{property1="valu
 Type: Hashtable
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ShowInFiltersPane
+Allows configuring a field to either always be shown (Pinned), never be shown (Removed) or have SharePoint define if it should be shown (Auto = default).
 
+```yaml
+Type: Commands.Enums.ShowInFiltersPaneStatus
+Parameter Sets: (All)
+Accepted values: Auto, Removed, Pinned
+
+Required: False
+Position: Named
+Default value: Auto
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

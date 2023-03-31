@@ -23,7 +23,7 @@ Copy-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-Force] [
 
 Copies a file or folder to a different location. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Notice that if copying between sites or to a subsite you cannot specify a target filename, only a folder name. It is currently not possible to copy files between a OneDrive for Business site to SharePoint or vice versa.
 
-Copying files and folders is bound to some restrictions. You can find more on it here: https://docs.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites
+Copying files and folders is bound to some restrictions. You can find more on it here: https://learn.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites
 
 ## EXAMPLES
 

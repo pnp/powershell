@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands.Lists
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(listItem);
             }
-            else if (HasUniqueId())
+            else if (UniqueId != Guid.Empty)
             {
                 CamlQuery query = new CamlQuery();
                 var viewFieldsStringBuilder = new StringBuilder();
@@ -170,7 +170,10 @@ namespace PnP.PowerShell.Commands.Lists
                         ScriptBlock.Invoke(listItems);
                     }
 
-                    query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+                    if (HasPageSize())
+                    {
+                        query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+                    }
                 } while (query.ListItemCollectionPosition != null);
             }
         }
@@ -178,11 +181,6 @@ namespace PnP.PowerShell.Commands.Lists
         private bool HasId()
         {
             return Id != -1;
-        }
-
-        private bool HasUniqueId()
-        {
-            return UniqueId != null && UniqueId != Guid.Empty;
         }
 
         private bool HasCamlQuery()

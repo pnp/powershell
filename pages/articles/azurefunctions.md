@@ -5,12 +5,19 @@ In this article we will setup an Azure Function to use PnP PowerShell
 > [!Important]
 > Notice that the Azure Function scripts in this article run in a separate thread/job. We do this because of possible conflicts between assemblies of already loaded PowerShell modules and PnP PowerShell (for instance, the Az cmdlets that get loaded by default use some of the same assemblies as PnP PowerShell but in different versions which can cause conflicts). By running the script in a separate thread we will not have these conflicts. If PnP PowerShell is the only module currently being used and loaded in your Azure Function you don't need the Start-ThreadJob construct and you can simply write the script as usual.
 
-## Create the function app
+## Create the Azure Function App
 
-As the UI in <https://portal.azure.com> changes every now and then, but the principles stay the same, follow the following steps:
+As the UI in [the Azure Portal](https://portal.azure.com) changes every now and then, but the principles stay the same, follow the following steps:
 
-1. Create a new Function App
-1. Choose runtime stack `PowerShell Core` and version `7.0` (7.2 is not supported yet)
+1. Go to the [Azure Portal](https://portal.azure.com) and login with your Azure credentials
+
+1. Create a new Function App using the **Create a resource** button and searching for **Function App** or use this [direct link](https://portal.azure.com/#create/Microsoft.FunctionApp) to locate it
+   
+   ![Creating an Azure resource](./../images/azurefunctions/createresource.png)
+
+   ![Creating a function app resource](./../images/azurefunctions/createfunctionappresource.png)
+
+1. Choose runtime stack `PowerShell Core` and version `7.2` (7.0 is not longer an option as of December 3rd, 2022)
 
    ![Create function app basics](./../images/azurefunctions/createfunctionappbasics.png)
 
@@ -18,49 +25,25 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
 
    ![Create function app hosting](./../images/azurefunctions/createfunctionapphosting.png)
 
-## Make PnP PowerShell available to all functions in the app
+1. Complete the creation of the Azure Function
+
+1. Once the resource has been created, click on **Go to resource** to open the Azure Function
+
+   ![Go to resource](./../images/azurefunctions/createfunctionappcompleted.png)
+
+## Configure the Azure Function
+
+Now your Azure Function has been created, proceed with the next paragraphs to configure it for using PnP PowerShell.
+
+### Disable the Azure cmdlets in the Azure Function
+
+The Azure Function comes with the Azure cmdlets pre-installed. If you don't need them, you can disable them to save some memory and processing time. It will also avoid version conflicts with PnP PowerShell, so it is highly recommended to disable them.
 
 1. Navigate to `App files` which is located the left side menu of the function app under the `Functions` header.
-2. In the dropdown presented, select `requirements.psd1`. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the `Az` entry presented commented out.
-3. Add a new entry or replace the whole contents of the file with:
+   
+   ![Navigate to App files](./../images/azurefunctions/functionappappfilesmenu.png)
 
-### Specific stable version
-
-   ```powershell
-   @{
-       'PnP.PowerShell' = '1.11.0'
-   }
-   ```
-
-   The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.
-
-### Latest stable version
-
-   If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version:
-
-    ```powershell
-    @{
-        'PnP.PowerShell' = '1.*'
-     }
-    ```
-
-   This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.
-
-### Specific prerelease version
-
-   If you wish to use a specific prerelease/nightly build version, go to the [overview of available versions](https://www.powershellgallery.com/packages/PnP.PowerShell) and literally copy/paste the version in the definition:  
-
-    ```powershell
-    @{
-        'PnP.PowerShell' = '1.11.95-nightly'
-     }
-    ```   
-
-![Adding PnP PowerShell to the requirements.psd1 file in an Azure Function](./../images/azurefunctions/addpnpposhtoappfilerequirements.png)
-
-1. Save the `requirements.psd1` file
-
-2. If you decide to keep the Az cmdlets commented out, save and edit the `profile.psd` file. Mark out the following block in the file as follows, if not already done:
+1. To disable the Az cmdlets, save and edit the `profile.psd` file. Mark out the following block in the file as follows, if not already done:
 
    ```powershell
    # if ($env:MSI_SECRET) {
@@ -73,74 +56,90 @@ As the UI in <https://portal.azure.com> changes every now and then, but the prin
 
    ![Disable the Az commands in profile](../images/azurefunctions/disableazinprofile.png)
 
+### Make PnP PowerShell available to all functions in the Azure function App
+
+1. Navigate to `App files` which is located the left side menu of the function app under the `Functions` header.
+   
+   ![Navigate to App files](./../images/azurefunctions/functionappappfilesmenu.png)
+
+1. In the dropdown presented near the top, select `requirements.psd1`. You'll notice that the function app wants to provide the Azure cmdlets. If you do not need those, keep the `Az` entry presented commented out.
+
+   ![Navigate to requirements.psd1](./../images/azurefunctions/functionappappfilesdropdown.png)
+
+1. Add a new entry or replace the whole contents of the file with one of the following and remember to save the `requirements.psd1` file:
+
+#### Specific stable version
+
+   > [!Important]
+   > There's currently no stable PnP PowerShell version that works with Azure Functions. Use the [latest nightly build](#specific-prerelease-version) instead.
+
+   ```powershell
+   @{
+       'PnP.PowerShell' = '1.12.0'
+   }
+   ```
+
+   The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.
+
+#### Latest stable version
+
+   > [!Important]
+   > There's currently no stable PnP PowerShell version that works with Azure Functions. Use the [latest nightly build](#specific-prerelease-version) instead.   
+
+   If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):
+
+   ```powershell
+   @{
+       'PnP.PowerShell' = '1.*'
+    }
+   ```
+
+   This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.
+
+#### Specific prerelease version
+
+   If you wish to use a specific prerelease/nightly build version, go to the [overview of available versions](https://www.powershellgallery.com/packages/PnP.PowerShell) and literally copy/paste the version in the definition, i.e.:  
+
+   ```powershell
+   @{
+       'PnP.PowerShell' = '2.0.45-nightly'
+    }
+   ```   
+
+   ![Adding PnP PowerShell to the requirements.psd1 file in an Azure Function](./../images/azurefunctions/addpnpposhtoappfilerequirements.png)
+
 ## Decide how you want to authenticate in your Azure Function
 
 ### By using a Managed Identity
 
-The recommended option is to use a [managed identity in Azure](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) to allow your Azure Function or Azure Automation Runbook to connect to Microsoft Graph using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.
+The recommended option is to use a [managed identity in Azure](https://learn.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) to allow your Azure Function to connect to Microsoft Graph or SharePoint Online using PnP PowerShell. Using this method, you specifically grant permissions for your Azure Function or Runbook to access these permissions, without having any client secret or certificate pair that potentially could fall into wrong hands. This makes this option the most secure option by far. Since version 1.11.95-nightly, Managed Identities are both supported against SharePoint Online as well as Microsoft Graph cmdlets. Before this version, only Microsoft Graph was being supported.
 
 #### Enabling the managed identity for an Azure Function
 
 1. In your Azure Function, in the left menu, go to Identity
+
 1. Ensure you are on the System assigned tab and flip the switch for Status to On
+
 1. Click the save button and confirm your action in the dialog box that will be shown
 
 A new entry will now automatically be created in your Azure Active Directory for this app having the same name as your Azure Function and the Object (principal) ID shown on this page. Take notice of the Object (principal) ID. We will need it in the next section to assign permissions to.
 
-#### Enabling the managed identity for an Azure Automation Runbook
+#### Assigning permissions to the managed identity
 
-1. In your Azure Automation account, in the left menu, go to Identity under Account Settings
-1. Ensure you are on the System assigned tab and flip the switch for Status to On
-1. Click the save button and confirm your action in the dialog box that will be shown
+Next step is to assign permissions to this managed identity so it is authorized to access the Microsoft Graph and/or SharePoint Online.
 
-A new entry will now automatically be created in your Azure Active Directory for this app having the same name as your Azure Function and the Object (principal) ID shown on this page. Take notice of the Object (principal) ID. We will need it in the next section to assign permissions to.
-
-#### Assigning Microsoft Graph permissions to the managed identity
-
-Next step is to assign permissions to this managed identity so it is authorized to access the Microsoft Graph.
-
-1. Ensure you're having the Azure PowerShell Resources PowerShell module installed on your environment. You can install it using:
-
-   ```powershell
-   Install-Module Az.Resources -Scope CurrentUser
-   ```
-
-1. Connect to the Azure instance where your Azure Function runs and of which you want to use the Microsoft Graph through PnP PowerShell
+1. If you don't know which permissions exist yet, you can use the below sample to get a list of all available permissions:
 
     ```powershell
-    Connect-AzAccount -Tenant <contoso>.onmicrosoft.com
+    Get-PnPAzureADServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPAzureADServicePrincipalAvailableAppRole
+    Get-PnPAzureADServicePrincipal -BuiltInType SharePointOnline | Get-PnPAzureADServicePrincipalAvailableAppRole
     ```
 
-1. Retrieve the Azure AD Service Principal instance for the Microsoft Graph (`00000003-0000-0000-c000-000000000000`) or SharePoint Online (`00000003-0000-0ff1-ce00-000000000000`).
+1. Once you know which permissions you would like to assign, you can use the below samples. Note that the Principal requires the object Id (not the application/client id) or the application name.
 
    ```powershell
-   $servicePrincipal = Get-AzADServicePrincipal -AppId "00000003-0000-0000-c000-000000000000" # Microsoft Graph
-   $servicePrincipal = Get-AzADServicePrincipal -AppId "00000003-0000-0ff1-ce00-000000000000" # SharePoint Online
-   ```
-
-1. Using the following PowerShell cmdlet you can list all the possible permissions you can give through the Managed Identity. This list will be long. Notice that we are specifically querying for application permissions. Delegate permissions cannot be utilized using a Managed Identity.
-
-   ```powershell
-   $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" } | Sort-Object Value | Select-Object Value, Description
-   ```
-
-1. Pick a permission which you would like to grant to the Managed Identity, i.e. `Group.Read.All`.
-
-   ```powershell
-   $appRole = $servicePrincipal.AppRole | Where-Object { $_.AllowedMemberType -eq "Application" -and $_.Value -eq "Group.Read.All" }
-   ```
-
-1. Now assign this permission to the Azure Active Directory app registration that has been created automatically by enabling the managed identity in the steps above:
-
-   ```powershell
-   $managedIdentityId = "<Object (principal) ID of the Azure Function or Azure Automation Account generated in the previous section>"
-
-   $body = "{'principalId':'$($managedIdentityId)','resourceId':'$($servicePrincipal.Id)','appRoleId':'$($appRole.Id)'}"
-
-   $accessTokenResource = Get-AzAccessToken -ResourceTypeName MSGraph
-
-   Invoke-WebRequest "https://graph.microsoft.com/v1.0/servicePrincipals/$($managedIdentityId)/appRoleAssignments" -Headers @{"Authorization" = "Bearer $($accessTokenResource.Token)"} -ContentType "application/json" -Body $body -Method Post
-
+   Add-PnPAzureADServicePrincipalAppRole -Principal "62614f96-cb78-4534-bf12-1f6693e8237c" -AppRole "Group.Read.All" -BuiltInType MicrosoftGraph
+   Add-PnPAzureADServicePrincipalAppRole -Principal "mymanagedidentity" -AppRole "Sites.FullControl.All" -BuiltInType SharePointOnline
    ```
 
 #### Create the Azure Function for managed identity authentication
@@ -161,7 +160,7 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 
 ```
 
-Notice the super clean and simple `Connect-PnPOnline`. No identifiers whatsoever need to be provided. Nothing that could fall into wrong hands, no client secret or certificate that could expire. Based on the permissions assigned to the managed identity, it will be able to authenticate and authorize access to the Microsoft Graph APIs used behind the cmdlet to fetch the data.
+Notice the super clean and simple `Connect-PnPOnline`. Nothing that could fall into wrong hands, no client secret or certificate that could expire. Based on the permissions assigned to the managed identity, it will be able to authenticate and authorize access to the Microsoft Graph APIs used behind the cmdlet to fetch the data.
 
 ### By using a certificate
 
@@ -192,7 +191,7 @@ Once you have an Azure Active Directory application set up and the public key ce
 2. Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
 3. After the certificate has been uploaded, copy the thumbprint value shown.
 4. Navigate to `Configuration` and add a new Application Setting
-5. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See <https://docs.microsoft.com/azure/app-service/configure-ssl-certificate-in-code> for more information.
+5. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See <https://learn.microsoft.com/azure/app-service/configure-ssl-certificate-in-code> for more information.
 6. Save the settings
 
 #### Create the Azure Function for certificate authentication
@@ -209,9 +208,9 @@ param($Request, $TriggerMetadata)
 Write-Host "PowerShell HTTP trigger function processed a request."
 
 $script = {
-    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -ClientId [the clientid created earlier] -Thumbprint [the thumbprint you copied] -Tenant [yourtenant.onmicrosoft.com]
+    Connect-PnPOnline tenant.sharepoint.com/sites/demo -ClientId [the clientid created earlier] -Thumbprint [the thumbprint you copied] -Tenant [tenant.onmicrosoft.com]
 
-    $web = Get-PnPWeb;
+    $web = Get-PnPWeb
     $web.Title
 }
 
@@ -253,9 +252,9 @@ $script = {
     $securePassword = ConvertTo-SecureString $env:tenant_pwd -AsPlainText -Force
     $credentials = New-Object PSCredential ($env:tenant_user, $securePassword)
 
-    Connect-PnPOnline -Url https://yourtenant.sharepoint.com/sites/demo -Credentials $credentials
+    Connect-PnPOnline yourtenant.sharepoint.com/sites/demo -Credentials $credentials
 
-    $web = Get-PnPWeb;
+    $web = Get-PnPWeb
     $web.Title
 }
 

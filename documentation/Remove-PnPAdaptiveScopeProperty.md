@@ -21,7 +21,7 @@ Remove-PnPAdaptiveScopeProperty [-Key] <String> [-Force]
 
 ## DESCRIPTION
 
-This cmdlet is used to remove a property bag value. Executing this cmdlet removes a value from the current web property bag just like  `Remove-PnPPropertyBagValue` would do, but also takes care of toggling the noscript value to allow for this to be possible in one cmdlet. Using this cmdlet does therefore require having the SharePoint Online Admin role or equivallent app permissions.
+This cmdlet is used to remove a property bag value. Executing this cmdlet removes a value from the current web property bag just like  `Remove-PnPPropertyBagValue` would do, but also takes care of toggling the noscript value to allow for this to be possible in one cmdlet. Using this cmdlet does therefore require having the SharePoint Online Admin role or equivalent app permissions.
 
 ## EXAMPLES
 
@@ -86,6 +86,6 @@ Accept wildcard characters: False
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 
-[Microsoft 365 Information Governance](https://docs.microsoft.com/en-us/microsoft-365/compliance/manage-information-governance?view=o365-worldwide)
+[Microsoft 365 Information Governance](https://learn.microsoft.com/en-us/microsoft-365/compliance/manage-information-governance?view=o365-worldwide)
 
-[Adaptive policy scopes](https://docs.microsoft.com/en-us/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention)
+[Adaptive policy scopes](https://learn.microsoft.com/en-us/microsoft-365/compliance/retention?view=o365-worldwide#adaptive-or-static-policy-scopes-for-retention)

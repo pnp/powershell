@@ -12,7 +12,7 @@ Applies to
 
 - PnP.PowerShell Module (1.2.0)
 - Azure AD - Global Admin (for app consent)
-- Azure PowerShell Module [https://docs.microsoft.com/powershell/azure/install-az-ps](https://docs.microsoft.com/powershell/azure/install-az-ps)
+- Azure PowerShell Module [https://learn.microsoft.com/powershell/azure/install-az-ps](https://learn.microsoft.com/powershell/azure/install-az-ps)
 
 ## Scripts
 

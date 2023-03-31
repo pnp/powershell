@@ -16,9 +16,14 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter WhatIf;
+
         protected override void ExecuteCmdlet()
         {
+            WriteVerbose("Looking up list design based on the provided identity");
             var listDesigns = Identity.GetTenantListDesign(Tenant);
+
             if(listDesigns == null || listDesigns.Length == 0)
             {
                 throw new PSArgumentException("List design provided through the Identity parameter could not be found", nameof(Identity));
@@ -28,8 +33,16 @@ namespace PnP.PowerShell.Commands
             {
                 if (Force || ShouldContinue(Properties.Resources.RemoveListDesign, Properties.Resources.Confirm))
                 {
-                    Tenant.RemoveListDesign(listDesign.Id);
-                    ClientContext.ExecuteQueryRetry();
+                    if(WhatIf.ToBool())
+                    {                        
+                        WriteVerbose($"Would remove list design with id {listDesign.Id} if {nameof(WhatIf)} was not present");
+                    }
+                    else
+                    {
+                        WriteVerbose($"Removing list design with id {listDesign.Id}");
+                        Tenant.RemoveListDesign(listDesign.Id);
+                        AdminContext.ExecuteQueryRetry();
+                    }
                 }
             }
         }

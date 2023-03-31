@@ -52,10 +52,6 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSetName_Wait)]
         public SwitchParameter Wait;
 
-        [Obsolete("The Force parameter has been deprecated and is no longer required to be provided. It will be removed in a future version.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public SwitchParameter Force;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSetName_Wait)]
         public SharingCapabilities? SharingCapability;
 
@@ -81,8 +77,8 @@ namespace PnP.PowerShell.Commands
                 props.SharingCapability = SharingCapability.Value;
 
                 var op = props.Update();
-                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+                AdminContext.ExecuteQueryRetry();
             }
         }
 

@@ -2,7 +2,7 @@
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
-
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Lists
@@ -82,9 +82,24 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false)]
         public bool DisableGridEditing;
+        
+        [Parameter(Mandatory = false)]
+        public bool DisableCommenting;
 
         [Parameter(Mandatory = false)]
         public string Path;
+
+        [Parameter(Mandatory = false)]
+        public bool EnableAutoExpirationVersionTrim;
+
+        [Parameter(Mandatory = false)]
+        public int ExpireVersionsAfterDays;
+        
+        [Parameter(Mandatory = false)]
+        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;        
+
+        [Parameter(Mandatory = false)]
+        public DocumentLibraryOpenDocumentsInMode OpenDocumentsMode;
 
         protected override void ExecuteCmdlet()
         {
@@ -107,7 +122,7 @@ namespace PnP.PowerShell.Commands.Lists
                 list = newIdentity.GetList(CurrentWeb);
             }
 
-            list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles, l => l.DisableGridEditing);
+            list.EnsureProperties(l => l.EnableAttachments, l => l.EnableVersioning, l => l.EnableMinorVersions, l => l.Hidden, l => l.EnableModeration, l => l.BaseType, l => l.HasUniqueRoleAssignments, l => l.ContentTypesEnabled, l => l.ExemptFromBlockDownloadOfNonViewableFiles, l => l.DisableGridEditing, l => l.DisableCommenting);
 
             var enableVersioning = list.EnableVersioning;
             var enableMinorVersions = list.EnableMinorVersions;
@@ -227,6 +242,12 @@ namespace PnP.PowerShell.Commands.Lists
                 updateRequired = true;
             }
 
+            if (ParameterSpecified(nameof(DisableCommenting)))
+            {
+                list.DisableCommenting = DisableCommenting;
+                updateRequired = true;
+            }
+ 
             if (updateRequired)
             {
                 list.Update();
@@ -237,17 +258,75 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list.EnableVersioning)
             {
-                // list or doclib?
+                // Is this for a list or a document library
                 if (list.BaseType == BaseType.DocumentLibrary)
                 {
+                    list.EnsureProperties(l => l.VersionPolicies);
+
+                    if (ParameterSpecified(nameof(EnableAutoExpirationVersionTrim)))
+                    {
+                        if (EnableAutoExpirationVersionTrim)
+                        {
+                            list.VersionPolicies.DefaultTrimMode = VersionPolicyTrimMode.AutoExpiration;
+                        }
+                        else
+                        {
+                            if (!ParameterSpecified(nameof(MajorVersions)) || !ParameterSpecified(nameof(ExpireVersionsAfterDays)))
+                            {
+                                throw new PSArgumentException($"You must specify a value for {nameof(ExpireVersionsAfterDays)} and {nameof(MajorVersions)}", nameof(ExpireVersionsAfterDays));
+                            }
+
+                            if (!ParameterSpecified(nameof(MinorVersions)) && list.EnableMinorVersions)
+                            {
+                                throw new PSArgumentException($"You must specify a value for {nameof(MinorVersions)} if it is enabled.", nameof(MinorVersions));
+                            }
+
+                            if (ExpireVersionsAfterDays == 0)
+                            {
+                                list.VersionPolicies.DefaultTrimMode = VersionPolicyTrimMode.NoExpiration;
+                            }
+                            else if (ExpireVersionsAfterDays >= 30)
+                            {
+                                list.VersionPolicies.DefaultTrimMode = VersionPolicyTrimMode.ExpireAfter;
+                            }
+                            else
+                            {
+                                throw new PSArgumentException($"You must specify {nameof(ExpireVersionsAfterDays)} to be 0 for NoExpiration or greater equal 30 for ExpireAfter.", nameof(ExpireVersionsAfterDays));
+                            }
+                        }
+
+                        updateRequired = true;
+                    }
+
+                    if (ParameterSpecified(nameof(ExpireVersionsAfterDays)) && (int)ExpireVersionsAfterDays >= 30)
+                    {
+                        if (list.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                        {
+                            throw new PSArgumentException($"The parameter {nameof(ExpireVersionsAfterDays)} can't be set when AutoExpiration is enabled");
+                        }
+
+                        list.VersionPolicies.DefaultExpireAfterDays = (int)ExpireVersionsAfterDays;
+                        updateRequired = true;
+                    }
+
                     if (ParameterSpecified(nameof(MajorVersions)))
                     {
+                        if (list.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                        {
+                            throw new PSArgumentException($"The parameter {nameof(MajorVersions)} can't be set when AutoExpiration is enabled", nameof(MajorVersions));
+                        }
+
                         list.MajorVersionLimit = (int)MajorVersions;
                         updateRequired = true;
                     }
 
                     if (ParameterSpecified(nameof(MinorVersions)) && list.EnableMinorVersions)
                     {
+                        if (list.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                        {
+                            throw new PSArgumentException($"The parameter {nameof(MinorVersions)} can't be set when AutoExpiration is enabled", nameof(MinorVersions));
+                        }
+
                         list.MajorWithMinorVersionsLimit = (int)MinorVersions;
                         updateRequired = true;
                     }
@@ -260,6 +339,85 @@ namespace PnP.PowerShell.Commands.Lists
                         updateRequired = true;
                     }
                 }
+            }
+
+            if(ParameterSpecified(nameof(DefaultSensitivityLabelForLibrary)))
+            {
+                if(DefaultSensitivityLabelForLibrary == null)
+                {
+                    WriteVerbose("Removing sensitivity label from library");
+                    list.DefaultSensitivityLabelForLibrary = null;
+                    updateRequired = true;
+                }
+                else
+                {
+                    if (DefaultSensitivityLabelForLibrary.LabelId.HasValue)
+                    {
+                        WriteVerbose($"Setting provided sensitivity label id '{DefaultSensitivityLabelForLibrary.LabelId}' as the default sensitivity label for the library");
+                        list.DefaultSensitivityLabelForLibrary = DefaultSensitivityLabelForLibrary.LabelId.ToString();
+                        updateRequired = true;
+                    }
+                    else
+                    {
+                        if (!string.IsNullOrEmpty(DefaultSensitivityLabelForLibrary.LabelName))
+                        {
+                            WriteVerbose($"Looking up sensitivity label id by label name '{DefaultSensitivityLabelForLibrary.LabelName}'");
+                            var label = DefaultSensitivityLabelForLibrary.GetLabelByNameThroughGraph(Connection, GraphAccessToken);
+
+                            if (label == null || !label.Id.HasValue)
+                            {
+                                throw new ArgumentException($"Unable to find a sensitivity label with the provided name '{DefaultSensitivityLabelForLibrary.LabelName}'", nameof(DefaultSensitivityLabelForLibrary));
+                            }
+                            else
+                            {
+                                WriteVerbose($"Provided sensitivity label name '{DefaultSensitivityLabelForLibrary.LabelName}' resolved to sensitivity label id '{label.Id.Value}' and will be set as the default sensitivity label for the library");
+                                list.DefaultSensitivityLabelForLibrary = label.Id.Value.ToString();
+                                updateRequired = true;
+                            }
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Unable set the default sensitivity label for the library as there's no label name or label Id", nameof(DefaultSensitivityLabelForLibrary));
+                        }
+                    }
+                }
+            }
+
+            if(ParameterSpecified(nameof(OpenDocumentsMode)))
+            {
+                // Is this for a list or a document library
+                if (list.BaseType == BaseType.DocumentLibrary)
+                {
+                    WriteVerbose($"Configuring document library to use default open mode to be '{OpenDocumentsMode}'");
+
+                    switch(OpenDocumentsMode)
+                    {
+                        case DocumentLibraryOpenDocumentsInMode.Browser:
+                            list.DefaultItemOpenInBrowser = true;
+                            break;
+
+                        case DocumentLibraryOpenDocumentsInMode.ClientApplication:
+                            list.DefaultItemOpenInBrowser = false;
+                            break;
+                    }
+                    updateRequired = true;
+                }
+                else
+                {
+                    WriteWarning($"{nameof(OpenDocumentsMode)} is only supported for document libraries");
+                }
+
+                switch(OpenDocumentsMode)
+                {
+                    case DocumentLibraryOpenDocumentsInMode.Browser:
+                        list.DefaultItemOpenInBrowser = true;
+                        break;
+
+                    case DocumentLibraryOpenDocumentsInMode.ClientApplication:
+                        list.DefaultItemOpenInBrowser = false;
+                        break;
+                }
+                updateRequired = true;
             }
 
             if (updateRequired)

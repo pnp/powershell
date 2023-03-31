@@ -61,7 +61,7 @@ Accept wildcard characters: False
 
 
 ### -TemplateId
-The unqiue identifier for the template used to create this group of settings. To fetch the values of available templates, use `Get-PnPMicrosoft365GroupSettingTemplates`.
+The unique identifier for the template used to create this group of settings. To fetch the values of available templates, use `Get-PnPMicrosoft365GroupSettingTemplates`.
 
 ```yaml
 Type: String
@@ -106,4 +106,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://docs.microsoft.com/graph/api/groupsetting-post-groupsettings)
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/groupsetting-post-groupsettings)

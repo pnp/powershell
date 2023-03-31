@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Viva
         [Parameter(Mandatory = false)]
         public string Title = "";
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         public string PropertiesJSON;
 
         [Parameter(Mandatory = false)]
@@ -41,7 +41,10 @@ namespace PnP.PowerShell.Commands.Viva
 
                 var cardDesignerACE = dashboard.NewACE(Identity, CardSize);
                 cardDesignerACE.Title = Title;
-                cardDesignerACE.Properties = JsonSerializer.Deserialize<JsonElement>(PropertiesJSON);
+                if (ParameterSpecified(nameof(PropertiesJSON)))
+                {
+                    cardDesignerACE.Properties = JsonSerializer.Deserialize<JsonElement>(PropertiesJSON);
+                }
 
                 if (ParameterSpecified(nameof(Description)))
                 {
@@ -60,7 +63,7 @@ namespace PnP.PowerShell.Commands.Viva
                 else
                 {
                     dashboard.AddACE(cardDesignerACE);
-                }                
+                }
 
                 dashboard.Save();
 

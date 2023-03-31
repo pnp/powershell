@@ -4,7 +4,8 @@ using Microsoft.SharePoint.Client;
 using System.Management.Automation.Runspaces;
 using System.Linq;
 using System.Xml.Linq;
-using OfficeDevPnP.Core.Utilities;
+using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Tests
 {
@@ -55,7 +56,7 @@ namespace PnP.PowerShell.Tests
                             new CommandParameter("Identity", wp.Id));
 
                         Assert.IsTrue(results.Count > 0);
-                        Assert.IsTrue(results[0].BaseObject.GetType() == typeof(Commands.PropertyBagValue));
+                        Assert.IsTrue(results[0].BaseObject.GetType() == typeof(PropertyBagValue));
 
                     }
                     else
@@ -70,15 +71,17 @@ namespace PnP.PowerShell.Tests
         [TestMethod]
         public void GetWebPartXmlTest()
         {
-            if (TestCommon.AppOnlyTesting())
-            {
-                Assert.Inconclusive("Can't currently retrieve web part settings using app-only");
-            }
 
             using (var scope = new PSTestScope(true))
             {
                 using (var ctx = TestCommon.CreateClientContext())
                 {
+
+                    if (ctx.IsAppOnly())
+                    {
+                        Assert.Inconclusive("Can't currently retrieve web part settings using app-only");
+                    }
+
                     var wps = ctx.Web.GetWebParts(serverRelativeHomePageUrl);
 
                     if (wps.Any())

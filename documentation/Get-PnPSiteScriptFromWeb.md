@@ -65,19 +65,26 @@ Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -I
 
 Returns the generated Site Script JSON containing all supported components from the site at the provided Url including the lists "Shared Documents" and "MyList"
 
-### EXAMPLE 5
+### EXAMPLE 4
 ```powershell
 Get-PnPSiteScriptFromWeb -Url "https://contoso.sharepoint.com/sites/teamsite" -IncludeBranding -IncludeLinksToExportedItems
 ```
 
 Returns the generated Site Script JSON containing the branding and navigation links from the site at the provided Url
 
-### EXAMPLE 6
+### EXAMPLE 5
 ```powershell
 Get-PnPSiteScriptFromWeb -IncludeAllLists
 ```
 
 Returns the generated Site Script JSON containing all lists from the currently connected to site
+
+### EXAMPLE 5
+```powershell
+Get-PnPSiteScriptFromWeb -IncludeAllLists | Add-PnPSiteScript -Title "My Site Script" | Add-PnPSiteDesign -Title "My Site Design" -WebTemplate TeamSite
+```
+
+Creates a new site script and site design based on the currently connected to site
 
 ## PARAMETERS
 

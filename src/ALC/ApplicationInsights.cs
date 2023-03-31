@@ -26,7 +26,7 @@ namespace PnP.PowerShell.ALC
         /// <param name="initializationType">Information on what method has been used to establish a connection</param>
         /// <param name="assemblyVersion">The PnP PowerShell version in use</param>
         /// <param name="operatingSystem">The operating system on which PnP PowerShell is being used</param>
-        public void Initialize(string serverLibraryVersion, string serverVersion, string initializationType, string assemblyVersion, string operatingSystem)
+        public void Initialize(string serverLibraryVersion, string serverVersion, string initializationType, string assemblyVersion, string operatingSystem, string psVersion = "")
         {
             // Retrieve an instance of the telemetry client to use
             _telemetryClient = TelemetryClientFactory.GetTelemetryClient();
@@ -41,7 +41,8 @@ namespace PnP.PowerShell.ALC
                     { "ConnectionMethod", initializationType.ToString() },      // Information on what method has been used to establish a connection
                     { "Version", assemblyVersion },                             // The PnP PowerShell version in use
                     { "Platform", "SPO" },                                      // Platform to which the connection has been made
-                    { "OperatingSystem", operatingSystem}                       // The operating system on which PnP PowerShell is being used
+                    { "OperatingSystem", operatingSystem},                       // The operating system on which PnP PowerShell is being used
+                    { "PSVersion", psVersion}
                 };
             }
         }

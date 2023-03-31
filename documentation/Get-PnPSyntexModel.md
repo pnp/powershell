@@ -4,7 +4,7 @@ title: Get-PnPSyntexModel
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPage.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSyntexModel.html
 ---
  
 # Get-PnPSyntexModel
@@ -39,14 +39,14 @@ Lists all the document processing models in the connected Syntex Content Center 
 Get-PnPSyntexModel -Identity 1
 ```
 
-Gets the content understanding model with id 1.
+Gets the document processing model with the id 1.
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPSyntexModel -Identity "Invoice model"
 ```
 
-Gets the content understanding model named "Invoice model".
+Gets the document processing model named "Invoice model".
 
 ## PARAMETERS
 

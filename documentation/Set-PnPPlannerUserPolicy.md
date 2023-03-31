@@ -1,8 +1,10 @@
 ---
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerUserPolicy.html
 Module Name: PnP.PowerShell
-external help file: PnP.PowerShell.dll-Help.xml
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerUserPolicy.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPPlannerUserPolicy
 ---
   
 # Set-PnPPlannerUserPolicy
@@ -17,7 +19,7 @@ Allows a Microsoft Planner user policy to be set for a specific user
 
 ## SYNTAX
 
-```
+```powershell
 Set-PnPPlannerUserPolicy -Identity <string> [-BlockDeleteTasksNotCreatedBySelf <boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 

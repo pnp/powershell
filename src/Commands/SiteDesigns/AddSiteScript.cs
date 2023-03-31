@@ -6,6 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteScript")]
+    [OutputType(typeof(TenantSiteScript))]
     public class AddSiteScript : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -14,7 +15,7 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public string Description;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public string Content;
 
         protected override void ExecuteCmdlet()
@@ -26,8 +27,8 @@ namespace PnP.PowerShell.Commands
                 Content = Content
             };
             var script = Tenant.CreateSiteScript(siteScriptCreationInfo);
-            ClientContext.Load(script);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(script);
+            AdminContext.ExecuteQueryRetry();
             WriteObject(script);
         }
     }

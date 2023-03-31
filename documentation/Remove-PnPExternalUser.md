@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPExternalUser.
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Removes one ore more external users from the tenant.
+Removes one or more external users from the tenant.
 
 ## SYNTAX
 
@@ -84,20 +84,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Scope
-Defines which app catalog to use. Defaults to Tenant
-
-```yaml
-Type: AppCatalogScope
-Parameter Sets: (All)
-Accepted values: Tenant, Site
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

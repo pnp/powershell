@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -EventReceiverType
-The type of the event receiver like ItemAdded, ItemAdding. See https://docs.microsoft.com/previous-versions/office/sharepoint-server/jj167297(v=office.15) for the full list of available types.
+The type of the event receiver like ItemAdded, ItemAdding. See https://learn.microsoft.com/previous-versions/office/sharepoint-server/jj167297(v=office.15) for the full list of available types.
 
 ```yaml
 Type: EventReceiverType

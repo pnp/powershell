@@ -10,13 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPApp.html
 # Remove-PnPApp
 
 ## SYNOPSIS
-Removes an app from the app catalog
+Removes an app from the app catalog.
 
 ## SYNTAX
 
 ```powershell
 Remove-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
- [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,14 +29,14 @@ Allows to remove an app from the app catalog.
 Remove-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
 ```
 
-This will remove the specified app from the tenant scoped app catalog
+This will remove the specified app from the tenant app catalog.
 
 ### EXAMPLE 2
 ```powershell
 Remove-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Site
 ```
 
-This will remove the specified app from the site collection scoped app catalog
+This will remove the specified app from the site collection app catalog.
 
 ## PARAMETERS
 
@@ -56,7 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specifies the Id of the Addin Instance
+Specifies the Id of the Add-in Instance.
 
 ```yaml
 Type: AppMetadataPipeBind
@@ -70,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -Scope
-Defines which app catalog to use. Defaults to Tenant
+Defines which app catalog to use. Defaults to Tenant.
 
 ```yaml
 Type: AppCatalogScope
@@ -79,7 +78,7 @@ Accepted values: Tenant, Site
 
 Required: False
 Position: Named
-Default value: None
+Default value: Tenant
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

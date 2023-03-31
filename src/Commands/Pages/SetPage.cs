@@ -203,8 +203,15 @@ namespace PnP.PowerShell.Commands.Pages
                     if (TranslationLanguageCodes != null && TranslationLanguageCodes.Length > 0)
                     {
                         var translationLanguagesList = new List<int>(TranslationLanguageCodes);
-
-                        PnPContext.Web.EnsureMultilingual(translationLanguagesList);
+                        
+                        try
+                        {
+                            PnPContext.Web.EnsureMultilingual(translationLanguagesList);    
+                        }
+                        catch
+                        {
+                            // swallow exception
+                        }                        
 
                         foreach (int i in TranslationLanguageCodes)
                         {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
@@ -20,8 +19,8 @@ namespace PnP.PowerShell.Commands
         {
             if (Force || ShouldContinue(Properties.Resources.RemoveSiteDesignTask, Properties.Resources.Confirm))
             {
-                Tenant.RemoveSiteDesignTask(ClientContext, Identity.Id);
-                ClientContext.ExecuteQueryRetry();
+                Tenant.RemoveSiteDesignTask(AdminContext, Identity.Id);
+                AdminContext.ExecuteQueryRetry();
             }
         }
     }

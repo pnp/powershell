@@ -15,16 +15,16 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPMicrosoft365Expi
 
   * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, Group.Read.All, Group.ReadWrite.All, GroupMember.Read.All, GroupMember.ReadWrite.All
 
-Gets all expiring Microsoft 365 Groups.
+Gets all soon to expire Microsoft 365 Groups.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365ExpiringGroup [-Limit <Int32>]  [<CommonParameters>]
+Get-PnPMicrosoft365ExpiringGroup [-Limit <Int32>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-This command returns all expiring Microsoft 365 Groups within certain time. By default, groups expiring in the next 31 days are return (in accordance with SharePoint/OneDrive's retention period's 31-day months).
+This command returns all soon to expire Microsoft 365 Groups. By default, groups expiring in the next 31 days are returned (in accordance with SharePoint/OneDrive's retention period's 31-day months). The `-Limit` parameter can be used to specify a different time period.
 
 ## EXAMPLES
 
@@ -52,6 +52,22 @@ Limits Groups to be returned to Groups expiring in as many days.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 31
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named

@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         ClipboardService.SetText(result.UserCode);
                         messageWriter.WriteWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the popup after you authenticated successfully to continue the process.");
-                        BrowserHelper.GetWebBrowserPopup(result.VerificationUrl, "Please login", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
+                        BrowserHelper.GetWebBrowserPopup(result.VerificationUrl, "Please login for PnP PowerShell", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
                     }
                     else
                     {

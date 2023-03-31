@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// Defines the roles that can be chosen when updating an existing site permission
-    /// See <a href="https://docs.microsoft.com/en-us/graph/api/resources/permission#roles-property-values">Graph Reference</a>
+    /// See <a href="https://learn.microsoft.com/en-us/graph/api/resources/permission#roles-property-values">Graph Reference</a>
     /// </summary>
     public enum AzureADUpdateSitePermissionRole
     {        

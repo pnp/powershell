@@ -114,10 +114,10 @@ namespace PnP.PowerShell.Commands.Utilities
                                     {
                                         TaxonomyItem taxonomyItem;
                                         Guid termGuid;
-                                        if (!Guid.TryParse(arrayItem as string, out termGuid))
+                                        if (!Guid.TryParse(arrayItem?.ToString(), out termGuid))
                                         {
                                             // Assume it's a TermPath
-                                            taxonomyItem = clonedContext.Site.GetTaxonomyItemByPath(arrayItem as string);
+                                            taxonomyItem = clonedContext.Site.GetTaxonomyItemByPath(arrayItem?.ToString());
                                         }
                                         else
                                         {
@@ -125,7 +125,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                             clonedContext.Load(taxonomyItem);
                                             clonedContext.ExecuteQueryRetry();
                                         }
-                                        if(taxonomyItem != null)
+                                        if (taxonomyItem != null)
                                         {
                                             terms.Add(new KeyValuePair<Guid, string>(taxonomyItem.Id, taxonomyItem.Name));
                                         }
@@ -151,7 +151,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                                             var newTaxFieldValue = new TaxonomyFieldValueCollection(context, termValuesString, taxField);
                                             itemValues.Add(new FieldUpdateValue(key as string, newTaxFieldValue, field.TypeAsString));
-                                        }                                        
+                                        }
                                     }
                                     else
                                     {
@@ -195,10 +195,10 @@ namespace PnP.PowerShell.Commands.Utilities
                                     }
                                     else
                                     {
-                                        if(updateTaxItemValue)
+                                        if (updateTaxItemValue)
                                         {
                                             taxField.ValidateSetValue(item, null);
-                                        }                                        
+                                        }
                                     }
                                 }
                                 break;
@@ -343,7 +343,22 @@ namespace PnP.PowerShell.Commands.Utilities
                                         }
                                         else
                                         {
-                                            userValueCollection.Values.Add(field.NewFieldUserValue(userId));
+                                            try
+                                            {
+                                                var fieldUserValue = list.PnPContext.Web.GetUserById(userId);
+                                                userValueCollection.Values.Add(field.NewFieldUserValue(fieldUserValue));
+                                            }
+                                            catch
+                                            {
+                                                // It is SharePoint Group
+                                                list.PnPContext.Web.LoadAsync(p => p.SiteGroups).GetAwaiter().GetResult();
+                                                var groupItem = list.PnPContext.Web.SiteGroups.AsRequested().Where(g => g.Id == userId).FirstOrDefault();
+                                                if (groupItem != null)
+                                                {
+                                                    userValueCollection.Values.Add(field.NewFieldUserValue(groupItem));
+                                                }
+                                            }
+
                                         }
                                     }
                                     item[key as string] = userValueCollection;
@@ -358,7 +373,21 @@ namespace PnP.PowerShell.Commands.Utilities
                                     }
                                     else
                                     {
-                                        item[key as string] = field.NewFieldUserValue(userId);
+                                        try
+                                        {
+                                            var fieldUserValue = list.PnPContext.Web.GetUserById(userId);
+                                            item[key as string] = field.NewFieldUserValue(fieldUserValue);
+                                        }
+                                        catch
+                                        {
+                                            // It is SharePoint Group
+                                            list.PnPContext.Web.LoadAsync(p => p.SiteGroups).GetAwaiter().GetResult();
+                                            var groupItem = list.PnPContext.Web.SiteGroups.AsRequested().Where(g => g.Id == userId).FirstOrDefault();
+                                            if (groupItem != null)
+                                            {
+                                                item[key as string] = field.NewFieldUserValue(groupItem);
+                                            }
+                                        }
                                     }
                                 }
                                 break;

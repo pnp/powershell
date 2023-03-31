@@ -68,7 +68,7 @@ Accept wildcard characters: False
 ```
 
 ### -Content
-A JSON string containing the site script. See https://docs.microsoft.com/sharepoint/dev/declarative-customization/site-design-json-schema for documentation on how to create such a JSON schema.
+A JSON string containing the site script. See https://learn.microsoft.com/sharepoint/dev/declarative-customization/site-design-json-schema for documentation on how to create such a JSON schema.
 
 ```yaml
 Type: String

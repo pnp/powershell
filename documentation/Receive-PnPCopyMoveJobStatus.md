@@ -1,8 +1,10 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Receive-PnPCopyMoveJobStatus.html
 Module Name: PnP.PowerShell
 schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Receive-PnPCopyMoveJobStatus.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Receive-PnPCopyMoveJobStatus
 ---
  
 # Receive-PnPCopyMoveJobStatus
@@ -12,7 +14,7 @@ This cmdlets receives Copy or Move job status which is being returned by Copy-Pn
 
 ## SYNTAX
 
-```
+```powershell
 Receive-PnPCopyMoveJobStatus -Job <CopyMigrationInfo> [-Wait]
 ```
 

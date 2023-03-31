@@ -54,7 +54,7 @@ Extracts a provisioning template in XML format from the current web.
 Get-PnPSiteTemplate -Out template.md
 ```
 
-Extracts a provisioning template in readible markdown format.
+Extracts a provisioning template in readable markdown format.
 
 ### EXAMPLE 4
 ```powershell
@@ -297,7 +297,7 @@ Accept wildcard characters: False
 ```
 
 ### -Handlers
-Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://docs.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers
+Allows you to only process a specific type of artifact in the site. Notice that this might result in a non-working template, as some of the handlers require other artifacts in place if they are not part of what your extracting. For possible values for this parameter visit https://learn.microsoft.com/dotnet/api/officedevpnp.core.framework.provisioning.model.handlers
 
 ```yaml
 Type: Handlers
@@ -456,7 +456,7 @@ Accept wildcard characters: False
 Filename to write to, optionally including full path. The format of the file is based upon the extension you specify. 
 - .xml will generate an XML file
 - .pnp will generate a PnP Provisioning Package, which is a file that contains all artifacts in a single archive (files, images, etc.)
-- .md will generate a user readible markdown report. This is work in progress and will be extended in the future.
+- .md will generate a user readable markdown report. This is work in progress and will be extended in the future.
 
 ```yaml
 Type: String
@@ -644,4 +644,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Encoding documentation](https://docs.microsoft.com/dotnet/api/system.text.encoding?view=net-6.0)
+[Encoding documentation](https://learn.microsoft.com/dotnet/api/system.text.encoding?view=net-6.0)

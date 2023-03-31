@@ -1,7 +1,7 @@
 namespace PnP.PowerShell.Commands.Enums
 {
     /// <summary>
-    /// Defines all the built in SharePoint Online Site Template types. See https://docs.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description
+    /// Defines all the built in SharePoint Online Site Template types. See https://learn.microsoft.com/powershell/module/sharepoint-online/set-spobuiltinsitetemplatesettings?view=sharepoint-ps#description
     /// </summary>
     public enum BuiltInSiteTemplates
     {
@@ -37,6 +37,11 @@ namespace PnP.PowerShell.Commands.Enums
         /// </summary>
         TeamCollaboration,
 
+        /// <summary>
+        /// Retail Management	e4ec393e-da09-4816-b6b2-195393656edd
+        /// </summary>
+        RetailManagement,
+
         #endregion
 
         #region Communication sites
@@ -71,6 +76,21 @@ namespace PnP.PowerShell.Commands.Enums
         /// </summary>
         Showcase,
 
+        /// <summary>
+        /// Healthcare	5215c092-152f-4912-a12a-7e1efdcc6878
+        /// </summary>
+        Healthcare,
+
+        /// <summary>
+        /// Store Collaboration	811ecf9a-b33f-44e6-81bd-da77729906dc
+        /// </summary>
+        StoreCollaboration,
+
+        /// <summary>
+        /// Volunteer center	b6e04a41-1535-4313-a856-6f3515d31999
+        /// </summary>
+        VolunteerCenter,
+	
         /// <summary>
         /// Topic	a30fef54-a4e5-4beb-a8b5-962c528d753a
         /// </summary>

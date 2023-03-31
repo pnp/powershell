@@ -26,7 +26,7 @@ New-PnPAzureADUserTemporaryAccessPass -DisplayName <String> -Description <String
 ## DESCRIPTION
 This cmdlet allows creation of a temporary access pass for a specific user to allow the user to log on once using the generated token. This can be used i.e. when the user needs to sign in to replace the multi factor authentication token.
 
-You can read more on how to enable Temporary Access Pass in Azure Active Directory in [this article](https://docs.microsoft.com/azure/active-directory/authentication/howto-authentication-temporary-access-pass). It is disabled by default on Azure Active Directory.
+You can read more on how to enable Temporary Access Pass in Azure Active Directory in [this article](https://learn.microsoft.com/azure/active-directory/authentication/howto-authentication-temporary-access-pass). It is disabled by default on Azure Active Directory.
 
 ## EXAMPLES
 
@@ -103,7 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsUseableOnce
-Allows defining if the access token can only be used once to log on after which it will directly expire. This takes presedence over the `-LifeTimeInMinutes` option. If not provided, the configured default in Azure Active Directory will be used.
+Allows defining if the access token can only be used once to log on after which it will directly expire. This takes precedence over the `-LifeTimeInMinutes` option. If not provided, the configured default in Azure Active Directory will be used.
 
 ```yaml
 Type: SwitchParameter
@@ -119,5 +119,5 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://docs.microsoft.com/graph/api/temporaryaccesspassauthenticationmethod-post)
-[Feature description](https://docs.microsoft.com/azure/active-directory/authentication/howto-authentication-temporary-access-pass)
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/temporaryaccesspassauthenticationmethod-post)
+[Feature description](https://learn.microsoft.com/azure/active-directory/authentication/howto-authentication-temporary-access-pass)

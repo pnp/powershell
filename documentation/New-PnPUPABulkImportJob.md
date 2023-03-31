@@ -32,7 +32,7 @@ New-PnPUPABulkImportJob -Url <String> [-UserProfilePropertyMapping] <Hashtable>
 ```
 
 ## DESCRIPTION
-See https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online for information on the API and how the bulk import process works.
+See https://learn.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online for information on the API and how the bulk import process works.
 
 ## EXAMPLES
 
@@ -206,4 +206,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Bulk update custom user profile properties for SharePoint Online](https://docs.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online)
+[Bulk update custom user profile properties for SharePoint Online](https://learn.microsoft.com/sharepoint/dev/solution-guidance/bulk-user-profile-update-api-for-sharepoint-online)

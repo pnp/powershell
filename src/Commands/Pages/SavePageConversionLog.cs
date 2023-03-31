@@ -8,8 +8,6 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsData.Save, "PnPPageConversionLog")]
-    [Alias("Save-PnPClientSidePageConversionLog")]
-    [WriteAliasWarning("Please use 'Save-PnPPageConversionLog'. The alias 'Save-PnPClientSidePageConversionLog' will be removed in the 1.5.0 release")]
 
     public class SavePageConversionLog : PnPWebCmdlet
     {
@@ -34,8 +32,8 @@ namespace PnP.PowerShell.Commands.Pages
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
+                string location = Assembly.GetExecutingAssembly().Location;
+                UriBuilder uri = new UriBuilder(location);
                 string path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetDirectoryName(path);
             }

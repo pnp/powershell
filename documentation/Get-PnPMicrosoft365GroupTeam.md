@@ -15,44 +15,44 @@ title: Get-PnPMicrosoft365GroupTeam
 
   * Microsoft Graph API : Group.Read.All
 
-Returns the Microsoft Teams team behind a particular Microsoft 365 Group
+Returns the Microsoft Teams team behind a particular Microsoft 365 Group.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365GroupTeam -Identity <Microsoft365GroupPipeBind> [-Connection] [-Verbose] [<CommonParameters>]
+Get-PnPMicrosoft365GroupTeam -Identity <Microsoft365GroupPipeBind> [-Connection] [-Verbose]
 ```
 
 ## DESCRIPTION
-This cmdlet allows retrieval of details on the Microsoft Teams team connected to a Microsoft 365 Group
+This cmdlet allows retrieval of details on the Microsoft Teams team connected to a Microsoft 365 Group.
 
 ## EXAMPLES
 
-### EXAMPLE 2
+### EXAMPLE 1
 ```powershell
 Get-PnPMicrosoft365GroupTeam
 ```
 
-Retrieves the Microsoft Teams team details behind the Microsoft 365 Group of the currently connected to site
+Retrieves the Microsoft Teams team details behind the Microsoft 365 Group of the currently connected to site.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPMicrosoft365GroupTeam -Identity "IT Team"
 ```
 
-Retrieves the Microsoft Teams team details behind the Microsoft 365 Group named "IT Team"
+Retrieves the Microsoft Teams team details behind the Microsoft 365 Group named "IT Team".
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPMicrosoft365GroupTeam -Identity e6212531-7f09-4c3b-bc2e-12cae26fb409
 ```
 
-Retrieves the Microsoft Teams team details behind the Microsoft 365 Group with the provided Id
+Retrieves the Microsoft Teams team details behind the Microsoft 365 Group with the provided Id.
 
 ## PARAMETERS
 
 ### -Identity
-The Identity of the Microsoft 365 Group
+The Identity of the Microsoft 365 Group.
 
 ```yaml
 Type: Microsoft365GroupPipeBind

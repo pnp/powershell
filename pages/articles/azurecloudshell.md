@@ -1,6 +1,6 @@
 # Using PnP PowerShell in Azure Cloud Shell
 
-In this article we will explain how to use PnP PowerShell inside [Azure Cloud Shell](https://docs.microsoft.com/en-us/azure/cloud-shell/overview). Using Azure Cloud Shell can come in handy in several scenarios. For example if policies on your local machine block you from installing PowerShell modules, you're behind a proxy which causes problems for your requests or you're on a shared machine which you don't want to pollute. With Azure Cloud Shell you open a PowerShell session which runs within Azure and outputs to you through i.e. a normal web browser via [shell.azure.com](https://shell.azure.com), [Windows Terminal](https://github.com/microsoft/terminal#welcome-to-the-windows-terminal-console-and-command-line-repo) or using any of the growing numbers of locations throughout the Microsoft products where the Azure Cloud Shell icon is visible (Microsoft 365 Admin Center, Teams Admin Center, Azure Portal, etc.).
+In this article we will explain how to use PnP PowerShell inside [Azure Cloud Shell](https://learn.microsoft.com/azure/cloud-shell/overview). Using Azure Cloud Shell can come in handy in several scenarios. For example if policies on your local machine block you from installing PowerShell modules, you're behind a proxy which causes problems for your requests or you're on a shared machine which you don't want to pollute. With Azure Cloud Shell you open a PowerShell session which runs within Azure and outputs to you through i.e. a normal web browser via [shell.azure.com](https://shell.azure.com), [Windows Terminal](https://github.com/microsoft/terminal#welcome-to-the-windows-terminal-console-and-command-line-repo) or using any of the growing numbers of locations throughout the Microsoft products where the Azure Cloud Shell icon is visible (Microsoft 365 Admin Center, Teams Admin Center, Azure Portal, etc.).
 
 ![Launch Azure Cloud Shell from the Teams Admin center](../images/azurecloudshell/launchcloudshellfromteamsadmin.png)
 
@@ -66,3 +66,8 @@ Using the Device Login option will allow you to use any browser session on any d
 
 > [!Important]
 > There is one final important remark to make. When connecting using the `-DeviceLogin` option, PnP PowerShell cannot automatically switch to the `yourtenant-admin.sharepoint.com` context, meaning any cmdlets you try to run that require being connected to the admin portal, will need you to use `Connect-PnPOnline https://yourtenant-admin.sharepoint.com -DeviceLogin` yourself first to authenticate specifically to the admin site before you can use them.
+
+### By using a Managed Identity
+
+> [!Important]
+> The current versions of PnP PowerShell and Azure Cloud Shell do not support Managed Identity authentication. This is a known issue and we are working on a solution. In the meantime, you can use the Device Login option to authenticate to your Microsoft 365 environment.

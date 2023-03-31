@@ -10,7 +10,7 @@ title: Add-PnPRoleDefinition
 # Add-PnPRoleDefinition
 
 ## SYNOPSIS
-Adds a Role Defintion (Permission Level) to the site collection in the current context
+Adds a Role Definition (Permission Level) to the site collection in the current context
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Add-PnPRoleDefinition -RoleName <String> [-Clone <RoleDefinitionPipeBind>] [-Inc
 ```
 
 ## DESCRIPTION
-This command allows adding a custom Role Defintion (Permission Level) to the site collection in the current context. It does not replace or remove existing Role Definitions.
+This command allows adding a custom Role Definition (Permission Level) to the site collection in the current context. It does not replace or remove existing Role Definitions.
 
 ## EXAMPLES
 
@@ -98,7 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -Exclude
-Specifies permission flag(s) to disable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
+Specifies permission flag(s) to disable. Please visit https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
 
 ```yaml
 Type: PermissionKind[]
@@ -113,7 +113,7 @@ Accept wildcard characters: False
 ```
 
 ### -Include
-Specifies permission flag(s) to enable. Please visit https://docs.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
+Specifies permission flag(s) to enable. Please visit https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum
 
 ```yaml
 Type: PermissionKind[]

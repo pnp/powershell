@@ -69,7 +69,7 @@ Removes all the items with Id 1 to Id 50 in the "Demo List" list
 Remove-PnPListItem -List "Demo List"
 ```
 
-Removes all items from the "Demlo List" list after asking for confirmation
+Removes all items from the "Demo List" list after asking for confirmation
 
 ## PARAMETERS
 

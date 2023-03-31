@@ -112,7 +112,7 @@ namespace PnP.PowerShell.Commands.Fields
                         fieldCI.FieldOptions |= AddFieldOptions.AddToAllContentTypes;
                     }
 
-                    if (ClientSideComponentId != null)
+                    if (ClientSideComponentId != Guid.Empty)
                     {
                         fieldCI.ClientSideComponentId = ClientSideComponentId;
                     }
@@ -223,7 +223,7 @@ namespace PnP.PowerShell.Commands.Fields
                     AddToDefaultView = AddToDefaultView
                 };
 
-                if (ClientSideComponentId != null)
+                if (ClientSideComponentId != Guid.Empty)
                 {
                     fieldCI.ClientSideComponentId = ClientSideComponentId;
                 }
@@ -245,6 +245,15 @@ namespace PnP.PowerShell.Commands.Fields
                     EnsureDynamicParameters(calculatedFieldParameters);
                     f = CurrentWeb.CreateField<FieldCalculated>(fieldCI);
                     ((FieldCalculated)f).Formula = calculatedFieldParameters.Formula;
+
+                    if(!string.IsNullOrEmpty(calculatedFieldParameters.ResultType) && Enum.TryParse<FieldType>(calculatedFieldParameters.ResultType, out FieldType resultType))
+                    {
+                        ((FieldCalculated)f).OutputType = resultType;
+                    }
+                    else
+                    {
+                        ((FieldCalculated)f).OutputType = FieldType.Text;
+                    }
                     f.Update();
                     ClientContext.ExecuteQueryRetry();
                 }
