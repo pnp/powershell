@@ -210,6 +210,8 @@ If you have only updated documentation, so called .md files, there's no need to 
 1. In Visual Studio Code, at the top a flyout menu should appear with the currently running processes on your machine. Start typing in the process ID you revealed in the step above and select the process that matches your PowerShell 7 session.
 
    ![Selecting the PowerShell 7 process](./../images/contributing/vscodeenterpid.png)
+   
+   Note that this does **not** work if you have installed PowerShell 7 through the Microsoft Store. If that's the case, uninstall it again from your Windows start menu by right clicking on PowerShell 7 and choosing Uninstall and [reinstall PowerShell 7 using any of the other options](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows).
 
 1. You can now set breakpoints as you are used to in your code and use the PowerShell 7 session you connected to to run the cmdlet and hit the breakpoints you have set.
 
