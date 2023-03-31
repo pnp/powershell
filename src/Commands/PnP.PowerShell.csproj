@@ -59,27 +59,27 @@
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.50.0" />
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
-		<PackageReference Include="PnP.Framework" Version="1.11.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Framework" Version="1.11.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Framework" Version="1.12.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Framework" Version="1.12.*-*" Condition="'$(IsRelease)' == '1'" />
 		
-		<PackageReference Include="PnP.Core" Version="1.8.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core" Version="1.8.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Core" Version="1.9.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core" Version="1.9.*-*" Condition="'$(IsRelease)' == '1'" />
 		
-		<PackageReference Include="PnP.Core.Auth" Version="1.8.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Auth" Version="1.8.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Core.Auth" Version="1.9.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Auth" Version="1.9.*-*" Condition="'$(IsRelease)' == '1'" />
 		
-		<PackageReference Include="PnP.Core.Admin" Version="1.8.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Admin" Version="1.8.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Core.Admin" Version="1.9.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Admin" Version="1.9.*-*" Condition="'$(IsRelease)' == '1'" />
 
 		<!-- currently for the following packages we only refer to the nightlies -->
 		<!-- <PackageReference Include="PnP.Core.Transformation" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Transformation" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
 
-		<PackageReference Include="PnP.Core.Transformation" Version="1.8.*-*" />
+		<PackageReference Include="PnP.Core.Transformation" Version="1.9.*-*" />
 		
 		<!-- <PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
-		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.8.*-*" />		
+		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.9.*-*" />		
 
 		<PackageReference Include="PowerShellStandard.Library" Version="5.1.0" />
 		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
