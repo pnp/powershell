@@ -10,6 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+## [2.1.1]
+
+### Fixed
+
+- Fixed an issue with the signing of the PnP PowerShell 2.1.0 release
+
 ## [2.1.0]
 
 ### Added
