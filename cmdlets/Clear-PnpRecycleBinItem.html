@@ -95,12 +95,12 @@
  [&lt;CommonParameters&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to permanently delete items from recycle bin. By default the command will delete all items but it is allow to specify the items by using the <code>Identity</code> or <code>RowLimit</code> options.</p>
+<p>Allows to permanently delete items from recycle bin. By default the command will delete all items but it is allowed to specify the items by using the <code>Identity</code> or <code>RowLimit</code> options.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem | Where-Object LeafName -like &quot;*.docx&quot; | Clear-PnPRecycleBinItem
 </code></pre>
-<p>Permanently deletes all the items in the first and second stage recycle bins of which the file names have the .docx extension</p>
+<p>Permanently deletes all the items in the first and second stage recycle bins of which the file names have the <code>.docx</code> extension</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Clear-PnPRecycleBinItem -Identity 72e4d749-d750-4989-b727-523d6726e442
 </code></pre>
@@ -108,7 +108,7 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Clear-PnPRecycleBinItem -Identity $item -Force
 </code></pre>
-<p>Permanently deletes the recycle bin item stored under variable $item from the recycle bin without asking for confirmation from the end user first</p>
+<p>Permanently deletes the recycle bin item stored under variable <code>$item</code> from the recycle bin without asking for confirmation from the end user first</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Clear-PnPRecycleBinItem -All -RowLimit 10000
 </code></pre>
@@ -137,7 +137,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>If provided, no confirmation will be asked to restore the recycle bin item</p>
+<p>If provided, no confirmation will be asked to clear the recycle bin</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 

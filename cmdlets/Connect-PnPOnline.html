@@ -129,16 +129,16 @@
 <pre><code>Connect-PnPOnline -Url &lt;String&gt; -AccessToken &lt;String&gt; [-AzureEnvironment &lt;AzureEnvironment&gt;] [-ReturnConnection]
 </code></pre>
 <h3 id="system-assigned-managed-identity">System Assigned Managed Identity</h3>
-<pre><code>Connect-PnPOnline -Url &lt;String&gt; -ManagedIdentity [-ReturnConnection]
+<pre><code>Connect-PnPOnline [-Url &lt;String&gt;] -ManagedIdentity [-ReturnConnection]
 </code></pre>
 <h3 id="user-assigned-managed-identity-by-client-id">User Assigned Managed Identity by Client Id</h3>
-<pre><code>Connect-PnPOnline -Url &lt;String&gt; -ManagedIdentity -UserAssignedManagedIdentityClientId &lt;String&gt; [-ReturnConnection]
+<pre><code>Connect-PnPOnline [-Url &lt;String&gt;] -ManagedIdentity -UserAssignedManagedIdentityClientId &lt;String&gt; [-ReturnConnection]
 </code></pre>
 <h3 id="user-assigned-managed-identity-by-principal-id">User Assigned Managed Identity by Principal Id</h3>
-<pre><code>Connect-PnPOnline -Url &lt;String&gt; -ManagedIdentity -UserAssignedManagedIdentityObjectId &lt;String&gt; [-ReturnConnection]
+<pre><code>Connect-PnPOnline [-Url &lt;String&gt;] -ManagedIdentity -UserAssignedManagedIdentityObjectId &lt;String&gt; [-ReturnConnection]
 </code></pre>
 <h3 id="user-assigned-managed-identity-by-azure-resource-id">User Assigned Managed Identity by Azure Resource Id</h3>
-<pre><code>Connect-PnPOnline -Url &lt;String&gt; -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId &lt;String&gt; [-ReturnConnection]
+<pre><code>Connect-PnPOnline [-Url &lt;String&gt;] -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId &lt;String&gt; [-ReturnConnection]
 </code></pre>
 <h3 id="environment-variable">Environment Variable</h3>
 <pre><code>Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-EnvironmentVariable] [-CurrentCredentials]
@@ -505,7 +505,7 @@ Accept wildcard characters: False
 Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable
 Aliases:
 
-Required: True
+Required: True (Except when using -ManagedIdentity)
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)

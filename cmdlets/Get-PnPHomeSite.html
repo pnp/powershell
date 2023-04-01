@@ -88,20 +88,29 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Returns the home site url for your tenant</p>
+<p>Returns the SharePoint home sites for your tenant</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPHomeSite [-IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<h3 id="basic-default">Basic (Default)</h3>
+<pre><code class="lang-powershell">Get-PnPHomeSite [-IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="detailed">Detailed</h3>
+<pre><code class="lang-powershell">Get-PnPHomeSite -Detailed &lt;SwitchParameter&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet will return the SharePoint Home sites for your tenant. Depending on which parameters you provide, you will get returned either the default first Home Site URL or details on all the Home Sites that have been configured for your tenant.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPHomeSite
 </code></pre>
-<p>Returns the home site url for your tenant</p>
+<p>Returns the URL of the first home site for your tenant</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPHomeSite -IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled
 </code></pre>
 <p>Returns whether Viva Connections landing experience is set to the SharePoint home site.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPHomeSite -Detailed
+</code></pre>
+<p>Returns detailed information on all the home sites that have been configured for your tenant</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -114,10 +123,20 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-isvivaconnectionsdefaultstartforcompanyportalsiteenabled">-IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled</h3>
-<p>When specified, it retrieves whether Viva Connections landing experience is set to the SharePoint home site.</p>
+<h3 id="-detailed">-Detailed</h3>
+<p>When provided, it returns detailed information on all the home sites configured on your tenant</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Detailed
+Required: True
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-isvivaconnectionsdefaultstartforcompanyportalsiteenabled">-IsVivaConnectionsDefaultStartForCompanyPortalSiteEnabled</h3>
+<p>When provided, it retrieves whether Viva Connections landing experience is set to the SharePoint home site.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Basic
 Required: False
 Position: Named
 Default value: None
