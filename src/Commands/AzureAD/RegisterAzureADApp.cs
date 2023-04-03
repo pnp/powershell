@@ -119,7 +119,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             var loginEndPoint = string.Empty;
 
-            using (var authenticationManager = new AuthenticationManager())
+            using (var authenticationManager = new AuthenticationManager(AzureEnvironment))
             {
                 loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
             }

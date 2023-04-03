@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             var messageWriter = new CmdletMessageWriter(this);
 
             var endPoint = string.Empty;
-            using (var authManager = new AuthenticationManager())
+            using (var authManager = new AuthenticationManager(AzureEnvironment))
             {
                 endPoint = authManager.GetAzureADLoginEndPoint(AzureEnvironment);
             }

@@ -199,7 +199,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    authManager = new PnP.Framework.AuthenticationManager();
+                    authManager = new PnP.Framework.AuthenticationManager(azureEnvironment);
                 }
                 using (authManager)
                 {
@@ -508,7 +508,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    authManager = new PnP.Framework.AuthenticationManager();
+                    authManager = new PnP.Framework.AuthenticationManager(azureEnvironment);
                 }
                 using (authManager)
                 {

@@ -148,9 +148,10 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     var settings = new PnP.Framework.Utilities.Context.ClientContextSettings();
                     settings.Type = PnP.Framework.Utilities.Context.ClientContextType.Cookie;
-                    settings.AuthenticationManager = new PnP.Framework.AuthenticationManager();
+                    settings.AuthenticationManager = new PnP.Framework.AuthenticationManager(azureEnvironment);
                     settings.AuthenticationManager.CookieContainer = authCookiesContainer;
                     settings.SiteUrl = siteUrl;
+		    settings.Environment = azureEnvironment;
 
                     ctx.AddContextSettings(settings);
                     return ctx;
