@@ -76,22 +76,22 @@ Connect-PnPOnline -Url <String> -AccessToken <String> [-AzureEnvironment <AzureE
 
 ### System Assigned Managed Identity
 ```
-Connect-PnPOnline -Url <String> -ManagedIdentity [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity [-ReturnConnection]
 ```
 
 ### User Assigned Managed Identity by Client Id
 ```
-Connect-PnPOnline -Url <String> -ManagedIdentity -UserAssignedManagedIdentityClientId <String> [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityClientId <String> [-ReturnConnection]
 ```
 
 ### User Assigned Managed Identity by Principal Id
 ```
-Connect-PnPOnline -Url <String> -ManagedIdentity -UserAssignedManagedIdentityObjectId <String> [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityObjectId <String> [-ReturnConnection]
 ```
 
 ### User Assigned Managed Identity by Azure Resource Id
 ```
-Connect-PnPOnline -Url <String> -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId <String> [-ReturnConnection]
+Connect-PnPOnline [-Url <String>] -ManagedIdentity -UserAssignedManagedIdentityAzureResourceId <String> [-ReturnConnection]
 ```
 
 ### Environment Variable
@@ -576,7 +576,7 @@ Type: String
 Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable
 Aliases:
 
-Required: True
+Required: True (Except when using -ManagedIdentity)
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)

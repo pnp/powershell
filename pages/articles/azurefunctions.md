@@ -151,7 +151,7 @@ using namespace System.Net
 
 param($Request, $TriggerMetadata)
 
-Connect-PnPOnline tenant.sharepoint.com -ManagedIdentity
+Connect-PnPOnline -ManagedIdentity
 Get-PnPMicrosoft365Group
 
 Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{

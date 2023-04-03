@@ -10,6 +10,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+## [2.1.1]
+
+### Fixed
+
+- Fixed an issue with the signing of the PnP PowerShell 2.1.0 release
+
+## [2.1.0]
+
+### Added
+
 - Added support for `.NET 6.0` since `.NET Core 3.1` support is getting deprecated. We have **removed** support for .NET Core 3.1, so users will have to update from `PowerShell 7.0.x` to `PowerShell 7.2.x or later` [#2292](https://github.com/pnp/powershell/pull/2292)
 - Added default table formatted output for `Get-PnPVivaConnectionsDashboardACE`
 - Added `Get-PnPAzureADServicePrincipal` which allows for service principals/application registrations to be retrieved from Azure Active Directory [#2551](https://github.com/pnp/powershell/pull/2551)
@@ -59,6 +69,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPPowerApp` which allows PowerApps to be retrieved [#2794](https://github.com/pnp/powershell/pull/2794)
 - Added `-DisableCommenting` to `Set-PnPList` which allows enabling or disabling commenting on a list. [#2939](https://github.com/pnp/powershell/pull/2939)
 - Added `-EnableAutoExpirationVersionTrim` and `-ExpireVersionsAfterDays` to `Set-PnPList` which allows enabling or disabling auto expiration of versions on a list or library based on the days passed. [#2869](https://github.com/pnp/powershell/pull/2869)
+- Added `-Detailed` parameter to `Get-PnPHomeSite` which will return detailed information on all home sites configured on the tenant [#2954](https://github.com/pnp/powershell/pull/2954)
 
 ### Changed
 
@@ -114,7 +125,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Sumit Kumar [sumitkumar0608]
 - [msjennywu]
 - [enthusol]
-- Ganesh Sanap [ganesh-sanap]
 - Chris R. [ChrisRo89]
 - Aimery Thomas [a1mery]
 - Ganesh Sanap [ganesh-sanap]
@@ -130,7 +140,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Leon Armston [LeonArmston]
 - Robin Meure [robinmeure]
 - Rohit Varghese [rohitvarghese96]
-- Arleta Wanat [PowershellScripts]
 - Erwin van Hunen [erwinvanhunen]
 - Marc Studer [studermarc]
 - [vin-ol]

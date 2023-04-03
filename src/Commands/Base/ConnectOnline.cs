@@ -78,10 +78,10 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
         public string Url;
 
