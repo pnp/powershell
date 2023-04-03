@@ -187,8 +187,8 @@ If you have only updated documentation, so called .md files, there's no need to 
 
    ![Build succeeded](./../images/contributing/vscodebuildsucceeded.png)
 
-   If it instead shows error like the one below, it means you still have a PowerShell session open somewhere your machine which has PnP PowerShell loaded and which blocks the build process to update the files. It can be frustrating at times to find the PowerShell session that is blocking the build process. If you're not sure which session is blocking the build process, you can try to close all PowerShell sessions and try again. If that doesn't work, you can try restarting Visual Studio Code.
-   If it you get the error "Path to shell executable "pwsh.exe" does not exist", open tasks.json file and change executable path "pwsh.exe" to the full path of your "C:\\Program Files\\PowerShell\\7\\pwsh.exe"  
+   If it instead shows an error like the one below, it means you still have a PowerShell session open somewhere your machine which has PnP PowerShell loaded and which blocks the build process to update the files. It can be frustrating at times to find the PowerShell session that is blocking the build process. If you're not sure which session is blocking the build process, you can try to close all PowerShell sessions and try again. If that doesn't work, you can try restarting Visual Studio Code.
+   If it you get the error "Path to shell executable "pwsh.exe" does not exist", open tasks.json file and change executable path "pwsh.exe" to the full path of your "C:\\Program Files\\PowerShell\\7\\pwsh.exe". 
 
    ![Build failed](./../images/contributing/vscodebuildfailed.png)
 
