@@ -10,9 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `-OutFile` to `Invoke-PnPGraphMethod` which allows for the response to be written to a file
+
 ### Contributors
 
 - [dhiabedoui]
+- Koen Zomers [koenzomers]
 
 ## [2.1.1]
 
