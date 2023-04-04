@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Added `-OutFile` to `Invoke-PnPGraphMethod` which allows for the response to be written to a file
+- Added `-OutFile` to `Invoke-PnPGraphMethod` which allows for the response to be written to a file [#2971](https://github.com/pnp/powershell/pull/2971)
 
 ### Contributors
 
