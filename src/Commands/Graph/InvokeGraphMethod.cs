@@ -8,12 +8,14 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json.Serialization;
+using System.IO;
 
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPGraphMethod", DefaultParameterSetName = ParameterSet_TOCONSOLE)]
     public class InvokeGraphMethod : PnPGraphCmdlet
     {
+        private const string ParameterSet_TOSTREAM = "Out to stream";
         private const string ParameterSet_TOFILE = "Out to file";
         private const string ParameterSet_TOCONSOLE = "Out to console";
 
@@ -25,6 +27,7 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOSTREAM)]
         public string Url
         {
             get { return _url; }
@@ -48,16 +51,19 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public object Content;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public string ContentType = "application/json";
 
         IDictionary<string, string> additionalHeaders = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public IDictionary<string, string> AdditionalHeaders
         {
             get
@@ -81,6 +87,7 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public SwitchParameter ConsistencyLevelEventual;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
@@ -91,6 +98,9 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOFILE)]
         public string OutFile;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOSTREAM)]
+        public SwitchParameter OutStream;        
 
         protected override void ExecuteCmdlet()
         {
@@ -133,7 +143,7 @@ namespace PnP.PowerShell.Commands.Base
                 switch (Method)
                 {
                     case HttpRequestMethod.Get:
-                        if(string.IsNullOrWhiteSpace(OutFile)) 
+                        if(ParameterSetName == ParameterSet_TOCONSOLE) 
                         {
                             GetRequestWithPaging();
                         }
@@ -283,24 +293,46 @@ namespace PnP.PowerShell.Commands.Base
 
         private void HandleResponse(HttpResponseMessage response)
         {
-            if(ParameterSpecified(nameof(OutFile)))
+            switch (ParameterSetName)
             {
-                var responseStream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+                case ParameterSet_TOCONSOLE:
+                    var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                WriteVerbose($"Writing {responseStream.Length} bytes response to {OutFile}");
+                    WriteVerbose($"Returning {result.Length} characters response");
 
-                using var fileStream = new System.IO.FileStream(OutFile, System.IO.FileMode.Create, System.IO.FileAccess.Write);
-                responseStream.CopyTo(fileStream);
-                fileStream.Close();
-                return;
-            }
-            else
-            {                
-                var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    WriteGraphResult(result);
+                    break;
 
-                WriteVerbose($"Returning {result.Length} characters response");
-                
-                WriteGraphResult(result);
+                case ParameterSet_TOFILE:
+                    using (var responseStreamForFile = response.Content.ReadAsStream())
+                    {
+                        WriteVerbose($"Writing {responseStreamForFile.Length} bytes response to {OutFile}");
+
+                        using (var fileStream = new System.IO.FileStream(OutFile, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                        {
+                            responseStreamForFile.CopyTo(fileStream);
+                            fileStream.Close();
+                        }
+                    }
+                    break;
+
+                case ParameterSet_TOSTREAM:
+                    var responseStream = response.Content.ReadAsStream();
+                    
+                    WriteVerbose($"Writing {responseStream.Length} bytes response to outputstream");
+
+                    var memoryStream = new System.IO.MemoryStream();
+                    responseStream.CopyTo(memoryStream);
+                    memoryStream.Position = 0;
+
+                    responseStream.Close();
+                    responseStream.Dispose();
+
+                    WriteObject(memoryStream);
+                    break;
+
+                default:
+                    throw new Exception($"Parameter set {ParameterSetName} not supported");
             }
         }        
     }
