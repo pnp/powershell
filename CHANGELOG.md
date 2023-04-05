@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `DisableDocumentLibraryDefaultLabeling`, `DisableListSync`, `IsEnableAppAuthPopUpEnabled`, `ExpireVersionsAfterDays`, `MajorVersionLimit` and `EnableAutoExpirationVersionTrim`, `OneDriveLoopSharingCapability`, `OneDriveLoopDefaultSharingLinkScope`, `OneDriveLoopDefaultSharingLinkRole`, `CoreLoopSharingCapability`, `CoreLoopDefaultSharingLinkScope`, `CoreLoopDefaultSharingLinkRole` , `DisableVivaConnectionsAnalytics` , `CoreDefaultLinkToExistingAccess`, `HideSyncButtonOnTeamSite` , `CoreBlockGuestsAsSiteAdmin`, `IsWBFluidEnabled`, `IsCollabMeetingNotesFluidEnabled`, `AllowAnonymousMeetingParticipantsToAccessWhiteboards`, `IBImplicitGroupBased`, `ShowOpenInDesktopOptionForSyncedFiles` and `ShowPeoplePickerGroupSuggestionsForIB` parameters to the `Set-PnPTenant` cmdlet.
+
 ### Contributors
 
 - [dhiabedoui]
