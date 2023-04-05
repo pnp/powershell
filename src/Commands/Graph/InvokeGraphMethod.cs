@@ -11,15 +11,20 @@ using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "PnPGraphMethod")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPGraphMethod", DefaultParameterSetName = ParameterSet_TOCONSOLE)]
     public class InvokeGraphMethod : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false)]
+        private const string ParameterSet_TOFILE = "Out to file";
+        private const string ParameterSet_TOCONSOLE = "Out to console";
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         public HttpRequestMethod Method = HttpRequestMethod.Get;
 
         private string _url;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOCONSOLE)]
         public string Url
         {
             get { return _url; }
@@ -41,15 +46,18 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         public object Content;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         public string ContentType = "application/json";
 
         IDictionary<string, string> additionalHeaders = null;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         public IDictionary<string, string> AdditionalHeaders
         {
             get
@@ -71,14 +79,18 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         public SwitchParameter ConsistencyLevelEventual;
 
-        [Parameter(Mandatory = false)]
-        public SwitchParameter Raw;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        public SwitchParameter Raw;      
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         public SwitchParameter All;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOFILE)]
+        public string OutFile;
 
         protected override void ExecuteCmdlet()
         {
@@ -121,7 +133,14 @@ namespace PnP.PowerShell.Commands.Base
                 switch (Method)
                 {
                     case HttpRequestMethod.Get:
-                        GetRequest();
+                        if(string.IsNullOrWhiteSpace(OutFile)) 
+                        {
+                            GetRequestWithPaging();
+                        }
+                        else
+                        {
+                            GetRequestWithoutPaging();
+                        }
                         return;
                     case HttpRequestMethod.Post:
                         PostRequest();
@@ -178,7 +197,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private void GetRequest()
+        private void GetRequestWithPaging()
         {
             var result = GraphHelper.GetAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
             if (Raw.IsPresent)
@@ -226,33 +245,63 @@ namespace PnP.PowerShell.Commands.Base
                 WriteObject(rootObj);
             }
         }
+        
+        private void GetRequestWithoutPaging()
+        {
+            WriteVerbose($"Sending HTTP GET to {Url}");
+            using var response = GraphHelper.GetResponseAsync(Connection, Url, AccessToken).GetAwaiter().GetResult();
+            HandleResponse(response);
+        }
 
         private void PostRequest()
         {
+            WriteVerbose($"Sending HTTP POST to {Url}");
             var response = GraphHelper.PostAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
-            var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            WriteGraphResult(result);
+            HandleResponse(response);
         }
 
         private void PutRequest()
         {
+            WriteVerbose($"Sending HTTP PUT to {Url}");
             var response = GraphHelper.PutAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
-            var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            WriteGraphResult(result);
+            HandleResponse(response);
         }
 
         private void PatchRequest()
         {
+            WriteVerbose($"Sending HTTP PATCH to {Url}");
             var response = GraphHelper.PatchAsync(Connection, AccessToken, GetHttpContent(), Url, AdditionalHeaders).GetAwaiter().GetResult();
-            var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            WriteGraphResult(result);
+            HandleResponse(response);
         }
 
         private void DeleteRequest()
         {
+            WriteVerbose($"Sending HTTP DELETE to {Url}");
             var response = GraphHelper.DeleteAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
-            var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            WriteGraphResult(result);
+            HandleResponse(response);
         }
+
+        private void HandleResponse(HttpResponseMessage response)
+        {
+            if(ParameterSpecified(nameof(OutFile)))
+            {
+                var responseStream = response.Content.ReadAsStreamAsync().GetAwaiter().GetResult();
+
+                WriteVerbose($"Writing {responseStream.Length} bytes response to {OutFile}");
+
+                using var fileStream = new System.IO.FileStream(OutFile, System.IO.FileMode.Create, System.IO.FileAccess.Write);
+                responseStream.CopyTo(fileStream);
+                fileStream.Close();
+                return;
+            }
+            else
+            {                
+                var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                WriteVerbose($"Returning {result.Length} characters response");
+                
+                WriteGraphResult(result);
+            }
+        }        
     }
 }

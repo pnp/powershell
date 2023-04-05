@@ -14,6 +14,7 @@ Invokes a REST request towards the Microsoft Graph API
 
 ## SYNTAX
 
+### Out to console (Default)
 ```powershell
 Invoke-PnPGraphMethod -Url <String>
                       [-AdditionalHeaders <System.Collections.Generic.IDictionary`2[System.String,System.String]>]
@@ -24,7 +25,20 @@ Invoke-PnPGraphMethod -Url <String>
                       [-Raw]
                       [-All] 
                       [-Connection <PnPConnection>]
-                      [<CommonParameters>]
+                      [-Verbose]
+```
+
+### Out to file
+```powershell
+Invoke-PnPGraphMethod -Url <String>
+                      [-AdditionalHeaders <System.Collections.Generic.IDictionary`2[System.String,System.String]>]
+                      [[-Method] <HttpRequestMethod>] 
+                      [-Content <Object>] 
+                      [-ContentType <String>] 
+                      [-ConsistencyLevelEventual] 
+                      [-Connection <PnPConnection>]
+                      [-OutFile <String>]
+                      [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -68,6 +82,13 @@ Invoke-PnPGraphMethod "https://graph.microsoft.com/v1.0/users"
 
 Performs a GET request to retrieve users from the Microsoft Graph API using the full URL.
 
+### Example 6
+```powershell
+Invoke-PnPGraphMethod "https://graph.microsoft.com/v1.0/users/user@contoso.com/photo/`$value" -OutFile c:\temp\photo.jpg
+```
+
+Downloads the user profile photo of the specified user to the specified file.
+
 ## PARAMETERS
 
 ### -AdditionalHeaders
@@ -90,7 +111,7 @@ Retrieve all pages of results. This will loop through all @odata.nextLink. This 
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Out to console
 Aliases:
 
 Required: False
@@ -178,12 +199,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OutFile
+The full path including filename to write the output to, i.e. c:\temp\myfile.txt. Existing files will be overwritten.
+
+```yaml
+Type: String
+Parameter Sets: Out to file
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Raw
 If specified the returned data will not be converted to an object but returned as a JSON string.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Out to console
 Aliases:
 
 Required: False
