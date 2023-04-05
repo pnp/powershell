@@ -41,6 +41,19 @@ Invoke-PnPGraphMethod -Url <String>
                       [-Verbose]
 ```
 
+### Out to stream
+```powershell
+Invoke-PnPGraphMethod -Url <String>
+                      [-AdditionalHeaders <System.Collections.Generic.IDictionary`2[System.String,System.String]>]
+                      [[-Method] <HttpRequestMethod>] 
+                      [-Content <Object>] 
+                      [-ContentType <String>] 
+                      [-ConsistencyLevelEventual] 
+                      [-Connection <PnPConnection>]
+                      [-OutStream]
+                      [-Verbose]
+```
+
 ## DESCRIPTION
 Invokes a REST request towards the Microsoft Graph API. It will take care of potential throttling retries that are needed to retrieve the data.
 
@@ -88,6 +101,13 @@ Invoke-PnPGraphMethod "https://graph.microsoft.com/v1.0/users/user@contoso.com/p
 ```
 
 Downloads the user profile photo of the specified user to the specified file.
+
+### Example 7
+```powershell
+Invoke-PnPGraphMethod "https://graph.microsoft.com/v1.0/users/user@contoso.com/photo/`$value" -OutStream | Add-PnPFile -FileName user.jpg -Folder "Shared Documents"
+```
+
+Takes the user profile photo of the specified user and uploads it to the specified library in SharePoint Online.
 
 ## PARAMETERS
 
@@ -205,6 +225,21 @@ The full path including filename to write the output to, i.e. c:\temp\myfile.txt
 ```yaml
 Type: String
 Parameter Sets: Out to file
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OutStream
+Indicates that the result of the request should be returned as a memory stream.
+
+```yaml
+Type: String
+Parameter Sets: Out to stream
 Aliases:
 
 Required: True
