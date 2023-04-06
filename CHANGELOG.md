@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+
+- Added `DisableDocumentLibraryDefaultLabeling`, `DisableListSync`, `IsEnableAppAuthPopUpEnabled`, `ExpireVersionsAfterDays`, `MajorVersionLimit` and `EnableAutoExpirationVersionTrim`, `OneDriveLoopSharingCapability`, `OneDriveLoopDefaultSharingLinkScope`, `OneDriveLoopDefaultSharingLinkRole`, `CoreLoopSharingCapability`, `CoreLoopDefaultSharingLinkScope`, `CoreLoopDefaultSharingLinkRole` , `DisableVivaConnectionsAnalytics` , `CoreDefaultLinkToExistingAccess`, `HideSyncButtonOnTeamSite` , `CoreBlockGuestsAsSiteAdmin`, `IsWBFluidEnabled`, `IsCollabMeetingNotesFluidEnabled`, `AllowAnonymousMeetingParticipantsToAccessWhiteboards`, `IBImplicitGroupBased`, `ShowOpenInDesktopOptionForSyncedFiles` and `ShowPeoplePickerGroupSuggestionsForIB` parameters to the `Set-PnPTenant` cmdlet. [#2979](https://github.com/pnp/powershell/pull/2979)
 - Added `-OutFile` to `Invoke-PnPGraphMethod` which allows for the response to be written to a file [#2971](https://github.com/pnp/powershell/pull/2971)
 - Added `-OutStream` to `Invoke-PnPGraphMethod` which allows for the response to be written to a memory stream [#2976](https://github.com/pnp/powershell/pull/2976)
 
