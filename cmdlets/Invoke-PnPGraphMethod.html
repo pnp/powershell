@@ -86,6 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Invokes a REST request towards the Microsoft Graph API</p>
 <h2 id="syntax">SYNTAX</h2>
+<h3 id="out-to-console-default">Out to console (Default)</h3>
 <pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &lt;String&gt;
                       [-AdditionalHeaders &lt;System.Collections.Generic.IDictionary`2[System.String,System.String]&gt;]
                       [[-Method] &lt;HttpRequestMethod&gt;] 
@@ -95,7 +96,29 @@
                       [-Raw]
                       [-All] 
                       [-Connection &lt;PnPConnection&gt;]
-                      [&lt;CommonParameters&gt;]
+                      [-Verbose]
+</code></pre>
+<h3 id="out-to-file">Out to file</h3>
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &lt;String&gt;
+                      [-AdditionalHeaders &lt;System.Collections.Generic.IDictionary`2[System.String,System.String]&gt;]
+                      [[-Method] &lt;HttpRequestMethod&gt;] 
+                      [-Content &lt;Object&gt;] 
+                      [-ContentType &lt;String&gt;] 
+                      [-ConsistencyLevelEventual] 
+                      [-Connection &lt;PnPConnection&gt;]
+                      [-OutFile &lt;String&gt;]
+                      [-Verbose]
+</code></pre>
+<h3 id="out-to-stream">Out to stream</h3>
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &lt;String&gt;
+                      [-AdditionalHeaders &lt;System.Collections.Generic.IDictionary`2[System.String,System.String]&gt;]
+                      [[-Method] &lt;HttpRequestMethod&gt;] 
+                      [-Content &lt;Object&gt;] 
+                      [-ContentType &lt;String&gt;] 
+                      [-ConsistencyLevelEventual] 
+                      [-Connection &lt;PnPConnection&gt;]
+                      [-OutStream]
+                      [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Invokes a REST request towards the Microsoft Graph API. It will take care of potential throttling retries that are needed to retrieve the data.</p>
@@ -121,6 +144,14 @@ Invoke-PnPGraphMethod -Url 'groups/{id}?`$select=hideFromOutlookClients'
 <pre><code class="lang-powershell">Invoke-PnPGraphMethod &quot;https://graph.microsoft.com/v1.0/users&quot;
 </code></pre>
 <p>Performs a GET request to retrieve users from the Microsoft Graph API using the full URL.</p>
+<h3 id="example-6">Example 6</h3>
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod &quot;https://graph.microsoft.com/v1.0/users/user@contoso.com/photo/`$value&quot; -OutFile c:\temp\photo.jpg
+</code></pre>
+<p>Downloads the user profile photo of the specified user to the specified file.</p>
+<h3 id="example-7">Example 7</h3>
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod &quot;https://graph.microsoft.com/v1.0/users/user@contoso.com/photo/`$value&quot; -OutStream | Add-PnPFile -FileName user.jpg -Folder &quot;Shared Documents&quot;
+</code></pre>
+<p>Takes the user profile photo of the specified user and uploads it to the specified library in SharePoint Online.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-additionalheaders">-AdditionalHeaders</h3>
 <p>Additional request headers</p>
@@ -137,7 +168,7 @@ Accept wildcard characters: False
 <h3 id="-all">-All</h3>
 <p>Retrieve all pages of results. This will loop through all @odata.nextLink. This flag will only be respected if the request is a GET request.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Out to console
 Aliases:
 
 Required: False
@@ -208,10 +239,34 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-outfile">-OutFile</h3>
+<p>The full path including filename to write the output to, i.e. c:\temp\myfile.txt. Existing files will be overwritten.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Out to file
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-outstream">-OutStream</h3>
+<p>Indicates that the result of the request should be returned as a memory stream.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Out to stream
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-raw">-Raw</h3>
 <p>If specified the returned data will not be converted to an object but returned as a JSON string.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Out to console
 Aliases:
 
 Required: False
