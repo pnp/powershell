@@ -167,6 +167,28 @@
  [-CoreRequestFilesLinkEnabled &lt;Boolean&gt;]
  [-CoreRequestFilesLinkExpirationInDays &lt;Boolean&gt;]
  [-LabelMismatchEmailHelpLink &lt;String&gt;]
+ [-DisableDocumentLibraryDefaultLabeling &lt;Boolean&gt;]
+ [-DisableListSync &lt;Boolean&gt;]
+ [-IsEnableAppAuthPopUpEnabled &lt;Boolean&gt;]
+ [-ExpireVersionsAfterDays &lt;Int32&gt;]
+ [-MajorVersionLimit &lt;Int32&gt;]
+ [-EnableAutoExpirationVersionTrim &lt;Boolean&gt;]
+ [-OneDriveLoopSharingCapability &lt;SharingCapabilities&gt;]
+ [-OneDriveLoopDefaultSharingLinkScope &lt;SharingScope&gt;]
+ [-OneDriveLoopDefaultSharingLinkRole &lt;Role&gt;]
+ [-CoreLoopSharingCapability &lt;SharingCapabilities&gt;]
+ [-CoreLoopDefaultSharingLinkScope &lt;SharingScope&gt;]
+ [-CoreLoopDefaultSharingLinkRole &lt;Role&gt;]
+ [-DisableVivaConnectionsAnalytics &lt;Boolean&gt;]
+ [-CoreDefaultLinkToExistingAccess &lt;Boolean&gt;]
+ [-HideSyncButtonOnTeamSite &lt;Boolean&gt;]
+ [-CoreBlockGuestsAsSiteAdmin &lt;SharingState&gt;]
+ [-IsWBFluidEnabled &lt;Boolean&gt;]
+ [-IsCollabMeetingNotesFluidEnabled &lt;Boolean&gt;]
+ [-AllowAnonymousMeetingParticipantsToAccessWhiteboards &lt;SharingState&gt;]
+ [-IBImplicitGroupBased &lt;Boolean&gt;]
+ [-ShowOpenInDesktopOptionForSyncedFiles &lt;Boolean&gt;]
+ [-ShowPeoplePickerGroupSuggestionsForIB &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -1263,6 +1285,314 @@ Accept wildcard characters: False
 <h3 id="-labelmismatchemailhelplink">-LabelMismatchEmailHelpLink</h3>
 <p>This parameter allows tenant admins to customize the &quot;Help Link&quot; in email with the subject &quot;Incompatible sensitivity label detected.&quot; When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coreloopsharingcapability">-CoreLoopSharingCapability</h3>
+<p>Gets or sets collaboration type for fluid on core partition</p>
+<p>The valid values are:</p>
+<ul>
+<li>Disabled</li>
+<li>ExternalUserSharingOnly</li>
+<li>ExternalUserAndGuestSharing</li>
+<li>ExistingExternalUserSharingOnly</li>
+</ul>
+<pre><code class="lang-yaml">Type: SharingCapabilities
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coreloopsharingcapability-1">-CoreLoopSharingCapability</h3>
+<p>Gets or sets collaboration type for fluid on core partition</p>
+<p>The valid values are:</p>
+<ul>
+<li>Disabled</li>
+<li>ExternalUserSharingOnly</li>
+<li>ExternalUserAndGuestSharing</li>
+<li>ExistingExternalUserSharingOnly</li>
+</ul>
+<pre><code class="lang-yaml">Type: SharingCapabilities
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedriveloopsharingcapability">-OneDriveLoopSharingCapability</h3>
+<p>When sharing a whiteboard in a Teams meeting, Whiteboard creates a sharing link that’s accessible by anyone within the organization and automatically shares the whiteboard with any in-tenant users in the meeting.</p>
+<p>There’s an additional capability for temporary collaboration by external and shared device accounts during a meeting. This allows these users to temporarily view and collaborate on whiteboards when they’re shared in a Teams meeting, similar to PowerPoint Live sharing.</p>
+<p>If you have the external sharing for OneDrive for Business allowed, no further action is required. If you have external sharing for OneDrive for Business disabled, you can leave it disabled but you must enable this new setting. The setting will not take effect until the SharingCapability 'ExternalUserAndGuestSharing' is also enabled at Tenant level. For more information, see <a href="https://support.microsoft.com/office/enable-microsoft-whiteboard-for-your-organization-1caaa2e2-5c18-4bdf-b878-2d98f1da4b24">Enable Microsoft Whiteboard for your organization</a>.</p>
+<p>The valid values are:</p>
+<ul>
+<li>Disabled</li>
+<li>ExternalUserSharingOnly</li>
+<li>ExternalUserAndGuestSharing</li>
+<li>ExistingExternalUserSharingOnly</li>
+</ul>
+<pre><code class="lang-yaml">Type: SharingCapabilities
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedriveloopdefaultsharinglinkscope">-OneDriveLoopDefaultSharingLinkScope</h3>
+<p>Gets or sets default share link scope for fluid on OneDrive sites.</p>
+<p>The valid values are:</p>
+<ul>
+<li>Anyone</li>
+<li>Organization</li>
+<li>SpecificPeople</li>
+<li>Uninitialized</li>
+</ul>
+<pre><code class="lang-yaml">Type: SharingScope
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coreloopdefaultsharinglinkscope">-CoreLoopDefaultSharingLinkScope</h3>
+<p>Gets or sets default share link scope for fluid on SharePoint sites.</p>
+<p>The valid values are:</p>
+<ul>
+<li>Anyone</li>
+<li>Organization</li>
+<li>SpecificPeople</li>
+<li>Uninitialized</li>
+</ul>
+<pre><code class="lang-yaml">Type: SharingScope
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coreloopdefaultsharinglinkrole">-CoreLoopDefaultSharingLinkRole</h3>
+<p>Gets or sets default share link role for fluid on SharePoint sites.</p>
+<p>The valid values are:</p>
+<ul>
+<li>Edit</li>
+<li>LimitedEdit</li>
+<li>LimitedView</li>
+<li>ManageList</li>
+<li>None</li>
+<li>Owner</li>
+<li>RestrictedView</li>
+<li>Review</li>
+<li>Submit</li>
+</ul>
+<pre><code class="lang-yaml">Type: Role
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-iswbfluidenabled">-IsWBFluidEnabled</h3>
+<p>Sets whether Whiteboard is enabled or disabled for OneDrive for Business users. Whiteboard on OneDrive for Business is automatically enabled for applicable Microsoft 365 tenants but can be disabled.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-iscollabmeetingnotesfluidenabled">-IsCollabMeetingNotesFluidEnabled</h3>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowanonymousmeetingparticipantstoaccesswhiteboards">-AllowAnonymousMeetingParticipantsToAccessWhiteboards</h3>
+<p>When you share a whiteboard in a Teams meeting, Whiteboard creates a sharing link. This link is accessible by anyone within the organization. The whiteboard is also shared with any in-tenant users in the meeting. Whiteboards are shared using company-shareable links, regardless of the default setting. Support for the default sharing link type is planned.</p>
+<p>There's more capability for temporary collaboration by external and shared device accounts during a Teams meeting. Users can temporarily view and collaborate on whiteboards that are shared in a meeting, in a similar way to PowerPoint Live sharing.</p>
+<p>In this case, Whiteboard provides temporary viewing and collaboration on the whiteboard during the Teams meeting only. A share link isn't created and Whiteboard doesn't grant access to the file.</p>
+<p>If you have external sharing enabled for OneDrive for Business, no further action is required.</p>
+<p>If you restrict external sharing for OneDrive for Business, you can keep it restricted, and just enable this new setting in order for external and shared device accounts to work. For more information, see <a href="https://learn.microsoft.com/en-us/microsoft-365/whiteboard/manage-sharing-organizations">Manage sharing for Microsoft Whiteboard</a>.</p>
+<pre><code class="lang-yaml">Type: SharingState
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-ibimplicitgroupbased">-IBImplicitGroupBased</h3>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-showopenindesktopoptionforsyncedfiles">-ShowOpenInDesktopOptionForSyncedFiles</h3>
+<p>The ShowOpenInDesktopOptionForSyncedFiles setting (set to false by default) displays the &quot;Open in desktop&quot; option when users go to SharePoint or OneDrive on the web and open the shortcut menu for a file that they're syncing with the OneDrive sync app.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-showpeoplepickergroupsuggestionsforib">-ShowPeoplePickerGroupSuggestionsForIB</h3>
+<p>The ShowPeoplePickerGroupSuggestionsForIB setting (defaulted to false) allows showing group suggestions for information barriers (IBs) in the People Picker.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coreblockguestsassiteadmin">-CoreBlockGuestsAsSiteAdmin</h3>
+<pre><code class="lang-yaml">Type: SharingState
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-hidesyncbuttononteamsite">-HideSyncButtonOnTeamSite</h3>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coredefaultlinktoexistingaccess">-CoreDefaultLinkToExistingAccess</h3>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disablevivaconnectionsanalytics">-DisableVivaConnectionsAnalytics</h3>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedriveloopdefaultsharinglinkrole">-OneDriveLoopDefaultSharingLinkRole</h3>
+<p>Gets or sets default share link role for fluid on OneDrive sites.</p>
+<p>The valid values are:</p>
+<ul>
+<li>Edit</li>
+<li>LimitedEdit</li>
+<li>LimitedView</li>
+<li>ManageList</li>
+<li>None</li>
+<li>Owner</li>
+<li>RestrictedView</li>
+<li>Review</li>
+<li>Submit</li>
+</ul>
+<pre><code class="lang-yaml">Type: Role
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-majorversionlimit">-MajorVersionLimit</h3>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-expireversionsafterdays">-ExpireVersionsAfterDays</h3>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enableautoexpirationversiontrim">-EnableAutoExpirationVersionTrim</h3>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-isenableappauthpopupenabled">-IsEnableAppAuthPopUpEnabled</h3>
+<p>Enables or disables users in the organization to authenticate SharePoint applications using popups.</p>
+<p>This parameter affects the way code in SharePoint interacts with Azure AD to get tokens to access APIs. In scenarios where third-party cookies are disabled (such as Safari browsers with ITP feature enabled), any code that requires a token to access an API automatically triggers a full page refresh. When IsEnableAppAuthPopUpEnabled is set to $true, SharePoint will instead surface a popup in this scenario.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disablelistsync">-DisableListSync</h3>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disabledocumentlibrarydefaultlabeling">-DisableDocumentLibraryDefaultLabeling</h3>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
