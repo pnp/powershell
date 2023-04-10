@@ -30,7 +30,7 @@ jobs:
           sudo unzip docfx-linux-x64-2.65.1.zip -d /usr/local/lib/docfx
           rm docfx-linux-x64-2.65.1.zip
           echo '#!/bin/sh' | sudo tee -a /usr/local/bin/docfx > /dev/null
-          echo 'exec `which mono` $MONO_OPTIONS /usr/local/lib/docfx/docfx.dll "$@"' | sudo tee -a /usr/local/bin/docfx > /dev/null
+          echo 'exec `which mono` $MONO_OPTIONS /usr/local/lib/docfx/docfx "$@"' | sudo tee -a /usr/local/bin/docfx > /dev/null
           sudo chmod +x /usr/local/bin/docfx
       - name: Build docs
         shell: pwsh
