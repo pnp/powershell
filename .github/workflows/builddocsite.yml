@@ -29,9 +29,9 @@ jobs:
           path: gh-pages
       - name : Install dependencies
         run: |
-          wget https://github.com/dotnet/docfx/releases/download/v2.51/docfx.zip
-          sudo unzip docfx.zip -d /usr/local/lib/docfx
-          rm docfx.zip
+          wget https://github.com/dotnet/docfx/releases/download/2.65.1/docfx-linux-x64-2.65.1.zip
+          sudo unzip docfx-linux-x64-2.65.1.zip -d /usr/local/lib/docfx
+          rm docfx-linux-x64-2.65.1.zip
           echo '#!/bin/sh' | sudo tee -a /usr/local/bin/docfx > /dev/null
           echo 'exec `which mono` $MONO_OPTIONS /usr/local/lib/docfx/docfx.exe "$@"' | sudo tee -a /usr/local/bin/docfx > /dev/null
           sudo chmod +x /usr/local/bin/docfx

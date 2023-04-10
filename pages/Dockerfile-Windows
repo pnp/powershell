@@ -2,5 +2,5 @@ FROM mcr.microsoft.com/windows/servercore:10.0.17763.2366-amd64
 
 SHELL ["powershell", "-command"]
 RUN $ProgressPreference = 'SilentlyContinue'; \
-    Invoke-WebRequest https://github.com/dotnet/docfx/releases/download/v2.51/docfx.zip -OutFile $env:TEMP\docfx.zip; \
+    Invoke-WebRequest https://github.com/dotnet/docfx/releases/download/2.65.1/docfx-win-x64-2.65.1.zip -OutFile $env:TEMP\docfx.zip; \
     Expand-Archive $env:TEMP\docfx.zip $env:TEMP\docfx;
