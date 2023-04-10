@@ -11,7 +11,7 @@ docker build . -f ./pages/Dockerfile-Linux -t pnp.powershell-pages-build
 ## Build Documentation
 
 ```bash
-docker run --rm -it -v $(pwd)/pages:/home pnp.powershell-pages-build /usr/bin/mono /usr/local/lib/docfx/docfx.exe build /home/docfx.json
+docker run --rm -it -v $(pwd)/pages:/home pnp.powershell-pages-build /usr/bin/mono /usr/local/lib/docfx/docfx.dll build /home/docfx.json
 ```
 
 ## Clean documentation
