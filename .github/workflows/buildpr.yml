@@ -17,23 +17,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout PnP.Framework
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: pnp/pnpframework
         path: pnpframework
         ref: 'dev'
     - name: Checkout PnP.Core
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: pnp/pnpcore
         path: pnpcore
         ref: 'dev'  
     - name: Checkout PnP.PowerShell
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         path: powershell
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
         dotnet-version: |
            6.0.x
