@@ -6,7 +6,7 @@ on:
   - cron: '0 2 * * *'
 jobs:
   documentation:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Wait for actions to finish
         uses: softprops/turnstyle@v1
@@ -27,15 +27,12 @@ jobs:
         with:
           ref: gh-pages
           path: gh-pages
-      - name: Setup .NET 6.0
+      - name: Setup .NET 7.0
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
+          dotnet-version: 7.x
       
-      - name: Setup DocFX
-        uses: crazy-max/ghaction-chocolatey@v2
-        with:
-          args: install docfx
+      - run: dotnet tool update -g docfx
       
       - name: Build docs
         shell: pwsh
