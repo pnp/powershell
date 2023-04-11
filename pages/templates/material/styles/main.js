@@ -197,8 +197,14 @@ $(function () {
         if (language === 'JS') {
             language = "JavaScript";
         }
-        if (language === 'powershell' || language === 'PowerShell') {
+        if (language === 'POWERSHELL') {
             language = "PowerShell"
+        }
+        if (language === 'BAT') {
+            language = "Bat"
+        }
+        if (language === 'BASH') {
+            language = "Bash"
         }
         if (language !== 'YAML') {
             var $codeHeader = $(
