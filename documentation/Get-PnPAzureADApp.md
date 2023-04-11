@@ -20,12 +20,12 @@ Returns Azure AD App registrations
 ## SYNTAX
 
 ### Filter
-```
+```powershell
 Get-PnPAzureADApp [-Identity <AzureADAppPipeBind>]
 ```
 
 ### Identity (Default)
-```
+```powershell
 Get-PnPAzureADApp -Filter <string>
 ```
 
