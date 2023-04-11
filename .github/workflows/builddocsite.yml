@@ -39,9 +39,7 @@ jobs:
         run: |
           ./dev/pages/Build-Site.ps1
       - name: Add & Commit & Push
-        uses: EndBug/add-and-commit@v6
+        uses: EndBug/add-and-commit@v9
         with:
-          cwd: ./gh-pages
-          branch: gh-pages
-          push: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          cwd: ./gh-pages          
+          push: true          
