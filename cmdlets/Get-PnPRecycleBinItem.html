@@ -92,19 +92,19 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all-default">All (Default)</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem [-RowLimit &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
- [&lt;CommonParameters&gt;]
+ 
 </code></pre>
 <h3 id="identity">Identity</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem [-Identity &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
- [&lt;CommonParameters&gt;]
+ 
 </code></pre>
 <h3 id="firststage">FirstStage</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem [-FirstStage] [-RowLimit &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
- [&lt;CommonParameters&gt;]
+ 
 </code></pre>
 <h3 id="secondstage">SecondStage</h3>
 <pre><code class="lang-powershell">Get-PnPRecycleBinItem [-SecondStage] [-RowLimit &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
- [&lt;CommonParameters&gt;]
+ 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This command will return all the items in the recycle bin for the SharePoint site you connected to with Connect-PnPOnline. You must connect as a Site Collection Owner or Administrator. The SharePoint Admin Role in the tenant alone will not work. If you are not a Site Collection Admin connect to the Tenant Admin URL with Connect-PnPOnline and use Get-PnPTenantRecycleBinItem.</p>

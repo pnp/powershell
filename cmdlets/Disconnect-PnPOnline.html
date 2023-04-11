@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Disconnects the current connection and clears its token cache.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Disconnect-PnPOnline [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Disconnect-PnPOnline 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Disconnects the current connection and clears its token cache. It will require you to build up a new connection again using <a href="Connect-PnPOnline.html">Connect-PnPOnline</a> in order to use any of the PnP PowerShell cmdlets. You will have to reauthenticate. If instead you simply want to connect to another site collection within the same tenant using the same credentials you used previously, do not use this cmdlet but instead use <code>Connect-PnPOnline -Url https://tenant.sharepoint.com/sites/othersite</code> instead without disconnecting. It will try to reuse the existing authentication method and cached credentials.</p>

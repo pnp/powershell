@@ -91,11 +91,11 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="single">Single</h3>
 <pre><code class="lang-powershell">Add-PnPListItem [-List] &lt;ListPipeBind&gt; [-ContentType &lt;ContentTypePipeBind&gt;] [-Values &lt;Hashtable&gt;]
- [-Folder &lt;String&gt;] [-Label &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Folder &lt;String&gt;] [-Label &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="batched">Batched</h3>
 <pre><code class="lang-powershell">Add-PnPListItem [-List] &lt;ListPipeBind&gt; -Batch &lt;PnPBatch&gt; [-ContentType &lt;ContentTypePipeBind&gt;] [-Values &lt;Hashtable&gt;]
- [-Folder &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Folder &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to add an item to the list and sets the creation time to the current date and time. The author is set to the current authenticated user executing the cmdlet. In order to set the author to a different user, please refer to Set-PnPListItem.</p>

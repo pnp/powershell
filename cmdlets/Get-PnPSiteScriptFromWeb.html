@@ -92,17 +92,17 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all-components">All components</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeAll] [-Connection &lt;PnPConnection&gt;]
-   [&lt;CommonParameters&gt;]
+   
 </code></pre>
 <h3 id="specific-components">Specific components</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb [-Url &lt;String&gt;] [-Lists &lt;String[]&gt;] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="all-lists">All lists</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromWeb [-Url &lt;String&gt;] [-IncludeAllLists] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This command allows a Site Script to be generated off of an existing site on your tenant. You need to provide at least one of the optional Include or Lists arguments. If you omit the URL, the Site Script will be created from the site to which you are connected.</p>

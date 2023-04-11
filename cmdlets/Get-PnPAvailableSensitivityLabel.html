@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Gets the Microsoft Purview sensitivity labels that are available within the tenant</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPAvailableSensitivityLabel [-Identity &lt;Guid&gt;] [-User &lt;AzureADUserPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPAvailableSensitivityLabel [-Identity &lt;Guid&gt;] [-User &lt;AzureADUserPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows retrieval of the available Microsoft Purview sensitivity labels in the currently connected tenant. You can retrieve all the labels, a specific label or all the labels available to a specific user. When connected with a delegate token, it will return the Microsoft Purview sensitivity labels for the user you logged on with. When connecting with an application token, it will return all available Microsoft Purview sensitivity labels on the tenant.</p>

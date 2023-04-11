@@ -88,10 +88,10 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="on">On</h3>
 <pre><code class="lang-powershell">Set-PnPTraceLog [-On] [-LogFile &lt;String&gt;] [-WriteToConsole] [-Level &lt;LogLevel&gt;] [-Delimiter &lt;String&gt;]
- [-IndentSize &lt;Int32&gt;] [-AutoFlush &lt;Boolean&gt;] [&lt;CommonParameters&gt;]
+ [-IndentSize &lt;Int32&gt;] [-AutoFlush &lt;Boolean&gt;] 
 </code></pre>
 <h3 id="off">Off</h3>
-<pre><code class="lang-powershell">Set-PnPTraceLog [-Off] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPTraceLog [-Off] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Defines if tracing should be turned on. PnP Core, which is the foundation of these cmdlets, uses the standard Trace functionality of .NET. With this cmdlet you can turn capturing of this trace to a log file on or off. Notice that basically only the Provisioning Engine writes to the trace log which means that cmdlets related to the engine will produce output.</p>

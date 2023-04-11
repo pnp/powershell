@@ -91,13 +91,13 @@
 <p>Retrieves users from Azure Active Directory. By default the following properties will be loaded: BusinessPhones, DisplayName, GivenName, JobTitle, Mail, MobilePhone, OfficeLocation, PreferredLanguage, Surname, UserPrincipalName, Id, AccountEnabled</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="return-a-list-default">Return a list (Default)</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-StartIndex &lt;Int32&gt;] [-EndIndex&lt;Int32&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-StartIndex &lt;Int32&gt;] [-EndIndex&lt;Int32&gt;] 
 </code></pre>
 <h3 id="return-by-specific-id">Return by specific ID</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADUser [-Identity &lt;String&gt;] [-Select &lt;String[]&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureADUser [-Identity &lt;String&gt;] [-Select &lt;String[]&gt;] 
 </code></pre>
 <h3 id="return-the-delta">Return the delta</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-Delta] [-DeltaToken &lt;String&gt;] [-StartIndex &lt;Int32&gt;] [-EndIndex&lt;Int32&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-Delta] [-DeltaToken &lt;String&gt;] [-StartIndex &lt;Int32&gt;] [-EndIndex&lt;Int32&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to retrieve single or list of users from Azure Active Directory.</p>

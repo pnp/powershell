@@ -89,7 +89,7 @@
 <pre><code class="lang-powershell">Publish-PnPCompanyApp -PortalUrl &lt;String&gt; -AppName &lt;String&gt; [-Description &lt;String&gt;] [-LongDescription &lt;String&gt;]
  [-PrivacyPolicyUrl &lt;String&gt;] [-TermsAndUsagePolicyUrl &lt;String&gt;] -CompanyName &lt;String&gt;
  -CompanyWebSiteUrl &lt;String&gt; -ColoredIconPath &lt;String&gt; -OutlineIconPath &lt;String&gt;
- [-Force] [-NoUpload] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Force] [-NoUpload] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet publishes a new company app (Microsoft Viva Connections) to Microsoft Teams. It will create a new package (zip file) in the current folder named after the CompanyApp value specified. E.g. if the name is 'Contoso Portal', the package will be called &quot;Contoso Portal.zip&quot;. This package will be uploaded to the Teams App Catalog. If you do not want to upload the package automatically, e.g. prepare a package ahead of time, specify '-NoUpload'.</p>

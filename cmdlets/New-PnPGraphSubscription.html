@@ -88,7 +88,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPGraphSubscription -ChangeType &lt;GraphSubscriptionChangeType&gt; -NotificationUrl &lt;String&gt; -Resource &lt;String&gt;
  [-ExpirationDateTime &lt;DateTime&gt;] [-ClientState &lt;String&gt;]
- [-LatestSupportedTlsVersion &lt;GraphSubscriptionTlsVersion&gt;]  [&lt;CommonParameters&gt;]
+ [-LatestSupportedTlsVersion &lt;GraphSubscriptionTlsVersion&gt;]  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Creates a new Microsoft Graph Subscription. The required Azure Active Directory application permission depends on the resource creating the subscription for, see <a href="https://learn.microsoft.com/graph/api/subscription-post-subscriptions#permissions">https://learn.microsoft.com/graph/api/subscription-post-subscriptions#permissions</a>. For a sample ASP.NET WebApi webhook implementation to receive the notifications from Microsoft Graph, see <a href="https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51">https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51</a>.</p>

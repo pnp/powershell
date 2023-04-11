@@ -91,15 +91,15 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="file">File</h3>
 <pre><code class="lang-powershell">Request-PnPSyntexClassifyAndExtract -FileUrl &lt;string&gt; [-Batch &lt;PnPBatch&gt;]  [-Connection &lt;PnPConnection&gt;] 
-[&lt;CommonParameters&gt;]
+
 </code></pre>
 <h3 id="folder">Folder</h3>
 <pre><code class="lang-powershell">Request-PnPSyntexClassifyAndExtract -Folder &lt;FolderPipeBind&gt; [-Connection &lt;PnPConnection&gt;] 
-[&lt;CommonParameters&gt;]
+
 </code></pre>
 <h3 id="list">List</h3>
 <pre><code class="lang-powershell">Request-PnPSyntexClassifyAndExtract -List &lt;ListPipeBind&gt; [-OffPeak &lt;SwitchParameter&gt;] [-Force &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;] 
-[&lt;CommonParameters&gt;]
+
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This command requests for all files in a library, folder or individual files to be classified and extracted via the published Syntex models on the libraries hosting the files. When using with the <code>OffPeak</code> switch then the files are send to the off peak Syntex document processing queue, this way there's no need to enumerate all files in the library and submit them to the regular queue. When using the <code>Force</code> switch without setting OffPeak then all files are enumerated and sent to the regular queue, regardless of whether they were processed in the past.</p>

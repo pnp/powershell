@@ -88,11 +88,11 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="group">Group</h3>
 <pre><code class="lang-powershell">Set-PnPListPermission -Identity &lt;ListPipeBind&gt; -Group &lt;GroupPipeBind&gt; [-AddRole &lt;String&gt;]
- [-RemoveRole &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-RemoveRole &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="user">User</h3>
 <pre><code class="lang-powershell">Set-PnPListPermission -Identity &lt;ListPipeBind&gt; -User &lt;String&gt; [-AddRole &lt;String&gt;] [-RemoveRole &lt;String&gt;]
- [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+ [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows changing permissions on a SharePoint list. In case you would like to break the permission inheritance on a list from its parent, you can use <a href="Set-PnPList.html#-breakroleinheritance">Set-PnPList -BreakRoleInheritance</a>.</p>

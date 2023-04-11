@@ -92,7 +92,7 @@
 <p>Enables or disables the SharePoint News Digest mails for a particular user. Note that the disabling option is still experimental and may not work and may be removed again in the future.</p>
 <p>Note: The implementation behind this in SharePoint Online has changed causing this cmdlet to no longer work. Unfortunately there's no alternative way to call into this functionality from PnP PowerShell. We therefore have to remove this cmdlet in a future version. At present it does not work anymore.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPSubscribeSharePointNewsDigest -Account &lt;String&gt; -Enabled &lt;Boolean&gt; [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
+<pre><code class="lang-powershell">Set-PnPSubscribeSharePointNewsDigest -Account &lt;String&gt; -Enabled &lt;Boolean&gt; [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Requires a connection to a SharePoint Tenant Admin site.</p>
