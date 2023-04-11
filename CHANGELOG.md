@@ -17,7 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - Fixed issue with `Grant-PnPAzureADAppSitePermission` cmdlet where users are not able to set selected site in the `Sites.Selected` permission. [#2983](https://github.com/pnp/powershell/pull/2983)
-- Fixed issue with `Get-PnPList` cmdlet not working with site-relative URL as identity.
+- Fixed issue with `Get-PnPList` cmdlet not working with site-relative URL as identity. [#3005](https://github.com/pnp/powershell/pull/3005)
 
 ### Contributors
 
