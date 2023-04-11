@@ -16,7 +16,7 @@ Adds a credential to the Windows Credential Manager or Mac OS Key Chain Entry.
 
 ```powershell
 Add-PnPStoredCredential -Name <String> -Username <String> [-Password <SecureString>] [-Overwrite]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

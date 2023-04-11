@@ -16,31 +16,31 @@ Returns a specific SharePoint group or all SharePoint groups in the current site
 
 ### All (Default)
 ```powershell
-Get-PnPGroup [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+Get-PnPGroup [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ### ByName
 ```powershell
 Get-PnPGroup [[-Identity] <GroupPipeBind>] [-Connection <PnPConnection>]
- [-Includes <String[]>] [<CommonParameters>]
+ [-Includes <String[]>] 
 ```
 
 ### Members
 ```powershell
 Get-PnPGroup [-AssociatedMemberGroup] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ### Visitors
 ```powershell
 Get-PnPGroup [-AssociatedVisitorGroup] [-Connection <PnPConnection>]
- [-Includes <String[]>] [<CommonParameters>]
+ [-Includes <String[]>] 
 ```
 
 ### Owners
 ```powershell
 Get-PnPGroup [-AssociatedOwnerGroup] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

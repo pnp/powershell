@@ -22,13 +22,13 @@ Submit up a new user profile bulk import job.
 ```powershell
 New-PnPUPABulkImportJob [-Folder] <String> [-Path] <String> [-UserProfilePropertyMapping] <Hashtable>
  [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Wait] [-Verbose] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ```powershell
 New-PnPUPABulkImportJob -Url <String> [-UserProfilePropertyMapping] <Hashtable>
  [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Wait] [-Verbose] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

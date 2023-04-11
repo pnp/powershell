@@ -15,7 +15,7 @@ Creates the site collection term store if it doesn't exist yet or if it does it 
 ## SYNTAX
 
 ```powershell
-New-PnPSiteCollectionTermStore [-Connection <PnPConnection>] [<CommonParameters>]
+New-PnPSiteCollectionTermStore [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

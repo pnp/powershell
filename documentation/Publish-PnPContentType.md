@@ -20,7 +20,7 @@ Publishes or republishes a content type present on content type hub site.
 ## SYNTAX
 
 ```powershell
-Publish-PnPContentType -ContentType <ContentTypePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
+Publish-PnPContentType -ContentType <ContentTypePipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

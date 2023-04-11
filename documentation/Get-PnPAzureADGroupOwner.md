@@ -20,7 +20,7 @@ Gets owners of a particular Azure Active Directory group. This can be a security
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [<CommonParameters>]
+Get-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> 
 ```
 
 ## DESCRIPTION

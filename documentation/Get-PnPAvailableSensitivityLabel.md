@@ -15,7 +15,7 @@ Gets the Microsoft Purview sensitivity labels that are available within the tena
 ## SYNTAX
 
 ```powershell
-Get-PnPAvailableSensitivityLabel [-Identity <Guid>] [-User <AzureADUserPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPAvailableSensitivityLabel [-Identity <Guid>] [-User <AzureADUserPipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

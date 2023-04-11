@@ -15,7 +15,7 @@ Updates an existing Role Definition (Permission Level) in the site collection in
 ## SYNTAX
 
 ```powershell
-Set-PnPRoleDefinition -Identity <RoleDefinitionPipeBind> [-NewRoleName <String>] [-Description <String>] [-Order <Int32>] [-SelectAll] [-ClearAll] [-Select <PermissionKind[]>] [-Clear <PermissionKind[]>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPRoleDefinition -Identity <RoleDefinitionPipeBind> [-NewRoleName <String>] [-Description <String>] [-Order <Int32>] [-SelectAll] [-ClearAll] [-Select <PermissionKind[]>] [-Clear <PermissionKind[]>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

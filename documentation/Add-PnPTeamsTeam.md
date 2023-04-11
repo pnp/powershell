@@ -15,7 +15,7 @@ Adds a Teams team to an existing, group connected, site collection
 ## SYNTAX
 
 ```powershell
-Add-PnPTeamsTeam [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPTeamsTeam [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -16,7 +16,7 @@ Configures the footer of the current web
 
 ```powershell
 Set-PnPFooter [-Enabled] [-Layout <FooterLayoutType>] [-BackgroundTheme <FooterVariantThemeType>]
- [-Title <String>] [-LogoUrl <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Title <String>] [-LogoUrl <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

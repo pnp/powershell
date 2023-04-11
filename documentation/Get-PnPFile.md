@@ -17,24 +17,24 @@ Downloads a file
 ### Return as file object (Default)
 ```powershell
 Get-PnPFile [-Url] <String> -AsFileObject [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Return as list item
 ```powershell
 Get-PnPFile [-Url] <String> -AsListItem [-ThrowExceptionIfFileNotFound] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Save to local path
 ```powershell
 Get-PnPFile [-Url] <String> -AsFile [-Path <String>] [-Filename <String>] [-Force] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Return as string
 ```powershell
-Get-PnPFile [-Url] <String> -AsString [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPFile [-Url] <String> -AsString [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

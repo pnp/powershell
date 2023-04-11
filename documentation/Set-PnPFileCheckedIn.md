@@ -16,7 +16,7 @@ Checks in a file.
 
 ```powershell
 Set-PnPFileCheckedIn [-Url] <String> [-CheckInType <CheckInType>] [-Comment <String>] [-Approve]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

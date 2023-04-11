@@ -20,7 +20,7 @@ Sets the picture of an existing team.
 ## SYNTAX
 
 ```powershell
-Set-PnPTeamsTeamPicture -Team <TeamsTeamPipeBind> -Path <String>  [<CommonParameters>]
+Set-PnPTeamsTeamPicture -Team <TeamsTeamPipeBind> -Path <String>  
 ```
 
 ## DESCRIPTION

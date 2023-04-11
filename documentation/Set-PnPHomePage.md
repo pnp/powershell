@@ -16,7 +16,7 @@ Sets the home page of the current web.
 
 ```powershell
 Set-PnPHomePage [-RootFolderRelativeUrl] <String> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

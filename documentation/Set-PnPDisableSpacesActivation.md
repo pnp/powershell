@@ -15,7 +15,7 @@ Sets if SharePoint Spaces should be disabled.
 ## SYNTAX
 
 ```powershell
-Set-PnPDisableSpacesActivation -Disable <SwitchParameter> [-Scope <String>] [-Identity <SitePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPDisableSpacesActivation -Disable <SwitchParameter> [-Scope <String>] [-Identity <SitePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

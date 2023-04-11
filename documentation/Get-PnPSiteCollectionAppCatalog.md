@@ -15,7 +15,7 @@ Returns all site collection scoped app catalogs that exist on the tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteCollectionAppCatalog [-CurrentSite <SwitchParameter>] [-ExcludeDeletedSites <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose] [<CommonParameters>]
+Get-PnPSiteCollectionAppCatalog [-CurrentSite <SwitchParameter>] [-ExcludeDeletedSites <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose] 
 ```
 
 ## DESCRIPTION

@@ -21,20 +21,20 @@ Use Get-PnPGroup to retrieve all groups available that you can add or remove usi
 ```powershell
 Set-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind> -User <String>
  [-AddRole <String>] [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Group
 ```powershell
 Set-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind> -Group <GroupPipeBind>
  [-AddRole <String>] [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Inherit
 ```powershell
 Set-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-InheritPermissions]
- [-SystemUpdate] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-SystemUpdate] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

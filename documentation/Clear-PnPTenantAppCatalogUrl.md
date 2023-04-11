@@ -20,7 +20,7 @@ Removes the url of the tenant scoped app catalog. It will not delete the site co
 ## SYNTAX
 
 ```powershell
-Clear-PnPTenantAppCatalogUrl [-Connection <PnPConnection>]   [<CommonParameters>]
+Clear-PnPTenantAppCatalogUrl [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION

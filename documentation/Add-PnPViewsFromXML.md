@@ -16,7 +16,7 @@ Adds one or more views to a list from an XML string.
 
 ```powershell
 Add-PnPViewsFromXML [-List] <ListPipeBind> [-ViewsXML <String>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

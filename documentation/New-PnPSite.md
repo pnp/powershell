@@ -17,7 +17,7 @@ Creates a communication site, Microsoft 365 group-connected team site or Modern 
 ### TeamSite
 ```powershell
 New-PnPSite -Type TeamSite -Title <String> -Alias <String> [-Description <String>] [-Classification <String>] [-IsPublic] [-Lcid <UInt>] [-Owners <String[]>] [-PreferredDataLocation <Office365Geography>] [-SensitivityLabel <String>] [-HubSiteId <Guid>] [-SiteAlias <String>] [-TimeZone <PnP.Framework.Enums.TimeZone>] [-Wait] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### CommunicationSite

@@ -17,13 +17,13 @@ Adds a user to a SharePoint group
 ### Internal
 ```powershell
 Add-PnPGroupMember -LoginName <String> -Group <GroupPipeBind> 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### External
 ```powershell
 Add-PnPGroupMember -Group <GroupPipeBind> -EmailAddress <String> [-SendEmail] [-EmailBody <String>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

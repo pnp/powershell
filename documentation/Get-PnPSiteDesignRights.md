@@ -21,7 +21,7 @@ Returns the principals with design rights on a specific Site Design
 
 ```powershell
 Get-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> [-Connection <PnPConnection>] 
-  [<CommonParameters>]
+  
 ```
 
 ## DESCRIPTION

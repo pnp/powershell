@@ -25,14 +25,14 @@ This cmdlet only works when you've connected to a Syntex Content Center site.
 
 ```powershell
 Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -ListWebUrl <string> -List <ListPipeBind> [-PublicationViewOption <MachineLearningPublicationViewOption>]  [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Batched
 
 ```powershell
 Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -TargetWebServerRelativeUrl <string> -TargetLibraryServerRelativeUrl <string> -Batch <PnPBatch>  [-PublicationViewOption <MachineLearningPublicationViewOption>]  [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

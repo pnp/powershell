@@ -16,7 +16,7 @@ Returns a previously not loaded property of a ClientObject
 
 ```powershell
 Get-PnPProperty [-ClientObject] <ClientObject> [-Property] <String[]> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

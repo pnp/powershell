@@ -20,7 +20,7 @@ Creates a temporary access pass to authenticate with for a certain user
 ## SYNTAX
 
 ```powershell
-New-PnPAzureADUserTemporaryAccessPass -DisplayName <String> -Description <String> -MailNickname <String> [-Owners <String[]>] [-Members <String[]>] [-IsSecurityEnabled <SwitchParameter>] [-IsMailEnabled <SwitchParameter>] [-Force] [<CommonParameters>]
+New-PnPAzureADUserTemporaryAccessPass -DisplayName <String> -Description <String> -MailNickname <String> [-Owners <String[]>] [-Members <String[]>] [-IsSecurityEnabled <SwitchParameter>] [-IsMailEnabled <SwitchParameter>] [-Force] 
 ```
 
 ## DESCRIPTION

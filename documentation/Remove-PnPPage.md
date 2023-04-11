@@ -16,7 +16,7 @@ Removes a page
 
 ```powershell
 Remove-PnPPage [-Identity] <PagePipeBind> [-Force] [-Recycle]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
