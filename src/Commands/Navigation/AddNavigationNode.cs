@@ -7,8 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-
-    [Cmdlet(VerbsCommon.Add, "PnPNavigationNode")]
+    [Cmdlet(VerbsCommon.Add, "PnPNavigationNode", DefaultParameterSetName = ParameterSet_Default)]
     [OutputType(typeof(NavigationNode))]
     public class AddNavigationNode : PnPWebCmdlet
     {
@@ -122,7 +121,7 @@ namespace PnP.PowerShell.Commands.Branding
             }
             else
             {
-                throw new Exception("Navigation Node Collection is null");
+                throw new Exception("Unable to define Navigation Node collection to add the node to");
             }            
         }
     }
