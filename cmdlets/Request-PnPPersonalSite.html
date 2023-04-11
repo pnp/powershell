@@ -1,15 +1,15 @@
 ﻿<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html lang="en">
-  
+
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title>Request-PnPPersonalSite | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
     <meta name="title" content="Request-PnPPersonalSite | PnP PowerShell ">
-    <meta name="generator" content="docfx 2.51.0.0">
-    <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
     <link rel="stylesheet" href="../styles/docfx.vendor.css">
     <link rel="stylesheet" href="../styles/docfx.css">
@@ -17,13 +17,13 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
     <meta property="docfx:navrel" content="../toc.html">
     <meta property="docfx:tocrel" content="toc.html">
-    
-    <meta property="docfx:rel" content="../">
-    <meta property="docfx:newtab" content="true">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
   </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
     <div id="wrapper">
       <header>
-        
+
         <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
           <div class="container">
             <div class="navbar-header">
@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              
+
               <a class="navbar-brand" href="../index.html">
                 <img id="logo" class="svg" src="../images/logo.svg" alt="">
               </a>
@@ -47,7 +47,7 @@
               </form>
             </div>
           </div>
-        </nav>        
+        </nav>
         <div class="subnav navbar navbar-default">
           <div class="container hide-when-search" id="breadcrumb">
             <ul class="breadcrumb">
@@ -57,17 +57,17 @@
         </div>
       </header>
       <div class="container body-content">
-        
+
         <div id="search-results">
-          <div class="search-list"></div>
+          <div class="search-list">Search Results for <span></span></div>
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination"></ul>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
-        
+
         <div class="sidenav hide-when-search">
           <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
           <div class="sidetoggle collapse" id="sidetoggle">
@@ -81,7 +81,7 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-                    <h1 id="request-pnppersonalsite">Request-PnPPersonalSite</h1>
+  <h1 id="request-pnppersonalsite">Request-PnPPersonalSite</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Requests that one or more users be enqueued for a OneDrive for Business site to be created for them.</p>
@@ -92,7 +92,7 @@
 <p>The Request-PnPPersonalSite cmdlet requests that the users specified be enqueued so that a Personal Site be created for each. The actual OneDrive for Business site is created by a Timer Job later.</p>
 <div class="NOTE">
 <h5>Note</h5>
-<p>• You must specify a string array of user logins that contains one or more valid user email (logins) and cannot contain any empty fields. The command will stop if it encounters any empty strings in the array. A maximum of 200 users can be specified. <br><br>• The actor executing this cmdlet must be at least assigned the SharePoint Online administrator role and have been assigned a SharePoint Online license to be able to provision the OneDrive for Business sites. The users who the sites will be provisioned for must also have a SharePoint license assigned. <br><br>•  This cmdlet is NOT OneDrive Multi-Geo aware. If you need to request Personal Sites for Multi-Geo enabled tenants, you must run this cmdlet for users in the region their data is to be hosted in. To retrieve users with a specific PDL, use the following sample: <code>Get-MSOLUser | Where {$_.PreferredDataLocation -eq &quot;EUR&quot;}</code><br><br>•  If you want to use this cmdlet in an automated script not requiring manual authentication, you <em>must</em> assign the following permission to your application registration from either Azure Active Directory or done through <a href="https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx">https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx</a> with the following permission through <a href="https://tenant-admin.sharepoint.com/_layouts/appinv.aspx">https://tenant-admin.sharepoint.com/_layouts/appinv.aspx</a>:<br><br> <code>&lt;AppPermissionRequests AllowAppOnlyPolicy=&quot;true&quot;&gt; &lt;AppPermissionRequest Scope=&quot;http://sharepoint/social/tenant&quot; Right=&quot;FullControl&quot; /&gt; &lt;/AppPermissionRequests&gt;</code><br><br>You then <em>must</em> connect using<br> <code>Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -ClientId &lt;clientid&gt; -ClientSecret &lt;clientsecret&gt;</code><br>Authenticating using a certificate is <em>not</em> possible and will throw an unauthorized exception. It does not require assigning any permissions in Azure Active Directory.<br><br>If you want to run this cmdlet using an interactive login, you <em>must</em> connect using:<br><code>Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -UseWebLogin</code></p>
+<p>• You must specify a string array of user logins that contains one or more valid user email (logins) and cannot contain any empty fields. The command will stop if it encounters any empty strings in the array. A maximum of 200 users can be specified. <br><br>• The actor executing this cmdlet must be at least assigned the SharePoint Online administrator role and have been assigned a SharePoint Online license to be able to provision the OneDrive for Business sites. The users who the sites will be provisioned for must also have a SharePoint license assigned. <br><br>•  This cmdlet is NOT OneDrive Multi-Geo aware. If you need to request Personal Sites for Multi-Geo enabled tenants, you must run this cmdlet for users in the region their data is to be hosted in. To retrieve users with a specific PDL, use the following sample: <code>Get-MSOLUser | Where {$_.PreferredDataLocation -eq &quot;EUR&quot;}</code><br><br>•  If you want to use this cmdlet in an automated script not requiring manual authentication, you <em>must</em> assign the following permission to your application registration from either Azure Active Directory or done through <a href="https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx">https://tenant-admin.sharepoint.com/_layouts/appregnew.aspx</a> with the following permission through <a href="https://tenant-admin.sharepoint.com/_layouts/appinv.aspx">https://tenant-admin.sharepoint.com/_layouts/appinv.aspx</a>:<br><br> <code> &lt;AppPermissionRequests AllowAppOnlyPolicy=&quot;true&quot;&gt; &lt;AppPermissionRequest Scope=&quot;http://sharepoint/social/tenant&quot; Right=&quot;FullControl&quot; /&gt; &lt;/AppPermissionRequests&gt;</code><br><br>You then <em>must</em> connect using<br> <code>Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -ClientId &lt;clientid&gt; -ClientSecret &lt;clientsecret&gt;</code><br>Authenticating using a certificate is <em>not</em> possible and will throw an unauthorized exception. It does not require assigning any permissions in Azure Active Directory.<br><br>If you want to run this cmdlet using an interactive login, you <em>must</em> connect using:<br><code>Connect-PnPOnline -Url https://tenant-admin.sharepoint.com -UseWebLogin</code></p>
 </div>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
@@ -167,7 +167,7 @@ Accept wildcard characters: False
             </div>
           </div>        </div>
       </div>
-      
+
       <footer>
         <div class="grad-bottom"></div>
         <div class="footer">
@@ -175,14 +175,14 @@ Accept wildcard characters: False
             <span class="pull-right">
               <a href="#top">Back to top</a>
             </span>
-            
-            <span>Generated by <strong>DocFX</strong></span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
             <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
           </div>
         </div>
       </footer>
     </div>
-    
+
     <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
     <script type="text/javascript" src="../styles/main.js"></script>
