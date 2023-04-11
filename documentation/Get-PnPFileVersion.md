@@ -15,7 +15,7 @@ Retrieves the previous versions of a file. Does not retrieve the current version
 ## SYNTAX
 
 ```powershell
-Get-PnPFileVersion -Url <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPFileVersion -Url <String> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

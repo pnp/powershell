@@ -20,7 +20,7 @@ Adds users to a Microsoft 365 Group as Owners.
 ## SYNTAX
 
 ```powershell
-Add-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
+Add-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting] 
 ```
 
 ## DESCRIPTION

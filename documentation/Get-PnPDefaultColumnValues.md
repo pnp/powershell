@@ -16,7 +16,7 @@ Gets the default column values for all folders in document library
 
 ```powershell
 Get-PnPDefaultColumnValues [-List] <ListPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

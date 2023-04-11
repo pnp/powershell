@@ -16,7 +16,7 @@ Returns the available apps from the app catalog
 
 ```powershell
 Get-PnPApp [[-Identity] <AppMetadataPipeBind>] [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

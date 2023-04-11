@@ -17,7 +17,7 @@ Retrieves the current configuration regarding the "Change the look" Header of th
 ```powershell
 Get-PnPWebHeader [-SiteLogoUrl <string>] [-HeaderLayout <HeaderLayoutType>] [-HeaderEmphasis <SPVariantThemeType>] [-HideTitleInHeader]
 [-HeaderBackgroundImageUrl <string>] [-HeaderBackgroundImageFocalX <double>] [-HeaderBackgroundImageFocalY <double>] [-LogoAlignment <LogoAlignment>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

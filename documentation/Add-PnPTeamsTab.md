@@ -21,7 +21,7 @@ Adds a tab to an existing Channel. Note that the `-ContentUrl` is a 'dynamic' pa
 
 ```powershell
 Add-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -DisplayName <String>
- -Type <TeamTabType> -ContentUrl <String> [<CommonParameters>]
+ -Type <TeamTabType> -ContentUrl <String> 
 ```
 
 ## DESCRIPTION

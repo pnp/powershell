@@ -16,7 +16,7 @@ Removes an existing image rendition
 
 ```powershell
 Remove-PnPPublishingImageRendition [-Identity] <ImageRenditionPipeBind> [-Force] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

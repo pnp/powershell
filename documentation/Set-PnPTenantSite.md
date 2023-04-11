@@ -34,13 +34,13 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-DisableFlows <FlowsPolicy>] [-AnonymousLinkExpirationInDays <Int32>] [-SensitivityLabel <String>] [-RemoveLabel] [-AddInformationSegment <Guid[]>] [-RemoveInformationSegment <Guid[]>]
  [-OverrideTenantAnonymousLinkExpirationPolicy] [-InformationBarriersMode <InformationBarriersMode>] 
  [-MediaTranscription <MediaTranscriptionPolicyType>] [-Wait] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Set Lock State
 ```powershell
 Set-PnPTenantSite [-Identity] <String> [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

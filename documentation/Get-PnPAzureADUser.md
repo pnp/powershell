@@ -21,17 +21,17 @@ Retrieves users from Azure Active Directory. By default the following properties
 
 ### Return a list (Default)
 ```powershell
-Get-PnPAzureADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-StartIndex <Int32>] [-EndIndex<Int32>] [<CommonParameters>]
+Get-PnPAzureADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-StartIndex <Int32>] [-EndIndex<Int32>] 
 ```
 
 ### Return by specific ID
 ```powershell
-Get-PnPAzureADUser [-Identity <String>] [-Select <String[]>] [<CommonParameters>]
+Get-PnPAzureADUser [-Identity <String>] [-Select <String[]>] 
 ```
 
 ### Return the delta
 ```powershell
-Get-PnPAzureADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [-StartIndex <Int32>] [-EndIndex<Int32>] [<CommonParameters>]
+Get-PnPAzureADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [-StartIndex <Int32>] [-EndIndex<Int32>] 
 ```
 
 ## DESCRIPTION

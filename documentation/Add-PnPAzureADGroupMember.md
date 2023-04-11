@@ -20,7 +20,7 @@ Adds members to a particular Azure Active Directory Group. This can be a securit
 ## SYNTAX
 
 ```powershell
-Add-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
+Add-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] 
 ```
 
 ## DESCRIPTION

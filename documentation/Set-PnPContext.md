@@ -15,7 +15,7 @@ Set the ClientContext
 ## SYNTAX
 
 ```powershell
-Set-PnPContext -Context <ClientContext> [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPContext -Context <ClientContext> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

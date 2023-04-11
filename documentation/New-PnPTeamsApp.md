@@ -20,7 +20,7 @@ Adds an app to the Teams App Catalog.
 ## SYNTAX
 
 ```powershell
-New-PnPTeamsApp -Path <String>  [<CommonParameters>]
+New-PnPTeamsApp -Path <String>  
 ```
 
 ## DESCRIPTION

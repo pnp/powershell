@@ -20,7 +20,7 @@ Removes all current owners from a particular Azure Active Directory group. This 
 ## SYNTAX
 
 ```powershell
-Clear-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [<CommonParameters>]
+Clear-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> 
 ```
 
 ## DESCRIPTION

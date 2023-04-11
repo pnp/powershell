@@ -20,7 +20,7 @@ Creates a new Planner plan.
 ## SYNTAX
 
 ```powershell
-New-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Title <String>  [<CommonParameters>]
+New-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Title <String>  
 ```
 
 ## DESCRIPTION

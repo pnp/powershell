@@ -21,7 +21,7 @@ Gets the channels for a specified Team.
 
 ```powershell
 Get-PnPTeamsChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPipeBind>] 
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

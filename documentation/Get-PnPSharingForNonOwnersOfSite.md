@@ -15,7 +15,7 @@ Returns $false if sharing of the site and items in the site is restricted only t
 ## SYNTAX
 
 ```powershell
-Get-PnPSharingForNonOwnersOfSite [-Identity <SitePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPSharingForNonOwnersOfSite [-Identity <SitePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

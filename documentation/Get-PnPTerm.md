@@ -19,7 +19,7 @@ Returns a Term Store Term.
 Get-PnPTerm
     -Identity <Guid>
     [-TermStore <Guid>]
-    [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+    [-IncludeChildTerms] [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ### By Term Name
@@ -30,7 +30,7 @@ Get-PnPTerm
     -TermGroup <Guid|Name>
     [-TermStore <Guid>]
     [-Recursive] 
-    [-IncludeChildTerms][-IncludeDeprecated] [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+    [-IncludeChildTerms][-IncludeDeprecated] [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

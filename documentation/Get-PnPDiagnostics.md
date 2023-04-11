@@ -15,7 +15,7 @@ Returns diagnostic information
 ## SYNTAX
 
 ```powershell
-Get-PnPDiagnostics [<CommonParameters>]
+Get-PnPDiagnostics 
 ```
 
 ## DESCRIPTION

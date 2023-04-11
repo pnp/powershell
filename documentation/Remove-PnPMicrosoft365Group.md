@@ -20,7 +20,7 @@ Removes one Microsoft 365 Group
 ## SYNTAX
 
 ```powershell
-Remove-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind>  [<CommonParameters>]
+Remove-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind>  
 ```
 
 ## DESCRIPTION

@@ -21,7 +21,7 @@ Removes a channel from a Microsoft Teams instance.
 
 ```powershell
 Remove-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-Force]
-  [<CommonParameters>]
+  
 ```
 
 ## DESCRIPTION

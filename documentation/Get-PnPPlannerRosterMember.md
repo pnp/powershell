@@ -20,7 +20,7 @@ Returns the current members of a Microsoft Planner Roster
 ## SYNTAX
 
 ```powershell
-Get-PnPPlannerRosterMember -Identity <string> [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPPlannerRosterMember -Identity <string> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

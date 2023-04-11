@@ -20,7 +20,7 @@ Retrieve List Designs that have been registered on the current tenant.
 ## SYNTAX
 
 ```powershell
-Get-PnPListDesign [[-Identity] <TenantListDesignPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPListDesign [[-Identity] <TenantListDesignPipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -20,7 +20,7 @@ Sets the Knowledge Hub Site for your tenant
 ## SYNTAX
 
 ```powershell
-Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPKnowledgeHubSite -KnowledgeHubSiteUrl <String> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

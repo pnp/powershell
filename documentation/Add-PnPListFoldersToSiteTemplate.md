@@ -17,7 +17,7 @@ Adds folders to a list in a PnP Provisioning Template
 ```powershell
 Add-PnPListFoldersToSiteTemplate [-Path] <String> [-List] <ListPipeBind> [-Recursive]
  [-IncludeSecurity] [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

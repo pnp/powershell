@@ -16,7 +16,7 @@ Updates record declaration settings of a list.
 
 ```powershell
 Set-PnPListRecordDeclaration -List <ListPipeBind> [-ManualRecordDeclaration <EcmListManualRecordDeclaration>]
- [-AutoRecordDeclaration <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-AutoRecordDeclaration <Boolean>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

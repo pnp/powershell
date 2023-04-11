@@ -22,13 +22,13 @@ Updates available classic Site Classifications for the tenant
 ### Settings
 ```powershell
 Update-PnPAvailableSiteClassification -Settings <SiteClassificationsSettings> 
- [<CommonParameters>]
+ 
 ```
 
 ### Specific
 ```powershell
 Update-PnPAvailableSiteClassification [-Classifications <System.Collections.Generic.List`1[System.String]>]
- [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>]  [<CommonParameters>]
+ [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>]  
 ```
 
 ## DESCRIPTION

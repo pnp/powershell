@@ -20,7 +20,7 @@ Allows placing a classic site classification on the current site.
 ## SYNTAX
 
 ```powershell
-Set-PnPSiteClassification -Identity <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPSiteClassification -Identity <String> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

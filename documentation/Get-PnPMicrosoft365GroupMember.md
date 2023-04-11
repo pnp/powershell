@@ -21,7 +21,7 @@ Returns the members of a particular Microsoft 365 Group
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> [-UserType <String>] [<CommonParameters>]
+Get-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> [-UserType <String>] 
 ```
 
 ## DESCRIPTION

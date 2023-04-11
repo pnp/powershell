@@ -20,7 +20,7 @@ Updates the role of a user in an existing Microsoft Teams private channel.
 ## SYNTAX
 
 ```powershell
-Set-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Identity <TeamsChannelMemberPipeBind> -Role <String> [<CommonParameters>]
+Set-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Identity <TeamsChannelMemberPipeBind> -Role <String> 
 ```
 
 ## DESCRIPTION

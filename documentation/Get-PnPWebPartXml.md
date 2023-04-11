@@ -16,7 +16,7 @@ Returns the web part XML of a web part registered on a site
 
 ```powershell
 Get-PnPWebPartXml -ServerRelativePageUrl <String> -Identity <WebPartPipeBind> 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

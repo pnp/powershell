@@ -15,7 +15,7 @@ Returns if the place records management feature is enabled.
 ## SYNTAX
 
 ```powershell
-Get-PnPInPlaceRecordsManagement [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPInPlaceRecordsManagement [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

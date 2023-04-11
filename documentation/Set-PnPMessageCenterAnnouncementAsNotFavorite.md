@@ -20,7 +20,7 @@ Marks one or multiple message center announcements of the Office 365 Services as
 ## SYNTAX
 
 ```powershell
-Set-PnPMessageCenterAnnouncementAsNotFavorite [-Identity <Ids>] [<CommonParameters>]
+Set-PnPMessageCenterAnnouncementAsNotFavorite [-Identity <Ids>] 
 ```
 
 ## DESCRIPTION

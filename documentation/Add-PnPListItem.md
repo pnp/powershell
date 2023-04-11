@@ -23,14 +23,14 @@ Adds an item to the list and sets the creation time to the current date and time
 
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
- [-Folder <String>] [-Label <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Folder <String>] [-Label <String>] [-Connection <PnPConnection>] 
 ```
 
 ### Batched
 
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
- [-Folder <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Folder <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
