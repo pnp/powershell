@@ -14,8 +14,16 @@ Adds an item to a navigation element
 
 ## SYNTAX
 
+### Default
+
 ```powershell
-Add-PnPNavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Parent <Int32>] [-First] [-External] [-AudienceIds <Guid[]>] [-Connection <PnPConnection>]
+Add-PnPNavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Parent <NavigationNodePipeBind>] [-First] [-External] [-AudienceIds <Guid[]>] [-Connection <PnPConnection>]
+```
+
+### Provide PreviousNode
+
+```powershell
+Add-PnPNavigationNode -Location <NavigationType> -Title <String> -PreviousNode <NavigationNodePipeBind> [-Url <String>] [-Parent <NavigationNodePipeBind>] [-External] [-AudienceIds <Guid[]>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -65,6 +73,12 @@ Add-PnPNavigationNode -Title "Label" -Location "TopNavigationBar" -Url "http://l
 
 Adds a navigation node to the top navigation bar. The navigation node will be created as a label.
 
+### EXAMPLE 7
+```powershell
+Add-PnPNavigationNode -Title "Wiki" -Location "QuickLaunch" -Url "wiki/" -PreviousNode 2012
+```
+Adds a navigation node to the quicklaunch. The navigation node will have the title "Wiki" and will link to the Wiki library on the selected Web after the node with the ID 2012.
+
 ## PARAMETERS
 
 ### -Connection
@@ -100,7 +114,7 @@ Add the new menu item to beginning of the collection
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Default
 
 Required: False
 Position: Named
@@ -125,13 +139,27 @@ Accept wildcard characters: False
 ```
 
 ### -Parent
-The key of the parent. Leave empty to add to the top level
+The parent navigation node. Leave empty to add to the top level
 
 ```yaml
-Type: Int32
+Type: NavigationNodePipeBind
 Parameter Sets: (All)
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreviousNode
+Specifies the navigation node after which the new navigation node will appear in the navigation node collection.
+
+```yaml
+Type: NavigationNodePipeBind
+Parameter Sets: Add node after another node
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
