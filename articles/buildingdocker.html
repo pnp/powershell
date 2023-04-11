@@ -102,7 +102,7 @@ sudo rm -rf ./pages/obj
 <pre><code class="lang-bat">docker run --rm -it -v %cd%\pages:C:\workplace pnp.powershell-pages-build powershell -c Start-Process -NoNewWindow -FilePath $env:TEMP\docfx\docfx.exe -ArgumentList build, C:\workplace\docfx.json -Wait
 </code></pre>
 <h2 id="clean-documentation-1">Clean documentation</h2>
-<pre><code>rmdir /s /q pages\_site
+<pre><code class="lang-bat">rmdir /s /q pages\_site
 rmdir /s /q pages\obj
 </code></pre>
 <h1 id="docker-with-windows-powershell">Docker with Windows PowerShell</h1>
