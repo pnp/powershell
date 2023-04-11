@@ -546,8 +546,7 @@ code {
 
 .code-header > .language {
   padding: 2px 16px;
-  flex-grow: 1;
-  text-transform: uppercase;
+  flex-grow: 1;  
   line-height: 26px;
 }
 
