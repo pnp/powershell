@@ -20,7 +20,7 @@ Exports a Microsoft Power Automate Flow
 ## SYNTAX
 
 ### As ZIP Package
-```
+```powershell
 Export-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind>
  [-AsZipPackage] [-PackageDisplayName <String>] [-PackageDescription <String>] [-PackageCreatedBy <String>]
  [-PackageSourceEnvironment <String>] [-OutPath <String>] [-Force] [-Connection <PnPConnection>]
@@ -28,7 +28,7 @@ Export-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerA
 ```
 
 ### As Json
-```
+```powershell
 Export-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind>
  [-Connection <PnPConnection>] [<CommonParameters>]
 ```
