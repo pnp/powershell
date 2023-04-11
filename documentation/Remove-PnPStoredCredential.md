@@ -15,7 +15,7 @@ Removes a credential from the Credential Manager
 ## SYNTAX
 
 ```powershell
-Remove-PnPStoredCredential -Name <String> [-Force] [<CommonParameters>]
+Remove-PnPStoredCredential -Name <String> [-Force] 
 ```
 
 ## DESCRIPTION

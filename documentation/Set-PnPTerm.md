@@ -19,7 +19,7 @@ Updates a term
 Set-PnPTerm -Identity <Guid> [-Name <String>] [-Lcid <Int32>] [-Description <String>]
  [-CustomProperties <Hashtable>] [-LocalCustomProperties <Hashtable>] [-DeleteAllCustomProperties]
  [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] [-TermStore <TaxonomyTermStorePipeBind>]
- [<CommonParameters>]
+ 
 ```
 
 ### By Term Name
@@ -27,7 +27,7 @@ Set-PnPTerm -Identity <Guid> [-Name <String>] [-Lcid <Int32>] [-Description <Str
 Set-PnPTerm -Identity <String> [-Name <String>] [-Lcid <Int32>] [-Description <String>]
  [-CustomProperties <Hashtable>] [-LocalCustomProperties <Hashtable>] [-DeleteAllCustomProperties]
  [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] -TermSet <TaxonomyTermSetPipeBind> -TermGroup <TaxonomyTermGroupPipeBind>
- [-TermStore <TaxonomyTermStorePipeBind>] [<CommonParameters>]
+ [-TermStore <TaxonomyTermStorePipeBind>] 
 ```
 
 ## DESCRIPTION

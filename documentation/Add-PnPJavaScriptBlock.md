@@ -16,7 +16,7 @@ Adds a link to a JavaScript snippet/block to a web or site collection, valid onl
 
 ```powershell
 Add-PnPJavaScriptBlock -Name <String> -Script <String> [-Sequence <Int32>] [-Scope <CustomActionScope>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

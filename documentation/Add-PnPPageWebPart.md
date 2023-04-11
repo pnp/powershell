@@ -18,28 +18,28 @@ Adds a web part to a page
 ```powershell
 Add-PnPPageWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Default with 3rd party web part
 ```powershell
 Add-PnPPageWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Positioned with built-in web part
 ```powershell
 Add-PnPPageWebPart [-Page] <PagePipeBind> -DefaultWebPartType <DefaultClientSideWebParts>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Positioned with 3rd party web part
 ```powershell
 Add-PnPPageWebPart [-Page] <PagePipeBind> -Component <PageComponentPipeBind>
  [-WebPartProperties <PropertyBagPipeBind>] [-Order <Int32>] -Section <Int32> -Column <Int32>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

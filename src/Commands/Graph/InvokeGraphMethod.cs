@@ -8,18 +8,26 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json.Serialization;
+using System.IO;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsLifecycle.Invoke, "PnPGraphMethod")]
+    [Cmdlet(VerbsLifecycle.Invoke, "PnPGraphMethod", DefaultParameterSetName = ParameterSet_TOCONSOLE)]
     public class InvokeGraphMethod : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false)]
+        private const string ParameterSet_TOSTREAM = "Out to stream";
+        private const string ParameterSet_TOFILE = "Out to file";
+        private const string ParameterSet_TOCONSOLE = "Out to console";
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         public HttpRequestMethod Method = HttpRequestMethod.Get;
 
         private string _url;
 
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOSTREAM)]
         public string Url
         {
             get { return _url; }
@@ -41,15 +49,21 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public object Content;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public string ContentType = "application/json";
 
         IDictionary<string, string> additionalHeaders = null;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public IDictionary<string, string> AdditionalHeaders
         {
             get
@@ -71,14 +85,22 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public SwitchParameter ConsistencyLevelEventual;
 
-        [Parameter(Mandatory = false)]
-        public SwitchParameter Raw;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        public SwitchParameter Raw;      
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         public SwitchParameter All;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOFILE)]
+        public string OutFile;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOSTREAM)]
+        public SwitchParameter OutStream;        
 
         protected override void ExecuteCmdlet()
         {
@@ -121,7 +143,14 @@ namespace PnP.PowerShell.Commands.Base
                 switch (Method)
                 {
                     case HttpRequestMethod.Get:
-                        GetRequest();
+                        if(ParameterSetName == ParameterSet_TOCONSOLE) 
+                        {
+                            GetRequestWithPaging();
+                        }
+                        else
+                        {
+                            GetRequestWithoutPaging();
+                        }
                         return;
                     case HttpRequestMethod.Post:
                         PostRequest();
@@ -178,7 +207,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private void GetRequest()
+        private void GetRequestWithPaging()
         {
             var result = GraphHelper.GetAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
             if (Raw.IsPresent)
@@ -226,33 +255,85 @@ namespace PnP.PowerShell.Commands.Base
                 WriteObject(rootObj);
             }
         }
+        
+        private void GetRequestWithoutPaging()
+        {
+            WriteVerbose($"Sending HTTP GET to {Url}");
+            using var response = GraphHelper.GetResponseAsync(Connection, Url, AccessToken).GetAwaiter().GetResult();
+            HandleResponse(response);
+        }
 
         private void PostRequest()
         {
+            WriteVerbose($"Sending HTTP POST to {Url}");
             var response = GraphHelper.PostAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
-            var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            WriteGraphResult(result);
+            HandleResponse(response);
         }
 
         private void PutRequest()
         {
+            WriteVerbose($"Sending HTTP PUT to {Url}");
             var response = GraphHelper.PutAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
-            var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            WriteGraphResult(result);
+            HandleResponse(response);
         }
 
         private void PatchRequest()
         {
+            WriteVerbose($"Sending HTTP PATCH to {Url}");
             var response = GraphHelper.PatchAsync(Connection, AccessToken, GetHttpContent(), Url, AdditionalHeaders).GetAwaiter().GetResult();
-            var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            WriteGraphResult(result);
+            HandleResponse(response);
         }
 
         private void DeleteRequest()
         {
+            WriteVerbose($"Sending HTTP DELETE to {Url}");
             var response = GraphHelper.DeleteAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
-            var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            WriteGraphResult(result);
+            HandleResponse(response);
         }
+
+        private void HandleResponse(HttpResponseMessage response)
+        {
+            switch (ParameterSetName)
+            {
+                case ParameterSet_TOCONSOLE:
+                    var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+                    WriteVerbose($"Returning {result.Length} characters response");
+
+                    WriteGraphResult(result);
+                    break;
+
+                case ParameterSet_TOFILE:
+                    using (var responseStreamForFile = response.Content.ReadAsStream())
+                    {
+                        WriteVerbose($"Writing {responseStreamForFile.Length} bytes response to {OutFile}");
+
+                        using (var fileStream = new System.IO.FileStream(OutFile, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                        {
+                            responseStreamForFile.CopyTo(fileStream);
+                            fileStream.Close();
+                        }
+                    }
+                    break;
+
+                case ParameterSet_TOSTREAM:
+                    var responseStream = response.Content.ReadAsStream();
+                    
+                    WriteVerbose($"Writing {responseStream.Length} bytes response to outputstream");
+
+                    var memoryStream = new System.IO.MemoryStream();
+                    responseStream.CopyTo(memoryStream);
+                    memoryStream.Position = 0;
+
+                    responseStream.Close();
+                    responseStream.Dispose();
+
+                    WriteObject(memoryStream);
+                    break;
+
+                default:
+                    throw new Exception($"Parameter set {ParameterSetName} not supported");
+            }
+        }        
     }
 }

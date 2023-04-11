@@ -16,19 +16,19 @@ Finds a file in the virtual file system of the web.
 
 ### Web (Default)
 ```powershell
-Find-PnPFile [-Match] <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Find-PnPFile [-Match] <String> [-Connection <PnPConnection>] 
 ```
 
 ### List
 ```powershell
 Find-PnPFile [-Match] <String> -List <ListPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Folder
 ```powershell
 Find-PnPFile [-Match] <String> -Folder <FolderPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

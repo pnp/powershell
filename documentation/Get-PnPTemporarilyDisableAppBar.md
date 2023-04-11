@@ -20,7 +20,7 @@ Returns the disabled state of the SharePoint Online App Bar. It may take some ti
 ## SYNTAX
 
 ```powershell
-Get-PnPTemporarilyDisableAppBar [<CommonParameters>]
+Get-PnPTemporarilyDisableAppBar 
 ```
 
 ## DESCRIPTION

@@ -24,7 +24,7 @@ Adds a new task to a planner bucket
 Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bucket <PlannerBucketPipeBind> -Title <String> 
 [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
  [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>]
- [<CommonParameters>]
+ 
 ```
 
 ### By Plan Id
@@ -32,7 +32,7 @@ Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bu
 Add-PnPPlannerTask -Bucket <PlannerBucketPipeBind> -PlanId <String> -Title <String> 
 [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
  [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

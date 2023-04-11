@@ -20,7 +20,7 @@ Removes a Microsoft Teams Team instance and its corresponding Microsoft 365 Grou
 ## SYNTAX
 
 ```powershell
-Remove-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-Force]  [<CommonParameters>]
+Remove-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-Force]  
 ```
 
 ## DESCRIPTION

@@ -21,7 +21,7 @@ Searches against all stored sharing links and retrieves the email invites
 
 ```powershell
 Get-PnPSiteUserInvitations [[-Site] <SitePipeBind>] -EmailAddress <string>
-   [<CommonParameters>]
+   
 ```
 
 ## DESCRIPTION

@@ -16,7 +16,7 @@ Unpublishes/retracts an available add-in from the app catalog
 
 ```powershell
 Unpublish-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

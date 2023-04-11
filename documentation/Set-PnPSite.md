@@ -49,7 +49,7 @@ Set-PnPSite [-Identity <String>]
 
 ### Set Lock State
 ```powershell
-Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

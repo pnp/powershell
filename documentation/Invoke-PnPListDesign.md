@@ -16,7 +16,7 @@ Apply a List Design to an existing site. * Requires Tenant Administration Rights
 
 ```powershell
 Invoke-PnPListDesign [-Identity] <TenantListDesignPipeBind> [-WebUrl <String>] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION

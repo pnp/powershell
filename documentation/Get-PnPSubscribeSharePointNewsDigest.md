@@ -24,7 +24,7 @@ Note: The implementation behind this in SharePoint Online has changed causing th
 ## SYNTAX
 
 ```powershell
-Get-PnPSubscribeSharePointNewsDigest -Account <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPSubscribeSharePointNewsDigest -Account <String> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

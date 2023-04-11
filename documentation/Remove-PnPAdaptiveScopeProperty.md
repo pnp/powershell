@@ -16,7 +16,7 @@ Removes a value from the current web property bag
 
 ```powershell
 Remove-PnPAdaptiveScopeProperty [-Key] <String> [-Force] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION

@@ -20,7 +20,7 @@ Allows placing a Microsoft Purview sensitivity label on the current site
 ## SYNTAX
 
 ```powershell
-Set-PnPSiteSensitivityLabel -Identity <String> [-Connection <PnPConnection>] [-Verbose] [<CommonParameters>]
+Set-PnPSiteSensitivityLabel -Identity <String> [-Connection <PnPConnection>] [-Verbose] 
 ```
 
 ## DESCRIPTION

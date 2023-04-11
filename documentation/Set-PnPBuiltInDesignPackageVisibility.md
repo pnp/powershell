@@ -16,7 +16,7 @@ Sets the visibility of the available built-in Design Packages at the moment of s
 
 ```powershell
 Set-PnPBuiltInDesignPackageVisibility [-IsVisible] <Boolean> [-DesignPackage] <DesignPackageType>
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

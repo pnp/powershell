@@ -20,7 +20,7 @@ Removes one or more existing classic site classification values from the list of
 ## SYNTAX
 
 ```powershell
-Remove-PnPAvailableSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> [<CommonParameters>]
+Remove-PnPAvailableSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> 
 ```
 
 ## DESCRIPTION

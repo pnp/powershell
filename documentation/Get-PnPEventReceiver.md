@@ -16,7 +16,7 @@ Returns registered event receivers
 
 ```powershell
 Get-PnPEventReceiver [-List <ListPipeBind>] [-Scope <EventReceiverScope>] [-Identity <EventReceiverPipeBind>] 
- [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

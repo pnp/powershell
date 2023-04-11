@@ -17,13 +17,13 @@ Allows permissions on a SharePoint list to be changed.
 ### Group
 ```powershell
 Set-PnPListPermission -Identity <ListPipeBind> -Group <GroupPipeBind> [-AddRole <String>]
- [-RemoveRole <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-RemoveRole <String>] [-Connection <PnPConnection>] 
 ```
 
 ### User
 ```powershell
 Set-PnPListPermission -Identity <ListPipeBind> -User <String> [-AddRole <String>] [-RemoveRole <String>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
