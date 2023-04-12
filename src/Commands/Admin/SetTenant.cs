@@ -347,6 +347,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? ShowPeoplePickerGroupSuggestionsForIB { get; set; }
 
         [Parameter(Mandatory = false)]
+        public int? OneDriveRequestFilesLinkExpirationInDays { get; set; }
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
@@ -1040,11 +1043,22 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
+            if (OneDriveRequestFilesLinkExpirationInDays.HasValue)
+            {
+                if (OneDriveRequestFilesLinkExpirationInDays.Value < 0 || OneDriveRequestFilesLinkExpirationInDays.Value > 730)
+                {
+                    throw new PSArgumentException($"{OneDriveRequestFilesLinkExpirationInDays} must have a value between 0 and 730", nameof(OneDriveRequestFilesLinkExpirationInDays));
+                }
+
+                Tenant.OneDriveRequestFilesLinkExpirationInDays = OneDriveRequestFilesLinkExpirationInDays.Value;
+                modified = true;
+            }
+
             if (EnableRestrictedAccessControl.HasValue)
             {
                 Tenant.EnableRestrictedAccessControl = EnableRestrictedAccessControl.Value;
                 modified = true;
-            }
+            }            
 
             if (SyncAadB2BManagementPolicy.HasValue)
             {
