@@ -1420,6 +1420,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-iscollabmeetingnotesfluidenabled">-IsCollabMeetingNotesFluidEnabled</h3>
+<p>Gets or sets a value to specify whether CollabMeetingNotes Fluid Framework is enabled If IsFluidEnabled disabled, IsCollabMeetingNotesFluidEnabled will be disabled automatically If IsFluidEnabled enabled, IsCollabMeetingNotesFluidEnabled will be enabled automatically IsCollabMeetingNotesFluidEnabled can be enabled only when IsFluidEnabled is already enabled</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1445,6 +1446,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-ibimplicitgroupbased">-IBImplicitGroupBased</h3>
+<p>Gets or sets IBImplicitGroupBased value</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1487,6 +1489,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-hidesyncbuttononteamsite">-HideSyncButtonOnTeamSite</h3>
+<p>To enable or disable Sync button on Team sites.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1497,6 +1500,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-coredefaultlinktoexistingaccess">-CoreDefaultLinkToExistingAccess</h3>
+<p>Gets or sets default share link to existing access on core partition</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1507,6 +1511,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-disablevivaconnectionsanalytics">-DisableVivaConnectionsAnalytics</h3>
+<p>Use this parameter to disable/enable Viva connection analytics.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1560,6 +1565,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-enableautoexpirationversiontrim">-EnableAutoExpirationVersionTrim</h3>
+<p>Enable or disable AutoExpiration version trim for the document library. Set to <code>$true</code> to enable, <code>$false</code> to disable.</p>
+<p>Parameter <code>ExpireVersionsAfterDays</code> is required when <code>EnableAutoExpirationVersionTrim</code> is false. Set <code>ExpireVersionsAfterDays</code> to 0 for NoExpiration, set it to greater or equal 30 for ExpireAfter.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1591,7 +1598,22 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-onedriverequestfileslinkexpirationindays">-OneDriveRequestFilesLinkExpirationInDays</h3>
+<p>Specifies the number of days before a Request files link expires for all OneDrive sites.
+The value can be from 0 to 730 days.
+To remove the expiration requirement, set the value to zero (0).</p>
+<pre><code class="lang-yaml">Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-disabledocumentlibrarydefaultlabeling">-DisableDocumentLibraryDefaultLabeling</h3>
+<p>Use this turn off setting the default sensitivity label for a document library.
+For more information on this feature, please take a look <a href="https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-default-label?view=o365-worldwide">here</a></p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
