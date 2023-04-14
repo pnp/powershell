@@ -1,6 +1,4 @@
 # copy documentation to output folder
-# make cmdlets folder
-New-Item -Path "./dev/pages/cmdlets" -ItemType Directory
 #New-Item -Path "./dev/pages/cmdlets/released" -ItemType Directory
 #New-Item -Path "./dev/pages/cmdlets/nightly" -ItemType Directory
 
