@@ -22,6 +22,16 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "articles/azure.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/azure.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "log_codes": [
         "InvalidFileLink"
       ],
@@ -166,6 +176,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/powershellpredictor.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/powershellpredictor.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/runningtests.md",
       "output": {
         ".html": {
@@ -216,6 +236,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/upgrading.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/vscodeextension.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/vscodeextension.html"
         }
       },
       "version": ""
@@ -6736,6 +6766,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Update-PnPUserType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/index.html"
         }
       },
       "version": ""

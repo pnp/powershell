@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Disable or Enable telemetry | PnP PowerShell </title>
+    <title>Visual Studio Code Extension | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Disable or Enable telemetry | PnP PowerShell ">
+    <meta name="title" content="Visual Studio Code Extension | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -79,20 +79,17 @@
             <article class="content wrap" id="_content" data-uid="">
                 
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/telemetry.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/vscodeextension.md/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="disable-or-enable-telemetry">Disable or Enable telemetry</h1>
+  <h1 id="visual-studio-code-extension">Visual Studio Code Extension</h1>
 
-<p>By default PnP PowerShell will report its usage anonymously to the PnP team. We collection information about the <strong>version of PnP PowerShell</strong>, the <strong>operation system version</strong> and the <strong>cmdlet</strong> executed. Notice that we will <em>not</em> include parameters used and we will <em>not</em> include any values of parameters. We will also <em>not</em> be able to trace the execution back to the specific tenant it ran on, the organization it was used for or the person it was run by. Having telemtry in place allows us to get insight in the usage of cmdlets and thereby prioritize work towards the most popular cmdlets.</p>
-<p>To query if in a connected PnP PowerShell session the telemetry is enabled, use <a href="../cmdlets/Get-PnPPowerShellTelemetryEnabled.html">Get-PnPPowerShellTelemetryEnabled</a>.</p>
-<p>If you wish to control telemetry to be sent, you can use one of the below options.</p>
-<h2 id="by-using-pnp-powershell">By using PnP PowerShell</h2>
-<p>You can disable telemetry to be sent by using <a href="../cmdlets/Disable-PnPPowerShellTelemetry.html">Disable-PnPPowerShellTelemetry</a>.
-You can enable telemetry to be sent by using <a href="../cmdlets/Enable-PnPPowerShellTelemetry.html">Enable-PnPPowerShellTelemetry</a>.</p>
-<h2 id="by-setting-an-environment-variable">By setting an environment variable</h2>
-<p>To disable telemetry, set the <code>PNPPOWERSHELL_DISABLETELEMETRY</code> environment variable to <code>true</code>, i.e. by using <code>$env:PNPPOWERSHELL_DISABLETELEMETRY=$true</code>. Remove the entry again or set it to <code>false</code> to enable telemetry to be sent again.</p>
-<h2 id="by-adding-a-file-in-your-user-profile-folder">By adding a file in your user profile folder</h2>
-<p>Alternatively, you can create an empty file called <code>.pnppowershelltelemetry</code> inside your home directory (<code>$env:UserProfile</code> on Windows, <code>$env:HOME</code> on Linux) not needing any content inside of the file to disable telemetry. Remove the file again to enable telemetry to be sent.</p>
+<p>If you like using Visual Studio Code for the development of your PnP PowerShell scripts, you might want to try the PnP PowerShell extension which is available for it. It provides various features to be helpful when creating scripts using PnP PowerShell. Currently the extension provides:</p>
+<ol>
+<li>docs viewer inside VS Code</li>
+<li>samples gallery</li>
+<li>snippets with all possible commands</li>
+</ol>
+<p>Check out the <a href="https://marketplace.visualstudio.com/items?itemName=adamwojcikit.pnp-powershell-extension">PnP PowerShell Visual Studio Code Extension</a> page for more information and downloading it.</p>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
