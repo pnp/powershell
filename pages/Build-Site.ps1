@@ -78,17 +78,36 @@ foreach ($nightlycmdlet in $nightlycmdlets) {
     }
 }
 
-# generate cmdlet toc
+# Generate cmdlet toc
 
-$items = Get-ChildItem "./dev/pages/cmdlets/*.md"
+$cmdletPages = Get-ChildItem -Path "./dev/pages/cmdlets/*.md" -Exclude "index.md"
 $toc = ""
-foreach ($item in $items) {
-    $toc = $toc + "- name: $($item.BaseName)`n  href: $($item.Name)`n"
+foreach ($cmdletPage in $cmdletPages) {
+    $toc = $toc + "- name: $($cmdletPage.BaseName)`n  href: $($cmdletPage.Name)`n"
 }
 
 $toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force
 
+# Generate cmdlet index page
+
+$cmdletIndexPageContent = Get-Content -Path "./dev/pages/cmdlets/index.md" -Raw
+$cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletcount%%", $items.Length)
+
+$cmdletIndexPageList = ""
+foreach ($cmdletPage in $cmdletPages) {
+    $cmdletIndexPageList = $cmdletIndexPageList + "- [$($cmdletPage.BaseName)]($($cmdletPage.Name))"
+
+    if (!$releasedcmdlets.Contains($cmdletPage.Name))
+    {
+        # Add an asterisk to the cmdlet name if it's only available in the nightly build
+        $cmdletIndexPageList = $cmdletIndexPageList + "*"
+    }
+    $cmdletIndexPageList = $cmdletIndexPageList + "`n"
+}
+
+$cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletlisting%%", $cmdletIndexPageList)
+$cmdletIndexPageContent | Out-File "./dev/pages/cmdlets/index.md" -Force
+
 docfx build ./dev/pages/docfx.json
 
 Copy-Item -Path "./dev/pages/_site/*" -Destination "./gh-pages" -Force -Recurse
-
