@@ -15,7 +15,7 @@ Returns all site collection scoped app catalogs that exist on the tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteCollectionAppCatalog [-CurrentSite <SwitchParameter>] [-ExcludeDeletedSites <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose] 
+Get-PnPSiteCollectionAppCatalog [-CurrentSite <SwitchParameter>] [-ExcludeDeletedSites <SwitchParameter>] [-SkipUrlValidation <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose] 
 ```
 
 ## DESCRIPTION
@@ -42,6 +42,20 @@ Get-PnPSiteCollectionAppCatalog -ExcludeDeletedSites
 Will return all the site collection app catalogs that exist on the tenant excluding the site collections having App Catalogs that are in the tenant recycle bin
 
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -CurrentSite
 When provided, it will check if the currently connected to site has a site collection App Catalog and will return information on it. If the current site holds no site collection App Catalog, an empty response will be returned.
@@ -71,11 +85,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+### -SkipUrlValidation
+When provided, the site collection app catalog Urls will not be validated for if they have been renamed since their creation. This makes the cmdlet a lot faster, but it could also lead to URLs being returned that no longer exist. If not provided, for each site collection app catalog, it will look up the actual URL of the site collection app catalog and return that instead of the URL that was used when the site collection app catalog was created.
 
 ```yaml
-Type: PnPConnection
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

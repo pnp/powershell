@@ -14,12 +14,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-OutFile` to `Invoke-PnPGraphMethod` which allows for the response to be written to a file [#2971](https://github.com/pnp/powershell/pull/2971)
 - Added `-OutStream` to `Invoke-PnPGraphMethod` which allows for the response to be written to a memory stream [#2976](https://github.com/pnp/powershell/pull/2976)
 - Added `-PreviousNode` to `Add-PnPNavigationNode` which allows for adding a navigation node after a specific node [#2940](https://github.com/pnp/powershell/pull/2940)
+- Added `-SkipUrlValidation` to `Get-PnPSiteCollectionAppCatalog` which allows for skipping the URL validation when retrieving the site collection app catalog making it faster but potentially returning URLs that have been renamed
 
 ### Fixed
 
 - Fixed issue with `Grant-PnPAzureADAppSitePermission` cmdlet where users are not able to set selected site in the `Sites.Selected` permission. [#2983](https://github.com/pnp/powershell/pull/2983)
 - Fixed issue with `Get-PnPList` cmdlet not working with site-relative URL as identity. [#3005](https://github.com/pnp/powershell/pull/3005)
 - Fixed issue with `Add-PnPNavigationNode` cmdlet where the target audience would not correctly be set when creating a node as a child of a parent node [#2940](https://github.com/pnp/powershell/pull/2940)
+
+### Removed
+
+- Removed alias `Get-PnPSiteCollectionAppCatalogs` for `Get-PnPSiteCollectionAppCatalog`
 
 ### Contributors
 
