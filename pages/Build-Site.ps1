@@ -103,7 +103,7 @@ foreach ($cmdletPage in $cmdletPages)
         if($cmdletVerb -ne $previousCmdletVerb)
         {
             # Add a new heading for the new verb
-            $cmdletIndexPageList += "### $($cmdletVerb)`n"
+            $cmdletIndexPageList += "## $($cmdletVerb)`n"
         }
     }
     else
