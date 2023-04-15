@@ -17,13 +17,13 @@ Applies a Site Script to an existing site
 ### Executing a site script registered as such
 
 ```powershell
-Invoke-PnPSiteScript -Identity <TenantSiteScriptPipeBind> -WebUrl <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Invoke-PnPSiteScript -Identity <TenantSiteScriptPipeBind> -WebUrl <String> [-Connection <PnPConnection>] 
 ```
 
 ### Executing a site script by passing in the script directly
 
 ```powershell
-Invoke-PnPSiteScript -Script <String> [-WebUrl <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+Invoke-PnPSiteScript -Script <String> [-WebUrl <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

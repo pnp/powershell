@@ -20,7 +20,7 @@ Returns the current registered origins from the public or private content delive
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantCdnOrigin -CdnType <SPOTenantCdnType> [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPTenantCdnOrigin -CdnType <SPOTenantCdnType> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

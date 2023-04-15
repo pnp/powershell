@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Branding
                 {
                     if (ParameterSetName == ParameterSet_BYID)
                     {
-                        var node = CurrentWeb.Navigation.GetNodeById(Identity.Id);
+                        var node = Identity.GetNavigationNode(CurrentWeb);
                         node.DeleteObject();
                         ClientContext.ExecuteQueryRetry();
                     }

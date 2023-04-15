@@ -20,7 +20,7 @@ Returns the CDN Policies for the specified CDN (Public | Private).
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantCdnPolicies -CdnType <SPOTenantCdnType> [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPTenantCdnPolicies -CdnType <SPOTenantCdnType> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

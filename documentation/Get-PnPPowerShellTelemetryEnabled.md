@@ -15,7 +15,7 @@ Returns true if the PnP PowerShell Telemetry has been enabled.
 ## SYNTAX
 
 ```powershell
-Get-PnPPowerShellTelemetryEnabled [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPPowerShellTelemetryEnabled [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

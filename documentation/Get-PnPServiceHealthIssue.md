@@ -20,7 +20,7 @@ Gets service health issues of the Office 365 Services from the Microsoft Graph A
 ## SYNTAX
 
 ```powershell
-Get-PnPServiceHealthIssue [-Identity <Id>] [<CommonParameters>]
+Get-PnPServiceHealthIssue [-Identity <Id>] 
 ```
 
 ## DESCRIPTION

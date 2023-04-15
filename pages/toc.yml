@@ -3,6 +3,7 @@
   topicHref: articles/index.md
 - name: Cmdlets
   href: cmdlets/
+  topicHref: cmdlets/index.md
 - name: GitHub
   href: https://github.com/pnp/powershell
 - name: Changelog

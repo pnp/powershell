@@ -19,21 +19,21 @@ Returns the search configuration
 
 ```powershell
 Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### OutputFormat
 
 ```powershell
 Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-OutputFormat <OutputFormat>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### BookmarksCSV
 
 ```powershell
 Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-PromotedResultsToBookmarkCSV] [-ExcludeVisualPromotedResults <Boolean>] [-BookmarkStatus <BookmarkStatus>] [-Path <String>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

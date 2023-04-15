@@ -16,7 +16,7 @@ Adds a new content type
 
 ```powershell
 Add-PnPContentType -Name <String> [-ContentTypeId <String>] [-Description <String>] [-Group <String>]
- [-ParentContentType <ContentType>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ParentContentType <ContentType>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

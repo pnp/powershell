@@ -16,7 +16,7 @@ Gets the visibility of the available built-in Design Packages.
 
 ```powershell
 Get-PnPBuiltInDesignPackageVisibility [-DesignPackage <DesignPackageType>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

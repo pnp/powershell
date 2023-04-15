@@ -20,7 +20,7 @@ Removes all current members from a particular Azure Active Directory group. This
 ## SYNTAX
 
 ```powershell
-Clear-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> [<CommonParameters>]
+Clear-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> 
 ```
 
 ## DESCRIPTION

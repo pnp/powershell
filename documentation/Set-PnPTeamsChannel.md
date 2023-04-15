@@ -21,7 +21,7 @@ Updates an existing Teams Channel
 
 ```powershell
 Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-DisplayName <String>] [-Description <String>] [-IsFavoriteByDefault <Boolean>]
-  [<CommonParameters>]
+  
 ```
 
 ## DESCRIPTION

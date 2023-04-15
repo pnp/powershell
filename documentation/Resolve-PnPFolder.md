@@ -16,7 +16,7 @@ Returns a folder from a given site relative path, and will create it if it does 
 
 ```powershell
 Resolve-PnPFolder [-SiteRelativePath] <String> [-Connection <PnPConnection>]
- [-Includes <String[]>] [<CommonParameters>]
+ [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

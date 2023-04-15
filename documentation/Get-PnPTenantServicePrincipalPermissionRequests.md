@@ -20,7 +20,7 @@ Gets the collection of permission requests for the "SharePoint Online Client" se
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantServicePrincipalPermissionRequests [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPTenantServicePrincipalPermissionRequests [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -21,7 +21,7 @@ Enables a specific flow
 
 ```powershell
 Enable-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] 
-[-Connection <PnPConnection>] [<CommonParameters>]
+[-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

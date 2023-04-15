@@ -15,7 +15,7 @@ Removes a Microsoft Planner Roster
 ## SYNTAX
 
 ```powershell
-Remove-PnPPlannerRoster -Identity <PlannerRosterPipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPPlannerRoster -Identity <PlannerRosterPipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

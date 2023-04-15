@@ -20,7 +20,7 @@ Retrieves the current configuration of the built into SharePoint Online site tem
 ## SYNTAX
 
 ```powershell
-Get-PnPBuiltInSiteTemplateSettings [-Identity <BuiltInSiteTemplateSettingsPipeBind>] [-Template <BuiltInSiteTemplates>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPBuiltInSiteTemplateSettings [-Identity <BuiltInSiteTemplateSettingsPipeBind>] [-Template <BuiltInSiteTemplates>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

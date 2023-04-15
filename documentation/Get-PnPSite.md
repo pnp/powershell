@@ -15,7 +15,7 @@ Returns the current site collection from the context.
 ## SYNTAX
 
 ```powershell
-Get-PnPSite [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+Get-PnPSite [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

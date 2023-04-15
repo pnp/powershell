@@ -15,7 +15,7 @@ Returns the current SharePoint Online CSOM context
 ## SYNTAX
 
 ```powershell
-Get-PnPContext [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPContext [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

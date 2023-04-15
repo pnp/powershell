@@ -21,7 +21,7 @@ Enables or disables the public or private Office 365 Content Delivery Network (C
 
 ```powershell
 Set-PnPTenantCdnEnabled [-NoDefaultOrigins] -Enable <Boolean> -CdnType <CdnType> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

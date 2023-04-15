@@ -23,7 +23,7 @@ Creates a new (classic) site collection for the current tenant
 New-PnPTenantSite -Title <String> -Url <String> -Owner <String> [-Lcid <UInt32>] [-Template <String>]
  -TimeZone <Int32> [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-StorageQuota <Int64>]
  [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-SharingCapability <SharingCapabilities>] [-Wait] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

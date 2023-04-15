@@ -17,7 +17,7 @@ Creates a new team site without a Microsoft 365 group in-memory object
 ```powershell
 New-PnPTenantSequenceTeamNoGroupSite -Url <String> -Title <String> -TimeZoneId <UInt32> [-Language <UInt32>]
  [-Owner <String>] [-Description <String>] [-HubSite] [-TemplateIds <String[]>]  
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

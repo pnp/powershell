@@ -16,7 +16,7 @@ Adds a link to a JavaScript file to a web or sitecollection, valid only for Shar
 
 ```powershell
 Add-PnPJavaScriptLink -Name <String> -Url <String[]> [-Sequence <Int32>] [-Scope <CustomActionScope>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

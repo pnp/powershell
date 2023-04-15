@@ -18,21 +18,21 @@ Uploads a file to Web
 ```powershell
 Add-PnPFile -Path <String> -Folder <FolderPipeBind> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>] [-CheckinType <CheckinType>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ### Upload file from stream
 ```powershell
 Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>] [-CheckinType <CheckinType>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ### Create or update file from text
 ```powershell
 Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Content <text> [-Checkout] [-CheckInComment <String>] [-CheckinType <CheckinType>]
  [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

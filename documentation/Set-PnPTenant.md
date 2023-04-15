@@ -1559,6 +1559,7 @@ Accept wildcard characters: False
 ```
 
 ### -LabelMismatchEmailHelpLink
+
 This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.
 
 ```yaml
@@ -1727,6 +1728,8 @@ Accept wildcard characters: False
 
 ### -IsCollabMeetingNotesFluidEnabled
 
+Gets or sets a value to specify whether CollabMeetingNotes Fluid Framework is enabled If IsFluidEnabled disabled, IsCollabMeetingNotesFluidEnabled will be disabled automatically If IsFluidEnabled enabled, IsCollabMeetingNotesFluidEnabled will be enabled automatically IsCollabMeetingNotesFluidEnabled can be enabled only when IsFluidEnabled is already enabled
+
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
@@ -1762,6 +1765,7 @@ Accept wildcard characters: False
 ```
 
 ### -IBImplicitGroupBased
+Gets or sets IBImplicitGroupBased value
 
 ```yaml
 Type: Boolean
@@ -1819,6 +1823,8 @@ Accept wildcard characters: False
 
 ### -HideSyncButtonOnTeamSite
 
+To enable or disable Sync button on Team sites.
+
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
@@ -1831,6 +1837,7 @@ Accept wildcard characters: False
 ```
 
 ### -CoreDefaultLinkToExistingAccess
+Gets or sets default share link to existing access on core partition
 
 ```yaml
 Type: Boolean
@@ -1844,6 +1851,8 @@ Accept wildcard characters: False
 ```
 
 ### -DisableVivaConnectionsAnalytics
+
+Use this parameter to disable/enable Viva connection analytics.
 
 ```yaml
 Type: Boolean
@@ -1911,6 +1920,10 @@ Accept wildcard characters: False
 
 ### -EnableAutoExpirationVersionTrim
 
+Enable or disable AutoExpiration version trim for the document library. Set to `$true` to enable, `$false` to disable.
+
+Parameter `ExpireVersionsAfterDays` is required when `EnableAutoExpirationVersionTrim` is false. Set `ExpireVersionsAfterDays` to 0 for NoExpiration, set it to greater or equal 30 for ExpireAfter.
+
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
@@ -1952,7 +1965,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OneDriveRequestFilesLinkExpirationInDays
+
+Specifies the number of days before a Request files link expires for all OneDrive sites.
+The value can be from 0 to 730 days.
+To remove the expiration requirement, set the value to zero (0).
+
+```yaml
+Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DisableDocumentLibraryDefaultLabeling
+
+Use this turn off setting the default sensitivity label for a document library.
+For more information on this feature, please take a look [here](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-default-label?view=o365-worldwide)
 
 ```yaml
 Type: Boolean
