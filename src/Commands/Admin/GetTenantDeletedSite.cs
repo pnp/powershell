@@ -62,11 +62,11 @@ namespace PnP.PowerShell.Commands.Admin
             else
             {
                 DeletedSiteProperties deletedSitePropertiesByUrl = Tenant.GetDeletedSitePropertiesByUrl(Identity.Url);
-                ClientContext.Load(deletedSitePropertiesByUrl);
+                AdminContext.Load(deletedSitePropertiesByUrl);
 
                 try
                 {
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                     WriteObject(new Model.SPODeletedSite(deletedSitePropertiesByUrl));
                 }
                 catch (Microsoft.SharePoint.Client.ServerException e) when (e.ServerErrorTypeName.Equals("Microsoft.SharePoint.Client.UnknownError", StringComparison.InvariantCultureIgnoreCase))
@@ -90,9 +90,9 @@ namespace PnP.PowerShell.Commands.Admin
                     {
                         throw new ArgumentNullException("Something went wrong fetching deleted sites");
                     }
-                    ClientContext.Load(spoDeletedSitePropertiesEnumerable);
-                    ClientContext.Load(spoDeletedSitePropertiesEnumerable, (SPODeletedSitePropertiesEnumerable sp) => sp.NextStartIndexFromSharePoint);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.Load(spoDeletedSitePropertiesEnumerable);
+                    AdminContext.Load(spoDeletedSitePropertiesEnumerable, (SPODeletedSitePropertiesEnumerable sp) => sp.NextStartIndexFromSharePoint);
+                    AdminContext.ExecuteQueryRetry();
                     if (siteRowLimit == 0 || spoDeletedSitePropertiesEnumerable.Count <= siteRowLimit)
                     {
                         deletedSitePropertiesList.AddRange(spoDeletedSitePropertiesEnumerable);
@@ -134,9 +134,9 @@ namespace PnP.PowerShell.Commands.Admin
             while (num >= 0 && flag2)
             {
                 SPODeletedSitePropertiesEnumerable spoDeletedSitePropertiesEnumerable = getDeletedSitePropertiesFunc(num);
-                ClientContext.Load(spoDeletedSitePropertiesEnumerable);
-                ClientContext.Load(spoDeletedSitePropertiesEnumerable, (SPODeletedSitePropertiesEnumerable sp) => sp.NextStartIndex);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(spoDeletedSitePropertiesEnumerable);
+                AdminContext.Load(spoDeletedSitePropertiesEnumerable, (SPODeletedSitePropertiesEnumerable sp) => sp.NextStartIndex);
+                AdminContext.ExecuteQueryRetry();
                 if (spoDeletedSitePropertiesEnumerable == null)
                 {
                     throw new ArgumentNullException("Something went wrong fetching deleted sites");
