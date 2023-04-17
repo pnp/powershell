@@ -107,7 +107,7 @@
   "articles/vscodeextension.html": {
     "href": "articles/vscodeextension.html",
     "title": "Visual Studio Code Extension | PnP PowerShell",
-    "keywords": "Visual Studio Code Extension If you like using Visual Studio Code for the development of your PnP PowerShell scripts, you might want to try the PnP PowerShell extension which is available for it. It provides various features to be helpful when creating scripts using PnP PowerShell. Currently the extension provides: docs viewer inside VS Code samples gallery snippets with all possible commands Check out the PnP PowerShell Visual Studio Code Extension page for more information and downloading it."
+    "keywords": "Visual Studio Code Extension If you like using Visual Studio Code to develop your PnP PowerShell scripts, you might want to try the PnP PowerShell extension to boost your productivity. It provides various features that may be helpful when creating scripts using PnP PowerShell. Currently, the extension provides the following: full docs for every PnP PowerShell command directly in VS Code samples gallery with samples from PnP script sample repo snippets with all possible commands Check out the PnP PowerShell Visual Studio Code Extension page for more information."
   },
   "cmdlets/Add-PnPAlert.html": {
     "href": "cmdlets/Add-PnPAlert.html",
