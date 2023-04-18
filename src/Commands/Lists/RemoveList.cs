@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Lists
                         {
                             var operationId = list.StartRecycle();
                             ClientContext.ExecuteQueryRetry();
-                            WriteVerbose($"Large List Operation Job {operationId.Value} initiated. It may take a while for this job to complete.");
+                            WriteVerbose($"Large List Operation Job {operationId.Value} initiated for list {list.Id}. Run Get-LargeListRemovalStatus -ListId {list.Id} -OperationId {operationId.Value} to check the status of the job");
                             WriteObject(new RecycleResult { RecycleBinItemId = operationId.Value });
                         }
                         else
