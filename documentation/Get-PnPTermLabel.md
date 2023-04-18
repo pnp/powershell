@@ -17,13 +17,13 @@ Returns all or a specific translation label for a term.
 
 ### By Term Id
 ```
-Get-PnPTermLabel -Term <Guid> [-Lcid <Int32>] [-TermStore <TaxonomyTermStorePipeBind>] [<CommonParameters>]
+Get-PnPTermLabel -Term <Guid> [-Lcid <Int32>] [-TermStore <TaxonomyTermStorePipeBind>] 
 ```
 
 ### By Term Name
 ```
 Get-PnPTermLabel -Term <String> [-Lcid <Int32>] -TermSet <TaxonomyTermSetPipeBind>
- -TermGroup <TaxonomyTermGroupPipeBind> [-TermStore <TaxonomyTermStorePipeBind>] [<CommonParameters>]
+ -TermGroup <TaxonomyTermGroupPipeBind> [-TermStore <TaxonomyTermStorePipeBind>] 
 ```
 
 ## DESCRIPTION

@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration.Internal;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
 using System.Linq;
@@ -13,10 +12,10 @@ namespace PnP.PowerShell.Commands.Apps
     {
         protected override void ExecuteCmdlet()
         {
-            var servicePrincipal = new SPOWebAppServicePrincipal(ClientContext);
+            var servicePrincipal = new SPOWebAppServicePrincipal(AdminContext);
             var permissionGrants = servicePrincipal.PermissionGrants;
-            ClientContext.Load(permissionGrants);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(permissionGrants);
+            AdminContext.ExecuteQueryRetry();
             WriteObject(permissionGrants.Select(g => new TenantServicePrincipalPermissionGrant(g)), true);
         }
 

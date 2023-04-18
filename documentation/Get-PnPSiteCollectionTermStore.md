@@ -15,7 +15,7 @@ Returns the site collection term store if it exists or else it will not return a
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteCollectionTermStore [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPSiteCollectionTermStore [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -75,7 +75,7 @@ namespace PnP.PowerShell.Commands
 
             if (ParameterSpecified(nameof(WhatIf))) return;
 
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
 
             if(templateSetting == null || templateSetting.Value == null)
             {

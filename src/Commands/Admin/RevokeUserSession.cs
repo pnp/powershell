@@ -1,6 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 
@@ -16,11 +15,11 @@ namespace PnP.PowerShell.Commands.Admin
         {
             if (ShouldProcess($"Sign out user {User} from all devices"))
             {
-                var office365Tenant = new Office365Tenant(ClientContext);
+                var office365Tenant = new Office365Tenant(AdminContext);
 
                 var result = office365Tenant.RevokeAllUserSessions(User);
-                ClientContext.Load(result);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(result);
+                AdminContext.ExecuteQueryRetry();
                 switch (result.State)
                 {
                     case SPOUserSessionRevocationState.FeatureDisabled:

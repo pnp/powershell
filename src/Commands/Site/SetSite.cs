@@ -395,11 +395,13 @@ namespace PnP.PowerShell.Commands.Site
                 LocaleId.HasValue ||
                 RestrictedToGeo.HasValue ||
                 SocialBarOnSitePagesDisabled.HasValue ||
-                 AnonymousLinkExpirationInDays.HasValue ||
+                AnonymousLinkExpirationInDays.HasValue ||
                 ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)) ||
-                LocaleId.HasValue ||
                 DisableCompanyWideSharingLinks.HasValue ||
                 MediaTranscription.HasValue ||
-                RestrictedAccessControl.HasValue;
+                RestrictedAccessControl.HasValue ||
+                RequestFilesLinkExpirationInDays.HasValue ||
+                RequestFilesLinkEnabled.HasValue;
+                
     }
 }

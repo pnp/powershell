@@ -187,7 +187,8 @@ If you have only updated documentation, so called .md files, there's no need to 
 
    ![Build succeeded](./../images/contributing/vscodebuildsucceeded.png)
 
-   If it instead shows error like the one below, it means you still have a PowerShell session open somewhere your machine which has PnP PowerShell loaded and which blocks the build process to update the files. It can be frustrating at times to find the PowerShell session that is blocking the build process. If you're not sure which session is blocking the build process, you can try to close all PowerShell sessions and try again. If that doesn't work, you can try restarting Visual Studio Code.
+   If it instead shows an error like the one below, it means you still have a PowerShell session open somewhere your machine which has PnP PowerShell loaded and which blocks the build process to update the files. It can be frustrating at times to find the PowerShell session that is blocking the build process. If you're not sure which session is blocking the build process, you can try to close all PowerShell sessions and try again. If that doesn't work, you can try restarting Visual Studio Code.
+   If it you get the error "Path to shell executable "pwsh.exe" does not exist", open tasks.json file and change executable path "pwsh.exe" to the full path of your "C:\\Program Files\\PowerShell\\7\\pwsh.exe". 
 
    ![Build failed](./../images/contributing/vscodebuildfailed.png)
 
@@ -210,6 +211,8 @@ If you have only updated documentation, so called .md files, there's no need to 
 1. In Visual Studio Code, at the top a flyout menu should appear with the currently running processes on your machine. Start typing in the process ID you revealed in the step above and select the process that matches your PowerShell 7 session.
 
    ![Selecting the PowerShell 7 process](./../images/contributing/vscodeenterpid.png)
+   
+   Note that this does **not** work if you have installed PowerShell 7 through the Microsoft Store. If that's the case, uninstall it again from your Windows start menu by right clicking on PowerShell 7 and choosing Uninstall and [reinstall PowerShell 7 using any of the other options](https://learn.microsoft.com/powershell/scripting/install/installing-powershell-on-windows).
 
 1. You can now set breakpoints as you are used to in your code and use the PowerShell 7 session you connected to to run the cmdlet and hit the breakpoints you have set.
 

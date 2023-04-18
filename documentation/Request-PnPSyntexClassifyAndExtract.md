@@ -23,21 +23,21 @@ Requests for a file, folder or all files in a library to be classified and extra
 
 ```powershell
 Request-PnPSyntexClassifyAndExtract -FileUrl <string> [-Batch <PnPBatch>]  [-Connection <PnPConnection>] 
-[<CommonParameters>]
+
 ```
 
 ### Folder
 
 ```powershell
 Request-PnPSyntexClassifyAndExtract -Folder <FolderPipeBind> [-Connection <PnPConnection>] 
-[<CommonParameters>]
+
 ```
 
 ### List
 
 ```powershell
 Request-PnPSyntexClassifyAndExtract -List <ListPipeBind> [-OffPeak <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
-[<CommonParameters>]
+
 ```
 
 ## DESCRIPTION

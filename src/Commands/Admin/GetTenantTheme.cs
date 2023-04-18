@@ -22,8 +22,8 @@ namespace PnP.PowerShell.Commands.Admin
             if (ParameterSpecified(nameof(Name)))
             {
                 var theme = Tenant.GetTenantTheme(Name);
-                ClientContext.Load(theme);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(theme);
+                AdminContext.ExecuteQueryRetry();
                 if (AsJson)
                 {
                     WriteObject(JsonSerializer.Serialize(theme.Palette));
@@ -36,8 +36,8 @@ namespace PnP.PowerShell.Commands.Admin
             else
             {
                 var themes = Tenant.GetAllTenantThemes();
-                ClientContext.Load(themes);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(themes);
+                AdminContext.ExecuteQueryRetry();
                 if (AsJson)
                 {
                     WriteObject(JsonSerializer.Serialize(themes.Select(t => new SPOTheme(t.Name, t.Palette, t.IsInverted))));

@@ -16,7 +16,7 @@ Sets a retention label on the specified list or library. Use Reset-PnPLabel to r
 
 ```powershell
 Set-PnPLabel [-List] <ListPipeBind> -Label <String> [-SyncToItems <Boolean>] [-BlockDeletion <Boolean>]
- [-BlockEdit <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-BlockEdit <Boolean>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -38,17 +38,10 @@ Set-PnPLabel -List "Demo List" -Label "Project Documentation" -SyncToItems $true
 
 This sets an O365 label on the specified list or library and sets the label to all the items in the list and library as well.
 
-### EXAMPLE 3
-```powershell
-Set-PnPLabel -List "Demo List" -Label "Project Documentation" -BlockDelete $true -BlockEdit $true
-```
-
-This sets an O365 label on the specified list or library. Next, it also blocks the ability to either edit or delete the item. 
-
 ## PARAMETERS
 
 ### -BlockDeletion
-Block deletion of items in the library
+Block deletion of items in the library. This parameter has been deprecated because overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.
 
 ```yaml
 Type: Boolean
@@ -62,7 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -BlockEdit
-Block editing of items in the library
+Block editing of items in the library. This parameter has been deprecated because overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.
 
 ```yaml
 Type: Boolean

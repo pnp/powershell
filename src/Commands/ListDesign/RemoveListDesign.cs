@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands
                     {
                         WriteVerbose($"Removing list design with id {listDesign.Id}");
                         Tenant.RemoveListDesign(listDesign.Id);
-                        ClientContext.ExecuteQueryRetry();
+                        AdminContext.ExecuteQueryRetry();
                     }
                 }
             }

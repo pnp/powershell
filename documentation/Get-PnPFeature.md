@@ -16,7 +16,7 @@ Returns all activated or a specific activated feature
 
 ```powershell
 Get-PnPFeature [[-Identity] <FeaturePipeBind>] [-Scope <FeatureScope>] 
- [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

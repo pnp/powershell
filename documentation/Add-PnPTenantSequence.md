@@ -16,7 +16,7 @@ Adds a tenant sequence object to a tenant template
 
 ```powershell
 Add-PnPTenantSequence -Template <ProvisioningHierarchy> -Sequence <ProvisioningSequence>  
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

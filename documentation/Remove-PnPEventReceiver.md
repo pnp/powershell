@@ -16,11 +16,11 @@ Remove an event receiver.
 
 ```powershell
 Remove-PnPEventReceiver -Identity <EventReceiverPipeBind> [-List <ListPipeBind>] [-Scope <EventReceiverScope>] [-Force] 
-[-Connection <PnPConnection>] [<CommonParameters>]
+[-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-Removes/unregisters a specific event receiver.
+Removes/unregister a specific event receiver.
 
 ## EXAMPLES
 

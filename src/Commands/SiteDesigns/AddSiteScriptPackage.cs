@@ -31,8 +31,8 @@ public class AddSiteScriptPackage : PnPAdminCmdlet
                 ContentStream = contentStream
             };
             var script = Tenant.CreateSiteScript(siteScriptCreationInfo);
-            ClientContext.Load(script);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(script);
+            AdminContext.ExecuteQueryRetry();
             WriteObject(script);
         }
     }

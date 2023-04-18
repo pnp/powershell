@@ -19,10 +19,10 @@ namespace PnP.PowerShell.Commands.Apps
         {
             if (Force || ShouldContinue($"Deny request {RequestId}?", "Continue"))
             {
-                var servicePrincipal = new SPOWebAppServicePrincipal(ClientContext);
+                var servicePrincipal = new SPOWebAppServicePrincipal(AdminContext);
                 var request = servicePrincipal.PermissionRequests.GetById(RequestId);
                 request.Deny();
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
         }
 

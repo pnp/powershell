@@ -16,7 +16,7 @@ Retrieves a content type
 
 ```powershell
 Get-PnPContentType [[-Identity] <ContentTypePipeBind>] [-List <ListPipeBind>] [-InSiteHierarchy]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

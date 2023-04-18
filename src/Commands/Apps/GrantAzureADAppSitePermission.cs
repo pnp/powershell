@@ -47,6 +47,14 @@ namespace PnP.PowerShell.Commands.Apps
                 var payload = new
                 {
                     roles = Permissions.Select(p => p.ToLower()).ToArray(),
+                    grantedToIdentities = new[] {
+                            new {
+                                application = new {
+                                    id = AppId.ToString(),
+                                    displayName = DisplayName
+                                }
+                            }
+                        },
                     grantedToIdentitiesV2 = new[] {
                             new {
                                 application = new {
@@ -57,7 +65,7 @@ namespace PnP.PowerShell.Commands.Apps
                         }
                 };
 
-                var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.PostAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload).GetAwaiter().GetResult();
+                var results = Utilities.REST.RestHelper.PostAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload).GetAwaiter().GetResult();
                 WriteObject(results.Convert());
             }
         }

@@ -20,7 +20,7 @@ Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
  [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
  [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] 
  [-Translate][-TranslationLanguageCodes <Int[][]>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -193,7 +193,7 @@ Sets the layout type of the page. (Default = Article)
 ```yaml
 Type: PageLayoutType
 Parameter Sets: (All)
-Accepted values: Article, Home, SingleWebPartAppPage, RepostPage, HeaderlessSearchResults, Spaces, Topic
+Accepted values: Article, Home, SingleWebPartAppPage,  RepostPage, HeaderlessSearchResults, Spaces, Topic
 
 Required: False
 Position: Named

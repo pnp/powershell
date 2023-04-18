@@ -17,13 +17,13 @@ Sets the contents of a wikipage
 ### STRING
 ```powershell
 Set-PnPWikiPageContent -Content <String> -ServerRelativePageUrl <String> 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### FILE
 ```powershell
 Set-PnPWikiPageContent -Path <String> -ServerRelativePageUrl <String> 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

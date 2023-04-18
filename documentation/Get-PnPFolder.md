@@ -17,13 +17,13 @@ Return a folder object
 ### Folder By Url
 ```powershell
 Get-PnPFolder [-Url] <String> [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ### Folders In List
 ```powershell
 Get-PnPFolder [-List] <ListPipeBind> [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

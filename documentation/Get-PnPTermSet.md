@@ -17,7 +17,7 @@ Returns a taxonomy term set
 ```powershell
 Get-PnPTermSet [-Identity <TaxonomyTermSetPipeBind>] [-TermGroup] <TaxonomyTermGroupPipeBind>
  [-TermStore <TaxonomyTermStorePipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

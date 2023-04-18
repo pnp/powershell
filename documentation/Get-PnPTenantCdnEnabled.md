@@ -20,7 +20,7 @@ Retrieves if the Office 365 Content Delivery Network has been enabled.
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantCdnEnabled -CdnType <SPOTenantCdnType> [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPTenantCdnEnabled -CdnType <SPOTenantCdnType> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

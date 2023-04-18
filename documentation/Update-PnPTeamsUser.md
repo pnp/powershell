@@ -20,7 +20,7 @@ Updates a user's role in an existing Microsoft Teams instance.
 ## SYNTAX
 
 ```powershell
-Update-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> -Role <String> [<CommonParameters>]
+Update-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> -Role <String> 
 ```
 
 ## DESCRIPTION

@@ -24,7 +24,7 @@ Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String>
 ### Add field reference to list
 ```powershell
 Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Add field to web

@@ -23,7 +23,7 @@ Sets the properties of a specific Azure Active Directory group.
 Set-PnPAzureADGroup -Identity <AzureADGroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-SecurityEnabled] [-MailEnabled] 
  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] 
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
@@ -33,7 +33,7 @@ This cmdlet sets the properties of a specific Azure Active Directory group. This
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPAzureADGroup -Identity $group -DisplayName "My Displayname"
+Set-PnPAzureADGroup -Identity $group -DisplayName "My DisplayName"
 ```
 
 Sets the display name of the group where $group is a Group entity.

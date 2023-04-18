@@ -1,12 +1,10 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using System;
 using System.Collections.Generic;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -33,8 +31,8 @@ namespace PnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(Tenant);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(Tenant);
+            AdminContext.ExecuteQueryRetry();
 
             if (ParameterSpecified(nameof(DomainGuids)))
             {
@@ -73,7 +71,7 @@ namespace PnP.PowerShell.Commands.Admin
                         throw new PSArgumentException(string.Format(Resources.GrooveBlockOptionNotSupported, nameof(GrooveBlockOption), GrooveBlockOption), nameof(GrooveBlockOption));
                 }
             }
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

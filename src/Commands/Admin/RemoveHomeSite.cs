@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 
@@ -14,13 +13,13 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             var homesiteUrl = Tenant.GetSPHSiteUrl();
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             if (!string.IsNullOrEmpty(homesiteUrl.Value))
             {
                 if (Force || ShouldContinue($"Remove {homesiteUrl.Value} as the home site?", Properties.Resources.Confirm))
                 {
                     Tenant.RemoveSPHSite();
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                 }
             }
             else

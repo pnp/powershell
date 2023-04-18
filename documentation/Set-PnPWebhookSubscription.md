@@ -17,7 +17,7 @@ Updates a Webhook subscription
 ```powershell
 Set-PnPWebhookSubscription [-Subscription] <WebhookSubscriptionPipeBind> [-List <ListPipeBind>]
  [-NotificationUrl <String>] [-ExpirationDate <DateTime>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

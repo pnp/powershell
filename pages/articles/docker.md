@@ -1,6 +1,6 @@
 # Using PnP PowerShell in Docker containers
 
-Using Docker allows you to use any software inside virtual envirionments, without having to install this software directly on your laptop or server. These virtual environments are containers, which might be imagined as lightweight virtual machines. Having their own virtual disks, memory and processes, containers are rationally isolated from your laptop operating system, providing you a great way of experimenting and using any version of PnP.PowerShell without installing it.
+Using Docker allows you to use any software inside virtual environments, without having to install this software directly on your laptop or server. These virtual environments are containers, which might be imagined as lightweight virtual machines. Having their own virtual disks, memory and processes, containers are rationally isolated from your laptop operating system, providing you a great way of experimenting and using any version of PnP.PowerShell without installing it.
 
 ![Using software in virtual environments, called containers](./../images/docker/dockercontainers.png)
 
@@ -22,7 +22,7 @@ You can try using m365pnp/powershell Docker containers online, without installin
 
 5. Run in the online console:
 
-    ```
+    ```powershell
     docker run --rm -it m365pnp/powershell
     ```
 
@@ -120,7 +120,7 @@ Mind you that in the case above, the container will have an isolated disk system
 
 In such container you can run `Get-ChildItem` and see the contents of the current directory.
 
-The examples above start new container and allow you to interactively use container, running inline commands. In other cases however, you might want to just start a container for a short time (a few seconds maybe) and run a ps1 script unattededly and then automatically terminate the container. Here is how you can do it.
+The examples above start new container and allow you to interactively use container, running inline commands. In other cases however, you might want to just start a container for a short time (a few seconds maybe) and run a ps1 script unattended and then automatically terminate the container. Here is how you can do it.
 
 - Linux/WSL/Mac OS:
 

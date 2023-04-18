@@ -19,7 +19,7 @@ Adds a custom action
 Add-PnPCustomAction -Name <String> -Title <String> -Description <String> -Group <String> -Location <String>
  [-Sequence <Int32>] [-Url <String>] [-ImageUrl <String>] [-CommandUIExtension <String>]
  [-RegistrationId <String>] [-Rights <PermissionKind[]>] [-RegistrationType <UserCustomActionRegistrationType>]
- [-Scope <CustomActionScope>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Scope <CustomActionScope>] [-Connection <PnPConnection>] 
 ```
 
 ### Client Side Component Id
@@ -27,7 +27,7 @@ Add-PnPCustomAction -Name <String> -Title <String> -Description <String> -Group 
 Add-PnPCustomAction -Name <String> -Title <String> -Location <String> [-Sequence <Int32>]
  [-RegistrationId <String>] [-RegistrationType <UserCustomActionRegistrationType>] [-Scope <CustomActionScope>]
  -ClientSideComponentId <Guid> [-ClientSideComponentProperties <String>]
- [-ClientSideHostProperties <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ClientSideHostProperties <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

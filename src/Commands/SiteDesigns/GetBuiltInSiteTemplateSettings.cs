@@ -30,14 +30,14 @@ namespace PnP.PowerShell.Commands
                 {
                     if (Identity == null || !Identity.Id.HasValue) throw new PSArgumentException($"Identity contains an invalid {nameof(BuiltInSiteTemplateSettingsPipeBind)} value", nameof(Identity));
 
-                    templateSetting = Tenant.GetOutOfBoxSiteTemplateSettings(ClientContext, Identity.Id.Value);
+                    templateSetting = Tenant.GetOutOfBoxSiteTemplateSettings(AdminContext, Identity.Id.Value);
                 }
                 else
                 {
                     var template = BuiltInSiteTemplateSettings.BuiltInSiteTemplateMappings.FirstOrDefault(tm => tm.Value == Template);
-                    templateSetting = Tenant.GetOutOfBoxSiteTemplateSettings(ClientContext, template.Key);
+                    templateSetting = Tenant.GetOutOfBoxSiteTemplateSettings(AdminContext, template.Key);
                 }
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
 
                 if(templateSetting == null || templateSetting.Value == null)
                 {
@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands
                 WriteVerbose("Retrieving all out of the box SharePoint site template settings");
 
                 var templateSettings = Tenant.GetAllOutOfBoxSiteTemplateSettings();
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
 
                 WriteVerbose($"{templateSettings.Count} returned");
 

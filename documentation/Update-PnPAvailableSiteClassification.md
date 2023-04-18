@@ -22,13 +22,13 @@ Updates available classic Site Classifications for the tenant
 ### Settings
 ```powershell
 Update-PnPAvailableSiteClassification -Settings <SiteClassificationsSettings> 
- [<CommonParameters>]
+ 
 ```
 
 ### Specific
 ```powershell
 Update-PnPAvailableSiteClassification [-Classifications <System.Collections.Generic.List`1[System.String]>]
- [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>]  [<CommonParameters>]
+ [-DefaultClassification <String>] [-UsageGuidelinesUrl <String>]  
 ```
 
 ## DESCRIPTION
@@ -55,7 +55,7 @@ Sets the default classification value to "LBI". This value needs to be present i
 Update-PnPAvailableSiteClassification -UsageGuidelinesUrl https://aka.ms/m365pnp
 ```
 
-sets the usage guideliness URL to the specified URL
+sets the usage guidelines URL to the specified URL
 
 ## PARAMETERS
 

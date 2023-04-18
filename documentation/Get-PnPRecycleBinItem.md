@@ -11,7 +11,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPRecycleBinItem.h
 
 ## SYNOPSIS
 
-** Required Permissions ** 
+**Required Permissions** 
 
 * SharePoint: Site Collection Administrator. SharePoint Tenant Admin alone is not enough
 
@@ -22,25 +22,25 @@ Returns one or more items from the Recycle Bin.
 ### All (Default)
 ```powershell
 Get-PnPRecycleBinItem [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ### Identity
 ```powershell
 Get-PnPRecycleBinItem [-Identity <Guid>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ### FirstStage
 ```powershell
 Get-PnPRecycleBinItem [-FirstStage] [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ### SecondStage
 ```powershell
 Get-PnPRecycleBinItem [-SecondStage] [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
@@ -100,7 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -FirstStage
-Return all items in the first stage recycle bin
+Returns all items in the first stage recycle bin
 
 ```yaml
 Type: SwitchParameter
@@ -128,7 +128,7 @@ Accept wildcard characters: False
 ```
 
 ### -RowLimit
-Limits return results to specified amount
+Limits returned results to specified amount
 
 ```yaml
 Type: Int32
@@ -142,7 +142,7 @@ Accept wildcard characters: False
 ```
 
 ### -SecondStage
-Return all items in the second stage recycle bin.
+Returns all items in the second stage recycle bin.
 
 ```yaml
 Type: SwitchParameter

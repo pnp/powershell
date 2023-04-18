@@ -16,7 +16,7 @@ Returns all or a specific custom action(s) with location type ScriptLink
 
 ```powershell
 Get-PnPJavaScriptLink [[-Name] <String>] [-Scope <CustomActionScope>] [-ThrowExceptionIfJavaScriptLinkNotFound]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

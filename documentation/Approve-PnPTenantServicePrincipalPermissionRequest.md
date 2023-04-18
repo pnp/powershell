@@ -21,7 +21,7 @@ Approves a permission request for the current tenant's "SharePoint Online Client
 
 ```powershell
 Approve-PnPTenantServicePrincipalPermissionRequest -RequestId <Guid> [-Force]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

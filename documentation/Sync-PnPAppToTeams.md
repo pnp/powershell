@@ -15,7 +15,7 @@ Synchronize an app from the tenant app catalog to the Microsoft Teams app catalo
 ## SYNTAX
 
 ```powershell
-Sync-PnPAppToTeams [-Identity] <AppMetadataPipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
+Sync-PnPAppToTeams [-Identity] <AppMetadataPipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specifies the Id of the Addin Instance
+Specifies the Id of the Add-In Instance
 
 ```yaml
 Type: AppMetadataPipeBind

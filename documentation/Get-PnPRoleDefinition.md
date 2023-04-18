@@ -15,7 +15,7 @@ Retrieves a Role Definitions of a site
 ## SYNTAX
 
 ```powershell
-Get-PnPRoleDefinition [[-Identity] <RoleDefinitionPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPRoleDefinition [[-Identity] <RoleDefinitionPipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

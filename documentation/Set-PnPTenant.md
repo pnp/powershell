@@ -56,11 +56,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-DefaultSharingLinkType <SharingLinkType>]
  [-ODBMembersCanShare <SharingState>]
  [-ODBAccessRequests <SharingState>]
- [-PreventExternalUsersFromResharing <Boolean>]
+ [-PreventExternalUsersFromReSharing <Boolean>]
  [-ShowPeoplePickerSuggestionsForGuestUsers <Boolean>]
  [-FileAnonymousLinkType <AnonymousLinkType>]
  [-FolderAnonymousLinkType <AnonymousLinkType>]
- [-NotifyOwnersWhenItemsReshared <Boolean>]
+ [-NotifyOwnersWhenItemsReShared <Boolean>]
  [-NotifyOwnersWhenInvitationsAccepted <Boolean>]
  [-NotificationsInOneDriveForBusinessEnabled <Boolean>]
  [-NotificationsInSharePointEnabled <Boolean>]
@@ -97,6 +97,28 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-CoreRequestFilesLinkEnabled <Boolean>]
  [-CoreRequestFilesLinkExpirationInDays <Boolean>]
  [-LabelMismatchEmailHelpLink <String>]
+ [-DisableDocumentLibraryDefaultLabeling <Boolean>]
+ [-DisableListSync <Boolean>]
+ [-IsEnableAppAuthPopUpEnabled <Boolean>]
+ [-ExpireVersionsAfterDays <Int32>]
+ [-MajorVersionLimit <Int32>]
+ [-EnableAutoExpirationVersionTrim <Boolean>]
+ [-OneDriveLoopSharingCapability <SharingCapabilities>]
+ [-OneDriveLoopDefaultSharingLinkScope <SharingScope>]
+ [-OneDriveLoopDefaultSharingLinkRole <Role>]
+ [-CoreLoopSharingCapability <SharingCapabilities>]
+ [-CoreLoopDefaultSharingLinkScope <SharingScope>]
+ [-CoreLoopDefaultSharingLinkRole <Role>]
+ [-DisableVivaConnectionsAnalytics <Boolean>]
+ [-CoreDefaultLinkToExistingAccess <Boolean>]
+ [-HideSyncButtonOnTeamSite <Boolean>]
+ [-CoreBlockGuestsAsSiteAdmin <SharingState>]
+ [-IsWBFluidEnabled <Boolean>]
+ [-IsCollabMeetingNotesFluidEnabled <Boolean>]
+ [-AllowAnonymousMeetingParticipantsToAccessWhiteboards <SharingState>]
+ [-IBImplicitGroupBased <Boolean>]
+ [-ShowOpenInDesktopOptionForSyncedFiles <Boolean>]
+ [-ShowPeoplePickerGroupSuggestionsForIB <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -231,7 +253,7 @@ Accept wildcard characters: False
 ```
 
 ### -ConditionalAccessPolicy
-Blocks or limits access to SharePoint and OneDrive content from unmanaged devices.
+Blocks or limits access to SharePoint and OneDrive content from un-managed devices.
 
 ```yaml
 Type: SPOConditionalAccessPolicyType
@@ -440,11 +462,11 @@ Accept wildcard characters: False
 
 ### -ExternalServicesEnabled
 Enables external services for a tenant.
-External services are defined as services that are not in the Office 365 datacenters.
+External services are defined as services that are not in the Office 365 data centers.
 
 The valid values are:
 True (default) - External services are enabled for the tenant.
-False - External services that are outside of the Office 365 datacenters cannot interact with SharePoint.
+False - External services that are outside of the Office 365 data centers cannot interact with SharePoint.
 
 ```yaml
 Type: Boolean
@@ -681,7 +703,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -NotifyOwnersWhenItemsReshared
+### -NotifyOwnersWhenItemsReShared
 When this parameter is set to $true and another user re-shares a document from a user's OneDrive for Business, the OneDrive for Business owner is notified by e-mail.
 
 For additional information about how to configure notifications for external sharing, see Configure notifications for external sharing for OneDrive for Business.
@@ -833,7 +855,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -PreventExternalUsersFromResharing
+### -PreventExternalUsersFromReSharing
 Prevents external users from resharing files, folders, and sites that they do not own.
 
 ```yaml
@@ -1479,7 +1501,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableAzureADB2BIntegration
-Allows enablement of SharePoint and OneDrive integrartion with Azure AD B2B. See [this article]](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
+Allows enablement of SharePoint and OneDrive integration with Azure AD B2B. See [this article](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
 
 ```yaml
 Type: Boolean
@@ -1537,10 +1559,436 @@ Accept wildcard characters: False
 ```
 
 ### -LabelMismatchEmailHelpLink
+
 This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreLoopSharingCapability
+Gets or sets collaboration type for fluid on core partition
+
+The valid values are:
+
+- Disabled
+- ExternalUserSharingOnly
+- ExternalUserAndGuestSharing
+- ExistingExternalUserSharingOnly
+
+```yaml
+Type: SharingCapabilities
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreLoopSharingCapability
+Gets or sets collaboration type for fluid on core partition
+
+The valid values are:
+
+- Disabled
+- ExternalUserSharingOnly
+- ExternalUserAndGuestSharing
+- ExistingExternalUserSharingOnly
+
+```yaml
+Type: SharingCapabilities
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveLoopSharingCapability
+
+When sharing a whiteboard in a Teams meeting, Whiteboard creates a sharing link that’s accessible by anyone within the organization and automatically shares the whiteboard with any in-tenant users in the meeting.
+
+There’s an additional capability for temporary collaboration by external and shared device accounts during a meeting. This allows these users to temporarily view and collaborate on whiteboards when they’re shared in a Teams meeting, similar to PowerPoint Live sharing.
+
+If you have the external sharing for OneDrive for Business allowed, no further action is required. If you have external sharing for OneDrive for Business disabled, you can leave it disabled but you must enable this new setting. The setting will not take effect until the SharingCapability 'ExternalUserAndGuestSharing' is also enabled at Tenant level. For more information, see [Enable Microsoft Whiteboard for your organization](https://support.microsoft.com/office/enable-microsoft-whiteboard-for-your-organization-1caaa2e2-5c18-4bdf-b878-2d98f1da4b24).
+
+The valid values are:
+
+- Disabled
+- ExternalUserSharingOnly
+- ExternalUserAndGuestSharing
+- ExistingExternalUserSharingOnly
+
+```yaml
+Type: SharingCapabilities
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveLoopDefaultSharingLinkScope
+Gets or sets default share link scope for fluid on OneDrive sites.
+
+The valid values are:
+
+- Anyone
+- Organization
+- SpecificPeople
+- Uninitialized
+
+```yaml
+Type: SharingScope
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreLoopDefaultSharingLinkScope
+
+Gets or sets default share link scope for fluid on SharePoint sites.
+
+The valid values are:
+
+- Anyone
+- Organization
+- SpecificPeople
+- Uninitialized
+
+```yaml
+Type: SharingScope
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreLoopDefaultSharingLinkRole
+
+Gets or sets default share link role for fluid on SharePoint sites.
+
+The valid values are:
+
+- Edit
+- LimitedEdit
+- LimitedView
+- ManageList
+- None
+- Owner
+- RestrictedView
+- Review
+- Submit
+
+```yaml
+Type: Role
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsWBFluidEnabled
+
+Sets whether Whiteboard is enabled or disabled for OneDrive for Business users. Whiteboard on OneDrive for Business is automatically enabled for applicable Microsoft 365 tenants but can be disabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsCollabMeetingNotesFluidEnabled
+
+Gets or sets a value to specify whether CollabMeetingNotes Fluid Framework is enabled If IsFluidEnabled disabled, IsCollabMeetingNotesFluidEnabled will be disabled automatically If IsFluidEnabled enabled, IsCollabMeetingNotesFluidEnabled will be enabled automatically IsCollabMeetingNotesFluidEnabled can be enabled only when IsFluidEnabled is already enabled
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowAnonymousMeetingParticipantsToAccessWhiteboards
+
+When you share a whiteboard in a Teams meeting, Whiteboard creates a sharing link. This link is accessible by anyone within the organization. The whiteboard is also shared with any in-tenant users in the meeting. Whiteboards are shared using company-shareable links, regardless of the default setting. Support for the default sharing link type is planned.
+
+There's more capability for temporary collaboration by external and shared device accounts during a Teams meeting. Users can temporarily view and collaborate on whiteboards that are shared in a meeting, in a similar way to PowerPoint Live sharing.
+
+In this case, Whiteboard provides temporary viewing and collaboration on the whiteboard during the Teams meeting only. A share link isn't created and Whiteboard doesn't grant access to the file.
+
+If you have external sharing enabled for OneDrive for Business, no further action is required.
+
+If you restrict external sharing for OneDrive for Business, you can keep it restricted, and just enable this new setting in order for external and shared device accounts to work. For more information, see [Manage sharing for Microsoft Whiteboard](https://learn.microsoft.com/en-us/microsoft-365/whiteboard/manage-sharing-organizations).
+
+```yaml
+Type: SharingState
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IBImplicitGroupBased
+Gets or sets IBImplicitGroupBased value
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowOpenInDesktopOptionForSyncedFiles
+
+The ShowOpenInDesktopOptionForSyncedFiles setting (set to false by default) displays the "Open in desktop" option when users go to SharePoint or OneDrive on the web and open the shortcut menu for a file that they're syncing with the OneDrive sync app.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowPeoplePickerGroupSuggestionsForIB
+
+The ShowPeoplePickerGroupSuggestionsForIB setting (defaulted to false) allows showing group suggestions for information barriers (IBs) in the People Picker.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreBlockGuestsAsSiteAdmin
+
+```yaml
+Type: SharingState
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HideSyncButtonOnTeamSite
+
+To enable or disable Sync button on Team sites.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreDefaultLinkToExistingAccess
+Gets or sets default share link to existing access on core partition
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableVivaConnectionsAnalytics
+
+Use this parameter to disable/enable Viva connection analytics.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveLoopDefaultSharingLinkRole
+
+Gets or sets default share link role for fluid on OneDrive sites.
+
+The valid values are:
+
+- Edit
+- LimitedEdit
+- LimitedView
+- ManageList
+- None
+- Owner
+- RestrictedView
+- Review
+- Submit
+
+```yaml
+Type: Role
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MajorVersionLimit
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpireVersionsAfterDays
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableAutoExpirationVersionTrim
+
+Enable or disable AutoExpiration version trim for the document library. Set to `$true` to enable, `$false` to disable.
+
+Parameter `ExpireVersionsAfterDays` is required when `EnableAutoExpirationVersionTrim` is false. Set `ExpireVersionsAfterDays` to 0 for NoExpiration, set it to greater or equal 30 for ExpireAfter.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsEnableAppAuthPopUpEnabled
+
+Enables or disables users in the organization to authenticate SharePoint applications using popups.
+
+This parameter affects the way code in SharePoint interacts with Azure AD to get tokens to access APIs. In scenarios where third-party cookies are disabled (such as Safari browsers with ITP feature enabled), any code that requires a token to access an API automatically triggers a full page refresh. When IsEnableAppAuthPopUpEnabled is set to $true, SharePoint will instead surface a popup in this scenario.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableListSync
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveRequestFilesLinkExpirationInDays
+
+Specifies the number of days before a Request files link expires for all OneDrive sites.
+The value can be from 0 to 730 days.
+To remove the expiration requirement, set the value to zero (0).
+
+```yaml
+Type: Int
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableDocumentLibraryDefaultLabeling
+
+Use this turn off setting the default sensitivity label for a document library.
+For more information on this feature, please take a look [here](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-default-label?view=o365-worldwide)
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False

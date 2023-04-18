@@ -19,7 +19,7 @@ Stops/cancels a specific run of a Microsoft flow.
 ## SYNTAX
 
 ```powershell
-Stop-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> -Identity <PowerAutomateFlowRunPipeBind> [-Force] [<CommonParameters>]
+Stop-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> -Identity <PowerAutomateFlowRunPipeBind> [-Force] 
 ```
 
 ## DESCRIPTION

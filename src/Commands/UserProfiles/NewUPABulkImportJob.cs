@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
                     WriteVerbose($"Going to use mapping file to upload from {Path}");
 
-                    var webCtx = ClientContext.Clone(Connection.Url);
+                    var webCtx = AdminContext.Clone(Connection.Url);
                     var web = webCtx.Web;
                     var webServerRelativeUrl = web.EnsureProperty(w => w.ServerRelativeUrl);
                     if (!Folder.ToLower().StartsWith(webServerRelativeUrl))
@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     break;
             }
 
-            var o365 = new Office365Tenant(ClientContext);
+            var o365 = new Office365Tenant(AdminContext);
             var propDictionary = UserProfilePropertyMapping.Cast<DictionaryEntry>().ToDictionary(kvp => (string)kvp.Key, kvp => (string)kvp.Value);
 
             Guid? jobId = null;
@@ -109,7 +109,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             {
                 WriteVerbose($"Instructing SharePoint Online to queue user profile file located at {Url}");
                 var id = o365.QueueImportProfileProperties(IdType, IdProperty, propDictionary, Url);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
 
                 if (id.Value != Guid.Empty)
                 {
@@ -130,8 +130,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
 
             var job = o365.GetImportProfilePropertyJob(jobId.Value);
-            ClientContext.Load(job);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(job);
+            AdminContext.ExecuteQueryRetry();
 
             WriteVerbose($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
 
@@ -149,8 +149,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
                     // Request the current status of the import job
                     jobStatus = o365.GetImportProfilePropertyJob(job.JobId);
-                    ClientContext.Load(jobStatus);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.Load(jobStatus);
+                    AdminContext.ExecuteQueryRetry();
 
                     WriteVerbose($"Current status of job {job.JobId}: {jobStatus.State}");
                 }

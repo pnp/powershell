@@ -19,8 +19,8 @@ Set-PnPTermSet -Identity <TaxonomyTermSetPipeBind> [-TermGroup] <TaxonomyTermGro
  [-Contact <String>] [-CustomProperties <Hashtable>] [-StakeholderToAdd <String>]
  [-StakeholderToDelete <String>] [-IsAvailableForTagging <Boolean>] [-IsOpenForTermCreation <Boolean>]
  [-UseForSiteNavigation <Boolean>] [-UseForFacetedNavigation <Boolean>] [-SetTargetPageForTerms <String>]
- [-RemoveTargetPageforTerms] [-SetCatalogItemPageForCategories <String>] [-RemoveCatalogItemPageForCategories]
- [<CommonParameters>]
+ [-RemoveTargetPageForTerms] [-SetCatalogItemPageForCategories <String>] [-RemoveCatalogItemPageForCategories]
+ 
 ```
 
 ## DESCRIPTION
@@ -187,7 +187,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RemoveTargetPageforTerms
+### -RemoveTargetPageForTerms
 Removes target page settings for the term set.
 
 ```yaml

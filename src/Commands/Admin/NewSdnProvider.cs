@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Admin
             if (ShouldProcess("Adds a new SDN Provider"))
             {
                 this.Tenant.AddSdnProvider(Identity, License);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
         }
     }

@@ -19,7 +19,7 @@ Removes a SharePoint User Profile from the tenant.
 ## SYNTAX
 
 ```powershell
-Remove-PnPUserProfile -LoginName <String> [<CommonParameters>]
+Remove-PnPUserProfile -LoginName <String> 
 ```
 
 ## DESCRIPTION

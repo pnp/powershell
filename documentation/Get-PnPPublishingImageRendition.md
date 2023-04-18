@@ -16,7 +16,7 @@ Returns all image renditions or if Identity is specified a specific one
 
 ```powershell
 Get-PnPPublishingImageRendition [[-Identity] <ImageRenditionPipeBind>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

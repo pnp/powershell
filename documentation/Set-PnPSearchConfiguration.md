@@ -17,13 +17,13 @@ Sets the search configuration.
 ### Config
 ```powershell
 Set-PnPSearchConfiguration -Configuration <String> [-Scope <SearchConfigurationScope>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Path
 ```powershell
 Set-PnPSearchConfiguration -Path <String> [-Scope <SearchConfigurationScope>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

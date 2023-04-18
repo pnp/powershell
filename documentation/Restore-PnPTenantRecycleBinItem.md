@@ -21,7 +21,7 @@ Restores a site collection from the tenant scoped recycle bin
 
 ```powershell
 Restore-PnPTenantRecycleBinItem -Url <String> [-Wait] [-Force] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

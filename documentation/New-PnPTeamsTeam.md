@@ -29,7 +29,7 @@ New-PnPTeamsTeam -GroupId <String> [-AllowAddRemoveApps <Boolean>]
  [-AllowOwnerDeleteMessages <Boolean>] [-AllowStickersAndMemes <Boolean>] [-AllowTeamMentions <Boolean>]
  [-AllowUserDeleteMessages <Boolean>] [-AllowUserEditMessages <Boolean>]
  [-GiphyContentRating <TeamGiphyContentRating>] [-ShowInTeamsSearchAndSuggestions <Boolean>]
- [-Classification <String>] [-Owners <String[]>] [-Members <String[]>] [<CommonParameters>]
+ [-Classification <String>] [-Owners <String[]>] [-Members <String[]>] 
 ```
 
 ### For a new group
@@ -46,7 +46,7 @@ New-PnPTeamsTeam -DisplayName <String> [-MailNickName <String>] [-Description <S
  [-Owners <String[]>] [-Members <String[]>]
  [-ResourceBehaviorOptions <TeamResourceBehaviorOptions>]
  [-SensitivityLabels <GUID[]>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
@@ -352,7 +352,7 @@ Accept wildcard characters: False
 ```
 
 ### -GiphyContentRating
-Setting that determines the level of sensitivity of giphy usage that is allowed in the team. Accepted values are "Strict" or "Moderate"
+Setting that determines the level of sensitivity of gify usage that is allowed in the team. Accepted values are "Strict" or "Moderate"
 
 ```yaml
 Type: TeamGiphyContentRating

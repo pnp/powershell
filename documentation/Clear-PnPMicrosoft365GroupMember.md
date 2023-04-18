@@ -20,7 +20,7 @@ Removes all current members from a particular Microsoft 365 Group
 ## SYNTAX
 
 ```powershell
-Clear-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> [<CommonParameters>]
+Clear-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> 
 ```
 
 ## DESCRIPTION
