@@ -101,11 +101,11 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureACSPrincipal -IncludeSubsites
 </code></pre>
-<p>Returns the lists of Azure ACS principals installed in your site collection as well as the subsites.</p>
+<p>Returns the lists of Azure ACS principals installed in your site collection as well as the subsites. The ValidUntil property will not be populated in this scenario.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPAzureACSPrincipal -Scope Tenant
 </code></pre>
-<p>Returns the lists of Azure ACS principals installed in your Tenant.</p>
+<p>Returns the lists of Azure ACS principals installed in your Tenant. This a very heavy operation, so it might take some time before we get the results.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPAzureACSPrincipal -Scope All -IncludeSubsites
 </code></pre>
@@ -124,7 +124,8 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-scope">-Scope</h3>
 <p>When specified, it determines the scope of the Azure ACS principals.
-Supported values are <code>List, Web, Site, Tenant , All</code>.</p>
+Supported values are <code>List, Web, Site, Tenant , All</code>.
+Only with <code>Tenant</code> and <code>All</code> the <code>ValidUntil</code> property will be populated. For the other options it will not, this is by design and makes the cmdlet perform faster.</p>
 <pre><code class="lang-yaml">Type: Enum (AzureACSPrincipalScope)
 Parameter Sets: (All)
 Required: False
