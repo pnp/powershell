@@ -8,8 +8,8 @@ using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "LargeLisRemovalStatus")]
-    public class GetLargeLisRemovalStatus : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "LargeListRemovalStatus")]
+    public class GetLargeListRemovalStatus : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
         public Guid ListId;
@@ -19,8 +19,10 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var operation = CurrentWeb.GetListOperation(ListId, OperationId);
-            Console.WriteLine($"OperationType: {operation.OperationType}, ResourceLocation: {operation.ResourceLocation}, Status: {operation.Status}, ProgressPercentage: {operation.ProgressPercentage}");
+            var operation = ClientContext.Web.GetListOperation(ListId, OperationId);
+            ClientContext.Load(operation);
+            ClientContext.ExecuteQueryRetry();
+            WriteObject(new RecycleBinLargeOperationResult { RecycleBinLargeOperationType = operation.OperationType, RecycleBinLargeOperationResourceLocation = operation.ResourceLocation, RecycleBinLargeOperationStatus = operation.Status, RecycleBinLargeOperationProgressPercentage = operation.ProgressPercentage});
         }
     }
 }
