@@ -5,10 +5,6 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
     public sealed class RecycleResult
     {
         public Guid RecycleBinItemId { get; set; }
-        public string RecycleBinLargeOperationType { get; set; }
-        public string RecycleBinLargeOperationResourceLocation { get; set; }
-        public string RecycleBinLargeOperationStatus { get; set; }
-        public double RecycleBinLargeOperationProgressPercentage { get; set; }
     }
 
     public sealed class RecycleBinLargeOperation

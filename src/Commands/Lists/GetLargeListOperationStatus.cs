@@ -8,8 +8,8 @@ using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "LargeListRemovalStatus")]
-    public class GetLargeListRemovalStatus : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "LargeListOperationStatus")]
+    public class GetLargeListOperationStatus : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
         public Guid ListId;
