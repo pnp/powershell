@@ -104,7 +104,7 @@
 </code></pre>
 <p>This will add all users with their title ending with &quot;Doe&quot; as additional secondary site collection administrators to the site collection in the current context</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdminrs &quot;user@contoso.onmicrosoft.com&quot;
+<pre><code class="lang-powershell">Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdmin &quot;user@contoso.onmicrosoft.com&quot;
 </code></pre>
 <p>This will set user@contoso.onmicrosoft.com as the primary site collection administrator of the site collection in the current context</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -124,7 +124,7 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
