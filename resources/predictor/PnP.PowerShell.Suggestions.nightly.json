@@ -807,7 +807,7 @@
     "CommandName": "Add-PnPSiteCollectionAdmin",
     "Rank": 3,
     "Id": 135,
-    "Command": "Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdminrs \"user@contoso.onmicrosoft.com\""
+    "Command": "Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdmin \"user@contoso.onmicrosoft.com\""
   },
   {
     "CommandName": "Add-PnPSiteCollectionAppCatalog",
