@@ -21,7 +21,7 @@ Gets the default channel, General, of a team.
 
 ```powershell
 Get-PnPTeamsPrimaryChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPipeBind>] 
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

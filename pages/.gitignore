@@ -8,3 +8,4 @@
 /**/obj/
 _site
 cmdlets
+!cmdlets/index.md

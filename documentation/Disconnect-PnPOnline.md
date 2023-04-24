@@ -15,7 +15,7 @@ Disconnects the current connection and clears its token cache.
 ## SYNTAX
 
 ```powershell
-Disconnect-PnPOnline [<CommonParameters>]
+Disconnect-PnPOnline 
 ```
 
 ## DESCRIPTION

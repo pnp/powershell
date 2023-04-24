@@ -17,7 +17,7 @@ Sets an indexed value to the current web property bag.
 ### Web
 ```powershell
 Set-PnPAdaptiveScopeProperty -Key <String> -Value <String>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

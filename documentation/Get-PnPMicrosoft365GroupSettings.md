@@ -20,7 +20,7 @@ Gets a settings of a specific Microsoft 365 Group or a tenant wide Microsoft 365
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365GroupSettings [-Identity <Microsoft365GroupPipeBind>] [<CommonParameters>]
+Get-PnPMicrosoft365GroupSettings [-Identity <Microsoft365GroupPipeBind>] 
 ```
 
 ## DESCRIPTION

@@ -15,7 +15,7 @@ Returns the current OAuth Access token for the Microsoft Graph API
 ## SYNTAX
 
 ```powershell
-Get-PnPGraphAccessToken [-Decoded] [<CommonParameters>]
+Get-PnPGraphAccessToken [-Decoded] 
 ```
 
 ## DESCRIPTION

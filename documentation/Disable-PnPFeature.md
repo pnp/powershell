@@ -16,7 +16,7 @@ Disables a feature
 
 ```powershell
 Disable-PnPFeature [-Identity] <Guid> [-Force] [-Scope <FeatureScope>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

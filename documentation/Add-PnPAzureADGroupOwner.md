@@ -20,7 +20,7 @@ Adds users to the owners of an Azure Active Directory group. This can be a secur
 ## SYNTAX
 
 ```powershell
-Add-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
+Add-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] 
 ```
 
 ## DESCRIPTION

@@ -15,7 +15,7 @@ Returns the Adaptive card extensions from the Viva connections dashboard page. T
 ## SYNTAX
 
 ```powershell
-Get-PnPVivaConnectionsDashboardACE [-Identity <VivaACEPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPVivaConnectionsDashboardACE [-Identity <VivaACEPipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

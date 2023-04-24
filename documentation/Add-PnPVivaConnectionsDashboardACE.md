@@ -15,7 +15,7 @@ Add an Adaptive card extension in the Viva connections dashboard page. This requ
 ## SYNTAX
 
 ```powershell
-Add-PnPVivaConnectionsDashboardACE [-Identity <DefaultACE>] [-Title <string>] [-PropertiesJSON <string>] [-Description <string>] [-IconProperty <string>] [-Order <Int>][-CardSize <CardSize>] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPVivaConnectionsDashboardACE [-Identity <DefaultACE>] [-Title <string>] [-PropertiesJSON <string>] [-Description <string>] [-IconProperty <string>] [-Order <Int>][-CardSize <CardSize>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

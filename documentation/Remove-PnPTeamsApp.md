@@ -20,7 +20,7 @@ Removes an app from the Teams AppCatalog.
 ## SYNTAX
 
 ```powershell
-Remove-PnPTeamsApp -Identity <TeamsAppPipeBind> [-Force]  [<CommonParameters>]
+Remove-PnPTeamsApp -Identity <TeamsAppPipeBind> [-Force]  
 ```
 
 ## DESCRIPTION

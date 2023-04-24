@@ -16,7 +16,7 @@ Adds a Role Definition (Permission Level) to the site collection in the current 
 
 ```powershell
 Add-PnPRoleDefinition -RoleName <String> [-Clone <RoleDefinitionPipeBind>] [-Include <PermissionKind[]>]
- [-Exclude <PermissionKind[]>] [-Description <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Exclude <PermissionKind[]>] [-Description <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

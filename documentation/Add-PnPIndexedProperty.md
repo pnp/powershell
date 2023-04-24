@@ -16,7 +16,7 @@ Marks the value of the propertybag key specified to be indexed by search.
 
 ```powershell
 Add-PnPIndexedProperty [-Key] <String> [-List <ListPipeBind>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

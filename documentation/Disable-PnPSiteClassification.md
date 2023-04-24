@@ -20,7 +20,7 @@ Disables Site Classifications for the tenant
 ## SYNTAX
 
 ```powershell
-Disable-PnPSiteClassification [<CommonParameters>]
+Disable-PnPSiteClassification 
 ```
 
 ## DESCRIPTION

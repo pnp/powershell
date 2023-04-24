@@ -16,7 +16,7 @@ Registers access to the tenant for the PnP Management Shell Multi-Tenant Azure A
 
 ### Main
 ```powershell
-Register-PnPManagementShellAccess [-AzureEnvironment <AzureEnvironment>] [<CommonParameters>]
+Register-PnPManagementShellAccess [-AzureEnvironment <AzureEnvironment>] 
 ```
 
 ### Show Consent Url

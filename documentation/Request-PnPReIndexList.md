@@ -16,7 +16,7 @@ Marks the list for full indexing during the next incremental crawl
 
 ```powershell
 Request-PnPReIndexList [-Identity] <ListPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

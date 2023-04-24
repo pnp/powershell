@@ -20,7 +20,7 @@ Sets the home site for your tenant. The home site needs to be a communication si
 ## SYNTAX
 
 ```powershell
-Set-PnPHomeSite -HomeSiteUrl <String> [VivaConnectionsDefaultStart <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPHomeSite -HomeSiteUrl <String> [VivaConnectionsDefaultStart <SwitchParameter>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

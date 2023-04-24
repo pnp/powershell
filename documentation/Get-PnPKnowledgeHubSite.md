@@ -20,7 +20,7 @@ Gets the Knowledge Hub Site URL for your tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPKnowledgeHubSite [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPKnowledgeHubSite [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

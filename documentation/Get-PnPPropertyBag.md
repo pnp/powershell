@@ -16,7 +16,7 @@ Returns the property bag values.
 
 ```powershell
 Get-PnPPropertyBag [[-Key] <String>] [-Folder <String>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

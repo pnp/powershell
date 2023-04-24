@@ -17,13 +17,13 @@ Adds a new or updates an existing property bag value.
 ### Web
 ```powershell
 Set-PnPPropertyBagValue -Key <String> -Value <String> [-Indexed] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Folder
 ```powershell
 Set-PnPPropertyBagValue -Key <String> -Value <String> [-Folder <String>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

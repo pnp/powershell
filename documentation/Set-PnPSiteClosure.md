@@ -16,7 +16,7 @@ Opens or closes a site which has a site policy applied
 
 ```powershell
 Set-PnPSiteClosure -State <ClosureState> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

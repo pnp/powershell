@@ -20,7 +20,7 @@ Retrieves if SharePoint Spaces is disabled on the entire tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPDisableSpacesActivation [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPDisableSpacesActivation [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

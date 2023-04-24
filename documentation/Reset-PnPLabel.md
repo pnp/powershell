@@ -16,7 +16,7 @@ Resets a retention label on the specified list or library to None
 
 ```powershell
 Reset-PnPLabel [-List] <ListPipeBind> [-SyncToItems <Boolean>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

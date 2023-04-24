@@ -17,7 +17,7 @@ Creates a new Microsoft Graph Subscription which allows your webhook API to be c
 ```powershell
 New-PnPGraphSubscription -ChangeType <GraphSubscriptionChangeType> -NotificationUrl <String> -Resource <String>
  [-ExpirationDateTime <DateTime>] [-ClientState <String>]
- [-LatestSupportedTlsVersion <GraphSubscriptionTlsVersion>]  [<CommonParameters>]
+ [-LatestSupportedTlsVersion <GraphSubscriptionTlsVersion>]  
 ```
 
 ## DESCRIPTION
