@@ -4,8 +4,6 @@ using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -43,6 +41,7 @@ namespace PnP.PowerShell.Commands.Model
             this.displayNamesOfFileViewers = tenant.DisplayNamesOfFileViewers;
             this.displayNamesOfFileViewersInSpo = tenant.DisplayNamesOfFileViewersInSpo;
             this.isLoopEnabled = tenant.IsLoopEnabled;
+            this.enableAzureADB2BIntegration = tenant.EnableAzureADB2BIntegration;
 
             try
             {
@@ -455,6 +454,14 @@ namespace PnP.PowerShell.Commands.Model
             {
                 this.enableAutoExpirationVersionTrim = false;
             }
+
+            try
+            {
+                this.enableAzureADB2BIntegration = tenant.EnableAzureADB2BIntegration;
+            }
+            catch
+            {
+            }            
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -622,6 +629,7 @@ namespace PnP.PowerShell.Commands.Model
         public int? ExpireVersionsAfterDays => expireVersionsAfterDays;
         public int? MajorVersionLimit => majorVersionLimit;
         public bool? EnableAutoExpirationVersionTrim => enableAutoExpirationVersionTrim;
+        public bool? EnableAzureADB2BIntegration => enableAzureADB2BIntegration;
 
         private bool hideDefaultThemes;
 
@@ -799,5 +807,6 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool? enableAutoExpirationVersionTrim;
 
+        private bool? enableAzureADB2BIntegration;
     }
 }
