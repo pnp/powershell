@@ -79,6 +79,13 @@ Add-PnPNavigationNode -Title "Wiki" -Location "QuickLaunch" -Url "wiki/" -Previo
 ```
 Adds a navigation node to the quicklaunch. The navigation node will have the title "Wiki" and will link to the Wiki library on the selected Web after the node with the ID 2012.
 
+### EXAMPLE 8
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com"
+Add-PnPNavigationNode -Title "Marketing" -Url "https://contoso.sharepoint.com/sites/Marketing" -Location TopNavigationBar -External
+```
+Adds the Marketing navigation node to the top navigation bar on the root site. NOTE that the `-External` switch is mandatory as the connection is made to the root site. This is currently a CSOM issue but once fixed, it will be fixed in PnP PowerShell automatically.
+
 ## PARAMETERS
 
 ### -Connection
