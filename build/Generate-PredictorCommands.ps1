@@ -57,7 +57,6 @@ try {
                 $id++;
             }
         }
-
     }
 
     # check if predictor folder exists in ..\resources folder
