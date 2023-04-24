@@ -1,12 +1,8 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
-using PnP.Framework.Sites;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
-using PnP.PowerShell.Commands.Enums;
 using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -20,7 +16,7 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             var result = Tenant.GetTenantCdnPolicies(CdnType);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
 
             WriteObject(Parse(result),true);
         }

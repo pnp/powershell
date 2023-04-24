@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.SharePoint;
 using System;
@@ -10,8 +9,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionAppCatalog")]
-    [Alias("Get-PnPSiteCollectionAppCatalogs")]
-    [WriteAliasWarning("Please use 'Get-PnPSiteCollectionAppCatalog' (singular). The alias 'Get-PnPSiteCollectionAppCatalogs' (plural) will be removed in a future release.")]
     [OutputType(typeof(IEnumerable<SiteCollectionAppCatalog>))]
     public class GetSiteCollectionAppCatalog : PnPAdminCmdlet
     {
@@ -20,6 +17,9 @@ namespace PnP.PowerShell.Commands
 
         [Parameter(Mandatory = false)]
         public SwitchParameter CurrentSite;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter SkipUrlValidation;
 
         protected override void ExecuteCmdlet()
         {
@@ -58,6 +58,13 @@ namespace PnP.PowerShell.Commands
                 appCatalogsLocalModel.Add(currentSite);
             }
 
+            if(SkipUrlValidation.ToBool())
+            {
+                WriteVerbose($"Skipping URL validation since the {nameof(SkipUrlValidation)} flag has been provided");
+                WriteObject(appCatalogsLocalModel, true);
+                return;
+            }
+            
             var results = new List<SiteCollectionAppCatalog>(appCatalogsLocalModel.Count);
             foreach (var appCatalogLocalModel in appCatalogsLocalModel)
             {
