@@ -123,6 +123,11 @@
 <pre><code class="lang-powershell">Add-PnPNavigationNode -Title &quot;Wiki&quot; -Location &quot;QuickLaunch&quot; -Url &quot;wiki/&quot; -PreviousNode 2012
 </code></pre>
 <p>Adds a navigation node to the quicklaunch. The navigation node will have the title &quot;Wiki&quot; and will link to the Wiki library on the selected Web after the node with the ID 2012.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot;
+Add-PnPNavigationNode -Title &quot;Marketing&quot; -Url &quot;https://contoso.sharepoint.com/sites/Marketing&quot; -Location TopNavigationBar -External
+</code></pre>
+<p>Adds the Marketing navigation node to the top navigation bar on the root site. NOTE that the <code>-External</code> switch is mandatory as the connection is made to the root site. This is currently a CSOM issue but once fixed, it will be fixed in PnP PowerShell automatically.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
