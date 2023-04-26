@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
-
 using Microsoft.SharePoint.Client;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Lists
@@ -12,17 +9,17 @@ namespace PnP.PowerShell.Commands.Lists
     public class GetLargeListOperationStatus : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
-        public Guid ListId;
+        public Guid Identity;
 
         [Parameter(Mandatory = true)]
         public Guid OperationId;
 
         protected override void ExecuteCmdlet()
         {
-            var operation = ClientContext.Web.GetListOperation(ListId, OperationId);
+            var operation = CurrentWeb.GetListOperation(Identity, OperationId);
             ClientContext.Load(operation);
             ClientContext.ExecuteQueryRetry();
-            WriteObject(new RecycleBinLargeOperationResult { RecycleBinLargeOperationType = operation.OperationType, RecycleBinLargeOperationResourceLocation = operation.ResourceLocation, RecycleBinLargeOperationStatus = operation.Status, RecycleBinLargeOperationProgressPercentage = operation.ProgressPercentage});
+            WriteObject(new RecycleBinLargeOperationResult { RecycleBinLargeOperationType = operation.OperationType, RecycleBinLargeOperationResourceLocation = operation.ResourceLocation, RecycleBinLargeOperationStatus = operation.Status, RecycleBinLargeOperationProgressPercentage = operation.ProgressPercentage });
         }
     }
 }
