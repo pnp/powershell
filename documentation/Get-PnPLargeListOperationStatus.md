@@ -10,12 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPLargeListOperati
 # Get-PnPLargeListOperationStatus
 
 ## SYNOPSIS
-Get the status of a large list operation. Currently supports Large List Removal Operation.
+Get the status of a large list operation. Currently supports large list removal operation.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPLargeListOperationStatus [-ListId] <ListId> [-OperationId] <OperationId> [-Connection <PnPConnection>]
+Get-PnPLargeListOperationStatus [-Identity] <ListId> [-OperationId] <OperationId> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -26,13 +26,14 @@ Allows to get the status of a large list operation.
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPLargeListOperationStatus -ListId 9ea5d197-2227-4156-9ae1-725d74dc029d -OperationId 924e6a34-5c90-4d0d-8083-2efc6d1cf481
+Get-PnPLargeListOperationStatus -Identity 9ea5d197-2227-4156-9ae1-725d74dc029d -OperationId 924e6a34-5c90-4d0d-8083-2efc6d1cf481
 ```
 
 ## PARAMETERS
 
-### -ListId
-ListId/Guid of the list. Retrieve the value for this parameter from the output of the Large List Operation Command.
+### -Identity
+ID of the list. Retrieve the value for this parameter from the output of the large list operation command. It can be retrieved as:
+`Remove-PnPList -Identity "Contoso" -Recycle -LargeList`
 
 ```yaml
 Type: Guid
@@ -46,7 +47,8 @@ Accept wildcard characters: False
 ```
 
 ### -OperationId
-OperationId/Guid of the Large List Operation. Retrieve the value for this parameter from the output of the Large List Operation Command.
+OperationId of the large list operation. Retrieve the value for this parameter from the output of the large list operation command which can be used as: 
+`Remove-PnPList -Identity "Contoso" -Recycle -LargeList`.
 
 ```yaml
 Type: Guid
