@@ -103,6 +103,10 @@
 <pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot; -RemoveExisting
 </code></pre>
 <p>Sets the provided two users as the only owners of the Azure Active Directory group named &quot;Project Team&quot; by removing any current existing members first</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &quot;Project Team&quot; -Users &quot;125eaa87-7b54-41fd-b30f-2adfa68c4afe&quot;
+</code></pre>
+<p>Sets the provided security group as owner of the Azure Active Directory group name &quot;Project Team&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
 <p>The Identity of the Azure Active Directory group to add owners to</p>
