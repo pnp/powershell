@@ -60,7 +60,8 @@ namespace PnP.PowerShell.Commands.Branding
                 Url = CurrentWeb.Url;
             }
 
-            var navigationNodeCreationInformation = new NavigationNodeCreationInformation {
+            var navigationNodeCreationInformation = new NavigationNodeCreationInformation
+            {
                 Title = Title,
                 Url = Url,
                 IsExternal = External.IsPresent,
@@ -69,7 +70,8 @@ namespace PnP.PowerShell.Commands.Branding
             if (ParameterSpecified(nameof(PreviousNode)))
             {
                 navigationNodeCreationInformation.PreviousNode = PreviousNode.GetNavigationNode(CurrentWeb);
-            } else
+            }
+            else
             {
                 navigationNodeCreationInformation.AsLastNode = !First.IsPresent;
             }
@@ -81,7 +83,7 @@ namespace PnP.PowerShell.Commands.Branding
                 nodeCollection = parentNode.Children;
                 CurrentWeb.Context.Load(nodeCollection);
                 CurrentWeb.Context.ExecuteQueryRetry();
-            } 
+            }
             else if (Location == NavigationType.SearchNav)
             {
                 nodeCollection = CurrentWeb.LoadSearchNavigation();
@@ -122,7 +124,7 @@ namespace PnP.PowerShell.Commands.Branding
             else
             {
                 throw new Exception("Unable to define Navigation Node collection to add the node to");
-            }            
+            }
         }
     }
 }

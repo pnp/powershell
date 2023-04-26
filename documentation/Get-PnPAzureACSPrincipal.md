@@ -39,14 +39,14 @@ Returns the Azure ACS principals
 Get-PnPAzureACSPrincipal -IncludeSubsites
 ```
 
-Returns the lists of Azure ACS principals installed in your site collection as well as the subsites.
+Returns the lists of Azure ACS principals installed in your site collection as well as the subsites. The ValidUntil property will not be populated in this scenario.
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPAzureACSPrincipal -Scope Tenant
 ```
 
-Returns the lists of Azure ACS principals installed in your Tenant.
+Returns the lists of Azure ACS principals installed in your Tenant. This a very heavy operation, so it might take some time before we get the results.
 
 ### EXAMPLE 4
 ```powershell
@@ -74,6 +74,7 @@ Accept wildcard characters: False
 ### -Scope
 When specified, it determines the scope of the Azure ACS principals. 
 Supported values are `List, Web, Site, Tenant , All`.
+Only with `Tenant` and `All` the `ValidUntil` property will be populated. For the other options it will not, this is by design and makes the cmdlet perform faster.
 
 ```yaml
 Type: Enum (AzureACSPrincipalScope)
@@ -101,5 +102,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
