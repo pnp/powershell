@@ -2244,6 +2244,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPLargeListOperationStatus.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPLargeListOperationStatus.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPList.md",
       "output": {
         ".html": {

@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Remove-PnPList | PnP PowerShell </title>
+    <title>Get-PnPLargeListOperationStatus | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Remove-PnPList | PnP PowerShell ">
+    <meta name="title" content="Get-PnPLargeListOperationStatus | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,38 +77,48 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="remove-pnplist">Remove-PnPList</h1>
+  <h1 id="get-pnplargelistoperationstatus">Get-PnPLargeListOperationStatus</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Deletes a list.</p>
+<p>Get the status of a large list operation. Currently supports large list removal operation.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPList [-Identity] &lt;ListPipeBind&gt; [-Recycle] [-LargeList] [-Force] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPLargeListOperationStatus [-Identity] &lt;ListId&gt; [-OperationId] &lt;OperationId&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to remove a list.</p>
+<p>Allows to get the status of a large list operation.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPList -Identity Announcements
+<pre><code class="lang-powershell">Get-PnPLargeListOperationStatus -Identity 9ea5d197-2227-4156-9ae1-725d74dc029d -OperationId 924e6a34-5c90-4d0d-8083-2efc6d1cf481
 </code></pre>
-<p>Removes the list named 'Announcements'. Asks for confirmation.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPList -Identity Announcements -Force
-</code></pre>
-<p>Removes the list named 'Announcements' without asking for confirmation.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Remove-PnPList -Identity Announcements -Recycle
-</code></pre>
-<p>Removes the list named 'Announcements' and moves it to the Recycle Bin.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Remove-PnPList -Identity Announcements -Recycle -LargeList
-</code></pre>
-<p>Removes the large list named 'Announcements' and moves it to the Recycle Bin.
-Run Get-PnPLargeListOperationStatus -ListId <listid> -OperationId <operationid> to check the status of the operation.</operationid></listid></p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>ID of the list. Retrieve the value for this parameter from the output of the large list operation command. It can be retrieved as:
+<code>Remove-PnPList -Identity &quot;Contoso&quot; -Recycle -LargeList</code></p>
+<pre><code class="lang-yaml">Type: Guid
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-operationid">-OperationId</h3>
+<p>OperationId of the large list operation. Retrieve the value for this parameter from the output of the large list operation command which can be used as:
+<code>Remove-PnPList -Identity &quot;Contoso&quot; -Recycle -LargeList</code>.</p>
+<pre><code class="lang-yaml">Type: Guid
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -117,50 +127,6 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-force">-Force</h3>
-<p>Specifying the Force parameter will skip the confirmation question.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The ID or Title of the list.</p>
-<pre><code class="lang-yaml">Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-recycle">-Recycle</h3>
-<p>When provided, the list will be moved to recycle bin. If omitted, the list will directly be deleted.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-largelist">-LargeList</h3>
-<p>When provided, the large list will be moved to recycle bin through a timer job. It must be paired with the Recycle Parameter.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
