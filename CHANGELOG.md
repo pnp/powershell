@@ -17,7 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `EnableAzureADB2BIntegration` to be returned by `Get-PnPTenant` [#3022](https://github.com/pnp/powershell/pull/3022)
 - Added `-SkipUrlValidation` to `Get-PnPSiteCollectionAppCatalog` which allows for skipping the URL validation when retrieving the site collection app catalog making it faster but potentially returning URLs that have been renamed [#2305](https://github.com/pnp/powershell/pull/3025)
 - Added `Get-PnPLargeListOperationStatus` cmdlet to retrieve the status of a large list operation. [#3033](https://github.com/pnp/powershell/pull/3033)
-- Added `-BlockDownloadFileTypePolicy`, `-BlockDownloadFileTypeIds` and `-ExcludedBlockDownloadGroupIds` parameters to `Set-PnPTenant` cmdlet.
+- Added `-BlockDownloadFileTypePolicy`, `-BlockDownloadFileTypeIds` and `-ExcludedBlockDownloadGroupIds` parameters to `Set-PnPTenant` cmdlet. [#3081](https://github.com/pnp/powershell/pull/3081)
 
 ### Fixed
 
