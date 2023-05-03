@@ -1,9 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using PnP.PowerShell.Commands.Enums;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Management.Automation;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
@@ -17,6 +18,9 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeID = false;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter ExcludeDeprecated = false;
 
         [Parameter(Mandatory = false)]
         public string Path;
@@ -46,6 +50,9 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 {
                     throw new Exception("Restricted delimiter specified");
                 }
+
+                if (ExcludeDeprecated) IncludeID = true;
+
                 if (!string.IsNullOrEmpty(TermStoreName))
                 {
                     var taxSession = TaxonomySession.GetTaxonomySession(ClientContext);
@@ -55,6 +62,11 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 else
                 {
                     exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, IncludeID, Delimiter, Lcid);
+                }
+
+                if (ExcludeDeprecated)
+                {
+                    RemoveDeprecatedTerms(exportedTerms);
                 }
             }
             else
@@ -74,7 +86,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 }
 
                 System.Text.Encoding textEncoding = System.Text.Encoding.Unicode;
-                if(Encoding == Encoding.UTF7)
+                if (Encoding == Encoding.UTF7)
                 {
                     WriteWarning("UTF-7 Encoding is no longer supported. Defaulting to UTF-8");
                     Encoding = Encoding.UTF8;
@@ -107,7 +119,6 @@ namespace PnP.PowerShell.Commands.Taxonomy
                             textEncoding = System.Text.Encoding.Unicode;
                             break;
                         }
-
                 }
 
                 if (File.Exists(Path))
@@ -124,5 +135,32 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
         }
 
+        private void RemoveDeprecatedTerms(List<string> exportedTerms)
+        {
+            var termIds = exportedTerms.Select(t => t.Split(";#").Last().ToGuid());
+            var taxSession = TaxonomySession.GetTaxonomySession(ClientContext);
+            if (termIds.Any())
+            {
+                //refetch all the terms (500 per call) again just to check the term is deprecated or not
+                var termGroups = termIds.Select((termId, index) => new { termId, index })
+                                        .GroupBy(x => x.index / 500, g => g.termId);
+                foreach (var termGroup in termGroups)
+                {
+                    var terms = taxSession.GetTermsById(termGroup.ToArray());
+                    ClientContext.Load(terms);
+                    ClientContext.ExecuteQuery();
+                    var deprecatedTerms = terms.Where(t => t.IsDeprecated);
+                    //remove all deprecated terms
+                    foreach (var deprecatedTerm in deprecatedTerms)
+                    {
+                        var index = exportedTerms.FindIndex(s => s.EndsWith(deprecatedTerm.Id.ToString()));
+                        if (index > -1)
+                        {
+                            exportedTerms.RemoveAt(index);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
