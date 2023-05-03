@@ -16,7 +16,7 @@ Creates a new list
 
 ```powershell
 New-PnPList -Title <String> -Template <ListTemplateType> [-Url <String>] [-Hidden] [-EnableVersioning]
- [-EnableContentTypes] [-OnQuickLaunch] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-EnableContentTypes] [-OnQuickLaunch] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

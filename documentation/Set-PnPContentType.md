@@ -19,7 +19,7 @@ Updates a content type in a web or a list
 Set-PnPContentType [-Identity] <ContentTypePipeBind> [-List] <ListPipeBind> [-InSiteHierarchy] <SwitchParameter>
 [-UpdateChildren] <SwitchParameter> [-Name] <String> [-Description] <String> [-Group] <String>
 [-Hidden] <String> [-ReadOnly] <String> [-Sealed] <String>
- [-Connection <PnPConnection>] [-Verbose] [<CommonParameters>]
+ [-Connection <PnPConnection>] [-Verbose] 
 ```
 
 ## DESCRIPTION

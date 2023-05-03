@@ -17,19 +17,19 @@ Sets the available page layouts for the current site.
 ### SPECIFIC
 ```powershell
 Set-PnPAvailablePageLayouts -PageLayouts <String[]> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### ALL
 ```powershell
 Set-PnPAvailablePageLayouts [-AllowAllPageLayouts] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### INHERIT
 ```powershell
 Set-PnPAvailablePageLayouts [-InheritPageLayouts] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

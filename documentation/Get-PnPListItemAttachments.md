@@ -16,7 +16,7 @@ Downloads the list item attachments to a specified path on the file system.
 
 ### Get attachments from list item
 ```powershell
-Get-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Path <String>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Path <String>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

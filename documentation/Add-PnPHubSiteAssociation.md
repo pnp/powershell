@@ -21,7 +21,7 @@ Connects a site to a hubsite.
 
 ```powershell
 Add-PnPHubSiteAssociation -Site <SitePipeBind> -HubSite <SitePipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

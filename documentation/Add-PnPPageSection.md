@@ -17,7 +17,7 @@ Adds a new section to a page
 ```powershell
 Add-PnPPageSection [-Page] <PagePipeBind> -SectionTemplate <CanvasSectionTemplate>
  [-Order <Int32>] [-ZoneEmphasis <Int32>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

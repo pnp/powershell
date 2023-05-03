@@ -16,7 +16,7 @@ Sets a retention label on the specified list or library. Use Reset-PnPLabel to r
 
 ```powershell
 Set-PnPLabel [-List] <ListPipeBind> -Label <String> [-SyncToItems <Boolean>] [-BlockDeletion <Boolean>]
- [-BlockEdit <Boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-BlockEdit <Boolean>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

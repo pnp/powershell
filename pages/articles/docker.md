@@ -22,7 +22,7 @@ You can try using m365pnp/powershell Docker containers online, without installin
 
 5. Run in the online console:
 
-    ```
+    ```powershell
     docker run --rm -it m365pnp/powershell
     ```
 

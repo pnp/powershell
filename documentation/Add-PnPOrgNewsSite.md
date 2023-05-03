@@ -20,7 +20,7 @@ Adds the site as an organization news source in your tenant
 ## SYNTAX
 
 ```powershell
-Add-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPOrgNewsSite -OrgNewsSiteUrl <SitePipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

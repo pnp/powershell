@@ -24,7 +24,7 @@ Remove-PnPTermLabel
     [-Connection <PnPConnection>] 
     [-WhatIf] 
     [-Confirm] 
-    [<CommonParameters>]
+    
 ```
 
 ### By Name
@@ -39,7 +39,7 @@ Remove-PnPTermLabel
     [-Connection <PnPConnection>] 
     [-WhatIf] 
     [-Confirm] 
-    [<CommonParameters>]
+    
 ```
 
 ## DESCRIPTION

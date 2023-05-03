@@ -16,7 +16,7 @@ Creates a new tenant template object
 
 ```powershell
 New-PnPTenantTemplate [-Author <String>] [-Description <String>] [-DisplayName <String>] [-Generator <String>]
-   [<CommonParameters>]
+   
 ```
 
 ## DESCRIPTION

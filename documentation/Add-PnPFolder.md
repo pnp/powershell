@@ -16,7 +16,7 @@ Creates a folder within a parent folder
 
 ```powershell
 Add-PnPFolder -Name <String> -Folder <FolderPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

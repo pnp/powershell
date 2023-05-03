@@ -16,7 +16,7 @@ Exports a taxonomy TermGroup to either the output or to an XML file.
 
 ```powershell
 Export-PnPTermGroupToXml [-Identity <TermGroupPipeBind>] [-Out <String>] [-FullTemplate] [-Encoding <Encoding>]
- [-Force] [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Force] [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION

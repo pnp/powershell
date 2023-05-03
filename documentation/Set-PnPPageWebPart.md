@@ -17,7 +17,7 @@ Set Web Part properties
 ```powershell
 Set-PnPPageWebPart [-Page] <PagePipeBind> -Identity <WebPartPipeBind>
  [-Title <String>] [-PropertiesJson <String>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

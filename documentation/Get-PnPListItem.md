@@ -18,25 +18,25 @@ Retrieves list items
 ```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-FolderServerRelativeUrl <String>] [-Fields <String[]>]
  [-PageSize <Int32>] [-ScriptBlock <ScriptBlock>][-IncludeContentType <SwitchParameter>][-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### By Id
 ```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-Id <Int32>] [-Fields <String[]>] [-IncludeContentType <SwitchParameter>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### By Unique Id
 ```powershell
-Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] [-IncludeContentType <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPListItem [-List] <ListPipeBind> [-UniqueId <Guid>] [-Fields <String[]>] [-IncludeContentType <SwitchParameter>] [-Connection <PnPConnection>] 
 ```
 
 ### By Query
 ```powershell
 Get-PnPListItem [-List] <ListPipeBind> [-Query <String>] [-FolderServerRelativeUrl <String>]
  [-PageSize <Int32>] [-IncludeContentType <SwitchParameter>] [-ScriptBlock <ScriptBlock>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

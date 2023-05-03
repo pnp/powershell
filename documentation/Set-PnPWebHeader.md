@@ -17,7 +17,7 @@ Allows configuration of the "Change the look" Header
 ```powershell
 Set-PnPWebHeader [-SiteLogoUrl <string>] [-HeaderLayout <HeaderLayoutType>] [-HeaderEmphasis <SPVariantThemeType>] [-HideTitleInHeader]
 [-HeaderBackgroundImageUrl <string>] [-HeaderBackgroundImageFocalX <double>] [-HeaderBackgroundImageFocalY <double>] [-LogoAlignment <LogoAlignment>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

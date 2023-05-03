@@ -20,7 +20,7 @@ Adds a user to an existing Microsoft Teams private channel.
 ## SYNTAX
 
 ```powershell
-Add-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User <String> -Role <String> [<CommonParameters>]
+Add-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User <String> -Role <String> 
 ```
 
 ## DESCRIPTION

@@ -15,7 +15,7 @@ Checks out a file
 ## SYNTAX
 
 ```powershell
-Set-PnPFileCheckedOut [-Url] <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPFileCheckedOut [-Url] <String> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

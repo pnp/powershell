@@ -28,7 +28,7 @@ Set-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-DisplayName <String>] [-Descrip
  [-AllowOwnerDeleteMessages <Boolean>] [-AllowStickersAndMemes <Boolean>] [-AllowTeamMentions <Boolean>]
  [-AllowUserDeleteMessages <Boolean>] [-AllowUserEditMessages <Boolean>]
  [-GiphyContentRating <TeamGiphyContentRating>] [-ShowInTeamsSearchAndSuggestions <Boolean>]
- [-Classification <String>]  [<CommonParameters>]
+ [-Classification <String>]  
 ```
 
 ## DESCRIPTION

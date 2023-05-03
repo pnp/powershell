@@ -20,7 +20,7 @@ Returns the endpoints behind a particular Microsoft 365 Group
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365GroupEndpoint -Identity <Microsoft365GroupPipeBind> [-Connection] [-Verbose] [<CommonParameters>]
+Get-PnPMicrosoft365GroupEndpoint -Identity <Microsoft365GroupPipeBind> [-Connection] [-Verbose] 
 ```
 
 ## DESCRIPTION

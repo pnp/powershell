@@ -20,7 +20,7 @@ Adds users to the owners of an Azure Active Directory group. This can be a secur
 ## SYNTAX
 
 ```powershell
-Add-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
+Add-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] 
 ```
 
 ## DESCRIPTION
@@ -42,6 +42,13 @@ Add-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicroso
 ```
 
 Sets the provided two users as the only owners of the Azure Active Directory group named "Project Team" by removing any current existing members first
+
+### EXAMPLE 3
+```powershell
+Add-PnPAzureADGroupOwner -Identity "Project Team" -Users "125eaa87-7b54-41fd-b30f-2adfa68c4afe"
+```
+
+Sets the provided security group as owner of the Azure Active Directory group name "Project Team".
 
 ## PARAMETERS
 

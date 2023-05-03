@@ -21,7 +21,7 @@ Denies a permission request for the current tenant's "SharePoint Online Client" 
 
 ```powershell
 Deny-PnPTenantServicePrincipalPermissionRequest -RequestId <Guid> [-Force]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -18,7 +18,7 @@ This cmdlet only works when you've connected to a Syntex Content Center site.
 
 ```powershell
 Get-PnPSyntexModelPublications -Model <SyntexModelPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

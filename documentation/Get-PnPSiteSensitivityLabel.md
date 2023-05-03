@@ -15,7 +15,7 @@ Gets the Microsoft Purview sensitivity label that is set on the connected to sit
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteSensitivityLabel [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPSiteSensitivityLabel [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

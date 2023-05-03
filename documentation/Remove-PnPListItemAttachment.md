@@ -16,12 +16,12 @@ Removes attachment from the specified list item in the SharePoint list.
 
 ### Remove attachment from list item
 ```powershell
-Remove-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-FileName <String>] [-Recycle <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-FileName <String>] [-Recycle <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
 ```
 
 ### Remove all attachment files from list item
 ```powershell
-Remove-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-All <SwitchParameter>] [-Recycle <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-All <SwitchParameter>] [-Recycle <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

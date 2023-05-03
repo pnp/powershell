@@ -17,13 +17,13 @@ Activates or deactivates the minimal downloading strategy.
 ### On
 ```powershell
 Set-PnPMinimalDownloadStrategy [-On] [-Force] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Off
 ```powershell
 Set-PnPMinimalDownloadStrategy [-Off] [-Force] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

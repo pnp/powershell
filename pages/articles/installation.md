@@ -22,13 +22,13 @@ Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisher
 
 To use PnP.PowerShell in a Windows container:
 
-```
+```powershell
 docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
 ```
 
 To use PnP.PowerShell in a Linux container:
 
-```
+```powershell
 docker run -it m365pnp/powershell
 ```
 

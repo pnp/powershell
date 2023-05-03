@@ -22,25 +22,25 @@ Returns one or more items from the Recycle Bin.
 ### All (Default)
 ```powershell
 Get-PnPRecycleBinItem [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ### Identity
 ```powershell
 Get-PnPRecycleBinItem [-Identity <Guid>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ### FirstStage
 ```powershell
 Get-PnPRecycleBinItem [-FirstStage] [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ### SecondStage
 ```powershell
 Get-PnPRecycleBinItem [-SecondStage] [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

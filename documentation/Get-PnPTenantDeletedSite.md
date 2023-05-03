@@ -20,7 +20,7 @@ Fetches the site collections from the tenant recycle bin.
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantDeletedSite [-Identity] <String> [-Limit] [-IncludePersonalSite] [-IncludeOnlyPersonalSite] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPTenantDeletedSite [-Identity] <String> [-Limit] [-IncludePersonalSite] [-IncludeOnlyPersonalSite] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

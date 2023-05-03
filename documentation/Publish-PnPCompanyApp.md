@@ -17,7 +17,7 @@ This cmdlet publishes a new company app to Microsoft Teams.
 Publish-PnPCompanyApp -PortalUrl <String> -AppName <String> [-Description <String>] [-LongDescription <String>]
  [-PrivacyPolicyUrl <String>] [-TermsAndUsagePolicyUrl <String>] -CompanyName <String>
  -CompanyWebSiteUrl <String> -ColoredIconPath <String> -OutlineIconPath <String>
- [-Force] [-NoUpload] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Force] [-NoUpload] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

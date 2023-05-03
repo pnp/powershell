@@ -95,7 +95,7 @@ namespace PnP.PowerShell.Commands.Site
         public SwitchParameter OverrideTenantAnonymousLinkExpirationPolicy;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public MediaTranscriptionPolicyType? MediaTranscription { get; set; }
+        public MediaTranscriptionPolicyType? MediaTranscription;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public Guid? SensitivityLabel;
@@ -111,6 +111,15 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool? RestrictedAccessControl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? BlockDownloadPolicy;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ExcludeBlockDownloadPolicySiteOwners;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] ExcludedBlockDownloadGroupIds;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
@@ -334,7 +343,7 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.RequestFilesLinkEnabled = RequestFilesLinkEnabled.Value;
                     executeQueryRequired = true;
                 }
-                
+
                 if (RequestFilesLinkExpirationInDays.HasValue)
                 {
                     if (RequestFilesLinkExpirationInDays.Value < 0 || RequestFilesLinkExpirationInDays > 730)
@@ -351,11 +360,31 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.RestrictedAccessControl = RestrictedAccessControl.Value;
                     executeQueryRequired = true;
                 }
+
+                if (ParameterSpecified(nameof(BlockDownloadPolicy)) && BlockDownloadPolicy.HasValue)
+                {
+                    siteProperties.BlockDownloadPolicy = BlockDownloadPolicy.Value;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(ExcludeBlockDownloadPolicySiteOwners)) && ExcludeBlockDownloadPolicySiteOwners.HasValue)
+                {
+                    siteProperties.ExcludeBlockDownloadPolicySiteOwners = ExcludeBlockDownloadPolicySiteOwners.Value;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) && ExcludedBlockDownloadGroupIds.Length > 0)
+                {
+                    siteProperties.ExcludedBlockDownloadGroupIds = ExcludedBlockDownloadGroupIds;
+                    executeQueryRequired = true;
+                }
+
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();
                     tenant.Context.ExecuteQueryRetry();
                 }
+
                 if (DisableSharingForNonOwners.IsPresent)
                 {
                     Office365Tenant office365Tenant = new Office365Tenant(context);
@@ -395,11 +424,15 @@ namespace PnP.PowerShell.Commands.Site
                 LocaleId.HasValue ||
                 RestrictedToGeo.HasValue ||
                 SocialBarOnSitePagesDisabled.HasValue ||
-                 AnonymousLinkExpirationInDays.HasValue ||
+                AnonymousLinkExpirationInDays.HasValue ||
                 ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)) ||
-                LocaleId.HasValue ||
                 DisableCompanyWideSharingLinks.HasValue ||
                 MediaTranscription.HasValue ||
-                RestrictedAccessControl.HasValue;
+                RestrictedAccessControl.HasValue ||
+                RequestFilesLinkExpirationInDays.HasValue ||
+                RequestFilesLinkEnabled.HasValue ||
+                BlockDownloadPolicy.HasValue ||
+                ExcludeBlockDownloadPolicySiteOwners.HasValue ||
+                ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds));
     }
 }

@@ -22,13 +22,13 @@ Updates an existing Planner bucket
 ### By Group
 ```powershell
 Set-PnPPlannerBucket -Bucket <PlannerBucketPipeBind> -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind>
- -Name <String>  [<CommonParameters>]
+ -Name <String>  
 ```
 
 ### By Plan Id
 ```powershell
 Set-PnPPlannerBucket -Bucket <PlannerBucketPipeBind> -PlanId <String> -Name <String> 
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

@@ -15,7 +15,7 @@ Returns the current connection
 ## SYNTAX
 
 ```powershell
-Get-PnPConnection [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPConnection [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

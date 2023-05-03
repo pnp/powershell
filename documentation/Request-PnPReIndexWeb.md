@@ -15,7 +15,7 @@ Marks the web for full indexing during the next incremental crawl.
 ## SYNTAX
 
 ```powershell
-Request-PnPReIndexWeb [-Connection <PnPConnection>] [<CommonParameters>]
+Request-PnPReIndexWeb [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

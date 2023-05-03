@@ -21,12 +21,12 @@ Adds a user to an existing Microsoft Teams instance.
 
 ### User
 ```powershell
-Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User <String> -Role <String> [<CommonParameters>]
+Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -User <String> -Role <String> 
 ```
 
 ### Users
 ```powershell
-Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Users <String[]> -Role <String> [<CommonParameters>]
+Add-PnPTeamsUser -Team <TeamsTeamPipeBind> -Users <String[]> -Role <String> 
 ```
 
 ## DESCRIPTION

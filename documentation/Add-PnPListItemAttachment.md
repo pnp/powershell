@@ -16,17 +16,17 @@ Adds an attachment to the specified list item in the SharePoint list
 
 ### Upload attachment file from path
 ```powershell
-Add-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Path <String>] [-NewFileName <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Path <String>] [-NewFileName <String>] [-Connection <PnPConnection>] 
 ```
 
 ### Upload attachment file from stream
 ```powershell
-Add-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-FileName <String>] [-Stream <Stream>] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-FileName <String>] [-Stream <Stream>] [-Connection <PnPConnection>] 
 ```
 
 ### Create attachment file from text
 ```powershell
-Add-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-FileName <String>] [-Content <text>] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-FileName <String>] [-Content <text>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

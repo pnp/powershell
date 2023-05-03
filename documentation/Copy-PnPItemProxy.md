@@ -30,7 +30,7 @@ Copy-Item
     [-Confirm]
     [-FromSession <PSSession>]
     [-ToSession <PSSession>]
-    [<CommonParameters>]
+    
 ```
 
 ## DESCRIPTION

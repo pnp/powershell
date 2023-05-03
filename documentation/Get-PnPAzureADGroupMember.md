@@ -20,7 +20,7 @@ Gets members of a particular Azure Active Directory group. This can be a securit
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> [<CommonParameters>]
+Get-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> 
 ```
 
 ## DESCRIPTION
