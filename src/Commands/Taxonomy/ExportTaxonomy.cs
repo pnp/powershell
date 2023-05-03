@@ -51,22 +51,20 @@ namespace PnP.PowerShell.Commands.Taxonomy
                     throw new Exception("Restricted delimiter specified");
                 }
 
-                if (ExcludeDeprecated) IncludeID = true;
-
                 if (!string.IsNullOrEmpty(TermStoreName))
                 {
                     var taxSession = TaxonomySession.GetTaxonomySession(ClientContext);
                     var termStore = taxSession.TermStores.GetByName(TermStoreName);
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, IncludeID, termStore, Delimiter, Lcid);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, IncludeID || ExcludeDeprecated, termStore, Delimiter, Lcid);
                 }
                 else
                 {
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, IncludeID, Delimiter, Lcid);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, IncludeID || ExcludeDeprecated, Delimiter, Lcid);
                 }
 
                 if (ExcludeDeprecated)
                 {
-                    RemoveDeprecatedTerms(exportedTerms);
+                    exportedTerms = RemoveDeprecatedTerms(exportedTerms);
                 }
             }
             else
@@ -135,7 +133,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
         }
 
-        private void RemoveDeprecatedTerms(List<string> exportedTerms)
+        private List<string> RemoveDeprecatedTerms(List<string> exportedTerms)
         {
             var termIds = exportedTerms.Select(t => t.Split(";#").Last().ToGuid());
             var taxSession = TaxonomySession.GetTaxonomySession(ClientContext);
@@ -161,6 +159,18 @@ namespace PnP.PowerShell.Commands.Taxonomy
                     }
                 }
             }
+
+            if (!IncludeID)
+            {
+                //remove the ids from the term string.
+                var exportedTermsWithoutId = new List<string>();
+                foreach (var term in exportedTerms)
+                {
+                    exportedTermsWithoutId.Add(string.Join("|", term.Split("|").Select(t => t.Split(";#").First())));
+                }
+                return exportedTermsWithoutId;
+            }
+            return exportedTerms;
         }
     }
 }
