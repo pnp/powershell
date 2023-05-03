@@ -166,7 +166,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 var exportedTermsWithoutId = new List<string>();
                 foreach (var term in exportedTerms)
                 {
-                    exportedTermsWithoutId.Add(string.Join("|", term.Split("|").Select(t => t.Split(";#").First())));
+                    exportedTermsWithoutId.Add(string.Join(Delimiter, term.Split(Delimiter).Select(t => t.Split(";#").First())));
                 }
                 return exportedTermsWithoutId;
             }
