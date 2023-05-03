@@ -6,6 +6,8 @@ using System;
 using Microsoft.Online.SharePoint.TenantManagement;
 using System.Collections.Generic;
 using Microsoft.SharePoint.Client.Sharing;
+using Microsoft.SharePoint.Client.Administration;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -348,6 +350,17 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public int? OneDriveRequestFilesLinkExpirationInDays { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? BlockDownloadFileTypePolicy { get; set; }
+
+        [Parameter(Mandatory = false)]
+        [ValidateNotNull]
+        public SPBlockDownloadFileTypeId[] BlockDownloadFileTypeIds { get; set; }
+
+        [Parameter(Mandatory = false)]
+        [ValidateNotNull]
+        public Guid[] ExcludedBlockDownloadGroupIds { get; set; }
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
@@ -1058,7 +1071,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 Tenant.EnableRestrictedAccessControl = EnableRestrictedAccessControl.Value;
                 modified = true;
-            }            
+            }
 
             if (SyncAadB2BManagementPolicy.HasValue)
             {
@@ -1206,6 +1219,50 @@ namespace PnP.PowerShell.Commands.Admin
             if (ShowPeoplePickerGroupSuggestionsForIB.HasValue)
             {
                 Tenant.ShowPeoplePickerGroupSuggestionsForIB = ShowPeoplePickerGroupSuggestionsForIB.Value;
+                modified = true;
+            }
+
+            if (BlockDownloadFileTypePolicy.HasValue)
+            {
+                if (!BlockDownloadFileTypePolicy.Value)
+                {
+                    Tenant.SetBlockDownloadFileTypePolicyData(BlockDownloadFileTypePolicy.Value, new SPBlockDownloadFileTypeId[0], new Guid[0]);
+                    modified = true;
+                }
+                else
+                {
+                    if (BlockDownloadFileTypeIds == null || BlockDownloadFileTypeIds.Length == 0)
+                    {
+                        throw new InvalidOperationException("Please specify the File Type Ids that you want to block for download.");
+                    }
+                    if (BlockDownloadFileTypeIds.Contains(SPBlockDownloadFileTypeId.TeamsMeetingRecording))
+                    {
+                        WriteWarning("Please note that this policy only prevents download of Teams Meeting Recording files saved in SharePoint Online by the Teams service. Only new meeting recordings saved after this policy is set will be impacted.");
+                    }
+                    BlockDownloadFileTypeIds = BlockDownloadFileTypeIds.Distinct().ToArray();
+                    if (ExcludedBlockDownloadGroupIds != null && ExcludedBlockDownloadGroupIds.Length != 0)
+                    {
+                        if (ExcludedBlockDownloadGroupIds.Length > 10)
+                        {
+                            throw new InvalidOperationException("You can only specify 10 IDs in the Block Download File Type Policy Invalid Exclusion List");
+                        }
+                        Tenant.SetBlockDownloadFileTypePolicyData(BlockDownloadFileTypePolicy.Value, BlockDownloadFileTypeIds, ExcludedBlockDownloadGroupIds);
+                    }
+                    else
+                    {
+                        Tenant.SetBlockDownloadFileTypePolicyData(BlockDownloadFileTypePolicy.Value, BlockDownloadFileTypeIds, new Guid[0]);
+                    }
+                    modified = true;
+                }
+
+            }
+            else if (ExcludedBlockDownloadGroupIds != null)
+            {
+                if (ExcludedBlockDownloadGroupIds.Length > 10)
+                {
+                    throw new InvalidOperationException("You can only specify 10 IDs in the Block Download File Type Policy Invalid Exclusion List");
+                }
+                Tenant.SetBlockDownloadFileTypePolicyExclusionList(ExcludedBlockDownloadGroupIds);
                 modified = true;
             }
 
