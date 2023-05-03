@@ -229,6 +229,8 @@ Rich text: -Values @{"MultiTextField" = "&lt;strong&gt;New&lt;/strong&gt; text"}
 
 Choice: -Values @{"ChoiceField" = "Value 1"}
 
+Multi-Choice: -Values @{"MultiChoice" = "Choice 1","Choice 2"}
+
 Number: -Values @{"NumberField" = "10"}
 
 Currency: -Values @{"CurrencyField" = "10"}
