@@ -26,7 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Add-PnPNavigationNode` cmdlet where the target audience would not correctly be set when creating a node as a child of a parent node [#2940](https://github.com/pnp/powershell/pull/2940)
 - Fixed regressions within the following cmdlets `Get-PnPTenantCdnEnabled`, `Get-PnPTenantCdnOrigin`, `Get-PnPTenantCdnPolicies`, `Get-PnPTenantDeletedSite`, `Get-PnPTenantInstance` [#3030](https://github.com/pnp/powershell/pull/3030)
 - Fixed issue where `Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdmin <user>` would require owners to be specified as well. [#3035](https://github.com/pnp/powershell/pull/3035)
-- Fixed `Get-PnPAzureADGroup` returns only 100 results even if there are more groups present in Azure AD.
+- Fixed `Get-PnPAzureADGroup` returns only 100 results even if there are more groups present in Azure AD. [#3085](https://github.com/pnp/powershell/pull/3085)
 
 ### Removed
 
