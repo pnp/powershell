@@ -144,12 +144,30 @@ namespace PnP.PowerShell.Commands.Site
 
             if (ParameterSpecified(nameof(ScriptSafeDomainName)) && !string.IsNullOrEmpty(ScriptSafeDomainName))
             {
-                ScriptSafeDomainEntityData scriptSafeDomainEntity = new ScriptSafeDomainEntityData
+                ScriptSafeDomain safeDomain = null;
+                try
                 {
-                    DomainName = ScriptSafeDomainName
-                };
-                site.CustomScriptSafeDomains.Create(scriptSafeDomainEntity);
-                context.ExecuteQueryRetry();
+                    safeDomain = ClientContext.Site.CustomScriptSafeDomains.GetByDomainName(ScriptSafeDomainName);
+                    ClientContext.Load(safeDomain);
+                    ClientContext.ExecuteQueryRetry();
+                }
+                catch { }
+                if (safeDomain.ServerObjectIsNull == null)
+                {
+                    ScriptSafeDomainEntityData scriptSafeDomainEntity = new ScriptSafeDomainEntityData
+                    {
+                        DomainName = ScriptSafeDomainName
+                    };
+
+                    safeDomain = context.Site.CustomScriptSafeDomains.Create(scriptSafeDomainEntity);
+                    context.Load(safeDomain);
+                    context.ExecuteQueryRetry();
+                    WriteObject(safeDomain);
+                }
+                else
+                {
+                    WriteWarning($"Unable to add Domain Name as there is an existing domain name with the same name. Will be skipped.");
+                }
             }
 
             if (ParameterSpecified(nameof(LogoFilePath)))
