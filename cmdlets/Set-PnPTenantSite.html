@@ -103,7 +103,10 @@
  [-DisableAppViews &lt;AppViewsPolicy&gt;] [-DisableCompanyWideSharingLinks &lt;CompanyWideSharingLinksPolicy&gt;]
  [-DisableFlows &lt;FlowsPolicy&gt;] [-AnonymousLinkExpirationInDays &lt;Int32&gt;] [-SensitivityLabel &lt;String&gt;] [-RemoveLabel] [-AddInformationSegment &lt;Guid[]&gt;] [-RemoveInformationSegment &lt;Guid[]&gt;]
  [-OverrideTenantAnonymousLinkExpirationPolicy] [-InformationBarriersMode &lt;InformationBarriersMode&gt;] 
- [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;] [-Wait] 
+ [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;] 
+ [-BlockDownloadPolicy &lt;Boolean&gt;] [-ExcludeBlockDownloadPolicySiteOwners &lt;Boolean&gt;]
+ [-ExcludedBlockDownloadGroupIds &lt;Guid[]&gt;]
+ [-Wait] 
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
@@ -590,6 +593,39 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: MediaTranscriptionPolicyType
 Parameter Sets: Set Properties
 Accepted values: Enabled, Disabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-blockdownloadpolicy">-BlockDownloadPolicy</h3>
+<p>Set this to true to block download of files from SharePoint sites or OneDrive</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-excludeblockdownloadpolicysiteowners">-ExcludeBlockDownloadPolicySiteOwners</h3>
+<p>Set this to true to exempts site owners from the block download policy so that they can fully download any content for the site.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-excludedblockdownloadgroupids">-ExcludedBlockDownloadGroupIds</h3>
+<p>Exempts users from the mentioned groups from this policy and they can fully download any content for the site.</p>
+<pre><code class="lang-yaml">Type: GUID[]
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
