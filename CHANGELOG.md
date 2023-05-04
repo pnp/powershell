@@ -28,12 +28,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue where `Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdmin <user>` would require owners to be specified as well. [#3035](https://github.com/pnp/powershell/pull/3035)
 - Fixed `Get-PnPAzureADGroup` returns only 100 results even if there are more groups present in Azure AD. [#3085](https://github.com/pnp/powershell/pull/3085)
 
+### Changed
+
+- Improved `Set-PnPSite` cmdlet when using the `ScriptSafeDomainName` parameter. If a domain is already existing, it will now throw a warning. [#3073](https://github.com/pnp/powershell/pull/3073)
+
 ### Removed
 
 - Removed alias `Get-PnPSiteCollectionAppCatalogs` for `Get-PnPSiteCollectionAppCatalog` [#2305](https://github.com/pnp/powershell/pull/3025)
 
 ### Contributors
 
+- Reshmee Auckloo [reshmee011]
 - Dan Toft [Tanddant]
 - [reusto]
 - [dhiabedoui]
