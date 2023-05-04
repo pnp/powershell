@@ -51,15 +51,20 @@ namespace PnP.PowerShell.Commands.Taxonomy
                     throw new Exception("Restricted delimiter specified");
                 }
 
+                if (ExcludeDeprecated && Delimiter != "|")
+                {
+                    throw new Exception("ExcludeDeprecated works only on the default delimiter");
+                }
+
                 if (!string.IsNullOrEmpty(TermStoreName))
                 {
                     var taxSession = TaxonomySession.GetTaxonomySession(ClientContext);
                     var termStore = taxSession.TermStores.GetByName(TermStoreName);
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, IncludeID || ExcludeDeprecated, termStore, Delimiter, Lcid);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, (IncludeID || ExcludeDeprecated), termStore, Delimiter, Lcid);
                 }
                 else
                 {
-                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, IncludeID || ExcludeDeprecated, Delimiter, Lcid);
+                    exportedTerms = ClientContext.Site.ExportTermSet(TermSetId, (IncludeID || ExcludeDeprecated), Delimiter, Lcid);
                 }
 
                 if (ExcludeDeprecated)
