@@ -109,6 +109,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPFileSharingLink` and `Remove-PnPFolderSharingLink` cmdlets to delete sharing links associated with files and folders. [#3200](https://github.com/pnp/powershell/pull/3200)
 - Added `Get-PnPUnfurlLink` cmdlet to support unfurling a link to get more information about the link. [#3224](https://github.com/pnp/powershell/pull/3224)
 - Added `ListsShowHeaderAndNavigation` parameter to always show lists with site elements intact when specified in `Set-PnPTenantSite` and `Set-PnPSite` cmdlets. [#3233](https://github.com/pnp/powershell/pull/3233)
+- Added `-AzureADWorkloadIdentity` parameter to `Connect-PnPOnline` cmdlet to support Azure AD Workload Identity authentication. [#3097](https://github.com/pnp/powershell/pull/3097)
+- Added Managed identity support for Power Platform related cmdlets. [#3097](https://github.com/pnp/powershell/pull/3097)
 
 ### Fixed
 
