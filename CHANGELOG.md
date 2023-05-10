@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-SkipUrlValidation` to `Get-PnPSiteCollectionAppCatalog` which allows for skipping the URL validation when retrieving the site collection app catalog making it faster but potentially returning URLs that have been renamed [#2305](https://github.com/pnp/powershell/pull/3025)
 - Added `Get-PnPLargeListOperationStatus` cmdlet to retrieve the status of a large list operation. [#3033](https://github.com/pnp/powershell/pull/3033)
 - Added `-BlockDownloadPolicy`, `-ExcludeBlockDownloadPolicySiteOwners` and `ExcludedBlockDownloadGroupIds` parameters to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets. [#3084](https://github.com/pnp/powershell/pull/3084)
+- Added `-ArchiveRedirectUrl` to `Set-PnPTenant` allowing the configuration of a custom page to be shown when navigating to an archived SharePoint Online site [#3100](https://github.com/pnp/powershell/pull/3100)
 
 ### Fixed
 
