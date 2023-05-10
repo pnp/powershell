@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue where `Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdmin <user>` would require owners to be specified as well. [#3035](https://github.com/pnp/powershell/pull/3035)
 - Fixed `Get-PnPAzureADGroup` returns only 100 results even if there are more groups present in Azure AD. [#3085](https://github.com/pnp/powershell/pull/3085)
 - Fixed `Get-PnPAccessToken` cmdlet to correctly retrieve the access token for the specified resource URL. [#3091](https://github.com/pnp/powershell/pull/3091)
+- Fixed issue with `Get-PnPTenantSyncClientRestriction` cmdlet not populating the necessary properties.
 
 ### Changed
 
