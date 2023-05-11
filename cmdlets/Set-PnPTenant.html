@@ -189,6 +189,7 @@
  [-IBImplicitGroupBased &lt;Boolean&gt;]
  [-ShowOpenInDesktopOptionForSyncedFiles &lt;Boolean&gt;]
  [-ShowPeoplePickerGroupSuggestionsForIB &lt;Boolean&gt;]
+ [-ArchiveRedirectUrl &lt;String&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -237,6 +238,17 @@ Accept wildcard characters: False
 <h3 id="-applyappenforcedrestrictionstoadhocrecipients">-ApplyAppEnforcedRestrictionsToAdHocRecipients</h3>
 <p>When the feature is enabled, all guest users are subject to conditional access policy. By default guest users who are accessing SharePoint Online files with pass code are exempt from the conditional access policy.</p>
 <pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-archiveredirecturl">-ArchiveRedirectUrl</h3>
+<p>Can be used to configure a custom page to show when a user is navigating to a SharePoint Online site that has been archived using Microsoft Syntex Archiving.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
