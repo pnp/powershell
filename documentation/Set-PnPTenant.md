@@ -119,6 +119,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IBImplicitGroupBased <Boolean>]
  [-ShowOpenInDesktopOptionForSyncedFiles <Boolean>]
  [-ShowPeoplePickerGroupSuggestionsForIB <Boolean>]
+ [-ArchiveRedirectUrl <String>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -192,6 +193,20 @@ When the feature is enabled, all guest users are subject to conditional access p
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ArchiveRedirectUrl
+Can be used to configure a custom page to show when a user is navigating to a SharePoint Online site that has been archived using Microsoft Syntex Archiving.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False
