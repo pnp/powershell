@@ -16,7 +16,7 @@ Set text part properties
 
 ```powershell
 Set-PnPPageTextPart [-Page] <PagePipeBind> -InstanceId <Guid> -Text <String>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

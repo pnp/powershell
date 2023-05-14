@@ -15,7 +15,7 @@ Returns the current site collection administrators of the site collection in the
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteCollectionAdmin [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPSiteCollectionAdmin [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

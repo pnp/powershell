@@ -37,7 +37,7 @@ docker run --rm -it -v %cd%\pages:C:\workplace pnp.powershell-pages-build powers
 
 ## Clean documentation
 
-```
+```bat
 rmdir /s /q pages\_site
 rmdir /s /q pages\obj
 ```

@@ -18,7 +18,7 @@ Returns a taxonomy term group
 Get-PnPTermGroup
  [-Identity <TaxonomyTermGroupPipeBind>]
  [-TermStore <TaxonomyTermStorePipeBind>]
- [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

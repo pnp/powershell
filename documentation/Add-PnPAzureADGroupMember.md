@@ -20,7 +20,7 @@ Adds members to a particular Azure Active Directory Group. This can be a securit
 ## SYNTAX
 
 ```powershell
-Add-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] [<CommonParameters>]
+Add-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] 
 ```
 
 ## DESCRIPTION
@@ -42,6 +42,13 @@ Add-PnPAzureADGroupMember -Identity "Project Team" -Users "john@contoso.onmicros
 ```
 
 Sets the provided two users as the only members of the Azure Active Directory group named "Project Team" by removing any current existing members first
+
+### EXAMPLE 3
+```powershell
+Add-PnPAzureADGroupMember -Identity "Project Team" -Users "125eaa87-7b54-41fd-b30f-2adfa68c4afe"
+```
+
+Sets the provided security group as a member of the Azure Active Directory group name "Project Team".
 
 ## PARAMETERS
 

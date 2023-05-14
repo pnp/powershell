@@ -16,7 +16,7 @@ Returns a taxonomy item
 
 ```powershell
 Get-PnPTaxonomyItem [-TermPath] <String> [-Connection <PnPConnection>]  
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

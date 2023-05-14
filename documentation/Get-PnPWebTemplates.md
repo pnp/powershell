@@ -21,7 +21,7 @@ Returns the available classic web templates
 
 ```powershell
 Get-PnPWebTemplates [-Lcid <UInt32>] [-CompatibilityLevel <Int32>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

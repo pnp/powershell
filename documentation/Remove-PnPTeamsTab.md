@@ -21,7 +21,7 @@ Removes a Microsoft Teams tab in a channel.
 
 ```powershell
 Remove-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Identity <TeamsTabPipeBind>
- [-Force]  [<CommonParameters>]
+ [-Force]  
 ```
 
 ## DESCRIPTION

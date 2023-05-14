@@ -20,7 +20,7 @@ Allows the SharePoint Online App Bar to be disabled. It may take some time for t
 ## SYNTAX
 
 ```powershell
-Set-PnPTemporarilyDisableAppBar -Enabled <Boolean> [<CommonParameters>]
+Set-PnPTemporarilyDisableAppBar -Enabled <Boolean> 
 ```
 
 ## DESCRIPTION

@@ -2,6 +2,8 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using System;
+using System.Linq;
 using System.Management.Automation;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
@@ -33,10 +35,23 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 group = Identity.GetGroup(Connection, AccessToken);
             }
-
             if (group != null)
             {
-                Microsoft365GroupsUtility.AddMembersAsync(Connection, new System.Guid(group.Id), Users, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
+                Guid emptyGuid = Guid.Empty;
+
+                var userArray = Users.Where(x => !Guid.TryParse(x, out emptyGuid)).ToArray();
+
+                if (userArray.Length > 0)
+                {
+                    Microsoft365GroupsUtility.AddMembersAsync(Connection, new System.Guid(group.Id), userArray, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
+                }
+
+                var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
+
+                if (secGroups.Length > 0)
+                {
+                    Microsoft365GroupsUtility.AddDirectoryMembersAsync(Connection, new System.Guid(group.Id), secGroups, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
+                }
             }
         }
     }

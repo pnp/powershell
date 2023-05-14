@@ -16,17 +16,17 @@ Loads/Reads a PnP file from the file system, string or stream
 
 ### By Path
 ```powershell
-Read-PnPSiteTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [<CommonParameters>]
+Read-PnPSiteTemplate [-Path] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
 ```
 
 ### By XML
 ```powershell
-Read-PnPSiteTemplate [-Xml] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [<CommonParameters>]
+Read-PnPSiteTemplate [-Xml] <String> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
 ```
 
 ### From a Stream
 ```powershell
-Read-PnPSiteTemplate [-Stream] <Stream> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [<CommonParameters>]
+Read-PnPSiteTemplate [-Stream] <Stream> [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
 ```
 
 ## DESCRIPTION

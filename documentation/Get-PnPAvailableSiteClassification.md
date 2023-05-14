@@ -20,7 +20,7 @@ Returns the available classic Site Classifications for the tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPAvailableSiteClassification [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPAvailableSiteClassification [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -22,13 +22,13 @@ Removes a planner bucket
 ### By Name
 ```powershell
 Remove-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind>
- -Identity <PlannerBucketPipeBind>  [-WhatIf] [-Confirm] [<CommonParameters>]
+ -Identity <PlannerBucketPipeBind>  [-WhatIf] [-Confirm] 
 ```
 
 ### By Bucket Id
 ```powershell
 Remove-PnPPlannerBucket -BucketId <String> -Identity <PlannerBucketPipeBind>  [-WhatIf]
- [-Confirm] [<CommonParameters>]
+ [-Confirm] 
 ```
 
 ## DESCRIPTION

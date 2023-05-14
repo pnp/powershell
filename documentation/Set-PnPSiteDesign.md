@@ -23,7 +23,7 @@ Updates a Site Design on the current tenant.
 Set-PnPSiteDesign -Identity <TenantSiteDesignPipeBind> [-Title <String>] [-SiteScriptIds <GuidPipeBind[]>]
  [-Description <String>] [-IsDefault] [-PreviewImageAltText <String>] [-PreviewImageUrl <String>]
  [-WebTemplate <SiteWebTemplate>] [-Version <Int32>] [-ThumbnailUrl <String>] [-DesignPackageId <Guid>] [-Connection <PnPConnection>]  
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

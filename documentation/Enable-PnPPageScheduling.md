@@ -16,7 +16,7 @@ Enables the modern page schedule feature
 ## SYNTAX
 
 ```powershell
-Enable-PnPPageScheduling [-Connection <PnPConnection>] [<CommonParameters>]
+Enable-PnPPageScheduling [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

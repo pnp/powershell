@@ -16,7 +16,7 @@ Converts a provisioning template to an other schema version
 
 ```powershell
 Convert-PnPSiteTemplate [-Path] <String> [-Out <String>] [[-ToSchema] <XMLPnPSchemaVersion>]
- [-Encoding <Encoding>] [-Force] [<CommonParameters>]
+ [-Encoding <Encoding>] [-Force] 
 ```
 
 ## DESCRIPTION

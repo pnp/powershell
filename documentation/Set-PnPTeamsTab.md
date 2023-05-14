@@ -21,7 +21,7 @@ Updates Teams Tab settings
 
 ```powershell
 Set-PnPTeamsTab -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsTabPipeBind>]
- [-DisplayName <String>]  [<CommonParameters>]
+ [-DisplayName <String>]  
 ```
 
 ## DESCRIPTION

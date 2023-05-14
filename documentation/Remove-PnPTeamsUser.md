@@ -21,7 +21,7 @@ Removes a user from a team.
 
 ```powershell
 Remove-PnPTeamsUser -Team <TeamsTeamPipeBind> -User <String> [-Role <String>] [-Force] 
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

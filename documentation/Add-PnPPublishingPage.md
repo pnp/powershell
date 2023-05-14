@@ -16,7 +16,7 @@ Adds a publishing page
 
 ```powershell
 Add-PnPPublishingPage -PageName <String> [-FolderPath <String>] -PageTemplateName <String> [-Title <String>]
- [-Publish] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Publish] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

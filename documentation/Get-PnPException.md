@@ -15,7 +15,7 @@ Returns the last exception that occurred
 ## SYNTAX
 
 ```powershell
-Get-PnPException [-All] [<CommonParameters>]
+Get-PnPException [-All] 
 ```
 
 ## DESCRIPTION

@@ -22,7 +22,7 @@ Set-PnPListInformationRightsManagement -List <ListPipeBind> [-Enable <Boolean>] 
  [-EnableDocumentBrowserPublishingView <Boolean>] [-EnableGroupProtection <Boolean>]
  [-EnableLicenseCacheExpire <Boolean>] [-LicenseCacheExpireDays <Int32>] [-GroupName <String>]
  [-PolicyDescription <String>] [-PolicyTitle <String>] [-TemplateId <String>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

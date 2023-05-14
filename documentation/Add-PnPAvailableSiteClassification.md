@@ -20,7 +20,7 @@ Adds one or more classic site classification values to the list of possible valu
 ## SYNTAX
 
 ```powershell
-Add-PnPAvailableSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> [<CommonParameters>]
+Add-PnPAvailableSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> 
 ```
 
 ## DESCRIPTION

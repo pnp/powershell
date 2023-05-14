@@ -20,7 +20,7 @@ Allows the Microsoft Planner configuration of the tenant to be set.
 ## SYNTAX
 
 ```powershell
-Set-PnPPlannerConfiguration [-IsPlannerAllowed <boolean>] [-AllowRosterCreation <boolean>] [-AllowTenantMoveWithDataLoss <boolean>] [-AllowTenantMoveWithDataMigration <boolean>] [-AllowPlannerMobilePushNotifications <boolean>] [-AllowCalendarSharing <boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPPlannerConfiguration [-IsPlannerAllowed <boolean>] [-AllowRosterCreation <boolean>] [-AllowTenantMoveWithDataLoss <boolean>] [-AllowTenantMoveWithDataMigration <boolean>] [-AllowPlannerMobilePushNotifications <boolean>] [-AllowCalendarSharing <boolean>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

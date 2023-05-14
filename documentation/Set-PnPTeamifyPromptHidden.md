@@ -15,7 +15,7 @@ Hides the teamify prompt for a site.
 ## SYNTAX
 
 ```powershell
-Set-PnPTeamifyPromptHidden [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPTeamifyPromptHidden [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

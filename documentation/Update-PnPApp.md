@@ -16,7 +16,7 @@ Updates an available app from the app catalog
 
 ```powershell
 Update-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

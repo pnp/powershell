@@ -228,9 +228,19 @@ namespace PnP.PowerShell.Commands.Utilities
             await AddUsersToGroupAsync("owners", connection, groupId, users, accessToken, removeExisting);
         }
 
+        internal static async Task AddDirectoryOwnersAsync(PnPConnection connection, Guid groupId, Guid[] users, string accessToken, bool removeExisting)
+        {
+            await AddDirectoryObjectsToGroupAsync("owners", connection, groupId, users, accessToken, removeExisting);
+        }
+
         internal static async Task AddMembersAsync(PnPConnection connection, Guid groupId, string[] users, string accessToken, bool removeExisting)
         {
             await AddUsersToGroupAsync("members", connection, groupId, users, accessToken, removeExisting);
+        }
+
+        internal static async Task AddDirectoryMembersAsync(PnPConnection connection, Guid groupId, Guid[] users, string accessToken, bool removeExisting)
+        {
+            await AddDirectoryObjectsToGroupAsync("members", connection, groupId, users, accessToken, removeExisting);
         }
 
         internal static string GetUserGraphUrlForUPN(string upn)
@@ -261,6 +271,23 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     await GraphHelper.PostAsync(connection, $"v1.0/groups/{groupId}/{groupName}/$ref", accessToken, stringContent);
                 }
+            }
+        }
+
+        private static async Task AddDirectoryObjectsToGroupAsync(string groupName, PnPConnection connection, Guid groupId, Guid[] directoryObjects, string accessToken, bool removeExisting)
+        {
+            foreach (var dirObject in directoryObjects)
+            {
+                var postData = new Dictionary<string, string>() {
+                    {
+                        "@odata.id", $"https://{connection.GraphEndPoint}/v1.0/directoryObjects/{dirObject}"
+                    }
+                };
+
+                var stringContent = new StringContent(JsonSerializer.Serialize(postData));
+                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                await GraphHelper.PostAsync(connection, $"v1.0/groups/{groupId}/{groupName}/$ref", accessToken, stringContent);
             }
         }
 

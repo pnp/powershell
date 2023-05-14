@@ -21,7 +21,7 @@ Sets the archived state of a team.
 
 ```powershell
 Set-PnPTeamsTeamArchivedState -Identity <TeamsTeamPipeBind> -Archived <Boolean>
- [-SetSiteReadOnlyForMembers <Boolean>]  [<CommonParameters>]
+ [-SetSiteReadOnlyForMembers <Boolean>]  
 ```
 
 ## DESCRIPTION

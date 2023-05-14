@@ -16,7 +16,7 @@ Adds a existing tenant sequence site object to a tenant template
 
 ```powershell
 Add-PnPTenantSequenceSite -Site <ProvisioningSitePipeBind> -Sequence <ProvisioningSequence> 
-  [<CommonParameters>]
+  
 ```
 
 ## DESCRIPTION

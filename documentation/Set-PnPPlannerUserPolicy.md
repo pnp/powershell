@@ -20,7 +20,7 @@ Allows a Microsoft Planner user policy to be set for a specific user
 ## SYNTAX
 
 ```powershell
-Set-PnPPlannerUserPolicy -Identity <string> [-BlockDeleteTasksNotCreatedBySelf <boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPPlannerUserPolicy -Identity <string> [-BlockDeleteTasksNotCreatedBySelf <boolean>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

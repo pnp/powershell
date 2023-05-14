@@ -19,7 +19,7 @@ Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
  [-PromoteAs <PagePromoteType>] [-ContentType <ContentTypePipeBind>] [-CommentsEnabled] [-Publish]
  [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
  [-Translate][-TranslationLanguageCodes <Int[][]>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

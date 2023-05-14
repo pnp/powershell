@@ -16,7 +16,7 @@ Declares a list item as a record, for more information, see https://learn.micros
 
 ```powershell
 Set-PnPListItemAsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-DeclarationDate <DateTime>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

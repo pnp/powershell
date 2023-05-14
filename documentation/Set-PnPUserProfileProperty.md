@@ -15,20 +15,20 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPUserProfilePrope
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Office365 only: Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.
+Office365 only: Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://\<tenant\>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.
 
 ## SYNTAX
 
 ### Single
 ```powershell
 Set-PnPUserProfileProperty -Account <String> -PropertyName <String> -Value <String>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Multi
 ```powershell
 Set-PnPUserProfileProperty -Account <String> -PropertyName <String> -Values <String[]>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -21,7 +21,7 @@ Gets the metadata for the location where the files of a channel are stored.
 
 ```powershell
 Get-PnPTeamsChannel [-Team <TeamsTeamPipeBind>] [-Channel <TeamsChannelPipeBind>] 
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

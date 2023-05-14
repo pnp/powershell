@@ -21,7 +21,7 @@ Returns Microsft Planner roster plans for a specific Microsoft Planner Roster or
 ## SYNTAX
 
 ```powershell
-Get-PnPPlannerRosterPlan [-Identity <PlannerRosterPipeBind>] [-User <string>] [<CommonParameters>]
+Get-PnPPlannerRosterPlan [-Identity <PlannerRosterPipeBind>] [-User <string>] 
 ```
 
 ## DESCRIPTION

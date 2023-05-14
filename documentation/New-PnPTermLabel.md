@@ -16,7 +16,7 @@ Creates a localized label for a taxonomy term
 
 
 ```powershell
-New-PnPTermLabel -Term <TaxonomyTermPipeBind> -Name <String> -Lcid <Int32> [-IsDefault] [<CommonParameters>]
+New-PnPTermLabel -Term <TaxonomyTermPipeBind> -Name <String> -Lcid <Int32> [-IsDefault] 
 ```
 
 ## DESCRIPTION

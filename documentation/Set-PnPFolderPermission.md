@@ -18,20 +18,20 @@ Sets or clears permissions on folders within SharePoint Online.
 ```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> -User <String> [-AddRole <String>]
  [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Group
 ```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> -Group <GroupPipeBind>
  [-AddRole <String>] [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Inherit
 ```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> [-InheritPermissions] [-SystemUpdate]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

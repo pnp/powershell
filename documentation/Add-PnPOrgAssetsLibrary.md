@@ -21,7 +21,7 @@ Adds a given document library as a organizational asset source
 
 ```powershell
 Add-PnPOrgAssetsLibrary -LibraryUrl <String> [-ThumbnailUrl <String>] [-CdnType <SPOTenantCdnType>] [-OrgAssetType <OrgAssetType>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

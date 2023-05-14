@@ -22,7 +22,7 @@ Explicitly grants a specified permission to the "SharePoint Online Client Extens
 
 ```powershell
 Grant-PnPTenantServicePrincipalPermission -Scope <String> [-Resource <String>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

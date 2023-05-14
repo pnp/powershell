@@ -16,7 +16,7 @@ Moves all items or a specific item in the first stage recycle bin of the current
 
 ```powershell
 Move-PnPRecycleBinItem [-Identity <RecycleBinItemPipeBind>] [-Force] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

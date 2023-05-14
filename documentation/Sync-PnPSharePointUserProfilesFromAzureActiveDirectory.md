@@ -16,7 +16,7 @@ Synchronizes user profiles from Azure Active Directory into the SharePoint Onlin
 
 ### Upload file
 ```powershell
-Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping <Hashtable> [-IdType <Enum>] [-Users <Array>] [-Folder <String>] [-Wait] [-Verbose] [-Connection <PnPConnection>] [<CommonParameters>]
+Sync-PnPSharePointUserProfilesFromAzureActiveDirectory -UserProfilePropertyMapping <Hashtable> [-IdType <Enum>] [-Users <Array>] [-Folder <String>] [-Wait] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
