@@ -17,12 +17,12 @@ Moves taxonomy term set from one term group to another
 
 ### By Term Id
 ```
-Move-PnPTermSet -Identity <Guid> -SourceTermGroup <Guid> -DestinationTermGroup <Guid> [-TermStore <TaxonomyTermStorePipeBind>]
+Move-PnPTermSet -Identity <Guid> -TermGroup <Guid> -TargetTermGroup <Guid> [-TermStore <TaxonomyTermStorePipeBind>]
 ```
 
 ### By Term Name
 ```
-Move-PnPTermSet -Identity <String> -SourceTermGroup <String> -DestinationTermGroup <String> [-TermStore <TaxonomyTermStorePipeBind>]
+Move-PnPTermSet -Identity <String> -TermGroup <String> -TargetTermGroup <String> [-TermStore <TaxonomyTermStorePipeBind>]
 ```
 
 ## DESCRIPTION
@@ -32,14 +32,14 @@ This cmdlet moves taxonomy term set from one term group to another.
 
 ### Example 1
 ```powershell
-Move-PnPTermSet -Identity 81e0a4b8-701d-459c-ad61-a1c7a81810ff -SourceTermGroup 17e16b98-a8c2-4db6-a860-5c42dbc818f4  -DestinationTermGroup cf33d1cd-42d8-431c-9e43-3d8dab9ea8fd
+Move-PnPTermSet -Identity 81e0a4b8-701d-459c-ad61-a1c7a81810ff -TermGroup 17e16b98-a8c2-4db6-a860-5c42dbc818f4  -TargetTermGroup cf33d1cd-42d8-431c-9e43-3d8dab9ea8fd
 ```
 
 Moves term set by id.
 
 ### Example 2
 ```powershell
-Move-PnPTermSet -Identity "OperationLevel-1 Test" -SourceTermGroup "FromPowerAutomate" -DestinationTermGroup "DestinationTermGroup"
+Move-PnPTermSet -Identity "OperationLevel-1 Test" -TermGroup "FromPowerAutomate" -TargetTermGroup "TargetTermGroup"
 ```
 
 Moves term set by name.
@@ -61,7 +61,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -SourceTermGroup
+### -TermGroup
 The identifier, either in the form of the term group's name or its GUID, where the term set is currently located before being moved.
 
 ```yaml
@@ -76,7 +76,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -DestinationTermGroup
+### -TargetTermGroup
 The identifier, either in the form of the term group's name or its GUID, indicating the destination where the term set should be relocated.
 
 ```yaml

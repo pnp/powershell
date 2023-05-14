@@ -17,15 +17,15 @@ Moves a taxonomy term to another term set or term
 
 ### Move to term set by Term Id
 ```
-Move-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -DestinationTermSet 95e13729-3ccf-4ec8-998c-78e9ef1daa0b -DestinationTermGroup b2645144-5757-4cd7-b7f9-e5d24757addf
+Move-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -TargetTermSet 95e13729-3ccf-4ec8-998c-78e9ef1daa0b -TargetTermGroup b2645144-5757-4cd7-b7f9-e5d24757addf
 ```
 ### Move to term set by Term Name
 ```
-Move-PnPTerm -Identity "Test" -DestinationTermSet "TestTermSet1" -SourceTermSet "OperationLevel-1 Test" -SourceTermGroup "FromPowerAutomate" -DestinationTermGroup "TestingGroup"
+Move-PnPTerm -Identity "Test" -TargetTermSet "TestTermSet1" -TermSet "OperationLevel-1 Test" -TermGroup "FromPowerAutomate" -TargetTermGroup "TestingGroup"
 ```
 ### Move to term
 ```
-Move-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -DestinationTerm 2ad90b20-b5c0-4544-ac64-25e32d51fa3b -MoveToTerm
+Move-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -TargetTerm 2ad90b20-b5c0-4544-ac64-25e32d51fa3b -MoveToTerm
 ```
 
 ## DESCRIPTION
@@ -36,21 +36,21 @@ This cmdlet moves a taxonomy term to another term set or term
 
 ### Example 1
 ```powershell
-Move-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -DestinationTermSet 95e13729-3ccf-4ec8-998c-78e9ef1daa0b -DestinationTermGroup b2645144-5757-4cd7-b7f9-e5d24757addf
+Move-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -TargetTermSet 95e13729-3ccf-4ec8-998c-78e9ef1daa0b -TargetTermGroup b2645144-5757-4cd7-b7f9-e5d24757addf
 ```
 
 Moves term by id to term set.
 
 ### Example 2
 ```powershell
-Move-PnPTerm -Identity "Test" -DestinationTermSet "TestTermSet1" -SourceTermSet "OperationLevel-1 Test" -SourceTermGroup "FromPowerAutomate" -DestinationTermGroup "TestingGroup"
+Move-PnPTerm -Identity "Test" -TargetTermSet "TestTermSet1" -TermSet "OperationLevel-1 Test" -TermGroup "FromPowerAutomate" -TargetTermGroup "TestingGroup"
 ```
 
 Moves term by name to term set.
 
 ### Example 3
 ```powershell
-Move-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -DestinationTerm 2ad90b20-b5c0-4544-ac64-25e32d51fa3b -MoveToTerm
+Move-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -TargetTerm 2ad90b20-b5c0-4544-ac64-25e32d51fa3b -MoveToTerm
 ```
 
 Moves a term to another term by its identifier.
@@ -72,7 +72,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -DestinationTermSet
+### -TargetTermSet
 The identifier of the term set where the term needs to be moved, either in the form of its name or its GUID
 
 ```yaml
@@ -87,7 +87,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -DestinationTermGroup
+### -TargetTermGroup
 The identifier of the term group where the term needs to be moved, either in the form of its name or its GUID
 
 ```yaml
@@ -102,7 +102,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -SourceTermSet
+### -TermSet
 The identifier of the term set where the term is present, in the form of its name
 
 ```yaml
@@ -117,7 +117,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -SourceTermGroup
+### -TermGroup
 The identifier of the term set where the term group is present, in the form of its name
 
 ```yaml
@@ -132,7 +132,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -DestinationTerm
+### -TargetTerm
 The identifier of the term where the term needs to be moved, in the form of its GUID
 
 ```yaml

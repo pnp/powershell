@@ -25,20 +25,20 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMID)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMNAME)]
-        public TaxonomyTermSetPipeBind DestinationTermSet;
+        public TaxonomyTermSetPipeBind TargetTermSet;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMID)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMNAME)]
-        public TaxonomyTermGroupPipeBind DestinationTermGroup;
+        public TaxonomyTermGroupPipeBind TargetTermGroup;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMNAME)]
-        public TaxonomyTermSetPipeBind SourceTermSet;
+        public TaxonomyTermSetPipeBind TermSet;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_TERMNAME)]
-        public TaxonomyTermGroupPipeBind SourceTermGroup;
+        public TaxonomyTermGroupPipeBind TermGroup;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_MoveToTerm)]
-        public TaxonomyTermPipeBind DestinationTerm;
+        public TaxonomyTermPipeBind TargetTerm;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_MoveToTerm)]
         public SwitchParameter MoveToTerm;
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
             if (MoveToTerm.ToBool())
             {
                 Term sourceterm = Identity.GetTerm(ClientContext, termStore, null, false, null);
-                Term destinationterm = DestinationTerm.GetTerm(ClientContext, termStore, null, false, null);
+                Term destinationterm = TargetTerm.GetTerm(ClientContext, termStore, null, false, null);
 
                 sourceterm.Move(destinationterm);
                 ClientContext.ExecuteQueryRetry();
@@ -75,16 +75,16 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 if (ParameterSetName == ParameterSet_TERMID)
                 {
                     term = Identity.GetTerm(ClientContext, termStore, null, false, null);
-                    TermGroup destinationtermGroup = DestinationTermGroup.GetGroup(termStore);
-                    destinationtermSet = DestinationTermSet.GetTermSet(destinationtermGroup);
+                    TermGroup destinationtermGroup = TargetTermGroup.GetGroup(termStore);
+                    destinationtermSet = TargetTermSet.GetTermSet(destinationtermGroup);
                 }
                 else
                 {
-                    TermGroup termGroup = SourceTermGroup.GetGroup(termStore);
-                    TermSet termSet = SourceTermSet.GetTermSet(termGroup);
+                    TermGroup termGroup = TermGroup.GetGroup(termStore);
+                    TermSet termSet = TermSet.GetTermSet(termGroup);
                     term = Identity.GetTerm(ClientContext, termStore, termSet, false, null);
-                    TermGroup destinationtermGroup = DestinationTermGroup.GetGroup(termStore);
-                    destinationtermSet = DestinationTermSet.GetTermSet(destinationtermGroup);
+                    TermGroup destinationtermGroup = TargetTermGroup.GetGroup(termStore);
+                    destinationtermSet = TargetTermSet.GetTermSet(destinationtermGroup);
                 }
 
                 term.Move(destinationtermSet);

@@ -19,10 +19,10 @@ namespace PnP.PowerShell.Commands.Taxonomy
         public TaxonomyTermSetPipeBind Identity;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public TaxonomyTermGroupPipeBind SourceTermGroup;
+        public TaxonomyTermGroupPipeBind TermGroup;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public TaxonomyTermGroupPipeBind DestinationTermGroup;
+        public TaxonomyTermGroupPipeBind TargetTermGroup;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         [Alias("TermStoreName")]
@@ -42,8 +42,8 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 termStore = TermStore.GetTermStore(taxonomySession);
             }
 
-            TermGroup destinationtermGroup = DestinationTermGroup.GetGroup(termStore);
-            TermGroup sourcetermGroup = SourceTermGroup.GetGroup(termStore);
+            TermGroup destinationtermGroup = TargetTermGroup.GetGroup(termStore);
+            TermGroup sourcetermGroup = TermGroup.GetGroup(termStore);
 
             TermSet termSet = Identity.GetTermSet(sourcetermGroup);
 
