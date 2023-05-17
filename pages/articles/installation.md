@@ -12,7 +12,7 @@ Install-Module PnP.PowerShell -Scope CurrentUser
 
 ## Nightly build
 
-If you want to install the latest nightly built prerelease of PnP PowerShell for the current user, run:
+If you want to install the latest nightly build prerelease of PnP PowerShell for the current user, run:
 
 ```powershell
 Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisherCheck

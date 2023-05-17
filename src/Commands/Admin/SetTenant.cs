@@ -355,6 +355,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string ArchiveRedirectUrl { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public bool? BlockSendLabelMismatchEmail { get; set; }     
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1215,6 +1218,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (ShowPeoplePickerGroupSuggestionsForIB.HasValue)
             {
                 Tenant.ArchiveRedirectUrl = ArchiveRedirectUrl;
+                modified = true;
+            }
+
+            if (BlockSendLabelMismatchEmail.HasValue)
+            {
+                Tenant.BlockSendLabelMismatchEmail = BlockSendLabelMismatchEmail.Value;
                 modified = true;
             }
 
