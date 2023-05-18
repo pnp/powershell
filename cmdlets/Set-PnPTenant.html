@@ -286,6 +286,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-blocksendlabelmismatchemail">-BlockSendLabelMismatchEmail</h3>
+<p>Allows blocking of the automated e-mail being sent when somebody uploads a document to a site that's protected with a sensitivity label and their document has a higher priority sensitivity label than the sensitivity label applied to the site. <a href="https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities">More information</a>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-commentsonsitepagesdisabled">-CommentsOnSitePagesDisabled</h3>
 <p>Disables or enables the commenting functionality on all site pages in the tenant.</p>
 <pre><code class="lang-yaml">Type: Boolean
@@ -1295,7 +1306,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-labelmismatchemailhelplink">-LabelMismatchEmailHelpLink</h3>
-<p>This parameter allows tenant admins to customize the &quot;Help Link&quot; in email with the subject &quot;Incompatible sensitivity label detected.&quot; When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.</p>
+<p>This parameter allows tenant admins to customize the &quot;Help Link&quot; in email with the subject &quot;Incompatible sensitivity label detected.&quot; When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels. <a href="https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities">More information</a>.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

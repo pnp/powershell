@@ -3787,6 +3787,26 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Move-PnPTerm.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Move-PnPTerm.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Move-PnPTermSet.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Move-PnPTermSet.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Move-PnpRecycleBinItem.md",
       "output": {
         ".html": {
