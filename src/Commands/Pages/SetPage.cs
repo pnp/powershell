@@ -3,6 +3,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 using System.Collections.Generic;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Pages
 {
@@ -91,7 +92,7 @@ namespace PnP.PowerShell.Commands.Pages
             {
                 clientSidePage.LayoutType = LayoutType;
             }
-                        
+
             if (Title != null)
             {
                 clientSidePage.PageTitle = Title;
@@ -203,15 +204,15 @@ namespace PnP.PowerShell.Commands.Pages
                     if (TranslationLanguageCodes != null && TranslationLanguageCodes.Length > 0)
                     {
                         var translationLanguagesList = new List<int>(TranslationLanguageCodes);
-                        
+
                         try
                         {
-                            PnPContext.Web.EnsureMultilingual(translationLanguagesList);    
+                            MultilingualHelper.EnsureMultilingual(Connection, translationLanguagesList);
                         }
                         catch
                         {
                             // swallow exception
-                        }                        
+                        }
 
                         foreach (int i in TranslationLanguageCodes)
                         {
