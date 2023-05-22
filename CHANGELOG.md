@@ -45,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- James Eccles [jameseccles]
 - Kunj Balkrishna Sangani [kunj-sangani]
 - Dayana Hristova [makarovv]
 - Rodrigo Pinto [ScoutmanPt]
