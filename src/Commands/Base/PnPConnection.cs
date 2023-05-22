@@ -371,8 +371,13 @@ namespace PnP.PowerShell.Commands.Base
         internal static PnPConnection CreateWithManagedIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
         {
             var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            var resourceUri = new Uri(url);
-            var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
+            string defaultResource = "https://graph.microsoft.com";
+            if(url != null)
+            {
+                var resourceUri = new Uri(url);
+                defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
+            }
+
             cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
             var accessToken = TokenHandler.GetManagedIdentityTokenAsync(cmdlet, httpClient, defaultResource, userAssignedManagedIdentityObjectId, userAssignedManagedIdentityClientId, userAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
 

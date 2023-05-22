@@ -15,7 +15,7 @@ Returns the access token for SharePoint Online
 ## SYNTAX
 
 ```powershell
-Get-PnPAppAuthAccessToken [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPAppAuthAccessToken [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

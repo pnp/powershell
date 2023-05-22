@@ -15,7 +15,7 @@ Return the homepage
 ## SYNTAX
 
 ```powershell
-Get-PnPHomePage [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPHomePage [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

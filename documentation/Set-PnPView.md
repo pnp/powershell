@@ -16,7 +16,7 @@ Change view properties
 
 ```powershell
 Set-PnPView [[-List] <ListPipeBind>] -Identity <ViewPipeBind> [-Values <Hashtable>] [-Fields <String[]>]
- [-Aggregations <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Aggregations <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

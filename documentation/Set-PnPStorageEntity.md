@@ -16,7 +16,7 @@ Set Storage Entities / Farm Properties in either the tenant scoped app catalog o
 
 ```powershell
 Set-PnPStorageEntity -Key <String> -Value <String> [-Comment <String>] [-Description <String>]
- [-Scope <StorageEntityScope>] [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Scope <StorageEntityScope>] [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION

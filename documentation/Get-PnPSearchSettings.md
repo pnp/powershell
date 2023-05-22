@@ -15,7 +15,7 @@ Retrieves search settings for a site
 ## SYNTAX
 
 ```powershell
-Get-PnPSearchSettings [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPSearchSettings [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

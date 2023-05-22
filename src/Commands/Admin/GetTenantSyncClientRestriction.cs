@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Model;
@@ -11,9 +10,8 @@ namespace PnP.PowerShell.Commands.Admin
     {
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(Tenant);
-            ClientContext.Load(Tenant, t => t.HideDefaultThemes);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(Tenant);            
+            AdminContext.ExecuteQueryRetry();
             WriteObject(new SPOTenantSyncClientRestriction(Tenant));
         }
     }

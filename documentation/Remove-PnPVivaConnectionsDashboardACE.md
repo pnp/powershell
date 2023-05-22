@@ -15,7 +15,7 @@ Removes the Adaptive card extensions from the Viva connections dashboard page. T
 ## SYNTAX
 
 ```powershell
-Remove-PnPVivaConnectionsDashboardACE [-Identity <VivaACEPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPVivaConnectionsDashboardACE [-Identity <VivaACEPipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

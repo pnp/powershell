@@ -2,7 +2,6 @@
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Collections.Generic;
 using PnP.Framework;
@@ -158,20 +157,29 @@ namespace PnP.PowerShell.Commands
         public BlockDownloadLinksFileTypes BlockDownloadLinksFileType;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
+        public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public InformationBarriersMode InformationBarriersMode;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public MediaTranscriptionPolicyType? MediaTranscription { get; set; }        
+        public MediaTranscriptionPolicyType? MediaTranscription;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? BlockDownloadPolicy;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ExcludeBlockDownloadPolicySiteOwners;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] ExcludedBlockDownloadGroupIds;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
         protected override void ExecuteCmdlet()
         {
-            ClientContext.ExecuteQueryRetry(); // fixes issue where ServerLibraryVersion is not available.
+            AdminContext.ExecuteQueryRetry(); // fixes issue where ServerLibraryVersion is not available.
 
             Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
@@ -191,8 +199,8 @@ namespace PnP.PowerShell.Commands
             var props = GetSiteProperties(Identity.Url);
             var updateRequired = false;
 
-            ClientContext.Load(props);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(props);
+            AdminContext.ExecuteQueryRetry();
 
             if (ParameterSpecified(nameof(Title)))
             {
@@ -400,7 +408,7 @@ namespace PnP.PowerShell.Commands
                 }
             }
 
-            if (ClientContext.ServerVersion >= new Version(16, 0, 8715, 1200)) // ServerSupportsIpLabelId2
+            if (AdminContext.ServerVersion >= new Version(16, 0, 8715, 1200)) // ServerSupportsIpLabelId2
             {
                 if (ParameterSpecified(nameof(SensitivityLabel)))
                 {
@@ -502,31 +510,49 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
+            if (ParameterSpecified(nameof(BlockDownloadPolicy)) && BlockDownloadPolicy.HasValue)
+            {
+                props.BlockDownloadPolicy = BlockDownloadPolicy.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ExcludeBlockDownloadPolicySiteOwners)) && ExcludeBlockDownloadPolicySiteOwners.HasValue)
+            {
+                props.ExcludeBlockDownloadPolicySiteOwners = ExcludeBlockDownloadPolicySiteOwners.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) && ExcludedBlockDownloadGroupIds.Length > 0)
+            {
+                props.ExcludedBlockDownloadGroupIds = ExcludedBlockDownloadGroupIds;
+                updateRequired = true;
+            }
+
             if (updateRequired)
             {
                 var op = props.Update();
-                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+                AdminContext.ExecuteQueryRetry();
 
                 if (Wait)
                 {
-                    WaitForIsComplete(ClientContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
+                    WaitForIsComplete(AdminContext, op, timeoutFunction, TenantOperationMessage.SettingSiteProperties);
                 }
             }
 
             if (ParameterSpecified(nameof(DisableSharingForNonOwners)))
             {
-                var office365Tenant = new Office365Tenant(ClientContext);
-                ClientContext.Load(office365Tenant);
-                ClientContext.ExecuteQueryRetry();
+                var office365Tenant = new Office365Tenant(AdminContext);
+                AdminContext.Load(office365Tenant);
+                AdminContext.ExecuteQueryRetry();
                 office365Tenant.DisableSharingForNonOwnersOfSite(Identity.Url);
             }
 
             if (ParameterSpecified(nameof(HubSiteId)))
             {
                 var hubsiteProperties = Tenant.GetHubSitePropertiesById(HubSiteId);
-                ClientContext.Load(hubsiteProperties);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(hubsiteProperties);
+                AdminContext.ExecuteQueryRetry();
                 if (hubsiteProperties == null || string.IsNullOrEmpty(hubsiteProperties.SiteUrl))
                 {
                     throw new PSArgumentException("Hubsite not found with the ID specified");
@@ -539,14 +565,14 @@ namespace PnP.PowerShell.Commands
                 {
                     Tenant.ConnectSiteToHubSite(Identity.Url, hubsiteProperties.SiteUrl);
                 }
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
 
-            if(PrimarySiteCollectionAdmin != null)
+            if (PrimarySiteCollectionAdmin != null)
             {
                 using (var siteContext = Tenant.Context.Clone(Identity.Url))
                 {
-                    var spAdmin = PrimarySiteCollectionAdmin.GetUser(siteContext, true);                   
+                    var spAdmin = PrimarySiteCollectionAdmin.GetUser(siteContext, true);
                     siteContext.Load(spAdmin);
                     siteContext.ExecuteQueryRetry();
 

@@ -31,8 +31,8 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 throw new PSArgumentException("Invalid Date Range");
             }
-            var errorEntries = ClientContext.LoadQuery(this.Tenant.GetAppErrors(ProductId, StartTimeInUtc, EndTimeInUtc));
-            ClientContext.ExecuteQueryRetry();
+            var errorEntries = AdminContext.LoadQuery(this.Tenant.GetAppErrors(ProductId, StartTimeInUtc, EndTimeInUtc));
+            AdminContext.ExecuteQueryRetry();
             WriteObject(errorEntries);
         }
 

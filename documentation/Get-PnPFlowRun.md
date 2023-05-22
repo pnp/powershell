@@ -21,7 +21,7 @@ Returns the flows runs for a given flow.
 
 ```powershell
 Get-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> [-Identity <PowerAutomateFlowRunPipeBind>]
-[-Connection <PnPConnection>] [<CommonParameters>]
+[-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

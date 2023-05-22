@@ -20,7 +20,7 @@ Retrieves all sites associated to a specific hub site
 ## SYNTAX
 
 ```powershell
-Get-PnPHubSiteChild [-Identity <HubSitePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPHubSiteChild [-Identity <HubSitePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

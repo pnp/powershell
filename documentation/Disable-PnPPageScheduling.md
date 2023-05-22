@@ -16,7 +16,7 @@ Disables the modern page schedule feature
 ## SYNTAX
 
 ```powershell
-Disable-PnPPageScheduling [-Connection <PnPConnection>] [<CommonParameters>]
+Disable-PnPPageScheduling [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

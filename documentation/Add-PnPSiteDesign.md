@@ -19,11 +19,20 @@ Creates a new Site Design on the current tenant
 
 ## SYNTAX
 
+### By SiteScript Instance (Default)
+
+```powershell
+Add-PnPSiteDesign -Title <String> -SiteScript <TenantSiteScriptPipeBind> [-Description <String>] [-IsDefault]
+ [-PreviewImageAltText <String>] [-PreviewImageUrl <String>] [-WebTemplate <SiteWebTemplate>]
+ [-ThumbnailUrl <String>] [-DesignPackageId <Guid>] [-Connection <PnPConnection>]
+```
+
+### By SiteScript Ids
+
 ```powershell
 Add-PnPSiteDesign -Title <String> -SiteScriptIds <Guid[]> [-Description <String>] [-IsDefault]
  [-PreviewImageAltText <String>] [-PreviewImageUrl <String>] [-WebTemplate <SiteWebTemplate>]
- [-ThumbnailUrl <String>] [-DesignPackageId <Guid>]
- [-Connection <PnPConnection>]
+ [-ThumbnailUrl <String>] [-DesignPackageId <Guid>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -52,6 +61,13 @@ Add-PnPSiteDesign -Title "My Company Design" -SiteScriptIds "e84dcb46-3ab9-4456-
 ```
 
 Adds a new Site Design, with the specified title, description and logo to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. The WebTemplate parameter specifies that this design applies to modern Team Sites. Notice that when the location for the ThumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.
+
+### EXAMPLE 4
+```powershell
+Get-PnPSiteScriptFromWeb -IncludeAll | Add-PnPSiteScript -Title "My Site Script" | Add-PnPSiteDesign -Title "My Site Design" -WebTemplate TeamSite
+```
+
+Adds a new Site Design based on the currently connected to site, with the specified title to be shown in the template picker.
 
 ## PARAMETERS
 
@@ -140,12 +156,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -SiteScript
+An instance, id or title of a site script to use for the site design
+
+```yaml
+Type: TenantSiteScriptPipeBind
+Parameter Sets: By SiteScript Instance
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+```
+
 ### -SiteScriptIds
-An array of guids of site scripts
+An array of guids of site scripts to use for the site design
 
 ```yaml
 Type: Guid[]
-Parameter Sets: (All)
+Parameter Sets: By SiteScript Ids
 
 Required: True
 Position: Named
@@ -229,5 +259,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

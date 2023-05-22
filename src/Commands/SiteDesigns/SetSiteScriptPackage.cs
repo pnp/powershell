@@ -25,9 +25,9 @@ public class SetSiteScriptPackage : PnPAdminCmdlet
 
     protected override void ExecuteCmdlet()
     {
-        var siteScript = Tenant.GetSiteScript(ClientContext, Identity.Id);
-        ClientContext.Load(siteScript);
-        ClientContext.ExecuteQueryRetry();
+        var siteScript = Tenant.GetSiteScript(AdminContext, Identity.Id);
+        AdminContext.Load(siteScript);
+        AdminContext.ExecuteQueryRetry();
 
         if (!Path.IsPathRooted(ContentPath))
         {
@@ -49,8 +49,8 @@ public class SetSiteScriptPackage : PnPAdminCmdlet
                 siteScript.Version = Version;
             }
             var tenantSiteScript = this.Tenant.UpdateSiteScriptPackage(siteScript);
-            ClientContext.Load(tenantSiteScript);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(tenantSiteScript);
+            AdminContext.ExecuteQueryRetry();
             WriteObject(tenantSiteScript);
         }
     }

@@ -20,23 +20,23 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
         protected override void ExecuteCmdlet()
         {
-            var peopleManager = new PeopleManager(ClientContext);
+            var peopleManager = new PeopleManager(AdminContext);
 
             foreach (var acc in Account)
             {
                 var currentAccount = acc;
                 var result = Tenant.EncodeClaim(currentAccount);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
                 currentAccount = result.Value;
 
                 SortedDictionary<string, object> upsDictionary = new();
 
                 if (ParameterSpecified(nameof(Properties)) && Properties != null && Properties.Length > 0)
                 {
-                    UserProfilePropertiesForUser userProfilePropertiesForUser = new UserProfilePropertiesForUser(ClientContext, currentAccount, Properties);
+                    UserProfilePropertiesForUser userProfilePropertiesForUser = new UserProfilePropertiesForUser(AdminContext, currentAccount, Properties);
                     var userRequestedProperties = peopleManager.GetUserProfilePropertiesFor(userProfilePropertiesForUser);
-                    ClientContext.Load(userProfilePropertiesForUser);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.Load(userProfilePropertiesForUser);
+                    AdminContext.ExecuteQueryRetry();
 
                     for (var i = 0; i < userRequestedProperties.Count(); i++)
                     {
@@ -50,8 +50,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 else
                 {
                     var userProfileProperties = peopleManager.GetPropertiesFor(currentAccount);
-                    ClientContext.Load(userProfileProperties);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.Load(userProfileProperties);
+                    AdminContext.ExecuteQueryRetry();
 
                     upsDictionary.Add("AccountName", userProfileProperties.AccountName);
                     upsDictionary.Add("DirectReports", userProfileProperties.DirectReports);

@@ -1,6 +1,5 @@
 ﻿using Microsoft.SharePoint.Administration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +13,7 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             var results = Tenant.GetOrgAssets();
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
 
             List<OrgAssetsLibrary> orgassetlibs = results.Value?.OrgAssetsLibraries?.ToList();
             WriteObject(orgassetlibs, true);

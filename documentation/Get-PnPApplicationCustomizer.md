@@ -18,14 +18,14 @@ Returns all SharePoint Framework client side extension application customizers
 ```powershell
 Get-PnPApplicationCustomizer [-Identity <Guid>] [-Scope <CustomActionScope>]
  [-ThrowExceptionIfCustomActionNotFound] [-Connection <PnPConnection>] 
-  [-Includes <String[]>] [<CommonParameters>]
+  [-Includes <String[]>] 
 ```
 
 ### Client Side Component Id
 ```powershell
 Get-PnPApplicationCustomizer -ClientSideComponentId <Guid> [-Scope <CustomActionScope>]
  [-ThrowExceptionIfCustomActionNotFound] [-Connection <PnPConnection>] 
-  [-Includes <String[]>] [<CommonParameters>]
+  [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

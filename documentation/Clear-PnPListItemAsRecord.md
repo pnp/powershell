@@ -16,7 +16,7 @@ Un declares a list item as a record
 
 ```powershell
 Clear-PnPListItemAsRecord [-List] <ListPipeBind> -Identity <ListItemPipeBind> 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

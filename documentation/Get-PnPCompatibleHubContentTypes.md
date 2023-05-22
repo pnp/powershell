@@ -20,7 +20,7 @@ Returns the list of content types present in content type hub site that can be a
 ## SYNTAX
 
 ```powershell
- Get-PnPCompatibleHubContentTypes -WebUrl <String> [-ListUrl <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ Get-PnPCompatibleHubContentTypes -WebUrl <String> [-ListUrl <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

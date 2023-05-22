@@ -1,5 +1,4 @@
-﻿using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
@@ -10,8 +9,7 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsData.Export, "PnPFlow")]
-    [RequiredMinimalApiPermissions("https://management.azure.com//.default")]
-    public class ExportFlow : PnPGraphCmdlet
+    public class ExportFlow : PnPAzureManagementApiCmdlet
     {
         private const string ParameterSet_ASJSON = "As Json";
         private const string ParameterSet_ASPACKAGE = "As ZIP Package";

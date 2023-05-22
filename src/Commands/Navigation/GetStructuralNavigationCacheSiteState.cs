@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Site
                 url = SiteUrl;
             }
             var state = this.Tenant.GetSPOStructuralNavigationCacheSiteState(url);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             WriteObject(state);
         }
     }

@@ -20,7 +20,7 @@ Marks one or multiple message center announcements of the Office 365 Services as
 ## SYNTAX
 
 ```powershell
-Set-PnPMessageCenterAnnouncementAsUnread [-Identity <String[]>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPMessageCenterAnnouncementAsUnread [-Identity <String[]>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

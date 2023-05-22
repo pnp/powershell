@@ -23,7 +23,7 @@ Sets the properties of a specific Azure Active Directory group.
 Set-PnPAzureADGroup -Identity <AzureADGroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-SecurityEnabled] [-MailEnabled] 
  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] 
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

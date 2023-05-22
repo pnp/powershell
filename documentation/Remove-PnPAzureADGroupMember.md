@@ -20,7 +20,7 @@ Removes members from a particular Azure Active Directory group. This can be a se
 ## SYNTAX
 
 ```powershell
-Remove-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> [<CommonParameters>]
+Remove-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> 
 ```
 
 ## DESCRIPTION

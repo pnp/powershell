@@ -20,7 +20,7 @@ Gets the collection of permission grants for the "SharePoint Online Client" serv
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantServicePrincipalPermissionGrants [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPTenantServicePrincipalPermissionGrants [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

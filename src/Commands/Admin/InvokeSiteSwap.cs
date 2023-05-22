@@ -33,8 +33,8 @@ namespace PnP.PowerShell.Commands.Admin
             WriteVerbose($"Invoking site swap with source {SourceUrl}, target {TargetUrl} and archive {ArchiveUrl}");
 
             var operation = this.Tenant.SwapSiteWithSmartGestureOption(SourceUrl, TargetUrl, ArchiveUrl, includeSmartGestures);
-            ClientContext.Load(operation);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(operation);
+            AdminContext.ExecuteQueryRetry();
 
             if(!ParameterSpecified(nameof(NoWait)))
             {

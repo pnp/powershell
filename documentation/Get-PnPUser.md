@@ -16,18 +16,18 @@ Returns site users of current web
 
 ### Identity based request (Default)
 ```powershell
-Get-PnPUser [-Identity <UserPipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPUser [-Identity <UserPipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ### With rights assigned
 ```powershell
-Get-PnPUser [-WithRightsAssigned] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPUser [-WithRightsAssigned] [-Connection <PnPConnection>] 
 ```
 
 ### With rights assigned detailed
 ```powershell
 Get-PnPUser [-WithRightsAssignedDetailed] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

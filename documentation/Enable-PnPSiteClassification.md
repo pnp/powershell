@@ -21,7 +21,7 @@ Enables Site Classifications for the tenant
 
 ```powershell
 Enable-PnPSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]>
- -DefaultClassification <String> [-UsageGuidelinesUrl <String>] [<CommonParameters>]
+ -DefaultClassification <String> [-UsageGuidelinesUrl <String>] 
 ```
 
 ## DESCRIPTION

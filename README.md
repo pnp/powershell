@@ -8,18 +8,15 @@ Last version | Last nightly version
 
 This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-powershell) module. The original cmdlets only work on Windows and Windows PowerShell and supports SharePoint On-Premises (2013, 2016 and 2019) and SharePoint Online. This version of the cmdlets is cross-platform (i.e it works on Windows, MacOS and Linux) but it will only support SharePoint Online. Going forward we will only be **actively maintaining the cross-platform PnP PowerShell** module.
 
-For more information about installing or upgrading to this module, please refer to the documentation at https://pnp.github.io/powershell/articles/index.html
+For more information about installing or upgrading to this module, please refer to [the documentation](https://pnp.github.io/powershell/articles/index.html).
 
 ## IMPORTANT - New PnP PowerShell 2.x
 
-As the technologies behind PowerShell evolve, so will the PnP PowerShell module. 
-Since Microsoft is not supporting .NET 3.1 since December 2022, and .NET Framework not actively developed (and not cross platform), we are currently working on PnP PowerShell 2.x. 
+As the technologies behind PowerShell evolve, so will the PnP PowerShell module. Microsoft is no longer supporting .NET 3.1 since December 2022, and .NET Framework is not actively being developed anymore. It is also not cross platform. PnP PowerShell 2.x will therefore no longer support PowerShell 5.1 nor the ISE. 
 
-Therefore, **this new version going forward will not support PowerShell 5.1 nor the ISE**. 
+We have created a [guide](https://github.com/pnp/powershell/blob/dev/MIGRATE-1.0-to-2.0.md) for upgrading from previous versions to PnP PowerShell 2.x. If you are still using PowerShell 5.1 or the ISE, and want to use the latest major or nightly release, you will need to specify the required version like below: 
 
-PnP PowerShell 2.x is already available should you wish to update now, and we have created a [guide](https://github.com/pnp/powershell/blob/dev/MIGRATE-1.0-to-2.0.md) for that purpose. If you are still using PowerShell 5.1 or the ISE, and want to use the latest major or nightly release, you will need to specify the required version like below: 
-
-`Install-Module PnP.PowerShell -RequiredVersion 1.12.0 -Force` or `Install-Module PnP.PowerShell -AllowPrerelease -RequiredVersion 1.12.80-nightly -Force`
+`Install-Module PnP.PowerShell -RequiredVersion 1.12.0 -Force`
 
 Both (1.x and 2.x) can be installed in the same machine with no conflict.
 
@@ -30,8 +27,5 @@ This library is open-source and community provided library with active community
 ---
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-<img src="https://m365-visitor-stats.azurewebsites.net/pnp-powershell/readme" /> 
 
-## Updating from 1.x to 2.x
-
-Please refer to [this page](MIGRATE-1.0-to-2.0.md) while performing an update from your 1.x version to 2.x version of PnP PowerShell.
+<img src="https://m365-visitor-stats.azurewebsites.net/pnp-powershell/readme" />

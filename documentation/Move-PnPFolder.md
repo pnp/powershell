@@ -16,7 +16,7 @@ Move a folder to another location in the current web. If you want to move a fold
 
 ```powershell
 Move-PnPFolder -Folder <FolderPipeBind> -TargetFolder <String> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

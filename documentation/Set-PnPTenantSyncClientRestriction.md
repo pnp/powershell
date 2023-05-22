@@ -23,7 +23,7 @@ Sets organization-level sync client restriction properties
 Set-PnPTenantSyncClientRestriction [-BlockMacSync] [-DisableReportProblemDialog]
  [-DomainGuids <System.Collections.Generic.List`1[System.Guid]>] [-Enable]
  [-ExcludedFileExtensions <System.Collections.Generic.List`1[System.String]>]
- [-GrooveBlockOption <GrooveBlockOption>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-GrooveBlockOption <GrooveBlockOption>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

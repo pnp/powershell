@@ -20,7 +20,7 @@ Creates a new Microsoft 365 Group setting for a specific group or the tenant
 ## SYNTAX
 
 ```powershell
-New-PnPMicrosoft365GroupSettings -Identity <Microsoft365GroupPipeBind> -DisplayName <String> -TemplateId <String> -Values <Hashtable> [<CommonParameters>]
+New-PnPMicrosoft365GroupSettings -Identity <Microsoft365GroupPipeBind> -DisplayName <String> -TemplateId <String> -Values <Hashtable> 
 ```
 
 ## DESCRIPTION

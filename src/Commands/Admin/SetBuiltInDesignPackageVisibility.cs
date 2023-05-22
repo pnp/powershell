@@ -20,8 +20,8 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 throw new PSArgumentException(nameof(DesignPackage));
             }
-            Microsoft.Online.SharePoint.TenantAdministration.Tenant.SetBuiltInDesignPackageVisibility(ClientContext, DesignPackage, IsVisible);
-            ClientContext.ExecuteQueryRetry();
+            Microsoft.Online.SharePoint.TenantAdministration.Tenant.SetBuiltInDesignPackageVisibility(AdminContext, DesignPackage, IsVisible);
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

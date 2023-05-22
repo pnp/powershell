@@ -29,8 +29,8 @@ namespace PnP.PowerShell.Commands
             else
             {
                 var designs = Tenant.GetListDesigns();
-                ClientContext.Load(designs);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(designs);
+                AdminContext.ExecuteQueryRetry();
 
                 WriteObject(designs, true);
             }

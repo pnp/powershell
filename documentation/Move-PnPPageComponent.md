@@ -17,25 +17,25 @@ Moves a page component to a different section/column
 ### Move to other section
 ```powershell
 Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Section <Int32>
- [-Position <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Position <Int32>] [-Connection <PnPConnection>] 
 ```
 
 ### Move to other section and column
 ```powershell
 Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Section <Int32>
- -Column <Int32> [-Position <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
+ -Column <Int32> [-Position <Int32>] [-Connection <PnPConnection>] 
 ```
 
 ### Move to other column
 ```powershell
 Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Column <Int32>
- [-Position <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Position <Int32>] [-Connection <PnPConnection>] 
 ```
 
 ### Move within a column
 ```powershell
 Move-PnPPageComponent [-Page] <PagePipeBind> -InstanceId <Guid> -Position <Int32>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

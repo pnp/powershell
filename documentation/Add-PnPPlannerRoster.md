@@ -15,7 +15,7 @@ Creates a new Microsoft Planner Roster
 ## SYNTAX
 
 ```powershell
-Add-PnPPlannerRoster [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPPlannerRoster [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

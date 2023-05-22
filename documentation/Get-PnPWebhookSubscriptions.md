@@ -16,7 +16,7 @@ Gets all the Webhook subscriptions of the resource
 
 ```powershell
 Get-PnPWebhookSubscriptions [-List <ListPipeBind>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

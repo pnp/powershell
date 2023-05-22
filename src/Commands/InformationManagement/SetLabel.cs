@@ -2,6 +2,7 @@
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
+using System;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
@@ -17,9 +18,11 @@ namespace PnP.PowerShell.Commands.InformationManagement
         [Parameter(Mandatory = false)]
         public bool SyncToItems;
 
+        [Obsolete("Overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.")]
         [Parameter(Mandatory = false)]
         public bool BlockDeletion;
 
+        [Obsolete("Overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.")]
         [Parameter(Mandatory = false)]
         public bool BlockEdit;
 
@@ -30,9 +33,10 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
             if (list != null)
             {
-                if (availableTags.FirstOrDefault(tag => tag.TagName.ToString() == Label) != null)
+                var availableTag = availableTags.FirstOrDefault(tag => tag.TagName.ToString() == Label);
+                if (availableTag != null)
                 {
-                    list.SetComplianceTag(Label, BlockDeletion, BlockEdit, SyncToItems);
+                    list.SetComplianceTag(Label, availableTag.BlockDelete, availableTag.BlockEdit, SyncToItems);
                 }
                 else
                 {

@@ -22,13 +22,13 @@ Retrieves site collection information
 ### By Site
 ```powershell
 Get-PnPTenantSite [-Identity] <string> [-Detailed] [-DisableSharingForNonOwnersStatus] [-Connection <PnPConnection>]
-    [<CommonParameters>]
+    
 ```
 
 ### All Sites
 ```powershell
 Get-PnPTenantSite [-Template <string>] [-Detailed] [-IncludeOneDriveSites] [-GroupIdDefined <Boolean>] [-Filter <string>] [-Connection
-    <PnPConnection>] [<CommonParameters>]
+    <PnPConnection>] 
 ```
 
 ## DESCRIPTION

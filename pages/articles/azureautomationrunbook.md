@@ -43,7 +43,8 @@ To add PnP PowerShell to the Azure Automation Account, follow these steps:
 #### Specific stable version
 
    > [!Important]
-   > There's currently no stable PnP PowerShell version that works with Azure Automation 7.2 Runbooks. Use the [latest nightly build](#latest-prerelease-version) instead.
+   > Currently stable PnP PowerShell version that works with Azure Automation 7.2 Runbooks is **2.1.1**. 
+   > If you would like to use a [latest nightly build] (#latest-prerelease-version) instead, use the below instructions
 
    Select **Browse from gallery**, Runtime version **7.2 (preview)** and click on the **Click here to browse from gallery** link
 
@@ -152,9 +153,9 @@ We're now ready to create a Runbook in which your PnP PowerShell script will run
 1. On the Edit PowerShell Runbook page, enter your PnP PowerShell code in the large white area, i.e.:
 
    ```powershell
-   Connect-PnPOnline tenant.sharepoint.com -ManagedIdentity
+   Connect-PnPOnline -ManagedIdentity
 
-   Get-PnPWeb
+   Get-PnPMicrosoft365Group
    ```
 
    Once done, click on **Save** at the top of the screen and then on **Test pane** to test your Runbook.

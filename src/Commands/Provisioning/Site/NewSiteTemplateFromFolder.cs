@@ -229,7 +229,7 @@ namespace PnP.PowerShell.Commands.Provisioning
             var fileInfo = dirInfo.GetFiles(Match);
             foreach (var file in fileInfo.Where(f => (f.Attributes & FileAttributes.Hidden) == 0))
             {
-                var unrootedPath = file.FullName.Substring(Folder.Length + 1);
+                var unrootedPath = file.FullName.Substring(Folder.Length);
                 var targetFolder = Path.Combine(TargetFolder, unrootedPath.LastIndexOf("\\") > -1 ? unrootedPath.Substring(0, unrootedPath.LastIndexOf("\\")) : "");
                 targetFolder = targetFolder.Replace('\\', '/');
                 var modelFile = new PnP.Framework.Provisioning.Model.File()

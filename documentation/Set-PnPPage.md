@@ -20,7 +20,7 @@ Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
  [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
  [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] 
  [-Translate][-TranslationLanguageCodes <Int[][]>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

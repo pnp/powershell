@@ -34,20 +34,20 @@ namespace PnP.PowerShell.Commands.Admin
             if (ParameterSetName == ParamSet_ById)
             {
                 HubSiteProperties sourceProperties = Tenant.GetHubSitePropertiesById(Source);
-                ClientContext.Load(sourceProperties);
+                AdminContext.Load(sourceProperties);
                 sourceProperties.ParentHubSiteId = Target;
                 sourceProperties.Update();
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
             else
             {
                 SiteProperties sourceSiteProperties = Tenant.GetSitePropertiesByUrl(SourceUrl, true);
-                ClientContext.Load(sourceSiteProperties);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(sourceSiteProperties);
+                AdminContext.ExecuteQueryRetry();
 
                 SiteProperties destSiteProperties = Tenant.GetSitePropertiesByUrl(TargetUrl, true);
-                ClientContext.Load(destSiteProperties);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(destSiteProperties);
+                AdminContext.ExecuteQueryRetry();
 
                 if (!sourceSiteProperties.IsHubSite)
                 {
@@ -60,13 +60,13 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 
                 HubSiteProperties sourceProperties = Tenant.GetHubSitePropertiesByUrl(SourceUrl);
-                ClientContext.Load(sourceProperties);
+                AdminContext.Load(sourceProperties);
                 Microsoft.SharePoint.Client.Site targetSite = Tenant.GetSiteByUrl(TargetUrl);
-                ClientContext.Load(targetSite);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(targetSite);
+                AdminContext.ExecuteQueryRetry();
                 sourceProperties.ParentHubSiteId = targetSite.HubSiteId;
                 sourceProperties.Update();
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
         }
     }

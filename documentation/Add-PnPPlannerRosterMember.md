@@ -15,7 +15,7 @@ Adds a user to an existing Microsoft Planner Roster
 ## SYNTAX
 
 ```powershell
-Add-PnPPlannerRosterMember -Identity <PlannerRosterPipeBind> -User <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPPlannerRosterMember -Identity <PlannerRosterPipeBind> -User <String> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

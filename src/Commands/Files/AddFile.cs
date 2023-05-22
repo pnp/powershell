@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Files
         [ValidateNotNullOrEmpty]
         public string NewFileName = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, ValueFromPipeline = true, Position = 0)]
         [ValidateNotNullOrEmpty]
         public Stream Stream;
 

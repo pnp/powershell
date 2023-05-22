@@ -51,7 +51,7 @@ Remove-PnPList -Identity Announcements -Recycle -LargeList
 ```
 
 Removes the large list named 'Announcements' and moves it to the Recycle Bin.
-
+Run Get-PnPLargeListOperationStatus -ListId <ListId> -OperationId <OperationId> to check the status of the operation.
 
 ## PARAMETERS
 
