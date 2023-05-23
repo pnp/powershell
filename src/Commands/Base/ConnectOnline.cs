@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -54,7 +55,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]        
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -214,7 +215,7 @@ namespace PnP.PowerShell.Commands.Base
         public string UserAssignedManagedIdentityClientId;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
-        public string UserAssignedManagedIdentityAzureResourceId;        
+        public string UserAssignedManagedIdentityAzureResourceId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
@@ -274,6 +275,11 @@ namespace PnP.PowerShell.Commands.Base
             if (Credentials != null)
             {
                 credentials = Credentials.Credential;
+            }
+
+            if (PingHost(new Uri(Url).Host) == false)
+            {
+                throw new PSArgumentException("Host not reachable");
             }
 
             // Connect using the used set parameters
@@ -480,7 +486,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new FileNotFoundException("Certificate not found");
                 }
-                
+
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword);
                 if (PnPConnection.Current?.ClientId == ClientId &&
                     PnPConnection.Current?.Tenant == Tenant &&
@@ -696,6 +702,32 @@ namespace PnP.PowerShell.Commands.Base
         #endregion
 
         #region Helper methods
+
+        private static bool PingHost(string nameOrAddress)
+        {
+            bool pingable = false;
+            Ping pinger = null;
+
+            try
+            {
+                pinger = new Ping();
+                PingReply reply = pinger.Send(nameOrAddress);
+                pingable = reply.Status == IPStatus.Success;
+            }
+            catch (PingException)
+            {
+                // Discard PingExceptions and return false;
+            }
+            finally
+            {
+                if (pinger != null)
+                {
+                    pinger.Dispose();
+                }
+            }
+
+            return pingable;
+        }
         private PSCredential GetCredentials()
         {
             var connectionUri = new Uri(Url);

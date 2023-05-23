@@ -122,6 +122,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-BlockDownloadFileTypePolicy <Boolean>]
  [-BlockDownloadFileTypeIds <SPBlockDownloadFileTypeId[]>]
  [-ExcludedBlockDownloadGroupIds <GUID[]>]
+ [-ArchiveRedirectUrl <String>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -204,6 +205,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ArchiveRedirectUrl
+Can be used to configure a custom page to show when a user is navigating to a SharePoint Online site that has been archived using Microsoft Syntex Archiving.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -BccExternalSharingInvitations
 When the feature is enabled, all external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.
 
@@ -232,6 +247,21 @@ Single or Multiple e-mail addresses - joe@contoso.com or joe@contoso.com,bob@con
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockSendLabelMismatchEmail
+Allows blocking of the automated e-mail being sent when somebody uploads a document to a site that's protected with a sensitivity label and their document has a higher priority sensitivity label than the sensitivity label applied to the site. [More information](
+https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities).
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -1563,7 +1593,7 @@ Accept wildcard characters: False
 
 ### -LabelMismatchEmailHelpLink
 
-This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.
+This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels. [More information](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities).
 
 ```yaml
 Type: String

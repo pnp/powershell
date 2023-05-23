@@ -371,6 +371,12 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;           
 
+        [Parameter(Mandatory = false)]
+        public string ArchiveRedirectUrl { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? BlockSendLabelMismatchEmail { get; set; }     
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);

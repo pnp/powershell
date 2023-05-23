@@ -1,5 +1,6 @@
 ﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -141,7 +142,7 @@ namespace PnP.PowerShell.Commands.Pages
 
                         try
                         {
-                            PnPContext.Web.EnsureMultilingual(translationLanguagesList);
+                            MultilingualHelper.EnsureMultilingual(Connection, translationLanguagesList);
                         }
                         catch
                         {
