@@ -349,13 +349,7 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? ShowPeoplePickerGroupSuggestionsForIB { get; set; }
 
         [Parameter(Mandatory = false)]
-        public int? OneDriveRequestFilesLinkExpirationInDays { get; set; }
-
-        [Parameter(Mandatory = false)]
-        public string ArchiveRedirectUrl { get; set; }
-
-        [Parameter(Mandatory = false)]
-        public bool? BlockSendLabelMismatchEmail { get; set; }     
+        public int? OneDriveRequestFilesLinkExpirationInDays { get; set; }  
 
         [Parameter(Mandatory = false)]
         public bool? BlockDownloadFileTypePolicy { get; set; }
