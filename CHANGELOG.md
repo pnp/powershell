@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Change `Set-PnPWebhookSubscription` to use the same default expiration date as `Add-PnPWebhookSubsription` cmdlet which is 180 days instead of 6 months.[#3106](https://github.com/pnp/powershell/pull/3106)
 - Improved `Set-PnPHomePage` cmdlet to handle forward slash issue. [#3128](https://github.com/pnp/powershell/pull/3128)
 - Improved `Connect-PnPOnline` cmdlet to handle ping on the destination server to check if it exists. [PR](https://github.com/pnp/powershell/commit/cc3c5564fca9ce96b1a2ac47c7aabdc8b90136d0)
+- Improved `Invoke-PnPGraphMethod` cmdlet to show a better error message when sufficient permissions are not available. [#3133](https://github.com/pnp/powershell/pull/3133)
 
 ### Removed
 
@@ -49,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Giacomo Pozzoni [jackpoz]
 - James Eccles [jameseccles]
 - Kunj Balkrishna Sangani [kunj-sangani]
 - Dayana Hristova [makarovv]
