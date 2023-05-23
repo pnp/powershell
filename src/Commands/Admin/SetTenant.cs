@@ -352,6 +352,12 @@ namespace PnP.PowerShell.Commands.Admin
         public int? OneDriveRequestFilesLinkExpirationInDays { get; set; }
 
         [Parameter(Mandatory = false)]
+        public string ArchiveRedirectUrl { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? BlockSendLabelMismatchEmail { get; set; }     
+
+        [Parameter(Mandatory = false)]
         public bool? BlockDownloadFileTypePolicy { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -363,7 +369,7 @@ namespace PnP.PowerShell.Commands.Admin
         public Guid[] ExcludedBlockDownloadGroupIds { get; set; }
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter Force;
+        public SwitchParameter Force;           
 
         protected override void ExecuteCmdlet()
         {
@@ -1222,6 +1228,18 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
+            if (ShowPeoplePickerGroupSuggestionsForIB.HasValue)
+            {
+                Tenant.ArchiveRedirectUrl = ArchiveRedirectUrl;
+                modified = true;
+            }
+
+            if (BlockSendLabelMismatchEmail.HasValue)
+            {
+                Tenant.BlockSendLabelMismatchEmail = BlockSendLabelMismatchEmail.Value;
+                modified = true;
+            }
+
             if (BlockDownloadFileTypePolicy.HasValue)
             {
                 if (!BlockDownloadFileTypePolicy.Value)
@@ -1264,7 +1282,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 Tenant.SetBlockDownloadFileTypePolicyExclusionList(ExcludedBlockDownloadGroupIds);
                 modified = true;
-            }
+            }            
 
             if (modified)
             {
