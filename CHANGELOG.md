@@ -19,6 +19,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPLargeListOperationStatus` cmdlet to retrieve the status of a large list operation. [#3033](https://github.com/pnp/powershell/pull/3033)
 - Added `-BlockDownloadPolicy`, `-ExcludeBlockDownloadPolicySiteOwners` and `ExcludedBlockDownloadGroupIds` parameters to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets. [#3084](https://github.com/pnp/powershell/pull/3084)
 - Added `OpenInNewTab` parameter to `Add-PnPNavigationNode` cmdlet to allow links to be opened in a new tab. [#3094](https://github.com/pnp/powershell/pull/3094)
+- Added `-ArchiveRedirectUrl` to `Set-PnPTenant` allowing the configuration of a custom page to be shown when navigating to an archived SharePoint Online site [#3100](https://github.com/pnp/powershell/pull/3100)
+- Added `-BlockSendLabelMismatchEmail` to `Set-PnPTenant` allowing the warning e-mail being sent when uploading a file with a higher sensitivity label than the site it is being uploaded to to be disabled. [#3113](https://github.com/pnp/powershell/pull/3113)
+- Added `Move-PnPTerm` and `Move-PnPTermSet` cmdlets to allow moving the terms and termsets. [#2989](https://github.com/pnp/powershell/pull/2989) 
 
 ### Fixed
 
@@ -29,10 +32,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue where `Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdmin <user>` would require owners to be specified as well. [#3035](https://github.com/pnp/powershell/pull/3035)
 - Fixed `Get-PnPAzureADGroup` returns only 100 results even if there are more groups present in Azure AD. [#3085](https://github.com/pnp/powershell/pull/3085)
 - Fixed `Get-PnPAccessToken` cmdlet to correctly retrieve the access token for the specified resource URL. [#3091](https://github.com/pnp/powershell/pull/3091)
+- Fixed issue with `Get-PnPTenantSyncClientRestriction` cmdlet not populating the necessary properties. [#3099](https://github.com/pnp/powershell/pull/3099)
+- Fixed `Add/Set/Get-PnPPage` cmdlets when using multilingual translation parameters which caused some exceptions. [#3120](https://github.com/pnp/powershell/pull/3120)
 
 ### Changed
 
 - Improved `Set-PnPSite` cmdlet when using the `ScriptSafeDomainName` parameter. If a domain is already existing, it will now throw a warning. [#3073](https://github.com/pnp/powershell/pull/3073)
+- Change `Set-PnPWebhookSubscription` to use the same default expiration date as `Add-PnPWebhookSubsription` cmdlet which is 180 days instead of 6 months.[#3106](https://github.com/pnp/powershell/pull/3106)
+- Improved `Set-PnPHomePage` cmdlet to handle forward slash issue. [#3128](https://github.com/pnp/powershell/pull/3128)
+- Improved `Connect-PnPOnline` cmdlet to handle ping on the destination server to check if it exists. [PR](https://github.com/pnp/powershell/commit/cc3c5564fca9ce96b1a2ac47c7aabdc8b90136d0)
 
 ### Removed
 
@@ -40,6 +48,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- James Eccles [jameseccles]
+- Kunj Balkrishna Sangani [kunj-sangani]
+- Dayana Hristova [makarovv]
+- Rodrigo Pinto [ScoutmanPt]
+- [reusto]
 - Reshmee Auckloo [reshmee011]
 - Dan Toft [Tanddant]
 - [reusto]

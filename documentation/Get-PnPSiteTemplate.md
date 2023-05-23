@@ -164,7 +164,7 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com/sites/yourContentCenter"
 Get-PnPSiteTemplate -Out MyModels.pnp -Handlers SyntexModels
 ```
 
-Export all Syntex Document Understanding models in a Content Center into a single PnP template
+Export all Syntex Document Understanding models in a Content Center into a single PnP template. Note that only unstructured document processing models can be imported from a PnP template.
 
 ## PARAMETERS
 
