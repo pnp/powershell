@@ -17,7 +17,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `EnableAzureADB2BIntegration` to be returned by `Get-PnPTenant` [#3022](https://github.com/pnp/powershell/pull/3022)
 - Added `-SkipUrlValidation` to `Get-PnPSiteCollectionAppCatalog` which allows for skipping the URL validation when retrieving the site collection app catalog making it faster but potentially returning URLs that have been renamed [#2305](https://github.com/pnp/powershell/pull/3025)
 - Added `Get-PnPLargeListOperationStatus` cmdlet to retrieve the status of a large list operation. [#3033](https://github.com/pnp/powershell/pull/3033)
+- Added `-BlockDownloadFileTypePolicy`, `-BlockDownloadFileTypeIds` and `-ExcludedBlockDownloadGroupIds` parameters to `Set-PnPTenant` cmdlet. [#3081](https://github.com/pnp/powershell/pull/3081)
 - Added `-BlockDownloadPolicy`, `-ExcludeBlockDownloadPolicySiteOwners` and `ExcludedBlockDownloadGroupIds` parameters to `Set-PnPTenantSite` and `Set-PnPSite` cmdlets. [#3084](https://github.com/pnp/powershell/pull/3084)
+- Added `-OpenInNewTab` parameter to `Add-PnPNavigationNode` cmdlet to allow links to be opened in a new tab. [#3094](https://github.com/pnp/powershell/pull/3094)
 - Added `-ArchiveRedirectUrl` to `Set-PnPTenant` allowing the configuration of a custom page to be shown when navigating to an archived SharePoint Online site [#3100](https://github.com/pnp/powershell/pull/3100)
 - Added `-BlockSendLabelMismatchEmail` to `Set-PnPTenant` allowing the warning e-mail being sent when uploading a file with a higher sensitivity label than the site it is being uploaded to to be disabled. [#3113](https://github.com/pnp/powershell/pull/3113)
 - Added `Move-PnPTerm` and `Move-PnPTermSet` cmdlets to allow moving the terms and termsets. [#2989](https://github.com/pnp/powershell/pull/2989)
@@ -41,6 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Change `Set-PnPWebhookSubscription` to use the same default expiration date as `Add-PnPWebhookSubsription` cmdlet which is 180 days instead of 6 months.[#3106](https://github.com/pnp/powershell/pull/3106)
 - Improved `Set-PnPHomePage` cmdlet to handle forward slash issue. [#3128](https://github.com/pnp/powershell/pull/3128)
 - Improved `Connect-PnPOnline` cmdlet to handle ping on the destination server to check if it exists. [PR](https://github.com/pnp/powershell/commit/cc3c5564fca9ce96b1a2ac47c7aabdc8b90136d0)
+- Improved `Invoke-PnPGraphMethod` cmdlet to show a better error message when sufficient permissions are not available. [#3133](https://github.com/pnp/powershell/pull/3133)
 
 ### Removed
 
@@ -48,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Giacomo Pozzoni [jackpoz]
 - James Eccles [jameseccles]
 - Kunj Balkrishna Sangani [kunj-sangani]
 - Dayana Hristova [makarovv]
