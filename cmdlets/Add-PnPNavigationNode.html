@@ -87,10 +87,10 @@
 <p>Adds an item to a navigation element</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="default">Default</h3>
-<pre><code class="lang-powershell">Add-PnPNavigationNode -Location &lt;NavigationType&gt; -Title &lt;String&gt; [-Url &lt;String&gt;] [-Parent &lt;NavigationNodePipeBind&gt;] [-First] [-External] [-AudienceIds &lt;Guid[]&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Add-PnPNavigationNode -Location &lt;NavigationType&gt; -Title &lt;String&gt; [-Url &lt;String&gt;] [-Parent &lt;NavigationNodePipeBind&gt;] [-First] [-External] [-AudienceIds &lt;Guid[]&gt; [-OpenInNewTab &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="provide-previousnode">Provide PreviousNode</h3>
-<pre><code class="lang-powershell">Add-PnPNavigationNode -Location &lt;NavigationType&gt; -Title &lt;String&gt; -PreviousNode &lt;NavigationNodePipeBind&gt; [-Url &lt;String&gt;] [-Parent &lt;NavigationNodePipeBind&gt;] [-External] [-AudienceIds &lt;Guid[]&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Add-PnPNavigationNode -Location &lt;NavigationType&gt; -Title &lt;String&gt; -PreviousNode &lt;NavigationNodePipeBind&gt; [-Url &lt;String&gt;] [-Parent &lt;NavigationNodePipeBind&gt;] [-External] [-AudienceIds &lt;Guid[]&gt;] [-OpenInNewTab &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Adds a menu item to either the quicklaunch, top navigation, search navigation or the footer</p>
@@ -128,6 +128,10 @@
 Add-PnPNavigationNode -Title &quot;Marketing&quot; -Url &quot;https://contoso.sharepoint.com/sites/Marketing&quot; -Location TopNavigationBar -External
 </code></pre>
 <p>Adds the Marketing navigation node to the top navigation bar on the root site. NOTE that the <code>-External</code> switch is mandatory as the connection is made to the root site. This is currently a CSOM issue but once fixed, it will be fixed in PnP PowerShell automatically.</p>
+<h3 id="example-9">EXAMPLE 9</h3>
+<pre><code class="lang-powershell">Add-PnPNavigationNode -Title &quot;Contoso&quot; -Url &quot;http://contoso.sharepoint.com/sites/contoso/&quot; -Location &quot;QuickLaunch&quot; -OpenInNewTab
+</code></pre>
+<p>Adds a navigation node to the quicklaunch. The navigation node will have the title &quot;Contoso&quot; and will link to the url &quot;http://contoso.sharepoint.com/sites/contoso/&quot;. It will also open the link in a new tab.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -221,6 +225,17 @@ Accept wildcard characters: False
 <h3 id="-audienceids">-AudienceIds</h3>
 <p>The Guids of the groups to which the navigation node should be visible. Leave empty to make the node visible to all users.</p>
 <pre><code class="lang-yaml">Type: Guid array
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-openinnewtab">-OpenInNewTab</h3>
+<p>Indicates that the link will be opened in a new browser tab.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
