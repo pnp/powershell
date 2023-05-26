@@ -193,6 +193,7 @@
  [-BlockDownloadFileTypeIds &lt;SPBlockDownloadFileTypeId[]&gt;]
  [-ExcludedBlockDownloadGroupIds &lt;GUID[]&gt;]
  [-ArchiveRedirectUrl &lt;String&gt;]
+ [-StopNew2013Workflows &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -1678,6 +1679,17 @@ Accept wildcard characters: False
 <h3 id="-excludedblockdownloadgroupids">-ExcludedBlockDownloadGroupIds</h3>
 <p>This parameter exempts users in the specified security groups from this policy so that they can download meeting recording files.</p>
 <pre><code class="lang-yaml">Type: GUID[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stopnew2013workflows">-StopNew2013Workflows</h3>
+<p>This parameter allows disablement of creation of new SharePoint 2013 workflows in the tenant</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
