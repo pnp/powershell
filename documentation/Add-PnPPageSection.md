@@ -16,7 +16,7 @@ Adds a new section to a page
 
 ```powershell
 Add-PnPPageSection [-Page] <PagePipeBind> -SectionTemplate <CanvasSectionTemplate>
- [-Order <Int32>] [-ZoneEmphasis <Int32>] [-Connection <PnPConnection>]
+ [-Order <Int32>] [-ZoneEmphasis <Int32>] [-VerticalZoneEmphasis <Int32>] [-Connection <PnPConnection>]
  
 ```
 
@@ -55,6 +55,15 @@ PS> Add-PnPPageSection -Page $page -SectionTemplate OneColumn -ZoneEmphasis 2
 ```
 
 Adds a new one column section to the page 'MyPage' and sets the background to 2 (0 is no background, 3 is highest emphasis)
+
+### EXAMPLE 4
+```powershell
+$page = Add-PnPPage -Name "MyPage"
+PS> Add-PnPPageSection -Page $page -SectionTemplate OneColumnVerticalSection -Order 1 -ZoneEmphasis 2 -VerticalZoneEmphasis 3
+```
+
+Adds a new one column with one vertical section to the page 'MyPage' and sets the zone emphasis to 2 for one column and vertical zone emphasis to 3 for the vertical column.
+
 
 ## PARAMETERS
 
@@ -131,8 +140,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -VerticalZoneEmphasis
+Sets the background of the vertical section (default = 0).
+Works only for vertical column layouts, will be ignored for other layouts.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
