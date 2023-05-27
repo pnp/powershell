@@ -123,6 +123,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-BlockDownloadFileTypeIds <SPBlockDownloadFileTypeId[]>]
  [-ExcludedBlockDownloadGroupIds <GUID[]>]
  [-ArchiveRedirectUrl <String>]
+ [-StopNew2013Workflows <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2075,6 +2076,21 @@ This parameter exempts users in the specified security groups from this policy s
 
 ```yaml
 Type: GUID[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StopNew2013Workflows
+
+This parameter allows disablement of creation of new SharePoint 2013 workflows in the tenant
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
