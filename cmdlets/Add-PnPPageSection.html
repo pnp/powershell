@@ -87,7 +87,7 @@
 <p>Adds a new section to a page</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPPageSection [-Page] &lt;PagePipeBind&gt; -SectionTemplate &lt;CanvasSectionTemplate&gt;
- [-Order &lt;Int32&gt;] [-ZoneEmphasis &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-Order &lt;Int32&gt;] [-ZoneEmphasis &lt;Int32&gt;] [-VerticalZoneEmphasis &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -111,6 +111,11 @@ PS&gt; Add-PnPPageSection -Page $page -SectionTemplate OneColumn
 PS&gt; Add-PnPPageSection -Page $page -SectionTemplate OneColumn -ZoneEmphasis 2
 </code></pre>
 <p>Adds a new one column section to the page 'MyPage' and sets the background to 2 (0 is no background, 3 is highest emphasis)</p>
+<h3 id="example-4-1">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">$page = Add-PnPPage -Name &quot;MyPage&quot;
+PS&gt; Add-PnPPageSection -Page $page -SectionTemplate OneColumnVerticalSection -Order 1 -ZoneEmphasis 2 -VerticalZoneEmphasis 3
+</code></pre>
+<p>Adds a new one column with one vertical section to the page 'MyPage' and sets the zone emphasis to 2 for one column and vertical zone emphasis to 3 for the vertical column.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -159,6 +164,18 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-zoneemphasis">-ZoneEmphasis</h3>
 <p>Sets the background of the section (default = 0)</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verticalzoneemphasis">-VerticalZoneEmphasis</h3>
+<p>Sets the background of the vertical section (default = 0).
+Works only for vertical column layouts, will be ignored for other layouts.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
