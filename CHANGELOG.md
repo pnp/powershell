@@ -23,7 +23,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ArchiveRedirectUrl` to `Set-PnPTenant` allowing the configuration of a custom page to be shown when navigating to an archived SharePoint Online site [#3100](https://github.com/pnp/powershell/pull/3100)
 - Added `-BlockSendLabelMismatchEmail` to `Set-PnPTenant` allowing the warning e-mail being sent when uploading a file with a higher sensitivity label than the site it is being uploaded to to be disabled. [#3113](https://github.com/pnp/powershell/pull/3113)
 - Added `Move-PnPTerm` and `Move-PnPTermSet` cmdlets to allow moving the terms and termsets. [#2989](https://github.com/pnp/powershell/pull/2989)
-- Added `-VerticalZoneEmphasis` parameter to `Add-PnPPageSection` cmdlet to allow setting the emphasis value for vertical columns.
+- Added `-VerticalZoneEmphasis` parameter to `Add-PnPPageSection` cmdlet to allow setting the emphasis value for vertical columns. [#3129](https://github.com/pnp/powershell/pull/3129)
+- Added `-AllowDeletion` parameter to `Set-PnPList` cmdlet to allow or prevent deletion of list from the SharePoint UI. [#3142](https://github.com/pnp/powershell/pull/3142)
 
 ### Fixed
 
@@ -51,6 +52,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Ganesh Sanap [ganesh-sanap]
 - Giacomo Pozzoni [jackpoz]
 - James Eccles [jameseccles]
 - Kunj Balkrishna Sangani [kunj-sangani]
