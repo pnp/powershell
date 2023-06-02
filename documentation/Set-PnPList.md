@@ -564,6 +564,34 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -EnableClassicAudienceTargeting
+Enable classic audience targeting in a SharePoint list.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableModernAudienceTargeting
+Enable modern audience targeting in a SharePoint list.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
