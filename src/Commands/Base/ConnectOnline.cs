@@ -10,13 +10,11 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
-using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
-using static PnP.PowerShell.Commands.Search.GetSearchConfiguration;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
