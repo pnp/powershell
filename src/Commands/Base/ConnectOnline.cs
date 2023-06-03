@@ -9,12 +9,14 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Net.Http;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using static PnP.PowerShell.Commands.Search.GetSearchConfiguration;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
@@ -705,28 +707,28 @@ namespace PnP.PowerShell.Commands.Base
 
         private static bool PingHost(string nameOrAddress)
         {
-            bool pingable = false;
-            Ping pinger = null;
 
             try
             {
-                pinger = new Ping();
-                PingReply reply = pinger.Send(nameOrAddress);
-                pingable = reply.Status == IPStatus.Success;
-            }
-            catch (PingException)
-            {
-                // Discard PingExceptions and return false;
-            }
-            finally
-            {
-                if (pinger != null)
+                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+                var httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Head;
+                httpRequest.Version = new Version(2,0);
+                httpRequest.RequestUri = new Uri("https://" + nameOrAddress);                
+                var cancellationToken = new CancellationTokenSource();
+                cancellationToken.CancelAfter(TimeSpan.FromSeconds(10));
+                var response = httpClient.SendAsync(httpRequest, cancellationToken.Token).Result;
+                var statusCode = (int) response.StatusCode;
+                if (statusCode > 100 && statusCode < 500)
                 {
-                    pinger.Dispose();
+                    return true;
                 }
+                return false;
             }
-
-            return pingable;
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
         private PSCredential GetCredentials()
         {
