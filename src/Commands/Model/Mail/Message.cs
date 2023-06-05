@@ -71,7 +71,7 @@ namespace PnP.PowerShell.Commands.Model.Mail
         public MessageImportanceType? Importance { get; set; }
 
         /// <summary>
-        /// The importance of the message
+        /// The attachments to attach to the message
         /// </summary>
         [JsonPropertyName("attachments")]
         public List<MessageAttachmentOptions> Attachments { get; set; }
