@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Model;
@@ -12,13 +11,13 @@ namespace PnP.PowerShell.Commands.Admin
     {
         protected override void ExecuteCmdlet()
         {
-            this.Tenant.IsUnmanagedSyncClientForTenantRestricted = false;
-            this.Tenant.BlockMacSync = false;
-            this.Tenant.ExcludedFileExtensionsForSyncClient = new List<string>();
-            this.Tenant.OptOutOfGrooveBlock = false;
-            this.Tenant.OptOutOfGrooveSoftBlock = false;
-            this.Tenant.DisableReportProblemDialog = false;
-            ClientContext.ExecuteQueryRetry();
+            Tenant.IsUnmanagedSyncClientForTenantRestricted = false;
+            Tenant.BlockMacSync = false;
+            Tenant.ExcludedFileExtensionsForSyncClient = new List<string>();
+            Tenant.OptOutOfGrooveBlock = false;
+            Tenant.OptOutOfGrooveSoftBlock = false;
+            Tenant.DisableReportProblemDialog = false;
+            AdminContext.ExecuteQueryRetry();
             WriteObject(new SPOTenantSyncClientRestriction(Tenant));
         }
     }

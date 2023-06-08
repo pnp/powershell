@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Site
     [OutputType(typeof(void))]
     public class AddSiteCollectionAdmin : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public List<UserPipeBind> Owners;
 
         [Parameter(Mandatory = false)]

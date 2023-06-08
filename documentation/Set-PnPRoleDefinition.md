@@ -15,7 +15,7 @@ Updates an existing Role Definition (Permission Level) in the site collection in
 ## SYNTAX
 
 ```powershell
-Set-PnPRoleDefinition -Identity <RoleDefinitionPipeBind> [-NewRoleName <String>] [-Description <String>] [-Order <Int32>] [-SelectAll] [-ClearAll] [-Select <PermissionKind[]>] [-Clear <PermissionKind[]>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPRoleDefinition -Identity <RoleDefinitionPipeBind> [-NewRoleName <String>] [-Description <String>] [-Order <Int32>] [-SelectAll] [-ClearAll] [-Select <PermissionKind[]>] [-Clear <PermissionKind[]>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -53,7 +53,7 @@ Changes the order in which the permission level is displayed.
 ## PARAMETERS
 
 ### -Identity
-The identity of the role definition, either a RoleDefinition object or the name of the roledefinition.
+The identity of the role definition, either a RoleDefinition object or the name of the RoleDefinition.
 
 ```yaml
 Type: RoleDefinitionPipeBind

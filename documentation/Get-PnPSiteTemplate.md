@@ -26,7 +26,7 @@ Get-PnPSiteTemplate [[-Out] <String>] [[-Schema] <XMLPnPSchemaVersion>] [-Includ
  [-TemplateProperties <Hashtable>] [-OutputInstance] [-ExcludeContentTypesFromSyndication]
  [-ListsToExtract <System.Collections.Generic.List`1[System.String]>]
  [-Configuration <ExtractConfigurationPipeBind>] [-Connection <PnPConnection>] 
-  [<CommonParameters>]
+  
 ```
 
 ## DESCRIPTION
@@ -54,7 +54,7 @@ Extracts a provisioning template in XML format from the current web.
 Get-PnPSiteTemplate -Out template.md
 ```
 
-Extracts a provisioning template in readible markdown format.
+Extracts a provisioning template in readable markdown format.
 
 ### EXAMPLE 4
 ```powershell
@@ -164,7 +164,7 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com/sites/yourContentCenter"
 Get-PnPSiteTemplate -Out MyModels.pnp -Handlers SyntexModels
 ```
 
-Export all Syntex Document Understanding models in a Content Center into a single PnP template
+Export all Syntex Document Understanding models in a Content Center into a single PnP template. Note that only unstructured document processing models can be imported from a PnP template.
 
 ## PARAMETERS
 
@@ -456,7 +456,7 @@ Accept wildcard characters: False
 Filename to write to, optionally including full path. The format of the file is based upon the extension you specify. 
 - .xml will generate an XML file
 - .pnp will generate a PnP Provisioning Package, which is a file that contains all artifacts in a single archive (files, images, etc.)
-- .md will generate a user readible markdown report. This is work in progress and will be extended in the future.
+- .md will generate a user readable markdown report. This is work in progress and will be extended in the future.
 
 ```yaml
 Type: String

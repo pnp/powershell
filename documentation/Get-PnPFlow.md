@@ -20,28 +20,26 @@ Returns the flows for a given environment
 ## SYNTAX
 
 ```powershell
-Get-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> [-AsAdmin] [-Identity <PowerPlatformPipeBind>] 
-[-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] [-AsAdmin] [-Identity <PowerPlatformPipeBind>] 
+[-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
-This cmdlet returns the flows for a given enviroment.
+This cmdlet returns the flows for a given environment.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment
+Get-PnPPowerPlatformEnvironment -Identity "MyOrganization (default)" | Get-PnPFlow
 ```
 This returns all the flows for a given Power Platform environment
 
 ### Example 2
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Get-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
-This returns a specific flow
+This returns a specific flow from the default environment
 
 ## PARAMETERS
 
@@ -53,9 +51,9 @@ Type: PowerAutomateEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
+Default value: The default environment
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -106,8 +104,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

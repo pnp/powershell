@@ -16,7 +16,7 @@ Removes a JavaScript link or block from a web or sitecollection
 
 ```powershell
 Remove-PnPJavaScriptLink [[-Identity] <UserCustomActionPipeBind>] [-Force] [-Scope <CustomActionScope>]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION

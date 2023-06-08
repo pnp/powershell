@@ -17,12 +17,12 @@ Adds a Masterpage
 ```powershell
 Add-PnPMasterPage -SourceFilePath <String> -Title <String> -Description <String>
  [-DestinationFolderHierarchy <String>] [-UIVersion <String>] [-DefaultCssFile <String>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
 
-Allows to add Masterpage.
+Allows to add MasterPage.
 
 ## EXAMPLES
 
@@ -31,7 +31,7 @@ Allows to add Masterpage.
 Add-PnPMasterPage -SourceFilePath "page.master" -Title "MasterPage" -Description "MasterPage for Web" -DestinationFolderHierarchy "SubFolder"
 ```
 
-Adds a MasterPage from the local file "page.master" to the folder "SubFolder" in the Masterpage gallery.
+Adds a MasterPage from the local file "page.master" to the folder "SubFolder" in the MasterPage gallery.
 
 ## PARAMETERS
 
@@ -64,7 +64,7 @@ Accept wildcard characters: False
 ```
 
 ### -Description
-Description for the Masterpage
+Description for the MasterPage
 
 ```yaml
 Type: String
@@ -106,7 +106,7 @@ Accept wildcard characters: False
 ```
 
 ### -Title
-Title for the Masterpage
+Title for the MasterPage
 
 ```yaml
 Type: String
@@ -120,7 +120,7 @@ Accept wildcard characters: False
 ```
 
 ### -UIVersion
-UIVersion of the Masterpage. Default = 15
+UIVersion of the MasterPage. Default = 15
 
 ```yaml
 Type: String

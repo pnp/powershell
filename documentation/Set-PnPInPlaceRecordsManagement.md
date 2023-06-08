@@ -16,7 +16,7 @@ Activates or deactivates in place records management feature.
 
 ```powershell
 Set-PnPInPlaceRecordsManagement -Enabled <Boolean> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

@@ -33,14 +33,17 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-DisableAppViews <AppViewsPolicy>] [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
  [-DisableFlows <FlowsPolicy>] [-AnonymousLinkExpirationInDays <Int32>] [-SensitivityLabel <String>] [-RemoveLabel] [-AddInformationSegment <Guid[]>] [-RemoveInformationSegment <Guid[]>]
  [-OverrideTenantAnonymousLinkExpirationPolicy] [-InformationBarriersMode <InformationBarriersMode>] 
- [-MediaTranscription <MediaTranscriptionPolicyType>] [-Wait] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-MediaTranscription <MediaTranscriptionPolicyType>] 
+ [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
+ [-ExcludedBlockDownloadGroupIds <Guid[]>]
+ [-Wait] 
+ [-Connection <PnPConnection>] 
 ```
 
 ### Set Lock State
 ```powershell
 Set-PnPTenantSite [-Identity] <String> [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
@@ -237,7 +240,7 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultLinkToExistingAccess
-When set to $true, the DefaultSharingLinkType will be overriden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
+When set to $true, the DefaultSharingLinkType will be overridden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
 
 ```yaml
 Type: Boolean
@@ -375,7 +378,7 @@ Accept wildcard characters: False
 ```
 
 ### -LockState
-Sets the lockstate of a site
+Sets the lockState of a site
 
 ```yaml
 Type: SiteLockState
@@ -669,6 +672,48 @@ When the feature is enabled, videos can have transcripts generated on demand or 
 Type: MediaTranscriptionPolicyType
 Parameter Sets: Set Properties
 Accepted values: Enabled, Disabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadPolicy
+Set this to true to block download of files from SharePoint sites or OneDrive
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludeBlockDownloadPolicySiteOwners
+Set this to true to exempts site owners from the block download policy so that they can fully download any content for the site.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludedBlockDownloadGroupIds
+Exempts users from the mentioned groups from this policy and they can fully download any content for the site.
+
+```yaml
+Type: GUID[]
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named

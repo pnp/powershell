@@ -16,14 +16,14 @@ Removes a taxonomy term from the term store.
 ### By Term Id
 ```
 Remove-PnPTerm -Identity <Guid> [-TermStore <TaxonomyTermStorePipeBind>]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-WhatIf] [-Confirm] 
 ```
 
 ### By Term Name
 ```
 Remove-PnPTerm -Identity <String> -TermSet <TaxonomyTermSetPipeBind>
  -TermGroup <TaxonomyTermGroupPipeBind> [-TermStore <TaxonomyTermStorePipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [-Connection <PnPConnection>] [-WhatIf] [-Confirm] 
 ```
 
 ## DESCRIPTION

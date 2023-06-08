@@ -13,9 +13,9 @@ namespace PnP.PowerShell.Commands.Principals
         protected override void ExecuteCmdlet()
         {
             var sitePropertiesEnumerable = this.Tenant.UpdateUserTypeFromAzureADForAllSites(LoginName);
-            ClientContext.Load(sitePropertiesEnumerable);
-            ClientContext.Load(sitePropertiesEnumerable, sp => sp.NextStartIndexFromSharePoint);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(sitePropertiesEnumerable);
+            AdminContext.Load(sitePropertiesEnumerable, sp => sp.NextStartIndexFromSharePoint);
+            AdminContext.ExecuteQueryRetry();
             if(sitePropertiesEnumerable.Count == 0)
             {
                 WriteWarning("User Type is already up to date.");

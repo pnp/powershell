@@ -11,10 +11,10 @@ namespace PnP.PowerShell.Commands.Admin
     {
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(Tenant);
-            ClientContext.Load(Tenant, t => t.HideDefaultThemes);
-            ClientContext.ExecuteQueryRetry();
-            WriteObject(new SPOTenant(Tenant, ClientContext));
+            AdminContext.Load(Tenant);
+            AdminContext.Load(Tenant, t => t.HideDefaultThemes);
+            AdminContext.ExecuteQueryRetry();
+            WriteObject(new SPOTenant(Tenant, AdminContext));
         }
     }
 }

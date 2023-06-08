@@ -32,7 +32,6 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-
             Guid siteId = Guid.Empty;
             if (ParameterSpecified(nameof(Site)))
             {
@@ -55,10 +54,18 @@ namespace PnP.PowerShell.Commands.Apps
                                     displayName = DisplayName
                                 }
                             }
+                        },
+                    grantedToIdentitiesV2 = new[] {
+                            new {
+                                application = new {
+                                    id = AppId.ToString(),
+                                    displayName = DisplayName
+                                }
+                            }
                         }
                 };
 
-                var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.PostAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload).GetAwaiter().GetResult();
+                var results = Utilities.REST.RestHelper.PostAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload).GetAwaiter().GetResult();
                 WriteObject(results.Convert());
             }
         }

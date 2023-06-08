@@ -24,7 +24,7 @@ Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String>
 ### Add field reference to list
 ```powershell
 Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Add field to web
@@ -79,7 +79,7 @@ This will add a site column of type Choice (only one choice value can be chosen 
 Add-PnPField -Type Calculated -ResultType Number -DisplayName "My Calculated Column" -InternalName "MyCalcCol" -Formula "=Today()"
 ```
 
-This will add a site column of type Caulculated called "My Calculated Column" which contains todays date.
+This will add a site column of type Calculated called "My Calculated Column" which contains todays date.
 
 ## PARAMETERS
 

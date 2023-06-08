@@ -21,7 +21,7 @@ Updates an existing Site Script Package on the current tenant.
 
 ```powershell
 Set-PnPSiteScriptPackage -Identity <TenantSiteScriptPipeBind> [-Title <String>] [-Description <String>]
- [-ContentPath <String>] [-Version <Int32>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-ContentPath <String>] [-Version <Int32>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

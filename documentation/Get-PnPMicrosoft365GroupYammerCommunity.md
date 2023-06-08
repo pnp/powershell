@@ -20,7 +20,7 @@ Returns the Yammer Community behind a particular Microsoft 365 Group
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365GroupYammerCommunity -Identity <Microsoft365GroupPipeBind> [-Connection] [-Verbose] [<CommonParameters>]
+Get-PnPMicrosoft365GroupYammerCommunity -Identity <Microsoft365GroupPipeBind> [-Connection] [-Verbose] 
 ```
 
 ## DESCRIPTION

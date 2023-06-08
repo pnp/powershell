@@ -15,7 +15,7 @@ Returns the url to Content Type Publishing Hub
 ## SYNTAX
 
 ```powershell
-Get-PnPContentTypePublishingHubUrl [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPContentTypePublishingHubUrl [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

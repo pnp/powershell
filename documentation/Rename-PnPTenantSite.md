@@ -16,7 +16,7 @@ Starts a rename of a site on a SharePoint Online site.
 
 ```powershell
 Rename-PnPTenantSite [[-Identity] <SPOSitePipeBind>] [[-NewSiteUrl] <String>] [[-NewSiteTitle] <string>]
-[[-SuppressMarketplaceAppCheck] [<SwitchParameter>]] [[-SuppressWorkflow2013Check] [<SwitchParameter>]] [[-SuppressBcsCheck] [<SwitchParameter>]] [-Connection <PnPConnection>] [<CommonParameters>]
+[[-SuppressMarketplaceAppCheck] [<SwitchParameter>]] [[-SuppressWorkflow2013Check] [<SwitchParameter>]] [[-SuppressBcsCheck] [<SwitchParameter>]] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -136,7 +136,7 @@ Accept wildcard characters: False
 ```
 
 ### -Wait
-Wait till the renaming of the new site collection is successfull. If not specified, a job will be created which you can use to check for its status.
+Wait till the renaming of the new site collection is successful. If not specified, a job will be created which you can use to check for its status.
 
 ```yaml
 Type: SwitchParameter

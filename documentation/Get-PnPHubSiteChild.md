@@ -20,7 +20,7 @@ Retrieves all sites associated to a specific hub site
 ## SYNTAX
 
 ```powershell
-Get-PnPHubSiteChild [-Identity <HubSitePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPHubSiteChild [-Identity <HubSitePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -52,7 +52,7 @@ Returns all sites that are associated to a hub site
 ## PARAMETERS
 
 ### -Identity
-The URL, Id or instance of the hubsite for which to receive the sites refering to it. If not provided, the currently connected to site will be used.
+The URL, Id or instance of the hubsite for which to receive the sites referring to it. If not provided, the currently connected to site will be used.
 
 ```yaml
 Type: HubSitePipeBind

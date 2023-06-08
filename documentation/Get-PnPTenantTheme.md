@@ -20,7 +20,7 @@ Returns all or a specific theme
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantTheme [[-Name] <String>] [-AsJson] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPTenantTheme [[-Name] <String>] [-AsJson] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

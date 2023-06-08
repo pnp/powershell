@@ -55,15 +55,16 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(_name))
             {
-                list = web.GetListByTitle(_name);
+                list = web.GetListByUrl(_name);
                 if (list == null)
                 {
-                    list = web.GetListByUrl(_name);
+                    list = web.GetListByTitle(_name);
                 }
             }
             if (list != null)
             {
-                web.Context.Load(list, l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl); if (retrievals != null)
+                web.Context.Load(list, l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.ContentTypesEnabled, l => l.RootFolder.ServerRelativeUrl);
+                if (retrievals != null)
                 {
                     web.Context.Load(list, retrievals);
                 }

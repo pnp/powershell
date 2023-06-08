@@ -20,12 +20,12 @@ Gets one Azure Active Directory group or a list of Azure Active Directory groups
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADGroup [-Identity <AzureADGroupPipeBind>] [<CommonParameters>]
+Get-PnPAzureADGroup [-Identity <AzureADGroupPipeBind>] 
 ```
 
 ## DESCRIPTION
 
-Allows to retrieve list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifing `Identity` option it is possible to get single group.
+Allows to retrieve list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying `Identity` option it is possible to get single group.
 
 ## EXAMPLES
 

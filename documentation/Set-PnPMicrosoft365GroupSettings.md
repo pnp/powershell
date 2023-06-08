@@ -21,12 +21,12 @@ Updates Microsoft 365 Group settings for the tenant or specified Group.
 
 ```powershell
 Set-PnPMicrosoft365GroupSettings -Identity <string> [-Values <Hashtable>] [-Group <Microsoft365GroupPipeBind>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
 
-Allows to modify Microsoft 365 Group settings for tenat or specified group.
+Allows to modify Microsoft 365 Group settings for tenant or specified group.
 
 ## EXAMPLES
 

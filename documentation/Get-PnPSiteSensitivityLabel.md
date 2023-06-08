@@ -15,11 +15,11 @@ Gets the Microsoft Purview sensitivity label that is set on the connected to sit
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteSensitivityLabel [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPSiteSensitivityLabel [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-This cmdlet allows retrieval of the currently assigned Microsoft Purview sensitivity label to the currently connectected to site.
+This cmdlet allows retrieval of the currently assigned Microsoft Purview sensitivity label to the currently connected to site.
 
 ## EXAMPLES
 
@@ -28,7 +28,7 @@ This cmdlet allows retrieval of the currently assigned Microsoft Purview sensiti
 Get-PnPSiteSensitivityLabel
 ```
 
-Returns the Microsoft Purview sensitivitiy label set on the currently connected to site
+Returns the Microsoft Purview sensitivity label set on the currently connected to site
 
 ## PARAMETERS
 

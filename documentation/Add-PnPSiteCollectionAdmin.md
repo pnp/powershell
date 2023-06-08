@@ -46,7 +46,7 @@ This will add all users with their title ending with "Doe" as additional seconda
 
 ### EXAMPLE 4
 ```powershell
-Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdminrs "user@contoso.onmicrosoft.com"
+Add-PnPSiteCollectionAdmin -PrimarySiteCollectionAdmin "user@contoso.onmicrosoft.com"
 ```
 
 This will set user@contoso.onmicrosoft.com as the primary site collection administrator of the site collection in the current context
@@ -74,7 +74,7 @@ Specifies owner(s) to add as site collection administrators. They will be added 
 Type: System.Collections.Generic.List`1[PnP.PowerShell.Commands.Base.PipeBinds.UserPipeBind]
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)

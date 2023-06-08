@@ -15,7 +15,7 @@ Moves a file or folder to a different location
 ## SYNTAX
 
 ```powershell
-Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-AllowSchemaMismatch] [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-NoWait] [-Force] [-Connection <PnPConnection>]
+Move-PnPFile [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-AllowSchemaMismatch] [-AllowSmallerVersionLimitOnDestination] [-IgnoreVersionHistory] [-NoWait] [-Force] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -193,7 +193,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Verbose
+When provided, additional debug statements might be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

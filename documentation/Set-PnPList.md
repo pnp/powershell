@@ -16,13 +16,14 @@ Updates list settings
 
 ```powershell
 Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRoleInheritance]
- [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubscopes] [-Title <String>] [-Description <String>]
- [-Hidden <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
+ [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubScopes] [-Title <String>] [-Description <String>]
+ [-Hidden <Boolean>] [-AllowDeletion <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
- [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>]
- [-Path <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DisableCommenting <Boolean>] 
+ [-EnableAutoExpirationVersionTrim <Boolean>] [-ExpireVersionsAfterDays <UInt32>]
+ [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>] [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -81,6 +82,27 @@ Rename a list, including its' URL.
 
 ### EXAMPLE 8
 ```powershell
+Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $true
+```
+
+Enable AutoExpiration file version trim mode on a doccument library.
+
+### EXAMPLE 9
+```powershell
+Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVersions 500
+```
+
+Enable ExpireAfter file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
+
+### EXAMPLE 10
+```powershell
+Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVersions 500
+```
+
+Enable NoExpiration file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
+
+### EXAMPLE 11
+```powershell
 Set-PnPList -Identity "Demo List" -DefaultSensitivityLabelForLibrary "Confidential"
 ```
 
@@ -116,7 +138,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ClearSubscopes
+### -ClearSubScopes
 If used the unique permissions are cleared from child objects and they can inherit role assignments from this object
 
 ```yaml
@@ -312,6 +334,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -AllowDeletion
+Allow or prevent deletion of the list from the SharePoint UI. Set to $true to allow, $false to prevent.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Identity
 The ID, Title or Url of the list.
 
@@ -361,6 +397,21 @@ Maximum major versions for which to keep minor versions
 ```yaml
 Type: UInt32
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OpenDocumentsMode
+Allows configuring the opening documents in the browser advanced setting on document libraries. Set to ClientApplication to have documents being opened in the locally installed Word, PowerPoint or Excel client or set to Browser to have documents being opened in the browser. It is not possible to set it to "Use the server default mode".
+
+```yaml
+Type: DocumentLibraryOpenDocumentsInMode
+Parameter Sets: (All)
+Accepted values: ClientApplication, Browser
 
 Required: False
 Position: Named
@@ -426,7 +477,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExemptFromBlockDownloadOfNonViewableFiles
-Allows to configure access capabilities for unmanaged devices for the list. If set to $true, the list will be accessible by unmanaged devices as well. For more information, see [SharePoint and OneDrive unmanaged device access controls for administrators](https://learn.microsoft.com/sharepoint/control-access-from-unmanaged-devices).
+Allows to configure access capabilities for un-managed devices for the list. If set to $true, the list will be accessible by un-managed devices as well. For more information, see [SharePoint and OneDrive un-managed device access controls for administrators](https://learn.microsoft.com/sharepoint/control-access-from-unmanaged-devices).
 
 ```yaml
 Type: Boolean
@@ -453,6 +504,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DisableCommenting
+Enable or disable whether commenting is enabled for the list. Set to $true to disable, $false to enable.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Path
 The new URL path of the list. The parent folder must exist and be in the same site/web. I.e. lists\newname.
 
@@ -467,6 +532,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnableAutoExpirationVersionTrim
+Enable or disable AutoExpiration version trim for the document library. Set to $true to enable, $false to disable.
+
+Parameter ExpireVersionsAfterDays is required when EnableAutoExpirationVersionTrim is false. Set ExpireVersionsAfterDays to 0 for NoExpiration, set it to greater or equal 30 for ExpireAfter.
+
+Parameter MajorVersions is required when EnableAutoExpirationVersionTrim is false.
+Parameter MinorVersions is required when EnableAutoExpirationVersionTrim is false and minor version is enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpireVersionsAfterDays
+Work with parameter EnableAutoExpirationVersionTrim. Please see description in EnableAutoExpirationVersionTrim.
+
+```yaml
+Type: UInt32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

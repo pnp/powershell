@@ -15,7 +15,7 @@ Gets the configuration regarding the footer of the current web
 ## SYNTAX
 
 ```powershell
-Get-PnPFooter [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPFooter [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

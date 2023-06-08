@@ -6,7 +6,6 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = ResourceTypeParam)]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/.default")]
     [OutputType(typeof(System.IdentityModel.Tokens.Jwt.JwtSecurityToken), ParameterSetName = new[] { ResourceTypeParam_Decoded, ResourceUrlParam_Decoded })]
     [OutputType(typeof(string), ParameterSetName = new[] { ResourceTypeParam, ResourceUrlParam })]
     public class GetPnPAccessToken : PnPGraphCmdlet
@@ -46,16 +45,16 @@ namespace PnP.PowerShell.Commands.Base
                             throw new PSArgumentException("No connection found, please login first.");
                         }
                         var rootUrl = new Uri(currentUrl).GetLeftPart(UriPartial.Authority);
-                        accessTokenValue = TokenHandler.GetAccessToken(null, rootUrl + "/.default", Connection);
+                        accessTokenValue = TokenHandler.GetAccessToken(this, rootUrl + "/.default", Connection);
                         break;
                     case ResourceTypeName.ARM:
-                        accessTokenValue = TokenHandler.GetAccessToken(null, "https://management.azure.com/.default", Connection);
+                        accessTokenValue = TokenHandler.GetAccessToken(this, "https://management.azure.com/.default", Connection);
                         break;
                 }
             }
             else if (ParameterSetName == ResourceUrlParam || ParameterSetName == ResourceUrlParam_Decoded)
             {
-                accessTokenValue = TokenHandler.GetAccessToken(null, ResourceUrl, Connection);
+                accessTokenValue = TokenHandler.GetAccessToken(this, ResourceUrl, Connection);
             }
 
             if (accessTokenValue == null)

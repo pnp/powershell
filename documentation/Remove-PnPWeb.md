@@ -16,7 +16,7 @@ Removes a subsite.
 ## SYNTAX
 
 ```powershell
-Remove-PnPWeb -Identity <WebPipeBind> [-Force] [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPWeb -Identity <WebPipeBind> [-Force] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -77,8 +77,8 @@ namespace PnP.PowerShell.Commands
                 props.SharingCapability = SharingCapability.Value;
 
                 var op = props.Update();
-                ClientContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+                AdminContext.ExecuteQueryRetry();
             }
         }
 

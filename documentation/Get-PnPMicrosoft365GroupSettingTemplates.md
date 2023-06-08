@@ -20,7 +20,7 @@ Gets the available system wide template of settings for Microsoft 365 Groups.
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365GroupSettingTemplates [-Identity <string>] [<CommonParameters>]
+Get-PnPMicrosoft365GroupSettingTemplates [-Identity <string>] 
 ```
 
 ## DESCRIPTION

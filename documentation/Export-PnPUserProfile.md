@@ -20,7 +20,7 @@ Export user profile data.
 ## SYNTAX
 
 ```powershell
-Export-PnPUserProfile -LoginName <String> [<CommonParameters>]
+Export-PnPUserProfile -LoginName <String> 
 ```
 
 ## DESCRIPTION

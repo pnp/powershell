@@ -16,7 +16,7 @@ Returns the available languages on the current web
 
 ```powershell
 Get-PnPAvailableLanguage [[-Identity] <WebPipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

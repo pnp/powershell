@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 requiredScopes = requiredScopesAttribute.PermissionScopes;
             }
-            if (requiredScopes.Length > 0)
+            if (requiredScopes?.Length > 0)
             {
                 var decodedToken = new JwtSecurityToken(token);
                 var roles = decodedToken.Claims.FirstOrDefault(c => c.Type == "roles");
@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static string GetAccessToken(Type cmdletType, string appOnlyDefaultScope, PnPConnection connection)
+        internal static string GetAccessToken(Cmdlet cmdlet, string appOnlyDefaultScope, PnPConnection connection)
         {
             var contextSettings = connection.Context.GetContextSettings();
             var authManager = contextSettings.AuthenticationManager;
@@ -62,9 +62,9 @@ namespace PnP.PowerShell.Commands.Base
 
                 string[] requiredScopes = null;                
                 RequiredMinimalApiPermissions requiredScopesAttribute = null;
-                if (cmdletType != null)
+                if (cmdlet != null && cmdlet.GetType() != null)
                 {
-                    requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
+                    requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
                 }
                 if (requiredScopesAttribute != null)
                 {
@@ -78,7 +78,10 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     requiredScopes = new[] { appOnlyDefaultScope };
                 }
+
+                cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(",", requiredScopes)}");
                 var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
+                cmdlet.WriteVerbose($"Access token acquired: {accessToken}");
                 return accessToken;
             }
             return null;

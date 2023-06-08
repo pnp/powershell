@@ -19,7 +19,7 @@ Add a taxonomy field
 Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -TermSetPath <String>
  [-TermPathDelimiter <String>] [-Group <String>] [-Id <Guid>] [-AddToDefaultView] [-MultiValue]
  [-Required] [-FieldOptions <AddFieldOptions>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Id
@@ -27,7 +27,7 @@ Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName 
 Add-PnPTaxonomyField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> 
 -TaxonomyItemId <Guid> [-Group <String>] [-Id <Guid>] [-AddToDefaultView] [-MultiValue]
  [-Required] [-FieldOptions <AddFieldOptions>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

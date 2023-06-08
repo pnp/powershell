@@ -16,7 +16,7 @@ Sets the theme of the current web.
 
 ```powershell
 Set-PnPWebTheme [[-Theme] <ThemePipeBind>] [-WebUrl <String>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

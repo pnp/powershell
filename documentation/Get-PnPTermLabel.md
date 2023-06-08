@@ -17,13 +17,13 @@ Returns all or a specific translation label for a term.
 
 ### By Term Id
 ```
-Get-PnPTermLabel -Term <Guid> [-Lcid <Int32>] [-TermStore <TaxonomyTermStorePipeBind>] [<CommonParameters>]
+Get-PnPTermLabel -Term <Guid> [-Lcid <Int32>] [-TermStore <TaxonomyTermStorePipeBind>] 
 ```
 
 ### By Term Name
 ```
 Get-PnPTermLabel -Term <String> [-Lcid <Int32>] -TermSet <TaxonomyTermSetPipeBind>
- -TermGroup <TaxonomyTermGroupPipeBind> [-TermStore <TaxonomyTermStorePipeBind>] [<CommonParameters>]
+ -TermGroup <TaxonomyTermGroupPipeBind> [-TermStore <TaxonomyTermStorePipeBind>] 
 ```
 
 ## DESCRIPTION
@@ -98,7 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -TermGroup
-The TermGroup containing the termset, required when refering to the term by name.
+The TermGroup containing the termset, required when referring to the term by name.
 
 ```yaml
 Type: TaxonomyTermGroupPipeBind
@@ -113,7 +113,7 @@ Accept wildcard characters: False
 ```
 
 ### -TermSet
-The TermSet to containing the term, required when refering to the term by name.
+The TermSet to containing the term, required when referring to the term by name.
 
 ```yaml
 Type: TaxonomyTermSetPipeBind

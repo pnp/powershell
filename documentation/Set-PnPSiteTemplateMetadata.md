@@ -18,7 +18,7 @@ Sets metadata of a provisioning template
 Set-PnPSiteTemplateMetadata [-Path] <String> [-TemplateDisplayName <String>]
  [-TemplateImagePreviewUrl <String>] [-TemplateProperties <Hashtable>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -1,7 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.UserProfiles;
-
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.UserProfiles
@@ -15,9 +14,9 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
         protected override void ExecuteCmdlet()
         {
-            ProfileLoader profileLoader = ProfileLoader.GetProfileLoader(ClientContext);
+            ProfileLoader profileLoader = ProfileLoader.GetProfileLoader(AdminContext);
             profileLoader.CreatePersonalSiteEnqueueBulk(Email);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

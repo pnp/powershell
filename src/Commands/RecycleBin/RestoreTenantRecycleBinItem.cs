@@ -1,7 +1,6 @@
 ﻿using System.Management.Automation;
 using System.Threading;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 

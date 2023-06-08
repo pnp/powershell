@@ -16,11 +16,11 @@ Updates an existing term group.
 
 ```powershell
 Set-PnPTermGroup -Identity <TaxonomyTermGroupPipeBind> [-Name <String>] [-Description <String>] 
- [-TermStore <TaxonomyTermStorePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-TermStore <TaxonomyTermStorePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-The cmdles allows you to update an existing term group.
+The cmdlet allows you to update an existing term group.
 
 ## EXAMPLES
 

@@ -11,9 +11,9 @@ If you want to learn more about this Visual Studio Code feature, you can start [
 There might be two options of using Visual Studio Code development containers with PnP.PowerShell:
 
 - Using locally installed Docker, on your desktop/laptop.
-- Running containers in cloud using GitHub Codespaces (requires a paid GitHub plan)
+- Running containers in cloud using GitHub CodeSpaces (requires a paid GitHub plan)
 
-When you run in a development container in GitHub Codespaces, you do NOT need to install any version of the PnP.PowerShell directly on your laptop/desktop.
+When you run in a development container in GitHub CodeSpaces, you do NOT need to install any version of the PnP.PowerShell directly on your laptop/desktop.
 
 What you will need locally is only Visual Studio Code!
 
@@ -23,13 +23,13 @@ For using that option you need to have locally installed the following software:
 
 - Visual Studio Code
 - [Visual Studio Code extension, Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
-- Docker Engine. Kindly use [`Installing Docker locally` section of the `Using PnP PowerShell in Docker containers` arcticle](dev-containers.md) for installation instructions.
+- Docker Engine. Kindly use [`Installing Docker locally` section of the `Using PnP PowerShell in Docker containers` article](dev-containers.md) for installation instructions.
 
-### GitHub Codespaces
+### GitHub CodeSpaces
 
 This option requires the following:
 
-- Git repository in a [GitHub organization with enabled Codespaces](https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/enabling-github-codespaces-for-your-organization)
+- Git repository in a [GitHub organization with enabled CodeSpaces](https://docs.github.com/en/codespaces/managing-codespaces-for-your-organization/enabling-github-codespaces-for-your-organization)
 
 ## Defining Development Containers for the Project
 
@@ -75,7 +75,7 @@ This option requires the following:
 
 The command should work even if you don't have PnP.PowerShell module installed locally on your laptop.
 
-## Starting working with PnP.PowerShell when you run containers remotely in GitHub Codespaces
+## Starting working with PnP.PowerShell when you run containers remotely in GitHub CodeSpaces
 
 1. Open the project in GitHub site.
 2. Click `Code` button:

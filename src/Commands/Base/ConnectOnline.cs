@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Net.Http;
 using System.Reflection;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -54,7 +55,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]        
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -78,10 +79,10 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
         public string Url;
 
@@ -214,7 +215,7 @@ namespace PnP.PowerShell.Commands.Base
         public string UserAssignedManagedIdentityClientId;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
-        public string UserAssignedManagedIdentityAzureResourceId;        
+        public string UserAssignedManagedIdentityAzureResourceId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
@@ -274,6 +275,11 @@ namespace PnP.PowerShell.Commands.Base
             if (Credentials != null)
             {
                 credentials = Credentials.Credential;
+            }
+
+            if (PingHost(new Uri(Url).Host) == false)
+            {
+                throw new PSArgumentException("Host not reachable");
             }
 
             // Connect using the used set parameters
@@ -480,7 +486,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new FileNotFoundException("Certificate not found");
                 }
-                
+
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword);
                 if (PnPConnection.Current?.ClientId == ClientId &&
                     PnPConnection.Current?.Tenant == Tenant &&
@@ -696,6 +702,32 @@ namespace PnP.PowerShell.Commands.Base
         #endregion
 
         #region Helper methods
+
+        private static bool PingHost(string nameOrAddress)
+        {
+
+            try
+            {
+                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+                var httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Head;
+                httpRequest.Version = new Version(2,0);
+                httpRequest.RequestUri = new Uri("https://" + nameOrAddress);                
+                var cancellationToken = new CancellationTokenSource();
+                cancellationToken.CancelAfter(TimeSpan.FromSeconds(10));
+                var response = httpClient.SendAsync(httpRequest, cancellationToken.Token).Result;
+                var statusCode = (int) response.StatusCode;
+                if (statusCode > 100 && statusCode < 500)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
         private PSCredential GetCredentials()
         {
             var connectionUri = new Uri(Url);

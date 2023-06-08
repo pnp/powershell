@@ -21,12 +21,12 @@ Gets subscriptions from Microsoft Graph.
 
 ### Return a list (Default)
 ```powershell
-Get-PnPGraphSubscription [<CommonParameters>]
+Get-PnPGraphSubscription 
 ```
 
 ### Return by specific ID
 ```powershell
-Get-PnPGraphSubscription [-Identity <String>] [<CommonParameters>]
+Get-PnPGraphSubscription [-Identity <String>] 
 ```
 
 ## DESCRIPTION

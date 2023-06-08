@@ -21,7 +21,7 @@ Adds a given document library as a organizational asset source
 
 ```powershell
 Add-PnPOrgAssetsLibrary -LibraryUrl <String> [-ThumbnailUrl <String>] [-CdnType <SPOTenantCdnType>] [-OrgAssetType <OrgAssetType>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -33,7 +33,7 @@ The libraries must also have read rights for 'Everyone except external users' en
 
 Only entire libraries can be configured as an organizational asset, folders cannot.
 
-It may take some time before this change will be reflected in the webinterface.
+It may take some time before this change will be reflected in the web interface.
 
 ## EXAMPLES
 

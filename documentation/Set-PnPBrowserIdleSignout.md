@@ -55,7 +55,7 @@ Enables the browser idle sign-out policy.
 
 ```yaml
 Type: Boolean
-Parameter Sets: DisableBrowserIdleSignout, EnableBrowserIdleSignout
+Parameter Sets: DisableBrowserIdleSignOut, EnableBrowserIdleSignOut
 
 Required: True
 Position: Named
@@ -82,7 +82,7 @@ where:
 
 ```yaml
 Type: TimeSpan
-Parameter Sets: EnableBrowserIdleSignout
+Parameter Sets: EnableBrowserIdleSignOut
 
 Required: True
 Position: Named
@@ -109,7 +109,7 @@ where:
 
 ```yaml
 Type: TimeSpan
-Parameter Sets: EnableBrowserIdleSignout
+Parameter Sets: EnableBrowserIdleSignOut
 
 Required: True
 Position: Named

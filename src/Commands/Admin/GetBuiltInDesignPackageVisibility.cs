@@ -11,10 +11,11 @@ namespace PnP.PowerShell.Commands.Admin
     {
         [Parameter(Mandatory = false)]
         public DesignPackageType DesignPackage;
+        
         protected override void ExecuteCmdlet()
         {
-            var result = Microsoft.Online.SharePoint.TenantAdministration.Tenant.GetHiddenBuiltInDesignPackages(ClientContext);
-            ClientContext.ExecuteQueryRetry();
+            var result = Microsoft.Online.SharePoint.TenantAdministration.Tenant.GetHiddenBuiltInDesignPackages(AdminContext);
+            AdminContext.ExecuteQueryRetry();
 
             var array = new DesignPackageType[4]
             {
@@ -23,6 +24,7 @@ namespace PnP.PowerShell.Commands.Admin
                 DesignPackageType.Blank,
                 DesignPackageType.TeamSite
             };
+
             if (ParameterSpecified(nameof(DesignPackage)))
             {
                 if (Array.IndexOf(array, DesignPackage) >= 0)

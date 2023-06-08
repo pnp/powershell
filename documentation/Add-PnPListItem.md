@@ -23,14 +23,14 @@ Adds an item to the list and sets the creation time to the current date and time
 
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
- [-Folder <String>] [-Label <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Folder <String>] [-Label <String>] [-Connection <PnPConnection>] 
 ```
 
 ### Batched
 
 ```powershell
 Add-PnPListItem [-List] <ListPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>]
- [-Folder <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Folder <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -194,6 +194,7 @@ Multiple lines of text: -Values @{"MultiText" = "New text\n\nMore text"}
 Rich text: -Values @{"MultiText" = "&lt;strong&gt;New&lt;/strong&gt; text"}
 
 Choice: -Values @{"Choice" = "Choice 1"}
+
 Multi-Choice: -Values @{"MultiChoice" = "Choice 1","Choice 2"}
 
 Number: -Values @{"Number" = "10"}
@@ -225,7 +226,7 @@ Managed Metadata (multiple values with paths to terms): -Values @{"MetadataField
 
 Managed Metadata (multiple values with ids of terms): -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593"}
 
-Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, OfficePnp"}
+Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, OfficePnP"}
 
 ```yaml
 Type: Hashtable
