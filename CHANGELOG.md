@@ -59,6 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Kasper Larsen [kasperbolarsen]
 - Ganesh Sanap [ganesh-sanap]
 - Giacomo Pozzoni [jackpoz]
 - James Eccles [jameseccles]
