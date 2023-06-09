@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-VerticalZoneEmphasis` parameter to `Add-PnPPageSection` cmdlet to allow setting the emphasis value for vertical columns. [#3129](https://github.com/pnp/powershell/pull/3129)
 - Added `-AllowDeletion` parameter to `Set-PnPList` cmdlet to allow or prevent deletion of list from the SharePoint UI. [#3142](https://github.com/pnp/powershell/pull/3142)
 - Added `EnableClassicAudienceTargeting` and `EnableModernAudienceTargeting` parameters to `Set-PnPList` cmdlet to enable audience targeting in lists. [#3153](https://github.com/pnp/powershell/pull/3153)
+- Added `-Attachments` parameter to `Send-PnPMail` cmdlet to allow sending attachments via Microsoft Graph API. [#3157](https://github.com/pnp/powershell/pull/3157)
 
 ### Fixed
 
@@ -38,21 +39,29 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPAccessToken` cmdlet to correctly retrieve the access token for the specified resource URL. [#3091](https://github.com/pnp/powershell/pull/3091)
 - Fixed issue with `Get-PnPTenantSyncClientRestriction` cmdlet not populating the necessary properties. [#3099](https://github.com/pnp/powershell/pull/3099)
 - Fixed `Add/Set/Get-PnPPage` cmdlets when using multilingual translation parameters which caused some exceptions. [#3120](https://github.com/pnp/powershell/pull/3120)
+- Fixed `New-PnPSite` cmdlet now supports creating Team site in non-commercial cloud environments. [#885](https://github.com/pnp/pnpframework/pull/885)
 
 ### Changed
 
 - Improved `Set-PnPSite` cmdlet when using the `ScriptSafeDomainName` parameter. If a domain is already existing, it will now throw a warning. [#3073](https://github.com/pnp/powershell/pull/3073)
 - Change `Set-PnPWebhookSubscription` to use the same default expiration date as `Add-PnPWebhookSubsription` cmdlet which is 180 days instead of 6 months.[#3106](https://github.com/pnp/powershell/pull/3106)
 - Improved `Set-PnPHomePage` cmdlet to handle forward slash issue. [#3128](https://github.com/pnp/powershell/pull/3128)
-- Improved `Connect-PnPOnline` cmdlet to handle ping on the destination server to check if it exists. [PR](https://github.com/pnp/powershell/commit/cc3c5564fca9ce96b1a2ac47c7aabdc8b90136d0)
+- Improved `Connect-PnPOnline` cmdlet to handle ping on the destination server to check if it exists. [PR](https://github.com/pnp/powershell/commit/cc3c5564fca9ce96b1a2ac47c7aabdc8b90136d0) and [#3154](https://github.com/pnp/powershell/pull/3154)
 - Improved `Invoke-PnPGraphMethod` cmdlet to show a better error message when sufficient permissions are not available. [#3133](https://github.com/pnp/powershell/pull/3133)
 
 ### Removed
 
 - Removed alias `Get-PnPSiteCollectionAppCatalogs` for `Get-PnPSiteCollectionAppCatalog` [#2305](https://github.com/pnp/powershell/pull/3025)
+- Removed alias `Export-PnPClientSidePage`, please use `Export-PnPPage` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Export-PnPClientSidePageMapping`, please use `Export-PnPPageMapping` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Get-PnPClientSideComponent`, please use `Get-PnPPageComponent` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Remove-PnPClientSideComponent`, please use `Remove-PnPPageComponent` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Set-PnPClientSideText`, please use `Set-PnPPageTextPart` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Set-PnPClientSideWebPart`, please use `Set-PnPPageWebPart` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
 
 ### Contributors
 
+- Kasper Larsen [kasperbolarsen]
 - Ganesh Sanap [ganesh-sanap]
 - Giacomo Pozzoni [jackpoz]
 - James Eccles [jameseccles]
