@@ -51,9 +51,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Removed
 
 - Removed alias `Get-PnPSiteCollectionAppCatalogs` for `Get-PnPSiteCollectionAppCatalog` [#2305](https://github.com/pnp/powershell/pull/3025)
+- Removed alias `Export-PnPClientSidePage`, please use `Export-PnPPage` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Export-PnPClientSidePageMapping`, please use `Export-PnPPageMapping` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Get-PnPClientSideComponent`, please use `Get-PnPPageComponent` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Remove-PnPClientSideComponent`, please use `Remove-PnPPageComponent` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Set-PnPClientSideText`, please use `Set-PnPPageTextPart` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
+- Removed alias `Set-PnPClientSideWebPart`, please use `Set-PnPPageWebPart` cmdlet. [#3158](https://github.com/pnp/powershell/pull/3158)
 
 ### Contributors
 
+- Kasper Larsen [kasperbolarsen]
 - Ganesh Sanap [ganesh-sanap]
 - Giacomo Pozzoni [jackpoz]
 - James Eccles [jameseccles]

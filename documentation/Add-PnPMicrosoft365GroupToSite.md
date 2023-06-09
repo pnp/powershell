@@ -44,6 +44,12 @@ Add-PnPMicrosoft365GroupToSite -Alias "HRTeamsite" -DisplayName "My HR team site
 
 This will groupify the currently connected to site
 
+### EXAMPLE 3
+```powershell
+Add-PnPMicrosoft365GroupToSite -Url $SiteURL -Alias $GroupAlias -DisplayName $GroupName -IsPublic -KeepOldHomePage
+```
+This will groupify the $SiteURL site, make the Group public (default is Private) and keep the old Home page as the default homepage. The new Home.aspx is created but not set as default Homepage.
+
 ## PARAMETERS
 
 ### -Alias
