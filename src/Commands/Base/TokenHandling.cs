@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 requiredScopes = requiredScopesAttribute.PermissionScopes;
             }
-            if (requiredScopes.Length > 0)
+            if (requiredScopes?.Length > 0)
             {
                 var decodedToken = new JwtSecurityToken(token);
                 var roles = decodedToken.Claims.FirstOrDefault(c => c.Type == "roles");

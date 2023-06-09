@@ -11,9 +11,9 @@ namespace PnP.PowerShell.Commands.Webhooks
     [OutputType(typeof(WebhookSubscription))]
     public class SetWebhookSubscription : PnPWebCmdlet
     {
-        public const int DefaultValidityInMonths = 6;
+        public const int DefaultValidityInDays = 180; // Note: the max is 180 days not 6 months - https://learn.microsoft.com/sharepoint/dev/apis/webhooks/overview-sharepoint-webhooks
         public const int ValidityDeltaInDays = -72; // Note: Some expiration dates too close to the limit are rejected
-        
+
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public WebhookSubscriptionPipeBind Subscription;
 
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Webhooks
         public string NotificationUrl;
 
         [Parameter(Mandatory = false)]
-        public DateTime ExpirationDate = DateTime.Today.ToUniversalTime().AddMonths(DefaultValidityInMonths).AddHours(ValidityDeltaInDays);
+        public DateTime ExpirationDate = DateTime.Today.ToUniversalTime().AddDays(DefaultValidityInDays).AddHours(ValidityDeltaInDays);
 
         protected override void ExecuteCmdlet()
         {

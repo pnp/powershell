@@ -119,6 +119,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IBImplicitGroupBased <Boolean>]
  [-ShowOpenInDesktopOptionForSyncedFiles <Boolean>]
  [-ShowPeoplePickerGroupSuggestionsForIB <Boolean>]
+ [-BlockDownloadFileTypePolicy <Boolean>]
+ [-BlockDownloadFileTypeIds <SPBlockDownloadFileTypeId[]>]
+ [-ExcludedBlockDownloadGroupIds <GUID[]>]
+ [-ArchiveRedirectUrl <String>]
+ [-StopNew2013Workflows <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -201,6 +206,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ArchiveRedirectUrl
+Can be used to configure a custom page to show when a user is navigating to a SharePoint Online site that has been archived using Microsoft Syntex Archiving.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -BccExternalSharingInvitations
 When the feature is enabled, all external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.
 
@@ -229,6 +248,21 @@ Single or Multiple e-mail addresses - joe@contoso.com or joe@contoso.com,bob@con
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockSendLabelMismatchEmail
+Allows blocking of the automated e-mail being sent when somebody uploads a document to a site that's protected with a sensitivity label and their document has a higher priority sensitivity label than the sensitivity label applied to the site. [More information](
+https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities).
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -877,7 +911,7 @@ True (default) - The Shared with Everyone folder is created.
 False - No folder is created when the site and OneDrive for Business document library is created.
 
 The default behavior of the Shared with Everyone folder changed in August 2015.
-For additional information about the change, see Provision the Shared with Everyone folder in OneDrive for Business (https://support.office.com/en-us/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2?ui=en-US&rs=en-US&ad=US)
+For additional information about the change, see Provision the Shared with Everyone folder in OneDrive for Business (https://support.office.com/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2)
 
 ```yaml
 Type: Boolean
@@ -1560,7 +1594,7 @@ Accept wildcard characters: False
 
 ### -LabelMismatchEmailHelpLink
 
-This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.
+This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels. [More information](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities).
 
 ```yaml
 Type: String
@@ -1751,7 +1785,7 @@ In this case, Whiteboard provides temporary viewing and collaboration on the whi
 
 If you have external sharing enabled for OneDrive for Business, no further action is required.
 
-If you restrict external sharing for OneDrive for Business, you can keep it restricted, and just enable this new setting in order for external and shared device accounts to work. For more information, see [Manage sharing for Microsoft Whiteboard](https://learn.microsoft.com/en-us/microsoft-365/whiteboard/manage-sharing-organizations).
+If you restrict external sharing for OneDrive for Business, you can keep it restricted, and just enable this new setting in order for external and shared device accounts to work. For more information, see [Manage sharing for Microsoft Whiteboard](https://learn.microsoft.com/microsoft-365/whiteboard/manage-sharing-organizations).
 
 ```yaml
 Type: SharingState
@@ -1986,6 +2020,74 @@ Accept wildcard characters: False
 
 Use this turn off setting the default sensitivity label for a document library.
 For more information on this feature, please take a look [here](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-default-label?view=o365-worldwide)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadFileTypePolicy
+
+You can block the download of Teams meeting recording files from SharePoint or OneDrive. This allows users to remain productive while addressing the risk of accidental data loss. Users have browser-only access to play the meeting recordings with no ability to download or sync files or access them through apps.
+
+This policy applies to new meeting recordings across the entire organization. You can exempt people who are members of specified security groups from the policy. This allows you to specify governance or compliance specialists who should have download access to meeting recordings.
+
+After the policy is turned on, any new Teams meeting recording files created by the Teams service and saved in SharePoint and OneDrive are blocked from download.
+
+Because this policy affects meeting recordings stored in OneDrive and SharePoint, you must be a SharePoint administrator to configure it.
+
+Note that this policy doesn't apply to manually uploaded meeting recording files. For more details, see [Block the download of Teams meeting recording files from SharePoint or OneDrive.](https://learn.microsoft.com/microsoftteams/block-download-meeting-recording)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadFileTypeIds
+
+The File Type IDs which need to specified to prevent download.
+
+```yaml
+Type: SPBlockDownloadFileTypeId[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludedBlockDownloadGroupIds
+
+This parameter exempts users in the specified security groups from this policy so that they can download meeting recording files.
+
+```yaml
+Type: GUID[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StopNew2013Workflows
+
+This parameter allows disablement of creation of new SharePoint 2013 workflows in the tenant
 
 ```yaml
 Type: Boolean
