@@ -1,0 +1,85 @@
+﻿using System.Linq;
+using System.Management.Automation;
+using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Extensions;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
+
+namespace PnP.PowerShell.Commands.Lists
+{
+    [Cmdlet(VerbsData.Restore, "PnPListItemVersion")]
+    public class RestoreListItemVersion : PnPWebCmdlet
+    {
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        public ListPipeBind List;
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        public ListItemPipeBind Identity;
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        public ListItemVersionPipeBind Version;
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Force;
+
+        private static readonly FieldType[] UnsupportedFieldTypes =
+        {
+            FieldType.Attachments,
+            FieldType.Computed
+        };
+
+        protected override void ExecuteCmdlet()
+        {
+            var list = List.GetList(CurrentWeb);
+
+            if (list is null)
+            {
+                throw new PSArgumentException($"Cannot find the list provided through -{nameof(List)}", nameof(List));
+            }
+
+            var item = Identity.GetListItem(list);
+
+            if (item is null)
+            {
+                throw new PSArgumentException($"Cannot find the list item provided through -{nameof(Identity)}", nameof(Identity));
+            }
+
+            item.LoadProperties(i => i.Versions);
+
+            ListItemVersion version = null;
+            if (!string.IsNullOrEmpty(Version.VersionLabel))
+            {
+                version = item.Versions.FirstOrDefault(v => v.VersionLabel == Version.VersionLabel);
+            }
+            else if (Version.Id != -1)
+            {
+                version = item.Versions.FirstOrDefault(v => v.VersionId == Version.Id);
+            }
+
+            if (version is null)
+            {
+                throw new PSArgumentException($"Cannot find the list item version provided through -{nameof(Version)}", nameof(Version));
+            }
+
+            if (Force || ShouldContinue(string.Format(Resources.Restore, version.VersionLabel), Resources.Confirm))
+            {
+                WriteVerbose($"Trying to restore to version with label '{version.VersionLabel}'");
+                
+                var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, 
+                    f => f.Title, f => f.Hidden, f => f.ReadOnlyField, f => f.FieldTypeKind));
+                ClientContext.ExecuteQueryRetry();
+
+                foreach (var fieldValue in version.FieldValues)
+                {
+                    var field = fields.FirstOrDefault(f => f.InternalName == fieldValue.Key || f.Title == fieldValue.Key);
+                    if (field is { ReadOnlyField: false, Hidden: false } && !UnsupportedFieldTypes.Contains(field.FieldTypeKind))
+                    {
+                        item[field.InternalName] = fieldValue.Value;
+                    }
+                }
+
+                item.Update();
+                ClientContext.ExecuteQueryRetry();
+
+                WriteVerbose($"Restored version {version.VersionLabel} of list item {item.Id} in list {list.Title}");
+            }
+        }
+    }
+}
