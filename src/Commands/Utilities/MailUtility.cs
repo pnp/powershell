@@ -11,6 +11,8 @@ using Microsoft.SharePoint.Client.Utilities;
 using System.Net.Mail;
 using System.Net;
 using PnP.PowerShell.Commands.Enums;
+using System.IO;
+using System;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -32,9 +34,9 @@ namespace PnP.PowerShell.Commands.Utilities
             var jsonSerializer = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, };
             jsonSerializer.Converters.Add(new JsonStringEnumConverter());
 
-            var stringContent = new StringContent(JsonSerializer.Serialize(new SendMailMessage { Message = message, SaveToSentItems = saveToSentItems}, jsonSerializer));
+            var stringContent = new StringContent(JsonSerializer.Serialize(new SendMailMessage { Message = message, SaveToSentItems = saveToSentItems }, jsonSerializer));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            
+
             var response = await GraphHelper.PostAsync(connection, $"v1.0/users/{message.Sender.EmailAddress.Address}/sendMail", accessToken, stringContent);
 
             if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
@@ -67,7 +69,7 @@ namespace PnP.PowerShell.Commands.Utilities
             if (bcc != null)
             {
                 properties.BCC = bcc;
-            }            
+            }
 
             properties.Subject = subject;
             properties.Body = body;
@@ -113,7 +115,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 IsBodyHtml = contentType == MessageBodyContentType.Html
             };
 
-            if(importance.HasValue)
+            if (importance.HasValue)
             {
                 switch (importance.Value)
                 {
@@ -132,7 +134,7 @@ namespace PnP.PowerShell.Commands.Utilities
             foreach (string user in to)
             {
                 mail.To.Add(user);
-            }          
+            }
 
             if (cc != null)
             {
@@ -151,6 +153,43 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             await client.SendMailAsync(mail);
-        }        
+        }
+
+        /// <summary>
+        /// Gets the list of attachments to be sent via email
+        /// </summary>
+        /// <param name="attachments">The list of attachments to be sent</param>
+        /// <param name="currentPath">The current path of the directory</param>
+        /// <returns></returns>
+        public static List<MessageAttachmentOptions> GetListOfAttachments(string[] attachments, string currentPath)
+        {
+            if (attachments == null || attachments?.Length == 0)
+            {
+                return null;
+            }
+
+            List<MessageAttachmentOptions> messageAttachmentOptions = new List<MessageAttachmentOptions>();
+            foreach (var attachment in attachments)
+            {
+                MessageAttachmentOptions item = new MessageAttachmentOptions();
+                var file = attachment;
+                if (!System.IO.Path.IsPathRooted(attachment))
+                {
+                    file = System.IO.Path.Combine(currentPath, attachment);
+                }
+
+                FileInfo attachmentFile = new FileInfo(file);
+                item.Type = "#microsoft.graph.fileAttachment";
+                item.Name = attachmentFile.Name;
+                var fileByteArray = System.IO.File.ReadAllBytes(file);
+                item.ContentBytes = Convert.ToBase64String(fileByteArray);
+
+                MimeTypeMap.TryGetMimeType(attachmentFile.Name, out var mimeType);
+                item.ContentType = mimeType ?? "text/plain";
+                messageAttachmentOptions.Add(item);
+            }
+
+            return messageAttachmentOptions;
+        }
     }
 }
