@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-AllowDeletion` parameter to `Set-PnPList` cmdlet to allow or prevent deletion of list from the SharePoint UI. [#3142](https://github.com/pnp/powershell/pull/3142)
 - Added `EnableClassicAudienceTargeting` and `EnableModernAudienceTargeting` parameters to `Set-PnPList` cmdlet to enable audience targeting in lists. [#3153](https://github.com/pnp/powershell/pull/3153)
 - Added `-Attachments` parameter to `Send-PnPMail` cmdlet to allow sending attachments via Microsoft Graph API. [#3157](https://github.com/pnp/powershell/pull/3157)
+- Added cmdlets for list item version history: `Get-PnPListItemVersion`, `Restore-PnPListItemVersion` and `Remove-PnPListItemVersion`. [#3086](https://github.com/pnp/powershell/pull/3086)
 
 ### Fixed
 
@@ -62,6 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Michał Romiszewski [mromiszewski]
 - Kasper Larsen [kasperbolarsen]
 - Ganesh Sanap [ganesh-sanap]
 - Giacomo Pozzoni [jackpoz]
