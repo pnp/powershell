@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
-        public string KeyColumn;
+        public string KeyColumn;        
 
         private readonly static FieldType[] _unsupportedFieldTypes =
         {
@@ -104,11 +104,21 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 viewFieldsStringBuilder.Append("</ViewFields>");
             }
 
-            query.ViewXml = string.Format("<View>{0}{1}</View>", Query, viewFieldsStringBuilder);
-            var listItems = spList.GetItems(query);
+            query.ViewXml = string.Format("<View Scope='RecursiveAll'>{0}{1}</View>", Query, viewFieldsStringBuilder);
+            List<ListItem> listItems = new List<ListItem>();
+            do
+            {
+                var listItemsCollection = spList.GetItems(query);
 
-            ClientContext.Load(listItems, lI => lI.Include(l => l.HasUniqueRoleAssignments, l => l.ContentType.StringId));
-            ClientContext.ExecuteQueryRetry();
+                ClientContext.Load(listItemsCollection, lI => lI.Include(l => l.HasUniqueRoleAssignments, l => l.ContentType.StringId));
+                ClientContext.ExecuteQueryRetry();
+
+                listItemsCollection.EnsureProperty(l => l.ListItemCollectionPosition);
+
+                query.ListItemCollectionPosition = listItemsCollection.ListItemCollectionPosition;
+                listItems.AddRange(listItemsCollection);
+
+            } while (query.ListItemCollectionPosition != null);            
 
             Microsoft.SharePoint.Client.FieldCollection fieldCollection = spList.Fields;
             ClientContext.Load(fieldCollection, fs => fs.Include(f => f.InternalName, f => f.FieldTypeKind, f => f.ReadOnlyField));
