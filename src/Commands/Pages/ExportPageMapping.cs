@@ -13,10 +13,7 @@ using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {
-    [Cmdlet(VerbsData.Export, "PnPPageMapping")]
-    [Alias("Export-PnPClientSidePageMapping")]
-    [WriteAliasWarning("Please use 'Export-PnPPageMapping'. The alias 'Export-PnPClientSidePageMapping' will be removed in the 1.5.0 release")]
-
+    [Cmdlet(VerbsData.Export, "PnPPageMapping")]    
     public class ExportPageMapping : PnPWebCmdlet
     {
         private Assembly sitesCoreAssembly;

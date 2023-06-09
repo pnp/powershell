@@ -85,7 +85,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false)]
         public bool DisableGridEditing;
-        
+
         [Parameter(Mandatory = false)]
         public bool DisableCommenting;
 
@@ -97,12 +97,18 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false)]
         public int ExpireVersionsAfterDays;
-        
+
         [Parameter(Mandatory = false)]
-        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;        
+        public SensitivityLabelPipeBind DefaultSensitivityLabelForLibrary;
 
         [Parameter(Mandatory = false)]
         public DocumentLibraryOpenDocumentsInMode OpenDocumentsMode;
+
+        [Parameter(Mandatory = false)]
+        public bool EnableClassicAudienceTargeting;
+
+        [Parameter(Mandatory = false)]
+        public bool EnableModernAudienceTargeting;
 
         protected override void ExecuteCmdlet()
         {
@@ -256,11 +262,21 @@ namespace PnP.PowerShell.Commands.Lists
                 list.DisableCommenting = DisableCommenting;
                 updateRequired = true;
             }
- 
+
             if (updateRequired)
             {
                 list.Update();
                 ClientContext.ExecuteQueryRetry();
+            }
+
+            if (ParameterSpecified(nameof(EnableClassicAudienceTargeting)))
+            {
+                list.EnableClassicAudienceTargeting();
+            }
+
+            if (ParameterSpecified(nameof(EnableModernAudienceTargeting)))
+            {
+                list.EnableModernAudienceTargeting();
             }
 
             updateRequired = false;
@@ -350,9 +366,9 @@ namespace PnP.PowerShell.Commands.Lists
                 }
             }
 
-            if(ParameterSpecified(nameof(DefaultSensitivityLabelForLibrary)))
+            if (ParameterSpecified(nameof(DefaultSensitivityLabelForLibrary)))
             {
-                if(DefaultSensitivityLabelForLibrary == null)
+                if (DefaultSensitivityLabelForLibrary == null)
                 {
                     WriteVerbose("Removing sensitivity label from library");
                     list.DefaultSensitivityLabelForLibrary = null;
@@ -392,14 +408,14 @@ namespace PnP.PowerShell.Commands.Lists
                 }
             }
 
-            if(ParameterSpecified(nameof(OpenDocumentsMode)))
+            if (ParameterSpecified(nameof(OpenDocumentsMode)))
             {
                 // Is this for a list or a document library
                 if (list.BaseType == BaseType.DocumentLibrary)
                 {
                     WriteVerbose($"Configuring document library to use default open mode to be '{OpenDocumentsMode}'");
 
-                    switch(OpenDocumentsMode)
+                    switch (OpenDocumentsMode)
                     {
                         case DocumentLibraryOpenDocumentsInMode.Browser:
                             list.DefaultItemOpenInBrowser = true;
@@ -416,7 +432,7 @@ namespace PnP.PowerShell.Commands.Lists
                     WriteWarning($"{nameof(OpenDocumentsMode)} is only supported for document libraries");
                 }
 
-                switch(OpenDocumentsMode)
+                switch (OpenDocumentsMode)
                 {
                     case DocumentLibraryOpenDocumentsInMode.Browser:
                         list.DefaultItemOpenInBrowser = true;

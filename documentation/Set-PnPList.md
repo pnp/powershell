@@ -89,14 +89,14 @@ Enable AutoExpiration file version trim mode on a doccument library.
 
 ### EXAMPLE 9
 ```powershell
-Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVerions 500
+Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVersions 500
 ```
 
 Enable ExpireAfter file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
 
 ### EXAMPLE 10
 ```powershell
-Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVerions 500
+Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVersions 500
 ```
 
 Enable NoExpiration file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
@@ -556,6 +556,34 @@ Work with parameter EnableAutoExpirationVersionTrim. Please see description in E
 
 ```yaml
 Type: UInt32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableClassicAudienceTargeting
+Enable classic audience targeting in a SharePoint list.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableModernAudienceTargeting
+Enable modern audience targeting in a SharePoint list.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
