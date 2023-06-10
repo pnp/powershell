@@ -2324,6 +2324,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPListItemVersion.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPListItemVersion.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPListPermissions.md",
       "output": {
         ".html": {
@@ -4647,6 +4657,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPListItemVersion.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPListItemVersion.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPMicrosoft365Group.md",
       "output": {
         ".html": {
@@ -5351,6 +5371,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Restore-PnPFileVersion.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Restore-PnPListItemVersion.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Restore-PnPListItemVersion.html"
         }
       },
       "version": ""
