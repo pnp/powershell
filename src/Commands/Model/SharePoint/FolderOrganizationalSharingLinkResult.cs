@@ -1,6 +1,6 @@
 ﻿namespace PnP.PowerShell.Commands.Model.SharePoint
 {
-    public class FolderOrganizationalSharingLinkResult : FileOrganizationalSharingLinkResult
+    public class FolderSharingLinkResult : FileSharingLinkResult
     {
     }
 }
