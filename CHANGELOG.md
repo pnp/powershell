@@ -52,6 +52,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Connect-PnPOnline` cmdlet to handle ping on the destination server to check if it exists. [PR](https://github.com/pnp/powershell/commit/cc3c5564fca9ce96b1a2ac47c7aabdc8b90136d0) and [#3154](https://github.com/pnp/powershell/pull/3154)
 - Improved `Invoke-PnPGraphMethod` cmdlet to show a better error message when sufficient permissions are not available. [#3133](https://github.com/pnp/powershell/pull/3133)
 - Improved `Add-PnPDataRowsToSiteTemplate` cmdlet to retrieve list item with pagination. [#3152](https://github.com/pnp/powershell/pull/3152)
+- Improved error message when caused using Graph endpoints used via PnP Core SDK. [#3179][https://github.com/pnp/powershell/pull/3179]
 
 ### Removed
 
