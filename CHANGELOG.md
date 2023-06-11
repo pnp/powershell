@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Attachments` parameter to `Send-PnPMail` cmdlet to allow sending attachments via Microsoft Graph API. [#3157](https://github.com/pnp/powershell/pull/3157)
 - Added cmdlets for list item version history: `Get-PnPListItemVersion`, `Restore-PnPListItemVersion` and `Remove-PnPListItemVersion`. [#3086](https://github.com/pnp/powershell/pull/3086)
 - Added `Add-PnPFileOrganizationalSharingLink` and `Add-PnPFolderOrganizationalSharingLink` cmdlets to allow creating organizational sharing links for files and folders. [#3177](https://github.com/pnp/powershell/pull/3177)
+- Added `Add-PnPFileUserSharingLink` and `Add-PnPFolderUserSharingLink` cmdlets to allow creating sharing links for files and folders to share them with specified list of users. [#3178](https://github.com/pnp/powershell/pull/3178)
 
 ### Fixed
 
