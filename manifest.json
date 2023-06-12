@@ -442,6 +442,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPFileOrganizationalSharingLink.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPFileOrganizationalSharingLink.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPFileToSiteTemplate.md",
       "output": {
         ".html": {
@@ -452,10 +462,40 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPFileUserSharingLink.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPFileUserSharingLink.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPFolder.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPFolder.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPFolderOrganizationalSharingLink.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPFolderOrganizationalSharingLink.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPFolderUserSharingLink.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPFolderUserSharingLink.html"
         }
       },
       "version": ""
