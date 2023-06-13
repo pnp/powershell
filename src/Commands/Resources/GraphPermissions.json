@@ -1646,7 +1646,7 @@
         "id": "f6a3db3e-f7e8-4ed2-a414-557c8c9830be",
         "isEnabled": true,
         "isAdmin": true,
-        "consentDescription": "Allows the app to read the memberships of hidden groups or administrative units on your behalf, for those hidden groups or adminstrative units that you have access to.",
+        "consentDescription": "Allows the app to read the memberships of hidden groups or administrative units on your behalf, for those hidden groups or administrative units that you have access to.",
         "consentDisplayName": "Read your hidden memberships",
         "value": "Member.Read.Hidden"
       },
