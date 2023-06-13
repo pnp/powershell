@@ -2054,6 +2054,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFileSharingLink.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFileSharingLink.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPFileVersion.md",
       "output": {
         ".html": {
@@ -2098,6 +2108,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPFolderItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFolderSharingLink.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFolderSharingLink.html"
         }
       },
       "version": ""
