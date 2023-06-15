@@ -84,7 +84,7 @@
   <h1 id="register-pnpmanagementshellaccess">Register-PnPManagementShellAccess</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Registers access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application</p>
+<p>Registers access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="main">Main</h3>
 <pre><code class="lang-powershell">Register-PnPManagementShellAccess [-AzureEnvironment &lt;AzureEnvironment&gt;] 
@@ -98,6 +98,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Register-PnPManagementShellAccess
 </code></pre>
+<p>Grants access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Register-PnPManagementShellAccess -ShowConsentUrl
 </code></pre>
@@ -118,7 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-azureenvironment">-AzureEnvironment</h3>
-<p>The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.</p>
+<p>The Azure environment to use for authentication. It defaults to 'Production' which is the main Azure environment.</p>
 <pre><code class="lang-yaml">Type: AzureEnvironment
 Parameter Sets: (All)
 Accepted values: Production, PPE, China, Germany, USGovernment

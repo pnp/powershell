@@ -88,21 +88,21 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Registers a site as a hubsite</p>
+<p>Registers a site as a hub site.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Register-PnPHubSite -Site &lt;SitePipeBind&gt; [-Principals &lt;String[][]&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Registers a site as a hubsite</p>
+<p>Registers a site as a hub site.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Register-PnPHubSite -Site &quot;https://tenant.sharepoint.com/sites/myhubsite&quot;
 </code></pre>
-<p>This example registers the specified site as a hubsite</p>
+<p>This example registers the specified site as a hub site.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Register-PnPHubSite -Site &quot;https://tenant.sharepoint.com/sites/myhubsite&quot; -Principals &quot;user@contoso.com&quot;
 </code></pre>
-<p>This example registers the specified site as a hubsite and specifies that 'user@contoso.com' be granted rights to the hub site.</p>
+<p>This example registers the specified site as a hub site and specifies that 'user@contoso.com' be granted rights to the hub site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -116,7 +116,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-site">-Site</h3>
-<p>The site to register as a hubsite</p>
+<p>The site to register as a hub site.</p>
 <pre><code class="lang-yaml">Type: SitePipeBind
 Parameter Sets: (All)
 
@@ -127,7 +127,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-principals">-Principals</h3>
-<p>Specifies One or more principles (user or group) to be granted rights to the specified HubSite. Can be used to filter who can associate sites to this hub site.</p>
+<p>Specifies one or more principals (user or group) to be granted rights to the specified hub site. Can be used to filter who can associate sites to this hub site.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
