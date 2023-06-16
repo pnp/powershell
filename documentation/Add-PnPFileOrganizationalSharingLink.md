@@ -71,7 +71,7 @@ Accept wildcard characters: False
 ### -ShareType
 The type of sharing that you want to, i.e do you want to enable people in your organization to view the shared content or also edit the content?
 
-Supported values are `View` and `Edit`
+`CreateOnly` value is not supported.
 
 ```yaml
 Type: PnP.Core.Model.Security.ShareType
