@@ -31,8 +31,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPFileOrganizationalSharingLink` and `Add-PnPFolderOrganizationalSharingLink` cmdlets to allow creating organizational sharing links for files and folders. [#3177](https://github.com/pnp/powershell/pull/3177)
 - Added `Add-PnPFileUserSharingLink` and `Add-PnPFolderUserSharingLink` cmdlets to allow creating sharing links for files and folders to share them with specified list of users. [#3178](https://github.com/pnp/powershell/pull/3178)
 - Added `Get-PnPFileSharingLink` and `Get-PnPFolderSharingLink` cmdlets to retrieve sharing links for files and folders respectively. [#3181](https://github.com/pnp/powershell/pull/3181)
-- Added `Add-PnPFileAnonymousSharingLink` and `Add-PnPFolderAnonymousSharingLink` cmdlets to create anonymous sharing links. (#3198)[https://github.com/pnp/powershell/pull/3198]
-- Added `Add-PnPFileSharingInvite` and `Add-PnPFolderSharingInvite` cmdlets to invite users to a file or a folder. (#3199)[https://github.com/pnp/powershell/pull/3199]
+- Added `Add-PnPFileAnonymousSharingLink` and `Add-PnPFolderAnonymousSharingLink` cmdlets to create anonymous sharing links. [#3198](https://github.com/pnp/powershell/pull/3198)
+- Added `Add-PnPFileSharingInvite` and `Add-PnPFolderSharingInvite` cmdlets to invite users to a file or a folder. [#3199](https://github.com/pnp/powershell/pull/3199)
 
 ### Fixed
 
