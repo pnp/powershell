@@ -90,6 +90,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Message
+A plain text formatted message that is included in the sharing invitation. Maximum length 2000 characters.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -RequireSignIn
 Specifies where the recipient of the invitation is required to sign-in to view the shared item
 
