@@ -38,7 +38,7 @@ Add-PnPFolderAnonymousSharingLink -Folder "/sites/demo/Shared Documents/Test" -T
 
 This will create an anonymous sharing link for `Test` folder in the `Shared Documents` library which will be editable by anonymous users with the specified password.
 
-### EXAMPLE 2
+### EXAMPLE 3
 ```powershell
 Add-PnPFolderAnonymousSharingLink -Folder "/sites/demo/Shared Documents/Test" -Type Edit -Password "PnPRocks!" -ExpirationDateTime (Get-Date).AddDays(15)
 ```
