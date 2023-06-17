@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Add-PnPFileUserSharingLink | PnP PowerShell </title>
+    <title>Add-PnPFileAnonymousSharingLink | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Add-PnPFileUserSharingLink | PnP PowerShell ">
+    <meta name="title" content="Add-PnPFileAnonymousSharingLink | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,24 +81,28 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="add-pnpfileusersharinglink">Add-PnPFileUserSharingLink</h1>
+  <h1 id="add-pnpfileanonymoussharinglink">Add-PnPFileAnonymousSharingLink</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Creates a sharing link to share a file with a list of specified users.</p>
+<p>Creates an anonymous sharing link to share a file.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPFileUserSharingLink -FileUrl &lt;String&gt; -Type &lt;PnP.Core.Model.Security.ShareType&gt; -Users &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Add-PnPFileAnonymousSharingLink -FileUrl &lt;String&gt; -Type &lt;PnP.Core.Model.Security.ShareType&gt; -Password &lt;String&gt; -ExpirationDateTime &lt;DateTime&gt; [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Creates a new user sharing link for a file.</p>
+<p>Creates an anonymous sharing link to share a file.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPFileUserSharingLink -FileUrl &quot;/sites/demo/Shared Documents/Test.docx&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
+<pre><code class="lang-powershell">Add-PnPFileAnonymousSharingLink -FileUrl &quot;/sites/demo/Shared Documents/Test.docx&quot;
 </code></pre>
-<p>This will create an user sharing link for <code>Test.docx</code> file in the <code>Shared Documents</code> library which will be viewable to specified users in the organization.</p>
+<p>This will create an anonymous sharing link for <code>Test.docx</code> file in the <code>Shared Documents</code> library which will be viewable.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPFileUserSharingLink -FileUrl &quot;/sites/demo/Shared Documents/Test.docx&quot; -Type Edit -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
+<pre><code class="lang-powershell">Add-PnPFileAnonymousSharingLink -FileUrl &quot;/sites/demo/Shared Documents/Test.docx&quot; -Type Edit -Password &quot;PnPRocks!&quot;
 </code></pre>
-<p>This will create an user sharing link for <code>Test.docx</code> file in the <code>Shared Documents</code> library which will be editable by specified users in the organization.</p>
+<p>This will create an anonymous sharing link for <code>Test.docx</code> file in the <code>Shared Documents</code> library which will be editable by anonymous users after specifying the password.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPFileAnonymousSharingLink -FileUrl &quot;/sites/demo/Shared Documents/Test.docx&quot; -Type View -ExpirationDateTime (Get-Date).AddDays(15)
+</code></pre>
+<p>This will create an anonymous sharing link for <code>Test.docx</code> file in the <code>Shared Documents</code> library which will be viewable by anonymous users. The link will expire after 15 days.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -134,12 +138,23 @@ Default value: View
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-users">-Users</h3>
-<p>The UPN(s) of the user(s) to with whom you would like to share the file.</p>
-<pre><code class="lang-yaml">Type: String[]
+<h3 id="-password">-Password</h3>
+<p>The password to be set for the file to be shared.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-expirationdatetime">-ExpirationDateTime</h3>
+<p>The expiration date to be after which the file link will expire.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
