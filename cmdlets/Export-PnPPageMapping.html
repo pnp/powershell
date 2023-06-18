@@ -98,15 +98,15 @@
                                 [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="------------------example-1------------------">------------------EXAMPLE 1------------------</h3>
+<h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Export-PnPPageMapping -BuiltInPageLayoutMapping -CustomPageLayoutMapping -Folder c:\\temp -Overwrite
 </code></pre>
 <p>Exports the built in page layout mapping and analyzes the current site's page layouts and exports these to files in folder c:\temp</p>
-<h3 id="------------------example-2------------------">------------------EXAMPLE 2------------------</h3>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Export-PnPPageMapping -CustomPageLayoutMapping -PublishingPage mypage.aspx -Folder c:\\temp -Overwrite
 </code></pre>
 <p>Analyzes the page layout of page mypage.aspx and exports this to a file in folder c:\temp</p>
-<h3 id="------------------example-3------------------">------------------EXAMPLE 3------------------</h3>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Export-PnPPageMapping -BuiltInWebPartMapping -Folder c:\\temp -Overwrite
 </code></pre>
 <p>Exports the built in webpart mapping to a file in folder c:\temp. Use this a starting basis if you want to tailer the web part mapping behavior.</p>

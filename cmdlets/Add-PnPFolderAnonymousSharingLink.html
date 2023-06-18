@@ -99,7 +99,7 @@
 <pre><code class="lang-powershell">Add-PnPFolderAnonymousSharingLink -Folder &quot;/sites/demo/Shared Documents/Test&quot; -Type Edit -Password &quot;PnPRocks!&quot;
 </code></pre>
 <p>This will create an anonymous sharing link for <code>Test</code> folder in the <code>Shared Documents</code> library which will be editable by anonymous users with the specified password.</p>
-<h3 id="example-2-1">EXAMPLE 2</h3>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPFolderAnonymousSharingLink -Folder &quot;/sites/demo/Shared Documents/Test&quot; -Type Edit -Password &quot;PnPRocks!&quot; -ExpirationDateTime (Get-Date).AddDays(15)
 </code></pre>
 <p>This will create an anonymous sharing link for <code>Test</code> folder in the <code>Shared Documents</code> library which will be editable by anonymous users with the specified password. The link will expire after 15 days.</p>

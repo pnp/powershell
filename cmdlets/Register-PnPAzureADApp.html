@@ -84,7 +84,7 @@
   <h1 id="register-pnpazureadapp">Register-PnPAzureADApp</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Register an Azure AD App and optionally creates a new self-signed certificate to use with the application registration.</p>
+<p>Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="generate-certificate">Generate Certificate</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName &lt;String&gt;
@@ -128,39 +128,39 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication.</p>
-<p>Note: if you want to use the newly created app to authentication with username/password you will have to make a modification to the app. Navigate to the application registration in your Azure AD, select the Authentication section, and set <code>Allow public client flows</code> to <code>yes</code>. Alternatively, navigate to the <code>Manifest</code> section and set <code>allowPublicClient</code> to <code>true</code>.</p>
+<p>Note: if you want to use the newly created app to authenticate with username/password you will have to make a modification to the app. Navigate to the application registration in your Azure AD, select the Authentication section, and set <code>Allow public client flows</code> to <code>yes</code>. Alternatively, navigate to the <code>Manifest</code> section and set <code>allowPublicClient</code> to <code>true</code>.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="------------------example-1------------------">------------------EXAMPLE 1------------------</h3>
+<h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -Username &quot;yourname@domain.com&quot; -Password (Read-Host -AsSecureString -Prompt &quot;Enter Password&quot;)
 </code></pre>
 <p>Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
-<h3 id="------------------example-2------------------">------------------EXAMPLE 2------------------</h3>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force) -Username &quot;yourname@domain.com&quot; -Password (Read-Host -AsSecureString -Prompt &quot;Enter password&quot;)
 </code></pre>
 <p>Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
-<h3 id="------------------example-3------------------">------------------EXAMPLE 3------------------</h3>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -GraphApplicationPermissions &quot;User.Read.All&quot; -SharePointApplicationPermissions &quot;Sites.Read.All&quot; -Username &quot;yourname@domain.com&quot; -Password (Read-Host -AsSecureString -Prompt &quot;Enter Password&quot;)
 </code></pre>
 <p>Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.Read.All, User.Read.All</p>
-<h3 id="------------------example-4------------------">------------------EXAMPLE 4------------------</h3>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -OutPath c:\ -CertificatePassword (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force) -Username &quot;yourname@domain.com&quot; -Password (Read-Host -AsSecureString -Prompt &quot;Enter Password&quot;)
 </code></pre>
 <p>Creates a new Azure AD Application registration, creates a new self signed certificate, and stores the public and private key certificates in c:. The private key certificate will be locked with the password &quot;password&quot;. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
-<h3 id="------------------example-5------------------">------------------EXAMPLE 5------------------</h3>
+<h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -DeviceLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force) 
 </code></pre>
 <p>Creates a new Azure AD Application registration and asks you to authenticate using device login methods, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
-<h3 id="------------------example-6------------------">------------------EXAMPLE 6------------------</h3>
+<h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -Interactive -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force) 
 </code></pre>
 <p>Creates a new Azure AD Application registration and asks you to authenticate using username and password, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All</p>
-<h3 id="------------------example-7------------------">------------------EXAMPLE 7------------------</h3>
+<h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force) -Username &quot;yourname@domain.com&quot; -Password (Read-Host -AsSecureString -Prompt &quot;Enter password&quot;) -LogoFilePath c:\logo.png
 </code></pre>
 <p>Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. It will also set the <code>logo.png</code> file as the logo for the Azure AD app.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-username">-Username</h3>
-<p>The username to use when logging into the Microsoft Graph. Notice that this user account needs to have write access to the Azure AD</p>
+<p>The username to use when logging into the Microsoft Graph. Notice that this user account needs to have write access to the Azure AD.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -169,7 +169,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-password">-Password</h3>
-<p>The password to use when logging into the Microsoft Graph</p>
+<p>The password to use when logging into the Microsoft Graph.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -178,7 +178,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-devicelogin">-DeviceLogin</h3>
-<p>If specified, a device login flow, supporting Multi-Factor Authentication will be used to authenticate towards the Microsoft Graph</p>
+<p>If specified, a device login flow, supporting Multi-Factor Authentication will be used to authenticate towards the Microsoft Graph.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -187,7 +187,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-applicationname">-ApplicationName</h3>
-<p>The name of the Azure AD Application to create</p>
+<p>The name of the Azure AD Application to create.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -196,7 +196,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-certificatepassword">-CertificatePassword</h3>
-<p>Optional certificate password</p>
+<p>Optional certificate password.</p>
 <pre><code class="lang-yaml">Type: SecureString
 Parameter Sets: (All)
 
@@ -205,7 +205,7 @@ Position: 8
 Accept pipeline input: False
 </code></pre>
 <h3 id="-certificatepath">-CertificatePath</h3>
-<p>File path to use an existing certificate</p>
+<p>File path to use an existing certificate.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Existing Certificate
 
@@ -214,7 +214,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-commonname">-CommonName</h3>
-<p>Common Name (e.g. server FQDN or YOUR name). defaults to 'pnp.contoso.com'</p>
+<p>Common Name (e.g. server FQDN or YOUR name). It defaults to 'pnp.contoso.com'</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Generate Certificate
 
@@ -223,7 +223,7 @@ Position: 0
 Accept pipeline input: False
 </code></pre>
 <h3 id="-country">-Country</h3>
-<p>Country Name (2 letter code)</p>
+<p>Country Name (2 letter code).</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Generate Certificate
 
@@ -232,7 +232,7 @@ Position: 1
 Accept pipeline input: False
 </code></pre>
 <h3 id="-locality">-Locality</h3>
-<p>Locality Name (eg, city)</p>
+<p>Locality Name (eg. city).</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Generate Certificate
 
@@ -241,7 +241,7 @@ Position: 3
 Accept pipeline input: False
 </code></pre>
 <h3 id="-organization">-Organization</h3>
-<p>Organization Name (eg, company)</p>
+<p>Organization Name (eg. company).</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Generate Certificate
 
@@ -250,7 +250,7 @@ Position: 4
 Accept pipeline input: False
 </code></pre>
 <h3 id="-organizationunit">-OrganizationUnit</h3>
-<p>Organizational Unit Name (eg, section)</p>
+<p>Organizational Unit Name (eg. section).</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Generate Certificate
 
@@ -259,7 +259,7 @@ Position: 5
 Accept pipeline input: False
 </code></pre>
 <h3 id="-outpath">-OutPath</h3>
-<p>Folder to create certificate files in (.CER and .PFX)</p>
+<p>Folder to create certificate files in (.CER and .PFX).</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Generate Certificate
 
@@ -304,7 +304,7 @@ Position: 0
 Accept pipeline input: False
 </code></pre>
 <h3 id="-state">-State</h3>
-<p>State or Province Name (full name)</p>
+<p>State or Province Name (full name).</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Generate Certificate
 
@@ -331,7 +331,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-validyears">-ValidYears</h3>
-<p>Number of years until expiration (default is 10, max is 30)</p>
+<p>Number of years until expiration (default is 10, max is 30).</p>
 <pre><code class="lang-yaml">Type: Int
 Parameter Sets: Generate Certificate
 
@@ -350,7 +350,7 @@ Position: Named
 Accept pipeline input: False
 </code></pre>
 <h3 id="-logofilepath">-LogoFilePath</h3>
-<p>Sets the logo for the Azure AD application. Provide a full path to a local image file on your disk which you want to use as the logo</p>
+<p>Sets the logo for the Azure AD application. Provide a full path to a local image file on your disk which you want to use as the logo.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

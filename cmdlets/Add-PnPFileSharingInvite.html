@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set-PnPWebPermission | PnP PowerShell </title>
+    <title>Add-PnPFileSharingInvite | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set-PnPWebPermission | PnP PowerShell ">
+    <meta name="title" content="Add-PnPFileSharingInvite | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,64 +77,36 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="set-pnpwebpermission">Set-PnPWebPermission</h1>
+  <h1 id="add-pnpfilesharinginvite">Add-PnPFileSharingInvite</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets web permissions.</p>
+<p>Creates an invitation for users to a file.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPWebPermission -Group &lt;GroupPipeBind&gt; [-Identity &lt;WebPipeBind&gt;] [-AddRole &lt;String[]&gt;] [-RemoveRole &lt;String[]&gt;]
-</code></pre>
-<pre><code class="lang-powershell">Set-PnPWebPermission -User &lt;String&gt; [-Identity &lt;WebPipeBind&gt;]  [-AddRole &lt;String[]&gt;] [-RemoveRole &lt;String[]&gt;]
+<pre><code class="lang-powershell">Add-PnPFileSharingInvite -FileUrl &lt;String&gt; -Users &lt;String[]&gt; -Message &lt;String&gt; -RequireSignIn &lt;SwitchParameter&gt; -SendInvitation &lt;SwitchParameter&gt; -Role &lt;PermissionRole&gt; -ExpirationDateTime &lt;DateTime&gt; [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet adds permissions to a user or a group or removes permissions from a user or a group.</p>
+<p>Creates an invitation for users to a file.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPWebPermission -User &quot;user@contoso.com&quot; -AddRole &quot;Contribute&quot;
+<pre><code class="lang-powershell">Add-PnPFileSharingInvite -FileUrl &quot;/sites/demo/Shared Documents/Test.docx&quot; -Users &quot;john@contoso.onmicrosoft.com&quot; -RequireSignIn
 </code></pre>
-<p>Adds the &quot;Contribute&quot; permission role to the specified user in the current web.</p>
+<p>This will invite the user <code>John@contoso.onmicrosoft.com</code> to the <code>Test.docx</code> file with Read permissions and will require that user to sign in before accessing the file.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPWebPermission -Group &quot;Project Managers&quot; -AddRole &quot;Contribute&quot;
+<pre><code class="lang-powershell">Add-PnPFileSharingInvite -FileUrl &quot;/sites/demo/Shared Documents/Test.docx&quot; -Users &quot;john@contoso.onmicrosoft.com&quot; -RequireSignIn -SendInvitation -Role Owner
 </code></pre>
-<p>Adds the &quot;Contribute&quot; permission role to the &quot;Project Managers&quot; group in the current web.</p>
+<p>This will invite the user <code>John@contoso.onmicrosoft.com</code> to the <code>Test.docx</code> file with Read permissions and will require that user to sign in before accessing the file. The invitation will be sent and the user will have <code>Owner</code> permissions</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Set-PnPWebPermission -Identity projectA -User &quot;user@contoso.com&quot; -AddRole &quot;Contribute&quot;
+<pre><code class="lang-powershell">Add-PnPFileSharingInvite -FileUrl &quot;/sites/demo/Shared Documents/Test.docx&quot; -Users &quot;john@contoso.onmicrosoft.com&quot; -RequireSignIn -ExpirationDate (Get-Date).AddDays(15)
 </code></pre>
-<p>Adds the &quot;Contribute&quot; permission role to the user &quot;user@contoso.com&quot; in the subweb of the current web with site relative url &quot;projectA&quot;.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Set-PnPWebPermission -User &quot;user@contoso.com&quot; -AddRole &quot;Custom Role 1&quot;,&quot;Custom Role 2&quot;
-</code></pre>
-<p>Adds the specified permission roles to the user &quot;user@contoso.com&quot; in the current web.</p>
+<p>This will invite the user <code>John@contoso.onmicrosoft.com</code> to the <code>Test.docx</code> file with Read permissions and will require that user to sign in before accessing the file. The link will expire after 15 days.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-user">-User</h3>
-<p>The name of the user.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Set user permissions
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-group">-Group</h3>
-<p>The name of the group.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Set group permissions
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-addrole">-AddRole</h3>
-<p>The name of the permission level to add to the specified user or group.</p>
-<pre><code class="lang-yaml">Type: String[]
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False
@@ -143,9 +115,32 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-removerole">-RemoveRole</h3>
-<p>The name of the permission level to remove from the specified user or group.</p>
+<h3 id="-fileurl">-FileUrl</h3>
+<p>The FileUrl in the site</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-users">-Users</h3>
+<p>A collection of recipients who will receive access and the sharing invitation.
+<strong>Currently, only one user at a time is supported</strong>. We are planning to add support for multiple users a bit later.</p>
 <pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-message">-Message</h3>
+<p>A plain text formatted message that is included in the sharing invitation. Maximum length 2000 characters.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -154,9 +149,43 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The guid or site relative url of the web to use.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
+<h3 id="-requiresignin">-RequireSignIn</h3>
+<p>Specifies where the recipient of the invitation is required to sign-in to view the shared item</p>
+<pre><code class="lang-yaml">Type: SwitchParamter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sendinvitation">-SendInvitation</h3>
+<p>Specifies if an email or post is generated (false) or if the permission is just created (true).</p>
+<pre><code class="lang-yaml">Type: SwitchParamter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-role">-Role</h3>
+<p>Specify the role that is to be granted to the recipients of the sharing invitation.</p>
+<p>Supported values are <code>Owner</code>, <code>Write</code> and <code>Read</code>.</p>
+<pre><code class="lang-yaml">Type: PnP.Core.Model.Security.PermissionRole
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Read
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-expirationdatetime">-ExpirationDateTime</h3>
+<p>The expiration date for the FileUrl after which the permission expires.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False

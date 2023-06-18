@@ -84,7 +84,7 @@
   <h1 id="add-pnppagesection">Add-PnPPageSection</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Adds a new section to a page</p>
+<p>Adds a new section to a page.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPPageSection [-Page] &lt;PagePipeBind&gt; -SectionTemplate &lt;CanvasSectionTemplate&gt;
  [-Order &lt;Int32&gt;] [-ZoneEmphasis &lt;Int32&gt;] [-VerticalZoneEmphasis &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
@@ -100,20 +100,20 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPPageSection -Page &quot;MyPage&quot; -SectionTemplate ThreeColumn -Order 10
 </code></pre>
-<p>Adds a new Three columns section to the page 'MyPage' with an order index of 10</p>
+<p>Adds a new Three columns section to the page 'MyPage' with an order index of 10.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">$page = Add-PnPPage -Name &quot;MyPage&quot;
-PS&gt; Add-PnPPageSection -Page $page -SectionTemplate OneColumn
+Add-PnPPageSection -Page $page -SectionTemplate OneColumn
 </code></pre>
-<p>Adds a new one column section to the page 'MyPage'</p>
+<p>Adds a new one column section to the page 'MyPage'.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">$page = Add-PnPPage -Name &quot;MyPage&quot;
-PS&gt; Add-PnPPageSection -Page $page -SectionTemplate OneColumn -ZoneEmphasis 2
+Add-PnPPageSection -Page $page -SectionTemplate OneColumn -ZoneEmphasis 2
 </code></pre>
-<p>Adds a new one column section to the page 'MyPage' and sets the background to 2 (0 is no background, 3 is highest emphasis)</p>
-<h3 id="example-4-1">EXAMPLE 4</h3>
+<p>Adds a new one column section to the page 'MyPage' and sets the background to 2 (0 is no background, 3 is highest emphasis).</p>
+<h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">$page = Add-PnPPage -Name &quot;MyPage&quot;
-PS&gt; Add-PnPPageSection -Page $page -SectionTemplate OneColumnVerticalSection -Order 1 -ZoneEmphasis 2 -VerticalZoneEmphasis 3
+Add-PnPPageSection -Page $page -SectionTemplate OneColumnVerticalSection -Order 1 -ZoneEmphasis 2 -VerticalZoneEmphasis 3
 </code></pre>
 <p>Adds a new one column with one vertical section to the page 'MyPage' and sets the zone emphasis to 2 for one column and vertical zone emphasis to 3 for the vertical column.</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -140,7 +140,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-page">-Page</h3>
-<p>The name of the page</p>
+<p>The name of the page or the page object.</p>
 <pre><code class="lang-yaml">Type: PagePipeBind
 Parameter Sets: (All)
 
@@ -163,7 +163,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-zoneemphasis">-ZoneEmphasis</h3>
-<p>Sets the background of the section (default = 0)</p>
+<p>Sets the background of the section (default = 0).</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 

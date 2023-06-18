@@ -462,6 +462,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPFileSharingInvite.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPFileSharingInvite.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPFileToSiteTemplate.md",
       "output": {
         ".html": {
@@ -506,6 +516,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Add-PnPFolderOrganizationalSharingLink.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPFolderSharingInvite.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPFolderSharingInvite.html"
         }
       },
       "version": ""
