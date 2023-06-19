@@ -4587,6 +4587,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPFileSharingLink.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPFileSharingLink.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPFileVersion.md",
       "output": {
         ".html": {
@@ -4611,6 +4621,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPFolder.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPFolderSharingLink.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPFolderSharingLink.html"
         }
       },
       "version": ""
