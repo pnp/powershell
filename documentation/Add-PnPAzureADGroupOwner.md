@@ -20,7 +20,7 @@ Adds users to the owners of an Azure Active Directory group. This can be a secur
 ## SYNTAX
 
 ```powershell
-Add-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] 
+Add-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -34,14 +34,14 @@ Allows to add users to owners of an Azure Active Directory Group. This can be a 
 Add-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
 ```
 
-Adds the provided two users as additional owners to the Azure Active Directory group named "Project Team"
+Adds the provided two users as additional owners to the Azure Active Directory group named "Project Team".
 
 ### EXAMPLE 2
 ```powershell
 Add-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
 ```
 
-Sets the provided two users as the only owners of the Azure Active Directory group named "Project Team" by removing any current existing members first
+Sets the provided two users as the only owners of the Azure Active Directory group named "Project Team" by removing any current existing members first.
 
 ### EXAMPLE 3
 ```powershell
@@ -52,8 +52,21 @@ Sets the provided security group as owner of the Azure Active Directory group na
 
 ## PARAMETERS
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Identity
-The Identity of the Azure Active Directory group to add owners to
+The Identity of the Azure Active Directory group to add owners to.
 
 ```yaml
 Type: AzureADGroupPipeBind
@@ -67,7 +80,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemoveExisting
-If provided, all existing members will be removed and only those provided through Users will become members
+If provided, all existing members will be removed and only those provided through Users will become members.
 
 ```yaml
 Type: SwitchParameter
@@ -81,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -Users
-The UPN(s) of the user(s) to add to the Azure Active Directory group as a member
+The UPN(s) of the user(s) to add to the Azure Active Directory group as a member.
 
 ```yaml
 Type: String[]
