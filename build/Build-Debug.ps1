@@ -147,7 +147,7 @@ if ($LASTEXITCODE -eq 0) {
 	GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
-	CompatiblePSEditions = @(`"Core`",`"Desktop`")
+	CompatiblePSEditions = @('Core')
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)
