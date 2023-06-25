@@ -49,6 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add/Set/Get-PnPPage` cmdlets when using multilingual translation parameters which caused some exceptions. [#3120](https://github.com/pnp/powershell/pull/3120)
 - Fixed `New-PnPSite` cmdlet now supports creating Team site in non-commercial cloud environments. [#885](https://github.com/pnp/pnpframework/pull/885)
 - Fixed issue where `Get-PnPField` cmdlet was throwing error in case `-Includes` parameter was used. [#3225](https://github.com/pnp/powershell/pull/3225)
+- Fixed issue with `Add-PnPDataRowsToSiteTemplate` cmdlet where it would throw property not initialized error when using `-IncludeSecurity` parameter. [#3226](https://github.com/pnp/powershell/pull/3226)
 
 ### Changed
 
@@ -59,6 +60,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Invoke-PnPGraphMethod` cmdlet to show a better error message when sufficient permissions are not available. [#3133](https://github.com/pnp/powershell/pull/3133)
 - Improved `Add-PnPDataRowsToSiteTemplate` cmdlet to retrieve list item with pagination. [#3152](https://github.com/pnp/powershell/pull/3152)
 - Improved error message when caused using Graph endpoints used via PnP Core SDK. [#3179](https://github.com/pnp/powershell/pull/3179)
+- Improved `Add-PnPDataRowsToSiteTemplate` cmdlet performance to not load and execute every list item. [#3226](https://github.com/pnp/powershell/pull/3226)
 
 ### Removed
 
