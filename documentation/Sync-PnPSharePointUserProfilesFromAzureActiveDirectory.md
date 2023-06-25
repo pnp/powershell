@@ -37,13 +37,13 @@ When not providing -Folder, it will assume a document library named "Shared Docu
 
 **Required Permissions**
 
-In order to be able to run this cmdlet you need to have [User.Read.All] and [Sites.FullControl.All] permissions on SharePoint and [User.Read.All] permissions on Microsoft Graph so it will be able to read the users directly from Azure Active Directory and upload the JSON file to SharePoint Online. It also needs to have the Tenant Full Control ACS permission through https://tenant-admin.sharepoint.com/_layouts/appinv.aspx for it to be allowed to kick off the import user profile process:
+In order to be able to run this cmdlet you need to have **[User.Read.All]** and **[Sites.FullControl.All]** or **[Sites.Selected]** permissions on `SharePoint` and **[User.Read.All]** permissions on `Microsoft Graph` so it will be able to read the users directly from Azure Active Directory and upload the JSON file to SharePoint Online. If you are using `Sites.Selected` permission, it needs minimum `Write or higher` permissions for the file upload to folder process. It also needs to have the Tenant Full Control ACS permission through `https://tenant-admin.sharepoint.com/_layouts/appinv.aspx` for it to be allowed to kick off the import user profile process:
 
-`
+```
 <AppPermissionRequests AllowAppOnlyPolicy="true">
   <AppPermissionRequest Scope="http://sharepoint/content/tenant" Right="FullControl" />
 </AppPermissionRequests>
-`
+```
 
 ## EXAMPLES
 
