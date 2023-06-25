@@ -20,12 +20,12 @@ Gets one Azure Active Directory group or a list of Azure Active Directory groups
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADGroup [-Identity <AzureADGroupPipeBind>] 
+Get-PnPAzureADGroup [-Identity <AzureADGroupPipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to retrieve list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying `Identity` option it is possible to get single group.
+Allows to retrieve list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying `Identity` option it is possible to get a single group.
 
 ## EXAMPLES
 
@@ -34,35 +34,35 @@ Allows to retrieve list of Azure Active Directory groups. Those can be a securit
 Get-PnPAzureADGroup
 ```
 
-Retrieves all the Azure Active Directory groups
+Retrieves all the Azure Active Directory groups.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPAzureADGroup -Identity $groupId
 ```
 
-Retrieves a specific Azure Active Directory group based on its ID
+Retrieves a specific Azure Active Directory group based on its ID.
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPAzureADGroup -Identity $groupDisplayName
 ```
 
-Retrieves a specific Azure Active Directory group that has the given DisplayName
+Retrieves a specific Azure Active Directory group that has the given DisplayName.
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPAzureADGroup -Identity $groupSiteMailNickName
 ```
 
-Retrieves a specific Azure Active Directory group for which the email address equals the provided mail nickName
+Retrieves a specific Azure Active Directory group for which the email address equals the provided mail nickName.
 
 ### EXAMPLE 5
 ```powershell
 Get-PnPAzureADGroup -Identity $group
 ```
 
-Retrieves a specific Azure Active Directory group based on its group object instance
+Retrieves a specific Azure Active Directory group based on its group object instance.
 
 ## PARAMETERS
 
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Identity of the Azure Active Directory group
+The Identity of the Azure Active Directory group.
 
 ```yaml
 Type: AzureADGroupPipeBind
