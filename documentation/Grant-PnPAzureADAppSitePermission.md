@@ -15,7 +15,7 @@ title: Grant-PnPAzureADAppSitePermission
 
   * Microsoft Graph API: Sites.FullControl.All
 
-Adds permissions for a given Azure Active Directory application registration
+Adds permissions for a given Azure Active Directory application registration.
 
 ## SYNTAX
 
@@ -34,19 +34,19 @@ This cmdlet adds permissions for a given Azure Active Directory application regi
 Grant-PnPAzureADAppSitePermission -AppId "aa37b89e-75a7-47e3-bdb6-b763851c61b6" -DisplayName "TestApp" -Permissions Read
 ```
 
-Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Read' access for the currently connected to site collection
+Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Read' access for the currently connected to site collection.
 
 ### EXAMPLE 2
 ```powershell
 Grant-PnPAzureADAppSitePermission -AppId "aa37b89e-75a7-47e3-bdb6-b763851c61b6" -DisplayName "TestApp" -Permissions Write -Site https://contoso.sharepoint.com/sites/projects
 ```
 
-Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Write' access for the site collection at the provided URL
+Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Write' access for the site collection at the provided URL.
 
 ## PARAMETERS
 
 ### -AppId
-If specified the permission with that id specified will be retrieved
+If specified the permission with that id specified will be retrieved.
 
 ```yaml
 Type: Guid
@@ -89,7 +89,7 @@ Accept wildcard characters: False
 ```
 
 ### -Site
-Optional url to to a site to set the permissions for. Defaults to the current site if not provided.
+Optional url of a site to set the permissions for. Defaults to the current site if not provided.
 
 ```yaml
 Type: SitePipeBind
@@ -97,7 +97,7 @@ Parameter Sets: (All)
 
 Required: True
 Position: Named
-Default value: Currently connected to site
+Default value: Currently connected site
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
