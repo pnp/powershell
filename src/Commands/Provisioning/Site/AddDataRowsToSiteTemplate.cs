@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
-        public string KeyColumn;        
+        public string KeyColumn;
 
         private readonly static FieldType[] _unsupportedFieldTypes =
         {
@@ -118,7 +118,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 query.ListItemCollectionPosition = listItemsCollection.ListItemCollectionPosition;
                 listItems.AddRange(listItemsCollection);
 
-            } while (query.ListItemCollectionPosition != null);            
+            } while (query.ListItemCollectionPosition != null);
 
             Microsoft.SharePoint.Client.FieldCollection fieldCollection = spList.Fields;
             ClientContext.Load(fieldCollection, fs => fs.Include(f => f.InternalName, f => f.FieldTypeKind, f => f.ReadOnlyField));
@@ -130,30 +130,32 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 // Make sure we don't pull Folders.. Of course this won't work
                 if (listItem.ServerObjectIsNull == false)
                 {
-                    ClientContext.Load(listItem);
-                    ClientContext.ExecuteQueryRetry();
                     if (!(listItem.FileSystemObjectType == FileSystemObjectType.Folder))
                     {
                         DataRow row = new DataRow();
-                        if (IncludeSecurity && listItem.HasUniqueRoleAssignments)
+                        if (IncludeSecurity)
                         {
-                            row.Security.ClearSubscopes = true;
-                            row.Security.CopyRoleAssignments = false;
-
-                            var roleAssignments = listItem.RoleAssignments;
-                            ClientContext.Load(roleAssignments);
-                            ClientContext.ExecuteQueryRetry();
-
-                            ClientContext.Load(roleAssignments, r => r.Include(a => a.Member.LoginName, a => a.Member, a => a.RoleDefinitionBindings));
-                            ClientContext.ExecuteQueryRetry();
-
-                            foreach (var roleAssignment in roleAssignments)
+                            listItem.EnsureProperty(l => l.HasUniqueRoleAssignments);
+                            if (listItem.HasUniqueRoleAssignments)
                             {
-                                var principalName = roleAssignment.Member.LoginName;
-                                var roleBindings = roleAssignment.RoleDefinitionBindings;
-                                foreach (var roleBinding in roleBindings)
+                                row.Security.ClearSubscopes = true;
+                                row.Security.CopyRoleAssignments = false;
+
+                                var roleAssignments = listItem.RoleAssignments;
+                                ClientContext.Load(roleAssignments);
+                                ClientContext.ExecuteQueryRetry();
+
+                                ClientContext.Load(roleAssignments, r => r.Include(a => a.Member.LoginName, a => a.Member, a => a.RoleDefinitionBindings));
+                                ClientContext.ExecuteQueryRetry();
+
+                                foreach (var roleAssignment in roleAssignments)
                                 {
-                                    row.Security.RoleAssignments.Add(new PnP.Framework.Provisioning.Model.RoleAssignment() { Principal = principalName, RoleDefinition = roleBinding.Name });
+                                    var principalName = roleAssignment.Member.LoginName;
+                                    var roleBindings = roleAssignment.RoleDefinitionBindings;
+                                    foreach (var roleBinding in roleBindings)
+                                    {
+                                        row.Security.RoleAssignments.Add(new PnP.Framework.Provisioning.Model.RoleAssignment() { Principal = principalName, RoleDefinition = roleBinding.Name });
+                                    }
                                 }
                             }
                         }
@@ -194,7 +196,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                                 }
                             }
                         }
-
                         rows.Add(row);
                     }
                 }
@@ -293,7 +294,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     return Convert.ToString(rawValue);
                 case FieldType.DateTime:
                     var dateValue = rawValue as DateTime?;
-                    if(dateValue != null)
+                    if (dateValue != null)
                     {
                         return string.Format("{0:O}", dateValue.Value.ToUniversalTime());
                     }
