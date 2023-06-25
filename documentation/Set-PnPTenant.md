@@ -451,6 +451,7 @@ Accept wildcard characters: False
 ```
 
 ### -EmailAttestationRequired
+Sets email attestation to required.
 
 ```yaml
 Type: Boolean
@@ -925,6 +926,7 @@ Accept wildcard characters: False
 ```
 
 ### -PublicCdnAllowedFileTypes
+Sets public CDN allowed file types, if the public CDN is enabled.
 
 ```yaml
 Type: String
@@ -938,6 +940,7 @@ Accept wildcard characters: False
 ```
 
 ### -PublicCdnEnabled
+Enables or disables the public CDN.
 
 ```yaml
 Type: Boolean
@@ -1143,7 +1146,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowPeoplePickerSuggestionsForGuestUsers
-
+Shows people picker suggestions for guest users. To enable the option to search for existing guest users at Tenant Level, set this parameter to $true.
 
 ```yaml
 Type: Boolean
@@ -1395,7 +1398,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisablePersonalListCreation
-Allows configuring whether personal lists created within the OneDrive for Business site of the user is enabled or disabled in the tenant. If set to `$true`, personal lists will be allowed to be created in the tenant. If set to `$false`, it will be disabled in the tenant.
+Allows configuring whether personal lists created within the OneDrive for Business site of the user is enabled or disabled in the tenant. If set to `$false`, personal lists will be allowed to be created in the tenant. If set to `$true`, it will be disabled in the tenant.
 
 ```yaml
 Type: Boolean
@@ -1987,6 +1990,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisableListSync
+Disables or enables sync functionality for lists.
 
 ```yaml
 Type: Boolean
