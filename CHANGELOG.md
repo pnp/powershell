@@ -34,7 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPFileAnonymousSharingLink` and `Add-PnPFolderAnonymousSharingLink` cmdlets to create anonymous sharing links. [#3198](https://github.com/pnp/powershell/pull/3198)
 - Added `Add-PnPFileSharingInvite` and `Add-PnPFolderSharingInvite` cmdlets to invite users to a file or a folder. [#3199](https://github.com/pnp/powershell/pull/3199)
 - Added `Remove-PnPFileSharingLink` and `Remove-PnPFolderSharingLink` cmdlets to delete sharing links associated with files and folders. [#3200](https://github.com/pnp/powershell/pull/3200)
-- Added `Get-PnPUnfurlLink` cmdlet to support unfurling a link to get more information about the link.
+- Added `Get-PnPUnfurlLink` cmdlet to support unfurling a link to get more information about the link. [#3224](https://github.com/pnp/powershell/pull/3224)
 
 ### Fixed
 
