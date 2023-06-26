@@ -90,7 +90,7 @@
 </ul>
 <p>Removes all current members from a particular Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Clear-PnPAzureADGroupMember -Identity &lt;AzureADGroupPipeBind&gt; 
+<pre><code class="lang-powershell">Clear-PnPAzureADGroupMember -Identity &lt;AzureADGroupPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to remove all current members from specified Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
@@ -98,10 +98,21 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Clear-PnPAzureADGroupMember -Identity &quot;Project Team&quot;
 </code></pre>
-<p>Removes all the current members from the Azure Active Directory group named &quot;Project Team&quot;</p>
+<p>Removes all the current members from the Azure Active Directory group named &quot;Project Team&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The Identity of the Azure Active Directory group to remove all members from</p>
+<p>The Identity of the Azure Active Directory group to remove all members from.</p>
 <pre><code class="lang-yaml">Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 

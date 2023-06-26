@@ -88,30 +88,30 @@
 <ul>
 <li>Microsoft Graph API: Application.Read.All</li>
 </ul>
-<p>Returns Azure AD App registrations</p>
+<p>Returns Azure AD App registrations.</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="filter">Filter</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADApp [-Identity &lt;AzureADAppPipeBind&gt;]
-</code></pre>
 <h3 id="identity-default">Identity (Default)</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADApp -Filter &lt;string&gt;
+<pre><code class="lang-powershell">Get-PnPAzureADApp [-Identity &lt;AzureADAppPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="filter">Filter</h3>
+<pre><code class="lang-powershell">Get-PnPAzureADApp -Filter &lt;string&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlets returns all app registrations, a specific one or ones matching a provided filter.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
+<h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADApp
 </code></pre>
-<p>This returns all Azure AD App registrations</p>
-<h3 id="example-2">Example 2</h3>
+<p>This returns all Azure AD App registrations.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADApp -Identity MyApp
 </code></pre>
-<p>This returns the Azure AD App registration with the display name as 'MyApp'</p>
-<h3 id="example-3">Example 3</h3>
+<p>This returns the Azure AD App registration with the display name as 'MyApp'.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
 </code></pre>
 <p>This returns the Azure AD App registration with the app id specified or the id specified.</p>
-<h3 id="example-4">Example 4</h3>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADApp -Filter &quot;startswith(description, 'contoso')&quot;
 </code></pre>
 <p>This returns the Azure AD App registrations with the description starting with &quot;contoso&quot;. This example demonstrates using Advanced Query capabilities (see: <a href="https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties">https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties</a>)</p>
@@ -132,6 +132,17 @@ Accept wildcard characters: False
 <p>Specify the query to pass to Graph API in $filter.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Filter
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

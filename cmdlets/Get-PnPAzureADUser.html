@@ -91,21 +91,21 @@
 <p>Retrieves users from Azure Active Directory. By default the following properties will be loaded: BusinessPhones, DisplayName, GivenName, JobTitle, Mail, MobilePhone, OfficeLocation, PreferredLanguage, Surname, UserPrincipalName, Id, AccountEnabled</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="return-a-list-default">Return a list (Default)</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-StartIndex &lt;Int32&gt;] [-EndIndex&lt;Int32&gt;] 
+<pre><code class="lang-powershell">Get-PnPAzureADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-StartIndex &lt;Int32&gt;] [-EndIndex&lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="return-by-specific-id">Return by specific ID</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADUser [-Identity &lt;String&gt;] [-Select &lt;String[]&gt;] 
+<pre><code class="lang-powershell">Get-PnPAzureADUser [-Identity &lt;String&gt;] [-Select &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="return-the-delta">Return the delta</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-Delta] [-DeltaToken &lt;String&gt;] [-StartIndex &lt;Int32&gt;] [-EndIndex&lt;Int32&gt;] 
+<pre><code class="lang-powershell">Get-PnPAzureADUser [-Filter &lt;String&gt;] [-OrderBy &lt;String&gt;] [-Select &lt;String[]&gt;] [-Delta] [-DeltaToken &lt;String&gt;] [-StartIndex &lt;Int32&gt;] [-EndIndex&lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to retrieve single or list of users from Azure Active Directory.</p>
+<p>Allows to retrieve a single user or a list of users from Azure Active Directory.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser
 </code></pre>
-<p>Retrieves all users from Azure Active Directory</p>
+<p>Retrieves all users from Azure Active Directory.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -EndIndex 50
 </code></pre>
@@ -117,34 +117,34 @@
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -Identity john@contoso.com
 </code></pre>
-<p>Retrieves the user from Azure Active Directory with the user principal name john@contoso.com</p>
+<p>Retrieves the user from Azure Active Directory with the user principal name john@contoso.com.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -Identity john@contoso.com -Select &quot;DisplayName&quot;,&quot;extension_3721d05137db455ad81aa442e3c2d4f9_extensionAttribute1&quot;
 </code></pre>
-<p>Retrieves only the DisplayName and extensionAttribute1 properties of the user from Azure Active Directory which has the user principal name john@contoso.com</p>
+<p>Retrieves only the DisplayName and extensionAttribute1 properties of the user from Azure Active Directory which has the user principal name john@contoso.com.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -Filter &quot;accountEnabled eq false&quot;
 </code></pre>
-<p>Retrieves all the disabled users from Azure Active Directory</p>
+<p>Retrieves all the disabled users from Azure Active Directory.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -Filter &quot;startswith(DisplayName, 'John')&quot; -OrderBy &quot;DisplayName&quot;
 </code></pre>
-<p>Retrieves all the users from Azure Active Directory of which their DisplayName starts with 'John' and sort the results by the DisplayName</p>
+<p>Retrieves all the users from Azure Active Directory of which their DisplayName starts with 'John' and sort the results by the DisplayName.</p>
 <h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -Delta
 </code></pre>
-<p>Retrieves all the users from Azure Active Directory and include a delta DeltaToken which can be used by providing -DeltaToken <code>&lt;token&gt;</code> to query for changes to users in Active Directory since this run</p>
+<p>Retrieves all the users from Azure Active Directory and includes a delta DeltaToken which can be used by providing -DeltaToken <code>&lt;token&gt;</code> to query for changes to users in Active Directory since this run.</p>
 <h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -Delta -DeltaToken abcdef
 </code></pre>
-<p>Retrieves all the users from Azure Active Directory which have had changes since the provided DeltaToken was given out</p>
+<p>Retrieves all the users from Azure Active Directory which have had changes since the provided DeltaToken was given out.</p>
 <h3 id="example-10">EXAMPLE 10</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADUser -StartIndex 10 -EndIndex 20
 </code></pre>
 <p>Retrieves the 10th through the 20th user from Azure Active Directory. Notice that you have no control over which users will be in this batch of 10 users.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-delta">-Delta</h3>
-<p>Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command</p>
+<p>Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Return the delta
 
@@ -155,7 +155,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-deltatoken">-DeltaToken</h3>
-<p>The change token provided during the previous run with -Delta to query for the changes to user objects made in Azure Active Directory since that run</p>
+<p>The change token provided during the previous run with -Delta to query for the changes to user objects made in Azure Active Directory since that run.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Return the delta
 
@@ -177,7 +177,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Returns the user with the provided user id</p>
+<p>Returns the user with the provided user id.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Return by specific ID
 
@@ -228,6 +228,17 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: $null
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

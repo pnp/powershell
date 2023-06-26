@@ -102,7 +102,7 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipalAvailableAppRole -Principal &quot;My application&quot;
 </code></pre>
-<p>Retrieves all app roles of the application registration with the name &quot;My application&quot;</p>
+<p>Retrieves all app roles of the application registration with the name &quot;My application&quot;.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Get-PnPAzureADServicePrincipalAvailableAppRole
 </code></pre>
@@ -110,10 +110,10 @@
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPAzureADServicePrincipalAvailableAppRole -Identity &quot;User.ReadWrite.All&quot;
 </code></pre>
-<p>Retrieves the app role details of the role &quot;User.ReadWrite.All&quot; of the built in Microsoft Graph application registration</p>
+<p>Retrieves the app role details of the role &quot;User.ReadWrite.All&quot; of the built in Microsoft Graph application registration.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-principal">-Principal</h3>
-<p>The object id, name or instance of the service principal/application registration to list the app roles for</p>
+<p>The object id, name or instance of the service principal/application registration to list the app roles for.</p>
 <pre><code class="lang-yaml">Type: ServicePrincipalPipeBind
 Parameter Sets: (All)
 
@@ -124,7 +124,7 @@ Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The object id, name or instance of the application role to retrieve from the service principal/application registration</p>
+<p>The object id, name or instance of the application role to retrieve from the service principal/application registration.</p>
 <pre><code class="lang-yaml">Type: ServicePrincipalAppRoleBind
 Parameter Sets: (All)
 

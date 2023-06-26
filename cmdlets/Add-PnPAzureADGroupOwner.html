@@ -90,7 +90,7 @@
 </ul>
 <p>Adds users to the owners of an Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &lt;AzureADGroupPipeBind&gt; -Users &lt;String[]&gt; [-RemoveExisting] 
+<pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &lt;AzureADGroupPipeBind&gt; -Users &lt;String[]&gt; [-RemoveExisting] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to add users to owners of an Azure Active Directory Group. This can be a security, distribution or Microsoft 365 group. By specifying <code>-RemoveExisting</code> option it is possible to first clear the group of all existing members.</p>
@@ -98,18 +98,28 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
 </code></pre>
-<p>Adds the provided two users as additional owners to the Azure Active Directory group named &quot;Project Team&quot;</p>
+<p>Adds the provided two users as additional owners to the Azure Active Directory group named &quot;Project Team&quot;.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot; -RemoveExisting
 </code></pre>
-<p>Sets the provided two users as the only owners of the Azure Active Directory group named &quot;Project Team&quot; by removing any current existing members first</p>
+<p>Sets the provided two users as the only owners of the Azure Active Directory group named &quot;Project Team&quot; by removing any current existing members first.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &quot;Project Team&quot; -Users &quot;125eaa87-7b54-41fd-b30f-2adfa68c4afe&quot;
 </code></pre>
 <p>Sets the provided security group as owner of the Azure Active Directory group name &quot;Project Team&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The Identity of the Azure Active Directory group to add owners to</p>
+<p>The Identity of the Azure Active Directory group to add owners to.</p>
 <pre><code class="lang-yaml">Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
@@ -120,7 +130,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-removeexisting">-RemoveExisting</h3>
-<p>If provided, all existing members will be removed and only those provided through Users will become members</p>
+<p>If provided, all existing members will be removed and only those provided through Users will become members.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -131,7 +141,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-users">-Users</h3>
-<p>The UPN(s) of the user(s) to add to the Azure Active Directory group as a member</p>
+<p>The UPN(s) of the user(s) to add to the Azure Active Directory group as a member.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 

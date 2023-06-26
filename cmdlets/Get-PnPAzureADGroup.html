@@ -90,31 +90,31 @@
 </ul>
 <p>Gets one Azure Active Directory group or a list of Azure Active Directory groups. This can be a security, distribution or Microsoft 365 group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPAzureADGroup [-Identity &lt;AzureADGroupPipeBind&gt;] 
+<pre><code class="lang-powershell">Get-PnPAzureADGroup [-Identity &lt;AzureADGroupPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to retrieve list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying <code>Identity</code> option it is possible to get single group.</p>
+<p>Allows to retrieve list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying <code>Identity</code> option it is possible to get a single group.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADGroup
 </code></pre>
-<p>Retrieves all the Azure Active Directory groups</p>
+<p>Retrieves all the Azure Active Directory groups.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADGroup -Identity $groupId
 </code></pre>
-<p>Retrieves a specific Azure Active Directory group based on its ID</p>
+<p>Retrieves a specific Azure Active Directory group based on its ID.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADGroup -Identity $groupDisplayName
 </code></pre>
-<p>Retrieves a specific Azure Active Directory group that has the given DisplayName</p>
+<p>Retrieves a specific Azure Active Directory group that has the given DisplayName.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADGroup -Identity $groupSiteMailNickName
 </code></pre>
-<p>Retrieves a specific Azure Active Directory group for which the email address equals the provided mail nickName</p>
+<p>Retrieves a specific Azure Active Directory group for which the email address equals the provided mail nickName.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADGroup -Identity $group
 </code></pre>
-<p>Retrieves a specific Azure Active Directory group based on its group object instance</p>
+<p>Retrieves a specific Azure Active Directory group based on its group object instance.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -128,7 +128,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The Identity of the Azure Active Directory group</p>
+<p>The Identity of the Azure Active Directory group.</p>
 <pre><code class="lang-yaml">Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 

@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Grant-PnPAzureADAppSitePermission | PnP PowerShell </title>
+    <title>Get-PnPUnfurlLink | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Grant-PnPAzureADAppSitePermission | PnP PowerShell ">
+    <meta name="title" content="Get-PnPUnfurlLink | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,75 +77,46 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Improve this Doc" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="grant-pnpazureadappsitepermission">Grant-PnPAzureADAppSitePermission</h1>
+  <h1 id="get-pnpunfurllink">Get-PnPUnfurlLink</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API: Sites.FullControl.All</li>
-</ul>
-<p>Adds permissions for a given Azure Active Directory application registration.</p>
+<p>To unfurl a link for a given resource such as file, folder, list items etc.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &lt;Guid&gt; -DisplayName &lt;String&gt; -Permissions &lt;Read|Write&gt; [-Site &lt;SitePipeBind&gt;]
+<pre><code class="lang-powershell">Get-PnPUnfurlLink -Url &lt;String&gt;
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet adds permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for fewer permissions compared for when updating rights through <a href="Set-PnPAzureADAppSitePermission.html">Set-PnPAzureADAppSitePermission</a>. If you wish to i.e. assign FullControl permissions, you need to add read or write permissions through this cmdlet first and then update it to FullControl.</p>
+<p>Creates a new organization sharing link for a file.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;aa37b89e-75a7-47e3-bdb6-b763851c61b6&quot; -DisplayName &quot;TestApp&quot; -Permissions Read
+<pre><code class="lang-powershell">Get-PnPUnfurlLink -Url &quot;https://contoso.sharepoint.com/:u:/s/testsitecol/ERs6pDuyD95LpUSUsJxi1EIBr9FMEYVBvMcs_B7cPdNPgQ?e=ZL3DPe&quot;
 </code></pre>
-<p>Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Read' access for the currently connected to site collection.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;aa37b89e-75a7-47e3-bdb6-b763851c61b6&quot; -DisplayName &quot;TestApp&quot; -Permissions Write -Site https://contoso.sharepoint.com/sites/projects
-</code></pre>
-<p>Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Write' access for the site collection at the provided URL.</p>
+<p>This will fetch the information of the resource to be unfurled.</p>
+<p>SharePoint supports many different types of links, you have direct links to lists, libraries and files, but there's also sharing links that user's have created for resources in SharePoint. Whenever your application needs to understand more about a given link we call that unfurling. A common scenario is where you allow your users to paste a link and your application gets the needed information to present the content behind the link (e.g. when you paste a link in Teams you'll you'll see the file name, thumbnail and more)</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-appid">-AppId</h3>
-<p>If specified the permission with that id specified will be retrieved.</p>
-<pre><code class="lang-yaml">Type: Guid
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-displayname">-DisplayName</h3>
-<p>The display name to set for the application permission you're adding. Only for visual reference purposes, does not need to match the name of the application in Azure Active Directory.</p>
+<h3 id="-url">-Url</h3>
+<p>The URL of the resource to be unfurled.
+For more information, you can visit the <a href="https://pnp.github.io/pnpcore/using-the-sdk/unfurl-intro.html">PnP Core SDK documentation</a></p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-permissions">-Permissions</h3>
-<p>Specifies the permissions to set for the Azure Active Directory application registration which can either be Read or Write. Use <a href="Set-PnPAzureADAppSitePermission.html">Set-PnPAzureADAppSitePermission</a> after initially adding these permissions to update it to Manage or FullControl permissions.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Accepted values: Read, Write
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-site">-Site</h3>
-<p>Optional url of a site to set the permissions for. Defaults to the current site if not provided.</p>
-<pre><code class="lang-yaml">Type: SitePipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: Currently connected site
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

@@ -88,31 +88,42 @@
 <ul>
 <li>Microsoft Graph API: Application.Read.All</li>
 </ul>
-<p>Returns app permissions for Microsoft SharePoint and Microsoft Graph</p>
+<p>Returns app permissions for Microsoft SharePoint and Microsoft Graph.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPAzureADAppPermission [-Identity &lt;AzureADAppPipeBind&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureADAppPermission [-Identity &lt;AzureADAppPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet returns the appid, displayname and permissions set for Microsoft SharePoint and the Microsoft Graph APIs</p>
+<p>This cmdlet returns the appid, displayname and permissions set for Microsoft SharePoint and the Microsoft Graph APIs.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppPermission
 </code></pre>
-<p>Returns all apps with all permissions</p>
+<p>Returns all apps with all permissions.</p>
 <h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppPermission -Identity MyApp
 </code></pre>
-<p>Returns permissions for the specified app</p>
+<p>Returns permissions for the specified app.</p>
 <h3 id="example-2-1">Example 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppPermission -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
 </code></pre>
-<p>Returns permissions for the specified app</p>
+<p>Returns permissions for the specified app.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
 <p>Specify the display name, id or app id.</p>
 <pre><code class="lang-yaml">Type: AzureADAppPipeBind
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

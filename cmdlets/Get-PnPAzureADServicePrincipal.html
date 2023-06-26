@@ -111,26 +111,26 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal
 </code></pre>
-<p>Retrieves all application registrations and enterprise applications from Azure Active Directory</p>
+<p>Retrieves all application registrations and enterprise applications from Azure Active Directory.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -AppId b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e
 </code></pre>
-<p>Retrieves the application registration with AppId/ClientId b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e from Azure Active Directory</p>
+<p>Retrieves the application registration with AppId/ClientId b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e from Azure Active Directory.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -ObjectId 06ca9985-367a-41ba-9c44-b2ed88c19aec
 </code></pre>
-<p>Retrieves the application registration with ObjectId 06ca9985-367a-41ba-9c44-b2ed88c19aec from Azure Active Directory</p>
+<p>Retrieves the application registration with ObjectId 06ca9985-367a-41ba-9c44-b2ed88c19aec from Azure Active Directory.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -AppName &quot;My application&quot;
 </code></pre>
-<p>Retrieves the application registration with the name &quot;My application&quot; from Azure Active Directory</p>
+<p>Retrieves the application registration with the name &quot;My application&quot; from Azure Active Directory.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -Filter &quot;startswith(description, 'contoso')&quot;
 </code></pre>
 <p>Retrieves the application registration with the description starting with &quot;contoso&quot; from Azure Active Directory. This example demonstrates using Advanced Query capabilities (see: <a href="https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties">https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties</a>).</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-appid">-AppId</h3>
-<p>The guid of the application registration its App Id/Client Id to retrieve</p>
+<p>The guid of the application registration its App Id/Client Id to retrieve.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: By App Id
 
@@ -141,7 +141,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-objectid">-ObjectId</h3>
-<p>The guid of the application registration its object Id to retrieve</p>
+<p>The guid of the application registration its object Id to retrieve.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: By Object Id
 
@@ -152,7 +152,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-appname">-AppName</h3>
-<p>The name of the application registration to retrieve</p>
+<p>The name of the application registration to retrieve.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: By App Name
 

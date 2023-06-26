@@ -110,14 +110,14 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPAzureADServicePrincipalAvailableAppRole -Identity &quot;Group.ReadWrite.All&quot; | Add-PnPAzureADServicePrincipalAppRole -Principal &quot;mymanagedidentity&quot;
 </code></pre>
-<p>Adds the permission Group.ReadWrite.All for Microsoft Graph to the service principal with the name mymanagedidentity</p>
+<p>Adds the permission Group.ReadWrite.All for Microsoft Graph to the service principal with the name mymanagedidentity.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Add-PnPAzureADServicePrincipalAppRole -Principal &quot;62614f96-cb78-4534-bf12-1f6693e8237c&quot; -AppRole &quot;MyApplication.Read&quot; -Resource &quot;b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e&quot;
 </code></pre>
 <p>Adds the permission MyApplication.Read for the application registration with object id b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e to the service principal with the object id 62614f96-cb78-4534-bf12-1f6693e8237c</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-principal">-Principal</h3>
-<p>The object id, name or instance of the service principal/application registration to add the app role to</p>
+<p>The object id, name or instance of the service principal/application registration to add the app role to.</p>
 <pre><code class="lang-yaml">Type: ServicePrincipalPipeBind
 Parameter Sets: (All)
 
@@ -128,7 +128,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-approle">-AppRole</h3>
-<p>The object id, name or instance of the application role to add to the service principal/application registration</p>
+<p>The object id, name or instance of the application role to add to the service principal/application registration.</p>
 <pre><code class="lang-yaml">Type: ServicePrincipalAppRoleBind
 Parameter Sets: (All)
 
