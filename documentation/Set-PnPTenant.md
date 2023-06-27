@@ -119,7 +119,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IBImplicitGroupBased <Boolean>]
  [-ShowOpenInDesktopOptionForSyncedFiles <Boolean>]
  [-ShowPeoplePickerGroupSuggestionsForIB <Boolean>]
+ [-BlockDownloadFileTypePolicy <Boolean>]
+ [-BlockDownloadFileTypeIds <SPBlockDownloadFileTypeId[]>]
+ [-ExcludedBlockDownloadGroupIds <GUID[]>]
  [-ArchiveRedirectUrl <String>]
+ [-StopNew2013Workflows <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -447,6 +451,7 @@ Accept wildcard characters: False
 ```
 
 ### -EmailAttestationRequired
+Sets email attestation to required.
 
 ```yaml
 Type: Boolean
@@ -907,7 +912,7 @@ True (default) - The Shared with Everyone folder is created.
 False - No folder is created when the site and OneDrive for Business document library is created.
 
 The default behavior of the Shared with Everyone folder changed in August 2015.
-For additional information about the change, see Provision the Shared with Everyone folder in OneDrive for Business (https://support.office.com/en-us/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2?ui=en-US&rs=en-US&ad=US)
+For additional information about the change, see Provision the Shared with Everyone folder in OneDrive for Business (https://support.office.com/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2)
 
 ```yaml
 Type: Boolean
@@ -921,6 +926,7 @@ Accept wildcard characters: False
 ```
 
 ### -PublicCdnAllowedFileTypes
+Sets public CDN allowed file types, if the public CDN is enabled.
 
 ```yaml
 Type: String
@@ -934,6 +940,7 @@ Accept wildcard characters: False
 ```
 
 ### -PublicCdnEnabled
+Enables or disables the public CDN.
 
 ```yaml
 Type: Boolean
@@ -1139,7 +1146,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowPeoplePickerSuggestionsForGuestUsers
-
+Shows people picker suggestions for guest users. To enable the option to search for existing guest users at Tenant Level, set this parameter to $true.
 
 ```yaml
 Type: Boolean
@@ -1391,7 +1398,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisablePersonalListCreation
-Allows configuring whether personal lists created within the OneDrive for Business site of the user is enabled or disabled in the tenant. If set to `$true`, personal lists will be allowed to be created in the tenant. If set to `$false`, it will be disabled in the tenant.
+Allows configuring whether personal lists created within the OneDrive for Business site of the user is enabled or disabled in the tenant. If set to `$false`, personal lists will be allowed to be created in the tenant. If set to `$true`, it will be disabled in the tenant.
 
 ```yaml
 Type: Boolean
@@ -1781,7 +1788,7 @@ In this case, Whiteboard provides temporary viewing and collaboration on the whi
 
 If you have external sharing enabled for OneDrive for Business, no further action is required.
 
-If you restrict external sharing for OneDrive for Business, you can keep it restricted, and just enable this new setting in order for external and shared device accounts to work. For more information, see [Manage sharing for Microsoft Whiteboard](https://learn.microsoft.com/en-us/microsoft-365/whiteboard/manage-sharing-organizations).
+If you restrict external sharing for OneDrive for Business, you can keep it restricted, and just enable this new setting in order for external and shared device accounts to work. For more information, see [Manage sharing for Microsoft Whiteboard](https://learn.microsoft.com/microsoft-365/whiteboard/manage-sharing-organizations).
 
 ```yaml
 Type: SharingState
@@ -1983,6 +1990,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisableListSync
+Disables or enables sync functionality for lists.
 
 ```yaml
 Type: Boolean
@@ -2016,6 +2024,74 @@ Accept wildcard characters: False
 
 Use this turn off setting the default sensitivity label for a document library.
 For more information on this feature, please take a look [here](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-sharepoint-default-label?view=o365-worldwide)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadFileTypePolicy
+
+You can block the download of Teams meeting recording files from SharePoint or OneDrive. This allows users to remain productive while addressing the risk of accidental data loss. Users have browser-only access to play the meeting recordings with no ability to download or sync files or access them through apps.
+
+This policy applies to new meeting recordings across the entire organization. You can exempt people who are members of specified security groups from the policy. This allows you to specify governance or compliance specialists who should have download access to meeting recordings.
+
+After the policy is turned on, any new Teams meeting recording files created by the Teams service and saved in SharePoint and OneDrive are blocked from download.
+
+Because this policy affects meeting recordings stored in OneDrive and SharePoint, you must be a SharePoint administrator to configure it.
+
+Note that this policy doesn't apply to manually uploaded meeting recording files. For more details, see [Block the download of Teams meeting recording files from SharePoint or OneDrive.](https://learn.microsoft.com/microsoftteams/block-download-meeting-recording)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadFileTypeIds
+
+The File Type IDs which need to specified to prevent download.
+
+```yaml
+Type: SPBlockDownloadFileTypeId[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludedBlockDownloadGroupIds
+
+This parameter exempts users in the specified security groups from this policy so that they can download meeting recording files.
+
+```yaml
+Type: GUID[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StopNew2013Workflows
+
+This parameter allows disablement of creation of new SharePoint 2013 workflows in the tenant
 
 ```yaml
 Type: Boolean

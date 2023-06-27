@@ -53,6 +53,8 @@ namespace PnP.PowerShell.Commands.Fields
                     ClientContext.Load(field, RetrievalExpressions);
                     ClientContext.ExecuteQueryRetry();
 
+                    field.EnsureProperty(f => f.FieldTypeKind);
+
                     switch (field.FieldTypeKind)
                     {
                         case FieldType.DateTime:
@@ -212,6 +214,8 @@ namespace PnP.PowerShell.Commands.Fields
                     ClientContext.Load(field, RetrievalExpressions);
                     ClientContext.ExecuteQueryRetry();
 
+                    field.EnsureProperty(f => f.FieldTypeKind);
+
                     switch (field.FieldTypeKind)
                     {
                         case FieldType.DateTime:
@@ -292,8 +296,6 @@ namespace PnP.PowerShell.Commands.Fields
                     }
                 }
             }
-
         }
     }
-
 }

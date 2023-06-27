@@ -9,6 +9,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Net.Http;
 using System.Reflection;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -294,6 +295,11 @@ namespace PnP.PowerShell.Commands.Base
             if (Credentials != null)
             {
                 credentials = Credentials.Credential;
+            }
+            
+            if (PingHost(new Uri(Url).Host) == false)
+            {
+                throw new PSArgumentException("Host not reachable");
             }
 
             if (AzureEnvironment == AzureEnvironment.Custom)
@@ -721,6 +727,32 @@ namespace PnP.PowerShell.Commands.Base
         #endregion
 
         #region Helper methods
+
+        private static bool PingHost(string nameOrAddress)
+        {
+
+            try
+            {
+                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+                var httpRequest = new HttpRequestMessage();
+                httpRequest.Method = HttpMethod.Head;
+                httpRequest.Version = new Version(2,0);
+                httpRequest.RequestUri = new Uri("https://" + nameOrAddress);                
+                var cancellationToken = new CancellationTokenSource();
+                cancellationToken.CancelAfter(TimeSpan.FromSeconds(10));
+                var response = httpClient.SendAsync(httpRequest, cancellationToken.Token).Result;
+                var statusCode = (int) response.StatusCode;
+                if (statusCode > 100 && statusCode < 500)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
         private PSCredential GetCredentials()
         {
             var connectionUri = new Uri(Url);
