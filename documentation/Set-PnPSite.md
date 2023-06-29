@@ -46,6 +46,7 @@ Set-PnPSite [-Identity <String>]
  [-ScriptSafeDomainName <string>]
  [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
  [-ExcludedBlockDownloadGroupIds <Guid[]>]
+ [-ListsShowHeaderAndNavigation <Boolean>]
  [-Connection <PnPConnection>]
 ```
 
@@ -575,6 +576,20 @@ Exempts users from the mentioned groups from this policy and they can fully down
 
 ```yaml
 Type: GUID[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ListsShowHeaderAndNavigation
+Set a property on a site collection to make all lists always load with the site elements intact.
+
+```yaml
+Type: Boolean
 Parameter Sets: Set Properties
 
 Required: False

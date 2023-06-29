@@ -723,7 +723,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 return false;
             }
-            catch(Exception ex)
+            catch
             {
                 return false;
             }
