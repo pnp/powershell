@@ -16,7 +16,7 @@ Returns lists from SharePoint
 
 ```powershell
 Get-PnPList [[-Identity] <ListPipeBind>] [-ThrowExceptionIfListNotFound] 
- [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+ [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

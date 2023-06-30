@@ -22,7 +22,7 @@
     <PackageReference Include="Microsoft.PowerShell.ConsoleHost" Version="7.2.0" />
     <PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="PnP.Framework" Version="1.11.*-*" Condition="'$(LocalDebug)' != 'true'" />
+    <PackageReference Include="PnP.Framework" Version="1.13.*-*" Condition="'$(LocalDebug)' != 'true'" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.27.0" />
     <PackageReference Include="System.Reflection.Emit" Version="4.7.0" />

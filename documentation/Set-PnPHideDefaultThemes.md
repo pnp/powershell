@@ -20,7 +20,7 @@ Defines if the default out of the box themes should be visible to users or not.
 ## SYNTAX
 
 ```powershell
-Set-PnPHideDefaultThemes -HideDefaultThemes <Boolean> [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPHideDefaultThemes -HideDefaultThemes <Boolean> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

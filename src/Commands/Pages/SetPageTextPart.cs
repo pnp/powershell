@@ -8,8 +8,6 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPageTextPart")]
-    [Alias("Set-PnPClientSideText")]
-    [WriteAliasWarning("Please use 'Set-PnPPageTextPart'. The alias 'Set-PnPClientSideText' will be removed in the 1.5.0 release")]
     public class SetClientSideText : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

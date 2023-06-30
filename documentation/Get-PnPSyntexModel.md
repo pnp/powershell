@@ -19,7 +19,7 @@ This cmdlet only works when you've connected to a Syntex Content Center site.
 
 ```powershell
 Get-PnPSyntexModel [-Identity] <SyntexModelPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

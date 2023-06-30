@@ -16,7 +16,7 @@ Returns a web part definition object
 
 ```powershell
 Get-PnPWebPart -ServerRelativePageUrl <String> [-Identity <WebPartPipeBind>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

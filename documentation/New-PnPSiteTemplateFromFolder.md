@@ -18,7 +18,7 @@ Generates a provisioning template from a given folder, including only files that
 New-PnPSiteTemplateFromFolder [[-Out] <String>] [[-Folder] <String>] [[-TargetFolder] <String>]
  [-Match <String>] [-ContentType <ContentTypePipeBind>] [-Properties <Hashtable>]
  [[-Schema] <XMLPnPSchemaVersion>] [-AsIncludeFile] [-Force] [-Encoding <Encoding>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -12,7 +12,7 @@ Install-Module PnP.PowerShell -Scope CurrentUser
 
 ## Nightly build
 
-If you want to install the latest nightly built prerelease of PnP PowerShell for the current user, run:
+If you want to install the latest nightly build prerelease of PnP PowerShell for the current user, run:
 
 ```powershell
 Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisherCheck
@@ -22,13 +22,13 @@ Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisher
 
 To use PnP.PowerShell in a Windows container:
 
-```
+```powershell
 docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
 ```
 
 To use PnP.PowerShell in a Linux container:
 
-```
+```powershell
 docker run -it m365pnp/powershell
 ```
 
@@ -49,7 +49,7 @@ Update-Module PnP.PowerShell -Scope CurrentUser
 If you want to update to the latest nightly built prerelease of PnP PowerShell for the current user, run:
 
 ```powershell
-Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -Force
+Update-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -Force
 ```
 
 # Uninstalling PnP PowerShell

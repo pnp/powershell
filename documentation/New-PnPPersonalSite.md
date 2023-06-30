@@ -18,7 +18,7 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPPersonalSite.htm
 ## SYNTAX
 
 ```powershell
-New-PnPPersonalSite [-Email] <String[]> [-Connection <PnPConnection>] [<CommonParameters>]
+New-PnPPersonalSite [-Email] <String[]> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

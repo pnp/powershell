@@ -5,7 +5,7 @@ PnP PowerShell is a cross-platform PowerShell Module providing over 650 cmdlets 
 
 Follow the [installation steps](/powershell/articles/installation.html) to get up and running in minutes.
 
-See the [articles](/powershell/articles) section for more information on authentication and configuration. All [cmdlets](/powershell/cmdlets/Add-PnPAlert.html) have been documented too.
+See the [articles](/powershell/articles) section for more information on authentication and configuration. All [cmdlets](/powershell/cmdlets) have been documented too.
 
 See [Using PnP PowerShell in Docker containers](/powershell/articles/docker.html) article for information how to run PnP.PowerShell without installing it.
 

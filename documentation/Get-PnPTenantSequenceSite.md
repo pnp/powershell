@@ -16,7 +16,7 @@ Returns one or more sites from a tenant template
 
 ```powershell
 Get-PnPTenantSequenceSite -Sequence <ProvisioningSequence> [-Identity <ProvisioningSitePipeBind>] 
-  [<CommonParameters>]
+  
 ```
 
 ## DESCRIPTION

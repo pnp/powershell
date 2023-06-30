@@ -20,7 +20,7 @@ Returns if the default / OOTB themes should be visible to users or not.
 ## SYNTAX
 
 ```powershell
-Get-PnPHideDefaultThemes [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPHideDefaultThemes [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

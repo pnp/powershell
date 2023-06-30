@@ -15,7 +15,7 @@ Returns a taxonomy session
 ## SYNTAX
 
 ```powershell
-Get-PnPTaxonomySession [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPTaxonomySession [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

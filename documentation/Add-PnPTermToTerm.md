@@ -18,7 +18,7 @@ Adds a new term to an existing term.
 Add-PnPTermToTerm -ParentTerm <Guid|Term> -Name <String> [-Id <Guid>] [-Lcid <Int32>]
   [-LocalCustomProperties <Hashtable>]
  [-TermStore <Guid>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -15,7 +15,7 @@ Returns the authentication realm
 ## SYNTAX
 
 ```powershell
-Get-PnPAuthenticationRealm [[-Url] <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPAuthenticationRealm [[-Url] <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

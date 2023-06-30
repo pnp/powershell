@@ -4,8 +4,6 @@ using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -43,6 +41,7 @@ namespace PnP.PowerShell.Commands.Model
             this.displayNamesOfFileViewers = tenant.DisplayNamesOfFileViewers;
             this.displayNamesOfFileViewersInSpo = tenant.DisplayNamesOfFileViewersInSpo;
             this.isLoopEnabled = tenant.IsLoopEnabled;
+            this.enableAzureADB2BIntegration = tenant.EnableAzureADB2BIntegration;
 
             try
             {
@@ -393,6 +392,33 @@ namespace PnP.PowerShell.Commands.Model
 
             try
             {
+                this.disableListSync = tenant.DisableListSync;
+            }
+            catch
+            {
+                this.disableListSync = false;
+            }
+
+            try
+            {
+                this.disableDocumentLibraryDefaultLabeling = tenant.DisableDocumentLibraryDefaultLabeling;
+            }
+            catch
+            {
+                this.disableDocumentLibraryDefaultLabeling = false;
+            }
+
+            try
+            {
+                this.isEnableAppAuthPopUpEnabled = tenant.IsEnableAppAuthPopUpEnabled;
+            }
+            catch
+            {
+                this.isEnableAppAuthPopUpEnabled = false;
+            }
+
+            try
+            {
                 var getAllowFilesWithKeepLabelToBeDeletedSPO = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedSPO(clientContext);
                 var getAllowFilesWithKeepLabelToBeDeletedODB = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAllowFilesWithKeepLabelToBeDeletedODB(clientContext);
                 clientContext.ExecuteQueryRetry();
@@ -401,6 +427,41 @@ namespace PnP.PowerShell.Commands.Model
                 this.allowFilesWithKeepLabelToBeDeletedODB = getAllowFilesWithKeepLabelToBeDeletedODB.Value;
             }
             catch { }
+
+            try
+            {
+                this.expireVersionsAfterDays = tenant.ExpireVersionsAfterDays;
+            }
+            catch
+            {
+                this.expireVersionsAfterDays = 0;
+            }
+
+            try
+            {
+                this.majorVersionLimit = tenant.MajorVersionLimit;
+            }
+            catch
+            {
+                this.majorVersionLimit = 0;
+            }
+
+            try
+            {
+                this.enableAutoExpirationVersionTrim = tenant.EnableAutoExpirationVersionTrim;
+            }
+            catch
+            {
+                this.enableAutoExpirationVersionTrim = false;
+            }
+
+            try
+            {
+                this.enableAzureADB2BIntegration = tenant.EnableAzureADB2BIntegration;
+            }
+            catch
+            {
+            }            
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -562,6 +623,13 @@ namespace PnP.PowerShell.Commands.Model
         public bool IsLoopEnabled => isLoopEnabled;
         public Guid[] DisabledModernListTemplateIds => disabledModernListTemplateIds;
         public bool RestrictedAccessControl => restrictedAccessControl;
+        public bool DisableListSync => disableListSync;
+        public bool DisableDocumentLibraryDefaultLabeling => disableDocumentLibraryDefaultLabeling;
+        public bool IsEnableAppAuthPopUpEnabled => isEnableAppAuthPopUpEnabled;
+        public int? ExpireVersionsAfterDays => expireVersionsAfterDays;
+        public int? MajorVersionLimit => majorVersionLimit;
+        public bool? EnableAutoExpirationVersionTrim => enableAutoExpirationVersionTrim;
+        public bool? EnableAzureADB2BIntegration => enableAzureADB2BIntegration;
 
         private bool hideDefaultThemes;
 
@@ -727,5 +795,18 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool restrictedAccessControl;
 
+        private bool disableListSync;
+
+        private bool disableDocumentLibraryDefaultLabeling;
+
+        private bool isEnableAppAuthPopUpEnabled;
+
+        private int? expireVersionsAfterDays;
+
+        private int? majorVersionLimit;
+
+        private bool? enableAutoExpirationVersionTrim;
+
+        private bool? enableAzureADB2BIntegration;
     }
 }

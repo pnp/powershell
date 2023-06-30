@@ -20,7 +20,7 @@ Set-PnPTermSet -Identity <TaxonomyTermSetPipeBind> [-TermGroup] <TaxonomyTermGro
  [-StakeholderToDelete <String>] [-IsAvailableForTagging <Boolean>] [-IsOpenForTermCreation <Boolean>]
  [-UseForSiteNavigation <Boolean>] [-UseForFacetedNavigation <Boolean>] [-SetTargetPageForTerms <String>]
  [-RemoveTargetPageForTerms] [-SetCatalogItemPageForCategories <String>] [-RemoveCatalogItemPageForCategories]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

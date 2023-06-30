@@ -15,7 +15,7 @@ Sets a site policy
 ## SYNTAX
 
 ```powershell
-Set-PnPSitePolicy -Name <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPSitePolicy -Name <String> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -21,7 +21,7 @@ Sends a message to a Microsoft Teams Channel.
 
 ```powershell
 Submit-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Message <String>
- [-ContentType <TeamChannelMessageContentType>] [-Important]  [<CommonParameters>]
+ [-ContentType <TeamChannelMessageContentType>] [-Important]  
 ```
 
 ## DESCRIPTION

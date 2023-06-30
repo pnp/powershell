@@ -16,7 +16,7 @@ Add/uploads an available app to the app catalog
 
 ```powershell
 Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Overwrite] [-Timeout <Int32>] [-Publish [-SkipFeatureDeployment]]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -1,6 +1,4 @@
 # copy documentation to output folder
-# make cmdlets folder
-New-Item -Path "./dev/pages/cmdlets" -ItemType Directory
 #New-Item -Path "./dev/pages/cmdlets/released" -ItemType Directory
 #New-Item -Path "./dev/pages/cmdlets/nightly" -ItemType Directory
 
@@ -78,17 +76,62 @@ foreach ($nightlycmdlet in $nightlycmdlets) {
     }
 }
 
-# generate cmdlet toc
+# Generate cmdlet toc
 
-$items = Get-ChildItem "./dev/pages/cmdlets/*.md"
+$cmdletPages = Get-ChildItem -Path "./dev/pages/cmdlets/*.md" -Exclude "index.md"
 $toc = ""
-foreach ($item in $items) {
-    $toc = $toc + "- name: $($item.BaseName)`n  href: $($item.Name)`n"
+foreach ($cmdletPage in $cmdletPages) {
+    $toc = $toc + "- name: $($cmdletPage.BaseName)`n  href: $($cmdletPage.Name)`n"
 }
 
 $toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force
 
+# Generate cmdlet index page
+
+$cmdletIndexPageContent = Get-Content -Path "./dev/pages/cmdlets/index.md" -Raw
+$cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletcount%%", $cmdletPages.Length)
+
+$cmdletIndexPageList = ""
+$previousCmdletVerb = ""
+foreach ($cmdletPage in $cmdletPages)
+{
+    # Define the verb of the cmdlet
+    if($cmdletPage.BaseName.Contains("-"))
+    {
+        $cmdletVerb = $cmdletPage.BaseName.Remove($cmdletPage.BaseName.IndexOf("-"))
+       
+        if($cmdletVerb -ne $previousCmdletVerb)
+        {
+            # Add a new heading for the new verb
+            $cmdletIndexPageList += "## $($cmdletVerb)`n"
+        }
+    }
+    else
+    {
+        $cmdletVerb = ""
+    }
+    
+    # Add a new entry for the verb
+    $cmdletIndexPageList += "- [$($cmdletPage.BaseName)]($($cmdletPage.Name))"
+
+    # Check if the cmdlet only exists in the nightly build
+    if (!$releasedcmdlets.Contains($cmdletPage.Name))
+    {
+        # Add an asterisk to the cmdlet name if it's only available in the nightly build
+        $cmdletIndexPageList = $cmdletIndexPageList + "*"
+    }
+    $cmdletIndexPageList = $cmdletIndexPageList + "`n"
+    
+    if($cmdletVerb -ne "")
+    {
+        # Track the last verb so we know if we need to add a new heading for the next cmdlet
+        $previousCmdletVerb = $cmdletVerb
+    }
+}
+
+$cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletlisting%%", $cmdletIndexPageList)
+$cmdletIndexPageContent | Out-File "./dev/pages/cmdlets/index.md" -Force
+
 docfx build ./dev/pages/docfx.json
 
 Copy-Item -Path "./dev/pages/_site/*" -Destination "./gh-pages" -Force -Recurse
-

@@ -21,7 +21,7 @@ Returns messages from the specified Microsoft Teams Channel.
 
 ```powershell
 Get-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsChannelMessagePipeBind>] [-IncludeDeleted]
-  [<CommonParameters>]
+  
 ```
 
 ## DESCRIPTION

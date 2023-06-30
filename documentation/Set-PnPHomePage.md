@@ -15,8 +15,7 @@ Sets the home page of the current web.
 ## SYNTAX
 
 ```powershell
-Set-PnPHomePage [-RootFolderRelativeUrl] <String> [-Connection <PnPConnection>]
- [<CommonParameters>]
+Set-PnPHomePage [-RootFolderRelativeUrl] <String> [-Connection <PnPConnection>] [-Verbose] 
 ```
 
 ## DESCRIPTION
@@ -56,7 +55,7 @@ Accept wildcard characters: False
 ```
 
 ### -RootFolderRelativeUrl
-The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'
+The root folder relative url of the homepage, e.g. 'sitepages/home.aspx'. Notice that the url is relative to the root folder of the web.
 
 ```yaml
 Type: String
@@ -70,9 +69,20 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
 
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

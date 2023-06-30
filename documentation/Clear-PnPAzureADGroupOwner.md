@@ -20,7 +20,7 @@ Removes all current owners from a particular Azure Active Directory group. This 
 ## SYNTAX
 
 ```powershell
-Clear-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [<CommonParameters>]
+Clear-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -34,12 +34,26 @@ Allows to remove all current owners from specified Azure Active Directory group.
 Clear-PnPAzureADGroupOwner -Identity "Project Team"
 ```
 
-Removes all the current owners from the Azure Active Directory group named "Project Team"
+Removes all the current owners from the Azure Active Directory group named "Project Team".
 
 ## PARAMETERS
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Identity
-The Identity of the Azure Active Directory group to remove all owners from
+The Identity of the Azure Active Directory group to remove all owners from.
 
 ```yaml
 Type: AzureADGroupPipeBind

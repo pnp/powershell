@@ -21,7 +21,7 @@ Sets the url of the tenant scoped app catalog
 
 ```powershell
 Set-PnPTenantAppCatalogUrl -Url <String> [-Connection <PnPConnection>]  
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

@@ -15,20 +15,20 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerBucket.ht
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Updates an existing Planner bucket
+Updates an existing Planner bucket.
 
 ## SYNTAX
 
 ### By Group
 ```powershell
 Set-PnPPlannerBucket -Bucket <PlannerBucketPipeBind> -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind>
- -Name <String>  [<CommonParameters>]
+ -Name <String>  
 ```
 
 ### By Plan Id
 ```powershell
 Set-PnPPlannerBucket -Bucket <PlannerBucketPipeBind> -PlanId <String> -Name <String> 
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
@@ -36,12 +36,12 @@ This cmdlet updates an existing Planner bucket.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```powershell
 Set-PnPPlannerBucket -Bucket "Todos" -Group "Marketing" -Plan "Conference Plan" -Name "Pre-conf Todos"
 ```
 
-This example renames the bucket called "Todos" to "Pre-conf Todos"
+This example renames the bucket called "Todos" to "Pre-conf Todos".
 
 ## PARAMETERS
 
@@ -76,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Specify the new name of the bucket
+Specify the new name of the bucket.
 
 ```yaml
 Type: String

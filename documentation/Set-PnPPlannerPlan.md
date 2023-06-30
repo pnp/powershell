@@ -15,32 +15,32 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPlannerPlan.html
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Updates an existing Planner plan
+Updates an existing Planner plan.
 
 ## SYNTAX
 
 ### By Group
 ```powershell
 Set-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Title <String>
-  [<CommonParameters>]
+  
 ```
 
 ### By Plan Id
 ```powershell
-Set-PnPPlannerPlan -PlanId <String> -Title <String>  [<CommonParameters>]
+Set-PnPPlannerPlan -PlanId <String> -Title <String>  
 ```
 
 ## DESCRIPTION
-This cmdlet updates an existing planner plan
+This cmdlet updates an existing planner plan.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```powershell
 Set-PnPPlannerPlan -Group "Marketing" -Plan "Conference" -Title "Conference 2020"
 ```
 
-This example renames the "Conference" plan to "Conference 2020"
+This example renames the "Conference" plan to "Conference 2020".
 
 ## PARAMETERS
 

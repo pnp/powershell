@@ -20,7 +20,7 @@ Adds published content types from content type hub site to current site. If the 
 ## SYNTAX
 
 ```powershell
-Add-PnPContentTypesFromContentTypeHub -ContentTypes List<String> [-Site <SitePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPContentTypesFromContentTypeHub -ContentTypes List<String> [-Site <SitePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

@@ -44,12 +44,15 @@ Set-PnPSite [-Identity <String>]
  [-SensitivityLabel <Guid>]
  [-RequestFilesLinkEnabled <Boolean>]
  [-ScriptSafeDomainName <string>]
+ [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
+ [-ExcludedBlockDownloadGroupIds <Guid[]>]
+ [-ListsShowHeaderAndNavigation <Boolean>]
  [-Connection <PnPConnection>]
 ```
 
 ### Set Lock State
 ```powershell
-Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -532,6 +535,62 @@ To enable restricted access control on a group-connected or Teams-connected site
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadPolicy
+Set this to true to block download of files from SharePoint sites or OneDrive
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludeBlockDownloadPolicySiteOwners
+Set this to true to exempts site owners from the block download policy so that they can fully download any content for the site.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludedBlockDownloadGroupIds
+Exempts users from the mentioned groups from this policy and they can fully download any content for the site.
+
+```yaml
+Type: GUID[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ListsShowHeaderAndNavigation
+Set a property on a site collection to make all lists always load with the site elements intact.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named

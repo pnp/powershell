@@ -20,7 +20,7 @@ Removes one Azure Active Directory group. This can be a security, distribution o
 ## SYNTAX
 
 ```powershell
-Remove-PnPAzureADGroup -Identity <AzureADGroupPipeBind>  [<CommonParameters>]
+Remove-PnPAzureADGroup -Identity <AzureADGroupPipeBind>  
 ```
 
 ## DESCRIPTION

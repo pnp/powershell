@@ -16,7 +16,7 @@ Retrieves a document set template
 
 ```powershell
 Get-PnPDocumentSetTemplate [-Identity] <DocumentSetPipeBind> [-Connection <PnPConnection>]
- [-Includes <String[]>] [<CommonParameters>]
+ [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION

@@ -157,13 +157,25 @@ namespace PnP.PowerShell.Commands
         public BlockDownloadLinksFileTypes BlockDownloadLinksFileType;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
+        public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public InformationBarriersMode InformationBarriersMode;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public MediaTranscriptionPolicyType? MediaTranscription { get; set; }        
+        public MediaTranscriptionPolicyType? MediaTranscription;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? BlockDownloadPolicy;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ExcludeBlockDownloadPolicySiteOwners;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] ExcludedBlockDownloadGroupIds;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ListsShowHeaderAndNavigation;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -501,6 +513,30 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
+            if (ParameterSpecified(nameof(BlockDownloadPolicy)) && BlockDownloadPolicy.HasValue)
+            {
+                props.BlockDownloadPolicy = BlockDownloadPolicy.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ExcludeBlockDownloadPolicySiteOwners)) && ExcludeBlockDownloadPolicySiteOwners.HasValue)
+            {
+                props.ExcludeBlockDownloadPolicySiteOwners = ExcludeBlockDownloadPolicySiteOwners.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) && ExcludedBlockDownloadGroupIds.Length > 0)
+            {
+                props.ExcludedBlockDownloadGroupIds = ExcludedBlockDownloadGroupIds;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ListsShowHeaderAndNavigation)) && ListsShowHeaderAndNavigation.HasValue)
+            {
+                props.ListsShowHeaderAndNavigation = ListsShowHeaderAndNavigation.Value;
+                updateRequired = true;
+            }
+
             if (updateRequired)
             {
                 var op = props.Update();
@@ -541,11 +577,11 @@ namespace PnP.PowerShell.Commands
                 AdminContext.ExecuteQueryRetry();
             }
 
-            if(PrimarySiteCollectionAdmin != null)
+            if (PrimarySiteCollectionAdmin != null)
             {
                 using (var siteContext = Tenant.Context.Clone(Identity.Url))
                 {
-                    var spAdmin = PrimarySiteCollectionAdmin.GetUser(siteContext, true);                   
+                    var spAdmin = PrimarySiteCollectionAdmin.GetUser(siteContext, true);
                     siteContext.Load(spAdmin);
                     siteContext.ExecuteQueryRetry();
 

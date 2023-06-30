@@ -24,7 +24,7 @@ Note: The implementation behind this in SharePoint Online has changed causing th
 ## SYNTAX
 
 ```powershell
-Set-PnPSubscribeSharePointNewsDigest -Account <String> -Enabled <Boolean> [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPSubscribeSharePointNewsDigest -Account <String> -Enabled <Boolean> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

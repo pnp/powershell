@@ -16,7 +16,7 @@ Removes a key from propertybag to be indexed by search. The key and it's value r
 
 ```powershell
 Remove-PnPIndexedProperty [-Key] <String> [-List <ListPipeBind>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
