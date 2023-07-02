@@ -369,7 +369,13 @@ namespace PnP.PowerShell.Commands.Admin
         public string ArchiveRedirectUrl { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? BlockSendLabelMismatchEmail { get; set; }     
+        public bool? BlockSendLabelMismatchEmail { get; set; }   
+
+        [Parameter(Mandatory = false)]
+        public MediaTranscriptionPolicyType? MediaTranscription { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public MediaTranscriptionAutomaticFeaturesPolicyType? MediaTranscriptionAutomaticFeatures { get; set; }
 
         protected override void ExecuteCmdlet()
         {
@@ -1231,6 +1237,18 @@ namespace PnP.PowerShell.Commands.Admin
             if (ShowPeoplePickerGroupSuggestionsForIB.HasValue)
             {
                 Tenant.ArchiveRedirectUrl = ArchiveRedirectUrl;
+                modified = true;
+            }
+
+            if (MediaTranscription.HasValue)
+            {
+                Tenant.MediaTranscription = MediaTranscription.Value;
+                modified = true;
+            }
+
+            if (MediaTranscriptionAutomaticFeatures.HasValue)
+            {
+                Tenant.MediaTranscriptionAutomaticFeatures = MediaTranscriptionAutomaticFeatures.Value;
                 modified = true;
             }
 
