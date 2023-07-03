@@ -124,6 +124,8 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ExcludedBlockDownloadGroupIds <GUID[]>]
  [-ArchiveRedirectUrl <String>]
  [-StopNew2013Workflows <Boolean>]
+ [-MediaTranscription <MediaTranscriptionPolicyType>]
+ [-MediaTranscriptionAutomaticFeatures <MediaTranscriptionAutomaticFeaturesPolicyType>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2095,6 +2097,36 @@ This parameter allows disablement of creation of new SharePoint 2013 workflows i
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MediaTranscription
+
+When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video. Possible values: Enabled, Disabled.
+
+```yaml
+Type: MediaTranscriptionPolicyType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MediaTranscriptionAutomaticFeatures
+
+When the feature is enabled, videos can have transcripts generated automatically on upload. The policy is default on. If a tenant admin decides to disable the feature, he can do so by disabling the policy at tenant level. This feature can not be enabled or disabled at site level. Possible values: Enabled, Disabled.
+
+```yaml
+Type: MediaTranscriptionAutomaticFeaturesPolicyType
 Parameter Sets: (All)
 
 Required: False
