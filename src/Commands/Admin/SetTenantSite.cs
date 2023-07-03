@@ -174,6 +174,9 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public Guid[] ExcludedBlockDownloadGroupIds;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ListsShowHeaderAndNavigation;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
@@ -525,6 +528,12 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) && ExcludedBlockDownloadGroupIds.Length > 0)
             {
                 props.ExcludedBlockDownloadGroupIds = ExcludedBlockDownloadGroupIds;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ListsShowHeaderAndNavigation)) && ListsShowHeaderAndNavigation.HasValue)
+            {
+                props.ListsShowHeaderAndNavigation = ListsShowHeaderAndNavigation.Value;
                 updateRequired = true;
             }
 

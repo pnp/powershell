@@ -121,6 +121,9 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public Guid[] ExcludedBlockDownloadGroupIds;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ListsShowHeaderAndNavigation;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 
@@ -397,6 +400,12 @@ namespace PnP.PowerShell.Commands.Site
                     executeQueryRequired = true;
                 }
 
+                if (ParameterSpecified(nameof(ListsShowHeaderAndNavigation)) && ListsShowHeaderAndNavigation.HasValue)
+                {
+                    siteProperties.ListsShowHeaderAndNavigation = ListsShowHeaderAndNavigation.Value;
+                    executeQueryRequired = true;
+                }
+
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();
@@ -451,6 +460,7 @@ namespace PnP.PowerShell.Commands.Site
                 RequestFilesLinkEnabled.HasValue ||
                 BlockDownloadPolicy.HasValue ||
                 ExcludeBlockDownloadPolicySiteOwners.HasValue ||
-                ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds));
+                ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) ||
+                ListsShowHeaderAndNavigation.HasValue;
     }
 }

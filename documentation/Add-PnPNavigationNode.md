@@ -223,7 +223,7 @@ Accept wildcard characters: False
 ```
 
 ### -OpenInNewTab
-Indicates that the link will be opened in a new browser tab.
+Indicates that the link will be opened in a new browser tab. This will only work if the navigation location is **QuickLaunch** due to SharePoint API limitation. 
 
 ```yaml
 Type: SwitchParameter

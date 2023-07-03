@@ -10,6 +10,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `-MediaTranscription` and `-MediaTranscriptionAutomaticFeatures` to `Set-PnPTenant` which allows for configuring the media transcription settings. [#3238](https://github.com/pnp/powershell/pull/3238)
+
+### Contributors
+
+- Koen Zomers [koenzomers]
+
+## [2.2.0]
+
+### Added
+
 - Added `DisableDocumentLibraryDefaultLabeling`, `DisableListSync`, `IsEnableAppAuthPopUpEnabled`, `ExpireVersionsAfterDays`, `MajorVersionLimit` and `EnableAutoExpirationVersionTrim`, `OneDriveLoopSharingCapability`, `OneDriveLoopDefaultSharingLinkScope`, `OneDriveLoopDefaultSharingLinkRole`, `CoreLoopSharingCapability`, `CoreLoopDefaultSharingLinkScope`, `CoreLoopDefaultSharingLinkRole` , `DisableVivaConnectionsAnalytics` , `CoreDefaultLinkToExistingAccess`, `HideSyncButtonOnTeamSite` , `CoreBlockGuestsAsSiteAdmin`, `IsWBFluidEnabled`, `IsCollabMeetingNotesFluidEnabled`, `AllowAnonymousMeetingParticipantsToAccessWhiteboards`, `IBImplicitGroupBased`, `ShowOpenInDesktopOptionForSyncedFiles` , `OneDriveRequestFilesLinkExpirationInDays` and `ShowPeoplePickerGroupSuggestionsForIB` parameters to the `Set-PnPTenant` cmdlet. [#2979](https://github.com/pnp/powershell/pull/2979) and [#3015](https://github.com/pnp/powershell/pull/3015)
 - Added `-OutFile` to `Invoke-PnPGraphMethod` which allows for the response to be written to a file [#2971](https://github.com/pnp/powershell/pull/2971)
 - Added `-OutStream` to `Invoke-PnPGraphMethod` which allows for the response to be written to a memory stream [#2976](https://github.com/pnp/powershell/pull/2976)
@@ -35,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPFileSharingInvite` and `Add-PnPFolderSharingInvite` cmdlets to invite users to a file or a folder. [#3199](https://github.com/pnp/powershell/pull/3199)
 - Added `Remove-PnPFileSharingLink` and `Remove-PnPFolderSharingLink` cmdlets to delete sharing links associated with files and folders. [#3200](https://github.com/pnp/powershell/pull/3200)
 - Added `Get-PnPUnfurlLink` cmdlet to support unfurling a link to get more information about the link. [#3224](https://github.com/pnp/powershell/pull/3224)
+- Added `ListsShowHeaderAndNavigation` parameter to always show lists with site elements intact when specified in `Set-PnPTenantSite` and `Set-PnPSite` cmdlets. [#3233](https://github.com/pnp/powershell/pull/3233)
 
 ### Fixed
 
