@@ -95,7 +95,7 @@ namespace PnP.PowerShell.Commands.Site
         public SwitchParameter OverrideTenantAnonymousLinkExpirationPolicy;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public MediaTranscriptionPolicyType? MediaTranscription { get; set; }
+        public MediaTranscriptionPolicyType? MediaTranscription;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public Guid? SensitivityLabel;
@@ -111,6 +111,18 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool? RestrictedAccessControl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? BlockDownloadPolicy;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ExcludeBlockDownloadPolicySiteOwners;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] ExcludedBlockDownloadGroupIds;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ListsShowHeaderAndNavigation;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
@@ -144,12 +156,30 @@ namespace PnP.PowerShell.Commands.Site
 
             if (ParameterSpecified(nameof(ScriptSafeDomainName)) && !string.IsNullOrEmpty(ScriptSafeDomainName))
             {
-                ScriptSafeDomainEntityData scriptSafeDomainEntity = new ScriptSafeDomainEntityData
+                ScriptSafeDomain safeDomain = null;
+                try
                 {
-                    DomainName = ScriptSafeDomainName
-                };
-                site.CustomScriptSafeDomains.Create(scriptSafeDomainEntity);
-                context.ExecuteQueryRetry();
+                    safeDomain = ClientContext.Site.CustomScriptSafeDomains.GetByDomainName(ScriptSafeDomainName);
+                    ClientContext.Load(safeDomain);
+                    ClientContext.ExecuteQueryRetry();
+                }
+                catch { }
+                if (safeDomain.ServerObjectIsNull == null)
+                {
+                    ScriptSafeDomainEntityData scriptSafeDomainEntity = new ScriptSafeDomainEntityData
+                    {
+                        DomainName = ScriptSafeDomainName
+                    };
+
+                    safeDomain = context.Site.CustomScriptSafeDomains.Create(scriptSafeDomainEntity);
+                    context.Load(safeDomain);
+                    context.ExecuteQueryRetry();
+                    WriteObject(safeDomain);
+                }
+                else
+                {
+                    WriteWarning($"Unable to add Domain Name as there is an existing domain name with the same name. Will be skipped.");
+                }
             }
 
             if (ParameterSpecified(nameof(LogoFilePath)))
@@ -334,7 +364,7 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.RequestFilesLinkEnabled = RequestFilesLinkEnabled.Value;
                     executeQueryRequired = true;
                 }
-                
+
                 if (RequestFilesLinkExpirationInDays.HasValue)
                 {
                     if (RequestFilesLinkExpirationInDays.Value < 0 || RequestFilesLinkExpirationInDays > 730)
@@ -351,11 +381,37 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.RestrictedAccessControl = RestrictedAccessControl.Value;
                     executeQueryRequired = true;
                 }
+
+                if (ParameterSpecified(nameof(BlockDownloadPolicy)) && BlockDownloadPolicy.HasValue)
+                {
+                    siteProperties.BlockDownloadPolicy = BlockDownloadPolicy.Value;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(ExcludeBlockDownloadPolicySiteOwners)) && ExcludeBlockDownloadPolicySiteOwners.HasValue)
+                {
+                    siteProperties.ExcludeBlockDownloadPolicySiteOwners = ExcludeBlockDownloadPolicySiteOwners.Value;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) && ExcludedBlockDownloadGroupIds.Length > 0)
+                {
+                    siteProperties.ExcludedBlockDownloadGroupIds = ExcludedBlockDownloadGroupIds;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(ListsShowHeaderAndNavigation)) && ListsShowHeaderAndNavigation.HasValue)
+                {
+                    siteProperties.ListsShowHeaderAndNavigation = ListsShowHeaderAndNavigation.Value;
+                    executeQueryRequired = true;
+                }
+
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();
                     tenant.Context.ExecuteQueryRetry();
                 }
+
                 if (DisableSharingForNonOwners.IsPresent)
                 {
                     Office365Tenant office365Tenant = new Office365Tenant(context);
@@ -401,7 +457,10 @@ namespace PnP.PowerShell.Commands.Site
                 MediaTranscription.HasValue ||
                 RestrictedAccessControl.HasValue ||
                 RequestFilesLinkExpirationInDays.HasValue ||
-                RequestFilesLinkEnabled.HasValue;
-                
+                RequestFilesLinkEnabled.HasValue ||
+                BlockDownloadPolicy.HasValue ||
+                ExcludeBlockDownloadPolicySiteOwners.HasValue ||
+                ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) ||
+                ListsShowHeaderAndNavigation.HasValue;
     }
 }

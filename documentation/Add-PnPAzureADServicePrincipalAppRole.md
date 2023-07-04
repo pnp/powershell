@@ -56,7 +56,7 @@ Adds the permission Site.FullControl.All for SharePoint Online to the service pr
 Get-PnPAzureADServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPAzureADServicePrincipalAvailableAppRole -Identity "Group.ReadWrite.All" | Add-PnPAzureADServicePrincipalAppRole -Principal "mymanagedidentity"
 ```
 
-Adds the permission Group.ReadWrite.All for Microsoft Graph to the service principal with the name mymanagedidentity
+Adds the permission Group.ReadWrite.All for Microsoft Graph to the service principal with the name mymanagedidentity.
 
 ### EXAMPLE 4
 ```powershell
@@ -68,7 +68,7 @@ Adds the permission MyApplication.Read for the application registration with obj
 ## PARAMETERS
 
 ### -Principal
-The object id, name or instance of the service principal/application registration to add the app role to
+The object id, name or instance of the service principal/application registration to add the app role to.
 
 ```yaml
 Type: ServicePrincipalPipeBind
@@ -82,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -AppRole
-The object id, name or instance of the application role to add to the service principal/application registration
+The object id, name or instance of the application role to add to the service principal/application registration.
 
 ```yaml
 Type: ServicePrincipalAppRoleBind

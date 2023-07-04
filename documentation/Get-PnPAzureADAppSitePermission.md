@@ -15,7 +15,7 @@ title: Get-PnPAzureADAppSitePermission
 
   * Microsoft Graph API: Sites.FullControl.All
 
-Returns Azure AD App permissions for a site
+Returns Azure AD App permissions for a site.
 
 ## SYNTAX
 
@@ -29,7 +29,7 @@ Get-PnPAzureADAppSitePermission [-PermissionId <String>] [-Site <SitePipeBind>]
 Get-PnPAzureADAppSitePermission -PermissionId <String> [-Site <SitePipeBind>]
 ```
 
-### By App Display Name
+### By App Display Name or App Id
 ```powershell
 Get-PnPAzureADAppSitePermission -AppIdentity <String> [-Site <SitePipeBind>]
 ```
@@ -52,33 +52,33 @@ Returns the apps that have permissions for the currently connected to site. Note
 Get-PnPAzureADAppSitePermission -Site https://contoso.sharepoint.com/sites/projects
 ```
 
-Returns the apps that have permissions for the site specified. Note that you required to have the SharePoint Administrator role in your tenant to be able to use this command.
+Returns the apps that have permissions for the site specified. Note that you are required to have the SharePoint Administrator role in your tenant to be able to use this command.
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPAzureADAppSitePermission -PermissionId TowaS50fG1zLnNwLmV4dHwxYxNmI0OTI1
 ```
 
-Returns the specific app permission details for the given permission id for the current site
+Returns the specific app permission details for the given permission id for the current site.
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPAzureADAppSitePermission -AppIdentity "Test App"
 ```
 
-Returns the specific app permission details for the app with the provided name
+Returns the specific app permission details for the app with the provided name.
 
 ### EXAMPLE 5
 ```powershell
 Get-PnPAzureADAppSitePermission -AppIdentity "14effc36-dc8b-4f68-8919-f6beb7d847b3"
 ```
 
-Returns the specific app permission details for the app with the provided Id
+Returns the specific app permission details for the app with the provided Id.
 
 ## PARAMETERS
 
 ### -PermissionId
-If specified the permission with that id specified will be retrieved
+If specified the permission with that id specified will be retrieved.
 
 ```yaml
 Type: String
@@ -96,7 +96,7 @@ You can specify either the Display Name or the AppId to specifically retrieve th
 
 ```yaml
 Type: String
-Parameter Sets: By Permission Id
+Parameter Sets: By App Display Name or App Id
 
 Required: True
 Position: Named
@@ -106,7 +106,7 @@ Accept wildcard characters: False
 ```
 
 ### -Site
-Optional url to to a site to retrieve the permissions for. Defaults to the current site.
+Optional url of a site to retrieve the permissions for. Defaults to the current site.
 
 ```yaml
 Type: SitePipeBind

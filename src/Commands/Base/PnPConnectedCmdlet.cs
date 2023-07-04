@@ -86,6 +86,9 @@ namespace PnP.PowerShell.Commands.Base
                             errorMessage = innermostException.Message;
                         }
                         break;
+                    case PnP.Core.MicrosoftGraphServiceException pgex:
+                        errorMessage = (pgex.Error as PnP.Core.MicrosoftGraphError).Message; 
+                        break;
 
                     default:
                         errorMessage = ex.Message;

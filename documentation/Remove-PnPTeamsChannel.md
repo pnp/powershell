@@ -32,7 +32,7 @@ Allows to remove a channel from specified team.
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -DisplayName "My Channel"
+Remove-PnPTeamsChannel -Team 4efdf392-8225-4763-9e7f-4edeb7f721aa -Identity "My Channel"
 ```
 
 Removes the channel specified from the team specified
@@ -84,4 +84,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

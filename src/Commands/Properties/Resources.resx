@@ -366,4 +366,7 @@
   <data name="Restore0RecycleBinItems" xml:space="preserve">
     <value>Restore {0} items from recycle bin to their original locations?</value>
   </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore '{0}'?</value>
+  </data>
 </root>

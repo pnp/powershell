@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Register-PnPHubSite.htm
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Registers a site as a hubsite
+Registers a site as a hub site.
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Register-PnPHubSite -Site <SitePipeBind> [-Principals <String[][]>] [-Connection
 ```
 
 ## DESCRIPTION
-Registers a site as a hubsite
+Registers a site as a hub site.
 
 ## EXAMPLES
 
@@ -33,14 +33,14 @@ Registers a site as a hubsite
 Register-PnPHubSite -Site "https://tenant.sharepoint.com/sites/myhubsite"
 ```
 
-This example registers the specified site as a hubsite
+This example registers the specified site as a hub site.
 
 ### EXAMPLE 2
 ```powershell
 Register-PnPHubSite -Site "https://tenant.sharepoint.com/sites/myhubsite" -Principals "user@contoso.com"
 ```
 
-This example registers the specified site as a hubsite and specifies that 'user@contoso.com' be granted rights to the hub site.
+This example registers the specified site as a hub site and specifies that 'user@contoso.com' be granted rights to the hub site.
 
 ## PARAMETERS
 
@@ -59,7 +59,7 @@ Accept wildcard characters: False
 ```
 
 ### -Site
-The site to register as a hubsite
+The site to register as a hub site.
 
 ```yaml
 Type: SitePipeBind
@@ -73,7 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -Principals
-Specifies One or more principles (user or group) to be granted rights to the specified HubSite. Can be used to filter who can associate sites to this hub site.
+Specifies one or more principals (user or group) to be granted rights to the specified hub site. Can be used to filter who can associate sites to this hub site.
 
 ```yaml
 Type: String[]

@@ -19,14 +19,14 @@ namespace PnP.PowerShell.Commands.Utilities
         public short? ServerPort;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHSMTP)]
-        public bool? EnableSsl;             
+        public bool? EnableSsl;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHSMTP)]
         public string From;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHSMTP)]
-        public string Username;        
+        public string Username;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHSMTP)]
         public string Password;
@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Utilities
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHSMTP)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHSPO)]
-        public string[] Bcc;        
+        public string[] Bcc;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHSMTP)]
@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Utilities
         public MessageImportanceType Importance { get; set; }
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
-        public string[] ReplyTo { get; set; }         
+        public string[] ReplyTo { get; set; }
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         public bool? SaveToSentItems { get; set; }
@@ -69,6 +69,9 @@ namespace PnP.PowerShell.Commands.Utilities
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHSMTP)]
         public MessageBodyContentType? BodyContentType { get; set; }
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
+        public string[] Attachments { get; set; }
 
         protected override void ExecuteCmdlet()
         {
@@ -79,7 +82,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else
             {
-                if(ParameterSpecified(nameof(Server)) && !string.IsNullOrWhiteSpace(Server))
+                if (ParameterSpecified(nameof(Server)) && !string.IsNullOrWhiteSpace(Server))
                 {
                     WriteVerbose($"Sending e-mail directly through SMTP server {Server}");
                     MailUtility.SendSmtpEmail(Subject, Body, From, To, Cc, Bcc, Importance, Server, ServerPort, EnableSsl, Username, Password, BodyContentType ?? MessageBodyContentType.Html).GetAwaiter().GetResult();
@@ -87,6 +90,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 else
                 {
                     WriteVerbose($"Sending e-mail using Microsoft Graph");
+
                     MailUtility.SendGraphMail(Connection, GraphAccessToken, new Message
                     {
                         Subject = Subject,
@@ -95,13 +99,14 @@ namespace PnP.PowerShell.Commands.Utilities
                             Content = Body,
                             ContentType = BodyContentType ?? MessageBodyContentType.Text
                         },
-                        ToRecipients = To.Select(t => new Recipient { EmailAddress = new EmailAddress { Address = t }}).ToList(),
-                        CcRecipients = Cc?.Select(t => new Recipient { EmailAddress = new EmailAddress { Address = t }}).ToList(),
-                        BccRecipients = Bcc?.Select(t => new Recipient { EmailAddress = new EmailAddress { Address = t }}).ToList(),
+                        ToRecipients = To.Select(t => new Recipient { EmailAddress = new EmailAddress { Address = t } }).ToList(),
+                        CcRecipients = Cc?.Select(t => new Recipient { EmailAddress = new EmailAddress { Address = t } }).ToList(),
+                        BccRecipients = Bcc?.Select(t => new Recipient { EmailAddress = new EmailAddress { Address = t } }).ToList(),
                         Sender = new Recipient { EmailAddress = new EmailAddress { Address = From } },
-                        ReplyTo = ReplyTo?.Select(t => new Recipient { EmailAddress = new EmailAddress { Address = t }}).ToList(),
-                        Importance = Importance
-                    }, SaveToSentItems ?? true).GetAwaiter().GetResult();                    
+                        ReplyTo = ReplyTo?.Select(t => new Recipient { EmailAddress = new EmailAddress { Address = t } }).ToList(),
+                        Importance = Importance,
+                        Attachments = MailUtility.GetListOfAttachments(Attachments, SessionState.Path.CurrentFileSystemLocation.Path)
+                    }, SaveToSentItems ?? true).GetAwaiter().GetResult();
                 }
             }
 
