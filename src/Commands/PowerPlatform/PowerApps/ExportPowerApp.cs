@@ -10,6 +10,7 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
@@ -68,14 +69,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             var environmentName = Environment.GetName();
             var appName = Identity.GetName();
 
-            var postData = new
-            {
-                baseResourceIds = new[] {
-                    $"/providers/Microsoft.PowerApps/apps/{appName}"
-                }
-            };
-            var wrapper = RestHelper.PostAsync<Model.PowerPlatform.PowerApp.PowerAppPackageWrapper>(Connection.HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData).GetAwaiter().GetResult();
-
+            var wrapper = PowerAppsUtility.GetWrapper(Connection.HttpClient, environmentName, AccessToken, appName).GetAwaiter().GetResult();
+           
             if (wrapper.Status == Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Succeeded)
             { 
                 foreach (var resource in wrapper.Resources)
@@ -85,31 +80,17 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                         resource.Value.SuggestedCreationType = "Update";
                     }
                 }
-            var exportPostData = new
-            {
-                includedResourceIds = new[]
-                {
-                             $"/providers/Microsoft.PowerApps/apps/{appName}"
-                },
-                details = new
-                {
-                    displayName = PackageDisplayName,
-                    description = PackageDescription,
-                    creator = PackageCreatedBy,
-                    sourceEnvironment = PackageSourceEnvironment
-                },
-                resources = wrapper.Resources
-            };
+                var objectDetails = new {
+                        displayName = PackageDisplayName,
+                        description = PackageDescription,
+                        creator = PackageCreatedBy,
+                        sourceEnvironment = PackageSourceEnvironment
+                };
+                var responseHeader = PowerAppsUtility.GetResponseHeader(Connection.HttpClient, environmentName,AccessToken, appName, wrapper, objectDetails);
 
-            var responseHeader = RestHelper.PostAsyncGetResponseHeader<string>(Connection.HttpClient, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", AccessToken, payload: exportPostData).GetAwaiter().GetResult();
-            
-            var packageLink = getPackageLink(Convert.ToString(responseHeader.Location));
-            using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, packageLink))
-            {
-                requestMessage.Version = new Version(2, 0);
-                //requestMessage.Headers.Add("Authorization", $"Bearer {AccessToken}");
-                var fileresponse = Connection.HttpClient.SendAsync(requestMessage).GetAwaiter().GetResult();
-                var byteArray = fileresponse.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+
+                var packageLink = PowerAppsUtility.GetPackageLink(Connection.HttpClient,Convert.ToString(responseHeader.Location),AccessToken);
+                var getFileByteArray = PowerAppsUtility.GetFileByteArray(Connection.HttpClient, packageLink, AccessToken);
                 var fileName = string.Empty;
                 if (ParameterSpecified(nameof(OutPath)))
                 {
@@ -125,12 +106,10 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                     fileName = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, fileName);
                 }
 
-                System.IO.File.WriteAllBytes(fileName, byteArray);
+                System.IO.File.WriteAllBytes(fileName, getFileByteArray);
                 var returnObject = new PSObject();
                 returnObject.Properties.Add(new PSNoteProperty("Filename", fileName));
                 WriteObject(returnObject);
-            }
-
             }
             else
             {
@@ -141,41 +120,6 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 }
             }
         }
-        private string getPackageLink(string location)
-        {
-            var status = Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Running;
-            var packageLink = "";
-            if (location != null)
-            {
-                do
-                {
-                    var runningresponse = RestHelper.GetAsync<JsonElement>(Connection.HttpClient, location, AccessToken).GetAwaiter().GetResult();
-
-                    if (runningresponse.TryGetProperty("properties", out JsonElement properties))
-                    {
-                        if (properties.TryGetProperty("status", out JsonElement runningstatusElement))
-                        {
-                            if (runningstatusElement.GetString() == Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Succeeded.ToString())
-                            {
-                                status = Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Succeeded;
-                                if (properties.TryGetProperty("packageLink", out JsonElement packageLinkElement))
-                                {
-                                    if (packageLinkElement.TryGetProperty("value", out JsonElement valueElement))
-                                    {
-                                        packageLink = valueElement.GetString();
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                //if status is still running, sleep the thread for 3 seconds
-                                Thread.Sleep(3000);
-                            }
-                        }
-                    }
-                } while (status == Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Running);
-            }
-            return packageLink;
-        }
+        
     }
 }
