@@ -21,17 +21,17 @@ Returns Azure AD App permissions for a site.
 
 ### All Permissions
 ```powershell
-Get-PnPAzureADAppSitePermission [-PermissionId <String>] [-Site <SitePipeBind>]
+Get-PnPAzureADAppSitePermission [-PermissionId <String>] [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ### By Permission Id
 ```powershell
-Get-PnPAzureADAppSitePermission -PermissionId <String> [-Site <SitePipeBind>]
+Get-PnPAzureADAppSitePermission -PermissionId <String> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ### By App Display Name or App Id
 ```powershell
-Get-PnPAzureADAppSitePermission -AppIdentity <String> [-Site <SitePipeBind>]
+Get-PnPAzureADAppSitePermission -AppIdentity <String> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -45,7 +45,7 @@ This cmdlet returns app permissions for either the current or a given site.
 Get-PnPAzureADAppSitePermission
 ```
 
-Returns the apps that have permissions for the currently connected to site. Note that if PermissionId is not specified then the Roles property is not populated. This is a current API limitation.
+Returns the apps that have permissions for the currently connected site. Note that if PermissionId is not specified then the Roles property is not populated. This is a current API limitation.
 
 ### EXAMPLE 2
 ```powershell
@@ -77,12 +77,12 @@ Returns the specific app permission details for the app with the provided Id.
 
 ## PARAMETERS
 
-### -PermissionId
-If specified the permission with that id specified will be retrieved.
+### -AppIdentity
+You can specify either the Display Name or the AppId to specifically retrieve the permission for.
 
 ```yaml
 Type: String
-Parameter Sets: By Permission Id
+Parameter Sets: By App Display Name or App Id
 
 Required: True
 Position: Named
@@ -91,12 +91,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AppIdentity
-You can specify either the Display Name or the AppId to specifically retrieve the permission for.
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PermissionId
+If specified the permission with that id specified will be retrieved.
 
 ```yaml
 Type: String
-Parameter Sets: By App Display Name or App Id
+Parameter Sets: By Permission Id
 
 Required: True
 Position: Named
@@ -114,7 +128,7 @@ Parameter Sets: (All)
 
 Required: True
 Position: Named
-Default value: None
+Default value: Currently connected site
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
