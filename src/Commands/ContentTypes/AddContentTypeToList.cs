@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
             var ct = ContentType?.GetContentTypeOrWarn(this, CurrentWeb);
             if (ct != null)
             {
-                CurrentWeb.AddContentTypeToList(list.Title, ct, DefaultContentType);
+                list.AddContentTypeToList(ct, DefaultContentType);
             }
         }
 
