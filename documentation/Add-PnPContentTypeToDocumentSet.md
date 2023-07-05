@@ -10,7 +10,7 @@ title: Add-PnPContentTypeToDocumentSet
 # Add-PnPContentTypeToDocumentSet
 
 ## SYNOPSIS
-Adds a content type to a document set
+Adds a content type to a document set.
 
 ## SYNTAX
 
@@ -21,7 +21,7 @@ Add-PnPContentTypeToDocumentSet -ContentType <ContentTypePipeBind[]> -DocumentSe
 
 ## DESCRIPTION
 
-Allows to add content type to document set.
+Allows to add a content type to a document set.
 
 ## EXAMPLES
 
@@ -30,7 +30,7 @@ Allows to add content type to document set.
 Add-PnPContentTypeToDocumentSet -ContentType "Test CT" -DocumentSet "Test Document Set"
 ```
 
-This will add the content type called 'Test CT' to the document set called ''Test Document Set'
+This will add the content type called 'Test CT' to the document set called 'Test Document Set'.
 
 ### EXAMPLE 2
 ```powershell
@@ -39,14 +39,14 @@ $ct = Get-PnPContentType -Identity "Test CT"
 Add-PnPContentTypeToDocumentSet -ContentType $ct -DocumentSet $docset
 ```
 
-This will add the content type called 'Test CT' to the document set called ''Test Document Set'
+This will add the content type called 'Test CT' to the document set called 'Test Document Set'.
 
 ### EXAMPLE 3
 ```powershell
 Add-PnPContentTypeToDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F00B6137E969 -DocumentSet 0x0120D520005DB65D094035A241BAC9AF083F825F3B
 ```
 
-This will add the content type called 'Test CT' to the document set called ''Test Document Set'
+This will add the content type called 'Test CT' to the document set called 'Test Document Set'.
 
 ## PARAMETERS
 
@@ -79,7 +79,7 @@ Accept wildcard characters: False
 ```
 
 ### -DocumentSet
-The document set object or id to add the content type to. Either specify a name, a document set template object, an id, or a content type object
+The document set object or id to add the content type to. Either specify a name, a document set template object, an id, or a content type object.
 
 ```yaml
 Type: DocumentSetPipeBind
