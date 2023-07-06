@@ -26,12 +26,14 @@ namespace PnP.PowerShell.Commands.UserProfiles
             var peopleManager = new PeopleManager(AdminContext);
 
             // Loop through each of the requested users
-            foreach (var acc in Account)
+            foreach (var account in Account)
             {
-                var currentAccount = acc;
-                var result = Tenant.EncodeClaim(currentAccount);
+                WriteVerbose($"Getting user profile properties for {account}");
+                var result = Tenant.EncodeClaim(account); 
                 AdminContext.ExecuteQueryRetry();
-                currentAccount = result.Value;
+                var currentAccount = result.Value;
+
+                WriteVerbose($"Account {account} encoded to {currentAccount}");
 
                 SortedDictionary<string, object> upsDictionary = new();
 
@@ -39,6 +41,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 if (ParameterSpecified(nameof(Properties)) && Properties != null && Properties.Length > 0 && Properties.All(p => !basicProperties.Contains(p)))
                 {
                     // Specific user profile properties have been requested and none of them are basic user profile properties, return only those properties that have been requested
+                    WriteVerbose($"Retrieving {Properties.Length} specific non basic user profile {(Properties.Length != 1 ? "properties" : "property")} for account {currentAccount}");
+
                     UserProfilePropertiesForUser userProfilePropertiesForUser = new UserProfilePropertiesForUser(AdminContext, currentAccount, Properties);
                     var userRequestedProperties = peopleManager.GetUserProfilePropertiesFor(userProfilePropertiesForUser);
                     AdminContext.Load(userProfilePropertiesForUser);
@@ -54,6 +58,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 else
                 {
                     // No specific user profile properties have been requested or there were basic user profile properties amongst them
+                    WriteVerbose($"Retrieving all user profile properties for {currentAccount}");
+
                     var userProfileProperties = peopleManager.GetPropertiesFor(currentAccount);
                     AdminContext.Load(userProfileProperties);
                     AdminContext.ExecuteQueryRetry();
@@ -61,6 +67,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     // Check if we only need to output specific properties or all of them
                     if (ParameterSpecified(nameof(Properties)) && Properties != null && Properties.Length > 0)
                     {
+                        WriteVerbose($"Adding specific {Properties.Length} user profile {(Properties.Length != 1 ? "properties" : "property")} to the output");
+
                         // Check if any of the base user profile properties have been requested and if so, add them to the output as well
                         if (Properties.Contains("AccountName")) upsDictionary.Add("AccountName", userProfileProperties.AccountName);
                         if (Properties.Contains("DirectReports")) upsDictionary.Add("DirectReports", userProfileProperties.DirectReports);
@@ -101,6 +109,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     else
                     {
                         // Add all of the basic user profile properties to the output
+                        WriteVerbose("Adding all user profile properties to the output");
+
                         upsDictionary.Add("AccountName", userProfileProperties.AccountName);
                         upsDictionary.Add("DirectReports", userProfileProperties.DirectReports);
                         upsDictionary.Add("DisplayName", userProfileProperties.DisplayName);
