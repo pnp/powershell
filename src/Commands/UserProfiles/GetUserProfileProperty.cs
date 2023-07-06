@@ -22,6 +22,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
         {
             var peopleManager = new PeopleManager(AdminContext);
 
+            // Loop through each of the requested users
             foreach (var acc in Account)
             {
                 var currentAccount = acc;
@@ -31,28 +32,46 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
                 SortedDictionary<string, object> upsDictionary = new();
 
+                // Check if specific user profile properties have been requested
                 if (ParameterSpecified(nameof(Properties)) && Properties != null && Properties.Length > 0)
                 {
+                    // Specific user profile properties have been requested, return only those properties that have been requested
                     UserProfilePropertiesForUser userProfilePropertiesForUser = new UserProfilePropertiesForUser(AdminContext, currentAccount, Properties);
                     var userRequestedProperties = peopleManager.GetUserProfilePropertiesFor(userProfilePropertiesForUser);
                     AdminContext.Load(userProfilePropertiesForUser);
                     AdminContext.ExecuteQueryRetry();
 
+                    // Add all the requested extended user profile properties to the output
                     for (var i = 0; i < userRequestedProperties.Count(); i++)
                     {
                         object propertyValue = userRequestedProperties.ElementAt(i);
                         upsDictionary.Add(Properties[i], propertyValue);
                     }
 
-                    WriteObject(upsDictionary, true);
-
+                    // Check if any of the base user profile properties have been requested and if so, add them to the output as well
+                    if(Properties.Contains("AccountName")) upsDictionary.Add("AccountName", userProfileProperties.AccountName);
+                    if(Properties.Contains("DirectReports")) upsDictionary.Add("DirectReports", userProfileProperties.DirectReports);
+                    if(Properties.Contains("DisplayName")) upsDictionary.Add("DisplayName", userProfileProperties.DisplayName);
+                    if(Properties.Contains("Email")) upsDictionary.Add("Email", userProfileProperties.Email);
+                    if(Properties.Contains("ExtendedManagers")) upsDictionary.Add("ExtendedManagers", userProfileProperties.ExtendedManagers);
+                    if(Properties.Contains("ExtendedReports")) upsDictionary.Add("ExtendedReports", userProfileProperties.ExtendedReports);
+                    if(Properties.Contains("IsFollowed")) upsDictionary.Add("IsFollowed", userProfileProperties.IsFollowed);
+                    if(Properties.Contains("LatestPost")) upsDictionary.Add("LatestPost", userProfileProperties.LatestPost);
+                    if(Properties.Contains("Peers")) upsDictionary.Add("Peers", userProfileProperties.Peers);
+                    if(Properties.Contains("PersonalSiteHostUrl")) upsDictionary.Add("PersonalSiteHostUrl", userProfileProperties.PersonalSiteHostUrl);
+                    if(Properties.Contains("PersonalUrl")) upsDictionary.Add("PersonalUrl", userProfileProperties.PersonalUrl);
+                    if(Properties.Contains("PictureUrl")) upsDictionary.Add("PictureUrl", userProfileProperties.PictureUrl);
+                    if(Properties.Contains("Title")) upsDictionary.Add("Title", userProfileProperties.Title);
+                    if(Properties.Contains("UserUrl")) upsDictionary.Add("UserUrl", userProfileProperties.UserUrl);
                 }
                 else
                 {
+                    // No specific user profile properties have been requested, return all we have
                     var userProfileProperties = peopleManager.GetPropertiesFor(currentAccount);
                     AdminContext.Load(userProfileProperties);
                     AdminContext.ExecuteQueryRetry();
 
+                    // Add all of the basic user profile properties to the output
                     upsDictionary.Add("AccountName", userProfileProperties.AccountName);
                     upsDictionary.Add("DirectReports", userProfileProperties.DirectReports);
                     upsDictionary.Add("DisplayName", userProfileProperties.DisplayName);
@@ -68,6 +87,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     upsDictionary.Add("Title", userProfileProperties.Title);
                     upsDictionary.Add("UserUrl", userProfileProperties.UserUrl);
 
+                    // Add all the extended user profile properties to the output
                     if (userProfileProperties.UserProfileProperties != null && userProfileProperties.UserProfileProperties.Count > 0)
                     {
                         for (var i = 0; i < userProfileProperties.UserProfileProperties.Count; i++)
@@ -83,9 +103,10 @@ namespace PnP.PowerShell.Commands.UserProfiles
                             }
                         }
                     }
-
-                    WriteObject(upsDictionary, true);
                 }
+
+                // Write the collected properties to the output stream
+                WriteObject(upsDictionary, true);
             }
         }
     }
