@@ -20,7 +20,7 @@ Revokes permissions for a given app.
 ## SYNTAX
 
 ```powershell
-Revoke-PnPAzureADAppSitePermission -PermissionId <String> [-Site <SitePipeBind>]
+Revoke-PnPAzureADAppSitePermission -PermissionId <String> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -38,8 +38,22 @@ Revoke permission specified with the Id.
 
 ## PARAMETERS
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PermissionId
-If specified the permission with that id specified will be retrieved
+Specify the permission id that should be revoked.
 
 ```yaml
 Type: String
@@ -53,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -Site
-Optional url to to a site to set the permissions for. Defaults to the current site.
+Optional url to a site to set the permissions for. Defaults to the current site.
 
 ```yaml
 Type: SitePipeBind
