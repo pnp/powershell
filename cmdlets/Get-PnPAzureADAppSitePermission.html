@@ -91,13 +91,13 @@
 <p>Returns Azure AD App permissions for a site.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all-permissions">All Permissions</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission [-PermissionId &lt;String&gt;] [-Site &lt;SitePipeBind&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission [-PermissionId &lt;String&gt;] [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="by-permission-id">By Permission Id</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; [-Site &lt;SitePipeBind&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="by-app-display-name-or-app-id">By App Display Name or App Id</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission -AppIdentity &lt;String&gt; [-Site &lt;SitePipeBind&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission -AppIdentity &lt;String&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet returns app permissions for either the current or a given site.</p>
@@ -105,7 +105,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission
 </code></pre>
-<p>Returns the apps that have permissions for the currently connected to site. Note that if PermissionId is not specified then the Roles property is not populated. This is a current API limitation.</p>
+<p>Returns the apps that have permissions for the currently connected site. Note that if PermissionId is not specified then the Roles property is not populated. This is a current API limitation.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADAppSitePermission -Site https://contoso.sharepoint.com/sites/projects
 </code></pre>
@@ -123,10 +123,10 @@
 </code></pre>
 <p>Returns the specific app permission details for the app with the provided Id.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-permissionid">-PermissionId</h3>
-<p>If specified the permission with that id specified will be retrieved.</p>
+<h3 id="-appidentity">-AppIdentity</h3>
+<p>You can specify either the Display Name or the AppId to specifically retrieve the permission for.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: By Permission Id
+Parameter Sets: By App Display Name or App Id
 
 Required: True
 Position: Named
@@ -134,10 +134,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-appidentity">-AppIdentity</h3>
-<p>You can specify either the Display Name or the AppId to specifically retrieve the permission for.</p>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-permissionid">-PermissionId</h3>
+<p>If specified the permission with that id specified will be retrieved.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: By App Display Name or App Id
+Parameter Sets: By Permission Id
 
 Required: True
 Position: Named
@@ -152,7 +163,7 @@ Parameter Sets: (All)
 
 Required: True
 Position: Named
-Default value: None
+Default value: Currently connected site
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

@@ -84,7 +84,7 @@
   <h1 id="add-pnpcontenttype">Add-PnPContentType</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Adds a new content type</p>
+<p>Adds a new content type.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPContentType -Name &lt;String&gt; [-ContentTypeId &lt;String&gt;] [-Description &lt;String&gt;] [-Group &lt;String&gt;]
  [-ParentContentType &lt;ContentType&gt;] [-Connection &lt;PnPConnection&gt;] 
@@ -99,7 +99,19 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Add-PnPContentType -Name &quot;Project Document&quot; -Description &quot;Use for Contoso projects&quot; -Group &quot;Contoso Content Types&quot; -ParentContentType (Get-PnPContentType -Identity 0x0101) -DocumentTemplate &quot;/_cts/Project Document/template.docx&quot;
 </code></pre>
-<p>This will add a new content type based on the standard document content type and assigns the document template template.docx to it</p>
+<p>This will add a new content type based on the standard document content type and assigns the document template template.docx to it.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Add-PnPContentType -Name &quot;Project Item&quot; -Description &quot;Use for Contoso projects&quot; -Group &quot;Contoso Content Types&quot;
+</code></pre>
+<p>This will add a new content type based on the item content type.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Add-PnPContentType -Name &quot;Project Item&quot;
+</code></pre>
+<p>This will add a new content type based on the item content type to a group &quot;Custom Content Types&quot;.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Add-PnPContentType -Name &quot;Project Document&quot; -Description &quot;Use for Contoso projects&quot; -Group &quot;Contoso Content Types&quot; -ContentTypeId 0x010100CD5BDB7DDE03324794E155CE37E4B6BB
+</code></pre>
+<p>This will add a new content type to a group &quot;Contoso Content Types&quot;. The content type will be based on the standard document content type, and with the specified content type id. Mind the content type id format: <a href="https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/aa543822(v=office.14)">https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/aa543822(v=office.14)</a></p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -113,7 +125,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-contenttypeid">-ContentTypeId</h3>
-<p>If specified, in the format of 0x0100233af432334r434343f32f3, will create a content type with the specific ID</p>
+<p>If specified, in the format of 0x0100233af432334r434343f32f3, will create a content type with the specific ID.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -124,7 +136,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
-<p>Specifies the description of the new content type</p>
+<p>Specifies the description of the new content type.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -135,7 +147,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-group">-Group</h3>
-<p>Specifies the group of the new content type</p>
+<p>Specifies the group of the new content type.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -146,7 +158,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-name">-Name</h3>
-<p>Specify the name of the new content type</p>
+<p>Specify the name of the new content type.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -157,7 +169,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-parentcontenttype">-ParentContentType</h3>
-<p>Specifies the parent of the new content type</p>
+<p>Specifies the parent of the new content type.</p>
 <pre><code class="lang-yaml">Type: ContentType
 Parameter Sets: (All)
 
@@ -168,7 +180,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-documenttemplate">-DocumentTemplate</h3>
-<p>Allows providing a server relative path to a file which should be used as the document template for this content type</p>
+<p>Allows providing a server relative path to a file which should be used as the document template for this content type.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

@@ -93,7 +93,7 @@
 <pre><code class="lang-powershell">Get-PnPAzureADGroup [-Identity &lt;AzureADGroupPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to retrieve list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying <code>Identity</code> option it is possible to get a single group.</p>
+<p>Allows to retrieve a list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying <code>Identity</code> option it is possible to get a single group.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADGroup
@@ -128,7 +128,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The Identity of the Azure Active Directory group.</p>
+<p>The identity of the Azure Active Directory group. Either specify an id, a display name, email address, or a group object.</p>
 <pre><code class="lang-yaml">Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 

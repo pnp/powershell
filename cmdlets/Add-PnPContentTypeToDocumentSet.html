@@ -84,28 +84,28 @@
   <h1 id="add-pnpcontenttypetodocumentset">Add-PnPContentTypeToDocumentSet</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Adds a content type to a document set</p>
+<p>Adds a content type to a document set.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPContentTypeToDocumentSet -ContentType &lt;ContentTypePipeBind[]&gt; -DocumentSet &lt;DocumentSetPipeBind&gt;
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to add content type to document set.</p>
+<p>Allows to add a content type to a document set.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPContentTypeToDocumentSet -ContentType &quot;Test CT&quot; -DocumentSet &quot;Test Document Set&quot;
 </code></pre>
-<p>This will add the content type called 'Test CT' to the document set called ''Test Document Set'</p>
+<p>This will add the content type called 'Test CT' to the document set called 'Test Document Set'.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">$docset = Get-PnPDocumentSetTemplate -Identity &quot;Test Document Set&quot;
 $ct = Get-PnPContentType -Identity &quot;Test CT&quot;
 Add-PnPContentTypeToDocumentSet -ContentType $ct -DocumentSet $docset
 </code></pre>
-<p>This will add the content type called 'Test CT' to the document set called ''Test Document Set'</p>
+<p>This will add the content type called 'Test CT' to the document set called 'Test Document Set'.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Add-PnPContentTypeToDocumentSet -ContentType 0x0101001F1CEFF1D4126E4CAD10F00B6137E969 -DocumentSet 0x0120D520005DB65D094035A241BAC9AF083F825F3B
 </code></pre>
-<p>This will add the content type called 'Test CT' to the document set called ''Test Document Set'</p>
+<p>This will add the content type called 'Test CT' to the document set called 'Test Document Set'.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -130,7 +130,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-documentset">-DocumentSet</h3>
-<p>The document set object or id to add the content type to. Either specify a name, a document set template object, an id, or a content type object</p>
+<p>The document set object or id to add the content type to. Either specify a name, a document set template object, an id, or a content type object.</p>
 <pre><code class="lang-yaml">Type: DocumentSetPipeBind
 Parameter Sets: (All)
 

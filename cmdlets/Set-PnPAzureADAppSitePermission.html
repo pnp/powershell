@@ -88,9 +88,9 @@
 <ul>
 <li>Microsoft Graph API: Sites.FullControl.All</li>
 </ul>
-<p>Updates permissions for a given Azure Active Directory application registration</p>
+<p>Updates permissions for a given Azure Active Directory application registration.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; -Permissions &lt;Read|Write|Manage|FullControl&gt; [-Site &lt;SitePipeBind&gt;]
+<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; -Permissions &lt;Read|Write|Manage|FullControl&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet updates permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for more permissions compared for when initially setting rights through <a href="Grant-PnPAzureADAppSitePermission.html">Grant-PnPAzureADAppSitePermission</a>.</p>
@@ -98,14 +98,25 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions Read
 </code></pre>
-<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'Read' access for the currently connected to site collection</p>
+<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'Read' access for the currently connected site collection.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions FullControl -Site https://contoso.microsoft.com/sites/projects
 </code></pre>
-<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'FullControl' access for the site collection at the provided URL</p>
+<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'FullControl' access for the site collection at the provided URL.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-permissionid">-PermissionId</h3>
-<p>The permission with the id specified will be updated. Use <a href="Get-PnPAzureADAppSitePermission.html">Get-PnPAzureADAppSitePermission</a> to discover currently set permissions which can be updated.</p>
+<p>The permission with the specified id will be updated. Use <a href="Get-PnPAzureADAppSitePermission.html">Get-PnPAzureADAppSitePermission</a> to discover currently set permissions which can be updated.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -134,7 +145,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: Currently connected to site
+Default value: Currently connected site
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

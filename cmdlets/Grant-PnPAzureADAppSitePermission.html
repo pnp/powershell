@@ -90,26 +90,37 @@
 </ul>
 <p>Adds permissions for a given Azure Active Directory application registration.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &lt;Guid&gt; -DisplayName &lt;String&gt; -Permissions &lt;Read|Write&gt; [-Site &lt;SitePipeBind&gt;]
+<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &lt;Guid&gt; -DisplayName &lt;String&gt; -Permissions &lt;Read|Write&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet adds permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for fewer permissions compared for when updating rights through <a href="Set-PnPAzureADAppSitePermission.html">Set-PnPAzureADAppSitePermission</a>. If you wish to i.e. assign FullControl permissions, you need to add read or write permissions through this cmdlet first and then update it to FullControl.</p>
+<p>This cmdlet adds permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for fewer permissions compared to updating rights through <a href="Set-PnPAzureADAppSitePermission.html">Set-PnPAzureADAppSitePermission</a>. If you wish to i.e. assign FullControl permissions, you need to add read or write permissions through this cmdlet first and then update it to FullControl.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;aa37b89e-75a7-47e3-bdb6-b763851c61b6&quot; -DisplayName &quot;TestApp&quot; -Permissions Read
 </code></pre>
-<p>Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Read' access for the currently connected to site collection.</p>
+<p>Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Read' access for the currently connected site collection.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;aa37b89e-75a7-47e3-bdb6-b763851c61b6&quot; -DisplayName &quot;TestApp&quot; -Permissions Write -Site https://contoso.sharepoint.com/sites/projects
 </code></pre>
 <p>Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Write' access for the site collection at the provided URL.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-appid">-AppId</h3>
-<p>If specified the permission with that id specified will be retrieved.</p>
+<p>Specify the AppId of the Azure Active Directory application registration to grant permission for.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

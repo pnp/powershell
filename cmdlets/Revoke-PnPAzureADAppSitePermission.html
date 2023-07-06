@@ -90,7 +90,7 @@
 </ul>
 <p>Revokes permissions for a given app.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Revoke-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; [-Site &lt;SitePipeBind&gt;]
+<pre><code class="lang-powershell">Revoke-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlets revokes permissions for a given app in a site.</p>
@@ -100,8 +100,19 @@
 </code></pre>
 <p>Revoke permission specified with the Id.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-permissionid">-PermissionId</h3>
-<p>If specified the permission with that id specified will be retrieved</p>
+<p>Specify the permission id that should be revoked.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -112,7 +123,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-site">-Site</h3>
-<p>Optional url to to a site to set the permissions for. Defaults to the current site.</p>
+<p>Optional url to a site to set the permissions for. Defaults to the current site.</p>
 <pre><code class="lang-yaml">Type: SitePipeBind
 Parameter Sets: (All)
 
