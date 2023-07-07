@@ -90,7 +90,7 @@
 </ul>
 <p>You must connect to the tenant admin website (https://&lt;tenant&gt;-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPUserProfileProperty -Account &lt;String[]&gt; [-Properties &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPUserProfileProperty -Account &lt;String[]&gt; [-Properties &lt;String[]&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Requires a connection to a SharePoint Tenant Admin site.</p>
@@ -133,6 +133,17 @@ Accept wildcard characters: False
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
