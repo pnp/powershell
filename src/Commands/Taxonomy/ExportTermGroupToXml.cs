@@ -48,26 +48,31 @@ namespace PnP.PowerShell.Commands.Taxonomy
             {
                 if (Identity.Id != Guid.Empty)
                 {
-                    // Find the site collection term group name
+                    // Find the tokenized site collection term group name
+                    bool updateSiteCollectionTermGroup = false;
                     var tg = template.TermGroups?.FirstOrDefault(g => g.Name == "{sitecollectiontermgroupname}");
                     if (tg != null)
                     {
                         var tokenParser = new TokenParser(ClientContext.Web, template);
                         // parse the group name
                         var siteCollectionTermGroupName = tokenParser.ParseString(tg.Name);
-                        var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
-                        var termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
-                        var group = termStore.Groups.GetByName(siteCollectionTermGroupName);
-                        group.EnsureProperties(g => g.Id, g => g.Name);
-
-                        // if group found and it's ID equals the one that we need, set the ID value so we can remove others
-                        if (group != null && group.Id == Identity.Id)
+                        if (!string.IsNullOrEmpty(siteCollectionTermGroupName))
                         {
-                            tg.Id = group.Id;
+                            var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
+                            var termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
+                            var group = termStore.Groups.GetByName(siteCollectionTermGroupName);
+                            group.EnsureProperties(g => g.Id, g => g.Name);
+
+                            // if group found and it's ID equals the one that we need, set the ID value so we can remove others
+                            if (group != null && group.Id == Identity.Id)
+                            {
+                                updateSiteCollectionTermGroup = true;
+                                tg.Id = group.Id;
+                            }
                         }
                     }
                     template?.TermGroups?.RemoveAll(t => t.Id != Identity.Id);
-                    if (template?.TermGroups?.Count == 1)
+                    if (template?.TermGroups?.Count == 1 && updateSiteCollectionTermGroup)
                     {
                         template.TermGroups[0].Id = Guid.Empty;
                     }
