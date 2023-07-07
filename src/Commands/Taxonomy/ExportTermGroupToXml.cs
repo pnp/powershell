@@ -5,10 +5,10 @@ using System.Management.Automation;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.ObjectHandlers;
 using PnP.Framework.Provisioning.Providers.Xml;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using File = System.IO.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -34,7 +34,6 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
-
         protected override void ExecuteCmdlet()
         {
             // var template = new ProvisioningTemplate();
@@ -49,11 +48,43 @@ namespace PnP.PowerShell.Commands.Taxonomy
             {
                 if (Identity.Id != Guid.Empty)
                 {
-                    template.TermGroups.RemoveAll(t => t.Id != Identity.Id);
+                    // Find the site collection term group name
+                    var tg = template.TermGroups?.FirstOrDefault(g => g.Name == "{sitecollectiontermgroupname}");
+                    if (tg != null)
+                    {
+                        var tokenParser = new TokenParser(ClientContext.Web, template);
+                        // parse the group name
+                        var siteCollectionTermGroupName = tokenParser.ParseString(tg.Name);
+                        var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
+                        var termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
+                        var group = termStore.Groups.GetByName(siteCollectionTermGroupName);
+                        group.EnsureProperties(g => g.Id, g => g.Name);
+
+                        // if group found and it's ID equals the one that we need, set the ID value so we can remove others
+                        if (group != null && group.Id == Identity.Id)
+                        {
+                            tg.Id = group.Id;
+                        }
+                    }
+                    template?.TermGroups?.RemoveAll(t => t.Id != Identity.Id);
+                    if (template?.TermGroups?.Count == 1)
+                    {
+                        template.TermGroups[0].Id = Guid.Empty;
+                    }
                 }
                 else if (Identity.Name != string.Empty)
                 {
-                    template.TermGroups.RemoveAll(t => t.Name != Identity.Name);
+                    var tg = template.TermGroups?.FirstOrDefault(g => g.Name == "{sitecollectiontermgroupname}");
+                    if (tg != null)
+                    {
+                        var tokenParser = new TokenParser(ClientContext.Web, template);
+                        var siteCollectionTermGroupName = tokenParser.ParseString(tg.Name);
+                        if (!string.IsNullOrEmpty(siteCollectionTermGroupName) && Identity.Name == siteCollectionTermGroupName)
+                        {
+                            tg.Name = siteCollectionTermGroupName;
+                        }
+                    }
+                    template?.TermGroups?.RemoveAll(t => t.Name != Identity.Name);
                 }
             }
             var outputStream = XMLPnPSchemaFormatter.LatestFormatter.ToFormattedTemplate(template);
@@ -104,12 +135,6 @@ namespace PnP.PowerShell.Commands.Taxonomy
             {
                 WriteObject(xml);
             }
-
-
-
-
-
         }
-
     }
 }
