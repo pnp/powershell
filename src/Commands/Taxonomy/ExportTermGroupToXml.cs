@@ -58,17 +58,25 @@ namespace PnP.PowerShell.Commands.Taxonomy
                         var siteCollectionTermGroupName = tokenParser.ParseString(tg.Name);
                         if (!string.IsNullOrEmpty(siteCollectionTermGroupName))
                         {
-                            var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
-                            var termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
-                            var group = termStore.Groups.GetByName(siteCollectionTermGroupName);
-                            group.EnsureProperties(g => g.Id, g => g.Name);
-
-                            // if group found and it's ID equals the one that we need, set the ID value so we can remove others
-                            if (group != null && group.Id == Identity.Id)
+                            try
                             {
-                                updateSiteCollectionTermGroup = true;
-                                tg.Id = group.Id;
+                                var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
+                                var termStore = taxonomySession.GetDefaultSiteCollectionTermStore();
+                                var group = termStore.Groups.GetByName(siteCollectionTermGroupName);
+                                group.EnsureProperties(g => g.Id, g => g.Name);
+
+                                // if group found and it's ID equals the one that we need, set the ID value so we can remove others
+                                if (group != null && group.Id == Identity.Id)
+                                {
+                                    updateSiteCollectionTermGroup = true;
+                                    tg.Id = group.Id;
+                                }
                             }
+                            catch
+                            {
+                                // swallow this, maybe something went wrong find the site collection termgroup.
+                            }
+                            
                         }
                     }
                     template?.TermGroups?.RemoveAll(t => t.Id != Identity.Id);
