@@ -15,12 +15,12 @@ title: Set-PnPAzureADAppSitePermission
 
   * Microsoft Graph API: Sites.FullControl.All
 
-Updates permissions for a given Azure Active Directory application registration
+Updates permissions for a given Azure Active Directory application registration.
 
 ## SYNTAX
 
 ```powershell
-Set-PnPAzureADAppSitePermission -PermissionId <String> -Permissions <Read|Write|Manage|FullControl> [-Site <SitePipeBind>]
+Set-PnPAzureADAppSitePermission -PermissionId <String> -Permissions <Read|Write|Manage|FullControl> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -34,19 +34,33 @@ This cmdlet updates permissions for a given Azure Active Directory application r
 Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions Read
 ```
 
-Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'Read' access for the currently connected to site collection
+Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'Read' access for the currently connected site collection.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions FullControl -Site https://contoso.microsoft.com/sites/projects
 ```
 
-Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'FullControl' access for the site collection at the provided URL
+Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'FullControl' access for the site collection at the provided URL.
 
 ## PARAMETERS
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -PermissionId
-The permission with the id specified will be updated. Use [Get-PnPAzureADAppSitePermission](Get-PnPAzureADAppSitePermission.html) to discover currently set permissions which can be updated.
+The permission with the specified id will be updated. Use [Get-PnPAzureADAppSitePermission](Get-PnPAzureADAppSitePermission.html) to discover currently set permissions which can be updated.
 
 ```yaml
 Type: String
@@ -83,7 +97,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: Currently connected to site
+Default value: Currently connected site
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

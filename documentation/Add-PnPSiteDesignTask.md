@@ -30,7 +30,7 @@ Allows to apply a site design to a specified site collection. This command is in
 Add-PnPSiteDesignTask -SiteDesignId 501z8c32-4147-44d4-8607-26c2f67cae82
 ```
 
-This example applies a site design the currently connected to site. Executing the commands will schedule the site design to be queued and run against the designated site collection.
+This example applies a site design to the currently connected site. Executing the commands will schedule the site design to be queued and run against the designated site collection.
 
 ### EXAMPLE 2
 ```powershell
@@ -40,21 +40,6 @@ Add-PnPSiteDesignTask -SiteDesignId 501z8c32-4147-44d4-8607-26c2f67cae82 -WebUrl
 This example applies a site design to the designated site. Executing the commands will schedule the site design to be queued and run against the designated site collection.
 
 ## PARAMETERS
-
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: cf
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -84,29 +69,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ### -WebUrl
 The URL of the site collection where the site design will be applied. If not specified the design will be applied to the site you connected to with Connect-PnPOnline.
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

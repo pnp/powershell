@@ -12,8 +12,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Added `-MediaTranscription` and `-MediaTranscriptionAutomaticFeatures` to `Set-PnPTenant` which allows for configuring the media transcription settings. [#3238](https://github.com/pnp/powershell/pull/3238)
 
+### Fixed
+
+- Fixed `Add-PnPContentTypeToList` cmdlet to better handle piped lists. [#3244](https://github.com/pnp/powershell/pull/3244)
+- Fixed `Get-PnPUserProfileProperty` cmdlet not allowing basic user profile properties to be retrieved using `-Properties` [#3247](https://github.com/pnp/powershell/pull/3247)
+- Fixed `Export-PnPTermGroupToXml` cmdlet issue with exporting site collection term groups.
+
 ### Contributors
 
+- Martin Lingstuyl [martinlingstuyl]
+- Arleta Wanat [PowershellScripts]
+- Nils Andresen [nils-a]
 - Koen Zomers [koenzomers]
 
 ## [2.2.0]
