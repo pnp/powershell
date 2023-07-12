@@ -564,7 +564,6 @@ namespace PnP.PowerShell.Commands.AzureAD
                 {
                     redirectUris = new[] {
                         $"{loginEndPoint}/common/oauth2/nativeclient",
-                        redirectUri != "http://localhost" ? "http://localhost" : null,
                         redirectUri
                     }
                 },
