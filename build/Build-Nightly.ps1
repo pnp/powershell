@@ -174,7 +174,7 @@ if ($runPublish -eq $true) {
 	}
 
 	# Generate predictor commands
-	./build/Generate-PredictorCommands.ps1 -Version "master"
+	./build/Generate-PredictorCommands.ps1 -Version $version
 
 	Write-Host "Generating Documentation" -ForegroundColor Yellow
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
