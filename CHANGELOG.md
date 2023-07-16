@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Giacomo Pozzoni [jackpoz]
 - Martin Lingstuyl [martinlingstuyl]
 - Arleta Wanat [PowershellScripts]
 - Nils Andresen [nils-a]
