@@ -84,6 +84,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableAutoNewsDigest <Boolean>]
  [-CommentsOnListItemsDisabled <Boolean>]
  [-CommentsOnFilesDisabled <Boolean>]
+ [-AllowCommentsTextOnEmailEnabled <Boolean>]
  [-DisableBackToClassic <Boolean>]
  [-InformationBarriersSuspension <Boolean>] 
  [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>]
@@ -1317,6 +1318,20 @@ Accept wildcard characters: False
 
 ### -CommentsOnFilesDisabled
 Disables or enables commenting functionality on files.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowCommentsTextOnEmailEnabled
+When this parameter is set to true, an email notification that user receives when is mentioned, includes the surrounding document context. Set it to false to disable this feature.
 
 ```yaml
 Type: Boolean
