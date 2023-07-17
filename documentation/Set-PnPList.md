@@ -85,21 +85,21 @@ Rename a list, including its' URL.
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $true
 ```
 
-Enable AutoExpiration file version trim mode on a doccument library.
+Enable AutoExpiration file version trim mode on a document library.
 
 ### EXAMPLE 9
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVersions 500
 ```
 
-Enable ExpireAfter file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
+Enable ExpireAfter file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.
 
 ### EXAMPLE 10
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVersions 500
 ```
 
-Enable NoExpiration file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
+Enable NoExpiration file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.
 
 ### EXAMPLE 11
 ```powershell
