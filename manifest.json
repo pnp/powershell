@@ -1545,6 +1545,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Export-PnPPowerApp.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Export-PnPPowerApp.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Export-PnPTaxonomy.md",
       "output": {
         ".html": {
