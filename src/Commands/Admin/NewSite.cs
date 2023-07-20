@@ -130,7 +130,7 @@ namespace PnP.PowerShell.Commands
 
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
-                    var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken, azureEnvironment: PnPConnection.Current.AzureEnvironment);
+                    var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken, azureEnvironment: Connection?.AzureEnvironment ?? Framework.AzureEnvironment.Production);
                     if (ParameterSpecified(nameof(TimeZone)))
                     {
                         returnedContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
