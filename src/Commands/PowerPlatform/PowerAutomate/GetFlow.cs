@@ -30,6 +30,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         {
             bool sharingStatus = false;
             string flowSharing = null;
+            string fetchAll = null;
+            bool sharingStatusAll = false;
             switch (SharingStatus)
             {
                 case FlowSharingStatus.SharedWithMe:
@@ -43,7 +45,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                     break;
 
                 case FlowSharingStatus.All:
-                    flowSharing = "&$filter=search('personal')&$filter = search('team')";
+                    flowSharing = "&$filter=search('team AND personal')";
                     sharingStatus = true;
                     break;
             }
