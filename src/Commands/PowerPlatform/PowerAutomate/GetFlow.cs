@@ -4,6 +4,10 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Enums;
+using Microsoft.SharePoint.Client;
+using static System.Formats.Asn1.AsnWriter;
+using Microsoft.BusinessData.MetadataModel;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
@@ -19,8 +23,31 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         [Parameter(Mandatory = false)]
         public PowerAutomateFlowPipeBind Identity;
 
+        [Parameter(Mandatory = false)]
+        public FlowSharingStatus SharingStatus = FlowSharingStatus.All;
+
         protected override void ExecuteCmdlet()
         {
+            bool sharingStatus = false;
+            string flowSharing = null;
+            switch (SharingStatus)
+            {
+                case FlowSharingStatus.SharedWithMe:
+                    flowSharing = "&$filter = search('team')";
+                    sharingStatus = true;
+                    break;
+
+                case FlowSharingStatus.Personal:
+                    flowSharing = "&$filter=search('personal')";
+                    sharingStatus = true;
+                    break;
+
+                case FlowSharingStatus.All:
+                    flowSharing = "&$filter=search('personal')&$filter = search('team')";
+                    sharingStatus = true;
+                    break;
+            }
+
             string environmentName = null;
             if(ParameterSpecified(nameof(Environment)))
             {
@@ -47,15 +74,16 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
                 WriteVerbose($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, sharingStatus ? $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01" + flowSharing : $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(result, false);
             }
             else
             {
                 WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'");
 
-                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, sharingStatus ? $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01" + flowSharing : $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flows, true);
+
             }
         }
     }
