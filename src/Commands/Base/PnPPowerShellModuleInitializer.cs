@@ -71,6 +71,16 @@ namespace PnP.PowerShell.Commands.Base
             AssemblyLoadContext assemblyLoadContext,
             AssemblyName assemblyName)
         {
+            if (assemblyName.Name.Equals("PnP.PowerShell.ALC"))
+            {
+                string filePath = GetRequiredAssemblyPath(assemblyName);
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    // - In .NET, load the assembly into the custom assembly load context.                    
+                    return s_proxy.LoadFromAssemblyPath(filePath);
+                }
+            }
+
             if (IsAssemblyMatching(assemblyName))
             {
                 string filePath = GetRequiredAssemblyPath(assemblyName);
@@ -131,8 +141,7 @@ namespace PnP.PowerShell.Commands.Base
         private static string GetRequiredAssemblyPath(AssemblyName assemblyName)
         {
             string fileName = assemblyName.Name + ".dll";
-            string filePath = Path.Combine(s_binBasePath, fileName);
-
+            string filePath = Path.Combine(s_binBasePath, fileName);            
             if (File.Exists(filePath))
                 return filePath;
 
