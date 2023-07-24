@@ -41,7 +41,7 @@ Retrieves all app roles of the application registration with the object Id 797ee
 Get-PnPAzureADServicePrincipalAvailableAppRole -Principal "My application"
 ```
 
-Retrieves all app roles of the application registration with the name "My application"
+Retrieves all app roles of the application registration with the name "My application".
 
 ### EXAMPLE 3
 ```powershell
@@ -55,12 +55,12 @@ Retrieves all app roles of the application registration with the app Id/Client I
 Get-PnPAzureADServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPAzureADServicePrincipalAvailableAppRole -Identity "User.ReadWrite.All"
 ```
 
-Retrieves the app role details of the role "User.ReadWrite.All" of the built in Microsoft Graph application registration
+Retrieves the app role details of the role "User.ReadWrite.All" of the built in Microsoft Graph application registration.
 
 ## PARAMETERS
 
 ### -Principal
-The object id, name or instance of the service principal/application registration to list the app roles for
+The object id, name or instance of the service principal/application registration to list the app roles for.
 
 ```yaml
 Type: ServicePrincipalPipeBind
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The object id, name or instance of the application role to retrieve from the service principal/application registration
+The object id, name or instance of the application role to retrieve from the service principal/application registration.
 
 ```yaml
 Type: ServicePrincipalAppRoleBind

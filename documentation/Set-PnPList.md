@@ -17,7 +17,7 @@ Updates list settings
 ```powershell
 Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRoleInheritance]
  [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubScopes] [-Title <String>] [-Description <String>]
- [-Hidden <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
+ [-Hidden <Boolean>] [-AllowDeletion <Boolean>] [-ForceCheckout <Boolean>] [-ListExperience <ListExperience>]
  [-EnableAttachments <Boolean>] [-EnableFolderCreation <Boolean>] [-EnableVersioning <Boolean>]
  [-EnableMinorVersions <Boolean>] [-MajorVersions <UInt32>] [-MinorVersions <UInt32>]
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
@@ -85,21 +85,21 @@ Rename a list, including its' URL.
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $true
 ```
 
-Enable AutoExpiration file version trim mode on a doccument library.
+Enable AutoExpiration file version trim mode on a document library.
 
 ### EXAMPLE 9
 ```powershell
-Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVerions 500
+Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVersions 500
 ```
 
-Enable ExpireAfter file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
+Enable ExpireAfter file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.
 
 ### EXAMPLE 10
 ```powershell
-Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVerions 500
+Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVersions 500
 ```
 
-Enable NoExpiration file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
+Enable NoExpiration file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.
 
 ### EXAMPLE 11
 ```powershell
@@ -334,6 +334,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -AllowDeletion
+Allow or prevent deletion of the list from the SharePoint UI. Set to $true to allow, $false to prevent.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Identity
 The ID, Title or Url of the list.
 
@@ -542,6 +556,34 @@ Work with parameter EnableAutoExpirationVersionTrim. Please see description in E
 
 ```yaml
 Type: UInt32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableClassicAudienceTargeting
+Enable classic audience targeting in a SharePoint list.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableModernAudienceTargeting
+Enable modern audience targeting in a SharePoint list.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False

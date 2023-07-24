@@ -289,6 +289,22 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
+        public static async Task<HttpResponseHeaders> PostAsyncGetResponseHeader<T>(HttpClient httpClient, string url, string accessToken, object payload, bool camlCasePolicy = true, string accept = "application/json")
+        {
+            HttpRequestMessage message = null;
+            if (payload != null)
+            {
+                var content = new StringContent(JsonSerializer.Serialize(payload, new JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull }));
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                message = GetMessage(url, HttpMethod.Post, accessToken, accept, content);
+            }
+            else
+            {
+                message = GetMessage(url, HttpMethod.Post, accessToken, accept);
+            }
+            return await SendMessageAsyncGetResponseHeader(httpClient, message);
+        }
+
 
 
         public static async Task<T> PostAsync<T>(HttpClient httpClient, string url, ClientContext clientContext, object payload, bool camlCasePolicy = true)
@@ -632,6 +648,28 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 throw new HttpRequestException(errorContent);
             }
         }
+
+        private static async Task<HttpResponseHeaders> SendMessageAsyncGetResponseHeader(HttpClient httpClient, HttpRequestMessage message)
+        {
+            var response = await httpClient.SendAsync(message);
+            while (response.StatusCode == (HttpStatusCode)429)
+            {
+                // throttled
+                var retryAfter = response.Headers.RetryAfter;
+                await Task.Delay(retryAfter.Delta.Value.Seconds * 1000);
+                response = await httpClient.SendAsync(CloneMessage(message));
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                return response.Headers;
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException(errorContent);
+            }
+        }
+
 
         private static HttpRequestMessage CloneMessage(HttpRequestMessage req)
         {

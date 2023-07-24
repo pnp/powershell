@@ -2,15 +2,7 @@
 $BinPath = "$ProjectPath\bin\Debug"
 
 $dlls = @("PnP.PowerShell.ALC.dll", "PnP.PowerShell.dll")
-
 $netversion = "net6.0-windows"
-
-if ($PSEdition -eq 'Core') {    
-  $netversion = "net6.0-windows"    
-}
-else {
-  $netversion = "net462"
-}
 
 $BinPath = "$BinPath\$netversion"
 

@@ -17,13 +17,13 @@ Adds an item to a navigation element
 ### Default
 
 ```powershell
-Add-PnPNavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Parent <NavigationNodePipeBind>] [-First] [-External] [-AudienceIds <Guid[]>] [-Connection <PnPConnection>]
+Add-PnPNavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Parent <NavigationNodePipeBind>] [-First] [-External] [-AudienceIds <Guid[]> [-OpenInNewTab <SwitchParameter>] [-Connection <PnPConnection>]
 ```
 
 ### Provide PreviousNode
 
 ```powershell
-Add-PnPNavigationNode -Location <NavigationType> -Title <String> -PreviousNode <NavigationNodePipeBind> [-Url <String>] [-Parent <NavigationNodePipeBind>] [-External] [-AudienceIds <Guid[]>] [-Connection <PnPConnection>]
+Add-PnPNavigationNode -Location <NavigationType> -Title <String> -PreviousNode <NavigationNodePipeBind> [-Url <String>] [-Parent <NavigationNodePipeBind>] [-External] [-AudienceIds <Guid[]>] [-OpenInNewTab <SwitchParameter>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -85,6 +85,13 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com"
 Add-PnPNavigationNode -Title "Marketing" -Url "https://contoso.sharepoint.com/sites/Marketing" -Location TopNavigationBar -External
 ```
 Adds the Marketing navigation node to the top navigation bar on the root site. NOTE that the `-External` switch is mandatory as the connection is made to the root site. This is currently a CSOM issue but once fixed, it will be fixed in PnP PowerShell automatically.
+
+### EXAMPLE 9
+```powershell
+Add-PnPNavigationNode -Title "Contoso" -Url "http://contoso.sharepoint.com/sites/contoso/" -Location "QuickLaunch" -OpenInNewTab
+```
+
+Adds a navigation node to the quicklaunch. The navigation node will have the title "Contoso" and will link to the url "http://contoso.sharepoint.com/sites/contoso/". It will also open the link in a new tab.
 
 ## PARAMETERS
 
@@ -206,6 +213,20 @@ The Guids of the groups to which the navigation node should be visible. Leave em
 
 ```yaml
 Type: Guid array
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OpenInNewTab
+Indicates that the link will be opened in a new browser tab. This will only work if the navigation location is **QuickLaunch** due to SharePoint API limitation. 
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

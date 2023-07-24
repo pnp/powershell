@@ -1,4 +1,5 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 
@@ -50,6 +51,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="tenant">Tenant instance to get the properties from to fill this instance</param>
         public SPOTenantSyncClientRestriction(Tenant tenant)
         {
+            tenant.EnsureProperties(t => t.IsUnmanagedSyncClientForTenantRestricted, t => t.AllowedDomainListForSyncClient, t => t.BlockMacSync, t => t.ExcludedFileExtensionsForSyncClient, t => t.OptOutOfGrooveBlock, t => t.OptOutOfGrooveSoftBlock, t => t.DisableReportProblemDialog);
             AllowedDomainList = new List<Guid>(tenant.AllowedDomainListForSyncClient);
             BlockMacSync = tenant.BlockMacSync;
             ExcludedFileExtensions = new List<string>(tenant.ExcludedFileExtensionsForSyncClient);

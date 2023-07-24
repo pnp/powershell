@@ -31,21 +31,21 @@ This cmdlets allows you to update an existing task in a Planner plan.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```powershell
 Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -Title "New Title" -StartDateTime 2020-10-01
 ```
 
 This updates the task with the specified id and sets the title to "New Title" and sets the start date to the first of October 2020.
 
-### Example 2
+### EXAMPLE 2
 ```powershell
 Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -Title "New Title" -Bucket "To do"
 ```
 
 This updates the task with the specified id and moves to the bucket "To do".
 
-### Example 3
+### EXAMPLE 3
 ```powershell
 Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -AssignedTo "user@contoso.com","manager@contoso.com"
 ```
