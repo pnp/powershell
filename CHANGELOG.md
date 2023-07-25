@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Ganesh Sanap [ganesh-sanap]
 - Siddharth Vaghasia [siddharth-vaghasia]
 - Giacomo Pozzoni [jackpoz]
 - Martin Lingstuyl [martinlingstuyl]
