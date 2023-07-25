@@ -12,6 +12,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Added `-MediaTranscription` and `-MediaTranscriptionAutomaticFeatures` to `Set-PnPTenant` which allows for configuring the media transcription settings. [#3238](https://github.com/pnp/powershell/pull/3238)
 - Added `AllowCommentsTextOnEmailEnabled`  parameter to `Set-PnPTenant` which allows including the surrounding document context in email notification when user is mentioned in document comments. [#3268](https://github.com/pnp/powershell/pull/3268)
+- Added `Export-PnPPowerApp` cmdlet which will export a specified PowerApp as zip package. [#2990](https://github.com/pnp/powershell/pull/2990)
 
 ### Fixed
 
@@ -19,9 +20,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPUserProfileProperty` cmdlet not allowing basic user profile properties to be retrieved using `-Properties` [#3247](https://github.com/pnp/powershell/pull/3247)
 - Fixed `Export-PnPTermGroupToXml` cmdlet issue with exporting site collection term groups. [#3256](https://github.com/pnp/powershell/pull/3256)
 - Fixed `Register-PnPAzureADApp` cmdlet issue with creation of Azure AD application. [#3265](https://github.com/pnp/powershell/pull/3265)
+- Fixed `Get-PnPServiceHealthIssue` cmdlet issue with null reference objection. [#3286](https://github.com/pnp/powershell/pull/3286)
+- Fixed `New-PnPSite` cmdlet issue with team site creation when using a connection object. [#3285](https://github.com/pnp/powershell/pull/3285)
+- Fixed issue with colliding assemblies when using PnP PowerShell with other modules. [#3280](https://github.com/pnp/powershell/pull/3280)
 
 ### Contributors
 
+- Siddharth Vaghasia [siddharth-vaghasia]
 - Giacomo Pozzoni [jackpoz]
 - Martin Lingstuyl [martinlingstuyl]
 - Arleta Wanat [PowershellScripts]
