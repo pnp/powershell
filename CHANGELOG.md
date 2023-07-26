@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-MediaTranscription` and `-MediaTranscriptionAutomaticFeatures` to `Set-PnPTenant` which allows for configuring the media transcription settings. [#3238](https://github.com/pnp/powershell/pull/3238)
 - Added `AllowCommentsTextOnEmailEnabled`  parameter to `Set-PnPTenant` which allows including the surrounding document context in email notification when user is mentioned in document comments. [#3268](https://github.com/pnp/powershell/pull/3268)
 - Added `Export-PnPPowerApp` cmdlet which will export a specified PowerApp as zip package. [#2990](https://github.com/pnp/powershell/pull/2990)
+- - Added `AzureADLoginEndPoint` and `MicrosoftGraphEndPoint` parameters to `Connect-PnPOnline` cmdlet for use in custom Azure environments. [#2925](https://github.com/pnp/powershell/pull/2925)
 
 ### Fixed
 
@@ -174,7 +175,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPAzureACSPrincipal` cmdlet to retrieve list of installed Azure ACS Principals in the site collection or tenant. [#2920](https://github.com/pnp/powershell/pull/2920)
 - Added `-LogoFilePath` parameter to `Register-PnPAzureADApp` cmdlet to allow setting the logo for the Azure AD app. [#2881](https://github.com/pnp/powershell/pull/2881)
 - Added support for `-Verbose` in `Move-PnPFile` which will show if it has problems determining if the destination location is a folder or a file [#2888](https://github.com/pnp/powershell/pull/2888)
-- Added `AzureADLoginEndPoint` and `MicrosoftGraphEndPoint` parameters to `Connect-PnPOnline` cmdlet for use in custom Azure environments. [#2925](https://github.com/pnp/powershell/pull/2925)
 - Added `CalendarMemberReadOnly` and `ConnectorsDisabled` as `-ResourceBehaviorOptions` to `New-PnPMicrosoft365Group` [#2929](https://github.com/pnp/powershell/pull/2929)
 - Added `-Identity` option to `Get-PnPPowerPlatformEnvironment` which allows retrieval of one specific environment by its displayname or id. [#2794](https://github.com/pnp/powershell/pull/2794)
 - Added `Get-PnPPowerApp` which allows PowerApps to be retrieved [#2794](https://github.com/pnp/powershell/pull/2794)
