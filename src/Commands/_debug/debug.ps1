@@ -1,4 +1,6 @@
-﻿$ProjectPath = $PSScriptRoot | Split-Path -Parent
+﻿$env:PNP_PS_DEBUG_IN_VISUAL_STUDIO = $true
+$env:PNPPOWERSHELL_UPDATECHECK = "Off"
+$ProjectPath = $PSScriptRoot | Split-Path -Parent
 $BinPath = "$ProjectPath\bin\Debug"
 
 $dlls = @("PnP.PowerShell.ALC.dll", "PnP.PowerShell.dll")

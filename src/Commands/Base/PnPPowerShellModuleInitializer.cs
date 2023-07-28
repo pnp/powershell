@@ -10,22 +10,24 @@ namespace PnP.PowerShell.Commands.Base
 {
     public class PnPPowerShellModuleInitializer : IModuleAssemblyInitializer
     {
-        //private static string s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), ".."));
-        //private static string s_binCommonPath = Path.Combine(s_binBasePath, "Common");
-
         private static readonly string s_binBasePath;
         private static readonly string s_binCommonPath;
         private static readonly HashSet<string> s_dependencies;
         private static readonly HashSet<string> s_psEditionDependencies;
-        private static readonly AssemblyLoadContextProxy s_proxy;
+        private static readonly AssemblyLoadContext s_proxy;
 
         static PnPPowerShellModuleInitializer()
         {
-            s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));            
+            s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
             s_binCommonPath = Path.Combine(Path.GetDirectoryName(s_binBasePath), "Common");
+            if (Environment.GetEnvironmentVariable("PNP_PS_DEBUG_IN_VISUAL_STUDIO") == "True")
+            {
+                s_binCommonPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..", "..", "..", "..", "..", "src", "ALC", "bin", "Debug", "net6.0"));
+            }
+
             s_dependencies = new HashSet<string>(StringComparer.Ordinal);
             s_psEditionDependencies = new HashSet<string>(StringComparer.Ordinal);
-            s_proxy = AssemblyLoadContextProxy.CreateLoadContext("pnp-powershell-load-context");
+            s_proxy = new AssemblyLoadContext("pnp-powershell-load-context");
 
             // Add shared dependencies.
             foreach (string filePath in Directory.EnumerateFiles(s_binBasePath, "*.dll"))
@@ -86,15 +88,6 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
             return null;
-            //// In .NET Core, PowerShell deals with assembly probing so our logic is much simpler
-            //// We only care about our Engine assembly
-            //if (!assemblyName.Name.Equals("PnP.PowerShell.ALC"))
-            //{
-            //    return null;
-            //}
-
-            //// Now load the Engine assembly through the dependency ALC, and let it resolve further dependencies automatically
-            //return DependencyAssemblyLoadContext.GetForDirectory(s_binCommonPath).LoadFromAssemblyName(assemblyName);
         }
 
         /// <summary>
@@ -136,46 +129,12 @@ namespace PnP.PowerShell.Commands.Base
         private static string GetRequiredAssemblyPath(AssemblyName assemblyName)
         {
             string fileName = assemblyName.Name + ".dll";
-            string filePath = Path.Combine(s_binBasePath, fileName);            
+            string filePath = Path.Combine(s_binBasePath, fileName);
             if (File.Exists(filePath))
                 return filePath;
 
             filePath = Path.Combine(s_binCommonPath, fileName);
             return File.Exists(filePath) ? filePath : null;
-        }
-    }
-
-    /// <summary>
-    /// An encapsulation of reflection API calls to create a custom AssemblyLoadContext. <see cref="AssemblyLoadContext"/> type is not available when targeting netstandard2.0 .NET Framework.
-    /// </summary>
-    internal class AssemblyLoadContextProxy
-    {
-        private readonly object _customContext;
-        private readonly MethodInfo _loadFromAssemblyPath;
-
-        private AssemblyLoadContextProxy(Type alc, string loadContextName)
-        {
-            var ctor = alc.GetConstructor(new[] { typeof(string), typeof(bool) });
-            _loadFromAssemblyPath = alc.GetMethod("LoadFromAssemblyPath", new[] { typeof(string) });
-            _customContext = ctor.Invoke(new object[] { loadContextName, false });
-        }
-
-        internal Assembly LoadFromAssemblyPath(string assemblyPath)
-        {
-            return (Assembly)_loadFromAssemblyPath.Invoke(_customContext, new[] { assemblyPath });
-        }
-
-        internal static AssemblyLoadContextProxy CreateLoadContext(string name)
-        {
-            if (string.IsNullOrEmpty(name))
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-
-            var alc = typeof(object).Assembly.GetType("System.Runtime.Loader.AssemblyLoadContext");
-            return alc != null
-                ? new AssemblyLoadContextProxy(alc, name)
-                : null;
         }
     }
 }
