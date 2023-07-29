@@ -195,33 +195,6 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             if (group != null)
             {
-                Team team = teamCI.ToTeam(group.Visibility.Value);
-                var retry = true;
-                var iteration = 0;
-                while (retry)
-                {
-                    try
-                    {
-                        var teamSettings = await GraphHelper.PutAsync(connection, $"v1.0/groups/{group.Id}/team", team, accessToken);
-                        if (teamSettings != null)
-                        {
-                            returnTeam = await GetTeamAsync(accessToken, connection, group.Id);
-                        }
-                        retry = false;
-                    }
-
-                    catch (Exception)
-                    {
-                        await Task.Delay(5000);
-                        iteration++;
-                    }
-
-                    if (iteration > 10) // don't try more than 10 times
-                    {
-                        retry = false;
-                    }
-                }
-
                 // Construct a list of all owners and members to add
                 var teamOwnersAndMembers = new List<TeamChannelMember>();
                 if (owners != null && owners.Length > 0)
@@ -248,7 +221,37 @@ namespace PnP.PowerShell.Commands.Utilities
                         await GraphHelper.PostAsync(connection, $"v1.0/teams/{group.Id}/members/add", new { values = chunk.ToList() }, accessToken);
                     }
                 }
+                
+                Team team = teamCI.ToTeam(group.Visibility.Value);
+                var retry = true;
+                var iteration = 0;
+                while (retry)
+                {
+                    try
+                    {
+                        var teamSettings = await GraphHelper.PutAsync(connection, $"v1.0/groups/{group.Id}/team", team, accessToken);
+                        if (teamSettings != null)
+                        {
+                            returnTeam = await GetTeamAsync(accessToken, connection, group.Id);
+                        }
+                        retry = false;
+                    }
 
+                    catch (Exception)
+                    {
+                        await Task.Delay(5000);
+                        iteration++;
+                        if (iteration > 10)
+                        {
+                            throw;
+                        }
+                    }
+
+                    if (iteration > 10) // don't try more than 10 times
+                    {
+                        retry = false;
+                    }
+                }                
             }
             return returnTeam;
         }
@@ -908,7 +911,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.Planner:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.planner";
-                        tab.Configuration = new TeamTabConfiguration();                        
+                        tab.Configuration = new TeamTabConfiguration();
                         tab.Configuration.ContentUrl = contentUrl;
                         break;
                     }
