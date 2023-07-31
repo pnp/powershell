@@ -25,6 +25,8 @@ Get-PnPAzureACSPrincipal [-Scope <AzureACSPrincipalScope>] [-IncludeSubsites <Sw
 
 ## DESCRIPTION
 
+This cmdlet provides insight into the app registrations that have been done over time using AppRegNew.aspx. You could look at it as a (detailed) equivallent of AppPrincipals.aspx. This information can help to get insights into the app registrations that have been done on a tenant and prepare for the Azure Access Control Services (ACS) deprecation that will follow in the future.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
