@@ -10,7 +10,6 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolder", DefaultParameterSetName = ParameterSet_FOLDERSINCURRENTWEB)]
-    [OutputType(typeof(Microsoft.SharePoint.Client.Folder))]
     public class GetFolder : PnPWebRetrievalsCmdlet<Folder>
     {
         private const string ParameterSet_FOLDERSINCURRENTWEB = "Folders in current Web";
