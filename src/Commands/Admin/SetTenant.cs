@@ -1242,7 +1242,7 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if (ShowPeoplePickerGroupSuggestionsForIB.HasValue)
+            if (ArchiveRedirectUrl != null)
             {
                 Tenant.ArchiveRedirectUrl = ArchiveRedirectUrl;
                 modified = true;

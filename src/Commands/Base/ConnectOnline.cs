@@ -237,6 +237,26 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public SwitchParameter EnvironmentVariable;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        public string MicrosoftGraphEndPoint;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        public string AzureADLoginEndPoint;
+
         protected override void ProcessRecord()
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -276,10 +296,15 @@ namespace PnP.PowerShell.Commands.Base
             {
                 credentials = Credentials.Credential;
             }
-
+            
             if (PingHost(new Uri(Url).Host) == false)
             {
                 throw new PSArgumentException("Host not reachable");
+            }
+
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                SetCustomEndpoints();
             }
 
             // Connect using the used set parameters
@@ -821,6 +846,19 @@ namespace PnP.PowerShell.Commands.Base
 
             return secPassword;
         }
+
+        private void SetCustomEndpoints()
+        {
+            if (!string.IsNullOrWhiteSpace(MicrosoftGraphEndPoint))
+            {
+                Environment.SetEnvironmentVariable("MicrosoftGraphEndPoint", MicrosoftGraphEndPoint, EnvironmentVariableTarget.Process);
+            }
+            if (!string.IsNullOrWhiteSpace(AzureADLoginEndPoint))
+            {
+                Environment.SetEnvironmentVariable("AzureADLoginEndPoint", AzureADLoginEndPoint, EnvironmentVariableTarget.Process);
+            }
+        }
+
         #endregion
     }
 }

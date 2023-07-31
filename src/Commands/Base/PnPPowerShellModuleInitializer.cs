@@ -21,13 +21,8 @@ namespace PnP.PowerShell.Commands.Base
 
         static PnPPowerShellModuleInitializer()
         {
-#if DEBUG
-            s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
-            s_binCommonPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..", "..", "..", "..", "..", "src", "ALC", "bin", "Debug", "net6.0"));
-#else
             s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));            
             s_binCommonPath = Path.Combine(Path.GetDirectoryName(s_binBasePath), "Common");
-#endif
             s_dependencies = new HashSet<string>(StringComparer.Ordinal);
             s_psEditionDependencies = new HashSet<string>(StringComparer.Ordinal);
             s_proxy = AssemblyLoadContextProxy.CreateLoadContext("pnp-powershell-load-context");
