@@ -127,6 +127,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-StopNew2013Workflows <Boolean>]
  [-MediaTranscription <MediaTranscriptionPolicyType>]
  [-MediaTranscriptionAutomaticFeatures <MediaTranscriptionAutomaticFeaturesPolicyType>]
+ [-SiteOwnerManageLegacyServicePrincipalEnabled <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2142,6 +2143,21 @@ When the feature is enabled, videos can have transcripts generated automatically
 
 ```yaml
 Type: MediaTranscriptionAutomaticFeaturesPolicyType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SiteOwnerManageLegacyServicePrincipalEnabled
+
+This parameter allows site owners to create or update the service principal.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
