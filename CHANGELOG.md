@@ -15,6 +15,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Export-PnPPowerApp` cmdlet which will export a specified PowerApp as zip package. [#2990](https://github.com/pnp/powershell/pull/2990)
 - Added `AzureADLoginEndPoint` and `MicrosoftGraphEndPoint` parameters to `Connect-PnPOnline` cmdlet for use in custom Azure environments. [#2925](https://github.com/pnp/powershell/pull/2925)
 - Added `Get-PnPFolder` cmdlet without any parameters to return all folders in the root of the current web
+- Added `Get-PnPFolderFile` cmdlet which allows retrieval of all files in a folder or site and optionally request additional properties from them
+- Added `Get-PnPFolderFolder` cmdlet which allows retrieval of all folders in a folder or site and optionally request additional properties from them
 
 ### Fixed
 
@@ -28,6 +30,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `-ArchiveRedirectUrl` parameter not working correctly in `Set-PnPTenant` cmdlet. [#3289](https://github.com/pnp/powershell/pull/3289)
 - Fixed `New-PnPAzureADGroup` cmdlet throwing null reference error when owners and members are not specified. [#3308](https://github.com/pnp/powershell/pull/3308)
 - Fixed `New-PnPTeamsTeam` cmdlet, it will now throw error if it fails to teamify a Microsoft 365 group. [#3310](https://github.com/pnp/powershell/pull/3310)
+- Fixed `Get-PnPFolderItem` cmdlet not accepting piping a folder instance to it
+- Fixed `Get-PnPFolderItem` cmdlet not working well with the `-Recursive` and `-Identity` parameters provided together
+- Fixed `Get-PnPFolderItem` cmdlet not working well with the `-ItemName` parameter
 
 ### Contributors
 
