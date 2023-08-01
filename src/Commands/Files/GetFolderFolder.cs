@@ -34,6 +34,8 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+            
             if(ExcludeSystemFolders.ToBool())
             {
                 DefaultRetrievalExpressions = new Expression<Func<Folder, object>>[] { f => f.ListItemAllFields };
@@ -81,7 +83,7 @@ namespace PnP.PowerShell.Commands.Files
                     var relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
 
                     WriteVerbose($"Processing folder {relativeUrl}");
-                    
+
                     var subFolderContents = GetContents(relativeUrl);
                     folderContent = folderContent.Concat<Folder>(subFolderContents);
                 }

@@ -83,8 +83,7 @@ namespace PnP.PowerShell.Commands.Files
 
                 if(string.IsNullOrEmpty(FolderSiteRelativeUrl))
                 {
-                    CurrentWeb.EnsureProperties(w => w.RootFolder);
-                    targetFolder = CurrentWeb.RootFolder;
+                    targetFolder = CurrentWeb.EnsureProperty(w => w.RootFolder);
                 }
                 else
                 {

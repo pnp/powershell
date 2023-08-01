@@ -31,6 +31,8 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+
             var contents = GetContents(FolderSiteRelativeUrl);
 
             if (!string.IsNullOrEmpty(ItemName))
@@ -47,15 +49,13 @@ namespace PnP.PowerShell.Commands.Files
             if (string.IsNullOrEmpty(FolderSiteRelativeUrl) && ParameterSetName == ParameterSet_FOLDERSBYPIPE && Identity != null)
             {
                 targetFolder = Identity.GetFolder(CurrentWeb);
-                CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
             }
             else
             {
                 string serverRelativeUrl = null;
                 if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
                 {
-                    var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
-                    serverRelativeUrl = UrlUtility.Combine(webUrl, FolderSiteRelativeUrl);
+                    serverRelativeUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, FolderSiteRelativeUrl);
                 }
 
                 targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? CurrentWeb.RootFolder : CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands.Files
                     var relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
 
                     WriteVerbose($"Processing folder {relativeUrl}");
-                    
+
                     var subFolderContents = GetContents(relativeUrl);
                     folderContent = folderContent.Concat<File>(subFolderContents);
                 }
