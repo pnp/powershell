@@ -88,6 +88,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ExcludeSystemFolders
+When provided, all files in system folders will be excluded from the output. This parameter is not supported when not providing a folder through -Identity or -FolderSiteRelativeUrl.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -FolderSiteRelativeUrl
 The site relative URL of the folder to retrieve
 

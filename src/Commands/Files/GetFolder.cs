@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Files
                 case ParameterSet_FOLDERSINCURRENTWEB:
                 {
                     // Query for all folders in the root of the current web
-                    ClientContext.Load(CurrentWeb, w => w.Folders.Include(DefaultRetrievalExpressions));
+                    ClientContext.Load(CurrentWeb, w => w.Folders.IncludeWithDefaultProperties(RetrievalExpressions));
                     ClientContext.ExecuteQueryRetry();
 
                     WriteObject(CurrentWeb.Folders, true);

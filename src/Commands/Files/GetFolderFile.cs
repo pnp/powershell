@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
@@ -26,8 +27,11 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false)]
         public string ItemName = string.Empty;
 
-        [Parameter(Mandatory = false, Position = 4)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Recursive;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter ExcludeSystemFolders;          
 
         protected override void ExecuteCmdlet()
         {
@@ -58,7 +62,19 @@ namespace PnP.PowerShell.Commands.Files
                     serverRelativeUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, FolderSiteRelativeUrl);
                 }
 
-                targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? CurrentWeb.RootFolder : CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                if(string.IsNullOrEmpty(FolderSiteRelativeUrl))
+                {
+                    if(ParameterSpecified(nameof(ExcludeSystemFolders)))
+                    {
+                        WriteWarning($"The {nameof(ExcludeSystemFolders)} parameter is only supported when retrieving a specific folder. It will be ignored.");
+                        ExcludeSystemFolders = false;
+                    }
+                    targetFolder = CurrentWeb.EnsureProperty(w => w.RootFolder);
+                }
+                else
+                {
+                    targetFolder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                }
             }
 
             IEnumerable<File> files = null;
@@ -68,7 +84,14 @@ namespace PnP.PowerShell.Commands.Files
 
             if (Recursive)
             {
-                folders = ClientContext.LoadQuery(targetFolder.Folders).OrderBy(f => f.Name);
+                if(ExcludeSystemFolders.ToBool())
+                {
+                    folders = ClientContext.LoadQuery(targetFolder.Folders.IncludeWithDefaultProperties(f => f.ListItemAllFields)).Where(f => !ExcludeSystemFolders.ToBool() || !f.ListItemAllFields.ServerObjectIsNull.GetValueOrDefault(false)).OrderBy(f => f.Name);
+                }
+                else
+                {
+                    folders = ClientContext.LoadQuery(targetFolder.Folders).OrderBy(f => f.Name);
+                }                
             }
             ClientContext.ExecuteQueryRetry();
 

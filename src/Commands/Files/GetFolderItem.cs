@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false)]
         public string ItemName = string.Empty;
 
-        [Parameter(Mandatory = false, Position = 4)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Recursive;
 
         protected override void ExecuteCmdlet()

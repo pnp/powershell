@@ -96,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExcludeSystemFolders
-When provided, all system folders will be excluded from the output
+When provided, all system folders will be excluded from the output. This parameter is not supported when not providing a folder through -Identity or -FolderSiteRelativeUrl.
 
 ```yaml
 Type: SwitchParameter
