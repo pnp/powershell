@@ -380,6 +380,8 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public MediaTranscriptionAutomaticFeaturesPolicyType? MediaTranscriptionAutomaticFeatures { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public bool? SiteOwnerManageLegacyServicePrincipalEnabled { get; set; }
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1263,6 +1265,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (BlockSendLabelMismatchEmail.HasValue)
             {
                 Tenant.BlockSendLabelMismatchEmail = BlockSendLabelMismatchEmail.Value;
+                modified = true;
+            }
+
+            if (SiteOwnerManageLegacyServicePrincipalEnabled.HasValue)
+            {
+                Tenant.SiteOwnerManageLegacyServicePrincipalEnabled = SiteOwnerManageLegacyServicePrincipalEnabled.Value;
                 modified = true;
             }
 
