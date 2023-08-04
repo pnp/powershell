@@ -21,13 +21,8 @@ namespace PnP.PowerShell.Commands.Base
 
         static PnPPowerShellModuleInitializer()
         {
-#if DEBUG
-            s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));
-            s_binCommonPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..", "..", "..", "..", "..", "src", "ALC", "bin", "Debug", "net6.0"));
-#else
             s_binBasePath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)));            
             s_binCommonPath = Path.Combine(Path.GetDirectoryName(s_binBasePath), "Common");
-#endif
             s_dependencies = new HashSet<string>(StringComparer.Ordinal);
             s_psEditionDependencies = new HashSet<string>(StringComparer.Ordinal);
             s_proxy = AssemblyLoadContextProxy.CreateLoadContext("pnp-powershell-load-context");
@@ -71,6 +66,16 @@ namespace PnP.PowerShell.Commands.Base
             AssemblyLoadContext assemblyLoadContext,
             AssemblyName assemblyName)
         {
+            if (assemblyName.Name.Equals("PnP.PowerShell.ALC"))
+            {
+                string filePath = GetRequiredAssemblyPath(assemblyName);
+                if (!string.IsNullOrEmpty(filePath))
+                {
+                    // - In .NET, load the assembly into the custom assembly load context.                    
+                    return s_proxy.LoadFromAssemblyPath(filePath);
+                }
+            }
+
             if (IsAssemblyMatching(assemblyName))
             {
                 string filePath = GetRequiredAssemblyPath(assemblyName);
@@ -131,8 +136,7 @@ namespace PnP.PowerShell.Commands.Base
         private static string GetRequiredAssemblyPath(AssemblyName assemblyName)
         {
             string fileName = assemblyName.Name + ".dll";
-            string filePath = Path.Combine(s_binBasePath, fileName);
-
+            string filePath = Path.Combine(s_binBasePath, fileName);            
             if (File.Exists(filePath))
                 return filePath;
 
