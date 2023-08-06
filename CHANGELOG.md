@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Per Østergaard [per-oestergaard]
 - Nishkalank Bezawada [NishkalankBezawada]
 - [PowerBugi]
 - Ganesh Sanap [ganesh-sanap]
