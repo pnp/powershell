@@ -5,51 +5,31 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Enums;
-using Microsoft.SharePoint.Client;
-using static System.Formats.Asn1.AsnWriter;
-using Microsoft.BusinessData.MetadataModel;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFlow")]
+    [Cmdlet(VerbsCommon.Get, "PnPFlow", DefaultParameterSetName = ParameterSet_ALL)]
     public class GetFlow : PnPAzureManagementApiCmdlet
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        private const string ParameterSet_BYIDENTITY = "By Identity";
+        private const string ParameterSet_ALL = "All";
+
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYIDENTITY)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_ALL)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYIDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
         public SwitchParameter AsAdmin;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYIDENTITY)]
         public PowerAutomateFlowPipeBind Identity;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
         public FlowSharingStatus SharingStatus = FlowSharingStatus.All;
 
         protected override void ExecuteCmdlet()
         {
-            bool sharingStatus = false;
-            string flowSharing = null;
-            string fetchAll = null;
-            bool sharingStatusAll = false;
-            switch (SharingStatus)
-            {
-                case FlowSharingStatus.SharedWithMe:
-                    flowSharing = "&$filter = search('team')";
-                    sharingStatus = true;
-                    break;
-
-                case FlowSharingStatus.Personal:
-                    flowSharing = "&$filter=search('personal')";
-                    sharingStatus = true;
-                    break;
-
-                case FlowSharingStatus.All:
-                    flowSharing = "&$filter=search('team AND personal')";
-                    sharingStatus = true;
-                    break;
-            }
-
             string environmentName = null;
             if(ParameterSpecified(nameof(Environment)))
             {
@@ -76,14 +56,30 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
                 WriteVerbose($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, sharingStatus ? $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01" + flowSharing : $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(result, false);
             }
             else
             {
-                WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'");
+                string filter = null;
+                switch (SharingStatus)
+                {
+                    case FlowSharingStatus.SharedWithMe:
+                        filter = "search('team')";
+                        break;
 
-                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, sharingStatus ? $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01" + flowSharing : $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                    case FlowSharingStatus.Personal:
+                        filter = "search('personal')";
+                        break;
+
+                    case FlowSharingStatus.All:
+                        filter = "search('team AND personal')";
+                        break;
+                }
+
+                WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'{(filter != null ? $" with filter '{filter}'" : "")}");
+
+                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01{(filter != null ? $"&$filter={filter}" : "")}", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flows, true);
 
             }
