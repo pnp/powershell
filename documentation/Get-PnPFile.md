@@ -16,25 +16,27 @@ Downloads a file
 
 ### Return as file object (Default)
 ```powershell
-Get-PnPFile [-Url] <String> -AsFileObject [-Connection <PnPConnection>]
- 
+Get-PnPFile -Url <String> -AsFileObject [-Connection <PnPConnection>]
 ```
 
 ### Return as list item
 ```powershell
-Get-PnPFile [-Url] <String> -AsListItem [-ThrowExceptionIfFileNotFound] 
- [-Connection <PnPConnection>] 
+Get-PnPFile -Url <String> -AsListItem [-ThrowExceptionIfFileNotFound] [-Connection <PnPConnection>] 
 ```
 
 ### Save to local path
 ```powershell
-Get-PnPFile [-Url] <String> -AsFile [-Path <String>] [-Filename <String>] [-Force] 
- [-Connection <PnPConnection>] 
+Get-PnPFile -Url <String> -AsFile -Path <String> -Filename <String> [-Force] [-Connection <PnPConnection>] 
 ```
 
 ### Return as string
 ```powershell
-Get-PnPFile [-Url] <String> -AsString [-Connection <PnPConnection>] 
+Get-PnPFile -Url <String> -AsString [-Connection <PnPConnection>] 
+```
+
+### Return as memorystream
+```powershell
+Get-PnPFile -Url <String> -AsMemoryStream [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

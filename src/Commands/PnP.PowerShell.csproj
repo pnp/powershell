@@ -46,7 +46,7 @@
 		<DefineConstants>TRACE;$(DefineConstants);DEBUG</DefineConstants>
 	</PropertyGroup>
 	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-		<DefineConstants>TRACE;$(DefineConstants);DEBUG</DefineConstants>
+		<DefineConstants>TRACE;$(DefineConstants);Release</DefineConstants>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="Resources\parker.ico" />

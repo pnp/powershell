@@ -12,6 +12,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Added `-MediaTranscription` and `-MediaTranscriptionAutomaticFeatures` to `Set-PnPTenant` which allows for configuring the media transcription settings. [#3238](https://github.com/pnp/powershell/pull/3238)
 - Added `-Includes` option to `Get-PnPListItem` which allows for specifying additional fields to be retrieved. [#3270](https://github.com/pnp/powershell/pull/3270)
+- Added `-AllowCommentsTextOnEmailEnabled` parameter to `Set-PnPTenant` which allows including the surrounding document context in email notification when user is mentioned in document comments. [#3268](https://github.com/pnp/powershell/pull/3268)
+- Added `Export-PnPPowerApp` cmdlet which will export a specified PowerApp as zip package. [#2990](https://github.com/pnp/powershell/pull/2990)
+- Added `-AzureADLoginEndPoint` and `-MicrosoftGraphEndPoint` parameters to `Connect-PnPOnline` cmdlet for use in custom Azure environments. [#2925](https://github.com/pnp/powershell/pull/2925)
 
 ### Fixed
 
@@ -19,9 +22,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPUserProfileProperty` cmdlet not allowing basic user profile properties to be retrieved using `-Properties` [#3247](https://github.com/pnp/powershell/pull/3247)
 - Fixed `Export-PnPTermGroupToXml` cmdlet issue with exporting site collection term groups. [#3256](https://github.com/pnp/powershell/pull/3256)
 - Fixed `Register-PnPAzureADApp` cmdlet issue with creation of Azure AD application. [#3265](https://github.com/pnp/powershell/pull/3265)
+- Fixed `Get-PnPServiceHealthIssue` cmdlet issue with null reference objection. [#3286](https://github.com/pnp/powershell/pull/3286)
+- Fixed `New-PnPSite` cmdlet issue with team site creation when using a connection object. [#3285](https://github.com/pnp/powershell/pull/3285)
+- Fixed issue with colliding assemblies when using PnP PowerShell with other modules. [#3280](https://github.com/pnp/powershell/pull/3280)
+- Fixed issue with `-ArchiveRedirectUrl` parameter not working correctly in `Set-PnPTenant` cmdlet. [#3289](https://github.com/pnp/powershell/pull/3289)
+- Fixed `New-PnPAzureADGroup` cmdlet throwing null reference error when owners and members are not specified. [#3308](https://github.com/pnp/powershell/pull/3308)
+- Fixed `New-PnPTeamsTeam` cmdlet, it will now throw error if it fails to teamify a Microsoft 365 group. [#3310](https://github.com/pnp/powershell/pull/3310)
 
 ### Contributors
 
+- [PowerBugi]
+- Ganesh Sanap [ganesh-sanap]
+- Siddharth Vaghasia [siddharth-vaghasia]
+- Giacomo Pozzoni [jackpoz]
 - Martin Lingstuyl [martinlingstuyl]
 - Arleta Wanat [PowershellScripts]
 - Nils Andresen [nils-a]

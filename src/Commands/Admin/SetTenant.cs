@@ -210,6 +210,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? CommentsOnFilesDisabled;
 
         [Parameter(Mandatory = false)]
+        public bool? AllowCommentsTextOnEmailEnabled;
+
+        [Parameter(Mandatory = false)]
         public SensitiveByDefaultState? MarkNewFilesSensitiveByDefault;
 
         [Parameter(Mandatory = false)]
@@ -971,6 +974,11 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.CommentsOnFilesDisabled = CommentsOnFilesDisabled.Value;
                 modified = true;
             }
+            if (AllowCommentsTextOnEmailEnabled.HasValue)
+            {
+                Tenant.AllowCommentsTextOnEmailEnabled = AllowCommentsTextOnEmailEnabled.Value;
+                modified = true;
+            }
             if (MarkNewFilesSensitiveByDefault.HasValue)
             {
                 Tenant.MarkNewFilesSensitiveByDefault = MarkNewFilesSensitiveByDefault.Value;
@@ -1234,7 +1242,7 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if (ShowPeoplePickerGroupSuggestionsForIB.HasValue)
+            if (ArchiveRedirectUrl != null)
             {
                 Tenant.ArchiveRedirectUrl = ArchiveRedirectUrl;
                 modified = true;
