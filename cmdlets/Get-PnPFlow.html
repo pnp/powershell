@@ -88,22 +88,33 @@
 <ul>
 <li>Azure: management.azure.com</li>
 </ul>
-<p>Returns the flows for a given environment</p>
+<p>Returns Power Automate Flows</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] [-AsAdmin] [-Identity &lt;PowerPlatformPipeBind&gt;] 
-[-Connection &lt;PnPConnection&gt;] [-Verbose]
+<h3 id="all-default">All (Default)</h3>
+<pre><code class="lang-powershell">Get-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] [-AsAdmin] [-SharingStatus &lt;FlowSharingStatus&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
+</code></pre>
+<h3 id="by-identity">By Identity</h3>
+<pre><code class="lang-powershell">Get-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] [-AsAdmin] [-Identity &lt;PowerPlatformPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet returns the flows for a given environment.</p>
+<p>This cmdlet returns Power Automate Flows meeting the specified criteria.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
+<pre><code class="lang-powershell">Get-PnPFlow -AsAdmin
+</code></pre>
+<p>Returns all the flows in the default Power Platform environment belonging to any user</p>
+<h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">Get-PnPPowerPlatformEnvironment -Identity &quot;MyOrganization (default)&quot; | Get-PnPFlow
 </code></pre>
-<p>This returns all the flows for a given Power Platform environment</p>
-<h3 id="example-2">Example 2</h3>
+<p>Returns all the flows for a given Power Platform environment belonging to the current user</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="lang-powershell">Get-PnPFlow -SharingStatus SharedWithMe
+</code></pre>
+<p>Returns all the flows which have been shared with the current user in the default Power Platform environment</p>
+<h3 id="example-4">Example 4</h3>
 <pre><code class="lang-powershell">Get-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>This returns a specific flow from the default environment</p>
+<p>Returns a specific flow from the default Power Platform environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
 <p>The name of the Power Platform environment or an Environment object to retrieve the available flows for.</p>
@@ -120,7 +131,7 @@ Accept wildcard characters: False
 <h3 id="-identity">-Identity</h3>
 <p>The Name/Id of the flow to retrieve.</p>
 <pre><code class="lang-yaml">Type: PowerPlatformPipeBind
-Parameter Sets: (All)
+Parameter Sets: By Identity
 Aliases:
 
 Required: False
@@ -151,6 +162,17 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sharingstatus">-SharingStatus</h3>
+<p>Allows specifying the type of Power Automate Flows that should be returned. Valid values: All, SharedWithMe, Personal.</p>
+<pre><code class="lang-yaml">Type: FlowSharingStatus
+Parameter Sets: All
+
+Required: False
+Position: Named
+Default value: All
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
