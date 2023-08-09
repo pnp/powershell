@@ -32,6 +32,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPTeamsTeam` cmdlet, it will now throw error if it fails to teamify a Microsoft 365 group. [#3310](https://github.com/pnp/powershell/pull/3310)
 - Fixed `Connect-PnPOnline` cmdlet throwing host not reachable errors.
 
+### Changed
+
+- Improved `Set-PnPListItem` cmdlet handling of Purview labels.
+
 ### Contributors
 
 - Per Østergaard [per-oestergaard]

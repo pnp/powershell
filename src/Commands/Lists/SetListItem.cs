@@ -5,7 +5,7 @@ using System.Linq;
 using System.Management.Automation;
 
 using Microsoft.SharePoint.Client;
-
+using Microsoft.SharePoint.Client.CompliancePolicy;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
@@ -154,14 +154,27 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (ClearLabel)
             {
-                item.SetComplianceTag(string.Empty, false, false, false, false, false);
+                ClientContext.Web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
+                list.EnsureProperties(l => l.RootFolder, l => l.RootFolder.ServerRelativeUrl);
+
+                string listUrl = string.Empty;
+                if (ClientContext.Web.ServerRelativeUrl.Equals("/"))
+                {
+                    listUrl = ClientContext.Web.Url + list.RootFolder.ServerRelativeUrl;
+                }
+                else
+                {
+                    listUrl = ClientContext.Web.Url.Replace(ClientContext.Web.ServerRelativeUrl, "") + list.RootFolder.ServerRelativeUrl;
+                }
+
+                SPPolicyStoreProxy.SetComplianceTagOnBulkItems(ClientContext, new[] { item.Id }, listUrl, string.Empty);
                 ClientContext.ExecuteQueryRetry();
                 itemUpdated = true;
             }
 
             if (!string.IsNullOrEmpty(Label))
             {
-                var tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
+                var tags = SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
                 ClientContext.ExecuteQueryRetry();
 
                 var tag = tags.Where(t => t.TagName == Label).FirstOrDefault();
@@ -174,8 +187,21 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     try
                     {
-                        item.SetComplianceTag(tag.TagName, tag.BlockDelete, tag.BlockEdit, tag.IsEventTag, tag.SuperLock, tag.UnlockedAsDefault);
-                        ClientContext.ExecuteQueryRetry();
+                        ClientContext.Web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
+                        list.EnsureProperties(l => l.RootFolder, l => l.RootFolder.ServerRelativeUrl);
+
+                        string listUrl = string.Empty;
+                        if (ClientContext.Web.ServerRelativeUrl.Equals("/"))
+                        {
+                            listUrl = ClientContext.Web.Url + list.RootFolder.ServerRelativeUrl;
+                        }
+                        else
+                        {
+                            listUrl = ClientContext.Web.Url.Replace(ClientContext.Web.ServerRelativeUrl, "") + list.RootFolder.ServerRelativeUrl;
+                        }
+
+                        SPPolicyStoreProxy.SetComplianceTagOnBulkItems(ClientContext, new[] { item.Id }, listUrl, tag.TagName);                        
+                        ClientContext.ExecuteQueryRetry();                        
                     }
                     catch (System.Exception error)
                     {
