@@ -17,6 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `AzureADLoginEndPoint` and `MicrosoftGraphEndPoint` parameters to `Connect-PnPOnline` cmdlet for use in custom Azure environments. [#2925](https://github.com/pnp/powershell/pull/2925)
 - Added `-SharingStatus` parameter to `Get-PnPFlow` which allows for filtering flows based on their sharing status. [#3287](https://github.com/pnp/powershell/pull/3287)
 - Added `-AzureADLoginEndPoint` and `-MicrosoftGraphEndPoint` parameters to `Connect-PnPOnline` cmdlet for use in custom Azure environments. [#2925](https://github.com/pnp/powershell/pull/2925)
+- Added `SiteOwnerManageLegacyServicePrincipalEnabled` parameter to `Set-PnPTenant` cmdlet. With this parameter site owners will not be able to register/update apps unless the tenant admin explicitly allows it. [#3318](https://github.com/pnp/powershell/pull/3318)
 
 ### Fixed
 
@@ -39,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Reshmee Auckloo [reshmee011]
 - Per Østergaard [per-oestergaard]
 - Nishkalank Bezawada [NishkalankBezawada]
 - [PowerBugi]
