@@ -733,20 +733,8 @@ namespace PnP.PowerShell.Commands.Base
 
             try
             {
-                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-                var httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Head;
-                httpRequest.Version = new Version(2,0);
-                httpRequest.RequestUri = new Uri("https://" + nameOrAddress);                
-                var cancellationToken = new CancellationTokenSource();
-                cancellationToken.CancelAfter(TimeSpan.FromSeconds(10));
-                var response = httpClient.SendAsync(httpRequest, cancellationToken.Token).Result;
-                var statusCode = (int) response.StatusCode;
-                if (statusCode > 100 && statusCode < 500)
-                {
-                    return true;
-                }
-                return false;
+                var conn = System.Net.Dns.GetHostEntry(nameOrAddress);
+                return true;
             }
             catch
             {
