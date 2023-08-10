@@ -197,6 +197,7 @@
  [-StopNew2013Workflows &lt;Boolean&gt;]
  [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;]
  [-MediaTranscriptionAutomaticFeatures &lt;MediaTranscriptionAutomaticFeaturesPolicyType&gt;]
+ [-SiteOwnerManageLegacyServicePrincipalEnabled &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -1731,6 +1732,17 @@ Accept wildcard characters: False
 <h3 id="-mediatranscriptionautomaticfeatures">-MediaTranscriptionAutomaticFeatures</h3>
 <p>When the feature is enabled, videos can have transcripts generated automatically on upload. The policy is default on. If a tenant admin decides to disable the feature, he can do so by disabling the policy at tenant level. This feature can not be enabled or disabled at site level. Possible values: Enabled, Disabled.</p>
 <pre><code class="lang-yaml">Type: MediaTranscriptionAutomaticFeaturesPolicyType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-siteownermanagelegacyserviceprincipalenabled">-SiteOwnerManageLegacyServicePrincipalEnabled</h3>
+<p>This parameter allows site owners to create or update the service principal.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
