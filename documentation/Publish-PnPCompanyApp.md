@@ -10,6 +10,7 @@ title: Publish-PnPCompanyApp
 
 ## SYNOPSIS
 This cmdlet publishes a new company app to Microsoft Teams.
+** This cmdlet is obsolete and will not be supported **
 
 ## SYNTAX
 
