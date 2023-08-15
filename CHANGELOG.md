@@ -37,7 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - Improved `Set-PnPListItem` cmdlet handling of Purview labels. [#3340](https://github.com/pnp/powershell/pull/3340)
-- The `Publish-PnPCompanyApp` cmdlet is now obsolete. It will be removed in the next version.
+- The `Publish-PnPCompanyApp` cmdlet is now obsolete. It will be removed in the next version. [#3349](https://github.com/pnp/powershell/pull/3349)
 
 ### Contributors
 
