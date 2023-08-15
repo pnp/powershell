@@ -376,6 +376,31 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? SiteOwnerManageLegacyServicePrincipalEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? ReduceTempTokenLifetimeEnabled { get; set; }
+        
+        [Parameter(Mandatory = false)]
+        public int? ReduceTempTokenLifetimeValue;
+
+        [Parameter(Mandatory = false)]
+        public bool? ViewersCanCommentOnMediaDisabled { get; set; }
+        
+        [Parameter(Mandatory = false)]
+        public bool? AllowGuestUserShareToUsersNotInSiteCollection { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public string ConditionalAccessPolicyErrorHelpLink;
+
+        [Parameter(Mandatory = false)]
+        public string CustomizedExternalSharingServiceUrl;
+
+        [Parameter(Mandatory = false)]
+        public bool? IncludeAtAGlanceInShareEmails { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? MassDeleteNotificationDisabled { get; set; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -397,6 +422,13 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.NoAccessRedirectUrl = NoAccessRedirectUrl;
                 modified = true;
             }
+
+            if (CustomizedExternalSharingServiceUrl != null)
+            {
+                Tenant.CustomizedExternalSharingServiceUrl = CustomizedExternalSharingServiceUrl;
+                modified = true;
+            }
+
             if (ExternalServicesEnabled.HasValue)
             {
                 Tenant.ExternalServicesEnabled = ExternalServicesEnabled.Value;
@@ -1076,7 +1108,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (OneDriveRequestFilesLinkExpirationInDays.Value < 0 || OneDriveRequestFilesLinkExpirationInDays.Value > 730)
                 {
-                    throw new PSArgumentException($"{OneDriveRequestFilesLinkExpirationInDays} must have a value between 0 and 730", nameof(OneDriveRequestFilesLinkExpirationInDays));
+                    throw new PSArgumentException("OneDriveRequestFilesLinkExpirationInDays must have a value between 0 and 730", nameof(OneDriveRequestFilesLinkExpirationInDays));
                 }
 
                 Tenant.OneDriveRequestFilesLinkExpirationInDays = OneDriveRequestFilesLinkExpirationInDays.Value;
@@ -1105,16 +1137,33 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (CoreRequestFilesLinkExpirationInDays.Value < 0 || CoreRequestFilesLinkExpirationInDays > 730)
                 {
-                    throw new PSArgumentException($"{CoreRequestFilesLinkExpirationInDays} must have a value between 0 and 730", nameof(CoreRequestFilesLinkExpirationInDays));
+                    throw new PSArgumentException("CoreRequestFilesLinkExpirationInDays must have a value between 0 and 730", nameof(CoreRequestFilesLinkExpirationInDays));
                 }
 
                 Tenant.CoreRequestFilesLinkExpirationInDays = CoreRequestFilesLinkExpirationInDays.Value;
                 modified = true;
             }
 
+            if (ReduceTempTokenLifetimeValue.HasValue)
+            {
+                if (ReduceTempTokenLifetimeValue.Value < 5 || ReduceTempTokenLifetimeValue > 15)
+                {
+                    throw new PSArgumentException("ReduceTempTokenLifetimeValue must have a value between 5 and 15", nameof(ReduceTempTokenLifetimeValue));
+                }
+
+                Tenant.ReduceTempTokenLifetimeValue = ReduceTempTokenLifetimeValue.Value;
+                modified = true;
+            }
+
             if (LabelMismatchEmailHelpLink != null)
             {
                 Tenant.LabelMismatchEmailHelpLink = LabelMismatchEmailHelpLink;
+                modified = true;
+            }
+
+            if (ConditionalAccessPolicyErrorHelpLink != null)
+            {
+                Tenant.ConditionalAccessPolicyErrorHelpLink = ConditionalAccessPolicyErrorHelpLink;
                 modified = true;
             }
 
@@ -1253,6 +1302,36 @@ namespace PnP.PowerShell.Commands.Admin
             if (SiteOwnerManageLegacyServicePrincipalEnabled.HasValue)
             {
                 Tenant.SiteOwnerManageLegacyServicePrincipalEnabled = SiteOwnerManageLegacyServicePrincipalEnabled.Value;
+                modified = true;
+            }
+
+            if (ReduceTempTokenLifetimeEnabled.HasValue)
+            {
+                Tenant.ReduceTempTokenLifetimeEnabled = ReduceTempTokenLifetimeEnabled.Value;
+                modified = true;
+            }
+
+            if (ViewersCanCommentOnMediaDisabled.HasValue)
+            {
+                Tenant.ViewersCanCommentOnMediaDisabled = ViewersCanCommentOnMediaDisabled.Value;
+                modified = true;
+            }
+
+            if (AllowGuestUserShareToUsersNotInSiteCollection.HasValue)
+            {
+                Tenant.AllowGuestUserShareToUsersNotInSiteCollection = AllowGuestUserShareToUsersNotInSiteCollection.Value;
+                modified = true;
+            }
+            
+            if (IncludeAtAGlanceInShareEmails.HasValue)
+            {
+                Tenant.IncludeAtAGlanceInShareEmails = IncludeAtAGlanceInShareEmails.Value;
+                modified = true;
+            }
+            
+            if (MassDeleteNotificationDisabled.HasValue)
+            {
+                Tenant.MassDeleteNotificationDisabled = MassDeleteNotificationDisabled.Value;
                 modified = true;
             }
 
