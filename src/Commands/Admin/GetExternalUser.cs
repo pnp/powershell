@@ -29,8 +29,6 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             var office365Tenant = new Office365Tenant(AdminContext);
-            AdminContext.Load(office365Tenant);
-            AdminContext.ExecuteQueryRetry();
             GetExternalUsers(office365Tenant);
         }
 

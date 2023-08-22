@@ -415,8 +415,6 @@ namespace PnP.PowerShell.Commands.Site
                 if (DisableSharingForNonOwners.IsPresent)
                 {
                     Office365Tenant office365Tenant = new Office365Tenant(context);
-                    context.Load(office365Tenant);
-                    context.ExecuteQueryRetry();
                     office365Tenant.DisableSharingForNonOwnersOfSite(siteUrl);
                     context.ExecuteQueryRetry();
                 }

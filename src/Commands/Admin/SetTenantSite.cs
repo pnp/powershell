@@ -552,9 +552,8 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(DisableSharingForNonOwners)))
             {
                 var office365Tenant = new Office365Tenant(AdminContext);
-                AdminContext.Load(office365Tenant);
-                AdminContext.ExecuteQueryRetry();
                 office365Tenant.DisableSharingForNonOwnersOfSite(Identity.Url);
+                AdminContext.ExecuteQueryRetry();
             }
 
             if (ParameterSpecified(nameof(HubSiteId)))

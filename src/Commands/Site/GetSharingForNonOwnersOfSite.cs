@@ -27,7 +27,6 @@ namespace PnP.PowerShell.Commands.Site
             }
 
             Office365Tenant office365Tenant = new Office365Tenant(context);
-            context.Load(office365Tenant);
             var isSharingDisabledForNonOwnersOfSite = office365Tenant.IsSharingDisabledForNonOwnersOfSite(siteUrl);
             context.ExecuteQueryRetry();
 
