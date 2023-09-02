@@ -53,6 +53,9 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false)]
         public bool Deprecated;
 
+        [Parameter(Mandatory = false)]
+        public bool? AvailableForTagging;
+
         protected override void ExecuteCmdlet()
         {
             DefaultRetrievalExpressions = new Expression<Func<Term, object>>[] { g => g.Name, g => g.TermsCount, g => g.Id };
@@ -130,6 +133,12 @@ namespace PnP.PowerShell.Commands.Taxonomy
             {
                 term.Deprecate(Deprecated);
             }
+            
+            if (ParameterSpecified(nameof(AvailableForTagging)) && AvailableForTagging.HasValue)
+            {
+                term.IsAvailableForTagging = AvailableForTagging.Value;
+            }
+            
             ClientContext.Load(term);
             termStore.CommitAll();
             ClientContext.ExecuteQueryRetry();
@@ -137,4 +146,3 @@ namespace PnP.PowerShell.Commands.Taxonomy
         }
     }
 }
-

@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ReduceTempTokenLifetimeEnabled`, `-ReduceTempTokenLifetimeValue`, `-ViewersCanCommentOnMediaDisabled`, `-AllowGuestUserShareToUsersNotInSiteCollection`, `-ConditionalAccessPolicyErrorHelpLink`, `-CustomizedExternalSharingServiceUrl`, `-IncludeAtAGlanceInShareEmails` and `-MassDeleteNotificationDisabled` to `Set-PnPTenant` [#3348](https://github.com/pnp/powershell/pull/3348)
 - Added `Add-PnPFlowOwner` and `Remove-PnPFlowOwner` cmdlets which allow granting or removing permissions to a Power Automate flow [#3343](https://github.com/pnp/powershell/pull/3343)
 - Added `Get-PnPFlowOwner` cmdlet which allows retrieving the owners of a Power Automate flow [#3314](https://github.com/pnp/powershell/pull/3314)
+- Added `-AvailableForTagging` to `Set-PnPTerm` which allows the available for tagging property on a Term to be set [#3321](https://github.com/pnp/powershell/pull/3321)
 
 ### Fixed
 
@@ -58,6 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Jim Duncan [sparkitect]
 - Jonathan Smith [jonathan-m-smith]
 - Carl Joakim Damsleth [damsleth]
 - Rodel Pacurib [ryder-cayden]
