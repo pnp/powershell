@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
@@ -10,9 +11,9 @@ using Folder = Microsoft.SharePoint.Client.Folder;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFolderItem", DefaultParameterSetName = ParameterSet_FOLDERSBYPIPE)]
-    [OutputType(typeof(IEnumerable<ClientObject>))]
-    public class GetFolderItem : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPFolderFile", DefaultParameterSetName = ParameterSet_FOLDERSBYPIPE)]
+    [OutputType(typeof(IEnumerable<File>))]
+    public class GetFolderFile : PnPWebRetrievalsCmdlet<File>
     {
         private const string ParameterSet_FOLDERSBYPIPE = "Folder via pipebind";
         private const string ParameterSet_FOLDERBYURL = "Folder via url";
@@ -24,14 +25,13 @@ namespace PnP.PowerShell.Commands.Files
         public FolderPipeBind Identity;
 
         [Parameter(Mandatory = false)]
-        [ValidateSet("Folder", "File", "All")]
-        public string ItemType = "All";
-
-        [Parameter(Mandatory = false)]
         public string ItemName = string.Empty;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Recursive;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter ExcludeSystemFolders;          
 
         protected override void ExecuteCmdlet()
         {
@@ -41,32 +41,13 @@ namespace PnP.PowerShell.Commands.Files
 
             if (!string.IsNullOrEmpty(ItemName))
             {
-                var filteredContents = new List<object>();
-                foreach(var item in contents)
-                {
-                    if(item is Folder folder)
-                    {
-                        if(folder.Name.Equals(ItemName, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            filteredContents.Add(folder);
-                        }
-                    }
-                    else if(item is File file)
-                    {
-                        if(file.Name.Equals(ItemName, StringComparison.InvariantCultureIgnoreCase))
-                        {
-                            filteredContents.Add(file);
-                        }
-                    }
-                }
-
-                contents = filteredContents;
+                contents = contents.Where(f => f.Name.Equals(ItemName, StringComparison.InvariantCultureIgnoreCase));
             }
 
             WriteObject(contents, true);
         }
 
-        private IEnumerable<object> GetContents(string FolderSiteRelativeUrl)
+        private IEnumerable<File> GetContents(string FolderSiteRelativeUrl)
         {
             Folder targetFolder = null;
             if (string.IsNullOrEmpty(FolderSiteRelativeUrl) && ParameterSetName == ParameterSet_FOLDERSBYPIPE && Identity != null)
@@ -83,6 +64,11 @@ namespace PnP.PowerShell.Commands.Files
 
                 if(string.IsNullOrEmpty(FolderSiteRelativeUrl))
                 {
+                    if(ParameterSpecified(nameof(ExcludeSystemFolders)))
+                    {
+                        WriteWarning($"The {nameof(ExcludeSystemFolders)} parameter is only supported when retrieving a specific folder. It will be ignored.");
+                        ExcludeSystemFolders = false;
+                    }
                     targetFolder = CurrentWeb.EnsureProperty(w => w.RootFolder);
                 }
                 else
@@ -94,29 +80,22 @@ namespace PnP.PowerShell.Commands.Files
             IEnumerable<File> files = null;
             IEnumerable<Folder> folders = null;
 
-            if (ItemType == "File" || ItemType == "All")
+            files = ClientContext.LoadQuery(targetFolder.Files.IncludeWithDefaultProperties(RetrievalExpressions)).OrderBy(f => f.Name);
+
+            if (Recursive)
             {
-                files = ClientContext.LoadQuery(targetFolder.Files).OrderBy(f => f.Name);
-            }
-            if (ItemType == "Folder" || ItemType == "All" || Recursive)
-            {
-                folders = ClientContext.LoadQuery(targetFolder.Folders).OrderBy(f => f.Name);
+                if(ExcludeSystemFolders.ToBool())
+                {
+                    folders = ClientContext.LoadQuery(targetFolder.Folders.IncludeWithDefaultProperties(f => f.ListItemAllFields)).Where(f => !ExcludeSystemFolders.ToBool() || !f.ListItemAllFields.ServerObjectIsNull.GetValueOrDefault(false)).OrderBy(f => f.Name);
+                }
+                else
+                {
+                    folders = ClientContext.LoadQuery(targetFolder.Folders).OrderBy(f => f.Name);
+                }                
             }
             ClientContext.ExecuteQueryRetry();
 
-            IEnumerable<object> folderContent = null;
-            switch (ItemType)
-            {
-                case "All":
-                    folderContent = folders.Concat<object>(files);
-                    break;
-                case "Folder":
-                    folderContent = folders;
-                    break;
-                default:
-                    folderContent = files;
-                    break;
-            }
+            IEnumerable<File> folderContent = files;
 
             if (Recursive && folders.Count() > 0)
             {
@@ -127,7 +106,7 @@ namespace PnP.PowerShell.Commands.Files
                     WriteVerbose($"Processing folder {relativeUrl}");
 
                     var subFolderContents = GetContents(relativeUrl);
-                    folderContent = folderContent.Concat<object>(subFolderContents);
+                    folderContent = folderContent.Concat<File>(subFolderContents);
                 }
             }
 
