@@ -1,16 +1,14 @@
-﻿using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 using System.Linq;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System.Security.Cryptography.X509Certificates;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 {
-    [Cmdlet(VerbsCommon.Get, "PnPPowerPlatformConnectors")]
-    public class GetPowerPlatformConnectors : PnPAzureManagementApiCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPPowerPlatformConnector")]
+    public class GetPowerPlatformConnector : PnPAzureManagementApiCmdlet
     {
       
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
@@ -59,7 +57,6 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
                 var connectors = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.PowerPlatformConnector>(Connection, $"https://api.powerapps.com/providers/Microsoft.PowerApps/apis?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", AccessToken).GetAwaiter().GetResult();
                 WriteObject(connectors, true);
             }
-
         }
     }
 }
