@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
         public bool Deprecated;
 
         [Parameter(Mandatory = false)]
-        public bool AvailableForTagging;
+        public bool? AvailableForTagging;
 
         protected override void ExecuteCmdlet()
         {
@@ -134,9 +134,9 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 term.Deprecate(Deprecated);
             }
             
-            if (ParameterSpecified(nameof(AvailableForTagging)))
+            if (ParameterSpecified(nameof(AvailableForTagging)) && AvailableForTagging.HasValue)
             {
-                term.IsAvailableForTagging = AvailableForTagging;
+                term.IsAvailableForTagging = AvailableForTagging.Value;
             }
             
             ClientContext.Load(term);
@@ -146,4 +146,3 @@ namespace PnP.PowerShell.Commands.Taxonomy
         }
     }
 }
-
