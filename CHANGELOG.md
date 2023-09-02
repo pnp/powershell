@@ -41,6 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- [CatSchneider]
 - Reshmee Auckloo [reshmee011]
 - Per Østergaard [per-oestergaard]
 - Nishkalank Bezawada [NishkalankBezawada]
