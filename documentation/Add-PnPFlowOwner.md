@@ -19,49 +19,43 @@ Assigns/updates permissions to a Power Automate flow
 
 ## SYNTAX
 
-### By Identity and User (default)
 ```powershell
-Add-PnPFlowOwner [-Environment <PowerAutomateEnvironmentPipeBind>] [-Identity <PowerPlatformPipeBind>] [-User <String>] [-AsAdmin] [-RoleName <FlowUserRoleName>]
+Add-PnPFlowOwner -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerPlatformPipeBind> -User <String> -Role <FlowAccessRole> [-AsAdmin] [-Verbose]
 ```
 
-
 ## DESCRIPTION
-This cmdlet assigns/updates permissions for a user to a power automate flow.
+This cmdlet assigns/updates permissions for a user to a Power Automate flow.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Add-PnPFlowOwner -environment $environment -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -RoleName CanEdit
+Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -Role CanEdit
 ```
-Assigns the specified useremail with 'CanEdit' access level to the specified flow
+Assigns the specified user with 'CanEdit' access level to the specified flow
 
 ### Example 2
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Add-PnPFlowOwner -environment $environment -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04 -RoleName CanView
+Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04 -Role CanView
 ```
-Assigns the specified user id with 'CanView' access level to the specified flow
+Assigns the specified user with 'CanView' access level to the specified flow
 
 ### Example 3
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Add-PnPFlowOwner -environment $environment -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04 -RoleName CanViewWithShare
+Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04 -Role CanViewWithShare
 ```
-Assigns the specified user id with 'CanViewWithShare' access level to the specified flow
+Assigns the specified user with 'CanViewWithShare' access level to the specified flow
 
 ### Example 4
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Add-PnPFlowOwner -environment $environment -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin -RoleName CanEdit
+Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin -Role CanEdit
 ```
-Assigns the specified useremail with 'CanEdit' access level to the specified flow as admin
+Assigns the specified user with 'CanEdit' access level to the specified flow as admin
 
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment object to retrieve the available flows for.
+The Power Platform environment that hosts the Power Automate Flow to add the permissions to.
 
 ```yaml
 Type: PowerAutomateEnvironmentPipeBind
@@ -70,17 +64,17 @@ Aliases:
 
 Required: True
 Position: Named
-Default value: The default environment
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Identity
-The Name/Id of the flow to retrieve.
+The Name, Id or instance of the Power Automate Flow to add the permissions to.
 
 ```yaml
 Type: PowerPlatformPipeBind
-Parameter Sets: By Identity
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -91,11 +85,12 @@ Accept wildcard characters: False
 ```
 
 ### -User
-Returns the user with the provided user id or username.
+The user principal name or Id of the user to assign permissions to the Power Automate Flow.
 
 ```yaml
 Type: String
-Parameter Sets: Return by specific ID/UserName
+Parameter Sets: (All)
+Aliases:
 
 Required: True
 Position: Named
@@ -104,24 +99,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RoleName
-Allows specifying the type of access levels with which user should be added to the flow . Valid values: CanView, CanViewWithShare, CanEdit.
+### -Role
+The type of permissions to assign to the user on the Power Automate Flow. Valid values: CanView, CanViewWithShare, CanEdit.
 
 ```yaml
-Type: FlowUserRoleName
-Parameter Sets: All
+Type: FlowUseFlowAccessRolerRoleName
+Parameter Sets: (All)
 
 Required: True
 Position: Named
-Default value: All
+Default value: CanView
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ### -AsAdmin
-If specified returns all the flows as admin. If not specified only the flows for the current user will be returned.
+If specified, the permission will be set as an admin. If not specified only the flows to which the current user already has access can be modified.
 
 ```yaml
 Type: SwitchParameter

@@ -20,49 +20,43 @@ Removes owner permissions to a Power Automate flow
 
 ## SYNTAX
 
-### By Identity and User (default)
 ```powershell
-Remove-PnPFlowOwner [-Environment <PowerAutomateEnvironmentPipeBind>] [-Identity <PowerPlatformPipeBind>] [-User <String>] [-AsAdmin] [-Force]
+Remove-PnPFlowOwner -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerPlatformPipeBind> -User <String> [-AsAdmin] [-Force] [-Verbose]
 ```
 
-
 ## DESCRIPTION
-This cmdlet removes owner permissions for a user to a power automate flow.
+This cmdlet removes owner permissions for a user from a Power Automate flow.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Remove-PnPFlowOwner -environment $environment -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com
+Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com
 ```
-Removes the specified user email with owner access level to the specified flow
+Removes the specified user from the specified Power Automate flow
 
 ### Example 2
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Remove-PnPFlowOwner -environment $environment -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04
+Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04
 ```
-Removes the specified user id with owner access level to the specified flow
+Removes the specified user from the specified Power Automate flow
 
 ### Example 3
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Remove-PnPFlowOwner -environment $environment -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin
+Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin
 ```
-Removes the specified user email with owner access level to the specified flow as admin
+Removes the specified user from the specified Power Automate flow as an admin
 
 ### Example 4
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Remove-PnPFlowOwner -environment $environment -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin -Force
+Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin -Force
 ```
-Removes the specified user email with owner access level to the specified flow as admin, without confirmation
+Removes the specified user from the specified Power Automate Flow as admin, without asking for confirmation
 
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment object to retrieve the available flows for.
+The Power Platform environment that hosts the Power Automate Flow to remove the permissions from.
 
 ```yaml
 Type: PowerAutomateEnvironmentPipeBind
@@ -71,17 +65,17 @@ Aliases:
 
 Required: True
 Position: Named
-Default value: The default environment
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Identity
-The Name/Id of the flow to retrieve.
+The Name, Id or instance of the Power Automate Flow to add the permissions to.
 
 ```yaml
 Type: PowerPlatformPipeBind
-Parameter Sets: By Identity
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -92,11 +86,11 @@ Accept wildcard characters: False
 ```
 
 ### -User
-Returns the user with the provided user id or username.
+The user principal name or Id of the user to remove its permissions from the Power Automate Flow.
 
 ```yaml
 Type: String
-Parameter Sets: Return by specific ID/UserName
+Parameter Sets: (All)
 
 Required: True
 Position: Named
@@ -105,9 +99,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
 ### -AsAdmin
-If specified returns all the flows as admin. If not specified only the flows for the current user will be returned.
+If specified, the permission will be removed as an admin. If not specified only the flows to which the current user already has access can be modified.
 
 ```yaml
 Type: SwitchParameter
@@ -122,7 +115,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Specifying the Force parameter will skip the confirmation question.
+Providing the Force parameter will skip the confirmation question.
 
 ```yaml
 Type: SwitchParameter
@@ -134,7 +127,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
 
 ## RELATED LINKS
 

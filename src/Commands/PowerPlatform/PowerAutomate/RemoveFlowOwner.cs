@@ -1,7 +1,5 @@
-﻿using AngleSharp.Css;
-using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
@@ -12,15 +10,13 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
     [Cmdlet(VerbsCommon.Remove, "PnPFlowOwner")]
     public class RemoveFlowOwner : PnPAzureManagementApiCmdlet
     {
-        private const string ParameterSet_BYID = "Return by specific ID/Username";
-
         [Parameter(Mandatory = true)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
         [Parameter(Mandatory = true)]
         public PowerAutomateFlowPipeBind Identity;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYID)]
+        [Parameter(Mandatory = true)]
         public string User;
 
         [Parameter(Mandatory = false)]
@@ -34,41 +30,36 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             var environmentName = Environment.GetName();
             if (string.IsNullOrEmpty(environmentName))
             {
-                throw new PSArgumentException("Environment not found.");
+                throw new PSArgumentException("Environment not found.", nameof(Environment));
             }
 
             var flowName = Identity.GetName();
             if (string.IsNullOrEmpty(flowName))
             {
-                throw new PSArgumentException("Flow not found.");
+                throw new PSArgumentException("Flow not found.", nameof(Identity));
             }
 
-            Guid idToRemove = Guid.Empty;
-            if (ParameterSpecified(nameof(User)))
-            {
-                /// <summary>
-                /// graphAccessToken => The OAuth 2.0 access token to use for invoking Microsoft Graph. 
-                /// This is used to get the user information from AzureAD
-                /// </summary>
-                var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
-                PnP.PowerShell.Commands.Model.AzureAD.User user;
-                if (Guid.TryParse(User, out Guid identityGuid))
-                {
-                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(graphAccessToken, identityGuid);
-                }
-                else
-                {
-                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(graphAccessToken, WebUtility.UrlEncode(User));
-                }
+            WriteVerbose("Acquiring access token for Microsoft Graph to look up user");
 
-                if (user == null)
-                {
-                    throw new PSArgumentException("User not found.");
-                }
-                else
-                {
-                    idToRemove = (Guid)user.Id;
-                }
+            var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
+
+            WriteVerbose("Microsoft Graph access token acquired");
+            
+            Model.AzureAD.User user;
+            if (Guid.TryParse(User, out Guid identityGuid))
+            {
+                WriteVerbose("Looking up user through Microsoft Graph by user id {identityGuid}");
+                user = Utilities.AzureAdUtility.GetUser(graphAccessToken, identityGuid);
+            }
+            else
+            {
+                WriteVerbose($"Looking up user through Microsoft Graph by user principal name {User}");
+                user = Utilities.AzureAdUtility.GetUser(graphAccessToken, WebUtility.UrlEncode(User));
+            }
+
+            if (user == null)
+            {
+                throw new PSArgumentException("User not found.", nameof(User));
             }
 
             var payload = new
@@ -77,13 +68,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 {
                     new
                     {
-                        id = idToRemove,
+                        id = user.Id.Value,
                     }
                 }
             };
 
-            if(Force || ShouldContinue($"Remove flow owner with id '{idToRemove}' from flow '{flowName}'?", "Remove flow owner"))
+            if(Force || ShouldContinue($"Remove flow owner with id '{user.Id.Value}' from flow '{flowName}'?", "Remove flow owner"))
             {
+                WriteVerbose($"Removing user {user.Id.Value} permissions from flow {flowName} in environment {environmentName}");
                 RestHelper.PostAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/modifyPermissions?api-version=2016-11-01", AccessToken, payload).GetAwaiter().GetResult();
             }
         }
