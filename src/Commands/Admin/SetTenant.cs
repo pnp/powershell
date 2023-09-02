@@ -274,9 +274,6 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? EnableAzureADB2BIntegration;
 
         [Parameter(Mandatory = false)]
-        public bool? SyncAadB2BManagementPolicy;
-
-        [Parameter(Mandatory = false)]
         public bool? CoreRequestFilesLinkEnabled;
 
         [Parameter(Mandatory = false)]
@@ -287,9 +284,6 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? DisableDocumentLibraryDefaultLabeling { get; set; }
-
-        [Parameter(Mandatory = false)]
-        public bool? DisableListSync { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? IsEnableAppAuthPopUpEnabled { get; set; }
@@ -1095,12 +1089,6 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if (SyncAadB2BManagementPolicy.HasValue)
-            {
-                Tenant.SyncAadB2BManagementPolicy = SyncAadB2BManagementPolicy.Value;
-                modified = true;
-            }
-
             if (EnableAzureADB2BIntegration.HasValue)
             {
                 Tenant.EnableAzureADB2BIntegration = EnableAzureADB2BIntegration.Value;
@@ -1133,12 +1121,6 @@ namespace PnP.PowerShell.Commands.Admin
             if (DisableDocumentLibraryDefaultLabeling.HasValue)
             {
                 Tenant.DisableDocumentLibraryDefaultLabeling = DisableDocumentLibraryDefaultLabeling.Value;
-                modified = true;
-            }
-
-            if (DisableListSync.HasValue)
-            {
-                Tenant.DisableListSync = DisableListSync.Value;
                 modified = true;
             }
 
