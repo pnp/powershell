@@ -50,6 +50,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Jonathan Smith [jonathan-m-smith]
 - Carl Joakim Damsleth [damsleth]
 - Rodel Pacurib [ryder-cayden]
 - [CatSchneider]
