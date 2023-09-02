@@ -34,6 +34,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPTeamsTeam` cmdlet, it will now throw error if it fails to teamify a Microsoft 365 group. [#3310](https://github.com/pnp/powershell/pull/3310)
 - Fixed `Connect-PnPOnline` cmdlet throwing host not reachable errors. [#3337](https://github.com/pnp/powershell/pull/3337)
 - Fixed `Set-PnPTerm` cmdlet throwing object reference error when only the term Id is specified. [#3341](https://github.com/pnp/powershell/pull/3341)
+- Fixed `New-PnPTeamsTeam` cmdlet throwing an error when specifying members [#3351](https://github.com/pnp/powershell/pull/3351)
+- Fixed `New-PnPTeamsTeam` cmdlet not working well with a managed identity [#3351](https://github.com/pnp/powershell/pull/3351)
 
 ### Changed
 
@@ -47,6 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Carl Joakim Damsleth [damsleth]
 - Rodel Pacurib [ryder-cayden]
 - [CatSchneider]
 - [msjennywu]
