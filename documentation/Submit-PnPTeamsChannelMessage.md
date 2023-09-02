@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Submit-PnPTeamsChannelM
 
 **Required Permissions**
 
-  * Microsoft Graph API: API required one of 'Teamwork.Migrate.All, ChannelMessage.ReadWrite.All'.
+  * Microsoft Graph API: API required one of: `Teamwork.Migrate.All, ChannelMessage.Send or Group.ReadWrite.All`.
 
 Sends a message to a Microsoft Teams Channel.
 

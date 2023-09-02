@@ -127,6 +127,27 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool EnableAutoExpirationVersionTrim;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int ExpireVersionsAfterDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int MajorVersions;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int MinorVersions;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter InheritTenantVersionPolicySettings;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter StartApplyVersionPolicySettingToExistingDocLibs;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter CancelApplyVersionPolicySettingToExistingDocLibs;
+
         protected override void ExecuteCmdlet()
         {
             var context = ClientContext;
@@ -232,6 +253,125 @@ namespace PnP.PowerShell.Commands.Site
                 else
                 {
                     throw new Exception("Logo file does not exist");
+                }
+            }
+
+            if (ParameterSpecified(nameof(InheritTenantVersionPolicySettings)))
+            {
+                if (ParameterSpecified(nameof(EnableAutoExpirationVersionTrim)) ||
+                    ParameterSpecified(nameof(ExpireVersionsAfterDays)) ||
+                    ParameterSpecified(nameof(MajorVersions)) ||
+                    ParameterSpecified(nameof(MinorVersions)) ||
+                    ParameterSpecified(nameof(StartApplyVersionPolicySettingToExistingDocLibs)) ||
+                    ParameterSpecified(nameof(CancelApplyVersionPolicySettingToExistingDocLibs)))
+                {
+                    throw new PSArgumentException($"The VersionPolicy related parameters (EnableAutoExpirationVersionTrim, ExpireVersionsAfterDays, MajorVersions, StartApplyVersionPolicySettingToExistingDocLibs, CancelApplyVersionPolicySettingToExistingDocLibs) cannot be set when InheritTenantVersionPolicySettings is specified.");
+                }
+
+                site.EnsureProperty(s => s.VersionPolicyForNewLibrariesTemplate);
+                site.VersionPolicyForNewLibrariesTemplate.InheritTenantSettings();
+                context.ExecuteQueryRetry();
+            }
+            else
+            {
+                if (ParameterSpecified(nameof(StartApplyVersionPolicySettingToExistingDocLibs)) &&
+                    ParameterSpecified(nameof(CancelApplyVersionPolicySettingToExistingDocLibs)))
+                {
+                    throw new PSArgumentException($"Don't specify both StartApplyVersionPolicySettingToExistingDocLibs and CancelApplyVersionPolicySettingToExistingDocLibs.");
+                }
+
+                if (ParameterSpecified(nameof(CancelApplyVersionPolicySettingToExistingDocLibs)))
+                {
+                    if (ParameterSpecified(nameof(EnableAutoExpirationVersionTrim)) ||
+                        ParameterSpecified(nameof(ExpireVersionsAfterDays)) ||
+                        ParameterSpecified(nameof(MajorVersions)) ||
+                        ParameterSpecified(nameof(MinorVersions)))
+                    {
+                        throw new PSArgumentException($"The VersionPolicy related parameters (EnableAutoExpirationVersionTrim, ExpireVersionsAfterDays, MajorVersions) cannot be set when CancelApplyVersionPolicySettingToExistingDocLibs is specified.");
+                    }
+
+                    site.CancelSetVersionPolicyForDocLibs();
+                    context.ExecuteQueryRetry();
+                }
+                else
+                {
+                    if (ParameterSpecified(nameof(StartApplyVersionPolicySettingToExistingDocLibs)))
+                    {
+                        if (ParameterSpecified(nameof(EnableAutoExpirationVersionTrim)))
+                        {
+                            if (EnableAutoExpirationVersionTrim)
+                            {
+                                if (ParameterSpecified(nameof(ExpireVersionsAfterDays)) ||
+                                    ParameterSpecified(nameof(MajorVersions)) ||
+                                    ParameterSpecified(nameof(MinorVersions)))
+                                {
+                                    throw new PSArgumentException($"Don't specify ExpireVersionsAfterDays, MajorVersions and MinorVersions when EnableAutoExpirationVersionTrim is true.");
+                                }
+
+                                site.StartSetVersionPolicyForDocLibs(true, -1, -1, -1);
+                                context.ExecuteQueryRetry();
+                            }
+                            else
+                            {
+                                if (!ParameterSpecified(nameof(ExpireVersionsAfterDays)) ||
+                                    !ParameterSpecified(nameof(MajorVersions)) ||
+                                    !ParameterSpecified(nameof(MinorVersions)))
+                                {
+                                    throw new PSArgumentException($"You must specify ExpireVersionsAfterDays, MajorVersions and MinorVersions when EnableAutoExpirationVersionTrim is false.");
+                                }
+
+                                site.StartSetVersionPolicyForDocLibs(false, MajorVersions, MinorVersions, ExpireVersionsAfterDays);
+                                context.ExecuteQueryRetry();
+                            }
+                        }
+                        else
+                        {
+                            throw new PSArgumentException($"You must specify EnableAutoExpirationVersionTrim when StartApplyVersionPolicySettingToExistingDocLibs is specified.");
+                        }
+                    }
+                    else
+                    {
+                        if (ParameterSpecified(nameof(EnableAutoExpirationVersionTrim)))
+                        {
+                            if (ParameterSpecified(nameof(MinorVersions)))
+                            {
+                                throw new PSArgumentException($"Don't specify MinorVersions when StartApplyVersionPolicySettingToExistingDocLibs is not specified.");
+                            }
+
+                            if (EnableAutoExpirationVersionTrim)
+                            {
+                                if (ParameterSpecified(nameof(ExpireVersionsAfterDays)) ||
+                                    ParameterSpecified(nameof(MajorVersions)))
+                                {
+                                    throw new PSArgumentException($"Don't specify ExpireVersionsAfterDays and MajorVersions when EnableAutoExpirationVersionTrim is true.");
+                                }
+
+                                site.EnsureProperty(s => s.VersionPolicyForNewLibrariesTemplate);
+                                site.VersionPolicyForNewLibrariesTemplate.SetAutoExpiration();
+                                context.ExecuteQueryRetry();
+                            }
+                            else
+                            {
+                                if (!ParameterSpecified(nameof(ExpireVersionsAfterDays)) ||
+                                    !ParameterSpecified(nameof(MajorVersions)))
+                                {
+                                    throw new PSArgumentException($"You must specify ExpireVersionsAfterDays and MajorVersions when EnableAutoExpirationVersionTrim is false.");
+                                }
+
+                                site.EnsureProperty(s => s.VersionPolicyForNewLibrariesTemplate);
+                                if (ExpireVersionsAfterDays == 0)
+                                {
+                                    site.VersionPolicyForNewLibrariesTemplate.SetNoExpiration(MajorVersions);
+                                    context.ExecuteQueryRetry();
+                                }
+                                else
+                                {
+                                    site.VersionPolicyForNewLibrariesTemplate.SetExpireAfter(MajorVersions, ExpireVersionsAfterDays);
+                                    context.ExecuteQueryRetry();
+                                }
+                            }
+                        }
+                    }
                 }
             }
 

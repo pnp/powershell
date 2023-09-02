@@ -12,6 +12,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Admin
 {
+    [Obsolete("This usage of this cmdlet is not supported anymore and will be removed in the next version.")]
     [Cmdlet(VerbsData.Publish, "PnPCompanyApp")]
     public class BuildCompanyApp : PnPAdminCmdlet
     {

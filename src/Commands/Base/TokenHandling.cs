@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(",", requiredScopes)}");
                 var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
-                cmdlet.WriteVerbose($"Access token acquired: {accessToken}");
+                cmdlet.WriteVerbose($"Access token acquired");
                 return accessToken;
             }
             return null;

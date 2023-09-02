@@ -57,7 +57,7 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 | ----------- | ---------------------- | -------------------- | --------------------- |
 | New-PnPTenantSite | Force | - | The parameter was obsolete and not used. It has been removed. |
 | Set-PnPTenantSite | BlockDownloadOfNonViewableFiles | AllowDownloadingNonWebViewableFiles | The parameter was obsolete and hence removed. Use `AllowDownloadingNonWebViewableFiles` |
-| Connect-PnPOnline | NoTelemetry | - | The parameter was obsolete and hence removed. Use `$env:PNP_DISABLETELEMETRY` environment variable or `Disable-PnPTelemetry/Enable-PnPTelemetry` cmdlet |
+| Connect-PnPOnline | NoTelemetry | - | The parameter was obsolete and hence removed. Use `$env:PNPPOWERSHELL_DISABLETELEMETRY` environment variable or `Disable-PnPTelemetry/Enable-PnPTelemetry` cmdlet |
 | Connect-PnPOnline | NoVersionCheck | - | The parameter was obsolete and hence removed. Use `$env:PNPPOWERSHELL_UPDATECHECK` environment variable |
 | Disconnect-PnPOnline | Connection | - | The parameter was obsolete and hence removed. |
 | Request-PnPAccessToken | Resource | Scopes | The parameter was obsolete and hence removed. Use `Scopes` instead |

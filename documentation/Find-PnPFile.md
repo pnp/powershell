@@ -103,7 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -Match
-Wildcard query
+Wildcard query using * (any number of charactes) and ? (single character)
 
 ```yaml
 Type: String
@@ -113,7 +113,7 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+Accept wildcard characters: True
 ```
 
 
