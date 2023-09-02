@@ -393,15 +393,6 @@ namespace PnP.PowerShell.Commands.Model
 
             try
             {
-                this.disableListSync = tenant.DisableListSync;
-            }
-            catch
-            {
-                this.disableListSync = false;
-            }
-
-            try
-            {
                 this.disableDocumentLibraryDefaultLabeling = tenant.DisableDocumentLibraryDefaultLabeling;
             }
             catch
@@ -632,7 +623,6 @@ namespace PnP.PowerShell.Commands.Model
         public bool IsLoopEnabled => isLoopEnabled;
         public Guid[] DisabledModernListTemplateIds => disabledModernListTemplateIds;
         public bool RestrictedAccessControl => restrictedAccessControl;
-        public bool DisableListSync => disableListSync;
         public bool DisableDocumentLibraryDefaultLabeling => disableDocumentLibraryDefaultLabeling;
         public bool IsEnableAppAuthPopUpEnabled => isEnableAppAuthPopUpEnabled;
         public int? ExpireVersionsAfterDays => expireVersionsAfterDays;
@@ -804,8 +794,6 @@ namespace PnP.PowerShell.Commands.Model
         private bool isLoopEnabled;
 
         private bool restrictedAccessControl;
-
-        private bool disableListSync;
 
         private bool disableDocumentLibraryDefaultLabeling;
 
