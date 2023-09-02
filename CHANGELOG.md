@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-EnableAutoExpirationVersionTrim`, `-ExpireVersionsAfterDays`, `-MajorVersions`, `-MinorVersions`, `-InheritTenantVersionPolicySettings`, `-StartApplyVersionPolicySettingToExistingDocLibs` and `-CancelApplyVersionPolicySettingToExistingDocLibs` to `Set-PnPSite` to allow for time based version expiration on the site level [#3373](https://github.com/pnp/powershell/pull/3373)
 - Added `-ReduceTempTokenLifetimeEnabled`, `-ReduceTempTokenLifetimeValue`, `-ViewersCanCommentOnMediaDisabled`, `-AllowGuestUserShareToUsersNotInSiteCollection`, `-ConditionalAccessPolicyErrorHelpLink`, `-CustomizedExternalSharingServiceUrl`, `-IncludeAtAGlanceInShareEmails` and `-MassDeleteNotificationDisabled` to `Set-PnPTenant` [#3348](https://github.com/pnp/powershell/pull/3348)
 - Added `Add-PnPFlowOwner` and `Remove-PnPFlowOwner` cmdlets which allow granting or removing permissions to a Power Automate flow [#3343](https://github.com/pnp/powershell/pull/3343)
+- Added `Get-PnPFlowOwner` cmdlet which allows retrieving the owners of a Power Automate flow [#3314](https://github.com/pnp/powershell/pull/3314)
 
 ### Fixed
 
