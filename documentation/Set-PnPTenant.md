@@ -93,13 +93,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ExternalUserExpireInDays <Boolean>]
  [-OneDriveRequestFilesLinkEnabled <Boolean>]
  [-EnableRestrictedAccessControl <Boolean>]
- [-SyncAadB2BManagementPolicy <Boolean>]
  [-EnableAzureADB2BIntegration <Boolean>]
  [-CoreRequestFilesLinkEnabled <Boolean>]
  [-CoreRequestFilesLinkExpirationInDays <Boolean>]
  [-LabelMismatchEmailHelpLink <String>]
  [-DisableDocumentLibraryDefaultLabeling <Boolean>]
- [-DisableListSync <Boolean>]
  [-IsEnableAppAuthPopUpEnabled <Boolean>]
  [-ExpireVersionsAfterDays <Int32>]
  [-MajorVersionLimit <Int32>]
@@ -1569,20 +1567,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SyncAadB2BManagementPolicy
-Allows enablement of Azure B2B Management Policies to be synced. See [this article](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -CoreRequestFilesLinkEnabled
 Enable or disable the Request files link on the core partition for all SharePoint sites (not including OneDrive sites). If this value is not set, Request files will only show for OneDrives with Anyone links enabled.
 
@@ -1995,20 +1979,6 @@ Accept wildcard characters: False
 Enables or disables users in the organization to authenticate SharePoint applications using popups.
 
 This parameter affects the way code in SharePoint interacts with Azure AD to get tokens to access APIs. In scenarios where third-party cookies are disabled (such as Safari browsers with ITP feature enabled), any code that requires a token to access an API automatically triggers a full page refresh. When IsEnableAppAuthPopUpEnabled is set to $true, SharePoint will instead surface a popup in this scenario.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DisableListSync
-Disables or enables sync functionality for lists.
 
 ```yaml
 Type: Boolean
