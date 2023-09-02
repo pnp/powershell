@@ -38,9 +38,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Improved `Set-PnPListItem` cmdlet handling of Purview labels. [#3340](https://github.com/pnp/powershell/pull/3340)
 - The `Publish-PnPCompanyApp` cmdlet is now obsolete. It will be removed in the next version. [#3349](https://github.com/pnp/powershell/pull/3349)
+- Verbose output will no longer show the access token [#3352](https://github.com/pnp/powershell/pull/3352)
 
 ### Contributors
 
+- Rodel Pacurib [ryder-cayden]
 - Reshmee Auckloo [reshmee011]
 - Per Østergaard [per-oestergaard]
 - Nishkalank Bezawada [NishkalankBezawada]
