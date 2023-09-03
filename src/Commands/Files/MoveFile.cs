@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 SourceUrl = UrlUtility.Combine(webServerRelativeUrl, SourceUrl);
             }
-            if (!TargetUrl.StartsWith("/"))
+            if (!TargetUrl.StartsWith("https://") && !TargetUrl.StartsWith("/"))
             {
                 TargetUrl = UrlUtility.Combine(webServerRelativeUrl, TargetUrl);
             }
@@ -66,7 +66,16 @@ namespace PnP.PowerShell.Commands.Files
             Uri sourceUri = new Uri(currentContextUri, EncodePath(sourceFolder));
             Uri sourceWebUri = Web.WebUrlFromFolderUrlDirect(ClientContext, sourceUri);
             Uri targetUri = new Uri(currentContextUri, EncodePath(targetFolder));
-            Uri targetWebUri = Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
+            Uri targetWebUri;
+            if (TargetUrl.StartsWith("https://"))
+            {
+                targetUri = new Uri(TargetUrl);
+                targetWebUri = targetUri;
+            }
+            else
+            {
+                targetWebUri = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, targetUri);
+            }
 
             if (Force || ShouldContinue(string.Format(Resources.MoveFile0To1, SourceUrl, TargetUrl), Resources.Confirm))
             {
@@ -115,7 +124,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 sourceUrl = $"{source.Scheme}://{source.Host}/{sourceUrl.TrimStart('/')}";
             }
-            if (!targetUrl.StartsWith(destination.ToString()))
+            if (!targetUrl.StartsWith("https://") && !targetUrl.StartsWith(destination.ToString()))
             {
                 targetUrl = $"{destination.Scheme}://{destination.Host}/{targetUrl.TrimStart('/')}";
             }
