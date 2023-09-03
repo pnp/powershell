@@ -163,13 +163,11 @@
  [-ExternalUserExpireInDays &lt;Boolean&gt;]
  [-OneDriveRequestFilesLinkEnabled &lt;Boolean&gt;]
  [-EnableRestrictedAccessControl &lt;Boolean&gt;]
- [-SyncAadB2BManagementPolicy &lt;Boolean&gt;]
  [-EnableAzureADB2BIntegration &lt;Boolean&gt;]
  [-CoreRequestFilesLinkEnabled &lt;Boolean&gt;]
- [-CoreRequestFilesLinkExpirationInDays &lt;Boolean&gt;]
+ [-CoreRequestFilesLinkExpirationInDays &lt;Int32&gt;]
  [-LabelMismatchEmailHelpLink &lt;String&gt;]
  [-DisableDocumentLibraryDefaultLabeling &lt;Boolean&gt;]
- [-DisableListSync &lt;Boolean&gt;]
  [-IsEnableAppAuthPopUpEnabled &lt;Boolean&gt;]
  [-ExpireVersionsAfterDays &lt;Int32&gt;]
  [-MajorVersionLimit &lt;Int32&gt;]
@@ -198,6 +196,14 @@
  [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;]
  [-MediaTranscriptionAutomaticFeatures &lt;MediaTranscriptionAutomaticFeaturesPolicyType&gt;]
  [-SiteOwnerManageLegacyServicePrincipalEnabled &lt;Boolean&gt;]
+ [-ReduceTempTokenLifetimeEnabled &lt;Boolean&gt;]
+ [-ReduceTempTokenLifetimeValue &lt;Int32&gt;]
+ [-ViewersCanCommentOnMediaDisabled &lt;Boolean&gt;]
+ [-AllowGuestUserShareToUsersNotInSiteCollection &lt;Boolean&gt;]
+ [-ConditionalAccessPolicyErrorHelpLink &lt;String&gt;]
+ [-CustomizedExternalSharingServiceUrl &lt;String&gt;]
+ [-IncludeAtAGlanceInShareEmails &lt;Boolean&gt;]
+ [-MassDeleteNotificationDisabled &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -1119,7 +1125,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-informationbarrierssuspension">-InformationBarriersSuspension</h3>
-<p>Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see <a href="https://learn.microsoft.com/sharepoint/information-barriers">https://learn.microsoft.com/sharepoint/information-barriers</a>.</p>
+<p>Allows suspension of the information barriers feature in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see <a href="https://learn.microsoft.com/sharepoint/information-barriers">https://learn.microsoft.com/sharepoint/information-barriers</a>.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1294,17 +1300,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-syncaadb2bmanagementpolicy">-SyncAadB2BManagementPolicy</h3>
-<p>Allows enablement of Azure B2B Management Policies to be synced. See <a href="https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration">this article</a> for more information.</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-corerequestfileslinkenabled">-CoreRequestFilesLinkEnabled</h3>
 <p>Enable or disable the Request files link on the core partition for all SharePoint sites (not including OneDrive sites). If this value is not set, Request files will only show for OneDrives with Anyone links enabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
@@ -1466,7 +1461,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-iscollabmeetingnotesfluidenabled">-IsCollabMeetingNotesFluidEnabled</h3>
-<p>Gets or sets a value to specify whether CollabMeetingNotes Fluid Framework is enabled If IsFluidEnabled disabled, IsCollabMeetingNotesFluidEnabled will be disabled automatically If IsFluidEnabled enabled, IsCollabMeetingNotesFluidEnabled will be enabled automatically IsCollabMeetingNotesFluidEnabled can be enabled only when IsFluidEnabled is already enabled</p>
+<p>Gets or sets a value to specify whether CollabMeetingNotes Fluid Framework is enabled. If IsFluidEnabled disabled, IsCollabMeetingNotesFluidEnabled will be disabled automatically. If IsFluidEnabled enabled, IsCollabMeetingNotesFluidEnabled will be enabled automatically. IsCollabMeetingNotesFluidEnabled can be enabled only when IsFluidEnabled is already enabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1591,6 +1586,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-majorversionlimit">-MajorVersionLimit</h3>
+<p>When Version History Limits are managed Manually (EnableAutoExpirationVersionTrim $false), admins will need to set the limits to the number of major versions (MajorVersionLimit) and the time period the versions are stored (ExpireVersionsAfterDays).</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
@@ -1601,6 +1597,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-expireversionsafterdays">-ExpireVersionsAfterDays</h3>
+<p>When Version History Limits are managed Manually (EnableAutoExpirationVersionTrim $false), admins will need to set the limits to the number of major versions (MajorVersionLimit) and the time period the versions are stored (ExpireVersionsAfterDays).</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
@@ -1625,17 +1622,6 @@ Accept wildcard characters: False
 <h3 id="-isenableappauthpopupenabled">-IsEnableAppAuthPopUpEnabled</h3>
 <p>Enables or disables users in the organization to authenticate SharePoint applications using popups.</p>
 <p>This parameter affects the way code in SharePoint interacts with Azure AD to get tokens to access APIs. In scenarios where third-party cookies are disabled (such as Safari browsers with ITP feature enabled), any code that requires a token to access an API automatically triggers a full page refresh. When IsEnableAppAuthPopUpEnabled is set to $true, SharePoint will instead surface a popup in this scenario.</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-disablelistsync">-DisableListSync</h3>
-<p>Disables or enables sync functionality for lists.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -1742,6 +1728,101 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-siteownermanagelegacyserviceprincipalenabled">-SiteOwnerManageLegacyServicePrincipalEnabled</h3>
 <p>This parameter allows site owners to create or update the service principal.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-reducetemptokenlifetimeenabled">-ReduceTempTokenLifetimeEnabled</h3>
+<p>Enables reduced session timeout for temporary URLs used by apps for document download scenarios. Reduction occurs when an app redeeming an IP address does not match the original requesting IP. The default value is 15 minutes if ReduceTempTokenLifetimeValue is not set.</p>
+<p>Note: Reducing this value may bring degradation in end-user experience by requiring frequent authentication prompts to users.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-reducetemptokenlifetimevalue">-ReduceTempTokenLifetimeValue</h3>
+<p>Optional parameter to set the session timeout value for temporary URLs. The value can be set between 5 and 15 minutes and the default value is 15 minutes.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-viewerscancommentonmediadisabled">-ViewersCanCommentOnMediaDisabled</h3>
+<p>Controls whether viewers commenting on media items is disabled or not.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowguestusersharetousersnotinsitecollection">-AllowGuestUserShareToUsersNotInSiteCollection</h3>
+<p>The AllowGuestUserShareToUsersNotInSiteCollection settings (defaulted to false) will allow guests to share to users not in the site.</p>
+<p>The valid values are:</p>
+<ul>
+<li>False (default) - Guest users will only be able to share to users that exist within the current site.</li>
+<li>True - Guest users will be able to find user accounts in the directory by typing in the exact email address match.</li>
+</ul>
+<p>Note: When the value is set to True, you will also need to enable <a href="https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration">SharePoint and OneDrive integration with Azure AD B2B</a> for the functionality to work.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-conditionalaccesspolicyerrorhelplink">-ConditionalAccessPolicyErrorHelpLink</h3>
+<p>A Link for help when Conditional Access Policy blocks a user. This should be in a valid URL format. A valid URL format that begins with http:// or https://.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-customizedexternalsharingserviceurl">-CustomizedExternalSharingServiceUrl</h3>
+<p>Specifies a URL that will be appended to the error message that is surfaced when a user is blocked from sharing externally by policy. This URL can be used to direct users to internal portals to request help or to inform them about your organization's policies. An example value is <code>https://www.contoso.com/sharingpolicies</code>.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includeataglanceinshareemails">-IncludeAtAGlanceInShareEmails</h3>
+<p>Enables or disables the At A Glance feature in sharing e-mails. This provides the key points and time to read for the shared item if available.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-massdeletenotificationdisabled">-MassDeleteNotificationDisabled</h3>
+<p>Enables or disables the mass delete detection feature. When MassDeleteNotificationDisabled is set to $true, tenant admins can perform mass deletion operations without triggering notifications.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 

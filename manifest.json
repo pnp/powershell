@@ -492,6 +492,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPFlowOwner.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPFlowOwner.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPFolder.md",
       "output": {
         ".html": {
@@ -2134,6 +2144,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFlowOwner.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFlowOwner.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPFlowRun.md",
       "output": {
         ".html": {
@@ -2153,6 +2173,29 @@
       "version": ""
     },
     {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFolderFile.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFolderFile.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFolderFolder.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFolderFolder.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPFolderItem.md",
       "output": {
@@ -2404,10 +2447,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPListItemAttachments.md",
+      "source_relative_path": "cmdlets/Get-PnPListItemAttachment.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPListItemAttachments.html"
+          "relative_path": "cmdlets/Get-PnPListItemAttachment.html"
         }
       },
       "version": ""
@@ -2698,6 +2741,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPPowerApp.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPowerPlatformConnector.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPowerPlatformConnector.html"
         }
       },
       "version": ""
@@ -4631,6 +4684,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPFlow.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPFlowOwner.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPFlowOwner.html"
         }
       },
       "version": ""

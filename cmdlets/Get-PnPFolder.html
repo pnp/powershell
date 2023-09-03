@@ -84,31 +84,36 @@
   <h1 id="get-pnpfolder">Get-PnPFolder</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Return a folder object</p>
+<p>Returns one or more folder objects</p>
 <h2 id="syntax">SYNTAX</h2>
+<h3 id="folders-in-current-web-default">Folders in current Web (Default)</h3>
+<pre><code class="lang-powershell">Get-PnPFolder [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
 <h3 id="folder-by-url">Folder By Url</h3>
-<pre><code class="lang-powershell">Get-PnPFolder [-Url] &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
- 
+<pre><code class="lang-powershell">Get-PnPFolder -Url &lt;String&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="folders-in-list">Folders In List</h3>
-<pre><code class="lang-powershell">Get-PnPFolder [-List] &lt;ListPipeBind&gt; [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
- 
+<pre><code class="lang-powershell">Get-PnPFolder -List &lt;ListPipeBind&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Retrieves a folder if it exists or all folders inside a provided list or library. Use Resolve-PnPFolder to create the folder if it does not exist.</p>
+<p>Retrieves one or more folders from the specified location. Use Resolve-PnPFolder to create the folder if it does not exist.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPFolder
+</code></pre>
+<p>Returns all the folders in the root of the current web</p>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPFolder -Url &quot;Shared Documents&quot;
 </code></pre>
 <p>Returns the folder called 'Shared Documents' which is located in the root of the current web</p>
-<h3 id="example-2">EXAMPLE 2</h3>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPFolder -Url &quot;/sites/demo/Shared Documents&quot;
 </code></pre>
-<p>Returns the folder called 'Shared Documents' which is located in the root of the current web</p>
-<h3 id="example-3">EXAMPLE 3</h3>
+<p>Returns the folder called 'Shared Documents' which is located in the root of the site collection located at '/sites/demo'</p>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPFolder -List &quot;Shared Documents&quot;
 </code></pre>
-<p>Returns the folder(s) residing inside a folder called 'Shared Documents'</p>
+<p>Returns the folders residing inside a folder called 'Shared Documents'</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -127,7 +132,7 @@ Accept wildcard characters: False
 Parameter Sets: Folders In List
 
 Required: True
-Position: 1
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
