@@ -15,6 +15,7 @@
         GraphDeviceLogin,
         SPOManagementShell,
         ManagedIdentity,
-        EnvironmentVariable
+        EnvironmentVariable,
+        AzureADWorkloadIdentity
     }
 }

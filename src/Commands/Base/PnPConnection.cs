@@ -615,6 +615,49 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
+        /// <summary>
+        /// Creates a PnPConnection using a Azure AD Workload Identity
+        /// </summary>
+        /// <param name="cmdlet">PowerShell instance hosting this execution</param>
+        /// <param name="url">Url to the SharePoint Online site to connect to</param>
+        /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
+        /// <returns>Instantiated PnPConnection</returns>
+        internal static PnPConnection CreateWithAzureADWorkloadIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl)
+        {            
+            string defaultResource = "https://graph.microsoft.com/.default";
+            if (url != null)
+            {
+                var resourceUri = new Uri(url);
+                defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
+            }
+
+            cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
+            var accessToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(cmdlet, defaultResource).GetAwaiter().GetResult();
+
+            using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
+            {
+                PnPClientContext context = null;
+                ConnectionType connectionType = ConnectionType.O365;
+                if (url != null)
+                {
+                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                    context.ApplicationName = Resources.ApplicationName;
+                    context.DisableReturnValueCache = true;
+                    context.ExecutingWebRequest += (sender, e) =>
+                    {
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                    };
+                    if (IsTenantAdminSite(context))
+                    {
+                        connectionType = ConnectionType.TenantAdmin;
+                    }
+                }
+
+                var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.AzureADWorkloadIdentity);
+                
+                return connection;
+            }
+        }
         #endregion
 
         #region Constructors
@@ -636,6 +679,17 @@ namespace PnP.PowerShell.Commands.Base
         {
             InitializeTelemetry(context, initializationType);
             var coreAssembly = Assembly.GetExecutingAssembly();
+
+            var connectionMethod = ConnectionMethod.Credentials;
+            if(initializationType == InitializationType.AzureADWorkloadIdentity)
+            {
+                connectionMethod = ConnectionMethod.AzureADWorkloadIdentity;
+            }
+            else if(initializationType == InitializationType.ManagedIdentity)
+            {
+                connectionMethod = ConnectionMethod.ManagedIdentity;
+            }
+
             if (context != null)
             {
                 Context = context;
@@ -650,7 +704,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Url = (new Uri(url)).AbsoluteUri;
             }
-            ConnectionMethod = initializationType == InitializationType.ManagedIdentity ? ConnectionMethod.ManagedIdentity : ConnectionMethod.Credentials;
+            ConnectionMethod = connectionMethod;
             ClientId = PnPManagementShellClientId;
         }
 
