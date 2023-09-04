@@ -23,7 +23,7 @@ Updates a list item
 
 ```powershell
 Set-PnPListItem [-List <ListPipeBind>] -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Force] [-Connection <PnPConnection>] 
+ [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-LabelAppliedDate <DateTime>] [-LabelAppliedByEmail <String>] [-Force] [-Connection <PnPConnection>] 
 ```
 
 ### Batched
@@ -91,6 +91,14 @@ Set-PnPListItem -List "Demo List" -Identity 1 -Values @{"Editor"="testuser@domai
 ```
 
 This example updates the modified by value of the list item and does not increase the version number.
+
+### EXAMPLE 7
+
+```powershell
+Set-PnPListItem -List "Demo List" -Identity 1 -Label "Record" -LabelAppliedByEmail "megan@contoso.com" -LabelAppliedDate "2023-01-01 09:00:00"
+```
+
+Sets the retention label in the list item with ID 1 in the "Demo List" with explicit User and DateTime properties.
 
 ## PARAMETERS
 
@@ -164,6 +172,36 @@ Parameter Sets: Single
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LabelAppliedByEmail
+
+The email of the user to set the 'Applied By User' field of the label setting.
+
+```yaml
+Type: String
+Parameter Sets: Single
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LabelAppliedDate
+
+The DateTime to set the 'Applied Date' on the label setting. Do not include the timezone in the DateTime object as SharePoint will recalculate the date and give incorrect results. This is only used when the `-LabelAppliedByEmail` parameter is specified.
+
+```yaml
+Type: DateTime
+Parameter Sets: Single
+
+Required: False
+Position: Named
+Default value: DateTime.Now
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
