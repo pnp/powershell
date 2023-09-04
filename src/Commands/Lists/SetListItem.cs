@@ -44,6 +44,12 @@ namespace PnP.PowerShell.Commands.Lists
         public string Label;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        public DateTime LabelAppliedDate;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
+        public string LabelAppliedByEmail;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         public SwitchParameter ClearLabel;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
@@ -187,21 +193,32 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     try
                     {
-                        ClientContext.Web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
-                        list.EnsureProperties(l => l.RootFolder, l => l.RootFolder.ServerRelativeUrl);
-
-                        string listUrl = string.Empty;
-                        if (ClientContext.Web.ServerRelativeUrl.Equals("/"))
+                        if (!string.IsNullOrEmpty(LabelAppliedByEmail))
                         {
-                            listUrl = ClientContext.Web.Url + list.RootFolder.ServerRelativeUrl;
+                            if (LabelAppliedDate == default(DateTime))
+                            {
+                                LabelAppliedDate = new DateTime();
+                            }
+                            item.SetComplianceTagWithMetaInfo(tag.TagName, tag.BlockDelete, tag.BlockEdit, LabelAppliedDate, LabelAppliedByEmail, tag.SuperLock, tag.UnlockedAsDefault);
                         }
                         else
                         {
-                            listUrl = ClientContext.Web.Url.Replace(ClientContext.Web.ServerRelativeUrl, "") + list.RootFolder.ServerRelativeUrl;
-                        }
+                            ClientContext.Web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
+                            list.EnsureProperties(l => l.RootFolder, l => l.RootFolder.ServerRelativeUrl);
 
-                        SPPolicyStoreProxy.SetComplianceTagOnBulkItems(ClientContext, new[] { item.Id }, listUrl, tag.TagName);                        
-                        ClientContext.ExecuteQueryRetry();                        
+                            string listUrl = string.Empty;
+                            if (ClientContext.Web.ServerRelativeUrl.Equals("/"))
+                            {
+                                listUrl = ClientContext.Web.Url + list.RootFolder.ServerRelativeUrl;
+                            }
+                            else
+                            {
+                                listUrl = ClientContext.Web.Url.Replace(ClientContext.Web.ServerRelativeUrl, "") + list.RootFolder.ServerRelativeUrl;
+                            }
+
+                            SPPolicyStoreProxy.SetComplianceTagOnBulkItems(ClientContext, new[] { item.Id }, listUrl, tag.TagName);
+                            ClientContext.ExecuteQueryRetry();
+                        }
                     }
                     catch (System.Exception error)
                     {
