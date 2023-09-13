@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Search
                 Configuration = System.IO.File.ReadAllText(Path);
             }
 
-            Configuration = Configuration.Trim(new char[] { '\uFEFF', '\u200B' });
+            Configuration = Configuration.Trim(new char[] { '\uFEFF', '\u200B' }).Trim();
 
             switch (Scope)
             {
