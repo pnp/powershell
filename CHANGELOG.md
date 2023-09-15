@@ -15,9 +15,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-AllowCommentsTextOnEmailEnabled` parameter to `Set-PnPTenant` which allows including the surrounding document context in email notification when user is mentioned in document comments. [#3268](https://github.com/pnp/powershell/pull/3268)
 - Added `Export-PnPPowerApp` cmdlet which will export a specified PowerApp as zip package. [#2990](https://github.com/pnp/powershell/pull/2990)
 - Added `AzureADLoginEndPoint` and `MicrosoftGraphEndPoint` parameters to `Connect-PnPOnline` cmdlet for use in custom Azure environments. [#2925](https://github.com/pnp/powershell/pull/2925)
+- Added `Get-PnPFolder` cmdlet without any parameters to return all folders in the root of the current web [#3319](https://github.com/pnp/powershell/pull/3319)
+- Added `Get-PnPFolderFile` cmdlet which allows retrieval of all files in a folder or site and optionally request additional properties from them [#3319](https://github.com/pnp/powershell/pull/3319)
+- Added `Get-PnPFolderFolder` cmdlet which allows retrieval of all folders in a folder or site and optionally request additional properties from them [#3319](https://github.com/pnp/powershell/pull/3319)
 - Added `-SharingStatus` parameter to `Get-PnPFlow` which allows for filtering flows based on their sharing status. [#3287](https://github.com/pnp/powershell/pull/3287)
 - Added `-AzureADLoginEndPoint` and `-MicrosoftGraphEndPoint` parameters to `Connect-PnPOnline` cmdlet for use in custom Azure environments. [#2925](https://github.com/pnp/powershell/pull/2925)
 - Added `SiteOwnerManageLegacyServicePrincipalEnabled` parameter to `Set-PnPTenant` cmdlet. With this parameter site owners will not be able to register/update apps unless the tenant admin explicitly allows it. [#3318](https://github.com/pnp/powershell/pull/3318)
+- Added `-EnableAutoExpirationVersionTrim`, `-ExpireVersionsAfterDays`, `-MajorVersions`, `-MinorVersions`, `-InheritTenantVersionPolicySettings`, `-StartApplyVersionPolicySettingToExistingDocLibs` and `-CancelApplyVersionPolicySettingToExistingDocLibs` to `Set-PnPSite` to allow for time based version expiration on the site level [#3373](https://github.com/pnp/powershell/pull/3373)
+- Added `-ReduceTempTokenLifetimeEnabled`, `-ReduceTempTokenLifetimeValue`, `-ViewersCanCommentOnMediaDisabled`, `-AllowGuestUserShareToUsersNotInSiteCollection`, `-ConditionalAccessPolicyErrorHelpLink`, `-CustomizedExternalSharingServiceUrl`, `-IncludeAtAGlanceInShareEmails` and `-MassDeleteNotificationDisabled` to `Set-PnPTenant` [#3348](https://github.com/pnp/powershell/pull/3348)
+- Added `Add-PnPFlowOwner` and `Remove-PnPFlowOwner` cmdlets which allow granting or removing permissions to a Power Automate flow [#3343](https://github.com/pnp/powershell/pull/3343)
+- Added `Get-PnPFlowOwner` cmdlet which allows retrieving the owners of a Power Automate flow [#3314](https://github.com/pnp/powershell/pull/3314)
+- Added `-AvailableForTagging` to `Set-PnPTerm` which allows the available for tagging property on a Term to be set [#3321](https://github.com/pnp/powershell/pull/3321)
+- Added `Get-PnPPowerPlatformConnector` cmdlet which allows for all custom connectors to be retrieved [#3309](https://github.com/pnp/powershell/pull/3309)
 
 ### Fixed
 
@@ -31,16 +40,33 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `-ArchiveRedirectUrl` parameter not working correctly in `Set-PnPTenant` cmdlet. [#3289](https://github.com/pnp/powershell/pull/3289)
 - Fixed `New-PnPAzureADGroup` cmdlet throwing null reference error when owners and members are not specified. [#3308](https://github.com/pnp/powershell/pull/3308)
 - Fixed `New-PnPTeamsTeam` cmdlet, it will now throw error if it fails to teamify a Microsoft 365 group. [#3310](https://github.com/pnp/powershell/pull/3310)
+- Fixed `Get-PnPFolderItem` cmdlet not accepting piping a folder instance to it [#3319](https://github.com/pnp/powershell/pull/3319)
+- Fixed `Get-PnPFolderItem` cmdlet not working well with the `-Recursive` and `-Identity` parameters provided together [#3319](https://github.com/pnp/powershell/pull/3319)
+- Fixed `Get-PnPFolderItem` cmdlet not working well with the `-ItemName` parameter [#3319](https://github.com/pnp/powershell/pull/3319)
 - Fixed `Connect-PnPOnline` cmdlet throwing host not reachable errors. [#3337](https://github.com/pnp/powershell/pull/3337)
 - Fixed `Set-PnPTerm` cmdlet throwing object reference error when only the term Id is specified. [#3341](https://github.com/pnp/powershell/pull/3341)
-
+- Fixed `New-PnPTeamsTeam` cmdlet throwing an error when specifying members [#3351](https://github.com/pnp/powershell/pull/3351)
+- Fixed `New-PnPTeamsTeam` cmdlet not working well with a managed identity [#3351](https://github.com/pnp/powershell/pull/3351)
+- Fixed `Copy-PnPFile`, `Copy-PnPFolder` and `Move-PnPFile` to better handle copying or moving operations to OneDrive or Multi-geo environments. [#3245](https://github.com/pnp/powershell/pull/3245)
+ 
 ### Changed
 
 - Improved `Set-PnPListItem` cmdlet handling of Purview labels. [#3340](https://github.com/pnp/powershell/pull/3340)
 - The `Publish-PnPCompanyApp` cmdlet is now obsolete. It will be removed in the next version. [#3349](https://github.com/pnp/powershell/pull/3349)
+- Verbose output will no longer show the access token [#3352](https://github.com/pnp/powershell/pull/3352)
+
+### Removed
+
+- Removed `-DisableListSync` and `-SyncAadB2BManagementPolicy` from `Set-PnPTenant` as the underlying properties have been removed from SharePoint CSOM as well [#3388](https://github.com/pnp/powershell/pull/3388)
 
 ### Contributors
 
+- Jim Duncan [sparkitect]
+- Jonathan Smith [jonathan-m-smith]
+- Carl Joakim Damsleth [damsleth]
+- Rodel Pacurib [ryder-cayden]
+- [CatSchneider]
+- [msjennywu]
 - Reshmee Auckloo [reshmee011]
 - Per Østergaard [per-oestergaard]
 - Nishkalank Bezawada [NishkalankBezawada]
@@ -83,6 +109,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPFileSharingLink` and `Remove-PnPFolderSharingLink` cmdlets to delete sharing links associated with files and folders. [#3200](https://github.com/pnp/powershell/pull/3200)
 - Added `Get-PnPUnfurlLink` cmdlet to support unfurling a link to get more information about the link. [#3224](https://github.com/pnp/powershell/pull/3224)
 - Added `ListsShowHeaderAndNavigation` parameter to always show lists with site elements intact when specified in `Set-PnPTenantSite` and `Set-PnPSite` cmdlets. [#3233](https://github.com/pnp/powershell/pull/3233)
+- Added `-AzureADWorkloadIdentity` parameter to `Connect-PnPOnline` cmdlet to support Azure AD Workload Identity authentication. [#3097](https://github.com/pnp/powershell/pull/3097)
+- Added Managed identity support for Power Platform related cmdlets. [#3097](https://github.com/pnp/powershell/pull/3097)
 
 ### Fixed
 

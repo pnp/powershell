@@ -47,6 +47,13 @@ Set-PnPSite [-Identity <String>]
  [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
  [-ExcludedBlockDownloadGroupIds <Guid[]>]
  [-ListsShowHeaderAndNavigation <Boolean>]
+ [-EnableAutoExpirationVersionTrim <Boolean>]
+ [-ExpireVersionsAfterDays <UInt32>]
+ [-MajorVersions <UInt32>]
+ [-MinorVersions <UInt32>]
+ [-InheritTenantVersionPolicySettings]
+ [-StartApplyVersionPolicySettingToExistingDocLibs]
+ [-CancelApplyVersionPolicySettingToExistingDocLibs]
  [-Connection <PnPConnection>]
 ```
 
@@ -102,6 +109,62 @@ Set-PnPSite -NoScriptSite $false
 ```
 
 Allows custom script on a specific site. See [Allow or prevent custom script](https://learn.microsoft.com/sharepoint/allow-or-prevent-custom-script) for more information.
+
+### EXAMPLE 7
+```powershell
+Set-PnPSite -EnableAutoExpirationVersionTrim $true
+```
+
+Set AutoExpiration file version trim mode for a site. The new document libraries will use this version setting.
+
+### EXAMPLE 8
+```powershell
+Set-PnPSite -EnableAutoExpirationVersionTrim $false -MajorVersions 100 -ExpireVersionsAfterDays 200
+```
+
+Set ExpireAfter file version trim mode for a site. The new document libraries will use this version setting.
+
+### EXAMPLE 9
+```powershell
+Set-PnPSite -EnableAutoExpirationVersionTrim $false -MajorVersions 300 -ExpireVersionsAfterDays 0
+```
+
+Set NoExpiration file version trim mode for a site. The new document libraries will use this version setting.
+
+### EXAMPLE 10
+```powershell
+Set-PnPSite -InheritTenantVersionPolicySettings
+```
+
+Clear the file version setting on a site. The new document libraries will use the tenant level setting.
+
+### EXAMPLE 11
+```powershell
+Set-PnPSite -EnableAutoExpirationVersionTrim $true -StartApplyVersionPolicySettingToExistingDocLibs
+```
+
+Create a request to set the file version trim mode as AutoExpiration for existing document libraries that enabled versioning.
+
+### EXAMPLE 12
+```powershell
+Set-PnPSite -EnableAutoExpirationVersionTrim $false -MajorVersions 100 -MinorVersions 5 -ExpireVersionsAfterDays 200 -StartApplyVersionPolicySettingToExistingDocLibs
+```
+
+Create a request to set the file version trim mode as ExpireAfter for existing document libraries that enabled versioning.
+
+### EXAMPLE 13
+```powershell
+Set-PnPSite -EnableAutoExpirationVersionTrim $false -MajorVersions 100 -MinorVersions 5 -ExpireVersionsAfterDays 0 -StartApplyVersionPolicySettingToExistingDocLibs
+```
+
+Create a request to set the file version trim mode as NoExpiration for existing document libraries that enabled versioning.
+
+### EXAMPLE 14
+```powershell
+Set-PnPSite -CancelApplyVersionPolicySettingToExistingDocLibs
+```
+
+Cancel the existing request which sets the file version trim mode for existing document libraries on a site.
 
 ## PARAMETERS
 
@@ -605,6 +668,109 @@ Wait for the operation to complete
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Set Lock State
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableAutoExpirationVersionTrim
+Enable or disable AutoExpiration version trim for the document libraries on the site. Set to $true to enable, $false to disable.
+
+Parameter ExpireVersionsAfterDays is required when EnableAutoExpirationVersionTrim is false. Set it to 0 for NoExpiration, set it to greater or equal to 30 for ExpireAfter.
+
+Parameter MajorVersions is required when EnableAutoExpirationVersionTrim is false.
+Parameter MinorVersions is required when EnableAutoExpirationVersionTrim is false and StartApplyVersionPolicySettingToExistingDocLibs is specified. It is used when minor version is enabled on the document libraries.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpireVersionsAfterDays
+Work with parameter EnableAutoExpirationVersionTrim. Please see description in EnableAutoExpirationVersionTrim.
+
+```yaml
+Type: UInt32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MajorVersions
+Work with parameter EnableAutoExpirationVersionTrim. Please see description in EnableAutoExpirationVersionTrim.
+
+```yaml
+Type: UInt32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MinorVersions
+Work with parameter EnableAutoExpirationVersionTrim and StartApplyVersionPolicySettingToExistingDocLibs. Please see description in EnableAutoExpirationVersionTrim.
+
+```yaml
+Type: UInt32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InheritTenantVersionPolicySettings
+Clear the file version setting on a site. The new document libraries will use the tenant level setting.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StartApplyVersionPolicySettingToExistingDocLibs
+Create a request to set the file version trim mode for existing document libraries that enabled versioning. Work with parameters EnableAutoExpirationVersionTrim, ExpireVersionsAfterDays, MajorVersions and MinorVersions.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CancelApplyVersionPolicySettingToExistingDocLibs
+Cancel the existing request which sets the file version trim mode for existing document libraries on a site.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named

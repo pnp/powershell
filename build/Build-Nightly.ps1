@@ -42,7 +42,7 @@ if($runPublish -eq $false -and $existing_pnpframework_hash -ne $pnpframework_has
 	$runPublish = $true
 }
 
-if($runPublic -eq $false -and $existing_pnpcoresdk_hash -ne $pnpcoresdk_hash)
+if($runPublish -eq $false -and $existing_pnpcoresdk_hash -ne $pnpcoresdk_hash)
 {
 	Write-Host "PnP Core SDK is newer"
 	Set-Content ./pnpcoresdk_hash.txt -Value $pnpcoresdk_hash -NoNewLine -Force
