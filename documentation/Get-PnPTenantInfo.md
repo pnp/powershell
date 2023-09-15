@@ -33,53 +33,46 @@ Gets information about any tenant. If no Domain name or Tenant id is specified, 
 ### EXAMPLE 1
 ```powershell
 Get-PnPTenantInfo -TenantId "e65b162c-6f87-4eb1-a24e-1b37d3504663"
-```
 
-Returns the tenant information of the specified TenantId as below. A valid connection with Connect-PnPOnline is required either 
-
-```powershell
 tenantId                             federationBrandName displayName defaultDomainName
 --------                             ------------------- ----------- -----------------
 e65b162c-6f87-4eb1-a24e-1b37d3504663                     contoso      contoso.onmicrosoft.com
 ```
 
+Returns the tenant information of the specified TenantId as shown. A valid connection with Connect-PnPOnline is required either 
 
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPTenantInfo -DomainName "contoso.com"
-```
 
-Returns the Tenant Information for the tenant contoso.sharepoint.com as below. A valid connection with Connect-PnPOnline is required either 
-
-```powershell
 tenantId                             federationBrandName displayName defaultDomainName
 --------                             ------------------- ----------- -----------------
 e65b162c-6f87-4eb1-a24e-1b37d3504663                     contoso      contoso.onmicrosoft.com
 ```
 
+Returns the Tenant Information for the tenant contoso.sharepoint.com as shown. A valid connection with Connect-PnPOnline is required either 
+
+
 ### EXAMPLE 3
 ```powershell
 Get-PnPTenantInfo -DomainName "contoso.com" -TenantId "e65b162c-6f87-4eb1-a24e-1b37d3504663"
-```
 
-Returns error message as below
-
-```powershell
+Error:
 Get-PnPTenantInfo: Specify atleast one, either DomainName or TenantId, but not both
 ```
+
+Returns error message as shown
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPTenantInfo
-```
 
-Returns error message as below
-
-```powershell
+Error:
 Get-PnPTenantInfo: Please specify either DomainName or TenantId, but not both
 ```
 
+Returns error message as shown
 
 ## PARAMETERS
 
