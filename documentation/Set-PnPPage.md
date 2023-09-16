@@ -18,7 +18,7 @@ Sets parameters of a page
 Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
  [-LayoutType <PageLayoutType>] [-PromoteAs <PagePromoteType>] [-CommentsEnabled]
  [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
- [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] 
+ [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] [-ShowPublishDate <Boolean>]
  [-Translate][-TranslationLanguageCodes <Int[][]>]
  [-Connection <PnPConnection>] 
 ```
@@ -98,6 +98,12 @@ Set-PnPPage -Name "NewPage" -Translate -TranslationLanguageCodes 1043,1035
 ```
 
 Creates the necessary translated page for the specified languages in the site collection. In this case, it will create the translated pages for Dutch and Finnish languages. If these languages are not enabled, it will enable these languages and then create the translated pages for the specified languages.
+
+### EXAMPLE 11
+```powershell
+Set-PnPPage -Name "NewPage" -ShowPublishDate $true -Publish
+```
+Display the published data in the title of the page
 
 ## PARAMETERS
 
@@ -250,6 +256,20 @@ Thumbnail Url
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowPublishDate
+Show Published Date in Header
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
