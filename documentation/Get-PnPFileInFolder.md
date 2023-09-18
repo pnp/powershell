@@ -74,10 +74,10 @@ Returns all files, including those located in any subfolders, in the folder Site
 
 ### EXAMPLE 7
 ```powershell
-Get-PnPFolder -List "Documents" | Get-PnPFileInFolder -Recurse
+Get-PnPFolder -List "Documents" | Get-PnPFileInFolder -Recurse -ExcludeSystemFolders
 ```
 
-Returns all files, including those located in any subfolders, located in the Documents document library
+Returns all files, including those located in any subfolders, located in the Documents document library where the files in system folders are excluded
 
 ## PARAMETERS
 
