@@ -10,27 +10,27 @@ title: Get-PnPFolder
 # Get-PnPFolder
 
 ## SYNOPSIS
-Returns one or more folder objects
+Returns a folder object
 
 ## SYNTAX
 
-### Folders in current Web (Default)
+### Root folder of the current Web (Default)
 ```powershell
-Get-PnPFolder [-Includes <String[]>] [-Connection <PnPConnection>]
+Get-PnPFolder [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
-### Folder By Url
+### Folder by url
 ```powershell
-Get-PnPFolder -Url <String> [-Includes <String[]>] [-Connection <PnPConnection>] 
+Get-PnPFolder -Url <String> [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
-### Folders In List
+### Root folder of a list
 ```powershell
-Get-PnPFolder -List <ListPipeBind> [-Includes <String[]>] [-Connection <PnPConnection>]
+Get-PnPFolder -List <ListPipeBind> [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
-Retrieves one or more folders from the specified location. Use Resolve-PnPFolder to create the folder if it does not exist.
+Retrieves the folder instance of the specified location. Use Resolve-PnPFolder to create the folder if it does not exist. Use Get-PnPFolderInFolder to retrieve subfolders.
 
 ## EXAMPLES
 
@@ -39,7 +39,7 @@ Retrieves one or more folders from the specified location. Use Resolve-PnPFolder
 Get-PnPFolder
 ```
 
-Returns all the folders in the root of the current web
+Returns the folders instance of the root of the current web
 
 ### EXAMPLE 2
 ```powershell
@@ -60,7 +60,7 @@ Returns the folder called 'Shared Documents' which is located in the root of the
 Get-PnPFolder -List "Shared Documents"
 ```
 
-Returns the folders residing inside a folder called 'Shared Documents'
+Returns the root folder of the list called 'Shared Documents'
 
 ## PARAMETERS
 
@@ -104,6 +104,20 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
