@@ -363,7 +363,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 {
                     if (ex.Error != null)
                     {
-                        throw new PSInvalidOperationException(ex.Error.Message);
+                        throw new PSInvalidOperationException($"Call to Microsoft Graph URL {message.RequestUri} failed with status code {response.StatusCode}{(!string.IsNullOrEmpty(ex.Error.Message) ? $": {ex.Error.Message}" : "")}");
                     }
                 }
                 else
