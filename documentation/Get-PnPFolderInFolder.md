@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFolderFolder.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFolderInFolder.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPFolderFolder
+title: Get-PnPFolderInFolder
 ---
   
-# Get-PnPFolderFolder
+# Get-PnPFolderInFolder
 
 ## SYNOPSIS
 List subfolders in a folder
@@ -16,12 +16,12 @@ List subfolders in a folder
 
 ### Folder via url
 ```powershell
-Get-PnPFolderFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via pipebind
 ```powershell
-Get-PnPFolderFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -32,49 +32,49 @@ This cmdlet allows listing of all the subfolders of a folder. It can optionally 
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPFolderFolder
+Get-PnPFolderInFolder
 ```
 
 Returns all the folders in the root of the current web
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPFolderFolder -Recurse
+Get-PnPFolderInFolder -Recurse
 ```
 
 Returns all the folders in the entire site. This will take a while to complete and will cause a lot of calls to be made towards SharePoint Online. Use it wisely.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPFolderFolder -Identity "Shared Documents"
+Get-PnPFolderInFolder -Identity "Shared Documents"
 ```
 
 Returns the folders located in the 'Shared Documents' folder located in the root of the current web
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPFolderFolder -Identity "Shared Documents" -ExcludeSystemFolders
+Get-PnPFolderInFolder -Identity "Shared Documents" -ExcludeSystemFolders
 ```
 
 Returns the folders located in the 'Shared Documents' folder located in the root of the current web which are not hidden system folders
 
 ### EXAMPLE 5
 ```powershell
-Get-PnPFolderFolder -FolderSiteRelativeUrl "Shared Documents" -ItemName "Templates"
+Get-PnPFolderInFolder -FolderSiteRelativeUrl "Shared Documents" -ItemName "Templates"
 ```
 
 Returns the folder 'Template' which is located in the folder 'Shared Documents' which is located in the root of the current web
 
 ### EXAMPLE 6
 ```powershell
-Get-PnPFolder -Identity "Shared Documents" | Get-PnPFolderFolder
+Get-PnPFolder -Identity "Shared Documents" | Get-PnPFolderInFolder
 ```
 
 Returns all folders in the "Shared Documents" folder which is located in the root of the current web
 
 ### EXAMPLE 7
 ```powershell
-Get-PnPFolderFolder -FolderSiteRelativeUrl "SitePages" -Recursive
+Get-PnPFolderInFolder -FolderSiteRelativeUrl "SitePages" -Recursive
 ```
 
 Returns all folders, including those located in any subfolders, in the folder SitePages which is located in the root of the current web
