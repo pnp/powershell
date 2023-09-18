@@ -100,7 +100,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 foreach (var folder in folders)
                 {
-                    var relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
+                    var relativeUrl = folder.ServerRelativeUrl.Remove(0, CurrentWeb.ServerRelativeUrl.Length);
 
                     WriteVerbose($"Processing folder {relativeUrl}");
 
