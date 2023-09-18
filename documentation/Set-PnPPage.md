@@ -80,30 +80,30 @@ Schedules the page "MyPage" to be published in one hour from now
 
 ### EXAMPLE 8
 ```powershell
-Set-PnPPage -Name "NewPage" -Translate
+Set-PnPPage -Identity "MyPage" -Translate
 ```
 
 Creates the necessary translated pages for all the supported languages in the site collection.
 
 ### EXAMPLE 9
 ```powershell
-Set-PnPPage -Name "NewPage" -Translate -TranslationLanguageCodes 1043
+Set-PnPPage -Identity "MyPage" -Translate -TranslationLanguageCodes 1043
 ```
 
 Creates the necessary translated page for the specified language in the site collection. In this case, it will create the translated page for Dutch language. If the Dutch language is not enabled, it will enable the language and then create the translated page.
 
 ### EXAMPLE 10
 ```powershell
-Set-PnPPage -Name "NewPage" -Translate -TranslationLanguageCodes 1043,1035
+Set-PnPPage -Identity "MyPage" -Translate -TranslationLanguageCodes 1043,1035
 ```
 
 Creates the necessary translated page for the specified languages in the site collection. In this case, it will create the translated pages for Dutch and Finnish languages. If these languages are not enabled, it will enable these languages and then create the translated pages for the specified languages.
 
 ### EXAMPLE 11
 ```powershell
-Set-PnPPage -Name "NewPage" -ShowPublishDate $true -Publish
+Set-PnPPage -Identity "MyPage" -ShowPublishDate $true -Publish
 ```
-Display the published data in the title of the page
+Display the date when the page was published in the header section of the page
 
 ## PARAMETERS
 
