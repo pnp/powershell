@@ -72,6 +72,13 @@ Get-PnPFileInFolder -FolderSiteRelativeUrl "SitePages" -Recurse
 
 Returns all files, including those located in any subfolders, in the folder SitePages which is located in the root of the current web
 
+### EXAMPLE 7
+```powershell
+Get-PnPFolder -List "Documents" | Get-PnPFileInFolder -Recurse
+```
+
+Returns all files, including those located in any subfolders, located in the Documents document library
+
 ## PARAMETERS
 
 ### -Connection
