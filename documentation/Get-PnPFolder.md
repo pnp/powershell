@@ -30,7 +30,12 @@ Get-PnPFolder -List <ListPipeBind> [-Includes <String[]>] [-Connection <PnPConne
 ```
 
 ## DESCRIPTION
-Retrieves the folder instance of the specified location. Use Resolve-PnPFolder to create the folder if it does not exist. Use Get-PnPFolderInFolder to retrieve subfolders.
+Retrieves the folder instance of the specified location.
+
+Use Resolve-PnPFolder to create the folder if it does not exist.
+Use Get-PnPFolderInFolder to retrieve subfolders.
+Use Get-PnPFileInFolder to retrieve files in a folder.
+Use Get-PnPFolderItem to retrieve files and subfolders.
 
 ## EXAMPLES
 
