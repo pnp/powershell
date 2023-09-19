@@ -89,7 +89,7 @@
 <pre><code class="lang-powershell">Set-PnPPage [-Identity] &lt;PagePipeBind&gt; [-Name &lt;String&gt;] [-Title &lt;String&gt;]
  [-LayoutType &lt;PageLayoutType&gt;] [-PromoteAs &lt;PagePromoteType&gt;] [-CommentsEnabled]
  [-Publish] [-HeaderType &lt;PageHeaderType&gt;] [-HeaderLayoutType &lt;PageHeaderLayoutType&gt;] [-ScheduledPublishDate &lt;DateTime&gt;] 
- [-RemoveScheduledPublish] [-ContentType &lt;ContentTypePipeBind&gt;] [-ThumbnailUrl &lt;String&gt;] 
+ [-RemoveScheduledPublish] [-ContentType &lt;ContentTypePipeBind&gt;] [-ThumbnailUrl &lt;String&gt;] [-ShowPublishDate &lt;Boolean&gt;]
  [-Translate][-TranslationLanguageCodes &lt;Int[][]&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -125,17 +125,21 @@
 </code></pre>
 <p>Schedules the page &quot;MyPage&quot; to be published in one hour from now</p>
 <h3 id="example-8">EXAMPLE 8</h3>
-<pre><code class="lang-powershell">Set-PnPPage -Name &quot;NewPage&quot; -Translate
+<pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -Translate
 </code></pre>
 <p>Creates the necessary translated pages for all the supported languages in the site collection.</p>
 <h3 id="example-9">EXAMPLE 9</h3>
-<pre><code class="lang-powershell">Set-PnPPage -Name &quot;NewPage&quot; -Translate -TranslationLanguageCodes 1043
+<pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -Translate -TranslationLanguageCodes 1043
 </code></pre>
 <p>Creates the necessary translated page for the specified language in the site collection. In this case, it will create the translated page for Dutch language. If the Dutch language is not enabled, it will enable the language and then create the translated page.</p>
 <h3 id="example-10">EXAMPLE 10</h3>
-<pre><code class="lang-powershell">Set-PnPPage -Name &quot;NewPage&quot; -Translate -TranslationLanguageCodes 1043,1035
+<pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -Translate -TranslationLanguageCodes 1043,1035
 </code></pre>
 <p>Creates the necessary translated page for the specified languages in the site collection. In this case, it will create the translated pages for Dutch and Finnish languages. If these languages are not enabled, it will enable these languages and then create the translated pages for the specified languages.</p>
+<h3 id="example-11">EXAMPLE 11</h3>
+<pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -ShowPublishDate $true -Publish
+</code></pre>
+<p>Display the date when the page was published in the header section of the page</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-commentsenabled">-CommentsEnabled</h3>
 <p>Enables or Disables the comments on the page</p>
@@ -254,6 +258,17 @@ Accept wildcard characters: False
 <h3 id="-thumbnailurl">-ThumbnailUrl</h3>
 <p>Thumbnail Url</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-showpublishdate">-ShowPublishDate</h3>
+<p>Show Published Date in Header</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
