@@ -91,16 +91,16 @@ namespace PnP.PowerShell.Tests.Admin
 				// Full URL - Example: "https://contoso.sharepoint.com/path/to/form"
 				var startASiteFormUrl = "";
 				// From Cmdlet Help: Enables the administrator to hide the Everyone claim in the People Picker.
-				// When users share an item with Everyone, it is accessible to all authenticated users in the tenant's Azure Active Directory, including any active external users who have previously accepted invitations.Note, that some SharePoint system resources such as templates and pages are required to be shared to Everyone and this type of sharing does not expose any user data or metadata.The valid values are:
+				// When users share an item with Everyone, it is accessible to all authenticated users in the tenant's Entra ID, including any active external users who have previously accepted invitations.Note, that some SharePoint system resources such as templates and pages are required to be shared to Everyone and this type of sharing does not expose any user data or metadata.The valid values are:
 				// True (default) - The Everyone claim group is displayed in People Picker.
 				// False - The Everyone claim group is hidden from the People Picker.
 				var showEveryoneClaim = "";
-				// From Cmdlet Help: Enables the administrator to hide the All Users claim groups in People Picker.When users share an item with "All Users (x)", it is accessible to all organization members in the tenant's Azure Active Directory who have authenticated with via this method. When users share an item with "All Users (x)" it is accessible to all organization members in the tenant that used NTLM to authentication with SharePoint.Note, the All Users(authenticated) group is equivalent to the Everyone claim, and shows as Everyone.To change this, see - ShowEveryoneClaim.The valid values are:
+				// From Cmdlet Help: Enables the administrator to hide the All Users claim groups in People Picker.When users share an item with "All Users (x)", it is accessible to all organization members in the tenant's Entra ID who have authenticated with via this method. When users share an item with "All Users (x)" it is accessible to all organization members in the tenant that used NTLM to authentication with SharePoint.Note, the All Users(authenticated) group is equivalent to the Everyone claim, and shows as Everyone.To change this, see - ShowEveryoneClaim.The valid values are:
 				// True(default) - The All Users claim groups are displayed in People Picker.
 				// False - The All Users claim groups are hidden in People Picker.
 				var showAllUsersClaim = "";
 				// From Cmdlet Help: Enables the administrator to hide the "Everyone except external users" claim in the People Picker.
-				// When users share an item with "Everyone except external users", it is accessible to all organization members in the tenant's Azure Active Directory, but not to any users who have previously accepted invitations.The valid values are:
+				// When users share an item with "Everyone except external users", it is accessible to all organization members in the tenant's Entra ID, but not to any users who have previously accepted invitations.The valid values are:
 				// True(default) - The Everyone except external users is displayed in People Picker.
 				// False - The Everyone except external users claim is not visible in People Picker.
 				var showEveryoneExceptExternalUsersClaim = "";
@@ -124,8 +124,8 @@ namespace PnP.PowerShell.Tests.Admin
 				// False - No folder is created when the site and OneDrive for Business document library is created.The default behavior of the Shared with Everyone folder changed in August 2015.
 				// For additional information about the change, see Provision the Shared with Everyone folder in OneDrive for Business (https://support.office.com/en-us/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2?ui=en-US&rs=en-US&ad=US)
 				var provisionSharedWithEveryoneFolder = "";
-				// From Cmdlet Help: Specifies the home realm discovery value to be sent to Azure Active Directory (AAD) during the user sign-in process.When the organization uses a third-party identity provider, this prevents the user from seeing the Azure Active Directory Home Realm Discovery web page and ensures the user only sees their company's Identity Provider's portal.
-				// This value can also be used with Azure Active Directory Premium to customize the Azure Active Directory login page.Acceleration will not occur on site collections that are shared externally.This value should be configured with the login domain that is used by your company (that is, example@contoso.com).If your company has multiple third-party identity providers, configuring the sign-in acceleration value will break sign-in for your organization.The valid values are:
+				// From Cmdlet Help: Specifies the home realm discovery value to be sent to Entra ID (AAD) during the user sign-in process.When the organization uses a third-party identity provider, this prevents the user from seeing the Entra ID Home Realm Discovery web page and ensures the user only sees their company's Identity Provider's portal.
+				// This value can also be used with Entra ID Premium to customize the Entra ID login page.Acceleration will not occur on site collections that are shared externally.This value should be configured with the login domain that is used by your company (that is, example@contoso.com).If your company has multiple third-party identity providers, configuring the sign-in acceleration value will break sign-in for your organization.The valid values are:
 				// "" (default) - Blank by default, this will also remove or clear any value that has been set.
 				// Login Domain - For example: "contoso.com"
 				var signInAccelerationDomain = "";

@@ -45,16 +45,16 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             WriteVerbose("Microsoft Graph access token acquired");
             
-            Model.AzureAD.User user;
+            Model.EntraID.User user;
             if (Guid.TryParse(User, out Guid identityGuid))
             {
                 WriteVerbose("Looking up user through Microsoft Graph by user id {identityGuid}");
-                user = Utilities.AzureAdUtility.GetUser(graphAccessToken, identityGuid);
+                user = Utilities.EntraIdUtility.GetUser(graphAccessToken, identityGuid);
             }
             else
             {
                 WriteVerbose($"Looking up user through Microsoft Graph by user principal name {User}");
-                user = Utilities.AzureAdUtility.GetUser(graphAccessToken, WebUtility.UrlEncode(User));
+                user = Utilities.EntraIdUtility.GetUser(graphAccessToken, WebUtility.UrlEncode(User));
             }
 
             if (user == null)

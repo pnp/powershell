@@ -70,8 +70,8 @@ namespace PnP.PowerShell.Tests.Base
 				var scopeVars = "";
 				// From Cmdlet Help: Returns the token in a decoded / human readible manner
 				var decoded = "";
-				// From Cmdlet Help: Set this token as the current token to use when performing Azure AD based authentication requests with PnP PowerShell
-				var setAsCurrent = "";
+                // From Cmdlet Help: Set this token as the current token to use when performing Entra ID based authentication requests with PnP PowerShell
+                var setAsCurrent = "";
 				// From Cmdlet Help: Optional credentials to use when retrieving the access token. If not present you need to connect first with Connect-PnPOnline.
 				var credentials = "";
 				// From Cmdlet Help: Optional tenant URL to use when retrieving the access token. The Url should be in the shape of https://yourtenant.sharepoint.com. See examples for more info.

@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -305,7 +305,7 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The Azure AD OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet..
+        ///   Looks up a localized string similar to The Entra ID OAuth 2.0 Access Token has expired. Authenticate again using the Connect-PnPMicrosoftGraph cmdlet..
         /// </summary>
         internal static string MicrosoftGraphOAuthAccessTokenExpired {
             get {
@@ -357,9 +357,9 @@ namespace PnP.PowerShell.Commands.Properties {
                 return ResourceManager.GetString("NoApiAccessToken", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to There is currently no connection yet. Use Connect-PnPOnline to connect..
+        ///   Looks up a localized string similar to There is currently no connection yet. Use Connect-PnPOnline to connect or provide a valid connection using -Connection..
         /// </summary>
         internal static string NoConnection {
             get {
@@ -394,6 +394,9 @@ namespace PnP.PowerShell.Commands.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to The provided connection through -Connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument to connect..
+        /// </summary>
         internal static string NoSharePointConnectionInProvidedConnection {
             get {
                 return ResourceManager.GetString("NoSharePointConnectionInProvidedConnection", resourceCulture);

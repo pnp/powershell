@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.Model.Planner
     public class PlannerUserPolicy
     {
         /// <summary>
-        /// User Azure Active Directory Identifier or Principal Name to which the policy applies
+        /// User Entra ID Identifier or Principal Name to which the policy applies
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }

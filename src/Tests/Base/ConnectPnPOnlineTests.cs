@@ -135,15 +135,15 @@ namespace PnP.PowerShell.Tests.Base
 				// * Access the directory as you
 				// 
 				var graph = "";
-				// This is a mandatory parameter
-				// From Cmdlet Help: The Client ID of the Azure AD Application
-				var clientId = "";
-				// This is a mandatory parameter
-				// From Cmdlet Help: The Redirect URI of the Azure AD Application
-				var redirectUri = "";
-				// This is a mandatory parameter
-				// From Cmdlet Help: The Azure AD Tenant name,e.g. mycompany.onmicrosoft.com
-				var tenant = "";
+                // This is a mandatory parameter
+                // From Cmdlet Help: The Client ID of the Entra ID Application
+                var clientId = "";
+                // This is a mandatory parameter
+                // From Cmdlet Help: The Redirect URI of the Entra ID Application
+                var redirectUri = "";
+                // This is a mandatory parameter
+                // From Cmdlet Help: The Entra ID Tenant name,e.g. mycompany.onmicrosoft.com
+                var tenant = "";
 				// From Cmdlet Help: Path to the certificate containing the private key (*.pfx)
 				var certificatePath = "";
 				// From Cmdlet Help: Base64 Encoded X509Certificate2 certificate containing the private key to authenticate the requests to SharePoint Online such as retrieved in Azure Functions from Azure KeyVault

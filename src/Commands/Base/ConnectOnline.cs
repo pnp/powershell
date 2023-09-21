@@ -26,8 +26,8 @@ namespace PnP.PowerShell.Commands.Base
         private CancellationTokenSource cancellationTokenSource;
         private const string ParameterSet_CREDENTIALS = "Credentials";
         private const string ParameterSet_ACSAPPONLY = "SharePoint ACS (Legacy) App Only";
-        private const string ParameterSet_APPONLYAADCERTIFICATE = "App-Only with Azure Active Directory";
-        private const string ParameterSet_APPONLYAADTHUMBPRINT = "App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint";
+        private const string ParameterSet_APPONLYAADCERTIFICATE = "App-Only with Entra ID";
+        private const string ParameterSet_APPONLYAADTHUMBPRINT = "App-Only with Entra ID using a certificate from the Windows Certificate Management Store by thumbprint";
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
         private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID = "User Assigned Managed Identity by Azure Resource Id";
         private const string ParameterSet_INTERACTIVE = "Interactive login for Multi Factor Authentication";
         private const string ParameterSet_ENVIRONMENTVARIABLE = "Environment Variable";
-        private const string ParameterSet_AZUREAD_WORKLOAD_IDENTITY = "Azure AD Workload Identity";
+        private const string ParameterSet_ENTRAID_WORKLOAD_IDENTITY = "Entra ID Workload Identity";
 
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENTRAID_WORKLOAD_IDENTITY)]
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -70,7 +70,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENTRAID_WORKLOAD_IDENTITY, ValueFromPipeline = true)]
         public SwitchParameter ValidateConnection;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -87,7 +87,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_ENTRAID_WORKLOAD_IDENTITY, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENTRAID_WORKLOAD_IDENTITY)]
         public PnPConnection Connection = PnPConnection.Current;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -261,7 +261,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public string AzureADLoginEndPoint;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ENTRAID_WORKLOAD_IDENTITY)]
         public SwitchParameter AzureADWorkloadIdentity;
 
         protected override void ProcessRecord()
@@ -353,8 +353,8 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_ENVIRONMENTVARIABLE:
                     newConnection = ConnectEnvironmentVariable();
                     break;
-                case ParameterSet_AZUREAD_WORKLOAD_IDENTITY:
-                    newConnection = ConnectAzureADWorkloadIdentity();
+                case ParameterSet_ENTRAID_WORKLOAD_IDENTITY:
+                    newConnection = ConnectEntraIDWorkloadIdentity();
                     break;
             }
 
@@ -568,7 +568,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Azure Active Directory registered application");
+                throw new ArgumentException("You must either provide CertificatePath, Certificate or CertificateBase64Encoded when connecting using an Entra ID registered application");
             }
         }
 
@@ -734,10 +734,10 @@ namespace PnP.PowerShell.Commands.Base
             return null;
         }
 
-        private PnPConnection ConnectAzureADWorkloadIdentity()
+        private PnPConnection ConnectEntraIDWorkloadIdentity()
         {
-            WriteVerbose("Connecting using Azure AD Workload Identity");
-            return PnPConnection.CreateWithAzureADWorkloadIdentity(this, Url, TenantAdminUrl);
+            WriteVerbose("Connecting using Entra ID Workload Identity");
+            return PnPConnection.CreateWithEntraIDWorkloadIdentity(this, Url, TenantAdminUrl);
         }
 
         #endregion

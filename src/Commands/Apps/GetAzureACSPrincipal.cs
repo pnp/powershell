@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Apps
 
             if (Scope == AzureACSPrincipalScope.Tenant)
             {
-                // First load a list possible principal app ids from Azure AD
+                // First load a list possible principal app ids from Entra ID
                 var legacyServicePrincipals = pnpContext.GetSiteCollectionManager().GetLegacyServicePrincipals();
                 if (legacyServicePrincipals != null)
                 {

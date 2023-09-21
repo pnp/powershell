@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Utilities;
+﻿using PnP.PowerShell.Commands.Model.EntraID;
+using PnP.PowerShell.Commands.Utilities;
 
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureCertificate")]
-    [OutputType(typeof(Model.AzureCertificate))]
+    [OutputType(typeof(AzureCertificate))]
     public class NewPnPAdalCertificate : PSCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]

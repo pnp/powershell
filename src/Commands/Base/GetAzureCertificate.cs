@@ -3,11 +3,12 @@ using System;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Model.EntraID;
 
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureCertificate", DefaultParameterSetName = "SELF")]
-    [OutputType(typeof(Model.AzureCertificate))]
+    [OutputType(typeof(AzureCertificate))]
     public class GetPnPAdalCertificate : PSCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -76,7 +77,7 @@ namespace PnP.PowerShell.Commands.Base
             string manifestEntry = GetManifestEntry(certificate);
             var pfxBase64 = GetPfxBase64OrWarn(cmdlet, certificate, password);
 
-            var record = new Model.AzureCertificate(
+            var record = new AzureCertificate(
                 subject: certificate.Subject,
                 notBefore: certificate.NotBefore,
                 notAfter: certificate.NotAfter,

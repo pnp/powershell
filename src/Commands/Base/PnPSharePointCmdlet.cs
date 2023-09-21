@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands
                     {
                         var resourceUri = new Uri(Connection.Url);
                         var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
-                        return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, defaultResource).GetAwaiter().GetResult();
+                        return TokenHandler.GetEntraIDWorkloadIdentityTokenAsync(this, defaultResource).GetAwaiter().GetResult();
                     }
                     else
                     {
@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands
                 }
                 else if (Connection?.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
                 {
-                    return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
+                    return TokenHandler.GetEntraIDWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
                 }
                 else
                 {

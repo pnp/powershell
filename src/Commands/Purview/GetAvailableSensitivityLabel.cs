@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Purview
     public class GetAvailableSensitivityLabel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
-        public AzureADUserPipeBind User;
+        public EntraIDUserPipeBind User;
 
         [Parameter(Mandatory = false)]
         public Guid Identity;

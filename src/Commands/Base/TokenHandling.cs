@@ -211,14 +211,14 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Returns an access token based on a Azure AD Workload Identity. Only works within Azure components supporting workload identities.
+        /// Returns an access token based on a Entra ID Workload Identity. Only works within Azure components supporting workload identities.
         /// </summary>
         /// <param name="cmdlet">The cmdlet scope in which this code runs. Used to write logging to.</param>
         /// <param name="httpClient">The HttpClient that will be reused to fetch the token to avoid port exhaustion</param>
         /// <param name="defaultResource">If the cmdlet being executed does not have an attribute to indicate the required permissions, this permission will be requested instead. Optional.</param>
         /// <returns>Access token</returns>
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
-        internal static async Task<string> GetAzureADWorkloadIdentityTokenAsync(Cmdlet cmdlet, string defaultResource)
+        internal static async Task<string> GetEntraIDWorkloadIdentityTokenAsync(Cmdlet cmdlet, string defaultResource)
         {
             string requiredScope = null;
             var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
@@ -235,16 +235,16 @@ namespace PnP.PowerShell.Commands.Base
                     requiredScope = defaultResource;
                 }
 
-                cmdlet.WriteVerbose($"Using scope {requiredScope} for Azure AD Workload identity token coming from the cmdlet permission attribute");
+                cmdlet.WriteVerbose($"Using scope {requiredScope} for Entra ID Workload identity token coming from the cmdlet permission attribute");
             }
             else
             {
                 requiredScope = defaultResource;
-                cmdlet.WriteVerbose($"Using scope {requiredScope} for Azure AD Workload identity token coming from the passed in default resource");
+                cmdlet.WriteVerbose($"Using scope {requiredScope} for Entra ID Workload identity token coming from the passed in default resource");
             }
 
             // <authentication>
-            // Azure AD Workload Identity webhook will inject the following env vars
+            // Entra ID Workload Identity webhook will inject the following env vars
             // 	AZURE_CLIENT_ID with the clientID set in the service account annotation
             // 	AZURE_TENANT_ID with the tenantID set in the service account annotation.
             // 	If not defined, then the tenantID provided via azure-wi-webhook-config for the webhook will be used.

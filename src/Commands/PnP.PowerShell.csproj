@@ -26,8 +26,8 @@
 		<EnableNETAnalyzers>true</EnableNETAnalyzers>
 		<RepositoryUrl>https://github.com/pnp/powershell</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/pnp/powershell</PackageProjectUrl>
-		<PackageTags>Microsoft 365; PowerShell; SharePoint; Teams; Graph; Azure AD</PackageTags>
-		<Description>PnP PowerShell is a .NET 6 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
+		<PackageTags>Microsoft 365; PowerShell; SharePoint; Teams; Graph; Azure AD; Entra ID</PackageTags>
+		<Description>PnP PowerShell is a .NET 6 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Entra ID, and more.</Description>
 		<PackageIcon>nugeticon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
