@@ -1,4 +1,4 @@
-﻿using PnP.PowerShell.Commands.Model.AzureAD;
+﻿using PnP.PowerShell.Commands.Model.EntraID;
 using System;
 using System.Linq;
 
@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     {
         private readonly Guid? _id;
         private readonly string _value;
-        private readonly AzureADServicePrincipalAppRole _appRole;
+        private readonly ServicePrincipalAppRole _appRole;
 
         public ServicePrincipalAvailableAppRoleBind()
         {
@@ -30,17 +30,17 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public ServicePrincipalAvailableAppRoleBind(AzureADServicePrincipalAppRole appRole)
+        public ServicePrincipalAvailableAppRoleBind(ServicePrincipalAppRole appRole)
         {
             _appRole = appRole;
         }
 
         public Guid? Id => _id;
-        public AzureADServicePrincipalAppRole AppRole => _appRole;
+        public ServicePrincipalAppRole AppRole => _appRole;
 
-        internal AzureADServicePrincipalAppRole GetAvailableAppRole(PnPConnection connection, string accesstoken, AzureADServicePrincipal servicePrincipal)
+        internal ServicePrincipalAppRole GetAvailableAppRole(PnPConnection connection, string accesstoken, ServicePrincipal servicePrincipal)
         {
-            AzureADServicePrincipalAppRole appRole = null;
+            ServicePrincipalAppRole appRole = null;
 
             if (_appRole != null) appRole = _appRole;
             if (!string.IsNullOrEmpty(_value)) appRole = servicePrincipal.AppRoles.FirstOrDefault(ar => ar.Value == _value);

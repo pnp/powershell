@@ -3,14 +3,15 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Model.AzureAD;
+using PnP.PowerShell.Commands.Model.EntraID;
 using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Add, "PnPAzureADServicePrincipalAppRole")]
+    [Cmdlet(VerbsCommon.Add, "PnPEntraIDServicePrincipalAppRole")]
     [RequiredMinimalApiPermissions("AppRoleAssignment.ReadWrite.All", "Application.Read.All")]
-    public class AddAzureADServicePrincipalAppRole : PnPGraphCmdlet
+    [Alias("Add-PnPAzureADServicePrincipalAppRole")]
+    public class AddEntraIDServicePrincipalAppRole : PnPGraphCmdlet
     {
         private const string ParameterSet_BYRESOURCE = "By resource";
         private const string ParameterSet_BYBUILTINTYPE = "By built in type";
@@ -42,7 +43,7 @@ namespace PnP.PowerShell.Commands.Apps
 
             WriteVerbose($"Adding app role to service principal {principal.DisplayName}");
 
-            AzureADServicePrincipalAppRole appRole;
+            ServicePrincipalAppRole appRole;
 
             if (AppRole.AppRole == null)
             {

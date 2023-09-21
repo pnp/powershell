@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Base
         #region Constants
 
         /// <summary>
-        /// ClientId of the application registered in Azure Active Directory which should be used for the device oAuth flow
+        /// ClientId of the application registered in Entra ID which should be used for the device oAuth flow
         /// </summary>
         internal const string PnPManagementShellClientId = "31359c7f-bd7e-475c-86db-fdb8c937548e";
         internal const string AzureManagementShellClientId = "1950a258-227b-4e31-a9cf-717495945fc2";
@@ -616,13 +616,13 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Creates a PnPConnection using a Azure AD Workload Identity
+        /// Creates a PnPConnection using a Entra ID Workload Identity
         /// </summary>
         /// <param name="cmdlet">PowerShell instance hosting this execution</param>
         /// <param name="url">Url to the SharePoint Online site to connect to</param>
         /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
         /// <returns>Instantiated PnPConnection</returns>
-        internal static PnPConnection CreateWithAzureADWorkloadIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl)
+        internal static PnPConnection CreateWithEntraIDWorkloadIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl)
         {            
             string defaultResource = "https://graph.microsoft.com/.default";
             if (url != null)
@@ -632,7 +632,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             cmdlet.WriteVerbose("Acquiring token for resource " + defaultResource);
-            var accessToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(cmdlet, defaultResource).GetAwaiter().GetResult();
+            var accessToken = TokenHandler.GetEntraIDWorkloadIdentityTokenAsync(cmdlet, defaultResource).GetAwaiter().GetResult();
 
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {

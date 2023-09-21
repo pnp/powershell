@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.Model.PowerPlatform.Environment
     public class EnvironmentUser
     {
         /// <summary>
-        /// Id of the user object in Azure Active Directory
+        /// Id of the user object in Entra ID
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }

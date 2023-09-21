@@ -1,4 +1,4 @@
-﻿using PnP.PowerShell.Commands.Model.AzureAD;
+﻿using PnP.PowerShell.Commands.Model.EntraID;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public sealed class ServicePrincipalAssignedAppRoleBind
     {
         private readonly string _id;
-        private readonly AzureADServicePrincipalAppRoleAssignment _appRoleAssignment;
+        private readonly ServicePrincipalAppRoleAssignment _appRoleAssignment;
 
         public ServicePrincipalAssignedAppRoleBind()
         {
@@ -23,17 +23,17 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = value;
         }
 
-        public ServicePrincipalAssignedAppRoleBind(AzureADServicePrincipalAppRoleAssignment appRoleAssignment)
+        public ServicePrincipalAssignedAppRoleBind(ServicePrincipalAppRoleAssignment appRoleAssignment)
         {
             _appRoleAssignment = appRoleAssignment;
         }
 
         public string Id => _id;
-        public AzureADServicePrincipalAppRoleAssignment AppRoleAssignment => _appRoleAssignment;
+        public ServicePrincipalAppRoleAssignment AppRoleAssignment => _appRoleAssignment;
 
-        internal AzureADServicePrincipalAppRoleAssignment GetAssignedAppRole(PnPConnection connection, string accesstoken, string servicePrincipalObjectId = null)
+        internal ServicePrincipalAppRoleAssignment GetAssignedAppRole(PnPConnection connection, string accesstoken, string servicePrincipalObjectId = null)
         {            
-            AzureADServicePrincipalAppRoleAssignment appRoleAssignment = null;
+            ServicePrincipalAppRoleAssignment appRoleAssignment = null;
 
             if (_appRoleAssignment != null) appRoleAssignment = _appRoleAssignment;
             if (!string.IsNullOrEmpty(_id))

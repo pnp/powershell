@@ -18,16 +18,16 @@ namespace PnP.PowerShell.Commands.Utilities
     public static class SharePointUserProfileSync
     {
         /// <summary>
-        /// Syncs from Azure Active Directory to SharePoint Online user profiles
+        /// Syncs from Entra ID to SharePoint Online user profiles
         /// </summary>
         /// <param name="clientContext">A ClientContext which can be used to interact with SharePoint Online</param>
-        /// <param name="users">Azure AD User objects that need to be synced</param>
-        /// <param name="userProfilePropertyMappings">Hashtable with the mapping from the Azure Active Directory property (the value) to the SharePoint Online User Profile Property (the key)</param>
+        /// <param name="users">Entra ID User objects that need to be synced</param>
+        /// <param name="userProfilePropertyMappings">Hashtable with the mapping from the Entra ID property (the value) to the SharePoint Online User Profile Property (the key)</param>
         /// <param name="idType">Type of identifier to map the user on to synchronize its user profile of (CloudId, PrincipalName, Email)</param>
         /// <param name="sharePointFolder">Location in the currently connected to site where to upload the JSON file to with instructions to update the user profiles</param>
         /// <param name="onlyCreateAndUploadMappingsFile">Boolean indicating if only the mappings file should be created and uploaded to SharePoint Online (true) or if the import job on that file should also be invoked (false)</param>
         /// <returns>Information on the status of the import job that has been created because of this action</returns>
-        public static async Task<SharePointUserProfileSyncStatus> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.AzureAD.User> users, ImportProfilePropertiesUserIdType idType, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
+        public static async Task<SharePointUserProfileSyncStatus> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.EntraID.User> users, ImportProfilePropertiesUserIdType idType, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
         {
             var webServerRelativeUrl = clientContext.Web.EnsureProperty(w => w.ServerRelativeUrl);
             if (!sharePointFolder.ToLower().StartsWith(webServerRelativeUrl))

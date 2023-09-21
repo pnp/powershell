@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
                     {
-                        return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, "https://management.azure.com/.default").GetAwaiter().GetResult();
+                        return TokenHandler.GetEntraIDWorkloadIdentityTokenAsync(this, "https://management.azure.com/.default").GetAwaiter().GetResult();
                     }
                     else
                     {

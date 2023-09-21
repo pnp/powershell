@@ -107,7 +107,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-EnvironmentVariable] [-C
  [-TransformationOnPrem] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
-### Azure AD Workload Identity
+### Entra ID Workload Identity
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
  [-AzureADWorkloadIdentity] [-Connection <PnPConnection>]

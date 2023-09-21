@@ -341,7 +341,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Retrieves the Planner User Policy for the provided user
         /// </summary>
-        /// <param name="userId">Azure Active Directory User Identifier or User Principal name</param>
+        /// <param name="userId">Entra ID User Identifier or User Principal name</param>
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerUserPolicy</returns>
@@ -354,7 +354,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Sets the Planner User Policy for the provided user
         /// </summary>
-        /// <param name="userId">Azure Active Directory User Identifier or User Principal name</param>
+        /// <param name="userId">Entra ID User Identifier or User Principal name</param>
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerUserPolicy</returns>

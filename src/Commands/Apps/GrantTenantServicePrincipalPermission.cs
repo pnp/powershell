@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Apps
                 }
                 else
                 {
-                    throw new PSInvalidOperationException("Cannot find the 'SharePoint Online Client Extensibility Web Application Principal' in your Azure AD Enterprise applications. Did you enable it using `Enable-PnPTenantServicePrincipal'?");
+                    throw new PSInvalidOperationException("Cannot find the 'SharePoint Online Client Extensibility Web Application Principal' in your Entra ID Enterprise applications. Did you enable it using `Enable-PnPTenantServicePrincipal'?");
                 }
             }
 

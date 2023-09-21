@@ -62,9 +62,9 @@ namespace PnP.PowerShell.Tests.Base
             {
                 // Complete writing cmd parameters
 
-				// This is a mandatory parameter
-				// From Cmdlet Help: The name of the Azure AD Application to create
-				var applicationName = "";
+                // This is a mandatory parameter
+                // From Cmdlet Help: The name of the Entra ID Application to create
+                var applicationName = "";
 				// This is a mandatory parameter
 				// From Cmdlet Help: The identifier of your tenant, e.g. mytenant.onmicrosoft.com
 				var tenant = "";

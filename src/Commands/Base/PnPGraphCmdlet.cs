@@ -55,8 +55,8 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
                     {
-                        WriteVerbose("Acquiring token for resource " + Connection.GraphEndPoint + " using Azure AD Workload Identity");
-                        var accessToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
+                        WriteVerbose("Acquiring token for resource " + Connection.GraphEndPoint + " using Entra ID Workload Identity");
+                        var accessToken = TokenHandler.GetEntraIDWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
 
                         return accessToken;
                     }

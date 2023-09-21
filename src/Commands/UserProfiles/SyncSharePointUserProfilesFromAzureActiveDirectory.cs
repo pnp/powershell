@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
     public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]
-        public List<Model.AzureAD.User> Users;
+        public List<Model.EntraID.User> Users;
 
         [Parameter(Mandatory = false)]
         public string Folder = "Shared Documents";
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 throw new PSArgumentNullException(nameof(Folder), "Folder cannot be empty");
             }
 
-            var aadUsers = new List<PnP.PowerShell.Commands.Model.AzureAD.User>();
+            var aadUsers = new List<PnP.PowerShell.Commands.Model.EntraID.User>();
             if (ParameterSpecified(nameof(Users)))
             {
                 // Ensure users have been provided
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             else
             {
                 // No users to sync have been provided, retrieve all users
-                // Construct an array with all the Azure Active Directory properties that need to be fetched from the users to be able to make the mapping
+                // Construct an array with all the Entra ID properties that need to be fetched from the users to be able to make the mapping
                 var allAadPropertiesList = new List<string>();
                 foreach (DictionaryEntry userProfilePropertyMappingEntry in UserProfilePropertyMapping)
                 {
@@ -73,16 +73,16 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     }
                 }
 
-                WriteVerbose("Retrieving users from Azure Active Directory");
+                WriteVerbose("Retrieving users from Entra ID");
 
-                // Retrieve all the users from Azure Active Directory
-                aadUsers = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(GraphAccessToken, null, null, allAadPropertiesList.ToArray(), endIndex: null);
+                // Retrieve all the users from Entra ID
+                aadUsers = PnP.PowerShell.Commands.Utilities.EntraIdUtility.ListUsers(GraphAccessToken, null, null, allAadPropertiesList.ToArray(), endIndex: null);
 
-                WriteVerbose($"{aadUsers.Count} user{(aadUsers.Count != 1 ? "s have" : " has")} been retrieved from Azure Active Directory");
+                WriteVerbose($"{aadUsers.Count} user{(aadUsers.Count != 1 ? "s have" : " has")} been retrieved from Entra ID");
 
                 if (aadUsers.Count == 0)
                 {
-                    throw new PSInvalidOperationException($"No Azure Active Directory users found to process");
+                    throw new PSInvalidOperationException($"No Entra ID users found to process");
                 }
             }
 

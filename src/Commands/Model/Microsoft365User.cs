@@ -3,12 +3,12 @@ using System.Text.Json.Serialization;
 namespace PnP.PowerShell.Commands.Model
 {
     /// <summary>
-    /// Contains the information of an Azure Active Directory user object
+    /// Contains the information of an Entra ID user object
     /// </summary>
     public class Microsoft365User
     {
         /// <summary>
-        /// Unique identifier of this user object in Azure Active Directory
+        /// Unique identifier of this user object in Entra ID
         /// </summary>
         [JsonPropertyName("id")]
         public string Id { get; set; }
