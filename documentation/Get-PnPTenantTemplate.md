@@ -43,7 +43,7 @@ Allows to generate a provisioning tenant template from a site. If the site is a 
 Get-PnPTenantTemplate -Out tenanttemplate.xml
 ```
 
-Extracts a tenant template
+Extracts a tenant template of the currently connected to site
 
 ### EXAMPLE 2
 ```powershell
@@ -132,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -SiteUrl
+The URL of the site collection to create a tenant template out of. If omitted, the currently connected to site will be used.
 
 ```yaml
 Type: String
