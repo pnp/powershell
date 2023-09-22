@@ -62,6 +62,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- [smsdaniel]
 - Jim Duncan [sparkitect]
 - Jonathan Smith [jonathan-m-smith]
 - Carl Joakim Damsleth [damsleth]
