@@ -58,7 +58,7 @@ Removes all custom properties and adds a new custom property to an existing term
 
 ### Example 4
 ```powershell
-Set-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Deprecated $true
+Set-PnPTerm -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Deprecated $true
 ```
 
 Marks an existing term as deprecated, hiding it from users.
