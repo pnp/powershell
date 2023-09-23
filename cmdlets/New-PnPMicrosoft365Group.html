@@ -90,36 +90,44 @@
 </ul>
 <p>Creates a new Microsoft 365 Group</p>
 <h2 id="syntax">SYNTAX</h2>
+<h3 id="assigned-membership-default">Assigned membership (default)</h3>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt;
- [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-MailEnabled &lt;Boolean&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="dynamic-membership">Dynamic membership</h3>
+<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &lt;String&gt; -Description &lt;String&gt; -MailNickname &lt;String&gt; -DynamicMembershipRule &lt;String&gt; [-DynamicMembershipRuleProcessingState &lt;DynamicMembershipRuleProcessingState&gt;] [-Owners &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam] [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-ResourceBehaviorOptions &lt;TeamResourceBehaviorOptions&gt;] [-Force] [-SensitivityLabels &lt;GUID[]&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to create a new Microsoft 365 Group.</p>
+<p>Allows to create a new Microsoft 365 Group. It can have an assigned membership or a dynamically defined membership.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname
 </code></pre>
-<p>Creates a public Microsoft 365 Group with all the required properties</p>
+<p>Creates a public Microsoft 365 Group with an assigned membership providing all the required properties</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners &quot;owner1@domain.com&quot; -Members &quot;member1@domain.com&quot;
 </code></pre>
-<p>Creates a public Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members</p>
+<p>Creates a public Microsoft 365 Group with an assigned membership providing all the required properties, and with a custom list of Owners and a custom list of Members</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -IsPrivate
 </code></pre>
-<p>Creates a private Microsoft 365 Group with all the required properties</p>
+<p>Creates a private Microsoft 365 Group with an assigned membership providing all the required properties</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate
 </code></pre>
-<p>Creates a private Microsoft 365 Group with all the required properties, and with a custom list of Owners and a custom list of Members</p>
+<p>Creates a private Microsoft 365 Group with an assigned membership providing all the required properties, and with a custom list of Owners and a custom list of Members</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName &quot;myPnPDemo1&quot; -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers -IsPrivate -ResourceBehaviorOptions WelcomeEmailDisabled, HideGroupInOutlook
 </code></pre>
-<p>This will create a new Microsoft 365 Group called &quot;myPnPDemo1&quot; and sets the privacy to Private. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.</p>
+<p>Creates a new Microsoft 365 Group called &quot;myPnPDemo1&quot; with an assigned membership and sets the privacy to Private. Welcome Email will not be sent when the Group is created. The M365 Group will also not be visible in Outlook.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -IsPrivate -SensitivityLabels &quot;bc98af29-59eb-4869-baaa-9a8dff631aa4&quot;
 </code></pre>
-<p>Creates a private Microsoft 365 Group with all the required properties and applies the sensitivity label.</p>
+<p>Creates a private Microsoft 365 Group with an assigned membership and with all the required properties and applies the sensitivity label.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">New-PnPMicrosoft365Group -DisplayName $displayName -Description $description -MailNickname $nickname -DynamicMembershipRule &quot;(user.department -eq &quot;&quot;HR&quot;&quot;)&quot; 
+</code></pre>
+<p>Creates a Microsoft 365 Group with all the users having HR in the department field of their profile as members. It will be active and will add users matching the criteria as members.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-createteam">-CreateTeam</h3>
 <p>Creates a Microsoft Teams team associated with created group</p>
@@ -151,6 +159,28 @@ Parameter Sets: (All)
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-dynamicmembershiprule">-DynamicMembershipRule</h3>
+<p>The rule that specifies which users should be a member of this group. I.e. (user.department -eq &quot;HR&quot;) to indicate all users having HR in the department field of their user profile in Entra ID should be a member of this group.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Dynamic membership
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-dynamicmembershipruleprocessingstate">-DynamicMembershipRuleProcessingState</h3>
+<p>The state of the dynamic membership rule for processing the rules assigned to it. Possible values are: On, Paused. Default is On.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Dynamic membership
+
+Required: True
+Position: Named
+Default value: On
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -187,6 +217,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-mailenabled">-MailEnabled</h3>
+<p>Boolean indicating if the group should be mail enabled. Default is true.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Assigned membership
+
+Required: True
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-mailnickname">-MailNickname</h3>
 <p>The Mail Nickname of the Microsoft 365 Group. Cannot contain spaces.</p>
 <pre><code class="lang-yaml">Type: String
@@ -201,7 +242,7 @@ Accept wildcard characters: False
 <h3 id="-members">-Members</h3>
 <p>The array UserPrincipalName values of the group's members</p>
 <pre><code class="lang-yaml">Type: String[]
-Parameter Sets: (All)
+Parameter Sets: Assigned membership
 
 Required: False
 Position: Named
