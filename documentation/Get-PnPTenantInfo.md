@@ -24,9 +24,14 @@ Get-PnPTenantInfo -TenantId <String>
 Get-PnPTenantInfo -DomainName <String>
 ```
 
+### Current Tenant
+```powershell
+Get-PnPTenantInfo
+```
+
 ## DESCRIPTION
 
-Gets information about any tenant. If no Domain name or Tenant id is specified, it returns an error message to specify atleast one of TenantId or DomainName
+Gets information about any tenant. If no Domain name or Tenant id is specified, it returns the Tenant Info of the current tenant.
 
 ## EXAMPLES
 
@@ -34,7 +39,7 @@ Gets information about any tenant. If no Domain name or Tenant id is specified, 
 ```powershell
 Get-PnPTenantInfo -TenantId "e65b162c-6f87-4eb1-a24e-1b37d3504663"
 
-tenantId                             federationBrandName displayName defaultDomainName
+TenantId                             FederationBrandName DisplayName DefaultDomainName
 --------                             ------------------- ----------- -----------------
 e65b162c-6f87-4eb1-a24e-1b37d3504663                     contoso      contoso.onmicrosoft.com
 ```
@@ -46,7 +51,7 @@ Returns the tenant information of the specified TenantId as shown. A valid conne
 ```powershell
 Get-PnPTenantInfo -DomainName "contoso.com"
 
-tenantId                             federationBrandName displayName defaultDomainName
+TenantId                             FederationBrandName DisplayName DefaultDomainName
 --------                             ------------------- ----------- -----------------
 e65b162c-6f87-4eb1-a24e-1b37d3504663                     contoso      contoso.onmicrosoft.com
 ```
@@ -54,25 +59,28 @@ e65b162c-6f87-4eb1-a24e-1b37d3504663                     contoso      contoso.on
 Returns the Tenant Information for the tenant contoso.sharepoint.com as shown. A valid connection with Connect-PnPOnline is required either 
 
 
+
 ### EXAMPLE 3
-```powershell
-Get-PnPTenantInfo -DomainName "contoso.com" -TenantId "e65b162c-6f87-4eb1-a24e-1b37d3504663"
-
-Error:
-Get-PnPTenantInfo: Specify atleast one, either DomainName or TenantId, but not both
-```
-
-Returns error message as shown
-
-### EXAMPLE 4
 ```powershell
 Get-PnPTenantInfo
 
-Error:
-Get-PnPTenantInfo: Please specify either DomainName or TenantId, but not both
+TenantId                             FederationBrandName DisplayName DefaultDomainName
+--------                             ------------------- ----------- -----------------
+e65b162c-6f87-4eb1-a24e-1b37d3504663                     contoso      contoso.onmicrosoft.com
 ```
 
-Returns error message as shown
+Returns Tenant Information of the current tenant.
+
+### EXAMPLE 4
+```powershell
+Get-PnPTenantInfo -CurrentTenant
+
+TenantId                             FederationBrandName DisplayName DefaultDomainName
+--------                             ------------------- ----------- -----------------
+e65b162c-6f87-4eb1-a24e-1b37d3504663                     contoso      contoso.onmicrosoft.com
+```
+
+Returns Tenant Information of the current tenant.
 
 ## PARAMETERS
 
@@ -81,9 +89,9 @@ The id of the tenant to retrieve the information. You can use either TenantId or
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: GETINFOBYTENANTID
 
-Required: false
+Required: true
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -95,11 +103,26 @@ The Domain name of the tenant to lookup. You can use either TenantId or DomainNa
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: GETINFOBYTDOMAINNAME
 
 Required: False
 Position: Named
 Default value: Production
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+
+### -CurrentTenant
+Gets the Tenant Information of the current tenant.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: GETINFOOFCURRENTTENANT
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

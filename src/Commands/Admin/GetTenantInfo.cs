@@ -1,7 +1,9 @@
-﻿using PnP.Core.Transformation;
+﻿using Microsoft.SharePoint.Client;
+using PnP.Core.Transformation;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities.REST;
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -9,15 +11,25 @@ namespace PnP.PowerShell.Commands.Admin
     [Cmdlet(VerbsCommon.Get, "PnPTenantInfo")]
     public class GetTenantInfo : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false)]
+        private const string GETINFOBYTDOMAINNAME = "Tenant Info by Domain Name";
+        private const string GETINFOBYTENANTID = "Tenant Info by Tenant ID";
+        private const string GETINFOOFCURRENTTENANT = "Default Tenant";
+
+        [Parameter(Mandatory = false, ParameterSetName = GETINFOOFCURRENTTENANT, Position = 0, ValueFromPipeline = true)]
+        public SwitchParameter CurrentTenant;
+
+        [Parameter(Mandatory = true, ParameterSetName = GETINFOBYTDOMAINNAME, Position = 0, ValueFromPipeline = true)]
         public string DomainName;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ParameterSetName = GETINFOBYTENANTID, Position = 0, ValueFromPipeline = true)]
         public string TenantId;
 
         protected override void ExecuteCmdlet()
         {
-            EnsureValidInput();
+            if ((ParameterSetName == GETINFOBYTDOMAINNAME && TenantId != null) || (ParameterSetName == GETINFOBYTENANTID && DomainName != null))
+            {
+                throw new PSArgumentException("Specify either DomainName or TenantId, but not both.");
+            }
 
             WriteVerbose("Acquiring access token for Microsoft Graph to look up Tenant");
             var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
@@ -27,26 +39,31 @@ namespace PnP.PowerShell.Commands.Admin
             WriteObject(results, true);
         }
 
-        private void EnsureValidInput()
-        {
-            if (string.IsNullOrEmpty(TenantId) && string.IsNullOrEmpty(DomainName))
-            {
-                throw new PSArgumentException("Specify atleast one, either DomainName or TenantId, but not both");
-            }
-
-            if (TenantId != null && DomainName != null)
-            {
-                throw new PSArgumentException("Please specify either DomainName or TenantId, but not both");
-            }
-        }
-
         private string BuildRequestUrl()
         {
             var baseUrl = $"https://{Connection.GraphEndPoint}/v1.0/tenantRelationships/";
-            var query = TenantId != null
-                ? $"microsoft.graph.findTenantInformationByTenantId(tenantId='{TenantId}')"
-                : $"microsoft.graph.findTenantInformationByDomainName(domainName='{DomainName}')";
-
+            var query = string.Empty;
+            var tenantId = string.Empty;
+            switch (ParameterSetName)
+            {
+                case GETINFOBYTDOMAINNAME:
+                    query = $"microsoft.graph.findTenantInformationByDomainName(domainName='{DomainName}')";
+                    break;
+                case GETINFOBYTENANTID:
+                    query = $"microsoft.graph.findTenantInformationByTenantId(tenantId='{TenantId}')";
+                    break;
+                case GETINFOOFCURRENTTENANT:
+                    if (Connection != null)
+                    {
+                        tenantId = TenantExtensions.GetTenantIdByUrl(Connection.Url, Connection.AzureEnvironment).ToString();
+                        query = $"microsoft.graph.findTenantInformationByTenantId(tenantId='{tenantId}')";
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument to connect.");
+                    }
+                    break;
+            }
             return baseUrl + query;
         }
     }
