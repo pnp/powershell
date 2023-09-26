@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsData.Convert, "PnPFileToPdf")]
-    public class ConvertFile : PnPWebCmdlet
+    public class ConvertFileToPdf : PnPWebCmdlet
     {
         private const string URLTOPATH = "Save to local path";
         private const string URLASMEMORYSTREAM = "Return as memorystream";
@@ -22,7 +22,6 @@ namespace PnP.PowerShell.Commands.Files
         public string Url;
 
         [Parameter(Mandatory = true, ParameterSetName = URLTOPATH)]
-        [Alias("Local path")]
         public string Path = string.Empty;
 
         [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
@@ -55,8 +54,6 @@ namespace PnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = false, ParameterSetName = URLASMEMORYSTREAM)]
         public SwitchParameter AsMemoryStream;
-
-
 
         protected override void ExecuteCmdlet()
         {
@@ -157,7 +154,6 @@ namespace PnP.PowerShell.Commands.Files
                 throw new PSArgumentException($"No file found with the provided Url {serverRelativeUrl}", "Url");
             }
         }
-
 
         private Folder EnsureFolder()
         {
