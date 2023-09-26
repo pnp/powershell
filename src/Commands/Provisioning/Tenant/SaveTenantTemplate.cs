@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 
         internal static void ProcessFiles(ProvisioningHierarchy tenantTemplate, string templateFileName, FileConnectorBase fileSystemConnector, Action<string> progress)
         {
-            var templateFile = ReadTenantTemplate.LoadProvisioningHierarchyFromFile(templateFileName, null);
+            var templateFile = ProvisioningHelper.LoadTenantTemplateFromFile(templateFileName, null);
             if (tenantTemplate.Tenant?.AppCatalog != null)
             {
                 foreach (var app in tenantTemplate.Tenant.AppCatalog.Packages)
