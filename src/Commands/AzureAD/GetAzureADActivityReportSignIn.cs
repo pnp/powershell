@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADActivityReportSignIn")]
     [RequiredMinimalApiPermissions("AuditLog.Read.All")]
+    [Alias("Get-PnPEntraIDActivityReportSignIn")]
     public class GetAzureADActivityReportSignIn : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

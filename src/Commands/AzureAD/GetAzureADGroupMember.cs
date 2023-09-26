@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADGroupMember")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [Alias("Get-PnPEntraIDGroupMember")]
     public class GetAzureADGroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
