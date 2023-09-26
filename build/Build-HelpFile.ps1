@@ -21,8 +21,10 @@ Try {
 
 		Write-Host "Importing PnP PowerShell assembly from $pnpDllLocation"
 		Import-Module -Name $pnpDllLocation -DisableNameChecking
+  		Write-Host "Import PnP PowerShell successful"
 		$cmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
 		$cmdlets
+  		Write-Host "Retrieved alias cmdlets successfully"
 	}
 	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
