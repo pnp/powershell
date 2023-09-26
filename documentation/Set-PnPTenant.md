@@ -93,13 +93,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ExternalUserExpireInDays <Boolean>]
  [-OneDriveRequestFilesLinkEnabled <Boolean>]
  [-EnableRestrictedAccessControl <Boolean>]
- [-SyncAadB2BManagementPolicy <Boolean>]
  [-EnableAzureADB2BIntegration <Boolean>]
  [-CoreRequestFilesLinkEnabled <Boolean>]
- [-CoreRequestFilesLinkExpirationInDays <Boolean>]
+ [-CoreRequestFilesLinkExpirationInDays <Int32>]
  [-LabelMismatchEmailHelpLink <String>]
  [-DisableDocumentLibraryDefaultLabeling <Boolean>]
- [-DisableListSync <Boolean>]
  [-IsEnableAppAuthPopUpEnabled <Boolean>]
  [-ExpireVersionsAfterDays <Int32>]
  [-MajorVersionLimit <Int32>]
@@ -127,6 +125,15 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-StopNew2013Workflows <Boolean>]
  [-MediaTranscription <MediaTranscriptionPolicyType>]
  [-MediaTranscriptionAutomaticFeatures <MediaTranscriptionAutomaticFeaturesPolicyType>]
+ [-SiteOwnerManageLegacyServicePrincipalEnabled <Boolean>]
+ [-ReduceTempTokenLifetimeEnabled <Boolean>]
+ [-ReduceTempTokenLifetimeValue <Int32>]
+ [-ViewersCanCommentOnMediaDisabled <Boolean>]
+ [-AllowGuestUserShareToUsersNotInSiteCollection <Boolean>]
+ [-ConditionalAccessPolicyErrorHelpLink <String>]
+ [-CustomizedExternalSharingServiceUrl <String>]
+ [-IncludeAtAGlanceInShareEmails <Boolean>]
+ [-MassDeleteNotificationDisabled <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -957,6 +964,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequireAcceptingAccountMatchInvitedAccount
+
 Ensures that an external user can only accept an external sharing invitation with an account matching the invited email address.
 
 Administrators who desire increased control over external collaborators should consider enabling this feature.
@@ -979,6 +987,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequireAnonymousLinksExpireInDays
+
 Specifies all anonymous links that have been created (or will be created) will expire after the set number of days .
 
 To remove the expiration requirement, set the value to zero (0).
@@ -995,6 +1004,7 @@ Accept wildcard characters: False
 ```
 
 ### -SearchResolveExactEmailOrUPN
+
 Removes the search capability from People Picker. Note, recently resolved names will still appear in the list until browser cache is cleared or expired.
 
 SharePoint Administrators will still be able to use starts with or partial name matching when enabled.
@@ -1015,6 +1025,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingAllowedDomainList
+
 Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, "contoso.com fabrikam.com".
 
 For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business
@@ -1031,6 +1042,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingBlockedDomainList
+
 Specifies a list of email domains that is blocked or prohibited for sharing with the external collaborators. Use space character as the delimiter for entering multiple values. For example, "contoso.com fabrikam.com".
 
 For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business
@@ -1047,6 +1059,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingCapability
+
 Determines what level of sharing is available for the site.
 
 The valid values are:
@@ -1068,6 +1081,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingDomainRestrictionMode
+
 Specifies the external sharing mode for domains.
 
 The following values are: None AllowList BlockList
@@ -1087,6 +1101,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowAllUsersClaim
+
 Enables the administrator to hide the All Users claim groups in People Picker.
 
 When users share an item with "All Users (x)", it is accessible to all organization members in the tenant's Azure Active Directory who have authenticated with via this method. When users share an item with "All Users (x)" it is accessible to all organization members in the tenant that used NTLM to authentication with SharePoint.
@@ -1109,6 +1124,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowEveryoneClaim
+
 Enables the administrator to hide the Everyone claim in the People Picker.
 When users share an item with Everyone, it is accessible to all authenticated users in the tenant's Azure Active Directory, including any active external users who have previously accepted invitations.
 
@@ -1130,6 +1146,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowEveryoneExceptExternalUsersClaim
+
 Enables the administrator to hide the "Everyone except external users" claim in the People Picker.
 When users share an item with "Everyone except external users", it is accessible to all organization members in the tenant's Azure Active Directory, but not to any users who have previously accepted invitations.
 
@@ -1149,6 +1166,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowPeoplePickerSuggestionsForGuestUsers
+
 Shows people picker suggestions for guest users. To enable the option to search for existing guest users at Tenant Level, set this parameter to $true.
 
 ```yaml
@@ -1163,6 +1181,7 @@ Accept wildcard characters: False
 ```
 
 ### -SignInAccelerationDomain
+
 Specifies the home realm discovery value to be sent to Azure Active Directory (AAD) during the user sign-in process.
 
 When the organization uses a third-party identity provider, this prevents the user from seeing the Azure Active Directory Home Realm Discovery web page and ensures the user only sees their company's Identity Provider's portal.
@@ -1190,6 +1209,7 @@ Accept wildcard characters: False
 ```
 
 ### -SocialBarOnSitePagesDisabled
+
 Disables or enables the Social Bar which appears on all modern SharePoint pages with the exception of the home page of a site. It gives users the ability to like a page, see the number of views, likes, and comments on a page, and see the people who have liked a page.
 
 ```yaml
@@ -1345,7 +1365,7 @@ Accept wildcard characters: False
 ```
 
 ### -InformationBarriersSuspension
-Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see https://learn.microsoft.com/sharepoint/information-barriers.
+Allows suspension of the information barriers feature in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see https://learn.microsoft.com/sharepoint/information-barriers.
 
 ```yaml
 Type: Boolean
@@ -1568,20 +1588,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SyncAadB2BManagementPolicy
-Allows enablement of Azure B2B Management Policies to be synced. See [this article](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -CoreRequestFilesLinkEnabled
 Enable or disable the Request files link on the core partition for all SharePoint sites (not including OneDrive sites). If this value is not set, Request files will only show for OneDrives with Anyone links enabled.
 
@@ -1618,27 +1624,6 @@ This parameter allows tenant admins to customize the "Help Link" in email with t
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -CoreLoopSharingCapability
-Gets or sets collaboration type for fluid on core partition
-
-The valid values are:
-
-- Disabled
-- ExternalUserSharingOnly
-- ExternalUserAndGuestSharing
-- ExistingExternalUserSharingOnly
-
-```yaml
-Type: SharingCapabilities
 Parameter Sets: (All)
 
 Required: False
@@ -1782,7 +1767,7 @@ Accept wildcard characters: False
 
 ### -IsCollabMeetingNotesFluidEnabled
 
-Gets or sets a value to specify whether CollabMeetingNotes Fluid Framework is enabled If IsFluidEnabled disabled, IsCollabMeetingNotesFluidEnabled will be disabled automatically If IsFluidEnabled enabled, IsCollabMeetingNotesFluidEnabled will be enabled automatically IsCollabMeetingNotesFluidEnabled can be enabled only when IsFluidEnabled is already enabled
+Gets or sets a value to specify whether CollabMeetingNotes Fluid Framework is enabled. If IsFluidEnabled disabled, IsCollabMeetingNotesFluidEnabled will be disabled automatically. If IsFluidEnabled enabled, IsCollabMeetingNotesFluidEnabled will be enabled automatically. IsCollabMeetingNotesFluidEnabled can be enabled only when IsFluidEnabled is already enabled.
 
 ```yaml
 Type: Boolean
@@ -1891,6 +1876,7 @@ Accept wildcard characters: False
 ```
 
 ### -CoreDefaultLinkToExistingAccess
+
 Gets or sets default share link to existing access on core partition
 
 ```yaml
@@ -1948,6 +1934,8 @@ Accept wildcard characters: False
 
 ### -MajorVersionLimit
 
+When Version History Limits are managed Manually (EnableAutoExpirationVersionTrim $false), admins will need to set the limits to the number of major versions (MajorVersionLimit) and the time period the versions are stored (ExpireVersionsAfterDays).
+
 ```yaml
 Type: Int32
 Parameter Sets: (All)
@@ -1960,6 +1948,8 @@ Accept wildcard characters: False
 ```
 
 ### -ExpireVersionsAfterDays
+
+When Version History Limits are managed Manually (EnableAutoExpirationVersionTrim $false), admins will need to set the limits to the number of major versions (MajorVersionLimit) and the time period the versions are stored (ExpireVersionsAfterDays).
 
 ```yaml
 Type: Int32
@@ -1994,20 +1984,6 @@ Accept wildcard characters: False
 Enables or disables users in the organization to authenticate SharePoint applications using popups.
 
 This parameter affects the way code in SharePoint interacts with Azure AD to get tokens to access APIs. In scenarios where third-party cookies are disabled (such as Safari browsers with ITP feature enabled), any code that requires a token to access an API automatically triggers a full page refresh. When IsEnableAppAuthPopUpEnabled is set to $true, SharePoint will instead surface a popup in this scenario.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DisableListSync
-Disables or enables sync functionality for lists.
 
 ```yaml
 Type: Boolean
@@ -2142,6 +2118,150 @@ When the feature is enabled, videos can have transcripts generated automatically
 
 ```yaml
 Type: MediaTranscriptionAutomaticFeaturesPolicyType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SiteOwnerManageLegacyServicePrincipalEnabled
+
+This parameter allows site owners to create or update the service principal.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReduceTempTokenLifetimeEnabled
+
+Enables reduced session timeout for temporary URLs used by apps for document download scenarios. Reduction occurs when an app redeeming an IP address does not match the original requesting IP. The default value is 15 minutes if ReduceTempTokenLifetimeValue is not set.
+
+Note: Reducing this value may bring degradation in end-user experience by requiring frequent authentication prompts to users.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReduceTempTokenLifetimeValue
+
+Optional parameter to set the session timeout value for temporary URLs. The value can be set between 5 and 15 minutes and the default value is 15 minutes.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ViewersCanCommentOnMediaDisabled
+
+Controls whether viewers commenting on media items is disabled or not.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowGuestUserShareToUsersNotInSiteCollection
+
+The AllowGuestUserShareToUsersNotInSiteCollection settings (defaulted to false) will allow guests to share to users not in the site.
+
+The valid values are:
+
+- False (default) - Guest users will only be able to share to users that exist within the current site.
+- True - Guest users will be able to find user accounts in the directory by typing in the exact email address match.
+
+Note: When the value is set to True, you will also need to enable [SharePoint and OneDrive integration with Azure AD B2B](https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration) for the functionality to work.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ConditionalAccessPolicyErrorHelpLink
+
+A Link for help when Conditional Access Policy blocks a user. This should be in a valid URL format. A valid URL format that begins with http:// or https://.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CustomizedExternalSharingServiceUrl
+
+Specifies a URL that will be appended to the error message that is surfaced when a user is blocked from sharing externally by policy. This URL can be used to direct users to internal portals to request help or to inform them about your organization's policies. An example value is `https://www.contoso.com/sharingpolicies`.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeAtAGlanceInShareEmails
+
+Enables or disables the At A Glance feature in sharing e-mails. This provides the key points and time to read for the shared item if available.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MassDeleteNotificationDisabled
+
+Enables or disables the mass delete detection feature. When MassDeleteNotificationDisabled is set to $true, tenant admins can perform mass deletion operations without triggering notifications.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
