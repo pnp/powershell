@@ -42,7 +42,7 @@ Try {
 }
 Catch {
 	Write-Host "Error: Cannot generate alias documentation files"
-	exit 1
+	Write-Host $_
 }
 
 $tempFolder = [System.IO.Path]::GetTempPath()
