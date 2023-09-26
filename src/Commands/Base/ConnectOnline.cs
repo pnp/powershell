@@ -396,6 +396,28 @@ namespace PnP.PowerShell.Commands.Base
                     WriteVerbose($"Site at {Url} does not exist");
                     throw new PSInvalidOperationException($"The specified site {Url} does not exist", e);
                 }
+                catch (TargetInvocationException tex)
+                {
+                    Exception innermostException = tex;
+                    while (innermostException.InnerException != null) innermostException = innermostException.InnerException;
+
+                    string errorMessage;
+                    if (innermostException is System.Net.WebException wex)
+                    {
+                        using var streamReader = new StreamReader(wex.Response.GetResponseStream());
+                        errorMessage = $"{wex.Status}: {wex.Message} Response received: {streamReader.ReadToEnd()}";
+                    }
+                    else
+                    {
+                        errorMessage = innermostException.Message;
+                    }
+
+                    // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
+                    if (!ParameterSpecified("ErrorAction") || !new [] { "stop", "ignore", "silentlycontinue" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant()))
+                    {
+                        throw new PSInvalidOperationException(errorMessage);
+                    }
+                }             
             }
 
             if (ReturnConnection)
