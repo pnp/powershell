@@ -3,18 +3,29 @@ if($IsLinux -or $isMacOS)
 {
 	$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
 } else {
-	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+	$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 }
 
 Try {
 	Write-Host "Generating documentation files for alias cmdlets" -ForegroundColor Yellow
 	# Load the Module in a new PowerShell session
-	
-	$pnpDllLocation = "$($using:destinationFolder)/Core/PnP.PowerShell.dll"
+	$scriptBlock = {
+		$documentsFolder = [environment]::getfolderpath("mydocuments")
+		if($IsLinux -or $isMacOS)
+		{
+			$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
+		} else {
+			$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
+		}
+		$pnpDllLocation = "$destinationFolder/Core/PnP.PowerShell.dll"
 
-	Write-Host "Importing PnP PowerShell assembly from $pnpDllLocation"
-	Import-Module -Name $pnpDllLocation -DisableNameChecking
-	$aliasCmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
+		Write-Host "Importing PnP PowerShell assembly from $pnpDllLocation"
+		Import-Module -Name $pnpDllLocation -DisableNameChecking
+		$cmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
+		$cmdlets
+	}
+	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
+
 	Write-Host "  - $($aliasCmdlets.Length) found" -ForegroundColor Yellow
 
 	$aliasTemplatePageContent = Get-Content -Path "../pages/cmdlets/alias.md" -Raw
