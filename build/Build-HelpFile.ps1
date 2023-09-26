@@ -20,7 +20,7 @@ Try {
 		$pnpDllLocation = "$destinationFolder/Core/PnP.PowerShell.dll"
 
 		Write-Host "Importing PnP PowerShell assembly from $pnpDllLocation"
-		Import-Module -Name $pnpDllLocation -DisableNameChecking
+		Import-Module -Name $pnpDllLocation -DisableNameChecking -Force
   		Write-Host "Import PnP PowerShell successful"
 		$cmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
 		$cmdlets
