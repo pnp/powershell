@@ -15,15 +15,20 @@ Try {
 		Write-Host "Importing PnP PowerShell assembly from $pnpDllLocation"
 		Import-Module -Name $pnpDllLocation -DisableNameChecking
 		$cmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
+		$cmdlets
 	}
 	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
-	$aliasTemplatePageContent = Get-Content -Path "./dev/pages/cmdlets/alias.md" -Raw
+	Write-Host "  - $($aliasCmdlets.Length) found" -ForegroundColor Yellow
+
+	$aliasTemplatePageContent = Get-Content -Path "../pages/cmdlets/alias.md" -Raw
 
 	ForEach($aliasCmdlet in $aliasCmdlets)
 	{
-		$aliasTemplatePageContent.Replace("%%cmdletname%%", $aliasCmdlet.Alias).Replace("%%referencedcmdletname%%", $aliasCmdlet.ReferencedCommand)`
-		| Out-File "./../documentation/$($aliasCmdlet.Alias).md"
+		$destinationFileName = "./../documentation/$($aliasCmdlet.Alias).md"
+
+		Write-Host "    - Creating page for $($aliasCmdlet.Alias) being an alias for $($aliasCmdlet.ReferencedCommand) as $destinationFileName" -ForegroundColor Yellow
+		$aliasTemplatePageContent.Replace("%%cmdletname%%", $aliasCmdlet.Alias).Replace("%%referencedcmdletname%%", $aliasCmdlet.ReferencedCommand) | Out-File $destinationFileName -Force
 	}
 }
 Catch {
