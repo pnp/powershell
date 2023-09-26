@@ -6,6 +6,31 @@ if($IsLinux -or $isMacOS)
 	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
 }
 
+Try {
+	Write-Host "Generating documentation files for alias cmdlets" -ForegroundColor Yellow
+	# Load the Module in a new PowerShell session
+	$scriptBlock = {
+		$pnpDllLocation = "$($using:destinationFolder)/Core/PnP.PowerShell.dll"
+
+		Write-Host "Importing PnP PowerShell assembly from $pnpDllLocation"
+		Import-Module -Name $pnpDllLocation -DisableNameChecking
+		$cmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
+	}
+	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
+
+	$aliasTemplatePageContent = Get-Content -Path "./dev/pages/cmdlets/alias.md" -Raw
+
+	ForEach($aliasCmdlet in $aliasCmdlets)
+	{
+		$aliasTemplatePageContent.Replace("%%cmdletname%%", $aliasCmdlet.Alias).Replace("%%referencedcmdletname%%", $aliasCmdlet.ReferencedCommand)`
+		| Out-File "./../documentation/$($aliasCmdlet.Alias).md"
+	}
+}
+Catch {
+	Write-Host "Error: Cannot generate alias documentation files"
+	exit 1
+}
+
 $tempFolder = [System.IO.Path]::GetTempPath()
 
 $runsInAction = $("$env:RUNSINACTION")

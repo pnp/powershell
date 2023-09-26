@@ -78,7 +78,7 @@ foreach ($nightlycmdlet in $nightlycmdlets) {
 
 # Generate cmdlet toc
 
-$cmdletPages = Get-ChildItem -Path "./dev/pages/cmdlets/*.md" -Exclude "index.md"
+$cmdletPages = Get-ChildItem -Path "./dev/pages/cmdlets/*.md" -Exclude "index.md","alias.md"
 $toc = ""
 foreach ($cmdletPage in $cmdletPages) {
     $toc = $toc + "- name: $($cmdletPage.BaseName)`n  href: $($cmdletPage.Name)`n"
