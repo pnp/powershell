@@ -60,6 +60,9 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public int[] TranslationLanguageCodes;
 
+        [Parameter(Mandatory = false)]
+        public bool ShowPublishDate;
+
         private CustomHeaderDynamicParameters customHeaderParameters;
 
         public object GetDynamicParameters()
@@ -128,6 +131,11 @@ namespace PnP.PowerShell.Commands.Pages
             if (ParameterSpecified(nameof(HeaderLayoutType)))
             {
                 clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
+            }
+            
+            if(ParameterSpecified(nameof(ShowPublishDate)))
+            {
+                clientSidePage.PageHeader.ShowPublishDate = ShowPublishDate;
             }
 
             if (PromoteAs == PagePromoteType.Template)
