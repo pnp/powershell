@@ -30,6 +30,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPSearchExternalItem` cmdlet which allows ingesting external items into the Microsoft Search index for custom connectors. [#3420](https://github.com/pnp/powershell/pull/3420)
 - Added `Get-PnPTenantInfo` which allows retrieving tenant information by its Id or domain name [#3414](https://github.com/pnp/powershell/pull/3414)
 - Added option to create a Microsft 365 Group with dynamic membership by passing in `-DynamicMembershipRule` [#3426](https://github.com/pnp/powershell/pull/3426)
+- Added option to pass in a Stream or XML string to `Read-PnPTenantTemplate` allowing the tenant template to be modified before being applied. [#3431](https://github.com/pnp/powershell/pull/3431)
+- Added `Get-PnPTenantInfo` which allows retrieving tenant information by its Id or domain name. [#3414](https://github.com/pnp/powershell/pull/3414)
+- Added option to create a Microsoft 365 Group with dynamic membership by passing in `-DynamicMembershipRule` [#3426](https://github.com/pnp/powershell/pull/3426)
 
 ### Fixed
 
@@ -51,6 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPTeamsTeam` cmdlet throwing an error when specifying members [#3351](https://github.com/pnp/powershell/pull/3351)
 - Fixed `New-PnPTeamsTeam` cmdlet not working well with a managed identity [#3351](https://github.com/pnp/powershell/pull/3351)
 - Fixed `Copy-PnPFile`, `Copy-PnPFolder` and `Move-PnPFile` to better handle copying or moving operations to OneDrive or Multi-geo environments. [#3245](https://github.com/pnp/powershell/pull/3245)
+- Fixed `Get-PnPTenantTemplate` not doing anything when the `-SiteUrl` parameter had not been specified. It will now use the currently connected site when the parameter is omitted. [#3431](https://github.com/pnp/powershell/pull/3431)
  
 ### Changed
 
