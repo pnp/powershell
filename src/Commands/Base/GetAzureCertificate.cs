@@ -3,7 +3,7 @@ using System;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Model.EntraID;
+using PnP.PowerShell.Commands.Model.AzureAD;
 
 namespace PnP.PowerShell.Commands.Base
 {

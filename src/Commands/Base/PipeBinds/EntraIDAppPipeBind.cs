@@ -1,7 +1,7 @@
 using System;
 using System.Linq;
 using System.Management.Automation;
-using PnP.PowerShell.Commands.Model.EntraID;
+using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds

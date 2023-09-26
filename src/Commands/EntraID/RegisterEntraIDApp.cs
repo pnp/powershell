@@ -17,7 +17,7 @@ using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base;
 using System.Diagnostics;
-using PnP.PowerShell.Commands.Model.EntraID;
+using PnP.PowerShell.Commands.Model.AzureAD;
 
 namespace PnP.PowerShell.Commands.EntraID
 {

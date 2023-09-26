@@ -1,6 +1,7 @@
 ﻿
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Utilities.EntraID;
 using System;
 using System.Management.Automation;
 using System.Net;
@@ -67,25 +68,25 @@ namespace PnP.PowerShell.Commands.Principals
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                PnP.PowerShell.Commands.Model.EntraID.User user;
+                PnP.PowerShell.Commands.Model.AzureAD.User user;
                 if (Guid.TryParse(Identity, out Guid identityGuid))
                 {
-                    user = PnP.PowerShell.Commands.Utilities.EntraIdUtility.GetUser(AccessToken, identityGuid, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent);
+                    user = UsersUtility.GetUser(AccessToken, identityGuid, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent);
                 }
                 else
                 {
-                    user = PnP.PowerShell.Commands.Utilities.EntraIdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent);
+                    user = UsersUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent);
                 }
                 WriteObject(user);
             }
             else if (ParameterSpecified(nameof(Delta)))
             {
-                var userDelta = PnP.PowerShell.Commands.Utilities.EntraIdUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
+                var userDelta = UsersUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
                 WriteObject(userDelta);
             } 
             else
             {
-                var users = PnP.PowerShell.Commands.Utilities.EntraIdUtility.ListUsers(AccessToken, Filter, OrderBy, Select, ignoreDefaultProperties: IgnoreDefaultProperties, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
+                var users = UsersUtility.ListUsers(AccessToken, Filter, OrderBy, Select, ignoreDefaultProperties: IgnoreDefaultProperties, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
                 WriteObject(users, true);
             }
         }

@@ -3,7 +3,7 @@ using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.SharePoint.SharePointUserProfileSync;
-
+using PnP.PowerShell.Commands.Utilities.EntraID;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
     public class SyncSharePointUserProfilesFromAzureActiveDirectory : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false)]
-        public List<Model.EntraID.User> Users;
+        public List<Model.AzureAD.User> Users;
 
         [Parameter(Mandatory = false)]
         public string Folder = "Shared Documents";
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 throw new PSArgumentNullException(nameof(Folder), "Folder cannot be empty");
             }
 
-            var aadUsers = new List<PnP.PowerShell.Commands.Model.EntraID.User>();
+            var aadUsers = new List<PnP.PowerShell.Commands.Model.AzureAD.User>();
             if (ParameterSpecified(nameof(Users)))
             {
                 // Ensure users have been provided
@@ -76,7 +76,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 WriteVerbose("Retrieving users from Entra ID");
 
                 // Retrieve all the users from Entra ID
-                aadUsers = PnP.PowerShell.Commands.Utilities.EntraIdUtility.ListUsers(GraphAccessToken, null, null, allAadPropertiesList.ToArray(), endIndex: null);
+                aadUsers = UsersUtility.ListUsers(GraphAccessToken, null, null, allAadPropertiesList.ToArray(), endIndex: null);
 
                 WriteVerbose($"{aadUsers.Count} user{(aadUsers.Count != 1 ? "s have" : " has")} been retrieved from Entra ID");
 

@@ -32,12 +32,12 @@ namespace PnP.PowerShell.Commands.EntraID
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                var auditResults = GraphHelper.GetAsync<Model.EntraID.SignIn>(Connection, signInUrl, AccessToken).GetAwaiter().GetResult();
+                var auditResults = GraphHelper.GetAsync<Model.AzureAD.SignIn>(Connection, signInUrl, AccessToken).GetAwaiter().GetResult();
                 WriteObject(auditResults, false);
             }
             else
             {
-                var auditResults = GraphHelper.GetResultCollectionAsync<Model.EntraID.SignIn>(Connection, signInUrl, AccessToken).GetAwaiter().GetResult();
+                var auditResults = GraphHelper.GetResultCollectionAsync<Model.AzureAD.SignIn>(Connection, signInUrl, AccessToken).GetAwaiter().GetResult();
                 WriteObject(auditResults, true);
             }
         }

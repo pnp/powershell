@@ -1,4 +1,4 @@
-﻿using PnP.PowerShell.Commands.Model.EntraID;
+﻿using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;

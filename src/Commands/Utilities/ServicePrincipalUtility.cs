@@ -1,6 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Model.EntraID;
+using PnP.PowerShell.Commands.Model.AzureAD;
 using System;
 using System.Collections.Generic;
 using System.Linq;

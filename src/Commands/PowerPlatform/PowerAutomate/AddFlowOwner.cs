@@ -1,5 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities.EntraID;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
@@ -45,16 +46,16 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             WriteVerbose("Microsoft Graph access token acquired");
 
-            Model.EntraID.User user;
+            Model.AzureAD.User user;
             if (Guid.TryParse(User, out Guid identityGuid))
             {
                 WriteVerbose("Looking up user through Microsoft Graph by user id {identityGuid}");
-                user = Utilities.EntraIdUtility.GetUser(graphAccessToken, identityGuid);
+                user = UsersUtility.GetUser(graphAccessToken, identityGuid);
             }
             else
             {
                 WriteVerbose($"Looking up user through Microsoft Graph by user principal name {User}");
-                user = Utilities.EntraIdUtility.GetUser(graphAccessToken, WebUtility.UrlEncode(User));
+                user = UsersUtility.GetUser(graphAccessToken, WebUtility.UrlEncode(User));
             }
 
             if (user == null)

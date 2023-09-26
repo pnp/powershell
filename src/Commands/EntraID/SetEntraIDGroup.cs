@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.EntraID;
 using System;
 using System.Management.Automation;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
@@ -77,7 +78,7 @@ namespace PnP.PowerShell.Commands.EntraID
 
                     if (changed)
                     {
-                        EntraIDGroupsUtility.UpdateAsync(Connection, AccessToken, group).GetAwaiter().GetResult();
+                        GroupsUtility.UpdateAsync(Connection, AccessToken, group).GetAwaiter().GetResult();
                     }
 
                     if (ParameterSpecified(nameof(Owners)))

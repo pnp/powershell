@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Properties;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.EntraID;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
@@ -51,7 +52,7 @@ namespace PnP.PowerShell.Commands.EntraID
 
             if (!Force)
             {
-                var existingGroup = EntraIDGroupsUtility.GetGroupAsync(Connection, MailNickname, AccessToken).GetAwaiter().GetResult();
+                var existingGroup = GroupsUtility.GetGroupAsync(Connection, MailNickname, AccessToken).GetAwaiter().GetResult();
 
                 forceCreation = existingGroup == null || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
             }

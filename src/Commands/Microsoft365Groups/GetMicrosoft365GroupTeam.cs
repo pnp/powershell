@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
 
             WriteVerbose($"Requesting endpoints of Microsoft 365 Group with Id {groupId}");
-            var endpoints = GraphHelper.GetResultCollectionAsync<Model.EntraID.GroupEndPoint>(Connection, $"/beta/groups/{groupId}/endpoints", AccessToken).GetAwaiter().GetResult();
+            var endpoints = GraphHelper.GetResultCollectionAsync<Model.AzureAD.GroupEndPoint>(Connection, $"/beta/groups/{groupId}/endpoints", AccessToken).GetAwaiter().GetResult();
             WriteVerbose($"{endpoints.Count()} endpoint(s) found in total");
 
             var yammerEndpoint = endpoints.Where(e => e.ProviderName.Equals("Microsoft Teams", StringComparison.InvariantCultureIgnoreCase));

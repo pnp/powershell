@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="sharePointFolder">Location in the currently connected to site where to upload the JSON file to with instructions to update the user profiles</param>
         /// <param name="onlyCreateAndUploadMappingsFile">Boolean indicating if only the mappings file should be created and uploaded to SharePoint Online (true) or if the import job on that file should also be invoked (false)</param>
         /// <returns>Information on the status of the import job that has been created because of this action</returns>
-        public static async Task<SharePointUserProfileSyncStatus> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.EntraID.User> users, ImportProfilePropertiesUserIdType idType, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
+        public static async Task<SharePointUserProfileSyncStatus> SyncFromAzureActiveDirectory(ClientContext clientContext, IEnumerable<PnP.PowerShell.Commands.Model.AzureAD.User> users, ImportProfilePropertiesUserIdType idType, Hashtable userProfilePropertyMappings, string sharePointFolder, bool onlyCreateAndUploadMappingsFile = false)
         {
             var webServerRelativeUrl = clientContext.Web.EnsureProperty(w => w.ServerRelativeUrl);
             if (!sharePointFolder.ToLower().StartsWith(webServerRelativeUrl))

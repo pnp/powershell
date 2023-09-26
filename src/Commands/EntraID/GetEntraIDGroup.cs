@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.EntraID;
 using System.Linq;
 using System.Management.Automation;
 
@@ -27,7 +28,7 @@ namespace PnP.PowerShell.Commands.EntraID
             }
             else
             {
-                var groups = EntraIDGroupsUtility.GetGroupsAsync(Connection, AccessToken).GetAwaiter().GetResult();
+                var groups = GroupsUtility.GetGroupsAsync(Connection, AccessToken).GetAwaiter().GetResult();
                 if (groups != null)
                 {
                     WriteObject(groups?.OrderBy(m => m.DisplayName), true);
