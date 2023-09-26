@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantInfo")]
+    [OutputType(typeof(Model.TenantInfo))]
     public class GetTenantInfo : PnPAdminCmdlet
     {
         private const string GETINFOBYTDOMAINNAME = "By Domain Name";
