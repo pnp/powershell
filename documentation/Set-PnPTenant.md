@@ -1654,27 +1654,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -CoreLoopSharingCapability
-Gets or sets collaboration type for fluid on core partition
-
-The valid values are:
-
-- Disabled
-- ExternalUserSharingOnly
-- ExternalUserAndGuestSharing
-- ExistingExternalUserSharingOnly
-
-```yaml
-Type: SharingCapabilities
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -OneDriveLoopSharingCapability
 
 When sharing a whiteboard in a Teams meeting, Whiteboard creates a sharing link that’s accessible by anyone within the organization and automatically shares the whiteboard with any in-tenant users in the meeting.

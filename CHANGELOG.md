@@ -27,6 +27,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPFlowOwner` cmdlet which allows retrieving the owners of a Power Automate flow [#3314](https://github.com/pnp/powershell/pull/3314)
 - Added `-AvailableForTagging` to `Set-PnPTerm` which allows the available for tagging property on a Term to be set [#3321](https://github.com/pnp/powershell/pull/3321)
 - Added `Get-PnPPowerPlatformConnector` cmdlet which allows for all custom connectors to be retrieved [#3309](https://github.com/pnp/powershell/pull/3309)
+- Added option to pass in a Stream or XML string to `Read-PnPTenantTemplate` allowing the tenant template to be modified before being applied. [#3431](https://github.com/pnp/powershell/pull/3431)
+- Added `Get-PnPTenantInfo` which allows retrieving tenant information by its Id or domain name. [#3414](https://github.com/pnp/powershell/pull/3414)
+- Added option to create a Microsoft 365 Group with dynamic membership by passing in `-DynamicMembershipRule` [#3426](https://github.com/pnp/powershell/pull/3426)
 
 ### Fixed
 
@@ -48,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPTeamsTeam` cmdlet throwing an error when specifying members [#3351](https://github.com/pnp/powershell/pull/3351)
 - Fixed `New-PnPTeamsTeam` cmdlet not working well with a managed identity [#3351](https://github.com/pnp/powershell/pull/3351)
 - Fixed `Copy-PnPFile`, `Copy-PnPFolder` and `Move-PnPFile` to better handle copying or moving operations to OneDrive or Multi-geo environments. [#3245](https://github.com/pnp/powershell/pull/3245)
+- Fixed `Get-PnPTenantTemplate` not doing anything when the `-SiteUrl` parameter had not been specified. It will now use the currently connected site when the parameter is omitted. [#3431](https://github.com/pnp/powershell/pull/3431)
  
 ### Changed
 
@@ -55,6 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - The `Publish-PnPCompanyApp` cmdlet is now obsolete. It will be removed in the next version. [#3349](https://github.com/pnp/powershell/pull/3349)
 - Verbose output will no longer show the access token [#3352](https://github.com/pnp/powershell/pull/3352)
 - Improved `Add-PnPFile` cmdlet. It will now automatically checkout the file if `-CheckinType` parameter is specified. [#3403](https://github.com/pnp/powershell/pull/3403)
+- Improved the error message thrown when using `-ValidateConnection` with `Connect-PnPOnline` and it failing due to i.e. an expired ClientSecret so the reason of the failed connect becomes more clear. [#3440](https://github.com/pnp/powershell/pull/3440)
 
 ### Removed
 
@@ -62,6 +67,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- [smsdaniel]
 - Jim Duncan [sparkitect]
 - Jonathan Smith [jonathan-m-smith]
 - Carl Joakim Damsleth [damsleth]
