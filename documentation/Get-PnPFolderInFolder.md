@@ -16,12 +16,12 @@ List subfolders in a folder
 
 ### Folder via url
 ```powershell
-Get-PnPFolderInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recurse] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via pipebind
 ```powershell
-Get-PnPFolderInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFolderInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-ExcludeSystemFolders] [-Includes <String[]>] [-Recurse] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -74,7 +74,7 @@ Returns all folders in the "Shared Documents" folder which is located in the roo
 
 ### EXAMPLE 7
 ```powershell
-Get-PnPFolderInFolder -FolderSiteRelativeUrl "SitePages" -Recursive
+Get-PnPFolderInFolder -FolderSiteRelativeUrl "SitePages" -Recurse
 ```
 
 Returns all folders, including those located in any subfolders, in the folder SitePages which is located in the root of the current web
@@ -165,7 +165,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Recursive
+### -Recurse
 A switch parameter to include folders of all subfolders in the specified folder
 
 ```yaml

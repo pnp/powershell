@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Files
         public string ItemName = string.Empty;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter Recursive;
+        public SwitchParameter Recurse;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter ExcludeSystemFolders;        
@@ -95,7 +95,7 @@ namespace PnP.PowerShell.Commands.Files
 
             IEnumerable<Folder> folderContent = folders;
 
-            if (Recursive && folders.Count() > 0)
+            if (Recurse && folders.Count() > 0)
             {
                 foreach (var folder in folders)
                 {
