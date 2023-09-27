@@ -3387,6 +3387,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTenantInfo.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTenantInfo.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTenantInstance.md",
       "output": {
         ".html": {
@@ -7029,6 +7039,20 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Update-PnPUserType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "log_codes": [
+        "invalid-yaml-header",
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/alias.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/alias.html"
         }
       },
       "version": ""

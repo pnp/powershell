@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Read-PnPTenantTemplate | PnP PowerShell </title>
+    <title>Get-PnPTenantInfo | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Read-PnPTenantTemplate | PnP PowerShell ">
+    <meta name="title" content="Get-PnPTenantInfo | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,66 +77,84 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="read-pnptenanttemplate">Read-PnPTenantTemplate</h1>
+  <h1 id="get-pnptenantinfo">Get-PnPTenantInfo</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Loads/Reads a PnP tenant template from the file system and returns an in-memory instance of this template.</p>
+<p>Gets information about any tenant</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="by-path-default">By Path (default)</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Path &lt;String&gt;
+<h3 id="current-tenant-default">Current Tenant (default)</h3>
+<pre><code class="lang-powershell">Get-PnPTenantInfo [-Verbose]
 </code></pre>
-<h3 id="by-stream">By Stream</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Stream &lt;Stream&gt;
+<h3 id="by-tenantid">By TenantId</h3>
+<pre><code class="lang-powershell">Get-PnPTenantInfo -TenantId &lt;String&gt; [-Verbose]
 </code></pre>
-<h3 id="by-xml">By XML</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Xml &lt;String&gt;
+<h3 id="by-domain-name">By Domain Name</h3>
+<pre><code class="lang-powershell">Get-PnPTenantInfo -DomainName &lt;String&gt; [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to load a PnP tenant template from the file system, from a stream or from a string to memory and return its instance object.</p>
+<p>Gets the tenantId, federation brand name, company name and default domain name regarding a specific tenant. If no Domain name or Tenant id is specified, it returns the Tenant Info of the currently connected to tenant.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Path template.pnp
+<pre><code class="lang-powershell">Get-PnPTenantInfo -TenantId &quot;e65b162c-6f87-4eb1-a24e-1b37d3504663&quot;
 </code></pre>
-<p>Reads a PnP tenant template file from the file system and returns an in-memory instance</p>
+<p>Returns the tenant information of the specified TenantId.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">$template = Get-PnPFile &quot;/sites/config/Templates/Default.xml&quot; -AsMemoryStream
-Read-PnPTenantTemplate -Stream $template
+<pre><code class="lang-powershell">Get-PnPTenantInfo -DomainName &quot;contoso.com&quot;
 </code></pre>
-<p>Downloads a PnP Tenant template from the provided location into memory and parses its contents into a TenantTemplate instance which can then be modified and passed on to the Apply-PnPTenantTemplate cmdlet without needing to write anything to disk</p>
+<p>Returns the Tenant Information for the tenant connected to the domain contoso.com.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPTenantInfo
+</code></pre>
+<p>Returns Tenant Information of the currently connected to tenant.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPTenantInfo -CurrentTenant
+</code></pre>
+<p>Returns Tenant Information of the currently connected to tenant.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-path">-Path</h3>
-<p>Filename to read from, optionally including full path.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: By Path
+<h3 id="-currenttenant">-CurrentTenant</h3>
+<p>Gets the Tenant Information of the currently connected to tenant.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: GETINFOOFCURRENTTENANT
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-stream">-Stream</h3>
-<p>A stream containing the PnP tenant template.</p>
+<h3 id="-domainname">-DomainName</h3>
+<p>The Domain name of the tenant to lookup. You can use the onmicrosoft.com domain name such as &quot;contoso.onmicrosoft.com&quot; or use any domain that is connected to the tenant, i.e. &quot;contoso.com&quot;.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: By Stream
+Parameter Sets: GETINFOBYTDOMAINNAME
 
-Required: True
-Position: 0
+Required: False
+Position: Named
+Default value: Production
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-tenantid">-TenantId</h3>
+<p>The id of the tenant to retrieve the information about</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: GETINFOBYTENANTID
+
+Required: true
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-xml">-Xml</h3>
-<p>A string containing the XML of the PnP tenant template.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: By XML
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
-Required: True
-Position: 0
+Required: False
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

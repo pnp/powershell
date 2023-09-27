@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Read-PnPTenantTemplate | PnP PowerShell </title>
+    <title>%%cmdletname%% | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Read-PnPTenantTemplate | PnP PowerShell ">
+    <meta name="title" content="%%cmdletname%% | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,66 +81,10 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="read-pnptenanttemplate">Read-PnPTenantTemplate</h1>
+  <h1 id="cmdletname">%%cmdletname%%</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Loads/Reads a PnP tenant template from the file system and returns an in-memory instance of this template.</p>
-<h2 id="syntax">SYNTAX</h2>
-<h3 id="by-path-default">By Path (default)</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Path &lt;String&gt;
-</code></pre>
-<h3 id="by-stream">By Stream</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Stream &lt;Stream&gt;
-</code></pre>
-<h3 id="by-xml">By XML</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Xml &lt;String&gt;
-</code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<p>Allows to load a PnP tenant template from the file system, from a stream or from a string to memory and return its instance object.</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Read-PnPTenantTemplate -Path template.pnp
-</code></pre>
-<p>Reads a PnP tenant template file from the file system and returns an in-memory instance</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">$template = Get-PnPFile &quot;/sites/config/Templates/Default.xml&quot; -AsMemoryStream
-Read-PnPTenantTemplate -Stream $template
-</code></pre>
-<p>Downloads a PnP Tenant template from the provided location into memory and parses its contents into a TenantTemplate instance which can then be modified and passed on to the Apply-PnPTenantTemplate cmdlet without needing to write anything to disk</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-path">-Path</h3>
-<p>Filename to read from, optionally including full path.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: By Path
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-stream">-Stream</h3>
-<p>A stream containing the PnP tenant template.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: By Stream
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-xml">-Xml</h3>
-<p>A string containing the XML of the PnP tenant template.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: By XML
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
+<p>This is an alias for <a href="./%%referencedcmdletname%%.md">%%referencedcmdletname%%</a></p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 </article>

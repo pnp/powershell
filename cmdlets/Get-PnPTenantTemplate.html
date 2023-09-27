@@ -105,7 +105,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTenantTemplate -Out tenanttemplate.xml
 </code></pre>
-<p>Extracts a tenant template</p>
+<p>Extracts a tenant template of the currently connected to site.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPTenantTemplate -Out tenanttemplate.xml -SiteUrl https://m365x123456.sharepoint.com/sites/HomeSite
 </code></pre>
@@ -171,6 +171,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-siteurl">-SiteUrl</h3>
+<p>The URL of the site collection to create a tenant template out of. If omitted, the currently connected to site will be used.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
