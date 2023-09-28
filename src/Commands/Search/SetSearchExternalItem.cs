@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Attributes;
 using System.Net.Http.Json;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Search
 {
@@ -96,7 +97,8 @@ namespace PnP.PowerShell.Commands.Search
                 bodyContent.Acls.Add(new Model.Graph.MicrosoftSearch.ExternalItemAcl
                 {
                     Type = Enums.SearchExternalItemAclType.Everyone,
-                    AccessType = Enums.SearchExternalItemAclAccessType.Grant
+                    AccessType = Enums.SearchExternalItemAclAccessType.Grant,
+                    Value = TenantExtensions.GetTenantIdByUrl(Connection.Url, Connection.AzureEnvironment)
                 });
             }
 

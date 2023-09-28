@@ -12,11 +12,16 @@ namespace PnP.PowerShell.Commands.JsonConverters;
 /// <seealso cref="https://learn.microsoft.com/graph/api/externalconnectors-externalconnection-put-items#creating-an-externalitem"/>
 internal sealed class MicrosoftSearchExternalItemPropertyConverter : JsonConverter<Hashtable>
 {
-    public override Hashtable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
-    {
-        var converter = (JsonConverter<Hashtable>)options.GetConverter(typeof(Hashtable));
-        return converter.Read(ref reader, typeToConvert, options);
-    }
+    // public override Hashtable Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+    // {
+    //     var converter = (JsonConverter<Hashtable>)options.GetConverter(typeof(Hashtable));
+    //     return converter.Read(ref reader, typeToConvert, options);
+    // }
+
+    private readonly JsonConverter<Hashtable> _fallbackConverter = (JsonConverter<Hashtable>)System.Text.Json.JsonSerializerOptions.Default.GetConverter(typeof(Hashtable));
+
+    public sealed override Hashtable? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        => _fallbackConverter.Read(ref reader, typeToConvert, options);
 
     public override void Write(Utf8JsonWriter writer, Hashtable hashtable, JsonSerializerOptions options)
     {
