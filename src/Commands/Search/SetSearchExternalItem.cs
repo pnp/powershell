@@ -18,7 +18,8 @@ namespace PnP.PowerShell.Commands.Search
         public string ConnectionId;
 
         [Parameter(Mandatory = true)]
-        public string Id;
+        [ValidateLength(1,128)]
+        public string ItemId;
 
         [Parameter(Mandatory = true)]
         public Hashtable Properties;
@@ -62,7 +63,7 @@ namespace PnP.PowerShell.Commands.Search
         {
             var bodyContent = new Model.Graph.MicrosoftSearch.ExternalItem
             {
-                Id = Id,
+                Id = ItemId,
                 Acls = new(),
                 Properties = Properties,
                 Content = new() {

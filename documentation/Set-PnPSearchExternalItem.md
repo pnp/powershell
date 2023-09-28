@@ -15,7 +15,7 @@ Adds or updates an external item in Microsoft Search
 ## SYNTAX
 
 ```powershell
-Set-PnPSearchExternalItem -Id <String> -ConnectionId <String> -Properties <Hashtable> [-ContentValue <String>] [-ContentType <SearchExternalItemContentType>] [-GrantUsers <AzureADUserPipeBind[]>] [-GrantGroups <AzureADGroupPipeBind[]>] [-DenyUsers <AzureADUserPipeBind[]>] [-DenyGroups <AzureADGroupPipeBind[]>] [-GrantExternalGroups <String[]>] [-DenyExternalGroups <String[]>] [-GrantEveryone <SwitchParameter>] [-Verbose] [-Connection <PnPConnection>] 
+Set-PnPSearchExternalItem -ItemId <String> -ConnectionId <String> -Properties <Hashtable> [-ContentValue <String>] [-ContentType <SearchExternalItemContentType>] [-GrantUsers <AzureADUserPipeBind[]>] [-GrantGroups <AzureADGroupPipeBind[]>] [-DenyUsers <AzureADUserPipeBind[]>] [-DenyGroups <AzureADGroupPipeBind[]>] [-GrantExternalGroups <String[]>] [-DenyExternalGroups <String[]>] [-GrantEveryone <SwitchParameter>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -26,14 +26,14 @@ This cmdlet can be used to add or update an external item in Microsoft Search on
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPSearchExternalItem -ConnectionId "pnppowershell" -Id "12345" -Properties @{ "Test1"= "Test van deze PnP PowerShell Connector"; "Test2" = "Red","Blue"; "Test3" = ([System.DateTime]::Now)} -ContentValue "Sample value" -ContentType Text -GrantEveryone
+Set-PnPSearchExternalItem -ConnectionId "pnppowershell" -ItemId "12345" -Properties @{ "Test1"= "Test van deze PnP PowerShell Connector"; "Test2" = "Red","Blue"; "Test3" = ([System.DateTime]::Now)} -ContentValue "Sample value" -ContentType Text -GrantEveryone
 ```
 
 This will add an item in the external Microsoft Search index with the properties as provided and grants everyone access to find the item back through Microsoft Search.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPSearchExternalItem -ConnectionId "pnppowershell" -Id "12345" -Properties @{ "Test1"= "Test van deze PnP PowerShell Connector"; "Test2" = "Red","Blue"; "Test3" = ([System.DateTime]::Now)} -ContentValue "Sample value" -ContentType Text -GrantUsers "user@contoso.onmicrosoft.com"
+Set-PnPSearchExternalItem -ConnectionId "pnppowershell" -ItemId "12345" -Properties @{ "Test1"= "Test van deze PnP PowerShell Connector"; "Test2" = "Red","Blue"; "Test3" = ([System.DateTime]::Now)} -ContentValue "Sample value" -ContentType Text -GrantUsers "user@contoso.onmicrosoft.com"
 ```
 
 This will add an item in the external Microsoft Search index with the properties as provided and grants only the user with the specified UPN access to find the item back through Microsoft Search.
@@ -53,7 +53,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Id
+### -ItemId
 Unique identifier of the external item in Microsoft Search. You can provide any identifier you want to identity this item. This identifier will be used to update the item if it already exists.
 
 ```yaml
