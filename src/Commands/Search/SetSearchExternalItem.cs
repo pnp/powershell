@@ -103,7 +103,7 @@ namespace PnP.PowerShell.Commands.Search
             var jsonContent = JsonContent.Create(bodyContent);
             WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
-            var graphApiUrl = $"v1.0/external/connections/{ConnectionId}/items/{Id}";
+            var graphApiUrl = $"v1.0/external/connections/{ConnectionId}/items/{ItemId}";
             WriteVerbose($"Calling Graph API at {graphApiUrl}");
 
             var results = Utilities.REST.GraphHelper.PutAsync(Connection, graphApiUrl, AccessToken, jsonContent).GetAwaiter().GetResult();
