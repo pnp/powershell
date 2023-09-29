@@ -6359,6 +6359,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSearchExternalItem.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSearchExternalItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPSearchSettings.md",
       "output": {
         ".html": {

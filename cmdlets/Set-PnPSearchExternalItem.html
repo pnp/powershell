@@ -1,0 +1,281 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Set-PnPSearchExternalItem | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Set-PnPSearchExternalItem | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="set-pnpsearchexternalitem">Set-PnPSearchExternalItem</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Adds or updates an external item in Microsoft Search</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ItemId &lt;String&gt; -ConnectionId &lt;String&gt; -Properties &lt;Hashtable&gt; [-ContentValue &lt;String&gt;] [-ContentType &lt;SearchExternalItemContentType&gt;] [-GrantUsers &lt;AzureADUserPipeBind[]&gt;] [-GrantGroups &lt;AzureADGroupPipeBind[]&gt;] [-DenyUsers &lt;AzureADUserPipeBind[]&gt;] [-DenyGroups &lt;AzureADGroupPipeBind[]&gt;] [-GrantExternalGroups &lt;String[]&gt;] [-DenyExternalGroups &lt;String[]&gt;] [-GrantEveryone &lt;SwitchParameter&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet can be used to add or update an external item in Microsoft Search on custom connectors. The cmdlet will create a new external item if the item does not exist yet. If the item already exists, it will be updated.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ConnectionId &quot;pnppowershell&quot; -ItemId &quot;12345&quot; -Properties @{ &quot;Test1&quot;= &quot;Test van deze PnP PowerShell Connector&quot;; &quot;Test2&quot; = &quot;Red&quot;,&quot;Blue&quot;; &quot;Test3&quot; = ([System.DateTime]::Now)} -ContentValue &quot;Sample value&quot; -ContentType Text -GrantEveryone
+</code></pre>
+<p>This will add an item in the external Microsoft Search index with the properties as provided and grants everyone access to find the item back through Microsoft Search.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ConnectionId &quot;pnppowershell&quot; -ItemId &quot;12345&quot; -Properties @{ &quot;Test1&quot;= &quot;Test van deze PnP PowerShell Connector&quot;; &quot;Test2&quot; = &quot;Red&quot;,&quot;Blue&quot;; &quot;Test3&quot; = ([System.DateTime]::Now)} -ContentValue &quot;Sample value&quot; -ContentType Text -GrantUsers &quot;user@contoso.onmicrosoft.com&quot;
+</code></pre>
+<p>This will add an item in the external Microsoft Search index with the properties as provided and grants only the user with the specified UPN access to find the item back through Microsoft Search.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-itemid">-ItemId</h3>
+<p>Unique identifier of the external item in Microsoft Search. You can provide any identifier you want to identity this item. This identifier will be used to update the item if it already exists.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connectionid">-ConnectionId</h3>
+<p>The Connection ID of the custom connector to use. This is the ID that was entered when registering the custom connector and will indicate for which custom connector this external item is being added to the Microsoft Search index.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Required: True
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-properties">-Properties</h3>
+<p>A hashtable with all the managed properties you want to provide for this external item. The key of the hashtable is the name of the managed property, the value is the value you want to provide for this managed property. The value can be a string, a string array or a DateTime object.</p>
+<pre><code class="lang-yaml">Type: Hashtable
+Parameter Sets: (All)
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-contentvalue">-ContentValue</h3>
+<p>A summary of the content that is being indexed. Can be used to display in the search result.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-contenttype">-ContentType</h3>
+<p>Defines the type of content used in the ContentValue attribue. Defaults to Text.</p>
+<pre><code class="lang-yaml">Type: SearchExternalItemContentType
+Parameter Sets: (All)
+Accepted values: Text, Html
+Required: False
+Position: Named
+Default value: Text
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-grantusers">-GrantUsers</h3>
+<p>When provided, the external item will only be shown to the users provided through this parameter. It can contain one or multiple users by providing AzureADUser objects, user principal names or Entra user IDs.</p>
+<pre><code class="lang-yaml">Type: AzureADUserPipeBind[]
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-grantgroups">-GrantGroups</h3>
+<p>When provided, the external item will only be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing AzureADGroup objects, group names or Entra group IDs.</p>
+<pre><code class="lang-yaml">Type: AzureADGroupPipeBind[]
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-denyusers">-DenyUsers</h3>
+<p>When provided, the external item not be shown to the users provided through this parameter. It can contain one or multiple users by providing AzureADUser objects, user principal names or Entra user IDs.</p>
+<pre><code class="lang-yaml">Type: AzureADUserPipeBind[]
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-denygroups">-DenyGroups</h3>
+<p>When provided, the external item will not be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing AzureADGroup objects, group names or Entra group IDs.</p>
+<pre><code class="lang-yaml">Type: AzureADGroupPipeBind[]
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-grantexternalgroups">-GrantExternalGroups</h3>
+<p>When provided, the external item will be shown to the groups provided through this parameter. It can contain one or multiple users by providing the external group identifiers.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-denyexternalgroups">-DenyExternalGroups</h3>
+<p>When provided, the external item will not be shown to the groups provided through this parameter. It can contain one or multiple users by providing the external group identifiers.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-granteveryone">-GrantEveryone</h3>
+<p>When provided, the external item will be shown to everyone.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>
