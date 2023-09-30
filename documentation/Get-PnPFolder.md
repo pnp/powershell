@@ -10,47 +10,57 @@ title: Get-PnPFolder
 # Get-PnPFolder
 
 ## SYNOPSIS
-Return a folder object
+Returns one or more folder objects
 
 ## SYNTAX
 
+### Folders in current Web (Default)
+```powershell
+Get-PnPFolder [-Includes <String[]>] [-Connection <PnPConnection>]
+```
+
 ### Folder By Url
 ```powershell
-Get-PnPFolder [-Url] <String> [-Connection <PnPConnection>] [-Includes <String[]>]
- 
+Get-PnPFolder -Url <String> [-Includes <String[]>] [-Connection <PnPConnection>] 
 ```
 
 ### Folders In List
 ```powershell
-Get-PnPFolder [-List] <ListPipeBind> [-Connection <PnPConnection>] [-Includes <String[]>]
- 
+Get-PnPFolder -List <ListPipeBind> [-Includes <String[]>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Retrieves a folder if it exists or all folders inside a provided list or library. Use Resolve-PnPFolder to create the folder if it does not exist.
+Retrieves one or more folders from the specified location. Use Resolve-PnPFolder to create the folder if it does not exist.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+```powershell
+Get-PnPFolder
+```
+
+Returns all the folders in the root of the current web
+
+### EXAMPLE 2
 ```powershell
 Get-PnPFolder -Url "Shared Documents"
 ```
 
 Returns the folder called 'Shared Documents' which is located in the root of the current web
 
-### EXAMPLE 2
+### EXAMPLE 3
 ```powershell
 Get-PnPFolder -Url "/sites/demo/Shared Documents"
 ```
 
-Returns the folder called 'Shared Documents' which is located in the root of the current web
+Returns the folder called 'Shared Documents' which is located in the root of the site collection located at '/sites/demo'
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Get-PnPFolder -List "Shared Documents"
 ```
 
-Returns the folder(s) residing inside a folder called 'Shared Documents'
+Returns the folders residing inside a folder called 'Shared Documents'
 
 ## PARAMETERS
 
@@ -76,7 +86,7 @@ Type: ListPipeBind
 Parameter Sets: Folders In List
 
 Required: True
-Position: 1
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -96,8 +106,6 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
-
-
 
 ## RELATED LINKS
 

@@ -214,6 +214,10 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         await Task.Delay(5000);
                         iteration++;
+                        if (iteration > 10)
+                        {
+                            throw;
+                        }
                     }
 
                     if (iteration > 10) // don't try more than 10 times
@@ -248,7 +252,6 @@ namespace PnP.PowerShell.Commands.Utilities
                         await GraphHelper.PostAsync(connection, $"v1.0/teams/{group.Id}/members/add", new { values = chunk.ToList() }, accessToken);
                     }
                 }
-
             }
             return returnTeam;
         }
@@ -290,7 +293,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
 
             // Check if by now we've identified a user Id to become the owner
-            if (!string.IsNullOrEmpty(ownerId))
+            if (string.IsNullOrEmpty(ownerId))
             {
                 var contextSettings = connection.Context.GetContextSettings();
 
@@ -908,7 +911,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 case TeamTabType.Planner:
                     {
                         tab.TeamsAppId = "com.microsoft.teamspace.tab.planner";
-                        tab.Configuration = new TeamTabConfiguration();                        
+                        tab.Configuration = new TeamTabConfiguration();
                         tab.Configuration.ContentUrl = contentUrl;
                         break;
                     }

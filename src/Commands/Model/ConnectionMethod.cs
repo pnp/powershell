@@ -17,6 +17,7 @@ namespace PnP.PowerShell.Commands.Model
         ADFS,
         GraphDeviceLogin,
         DeviceLogin,
-        ManagedIdentity
+        ManagedIdentity,
+        AzureADWorkloadIdentity
     }
 }

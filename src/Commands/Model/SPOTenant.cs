@@ -42,6 +42,7 @@ namespace PnP.PowerShell.Commands.Model
             this.displayNamesOfFileViewersInSpo = tenant.DisplayNamesOfFileViewersInSpo;
             this.isLoopEnabled = tenant.IsLoopEnabled;
             this.enableAzureADB2BIntegration = tenant.EnableAzureADB2BIntegration;
+            this.siteOwnerManageLegacyServicePrincipalEnabled = tenant.SiteOwnerManageLegacyServicePrincipalEnabled;
 
             try
             {
@@ -392,15 +393,6 @@ namespace PnP.PowerShell.Commands.Model
 
             try
             {
-                this.disableListSync = tenant.DisableListSync;
-            }
-            catch
-            {
-                this.disableListSync = false;
-            }
-
-            try
-            {
                 this.disableDocumentLibraryDefaultLabeling = tenant.DisableDocumentLibraryDefaultLabeling;
             }
             catch
@@ -461,7 +453,15 @@ namespace PnP.PowerShell.Commands.Model
             }
             catch
             {
-            }            
+            }
+
+            try
+            {
+                this.siteOwnerManageLegacyServicePrincipalEnabled = tenant.SiteOwnerManageLegacyServicePrincipalEnabled;
+            }
+            catch
+            {
+            }
         }
 
         public bool HideDefaultThemes => hideDefaultThemes;
@@ -623,13 +623,13 @@ namespace PnP.PowerShell.Commands.Model
         public bool IsLoopEnabled => isLoopEnabled;
         public Guid[] DisabledModernListTemplateIds => disabledModernListTemplateIds;
         public bool RestrictedAccessControl => restrictedAccessControl;
-        public bool DisableListSync => disableListSync;
         public bool DisableDocumentLibraryDefaultLabeling => disableDocumentLibraryDefaultLabeling;
         public bool IsEnableAppAuthPopUpEnabled => isEnableAppAuthPopUpEnabled;
         public int? ExpireVersionsAfterDays => expireVersionsAfterDays;
         public int? MajorVersionLimit => majorVersionLimit;
         public bool? EnableAutoExpirationVersionTrim => enableAutoExpirationVersionTrim;
         public bool? EnableAzureADB2BIntegration => enableAzureADB2BIntegration;
+        public bool? SiteOwnerManageLegacyServicePrincipalEnabled => siteOwnerManageLegacyServicePrincipalEnabled;
 
         private bool hideDefaultThemes;
 
@@ -795,8 +795,6 @@ namespace PnP.PowerShell.Commands.Model
 
         private bool restrictedAccessControl;
 
-        private bool disableListSync;
-
         private bool disableDocumentLibraryDefaultLabeling;
 
         private bool isEnableAppAuthPopUpEnabled;
@@ -808,5 +806,7 @@ namespace PnP.PowerShell.Commands.Model
         private bool? enableAutoExpirationVersionTrim;
 
         private bool? enableAzureADB2BIntegration;
+
+        private bool? siteOwnerManageLegacyServicePrincipalEnabled;
     }
 }
