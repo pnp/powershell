@@ -7055,8 +7055,8 @@
     },
     {
       "log_codes": [
-        "InvalidFileLink",
-        "invalid-yaml-header"
+        "invalid-yaml-header",
+        "InvalidFileLink"
       ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/alias.md",
