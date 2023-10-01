@@ -5,7 +5,7 @@ if($IsLinux -or $isMacOS)
 } else {
 	$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 }
-Get-ChildItem -Recurse
+
 Try {
 	Write-Host "Generating documentation files for alias cmdlets" -ForegroundColor Yellow
 	# Load the Module in a new PowerShell session
