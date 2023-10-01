@@ -104,7 +104,7 @@ Copy-Item -Path "./dev/documentation/*.md" -Destination "./dev/pages/cmdlets" -F
 
 foreach ($nightlycmdlet in $nightlycmdlets) {
     if (!$releasedcmdlets.Contains($nightlycmdlet)) {
-        Copy-Item "./dev/documentation/$nightlycmdlet" -Destination "./dev/pages/cmdlets" -Force
+        Copy-Item "./dev/documentation/$nightlycmdlet" -Destination "./dev/pages/cmdlets" -Force | Out-Null
         # update the document to state it's only available in the nightly build
         $header = $fm.GetHeader("./dev/pages/cmdlets/$nightlycmdlet")
         $header["tags"] = "Available in the current Nightly Release only."
