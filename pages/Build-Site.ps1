@@ -113,6 +113,8 @@ foreach ($nightlycmdlet in $nightlycmdlets) {
 
 # Generate cmdlet toc
 
+Write-Host "Retrieving all cmdlet pages"
+
 $cmdletPages = Get-ChildItem -Path "./dev/pages/cmdlets/*.md" -Exclude "index.md","alias.md"
 $toc = ""
 foreach ($cmdletPage in $cmdletPages) {
@@ -123,6 +125,11 @@ $toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force
 
 # Generate cmdlet index page
 
+Write-Host "Creating cmdlets index page"
+
+Write-Host "- Alias cmdlets:"
+Write-Host $aliasCmdlets.Alias
+
 $cmdletIndexPageContent = Get-Content -Path "./dev/pages/cmdlets/index.md" -Raw
 $cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletcount%%", $cmdletPages.Length - $aliasCmdletsCount)
 
@@ -130,6 +137,8 @@ $cmdletIndexPageList = ""
 $previousCmdletVerb = ""
 foreach ($cmdletPage in $cmdletPages)
 {
+    Write-Host "- $($cmdletPage.Name)"
+    
     # Define the verb of the cmdlet
     if($cmdletPage.BaseName.Contains("-"))
     {
