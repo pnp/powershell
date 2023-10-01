@@ -5,14 +5,14 @@ if($IsLinux -or $isMacOS)
 } else {
 	$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 }
-
+Get-ChildItem -Recurse
 Try {
 	Write-Host "Generating documentation files for alias cmdlets" -ForegroundColor Yellow
 	# Load the Module in a new PowerShell session
 	$scriptBlock = {
 		Write-Host "Installing latest nightly of PnP PowerShell"
   		Install-Module PnP.PowerShell -AllowPrerelease -Force
-Get-ChildItem -Recurse
+
   		Write-Host "Retrieving PnP PowerShell alias cmdlets"
 		$cmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
 		$cmdlets
