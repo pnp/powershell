@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/%%cmdletname%%.html
 # %%cmdletname%%
 
 ## SYNOPSIS
-This is an alias for [%%referencedcmdletname%%](./%%referencedcmdletname%%.md)
+This is an alias for [%%referencedcmdletname%%](./%%referencedcmdletname%%.md). Please update your scripts to use this cmdlet instead as it may be removed in a future update.
 
 ## RELATED LINKS
 
