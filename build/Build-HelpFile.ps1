@@ -22,7 +22,7 @@ Try {
 
 	Write-Host "  - $($aliasCmdlets.Length) found" -ForegroundColor Yellow
 
-	$aliasTemplatePageContent = Get-Content -Path "./pages/cmdlets/alias.md" -Raw
+	$aliasTemplatePageContent = Get-Content -Path "./pnppowershell/pages/cmdlets/alias.md" -Raw
 
 	ForEach($aliasCmdlet in $aliasCmdlets)
 	{
