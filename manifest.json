@@ -31,9 +31,6 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "articles/azureautomationrunbook.md",
       "output": {
@@ -194,9 +191,6 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "articles/telemetry.md",
       "output": {
@@ -217,9 +211,6 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "articles/updatenotifications.md",
       "output": {
@@ -1460,9 +1451,6 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Disconnect-PnPOnline.md",
       "output": {
@@ -7194,8 +7182,8 @@
     },
     {
       "log_codes": [
-        "InvalidFileLink",
-        "invalid-yaml-header"
+        "invalid-yaml-header",
+        "InvalidFileLink"
       ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/alias.md",
