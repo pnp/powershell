@@ -159,14 +159,14 @@ foreach ($cmdletPage in $cmdletPages)
     if (!$releasedcmdlets.Contains($cmdletPage.Name))
     {
         # Add a 1 to the cmdlet name if it's only available in the nightly build
-        $cmdletIndexPageList = $cmdletIndexPageList + " ^1^"
+        $cmdletIndexPageList = $cmdletIndexPageList + " <sup>1</sup>"
     }
 
     # Check if the cmdlet is an alias
     if ($aliasCmdlets.Alias -contains $cmdletPage.BaseName)
     {
         # Add a 2 to the cmdlet name if it's an alias
-        $cmdletIndexPageList = $cmdletIndexPageList + " ^2^"
+        $cmdletIndexPageList = $cmdletIndexPageList + " <sup>2</sup>"
     }
     
     $cmdletIndexPageList = $cmdletIndexPageList + "`n"
