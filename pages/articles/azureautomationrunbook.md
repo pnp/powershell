@@ -90,8 +90,6 @@ To add PnP PowerShell to the Azure Automation Account, follow these steps:
 
    Click on **Import** to start the download and importing process.
 
-   ![Start importing the PnP PowerShell module](../images/azureautomation/automationaddmodulepnpposhcustombuildimport.png)
-
    It will take up to 10 minutes for the import to complete. You can check the import status by changing the **Module type** filter to **Custom**.
 
    ![Check the import status](../images/azureautomation/automationaddmodulepnpposhcustombuildstatus.png)
