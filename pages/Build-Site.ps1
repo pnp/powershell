@@ -98,6 +98,8 @@ Catch {
 	Write-Host $_
 }
 
+Write-Host "Copying documentation files to page cmdlets"
+
 Copy-Item -Path "./dev/documentation/*.md" -Destination "./dev/pages/cmdlets" -Force
 
 foreach ($nightlycmdlet in $nightlycmdlets) {
@@ -106,7 +108,7 @@ foreach ($nightlycmdlet in $nightlycmdlets) {
         # update the document to state it's only available in the nightly build
         $header = $fm.GetHeader("./dev/pages/cmdlets/$nightlycmdlet")
         $header["tags"] = "Available in the current Nightly Release only."
-        Write-Host "Writing $nightlycmdlet"
+        #Write-Host "Writing $nightlycmdlet"
         $fm.WriteHeader("./dev/pages/cmdlets/$nightlycmdlet",$header)
     }
 }
