@@ -63,8 +63,8 @@ class FrontMatters {
 
 $fm = New-Object -TypeName FrontMatters
 
-$aliasCmdLetsCount = 0
-$aliasCmdLets = @()
+$aliasCmdletsCount = 0
+$aliasCmdlets = @()
 Try {
 	Write-Host "Generating documentation files for alias cmdlets" -ForegroundColor Yellow
 	# Load the Module in a new PowerShell session
@@ -79,9 +79,9 @@ Try {
 	}
 	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
- 	$aliasCmdLetsCount = $aliasCmdlets.Length  	
+ 	$aliasCmdletsCount = $aliasCmdlets.Length  	
 
-	Write-Host "  - $aliasCmdLetsCount found" -ForegroundColor Yellow
+	Write-Host "  - $aliasCmdletsCount found" -ForegroundColor Yellow
 
 	$aliasTemplatePageContent = Get-Content -Path "./dev/pages/cmdlets/alias.md" -Raw
 
@@ -124,7 +124,7 @@ $toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force
 # Generate cmdlet index page
 
 $cmdletIndexPageContent = Get-Content -Path "./dev/pages/cmdlets/index.md" -Raw
-$cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletcount%%", $cmdletPages.Length - $aliasCmdLetsCount)
+$cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletcount%%", $cmdletPages.Length - $aliasCmdletsCount)
 
 $cmdletIndexPageList = ""
 $previousCmdletVerb = ""
@@ -153,14 +153,14 @@ foreach ($cmdletPage in $cmdletPages)
     if (!$releasedcmdlets.Contains($cmdletPage.Name))
     {
         # Add an asterisk to the cmdlet name if it's only available in the nightly build
-        $cmdletIndexPageList = $cmdletIndexPageList + "*"
+        $cmdletIndexPageList = $cmdletIndexPageList + "* "
     }
 
     # Check if the cmdlet is an alias
-    if ($aliasCmdLets.Alias -contains $cmdletPage.Name)
+    if ($aliasCmdlets.Alias -contains $cmdletPage.Name)
     {
         # Add a double asterisk to the cmdlet name if it's an alias
-        $cmdletIndexPageList = $cmdletIndexPageList + "**"
+        $cmdletIndexPageList = $cmdletIndexPageList + "** "
     }
     
     $cmdletIndexPageList = $cmdletIndexPageList + "`n"
