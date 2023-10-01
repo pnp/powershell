@@ -12,7 +12,7 @@ Try {
 	$scriptBlock = {
 		Write-Host "Installing latest nightly of PnP PowerShell"
   		Install-Module PnP.PowerShell -AllowPrerelease -Force
-
+Get-ChildItem -Recurse
   		Write-Host "Retrieving PnP PowerShell alias cmdlets"
 		$cmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
 		$cmdlets
@@ -26,7 +26,7 @@ Try {
 
 	ForEach($aliasCmdlet in $aliasCmdlets)
 	{
-		$destinationFileName = "./../documentation/$($aliasCmdlet.Alias).md"
+		$destinationFileName = "./documentation/$($aliasCmdlet.Alias).md"
 
 		Write-Host "    - Creating page for $($aliasCmdlet.Alias) being an alias for $($aliasCmdlet.ReferencedCommand) as $destinationFileName" -ForegroundColor Yellow
 		$aliasTemplatePageContent.Replace("%%cmdletname%%", $aliasCmdlet.Alias).Replace("%%referencedcmdletname%%", $aliasCmdlet.ReferencedCommand) | Out-File $destinationFileName -Force
