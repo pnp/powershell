@@ -10,18 +10,10 @@ Try {
 	Write-Host "Generating documentation files for alias cmdlets" -ForegroundColor Yellow
 	# Load the Module in a new PowerShell session
 	$scriptBlock = {
-		$documentsFolder = [environment]::getfolderpath("mydocuments")
-		if($IsLinux -or $isMacOS)
-		{
-			$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-		} else {
-			$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
-		}
-		$pnpDllLocation = "$destinationFolder/Core/PnP.PowerShell.dll"
+		Write-Host "Installing latest nightly of PnP PowerShell"
+  		Install-Module PnP.PowerShell -AllowPrerelease -Force
 
-		Write-Host "Importing PnP PowerShell assembly from $pnpDllLocation"
-		Import-Module -Name $pnpDllLocation -DisableNameChecking -Force
-  		Write-Host "Import PnP PowerShell successful"
+  		Write-Host "Retrieving PnP PowerShell alias cmdlets"
 		$cmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
 		$cmdlets
   		Write-Host "Retrieved alias cmdlets successfully"
