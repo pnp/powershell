@@ -21,7 +21,7 @@ Get-PnPAvailableSensitivityLabel [-Identity <Guid>] [-User <AzureADUserPipeBind>
 ## DESCRIPTION
 This cmdlet allows retrieval of the available Microsoft Purview sensitivity labels in the currently connected tenant. You can retrieve all the labels, a specific label or all the labels available to a specific user. When connected with a delegate token, it will return the Microsoft Purview sensitivity labels for the user you logged on with. When connecting with an application token, it will return all available Microsoft Purview sensitivity labels on the tenant.
 
-For retrieval of the available classic Site Classification, use [Get-PnPAvailableSiteClassification](Get-PnPAvailableSiteClassification.MD) instead.
+For retrieval of the available classic Site Classification, use [Get-PnPAvailableSiteClassification](Get-PnPAvailableSiteClassification.md) instead.
 
 ## EXAMPLES
 
