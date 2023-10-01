@@ -64,6 +64,7 @@ class FrontMatters {
 $fm = New-Object -TypeName FrontMatters
 
 $aliasCmdLetsCount = 0
+$aliasCmdLets = @()
 Try {
 	Write-Host "Generating documentation files for alias cmdlets" -ForegroundColor Yellow
 	# Load the Module in a new PowerShell session
@@ -78,7 +79,7 @@ Try {
 	}
 	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
- 	$aliasCmdLetsCount = $aliasCmdlets.Length
+ 	$aliasCmdLetsCount = $aliasCmdlets.Length  	
 
 	Write-Host "  - $aliasCmdLetsCount found" -ForegroundColor Yellow
 
@@ -154,6 +155,14 @@ foreach ($cmdletPage in $cmdletPages)
         # Add an asterisk to the cmdlet name if it's only available in the nightly build
         $cmdletIndexPageList = $cmdletIndexPageList + "*"
     }
+
+    # Check if the cmdlet is an alias
+    if ($aliasCmdLets.Alias -contains $cmdletPage.Name)
+    {
+        # Add a double asterisk to the cmdlet name if it's an alias
+        $cmdletIndexPageList = $cmdletIndexPageList + "**"
+    }
+    
     $cmdletIndexPageList = $cmdletIndexPageList + "`n"
     
     if($cmdletVerb -ne "")
