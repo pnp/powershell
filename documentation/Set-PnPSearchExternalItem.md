@@ -10,6 +10,10 @@ title: Set-PnPSearchExternalItem
 # Set-PnPSearchExternalItem
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API : One of ExternalItem.ReadWrite.OwnedBy, ExternalItem.ReadWrite.All
 Adds or updates an external item in Microsoft Search
 
 ## SYNTAX
