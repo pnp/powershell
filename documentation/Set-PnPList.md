@@ -111,7 +111,7 @@ Sets the default sensitivity label for a document library to Confidential.
 ## PARAMETERS
 
 ### -BreakRoleInheritance
-If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.html).
+If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.md).
 
 ```yaml
 Type: SwitchParameter
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResetRoleInheritance
-If used the security inheritance is reset for this list meaning it will not copy the permissions from its parent, but will start with an empty list of permissions. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.html).
+If used the security inheritance is reset for this list meaning it will not copy the permissions from its parent, but will start with an empty list of permissions. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.md).
 
 ```yaml
 Type: SwitchParameter
