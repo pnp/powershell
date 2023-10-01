@@ -84,6 +84,10 @@
   <h1 id="set-pnpsearchexternalitem">Set-PnPSearchExternalItem</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API : One of ExternalItem.ReadWrite.OwnedBy, ExternalItem.ReadWrite.All</li>
+</ul>
 <p>Adds or updates an external item in Microsoft Search</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPSearchExternalItem -ItemId &lt;String&gt; -ConnectionId &lt;String&gt; -Properties &lt;Hashtable&gt; [-ContentValue &lt;String&gt;] [-ContentType &lt;SearchExternalItemContentType&gt;] [-GrantUsers &lt;AzureADUserPipeBind[]&gt;] [-GrantGroups &lt;AzureADGroupPipeBind[]&gt;] [-DenyUsers &lt;AzureADUserPipeBind[]&gt;] [-DenyGroups &lt;AzureADGroupPipeBind[]&gt;] [-GrantExternalGroups &lt;String[]&gt;] [-DenyExternalGroups &lt;String[]&gt;] [-GrantEveryone &lt;SwitchParameter&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
