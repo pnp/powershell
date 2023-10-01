@@ -63,6 +63,7 @@ class FrontMatters {
 
 $fm = New-Object -TypeName FrontMatters
 
+$aliasCmdLetsCount = 0
 Try {
 	Write-Host "Generating documentation files for alias cmdlets" -ForegroundColor Yellow
 	# Load the Module in a new PowerShell session
@@ -77,7 +78,9 @@ Try {
 	}
 	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
-	Write-Host "  - $($aliasCmdlets.Length) found" -ForegroundColor Yellow
+ 	$aliasCmdLetsCount = $aliasCmdlets.Length
+
+	Write-Host "  - $aliasCmdLetsCount found" -ForegroundColor Yellow
 
 	$aliasTemplatePageContent = Get-Content -Path "./dev/pages/cmdlets/alias.md" -Raw
 
@@ -120,7 +123,7 @@ $toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force
 # Generate cmdlet index page
 
 $cmdletIndexPageContent = Get-Content -Path "./dev/pages/cmdlets/index.md" -Raw
-$cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletcount%%", $cmdletPages.Length)
+$cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletcount%%", $cmdletPages.Length - $aliasCmdLetsCount)
 
 $cmdletIndexPageList = ""
 $previousCmdletVerb = ""
