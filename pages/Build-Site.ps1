@@ -75,21 +75,20 @@ Try {
   		Write-Host "Retrieving PnP PowerShell alias cmdlets"
 		$cmdlets = Get-Command -Module PnP.PowerShell | Where-Object CommandType -eq "Alias" | Select-Object -Property @{N="Alias";E={$_.Name}}, @{N="ReferencedCommand";E={$_.ReferencedCommand.Name}}
 		$cmdlets
-  		Write-Host "Retrieved alias cmdlets successfully"
+  		Write-Host "$($cmdlets.Length) alias cmdlets retrieved"
 	}
 	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
 
- 	$aliasCmdletsCount = $aliasCmdlets.Length  	
+ 	$aliasCmdletsCount = $aliasCmdlets.Length
 
-	Write-Host "  - $aliasCmdletsCount found" -ForegroundColor Yellow
-
+  	Write-Host "- Retrieving alias template page"
 	$aliasTemplatePageContent = Get-Content -Path "./dev/pages/cmdlets/alias.md" -Raw
 
 	ForEach($aliasCmdlet in $aliasCmdlets)
 	{
 		$destinationFileName = "./dev/documentation/$($aliasCmdlet.Alias).md"
 
-		Write-Host "    - Creating page for $($aliasCmdlet.Alias) being an alias for $($aliasCmdlet.ReferencedCommand) as $destinationFileName" -ForegroundColor Yellow
+		Write-Host "- Creating page for $($aliasCmdlet.Alias) being an alias for $($aliasCmdlet.ReferencedCommand) as $destinationFileName" -ForegroundColor Yellow
 		$aliasTemplatePageContent.Replace("%%cmdletname%%", $aliasCmdlet.Alias).Replace("%%referencedcmdletname%%", $aliasCmdlet.ReferencedCommand) | Out-File $destinationFileName -Force
 	}
 }
@@ -114,7 +113,6 @@ foreach ($nightlycmdlet in $nightlycmdlets) {
 }
 
 # Generate cmdlet toc
-
 Write-Host "Retrieving all cmdlet pages"
 
 $cmdletPages = Get-ChildItem -Path "./dev/pages/cmdlets/*.md" -Exclude "index.md","alias.md"
@@ -128,9 +126,6 @@ $toc | Out-File "./dev/pages/cmdlets/toc.yml" -Force
 # Generate cmdlet index page
 
 Write-Host "Creating cmdlets index page"
-
-Write-Host "- Alias cmdlets:"
-Write-Host $aliasCmdlets.Alias
 
 $cmdletIndexPageContent = Get-Content -Path "./dev/pages/cmdlets/index.md" -Raw
 $cmdletIndexPageContent = $cmdletIndexPageContent.Replace("%%cmdletcount%%", $cmdletPages.Length - $aliasCmdletsCount)
@@ -163,15 +158,15 @@ foreach ($cmdletPage in $cmdletPages)
     # Check if the cmdlet only exists in the nightly build
     if (!$releasedcmdlets.Contains($cmdletPage.Name))
     {
-        # Add an asterisk to the cmdlet name if it's only available in the nightly build
-        $cmdletIndexPageList = $cmdletIndexPageList + " *"
+        # Add a 1 to the cmdlet name if it's only available in the nightly build
+        $cmdletIndexPageList = $cmdletIndexPageList + " ^1^"
     }
 
     # Check if the cmdlet is an alias
     if ($aliasCmdlets.Alias -contains $cmdletPage.BaseName)
     {
-        # Add a double asterisk to the cmdlet name if it's an alias
-        $cmdletIndexPageList = $cmdletIndexPageList + " **"
+        # Add a 2 to the cmdlet name if it's an alias
+        $cmdletIndexPageList = $cmdletIndexPageList + " ^2^"
     }
     
     $cmdletIndexPageList = $cmdletIndexPageList + "`n"
