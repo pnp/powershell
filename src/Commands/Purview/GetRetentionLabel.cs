@@ -1,0 +1,25 @@
+﻿using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities.REST;
+using System;
+using System.Collections.Generic;
+using System.Management.Automation;
+
+namespace PnP.PowerShell.Commands.Purview
+{
+    [Cmdlet(VerbsCommon.Get, "PnPRetentionLabel")]
+    [OutputType(typeof(IEnumerable<Model.Graph.Purview.RetentionLabel>))]
+    [OutputType(typeof(Model.Graph.Purview.RetentionLabel))]
+    public class GetAvailableRetentionLabel : PnPGraphCmdlet
+    {
+        protected override void ExecuteCmdlet()
+        {
+            string url;
+     
+                url = "/beta/security/labels/retentionLabels";
+            
+                var labels = GraphHelper.GetResultCollectionAsync<Model.Graph.Purview.RetentionLabel>(Connection, url, AccessToken).GetAwaiter().GetResult();
+                WriteObject(labels, true);
+        }
+    }
+}
