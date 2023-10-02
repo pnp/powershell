@@ -25,7 +25,7 @@ Get-PnPAzureADServicePrincipalAvailableAppRole -Principal <ServicePrincipalPipeB
 
 ## DESCRIPTION
 
-Allows retrieval of all available app roles of a specific service principals/app registration in Azure Active Directory. To retrieve the app roles currently assigned to a specific service principal/application registration, use [Get-PnPAzureADServicePrincipalAssignedAppRole](Get-PnPAzureADServicePrincipalAssignedAppRole.html) instead.
+Allows retrieval of all available app roles of a specific service principals/app registration in Azure Active Directory. To retrieve the app roles currently assigned to a specific service principal/application registration, use [Get-PnPAzureADServicePrincipalAssignedAppRole](Get-PnPAzureADServicePrincipalAssignedAppRole.md) instead.
 
 ## EXAMPLES
 

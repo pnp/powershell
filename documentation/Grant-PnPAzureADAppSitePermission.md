@@ -25,7 +25,7 @@ Grant-PnPAzureADAppSitePermission -AppId <Guid> -DisplayName <String> -Permissio
 
 ## DESCRIPTION
 
-This cmdlet adds permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for fewer permissions compared to updating rights through [Set-PnPAzureADAppSitePermission](Set-PnPAzureADAppSitePermission.html). If you wish to i.e. assign FullControl permissions, you need to add read or write permissions through this cmdlet first and then update it to FullControl.
+This cmdlet adds permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for fewer permissions compared to updating rights through [Set-PnPAzureADAppSitePermission](Set-PnPAzureADAppSitePermission.md). If you wish to i.e. assign FullControl permissions, you need to add read or write permissions through this cmdlet first and then update it to FullControl.
 
 ## EXAMPLES
 
@@ -88,7 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -Permissions
-Specifies the permissions to set for the Azure Active Directory application registration which can either be Read or Write. Use [Set-PnPAzureADAppSitePermission](Set-PnPAzureADAppSitePermission.html) after initially adding these permissions to update it to Manage or FullControl permissions.
+Specifies the permissions to set for the Azure Active Directory application registration which can either be Read or Write. Use [Set-PnPAzureADAppSitePermission](Set-PnPAzureADAppSitePermission.md) after initially adding these permissions to update it to Manage or FullControl permissions.
 
 ```yaml
 Type: String

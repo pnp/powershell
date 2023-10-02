@@ -27,7 +27,7 @@ Set-PnPListPermission -Identity <ListPipeBind> -User <String> [-AddRole <String>
 ```
 
 ## DESCRIPTION
-Allows changing permissions on a SharePoint list. In case you would like to break the permission inheritance on a list from its parent, you can use [Set-PnPList -BreakRoleInheritance](Set-PnPList.html#-breakroleinheritance).
+Allows changing permissions on a SharePoint list. In case you would like to break the permission inheritance on a list from its parent, you can use [Set-PnPList -BreakRoleInheritance](Set-PnPList.md#-breakroleinheritance).
 
 ## EXAMPLES
 
