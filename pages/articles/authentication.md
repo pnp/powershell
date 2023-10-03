@@ -163,3 +163,36 @@ For running `Connect-PnPOnline` with user credentials in Azure DevOps pipeline, 
 Public client can be configured from the Azure portal from the Authentication Blade in the application or by setting the `allowPublicClient` property in the application's manifest to true.
 
 `username` and `password` for service account can be stored as secret pipeline variables and can be referenced in the script to achieve complete automation.
+
+## Silent Authentication with Credentials and MFA for running in Azure DevOps Pipelines with Microsoft Hosted Agents
+### Identify the possible IP ranges for Microsoft-hosted agents
+
+- Identify the [region for your organization](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/change-organization-location?view=azure-devops) in Organization settings.
+- Identify the [Azure Geography](https://azure.microsoft.com/global-infrastructure/geographies/) for your organization's region.
+- Map the names of the regions in your geography to the format used in the weekly file, following the format of AzureCloud., such as AzureCloud.westus. You can map the names of the regions from the Azure Geography list to the format used in the weekly file.
+- You can find the weekly IP file at the following URL: https://www.microsoft.com/en-us/download/details.aspx?id=56519
+
+For example, if your organization is located in the South East Asia region, you would map it to the format AzureCloud.SouthEastAsia.
+
+### Create a named location in Azure AD conditional access
+
+- Go to Azure AD conditional access
+- Open named location blade, click on `+ IP Ranges Location`
+- Enter the IP ranges for Microsoft Hosted Agents, `Mark as trusted location` should be checked.
+
+### Create a conditional access policy
+
+- Go to Azure AD conditional access, click on `+New Policy`.
+- Give a meaningful name, click on Users and Groups -> Include select users and groups, select the user with which you want to run your pipeline.
+- Include all cloud apps.
+- Under conditions -> locations include `any locations` and exclude the recently created named location.
+- Under grant -> choose `grant access`. Only `require multifactor authentication needs to be checked`.
+- Enable the policy and click on Save.
+> [!Important]
+> You need to make sure that the new policy does not conflicts with any other policy in your tenant, otherwise make the changes accordingly.
+
+### Powershell script to be run in pipeline
+```powershell
+$creds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
+Connect-PnPOnline -Url <site url> -Credentials $creds -ClientId <Application/Client ID of Azure AD app>
+```
