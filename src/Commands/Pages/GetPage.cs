@@ -7,6 +7,7 @@ namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Get, "PnPPage")]
     [Alias("Get-PnPClientSidePage")]
+    [OutputType(typeof(PnP.Core.Model.SharePoint.IPage))]
     public class GetPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
