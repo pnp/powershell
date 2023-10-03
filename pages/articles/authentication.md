@@ -155,3 +155,11 @@ Permission | Permission type | Id | Type
 Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
 ```
 The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.
+
+## Silent Authentication with Credentials for running in Pipelines
+
+For running `Connect-PnPOnline` with user credentials in Azure DevOps pipeline, you need to make sure that authentication in your Azure AD application is configured to allow public client. 
+
+Public client can be configured from the Azure portal from the Authentication Blade in the application or by setting the `allowPublicClient` property in the application's manifest to true.
+
+`username` and `password` for service account can be stored as secret pipeline variables and can be referenced in the script to achieve complete automation.
