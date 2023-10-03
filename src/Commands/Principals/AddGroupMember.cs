@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Add, "PnPGroupMember")]
+    [OutputType(typeof(void))]
     public class AddGroupMember : PnPWebCmdlet
     {
         private const string ParameterSet_INTERNAL = "Internal";
