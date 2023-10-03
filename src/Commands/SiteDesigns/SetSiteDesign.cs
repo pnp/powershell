@@ -10,6 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteDesign")]
+    [OutputType(typeof(TenantSiteDesign))]
     public class SetSiteDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
