@@ -12,14 +12,26 @@ namespace PnP.PowerShell.Commands.Purview
     [OutputType(typeof(Model.Graph.Purview.RetentionLabel))]
     public class GetAvailableRetentionLabel : PnPGraphCmdlet
     {
+        [Parameter(Mandatory = false)]
+        public Guid Identity;
+
         protected override void ExecuteCmdlet()
         {
             string url;
-     
-                url = "/beta/security/labels/retentionLabels";
-            
+            url = "/beta/security/labels/retentionLabels";
+
+            if (ParameterSpecified(nameof(Identity)))
+            {
+                url += $"/{Identity}";
+
+                var labels = GraphHelper.GetAsync<Model.Graph.Purview.RetentionLabel>(Connection, url, AccessToken).GetAwaiter().GetResult();
+                WriteObject(labels, false);
+            }
+            else
+            {
                 var labels = GraphHelper.GetResultCollectionAsync<Model.Graph.Purview.RetentionLabel>(Connection, url, AccessToken).GetAwaiter().GetResult();
                 WriteObject(labels, true);
+            }
         }
     }
 }

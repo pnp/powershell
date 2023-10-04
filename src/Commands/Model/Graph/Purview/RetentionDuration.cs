@@ -12,6 +12,6 @@ namespace PnP.PowerShell.Commands.Model.Graph.Purview
         /// <summary>
         /// Number of days.
         /// </summary>
-        public int days { get; set; }
+        public int Days { get; set; }
     }
 }
