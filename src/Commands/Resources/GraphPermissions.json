@@ -2741,6 +2741,26 @@
         "value": "InformationProtectionPolicy.Read"
       },
       {
+        "adminConsentDescription": "Allows the application to read any data from Records Management, such as configuration, labels, and policies on behalf of the signed-in user.",
+        "adminConsentDisplayName": "Read Records Management configuration, labels, and policies.",
+        "id": "07f995eb-fc67-4522-ad66-2b8ca8ea3efd",
+        "isEnabled": true,
+        "isAdmin": false,
+        "consentDescription": "Allows the application to read any data from Records Management, such as configuration, labels, and policies on behalf of the signed-in user.",
+        "consentDisplayName": "Read Records Management configuration, labels, and policies.",
+        "value": "RecordsManagement.Read.All"
+      },
+      {
+        "adminConsentDescription": "Allows the application to create, update and delete any data from Records Management, such as configuration, labels, and policies on behalf of the signed-in user.",
+        "adminConsentDisplayName": "Read and write Records Management configuration, labels, and policies",
+        "id": "f2833d75-a4e6-40ab-86d4-6dfe73c97605",
+        "isEnabled": true,
+        "isAdmin": false,
+        "consentDescription": "Allows the application to create, update and delete any data from Records Management, such as configuration, labels, and policies on behalf of the signed-in user.",
+        "consentDisplayName": "Read and write Records Management configuration, labels, and policies.",
+        "value": "RecordsManagement.ReadWrite.All"
+      },
+      {
         "adminConsentDescription": "Allows the app to manage hybrid identity service configuration by creating, viewing, updating and deleting on-premises published resources, on-premises agents and agent groups, on behalf of the signed-in user.",
         "adminConsentDisplayName": "Manage on-premises published resources",
         "id": "8c4d5184-71c2-4bf8-bb9d-bc3378c9ad42",
