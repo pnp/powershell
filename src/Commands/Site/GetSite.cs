@@ -22,30 +22,39 @@ namespace PnP.PowerShell.Commands.Site
             {
                 site.EnsureProperties(s => s.Url, s => s.VersionPolicyForNewLibrariesTemplate, s => s.VersionPolicyForNewLibrariesTemplate.VersionPolicies);
 
-                var s = new PSObject();
-                s.Properties.Add(new PSVariableProperty(new PSVariable("Url", site.Url)));
+                var vp = new VersionPolicy();
+                vp.Url = site.Url;
 
                 if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.ServerObjectIsNull == true)
                 {
-                    s.Properties.Add(new PSVariableProperty(new PSVariable("VersionPolicy", "No Site Level Policy Set")));
+                    vp.Description = "No Site Level Policy Set";
                 }
                 else
                 {
                     site.EnsureProperties(s => s.VersionPolicyForNewLibrariesTemplate, s => s.VersionPolicyForNewLibrariesTemplate.MajorVersionLimit, s => s.VersionPolicyForNewLibrariesTemplate.VersionPolicies);
 
-                    s.Properties.Add(new PSVariableProperty(new PSVariable("DefaultTrimMode", site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultTrimMode)));
+                    vp.DefaultTrimMode = site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultTrimMode.ToString();
 
-                    if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultTrimMode != VersionPolicyTrimMode.AutoExpiration)
+                    if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
+                    {
+                        vp.Description = "Site has Automatic Policy Set";
+                    }
+                    else
                     {
                         if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.ExpireAfter)
                         {
-                            s.Properties.Add(new PSVariableProperty(new PSVariable("DefaultExpireAfterDays", site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultExpireAfterDays)));
+                            vp.DefaultExpireAfterDays = site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultExpireAfterDays.ToString();
+                            vp.Description = "Site has Manual settings with specific count and time limits";
                         }
-                        s.Properties.Add(new PSVariableProperty(new PSVariable("MajorVersionLimit", site.VersionPolicyForNewLibrariesTemplate.MajorVersionLimit)));
+                        else if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.NoExpiration)
+                        {
+                            vp.Description = "Site has Manual settings with specific version count limit and no time limits";
+                        }
+                        vp.MajorVersionLimit = site.VersionPolicyForNewLibrariesTemplate.MajorVersionLimit.ToString();
                     }
                 }
 
-                WriteObject(s);
+                WriteObject(vp);
             }
             else
             {
@@ -54,5 +63,14 @@ namespace PnP.PowerShell.Commands.Site
                 WriteObject(site);
             }
         }
+    }
+
+    public class VersionPolicy
+    {
+        public string Url { get; set; }
+        public string DefaultTrimMode { get; set; }
+        public string DefaultExpireAfterDays { get; set; }
+        public string MajorVersionLimit { get; set; }
+        public string Description { get; set; }
     }
 }
