@@ -96,13 +96,13 @@
 <p>This cmdlet can be used to add or update an external item in Microsoft Search on custom connectors. The cmdlet will create a new external item if the item does not exist yet. If the item already exists, it will be updated.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ConnectionId &quot;pnppowershell&quot; -ItemId &quot;12345&quot; -Properties @{ &quot;Test1&quot;= &quot;Test van deze PnP PowerShell Connector&quot;; &quot;Test2&quot; = &quot;Red&quot;,&quot;Blue&quot;; &quot;Test3&quot; = ([System.DateTime]::Now)} -ContentValue &quot;Sample value&quot; -ContentType Text -GrantEveryone
+<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ConnectionId &quot;pnppowershell&quot; -ItemId &quot;12345&quot; -Properties @{ &quot;Test1&quot;= &quot;Test of this PnP PowerShell Connector&quot;; &quot;Test2&quot; = &quot;Red&quot;,&quot;Blue&quot;; &quot;Test3&quot; = ([System.DateTime]::Now)} -ContentValue &quot;Sample value&quot; -ContentType Text -GrantEveryone
 </code></pre>
-<p>This will add an item in the external Microsoft Search index with the properties as provided and grants everyone access to find the item back through Microsoft Search.</p>
+<p>This will add an item in the external Microsoft Search index with the properties as provided and grants everyone access to find the item back through Microsoft Search. It shows three types of properties you can set for an external item in the index, being a simple text, an array and a date/time value.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ConnectionId &quot;pnppowershell&quot; -ItemId &quot;12345&quot; -Properties @{ &quot;Test1&quot;= &quot;Test van deze PnP PowerShell Connector&quot;; &quot;Test2&quot; = &quot;Red&quot;,&quot;Blue&quot;; &quot;Test3&quot; = ([System.DateTime]::Now)} -ContentValue &quot;Sample value&quot; -ContentType Text -GrantUsers &quot;user@contoso.onmicrosoft.com&quot;
+<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ConnectionId &quot;pnppowershell&quot; -ItemId &quot;12345&quot; -Properties @{ &quot;Test1&quot;= &quot;Test of this PnP PowerShell Connector&quot;; &quot;Test2&quot; = &quot;Red&quot;,&quot;Blue&quot;; &quot;Test3&quot; = ([System.DateTime]::Now)} -ContentValue &quot;Sample value&quot; -ContentType Text -GrantUsers &quot;user@contoso.onmicrosoft.com&quot;
 </code></pre>
-<p>This will add an item in the external Microsoft Search index with the properties as provided and grants only the user with the specified UPN access to find the item back through Microsoft Search.</p>
+<p>This will add an item in the external Microsoft Search index with the properties as provided and grants only the user with the specified UPN access to find the item back through Microsoft Search. It shows three types of properties you can set for an external item in the index, being a simple text, an array and a date/time value.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

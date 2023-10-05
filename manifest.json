@@ -2862,6 +2862,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPRetentionLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPRetentionLabel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPRoleDefinition.md",
       "output": {
         ".html": {
