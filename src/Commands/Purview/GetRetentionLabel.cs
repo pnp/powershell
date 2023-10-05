@@ -1,5 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Purview
     [Cmdlet(VerbsCommon.Get, "PnPRetentionLabel")]
     [OutputType(typeof(IEnumerable<Model.Graph.Purview.RetentionLabel>))]
     [OutputType(typeof(Model.Graph.Purview.RetentionLabel))]
+    [RequiredMinimalApiPermissions("RecordsManagement.Read.All")]
     public class GetAvailableRetentionLabel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
