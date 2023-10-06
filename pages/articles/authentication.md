@@ -161,8 +161,10 @@ The AzureEnvironment parameter only allows one value. Select the correct one tha
 For running `Connect-PnPOnline` with user credentials in Azure DevOps pipeline, you need to make sure that authentication in your Azure AD application is configured to allow public client. 
 
 Public client can be configured from the Azure portal from the Authentication Blade in the application or by setting the `allowPublicClient` property in the application's manifest to true.
+![image](https://github.com/kzkalra/powershell/assets/38322484/507d3c70-9c74-445b-9f50-1022973de5ba)
 
 `username` and `password` for service account can be stored as secret pipeline variables and can be referenced in the script to achieve complete automation.
+![image](https://github.com/kzkalra/powershell/assets/38322484/1d5acb94-3b12-4d51-b1b5-61f021789187)
 
 ## Silent Authentication with Credentials and MFA for running in Azure DevOps Pipelines with Microsoft Hosted Agents
 ### Identify the possible IP ranges for Microsoft-hosted agents
@@ -179,6 +181,8 @@ For example, if your organization is located in the South East Asia region, you 
 - Go to Azure AD conditional access
 - Open named location blade, click on `+ IP Ranges Location`
 - Enter the IP ranges for Microsoft Hosted Agents, `Mark as trusted location` should be checked.
+  ![image](https://github.com/kzkalra/powershell/assets/38322484/1cab2153-4075-43ef-83fd-b9509252119a)
+
 
 ### Create a conditional access policy
 
@@ -188,6 +192,8 @@ For example, if your organization is located in the South East Asia region, you 
 - Under conditions -> locations include `any locations` and exclude the recently created named location.
 - Under grant -> choose `grant access`. Only `require multifactor authentication needs to be checked`.
 - Enable the policy and click on Save.
+![image](https://github.com/kzkalra/powershell/assets/38322484/1635ca9f-b743-4128-92d6-a322462908a2)
+
 > [!Important]
 > You need to make sure that the new policy does not conflicts with any other policy in your tenant, otherwise make the changes accordingly.
 
