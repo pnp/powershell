@@ -1,6 +1,7 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
@@ -27,7 +28,22 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             if (Force || ShouldContinue($"Remove flow with name '{flowName}'?", "Remove flow"))
             {
-                var result = RestHelper.DeleteAsync<RestResultCollection<Model.PowerPlatform.PowerAutomate.Flow>>(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                try
+                {
+                    // Had to add this because DELETE doesn't throw error if invalid Flow Id or Name is provided
+                    WriteVerbose($"Retrieving Flow with name {flowName} in environment ${environmentName}");
+                    var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                    if (result != null)
+                    {
+                        WriteVerbose($"Attempting to delete Flow with name {flowName}");
+                        RestHelper.DeleteAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                        WriteVerbose($"Flow with name {flowName} deleted");
+                    }
+                }
+                catch
+                {
+                    throw new Exception($"Cannot find flow with Identity '{flowName}'");
+                }
             }
         }
     }
