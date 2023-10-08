@@ -53,7 +53,9 @@ namespace PnP.PowerShell.Commands.Files
                 case ParameterSet_FOLDERSINLIST:
                 {
                     // Gets the provided list
+#pragma warning disable CS0618 // Type or member is obsolete                    
                     var list = List.GetList(CurrentWeb);
+#pragma warning restore CS0618 // Type or member is obsolete                    
 
                     // Query for all folders in the list
                     CamlQuery query = CamlQuery.CreateAllFoldersQuery();
