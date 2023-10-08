@@ -19,7 +19,7 @@ public class ExternalItem
     /// <summary>
     /// The managed properties to provide to Microsoft Search about this external item
     /// </summary>
-    [JsonConverter(typeof(JsonConverters.MicrosoftSearchExternalItemPropertyConverter))]
+    [JsonConverter(typeof(Utilities.Json.MicrosoftSearchExternalItemPropertyConverter))]
     [JsonPropertyName("properties")]
     public Hashtable Properties { get; set; }
 
