@@ -8,6 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsData.Export, "PnPUserInfo")]
+    [OutputType(typeof(PSObject))]
     public class ExportUserInfo : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
