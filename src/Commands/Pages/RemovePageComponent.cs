@@ -8,6 +8,7 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPageComponent")]
+    [OutputType(typeof(void))]
     public class RemovePageComponent : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

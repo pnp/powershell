@@ -6,6 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPPageSection")]
+    [OutputType(typeof(void))]
     public class AddPageSection : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
