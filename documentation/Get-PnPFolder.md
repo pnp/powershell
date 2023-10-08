@@ -26,16 +26,21 @@ Get-PnPFolder -Url <String> [-Includes <String[]>] [-Connection <PnPConnection>]
 
 ### Root folder of a list
 ```powershell
+Get-PnPFolder -ListRootFolder <ListPipeBind> [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
+```
+
+### Folders In List
+```powershell
 Get-PnPFolder -List <ListPipeBind> [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
 Retrieves the folder instance of the specified location.
 
-Use Resolve-PnPFolder to create the folder if it does not exist.
-Use Get-PnPFolderInFolder to retrieve subfolders.
-Use Get-PnPFileInFolder to retrieve files in a folder.
-Use Get-PnPFolderItem to retrieve files and subfolders.
+Use [Resolve-PnPFolder](Resolve-PnPFolder.md) to create the folder if it does not exist.
+Use [Get-PnPFolderInFolder](Get-PnPFolderInFolder.md) to retrieve subfolders.
+Use [Get-PnPFileInFolder](Get-PnPFileInFolder.md) to retrieve files in a folder.
+Use [Get-PnPFolderItem](Get-PnPFolderItem.md) to retrieve files and subfolders.
 
 ## EXAMPLES
 
@@ -62,10 +67,17 @@ Returns the folder called 'Shared Documents' which is located in the root of the
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPFolder -List "Shared Documents"
+Get-PnPFolder -ListRootFolder "Shared Documents"
 ```
 
 Returns the root folder of the list called 'Shared Documents'
+
+### EXAMPLE 5
+```powershell
+Get-PnPFolder -List "Shared Documents"
+```
+
+Returns the folders inside the root folder of the list called 'Shared Documents'. Please use Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead.
 
 ## PARAMETERS
 
@@ -84,11 +96,25 @@ Accept wildcard characters: False
 ```
 
 ### -List
-Name, ID or instance of a list or document library to retrieve the folders residing in it for.
+Name, ID or instance of a list or document library to retrieve the folders residing in it for. Please use Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead.
 
 ```yaml
 Type: ListPipeBind
 Parameter Sets: Folders In List
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ListRootFolder
+Name, ID or instance of a list or document library to retrieve the rootfolder of.
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: Root folder of a list
 
 Required: True
 Position: 0
@@ -129,4 +155,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Resolve-PnPFolder](https://github.com/MicrosoftDocs/office-docs-powershell/blob/master/sharepoint/sharepoint-ps/sharepoint-pnp/Resolve-PnPFolder.md)

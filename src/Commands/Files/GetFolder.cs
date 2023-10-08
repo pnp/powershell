@@ -10,11 +10,11 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolder", DefaultParameterSetName = ParameterSet_CURRENTWEBROOTFOLDER)]
-    [OutputType(typeof(Folder))]
     public class GetFolder : PnPWebRetrievalsCmdlet<Folder>
     {
         private const string ParameterSet_CURRENTWEBROOTFOLDER = "Root folder of the current Web";
         private const string ParameterSet_LISTROOTFOLDER = "Root folder of a list";
+        private const string ParameterSet_FOLDERSINLIST  = "Folders In List";
         private const string ParameterSet_FOLDERBYURL = "Folder by url";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERBYURL)]
@@ -22,7 +22,11 @@ namespace PnP.PowerShell.Commands.Files
         public string Url;
 
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_LISTROOTFOLDER)]
+        [Obsolete("Please transition to using Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead as this argument will be removed in a future version of the PnP PowerShell Cmdlets")]
         public ListPipeBind List;
+
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_LISTROOTFOLDER)]
+        public ListPipeBind ListRootFolder;
 
         protected override void ExecuteCmdlet()
         {
@@ -45,6 +49,36 @@ namespace PnP.PowerShell.Commands.Files
                     folder = list.RootFolder;
                     break;
                 }
+
+                case ParameterSet_FOLDERSINLIST:
+                {
+                    // Gets the provided list
+                    var list = ListRootFolder.GetList(CurrentWeb);
+
+                    // Query for all folders in the list
+                    CamlQuery query = CamlQuery.CreateAllFoldersQuery();
+                    do
+                    {
+                        // Execute the query. It will retrieve all properties of the folders. Refraining to using the RetrievalExpressions would cause a tremendous increased load on SharePoint as it would have to execute a query per list item which would be less efficient, especially on lists with many folders, than just getting all properties directly
+                        ListItemCollection listItems = list.GetItems(query);
+                        ClientContext.Load(listItems, item => item.Include(t => t.Folder), item => item.ListItemCollectionPosition);
+                        ClientContext.ExecuteQueryRetry();
+
+                        // Take all the folders from the resulting list items and put them in a list to return
+                        var folders = new List<Folder>(listItems.Count);
+                        foreach (ListItem listItem in listItems)
+                        {
+                            var listFolder = listItem.Folder;
+                            listFolder.EnsureProperties(RetrievalExpressions);
+                            folders.Add(listFolder);
+                        }
+
+                        WriteObject(folders, true);
+
+                        query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+                    } while (query.ListItemCollectionPosition != null);
+                    break;
+                }                
 
                 case ParameterSet_FOLDERBYURL:
                 {
