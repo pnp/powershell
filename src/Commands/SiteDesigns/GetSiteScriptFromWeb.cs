@@ -7,6 +7,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteScriptFromWeb", DefaultParameterSetName = ParameterSet_BASICCOMPONENTS)]
+    [OutputType(typeof(string))]
     public class GetSiteScriptFromWeb : PnPAdminCmdlet
     {
         private const string ParameterSet_BASICCOMPONENTS = "Basic components";

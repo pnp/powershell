@@ -8,6 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsData.Update, "PnPSiteDesignFromWeb", DefaultParameterSetName = ParameterSet_ALLCOMPONENTS)]
+    [OutputType(typeof(TenantSiteDesign))]
     public class UpdateSiteDesignFromWeb : PnPAdminCmdlet
     {
         private const string ParameterSet_BASICCOMPONENTS = "Basic components";
