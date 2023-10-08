@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Files
         [Alias("RelativeUrl")]
         public string Url;
 
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_LISTROOTFOLDER)]
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_FOLDERSINLIST)]
         [Obsolete("Please transition to using Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead as this argument will be removed in a future version of the PnP PowerShell Cmdlets")]
         public ListPipeBind List;
 
@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Files
                 case ParameterSet_LISTROOTFOLDER:
                 {
                     WriteVerbose("Getting root folder of the provided list");
-                    var list = List.GetList(CurrentWeb);
+                    var list = ListRootFolder.GetList(CurrentWeb);
                     folder = list.RootFolder;
                     break;
                 }
@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Files
                 case ParameterSet_FOLDERSINLIST:
                 {
                     // Gets the provided list
-                    var list = ListRootFolder.GetList(CurrentWeb);
+                    var list = List.GetList(CurrentWeb);
 
                     // Query for all folders in the list
                     CamlQuery query = CamlQuery.CreateAllFoldersQuery();
