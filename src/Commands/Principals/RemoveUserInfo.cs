@@ -8,6 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUserInfo")]
+    [OutputType(typeof(PSObject))]
     public class RemoveUserInfo : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

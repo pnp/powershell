@@ -34,6 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPTenantInfo` which allows retrieving tenant information by its Id or domain name. [#3414](https://github.com/pnp/powershell/pull/3414)
 - Added option to create a Microsoft 365 Group with dynamic membership by passing in `-DynamicMembershipRule` [#3426](https://github.com/pnp/powershell/pull/3426)
 - Added `RestrictedAccessControl`, `ClearRestrictedAccessControl`, `RemoveRestrictedAccessControlGroups`, `AddRestrictedAccessControlGroups` and `RestrictedAccessControlGroups` parameters to `Set-PnPTenantSite` cmdlet to handle restricted access control. [#3463](https://github.com/pnp/powershell/pull/3463)
+- Added `Get-PnPRetentionLabel` cmdlet to retrieve Purview retention labels. [#3459](https://github.com/pnp/powershell/pull/3459)
 
 ### Fixed
 
