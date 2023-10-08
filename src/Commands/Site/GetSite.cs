@@ -3,6 +3,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Site
 {
@@ -22,7 +23,7 @@ namespace PnP.PowerShell.Commands.Site
             {
                 site.EnsureProperties(s => s.Url, s => s.VersionPolicyForNewLibrariesTemplate, s => s.VersionPolicyForNewLibrariesTemplate.VersionPolicies);
 
-                var vp = new VersionPolicy();
+                var vp = new SiteVersionPolicy();
                 vp.Url = site.Url;
 
                 if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.ServerObjectIsNull == true)
@@ -63,14 +64,5 @@ namespace PnP.PowerShell.Commands.Site
                 WriteObject(site);
             }
         }
-    }
-
-    public class VersionPolicy
-    {
-        public string Url { get; set; }
-        public string DefaultTrimMode { get; set; }
-        public string DefaultExpireAfterDays { get; set; }
-        public string MajorVersionLimit { get; set; }
-        public string Description { get; set; }
     }
 }
