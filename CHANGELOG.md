@@ -65,7 +65,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Add-PnPFile` cmdlet. It will now automatically checkout the file if `-CheckinType` parameter is specified. [#3403](https://github.com/pnp/powershell/pull/3403)
 - Improved the error message thrown when using `-ValidateConnection` with `Connect-PnPOnline` and it failing due to i.e. an expired ClientSecret so the reason of the failed connect becomes more clear. [#3440](https://github.com/pnp/powershell/pull/3440)
 - If a cmdlet gets renamed and an alias gets added for it for backwards compatibility, a cmdlet page for the alias will automatically be created so it can still be found in the documentation [#3455](https://github.com/pnp/powershell/pull/3455)
-- Improved `Remove-PnPFlow` cmdlet to throw error if the Flow doesn't exist and also added verbose logging.
+- Improved `Remove-PnPFlow` cmdlet to throw error if the Flow doesn't exist and also added verbose logging. [#3474](https://github.com/pnp/powershell/pull/3474)
 
 ### Removed
 
