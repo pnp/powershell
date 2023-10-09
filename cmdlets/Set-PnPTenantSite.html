@@ -645,6 +645,61 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-restrictedaccesscontrol">-RestrictedAccessControl</h3>
+<p>To apply restricted access control to a group-connected or Teams-connected site.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-clearrestrictedaccesscontrol">-ClearRestrictedAccessControl</h3>
+<p>To reset restricted access control configuration for a site.</p>
+<pre><code class="lang-yaml">Type: Switch Parameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-removerestrictedaccesscontrolgroups">-RemoveRestrictedAccessControlGroups</h3>
+<p>You can remove the specified security group from restricted access control configuration. Members of the security group are no longer be able to access site content while the policy is enforced on the site.</p>
+<pre><code class="lang-yaml">Type: GUID []
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-addrestrictedaccesscontrolgroups">-AddRestrictedAccessControlGroups</h3>
+<p>You can add the specified security groups for restricted access control configuration.</p>
+<pre><code class="lang-yaml">Type: GUID []
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-restrictedaccesscontrolgroups">-RestrictedAccessControlGroups</h3>
+<p>To edit a restricted access control group for a non-group site</p>
+<pre><code class="lang-yaml">Type: GUID []
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-wait">-Wait</h3>
 <p>Wait for the operation to complete</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
