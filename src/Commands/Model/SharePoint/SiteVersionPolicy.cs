@@ -8,8 +8,8 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
 {
     /// <summary>
     /// The VersionPolicy setting on site
-    /// The new document libraries use the setting on site if it is set
-    /// Otherwise, it uses the setting on tenant
+    /// When the new document libraries are created, they will be set as the version policy of the site.
+    /// If the version policy is not set on the site, the setting on the tenant will be used.
     /// </summary>
     public class SiteVersionPolicy
     {

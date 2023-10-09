@@ -38,12 +38,6 @@ Get-PnPSite -Includes RootWeb,ServerRelativeUrl
 
 Gets the current site specifying to include RootWeb and ServerRelativeUrl properties. For the full list of properties see https://learn.microsoft.com/previous-versions/office/sharepoint-server/ee538579(v%3doffice.15)
 
-### EXAMPLE 3
-```powershell
-Get-PnPSite -GetVersionPolicy
-```
-Get site level version policy settings.
-
 ## PARAMETERS
 
 ### -Connection
@@ -51,20 +45,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -GetVersionPolicy
-Get site level version policy settings.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
