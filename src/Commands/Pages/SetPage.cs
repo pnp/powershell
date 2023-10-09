@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPage")]
     [Alias("Set-PnPClientSidePage")]
+    [OutputType(typeof(PnP.Core.Model.SharePoint.IPage))]
     public class SetPage : PnPWebCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

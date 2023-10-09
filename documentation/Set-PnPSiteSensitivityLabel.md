@@ -28,9 +28,9 @@ This cmdlet allows for setting a Microsoft Purview sensitivity label on the curr
 
 It may take up to a few minutes for a change to the sensitivity label to become visible in SharePoint Online and Azure Active Directory.
 
-Use [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.html) to get an overview of the available Microsoft Purview sensitivity labels on the tenant.
+Use [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.md) to get an overview of the available Microsoft Purview sensitivity labels on the tenant.
 
-For the classic classification labels, use [Set-PnPSiteClassification](Set-PnPSiteClassification.html) instead.
+For the classic classification labels, use [Set-PnPSiteClassification](Set-PnPSiteClassification.md) instead.
 
 ## EXAMPLES
 

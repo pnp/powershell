@@ -24,7 +24,7 @@ Set-PnPSiteClassification -Identity <String> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-This cmdlet allows for setting a classic site classification on the currently connected to site. If the site has a Microsoft 365 Group behind it, the classification will be placed on the Microsoft 365 Group and will require either Directory.Read.All or Directory.ReadWrite.All application permissions on Microsoft Graph. If it does not have a Microsoft 365 Group behind it, it will set the site classification on the SharePoint Online site and will not require Microsoft Graph permissions. Use [Get-PnPAvailableSiteClassification](Get-PnPAvailableSiteClassification.html) to get an overview of the available site classifications on the tenant. For the new Microsoft Purview sensitivity labels, use [Set-PnPSiteSensitivityLabel](Set-PnPSiteSensitivityLabel.html) instead.
+This cmdlet allows for setting a classic site classification on the currently connected to site. If the site has a Microsoft 365 Group behind it, the classification will be placed on the Microsoft 365 Group and will require either Directory.Read.All or Directory.ReadWrite.All application permissions on Microsoft Graph. If it does not have a Microsoft 365 Group behind it, it will set the site classification on the SharePoint Online site and will not require Microsoft Graph permissions. Use [Get-PnPAvailableSiteClassification](Get-PnPAvailableSiteClassification.md) to get an overview of the available site classifications on the tenant. For the new Microsoft Purview sensitivity labels, use [Set-PnPSiteSensitivityLabel](Set-PnPSiteSensitivityLabel.md) instead.
 
 ## EXAMPLES
 

@@ -10,6 +10,11 @@ title: Set-PnPSearchExternalItem
 # Set-PnPSearchExternalItem
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API : One of ExternalItem.ReadWrite.OwnedBy, ExternalItem.ReadWrite.All
+
 Adds or updates an external item in Microsoft Search
 
 ## SYNTAX
@@ -26,17 +31,17 @@ This cmdlet can be used to add or update an external item in Microsoft Search on
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPSearchExternalItem -ConnectionId "pnppowershell" -ItemId "12345" -Properties @{ "Test1"= "Test van deze PnP PowerShell Connector"; "Test2" = "Red","Blue"; "Test3" = ([System.DateTime]::Now)} -ContentValue "Sample value" -ContentType Text -GrantEveryone
+Set-PnPSearchExternalItem -ConnectionId "pnppowershell" -ItemId "12345" -Properties @{ "Test1"= "Test of this PnP PowerShell Connector"; "Test2" = "Red","Blue"; "Test3" = ([System.DateTime]::Now)} -ContentValue "Sample value" -ContentType Text -GrantEveryone
 ```
 
-This will add an item in the external Microsoft Search index with the properties as provided and grants everyone access to find the item back through Microsoft Search.
+This will add an item in the external Microsoft Search index with the properties as provided and grants everyone access to find the item back through Microsoft Search. It shows three types of properties you can set for an external item in the index, being a simple text, an array and a date/time value.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPSearchExternalItem -ConnectionId "pnppowershell" -ItemId "12345" -Properties @{ "Test1"= "Test van deze PnP PowerShell Connector"; "Test2" = "Red","Blue"; "Test3" = ([System.DateTime]::Now)} -ContentValue "Sample value" -ContentType Text -GrantUsers "user@contoso.onmicrosoft.com"
+Set-PnPSearchExternalItem -ConnectionId "pnppowershell" -ItemId "12345" -Properties @{ "Test1"= "Test of this PnP PowerShell Connector"; "Test2" = "Red","Blue"; "Test3" = ([System.DateTime]::Now)} -ContentValue "Sample value" -ContentType Text -GrantUsers "user@contoso.onmicrosoft.com"
 ```
 
-This will add an item in the external Microsoft Search index with the properties as provided and grants only the user with the specified UPN access to find the item back through Microsoft Search.
+This will add an item in the external Microsoft Search index with the properties as provided and grants only the user with the specified UPN access to find the item back through Microsoft Search. It shows three types of properties you can set for an external item in the index, being a simple text, an array and a date/time value.
 
 ## PARAMETERS
 
