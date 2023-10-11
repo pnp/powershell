@@ -6,6 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPPageImageWebPart")]
+    [OutputType(typeof(PnP.Core.Model.SharePoint.IPageWebPart))]
     public class AddPageImageWebPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";

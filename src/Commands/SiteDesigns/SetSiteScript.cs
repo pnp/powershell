@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteScript")]
+    [OutputType(typeof(TenantSiteScript))]
     public class SetSiteScript : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

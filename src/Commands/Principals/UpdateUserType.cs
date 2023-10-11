@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsData.Update, "PnPUserType")]
+    [OutputType(typeof(string))]
     public class UpdateUserType : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

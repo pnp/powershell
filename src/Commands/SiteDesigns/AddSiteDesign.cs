@@ -10,6 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteDesign", DefaultParameterSetName = ParameterSet_BYSITESCRIPTINSTANCE)]
+    [OutputType(typeof(TenantSiteDesign))]
     public class AddSiteDesign : PnPAdminCmdlet
     {
         private const string ParameterSet_BYSITESCRIPTIDS = "By SiteScript Ids";

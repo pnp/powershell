@@ -10,6 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPBuiltInSiteTemplateSettings")]
+    [OutputType(typeof(BuiltInSiteTemplateSettings))]
     public class SetBuiltInSiteTemplateSettings : PnPAdminCmdlet
     {
         private const string ByIdentityParamSet = "ByIdentity";
