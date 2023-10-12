@@ -7202,6 +7202,56 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/authentication/README.md",
+      "output": {
+        "resource": {
+          "relative_path": "images/authentication/README.md"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/authentication/allowPublicClient.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/authentication/allowPublicClient.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/authentication/conditionalAccess.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/authentication/conditionalAccess.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/authentication/libraryVariables.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/authentication/libraryVariables.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/authentication/namedLocations.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/authentication/namedLocations.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/azureautomation/addmodulefromgallery.png",
       "output": {
         "resource": {

@@ -196,6 +196,46 @@ Set-Secret -Name &quot;yourlabel&quot; -Secret (Get-Credential)
 <pre><code class="lang-powershell">Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
 </code></pre>
 <p>The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.</p>
+<h2 id="silent-authentication-with-credentials-for-running-in-pipelines">Silent Authentication with Credentials for running in Pipelines</h2>
+<p>For running <code>Connect-PnPOnline</code> with user credentials in Azure DevOps pipeline, you need to make sure that authentication in your Azure AD application is configured to allow public client.</p>
+<p>Public client can be configured from the Azure portal from the Authentication Blade in the application or by setting the <code>allowPublicClient</code> property in the application's manifest to true.
+<img src="../images/authentication/allowPublicClient.png" alt="image"></p>
+<p><code>username</code> and <code>password</code> for service account can be stored as secret pipeline variables and can be referenced in the script to achieve complete automation.
+<img src="../images/authentication/libraryVariables.png" alt="image"></p>
+<h2 id="silent-authentication-with-credentials-and-mfa-for-running-in-azure-devops-pipelines-with-microsoft-hosted-agents">Silent Authentication with Credentials and MFA for running in Azure DevOps Pipelines with Microsoft Hosted Agents</h2>
+<h3 id="identify-the-possible-ip-ranges-for-microsoft-hosted-agents">Identify the possible IP ranges for Microsoft-hosted agents</h3>
+<ul>
+<li>Identify the <a href="https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/change-organization-location?view=azure-devops">region for your organization</a> in Organization settings.</li>
+<li>Identify the <a href="https://azure.microsoft.com/global-infrastructure/geographies/">Azure Geography</a> for your organization's region.</li>
+<li>Map the names of the regions in your geography to the format used in the weekly file, following the format of AzureCloud., such as AzureCloud.westus. You can map the names of the regions from the Azure Geography list to the format used in the weekly file.</li>
+<li>You can find the weekly IP file at the following URL: <a href="https://www.microsoft.com/en-us/download/details.aspx?id=56519">https://www.microsoft.com/en-us/download/details.aspx?id=56519</a></li>
+</ul>
+<p>For example, if your organization is located in the South East Asia region, you would map it to the format AzureCloud.SouthEastAsia.</p>
+<h3 id="create-a-named-location-in-azure-ad-conditional-access">Create a named location in Azure AD conditional access</h3>
+<ul>
+<li>Go to Azure AD conditional access</li>
+<li>Open named location blade, click on <code>+ IP Ranges Location</code></li>
+<li>Enter the IP ranges for Microsoft Hosted Agents, <code>Mark as trusted location</code> should be checked.
+<img src="../images/authentication/namedLocations.png" alt="image"></li>
+</ul>
+<h3 id="create-a-conditional-access-policy">Create a conditional access policy</h3>
+<ul>
+<li>Go to Azure AD conditional access, click on <code>+New Policy</code>.</li>
+<li>Give a meaningful name, click on Users and Groups -&gt; Include select users and groups, select the user with which you want to run your pipeline.</li>
+<li>Include all cloud apps.</li>
+<li>Under conditions -&gt; locations include <code>any locations</code> and exclude the recently created named location.</li>
+<li>Under grant -&gt; choose <code>grant access</code>. Only <code>require multifactor authentication needs to be checked</code>.</li>
+<li>Enable the policy and click on Save.
+<img src="../images/authentication/conditionalAccess.png" alt="image"></li>
+</ul>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>You need to make sure that the new policy does not conflicts with any other policy in your tenant, otherwise make the changes accordingly.</p>
+</div>
+<h3 id="powershell-script-to-be-run-in-pipeline">Powershell script to be run in pipeline</h3>
+<pre><code class="lang-powershell">$creds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
+Connect-PnPOnline -Url &lt;site url&gt; -Credentials $creds -ClientId &lt;Application/Client ID of Azure AD app&gt;
+</code></pre>
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
