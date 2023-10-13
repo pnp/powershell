@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             {
                 var webUrl = Web.GetWebUrlFromPageUrl(AdminContext, job.LogFolderUri);
                 AdminContext.ExecuteQueryRetry();
-                string relativePath = job.LogFolderUri.Replace(webUrl.Value, "");
+                string relativePath = new Uri(job.LogFolderUri).LocalPath;
                 var webCtx = AdminContext.Clone(webUrl.Value);
                 if (webCtx.Web.DoesFolderExists(relativePath))
                 {
