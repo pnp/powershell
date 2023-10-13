@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Model.AzureAD;
+﻿using PnP.Framework;
+using PnP.PowerShell.Commands.Model.AzureAD;
 using System;
 using System.Net;
 
@@ -54,8 +55,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         /// Tries to return the User instace based on the information this pipe has available
         /// </summary>
         /// <param name="accessToken">Access Token for Microsoft Graph that can be used to fetch User data</param>
+        /// <param name="azureEnvironment">Azure environment cloud</param>
         /// <returns>User instance or NULL if unable to define user instance based on the available information</returns>
-        public User GetUser(string accessToken)
+        public User GetUser(string accessToken, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             if (_user != null)
             {
@@ -63,11 +65,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             if (_userId != null)
             {
-                return User.CreateFrom(PnP.Framework.Graph.UsersUtility.GetUser(accessToken, _userId));
+                return User.CreateFrom(PnP.Framework.Graph.UsersUtility.GetUser(accessToken, _userId, azureEnvironment: azureEnvironment));
             }
             if (_upn != null)
             {                
-                return User.CreateFrom(PnP.Framework.Graph.UsersUtility.GetUser(accessToken, WebUtility.UrlEncode(_upn)));
+                return User.CreateFrom(PnP.Framework.Graph.UsersUtility.GetUser(accessToken, WebUtility.UrlEncode(_upn), azureEnvironment: azureEnvironment));
             }
             return null;
         }
