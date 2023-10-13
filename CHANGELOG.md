@@ -59,6 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPTenantTemplate` not doing anything when the `-SiteUrl` parameter had not been specified. It will now use the currently connected site when the parameter is omitted. [#3431](https://github.com/pnp/powershell/pull/3431)
 - Fixed `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` cmdlets not working due to changes in backend code. [#3469](https://github.com/pnp/powershell/pull/3469)
 - Fixed an issue when trying to download a file using `Get-PnPFile` from a location that's deeply nested into folders and/or has a really long filename [PnP Core #1290](https://github.com/pnp/pnpcore/pull/1290)
+- Fixed retrieving error detail in `Get-UPABulkImportStatus` cmdlet. [#3494](https://github.com/pnp/powershell/pull/3494)
  
 ### Changed
 
