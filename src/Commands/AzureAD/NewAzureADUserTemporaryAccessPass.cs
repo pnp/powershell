@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Graph
                                 userId: Identity.User?.Id?.ToString() ?? Identity.Upn ?? Identity.UserId,
                                 startDateTime: StartDateTime,
                                 lifeTimeInMinutes: LifeTimeInMinutes,
-                                isUsableOnce: IsUsableOnce);
+                                isUsableOnce: IsUsableOnce, azureEnvironment: Connection.AzureEnvironment);
 
             WriteObject(accessPass);
         }

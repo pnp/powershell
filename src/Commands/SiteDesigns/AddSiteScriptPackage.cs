@@ -4,36 +4,40 @@ using PnP.PowerShell.Commands.Base;
 using System.IO;
 using System.Management.Automation;
 
-[Cmdlet(VerbsCommon.Add, "PnPSiteScriptPackage")]
-public class AddSiteScriptPackage : PnPAdminCmdlet
+namespace PnP.PowerShell.Commands
 {
-    [Parameter(Mandatory = true)]
-    public string Title;
-
-    [Parameter(Mandatory = false)]
-    public string Description;
-
-    [Parameter(Mandatory = true)]
-    public string ContentPath;
-
-    protected override void ExecuteCmdlet()
+    [Cmdlet(VerbsCommon.Add, "PnPSiteScriptPackage")]
+    [OutputType(typeof(TenantSiteScript))]
+    public class AddSiteScriptPackage : PnPAdminCmdlet
     {
-        if (!Path.IsPathRooted(ContentPath))
+        [Parameter(Mandatory = true)]
+        public string Title;
+
+        [Parameter(Mandatory = false)]
+        public string Description;
+
+        [Parameter(Mandatory = true)]
+        public string ContentPath;
+
+        protected override void ExecuteCmdlet()
         {
-            ContentPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, ContentPath);
-        }
-        using (var contentStream = System.IO.File.OpenRead(ContentPath))
-        {
-            TenantSiteScriptCreationInfo siteScriptCreationInfo = new TenantSiteScriptCreationInfo
+            if (!Path.IsPathRooted(ContentPath))
             {
-                Title = Title,
-                Description = Description,
-                ContentStream = contentStream
-            };
-            var script = Tenant.CreateSiteScript(siteScriptCreationInfo);
-            AdminContext.Load(script);
-            AdminContext.ExecuteQueryRetry();
-            WriteObject(script);
+                ContentPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, ContentPath);
+            }
+            using (var contentStream = System.IO.File.OpenRead(ContentPath))
+            {
+                TenantSiteScriptCreationInfo siteScriptCreationInfo = new TenantSiteScriptCreationInfo
+                {
+                    Title = Title,
+                    Description = Description,
+                    ContentStream = contentStream
+                };
+                var script = Tenant.CreateSiteScript(siteScriptCreationInfo);
+                AdminContext.Load(script);
+                AdminContext.ExecuteQueryRetry();
+                WriteObject(script);
+            }
         }
     }
 }

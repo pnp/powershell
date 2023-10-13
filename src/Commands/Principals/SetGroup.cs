@@ -8,6 +8,7 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Set, "PnPGroup")]
+    [OutputType(typeof(void))]
     
     public class SetGroup : PnPWebCmdlet
     {
