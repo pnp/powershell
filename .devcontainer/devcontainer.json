@@ -37,11 +37,19 @@
 	"customizations": {
 		"vscode": {
 			"settings": {
-				"terminal.integrated.defaultProfile.linux": "pwsh"
+				"terminal.integrated.defaultProfile.linux": "pwsh",
+				"terminal.integrated.shellIntegration.decorationsEnabled":"both",
+				"terminal.integrated.smoothScrolling": true
 			},
 			"extensions": [				
 				"ms-vscode.powershell",
-				"ms-dotnettools.csdevkit"
+				"ms-dotnettools.csdevkit",
+				"mhutchie.git-graph",
+				"donjayamanne.githistory",
+				"ms-vsliveshare.vsliveshare",				
+				"shd101wyy.markdown-preview-enhanced",
+				"GitHub.copilot",
+				"GitHub.copilot-chat"
 			]
 		}
 	},
