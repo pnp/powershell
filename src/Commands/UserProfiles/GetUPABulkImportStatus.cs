@@ -60,8 +60,21 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     string message = string.Empty;
                     foreach (var logFile in files)
                         message += "\r\n" + webCtx.Web.GetFileAsString(logFile.ServerRelativeUrl);
-                    job.ErrorMessage = message;
+                    TrySetJobErrorMessage(job, message);
                 }
+            }
+        }
+
+        private void TrySetJobErrorMessage(ImportProfilePropertiesJobInfo job, string message)
+        {
+            try
+            {
+                job.ErrorMessage = message;
+            }
+            catch (ClientRequestException)
+            {
+                // Setting the ErrorMessage property to ImportProfilePropertiesJobInfo returned by GetImportProfilePropertyJobs() throws an exception sometimes as the Path is property is null.
+                // In this case the generic error message with the file location of the log in SPO will be returned.
             }
         }
     }
