@@ -3152,6 +3152,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSiteVersionPolicy.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSiteVersionPolicy.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPStorageEntity.md",
       "output": {
         ".html": {
