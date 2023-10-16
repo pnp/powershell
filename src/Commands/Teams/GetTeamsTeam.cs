@@ -33,6 +33,10 @@ namespace PnP.PowerShell.Commands.Graph
                 {
                     WriteObject(TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
                 }
+                else
+                {
+                    this.WriteError(new PSArgumentException("Team not found"), ErrorCategory.ObjectNotFound);
+                }
             }
             else
             {
