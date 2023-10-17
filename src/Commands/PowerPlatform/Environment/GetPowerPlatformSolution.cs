@@ -56,7 +56,6 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
             {
                 WriteVerbose($"Retrieving all Solutions within environment '{environmentName}'");
                 var requestUrl = dynamicsScopeUrl + "/api/data/v9.0/solutions?$filter=isvisible eq true&$expand=publisherid($select=friendlyname)&api-version=9.1";
-                //https://orge92ba4cd.crm8.dynamics.com/api/data/v9.0/solutions?%24expand=publisherid&%24filter=(isvisible%20eq%20true)&%24orderby=createdon%20desc
                 var solutions = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Solution.PowerPlatformSolution>(Connection, requestUrl, accessTokenForGettingSolutions).GetAwaiter().GetResult();
                 WriteObject(solutions, true);
             }
