@@ -78,6 +78,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Dave Paylor [paylord]
 - [smsdaniel]
 - Jim Duncan [sparkitect]
 - Jonathan Smith [jonathan-m-smith]
