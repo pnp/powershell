@@ -8,6 +8,7 @@ namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Move, "PnPPageComponent")]
     [Alias("Move-PnPClientSideComponent")]
+    [OutputType(typeof(void))]
     public class MovePageComponent : PnPWebCmdlet
     {
         const string ParameterSet_SECTION = "Move to other section";

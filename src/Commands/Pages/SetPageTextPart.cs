@@ -8,6 +8,7 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPageTextPart")]
+    [OutputType(typeof(void))]
     public class SetClientSideText : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

@@ -6,6 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.WebParts
 {
     [Cmdlet(VerbsCommon.Add, "PnPPageWebPart")]
+    [OutputType(typeof(PnP.Core.Model.SharePoint.IPageWebPart))]
     public class AddWebPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULTBUILTIN = "Default with built-in web part";

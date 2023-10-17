@@ -9,6 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPPage")]
+    [OutputType(typeof(PnP.Core.Model.SharePoint.IPage))]
     public class AddPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]

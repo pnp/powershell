@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Purview
             string url;
             if (ParameterSpecified(nameof(User)))
             {
-                var user = User.GetUser(AccessToken);
+                var user = User.GetUser(AccessToken, Connection.AzureEnvironment);
 
                 if (user == null)
                 {
