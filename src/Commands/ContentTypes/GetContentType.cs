@@ -1,15 +1,18 @@
 ﻿using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using System.Linq.Expressions;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Get, "PnPContentType")]
-    public class GetContentType : PnPWebCmdlet
+    [OutputType(typeof(ContentType))]
+    [OutputType(typeof(IEnumerable<ContentType>))]
+    public class GetContentType : PnPWebRetrievalsCmdlet<ContentType>
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
@@ -22,6 +25,8 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
         protected override void ExecuteCmdlet()
         {
+            DefaultRetrievalExpressions = new Expression<Func<ContentType, object>>[] {ct => ct.Id, ct => ct.Name, ct => ct.StringId, ct => ct.Group };
+
             if (List != null)
             {
                 var list = List?.GetListOrThrow(nameof(List), CurrentWeb);
@@ -36,12 +41,12 @@ namespace PnP.PowerShell.Commands.ContentTypes
                         return;
                     }
 
+                    ct.EnsureProperties(RetrievalExpressions);
                     WriteObject(ct, false);
-
                 }
                 else
                 {
-                    var cts = ClientContext.LoadQuery(list.ContentTypes.Include(ct => ct.Id, ct => ct.Name, ct => ct.StringId, ct => ct.Group));
+                    var cts = ClientContext.LoadQuery(list.ContentTypes.IncludeWithDefaultProperties(RetrievalExpressions));
                     ClientContext.ExecuteQueryRetry();
                     WriteObject(cts, true);
                 }
@@ -55,11 +60,13 @@ namespace PnP.PowerShell.Commands.ContentTypes
                     {
                         return;
                     }
+
+                    ct.EnsureProperties(RetrievalExpressions);
                     WriteObject(ct, false);
                 }
                 else
                 {
-                    var cts = InSiteHierarchy ? ClientContext.LoadQuery(CurrentWeb.AvailableContentTypes) : ClientContext.LoadQuery(CurrentWeb.ContentTypes);
+                    var cts = InSiteHierarchy ? ClientContext.LoadQuery(CurrentWeb.AvailableContentTypes.IncludeWithDefaultProperties(RetrievalExpressions)) : ClientContext.LoadQuery(CurrentWeb.ContentTypes.IncludeWithDefaultProperties(RetrievalExpressions));
 
                     ClientContext.ExecuteQueryRetry();
 
@@ -69,4 +76,3 @@ namespace PnP.PowerShell.Commands.ContentTypes
         }
     }
 }
-
