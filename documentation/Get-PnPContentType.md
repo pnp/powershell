@@ -15,8 +15,7 @@ Retrieves a content type
 ## SYNTAX
 
 ```powershell
-Get-PnPContentType [[-Identity] <ContentTypePipeBind>] [-List <ListPipeBind>] [-InSiteHierarchy]
- [-Connection <PnPConnection>] 
+Get-PnPContentType [-Identity <ContentTypePipeBind>] [-List <ListPipeBind>] [-InSiteHierarchy] [-Includes <String[]>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -53,6 +52,13 @@ Get-PnPContentType -List "Documents"
 
 This will get a listing of all available content types within the list "Documents"
 
+### EXAMPLE 5
+```powershell
+Get-PnPContentType -Includes "SchemaXml"
+```
+
+This will get a listing of all available content types with the SchemaXml also being returned in the results
+
 ## PARAMETERS
 
 ### -Connection
@@ -80,6 +86,20 @@ Required: False
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Includes
+List of properties to fetch about the ContentType(s) being returned
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
