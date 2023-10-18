@@ -17,9 +17,11 @@ namespace PnP.PowerShell.Commands.ContentTypes
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
         public ContentTypePipeBind Identity;
+
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
         public ListPipeBind List;
+        
         [Parameter(Mandatory = false, ValueFromPipeline = false)]
         public SwitchParameter InSiteHierarchy;
 
