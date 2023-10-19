@@ -8,8 +8,8 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsData.Convert, "PnPFileToPdf")]
-    public class ConvertFileToPdf : PnPWebCmdlet
+    [Cmdlet(VerbsData.Convert, "PnPFileToPDF")]
+    public class ConvertFileToPDF : PnPWebCmdlet
     {
         private const string URLTOPATH = "Save to local path";
         private const string URLASMEMORYSTREAM = "Return as memorystream";
@@ -29,28 +29,7 @@ namespace PnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = true, ParameterSetName = UPLOADTOSHAREPOINT)]
         [ValidateNotNullOrEmpty]
-        public FolderPipeBind DocumentLibrary;
-
-        [Parameter(Mandatory = false, ParameterSetName = UPLOADTOSHAREPOINT)]
-        public SwitchParameter Checkout;
-
-        [Parameter(Mandatory = false, ParameterSetName = UPLOADTOSHAREPOINT)]
-        public string CheckInComment = string.Empty;
-
-        [Parameter(Mandatory = false, ParameterSetName = UPLOADTOSHAREPOINT)]
-        public CheckinType CheckinType = CheckinType.MinorCheckIn;
-
-        [Parameter(Mandatory = false, ParameterSetName = UPLOADTOSHAREPOINT)]
-        public SwitchParameter Approve;
-
-        [Parameter(Mandatory = false, ParameterSetName = UPLOADTOSHAREPOINT)]
-        public string ApproveComment = string.Empty;
-
-        [Parameter(Mandatory = false, ParameterSetName = UPLOADTOSHAREPOINT)]
-        public SwitchParameter Publish;
-
-        [Parameter(Mandatory = false)]
-        public string PublishComment = string.Empty;
+        public FolderPipeBind Folder;
 
         [Parameter(Mandatory = false, ParameterSetName = URLASMEMORYSTREAM)]
         public SwitchParameter AsMemoryStream;
@@ -66,16 +45,12 @@ namespace PnP.PowerShell.Commands.Files
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
             Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
             var serverRelativeUrl = GetServerRelativeUrl(Url);
             var fileObj = GetFileByServerRelativePath(serverRelativeUrl);
-            var siteId = PnPContext.Site.Id.ToString();
-            var listId = fileObj.ListId.ToString();
-            var itemId = fileObj.ListItemAllFields.Id.ToString();
             var sourceFileName = fileObj.Name.ToString().Substring(0, fileObj.Name.ToString().LastIndexOf("."));
-            var apiUrl = $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/lists/{listId}/items/{itemId}/driveItem/content?format=pdf";
-            byte[] response = RestHelper.GetByteArrayAsync(Connection.HttpClient, apiUrl, graphAccessToken).GetAwaiter().GetResult();
+            var apiUrl = GeneratePdfApiUrl(Url, sourceFileName, fileObj);
+            byte[] response = RestHelper.GetByteArrayAsync(Connection.HttpClient, apiUrl, GraphAccessToken).GetAwaiter().GetResult();
             var fileToDownloadName = !string.IsNullOrEmpty(sourceFileName) ? sourceFileName : "Download";
 
             switch (ParameterSetName)
@@ -84,7 +59,7 @@ namespace PnP.PowerShell.Commands.Files
                     var fileOut = System.IO.Path.Combine(Path, $"{fileToDownloadName}.pdf");
                     if (!Directory.Exists(Path))
                     {
-                        Directory.CreateDirectory(Path);
+                        throw new PSArgumentException("Path does not exists");
                     }
                     if (!Force && System.IO.File.Exists(fileOut))
                     {
@@ -107,18 +82,6 @@ namespace PnP.PowerShell.Commands.Files
                     Stream fileStream = new MemoryStream(response);
                     var targetFileName = $"{fileToDownloadName}.pdf";
                     var uploadedFile = targetLibrary.UploadFileAsync(targetFileName, fileStream, true).GetAwaiter().GetResult();
-                    if (Checkout || ParameterSpecified(nameof(CheckinType)))
-                    {
-                        CurrentWeb.CheckInFile(uploadedFile.ServerRelativeUrl, CheckinType, CheckInComment);
-                    }
-                    if (Publish)
-                    {
-                        CurrentWeb.PublishFile(uploadedFile.ServerRelativeUrl, PublishComment);
-                    }
-                    if (Approve)
-                    {
-                        CurrentWeb.ApproveFile(uploadedFile.ServerRelativeUrl, ApproveComment);
-                    }
                     ClientContext.Load(uploadedFile);
                     try
                     {
@@ -155,6 +118,15 @@ namespace PnP.PowerShell.Commands.Files
             }
         }
 
+        private string GeneratePdfApiUrl(string url, string sourceFileName, Microsoft.SharePoint.Client.File fileObj)
+        {
+            var siteId = PnPContext.Site.Id.ToString();
+            var listId = fileObj.ListId.ToString();
+            var itemId = fileObj.ListItemAllFields.Id.ToString();
+            return $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/lists/{listId}/items/{itemId}/driveItem/content?format=pdf";
+        }
+
+
         private Folder EnsureFolder()
         {
             // First try to get the folder if it exists already. This avoids an Access Denied exception if the current user doesn't have Full Control access at Web level
@@ -163,7 +135,7 @@ namespace PnP.PowerShell.Commands.Files
             Folder library = null;
             try
             {
-                library = DocumentLibrary.GetFolder(CurrentWeb);
+                library = Folder.GetFolder(CurrentWeb);
                 library.EnsureProperties(f => f.ServerRelativeUrl);
                 return library;
             }
@@ -171,8 +143,8 @@ namespace PnP.PowerShell.Commands.Files
             catch (ServerException serverEx) when (serverEx.ServerErrorCode == -2147024894)
             {
                 // create the library
-                CurrentWeb.CreateList(ListTemplateType.DocumentLibrary, DocumentLibrary.ServerRelativeUrl, false, true, "", false, false);
-                library = DocumentLibrary.GetFolder(CurrentWeb);
+                CurrentWeb.CreateList(ListTemplateType.DocumentLibrary, Folder.ServerRelativeUrl, false, true, "", false, false);
+                library = Folder.GetFolder(CurrentWeb);
                 library.EnsureProperties(f => f.ServerRelativeUrl);
                 return library;
             }
