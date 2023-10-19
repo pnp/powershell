@@ -6,6 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPPageTextPart")]
+    [OutputType(typeof(PnP.Core.Model.SharePoint.IPageText))]
     public class AddTextPart : PnPWebCmdlet
     {
         private const string ParameterSet_DEFAULT = "Default";

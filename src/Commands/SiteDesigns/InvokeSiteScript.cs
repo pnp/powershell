@@ -9,6 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteScript", DefaultParameterSetName = ParameterSet_SCRIPTCONTENTS)]
+    [OutputType(typeof(IEnumerable<InvokeSiteScriptActionResponse>))]
     public class InvokeSiteScript : PnPWebCmdlet
     {
         private const string ParameterSet_SITESCRIPTREFERENCE = "By Site Script Reference";

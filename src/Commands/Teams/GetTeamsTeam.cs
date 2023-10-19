@@ -29,10 +29,14 @@ namespace PnP.PowerShell.Commands.Graph
             if (ParameterSpecified(nameof(Identity)))
             {
                 var groupId = Identity.GetGroupId(Connection, AccessToken);
-                if (groupId != null)
+                if(groupId == null)
                 {
-                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
+                    throw new PSArgumentException("Team not found", nameof(Identity));
                 }
+                else
+                {                
+                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
+                }                
             }
             else
             {

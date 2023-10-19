@@ -177,6 +177,21 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool? ListsShowHeaderAndNavigation;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? RestrictedAccessControl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter ClearRestrictedAccessControl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] RemoveRestrictedAccessControlGroups;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] AddRestrictedAccessControlGroups;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] RestrictedAccessControlGroups;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
@@ -534,6 +549,36 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(ListsShowHeaderAndNavigation)) && ListsShowHeaderAndNavigation.HasValue)
             {
                 props.ListsShowHeaderAndNavigation = ListsShowHeaderAndNavigation.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RestrictedAccessControl)) && RestrictedAccessControl.HasValue)
+            {
+                props.RestrictedAccessControl = RestrictedAccessControl.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ClearRestrictedAccessControl)))
+            {
+                props.ClearRestrictedAccessControl = true;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RemoveRestrictedAccessControlGroups)) && RemoveRestrictedAccessControlGroups.Length > 0)
+            {
+                props.RestrictedAccessControlGroupsToRemove = RemoveRestrictedAccessControlGroups;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(AddRestrictedAccessControlGroups)) && AddRestrictedAccessControlGroups.Length > 0)
+            {
+                props.RestrictedAccessControlGroupsToAdd = AddRestrictedAccessControlGroups;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RestrictedAccessControlGroups)) && RestrictedAccessControlGroups.Length > 0)
+            {
+                props.RestrictedAccessControlGroups = RestrictedAccessControlGroups;
                 updateRequired = true;
             }
 
