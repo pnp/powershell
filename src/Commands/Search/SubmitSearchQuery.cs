@@ -185,7 +185,7 @@ namespace PnP.PowerShell.Commands.Search
                     catch (Exception ex) when (RetryCount > 0 && iterator < RetryCount)
                     {   
                         // Swallow the exception and retry (with incremental backoff)
-                        Thread.Sleep(4000 * (iterator+1));
+                        Thread.Sleep(5000 * (iterator+1));
 
                         continue;
                     }
