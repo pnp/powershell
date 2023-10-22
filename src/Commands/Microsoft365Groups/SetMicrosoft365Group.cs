@@ -52,13 +52,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public Guid[] SensitivityLabels;
 
         [Parameter(Mandatory = false)]
-        public bool? AllowExternalSenders;
-
-        [Parameter(Mandatory = false)]
-        public bool? AutoSubscribeNewMembers;
-
-        [Parameter(Mandatory = false)]
-        public string mailNickname;
+        public string MailNickname;
         
         protected override void ExecuteCmdlet()
         {
@@ -83,26 +77,16 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     group.Visibility = IsPrivate ? "Private" : "Public";
                     changed = true;
                 }
-                if (ParameterSpecified(nameof(AllowExternalSenders)))
-                {
-                    group.AllowExternalSenders = AllowExternalSenders;
-                    changed = true;
-                }
-                if (ParameterSpecified(nameof(AutoSubscribeNewMembers)))
-                {
-                    group.AutoSubscribeNewMembers = AutoSubscribeNewMembers;
-                    changed = true;
-                }
-                if (ParameterSpecified(nameof(mailNickname)))
+                if (ParameterSpecified(nameof(MailNickname)))
                 {
                     //Ensures mailNickname contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE.
-                    mailNickname = mailNickname.Replace("@", "").Replace("(", "").Replace(")", "").Replace("\\", "").Replace("[", "").Replace("]", "").Replace("\"", "").Replace(";", "").Replace(":", "").Replace(".", "").Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "");
+                    MailNickname = MailNickname.Replace("@", "").Replace("(", "").Replace(")", "").Replace("\\", "").Replace("[", "").Replace("]", "").Replace("\"", "").Replace(";", "").Replace(":", "").Replace(".", "").Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "");
                     // Ensures Maximum length is 64 characters. 
-                    if (mailNickname.Length > 64)
+                    if (MailNickname.Length > 64)
                     {
-                        mailNickname = mailNickname.Substring(0, 64);
+                        MailNickname = MailNickname.Substring(0, 64);
                     }
-                    group.MailNickname = mailNickname;
+                    group.MailNickname = MailNickname;
                     changed = true;
                 }
                 if (changed)

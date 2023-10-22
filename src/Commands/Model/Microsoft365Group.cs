@@ -52,8 +52,6 @@ namespace PnP.PowerShell.Commands.Model
         public string Visibility { get; set; }
         public string SiteUrl { get; set; }
         public string[] GroupTypes { get; set; }
-        public bool? AllowExternalSenders { get; set; }
-        public bool? AutoSubscribeNewMembers { get; set; }
         public IEnumerable<Microsoft365User> Owners { get; set; }
 
         public List<AssignedLabels> AssignedLabels { get; set; }
