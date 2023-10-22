@@ -6,7 +6,6 @@ using Microsoft.SharePoint.Client.Search.Query;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Search
 {
@@ -184,24 +183,11 @@ namespace PnP.PowerShell.Commands.Search
                     }
                     // If we're not retrying, or if we're on the last retry, don't catch the exception
                     catch (Exception ex) when (RetryCount > 0 && iterator < RetryCount)
-                    {
-                        // use reflection to find if the Exception has a property called "ServerErrorTypeName" and if so, check if its value is "Microsoft.Office.Server.Search.Query.InternalQueryErrorException"
-                        var serverErrorTypeNameProperty = ex.GetType().GetProperty("ServerErrorTypeName", BindingFlags.Instance | BindingFlags.Public);
-                        if (serverErrorTypeNameProperty != null)
-                        {
-                            var serverErrorTypeName = serverErrorTypeNameProperty.GetValue(ex);
-                            if (serverErrorTypeName != null && serverErrorTypeName.ToString().Equals("Microsoft.Office.Server.Search.Query.InternalQueryErrorException", StringComparison.InvariantCultureIgnoreCase))
-                            {
-                                // This was a "Microsoft.Office.Server.Search.Query.InternalQueryErrorException" which is safe to retry as-is (it's often transient)
-                                // It's the one that says "Search has encountered a problem that prevents results from being returned.  If the issue persists, please contact your administrator."
-                                // Swallow the exception and retry (with incremental backoff)
-                                Thread.Sleep(4000 * (iterator+1));
+                    {   
+                        // Swallow the exception and retry (with incremental backoff)
+                        Thread.Sleep(4000 * (iterator+1));
 
-                                continue;
-                            }
-                        }
-                        // Rethrow the exception if it wasn't one warranting a retry
-                        throw;
+                        continue;
                     }
                 }
                 startRow += rowLimit;
