@@ -22,7 +22,7 @@ Sets Microsoft 365 Group properties
 ```powershell
 Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam]
- [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-SensitivityLabels <GUID[]>]
+ [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-mailNickname <String>] [-SensitivityLabels <GUID[]>]
  
 ```
 
@@ -151,6 +151,20 @@ Controls whether the group shows in the Outlook left-hand navigation.
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MailNickname
+The mail alias for the group, unique for Microsoft 365 groups in the organization. Maximum length is 64 characters. This property can contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False
