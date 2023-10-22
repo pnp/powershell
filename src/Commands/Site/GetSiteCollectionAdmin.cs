@@ -9,12 +9,12 @@ namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionAdmin")]
     [OutputType(typeof(User))]
-    public class GetSiteCollectionAdmin : PnPWebCmdlet
+    public class GetSiteCollectionAdmin : PnPWebRetrievalsCmdlet<User>
     {
         protected override void ExecuteCmdlet()
         {
-            var retrievalExpressions = new Expression<Func<User, object>>[]
-           {
+            DefaultRetrievalExpressions = new Expression<Func<User, object>>[]
+            {
                 u => u.Id,
                 u => u.Title,
                 u => u.LoginName,
@@ -31,10 +31,10 @@ namespace PnP.PowerShell.Commands.Site
                     g => g.Id,
                     g => g.Title,
                     g => g.LoginName)
-           };
+            };
 
             var siteCollectionAdminUsersQuery = CurrentWeb.SiteUsers.Where(u => u.IsSiteAdmin);
-            var siteCollectionAdminUsers = ClientContext.LoadQuery(siteCollectionAdminUsersQuery.Include(retrievalExpressions));
+            var siteCollectionAdminUsers = ClientContext.LoadQuery(siteCollectionAdminUsersQuery.Include(RetrievalExpressions));
             ClientContext.ExecuteQueryRetry();
 
             WriteObject(siteCollectionAdminUsers, true);
