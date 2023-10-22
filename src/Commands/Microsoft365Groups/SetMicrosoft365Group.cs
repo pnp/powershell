@@ -95,8 +95,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 }
                 if (ParameterSpecified(nameof(mailNickname)))
                 {
-                    // Ensures Maximum length is 64 characters. This property can contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE.
-
+                    //Ensures mailNickname contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE.
+                    mailNickname = mailNickname.Replace("@", "").Replace("(", "").Replace(")", "").Replace("\\", "").Replace("[", "").Replace("]", "").Replace("\"", "").Replace(";", "").Replace(":", "").Replace(".", "").Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "");
+                    // Ensures Maximum length is 64 characters. 
+                    if (mailNickname.Length > 64)
+                    {
+                        mailNickname = mailNickname.Substring(0, 64);
+                    }
                     group.MailNickname = mailNickname;
                     changed = true;
                 }
