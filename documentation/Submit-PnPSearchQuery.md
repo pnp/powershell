@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Submit-PnPSearchQuery.h
 # Submit-PnPSearchQuery
 
 ## SYNOPSIS
-Executes an arbitrary search query against the SharePoint search index
+Executes an arbitrary search query against the SharePoint search index.
 
 ## SYNTAX
 
@@ -48,42 +48,42 @@ Allows to run an arbitrary search query against the SharePoint search index.
 Submit-PnPSearchQuery -Query "finance"
 ```
 
-Returns the top 500 items with the term finance
+Returns the top 500 items with the term finance.
 
 ### EXAMPLE 2
 ```powershell
 Submit-PnPSearchQuery -Query "Title:Intranet*" -MaxResults 10
 ```
 
-Returns the top 10 items indexed by SharePoint Search of which the title starts with the word Intranet
+Returns the top 10 items indexed by SharePoint Search of which the title starts with the word Intranet.
 
 ### EXAMPLE 3
 ```powershell
 Submit-PnPSearchQuery -Query "Title:Intranet*" -All
 ```
 
-Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet
+Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet.
 
 ### EXAMPLE 4
 ```powershell
 Submit-PnPSearchQuery -Query "Title:Intranet*" -Refiners "contentclass,FileType(filter=6/0/*)"
 ```
 
-Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties
+Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties.
 
 ### EXAMPLE 5
 ```powershell
 Submit-PnPSearchQuery -Query "contentclass:STS_ListItem_DocumentLibrary" -SelectProperties ComplianceTag,InformationProtectionLabelId -All
 ```
 
-Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and instructs explicitly to return the managed properties InformationProtectionLabelId and ComplianceTag which will give insight into the sensitivity and retention labels assigned to the documents
+Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and instructs explicitly to return the managed properties InformationProtectionLabelId and ComplianceTag which will give insight into the sensitivity and retention labels assigned to the documents.
 
 ### EXAMPLE 6
 ```powershell
 Submit-PnPSearchQuery -Query "contentclass:STS_ListItem_DocumentLibrary" -SortList @{"filename" = "ascending"} -All
 ```
 
-Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and sorts the items by file name in ascending order
+Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and sorts the items by file name in ascending order.
 
 ## PARAMETERS
 
