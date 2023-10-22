@@ -22,7 +22,7 @@ Sets Microsoft 365 Group properties
 ```powershell
 Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam]
- [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-mailNickname <String>] [-SensitivityLabels <GUID[]>]
+ [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-MailNickname <String>] [-SensitivityLabels <GUID[]>]
  
 ```
 
