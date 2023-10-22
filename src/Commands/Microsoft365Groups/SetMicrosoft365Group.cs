@@ -51,6 +51,15 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = false)]
         public Guid[] SensitivityLabels;
 
+        [Parameter(Mandatory = false)]
+        public bool? AllowExternalSenders;
+
+        [Parameter(Mandatory = false)]
+        public bool? AutoSubscribeNewMembers;
+
+        [Parameter(Mandatory = false)]
+        public string mailNickname;
+        
         protected override void ExecuteCmdlet()
         {
             var group = Identity.GetGroup(Connection, AccessToken, false, false);
@@ -72,6 +81,23 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 if (ParameterSpecified(nameof(IsPrivate)))
                 {
                     group.Visibility = IsPrivate ? "Private" : "Public";
+                    changed = true;
+                }
+                if (ParameterSpecified(nameof(AllowExternalSenders)))
+                {
+                    group.AllowExternalSenders = AllowExternalSenders;
+                    changed = true;
+                }
+                if (ParameterSpecified(nameof(AutoSubscribeNewMembers)))
+                {
+                    group.AutoSubscribeNewMembers = AutoSubscribeNewMembers;
+                    changed = true;
+                }
+                if (ParameterSpecified(nameof(mailNickname)))
+                {
+                    // Ensures Maximum length is 64 characters. This property can contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE.
+
+                    group.MailNickname = mailNickname;
                     changed = true;
                 }
                 if (changed)
