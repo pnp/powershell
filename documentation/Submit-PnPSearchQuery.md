@@ -144,7 +144,7 @@ Accept wildcard characters: False
 ```
 
 ### -Culture
-The locale for the query.
+The locale for the query. Uses LCID's as per this [documentation](https://learn.microsoft.com/en-us/previous-versions/office/sharepoint-csom/jj167546(v=office.15)).
 
 ```yaml
 Type: Int32
