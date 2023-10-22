@@ -236,6 +236,7 @@ Set-Secret -Name &quot;yourlabel&quot; -Secret (Get-Credential)
 <pre><code class="lang-powershell">$creds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
 Connect-PnPOnline -Url &lt;site url&gt; -Credentials $creds -ClientId &lt;Application/Client ID of Azure AD app&gt;
 </code></pre>
+
 </article>
           </div>
           <div class="hidden-sm col-md-2" role="complementary">
