@@ -1,0 +1,34 @@
+{
+	"name": "PnP PowerShell",	
+	"image": "mcr.microsoft.com/devcontainers/dotnet:0-6.0",	
+	"features": {		
+		"ghcr.io/devcontainers/features/git:1": {
+			"ppa": true,
+			"version": "os-provided"
+		},
+		"ghcr.io/devcontainers/features/powershell:1": {
+			"version": "latest"
+		}		
+	},
+	"workspaceFolder": "/workspaces/powershell",
+	"postCreateCommand": "bash ./build/postCreateCommand.sh",		
+	"customizations": {
+		"vscode": {
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "pwsh"
+			},
+			"extensions": [				
+				"ms-vscode.powershell",
+				"ms-dotnettools.csdevkit",
+				"ms-vsliveshare.vsliveshare",				
+				"shd101wyy.markdown-preview-enhanced",
+				"GitHub.copilot",
+				"GitHub.copilot-chat",
+				"eamodio.gitlens",
+				"github.vscode-pull-request-github"
+			]
+		}
+	},	
+	"remoteUser": "root",
+	"shutdownAction": "stopCompose"
+}
