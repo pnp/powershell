@@ -18,6 +18,7 @@ using PnP.PowerShell.Commands.Utilities;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Net.Http;
+using System.IO;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -536,12 +537,23 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection CreateWithWeblogin(Uri url, string tenantAdminUrl, bool clearCookies, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+
+        /// <summary>
+        /// Creates a PnPConnection using web login authentication
+        /// </summary>
+        /// <param name="url">Url to the SharePoint Online site to connect to</param>
+        /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
+        /// <param name="clearCookies">Clears cookies before logging in</param>
+        /// <param name="azureEnvironment">Azure environment to use for authentication (defaults to standard "Production" cloud)</param>
+        /// <param name="siteRelativeUrl">Relative URL of the page to log in to (defaults to "/_layouts/15/settings.aspx" which is a known performant page)</param>
+        /// <returns>Instantiated PnPConnection</returns>
+        internal static PnPConnection CreateWithWeblogin(Uri url, string tenantAdminUrl, bool clearCookies, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string siteRelativeUrl = "/_layouts/15/settings.aspx")
         {
             if (Utilities.OperatingSystem.IsWindows())
             {
-                // Log in to a specific page on the tenant which is known to be performant
-                var webLoginClientContext = BrowserHelper.GetWebLoginClientContext(url.ToString(), clearCookies, scriptErrorsSuppressed: false, loginRequestUri: new Uri(url, "/_layouts/15/settings.aspx"));
+                // Log in to a specific page on the tenant
+                var specificPageUri = new Uri(string.Format("{0}/{1}", url.AbsoluteUri.TrimEnd('/'), siteRelativeUrl.TrimStart('/')));
+                var webLoginClientContext = BrowserHelper.GetWebLoginClientContext(url.ToString(), clearCookies, scriptErrorsSuppressed: false, loginRequestUri: specificPageUri);
 
                 // Ensure the login process has been completed
                 if (webLoginClientContext == null)
