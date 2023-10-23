@@ -18,7 +18,6 @@ using PnP.PowerShell.Commands.Utilities;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Net.Http;
-using System.IO;
 
 namespace PnP.PowerShell.Commands.Base
 {
