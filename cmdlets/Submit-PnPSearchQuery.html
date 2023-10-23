@@ -84,7 +84,7 @@
   <h1 id="submit-pnpsearchquery">Submit-PnPSearchQuery</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Executes an arbitrary search query against the SharePoint search index</p>
+<p>Executes an arbitrary search query against the SharePoint search index.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="limit-default">Limit (Default)</h3>
 <pre><code class="lang-powershell">Submit-PnPSearchQuery [-Query] &lt;String&gt; [-StartRow &lt;Int32&gt;] [-MaxResults &lt;Int32&gt;] [-TrimDuplicates &lt;Boolean&gt;]
@@ -111,23 +111,27 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Submit-PnPSearchQuery -Query &quot;finance&quot;
 </code></pre>
-<p>Returns the top 500 items with the term finance</p>
+<p>Returns the top 500 items with the term finance.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Submit-PnPSearchQuery -Query &quot;Title:Intranet*&quot; -MaxResults 10
 </code></pre>
-<p>Returns the top 10 items indexed by SharePoint Search of which the title starts with the word Intranet</p>
+<p>Returns the top 10 items indexed by SharePoint Search of which the title starts with the word Intranet.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Submit-PnPSearchQuery -Query &quot;Title:Intranet*&quot; -All
 </code></pre>
-<p>Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet</p>
+<p>Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Submit-PnPSearchQuery -Query &quot;Title:Intranet*&quot; -Refiners &quot;contentclass,FileType(filter=6/0/*)&quot;
 </code></pre>
-<p>Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties</p>
+<p>Returns absolutely all items indexed by SharePoint Search of which the title starts with the word Intranet, and return refiners for contentclass and FileType managed properties.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Submit-PnPSearchQuery -Query &quot;contentclass:STS_ListItem_DocumentLibrary&quot; -SelectProperties ComplianceTag,InformationProtectionLabelId -All
 </code></pre>
-<p>Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and instructs explicitly to return the managed properties InformationProtectionLabelId and ComplianceTag which will give insight into the sensitivity and retention labels assigned to the documents</p>
+<p>Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and instructs explicitly to return the managed properties InformationProtectionLabelId and ComplianceTag which will give insight into the sensitivity and retention labels assigned to the documents.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Submit-PnPSearchQuery -Query &quot;contentclass:STS_ListItem_DocumentLibrary&quot; -SortList @{&quot;filename&quot; = &quot;ascending&quot;} -All
+</code></pre>
+<p>Returns absolutely all items indexed by SharePoint Search which represent a document in a document library and sorts the items by file name in ascending order.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-all">-All</h3>
 <p>Automatically page results until the end to get more than 500. Use with caution!</p>
@@ -174,7 +178,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-culture">-Culture</h3>
-<p>The locale for the query.</p>
+<p>The locale for the query. Uses LCID's as per this <a href="https://learn.microsoft.com/previous-versions/office/sharepoint-csom/jj167546(v=office.15)">documentation</a>.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
@@ -317,7 +321,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-refiners">-Refiners</h3>
-<p>The list of refiners to be returned in a search result.</p>
+<p>The list of refiners to be returned in a search result, separated by a comma. I.e. contentclass,ContentType(filter=7/0/*).</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -328,7 +332,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-relevantresults">-RelevantResults</h3>
-<p>Specifies whether only relevant results are returned</p>
+<p>Specifies whether only relevant results are returned.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -350,7 +354,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-sortlist">-SortList</h3>
-<p>The list of properties by which the search results are ordered.</p>
+<p>The list of properties by which the search results are ordered as a hashtable, i.e. each property needs to be a key and the associated value either &quot;Ascending&quot; or &quot;Descending&quot; based on the wanted sort order, or &quot;FQLFormula&quot; if you want to use a formula to define the sort order.</p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
 

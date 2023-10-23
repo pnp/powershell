@@ -89,7 +89,7 @@
 <h3 id="add-field-to-list-default">Add field to list (Default)</h3>
 <pre><code class="lang-powershell">Add-PnPField [-List &lt;ListPipeBind&gt;] -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -Type &lt;FieldType&gt;
  [-Id &lt;Guid&gt;] [-Formula &lt;String&gt;] [-Choices &lt;String&gt;] [-AddToDefaultView] [-Required] [-Group &lt;String&gt;] [-ClientSideComponentId &lt;Guid&gt;]
- [-ClientSideComponentProperties &lt;String&gt;] [-AddToAllContentTypes] [-ReturnType &lt;String&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-ClientSideComponentProperties &lt;String&gt;] [-AddToAllContentTypes] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="add-field-reference-to-list">Add field reference to list</h3>
 <pre><code class="lang-powershell">Add-PnPField -List &lt;ListPipeBind&gt; -Field &lt;FieldPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
@@ -97,7 +97,7 @@
 </code></pre>
 <h3 id="add-field-to-web">Add field to web</h3>
 <pre><code class="lang-powershell">Add-PnPField -DisplayName &lt;String&gt; -InternalName &lt;String&gt; -Type &lt;FieldType&gt; [-Id &lt;Guid&gt;] [-Formula &lt;String&gt;] [-Choices &lt;String&gt;]
- [-ClientSideComponentId &lt;Guid&gt;] [-ClientSideComponentProperties &lt;String&gt;] [-ReturnType &lt;String&gt;]
+ [-ClientSideComponentId &lt;Guid&gt;] [-ClientSideComponentProperties &lt;String&gt;]
  [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -300,18 +300,6 @@ Accepted values: Invalid, Integer, Text, Note, DateTime, Counter, Choice, Lookup
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-returntype">-ReturnType</h3>
-<p>The return type of the calculated field. Only valid when Type Calculated is chosen.</p>
-<pre><code class="lang-yaml">Type: FieldType
-Parameter Sets: Add field to list, Add field to web
-Accepted values: Integer, Text, DateTime, Boolean, Number, Currency
-
-Required: False
-Position: Named
-Default value: Text
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
