@@ -38,6 +38,9 @@ namespace PnP.PowerShell.Commands.Admin
         public SwitchParameter SuppressBcsCheck { get; set; }
 
         [Parameter(Mandatory = false)]
+        public SwitchParameter SuppressAdminUrlValidation { get; set; };
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Wait { get; set; }
 
         protected override void ExecuteCmdlet()
@@ -68,7 +71,11 @@ namespace PnP.PowerShell.Commands.Admin
                 OperationId = Guid.Empty
             };
 
-            var tenantUrl = UrlUtilities.GetTenantAdministrationUrl(AdminContext.Url);
+            var tenantUrl = AdminContext.Url;
+            if (!SuppressAdminUrlValidation)
+            {
+                tenantUrl = UrlUtilities.GetTenantAdministrationUrl(AdminContext.Url);
+            }
 
             var results = Utilities.REST.RestHelper.PostAsync<SPOSiteRenameJob>(HttpClient, $"{tenantUrl.TrimEnd('/')}/_api/SiteRenameJobs?api-version=1.4.7", AdminContext, body, false).GetAwaiter().GetResult();
             if (!Wait.IsPresent)
