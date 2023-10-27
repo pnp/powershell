@@ -135,20 +135,6 @@ Accept pipeline input: True
 Accept wildcard characters: False
 ```
 
-### -SuppressAdminUrlValidation
-Suppress validating the Tenant Admin URL. Useful if your tenant has a vanity domain or an otherwise non-standard admin site address.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True
-Accept wildcard characters: False
-```
-
 ### -Wait
 Wait till the renaming of the new site collection is successful. If not specified, a job will be created which you can use to check for its status.
 
