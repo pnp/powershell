@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Admin
         public SwitchParameter SuppressBcsCheck { get; set; }
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter SuppressAdminUrlValidation { get; set; }
+        public SwitchParameter SuppressAdminUrlValidation { get; set; };
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait { get; set; }
