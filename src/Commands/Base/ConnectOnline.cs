@@ -661,7 +661,7 @@ namespace PnP.PowerShell.Commands.Base
             WriteWarning("Consider using -Interactive instead, which provides better functionality. See the documentation at https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html#interactive-login-for-multi-factor-authentication");
             if (Utilities.OperatingSystem.IsWindows())
             {
-                if (RelativeUrl != null)
+                if (!string.IsNullOrWhiteSpace(RelativeUrl))
                 {
                     return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication, siteRelativeUrl: RelativeUrl);
                 }
