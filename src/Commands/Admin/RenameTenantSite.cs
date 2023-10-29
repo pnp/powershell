@@ -66,11 +66,9 @@ namespace PnP.PowerShell.Commands.Admin
                 Option = optionsBitMask,
                 Reserve = string.Empty,
                 OperationId = Guid.Empty
-            };
+            };            
 
-            var tenantUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(AdminContext.Url);
-
-            var results = Utilities.REST.RestHelper.PostAsync<SPOSiteRenameJob>(HttpClient, $"{tenantUrl.TrimEnd('/')}/_api/SiteRenameJobs?api-version=1.4.7", AdminContext, body, false).GetAwaiter().GetResult();
+            var results = Utilities.REST.RestHelper.PostAsync<SPOSiteRenameJob>(HttpClient, $"{AdminContext.Url.TrimEnd('/')}/_api/SiteRenameJobs?api-version=1.4.7", AdminContext, body, false).GetAwaiter().GetResult();
             if (!Wait.IsPresent)
             {
                 if (results != null)
@@ -87,7 +85,7 @@ namespace PnP.PowerShell.Commands.Admin
 
                 var httpClient = PnPHttpClient.Instance.GetHttpClient(AdminContext);
 
-                var requestUrl = $"{tenantUrl.TrimEnd('/')}/_api/SiteRenameJobs/GetJobsBySiteUrl(url='{Identity.Url}')?api-version=1.4.7";
+                var requestUrl = $"{AdminContext.Url.TrimEnd('/')}/_api/SiteRenameJobs/GetJobsBySiteUrl(url='{Identity.Url}')?api-version=1.4.7";
 
                 while (wait)
                 {
