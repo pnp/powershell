@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPRetentionLabel` cmdlet to retrieve Purview retention labels. [#3459](https://github.com/pnp/powershell/pull/3459)
 - Added GCC support for `Get-PnPAzureADUser` , `Add-PnPFlowOwner` , `Remove-PnPFlowOwner`, `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory`, `New-PnPAzureADUserTemporaryAccessPass` and `Get-PnPAvailableSensitivityLabel` cmdlets. [#3484](https://github.com/pnp/powershell/pull/3484)
 - Added a devcontainer for easily building a minimal environment necessary to contribute to the project. [#3497](https://github.com/pnp/powershell/pull/3497)
+- Added `-RelativeUrl` parameter to `Connect-PnPOnline` cmdlet to allow specifying custom URLs for usage with `-WebLogin` method. [#3530](https://github.com/pnp/powershell/pull/3530)
 
 ### Fixed
 
@@ -63,6 +64,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` cmdlets not working due to changes in backend code. [#3469](https://github.com/pnp/powershell/pull/3469)
 - Fixed an issue when trying to download a file using `Get-PnPFile` from a location that's deeply nested into folders and/or has a really long filename [PnP Core #1290](https://github.com/pnp/pnpcore/pull/1290)
 - Fixed retrieving error detail in `Get-UPABulkImportStatus` cmdlet. [#3494](https://github.com/pnp/powershell/pull/3494)
+- Fixed `Rename-PnPTenantSite` cmdlet to allow support for vanity tenant URLs. [#3533](https://github.com/pnp/powershell/pull/3533)
  
 ### Changed
 
