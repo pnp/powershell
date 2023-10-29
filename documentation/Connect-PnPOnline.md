@@ -665,6 +665,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RelativeUrl
+The site-relative URL of the site you're collecting to. Only applies if you're using -UseWebLogin.
+
+```yaml
+Type: String
+Parameter Sets: Web Login for Multi Factor Authentication
+Aliases:
+
+Required: False
+Position: Named
+Default value: /_layouts/15/settings.aspx
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Interactive
 Connects to the Azure AD using interactive login, allowing you to authenticate using multi-factor authentication.
 This parameter has preference over \`-UseWebLogin\`.

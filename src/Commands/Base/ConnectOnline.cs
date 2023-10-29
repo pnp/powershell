@@ -229,6 +229,9 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter UseWebLogin;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
+        public string RelativeUrl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public SwitchParameter ForceAuthentication;
 
@@ -658,7 +661,14 @@ namespace PnP.PowerShell.Commands.Base
             WriteWarning("Consider using -Interactive instead, which provides better functionality. See the documentation at https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html#interactive-login-for-multi-factor-authentication");
             if (Utilities.OperatingSystem.IsWindows())
             {
-                return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
+                if (!string.IsNullOrWhiteSpace(RelativeUrl))
+                {
+                    return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication, siteRelativeUrl: RelativeUrl);
+                }
+                else
+                {
+                    return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
+                }
             }
             else
             {
