@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 using System.Threading.Tasks;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsData.Update, "PnPTeamsApp")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
