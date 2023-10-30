@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsApp")]
     [RequiredMinimalApiPermissions("AppCatalog.ReadWrite.All")]
