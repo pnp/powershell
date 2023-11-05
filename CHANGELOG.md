@@ -29,7 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPPowerPlatformConnector` cmdlet which allows for all custom connectors to be retrieved [#3309](https://github.com/pnp/powershell/pull/3309)
 - Added `Set-PnPSearchExternalItem` cmdlet which allows ingesting external items into the Microsoft Search index for custom connectors. [#3420](https://github.com/pnp/powershell/pull/3420)
 - Added `Get-PnPTenantInfo` which allows retrieving tenant information by its Id or domain name [#3414](https://github.com/pnp/powershell/pull/3414)
-- Added option to create a Microsft 365 Group with dynamic membership by passing in `-DynamicMembershipRule` [#3426](https://github.com/pnp/powershell/pull/3426)
+- Added option to create a Microsoft 365 Group with dynamic membership by passing in `-DynamicMembershipRule` [#3426](https://github.com/pnp/powershell/pull/3426)
 - Added option to pass in a Stream or XML string to `Read-PnPTenantTemplate` allowing the tenant template to be modified before being applied. [#3431](https://github.com/pnp/powershell/pull/3431)
 - Added `Get-PnPTenantInfo` which allows retrieving tenant information by its Id or domain name. [#3414](https://github.com/pnp/powershell/pull/3414)
 - Added option to create a Microsoft 365 Group with dynamic membership by passing in `-DynamicMembershipRule` [#3426](https://github.com/pnp/powershell/pull/3426)
@@ -736,7 +736,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get\Set-PnPPlannerConfiguration` to allow working with the Microsoft Planner tenant configuration
 - Added `Get\Set-PnPPlannerUserPolicy` to allow setting Microsoft Planner user policies for specific users
 - Added `Get\Add\Remove-PnPPlannerRoster` which allows a Microsoft Planner Roster to be created, retrieved or removed
-- Added `Get\Add\Remove-PnPPlannerRosterMember` to be able to read, add and remove members from a Microsft Planner Roster
+- Added `Get\Add\Remove-PnPPlannerRosterMember` to be able to read, add and remove members from a Microsoft Planner Roster
 - Added `Get-PnPPlannerRosterPlan` to be able to retrieve the Microsoft Planner plans inside a Microsoft Planner Roster or the ones belonging to a specific user
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
 - Added `Invoke-PnPSiteScript` which allows for a Site Script to be executed on a site without needing to have it registered in a site design or site script first
