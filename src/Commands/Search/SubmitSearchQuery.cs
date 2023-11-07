@@ -182,12 +182,21 @@ namespace PnP.PowerShell.Commands.Search
                         break;
                     }
                     // If we're not retrying, or if we're on the last retry, don't catch the exception
-                    catch (Exception ex) when (RetryCount > 0 && iterator < RetryCount)
-                    {   
-                        // Swallow the exception and retry (with incremental backoff)
-                        Thread.Sleep(5000 * (iterator+1));
+                    catch (Exception ex)
+                    {
+                        if (RetryCount > 0 && iterator < RetryCount)
+                        {
+                            var waitTime = 5 * (iterator + 1);
 
-                        continue;
+                            WriteVerbose($"Search operation failed with exception {ex.Message}. Attempt {iterator + 1} out of {RetryCount}. Retrying in {waitTime} seconds.");
+
+                            Thread.Sleep(TimeSpan.FromSeconds(waitTime));
+                            continue;
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
                 }
                 startRow += rowLimit;
