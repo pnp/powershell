@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `RestrictedAccessControl`, `ClearRestrictedAccessControl`, `RemoveRestrictedAccessControlGroups`, `AddRestrictedAccessControlGroups` and `RestrictedAccessControlGroups` parameters to `Set-PnPTenantSite` cmdlet to handle restricted access control. [#3463](https://github.com/pnp/powershell/pull/3463)
 - Added `Get-PnPRetentionLabel` cmdlet to retrieve Purview retention labels. [#3459](https://github.com/pnp/powershell/pull/3459)
 - Added GCC support for `Get-PnPAzureADUser` , `Add-PnPFlowOwner` , `Remove-PnPFlowOwner`, `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory`, `New-PnPAzureADUserTemporaryAccessPass` and `Get-PnPAvailableSensitivityLabel` cmdlets. [#3484](https://github.com/pnp/powershell/pull/3484)
+- Added `-Detailed` option to `Get-PnPTenantDeletedSite` to optionally fetch more information on the deleted sites
 
 ### Fixed
 
