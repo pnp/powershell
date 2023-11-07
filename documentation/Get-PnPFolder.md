@@ -14,9 +14,14 @@ Returns a folder object
 
 ## SYNTAX
 
-### Root folder of the current Web (Default)
+### Folders in current Web (Default)
 ```powershell
 Get-PnPFolder [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
+```
+
+### Root folder of the current Web
+```powershell
+Get-PnPFolder -CurrentWebRootFolder [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ### Folder by url
@@ -49,30 +54,37 @@ Use [Get-PnPFolderItem](Get-PnPFolderItem.md) to retrieve files and subfolders.
 Get-PnPFolder
 ```
 
-Returns the folders instance of the root of the current web
+Returns all the folders located in the root of the current web
 
 ### EXAMPLE 2
+```powershell
+Get-PnPFolder -CurrentWebRootFolder
+```
+
+Returns the folder instance representing the root of the current web
+
+### EXAMPLE 3
 ```powershell
 Get-PnPFolder -Url "Shared Documents"
 ```
 
 Returns the folder called 'Shared Documents' which is located in the root of the current web
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Get-PnPFolder -Url "/sites/demo/Shared Documents"
 ```
 
 Returns the folder called 'Shared Documents' which is located in the root of the site collection located at '/sites/demo'
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```powershell
 Get-PnPFolder -ListRootFolder "Shared Documents"
 ```
 
 Returns the root folder of the list called 'Shared Documents'
 
-### EXAMPLE 5
+### EXAMPLE 6
 ```powershell
 Get-PnPFolder -List "Shared Documents"
 ```
@@ -80,6 +92,20 @@ Get-PnPFolder -List "Shared Documents"
 Returns the folders inside the root folder of the list called 'Shared Documents'. Please use Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead.
 
 ## PARAMETERS
+
+### -CurrentWebRootFolder
+If provided, the folder representing the root of the current web will be returned
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Root folder of the current Web
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
