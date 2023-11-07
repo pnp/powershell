@@ -1465,6 +1465,12 @@ Accept wildcard characters: False
 ### -EnableModernListTemplateIds
 Guids of out of the box modern list templates to show when creating a new list
 
+| Template  | Template Id |
+| ------------- | ------------- |
+| Media library | 7fdc8cba-3e07-4851-a7ac-b747040ff1ce |
+| Learning | 2a31cc9a-a7a2-4978-8104-6b7c0c0ff1ce |
+| Invoices | cb3f4b1a-d4d8-40b3-a3e8-c39c470ff1ce |
+
 ```yaml
 Type: Guid[]
 Parameter Sets: (All)
