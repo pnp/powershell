@@ -20,7 +20,8 @@ Returns the Custom Power Platform Connectors for a given environment
 ## SYNTAX
 
 ```powershell
-Get-PnPPowerPlatformConnector [-Environment <PowerPlatformEnvironmentPipeBind>] [-Identity <PowerPlatformConnectorPipeBind>] [-AsAdmin] [-Verbose]
+Get-PnPPowerPlatformConnector [-Environment <PowerPlatformEnvironmentPipeBind>] [-AsAdmin] [-Identity <PowerPlatformConnectorPipeBind>] 
+[-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -30,20 +31,22 @@ This cmdlet returns the custom connectors on a given enviroment.
 
 ### Example 1
 ```powershell
-Get-PnPPowerPlatformConnector -Environment (Get-PnPPowerPlatformEnvironment)
+$environment = Get-PnPPowerPlatformEnvironment
+Get-PnPPowerPlatformConnector -Environment $environment
 ```
 This returns all the custom connectors for a given Power Platform environment
 
 ### Example 2
 ```powershell
-Get-PowerPlatformConnectorPipeBind -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+$environment = Get-PnPPowerPlatformEnvironment
+Get-PowerPlatformConnectorPipeBind -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
-This returns a specific custom connector on the default Power Platform environment
+This returns a specific custom connector
 
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment instance to retrieve the available custom connectors for. If omitted, the default environment will be used.
+The name of the Power Platform environment or an Environment object to retrieve the available custom connectors for.
 
 ```yaml
 Type: PowerPlatformEnvironmentPipeBind
@@ -58,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Id of the connector to retrieve. If not provided, all custom connectors will be returned.
+The Id of the connector to retrieve.
 
 ```yaml
 Type: PowerPlatformConnectorPipeBind
@@ -77,6 +80,22 @@ If specified returns all the custom connectors as admin. If not specified only t
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
 Parameter Sets: (All)
 Aliases:
 
