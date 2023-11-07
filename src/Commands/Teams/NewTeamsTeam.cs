@@ -10,7 +10,7 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.New, "PnPTeamsTeam")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]

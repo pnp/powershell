@@ -21,6 +21,7 @@ using System.Diagnostics;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPAzureADApp")]
+    [Alias("Register-PnPEntraIDApp")]
     public class RegisterAzureADApp : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
