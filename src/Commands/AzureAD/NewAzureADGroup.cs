@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureADGroup")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [Alias("New-PnPEntraIDGroup")]
     public class NewAzureADGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

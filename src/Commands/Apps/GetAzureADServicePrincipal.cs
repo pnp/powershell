@@ -12,6 +12,7 @@ namespace PnP.PowerShell.Commands.Apps
     [Cmdlet(VerbsCommon.Get, "PnPAzureADServicePrincipal", DefaultParameterSetName = ParameterSet_ALL)]
     [RequiredMinimalApiPermissions("Application.Read.All")]
     [OutputType(typeof(List<AzureADServicePrincipal>))]
+    [Alias("Get-PnPEntraIDServicePrincipal")]
     public class GetAzureADServicePrincipal : PnPGraphCmdlet
     {
         private const string ParameterSet_ALL = "All";
