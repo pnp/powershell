@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADUser", DefaultParameterSetName = ParameterSet_LIST)]
     [RequiredMinimalApiPermissions("User.Read.All")]
+    [Alias("Get-PnPEntraIDUser")]
     public class GetAzureADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";
