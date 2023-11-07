@@ -284,6 +284,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DisableSharingForNonOwners
+Specifies whether non-owners should be prevented from inviting new users to the site. Setting this will also disable Access Request Emails.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DisableCompanyWideSharingLinks
 Determines whether company-wide sharing links are disabled in collection.
 
