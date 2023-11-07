@@ -16,7 +16,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPlannerRosterPla
   * Microsoft Graph API: Tasks.ReadWrite
   * Microsoft Graph API: Tasks.Read
   
-Returns Microsft Planner roster plans for a specific Microsoft Planner Roster or a specific user
+Returns Microsoft Planner roster plans for a specific Microsoft Planner Roster or a specific user
 
 ## SYNTAX
 
