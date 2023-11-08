@@ -67,6 +67,10 @@ namespace PnP.PowerShell.Commands.Model
         public string Title { get; set; }
         public string Url { get; set; }
         public int WebsCount { get; set; }
+        public string InformationBarrierMode { get; set; }
+        public Guid[] InformationBarrierSegments { get; set; }
+        public Guid[] InformationBarrierSegmentsToAdd { get; set; }
+        public Guid[] InformationBarrierSegmentsToRemove { get; set; }
         public SPOSite(SiteProperties props, bool? disableSharingForNonOwnersStatus)
         {
             AllowDownloadingNonWebViewableFiles = props.AllowDownloadingNonWebViewableFiles;
@@ -128,8 +132,11 @@ namespace PnP.PowerShell.Commands.Model
             Template = props.Template;
             Title = props.Title;            
             WebsCount = props.WebsCount;
-            Url = props.Url;            
+            Url = props.Url;
+            InformationBarrierMode = props.IBMode;
+            InformationBarrierSegments = props.IBSegments;
+            InformationBarrierSegmentsToAdd = props.IBSegmentsToAdd;
+            InformationBarrierSegmentsToRemove = props.IBSegmentsToRemove;
         }
-
     }
 }
