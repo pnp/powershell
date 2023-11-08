@@ -93,7 +93,7 @@
  [-RankingModelId &lt;String&gt;] [-ClientType &lt;String&gt;] [-CollapseSpecification &lt;String&gt;]
  [-HiddenConstraints &lt;String&gt;] [-TimeZoneId &lt;Int32&gt;] [-EnablePhonetic &lt;Boolean&gt;] [-EnableStemming &lt;Boolean&gt;]
  [-EnableQueryRules &lt;Boolean&gt;] [-SourceId &lt;Guid&gt;] [-ProcessBestBets &lt;Boolean&gt;]
- [-ProcessPersonalFavorites &lt;Boolean&gt;] [-RelevantResults] [-Connection &lt;PnPConnection&gt;]
+ [-ProcessPersonalFavorites &lt;Boolean&gt;] [-RelevantResults] [-Connection &lt;PnPConnection&gt;] [-RetryCount &lt;Int32&gt;] [-Verbose]
  
 </code></pre>
 <h3 id="all">All</h3>
@@ -103,7 +103,7 @@
  [-CollapseSpecification &lt;String&gt;] [-HiddenConstraints &lt;String&gt;] [-TimeZoneId &lt;Int32&gt;]
  [-EnablePhonetic &lt;Boolean&gt;] [-EnableStemming &lt;Boolean&gt;] [-EnableQueryRules &lt;Boolean&gt;] [-SourceId &lt;Guid&gt;]
  [-ProcessBestBets &lt;Boolean&gt;] [-ProcessPersonalFavorites &lt;Boolean&gt;] [-RelevantResults] 
- [-Connection &lt;PnPConnection&gt;] 
+ [-Connection &lt;PnPConnection&gt;] [-RetryCount &lt;Int32&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to run an arbitrary search query against the SharePoint search index.</p>
@@ -342,6 +342,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-retrycount">-RetryCount</h3>
+<p>How many times to retry for a failed query. Default is 0 (no retries). Will wait 5 seconds between each retry.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-selectproperties">-SelectProperties</h3>
 <p>The list of properties to return in the search results, separated by a comma. I.e. ComplianceTag,InformationProtectionLabelId.</p>
 <pre><code class="lang-yaml">Type: String[]
@@ -400,6 +411,17 @@ Accept wildcard characters: False
 <h3 id="-trimduplicates">-TrimDuplicates</h3>
 <p>Specifies whether near duplicate items should be removed from the search results.</p>
 <pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

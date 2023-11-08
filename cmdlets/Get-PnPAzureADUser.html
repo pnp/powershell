@@ -145,6 +145,7 @@
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-delta">-Delta</h3>
 <p>Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command.</p>
+<p>Note that using -Select and -Filter in combination with this parameter is limited. More information on this can be found <a href="https://learn.microsoft.com/graph/api/user-delta?view=graph-rest-1.0&amp;tabs=http#odata-query-parameters">here</a>.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Return the delta
 

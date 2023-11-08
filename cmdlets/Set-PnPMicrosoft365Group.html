@@ -92,7 +92,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity &lt;Microsoft365GroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
  [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam]
- [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-SensitivityLabels &lt;GUID[]&gt;]
+ [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-MailNickname &lt;String&gt;] [-SensitivityLabels &lt;GUID[]&gt;]
  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -181,6 +181,17 @@ Accept wildcard characters: False
 <h3 id="-hidefromoutlookclients">-HideFromOutlookClients</h3>
 <p>Controls whether the group shows in the Outlook left-hand navigation.</p>
 <pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-mailnickname">-MailNickname</h3>
+<p>The mail alias for the group, unique for Microsoft 365 groups in the organization. Maximum length is 64 characters. This property can contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] &quot; ; : . &lt;&gt; , SPACE</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
