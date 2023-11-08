@@ -174,6 +174,10 @@ namespace PnP.PowerShell.Commands.Model
         public bool? EnableAutoExpirationVersionTrim { private set; get; }
         public bool? EnableAzureADB2BIntegration { private set; get; }
         public bool? SiteOwnerManageLegacyServicePrincipalEnabled { private set; get; }
+        public bool? CoreRequestFilesLinkEnabled { private set; get; }
+        public int? CoreRequestFilesLinkExpirationInDays { private set; get; }
+        public bool? OneDriveRequestFilesLinkEnabled { private set; get; }
+        public int? OneDriveRequestFilesLinkExpirationInDays { private set; get; }
 
         #endregion
 
@@ -630,6 +634,11 @@ namespace PnP.PowerShell.Commands.Model
             catch
             {
             }
+
+            CoreRequestFilesLinkEnabled = tenant.CoreRequestFilesLinkEnabled;
+            CoreRequestFilesLinkExpirationInDays = tenant.CoreRequestFilesLinkExpirationInDays;
+            OneDriveRequestFilesLinkEnabled = tenant.OneDriveRequestFilesLinkEnabled;
+            OneDriveRequestFilesLinkExpirationInDays = tenant.OneDriveRequestFilesLinkExpirationInDays;
         }
     }
 }
