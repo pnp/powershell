@@ -41,7 +41,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-RelativeUrl` parameter to `Connect-PnPOnline` cmdlet to allow specifying custom URLs for usage with `-WebLogin` method. [#3530](https://github.com/pnp/powershell/pull/3530)
 - Added `-RetryCount` to `Submit-PnPSearchQuery` which allows for specifying the number of retries to perform when an exception occurs [#3528](https://github.com/pnp/powershell/pull/3528)
 - Added `-MailNickname` parameter to `Set-PnPMicrosoft365Group` cmdlet to allow changing of this property on a Microsoft 365 Group [#3529](https://github.com/pnp/powershell/pull/3529)
-- Added `-BusinessConnectivityServiceDisabled` parameter to `Set-PnPTenant` cmdlt to allow disabling the Business Connectivity Service
+- Added `-BusinessConnectivityServiceDisabled` parameter to `Set-PnPTenant` cmdlt to allow disabling the Business Connectivity Service [#3562](https://github.com/pnp/powershell/pull/3562)
 
 ### Fixed
 
