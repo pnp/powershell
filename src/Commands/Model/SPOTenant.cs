@@ -179,6 +179,8 @@ namespace PnP.PowerShell.Commands.Model
         public bool? OneDriveRequestFilesLinkEnabled { private set; get; }
         public int? OneDriveRequestFilesLinkExpirationInDays { private set; get; }
 
+        public bool? BusinessConnectivityServiceDisabled { private set; get; }
+
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext)
@@ -639,6 +641,7 @@ namespace PnP.PowerShell.Commands.Model
             CoreRequestFilesLinkExpirationInDays = tenant.CoreRequestFilesLinkExpirationInDays;
             OneDriveRequestFilesLinkEnabled = tenant.OneDriveRequestFilesLinkEnabled;
             OneDriveRequestFilesLinkExpirationInDays = tenant.OneDriveRequestFilesLinkExpirationInDays;
+            BusinessConnectivityServiceDisabled = tenant.BusinessConnectivityServiceDisabled;
         }
     }
 }
