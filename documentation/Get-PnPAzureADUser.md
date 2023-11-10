@@ -115,6 +115,8 @@ Retrieves the 10th through the 20th user from Azure Active Directory. Notice tha
 ### -Delta
 Retrieves all users and provides a SkipToken delta token to allow to query for changes since this run when querying again by adding -DeltaToken to the command.
 
+Note that using -Select and -Filter in combination with this parameter is limited. More information on this can be found [here](https://learn.microsoft.com/graph/api/user-delta?view=graph-rest-1.0&tabs=http#odata-query-parameters).
+
 ```yaml
 Type: SwitchParameter
 Parameter Sets: Return the delta
