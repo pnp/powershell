@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADAppPermission")]
     [RequiredMinimalApiPermissions("Application.Read.All")]
+    [Alias("Get-PnPEntraIDAppPermission")]
     public class GetAzureADAppPermission : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

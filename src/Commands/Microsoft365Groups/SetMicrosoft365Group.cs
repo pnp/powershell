@@ -51,6 +51,9 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = false)]
         public Guid[] SensitivityLabels;
 
+        [Parameter(Mandatory = false)]
+        public string MailNickname;
+        
         protected override void ExecuteCmdlet()
         {
             var group = Identity.GetGroup(Connection, AccessToken, false, false);
@@ -72,6 +75,18 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 if (ParameterSpecified(nameof(IsPrivate)))
                 {
                     group.Visibility = IsPrivate ? "Private" : "Public";
+                    changed = true;
+                }
+                if (ParameterSpecified(nameof(MailNickname)))
+                {
+                    //Ensures mailNickname contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE.
+                    MailNickname = MailNickname.Replace("@", "").Replace("(", "").Replace(")", "").Replace("\\", "").Replace("[", "").Replace("]", "").Replace("\"", "").Replace(";", "").Replace(":", "").Replace(".", "").Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "");
+                    // Ensures Maximum length is 64 characters. 
+                    if (MailNickname.Length > 64)
+                    {
+                        MailNickname = MailNickname.Substring(0, 64);
+                    }
+                    group.MailNickname = MailNickname;
                     changed = true;
                 }
                 if (changed)

@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Query;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 
 namespace PnP.PowerShell.Commands.Search
 {
@@ -85,6 +86,9 @@ namespace PnP.PowerShell.Commands.Search
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter RelevantResults;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public int RetryCount = 0;
+
         internal IEnumerable<object> Run()
         {
             int startRow = StartRow;
@@ -121,53 +125,79 @@ namespace PnP.PowerShell.Commands.Search
                     keywordQuery.QueryText += " IndexDocId>" + lastDocId;
                 }
 
-                var searchExec = new SearchExecutor(ClientContext);
-                var results = searchExec.ExecuteQuery(keywordQuery);
-                ClientContext.ExecuteQueryRetry();
-
-                if (results.Value != null)
+                // We'll always try at least once, even if RetryCount is 0 (default)
+                for (var iterator = 0; iterator <= RetryCount; iterator++)
                 {
-                    if (finalResults == null)
+                    try
                     {
-                        finalResults = (PnPResultTableCollection)results.Value;
-                        foreach (ResultTable resultTable in results.Value)
+                        var searchExec = new SearchExecutor(ClientContext);
+                        var results = searchExec.ExecuteQuery(keywordQuery);
+                        ClientContext.ExecuteQueryRetry();
+
+                        if (results.Value != null)
                         {
-                            if (resultTable.TableType == "RelevantResults")
+                            if (finalResults == null)
                             {
-                                currentCount = resultTable.RowCount;
-                                if (currentCount > 0)
+                                finalResults = (PnPResultTableCollection)results.Value;
+                                foreach (ResultTable resultTable in results.Value)
                                 {
-                                    lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
+                                    if (resultTable.TableType == "RelevantResults")
+                                    {
+                                        currentCount = resultTable.RowCount;
+                                        if (currentCount > 0)
+                                        {
+                                            lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
+                                        }
+                                    }
                                 }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // we're in paging mode
-                        foreach (ResultTable resultTable in results.Value)
-                        {
-                            PnPResultTable pnpResultTable = (PnPResultTable)resultTable;
-                            var existingTable = finalResults.SingleOrDefault(t => t.TableType == resultTable.TableType);
-                            if (existingTable != null)
-                            {
-                                existingTable.ResultRows.AddRange(pnpResultTable.ResultRows);
                             }
                             else
                             {
-                                finalResults.Add(pnpResultTable);
-                            }
-                            if (pnpResultTable.TableType == "RelevantResults")
-                            {
-                                currentCount = resultTable.RowCount;
-                                if (currentCount > 0)
+                                // we're in paging mode
+                                foreach (ResultTable resultTable in results.Value)
                                 {
-                                    lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
+                                    PnPResultTable pnpResultTable = (PnPResultTable)resultTable;
+                                    var existingTable = finalResults.SingleOrDefault(t => t.TableType == resultTable.TableType);
+                                    if (existingTable != null)
+                                    {
+                                        existingTable.ResultRows.AddRange(pnpResultTable.ResultRows);
+                                    }
+                                    else
+                                    {
+                                        finalResults.Add(pnpResultTable);
+                                    }
+                                    if (pnpResultTable.TableType == "RelevantResults")
+                                    {
+                                        currentCount = resultTable.RowCount;
+                                        if (currentCount > 0)
+                                        {
+                                            lastDocId = resultTable.ResultRows.Last()["DocId"].ToString();
+                                        }
+                                    }
                                 }
                             }
                         }
-                    }
 
+                        // If we were successful (and didn't end in the catch block), we don't want to retry -> break out of retry loop
+                        break;
+                    }
+                    // If we're not retrying, or if we're on the last retry, don't catch the exception
+                    catch (Exception ex)
+                    {
+                        if (RetryCount > 0 && iterator < RetryCount)
+                        {
+                            var waitTime = 5 * (iterator + 1);
+
+                            WriteVerbose($"Search operation failed with exception {ex.Message}. Attempt {iterator + 1} out of {RetryCount}. Retrying in {waitTime} seconds.");
+
+                            Thread.Sleep(TimeSpan.FromSeconds(waitTime));
+                            continue;
+                        }
+                        else
+                        {
+                            throw;
+                        }
+                    }
                 }
                 startRow += rowLimit;
             } while (currentCount == rowLimit && All.IsPresent);

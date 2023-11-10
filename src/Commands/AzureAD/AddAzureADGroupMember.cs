@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Add, "PnPAzureADGroupMember")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [Alias("Add-PnPEntraIDGroupMember")]
     public class AddAzureADGroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

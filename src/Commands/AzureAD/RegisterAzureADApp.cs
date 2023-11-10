@@ -21,6 +21,7 @@ using System.Diagnostics;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPAzureADApp")]
+    [Alias("Register-PnPEntraIDApp")]
     public class RegisterAzureADApp : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
@@ -492,7 +493,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 DateTime validFrom = DateTime.Today;
                 DateTime validTo = validFrom.AddYears(ValidYears);
-                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
+                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo, Array.Empty<string>());
 
                 if (Directory.Exists(OutPath))
                 {
