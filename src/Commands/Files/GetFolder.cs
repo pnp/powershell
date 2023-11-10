@@ -13,36 +13,66 @@ namespace PnP.PowerShell.Commands.Files
     public class GetFolder : PnPWebRetrievalsCmdlet<Folder>
     {
         private const string ParameterSet_FOLDERSINCURRENTWEB = "Folders in current Web";
-        private const string ParameterSet_FOLDERSINLIST = "Folders In List";
-        private const string ParameterSet_FOLDERBYURL = "Folder By Url";
+        private const string ParameterSet_CURRENTWEBROOTFOLDER = "Root folder of the current Web";
+        private const string ParameterSet_LISTROOTFOLDER = "Root folder of a list";
+        private const string ParameterSet_FOLDERSINLIST  = "Folders In List";
+        private const string ParameterSet_FOLDERBYURL = "Folder by url";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERBYURL)]
         [Alias("RelativeUrl")]
         public string Url;
 
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_FOLDERSINLIST)]
+        [Obsolete("Please transition to using Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead as this argument will be removed in a future version of the PnP PowerShell Cmdlets")]
         public ListPipeBind List;
+
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_LISTROOTFOLDER)]
+        public ListPipeBind ListRootFolder;
+
+        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_CURRENTWEBROOTFOLDER)]
+        public SwitchParameter CurrentWebRootFolder;
 
         protected override void ExecuteCmdlet()
         {
             DefaultRetrievalExpressions = new Expression<Func<Folder, object>>[] { f => f.ServerRelativeUrl, f => f.Name, f => f.TimeLastModified, f => f.ItemCount };
-            
+
+            Folder folder = null;
             switch(ParameterSetName)
             {
                 case ParameterSet_FOLDERSINCURRENTWEB:
                 {
-                    // Query for all folders in the root of the current web
+                    WriteVerbose("Getting all folders in the root of the current web");
                     ClientContext.Load(CurrentWeb, w => w.Folders.IncludeWithDefaultProperties(RetrievalExpressions));
                     ClientContext.ExecuteQueryRetry();
-
                     WriteObject(CurrentWeb.Folders, true);
+                    break;
+                }
+
+                case ParameterSet_CURRENTWEBROOTFOLDER:
+                {
+                    WriteVerbose("Getting root folder of the current web");
+                    folder = CurrentWeb.RootFolder;
+                    
+                    ReturnFolderProperties(folder);
+                    break;
+                }
+
+                case ParameterSet_LISTROOTFOLDER:
+                {
+                    WriteVerbose("Getting root folder of the provided list");
+                    var list = ListRootFolder.GetList(CurrentWeb);
+                    folder = list.RootFolder;
+                    
+                    ReturnFolderProperties(folder);
                     break;
                 }
 
                 case ParameterSet_FOLDERSINLIST:
                 {
                     // Gets the provided list
+#pragma warning disable CS0618 // Type or member is obsolete                    
                     var list = List.GetList(CurrentWeb);
+#pragma warning restore CS0618 // Type or member is obsolete                    
 
                     // Query for all folders in the list
                     CamlQuery query = CamlQuery.CreateAllFoldersQuery();
@@ -57,9 +87,9 @@ namespace PnP.PowerShell.Commands.Files
                         var folders = new List<Folder>(listItems.Count);
                         foreach (ListItem listItem in listItems)
                         {
-                            var folder = listItem.Folder;
-                            folder.EnsureProperties(RetrievalExpressions);
-                            folders.Add(folder);
+                            var listFolder = listItem.Folder;
+                            listFolder.EnsureProperties(RetrievalExpressions);
+                            folders.Add(listFolder);
                         }
 
                         WriteObject(folders, true);
@@ -67,23 +97,29 @@ namespace PnP.PowerShell.Commands.Files
                         query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
                     } while (query.ListItemCollectionPosition != null);
                     break;
-                }
+                }                
 
                 case ParameterSet_FOLDERBYURL:
                 {
-                    // Query for folders at the provided URL
+                    WriteVerbose("Getting folder at the provided url");
                     var webServerRelativeUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                     if (!Url.StartsWith(webServerRelativeUrl, StringComparison.OrdinalIgnoreCase))
                     {
                         Url = UrlUtility.Combine(webServerRelativeUrl, Url);
                     }
-                    var folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
-                    folder.EnsureProperties(RetrievalExpressions);
-
-                    WriteObject(folder);
+                    folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(Url));
+                    
+                    ReturnFolderProperties(folder);
                     break;
                 }
             }
+        }
+
+        private void ReturnFolderProperties(Folder folder)
+        {
+            WriteVerbose("Retrieving folder properties");
+            folder?.EnsureProperties(RetrievalExpressions);
+            WriteObject(folder, false);
         }
     }
 }

@@ -13,6 +13,7 @@ namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPAzureADAppSitePermission")]
     [RequiredMinimalApiPermissions("Sites.FullControl.All")]
+    [Alias("Grant-PnPEntraIDAppSitePermission")]
     public class GrantPnPAzureADAppSitePermission : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

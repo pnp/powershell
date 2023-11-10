@@ -41,6 +41,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = team.GroupId;
         }
 
+        public TeamsTeamPipeBind(Guid id)
+        {
+            _id = id.ToString();
+        }
+        
         public string GetGroupId(PnPConnection connection, string accessToken)
         {
             if (!string.IsNullOrEmpty(_id))

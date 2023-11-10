@@ -241,11 +241,21 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #endregion
 
-        internal static X509Certificate2 CreateSelfSignedCertificate(string commonName, string country, string state, string locality, string organization, string organizationUnit, SecureString password, string friendlyName, DateTimeOffset from, DateTimeOffset to)
+        internal static X509Certificate2 CreateSelfSignedCertificate(string commonName, string country, string state, string locality, string organization, string organizationUnit, SecureString password, string friendlyName, DateTimeOffset from, DateTimeOffset to, string[] sanNames = null)
         {
             SubjectAlternativeNameBuilder sanBuilder = new SubjectAlternativeNameBuilder();
-            sanBuilder.AddDnsName("localhost");
-            sanBuilder.AddDnsName(Environment.MachineName);
+            if (sanNames != null)
+            {
+                foreach (var sanName in sanNames)
+                {
+                    sanBuilder.AddDnsName(sanName);
+                }
+            }
+            else
+            {
+                sanBuilder.AddDnsName("localhost");
+                sanBuilder.AddDnsName(Environment.MachineName);
+            }
 
             var x500Values = new List<string>();
             if (!string.IsNullOrWhiteSpace(commonName)) x500Values.Add($"CN={commonName}");
