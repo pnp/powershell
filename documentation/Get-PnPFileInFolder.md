@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFolderFile.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPFileInFolder.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPFolderFile
+title: Get-PnPFileInFolder
 ---
   
-# Get-PnPFolderFile
+# Get-PnPFileInFolder
 
 ## SYNOPSIS
 List files in a folder
@@ -16,12 +16,12 @@ List files in a folder
 
 ### Folder via url
 ```powershell
-Get-PnPFolderFile [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-Recursive] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFileInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-Recurse] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via pipebind
 ```powershell
-Get-PnPFolderFile [-Identity <FolderPipeBind>] [-ItemName <String>] [-Recursive] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFileInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-Recurse] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -32,45 +32,52 @@ This cmdlet allows listing of all the files in a folder. It can optionally also 
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPFolderFile
+Get-PnPFileInFolder
 ```
 
 Returns all the files in the root of the current web
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPFolderFile -Recurse
+Get-PnPFileInFolder -Recurse
 ```
 
 Returns all the files in the entire site. This will take a while to complete and will cause a lot of calls to be made towards SharePoint Online. Use it wisely.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPFolderFile -Identity "Shared Documents"
+Get-PnPFileInFolder -Identity "Shared Documents"
 ```
 
 Returns the files located in the 'Shared Documents' folder located in the root of the current web
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPFolderFile -FolderSiteRelativeUrl "SitePages" -ItemName "Default.aspx"
+Get-PnPFileInFolder -FolderSiteRelativeUrl "SitePages" -ItemName "Default.aspx"
 ```
 
 Returns the file 'Default.aspx' which is located in the folder SitePages which is located in the root of the current web
 
 ### EXAMPLE 5
 ```powershell
-Get-PnPFolder -Identity "Shared Documents" | Get-PnPFolderFile
+Get-PnPFolder -Identity "Shared Documents" | Get-PnPFileInFolder
 ```
 
 Returns all files in the "Shared Documents" folder which is located in the root of the current web
 
 ### EXAMPLE 6
 ```powershell
-Get-PnPFolderFile -FolderSiteRelativeUrl "SitePages" -Recursive
+Get-PnPFileInFolder -FolderSiteRelativeUrl "SitePages" -Recurse
 ```
 
 Returns all files, including those located in any subfolders, in the folder SitePages which is located in the root of the current web
+
+### EXAMPLE 7
+```powershell
+Get-PnPFolder -List "Documents" | Get-PnPFileInFolder -Recurse -ExcludeSystemFolders
+```
+
+Returns all files, including those located in any subfolders, located in the Documents document library where the files in system folders are excluded
 
 ## PARAMETERS
 
@@ -158,7 +165,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Recursive
+### -Recurse
 A switch parameter to include files of all subfolders in the specified folder
 
 ```yaml
