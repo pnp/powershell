@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
-using System;
-using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Features
 {
@@ -10,7 +9,8 @@ namespace PnP.PowerShell.Commands.Features
     {
         protected override void ExecuteCmdlet()
         {
-            CurrentWeb.DeactivateFeature(new Guid("E87CA965-5E07-4A23-B007-DDD4B5AFB9C7"));
+            var pagesList = PagesUtility.GetModernPagesLibrary(PnPContext.Web);
+            Utilities.REST.RestHelper.PostAsync(Connection.HttpClient, $"{PnPContext.Web.Url}/_api/sitepages/pagesinlib(guid'{pagesList.Id}')/setscheduling(false)", ClientContext, null, "application/json", "application/json;odata=nometadata").GetAwaiter().GetResult();
         }
     }
 }

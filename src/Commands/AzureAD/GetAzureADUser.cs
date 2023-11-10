@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADUser", DefaultParameterSetName = ParameterSet_LIST)]
     [RequiredMinimalApiPermissions("User.Read.All")]
+    [Alias("Get-PnPEntraIDUser")]
     public class GetAzureADUser : PnPGraphCmdlet
     {
         const string ParameterSet_BYID = "Return by specific ID";
@@ -69,22 +70,22 @@ namespace PnP.PowerShell.Commands.Principals
                 PnP.PowerShell.Commands.Model.AzureAD.User user;
                 if (Guid.TryParse(Identity, out Guid identityGuid))
                 {
-                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, identityGuid, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent);
+                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, identityGuid, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);
                 }
                 else
                 {
-                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent);
+                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);
                 }
                 WriteObject(user);
             }
             else if (ParameterSpecified(nameof(Delta)))
             {
-                var userDelta = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
+                var userDelta = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);
                 WriteObject(userDelta);
             } 
             else
             {
-                var users = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(AccessToken, Filter, OrderBy, Select, ignoreDefaultProperties: IgnoreDefaultProperties, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent);
+                var users = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(AccessToken, Filter, OrderBy, Select, ignoreDefaultProperties: IgnoreDefaultProperties, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);
                 WriteObject(users, true);
             }
         }

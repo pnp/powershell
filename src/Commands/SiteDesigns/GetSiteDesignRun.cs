@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.SiteDesigns
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteDesignRun")]
+    [OutputType(typeof(ClientObjectList<TenantSiteDesignRun>))]
     public class GetSiteDesignRun : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Apps
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADServicePrincipalAssignedAppRole")]
     [RequiredMinimalApiPermissions("AppRoleAssignment.ReadWrite.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRole>))]
+    [Alias("Remove-PnPEntraIDServicePrincipalAssignedAppRole")]
     public class RemoveAzureADServicePrincipalAssignedAppRole : PnPGraphCmdlet
     {
         private const string ParameterSet_BYINSTANCE = "By instance";

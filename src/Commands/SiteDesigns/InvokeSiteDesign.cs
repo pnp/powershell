@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteDesign")]
+    [OutputType(typeof(ClientObjectList<TenantSiteScriptActionResult>))]
     public class InvokeSiteDesign : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]

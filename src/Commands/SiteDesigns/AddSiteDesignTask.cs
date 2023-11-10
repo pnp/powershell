@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.SiteDesigns
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteDesignTask")]
+    [OutputType(typeof(TenantSiteDesignTask))]
     public class AddSiteDesignTask : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]

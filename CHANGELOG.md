@@ -27,9 +27,25 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPFlowOwner` cmdlet which allows retrieving the owners of a Power Automate flow [#3314](https://github.com/pnp/powershell/pull/3314)
 - Added `-AvailableForTagging` to `Set-PnPTerm` which allows the available for tagging property on a Term to be set [#3321](https://github.com/pnp/powershell/pull/3321)
 - Added `Get-PnPPowerPlatformConnector` cmdlet which allows for all custom connectors to be retrieved [#3309](https://github.com/pnp/powershell/pull/3309)
+- Added `Set-PnPSearchExternalItem` cmdlet which allows ingesting external items into the Microsoft Search index for custom connectors. [#3420](https://github.com/pnp/powershell/pull/3420)
+- Added `Get-PnPTenantInfo` which allows retrieving tenant information by its Id or domain name [#3414](https://github.com/pnp/powershell/pull/3414)
+- Added option to create a Microsoft 365 Group with dynamic membership by passing in `-DynamicMembershipRule` [#3426](https://github.com/pnp/powershell/pull/3426)
 - Added option to pass in a Stream or XML string to `Read-PnPTenantTemplate` allowing the tenant template to be modified before being applied. [#3431](https://github.com/pnp/powershell/pull/3431)
 - Added `Get-PnPTenantInfo` which allows retrieving tenant information by its Id or domain name. [#3414](https://github.com/pnp/powershell/pull/3414)
 - Added option to create a Microsoft 365 Group with dynamic membership by passing in `-DynamicMembershipRule` [#3426](https://github.com/pnp/powershell/pull/3426)
+- Added `Get-PnPSiteVersionPolicy` which allows retrieval of the version policy settings for a site [#3470](https://github.com/pnp/powershell/pull/3470)
+- Added `RestrictedAccessControl`, `ClearRestrictedAccessControl`, `RemoveRestrictedAccessControlGroups`, `AddRestrictedAccessControlGroups` and `RestrictedAccessControlGroups` parameters to `Set-PnPTenantSite` cmdlet to handle restricted access control. [#3463](https://github.com/pnp/powershell/pull/3463)
+- Added `Get-PnPRetentionLabel` cmdlet to retrieve Purview retention labels. [#3459](https://github.com/pnp/powershell/pull/3459)
+- Added GCC support for `Get-PnPAzureADUser` , `Add-PnPFlowOwner` , `Remove-PnPFlowOwner`, `Sync-PnPSharePointUserProfilesFromAzureActiveDirectory`, `New-PnPAzureADUserTemporaryAccessPass` and `Get-PnPAvailableSensitivityLabel` cmdlets. [#3484](https://github.com/pnp/powershell/pull/3484)
+- Added a devcontainer for easily building a minimal environment necessary to contribute to the project. [#3497](https://github.com/pnp/powershell/pull/3497)
+- Added `-RelativeUrl` parameter to `Connect-PnPOnline` cmdlet to allow specifying custom URLs for usage with `-WebLogin` method. [#3530](https://github.com/pnp/powershell/pull/3530)
+- Added `-RetryCount` to `Submit-PnPSearchQuery` which allows for specifying the number of retries to perform when an exception occurs [#3528](https://github.com/pnp/powershell/pull/3528)
+- Added `-MailNickname` parameter to `Set-PnPMicrosoft365Group` cmdlet to allow changing of this property on a Microsoft 365 Group [#3529](https://github.com/pnp/powershell/pull/3529)
+- Added `-SanNames` to `New-PnPAzureCertificate` which allows for controlling the Subject Alternative Names set on the generated certificate [#3555](https://github.com/pnp/powershell/pull/3555)
+- Added Information Barriers information to the output of `Get-PnPTenantSite` [#3556](https://github.com/pnp/powershell/pull/3556)
+- Added `RequestFilesLinkEnabled` and `RequestFilesLinkExpirationInDays` to the output of `Get-PnPSite` [#3557](https://github.com/pnp/powershell/pull/3557)
+- Added `CoreRequestFilesLinkEnabled`, `CoreRequestFilesLinkExpirationInDays`, `OneDriveRequestFilesLinkEnabled`, `OneDriveRequestFilesLinkExpirationInDays`, `BusinessConnectivityServiceDisabled` to the output of `Get-PnPTenant` [#3557](https://github.com/pnp/powershell/pull/3557)
+- Added `-BusinessConnectivityServiceDisabled` parameter to `Set-PnPTenant` cmdlt to allow disabling the Business Connectivity Service [#3562](https://github.com/pnp/powershell/pull/3562)
 
 ### Fixed
 
@@ -52,6 +68,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `New-PnPTeamsTeam` cmdlet not working well with a managed identity [#3351](https://github.com/pnp/powershell/pull/3351)
 - Fixed `Copy-PnPFile`, `Copy-PnPFolder` and `Move-PnPFile` to better handle copying or moving operations to OneDrive or Multi-geo environments. [#3245](https://github.com/pnp/powershell/pull/3245)
 - Fixed `Get-PnPTenantTemplate` not doing anything when the `-SiteUrl` parameter had not been specified. It will now use the currently connected site when the parameter is omitted. [#3431](https://github.com/pnp/powershell/pull/3431)
+- Fixed `Enable-PnPPageScheduling` and `Disable-PnPPageScheduling` cmdlets not working due to changes in backend code. [#3469](https://github.com/pnp/powershell/pull/3469)
+- Fixed an issue when trying to download a file using `Get-PnPFile` from a location that's deeply nested into folders and/or has a really long filename [PnP Core #1290](https://github.com/pnp/pnpcore/pull/1290)
+- Fixed retrieving error detail in `Get-UPABulkImportStatus` cmdlet. [#3494](https://github.com/pnp/powershell/pull/3494)
+- Fixed `Rename-PnPTenantSite` cmdlet to allow support for vanity tenant URLs. [#3533](https://github.com/pnp/powershell/pull/3533)
  
 ### Changed
 
@@ -60,6 +80,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Verbose output will no longer show the access token [#3352](https://github.com/pnp/powershell/pull/3352)
 - Improved `Add-PnPFile` cmdlet. It will now automatically checkout the file if `-CheckinType` parameter is specified. [#3403](https://github.com/pnp/powershell/pull/3403)
 - Improved the error message thrown when using `-ValidateConnection` with `Connect-PnPOnline` and it failing due to i.e. an expired ClientSecret so the reason of the failed connect becomes more clear. [#3440](https://github.com/pnp/powershell/pull/3440)
+- If a cmdlet gets renamed and an alias gets added for it for backwards compatibility, a cmdlet page for the alias will automatically be created so it can still be found in the documentation [#3455](https://github.com/pnp/powershell/pull/3455)
+- Changed `Get-PnPContentType` to now also support `-Includes` to allow retrieval of additional properties of the content type [#3518](https://github.com/pnp/powershell/pull/3518)
+- `Get-PnPTeamsTeam` cmdlet throws error message if the team isn't found when `-Identity` parameter is specified. [#3502](https://github.com/pnp/powershell/pull/3502)
+- Improved `Get-PnPSiteCollectionAdmin ` cmdlet to allow retrieval of additional properties when `-Includes` parameter is specified. [#3521](https://github.com/pnp/powershell/pull/3521)
 
 ### Removed
 
@@ -67,6 +91,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Antti K. Koskela [koskila]
+- Christian Veenhuis [ChVeen]
+- Kunj Balkrishna Sangani [kunj-sangani]
+- Antti K. Koskela [koskila]
+- Dave Paylor [paylord]
 - [smsdaniel]
 - Jim Duncan [sparkitect]
 - Jonathan Smith [jonathan-m-smith]
@@ -716,7 +745,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get\Set-PnPPlannerConfiguration` to allow working with the Microsoft Planner tenant configuration
 - Added `Get\Set-PnPPlannerUserPolicy` to allow setting Microsoft Planner user policies for specific users
 - Added `Get\Add\Remove-PnPPlannerRoster` which allows a Microsoft Planner Roster to be created, retrieved or removed
-- Added `Get\Add\Remove-PnPPlannerRosterMember` to be able to read, add and remove members from a Microsft Planner Roster
+- Added `Get\Add\Remove-PnPPlannerRosterMember` to be able to read, add and remove members from a Microsoft Planner Roster
 - Added `Get-PnPPlannerRosterPlan` to be able to retrieve the Microsoft Planner plans inside a Microsoft Planner Roster or the ones belonging to a specific user
 - Added support for off peak SharePoint Syntex content classification and extraction for lists and folders via new `-OffPeak` and `-Folder` parameters for `Request-PnPSyntexClassifyAndExtract`
 - Added `Invoke-PnPSiteScript` which allows for a Site Script to be executed on a site without needing to have it registered in a site design or site script first

@@ -401,6 +401,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? MassDeleteNotificationDisabled { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public bool? BusinessConnectivityServiceDisabled { get; set; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1332,6 +1335,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (MassDeleteNotificationDisabled.HasValue)
             {
                 Tenant.MassDeleteNotificationDisabled = MassDeleteNotificationDisabled.Value;
+                modified = true;
+            }
+
+            if(BusinessConnectivityServiceDisabled.HasValue)
+            {
+                Tenant.BusinessConnectivityServiceDisabled = BusinessConnectivityServiceDisabled.Value;
                 modified = true;
             }
 

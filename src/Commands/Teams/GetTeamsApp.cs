@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Attributes;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsApp")]
     [RequiredMinimalApiPermissions("Directory.Read.All")]

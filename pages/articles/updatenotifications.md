@@ -9,8 +9,6 @@ If you have a script and want to turn off the update check, simply set the follo
 $env:PNPPOWERSHELL_UPDATECHECK="false"
 ```
 
-See [Configure PnP PowerShell](configuration.md) for more information on the environment variables you can set.
-
 ## When do you receive an update notification
 
 If the major version of your current version is lower than the currently available major version.
