@@ -3,6 +3,9 @@ using System;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using PnP.PowerShell.Commands.Utilities;
+using System.Runtime.ConstrainedExecution;
+using System.Security.Cryptography;
+using System.Linq;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -84,7 +87,12 @@ namespace PnP.PowerShell.Commands.Base
                 pfxBase64: pfxBase64,
                 keyCredentials: manifestEntry,
                 certificate: CertificateHelper.CertificateToBase64(certificate),
-                privateKey: CertificateHelper.PrivateKeyToBase64(certificate)
+                privateKey: CertificateHelper.PrivateKeyToBase64(certificate),
+                sanNames: certificate.Extensions.Cast<X509Extension>()
+                                                .Where(n => n.Oid.FriendlyName=="Subject Alternative Name")
+                                                .Select(n => new AsnEncodedData(n.Oid, n.RawData))
+                                                .Select(n => n.Format(false))
+                                                .FirstOrDefault().Split(',', StringSplitOptions.TrimEntries)
             );
 
             cmdlet.WriteObject(record);
