@@ -19,6 +19,9 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         public SwitchParameter AsAdmin;
 
         [Parameter(Mandatory = false)]
+        public SwitchParameter ThrowExceptionIfPowerAutomateNotFound;
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
@@ -28,21 +31,29 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             if (Force || ShouldContinue($"Remove flow with name '{flowName}'?", "Remove flow"))
             {
-                try
+                WriteVerbose($"Attempting to delete Flow with name {flowName}");
+                if (ThrowExceptionIfPowerAutomateNotFound)
                 {
-                    // Had to add this because DELETE doesn't throw error if invalid Flow Id or Name is provided
-                    WriteVerbose($"Retrieving Flow with name {flowName} in environment ${environmentName}");
-                    var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
-                    if (result != null)
+                    try
                     {
-                        WriteVerbose($"Attempting to delete Flow with name {flowName}");
-                        RestHelper.DeleteAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
-                        WriteVerbose($"Flow with name {flowName} deleted");
+                        // Had to add this because DELETE doesn't throw error if invalid Flow Id or Name is provided
+                        WriteVerbose($"Retrieving Flow with name {flowName} in environment ${environmentName}");
+                        var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                        if (result != null)
+                        {
+                            RestHelper.DeleteAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                            WriteVerbose($"Flow with name {flowName} deleted");
+                        }
+                    }
+                    catch
+                    {
+                        throw new Exception($"Cannot find flow with Identity '{flowName}'");
                     }
                 }
-                catch
+                else
                 {
-                    throw new Exception($"Cannot find flow with Identity '{flowName}'");
+                    RestHelper.DeleteAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                    WriteVerbose($"Flow with name {flowName} deleted");
                 }
             }
         }
