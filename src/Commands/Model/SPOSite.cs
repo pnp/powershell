@@ -5,6 +5,7 @@ namespace PnP.PowerShell.Commands.Model
 {
     public class SPOSite
     {
+        #region Properties
         public bool AllowDownloadingNonWebViewableFiles { get; set; }
         public bool AllowEditing { get; set; }
         public bool AllowSelfServiceUpgrade { get; set; }
@@ -67,6 +68,11 @@ namespace PnP.PowerShell.Commands.Model
         public string Title { get; set; }
         public string Url { get; set; }
         public int WebsCount { get; set; }
+        public bool? RequestFilesLinkEnabled { private set; get; }
+        public int? RequestFilesLinkExpirationInDays { private set; get; }
+
+        #endregion
+
         public SPOSite(SiteProperties props, bool? disableSharingForNonOwnersStatus)
         {
             AllowDownloadingNonWebViewableFiles = props.AllowDownloadingNonWebViewableFiles;
@@ -128,7 +134,9 @@ namespace PnP.PowerShell.Commands.Model
             Template = props.Template;
             Title = props.Title;            
             WebsCount = props.WebsCount;
-            Url = props.Url;            
+            Url = props.Url;
+            RequestFilesLinkEnabled = props.RequestFilesLinkEnabled;
+            RequestFilesLinkExpirationInDays = props.RequestFilesLinkExpirationInDays;
         }
 
     }
