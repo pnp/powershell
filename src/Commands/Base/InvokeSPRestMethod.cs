@@ -1,7 +1,10 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.Core.Model;
+using PnP.Core.Services;
 using PnP.Framework.Http;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,29 +19,36 @@ namespace PnP.PowerShell.Commands.Admin
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSPRestMethod", DefaultParameterSetName = PARAMETERSET_Parsed)]
     [OutputType(typeof(PSObject), ParameterSetName = new[] { PARAMETERSET_Parsed })]
     [OutputType(typeof(string), ParameterSetName = new[] { PARAMETERSET_Raw })]
+    [OutputType(typeof(void), ParameterSetName = new[] { PARAMETERSET_Batch })]
     public class InvokeSPRestMethod : PnPSharePointCmdlet
     {
         public const string PARAMETERSET_Parsed = "Parsed";
         public const string PARAMETERSET_Raw = "Raw";
+        public const string PARAMETERSET_Batch = "Batch";
 
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Parsed)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Raw)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
         public HttpRequestMethod Method = HttpRequestMethod.Get;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = PARAMETERSET_Parsed)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = PARAMETERSET_Raw)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
         public object Content;
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
         public string ContentType = "application/json";
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
         public string Accept = "application/json;odata=nometadata";
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
@@ -48,6 +58,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public string ResponseHeadersVariable;
 
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
+        public PnPBatch Batch;
+
         protected override void ExecuteCmdlet()
         {
             if (Url.StartsWith("/"))
@@ -56,21 +69,37 @@ namespace PnP.PowerShell.Commands.Admin
                 Url = UrlUtility.Combine(ClientContext.Url, Url);
             }
 
-            var method = new HttpMethod(Method.ToString());
-
-            var httpClient = PnPHttpClient.Instance.GetHttpClient(ClientContext);
+            var method = new HttpMethod(Method.ToString().ToUpper());
 
             var requestUrl = Url;
 
+            if (string.IsNullOrEmpty(Accept))
+            {
+                Accept = "application/json;odata=nometadata";
+            }
+
+            if (string.IsNullOrEmpty(ContentType))
+            {
+                ContentType = "application/json";
+            }
+
+            if (ParameterSpecified(nameof(Batch)))
+            {
+                CallBatchRequest(method, requestUrl);
+            }
+            else
+            {
+                CallSingleRequest(method, requestUrl);
+            }
+        }
+
+        private void CallSingleRequest(HttpMethod method, string requestUrl)
+        {
+            var httpClient = PnPHttpClient.Instance.GetHttpClient(ClientContext);
             bool isResponseHeaderRequired = !string.IsNullOrEmpty(ResponseHeadersVariable);
 
             using (HttpRequestMessage request = new HttpRequestMessage(method, requestUrl))
             {
-                if (string.IsNullOrEmpty(Accept))
-                {
-                    Accept = "application/json;odata=nometadata";
-                }
-
                 request.Headers.Add("accept", Accept);
 
                 if (Method == HttpRequestMethod.Merge)
@@ -88,10 +117,7 @@ namespace PnP.PowerShell.Commands.Admin
 
                 if (Method == HttpRequestMethod.Post || Method == HttpRequestMethod.Merge || Method == HttpRequestMethod.Put || Method == HttpRequestMethod.Patch)
                 {
-                    if (string.IsNullOrEmpty(ContentType))
-                    {
-                        ContentType = "application/json";
-                    }
+
                     var contentString = Content is string ? Content.ToString() :
                         JsonSerializer.Serialize(Content, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, WriteIndented = true });
                     request.Content = new StringContent(contentString, System.Text.Encoding.UTF8);
@@ -149,6 +175,33 @@ namespace PnP.PowerShell.Commands.Admin
                     throw new Exception(response.Content.ReadAsStringAsync().GetAwaiter().GetResult());
                 }
             }
+        }
+
+        private void CallBatchRequest(HttpMethod method, string requestUrl)
+        {
+            var web = PnPContext.Web;
+            string contentString = null;
+            if (ParameterSpecified(nameof(Content)))
+            {
+                contentString = Content is string ? Content.ToString() :
+                        JsonSerializer.Serialize(Content, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, WriteIndented = true });
+
+            }
+
+            Dictionary<string, string> extraHeaders = new() { { "Accept", Accept } };
+
+            if (Method == HttpRequestMethod.Merge)
+            {
+                extraHeaders.Add("X-HTTP-Method", "MERGE");
+            }
+
+            if (Method == HttpRequestMethod.Merge || Method == HttpRequestMethod.Delete)
+            {
+                extraHeaders.Add("IF-MATCH", "*");
+            }
+            extraHeaders.Add("Content-Type", ContentType);
+
+            web.WithHeaders(extraHeaders).ExecuteRequestBatch(Batch.Batch, new ApiRequest(method, ApiRequestType.SPORest, requestUrl, contentString));
         }
     }
 }
