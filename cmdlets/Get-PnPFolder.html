@@ -84,37 +84,66 @@
   <h1 id="get-pnpfolder">Get-PnPFolder</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns one or more folder objects</p>
+<p>Returns a folder object</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="folders-in-current-web-default">Folders in current Web (Default)</h3>
-<pre><code class="lang-powershell">Get-PnPFolder [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPFolder [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
-<h3 id="folder-by-url">Folder By Url</h3>
-<pre><code class="lang-powershell">Get-PnPFolder -Url &lt;String&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] 
+<h3 id="root-folder-of-the-current-web">Root folder of the current Web</h3>
+<pre><code class="lang-powershell">Get-PnPFolder -CurrentWebRootFolder [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
+</code></pre>
+<h3 id="folder-by-url">Folder by url</h3>
+<pre><code class="lang-powershell">Get-PnPFolder -Url &lt;String&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
+</code></pre>
+<h3 id="root-folder-of-a-list">Root folder of a list</h3>
+<pre><code class="lang-powershell">Get-PnPFolder -ListRootFolder &lt;ListPipeBind&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h3 id="folders-in-list">Folders In List</h3>
-<pre><code class="lang-powershell">Get-PnPFolder -List &lt;ListPipeBind&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPFolder -List &lt;ListPipeBind&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Retrieves one or more folders from the specified location. Use Resolve-PnPFolder to create the folder if it does not exist.</p>
+<p>Retrieves the folder instance of the specified location.</p>
+<p>Use <a href="Resolve-PnPFolder.html">Resolve-PnPFolder</a> to create the folder if it does not exist.
+Use <a href="Get-PnPFolderInFolder.html">Get-PnPFolderInFolder</a> to retrieve subfolders.
+Use <a href="Get-PnPFileInFolder.html">Get-PnPFileInFolder</a> to retrieve files in a folder.
+Use <a href="Get-PnPFolderItem.html">Get-PnPFolderItem</a> to retrieve files and subfolders.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPFolder
 </code></pre>
-<p>Returns all the folders in the root of the current web</p>
+<p>Returns all the folders located in the root of the current web</p>
 <h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPFolder -CurrentWebRootFolder
+</code></pre>
+<p>Returns the folder instance representing the root of the current web</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPFolder -Url &quot;Shared Documents&quot;
 </code></pre>
 <p>Returns the folder called 'Shared Documents' which is located in the root of the current web</p>
-<h3 id="example-3">EXAMPLE 3</h3>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPFolder -Url &quot;/sites/demo/Shared Documents&quot;
 </code></pre>
 <p>Returns the folder called 'Shared Documents' which is located in the root of the site collection located at '/sites/demo'</p>
-<h3 id="example-4">EXAMPLE 4</h3>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPFolder -ListRootFolder &quot;Shared Documents&quot;
+</code></pre>
+<p>Returns the root folder of the list called 'Shared Documents'</p>
+<h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Get-PnPFolder -List &quot;Shared Documents&quot;
 </code></pre>
-<p>Returns the folders residing inside a folder called 'Shared Documents'</p>
+<p>Returns the folders inside the root folder of the list called 'Shared Documents'. Please use Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead.</folder></p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-currentwebrootfolder">-CurrentWebRootFolder</h3>
+<p>If provided, the folder representing the root of the current web will be returned</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Root folder of the current Web
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -127,9 +156,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
-<p>Name, ID or instance of a list or document library to retrieve the folders residing in it for.</p>
+<p>Name, ID or instance of a list or document library to retrieve the folders residing in it for. Please use Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead.</folder></p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: Folders In List
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listrootfolder">-ListRootFolder</h3>
+<p>Name, ID or instance of a list or document library to retrieve the rootfolder of.</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: Root folder of a list
 
 Required: True
 Position: 0
@@ -149,9 +189,19 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
-<a href="https://github.com/MicrosoftDocs/office-docs-powershell/blob/master/sharepoint/sharepoint-ps/sharepoint-pnp/Resolve-PnPFolder.md">Resolve-PnPFolder</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>
           </div>

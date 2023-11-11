@@ -2305,6 +2305,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFileInFolder.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFileInFolder.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPFileSharingLink.md",
       "output": {
         ".html": {
@@ -2365,25 +2375,18 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPFolderFile.md",
+      "source_relative_path": "cmdlets/Get-PnPFolderInFolder.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPFolderFile.html"
+          "relative_path": "cmdlets/Get-PnPFolderInFolder.html"
         }
       },
       "version": ""
     },
     {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPFolderFolder.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Get-PnPFolderFolder.html"
-        }
-      },
-      "version": ""
-    },
-    {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPFolderItem.md",
       "output": {
@@ -3945,10 +3948,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPWebhookSubscriptions.md",
+      "source_relative_path": "cmdlets/Get-PnPWebhookSubscription.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPWebhookSubscriptions.html"
+          "relative_path": "cmdlets/Get-PnPWebhookSubscription.html"
         }
       },
       "version": ""

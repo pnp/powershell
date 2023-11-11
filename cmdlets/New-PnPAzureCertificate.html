@@ -92,23 +92,27 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPAzureCertificate [-CommonName &lt;String&gt;] [-Country &lt;String&gt;] [-State &lt;String&gt;]
  [-Locality &lt;String&gt;] [-Organization &lt;String&gt;] [-OrganizationUnit &lt;String&gt;] [-OutPfx &lt;String&gt;]
- [-OutCert &lt;String&gt;] [-ValidYears &lt;Int32&gt;] [-CertificatePassword &lt;SecureString&gt;] [-Store &lt;StoreLocation&gt;] 
+ [-OutCert &lt;String&gt;] [-ValidYears &lt;Int32&gt;] [-CertificatePassword &lt;SecureString&gt;] [-Store &lt;StoreLocation&gt;] [-SanNames &lt;String[]&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to create a self-signed certificate and manifest settings to be used with CSOM via an app-only ADAL application.</p>
+<p>Allows to create a self-signed certificate and manifest settings to be used with PnP PowerShell via an app-only application registration.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer
 </code></pre>
-<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file to disk. The private key file (pfx) will not be password protected.</p>
+<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file to disk. The private key file (pfx) will not be password protected. It will have localhost and the machinename as the Subject Alternative Names.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">New-PnPAzureCertificate -CommonName &quot;My Certificate&quot; -ValidYears 30
 </code></pre>
-<p>This will output a certificate named &quot;My Certificate&quot; which expires in 30 years from now to the screen. It will not write the certificate files to disk.</p>
+<p>This will output a certificate named &quot;My Certificate&quot; which expires in 30 years from now to the screen. It will not write the certificate files to disk. It will have localhost and the machinename as the Subject Alternative Names.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer -CertificatePassword (ConvertTo-SecureString -String &quot;pass@word1&quot; -AsPlainText -Force)
 </code></pre>
-<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file to disk. The pfx file will have the password pass@word1 set on it.</p>
+<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file to disk. The pfx file will have the password pass@word1 set on it. It will have localhost and the machinename as the Subject Alternative Names.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer -SanNames $null
+</code></pre>
+<p>This will generate a default self-signed certificate named &quot;pnp.contoso.com&quot; valid for 10 years and output a pfx and cer file to disk. There will not be any Subject Alternative Names in the generated certificate.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-certificatepassword">-CertificatePassword</h3>
 <p>Optional certificate password</p>
@@ -190,6 +194,19 @@ Accept wildcard characters: False
 <h3 id="-outpfx">-OutPfx</h3>
 <p>Filename to write to, optionally including full path (.pfx)</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sannames">-SanNames</h3>
+<p>One or more DNS names to add to the certificate as Subject Alternative Names. Separate multiple names with a comma, i.e. &quot;host1.domain.com&quot;,&quot;host2.domain.com&quot;.</p>
+<p>Provide $null to not add any Subject Alternative names to the certificate.</p>
+<p>Omit to add localhost and the machine name as Subject Alternative Names.</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
 Required: False

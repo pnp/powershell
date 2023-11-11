@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPTenantDeletedSite | PnP PowerShell </title>
+    <title>Get-PnPFolderInFolder | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPTenantDeletedSite | PnP PowerShell ">
+    <meta name="title" content="Get-PnPFolderInFolder | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,47 +77,55 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="get-pnptenantdeletedsite">Get-PnPTenantDeletedSite</h1>
+  <h1 id="get-pnpfolderinfolder">Get-PnPFolderInFolder</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
-</ul>
-<p>Fetches the site collections from the tenant recycle bin.</p>
+<p>List subfolders in a folder</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite [-Identity] &lt;String&gt; [-Limit] [-IncludePersonalSite] [-IncludeOnlyPersonalSite] [-Detailed] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<h3 id="folder-via-url">Folder via url</h3>
+<pre><code class="lang-powershell">Get-PnPFolderInFolder [-FolderSiteRelativeUrl &lt;String&gt;] [-ItemName &lt;String&gt;] [-ExcludeSystemFolders] [-Includes &lt;String[]&gt;] [-Recurse] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+</code></pre>
+<h3 id="folder-via-pipebind">Folder via pipebind</h3>
+<pre><code class="lang-powershell">Get-PnPFolderInFolder [-Identity &lt;FolderPipeBind&gt;] [-ItemName &lt;String&gt;] [-ExcludeSystemFolders] [-Includes &lt;String[]&gt;] [-Recurse] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Fetches the site collections which are listed in your tenant's recycle bin.</p>
+<p>This cmdlet allows listing of all the subfolders of a folder. It can optionally also list all folders in the underlying subfolders.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite
+<pre><code class="lang-powershell">Get-PnPFolderInFolder
 </code></pre>
-<p>This will fetch basic information on site collections located in the recycle bin.</p>
+<p>Returns all the folders in the root of the current web</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite -Detailed
+<pre><code class="lang-powershell">Get-PnPFolderInFolder -Recurse
 </code></pre>
-<p>This will fetch detailed information on site collections located in the recycle bin.</p>
+<p>Returns all the folders in the entire site. This will take a while to complete and will cause a lot of calls to be made towards SharePoint Online. Use it wisely.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite -Identity &quot;https://tenant.sharepoint.com/sites/contoso&quot;
+<pre><code class="lang-powershell">Get-PnPFolderInFolder -Identity &quot;Shared Documents&quot;
 </code></pre>
-<p>This will fetch basic information on the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.</p>
+<p>Returns the folders located in the 'Shared Documents' folder located in the root of the current web</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite -IncludePersonalSite
+<pre><code class="lang-powershell">Get-PnPFolderInFolder -Identity &quot;Shared Documents&quot; -ExcludeSystemFolders
 </code></pre>
-<p>This will fetch the site collections from the recycle bin including the personal sites and display its properties.</p>
+<p>Returns the folders located in the 'Shared Documents' folder located in the root of the current web which are not hidden system folders</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite -IncludeOnlyPersonalSite
+<pre><code class="lang-powershell">Get-PnPFolderInFolder -FolderSiteRelativeUrl &quot;Shared Documents&quot; -ItemName &quot;Templates&quot;
 </code></pre>
-<p>This will fetch the site collections from the recycle bin which are personal sites and display its properties.</p>
+<p>Returns the folder 'Template' which is located in the folder 'Shared Documents' which is located in the root of the current web</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPFolder -Identity &quot;Shared Documents&quot; | Get-PnPFolderInFolder
+</code></pre>
+<p>Returns all folders in the &quot;Shared Documents&quot; folder which is located in the root of the current web</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Get-PnPFolderInFolder -FolderSiteRelativeUrl &quot;SitePages&quot; -Recurse
+</code></pre>
+<p>Returns all folders, including those located in any subfolders, in the folder SitePages which is located in the root of the current web</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
@@ -127,32 +135,43 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-detailed">-Detailed</h3>
-<p>When specified, detailed information will be returned on the site collections. This will take longer to execute.</p>
+<h3 id="-excludesystemfolders">-ExcludeSystemFolders</h3>
+<p>When provided, all system folders will be excluded from the output. This parameter is not supported when not providing a folder through -Identity or -FolderSiteRelativeUrl.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
 Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-foldersiterelativeurl">-FolderSiteRelativeUrl</h3>
+<p>The site relative URL of the folder to retrieve</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Folder via url
+
+Required: False
+Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Specifies the full URL of the site collection that needs to be restored.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+<p>A folder instance to the folder to retrieve</p>
+<pre><code class="lang-yaml">Type: FolderPipeBind
+Parameter Sets: Folder via pipebind
 
 Required: False
 Position: 0
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-includeonlypersonalsite">-IncludeOnlyPersonalSite</h3>
-<p>If specified the task will only retrieve the personal sites from the recycle bin.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (ParameterSetPersonalSitesOnly)
+<h3 id="-includes">-Includes</h3>
+<p>Optionally allows properties to be retrieved for the returned files which are not included in the response by default</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -160,10 +179,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-includepersonalsite">-IncludePersonalSite</h3>
-<p>If specified the task will also retrieve the personal sites from the recycle bin.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (ParameterSetAllSites)
+<h3 id="-itemname">-ItemName</h3>
+<p>Name of the folder to retrieve (not case sensitive)</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -171,8 +190,19 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-limit">-Limit</h3>
-<p>Limit of the number of site collections to be retrieved from the recycle bin. Default is 200.</p>
+<h3 id="-recurse">-Recurse</h3>
+<p>A switch parameter to include folders of all subfolders in the specified folder</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 

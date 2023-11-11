@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPTenantDeletedSite | PnP PowerShell </title>
+    <title>Get-PnPWebhookSubscription | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPTenantDeletedSite | PnP PowerShell ">
+    <meta name="title" content="Get-PnPWebhookSubscription | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,44 +77,29 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="get-pnptenantdeletedsite">Get-PnPTenantDeletedSite</h1>
+  <h1 id="get-pnpwebhooksubscription">Get-PnPWebhookSubscription</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
-</ul>
-<p>Fetches the site collections from the tenant recycle bin.</p>
+<p>Gets all the Webhook subscriptions of the resource</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite [-Identity] &lt;String&gt; [-Limit] [-IncludePersonalSite] [-IncludeOnlyPersonalSite] [-Detailed] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPWebhookSubscription [-List &lt;ListPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+ 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Fetches the site collections which are listed in your tenant's recycle bin.</p>
+<p>Allows to retrieve Webhook subscriptions of specified list.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite
+<pre><code class="lang-powershell">Get-PnPWebhookSubscription -List MyList
 </code></pre>
-<p>This will fetch basic information on site collections located in the recycle bin.</p>
+<p>Gets all Webhook subscriptions of the list MyList</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite -Detailed
+<pre><code class="lang-powershell">Get-PnPList | Get-PnPWebhookSubscription
 </code></pre>
-<p>This will fetch detailed information on site collections located in the recycle bin.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite -Identity &quot;https://tenant.sharepoint.com/sites/contoso&quot;
-</code></pre>
-<p>This will fetch basic information on the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite -IncludePersonalSite
-</code></pre>
-<p>This will fetch the site collections from the recycle bin including the personal sites and display its properties.</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-PnPTenantDeletedSite -IncludeOnlyPersonalSite
-</code></pre>
-<p>This will fetch the site collections from the recycle bin which are personal sites and display its properties.</p>
+<p>Gets all Webhook subscriptions of the all the lists</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -127,59 +112,15 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-detailed">-Detailed</h3>
-<p>When specified, detailed information will be returned on the site collections. This will take longer to execute.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-list">-List</h3>
+<p>The list object or name to get the Webhook subscriptions from</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>Specifies the full URL of the site collection that needs to be restored.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-includeonlypersonalsite">-IncludeOnlyPersonalSite</h3>
-<p>If specified the task will only retrieve the personal sites from the recycle bin.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (ParameterSetPersonalSitesOnly)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-includepersonalsite">-IncludePersonalSite</h3>
-<p>If specified the task will also retrieve the personal sites from the recycle bin.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (ParameterSetAllSites)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-limit">-Limit</h3>
-<p>Limit of the number of site collections to be retrieved from the recycle bin. Default is 200.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
