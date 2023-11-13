@@ -3958,6 +3958,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPWebhookSubscriptions.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPWebhookSubscriptions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPWikiPageContent.md",
       "output": {
         ".html": {
