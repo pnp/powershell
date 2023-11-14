@@ -3308,6 +3308,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSiteSetVersionPolicyProgress.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSiteSetVersionPolicyProgress.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPSiteTemplate.md",
       "output": {
         ".html": {
