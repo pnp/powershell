@@ -74,7 +74,7 @@ namespace PnP.PowerShell.Commands.Principals
                 }
                 else
                 {
-                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity), Select, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);
+                    user = PnP.PowerShell.Commands.Utilities.AzureAdUtility.GetUser(AccessToken, WebUtility.UrlEncode(Identity.Replace("'","''")), Select, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);
                 }
                 WriteObject(user);
             }
