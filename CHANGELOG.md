@@ -47,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `RequestFilesLinkEnabled` and `RequestFilesLinkExpirationInDays` to the output of `Get-PnPSite` [#3557](https://github.com/pnp/powershell/pull/3557)
 - Added `CoreRequestFilesLinkEnabled`, `CoreRequestFilesLinkExpirationInDays`, `OneDriveRequestFilesLinkEnabled`, `OneDriveRequestFilesLinkExpirationInDays`, `BusinessConnectivityServiceDisabled` to the output of `Get-PnPTenant` [#3557](https://github.com/pnp/powershell/pull/3557)
 - Added `-BusinessConnectivityServiceDisabled` parameter to `Set-PnPTenant` cmdlt to allow disabling the Business Connectivity Service [#3562](https://github.com/pnp/powershell/pull/3562)
+- Added `Get-PnPSiteSetVersionPolicyProgress` cmdlet which allows for getting the progress of setting a version policy for existing document libraries on a site [#3564](https://github.com/pnp/powershell/pull/3564)
 
 ### Fixed
 
