@@ -20,7 +20,7 @@ Removes the specified flow.
 
 ```powershell
 Remove-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin]
- [-Force] [-Connection <PnPConnection>] 
+ [-Force] [-ThrowExceptionIfPowerAutomateNotFound] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -35,6 +35,14 @@ Remove-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c
 ```
 
 This removes the specified flow.
+
+### Example 1
+```powershell
+$environment = Get-PnPFlowEnvironment
+Remove-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -ThrowExceptionIfPowerAutomateNotFound
+```
+
+This removes the specified flow and throws an exception if the specified flow is not present.
 
 ## PARAMETERS
 
@@ -93,6 +101,20 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ThrowExceptionIfPowerAutomateNotFound
+Switch parameter if an exception should be thrown if the requested flow does not exist (true) or if omitted, nothing will be returned in case the flow does not exist
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

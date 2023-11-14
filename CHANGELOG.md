@@ -48,6 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `CoreRequestFilesLinkEnabled`, `CoreRequestFilesLinkExpirationInDays`, `OneDriveRequestFilesLinkEnabled`, `OneDriveRequestFilesLinkExpirationInDays`, `BusinessConnectivityServiceDisabled` to the output of `Get-PnPTenant` [#3557](https://github.com/pnp/powershell/pull/3557)
 - Added `-BusinessConnectivityServiceDisabled` parameter to `Set-PnPTenant` cmdlt to allow disabling the Business Connectivity Service [#3562](https://github.com/pnp/powershell/pull/3562)
 - Added support for executing the 'Invoke-PnPSPRestMethod' cmdlet in a batch [#3565](https://github.com/pnp/powershell/pull/3565)
+- Added `Get-PnPSiteSetVersionPolicyProgress` cmdlet which allows for getting the progress of setting a version policy for existing document libraries on a site [#3564](https://github.com/pnp/powershell/pull/3564)
 
 ### Fixed
 
@@ -83,6 +84,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Add-PnPFile` cmdlet. It will now automatically checkout the file if `-CheckinType` parameter is specified. [#3403](https://github.com/pnp/powershell/pull/3403)
 - Improved the error message thrown when using `-ValidateConnection` with `Connect-PnPOnline` and it failing due to i.e. an expired ClientSecret so the reason of the failed connect becomes more clear. [#3440](https://github.com/pnp/powershell/pull/3440)
 - If a cmdlet gets renamed and an alias gets added for it for backwards compatibility, a cmdlet page for the alias will automatically be created so it can still be found in the documentation [#3455](https://github.com/pnp/powershell/pull/3455)
+- Improved `Remove-PnPFlow` cmdlet to throw error if the Flow doesn't exist and also added verbose logging. [#3474](https://github.com/pnp/powershell/pull/3474)
 - Changed `Get-PnPContentType` to now also support `-Includes` to allow retrieval of additional properties of the content type [#3518](https://github.com/pnp/powershell/pull/3518)
 - `Get-PnPTeamsTeam` cmdlet throws error message if the team isn't found when `-Identity` parameter is specified. [#3502](https://github.com/pnp/powershell/pull/3502)
 - Improved `Get-PnPSiteCollectionAdmin ` cmdlet to allow retrieval of additional properties when `-Includes` parameter is specified. [#3521](https://github.com/pnp/powershell/pull/3521)
