@@ -93,6 +93,7 @@
                        [-Raw]
                        [-Connection &lt;PnPConnection&gt;]
                        [-ResponseHeadersVariable &lt;String&gt;]
+                       [-Batch &lt;PnPBatch&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Invokes a REST request towards a SharePoint site.</p>
@@ -128,6 +129,16 @@ $headers
 </code></pre>
 <p>This example executes a GET request towards the current site collection and returns the id and title of all the lists and outputs them to the console. Notice the use of single quotes. If you want to use double quotes (&quot;) then you will have to escape the $ character with a backtick: `$</p>
 <p>It will also store the response headers values in the PowerShell variable name that you specify. Enter a variable name without the dollar sign ($) symbol.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">$batch = New-PnPBatch -RetainRequests
+Invoke-PnPSPRestMethod -Method Get -Url &quot;https://tenant.sharepoint.com/sites/mysite/_api/web/lists&quot; -Batch $batch
+$item = &quot;{'Title':'Test'}&quot;
+Invoke-PnPSPRestMethod -Method Post -Url &quot;https://tenant.sharepoint.com/sites/mysite/_api/web/lists/GetByTitle('Test')/items&quot; -Content $item -Batch $batch
+$response = Invoke-PnPBatch $batch -Details
+$response
+</code></pre>
+<p>This example executes a GET request to get all lists and a POST request to add an item to a list in a single batch request.
+It is necessary to create and invoke batch requests in the manner specified here if you want to process something later on with the response object.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-content">-Content</h3>
 <p>A string or object to send.</p>
