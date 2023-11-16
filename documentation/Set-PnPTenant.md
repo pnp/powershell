@@ -134,6 +134,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-CustomizedExternalSharingServiceUrl <String>]
  [-IncludeAtAGlanceInShareEmails <Boolean>]
  [-MassDeleteNotificationDisabled <Boolean>]
+ [-BusinessConnectivityServiceDisabled <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -270,6 +271,20 @@ Accept wildcard characters: False
 ### -BlockSendLabelMismatchEmail
 Allows blocking of the automated e-mail being sent when somebody uploads a document to a site that's protected with a sensitivity label and their document has a higher priority sensitivity label than the sensitivity label applied to the site. [More information](
 https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BusinessConnectivityServiceDisabled
+Allows blocking of Business Connectivity Services to be used on SharePoint Online. This feature is set to be retired on September 30, 2024. [More information](https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/support-update-for-business-connectivity-services-in-microsoft/ba-p/3938773).
 
 ```yaml
 Type: Boolean
