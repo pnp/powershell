@@ -75,7 +75,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed an issue when trying to download a file using `Get-PnPFile` from a location that's deeply nested into folders and/or has a really long filename [PnP Core #1290](https://github.com/pnp/pnpcore/pull/1290)
 - Fixed retrieving error detail in `Get-UPABulkImportStatus` cmdlet. [#3494](https://github.com/pnp/powershell/pull/3494)
 - Fixed `Rename-PnPTenantSite` cmdlet to allow support for vanity tenant URLs. [#3533](https://github.com/pnp/powershell/pull/3533)
- 
+- Fixed `Get-PnPAzureADUser`, `Get-PnPEntraIDUser`, `Add-PnPFlowOwner` and `Remove-PnPFlowOwner` not working when an UPN containing an apostrophe was passed in [#3570](https://github.com/pnp/powershell/pull/3570)
+
 ### Changed
 
 - Improved `Set-PnPListItem` cmdlet handling of Purview labels. [#3340](https://github.com/pnp/powershell/pull/3340)
@@ -95,6 +96,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Dan Cecil [danielcecil]
 - Antti K. Koskela [koskila]
 - Christian Veenhuis [ChVeen]
 - Kunj Balkrishna Sangani [kunj-sangani]
