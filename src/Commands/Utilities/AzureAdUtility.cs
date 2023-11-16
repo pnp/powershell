@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using PnP.Framework;
 using PnP.PowerShell.Commands.Model.AzureAD;
 
@@ -83,7 +84,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <returns>User object</returns>
         public static User GetUser(string accessToken, string userPrincipalName, string[] selectProperties = null, bool ignoreDefaultProperties = false, int startIndex = 0, int? endIndex = 999, bool useBetaEndPoint = false, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
-            return PnP.Framework.Graph.UsersUtility.ListUsers(accessToken, $"userPrincipalName eq '{userPrincipalName}'", null, selectProperties, startIndex, endIndex, ignoreDefaultProperties: ignoreDefaultProperties, useBetaEndPoint: useBetaEndPoint, azureEnvironment: azureEnvironment).Select(User.CreateFrom).FirstOrDefault();
+            return PnP.Framework.Graph.UsersUtility.ListUsers(accessToken, $"userPrincipalName eq '{WebUtility.UrlEncode(userPrincipalName.Replace("'", "''"))}'", null, selectProperties, startIndex, endIndex, ignoreDefaultProperties: ignoreDefaultProperties, useBetaEndPoint: useBetaEndPoint, azureEnvironment: azureEnvironment).Select(User.CreateFrom).FirstOrDefault();
         }
 
         #endregion
