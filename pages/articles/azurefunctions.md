@@ -71,11 +71,11 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 #### Specific stable version
 
    > [!Important]
-   > There's currently no stable PnP PowerShell version that works with Azure Functions. Use the [latest nightly build](#specific-prerelease-version) instead.
+   > PnP PowerShell version 2 or later is required for this to work
 
    ```powershell
    @{
-       'PnP.PowerShell' = '1.12.0'
+       'PnP.PowerShell' = '2.2.0'
    }
    ```
 
@@ -84,13 +84,13 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 #### Latest stable version
 
    > [!Important]
-   > There's currently no stable PnP PowerShell version that works with Azure Functions. Use the [latest nightly build](#specific-prerelease-version) instead.   
+   > PnP PowerShell version 2 or later is required for this to work
 
    If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):
 
    ```powershell
    @{
-       'PnP.PowerShell' = '1.*'
+       'PnP.PowerShell' = '2.*'
     }
    ```
 
@@ -102,7 +102,7 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
    ```powershell
    @{
-       'PnP.PowerShell' = '2.0.45-nightly'
+       'PnP.PowerShell' = '2.2.130-nightly'
     }
    ```   
 
