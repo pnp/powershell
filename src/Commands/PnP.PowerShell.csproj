@@ -17,7 +17,7 @@
 		<Copyright>PnP 2023</Copyright>
 		<Configurations>Debug;Release</Configurations>
 		<PnPFrameworkPath Condition="'$(PnPFrameworkPath)' == ''"></PnPFrameworkPath>
-		<PnPCoreSdkPath Condition="'$(PnPCoreSdkPath)' == ''"></PnPCoreSdkPath>
+		<PnPCoreSdkPath Condition="'$(PnPCoreSdkPathNet8)' == ''"></PnPCoreSdkPath>
 		<IsRelease></IsRelease>
 		<IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
 		<IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
