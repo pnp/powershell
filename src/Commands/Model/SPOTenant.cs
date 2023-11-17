@@ -181,6 +181,8 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? BusinessConnectivityServiceDisabled { private set; get; }
 
+        public bool? EnableSensitivityLabelForPDF { private set; get; }
+
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext)
@@ -642,6 +644,15 @@ namespace PnP.PowerShell.Commands.Model
             OneDriveRequestFilesLinkEnabled = tenant.OneDriveRequestFilesLinkEnabled;
             OneDriveRequestFilesLinkExpirationInDays = tenant.OneDriveRequestFilesLinkExpirationInDays;
             BusinessConnectivityServiceDisabled = tenant.BusinessConnectivityServiceDisabled;
+
+            try 
+            {
+                EnableSensitivityLabelForPDF = tenant.EnableSensitivityLabelForPDF;
+            }
+            catch 
+            {
+                EnableSensitivityLabelForPDF = false;
+            }
         }
     }
 }
