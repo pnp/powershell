@@ -141,28 +141,28 @@
 <h4 id="specific-stable-version">Specific stable version</h4>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>There's currently no stable PnP PowerShell version that works with Azure Functions. Use the <a href="#specific-prerelease-version">latest nightly build</a> instead.</p>
+<p>PnP PowerShell version 2 or later is required for this to work</p>
 </div>
 <pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '1.12.0'
+    'PnP.PowerShell' = '2.2.0'
 }
 </code></pre>
 <p>The version that will be installed will be the specified specific build, which is generally recommended. You build and test your Azure Function against this specific PnP PowerShell version. Future releases may work differently and cause issues, therefore it is generally recommended to specify a specific version here.</p>
 <h4 id="latest-stable-version">Latest stable version</h4>
 <div class="IMPORTANT">
 <h5>Important</h5>
-<p>There's currently no stable PnP PowerShell version that works with Azure Functions. Use the <a href="#specific-prerelease-version">latest nightly build</a> instead.</p>
+<p>PnP PowerShell version 2 or later is required for this to work</p>
 </div>
 <p>If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):</p>
 <pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '1.*'
+    'PnP.PowerShell' = '2.*'
  }
 </code></pre>
 <p>This will then automatically download any minor version of the major 1 release when available. Note that wildcards will always take the latest stable version and not the nightly build/prerelease versions.</p>
 <h4 id="specific-prerelease-version">Specific prerelease version</h4>
 <p>If you wish to use a specific prerelease/nightly build version, go to the <a href="https://www.powershellgallery.com/packages/PnP.PowerShell">overview of available versions</a> and literally copy/paste the version in the definition, i.e.:</p>
 <pre><code class="lang-powershell">@{
-    'PnP.PowerShell' = '2.0.45-nightly'
+    'PnP.PowerShell' = '2.2.130-nightly'
  }
 </code></pre>
 <p><img src="../images/azurefunctions/addpnpposhtoappfilerequirements.png" alt="Adding PnP PowerShell to the requirements.psd1 file in an Azure Function"></p>
@@ -226,12 +226,25 @@ Register-PnPAzureADApp -ApplicationName &quot;MyDemoApp&quot; -Tenant [yourtenan
 <h4 id="apply-your-certificate">Apply your certificate</h4>
 <p>Once you have an Azure Active Directory application set up and the public key certificate uploaded to its registration, proceed with configuring the Azure Function to make use of the private key of this certificate pair:</p>
 <ol>
-<li>In your function app, navigate to <code>TLS/SSL Settings</code> and switch to the <code>Private Key Certificates (.pfx)</code> section.</li>
-<li>Click <code>Upload Certificate</code> and select the &quot;MyDemoApp.pfx&quot; file that has been created for you. Enter the password you used in the script above.</li>
-<li>After the certificate has been uploaded, copy the thumbprint value shown.</li>
-<li>Navigate to <code>Configuration</code> and add a new Application Setting</li>
-<li>Call the setting <code>WEBSITE_LOAD_CERTIFICATES</code> and set the thumbprint as a value. To make all the certificates you uploaded available use <code>*</code> as the value. See <a href="https://learn.microsoft.com/azure/app-service/configure-ssl-certificate-in-code">https://learn.microsoft.com/azure/app-service/configure-ssl-certificate-in-code</a> for more information.</li>
-<li>Save the settings</li>
+<li><p>In your function app, navigate to <code>Certificates</code> under Settings, switch to the <code>Bring your own certificates (.pfx)</code> section and click on <code>Add certificate</code>.</p>
+<p><img src="../images/azurefunctions/addpfxcertificate.png" alt="Adding a custom PFX certificate in an Azure Function"></p>
+</li>
+<li><p>In the panel that appears from the side, select <code>Upload certificate (.pfx)</code> and select the &quot;MyDemoApp.pfx&quot; file that has been created for you in the Create your certificate step above. Enter the password you used when creating the certificate. The certificate friendly name can be anything you would like.</p>
+</li>
+<li><p>After the certificate has been uploaded, copy the thumbprint value shown.</p>
+</li>
+</ol>
+<p><img src="../images/azurefunctions/addpfxcertificatethumbprint.png" alt="Copying the thumbprint from a custom certificate in an Azure Function"></p>
+<ol start="4">
+<li>Navigate to <code>Configuration</code>, ensure you are on the <code>Application settings</code> tab and click on <code>New application setting</code></li>
+</ol>
+<p><img src="../images/azurefunctions/whitelistpfxthumbprint.png" alt="Whitelisting the thumbprint of a custom certificate in an Azure Function"></p>
+<ol start="5">
+<li><p>Call the setting <code>WEBSITE_LOAD_CERTIFICATES</code> and set the thumbprint as a value. To make all the certificates you uploaded available use <code>*</code> as the value. See <a href="https://learn.microsoft.com/azure/app-service/configure-ssl-certificate-in-code">https://learn.microsoft.com/azure/app-service/configure-ssl-certificate-in-code</a> for more information.</p>
+<p><img src="../images/azurefunctions/whitelistpfxthumbprintdetails.png" alt="Providing the details of the to be whitelisted custom certificate in an Azure Function"></p>
+</li>
+<li><p>Click on <code>OK</code> at the bottom and then on <code>Save</code> at the top. Click <code>Continue</code> to confirm your changes.</p>
+</li>
 </ol>
 <h4 id="create-the-azure-function-for-certificate-authentication">Create the Azure Function for certificate authentication</h4>
 <p>Create a new function and replace the function code with the following example:</p>

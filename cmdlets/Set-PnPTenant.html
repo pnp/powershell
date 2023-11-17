@@ -204,6 +204,7 @@
  [-CustomizedExternalSharingServiceUrl &lt;String&gt;]
  [-IncludeAtAGlanceInShareEmails &lt;Boolean&gt;]
  [-MassDeleteNotificationDisabled &lt;Boolean&gt;]
+ [-BusinessConnectivityServiceDisabled &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -302,6 +303,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-blocksendlabelmismatchemail">-BlockSendLabelMismatchEmail</h3>
 <p>Allows blocking of the automated e-mail being sent when somebody uploads a document to a site that's protected with a sensitivity label and their document has a higher priority sensitivity label than the sensitivity label applied to the site. <a href="https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities">More information</a>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-businessconnectivityservicedisabled">-BusinessConnectivityServiceDisabled</h3>
+<p>Allows blocking of Business Connectivity Services to be used on SharePoint Online. This feature is set to be retired on September 30, 2024. <a href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/support-update-for-business-connectivity-services-in-microsoft/ba-p/3938773">More information</a>.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 

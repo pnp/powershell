@@ -7901,6 +7901,26 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/azurefunctions/addpfxcertificate.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/addpfxcertificate.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/addpfxcertificatethumbprint.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/addpfxcertificatethumbprint.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/azurefunctions/addpnpposhtoappfilerequirements.png",
       "output": {
         "resource": {
@@ -7985,6 +8005,26 @@
       "output": {
         "resource": {
           "relative_path": "images/azurefunctions/functionappappfilesmenu.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/whitelistpfxthumbprint.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/whitelistpfxthumbprint.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/azurefunctions/whitelistpfxthumbprintdetails.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/whitelistpfxthumbprintdetails.png"
         }
       },
       "version": ""
