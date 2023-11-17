@@ -627,19 +627,28 @@ namespace PnP.PowerShell.Commands.Utilities
         #endregion
 
         #region Channel
-        public static async Task<IEnumerable<TeamChannel>> GetChannelsAsync(string accessToken, PnPConnection connection, string groupId)
+
+        public static async Task<TeamChannel> GetChannelAsync(string accessToken, PnPConnection connection, string groupId, string channelId, bool useBeta = false)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannel>(connection, $"v1.0/teams/{groupId}/channels", accessToken);
+            var channel = await GraphHelper.GetAsync<TeamChannel>(connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", accessToken);
+            return channel;
+        }
+
+        public static async Task<IEnumerable<TeamChannel>> GetChannelsAsync(string accessToken, PnPConnection connection, string groupId, bool useBeta = false)
+        {
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannel>(connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels", accessToken);
             return collection;
         }
-        public static async Task<TeamChannel> GetPrimaryChannelAsync(string accessToken, PnPConnection connection, string groupId)
+
+        public static async Task<TeamChannel> GetPrimaryChannelAsync(string accessToken, PnPConnection connection, string groupId, bool useBeta = false)
         {
-            var collection = await GraphHelper.GetAsync<TeamChannel>(connection, $"v1.0/teams/{groupId}/primaryChannel", accessToken);
+            var collection = await GraphHelper.GetAsync<TeamChannel>(connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/primaryChannel", accessToken);
             return collection;
         }
-        public static async Task<HttpResponseMessage> DeleteChannelAsync(string accessToken, PnPConnection connection, string groupId, string channelId)
+
+        public static async Task<HttpResponseMessage> DeleteChannelAsync(string accessToken, PnPConnection connection, string groupId, string channelId, bool useBeta = false)
         {
-            return await GraphHelper.DeleteAsync(connection, $"v1.0/teams/{groupId}/channels/{channelId}", accessToken);
+            return await GraphHelper.DeleteAsync(connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", accessToken);
         }
 
         public static async Task<TeamChannel> AddChannelAsync(string accessToken, PnPConnection connection, string groupId, string displayName, string description, TeamsChannelType channelType, string ownerUPN, bool isFavoriteByDefault)
@@ -716,9 +725,12 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.GetAsync<TeamChannelMessageReply>(connection, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies/{replyId}", accessToken);
         }
 
-        public static async Task<TeamChannel> UpdateChannelAsync(PnPConnection connection, string accessToken, string groupId, string channelId, TeamChannel channel)
+        /// <summary>
+        /// Updates a Teams Channel
+        /// </summary>
+        public static async Task<TeamChannel> UpdateChannelAsync(PnPConnection connection, string accessToken, string groupId, string channelId, TeamChannel channel, bool useBeta = false)
         {
-            return await GraphHelper.PatchAsync(connection, accessToken, $"v1.0/teams/{groupId}/channels/{channelId}", channel);
+            return await GraphHelper.PatchAsync(connection, accessToken, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", channel);
         }
         #endregion
 

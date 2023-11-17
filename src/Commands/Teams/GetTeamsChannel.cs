@@ -17,22 +17,20 @@ namespace PnP.PowerShell.Commands.Teams
         [Parameter(Mandatory = false)]
         public TeamsChannelPipeBind Identity;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter UseBeta;
+
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
-            if (groupId != null)
+            var groupId = Team.GetGroupId(Connection, AccessToken) ?? throw new PSArgumentException("Team not found", nameof(Team));
+
+            if (ParameterSpecified(nameof(Identity)))
             {
-                if (ParameterSpecified(nameof(Identity)))
-                {
-                    WriteObject(Identity.GetChannel(Connection, AccessToken, groupId));
-                }
-                else
-                {
-                    WriteObject(TeamsUtility.GetChannelsAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult(), true);
-                }
-            } else
+                WriteObject(Identity.GetChannel(Connection, AccessToken, groupId, useBeta: UseBeta.ToBool()));
+            }
+            else
             {
-                throw new PSArgumentException("Team not found", nameof(Team));
+                WriteObject(TeamsUtility.GetChannelsAsync(AccessToken, Connection, groupId, useBeta: UseBeta.ToBool()).GetAwaiter().GetResult(), true);
             }
         }
     }

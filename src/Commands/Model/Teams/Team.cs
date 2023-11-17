@@ -1,5 +1,4 @@
 ﻿using PnP.PowerShell.Commands.Model.Graph;
-using PnP.PowerShell.Commands.Utilities.JSON;
 using System;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
@@ -12,6 +11,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
     public class Team
     {
         #region Public Members
+
         public string DisplayName { get; set; }
 
         public string Classification { get; set; }
