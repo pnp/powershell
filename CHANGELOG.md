@@ -49,6 +49,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-BusinessConnectivityServiceDisabled` parameter to `Set-PnPTenant` cmdlt to allow disabling the Business Connectivity Service [#3562](https://github.com/pnp/powershell/pull/3562)
 - Added support for executing the 'Invoke-PnPSPRestMethod' cmdlet in a batch [#3565](https://github.com/pnp/powershell/pull/3565)
 - Added `Get-PnPSiteSetVersionPolicyProgress` cmdlet which allows for getting the progress of setting a version policy for existing document libraries on a site [#3564](https://github.com/pnp/powershell/pull/3564)
+- Added `AllowNewMessageFromBots`, `AllowNewMessageFromConnectors`, `ReplyRestriction` and `UserNewMessageRestriction` to `Set-PnPTeamsChannel` which allows setting the moderation settings on a Teams channel
+- Added the ModerationSettings to be returned with `Get-PnPTeamsChannel` when passing in `-UseBeta` and using `-Identity <channelId>`
 
 ### Fixed
 
