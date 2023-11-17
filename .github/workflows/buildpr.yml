@@ -38,6 +38,7 @@ jobs:
         dotnet-version: |
            6.0.x
            7.0.x
+           8.0.x
     - name: Install PnP.Core dependencies
       run: dotnet restore
       working-directory: pnpcore/src/sdk
