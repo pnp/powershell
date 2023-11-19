@@ -404,6 +404,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? BusinessConnectivityServiceDisabled { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public bool? EnableSensitivityLabelForPDF { get; set; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1341,6 +1344,12 @@ namespace PnP.PowerShell.Commands.Admin
             if(BusinessConnectivityServiceDisabled.HasValue)
             {
                 Tenant.BusinessConnectivityServiceDisabled = BusinessConnectivityServiceDisabled.Value;
+                modified = true;
+            }
+
+            if (EnableSensitivityLabelForPDF.HasValue)
+            {
+                Tenant.EnableSensitivityLabelForPDF = EnableSensitivityLabelForPDF.Value;
                 modified = true;
             }
 

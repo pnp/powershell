@@ -135,6 +135,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IncludeAtAGlanceInShareEmails <Boolean>]
  [-MassDeleteNotificationDisabled <Boolean>]
  [-BusinessConnectivityServiceDisabled <Boolean>]
+ [-EnableSensitivityLabelForPDF <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -285,6 +286,29 @@ Accept wildcard characters: False
 
 ### -BusinessConnectivityServiceDisabled
 Allows blocking of Business Connectivity Services to be used on SharePoint Online. This feature is set to be retired on September 30, 2024. [More information](https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/support-update-for-business-connectivity-services-in-microsoft/ba-p/3938773).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableSensitivityLabelForPDF
+Allows turning on support for PDFs with sensitivity labels for the following scenarios:
+
+- Applying a sensitivity label in Office for the web.
+- Uploading a labeled document, and then extracting and displaying that sensitivity label.
+- Search, eDiscovery, and data loss prevention.
+- Auto-labeling policies and default sensitivity labels for SharePoint document libraries.
+
+The valid values are:
+True - Enables support for PDFs.
+False (default) - Disables support for PDFs.
 
 ```yaml
 Type: Boolean
