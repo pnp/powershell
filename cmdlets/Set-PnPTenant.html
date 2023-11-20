@@ -205,6 +205,7 @@
  [-IncludeAtAGlanceInShareEmails &lt;Boolean&gt;]
  [-MassDeleteNotificationDisabled &lt;Boolean&gt;]
  [-BusinessConnectivityServiceDisabled &lt;Boolean&gt;]
+ [-EnableSensitivityLabelForPDF &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -314,6 +315,26 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-businessconnectivityservicedisabled">-BusinessConnectivityServiceDisabled</h3>
 <p>Allows blocking of Business Connectivity Services to be used on SharePoint Online. This feature is set to be retired on September 30, 2024. <a href="https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/support-update-for-business-connectivity-services-in-microsoft/ba-p/3938773">More information</a>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enablesensitivitylabelforpdf">-EnableSensitivityLabelForPDF</h3>
+<p>Allows turning on support for PDFs with sensitivity labels for the following scenarios:</p>
+<ul>
+<li>Applying a sensitivity label in Office for the web.</li>
+<li>Uploading a labeled document, and then extracting and displaying that sensitivity label.</li>
+<li>Search, eDiscovery, and data loss prevention.</li>
+<li>Auto-labeling policies and default sensitivity labels for SharePoint document libraries.</li>
+</ul>
+<p>The valid values are:
+True - Enables support for PDFs.
+False (default) - Disables support for PDFs.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
