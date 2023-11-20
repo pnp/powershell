@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformConnector.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformCustomConnector.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPPowerPlatformConnector
+title: Get-PnPPowerPlatformCustomConnector
 ---
   
-# Get-PnPPowerPlatformConnector
+# Get-PnPPowerPlatformCustomConnector
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Returns the Custom Power Platform Connectors for a given environment
 ## SYNTAX
 
 ```powershell
-Get-PnPPowerPlatformConnector [-Environment <PowerPlatformEnvironmentPipeBind>] [-AsAdmin] [-Identity <PowerPlatformConnectorPipeBind>] 
+Get-PnPPowerPlatformCustomConnector [-Environment <PowerPlatformEnvironmentPipeBind>] [-Identity <PowerPlatformConnectorPipeBind>] 
 [-Connection <PnPConnection>] [-Verbose]
 ```
 
@@ -32,16 +32,16 @@ This cmdlet returns the custom connectors on a given enviroment.
 ### Example 1
 ```powershell
 $environment = Get-PnPPowerPlatformEnvironment
-Get-PnPPowerPlatformConnector -Environment $environment
+Get-PnPPowerPlatformCustomConnector -Environment $environment
 ```
 This returns all the custom connectors for a given Power Platform environment
 
 ### Example 2
 ```powershell
 $environment = Get-PnPPowerPlatformEnvironment
-Get-PowerPlatformConnectorPipeBind -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Get-PowerPlatformCustomConnector -Environment $environment -Identity 'Tikit Connector'
 ```
-This returns a specific custom connector
+This returns a specific custom connector based on connector display name
 
 ## PARAMETERS
 
@@ -61,10 +61,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Id of the connector to retrieve.
+The Display Name of the connector to retrieve.
 
 ```yaml
-Type: PowerPlatformConnectorPipeBind
+Type: PowerPlatformCustomConnectorPipeBind
 Parameter Sets: (All)
 Aliases:
 
@@ -74,22 +74,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
-### -AsAdmin
-If specified returns all the custom connectors as admin. If not specified only the custom connectors for the current user will be returned.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Connection
 Optional connection to be used by the cmdlet.
 Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
