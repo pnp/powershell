@@ -610,7 +610,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             return await GraphHelper.PatchAsync(connection, accessToken, $"v1.0/groups/{group.Id}", group);
         }
-
+        
         internal static async Task SetVisibilityAsync(PnPConnection connection, string accessToken, Guid groupId, bool? hideFromAddressLists, bool? hideFromOutlookClients)
         {
             var patchData = new

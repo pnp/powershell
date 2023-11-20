@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Apps
     [Cmdlet(VerbsCommon.Get, "PnPAzureADServicePrincipalAvailableAppRole")]
     [RequiredMinimalApiPermissions("Application.Read.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRole>))]
+    [Alias("Get-PnPEntraIDServicePrincipalAvailableAppRole")]
     public class GetAzureADServicePrincipalAvailableAppRole : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

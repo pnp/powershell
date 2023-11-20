@@ -22,7 +22,7 @@ Submit-PnPSearchQuery [-Query] <String> [-StartRow <Int32>] [-MaxResults <Int32>
  [-RankingModelId <String>] [-ClientType <String>] [-CollapseSpecification <String>]
  [-HiddenConstraints <String>] [-TimeZoneId <Int32>] [-EnablePhonetic <Boolean>] [-EnableStemming <Boolean>]
  [-EnableQueryRules <Boolean>] [-SourceId <Guid>] [-ProcessBestBets <Boolean>]
- [-ProcessPersonalFavorites <Boolean>] [-RelevantResults] [-Connection <PnPConnection>]
+ [-ProcessPersonalFavorites <Boolean>] [-RelevantResults] [-Connection <PnPConnection>] [-RetryCount <Int32>] [-Verbose]
  
 ```
 
@@ -34,7 +34,7 @@ Submit-PnPSearchQuery [-Query] <String> [-All] [-TrimDuplicates <Boolean>] [-Pro
  [-CollapseSpecification <String>] [-HiddenConstraints <String>] [-TimeZoneId <Int32>]
  [-EnablePhonetic <Boolean>] [-EnableStemming <Boolean>] [-EnableQueryRules <Boolean>] [-SourceId <Guid>]
  [-ProcessBestBets <Boolean>] [-ProcessPersonalFavorites <Boolean>] [-RelevantResults] 
- [-Connection <PnPConnection>] 
+ [-Connection <PnPConnection>] [-RetryCount <Int32>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -353,6 +353,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RetryCount
+How many times to retry for a failed query. Default is 0 (no retries). Will wait 5 seconds between each retry.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SelectProperties
 The list of properties to return in the search results, separated by a comma. I.e. ComplianceTag,InformationProtectionLabelId.
 
@@ -437,9 +451,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
 
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
