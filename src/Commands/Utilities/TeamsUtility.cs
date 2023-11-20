@@ -423,7 +423,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
-            await GraphHelper.PutAsync<string>(connection, $"v1.0/groups/{groupId}/photo/$value", accessToken, byteArrayContent);
+            await GraphHelper.PutAsync<string>(connection, $"v1.0/teams/{groupId}/photo/$value", accessToken, byteArrayContent);
         }
 
         public static async Task<HttpResponseMessage> SetTeamArchivedStateAsync(PnPConnection connection, string accessToken, string groupId, bool archived, bool? setSiteReadOnly)
