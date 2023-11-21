@@ -387,6 +387,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPDeletedTeam` cmdlet to retrieve all deleted Microsoft Teams teams [#2487](https://github.com/pnp/powershell/pull/2487)
 - Added `-ServerRelativePath` and `-Path` parameters to `Set-PnPImageListItemColumn` cmdlet to allow for file to be uploaded for the Image type column. [#2503](https://github.com/pnp/powershell/pull/2503)
 - Added support for sovereign tenants in `Get-PnPTenandId` by utilizing the `-AzureEnvironment` parameter. [#2512](https://github.com/pnp/powershell/pull/2512)
+- Added `Set-PnPTeamsTeamPicture` which allows setting the picture of a Teams team [#3590](https://github.com/pnp/powershell/pull/3590)
 
 ### Changed
 
