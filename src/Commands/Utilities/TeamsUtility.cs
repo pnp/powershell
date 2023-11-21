@@ -419,11 +419,11 @@ namespace PnP.PowerShell.Commands.Utilities
             return await GraphHelper.PatchAsync<Group>(connection, accessToken, $"v1.0/groups/{groupId}", group);
         }
 
-        public static async Task SetTeamPictureAsync(PnPConnection connection, string accessToken, string groupId, byte[] bytes, string contentType)
+        public static async Task SetTeamPictureAsync(PnPConnection connection, string accessToken, string teamId, byte[] bytes, string contentType)
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
-            await GraphHelper.PutAsync<string>(connection, $"v1.0/teams/{groupId}/photo/$value", accessToken, byteArrayContent);
+            await GraphHelper.PutAsync<string>(connection, $"v1.0/teams/{teamId}/photo/$value", accessToken, byteArrayContent);
         }
 
         public static async Task<HttpResponseMessage> SetTeamArchivedStateAsync(PnPConnection connection, string accessToken, string groupId, bool archived, bool? setSiteReadOnly)
