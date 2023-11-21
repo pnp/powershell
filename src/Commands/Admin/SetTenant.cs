@@ -407,6 +407,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? EnableSensitivityLabelForPDF { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public bool? ShowOpenInDesktopOptionForSyncedFiles { get; set; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1350,6 +1353,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (EnableSensitivityLabelForPDF.HasValue)
             {
                 Tenant.EnableSensitivityLabelForPDF = EnableSensitivityLabelForPDF.Value;
+                modified = true;
+            }
+
+            if(ShowOpenInDesktopOptionForSyncedFiles.HasValue)
+            {
+                Tenant.ShowOpenInDesktopOptionForSyncedFiles = ShowOpenInDesktopOptionForSyncedFiles.Value;
                 modified = true;
             }
 

@@ -136,6 +136,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-MassDeleteNotificationDisabled <Boolean>]
  [-BusinessConnectivityServiceDisabled <Boolean>]
  [-EnableSensitivityLabelForPDF <Boolean>]
+ [-ShowOpenInDesktopOptionForSyncedFiles <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2321,6 +2322,22 @@ If provided, no confirmation will be requested and the action will be performed
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowOpenInDesktopOptionForSyncedFiles
+
+Allows Open in App to open and edit non-Office files in desktop applications from OneDrive for Business and SharePoint
+web and Teams, leveraging the power of OneDrive sync. It does not require users to have the file already syncing before they can open it.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False

@@ -178,10 +178,9 @@ namespace PnP.PowerShell.Commands.Model
         public int? CoreRequestFilesLinkExpirationInDays { private set; get; }
         public bool? OneDriveRequestFilesLinkEnabled { private set; get; }
         public int? OneDriveRequestFilesLinkExpirationInDays { private set; get; }
-
         public bool? BusinessConnectivityServiceDisabled { private set; get; }
-
         public bool? EnableSensitivityLabelForPDF { private set; get; }
+        public bool? ShowOpenInDesktopOptionForSyncedFiles { private set; get; }
 
         #endregion
 
@@ -219,6 +218,7 @@ namespace PnP.PowerShell.Commands.Model
             IsLoopEnabled = tenant.IsLoopEnabled;
             EnableAzureADB2BIntegration = tenant.EnableAzureADB2BIntegration;
             SiteOwnerManageLegacyServicePrincipalEnabled = tenant.SiteOwnerManageLegacyServicePrincipalEnabled;
+            ShowOpenInDesktopOptionForSyncedFiles = tenant.ShowOpenInDesktopOptionForSyncedFiles;
 
             try
             {

@@ -388,6 +388,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ServerRelativePath` and `-Path` parameters to `Set-PnPImageListItemColumn` cmdlet to allow for file to be uploaded for the Image type column. [#2503](https://github.com/pnp/powershell/pull/2503)
 - Added support for sovereign tenants in `Get-PnPTenandId` by utilizing the `-AzureEnvironment` parameter. [#2512](https://github.com/pnp/powershell/pull/2512)
 - Added `Set-PnPTeamsTeamPicture` which allows setting the picture of a Teams team [#3590](https://github.com/pnp/powershell/pull/3590)
+- Added `-ShowOpenInDesktopOptionForSyncedFiles` parameter to `Set-PnPTenant` allowing the Open in App feature to be made available to the tenant
 
 ### Changed
 
@@ -423,7 +424,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed support for `2019-03` version of the PnP Provisioning Schema from `Convert-PnPSiteTemplate` , `New-PnPSiteTemplateFromFolder` and other cmdlets which are using this schema. It was already marked as deprecated in the PnP Provisioning engine. You should use a newer version of the schema.
 - Removed `-NoBaseTemplate` parameter from `Get-PnPSiteTemplate` cmdlet. It was marked as obsolete. It will not use the default web base template of the connected site.
 - Removed `-Private` parameter from `Add-PnPTeamsChannel` cmdlet. It was marked as obsolete. You should use `TeamMembershipType` parameter instead.
-
 
 ### Fixed
 
