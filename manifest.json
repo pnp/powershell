@@ -204,6 +204,9 @@
       "type": "Toc",
       "source_relative_path": "articles/toc.yml",
       "output": {
+        ".json": {
+          "relative_path": "articles/toc.json"
+        },
         ".html": {
           "relative_path": "articles/toc.html"
         }
@@ -7497,6 +7500,9 @@
       "type": "Toc",
       "source_relative_path": "cmdlets/toc.yml",
       "output": {
+        ".json": {
+          "relative_path": "cmdlets/toc.json"
+        },
         ".html": {
           "relative_path": "cmdlets/toc.html"
         }
@@ -8637,6 +8643,9 @@
       "type": "Toc",
       "source_relative_path": "toc.yml",
       "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        },
         ".html": {
           "relative_path": "toc.html"
         }
