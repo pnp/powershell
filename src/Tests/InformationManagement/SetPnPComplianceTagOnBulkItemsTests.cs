@@ -1,6 +1,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
+using System.Collections.Generic;
 
 namespace PnP.PowerShell.Tests.InformationManagement
 {
@@ -73,7 +74,7 @@ namespace PnP.PowerShell.Tests.InformationManagement
 				
                 var results = scope.ExecuteCommand("Set-PnPComplianceTagOnBulkItemsTests",
 					new CommandParameter("List", list),
-					new CommandParameter("ItemIds", items),
+					new CommandParameter("ItemIds", itemIds),
 					new CommandParameter("ComplianceTag", complianceTag));
                 
                 Assert.IsNotNull(results);
