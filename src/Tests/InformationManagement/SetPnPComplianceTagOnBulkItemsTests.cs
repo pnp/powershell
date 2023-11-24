@@ -1,6 +1,7 @@
 using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Management.Automation.Runspaces;
+using System.Collections.Generic;
 
 namespace PnP.PowerShell.Tests.InformationManagement
 {
@@ -67,13 +68,13 @@ namespace PnP.PowerShell.Tests.InformationManagement
 				var list = "";
 				// This is a mandatory parameter
 				// From Cmdlet Help: List of iist item IDs.
-				var itemIds = new List<int>(1,2,3);
+				var itemIds = new List<int>();
 				// From Cmdlet Help: Name of compliance tag (retention label) to be set or empty value to clear existing tag.
 				var complianceTag = "";
 				
                 var results = scope.ExecuteCommand("Set-PnPComplianceTagOnBulkItemsTests",
 					new CommandParameter("List", list),
-					new CommandParameter("ItemIds", items),
+					new CommandParameter("ItemIds", itemIds),
 					new CommandParameter("ComplianceTag", complianceTag));
                 
                 Assert.IsNotNull(results);
