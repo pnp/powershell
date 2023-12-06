@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTeamPicture")]
-    [RequiredMinimalApiPermissions("TeamSettings.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
 
     public class SetTeamsTeamPicture : PnPGraphCmdlet
     {
