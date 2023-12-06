@@ -97,6 +97,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Pieter Veenstra [Pieter-Veenstra]
 - Konrad K. [wilecoyotegenius]
 - Dan Cecil [danielcecil]
 - Antti K. Koskela [koskila]
