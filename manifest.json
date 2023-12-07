@@ -5285,6 +5285,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPMicrosoft365GroupPhoto.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPMicrosoft365GroupPhoto.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPMicrosoft365GroupSettings.md",
       "output": {
         ".html": {

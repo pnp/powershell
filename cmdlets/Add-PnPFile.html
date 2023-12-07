@@ -113,21 +113,21 @@
 </code></pre>
 <p>This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder does not exist it will create it.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPFile -Path .\sample.doc -Folder &quot;Shared Documents&quot; -Values @{Modified=&quot;1/1/2016&quot;}
+<pre><code class="lang-powershell">Add-PnPFile -Path .\sample.doc -Folder &quot;Shared Documents&quot; -Values @{Modified=&quot;12/28/2023&quot;}
 </code></pre>
-<p>This will upload the file sample.doc to the Shared Documents folder. After uploading it will set the Modified date to 1/1/2016.</p>
+<p>This will upload the file sample.doc to the Shared Documents folder. After uploading it will set the Modified date to 12/28/2023.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Add-PnPFile -FileName sample.doc -Folder &quot;Shared Documents&quot; -Stream $fileStream -Values @{Modified=&quot;1/1/2016&quot;}
+<pre><code class="lang-powershell">Add-PnPFile -FileName sample.doc -Folder &quot;Shared Documents&quot; -Stream $fileStream -Values @{Modified=&quot;12/28/2023&quot;}
 </code></pre>
-<p>This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 1/1/2016.</p>
+<p>This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 12/28/2023.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Add-PnPFile -Path sample.doc -Folder &quot;Shared Documents&quot; -ContentType &quot;Document&quot; -Values @{Modified=&quot;1/1/2016&quot;}
+<pre><code class="lang-powershell">Add-PnPFile -Path sample.doc -Folder &quot;Shared Documents&quot; -ContentType &quot;Document&quot; -Values @{Modified=&quot;12/28/2023&quot;}
 </code></pre>
-<p>This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 1/1/2016.</p>
+<p>This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 12/28/2023.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
-<pre><code class="lang-powershell">Add-PnPFile -Path sample.docx -Folder &quot;Documents&quot; -Values @{Modified=&quot;1/1/2016&quot;; Created=&quot;1/1/2017&quot;; Editor=23}
+<pre><code class="lang-powershell">Add-PnPFile -Path sample.docx -Folder &quot;Documents&quot; -Values @{Modified=&quot;12/28/2016&quot;; Created=&quot;12/28/2023&quot;; Editor=23}
 </code></pre>
-<p>This will add a file sample.docx to the Documents folder and will set the Modified date to 1/1/2016, Created date to 1/1/2017 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.</p>
+<p>This will add a file sample.docx to the Documents folder and will set the Modified date to 12/28/2016, Created date to 12/28/2023 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Add-PnPFile -Path sample.docx -Folder &quot;Documents&quot; -NewFileName &quot;differentname.docx&quot;
 </code></pre>
@@ -321,7 +321,7 @@ Accept wildcard characters: False
 <p>Number: -Values @{&quot;Number&quot; = &quot;10&quot;}</p>
 <p>Currency: -Values @{&quot;Number&quot; = &quot;10&quot;}</p>
 <p>Currency: -Values @{&quot;Currency&quot; = &quot;10&quot;}</p>
-<p>Date and Time: -Values @{&quot;DateAndTime&quot; = &quot;03/10/2015 14:16&quot;}</p>
+<p>Date and Time: -Values @{&quot;DateAndTime&quot; = &quot;04/20/2023 14:16&quot;} (use mm/dd/yyyy)</p>
 <p>Lookup (id of lookup value): -Values @{&quot;Lookup&quot; = &quot;2&quot;}</p>
 <p>Multi value lookup (id of lookup values as array 1): -Values @{&quot;MultiLookupField&quot; = &quot;1&quot;,&quot;2&quot;}</p>
 <p>Multi value lookup (id of lookup values as array 2): -Values @{&quot;MultiLookupField&quot; = 1,2}</p>
