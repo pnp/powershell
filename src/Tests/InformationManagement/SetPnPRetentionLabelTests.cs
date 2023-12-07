@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Tests.InformationManagement
 {
     [TestClass]
-    public class SetComplianceTagOnBulkItemsTests
+    public class SetRetentionLabelTests
     {
         #region Test Setup/CleanUp
         [ClassInitialize]
@@ -57,7 +57,39 @@ namespace PnP.PowerShell.Tests.InformationManagement
         #region Scaffolded Cmdlet Tests
         //TODO: This is a scaffold of the cmdlet - complete the unit test
         //[TestMethod]
-        public void SetPnPLabelTest()
+        public void SetPnPRetentionLabel_ListTest()
+        {
+            using (var scope = new PSTestScope(true))
+            {
+                // Complete writing cmd parameters
+
+				// This is a mandatory parameter
+				// From Cmdlet Help: The ID or Url of the list.
+				var list = "";
+				// This is a mandatory parameter
+				// From Cmdlet Help: The name of the retention label
+				var label = "";
+				// From Cmdlet Help: Apply label to existing items in the library
+				var syncToItems = "";
+				// From Cmdlet Help: Block deletion of items in the library
+				var blockDeletion = "";
+				// From Cmdlet Help: Block editing of items in the library
+				var blockEdit = "";
+
+                var results = scope.ExecuteCommand("Set-PnPRetentionLabel",
+					new CommandParameter("List", list),
+					new CommandParameter("Label", label),
+					new CommandParameter("SyncToItems", syncToItems),
+					new CommandParameter("BlockDeletion", blockDeletion),
+					new CommandParameter("BlockEdit", blockEdit));
+                
+                Assert.IsNotNull(results);
+            }
+        }
+
+        //TODO: This is a scaffold of the cmdlet - complete the unit test
+        //[TestMethod]
+        public void SetPnPRetentionLabel_BulkItemsTest()
         {
             using (var scope = new PSTestScope(true))
             {
@@ -69,13 +101,14 @@ namespace PnP.PowerShell.Tests.InformationManagement
 				// This is a mandatory parameter
 				// From Cmdlet Help: List of iist item IDs.
 				var itemIds = new List<int>();
-				// From Cmdlet Help: Name of compliance tag (retention label) to be set or empty value to clear existing tag.
-				var complianceTag = "";
+				// This is a mandatory parameter
+				// From Cmdlet Help: Name of retention label to be set.
+				var label = "";
 				
-                var results = scope.ExecuteCommand("Set-PnPComplianceTagOnBulkItemsTests",
+                var results = scope.ExecuteCommand("Reset-PnPRetentionLabel",
 					new CommandParameter("List", list),
 					new CommandParameter("ItemIds", itemIds),
-					new CommandParameter("ComplianceTag", complianceTag));
+                    new CommandParameter("Label", label));
                 
                 Assert.IsNotNull(results);
             }
