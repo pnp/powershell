@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Admin
     [OutputType(typeof(SPContainerProperties))]
     public class GetContainer : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, Position=0, ValueFromPipeline=true)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public Guid OwningApplicationId;
 
         [Parameter(Mandatory = false)]
@@ -22,6 +22,7 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public string PagingToken { get; set; }
+
         protected override void ExecuteCmdlet()
         {
             if (Identity != null)
@@ -37,7 +38,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                throw new PSArgumentException($"Please specify the parameter OwningApplicationId or Identity when invoking this cmdlet");
+                throw new PSArgumentException($"Please specify the parameter {nameof(OwningApplicationId)} or {nameof(Identity)} when invoking this cmdlet");
             }
         }
     }
