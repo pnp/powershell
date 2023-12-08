@@ -2012,6 +2012,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPContainer.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPContainer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPContentType.md",
       "output": {
         ".html": {
