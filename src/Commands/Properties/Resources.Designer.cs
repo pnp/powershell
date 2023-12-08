@@ -813,5 +813,14 @@ namespace PnP.PowerShell.Commands.Properties {
                 return ResourceManager.GetString("WebhooksOnlySupportsLists", resourceCulture);
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The provided container could not be found.
+        /// </summary>
+        internal static string ContainerNotFound {
+            get {
+                return ResourceManager.GetString("ContainerNotFound", resourceCulture);
+            }
+        }
     }
 }
