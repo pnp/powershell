@@ -25,7 +25,7 @@ Get-PnPAzureADGroup [-Identity <AzureADGroupPipeBind>] [-Connection <PnPConnecti
 
 ## DESCRIPTION
 
-Allows to retrieve list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying `Identity` option it is possible to get a single group.
+Allows to retrieve a list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying `Identity` option it is possible to get a single group.
 
 ## EXAMPLES
 
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Identity of the Azure Active Directory group.
+The identity of the Azure Active Directory group. Either specify an id, a display name, email address, or a group object.
 
 ```yaml
 Type: AzureADGroupPipeBind

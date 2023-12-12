@@ -210,6 +210,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? CommentsOnFilesDisabled;
 
         [Parameter(Mandatory = false)]
+        public bool? AllowCommentsTextOnEmailEnabled;
+
+        [Parameter(Mandatory = false)]
         public SensitiveByDefaultState? MarkNewFilesSensitiveByDefault;
 
         [Parameter(Mandatory = false)]
@@ -271,9 +274,6 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? EnableAzureADB2BIntegration;
 
         [Parameter(Mandatory = false)]
-        public bool? SyncAadB2BManagementPolicy;
-
-        [Parameter(Mandatory = false)]
         public bool? CoreRequestFilesLinkEnabled;
 
         [Parameter(Mandatory = false)]
@@ -284,9 +284,6 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? DisableDocumentLibraryDefaultLabeling { get; set; }
-
-        [Parameter(Mandatory = false)]
-        public bool? DisableListSync { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? IsEnableAppAuthPopUpEnabled { get; set; }
@@ -369,7 +366,46 @@ namespace PnP.PowerShell.Commands.Admin
         public string ArchiveRedirectUrl { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? BlockSendLabelMismatchEmail { get; set; }     
+        public bool? BlockSendLabelMismatchEmail { get; set; }   
+
+        [Parameter(Mandatory = false)]
+        public MediaTranscriptionPolicyType? MediaTranscription { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public MediaTranscriptionAutomaticFeaturesPolicyType? MediaTranscriptionAutomaticFeatures { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? SiteOwnerManageLegacyServicePrincipalEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? ReduceTempTokenLifetimeEnabled { get; set; }
+        
+        [Parameter(Mandatory = false)]
+        public int? ReduceTempTokenLifetimeValue;
+
+        [Parameter(Mandatory = false)]
+        public bool? ViewersCanCommentOnMediaDisabled { get; set; }
+        
+        [Parameter(Mandatory = false)]
+        public bool? AllowGuestUserShareToUsersNotInSiteCollection { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public string ConditionalAccessPolicyErrorHelpLink;
+
+        [Parameter(Mandatory = false)]
+        public string CustomizedExternalSharingServiceUrl;
+
+        [Parameter(Mandatory = false)]
+        public bool? IncludeAtAGlanceInShareEmails { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? MassDeleteNotificationDisabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? BusinessConnectivityServiceDisabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableSensitivityLabelForPDF { get; set; }
 
         protected override void ExecuteCmdlet()
         {
@@ -392,6 +428,13 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.NoAccessRedirectUrl = NoAccessRedirectUrl;
                 modified = true;
             }
+
+            if (CustomizedExternalSharingServiceUrl != null)
+            {
+                Tenant.CustomizedExternalSharingServiceUrl = CustomizedExternalSharingServiceUrl;
+                modified = true;
+            }
+
             if (ExternalServicesEnabled.HasValue)
             {
                 Tenant.ExternalServicesEnabled = ExternalServicesEnabled.Value;
@@ -965,6 +1008,11 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.CommentsOnFilesDisabled = CommentsOnFilesDisabled.Value;
                 modified = true;
             }
+            if (AllowCommentsTextOnEmailEnabled.HasValue)
+            {
+                Tenant.AllowCommentsTextOnEmailEnabled = AllowCommentsTextOnEmailEnabled.Value;
+                modified = true;
+            }
             if (MarkNewFilesSensitiveByDefault.HasValue)
             {
                 Tenant.MarkNewFilesSensitiveByDefault = MarkNewFilesSensitiveByDefault.Value;
@@ -1066,7 +1114,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (OneDriveRequestFilesLinkExpirationInDays.Value < 0 || OneDriveRequestFilesLinkExpirationInDays.Value > 730)
                 {
-                    throw new PSArgumentException($"{OneDriveRequestFilesLinkExpirationInDays} must have a value between 0 and 730", nameof(OneDriveRequestFilesLinkExpirationInDays));
+                    throw new PSArgumentException("OneDriveRequestFilesLinkExpirationInDays must have a value between 0 and 730", nameof(OneDriveRequestFilesLinkExpirationInDays));
                 }
 
                 Tenant.OneDriveRequestFilesLinkExpirationInDays = OneDriveRequestFilesLinkExpirationInDays.Value;
@@ -1076,12 +1124,6 @@ namespace PnP.PowerShell.Commands.Admin
             if (EnableRestrictedAccessControl.HasValue)
             {
                 Tenant.EnableRestrictedAccessControl = EnableRestrictedAccessControl.Value;
-                modified = true;
-            }
-
-            if (SyncAadB2BManagementPolicy.HasValue)
-            {
-                Tenant.SyncAadB2BManagementPolicy = SyncAadB2BManagementPolicy.Value;
                 modified = true;
             }
 
@@ -1101,10 +1143,21 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (CoreRequestFilesLinkExpirationInDays.Value < 0 || CoreRequestFilesLinkExpirationInDays > 730)
                 {
-                    throw new PSArgumentException($"{CoreRequestFilesLinkExpirationInDays} must have a value between 0 and 730", nameof(CoreRequestFilesLinkExpirationInDays));
+                    throw new PSArgumentException("CoreRequestFilesLinkExpirationInDays must have a value between 0 and 730", nameof(CoreRequestFilesLinkExpirationInDays));
                 }
 
                 Tenant.CoreRequestFilesLinkExpirationInDays = CoreRequestFilesLinkExpirationInDays.Value;
+                modified = true;
+            }
+
+            if (ReduceTempTokenLifetimeValue.HasValue)
+            {
+                if (ReduceTempTokenLifetimeValue.Value < 5 || ReduceTempTokenLifetimeValue > 15)
+                {
+                    throw new PSArgumentException("ReduceTempTokenLifetimeValue must have a value between 5 and 15", nameof(ReduceTempTokenLifetimeValue));
+                }
+
+                Tenant.ReduceTempTokenLifetimeValue = ReduceTempTokenLifetimeValue.Value;
                 modified = true;
             }
 
@@ -1114,15 +1167,15 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if (DisableDocumentLibraryDefaultLabeling.HasValue)
+            if (ConditionalAccessPolicyErrorHelpLink != null)
             {
-                Tenant.DisableDocumentLibraryDefaultLabeling = DisableDocumentLibraryDefaultLabeling.Value;
+                Tenant.ConditionalAccessPolicyErrorHelpLink = ConditionalAccessPolicyErrorHelpLink;
                 modified = true;
             }
 
-            if (DisableListSync.HasValue)
+            if (DisableDocumentLibraryDefaultLabeling.HasValue)
             {
-                Tenant.DisableListSync = DisableListSync.Value;
+                Tenant.DisableDocumentLibraryDefaultLabeling = DisableDocumentLibraryDefaultLabeling.Value;
                 modified = true;
             }
 
@@ -1228,15 +1281,75 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if (ShowPeoplePickerGroupSuggestionsForIB.HasValue)
+            if (ArchiveRedirectUrl != null)
             {
                 Tenant.ArchiveRedirectUrl = ArchiveRedirectUrl;
+                modified = true;
+            }
+
+            if (MediaTranscription.HasValue)
+            {
+                Tenant.MediaTranscription = MediaTranscription.Value;
+                modified = true;
+            }
+
+            if (MediaTranscriptionAutomaticFeatures.HasValue)
+            {
+                Tenant.MediaTranscriptionAutomaticFeatures = MediaTranscriptionAutomaticFeatures.Value;
                 modified = true;
             }
 
             if (BlockSendLabelMismatchEmail.HasValue)
             {
                 Tenant.BlockSendLabelMismatchEmail = BlockSendLabelMismatchEmail.Value;
+                modified = true;
+            }
+
+            if (SiteOwnerManageLegacyServicePrincipalEnabled.HasValue)
+            {
+                Tenant.SiteOwnerManageLegacyServicePrincipalEnabled = SiteOwnerManageLegacyServicePrincipalEnabled.Value;
+                modified = true;
+            }
+
+            if (ReduceTempTokenLifetimeEnabled.HasValue)
+            {
+                Tenant.ReduceTempTokenLifetimeEnabled = ReduceTempTokenLifetimeEnabled.Value;
+                modified = true;
+            }
+
+            if (ViewersCanCommentOnMediaDisabled.HasValue)
+            {
+                Tenant.ViewersCanCommentOnMediaDisabled = ViewersCanCommentOnMediaDisabled.Value;
+                modified = true;
+            }
+
+            if (AllowGuestUserShareToUsersNotInSiteCollection.HasValue)
+            {
+                Tenant.AllowGuestUserShareToUsersNotInSiteCollection = AllowGuestUserShareToUsersNotInSiteCollection.Value;
+                modified = true;
+            }
+            
+            if (IncludeAtAGlanceInShareEmails.HasValue)
+            {
+                Tenant.IncludeAtAGlanceInShareEmails = IncludeAtAGlanceInShareEmails.Value;
+                modified = true;
+            }
+            
+            if (MassDeleteNotificationDisabled.HasValue)
+            {
+                Tenant.MassDeleteNotificationDisabled = MassDeleteNotificationDisabled.Value;
+                modified = true;
+            }
+
+            if(BusinessConnectivityServiceDisabled.HasValue)
+            {
+                Tenant.BusinessConnectivityServiceDisabled = BusinessConnectivityServiceDisabled.Value;
+                modified = true;
+            }
+
+            if (EnableSensitivityLabelForPDF.HasValue)
+            {
+                Tenant.EnableSensitivityLabelForPDF = EnableSensitivityLabelForPDF.Value;
                 modified = true;
             }
 

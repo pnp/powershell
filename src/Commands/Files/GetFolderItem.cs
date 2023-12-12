@@ -4,13 +4,14 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using File = Microsoft.SharePoint.Client.File;
+using Folder = Microsoft.SharePoint.Client.Folder;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFolderItem")]
+    [Cmdlet(VerbsCommon.Get, "PnPFolderItem", DefaultParameterSetName = ParameterSet_FOLDERSBYPIPE)]
+    [OutputType(typeof(IEnumerable<ClientObject>))]
     public class GetFolderItem : PnPWebCmdlet
     {
         private const string ParameterSet_FOLDERSBYPIPE = "Folder via pipebind";
@@ -19,7 +20,7 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERBYURL)]
         public string FolderSiteRelativeUrl;
 
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_FOLDERSBYPIPE)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERSBYPIPE)]
         public FolderPipeBind Identity;
 
         [Parameter(Mandatory = false)]
@@ -29,19 +30,46 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false)]
         public string ItemName = string.Empty;
 
-        [Parameter(Mandatory = false, Position = 4)]
+        [Parameter(Mandatory = false)]
         public SwitchParameter Recursive;
 
         protected override void ExecuteCmdlet()
         {
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+
             var contents = GetContents(FolderSiteRelativeUrl);
+
+            if (!string.IsNullOrEmpty(ItemName))
+            {
+                var filteredContents = new List<object>();
+                foreach(var item in contents)
+                {
+                    if(item is Folder folder)
+                    {
+                        if(folder.Name.Equals(ItemName, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            filteredContents.Add(folder);
+                        }
+                    }
+                    else if(item is File file)
+                    {
+                        if(file.Name.Equals(ItemName, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            filteredContents.Add(file);
+                        }
+                    }
+                }
+
+                contents = filteredContents;
+            }
+
             WriteObject(contents, true);
         }
 
         private IEnumerable<object> GetContents(string FolderSiteRelativeUrl)
         {
             Folder targetFolder = null;
-            if (ParameterSetName == ParameterSet_FOLDERSBYPIPE && Identity != null)
+            if (string.IsNullOrEmpty(FolderSiteRelativeUrl) && ParameterSetName == ParameterSet_FOLDERSBYPIPE && Identity != null)
             {
                 targetFolder = Identity.GetFolder(CurrentWeb);
             }
@@ -50,11 +78,17 @@ namespace PnP.PowerShell.Commands.Files
                 string serverRelativeUrl = null;
                 if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
                 {
-                    var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
-                    serverRelativeUrl = UrlUtility.Combine(webUrl, FolderSiteRelativeUrl);
+                    serverRelativeUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, FolderSiteRelativeUrl);
                 }
 
-                targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? CurrentWeb.RootFolder : CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                if(string.IsNullOrEmpty(FolderSiteRelativeUrl))
+                {
+                    targetFolder = CurrentWeb.EnsureProperty(w => w.RootFolder);
+                }
+                else
+                {
+                    targetFolder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
+                }
             }
 
             IEnumerable<File> files = null;
@@ -63,18 +97,10 @@ namespace PnP.PowerShell.Commands.Files
             if (ItemType == "File" || ItemType == "All")
             {
                 files = ClientContext.LoadQuery(targetFolder.Files).OrderBy(f => f.Name);
-                if (!string.IsNullOrEmpty(ItemName))
-                {
-                    files = files.Where(f => f.Name.Equals(ItemName, StringComparison.InvariantCultureIgnoreCase));
-                }
             }
             if (ItemType == "Folder" || ItemType == "All" || Recursive)
             {
                 folders = ClientContext.LoadQuery(targetFolder.Folders).OrderBy(f => f.Name);
-                if (!string.IsNullOrEmpty(ItemName))
-                {
-                    folders = folders.Where(f => f.Name.Equals(ItemName, StringComparison.InvariantCultureIgnoreCase));
-                }
             }
             ClientContext.ExecuteQueryRetry();
 
@@ -97,6 +123,9 @@ namespace PnP.PowerShell.Commands.Files
                 foreach (var folder in folders)
                 {
                     var relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
+
+                    WriteVerbose($"Processing folder {relativeUrl}");
+
                     var subFolderContents = GetContents(relativeUrl);
                     folderContent = folderContent.Concat<object>(subFolderContents);
                 }
@@ -104,7 +133,5 @@ namespace PnP.PowerShell.Commands.Files
 
             return folderContent;
         }
-
-
     }
 }

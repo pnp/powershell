@@ -20,7 +20,7 @@ You must connect to the tenant admin website (https://\<tenant\>-admin.sharepoin
 ## SYNTAX
 
 ```powershell
-Get-PnPUserProfileProperty -Account <String[]> [-Properties <String[]>] [-Connection <PnPConnection>]
+Get-PnPUserProfileProperty -Account <String[]> [-Properties <String[]>] [-Verbose] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -84,6 +84,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

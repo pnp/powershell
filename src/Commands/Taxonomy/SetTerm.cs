@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Globalization;
+using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
@@ -10,9 +11,8 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Taxonomy
 {
     [Cmdlet(VerbsCommon.Set, "PnPTerm")]
-    public class SetTerm : PnPSharePointCmdlet
+    public class SetTerm : PnPRetrievalsCmdlet<Term>
     {
-
         private const string ParameterSet_BYID = "By Term Id";
         private const string ParameterSet_BYNAME = "By Term Name";
 
@@ -53,8 +53,13 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false)]
         public bool Deprecated;
 
+        [Parameter(Mandatory = false)]
+        public bool? AvailableForTagging;
+
         protected override void ExecuteCmdlet()
         {
+            DefaultRetrievalExpressions = new Expression<Func<Term, object>>[] { g => g.Name, g => g.TermsCount, g => g.Id };
+            Term term;
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
             // Get Term Store
             TermStore termStore = null;
@@ -68,9 +73,25 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
             termStore.EnsureProperty(ts => ts.DefaultLanguage);
 
-            var termGroup = TermGroup.GetGroup(termStore);
-            var termSet = TermSet.GetTermSet(termGroup);
-            var term = Identity.GetTerm(ClientContext, termStore, termSet, false, null);
+            if (ParameterSetName == ParameterSet_BYID)
+            {
+                if (Identity.Id != Guid.Empty)
+                {
+                    term = termStore.GetTerm(Identity.Id);
+                    ClientContext.Load(term, RetrievalExpressions);
+                    ClientContext.ExecuteQueryRetry();
+                }
+                else
+                {
+                    throw new PSArgumentException("Insufficient Parameters specified to determine the term to retrieve");
+                }
+            }
+            else
+            {
+                var termGroup = TermGroup.GetGroup(termStore);
+                var termSet = TermSet.GetTermSet(termGroup);
+                term = Identity.GetTerm(ClientContext, termStore, termSet, false, null);
+            }
 
             if (ParameterSpecified(nameof(Name)))
             {
@@ -112,6 +133,12 @@ namespace PnP.PowerShell.Commands.Taxonomy
             {
                 term.Deprecate(Deprecated);
             }
+            
+            if (ParameterSpecified(nameof(AvailableForTagging)) && AvailableForTagging.HasValue)
+            {
+                term.IsAvailableForTagging = AvailableForTagging.Value;
+            }
+            
             ClientContext.Load(term);
             termStore.CommitAll();
             ClientContext.ExecuteQueryRetry();
@@ -119,4 +146,3 @@ namespace PnP.PowerShell.Commands.Taxonomy
         }
     }
 }
-

@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsTeam")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]

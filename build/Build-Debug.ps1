@@ -83,7 +83,7 @@ if ($LASTEXITCODE -eq 0) {
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
 
 	if ($IsLinux -or $isMacOS) {
-		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
+		$destinationFolder = "$HOME/.local/share/powershell/Modules/PnP.PowerShell"
 	}
 	else {
 		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"

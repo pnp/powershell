@@ -85,21 +85,21 @@ Rename a list, including its' URL.
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $true
 ```
 
-Enable AutoExpiration file version trim mode on a doccument library.
+Enable AutoExpiration file version trim mode on a document library.
 
 ### EXAMPLE 9
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVersions 500
 ```
 
-Enable ExpireAfter file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
+Enable ExpireAfter file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.
 
 ### EXAMPLE 10
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVersions 500
 ```
 
-Enable NoExpiration file version trim mode on a doccument library. MinorVersions is also needed when minor version is enabled.
+Enable NoExpiration file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.
 
 ### EXAMPLE 11
 ```powershell
@@ -111,7 +111,7 @@ Sets the default sensitivity label for a document library to Confidential.
 ## PARAMETERS
 
 ### -BreakRoleInheritance
-If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.html).
+If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.md).
 
 ```yaml
 Type: SwitchParameter
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResetRoleInheritance
-If used the security inheritance is reset for this list meaning it will not copy the permissions from its parent, but will start with an empty list of permissions. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.html).
+If used the security inheritance is reset for this list meaning it will not copy the permissions from its parent, but will start with an empty list of permissions. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.md).
 
 ```yaml
 Type: SwitchParameter

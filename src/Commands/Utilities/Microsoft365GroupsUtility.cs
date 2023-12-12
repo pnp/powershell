@@ -610,7 +610,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             return await GraphHelper.PatchAsync(connection, accessToken, $"v1.0/groups/{group.Id}", group);
         }
-
+        
         internal static async Task SetVisibilityAsync(PnPConnection connection, string accessToken, Guid groupId, bool? hideFromAddressLists, bool? hideFromOutlookClients)
         {
             var patchData = new
@@ -734,6 +734,11 @@ namespace PnP.PowerShell.Commands.Utilities
                     retry = false;
                 }
             }
+        }
+        
+        internal static async Task<HttpResponseMessage> DeletePhotoAsync(PnPConnection connection, string accessToken, Guid groupId)
+        {
+            return await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}/photo/$value", accessToken);
         }
     }
 }

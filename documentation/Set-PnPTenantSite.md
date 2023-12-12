@@ -284,6 +284,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DisableSharingForNonOwners
+Specifies whether non-owners should be prevented from inviting new users to the site. Setting this will also disable Access Request Emails.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DisableCompanyWideSharingLinks
 Determines whether company-wide sharing links are disabled in collection.
 
@@ -728,6 +742,76 @@ Set a property on a site collection to make all lists always load with the site 
 
 ```yaml
 Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedAccessControl
+To apply restricted access control to a group-connected or Teams-connected site.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClearRestrictedAccessControl
+To reset restricted access control configuration for a site.
+
+```yaml
+Type: Switch Parameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoveRestrictedAccessControlGroups
+You can remove the specified security group from restricted access control configuration. Members of the security group are no longer be able to access site content while the policy is enforced on the site. 
+
+```yaml
+Type: GUID []
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AddRestrictedAccessControlGroups
+You can add the specified security groups for restricted access control configuration.
+
+```yaml
+Type: GUID []
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedAccessControlGroups
+To edit a restricted access control group for a non-group site
+
+```yaml
+Type: GUID []
 Parameter Sets: Set Properties
 
 Required: False

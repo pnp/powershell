@@ -12,6 +12,9 @@ namespace PnP.PowerShell.Commands.Admin
     [Cmdlet(VerbsCommon.Get, "PnPTenantDeletedSite")]
     public class GetTenantDeletedSite : PnPAdminCmdlet
     {
+        private const string ParameterSet_ALLSITES = "ParameterSetAllSites";
+        private const string ParameterSet_PERSONALSITESONLY = "ParameterSetPersonalSitesOnly";
+
         [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = false)]
         [Alias("Url")]
         public SPOSitePipeBind Identity { get; set; }
@@ -19,11 +22,15 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public uint Limit = 200;
 
-        [Parameter(ParameterSetName = "ParameterSetAllSites")]
+        [Parameter(ParameterSetName = ParameterSet_ALLSITES)]
         public SwitchParameter IncludePersonalSite { get; set; }
 
-        [Parameter(ParameterSetName = "ParameterSetPersonalSitesOnly", Mandatory = true)]
+        [Parameter(ParameterSetName = ParameterSet_PERSONALSITESONLY, Mandatory = true)]
         public SwitchParameter IncludeOnlyPersonalSite { get; set; }
+
+        [Parameter(ParameterSetName = ParameterSet_ALLSITES)]
+        [Parameter(ParameterSetName = ParameterSet_PERSONALSITESONLY)]
+        public SwitchParameter Detailed { get; set; }
 
         protected override void ExecuteCmdlet()
         {
@@ -52,7 +59,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 foreach (DeletedSiteProperties item in list)
                 {
-                    WriteObject(new Model.SPODeletedSite(item));
+                    WriteObject(new Model.SPODeletedSite(item, Detailed.ToBool(), AdminContext, this));
                 }
                 if (!flag2 && flag3)
                 {
@@ -67,9 +74,9 @@ namespace PnP.PowerShell.Commands.Admin
                 try
                 {
                     AdminContext.ExecuteQueryRetry();
-                    WriteObject(new Model.SPODeletedSite(deletedSitePropertiesByUrl));
+                    WriteObject(new Model.SPODeletedSite(deletedSitePropertiesByUrl, Detailed.ToBool(), AdminContext, this));
                 }
-                catch (Microsoft.SharePoint.Client.ServerException e) when (e.ServerErrorTypeName.Equals("Microsoft.SharePoint.Client.UnknownError", StringComparison.InvariantCultureIgnoreCase))
+                catch (ServerException e) when (e.ServerErrorTypeName.Equals("Microsoft.SharePoint.Client.UnknownError", StringComparison.InvariantCultureIgnoreCase))
                 {
                     WriteVerbose($"No sitecollection found in the tenant recycle bin with the Url {Identity.Url}");
                 }

@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPage")]
     [Alias("Set-PnPClientSidePage")]
+    [OutputType(typeof(PnP.Core.Model.SharePoint.IPage))]
     public class SetPage : PnPWebCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -59,6 +60,9 @@ namespace PnP.PowerShell.Commands.Pages
 
         [Parameter(Mandatory = false)]
         public int[] TranslationLanguageCodes;
+
+        [Parameter(Mandatory = false)]
+        public bool ShowPublishDate;
 
         private CustomHeaderDynamicParameters customHeaderParameters;
 
@@ -128,6 +132,11 @@ namespace PnP.PowerShell.Commands.Pages
             if (ParameterSpecified(nameof(HeaderLayoutType)))
             {
                 clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
+            }
+            
+            if(ParameterSpecified(nameof(ShowPublishDate)))
+            {
+                clientSidePage.PageHeader.ShowPublishDate = ShowPublishDate;
             }
 
             if (PromoteAs == PagePromoteType.Template)

@@ -13,6 +13,8 @@ namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPAzureADAppSitePermission")]
     [RequiredMinimalApiPermissions("Sites.FullControl.All")]
+    [Alias("Grant-PnPEntraIDAppSitePermission")]
+    [OutputType(typeof(AzureADAppPermissionInternal))]
     public class GrantPnPAzureADAppSitePermission : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -35,39 +37,50 @@ namespace PnP.PowerShell.Commands.Apps
             Guid siteId = Guid.Empty;
             if (ParameterSpecified(nameof(Site)))
             {
+                WriteVerbose($"Using Microsoft Graph to lookup the site Id of the passed in site using -{nameof(Site)}");
                 siteId = Site.GetSiteIdThroughGraph(Connection, AccessToken);
+                WriteVerbose($"Site passed in using -{nameof(Site)} resolved to Id {siteId}");
             }
             else
             {
+                WriteVerbose($"No specific site passed in through -{nameof(Site)}, taking the currently connected to site");
                 siteId = PnPContext.Site.Id;
+                WriteVerbose($"Currently connected to site has Id {siteId}");
             }
 
-            if (siteId != Guid.Empty)
+            if (siteId == Guid.Empty)
             {
-                var payload = new
-                {
-                    roles = Permissions.Select(p => p.ToLower()).ToArray(),
-                    grantedToIdentities = new[] {
-                            new {
-                                application = new {
-                                    id = AppId.ToString(),
-                                    displayName = DisplayName
-                                }
-                            }
-                        },
-                    grantedToIdentitiesV2 = new[] {
-                            new {
-                                application = new {
-                                    id = AppId.ToString(),
-                                    displayName = DisplayName
-                                }
+                WriteVerbose("Id of the site to provide permissions on could not be defined. Please ensure you're passing in a valid site using -{nameof(Site)}");
+                return;
+            }
+
+            // Construct the payload of the Graph request
+            var payload = new
+            {
+                roles = Permissions.Select(p => p.ToString().ToLowerInvariant()).ToArray(),
+                grantedToIdentities = new[] {
+                        new {
+                            application = new {
+                                id = AppId.ToString(),
+                                displayName = DisplayName
                             }
                         }
-                };
+                    },
+                grantedToIdentitiesV2 = new[] {
+                        new {
+                            application = new {
+                                id = AppId.ToString(),
+                                displayName = DisplayName
+                            }
+                        }
+                    }
+            };
 
-                var results = Utilities.REST.RestHelper.PostAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload).GetAwaiter().GetResult();
-                WriteObject(results.Convert());
-            }
+            WriteVerbose($"Granting App with Id {AppId} the permission{(payload.roles.Length != 1 ? "s" : "")} {string.Join(',', payload.roles)}");
+
+            // Make the Graph Grant request
+            var result = Utilities.REST.RestHelper.PostAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload).GetAwaiter().GetResult();
+            WriteObject(result.Convert());
         }
     }
 }

@@ -12,6 +12,7 @@ namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADAppSitePermission", DefaultParameterSetName = ParameterSet_ALL)]
     [RequiredMinimalApiPermissions("Sites.FullControl.All")]
+    [Alias("Get-PnPEntraIDAppSitePermission")]
     public class GetPnPAzureADAppSitePermission : PnPGraphCmdlet
     {
         private const string ParameterSet_ALL = "All Permissions";

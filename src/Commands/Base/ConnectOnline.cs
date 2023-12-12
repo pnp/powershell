@@ -38,6 +38,7 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID = "User Assigned Managed Identity by Azure Resource Id";
         private const string ParameterSet_INTERACTIVE = "Interactive login for Multi Factor Authentication";
         private const string ParameterSet_ENVIRONMENTVARIABLE = "Environment Variable";
+        private const string ParameterSet_AZUREAD_WORKLOAD_IDENTITY = "Azure AD Workload Identity";
 
         private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
         private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
@@ -56,6 +57,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -68,6 +70,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY, ValueFromPipeline = true)]
         public SwitchParameter ValidateConnection;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -84,6 +87,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -94,6 +98,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
         public PnPConnection Connection = PnPConnection.Current;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -204,7 +209,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
-
         public SwitchParameter ManagedIdentity;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
@@ -225,6 +229,9 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter UseWebLogin;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
+        public string RelativeUrl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public SwitchParameter ForceAuthentication;
 
@@ -236,6 +243,29 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public SwitchParameter EnvironmentVariable;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        public string MicrosoftGraphEndPoint;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        public string AzureADLoginEndPoint;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
+        public SwitchParameter AzureADWorkloadIdentity;
 
         protected override void ProcessRecord()
         {
@@ -276,10 +306,15 @@ namespace PnP.PowerShell.Commands.Base
             {
                 credentials = Credentials.Credential;
             }
-
+            
             if (PingHost(new Uri(Url).Host) == false)
             {
                 throw new PSArgumentException("Host not reachable");
+            }
+
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                SetCustomEndpoints();
             }
 
             // Connect using the used set parameters
@@ -321,6 +356,9 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_ENVIRONMENTVARIABLE:
                     newConnection = ConnectEnvironmentVariable();
                     break;
+                case ParameterSet_AZUREAD_WORKLOAD_IDENTITY:
+                    newConnection = ConnectAzureADWorkloadIdentity();
+                    break;
             }
 
             // Ensure a connection instance has been created by now
@@ -361,6 +399,28 @@ namespace PnP.PowerShell.Commands.Base
                     WriteVerbose($"Site at {Url} does not exist");
                     throw new PSInvalidOperationException($"The specified site {Url} does not exist", e);
                 }
+                catch (TargetInvocationException tex)
+                {
+                    Exception innermostException = tex;
+                    while (innermostException.InnerException != null) innermostException = innermostException.InnerException;
+
+                    string errorMessage;
+                    if (innermostException is System.Net.WebException wex)
+                    {
+                        using var streamReader = new StreamReader(wex.Response.GetResponseStream());
+                        errorMessage = $"{wex.Status}: {wex.Message} Response received: {streamReader.ReadToEnd()}";
+                    }
+                    else
+                    {
+                        errorMessage = innermostException.Message;
+                    }
+
+                    // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
+                    if (!ParameterSpecified("ErrorAction") || !new [] { "stop", "ignore", "silentlycontinue" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant()))
+                    {
+                        throw new PSInvalidOperationException(errorMessage);
+                    }
+                }             
             }
 
             if (ReturnConnection)
@@ -601,7 +661,14 @@ namespace PnP.PowerShell.Commands.Base
             WriteWarning("Consider using -Interactive instead, which provides better functionality. See the documentation at https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html#interactive-login-for-multi-factor-authentication");
             if (Utilities.OperatingSystem.IsWindows())
             {
-                return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
+                if (!string.IsNullOrWhiteSpace(RelativeUrl))
+                {
+                    return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication, siteRelativeUrl: RelativeUrl);
+                }
+                else
+                {
+                    return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
+                }
             }
             else
             {
@@ -699,6 +766,12 @@ namespace PnP.PowerShell.Commands.Base
             return null;
         }
 
+        private PnPConnection ConnectAzureADWorkloadIdentity()
+        {
+            WriteVerbose("Connecting using Azure AD Workload Identity");
+            return PnPConnection.CreateWithAzureADWorkloadIdentity(this, Url, TenantAdminUrl);
+        }
+
         #endregion
 
         #region Helper methods
@@ -708,20 +781,8 @@ namespace PnP.PowerShell.Commands.Base
 
             try
             {
-                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-                var httpRequest = new HttpRequestMessage();
-                httpRequest.Method = HttpMethod.Head;
-                httpRequest.Version = new Version(2,0);
-                httpRequest.RequestUri = new Uri("https://" + nameOrAddress);                
-                var cancellationToken = new CancellationTokenSource();
-                cancellationToken.CancelAfter(TimeSpan.FromSeconds(10));
-                var response = httpClient.SendAsync(httpRequest, cancellationToken.Token).Result;
-                var statusCode = (int) response.StatusCode;
-                if (statusCode > 100 && statusCode < 500)
-                {
-                    return true;
-                }
-                return false;
+                var conn = System.Net.Dns.GetHostEntry(nameOrAddress);
+                return true;
             }
             catch
             {
@@ -821,6 +882,19 @@ namespace PnP.PowerShell.Commands.Base
 
             return secPassword;
         }
+
+        private void SetCustomEndpoints()
+        {
+            if (!string.IsNullOrWhiteSpace(MicrosoftGraphEndPoint))
+            {
+                Environment.SetEnvironmentVariable("MicrosoftGraphEndPoint", MicrosoftGraphEndPoint, EnvironmentVariableTarget.Process);
+            }
+            if (!string.IsNullOrWhiteSpace(AzureADLoginEndPoint))
+            {
+                Environment.SetEnvironmentVariable("AzureADLoginEndPoint", AzureADLoginEndPoint, EnvironmentVariableTarget.Process);
+            }
+        }
+
         #endregion
     }
 }

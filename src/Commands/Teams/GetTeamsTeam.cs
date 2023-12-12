@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsTeam", DefaultParameterSetName = ParameterSet_Identity)]
     [RequiredMinimalApiPermissions("Group.Read.All")]
@@ -29,10 +29,14 @@ namespace PnP.PowerShell.Commands.Graph
             if (ParameterSpecified(nameof(Identity)))
             {
                 var groupId = Identity.GetGroupId(Connection, AccessToken);
-                if (groupId != null)
+                if(groupId == null)
                 {
-                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
+                    throw new PSArgumentException("Team not found", nameof(Identity));
                 }
+                else
+                {                
+                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
+                }                
             }
             else
             {

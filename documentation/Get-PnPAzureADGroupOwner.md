@@ -25,7 +25,7 @@ Get-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [-Connection <PnPConne
 
 ## DESCRIPTION
 
-Allows to list owners from given Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Allows to list owners from a given Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
 
 ## EXAMPLES
 
@@ -46,7 +46,7 @@ Retrieves all the owners of a specific Azure Active Directory group based on the
 ## PARAMETERS
 
 ### -Identity
-The Identity of the Azure Active Directory group.
+The identity of the Azure Active Directory group.
 
 ```yaml
 Type: AzureADGroupPipeBind

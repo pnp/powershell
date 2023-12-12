@@ -22,6 +22,7 @@ Invoke-PnPSPRestMethod -Url <String>
                        [-Raw]
                        [-Connection <PnPConnection>]
                        [-ResponseHeadersVariable <String>]
+                       [-Batch <PnPBatch>]
 ```
 
 ## DESCRIPTION
@@ -78,6 +79,19 @@ $headers
 This example executes a GET request towards the current site collection and returns the id and title of all the lists and outputs them to the console. Notice the use of single quotes. If you want to use double quotes (") then you will have to escape the $ character with a backtick: `$
 
 It will also store the response headers values in the PowerShell variable name that you specify. Enter a variable name without the dollar sign ($) symbol.
+
+### EXAMPLE 7
+```powershell
+$batch = New-PnPBatch -RetainRequests
+Invoke-PnPSPRestMethod -Method Get -Url "https://tenant.sharepoint.com/sites/mysite/_api/web/lists" -Batch $batch
+$item = "{'Title':'Test'}"
+Invoke-PnPSPRestMethod -Method Post -Url "https://tenant.sharepoint.com/sites/mysite/_api/web/lists/GetByTitle('Test')/items" -Content $item -Batch $batch
+$response = Invoke-PnPBatch $batch -Details
+$response
+```
+
+This example executes a GET request to get all lists and a POST request to add an item to a list in a single batch request.
+It is necessary to create and invoke batch requests in the manner specified here if you want to process something later on with the response object.
 
 ## PARAMETERS
 

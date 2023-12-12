@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureADUserTemporaryAccessPass")]
     [RequiredMinimalApiPermissions("UserAuthenticationMethod.ReadWrite.All")]
+    [Alias("New-PnPEntraIDUserTemporaryAccessPass")]
     public class NewAzureADUserTemporaryAccessPass : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -30,7 +31,7 @@ namespace PnP.PowerShell.Commands.Graph
                                 userId: Identity.User?.Id?.ToString() ?? Identity.Upn ?? Identity.UserId,
                                 startDateTime: StartDateTime,
                                 lifeTimeInMinutes: LifeTimeInMinutes,
-                                isUsableOnce: IsUsableOnce);
+                                isUsableOnce: IsUsableOnce, azureEnvironment: Connection.AzureEnvironment);
 
             WriteObject(accessPass);
         }

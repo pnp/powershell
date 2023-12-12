@@ -8,6 +8,7 @@ namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Revoke, "PnPAzureADAppSitePermission")]
     [RequiredMinimalApiPermissions("Sites.FullControl.All")]
+    [Alias("Revoke-PnPEntraIDAppSitePermission")]
     public class RevokePnPAzureADAppSitePermission : PnPGraphCmdlet
     {
 
