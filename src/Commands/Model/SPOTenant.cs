@@ -183,6 +183,8 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? EnableSensitivityLabelForPDF { private set; get; }
 
+        public bool? IsDataAccessInCardDesignerEnabled { private set; get; }
+
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext)
@@ -219,6 +221,7 @@ namespace PnP.PowerShell.Commands.Model
             IsLoopEnabled = tenant.IsLoopEnabled;
             EnableAzureADB2BIntegration = tenant.EnableAzureADB2BIntegration;
             SiteOwnerManageLegacyServicePrincipalEnabled = tenant.SiteOwnerManageLegacyServicePrincipalEnabled;
+            IsDataAccessInCardDesignerEnabled = tenant.IsDataAccessInCardDesignerEnabled;
 
             try
             {
