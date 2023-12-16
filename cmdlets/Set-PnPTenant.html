@@ -206,6 +206,7 @@
  [-MassDeleteNotificationDisabled &lt;Boolean&gt;]
  [-BusinessConnectivityServiceDisabled &lt;Boolean&gt;]
  [-EnableSensitivityLabelForPDF &lt;Boolean&gt;]
+ [-IsDataAccessInCardDesignerEnabled &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -608,6 +609,17 @@ Accept wildcard characters: False
 <h3 id="-ipaddresswactokenlifetime">-IPAddressWACTokenLifetime</h3>
 <p>Allows to set the session timeout. If you are a tenant administrator and you begin IP address enforcement for OneDrive for Business in Office 365, this enforcement automatically activates a tenant parameter IPAddressWACTokenLifetime. The default value is 15 minutes, when IP Address Enforcement is True.</p>
 <pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-isdataaccessincarddesignerenabled">-IsDataAccessInCardDesignerEnabled</h3>
+<p>Allows turning on support for data access in the Viva Connections Adaptive Card Designer.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
