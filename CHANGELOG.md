@@ -10,6 +10,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `-IsDataAccessInCardDesignerEnabled` to `Set-PnPTenant` which allows for configuring Viva Connections Adaptive Cards to connect to backend services for their data [#3635](https://github.com/pnp/powershell/pull/3635)
+
+### Contributors
+
+- Koen Zomers [koenzomers]
+
+## [2.3.0]
+
+### Added
+
 - Added `-MediaTranscription` and `-MediaTranscriptionAutomaticFeatures` to `Set-PnPTenant` which allows for configuring the media transcription settings. [#3238](https://github.com/pnp/powershell/pull/3238)
 - Added `-Includes` option to `Get-PnPListItem` which allows for specifying additional fields to be retrieved. [#3270](https://github.com/pnp/powershell/pull/3270)
 - Added `-AllowCommentsTextOnEmailEnabled` parameter to `Set-PnPTenant` which allows including the surrounding document context in email notification when user is mentioned in document comments. [#3268](https://github.com/pnp/powershell/pull/3268)
@@ -105,7 +115,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Antti K. Koskela [koskila]
 - Christian Veenhuis [ChVeen]
 - Kunj Balkrishna Sangani [kunj-sangani]
-- Antti K. Koskela [koskila]
 - Dave Paylor [paylord]
 - [smsdaniel]
 - Jim Duncan [sparkitect]
