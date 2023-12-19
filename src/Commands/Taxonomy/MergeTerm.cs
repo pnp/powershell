@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
-    [Cmdlet(VerbsData.Merge, "PnPTerms")]
+    [Cmdlet(VerbsData.Merge, "PnPTerm")]
     public class MergeTerm : PnPSharePointCmdlet
     {
         private const string ParameterSet_TERMID = "By Term Id";

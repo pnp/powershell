@@ -4,7 +4,7 @@ title: Merge-PnPTerms
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Merge-PnPTerms.html
+online version: https://pnp.github.io/powershell/cmdlets/Merge-PnPTerm.html
 ---
 
 # Merge-PnPTerms
@@ -23,7 +23,8 @@ Merge-PnPTerms -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -TargetTerm 95e137
 
 ## DESCRIPTION
 
-This cmdlet moves a taxonomy term to another term set or term
+This cmdlet merges a taxonomy term into another term.
+
 
 ## EXAMPLES
 
