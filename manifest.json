@@ -4895,6 +4895,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPContainer.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPContainer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPContentType.md",
       "output": {
         ".html": {

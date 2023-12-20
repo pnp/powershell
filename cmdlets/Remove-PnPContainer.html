@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPContainer | PnP PowerShell </title>
+    <title>Remove-PnPContainer | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPContainer | PnP PowerShell ">
+    <meta name="title" content="Remove-PnPContainer | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,35 +77,31 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="get-pnpcontainer">Get-PnPContainer</h1>
+  <h1 id="remove-pnpcontainer">Remove-PnPContainer</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Returns one or more Containers in a SharePoint repository services application.</p>
+<p>The Remove-PnPContainer cmdlet removes a container from the SharePoint tenant. The container to remove is specified by the Identity parameter, which accepts a ContainerPipeBind object.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPContainer [[-Identity] &lt;ContainerPipeBind&gt;] [-OwningApplicationId [Guid]] [-Paged [switchparameter]] [-PagingToken [string]][-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Remove-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -OwningApplicationId a187e399-0c36-4b98-8f04-1edc167a0996
+<pre><code class="lang-powershell">Remove-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; 
 </code></pre>
-<p>Returns a tabular list of Containers created under the specified SharePoint repository services application.</p>
+<p>Removes the specified container by using the container id.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -OwningApplicationId a187e399-0c36-4b98-8f04-1edc167a0996 -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; 
+<pre><code class="lang-powershell">Remove-PnPContainer -Identity  &quot;https://contoso.sharepoint.com/contentstorage/CSP_4bd71a68-8312-4275-99b1-a2b70e3ba0e8&quot;
 </code></pre>
-<p>Returns the properties of the specified container by using the container id</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPContainer -Identity &quot;bc07d4b8-1c2f-4184-8cc2-a52dfd6fe0c4&quot; -Identity  &quot;https://contoso.sharepoint.com/contentstorage/CSP_4bd71a68-8312-4275-99b1-a2b70e3ba0e8&quot;
-</code></pre>
-<p>Returns the properties of the specified container by using the container url</p>
+<p>Removes the the specified container by using the container url</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -123,45 +119,10 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: ContainerPipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: Falsegit 
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-owningapplicationid">-OwningApplicationId</h3>
-<p>This parameter specifies the ID of the SharePoint repository services application.</p>
-<p>To retrieve Containers for the Microsoft Loop app, use OwningApplicationId: a187e399-0c36-4b98-8f04-1edc167a0996.
-To retrieve Containers for the Microsoft Designer app, use OwningApplicationId: 5e2795e3-ce8c-4cfb-b302-35fe5cd01597</p>
-<pre><code class="lang-yaml">Type: Guid
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-paged">-Paged</h3>
-<p>This parameter can be used when there are more than 5,000 Containers in a given SharePoint repository services application. Using -Paged will provide a <paging token=""> that will display the next 5,000 Containers.</paging></p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-pagingtoken">-PagingToken</h3>
-<p>Use this parameter to provide the <paging token=""> provided to view the remaining Containers as shown in Example 5. If there are no more Containers to display, the commandlet output will return the message End of Containers view. Otherwise, use the given <paging token=""> to retrieve the next batch of up to 5,000 ontainers.</paging></paging></p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
