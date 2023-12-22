@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Merge-PnPTerms
+title: Merge-PnPTerm
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
 online version: https://pnp.github.io/powershell/cmdlets/Merge-PnPTerm.html
 ---
 
-# Merge-PnPTerms
+# Merge-PnPTerm
 
 ## SYNOPSIS
 
@@ -18,7 +18,7 @@ Merges a taxonomy term into another term.
 ### Merge term set into term by Term Ids
 
 ```
-Merge-PnPTerms -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -TargetTerm 95e13729-3ccf-4ec8-998c-78e9ef1daa0b 
+Merge-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -TargetTerm 95e13729-3ccf-4ec8-998c-78e9ef1daa0b 
 ```
 
 ## DESCRIPTION
@@ -30,10 +30,8 @@ This cmdlet merges a taxonomy term into another term.
 
 ### Example 1
 ```powershell
-Merge-PnPTerms -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -TargetTerm 95e13729-3ccf-4ec8-998c-78e9ef1daa0b 
+Merge-PnPTerm -Identity d67966b0-3b60-4331-8dc4-0b5a2ca730fc -TargetTerm 95e13729-3ccf-4ec8-998c-78e9ef1daa0b 
 ```
-
-
 
 ## PARAMETERS
 
