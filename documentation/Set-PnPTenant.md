@@ -134,6 +134,9 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-CustomizedExternalSharingServiceUrl <String>]
  [-IncludeAtAGlanceInShareEmails <Boolean>]
  [-MassDeleteNotificationDisabled <Boolean>]
+ [-BusinessConnectivityServiceDisabled <Boolean>]
+ [-EnableSensitivityLabelForPDF <Boolean>]
+ [-IsDataAccessInCardDesignerEnabled <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -270,6 +273,43 @@ Accept wildcard characters: False
 ### -BlockSendLabelMismatchEmail
 Allows blocking of the automated e-mail being sent when somebody uploads a document to a site that's protected with a sensitivity label and their document has a higher priority sensitivity label than the sensitivity label applied to the site. [More information](
 https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BusinessConnectivityServiceDisabled
+Allows blocking of Business Connectivity Services to be used on SharePoint Online. This feature is set to be retired on September 30, 2024. [More information](https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/support-update-for-business-connectivity-services-in-microsoft/ba-p/3938773).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableSensitivityLabelForPDF
+Allows turning on support for PDFs with sensitivity labels for the following scenarios:
+
+- Applying a sensitivity label in Office for the web.
+- Uploading a labeled document, and then extracting and displaying that sensitivity label.
+- Search, eDiscovery, and data loss prevention.
+- Auto-labeling policies and default sensitivity labels for SharePoint document libraries.
+
+The valid values are:
+True - Enables support for PDFs.
+False (default) - Disables support for PDFs.
 
 ```yaml
 Type: Boolean
@@ -624,6 +664,20 @@ Allows to set the session timeout. If you are a tenant administrator and you beg
 
 ```yaml
 Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsDataAccessInCardDesignerEnabled
+Allows turning on support for data access in the Viva Connections Adaptive Card Designer.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -1464,6 +1518,12 @@ Accept wildcard characters: False
 
 ### -EnableModernListTemplateIds
 Guids of out of the box modern list templates to show when creating a new list
+
+| Template  | Template Id |
+| ------------- | ------------- |
+| Media library | 7fdc8cba-3e07-4851-a7ac-b747040ff1ce |
+| Learning | 2a31cc9a-a7a2-4978-8104-6b7c0c0ff1ce |
+| Invoices | cb3f4b1a-d4d8-40b3-a3e8-c39c470ff1ce |
 
 ```yaml
 Type: Guid[]

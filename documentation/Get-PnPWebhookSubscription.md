@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Get-PnPWebhookSubscriptions
+title: Get-PnPWebhookSubscription
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPWebhookSubscriptions.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPWebhookSubscription.html
 ---
  
-# Get-PnPWebhookSubscriptions
+# Get-PnPWebhookSubscription
 
 ## SYNOPSIS
 Gets all the Webhook subscriptions of the resource
@@ -15,7 +15,7 @@ Gets all the Webhook subscriptions of the resource
 ## SYNTAX
 
 ```powershell
-Get-PnPWebhookSubscriptions [-List <ListPipeBind>] [-Connection <PnPConnection>]
+Get-PnPWebhookSubscription [-List <ListPipeBind>] [-Connection <PnPConnection>]
  
 ```
 
@@ -27,14 +27,14 @@ Allows to retrieve Webhook subscriptions of specified list.
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPWebhookSubscriptions -List MyList
+Get-PnPWebhookSubscription -List MyList
 ```
 
 Gets all Webhook subscriptions of the list MyList
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPList | Get-PnPWebhookSubscriptions
+Get-PnPList | Get-PnPWebhookSubscription
 ```
 
 Gets all Webhook subscriptions of the all the lists

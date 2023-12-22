@@ -71,11 +71,11 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 #### Specific stable version
 
    > [!Important]
-   > There's currently no stable PnP PowerShell version that works with Azure Functions. Use the [latest nightly build](#specific-prerelease-version) instead.
+   > PnP PowerShell version 2 or later is required for this to work
 
    ```powershell
    @{
-       'PnP.PowerShell' = '1.12.0'
+       'PnP.PowerShell' = '2.2.0'
    }
    ```
 
@@ -84,13 +84,13 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 #### Latest stable version
 
    > [!Important]
-   > There's currently no stable PnP PowerShell version that works with Azure Functions. Use the [latest nightly build](#specific-prerelease-version) instead.   
+   > PnP PowerShell version 2 or later is required for this to work
 
    If, for some reason, you would like to ensure it is always using the latest available PnP PowerShell version, you can also specify a wildcard in the version (not recommended):
 
    ```powershell
    @{
-       'PnP.PowerShell' = '1.*'
+       'PnP.PowerShell' = '2.*'
     }
    ```
 
@@ -102,7 +102,7 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
    ```powershell
    @{
-       'PnP.PowerShell' = '2.0.45-nightly'
+       'PnP.PowerShell' = '2.2.130-nightly'
     }
    ```   
 
@@ -187,12 +187,24 @@ Make a note of the clientid shown and proceed with the steps in the following se
 
 Once you have an Azure Active Directory application set up and the public key certificate uploaded to its registration, proceed with configuring the Azure Function to make use of the private key of this certificate pair:
 
-1. In your function app, navigate to `TLS/SSL Settings` and switch to the `Private Key Certificates (.pfx)` section.
-2. Click `Upload Certificate` and select the "MyDemoApp.pfx" file that has been created for you. Enter the password you used in the script above.
+1. In your function app, navigate to `Certificates` under Settings, switch to the `Bring your own certificates (.pfx)` section and click on `Add certificate`.
+
+   ![Adding a custom PFX certificate in an Azure Function](./../images/azurefunctions/addpfxcertificate.png)
+
+2. In the panel that appears from the side, select `Upload certificate (.pfx)` and select the "MyDemoApp.pfx" file that has been created for you in the Create your certificate step above. Enter the password you used when creating the certificate. The certificate friendly name can be anything you would like.
 3. After the certificate has been uploaded, copy the thumbprint value shown.
-4. Navigate to `Configuration` and add a new Application Setting
+
+  ![Copying the thumbprint from a custom certificate in an Azure Function](./../images/azurefunctions/addpfxcertificatethumbprint.png)
+
+4. Navigate to `Configuration`, ensure you are on the `Application settings` tab and click on `New application setting`
+
+  ![Whitelisting the thumbprint of a custom certificate in an Azure Function](./../images/azurefunctions/whitelistpfxthumbprint.png)
+
 5. Call the setting `WEBSITE_LOAD_CERTIFICATES` and set the thumbprint as a value. To make all the certificates you uploaded available use `*` as the value. See <https://learn.microsoft.com/azure/app-service/configure-ssl-certificate-in-code> for more information.
-6. Save the settings
+
+   ![Providing the details of the to be whitelisted custom certificate in an Azure Function](./../images/azurefunctions/whitelistpfxthumbprintdetails.png)
+   
+7. Click on `OK` at the bottom and then on `Save` at the top. Click `Continue` to confirm your changes.
 
 #### Create the Azure Function for certificate authentication
 

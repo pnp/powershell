@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
@@ -11,9 +10,9 @@ using Folder = Microsoft.SharePoint.Client.Folder;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFolderFile", DefaultParameterSetName = ParameterSet_FOLDERSBYPIPE)]
+    [Cmdlet(VerbsCommon.Get, "PnPFileInFolder", DefaultParameterSetName = ParameterSet_FOLDERSBYPIPE)]
     [OutputType(typeof(IEnumerable<File>))]
-    public class GetFolderFile : PnPWebRetrievalsCmdlet<File>
+    public class GetFileInFolder : PnPWebRetrievalsCmdlet<File>
     {
         private const string ParameterSet_FOLDERSBYPIPE = "Folder via pipebind";
         private const string ParameterSet_FOLDERBYURL = "Folder via url";
@@ -28,7 +27,7 @@ namespace PnP.PowerShell.Commands.Files
         public string ItemName = string.Empty;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter Recursive;
+        public SwitchParameter Recurse;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter ExcludeSystemFolders;          
@@ -82,7 +81,7 @@ namespace PnP.PowerShell.Commands.Files
 
             files = ClientContext.LoadQuery(targetFolder.Files.IncludeWithDefaultProperties(RetrievalExpressions)).OrderBy(f => f.Name);
 
-            if (Recursive)
+            if (Recurse)
             {
                 if(ExcludeSystemFolders.ToBool())
                 {
@@ -97,16 +96,16 @@ namespace PnP.PowerShell.Commands.Files
 
             IEnumerable<File> folderContent = files;
 
-            if (Recursive && folders.Count() > 0)
+            if (Recurse && folders.Count() > 0)
             {
                 foreach (var folder in folders)
                 {
-                    var relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
+                    var relativeUrl = folder.ServerRelativeUrl.Remove(0, CurrentWeb.ServerRelativeUrl.Length);
 
                     WriteVerbose($"Processing folder {relativeUrl}");
 
                     var subFolderContents = GetContents(relativeUrl);
-                    folderContent = folderContent.Concat<File>(subFolderContents);
+                    folderContent = folderContent.Concat(subFolderContents);
                 }
             }
 

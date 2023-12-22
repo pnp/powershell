@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureADUserTemporaryAccessPass")]
     [RequiredMinimalApiPermissions("UserAuthenticationMethod.ReadWrite.All")]
+    [Alias("New-PnPEntraIDUserTemporaryAccessPass")]
     public class NewAzureADUserTemporaryAccessPass : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

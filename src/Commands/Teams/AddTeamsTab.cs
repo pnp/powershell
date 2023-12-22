@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model.Graph;
 using System.Text.RegularExpressions;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsTab")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]

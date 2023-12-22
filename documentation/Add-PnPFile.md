@@ -56,31 +56,31 @@ This will upload the file displaytemplate.html to the test folder in the display
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPFile -Path .\sample.doc -Folder "Shared Documents" -Values @{Modified="1/1/2016"}
+Add-PnPFile -Path .\sample.doc -Folder "Shared Documents" -Values @{Modified="12/28/2023"}
 ```
 
-This will upload the file sample.doc to the Shared Documents folder. After uploading it will set the Modified date to 1/1/2016.
+This will upload the file sample.doc to the Shared Documents folder. After uploading it will set the Modified date to 12/28/2023.
 
 ### EXAMPLE 4
 ```powershell
-Add-PnPFile -FileName sample.doc -Folder "Shared Documents" -Stream $fileStream -Values @{Modified="1/1/2016"}
+Add-PnPFile -FileName sample.doc -Folder "Shared Documents" -Stream $fileStream -Values @{Modified="12/28/2023"}
 ```
 
-This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 1/1/2016.
+This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 12/28/2023.
 
 ### EXAMPLE 5
 ```powershell
-Add-PnPFile -Path sample.doc -Folder "Shared Documents" -ContentType "Document" -Values @{Modified="1/1/2016"}
+Add-PnPFile -Path sample.doc -Folder "Shared Documents" -ContentType "Document" -Values @{Modified="12/28/2023"}
 ```
 
-This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 1/1/2016.
+This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 12/28/2023.
 
 ### EXAMPLE 6
 ```powershell
-Add-PnPFile -Path sample.docx -Folder "Documents" -Values @{Modified="1/1/2016"; Created="1/1/2017"; Editor=23}
+Add-PnPFile -Path sample.docx -Folder "Documents" -Values @{Modified="12/28/2016"; Created="12/28/2023"; Editor=23}
 ```
 
-This will add a file sample.docx to the Documents folder and will set the Modified date to 1/1/2016, Created date to 1/1/2017 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.
+This will add a file sample.docx to the Documents folder and will set the Modified date to 12/28/2016, Created date to 12/28/2023 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.
 
 ### EXAMPLE 7
 ```powershell
@@ -338,7 +338,7 @@ Currency: -Values @{"Number" = "10"}
 
 Currency: -Values @{"Currency" = "10"}
 
-Date and Time: -Values @{"DateAndTime" = "03/10/2015 14:16"}
+Date and Time: -Values @{"DateAndTime" = "04/20/2023 14:16"} (use mm/dd/yyyy)
 
 Lookup (id of lookup value): -Values @{"Lookup" = "2"}
 

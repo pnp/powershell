@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADGroupOwner")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [Alias("Remove-PnPEntraIDGroupOwner")]
     public class RemoveAzureADGroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

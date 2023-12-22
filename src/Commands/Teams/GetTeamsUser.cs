@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities;
 using System.Linq;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsUser")]
     [RequiredMinimalApiPermissions("Group.Read.All")]

@@ -19,7 +19,7 @@ Get-PnPBrowserIdleSignout
 ```
 
 ## DESCRIPTION
-Use this cmdlet to retrieve the current configuration values for Idle session sign-out policy, the time at which users are warned and subsequently signed out of Microsft 365 after a period of browser inactivity in SharePoint and OneDrive.
+Use this cmdlet to retrieve the current configuration values for Idle session sign-out policy, the time at which users are warned and subsequently signed out of Microsoft 365 after a period of browser inactivity in SharePoint and OneDrive.
 
 ## EXAMPLES
 
