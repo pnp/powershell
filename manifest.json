@@ -1332,6 +1332,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Convert-PnPFile.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Convert-PnPFile.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Convert-PnPFolderToSiteTemplate.md",
       "output": {
         ".html": {
@@ -4219,6 +4229,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Measure-PnPWeb.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Merge-PnPTerm.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Merge-PnPTerm.html"
         }
       },
       "version": ""
