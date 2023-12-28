@@ -2092,6 +2092,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPDeletedContainer.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPDeletedContainer.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPDeletedMicrosoft365Group.md",
       "output": {
         ".html": {
