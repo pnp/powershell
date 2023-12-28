@@ -54,6 +54,10 @@ namespace PnP.PowerShell.Commands.Apps
                 return;
             }
 
+            // Adding a fix for multi-geo issue
+            // https://github.com/pnp/powershell/issues/2801
+            var multiGeoFix = Utilities.REST.RestHelper.GetAsync(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}", AccessToken).GetAwaiter().GetResult();
+
             // Construct the payload of the Graph request
             var payload = new
             {

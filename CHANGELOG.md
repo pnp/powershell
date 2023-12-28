@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Merge-PnPTerm` cmdlet which allows merging of one term into another. [#3638](https://github.com/pnp/powershell/pull/3638)
 - Added `Get-PnPDeletedContainer` cmdlet which returns a list of all deleted Containers in the recycle bin. [#3648](https://github.com/pnp/powershell/pull/3648)
 
+### Fixed
+
+- Fixed `Grant-PnPAzureADAppSitePermission` cmdlet which allows it to work in multi-geo environment.
+
 ### Contributors
 
 - Koen Zomers [koenzomers]
