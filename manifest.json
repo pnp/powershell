@@ -2032,6 +2032,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPContainerTypeConfiguration.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPContainerTypeConfiguration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPContentType.md",
       "output": {
         ".html": {
