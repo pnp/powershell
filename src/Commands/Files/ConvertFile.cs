@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Files
         public string Path = string.Empty;
 
         [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
-        [Parameter(Mandatory = true, ParameterSetName = UPLOADTOSHAREPOINT)]
+        [Parameter(Mandatory = false, ParameterSetName = UPLOADTOSHAREPOINT)]
         public SwitchParameter Force;
 
         [Parameter(Mandatory = true, ParameterSetName = UPLOADTOSHAREPOINT)]
