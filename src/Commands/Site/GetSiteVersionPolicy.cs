@@ -7,20 +7,20 @@ using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteVersionPolicy")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteVersionPolicyForNewLibs")]
     [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SiteVersionPolicy))]
     public class GetSiteVersionPolicy : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(ClientContext.Site, s => s.Url, s => s.VersionPolicyForNewLibrariesTemplate, s => s.VersionPolicyForNewLibrariesTemplate.VersionPolicies);
+            ClientContext.Load(ClientContext.Site, s => s.Url, s => s.VersionPolicyForNewLibrariesTemplate, s => s.VersionPolicyForNewLibrariesTemplate.MajorVersionLimit);
             ClientContext.ExecuteQueryRetry();
             var site = ClientContext.Site;
 
             var vp = new SiteVersionPolicy();
             vp.Url = site.Url;
 
-            if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.ServerObjectIsNull == true)
+            if (site.VersionPolicyForNewLibrariesTemplate.MajorVersionLimit == -1)
             {
                 vp.Description = "No Site Level Policy Set";
             }

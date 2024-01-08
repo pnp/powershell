@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteVersionPolicy.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteVersionPolicyForNewLibs.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPSiteVersionPolicy
+title: Get-PnPSiteVersionPolicyForNewLibs
 ---
   
-# Get-PnPSiteVersionPolicy
+# Get-PnPSiteVersionPolicyForNewLibs
 
 ## SYNOPSIS
 Get version policy setting of the site.
@@ -15,7 +15,7 @@ Get version policy setting of the site.
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteVersionPolicy [-Connection <PnPConnection>] 
+Get-PnPSiteVersionPolicyForNewLibs [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -26,7 +26,7 @@ If the version policy is not set on the site, the setting of the tenant will be 
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteVersionPolicy
+Get-PnPSiteVersionPolicyForNewLibs
 ```
 
 Returns the version policy setting of the site.

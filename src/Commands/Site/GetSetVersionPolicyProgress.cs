@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteSetVersionPolicyProgress")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteSetVPProgressExistingLibs")]
     [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SetVersionPolicyProgress))]
     public class GetSetVersionPolicyProgress : PnPSharePointCmdlet
     {
