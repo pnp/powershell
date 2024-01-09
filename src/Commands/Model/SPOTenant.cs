@@ -701,7 +701,7 @@ namespace PnP.PowerShell.Commands.Model
 
             try
             {
-                if (tenant.DefaultODBMode != null)
+                if (tenant.DefaultODBMode != null) 
                 {
                     DefaultOneDriveInformationBarrierMode = Enum.Parse<InformationBarriersMode>(tenant.DefaultODBMode);
                 }
