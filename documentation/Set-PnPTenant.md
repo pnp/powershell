@@ -136,6 +136,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-MassDeleteNotificationDisabled <Boolean>]
  [-BusinessConnectivityServiceDisabled <Boolean>]
  [-EnableSensitivityLabelForPDF <Boolean>]
+ [-IsDataAccessInCardDesignerEnabled <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -663,6 +664,20 @@ Allows to set the session timeout. If you are a tenant administrator and you beg
 
 ```yaml
 Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsDataAccessInCardDesignerEnabled
+Allows turning on support for data access in the Viva Connections Adaptive Card Designer.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
