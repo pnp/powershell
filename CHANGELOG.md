@@ -20,6 +20,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Fixed
 
 - Fixed `Grant-PnPAzureADAppSitePermission` cmdlet which allows it to work in multi-geo environment. [#3658](https://github.com/pnp/powershell/pull/3658)
+- Fixed `Get-PnPTeamsChannelMessageReply` cmdlet which didn't work correctly when `-IncludeDeleted` parameter was not specified. [#3676](https://github.com/pnp/powershell/pull/3676)
+- Fixed `Add-PnPNavigationNode` cmdlet to also search for nodes in child navigation items. [#3625](https://github.com/pnp/powershell/pull/3625)
 
 ### Contributors
 
@@ -27,6 +29,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Reshmee Auckloo [reshme011]
 - Nishkalank Bezawada [NishkalankBezawada]
 - Jørgen Wiik [joHKwi]
+- Siddharth Vaghasia [siddharth-vaghasia]
+- Jürgen Rosenthal-Buroh [JuergenRB]
 
 ## [2.3.0]
 
