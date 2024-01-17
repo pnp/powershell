@@ -14,7 +14,7 @@
 		<CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<Authors>PnP.PowerShell</Authors>
-		<Copyright>PnP 2023</Copyright>
+		<Copyright>PnP 2024</Copyright>
 		<Configurations>Debug;Release</Configurations>
 		<PnPFrameworkPath Condition="'$(PnPFrameworkPath)' == ''"></PnPFrameworkPath>
 		<PnPCoreSdkPath Condition="'$(PnPCoreSdkPath)' == ''"></PnPCoreSdkPath>
