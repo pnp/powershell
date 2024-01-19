@@ -26,6 +26,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
+            string baseUrl = "https://api.flow.microsoft.com/";
             var environmentName = Environment.GetName();
             var flowName = Identity.GetName();
 
@@ -38,10 +39,10 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                     {
                         // Had to add this because DELETE doesn't throw error if invalid Flow Id or Name is provided
                         WriteVerbose($"Retrieving Flow with name {flowName} in environment ${environmentName}");
-                        var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                        var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, baseUrl + $"providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                         if (result != null)
                         {
-                            RestHelper.DeleteAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                            RestHelper.DeleteAsync(Connection.HttpClient, baseUrl +  $"providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                             WriteVerbose($"Flow with name {flowName} deleted");
                         }
                     }
@@ -52,7 +53,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
                 else
                 {
-                    RestHelper.DeleteAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                    RestHelper.DeleteAsync(Connection.HttpClient, baseUrl + $"providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                     WriteVerbose($"Flow with name {flowName} deleted");
                 }
             }
