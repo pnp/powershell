@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Batch` parameter to `Add-PnPGroupMember` cmdlet which allows adding members to a SharePoint group in a batch. [#3651](https://github.com/pnp/powershell/pull/3651)
 - Added `Get-PnPContainerTypeConfiguration` cmdlet which fetches the container type configuration values. [#3660](https://github.com/pnp/powershell/pull/3660)
 - Added `-AppBypassInformationBarriers` and `-DefaultOneDriveInformationBarrierMode` parameters to `Set-PnPTenant` cmdlet. [#3679](https://github.com/pnp/powershell/pull/3679)
+- Added `Add-PnPFileAnalyticsData` cmdlet to allow retrieval of file analytics data. [#3644](https://github.com/pnp/powershell/pull/3644)
 
 ### Fixed
 
