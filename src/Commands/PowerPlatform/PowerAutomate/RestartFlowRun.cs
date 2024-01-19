@@ -25,6 +25,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
+            string baseUrl = "https://api.flow.microsoft.com/";
             var environmentName = Environment.GetName();
             if (string.IsNullOrEmpty(environmentName))
             {
@@ -46,8 +47,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             if (!Force && !ShouldContinue($"Restart flow run with name '{flowRunName}'?", Resources.Confirm))
                 return;
 
-            var triggers = GraphHelper.GetResultCollectionAsync<FlowRunTrigger>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
-            RestHelper.PostAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers/{triggers.First().Name}/histories/{flowRunName}/resubmit?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            var triggers = GraphHelper.GetResultCollectionAsync<FlowRunTrigger>(Connection, baseUrl + $"providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            RestHelper.PostAsync(Connection.HttpClient, baseUrl  + $"providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers/{triggers.First().Name}/histories/{flowRunName}/resubmit?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
         }
     }
 }

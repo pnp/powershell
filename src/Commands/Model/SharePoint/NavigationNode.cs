@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
         public bool IsHidden { get; set; }
         public bool IsTitleForExistingLanguage { get; set; }
         public string Key { get; set; }
-        public List<object> Nodes { get; set; }
+        public List<NavigationNode> Nodes { get; set; }
         public int NodeType { get; set; }
         public bool? OpenInNewWindow { get; set; }
         public string SimpleUrl { get; set; }
