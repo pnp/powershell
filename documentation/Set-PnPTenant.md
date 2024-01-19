@@ -2331,6 +2331,45 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -AppBypassInformationBarriers
+Enables of disables applications running in app-only mode to access IB sites.
+
+For more information about information barriers, see [Use information barriers with SharePoint](https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint) for your SharePoint Online environment.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultOneDriveInformationBarrierMode
+The DefaultOneDriveInformationBarrierMode sets the information barrier mode for all OneDrive sites.
+
+The valid values are:
+
+- Open
+- Explicit
+- Implicit
+- OwnerModerated
+- Mixed
+For more information about information barriers, see [Use information barriers with SharePoint](https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint) for your SharePoint Online environment.
+
+```yaml
+Type: InformationBarriersMode
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Force
 If provided, no confirmation will be requested and the action will be performed
 

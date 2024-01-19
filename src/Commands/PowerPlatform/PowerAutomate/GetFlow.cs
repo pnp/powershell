@@ -31,7 +31,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         protected override void ExecuteCmdlet()
         {
             string environmentName = null;
-            if(ParameterSpecified(nameof(Environment)))
+            string baseUrl = "https://api.flow.microsoft.com/";
+            if (ParameterSpecified(nameof(Environment)))
             {
                 environmentName = Environment.GetName();
 
@@ -39,7 +40,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             }
             else
             {
-                var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, "https://management.azure.com/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection,  baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 environmentName = environments.FirstOrDefault(e => e.Properties.IsDefault.HasValue && e.Properties.IsDefault == true)?.Name;
 
                 if(string.IsNullOrEmpty(environmentName))
@@ -56,7 +57,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
                 WriteVerbose($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, baseUrl + $"providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(result, false);
             }
             else
@@ -79,7 +80,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
                 WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'{(filter != null ? $" with filter '{filter}'" : "")}");
 
-                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01{(filter != null ? $"&$filter={filter}" : "")}", AccessToken).GetAwaiter().GetResult();
+                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, baseUrl + $"providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01{(filter != null ? $"&$filter={filter}" : "")}", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flows, true);
 
             }
