@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Microsoft.SharePoint.Client.Sharing;
 using Microsoft.SharePoint.Client.Administration;
 using System.Linq;
+using InformationBarriersMode = PnP.PowerShell.Commands.Enums.InformationBarriersMode;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -409,6 +410,12 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? IsDataAccessInCardDesignerEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AppBypassInformationBarriers { get; set;}
+
+        [Parameter(Mandatory = false)]
+        public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { get; set;}
 
         protected override void ExecuteCmdlet()
         {
@@ -1359,6 +1366,18 @@ namespace PnP.PowerShell.Commands.Admin
             if (IsDataAccessInCardDesignerEnabled.HasValue)
             {
                 Tenant.IsDataAccessInCardDesignerEnabled = IsDataAccessInCardDesignerEnabled.Value;
+                modified = true;
+            }
+
+            if (AppBypassInformationBarriers.HasValue)
+            {
+                Tenant.AppBypassInformationBarriers = AppBypassInformationBarriers.Value;
+                modified = true;
+            }
+
+            if (DefaultOneDriveInformationBarrierMode.HasValue)
+            {
+                Tenant.DefaultODBMode = DefaultOneDriveInformationBarrierMode.Value.ToString();
                 modified = true;
             }
 

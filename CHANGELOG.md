@@ -12,15 +12,32 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Added `-IsDataAccessInCardDesignerEnabled` to `Set-PnPTenant` which allows for configuring Viva Connections Adaptive Cards to connect to backend services for their data [#3635](https://github.com/pnp/powershell/pull/3635)
 - Added `Remove-PnPContainer` cmdlet to remove the SharePoint embed container. [#3629](https://github.com/pnp/powershell/pull/3629)
-- Added `Convert-PnPFile` cmdlet which allows for a file to be converted to from one format to another. [#3435](https://github.com/pnp/powershell/pull/3435) and [#3643](https://github.com/pnp/powershell/pull/3643)
+- Added `Convert-PnPFile` cmdlet which allows for a file to be converted to from one format to another. [#3435](https://github.com/pnp/powershell/pull/3435) & [#3643](https://github.com/pnp/powershell/pull/3643)
 - Added `Merge-PnPTerm` cmdlet which allows merging of one term into another. [#3638](https://github.com/pnp/powershell/pull/3638)
+- Added `Get-PnPDeletedContainer` cmdlet which returns a list of all deleted Containers in the recycle bin. [#3648](https://github.com/pnp/powershell/pull/3648)
+- Added `-Batch` parameter to `Add-PnPGroupMember` cmdlet which allows adding members to a SharePoint group in a batch. [#3651](https://github.com/pnp/powershell/pull/3651)
+- Added `Get-PnPContainerTypeConfiguration` cmdlet which fetches the container type configuration values. [#3660](https://github.com/pnp/powershell/pull/3660)
+- Added `-AppBypassInformationBarriers` and `-DefaultOneDriveInformationBarrierMode` parameters to `Set-PnPTenant` cmdlet. [#3679](https://github.com/pnp/powershell/pull/3679)
+
+### Fixed
+
+- Fixed `Grant-PnPAzureADAppSitePermission` cmdlet which allows it to work in multi-geo environment. [#3658](https://github.com/pnp/powershell/pull/3658)
+- Fixed `Get-PnPTeamsChannelMessageReply` cmdlet which didn't work correctly when `-IncludeDeleted` parameter was not specified. [#3676](https://github.com/pnp/powershell/pull/3676)
+- Fixed `Add-PnPNavigationNode` cmdlet to also search for nodes in child navigation items. [#3625](https://github.com/pnp/powershell/pull/3625)
+- Fixed `Get-PnPFlow` cmdlet to use the newer Flow URLs instead of the old ARM URLs. [#3677](https://github.com/pnp/powershell/pull/3677)
+- Fixed `Get-PnPPowerPlatformConnector`, `Get-PnPPowerPlatformEnvironment`, `Get-PnPPowerApp`, `Add-PnPFlowOwner`, `Disable-PnPFlow`, `Enable-PnPFlow`, `Export-PnPFlow`, `Get-PnPFlowOwner`, `Get-PnPFlowRun`, `Remove-PnPFlow`, `Remove-PnPFlowOwner` , `Restart-PnPFlow` and `Stop-PnPFlowRun` cmdlets to use the new HTTP endpoints. [#3687](https://github.com/pnp/powershell/pull/3687)
+- Fixed `Add-PnPHubSiteAssociation` cmdlet to allow support for multi-geo scenario. [#3568](https://github.com/pnp/powershell/pull/3568)
 
 ### Contributors
 
+- Konrad K. [wilecoyotegenius]
+- Kunj Balkrishna Sangani [kunj-sangani]
 - Koen Zomers [koenzomers]
 - Reshmee Auckloo [reshme011]
 - Nishkalank Bezawada [NishkalankBezawada]
 - Jørgen Wiik [joHKwi]
+- Siddharth Vaghasia [siddharth-vaghasia]
+- Jürgen Rosenthal-Buroh [JuergenRB]
 
 ## [2.3.0]
 

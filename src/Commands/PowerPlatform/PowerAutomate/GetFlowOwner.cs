@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 throw new PSArgumentException("Flow not found.", nameof(Identity));
             }
 
-            var flowOwners = GraphHelper.GetResultCollectionAsync<FlowPermission>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/permissions?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            var flowOwners = GraphHelper.GetResultCollectionAsync<FlowPermission>(Connection, $"https://api.flow.microsoft.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/permissions?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
             WriteObject(flowOwners, true);
         }
     }
