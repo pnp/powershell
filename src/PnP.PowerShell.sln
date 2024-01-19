@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
@@ -6,8 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell", "Commands\PnP.PowerShell.csproj", "{F91159F1-31F8-47CF-B546-9487F9EF8426}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell.ALC", "ALC\PnP.PowerShell.ALC.csproj", "{546A8F8C-AD8A-488D-98DB-5AB25CF9558B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PnP.PowerShell.Tests", "Tests\PnP.PowerShell.Tests.csproj", "{5B479E2D-67D3-4B12-9562-03D4D30B8BF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,12 +26,6 @@ Global
 		{546A8F8C-AD8A-488D-98DB-5AB25CF9558B}.DebugLocal|Any CPU.Build.0 = DebugLocal|Any CPU
 		{546A8F8C-AD8A-488D-98DB-5AB25CF9558B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{546A8F8C-AD8A-488D-98DB-5AB25CF9558B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5B479E2D-67D3-4B12-9562-03D4D30B8BF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5B479E2D-67D3-4B12-9562-03D4D30B8BF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5B479E2D-67D3-4B12-9562-03D4D30B8BF9}.DebugLocal|Any CPU.ActiveCfg = DebugLocal|Any CPU
-		{5B479E2D-67D3-4B12-9562-03D4D30B8BF9}.DebugLocal|Any CPU.Build.0 = DebugLocal|Any CPU
-		{5B479E2D-67D3-4B12-9562-03D4D30B8BF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5B479E2D-67D3-4B12-9562-03D4D30B8BF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
