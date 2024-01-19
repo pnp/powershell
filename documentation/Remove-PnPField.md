@@ -38,6 +38,18 @@ Remove-PnPField -List "Demo list" -Identity "Speakers"
 
 Removes the speakers field from the list "Demo list".
 
+### EXAMPLE 3
+```powershell
+$batch = New-PnPBatch
+Remove-PnPField -List "Demo list" -Identity "Speakers" -Batch $batch
+Remove-PnPField -List "Demo list" -Identity "Sponsors" -Batch $batch
+Remove-PnPField -List "Demo list" -Identity "Organizers" -Batch $batch
+Remove-PnPField -Identity "Test" -Batch $batch
+Invoke-PnPBatch $batch
+```
+
+Removes the speakers, sponsors and organizers fields from the list "Demo list" as well as Test field from the web in a batch.
+
 ## PARAMETERS
 
 ### -Connection
@@ -91,6 +103,21 @@ Parameter Sets: (All)
 
 Required: False
 Position: 1
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Batch
+
+Batch object used to remove fields in a batched manner. See above example on how to use this.
+
+```yaml
+Type: PnPBatch
+Parameter Sets: (All)
+
+Required: False
+Position: named
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
