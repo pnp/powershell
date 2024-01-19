@@ -221,43 +221,43 @@ Accept wildcard characters: False
 
 Use the internal names of the fields when specifying field names.
 
-Single line of text: -Values @{"TextField" = "Title New"}
+Single line of text: ``` -Values @{"TextField" = "Title New"} ```
 
-Multiple lines of text: -Values @{"MultiTextField" = "New text\`n\`nMore text"}
+Multiple lines of text: ``` -Values @{"MultiTextField" = "New text\`n\`nMore text"} ```
 
-Rich text: -Values @{"MultiTextField" = "&lt;strong&gt;New&lt;/strong&gt; text"}
+Rich text: ``` -Values @{"MultiTextField" = "&lt;strong&gt;New&lt;/strong&gt; text"} ```
 
-Choice: -Values @{"ChoiceField" = "Value 1"}
+Choice: ``` -Values @{"ChoiceField" = "Value 1"} ```
 
-Multi-Choice: -Values @{"MultiChoice" = "Choice 1","Choice 2"}
+Multi-Choice: ``` -Values @{"MultiChoice" = "Choice 1","Choice 2"} ```
 
-Number: -Values @{"NumberField" = "10"}
+Number: ``` -Values @{"NumberField" = "10"} ```
 
-Currency: -Values @{"CurrencyField" = "10"}
+Currency: ``` -Values @{"CurrencyField" = "10"} ```
 
-Date and Time: -Values @{"DateAndTimeField" = "03/13/2015 14:16"}
+Date and Time: ``` -Values @{"DateAndTimeField" = "03/13/2015 14:16"} ```
 
-Lookup (id of lookup value): -Values @{"LookupField" = "2"}
+Lookup (id of lookup value): ``` -Values @{"LookupField" = "2"} ```
 
-Multi value lookup (id of lookup values as array 1): -Values @{"MultiLookupField" = "1","2"}
+Multi value lookup (id of lookup values as array 1): ``` -Values @{"MultiLookupField" = "1","2"} ```
 
-Multi value lookup (id of lookup values as array 2): -Values @{"MultiLookupField" = 1,2}
+Multi value lookup (id of lookup values as array 2): ``` -Values @{"MultiLookupField" = 1,2} ```
 
-Multi value lookup (id of lookup values as string): -Values @{"MultiLookupField" = "1,2"}
+Multi value lookup (id of lookup values as string): ``` -Values @{"MultiLookupField" = "1,2"} ```
 
-Yes/No: -Values @{"YesNoField" = $false}
+Yes/No: ``` -Values @{"YesNoField" = $false} ```
 
-Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): -Values @{"PersonField" = "user1@domain.com","21"}
+Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): ``` -Values @{"PersonField" = "user1@domain.com","21"} ```
 
-Managed Metadata (single value with path to term): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"}
+Managed Metadata (single value with path to term): ``` -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"} ```
 
-Managed Metadata (single value with id of term): -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818"} with Id of term
+Managed Metadata (single value with id of term): ``` -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818"} with Id of term ```
 
-Managed Metadata (multiple values with paths to terms): -Values @{"MetadataField" = ("CORPORATE|DEPARTMENTS|FINANCE","CORPORATE|DEPARTMENTS|HR")}
+Managed Metadata (multiple values with paths to terms): ``` -Values @{"MetadataField" = ("CORPORATE|DEPARTMENTS|FINANCE","CORPORATE|DEPARTMENTS|HR")} ```
 
-Managed Metadata (multiple values with ids of terms): -Values @{"MetadataField" = ("fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593")}
+Managed Metadata (multiple values with ids of terms): ``` -Values @{"MetadataField" = ("fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593")} ```
 
-Hyperlink or Picture: -Values @{"HyperlinkField" = "https://pnp.github.com/powershell, PnP PowerShell Home"}
+Hyperlink or Picture: ``` -Values @{"HyperlinkField" = "https://pnp.github.com/powershell, PnP PowerShell Home"} ```
 
 ```yaml
 Type: Hashtable
