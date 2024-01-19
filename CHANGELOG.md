@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Merge-PnPTerm` cmdlet which allows merging of one term into another. [#3638](https://github.com/pnp/powershell/pull/3638)
 - Added `Get-PnPDeletedContainer` cmdlet which returns a list of all deleted Containers in the recycle bin. [#3648](https://github.com/pnp/powershell/pull/3648)
 - Added `Get-PnPContainerTypeConfiguration` cmdlet which fetches the container type configuration values. [#3660](https://github.com/pnp/powershell/pull/3660)
+- Added `-AppBypassInformationBarriers` and `-DefaultOneDriveInformationBarrierMode` parameters to `Set-PnPTenant` cmdlet. [#3679](https://github.com/pnp/powershell/pull/3679)
 
 ### Fixed
 
@@ -27,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Konrad K. [wilecoyotegenius]
 - Kunj Balkrishna Sangani [kunj-sangani]
 - Koen Zomers [koenzomers]
 - Reshmee Auckloo [reshme011]
