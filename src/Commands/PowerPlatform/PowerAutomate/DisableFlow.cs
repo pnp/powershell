@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         {
             var environmentName = Environment.GetName();
             var flowName = Identity.GetName();
-            RestHelper.PostAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/stop?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            RestHelper.PostAsync(Connection.HttpClient, $"https://api.flow.microsoft.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/stop?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
         }
     }
 }
