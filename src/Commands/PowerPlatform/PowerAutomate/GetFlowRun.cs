@@ -20,6 +20,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
+            string baseUrl = "https://api.flow.microsoft.com/";
             var environmentName = Environment.GetName();
             if (string.IsNullOrEmpty(environmentName))
             {
@@ -35,12 +36,12 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             if (ParameterSpecified(nameof(Identity)))
             {
                 var flowRunName = Identity.GetName();
-                var flowRun = GraphHelper.GetAsync<FlowRun>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs/{flowRunName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var flowRun = GraphHelper.GetAsync<FlowRun>(Connection, baseUrl + $"providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs/{flowRunName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flowRun, false);
             }
             else
             {
-                var flowRuns = GraphHelper.GetResultCollectionAsync<FlowRun>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var flowRuns = GraphHelper.GetResultCollectionAsync<FlowRun>(Connection, baseUrl + $"providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flowRuns, true);
             }
         }

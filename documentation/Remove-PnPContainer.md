@@ -17,6 +17,8 @@ title: Remove-PnPContainer
 
 The Remove-PnPContainer cmdlet removes a container from the SharePoint tenant. The container to remove is specified by the Identity parameter, which accepts a ContainerPipeBind object.
 
+When admins delete a Container, it is moved into the Recycle Bin. A deleted Container can be restored from the Recycle Bin within 93 days. If a Container is deleted from the Recycle Bin, or it exceeds the 93-day retention period, it is permanently deleted. Deleting a Container deletes everything within it, including all documents and files. You can view all deleted Containers in the Recycle Bin with the Get-PnPDeletedContainer cmdlet.
+
 ## SYNTAX
 
 ```powershell
