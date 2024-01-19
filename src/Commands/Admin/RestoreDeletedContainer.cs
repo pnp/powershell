@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Admin
     [Cmdlet(VerbsData.Restore, "PnPDeletedContainer")]
     public class RestoreDeletedContainer : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Identity { get; set; }
 
         [Parameter(Mandatory = false)]
