@@ -735,5 +735,10 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
         }
+        
+        internal static async Task<HttpResponseMessage> DeletePhotoAsync(PnPConnection connection, string accessToken, Guid groupId)
+        {
+            return await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}/photo/$value", accessToken);
+        }
     }
 }

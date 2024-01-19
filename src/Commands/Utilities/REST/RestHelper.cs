@@ -153,6 +153,12 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return await SendMessageAsync(httpClient, message);
         }
 
+        public static async Task<byte[]> GetByteArrayAsync(HttpClient httpClient, string url, string accessToken, string accept = "application/json")
+        {
+            var message = GetMessage(url, HttpMethod.Get, accessToken, accept);
+            return await SendMessageByteArrayAsync(httpClient, message);
+        }
+
         public static async Task<string> GetAsync(HttpClient httpClient, string url, ClientContext clientContext, string accept = "application/json")
         {
             var message = GetMessage(url, HttpMethod.Get, clientContext, accept);
@@ -646,6 +652,27 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 var errorContent = await response.Content.ReadAsStringAsync();
                 throw new HttpRequestException(errorContent);
+            }
+        }
+
+        private static async Task<byte[]> SendMessageByteArrayAsync(HttpClient httpClient, HttpRequestMessage message)
+        {
+            var response = await httpClient.SendAsync(message);
+            while (response.StatusCode == (HttpStatusCode)429)
+            {
+                // throttled
+                var retryAfter = response.Headers.RetryAfter;
+                await Task.Delay(retryAfter.Delta.Value.Seconds * 1000);
+                response = await httpClient.SendAsync(CloneMessage(message));
+            }
+            if (response.IsSuccessStatusCode)
+            {
+                return await response.Content.ReadAsByteArrayAsync();
+            }
+            else
+            {
+                var errorContent = await response.Content.ReadAsStringAsync();
+                throw new HttpRequestException($"HTTP Error {response.StatusCode}: {errorContent}");
             }
         }
 

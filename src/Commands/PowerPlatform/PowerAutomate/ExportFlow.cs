@@ -161,7 +161,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             }
             else
             {
-                var json = RestHelper.PostAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/exportToARMTemplate?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var json = RestHelper.PostAsync(Connection.HttpClient, $"https://api.flow.microsoft.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/exportToARMTemplate?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(json);
             }
         }

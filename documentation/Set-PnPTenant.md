@@ -135,6 +135,8 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IncludeAtAGlanceInShareEmails <Boolean>]
  [-MassDeleteNotificationDisabled <Boolean>]
  [-BusinessConnectivityServiceDisabled <Boolean>]
+ [-EnableSensitivityLabelForPDF <Boolean>]
+ [-IsDataAccessInCardDesignerEnabled <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -285,6 +287,29 @@ Accept wildcard characters: False
 
 ### -BusinessConnectivityServiceDisabled
 Allows blocking of Business Connectivity Services to be used on SharePoint Online. This feature is set to be retired on September 30, 2024. [More information](https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/support-update-for-business-connectivity-services-in-microsoft/ba-p/3938773).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableSensitivityLabelForPDF
+Allows turning on support for PDFs with sensitivity labels for the following scenarios:
+
+- Applying a sensitivity label in Office for the web.
+- Uploading a labeled document, and then extracting and displaying that sensitivity label.
+- Search, eDiscovery, and data loss prevention.
+- Auto-labeling policies and default sensitivity labels for SharePoint document libraries.
+
+The valid values are:
+True - Enables support for PDFs.
+False (default) - Disables support for PDFs.
 
 ```yaml
 Type: Boolean
@@ -639,6 +664,20 @@ Allows to set the session timeout. If you are a tenant administrator and you beg
 
 ```yaml
 Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsDataAccessInCardDesignerEnabled
+Allows turning on support for data access in the Viva Connections Adaptive Card Designer.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -2283,6 +2322,45 @@ Enables or disables the mass delete detection feature. When MassDeleteNotificati
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AppBypassInformationBarriers
+Enables of disables applications running in app-only mode to access IB sites.
+
+For more information about information barriers, see [Use information barriers with SharePoint](https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint) for your SharePoint Online environment.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultOneDriveInformationBarrierMode
+The DefaultOneDriveInformationBarrierMode sets the information barrier mode for all OneDrive sites.
+
+The valid values are:
+
+- Open
+- Explicit
+- Implicit
+- OwnerModerated
+- Mixed
+For more information about information barriers, see [Use information barriers with SharePoint](https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint) for your SharePoint Online environment.
+
+```yaml
+Type: InformationBarriersMode
 Parameter Sets: (All)
 
 Required: False
