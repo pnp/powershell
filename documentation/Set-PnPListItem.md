@@ -249,6 +249,8 @@ Yes/No: ``` -Values @{"YesNoField" = $false} ```
 
 Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): ``` -Values @{"PersonField" = "user1@domain.com","21"} ```
 
+**If the user is not present, in the site user information list, you need to add that user using `New-PnPUser` cmdlet.**
+
 Managed Metadata (single value with path to term): ``` -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"} ```
 
 Managed Metadata (single value with id of term): ``` -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818"} with Id of term ```
