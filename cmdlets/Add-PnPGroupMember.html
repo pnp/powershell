@@ -94,6 +94,10 @@
 <pre><code class="lang-powershell">Add-PnPGroupMember -Group &lt;GroupPipeBind&gt; -EmailAddress &lt;String&gt; [-SendEmail] [-EmailBody &lt;String&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
+<h3 id="batched">Batched</h3>
+<pre><code class="lang-powershell">Add-PnPGroupMember -LoginName &lt;String&gt; -Group &lt;GroupPipeBind&gt; 
+ [-Connection &lt;PnPConnection&gt;] -Batch &lt;PnPBatch&gt;
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to add new user to SharePoint group. The SharePoint group may be specified either by id, name or related object.</p>
 <h2 id="examples">EXAMPLES</h2>
@@ -105,6 +109,13 @@
 <pre><code class="lang-powershell">Add-PnPGroupMember -LoginName user@company.com -Group 5
 </code></pre>
 <p>Add the specified user to the SharePoint group with Id 5</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">$batch = New-PnPBatch
+Add-PnPGroupMember -LoginName user@company.com -Group 5 -Batch $batch
+Add-PnPGroupMember -LoginName user1@company.com -Group 5 -Batch $batch
+Invoke-PnPBatch $batch
+</code></pre>
+<p>Add the specified users to the SharePoint group with Id 5 in a batch.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -165,6 +176,16 @@ Accept wildcard characters: False
 Parameter Sets: External
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-batch">-Batch</h3>
+<pre><code class="lang-yaml">Type: PnPBatch
+Parameter Sets: Batched
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

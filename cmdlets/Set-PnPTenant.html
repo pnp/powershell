@@ -1881,6 +1881,38 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-appbypassinformationbarriers">-AppBypassInformationBarriers</h3>
+<p>Enables of disables applications running in app-only mode to access IB sites.</p>
+<p>For more information about information barriers, see <a href="https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint">Use information barriers with SharePoint</a> for your SharePoint Online environment.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultonedriveinformationbarriermode">-DefaultOneDriveInformationBarrierMode</h3>
+<p>The DefaultOneDriveInformationBarrierMode sets the information barrier mode for all OneDrive sites.</p>
+<p>The valid values are:</p>
+<ul>
+<li>Open</li>
+<li>Explicit</li>
+<li>Implicit</li>
+<li>OwnerModerated</li>
+<li>Mixed
+For more information about information barriers, see <a href="https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint">Use information barriers with SharePoint</a> for your SharePoint Online environment.</li>
+</ul>
+<pre><code class="lang-yaml">Type: InformationBarriersMode
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-force">-Force</h3>
 <p>If provided, no confirmation will be requested and the action will be performed</p>
 <pre><code class="lang-yaml">Type: SwitchParameter

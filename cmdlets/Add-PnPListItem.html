@@ -197,29 +197,30 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-values">-Values</h3>
 <p>Use the internal names of the fields when specifying field names.</p>
-<p>Single line of text: -Values @{&quot;Title&quot; = &quot;Title New&quot;}</p>
-<p>Multiple lines of text: -Values @{&quot;MultiText&quot; = &quot;New text\n\nMore text&quot;}</p>
-<p>Rich text: -Values @{&quot;MultiText&quot; = &quot;&lt;strong&gt;New&lt;/strong&gt; text&quot;}</p>
-<p>Choice: -Values @{&quot;Choice&quot; = &quot;Choice 1&quot;}</p>
-<p>Multi-Choice: -Values @{&quot;MultiChoice&quot; = &quot;Choice 1&quot;,&quot;Choice 2&quot;}</p>
-<p>Number: -Values @{&quot;Number&quot; = &quot;10&quot;}</p>
-<p>Currency: -Values @{&quot;Currency&quot; = &quot;10&quot;}</p>
+<p>Single line of text: <code>-Values @{&quot;Title&quot; = &quot;Title New&quot;}</code></p>
+<p>Multiple lines of text:  <code>-Values @{&quot;MultiText&quot; = &quot;New text\n\nMore text&quot;}</code></p>
+<p>Rich text: <code>-Values @{&quot;MultiText&quot; = &quot;&amp;lt;strong&amp;gt;New&amp;lt;/strong&amp;gt; text&quot;}</code></p>
+<p>Choice: <code>-Values @{&quot;Choice&quot; = &quot;Choice 1&quot;}</code></p>
+<p>Multi-Choice: <code>-Values @{&quot;MultiChoice&quot; = &quot;Choice 1&quot;,&quot;Choice 2&quot;}</code></p>
+<p>Number: <code>-Values @{&quot;Number&quot; = &quot;10&quot;}</code></p>
+<p>Currency: <code>-Values @{&quot;Currency&quot; = &quot;10&quot;}</code></p>
 <div class="NOTE">
 <h5>Note</h5>
 <p>For numeric and currency fields, when using -Batch, provide the value using the comma and dots matching the regional setting of the site you're adding the listitem to. When not using batch, you must always provide the value in the American notation, so dot for decimals and comma for thousands separators.</p>
 </div>
-<p>Date and Time: -Values @{&quot;DateAndTime&quot; = &quot;03/13/2015 14:16&quot;}</p>
-<p>Lookup (id of lookup value): -Values @{&quot;Lookup&quot; = &quot;2&quot;}</p>
-<p>Multi value lookup (id of lookup values as array 1): -Values @{&quot;MultiLookupField&quot; = &quot;1&quot;,&quot;2&quot;}</p>
-<p>Multi value lookup (id of lookup values as array 2): -Values @{&quot;MultiLookupField&quot; = 1,2}</p>
-<p>Multi value lookup (id of lookup values as string): -Values @{&quot;MultiLookupField&quot; = &quot;1,2&quot;}</p>
-<p>Yes/No: -Values @{&quot;YesNo&quot; = $false}</p>
-<p>Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): -Values @{&quot;Person&quot; = &quot;user1@domain.com&quot;,&quot;21&quot;}</p>
-<p>Managed Metadata (single value with path to term): -Values @{&quot;MetadataField&quot; = &quot;CORPORATE|DEPARTMENTS|FINANCE&quot;}</p>
-<p>Managed Metadata (single value with id of term): -Values @{&quot;MetadataField&quot; = &quot;fe40a95b-2144-4fa2-b82a-0b3d0299d818&quot;} with Id of term</p>
-<p>Managed Metadata (multiple values with paths to terms): -Values @{&quot;MetadataField&quot; = &quot;CORPORATE|DEPARTMENTS|FINANCE&quot;,&quot;CORPORATE|DEPARTMENTS|HR&quot;}</p>
-<p>Managed Metadata (multiple values with ids of terms): -Values @{&quot;MetadataField&quot; = &quot;fe40a95b-2144-4fa2-b82a-0b3d0299d818&quot;,&quot;52d88107-c2a8-4bf0-adfa-04bc2305b593&quot;}</p>
-<p>Hyperlink or Picture: -Values @{&quot;Hyperlink&quot; = &quot;https://github.com/OfficeDev/, OfficePnP&quot;}</p>
+<p>Date and Time: <code>-Values @{&quot;DateAndTime&quot; = &quot;03/13/2015 14:16&quot;}</code></p>
+<p>Lookup (id of lookup value): <code>-Values @{&quot;Lookup&quot; = &quot;2&quot;}</code></p>
+<p>Multi value lookup (id of lookup values as array 1): <code>-Values @{&quot;MultiLookupField&quot; = &quot;1&quot;,&quot;2&quot;}</code></p>
+<p>Multi value lookup (id of lookup values as array 2): <code>-Values @{&quot;MultiLookupField&quot; = 1,2}</code></p>
+<p>Multi value lookup (id of lookup values as string): <code>-Values @{&quot;MultiLookupField&quot; = &quot;1,2&quot;}</code></p>
+<p>Yes/No: <code>-Values @{&quot;YesNo&quot; = $false}</code></p>
+<p>Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): <code>-Values @{&quot;Person&quot; = &quot;user1@domain.com&quot;,&quot;21&quot;}</code></p>
+<p><strong>If the user is not present, in the site user information list, you need to add that user using <code>New-PnPUser</code> cmdlet.</strong></p>
+<p>Managed Metadata (single value with path to term): <code>-Values @{&quot;MetadataField&quot; = &quot;CORPORATE|DEPARTMENTS|FINANCE&quot;}</code></p>
+<p>Managed Metadata (single value with id of term): <code>-Values @{&quot;MetadataField&quot; = &quot;fe40a95b-2144-4fa2-b82a-0b3d0299d818&quot;} with Id of term</code></p>
+<p>Managed Metadata (multiple values with paths to terms): <code>-Values @{&quot;MetadataField&quot; = &quot;CORPORATE|DEPARTMENTS|FINANCE&quot;,&quot;CORPORATE|DEPARTMENTS|HR&quot;}</code></p>
+<p>Managed Metadata (multiple values with ids of terms): <code>-Values @{&quot;MetadataField&quot; = &quot;fe40a95b-2144-4fa2-b82a-0b3d0299d818&quot;,&quot;52d88107-c2a8-4bf0-adfa-04bc2305b593&quot;}</code></p>
+<p>Hyperlink or Picture: <code>-Values @{&quot;Hyperlink&quot; = &quot;https://github.com/OfficeDev/, OfficePnP&quot;}</code></p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
 

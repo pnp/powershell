@@ -99,6 +99,15 @@
 <pre><code class="lang-powershell">Remove-PnPField -List &quot;Demo list&quot; -Identity &quot;Speakers&quot;
 </code></pre>
 <p>Removes the speakers field from the list &quot;Demo list&quot;.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">$batch = New-PnPBatch
+Remove-PnPField -List &quot;Demo list&quot; -Identity &quot;Speakers&quot; -Batch $batch
+Remove-PnPField -List &quot;Demo list&quot; -Identity &quot;Sponsors&quot; -Batch $batch
+Remove-PnPField -List &quot;Demo list&quot; -Identity &quot;Organizers&quot; -Batch $batch
+Remove-PnPField -Identity &quot;Test&quot; -Batch $batch
+Invoke-PnPBatch $batch
+</code></pre>
+<p>Removes the speakers, sponsors and organizers fields from the list &quot;Demo list&quot; as well as Test field from the web in a batch.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -140,6 +149,17 @@ Parameter Sets: (All)
 
 Required: False
 Position: 1
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-batch">-Batch</h3>
+<p>Batch object used to remove fields in a batched manner. See above example on how to use this.</p>
+<pre><code class="lang-yaml">Type: PnPBatch
+Parameter Sets: (All)
+
+Required: False
+Position: named
 Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False

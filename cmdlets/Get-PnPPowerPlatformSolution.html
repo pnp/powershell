@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set-PnPAzureADAppSitePermission | PnP PowerShell </title>
+    <title>Get-PnPPowerPlatformSolution | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set-PnPAzureADAppSitePermission | PnP PowerShell ">
+    <meta name="title" content="Get-PnPPowerPlatformSolution | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,37 +77,50 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="set-pnpazureadappsitepermission">Set-PnPAzureADAppSitePermission</h1>
+  <h1 id="get-pnppowerplatformsolution">Get-PnPPowerPlatformSolution</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API: Sites.FullControl.All</li>
+<li>Azure: management.azure.com</li>
 </ul>
-<p>Updates permissions for a given Azure Active Directory application registration.</p>
+<p>Returns the Power Platform Solution/s for a given environment</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; -Permissions &lt;Read|Write|Manage|FullControl&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPPowerPlatformSolution [-Environment &lt;PowerPlatformEnvironmentPipeBind&gt;] [-Name &lt;PowerPlatformConnectorPipeBind&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet updates permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected.</p>
+<p>This cmdlet returns the PowerPlatform solution on a given enviroment.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions Read
+<h3 id="example-1">Example 1</h3>
+<pre><code class="lang-powershell">Get-PnPPowerPlatformSolution -Environment (Get-PnPPowerPlatformEnvironment)
 </code></pre>
-<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'Read' access for the currently connected site collection.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions FullControl -Site https://contoso.microsoft.com/sites/projects
+<p>This returns all the solutions for a given Power Platform environment</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Get-PnPPowerPlatformSolution -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Name 'My Solution Name'
 </code></pre>
-<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'FullControl' access for the site collection at the provided URL.</p>
+<p>This returns a specific solution on the default Power Platform environment</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-environment">-Environment</h3>
+<p>The name of the Power Platform environment or an Environment instance to retrieve the available solutions for. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: The default environment
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-name">-Name</h3>
+<p>The Name of the solution to retrieve. If not provided, all the solutions will be returned.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformSolutionPipeBind
+Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -115,37 +128,14 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-permissionid">-PermissionId</h3>
-<p>The permission with the specified id will be updated. Use <a href="Get-PnPAzureADAppSitePermission.html">Get-PnPAzureADAppSitePermission</a> to discover currently set permissions which can be updated.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-permissions">-Permissions</h3>
-<p>Specifies the permissions to set for the Azure Active Directory application registration which can either be Read, Write, Manage or FullControl.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Accepted values: Read, Write, Manage, FullControl
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-site">-Site</h3>
-<p>Optional url of a site to set the permissions for. Defaults to the current site if not provided.</p>
-<pre><code class="lang-yaml">Type: SitePipeBind
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: Currently connected site
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

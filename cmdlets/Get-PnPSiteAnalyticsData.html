@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set-PnPAzureADAppSitePermission | PnP PowerShell </title>
+    <title>Get-PnPSiteAnalyticsData | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set-PnPAzureADAppSitePermission | PnP PowerShell ">
+    <meta name="title" content="Get-PnPSiteAnalyticsData | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,33 +77,106 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="set-pnpazureadappsitepermission">Set-PnPAzureADAppSitePermission</h1>
+  <h1 id="get-pnpsiteanalyticsdata">Get-PnPSiteAnalyticsData</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API: Sites.FullControl.All</li>
-</ul>
-<p>Updates permissions for a given Azure Active Directory application registration.</p>
+<p>Retrieves analytics data for a site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId &lt;String&gt; -Permissions &lt;Read|Write|Manage|FullControl&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+<h3 id="return-analytics-data">Return analytics data</h3>
+<pre><code class="lang-powershell">Get-PnPSiteAnalyticsData -Url &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet updates permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected.</p>
+<p>Retrieves site analytics data within a specific date range.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions Read
+<pre><code class="lang-powershell">Get-PnPSiteAnalyticsData -All
 </code></pre>
-<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'Read' access for the currently connected site collection.</p>
+<p>Retrieves all available analytics data for the specified site.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions FullControl -Site https://contoso.microsoft.com/sites/projects
+<pre><code class="lang-powershell">Get-PnPSiteAnalyticsData -LastSevenDays
 </code></pre>
-<p>Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'FullControl' access for the site collection at the provided URL.</p>
+<p>Retrieves analytics data for the last seven days of the site.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPSiteAnalyticsData -StartDate (Get-date).AddDays(-15) -EndDate (Get-date) -AnalyticsAggregationInterval Day
+</code></pre>
+<p>Retrieves analytics data for the last 15 days of the specified site with aggregation interval as days.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPSiteAnalyticsData -Identity &quot;https://tenant.sharepoint.com/sites/mysite&quot; -StartDate (Get-date).AddDays(-15) -EndDate (Get-date) -AnalyticsAggregationInterval Day
+</code></pre>
+<p>Retrieves analytics data, for the specified site, for the last 15 days of the specified site with aggregation interval as days.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>The URL (server or site relative) of the site</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases: ServerRelativeUrl, SiteRelativeUrl
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-all">-All</h3>
+<p>When specified, it will retrieve all analytics data.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: All analytics data
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-lastsevendays">-LastSevenDays</h3>
+<p>When specified, it will retrieve analytics data for the last seven days.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Analytics by specific intervals
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-startdate">-StartDate</h3>
+<p>When specified, it will retrieve analytics data starting from the specified start date.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: Analytics by date range
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enddate">-EndDate</h3>
+<p>When specified, it will retrieve analytics data ending with specified end date. Should be used along with StartDate parameter</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: Analytics by date range
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-analyticsaggregationinterval">-AnalyticsAggregationInterval</h3>
+<p>When specified, it will retrieve analytics data with specified aggregation interval. Default is day.
+Allowed values are <code>Day</code>,<code>Week</code> and <code>Month</code>.</p>
+<pre><code class="lang-yaml">Type: DateTime
+Parameter Sets: Analytics by date range
+
+Required: False
+Position: Named
+Default value: Day
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -112,40 +185,6 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-permissionid">-PermissionId</h3>
-<p>The permission with the specified id will be updated. Use <a href="Get-PnPAzureADAppSitePermission.html">Get-PnPAzureADAppSitePermission</a> to discover currently set permissions which can be updated.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-permissions">-Permissions</h3>
-<p>Specifies the permissions to set for the Azure Active Directory application registration which can either be Read, Write, Manage or FullControl.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Accepted values: Read, Write, Manage, FullControl
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-site">-Site</h3>
-<p>Optional url of a site to set the permissions for. Defaults to the current site if not provided.</p>
-<pre><code class="lang-yaml">Type: SitePipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: Currently connected site
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
