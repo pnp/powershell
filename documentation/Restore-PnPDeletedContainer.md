@@ -15,7 +15,7 @@ title: Restore-PnPDeletedContainer
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-The Restore-SPODeletedContainer recovers a deleted Container from the Recycle Bin.
+The Restore-PnPDeletedContainer recovers a deleted Container from the Recycle Bin.
 
 ## SYNTAX
 
