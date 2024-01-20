@@ -12,10 +12,10 @@ namespace PnP.PowerShell.Commands.Admin
     public class GetContainer : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
-        public Guid OwningApplicationId;
+        public ContainerPipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false)]
-        public ContainerPipeBind Identity { get; set; }
+        public Guid OwningApplicationId;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Paged { get; set; }

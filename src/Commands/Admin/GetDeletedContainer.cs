@@ -14,7 +14,6 @@ namespace PnP.PowerShell.Commands.Admin
     {
         protected override void ExecuteCmdlet()
         {
-        
             IList<SPDeletedContainerProperties> deletedContainers = Tenant.GetSPODeletedContainers();
             AdminContext.ExecuteQueryRetry();
             WriteObject(deletedContainers, true);
