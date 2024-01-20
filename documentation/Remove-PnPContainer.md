@@ -70,7 +70,7 @@ Specify container site url or container id.
 Type: ContainerPipeBind
 Parameter Sets: (All)
 
-Required: Falsegit 
+Required: true 
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
