@@ -124,7 +124,8 @@ namespace PnP.PowerShell.Commands.Branding
                     CurrentWeb.EnsureProperties(w => w.Url);
                     var menuState = Utilities.REST.RestHelper.GetAsync<Model.SharePoint.NavigationNodeCollection>(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/MenuState", ClientContext.GetAccessToken(), false).GetAwaiter().GetResult();
 
-                    var currentItem = menuState?.Nodes?.Where(t => t.Key == addedNode.Id.ToString()).FirstOrDefault();
+                    var currentItem = menuState?.Nodes?.Select(node => SearchNodeById(node, addedNode.Id))
+                        .FirstOrDefault(result => result != null);
                     if (currentItem != null)
                     {
                         currentItem.OpenInNewWindow = OpenInNewTab.ToBool();
@@ -150,5 +151,16 @@ namespace PnP.PowerShell.Commands.Branding
                 throw new Exception("Unable to define Navigation Node collection to add the node to");
             }
         }
+
+        private static Model.SharePoint.NavigationNode SearchNodeById(Model.SharePoint.NavigationNode root, int id)
+        {
+            if (root.Key == id.ToString())
+            {
+                return root;
+            }
+
+            return root.Nodes.Select(child => SearchNodeById(child, id)).FirstOrDefault(result => result != null);
+        }
+
     }
 }
