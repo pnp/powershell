@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPPowerPlatformSolution` cmdlet to Power Platform solutions. [#3675](https://github.com/pnp/powershell/pull/3675)
 - Added `New-PnPContainerType` cmdlet to create a new SharePoint container type. [#3669](https://github.com/pnp/powershell/pull/3669)
 - Added `Remove-PnPContainerType` cmdlet which removes a specific container type. [#3689](https://github.com/pnp/powershell/pull/3689/)
+- Added `Restore-PnPDeletedContainer` cmdlet which recovers a deleted Container from the Recycle Bin. [#3661](https://github.com/pnp/powershell/pull/3661)
 
 ### Fixed
 
