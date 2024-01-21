@@ -4985,6 +4985,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPContainerType.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPContainerType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPContentType.md",
       "output": {
         ".html": {
@@ -6059,6 +6069,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Restart-PnPFlowRun.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Restore-PnPDeletedContainer.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Restore-PnPDeletedContainer.html"
         }
       },
       "version": ""

@@ -88,7 +88,7 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>The Get-SPODeletedContainer cmdlet returns a list of all deleted Containers in the Recycle Bin. There is no Identity parameter needed. The list includes the ContainerId, ContainerName, DeletedOn, and CreatedDate. Deleted Containers in the Recycle Bin are permanently deleted after 93 days.</p>
+<p>The Get-PnPDeletedContainer cmdlet returns a list of all deleted Containers in the Recycle Bin. There is no Identity parameter needed. The list includes the ContainerId, ContainerName, DeletedOn, and CreatedDate. Deleted Containers in the Recycle Bin are permanently deleted after 93 days. Use cmdlet Restore-PnPDeletedContainer to restore a deleted container.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPDeletedContainer [-Connection &lt;PnPConnection&gt;] 
 </code></pre>

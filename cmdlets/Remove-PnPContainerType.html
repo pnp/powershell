@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Remove-PnPContainer | PnP PowerShell </title>
+    <title>Remove-PnPContainerType | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Remove-PnPContainer | PnP PowerShell ">
+    <meta name="title" content="Remove-PnPContainerType | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,28 +81,23 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="remove-pnpcontainer">Remove-PnPContainer</h1>
+  <h1 id="remove-pnpcontainertype">Remove-PnPContainerType</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>The Remove-PnPContainer cmdlet removes a container from the SharePoint tenant. The container to remove is specified by the Identity parameter, which accepts a ContainerPipeBind object.</p>
-<p>When admins delete a Container, it is moved into the Recycle Bin. A deleted Container can be restored from the Recycle Bin within 93 days. If a Container is deleted from the Recycle Bin, or it exceeds the 93-day retention period, it is permanently deleted. Deleting a Container deletes everything within it, including all documents and files. You can view all deleted Containers in the Recycle Bin with the Get-PnPDeletedContainer cmdlet.</p>
+<p>The Remove-PnPContainerType cmdlet removes a trial container from the SharePoint tenant. The container to remove is specified by the Identity parameter.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPContainer [-Identity] &lt;ContainerPipeBind&gt; [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Remove-PnPContainerType [-Identity] &lt;Guid&gt; [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPContainer -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; 
+<pre><code class="lang-powershell">Remove-PnPContainerType -Identity 00be1092-0c75-028a-18db-89e57908e7d6 
 </code></pre>
-<p>Removes the specified container by using the container id.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPContainer -Identity  &quot;https://contoso.sharepoint.com/contentstorage/CSP_4bd71a68-8312-4275-99b1-a2b70e3ba0e8&quot;
-</code></pre>
-<p>Removes the the specified container by using the container url</p>
+<p>Removes the specified trial container by using the container id.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -116,11 +111,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Specify container site url or container id.</p>
-<pre><code class="lang-yaml">Type: ContainerPipeBind
+<p>Specify the container id.</p>
+<pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
-Required: true 
+Required: True 
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
