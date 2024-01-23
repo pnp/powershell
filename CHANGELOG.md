@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Daniel Cecil [danielcecil]
 - Rohit Devmore [rohit404404]
 - Konrad K. [wilecoyotegenius]
 - Kunj Balkrishna Sangani [kunj-sangani]
