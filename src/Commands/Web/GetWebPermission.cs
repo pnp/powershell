@@ -7,9 +7,9 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsCommon.Get, "PnPWebPermissions")]
+    [Cmdlet(VerbsCommon.Get, "PnPWebPermission")]
     [OutputType(typeof(IRoleDefinition))]
-    public class GetWebPermissions : PnPWebCmdlet
+    public class GetWebPermission : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = "ByName")]
         public WebPipeBind Identity;

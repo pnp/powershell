@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPWebPermissions.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPWebPermission.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPWebPermissions
+title: Get-PnPWebPermission
 ---
   
-# Get-PnPWebPermissions
+# Get-PnPWebPermission
 
 ## SYNOPSIS
 Returns the explicit permissions for a specific SharePoint Web given a user or group by id.
@@ -15,7 +15,7 @@ Returns the explicit permissions for a specific SharePoint Web given a user or g
 ## SYNTAX
 
 ```powershell
-Get-PnPWebPermissions [-Identity] <WebPipeBind> -PrincipalId <Int32>
+Get-PnPWebPermission [-Identity] <WebPipeBind> -PrincipalId <Int32>
 ```
 
 ## DESCRIPTION
@@ -26,14 +26,14 @@ This cmdlet retrieves the web permissions (role definitions) for a specific user
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPWebPermissions -Identity (Get-PnPWeb) -PrincipalId 60
+Get-PnPWebPermission -Identity (Get-PnPWeb) -PrincipalId 60
 ```
 
 Returns the permissions for the SharePoint group with id for the current Web.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPListPermissions -Identity "subsite" -PrincipalId (Get-PnPGroup -Identity DemoGroup).Id
+Get-PnPWebPermission -Identity "subsite" -PrincipalId (Get-PnPGroup -Identity DemoGroup).Id
 ```
 
 Returns the permissions for the SharePoint group called DemoGroup for a given subsite path.
