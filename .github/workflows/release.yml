@@ -8,7 +8,7 @@ jobs:
   publish-docker-windows-2022:
     runs-on: windows-2022
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build and Publish All
       shell: pwsh
       run: |
@@ -17,7 +17,7 @@ jobs:
   publish-docker-windows-2019:
     runs-on: windows-2019
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build and Publish All
       shell: pwsh
       run: |
@@ -26,7 +26,7 @@ jobs:
   publish-docker-linux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build and Publish All
       shell: pwsh
       run: |
