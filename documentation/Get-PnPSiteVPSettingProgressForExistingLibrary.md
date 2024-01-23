@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteSetVPProgressExistingLibs.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteVPSettingProgressForExistingLibrary.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPSiteSetVPProgressExistingLibs
+title: Get-PnPSiteVPSettingProgressForExistingLibrary
 ---
   
-# Get-PnPSiteSetVPProgressExistingLibs
+# Get-PnPSiteVPSettingProgressForExistingLibrary
 
 ## SYNOPSIS
 Get the progress of setting version policy for existing document libraries on the site.
@@ -15,7 +15,7 @@ Get the progress of setting version policy for existing document libraries on th
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteSetVPProgressExistingLibs [-Connection <PnPConnection>] 
+Get-PnPSiteVPSettingProgressForExistingLibrary [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -25,7 +25,7 @@ This cmdlet allows retrieval of the progress of setting version policy for exist
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteSetVPProgressExistingLibs
+Get-PnPSiteVPSettingProgressForExistingLibrary
 ```
 
 Returns the progress of setting version policy for existing document libraries on the site.

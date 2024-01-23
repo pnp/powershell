@@ -275,7 +275,7 @@ namespace PnP.PowerShell.Commands.Site
                 site.EnsureProperty(s => s.VersionPolicyForNewLibrariesTemplate);
                 site.VersionPolicyForNewLibrariesTemplate.InheritTenantSettings();
                 context.ExecuteQueryRetry();
-                WriteWarning("The setting for new libraries takes effect immediately. Please run Get-PnPSiteVersionPolicyForNewLibs to display the newly set values.");
+                WriteWarning("The setting for new libraries takes effect immediately. Please run Get-PnPSiteVersionPolicyForNewLibrary to display the newly set values.");
             }
             else
             {
@@ -368,7 +368,7 @@ namespace PnP.PowerShell.Commands.Site
                                 }
                             }
 
-                            WriteWarning("The setting for new libraries takes effect immediately. Please run Get-PnPSiteVersionPolicyForNewLibs to display the newly set values.");
+                            WriteWarning("The setting for new libraries takes effect immediately. Please run Get-PnPSiteVersionPolicyForNewLibrary to display the newly set values.");
                         }
 
                         if (!(ParameterSpecified(nameof(ApplyForNewLibs)) &&
@@ -387,7 +387,7 @@ namespace PnP.PowerShell.Commands.Site
                                 context.ExecuteQueryRetry();
                             }
 
-                            WriteWarning("The setting for existing libraries takes at least 24 hours to take effect. Please run Get-PnPSiteSetVPProgressExistingLibs to check the progress.");
+                            WriteWarning("The setting for existing libraries takes at least 24 hours to take effect. Please run Get-PnPSiteVPSettingProgressForExistingLibrary to check the progress.");
                         }
                     }
                     else
