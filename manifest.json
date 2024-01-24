@@ -4015,6 +4015,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPWebPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPWebPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPWebTemplates.md",
       "output": {
         ".html": {
