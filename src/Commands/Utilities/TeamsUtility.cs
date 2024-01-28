@@ -667,7 +667,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else
             {
-                channel.IsFavoriteByDefault = isFavoriteByDefault;
+                channel.IsFavoriteByDefault = null;
                 return await GraphHelper.PostAsync<TeamChannel>(connection, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
         }
