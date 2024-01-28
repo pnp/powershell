@@ -25,7 +25,7 @@ Set-PnPAzureADAppSitePermission -PermissionId <String> -Permissions <Read|Write|
 
 ## DESCRIPTION
 
-This cmdlet updates permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. Notice that this cmdlet allows for more permissions compared for when initially setting rights through [Grant-PnPAzureADAppSitePermission](Grant-PnPAzureADAppSitePermission.md).
+This cmdlet updates permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. 
 
 ## EXAMPLES
 

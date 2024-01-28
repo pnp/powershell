@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.Core.Model.SharePoint;
+using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Fields
 {
@@ -19,7 +22,92 @@ namespace PnP.PowerShell.Commands.Fields
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
+        [Parameter(Mandatory = false)]
+        public PnPBatch Batch;
+        
         protected override void ExecuteCmdlet()
+        {
+            if (ParameterSpecified(nameof(Batch)))
+            {
+                RemoveFieldBatch();
+            }
+            else
+            {
+                RemoveSingleField();
+            }
+        }
+
+        private void RemoveFieldBatch()
+        {
+            if (List != null)
+            {
+                var list = List.GetList(PnPContext);
+                list.EnsureProperties(l => l.Fields);
+                var fieldCollection = list.Fields.AsRequested();
+                var f = Identity.Field;
+                IField pnpField = null;
+
+                if (list != null)
+                {
+                    if (f == null)
+                    {
+                        if (Identity.Id != Guid.Empty)
+                        {
+                            pnpField = fieldCollection.Where(fi => fi.Id == Identity.Id).FirstOrDefault();
+                        }
+                        else if (!string.IsNullOrEmpty(Identity.Name))
+                        {
+                            pnpField = fieldCollection.Where(fi => fi.InternalName == Identity.Name).FirstOrDefault();
+                            if (pnpField == null)
+                            {
+                                pnpField = fieldCollection.Where(fi => fi.Title == Identity.Name).FirstOrDefault();
+                            }
+                        }
+
+                        if (pnpField != null)
+                        {
+                            if (Force || ShouldContinue(string.Format(Properties.Resources.DeleteField0, pnpField.InternalName), Properties.Resources.Confirm))
+                            {
+                                pnpField.DeleteBatch(Batch.Batch);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                var f = Identity.Field;
+                PnPContext.Web.EnsureProperties(w => w.Fields);
+                var fieldCollection = PnPContext.Web.Fields.AsRequested();
+                IField pnpField = null;
+                if (f == null)
+                {
+                    if (Identity.Id != Guid.Empty)
+                    {
+                        pnpField = fieldCollection.Where(fi => fi.Id == Identity.Id).FirstOrDefault();
+                    }
+                    else if (!string.IsNullOrEmpty(Identity.Name))
+                    {
+                        pnpField = fieldCollection.Where(fi => fi.InternalName == Identity.Name).FirstOrDefault();
+
+                        if (pnpField == null)
+                        {
+                            pnpField = fieldCollection.Where(fi => fi.Title == Identity.Name).FirstOrDefault();
+                        }
+                    }
+
+                    if (pnpField != null)
+                    {
+                        if (Force || ShouldContinue(string.Format(Properties.Resources.DeleteField0, pnpField.InternalName), Properties.Resources.Confirm))
+                        {
+                            pnpField.DeleteBatch(Batch.Batch);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void RemoveSingleField()
         {
             if (List != null)
             {
@@ -50,7 +138,7 @@ namespace PnP.PowerShell.Commands.Fields
                         }
                     }
                 }
-            } 
+            }
             else
             {
                 var f = Identity.Field;
@@ -80,5 +168,4 @@ namespace PnP.PowerShell.Commands.Fields
             }
         }
     }
-
 }
