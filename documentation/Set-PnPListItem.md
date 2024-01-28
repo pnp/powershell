@@ -187,9 +187,9 @@ Accept wildcard characters: False
 
 Specifies the update type to use when updating the listitem. Possible values are "Update", "SystemUpdate", "UpdateOverwriteVersion".
 
-* Update: Sets field values and creates a new version if versioning is enabled for the list
-* SystemUpdate: Sets field values and does not create a new version. Any events on the list will trigger.
-* UpdateOverwriteVersion: Sets field values and does not create a new version. No events on the list will trigger.
+* **Update**: Sets field values and creates a new version if versioning is enabled for the list. The "Modified By" and "Modified" fields will be updated to reflect the time of the update and the user who made the change.
+* **SystemUpdate**: Sets field values and does not create a new version. Any events on the list will trigger. The "Modified By" and "Modified" fields not updated and can not be set.
+* **UpdateOverwriteVersion**: Sets field values and does not create a new version. No events on the list will trigger. The "Modified By" and "Modified" fields are not updated but can be set by passing the field values in the update. HINT: use 'Editor' to set the "Modified By" field.
 
 ```yaml
 Type: SwitchParameter
