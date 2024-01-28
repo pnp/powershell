@@ -99,7 +99,8 @@ Accept wildcard characters: False
 ```
 
 ### -IsFavoriteByDefault
-Allows you to specify if the channel is by default visible for members
+Allows you to specify if the channel is by default visible for members.
+** This parameter is obsolete. [ Microsoft Graph API docs](https://learn.microsoft.com/en-us/graph/api/resources/channel?view=graph-rest-1.0#properties) mention that it only works when you create a channel in Teams creation request. It will be removed in a future version. **
 
 ```yaml
 Type: Boolean
