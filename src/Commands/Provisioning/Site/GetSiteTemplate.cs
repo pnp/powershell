@@ -213,14 +213,26 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 creationInformation.PersistBrandingFiles = PersistBrandingFiles;
             }
 #pragma warning restore 618
-            creationInformation.PersistPublishingFiles = PersistPublishingFiles;
-            creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
+            if (ParameterSpecified(nameof(PersistPublishingFiles)))
+            {
+                creationInformation.PersistPublishingFiles = PersistPublishingFiles;
+            }
+            if (ParameterSpecified(nameof(IncludeNativePublishingFiles)))
+            {
+                creationInformation.IncludeNativePublishingFiles = IncludeNativePublishingFiles;
+            }
             if (ParameterSpecified(nameof(IncludeSiteGroups)))
             {
                 creationInformation.IncludeSiteGroups = IncludeSiteGroups;
             }
-            creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
-            creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
+            if (ParameterSpecified(nameof(IncludeTermGroupsSecurity)))
+            {
+                creationInformation.IncludeTermGroupsSecurity = IncludeTermGroupsSecurity;
+            }
+            if (ParameterSpecified(nameof(IncludeSearchConfiguration)))
+            {
+                creationInformation.IncludeSearchConfiguration = IncludeSearchConfiguration;
+            }
             if (ParameterSpecified(nameof(IncludeHiddenLists)))
             {
                 creationInformation.IncludeHiddenLists = IncludeHiddenLists;
@@ -229,12 +241,18 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 creationInformation.IncludeAllClientSidePages = IncludeAllPages;
             }
-            creationInformation.SkipVersionCheck = SkipVersionCheck;
+            if (ParameterSpecified(nameof(SkipVersionCheck)))
+            {
+                creationInformation.SkipVersionCheck = SkipVersionCheck;
+            }
             if (ParameterSpecified(nameof(ContentTypeGroups)) && ContentTypeGroups != null)
             {
                 creationInformation.ContentTypeGroupsToInclude = ContentTypeGroups.ToList();
             }
-            creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
+            if (ParameterSpecified(nameof(PersistMultiLanguageResources)) && ContentTypeGroups != null)
+            {
+                creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
+            }
             if (extension == ".pnp")
             {
                 // if file is of pnp format, persist all files
