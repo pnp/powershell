@@ -198,9 +198,9 @@ Accept wildcard characters: False
 <h3 id="-updatetype">-UpdateType</h3>
 <p>Specifies the update type to use when updating the listitem. Possible values are &quot;Update&quot;, &quot;SystemUpdate&quot;, &quot;UpdateOverwriteVersion&quot;.</p>
 <ul>
-<li>Update: Sets field values and creates a new version if versioning is enabled for the list</li>
-<li>SystemUpdate: Sets field values and does not create a new version. Any events on the list will trigger.</li>
-<li>UpdateOverwriteVersion: Sets field values and does not create a new version. No events on the list will trigger.</li>
+<li><strong>Update</strong>: Sets field values and creates a new version if versioning is enabled for the list. The &quot;Modified By&quot; and &quot;Modified&quot; fields will be updated to reflect the time of the update and the user who made the change.</li>
+<li><strong>SystemUpdate</strong>: Sets field values and does not create a new version. Any events on the list will trigger. The &quot;Modified By&quot; and &quot;Modified&quot; fields not updated and can not be set.</li>
+<li><strong>UpdateOverwriteVersion</strong>: Sets field values and does not create a new version. No events on the list will trigger. The &quot;Modified By&quot; and &quot;Modified&quot; fields are not updated but can be set by passing the field values in the update. HINT: use 'Editor' to set the &quot;Modified By&quot; field.</li>
 </ul>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
