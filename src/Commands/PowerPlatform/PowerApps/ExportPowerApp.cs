@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             var environmentName = Environment.GetName();
             var appName = Identity.GetName();
 
-            var wrapper = PowerAppsUtility.GetWrapper(Connection.HttpClient, environmentName, AccessToken, appName).GetAwaiter().GetResult();
+            var wrapper = PowerAppsUtility.GetWrapper(Connection.HttpClient, environmentName, AccessToken, appName, Connection.AzureEnvironment).GetAwaiter().GetResult();
            
             if (wrapper.Status == Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Succeeded)
             { 

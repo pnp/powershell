@@ -1,5 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
@@ -23,7 +24,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
         protected override void ExecuteCmdlet()
         {
             string environmentName = null;
-            if(ParameterSpecified(nameof(Environment)))
+            string powerAppsUrl = PowerPlatformUtility.GetPowerAppsEndpoint(Connection.AzureEnvironment);
+            if (ParameterSpecified(nameof(Environment)))
             {
                 environmentName = Environment.GetName();
 
@@ -31,7 +33,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             }
             else
             {
-                string baseUrl = "https://api.flow.microsoft.com/";
+                string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
                 var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 environmentName = environments.FirstOrDefault(e => e.Properties.IsDefault.HasValue && e.Properties.IsDefault == true)?.Name;
 
@@ -49,7 +51,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 
                 WriteVerbose($"Retrieving specific PowerApp with the provided name '{appName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerApp.PowerApp>(Connection, $"https://api.powerapps.com/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerApp.PowerApp>(Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                  
                 WriteObject(result, false);
             }
@@ -57,7 +59,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             {
                 WriteVerbose($"Retrieving all PowerApps within environment '{environmentName}'");
 
-                var apps = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerApp.PowerApp>(Connection, $"https://api.powerapps.com/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'", AccessToken).GetAwaiter().GetResult();
+                var apps = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerApp.PowerApp>(Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'", AccessToken).GetAwaiter().GetResult();
                 WriteObject(apps, true);
             }
         }

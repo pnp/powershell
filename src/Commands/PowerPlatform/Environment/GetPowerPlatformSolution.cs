@@ -4,6 +4,7 @@ using System;
 using System.Management.Automation;
 using System.Linq;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 {
@@ -21,7 +22,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
         {
             string environmentName = null;
             string dynamicsScopeUrl = null;
-            var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, "https://api.flow.microsoft.com/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
+            var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
             if (ParameterSpecified(nameof(Environment)))
             {
                 environmentName = Environment.GetName().ToLower();

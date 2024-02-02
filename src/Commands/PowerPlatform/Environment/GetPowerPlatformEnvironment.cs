@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 using System.Linq;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 {
@@ -21,7 +22,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
         protected override void ExecuteCmdlet()
         {
-            string baseUrl = "https://api.flow.microsoft.com/";
+            string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
             var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection,  baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
 
             if(ParameterSpecified(nameof(IsDefault)) && IsDefault.ToBool())
