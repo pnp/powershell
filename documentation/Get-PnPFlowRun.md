@@ -52,6 +52,7 @@ $flowrun.Properties.trigger
 ```
 This returns a specific flow run trigger information as below
 
+### Output
 ```powershell
 Name              : Recurrence
 StartTime         : 2024-02-02 06:00:00
@@ -71,6 +72,7 @@ $flowruns.Properties.trigger
 ```
 This returns a specific flows trigger information as below
 
+### Output
 ```powershell
 Name              : Recurrence
 StartTime         : 2024-02-02 06:00:00
