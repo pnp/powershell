@@ -56,6 +56,8 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false)]
         public SwitchParameter HideTitleInHeader;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter HorizontalQuickLaunch;
         protected override void ExecuteCmdlet()
         {
             var dirty = false;
@@ -157,6 +159,12 @@ namespace PnP.PowerShell.Commands
                     case nameof(HideTitleInHeader):
                         {
                             CurrentWeb.HideTitleInHeader = HideTitleInHeader.ToBool();
+                            dirty = true;
+                            break;
+                        }
+                    case nameof(HorizontalQuickLaunch):
+                        {
+                            CurrentWeb.HorizontalQuickLaunch = HorizontalQuickLaunch.ToBool();
                             dirty = true;
                             break;
                         }
