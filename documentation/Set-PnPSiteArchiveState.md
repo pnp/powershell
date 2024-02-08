@@ -20,13 +20,13 @@ Sets the archived state of the site. Can be used to archive and reactivate sites
 ## SYNTAX
 
 ```powershell
-Set-PnPSiteArchiveState [-Identity] <SPOSitePipeBind> -ArchiveState <SPOArchiveState> [-NoWait] [-Force]
+Set-PnPSiteArchiveState -Identity <SPOSitePipeBind> -ArchiveState <SPOArchiveState> [-NoWait] [-Force]
 ```
 
 ## DESCRIPTION
 
 Use this cmdlet to change the archive status of the site. You must be a SharePoint Online administrator or Global administrator and be a site collection administrator to run the cmdlet.
-Microsoft 365 Archive needs to be enabled for the organization to be able to use the feature.
+Microsoft 365 Archive needs to be enabled for the organization to be able to use this feature.
 
 ## EXAMPLES
 
