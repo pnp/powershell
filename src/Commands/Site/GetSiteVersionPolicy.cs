@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteVersionPolicyForNewLibrary")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteVersionPolicy")]
     [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SiteVersionPolicy))]
     public class GetSiteVersionPolicy : PnPSharePointCmdlet
     {

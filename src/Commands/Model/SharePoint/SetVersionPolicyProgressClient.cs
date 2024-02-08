@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
         /// <summary>
         /// Set version policy as AutoExpiration or not
         /// </summary>
-        public string EnableAutoTrim { get; set; }
+        public string EnableAutomaticMode { get; set; }
 
         /// <summary>
         /// The time limit if the version policy is ExpireAfter

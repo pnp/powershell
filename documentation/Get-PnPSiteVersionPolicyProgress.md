@@ -2,34 +2,33 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteVersionPolicyForNewLibrary.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteVersionPolicyProgress.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPSiteVersionPolicyForNewLibrary
+title: Get-PnPSiteVersionPolicyProgress
 ---
   
-# Get-PnPSiteVersionPolicyForNewLibrary
+# Get-PnPSiteVersionPolicyProgress
 
 ## SYNOPSIS
-Get version policy setting of the site.
+Get the progress of setting version policy for existing document libraries on the site.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteVersionPolicyForNewLibrary [-Connection <PnPConnection>] 
+Get-PnPSiteVersionPolicyProgress [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-This cmdlet allows retrieval of version policy setting on the site. When the new document libraries are created, they will be set as the version policy of the site.
-If the version policy is not set on the site, the setting of the tenant will be used.
+This cmdlet allows retrieval of the progress of setting version policy for existing document libraries on the site.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteVersionPolicyForNewLibrary
+Get-PnPSiteVersionPolicyProgress
 ```
 
-Returns the version policy setting of the site.
+Returns the progress of setting version policy for existing document libraries on the site.
 
 ## PARAMETERS
 

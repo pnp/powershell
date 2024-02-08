@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteVPSettingProgressForExistingLibrary")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteVersionPolicyProgress")]
     [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SetVersionPolicyProgressClient))]
     public class GetSetVersionPolicyProgress : PnPSharePointCmdlet
     {
@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Site
                 CompleteTimeInUTC = progress.CompleteTimeInUTC,
                 LibrariesProcessedInTotal = progress.ListsProcessedInTotal,
                 LibrariesFailedInTotal = progress.ListsFailedInTotal,
-                EnableAutoTrim = progress.EnableAutoTrim,
+                EnableAutomaticMode = progress.EnableAutoTrim,
                 ExpireAfterDays = progress.ExpireAfterDays,
                 MajorVersionLimit = progress.MajorVersionLimit,
                 MajorWithMinorVersionsLimit = progress.MajorWithMinorVersionsLimit
