@@ -23,6 +23,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
         protected override void ExecuteCmdlet()
         {
             string environmentName = null;
+            string baseUrl = "https://api.flow.microsoft.com/";
             if (ParameterSpecified(nameof(Environment)))
             {
                 environmentName = Environment.GetName();
@@ -30,7 +31,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
             }
             else
             {
-                var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, "https://management.azure.com/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 environmentName = environments.FirstOrDefault(e => e.Properties.IsDefault.HasValue && e.Properties.IsDefault == true)?.Name;
 
                 if (string.IsNullOrEmpty(environmentName))

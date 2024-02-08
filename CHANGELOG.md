@@ -10,6 +10,55 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `-IsDataAccessInCardDesignerEnabled` to `Set-PnPTenant` which allows for configuring Viva Connections Adaptive Cards to connect to backend services for their data [#3635](https://github.com/pnp/powershell/pull/3635)
+- Added `Remove-PnPContainer` cmdlet to remove the SharePoint embed container. [#3629](https://github.com/pnp/powershell/pull/3629)
+- Added `Convert-PnPFile` cmdlet which allows for a file to be converted to from one format to another. [#3435](https://github.com/pnp/powershell/pull/3435) & [#3643](https://github.com/pnp/powershell/pull/3643)
+- Added `Merge-PnPTerm` cmdlet which allows merging of one term into another. [#3638](https://github.com/pnp/powershell/pull/3638)
+- Added `Get-PnPDeletedContainer` cmdlet which returns a list of all deleted Containers in the recycle bin. [#3648](https://github.com/pnp/powershell/pull/3648)
+- Added `-Batch` parameter to `Add-PnPGroupMember` cmdlet which allows adding members to a SharePoint group in a batch. [#3651](https://github.com/pnp/powershell/pull/3651)
+- Added `Get-PnPContainerTypeConfiguration` cmdlet which fetches the container type configuration values. [#3660](https://github.com/pnp/powershell/pull/3660)
+- Added `-AppBypassInformationBarriers` and `-DefaultOneDriveInformationBarrierMode` parameters to `Set-PnPTenant` cmdlet. [#3679](https://github.com/pnp/powershell/pull/3679)
+- Added `Add-PnPFileAnalyticsData` cmdlet to allow retrieval of file analytics data. [#3644](https://github.com/pnp/powershell/pull/3644)
+- Added `Add-PnPSiteAnalyticsData` cmdlet to allow retrieval of site analytics data. [#3645](https://github.com/pnp/powershell/pull/3645)
+- Added `Get-PnPPowerPlatformSolution` cmdlet to Power Platform solutions. [#3675](https://github.com/pnp/powershell/pull/3675)
+- Added `New-PnPContainerType` cmdlet to create a new SharePoint container type. [#3669](https://github.com/pnp/powershell/pull/3669)
+- Added `Remove-PnPContainerType` cmdlet which removes a specific container type. [#3689](https://github.com/pnp/powershell/pull/3689/)
+- Added `Restore-PnPDeletedContainer` cmdlet which recovers a deleted Container from the Recycle Bin. [#3661](https://github.com/pnp/powershell/pull/3661)
+- Added `Get-PnPWebPermission` cmdlet which retrieves permission given by user for specific web. [#3685](https://github.com/pnp/powershell/pull/3685)
+- Added `-HorizontalQuickLaunch` parameter to `Set-PnPWeb` cmdlet to allow navigation orientation to be horizontal. [#3722](https://github.com/pnp/powershell/pull/3722)
+
+### Fixed
+
+- Fixed `Grant-PnPAzureADAppSitePermission` cmdlet which allows it to work in multi-geo environment. [#3658](https://github.com/pnp/powershell/pull/3658)
+- Fixed `Get-PnPTeamsChannelMessageReply` cmdlet which didn't work correctly when `-IncludeDeleted` parameter was not specified. [#3676](https://github.com/pnp/powershell/pull/3676)
+- Fixed `Add-PnPNavigationNode` cmdlet to also search for nodes in child navigation items. [#3625](https://github.com/pnp/powershell/pull/3625)
+- Fixed `Get-PnPFlow` cmdlet to use the newer Flow URLs instead of the old ARM URLs. [#3677](https://github.com/pnp/powershell/pull/3677)
+- Fixed `Get-PnPPowerPlatformConnector`, `Get-PnPPowerPlatformEnvironment`, `Get-PnPPowerApp`, `Add-PnPFlowOwner`, `Disable-PnPFlow`, `Enable-PnPFlow`, `Export-PnPFlow`, `Get-PnPFlowOwner`, `Get-PnPFlowRun`, `Remove-PnPFlow`, `Remove-PnPFlowOwner` , `Restart-PnPFlow` and `Stop-PnPFlowRun` cmdlets to use the new HTTP endpoints. [#3687](https://github.com/pnp/powershell/pull/3687)
+- Fixed `Add-PnPHubSiteAssociation` cmdlet to allow support for multi-geo scenario. [#3568](https://github.com/pnp/powershell/pull/3568)
+- Fixed `Enable/Disable-PnPPageScheduling` cmdlet to also work with Viva connections enabled site. [#3713](https://github.com/pnp/powershell/pull/3713)
+
+### Changed
+
+- `-IsFavoriteByDefault` parameter is now obsolete in `Add-PnPTeamsChannel` cmdlet due to deprecation by Microsoft Graph API. [#3712](https://github.com/pnp/powershell/pull/3712)
+
+### Contributors
+
+- Leon Armston [LeonArmston]
+- Daniel Cecil [danielcecil]
+- Rohit Devmore [rohit404404]
+- Konrad K. [wilecoyotegenius]
+- Kunj Balkrishna Sangani [kunj-sangani]
+- Koen Zomers [koenzomers]
+- Reshmee Auckloo [reshme011]
+- Nishkalank Bezawada [NishkalankBezawada]
+- Jørgen Wiik [joHKwi]
+- Siddharth Vaghasia [siddharth-vaghasia]
+- Jürgen Rosenthal-Buroh [JuergenRB]
+
+## [2.3.0]
+
+### Added
+
 - Added `-MediaTranscription` and `-MediaTranscriptionAutomaticFeatures` to `Set-PnPTenant` which allows for configuring the media transcription settings. [#3238](https://github.com/pnp/powershell/pull/3238)
 - Added `-Includes` option to `Get-PnPListItem` which allows for specifying additional fields to be retrieved. [#3270](https://github.com/pnp/powershell/pull/3270)
 - Added `-AllowCommentsTextOnEmailEnabled` parameter to `Set-PnPTenant` which allows including the surrounding document context in email notification when user is mentioned in document comments. [#3268](https://github.com/pnp/powershell/pull/3268)
@@ -51,7 +100,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPSiteSetVersionPolicyProgress` cmdlet which allows for getting the progress of setting a version policy for existing document libraries on a site [#3564](https://github.com/pnp/powershell/pull/3564)
 - Added `EnableSensitivityLabelForPDF` to `Set-PnPTenant` and `Get-PnPTenant` [#3581](https://github.com/pnp/powershell/pull/3581)
 - Changed `Restore-PnPRecycleBinItem` , made `-Identity` parameter as non-mandatory. [#2499](https://github.com/pnp/powershell/pull/2499)
-  
+- Added the ability to set Manage and FullControl permissions directly when using Sites.Selected with `Grant-PnPAzureADAppSitePermission` [#3617](https://github.com/pnp/powershell/pull/3617)
+- Added `Remove-PnPMicrosoft365GroupPhoto` cmdlet which allows removal of profile picture of M365 Group. [#3607](https://github.com/pnp/powershell/pull/3607)
+
 ### Fixed
 
 - Fixed `Add-PnPContentTypeToList` cmdlet to better handle piped lists. [#3244](https://github.com/pnp/powershell/pull/3244)
@@ -98,12 +149,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Pieter Veenstra [Pieter-Veenstra]
 - Konrad K. [wilecoyotegenius]
 - Dan Cecil [danielcecil]
 - Antti K. Koskela [koskila]
 - Christian Veenhuis [ChVeen]
 - Kunj Balkrishna Sangani [kunj-sangani]
-- Antti K. Koskela [koskila]
 - Dave Paylor [paylord]
 - [smsdaniel]
 - Jim Duncan [sparkitect]

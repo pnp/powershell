@@ -667,7 +667,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else
             {
-                channel.IsFavoriteByDefault = isFavoriteByDefault;
+                channel.IsFavoriteByDefault = null;
                 return await GraphHelper.PostAsync<TeamChannel>(connection, $"v1.0/teams/{groupId}/channels", channel, accessToken);
             }
         }
@@ -705,7 +705,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var replies = await GraphHelper.GetResultCollectionAsync<TeamChannelMessageReply>(connection, $"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies", accessToken);
 
-            return includeDeleted ? replies.ToList() : replies.Where(r => r.DeletedDateTime.HasValue).ToList();
+            return includeDeleted ? replies.ToList() : replies.Where(r => !r.DeletedDateTime.HasValue).ToList();
         }
 
         /// <summary>

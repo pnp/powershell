@@ -136,6 +136,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-MassDeleteNotificationDisabled <Boolean>]
  [-BusinessConnectivityServiceDisabled <Boolean>]
  [-EnableSensitivityLabelForPDF <Boolean>]
+ [-IsDataAccessInCardDesignerEnabled <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -663,6 +664,20 @@ Allows to set the session timeout. If you are a tenant administrator and you beg
 
 ```yaml
 Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsDataAccessInCardDesignerEnabled
+Allows turning on support for data access in the Viva Connections Adaptive Card Designer.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -2307,6 +2322,45 @@ Enables or disables the mass delete detection feature. When MassDeleteNotificati
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AppBypassInformationBarriers
+Enables of disables applications running in app-only mode to access IB sites.
+
+For more information about information barriers, see [Use information barriers with SharePoint](https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint) for your SharePoint Online environment.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultOneDriveInformationBarrierMode
+The DefaultOneDriveInformationBarrierMode sets the information barrier mode for all OneDrive sites.
+
+The valid values are:
+
+- Open
+- Explicit
+- Implicit
+- OwnerModerated
+- Mixed
+For more information about information barriers, see [Use information barriers with SharePoint](https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint) for your SharePoint Online environment.
+
+```yaml
+Type: InformationBarriersMode
 Parameter Sets: (All)
 
 Required: False
