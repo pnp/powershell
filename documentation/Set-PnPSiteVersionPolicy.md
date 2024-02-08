@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSiteVersionPolic
 # Set-PnPSiteVersionPolicy
 
 ## SYNOPSIS
-Sets file version policy related properties on the site.
+Set file version policy related properties on the site.
 
 ## SYNTAX
 
