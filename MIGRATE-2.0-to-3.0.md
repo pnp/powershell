@@ -42,7 +42,7 @@ Recommend referring to these 2 links:
 ## Breaking changes
 
 | **Cmdlet** | **Comment** |
-| ----------- | ---------------------- | -------------------- | --------------------- |
+| ----------- | ---------------------- |
 | Get-PnPRetentionLabel | The `Get-PnPRetentionLabel` cmdlet has been renamed to `Get-PnPTenantRetentionLabel` |
 | Get-PnPLabel | The `Get-PnPLabel` cmdlet has been renamed to `Get-PnRetentionLabel` |
 
