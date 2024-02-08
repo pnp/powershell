@@ -14,7 +14,6 @@ Sets file version policy related properties on the site.
 
 ## SYNTAX
 
-### Set Properties
 ```powershell
 Set-PnPSiteVersionPolicy 
  [-EnableAutoExpirationVersionTrim <Boolean>]
