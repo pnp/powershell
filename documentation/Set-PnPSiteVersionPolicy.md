@@ -27,6 +27,8 @@ Set-PnPSiteVersionPolicy
  [-Connection <PnPConnection>]
 ```
 
+## EXAMPLES
+
 ### EXAMPLE 1
 ```powershell
 Set-PnPSiteVersionPolicy -EnableAutoExpirationVersionTrim $true
