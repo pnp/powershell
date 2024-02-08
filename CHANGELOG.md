@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Restore-PnPDeletedContainer` cmdlet which recovers a deleted Container from the Recycle Bin. [#3661](https://github.com/pnp/powershell/pull/3661)
 - Added `Get-PnPWebPermission` cmdlet which retrieves permission given by user for specific web. [#3685](https://github.com/pnp/powershell/pull/3685)
 - Added `-HorizontalQuickLaunch` parameter to `Set-PnPWeb` cmdlet to allow navigation orientation to be horizontal. [#3722](https://github.com/pnp/powershell/pull/3722)
+- Added `Set-PnPRetentionLabel` and `Reset-PnPRetentionLabel` cmdlets to support setting a retention label on one or more items [#3599](https://github.com/pnp/powershell/pull/3599)
 
 ### Fixed
 
@@ -43,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Konrad K. [wilecoyotegenius]
 - Leon Armston [LeonArmston]
 - Daniel Cecil [danielcecil]
 - Rohit Devmore [rohit404404]
@@ -440,7 +442,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ServerRelativePath` and `-Path` parameters to `Set-PnPImageListItemColumn` cmdlet to allow for file to be uploaded for the Image type column. [#2503](https://github.com/pnp/powershell/pull/2503)
 - Added support for sovereign tenants in `Get-PnPTenandId` by utilizing the `-AzureEnvironment` parameter. [#2512](https://github.com/pnp/powershell/pull/2512)
 - Added `Set-PnPTeamsTeamPicture` which allows setting the picture of a Teams team [#3590](https://github.com/pnp/powershell/pull/3590)
-- Added `Set-PnPRetentionLabel` and `Reset-PnPRetentionLabel` cmdlets to support setting a retention label on one or more items [#3599](https://github.com/pnp/powershell/pull/3599)
 
 ### Changed
 
