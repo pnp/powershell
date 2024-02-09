@@ -46,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Nishkalank Bezawada [NishkalankBezawada]
 - Konrad K. [wilecoyotegenius]
 - Leon Armston [LeonArmston]
 - Daniel Cecil [danielcecil]
