@@ -26,6 +26,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Restore-PnPDeletedContainer` cmdlet which recovers a deleted Container from the Recycle Bin. [#3661](https://github.com/pnp/powershell/pull/3661)
 - Added the ModerationSettings to be returned with `Get-PnPTeamsChannel` when passing in `-IncludeModerationSettings` and using `-Identity <channelId>` [#3580](https://github.com/pnp/powershell/pull/3580)
 - Added `AllowNewMessageFromBots`, `AllowNewMessageFromConnectors`, `ReplyRestriction` and `UserNewMessageRestriction` to `Set-PnPTeamsChannel` which allows setting the moderation settings on a Teams channel [#3580](https://github.com/pnp/powershell/pull/3580)
+- Added `Get-PnPWebPermission` cmdlet which retrieves permission given by user for specific web. [#3685](https://github.com/pnp/powershell/pull/3685)
+- Added `-HorizontalQuickLaunch` parameter to `Set-PnPWeb` cmdlet to allow navigation orientation to be horizontal. [#3722](https://github.com/pnp/powershell/pull/3722)
+- Added `Set-PnPRetentionLabel` and `Reset-PnPRetentionLabel` cmdlets to support setting a retention label on one or more items [#3599](https://github.com/pnp/powershell/pull/3599)
 
 ### Fixed
 
@@ -35,9 +38,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPFlow` cmdlet to use the newer Flow URLs instead of the old ARM URLs. [#3677](https://github.com/pnp/powershell/pull/3677)
 - Fixed `Get-PnPPowerPlatformConnector`, `Get-PnPPowerPlatformEnvironment`, `Get-PnPPowerApp`, `Add-PnPFlowOwner`, `Disable-PnPFlow`, `Enable-PnPFlow`, `Export-PnPFlow`, `Get-PnPFlowOwner`, `Get-PnPFlowRun`, `Remove-PnPFlow`, `Remove-PnPFlowOwner` , `Restart-PnPFlow` and `Stop-PnPFlowRun` cmdlets to use the new HTTP endpoints. [#3687](https://github.com/pnp/powershell/pull/3687)
 - Fixed `Add-PnPHubSiteAssociation` cmdlet to allow support for multi-geo scenario. [#3568](https://github.com/pnp/powershell/pull/3568)
+- Fixed `Enable/Disable-PnPPageScheduling` cmdlet to also work with Viva connections enabled site. [#3713](https://github.com/pnp/powershell/pull/3713)
+
+### Changed
+
+- `-IsFavoriteByDefault` parameter is now obsolete in `Add-PnPTeamsChannel` cmdlet due to deprecation by Microsoft Graph API. [#3712](https://github.com/pnp/powershell/pull/3712)
 
 ### Contributors
 
+- Konrad K. [wilecoyotegenius]
+- Leon Armston [LeonArmston]
+- Daniel Cecil [danielcecil]
 - Rohit Devmore [rohit404404]
 - Konrad K. [wilecoyotegenius]
 - Kunj Balkrishna Sangani [kunj-sangani]
@@ -92,9 +103,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for executing the 'Invoke-PnPSPRestMethod' cmdlet in a batch [#3565](https://github.com/pnp/powershell/pull/3565)
 - Added `Get-PnPSiteSetVersionPolicyProgress` cmdlet which allows for getting the progress of setting a version policy for existing document libraries on a site [#3564](https://github.com/pnp/powershell/pull/3564)
 - Added `EnableSensitivityLabelForPDF` to `Set-PnPTenant` and `Get-PnPTenant` [#3581](https://github.com/pnp/powershell/pull/3581)
+- Changed `Restore-PnPRecycleBinItem` , made `-Identity` parameter as non-mandatory. [#2499](https://github.com/pnp/powershell/pull/2499)
 - Added the ability to set Manage and FullControl permissions directly when using Sites.Selected with `Grant-PnPAzureADAppSitePermission` [#3617](https://github.com/pnp/powershell/pull/3617)
 - Added `Remove-PnPMicrosoft365GroupPhoto` cmdlet which allows removal of profile picture of M365 Group. [#3607](https://github.com/pnp/powershell/pull/3607)
-
 
 ### Fixed
 
@@ -448,7 +459,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Remove-PnPFieldFromContentType` cmdlet to ensure proper null check for non-existing fields. It will now throw proper `Field not found` error. [#2407](https://github.com/pnp/powershell/pull/2407)
 - Changed the Microsoft 365 Groups cmdlets to use the `v1.0` endpoint instead of the `beta` [#2426](https://github.com/pnp/powershell/pull/2426)
 - Changed `Add-PnPMicrosoft365GroupToSite` to longer require the `-Url` parameter to be specified. If its not provided, the currently connected to site will be groupified. [#2496](https://github.com/pnp/powershell/pull/2496)
-- Changed `Restore-PnPRecycleBinItem` , made `-Identity` parameter as non-mandatory. [#2499](https://github.com/pnp/powershell/pull/2499)
 
 ### Removed
 

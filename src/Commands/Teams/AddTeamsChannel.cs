@@ -40,6 +40,7 @@ namespace PnP.PowerShell.Commands.Teams
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
         public string OwnerUPN;
 
+        [Obsolete("It is not supported by Microsoft Graph API now. It will be removed in the next major release.")]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_SPECIFIC)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_STANDARD)]
         public bool IsFavoriteByDefault;

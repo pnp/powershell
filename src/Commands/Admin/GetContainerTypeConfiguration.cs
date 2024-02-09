@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Admin
                 throw new ArgumentException($"Identity {Identity} value is invalid");
             }
             ClientResult<SPContainerTypeConfigurationProperties> sPOContainerTypeConfigurationByContainerTypeId = Tenant.GetSPOContainerTypeConfigurationByContainerTypeId(Identity);
-            AdminContext.ExecuteQuery();
+            AdminContext.ExecuteQueryRetry();
             if (sPOContainerTypeConfigurationByContainerTypeId != null && sPOContainerTypeConfigurationByContainerTypeId.Value != null)
             {
                 WriteObject(new Model.SharePoint.SPContainerTypeConfigurationPropertiesObj(sPOContainerTypeConfigurationByContainerTypeId.Value));

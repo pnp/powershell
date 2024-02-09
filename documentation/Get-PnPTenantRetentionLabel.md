@@ -10,7 +10,7 @@ title: Get-PnPRetentionLabel
 # Get-PnPRetentionLabel
 
 ## SYNOPSIS
-Gets the Microsoft Purview retention labels that are within the tenant
+Gets the Microsoft Purview retention labels that are available within the tenant
 
 ## SYNTAX
 
