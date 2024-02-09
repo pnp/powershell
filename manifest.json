@@ -3005,10 +3005,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPPowerPlatformConnector.md",
+      "source_relative_path": "cmdlets/Get-PnPPowerPlatformCustomConnector.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPPowerPlatformConnector.html"
+          "relative_path": "cmdlets/Get-PnPPowerPlatformCustomConnector.html"
         }
       },
       "version": ""
@@ -3089,16 +3089,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPRequestAccessEmails.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPRetentionLabel.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Get-PnPRetentionLabel.html"
         }
       },
       "version": ""
@@ -3375,16 +3365,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPSiteSetVersionPolicyProgress.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Get-PnPSiteSetVersionPolicyProgress.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPSiteTemplate.md",
       "output": {
         ".html": {
@@ -3409,6 +3389,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSiteVersionPolicy.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSiteVersionPolicyProgress.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSiteVersionPolicyProgress.html"
         }
       },
       "version": ""
@@ -3729,6 +3719,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPTenantRecycleBinItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTenantRetentionLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTenantRetentionLabel.html"
         }
       },
       "version": ""
@@ -6035,20 +6035,20 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Reset-PnPLabel.md",
+      "source_relative_path": "cmdlets/Reset-PnPMicrosoft365GroupExpiration.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Reset-PnPLabel.html"
+          "relative_path": "cmdlets/Reset-PnPMicrosoft365GroupExpiration.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Reset-PnPMicrosoft365GroupExpiration.md",
+      "source_relative_path": "cmdlets/Reset-PnPRetentionLabel.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Reset-PnPMicrosoft365GroupExpiration.html"
+          "relative_path": "cmdlets/Reset-PnPRetentionLabel.html"
         }
       },
       "version": ""
@@ -6615,16 +6615,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Set-PnPLabel.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Set-PnPLabel.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPList.md",
       "output": {
         ".html": {
@@ -6895,6 +6885,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPRetentionLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPRetentionLabel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPRoleDefinition.md",
       "output": {
         ".html": {
@@ -7029,6 +7029,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSiteTemplateMetadata.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSiteVersionPolicy.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSiteVersionPolicy.html"
         }
       },
       "version": ""

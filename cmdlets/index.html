@@ -83,7 +83,7 @@
                   </div>
   <h1 id="pnp-powershell-cmdlets">PnP PowerShell cmdlets</h1>
 
-<p>PnP PowerShell exists out of 693 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below.</p>
+<p>PnP PowerShell exists out of 694 cmdlets which can help you in setting up, configuring, maintaining and using various Microsoft 365 products from one single connection. Each of the cmdlets is documented to aid in learning how to use it. Find the available cmdlets below.</p>
 <p><sup>1</sup>: Only available in the latest nightly build. All the others can also be used using the latest stable release.<br>
 <sup>2</sup>: Cmdlet is an alias of another cmdlet, used to provide backwards compatibility.</p>
 <h2 id="add">Add</h2>
@@ -403,7 +403,7 @@
 <li><a href="Get-PnPPlannerTask.html">Get-PnPPlannerTask</a></li>
 <li><a href="Get-PnPPlannerUserPolicy.html">Get-PnPPlannerUserPolicy</a></li>
 <li><a href="Get-PnPPowerApp.html">Get-PnPPowerApp</a></li>
-<li><a href="Get-PnPPowerPlatformConnector.html">Get-PnPPowerPlatformConnector</a></li>
+<li><a href="Get-PnPPowerPlatformCustomConnector.html">Get-PnPPowerPlatformCustomConnector</a> <sup>1</sup></li>
 <li><a href="Get-PnPPowerPlatformEnvironment.html">Get-PnPPowerPlatformEnvironment</a></li>
 <li><a href="Get-PnPPowerPlatformSolution.html">Get-PnPPowerPlatformSolution</a> <sup>1</sup></li>
 <li><a href="Get-PnPPowerShellTelemetryEnabled.html">Get-PnPPowerShellTelemetryEnabled</a></li>
@@ -412,7 +412,6 @@
 <li><a href="Get-PnPPublishingImageRendition.html">Get-PnPPublishingImageRendition</a></li>
 <li><a href="Get-PnPRecycleBinItem.html">Get-PnPRecycleBinItem</a></li>
 <li><a href="Get-PnPRequestAccessEmails.html">Get-PnPRequestAccessEmails</a></li>
-<li><a href="Get-PnPRetentionLabel.html">Get-PnPRetentionLabel</a></li>
 <li><a href="Get-PnPRoleDefinition.html">Get-PnPRoleDefinition</a></li>
 <li><a href="Get-PnPSearchConfiguration.html">Get-PnPSearchConfiguration</a></li>
 <li><a href="Get-PnPSearchCrawlLog.html">Get-PnPSearchCrawlLog</a></li>
@@ -440,10 +439,10 @@
 <li><a href="Get-PnPSiteScriptFromWeb.html">Get-PnPSiteScriptFromWeb</a></li>
 <li><a href="Get-PnPSiteSearchQueryResults.html">Get-PnPSiteSearchQueryResults</a></li>
 <li><a href="Get-PnPSiteSensitivityLabel.html">Get-PnPSiteSensitivityLabel</a></li>
-<li><a href="Get-PnPSiteSetVersionPolicyProgress.html">Get-PnPSiteSetVersionPolicyProgress</a></li>
 <li><a href="Get-PnPSiteTemplate.html">Get-PnPSiteTemplate</a></li>
 <li><a href="Get-PnPSiteUserInvitations.html">Get-PnPSiteUserInvitations</a></li>
 <li><a href="Get-PnPSiteVersionPolicy.html">Get-PnPSiteVersionPolicy</a></li>
+<li><a href="Get-PnPSiteVersionPolicyProgress.html">Get-PnPSiteVersionPolicyProgress</a> <sup>1</sup></li>
 <li><a href="Get-PnPStorageEntity.html">Get-PnPStorageEntity</a></li>
 <li><a href="Get-PnPStoredCredential.html">Get-PnPStoredCredential</a></li>
 <li><a href="Get-PnPStructuralNavigationCacheSiteState.html">Get-PnPStructuralNavigationCacheSiteState</a></li>
@@ -476,6 +475,7 @@
 <li><a href="Get-PnPTenantInfo.html">Get-PnPTenantInfo</a></li>
 <li><a href="Get-PnPTenantInstance.html">Get-PnPTenantInstance</a></li>
 <li><a href="Get-PnPTenantRecycleBinItem.html">Get-PnPTenantRecycleBinItem</a></li>
+<li><a href="Get-PnPTenantRetentionLabel.html">Get-PnPTenantRetentionLabel</a> <sup>1</sup></li>
 <li><a href="Get-PnPTenantSequence.html">Get-PnPTenantSequence</a></li>
 <li><a href="Get-PnPTenantSequenceSite.html">Get-PnPTenantSequenceSite</a></li>
 <li><a href="Get-PnPTenantServicePrincipal.html">Get-PnPTenantServicePrincipal</a></li>
@@ -757,8 +757,8 @@
 <h2 id="reset">Reset</h2>
 <ul>
 <li><a href="Reset-PnPFileVersion.html">Reset-PnPFileVersion</a></li>
-<li><a href="Reset-PnPLabel.html">Reset-PnPLabel</a></li>
 <li><a href="Reset-PnPMicrosoft365GroupExpiration.html">Reset-PnPMicrosoft365GroupExpiration</a></li>
+<li><a href="Reset-PnPRetentionLabel.html">Reset-PnPRetentionLabel</a> <sup>1</sup></li>
 <li><a href="Reset-PnPUserOneDriveQuotaToDefault.html">Reset-PnPUserOneDriveQuotaToDefault</a></li>
 </ul>
 <h2 id="resolve">Resolve</h2>
@@ -836,7 +836,6 @@
 <li><a href="Set-PnPIndexedProperties.html">Set-PnPIndexedProperties</a></li>
 <li><a href="Set-PnPInPlaceRecordsManagement.html">Set-PnPInPlaceRecordsManagement</a></li>
 <li><a href="Set-PnPKnowledgeHubSite.html">Set-PnPKnowledgeHubSite</a></li>
-<li><a href="Set-PnPLabel.html">Set-PnPLabel</a></li>
 <li><a href="Set-PnPList.html">Set-PnPList</a></li>
 <li><a href="Set-PnPListInformationRightsManagement.html">Set-PnPListInformationRightsManagement</a></li>
 <li><a href="Set-PnPListItem.html">Set-PnPListItem</a></li>
@@ -864,6 +863,7 @@
 <li><a href="Set-PnPPlannerUserPolicy.html">Set-PnPPlannerUserPolicy</a></li>
 <li><a href="Set-PnPPropertyBagValue.html">Set-PnPPropertyBagValue</a></li>
 <li><a href="Set-PnPRequestAccessEmails.html">Set-PnPRequestAccessEmails</a></li>
+<li><a href="Set-PnPRetentionLabel.html">Set-PnPRetentionLabel</a> <sup>1</sup></li>
 <li><a href="Set-PnPRoleDefinition.html">Set-PnPRoleDefinition</a></li>
 <li><a href="Set-PnPSearchConfiguration.html">Set-PnPSearchConfiguration</a></li>
 <li><a href="Set-PnPSearchExternalItem.html">Set-PnPSearchExternalItem</a></li>
@@ -878,6 +878,7 @@
 <li><a href="Set-PnPSiteScriptPackage.html">Set-PnPSiteScriptPackage</a></li>
 <li><a href="Set-PnPSiteSensitivityLabel.html">Set-PnPSiteSensitivityLabel</a></li>
 <li><a href="Set-PnPSiteTemplateMetadata.html">Set-PnPSiteTemplateMetadata</a></li>
+<li><a href="Set-PnPSiteVersionPolicy.html">Set-PnPSiteVersionPolicy</a> <sup>1</sup></li>
 <li><a href="Set-PnPStorageEntity.html">Set-PnPStorageEntity</a></li>
 <li><a href="Set-PnPStructuralNavigationCacheSiteState.html">Set-PnPStructuralNavigationCacheSiteState</a></li>
 <li><a href="Set-PnPStructuralNavigationCacheWebState.html">Set-PnPStructuralNavigationCacheWebState</a></li>

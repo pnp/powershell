@@ -97,6 +97,10 @@
 <pre><code class="lang-powershell">Export-PnPPage -Identity Home.aspx
 </code></pre>
 <p>Exports the page 'Home.aspx' to a new PnP Provisioning Template</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Export-PnPPage -Identity HR/Home.aspx -Out template.pnp
+</code></pre>
+<p>Exports the page 'Home.aspx' to a new PnP Provisioning Template</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-configuration">-Configuration</h3>
 <p>Specify a JSON configuration file to configure the extraction progress.</p>
@@ -144,7 +148,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The name of the page</p>
+<p>The name/identity of the page. This can be a page instance or the filename of the page. I.e. if the page is called MyPage.aspx and is located in the root of the Site Pages library, provide &quot;MyPage&quot; or &quot;MyPage.aspx&quot;. If the page is called MyOtherPage.aspx and is located inside a subfolder called HR located in the root of the Site Pages library, provide &quot;HR/MyOtherPage&quot; or &quot;HR/MyOtherPage.aspx</p>
 <pre><code class="lang-yaml">Type: ClientSidePagePipeBind
 Parameter Sets: (All)
 

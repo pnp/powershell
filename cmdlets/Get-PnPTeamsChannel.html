@@ -90,11 +90,12 @@
 </ul>
 <p>Gets the channels for a specified Team.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; [-Identity &lt;TeamsChannelPipeBind&gt;] 
+<pre><code class="lang-powershell">Get-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; [-Identity &lt;TeamsChannelPipeBind&gt;] [-IncludeModerationSettings &lt;SwitchParameter&gt;]
  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to retrieve list of channels for a specified team.</p>
+<p>Note that the ModerationSettings are only being returned when providing the channel Id of a specific channel through -Identity and by providing -IncludeModerationSettings (Example 4). They will not be returned when retrieving all channels for a team or when omitting -IncludeModerationSettings. This is because of a design choice in Microsoft Graph and the moderationsettings currently only being available through its beta endpoint, which will be used when -IncludeModerationSettings is provided.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTeamsChannel -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8
@@ -108,6 +109,10 @@
 <pre><code class="lang-powershell">Get-PnPTeamsChannel -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity &quot;19:796d063b63e34497aeaf092c8fb9b44e@thread.skype&quot;
 </code></pre>
 <p>Retrieves the channel specified by its channel id</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPTeamsChannel -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity &quot;19:796d063b63e34497aeaf092c8fb9b44e@thread.skype&quot; -IncludeModerationSettings
+</code></pre>
+<p>Retrieves the channel specified by its channel id which will include the ModerationSettings</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
 <p>The id or name of the channel to retrieve.</p>
@@ -129,6 +134,17 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includemoderationsettings">-IncludeModerationSettings</h3>
+<p>When provided, it will use the beta endpoint of Microsoft Graph to retrieve the information. This will include the ModerationSettings if used in combination with -Identity <channelid>.</channelid></p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
