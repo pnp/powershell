@@ -3,7 +3,7 @@
 	<Import Project="Sdk.targets" Condition="'$(OS)' != 'Windows_NT'" />
 
 	<PropertyGroup>
-		<LangVersion>10</LangVersion>
+		<LangVersion>12</LangVersion>
 	 </PropertyGroup>
 	 
 	<PropertyGroup>
@@ -27,7 +27,7 @@
 		<RepositoryUrl>https://github.com/pnp/powershell</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/pnp/powershell</PackageProjectUrl>
 		<PackageTags>Microsoft 365; PowerShell; SharePoint; Teams; Graph; Azure AD</PackageTags>
-		<Description>PnP PowerShell is a .NET 6 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
+		<Description>PnP PowerShell is a .NET 8 based PowerShell Module providing over 650 cmdlets that work with Microsoft 365 environments such as SharePoint Online, Microsoft Teams, Microsoft Project, Security &amp; Compliance, Azure Active Directory, and more.</Description>
 		<PackageIcon>nugeticon.png</PackageIcon>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
@@ -58,7 +58,7 @@
 		<PackageReference Include="Microsoft.Graph" Version="3.33.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.50.0" />
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
-		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.3.1" />
 		<PackageReference Include="PnP.Framework" Version="1.14.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Framework" Version="1.14.*-*" Condition="'$(IsRelease)' == '1'" />
 		
@@ -97,53 +97,53 @@
 
 	<ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(IsRelease)' != '1'">
 		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
-		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net6.0-windows'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core\bin\Debug\net6.0\PnP.Core.dll</HintPath>
+		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+			<HintPath>$(PnPCoreSdkPath)PnP.Core\bin\Debug\net8.0\PnP.Core.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Auth" Condition="'$(TargetFramework)' == 'net6.0-windows'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Auth\bin\Debug\net6.0\PnP.Core.Auth.dll</HintPath>
+		<Reference Include="PnP.Core.Auth" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Auth\bin\Debug\net8.0\PnP.Core.Auth.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Admin" Condition="'$(TargetFramework)' == 'net6.0-windows'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\net6.0\PnP.Core.Admin.dll</HintPath>
+		<Reference Include="PnP.Core.Admin" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\net8.0\PnP.Core.Admin.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Transformation" Condition="'$(TargetFramework)' == 'net6.0-windows'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation\bin\Debug\net6.0\PnP.Core.Transformation.dll</HintPath>
+		<Reference Include="PnP.Core.Transformation" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation\bin\Debug\net8.0\PnP.Core.Transformation.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Transformation.SharePoint" Condition="'$(TargetFramework)' == 'net6.0-windows'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation.SharePoint\bin\Debug\net6.0\PnP.Core.Transformation.SharePoint.dll</HintPath>
+		<Reference Include="PnP.Core.Transformation.SharePoint" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation.SharePoint\bin\Debug\net8.0\PnP.Core.Transformation.SharePoint.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
-		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net6.0-windows'">
-			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\net6.0\PnP.Framework.dll</HintPath>
+		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\net8.0\PnP.Framework.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-windows'">
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="6.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="6.0.1" />
-		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="6.0.0" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.0" />
+		<PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
 		<PackageReference Include="System.Security.Cryptography.OpenSsl" Version="5.0.0" />
-		<PackageReference Include="System.Text.Encodings.Web" Version="6.0.0" />
-		<PackageReference Include="System.Management.Automation" Version="7.2.0" />
-		<PackageReference Include="System.Text.Json" Version="6.0.7" />
-		<PackageReference Include="TextCopy" Version="6.1.0" />
+		<PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
+		<PackageReference Include="System.Management.Automation" Version="7.4.0" />
+		<PackageReference Include="System.Text.Json" Version="8.0.1" />
+		<PackageReference Include="TextCopy" Version="6.2.1" />
 		
 	</ItemGroup>
 
