@@ -49,21 +49,22 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public TeamChannel GetChannel(PnPConnection connection, string accessToken, string groupId)
+        public TeamChannel GetChannel(PnPConnection connection, string accessToken, string groupId, bool useBeta = false)
         {
-            var channels = TeamsUtility.GetChannelsAsync(accessToken, connection, groupId).GetAwaiter().GetResult();
-            if(channels != null && channels.Any())
+            if (!string.IsNullOrEmpty(_id))
             {
-                if(!string.IsNullOrEmpty(_id))
-                {
-                    return channels.FirstOrDefault(c => c.Id.Equals(_id, StringComparison.OrdinalIgnoreCase));
-                } else
+                var channel = TeamsUtility.GetChannelAsync(accessToken, connection, groupId, _id, useBeta).GetAwaiter().GetResult();
+                return channel;
+            }
+            else
+            {
+                var channels = TeamsUtility.GetChannelsAsync(accessToken, connection, groupId, useBeta).GetAwaiter().GetResult();
+                if (channels != null && channels.Any())
                 {
                     return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase));
                 }
+                return null;
             }
-            return null;
         }
-
     }
 }

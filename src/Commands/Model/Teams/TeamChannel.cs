@@ -59,7 +59,15 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// </summary>
         public string Id { get; set; }
 
+        /// <summary>
+        /// Members of a channel
+        /// </summary>
         public List<TeamChannelMember> Members { get; set; }
+
+        /// <summary>
+        /// Settings for moderating posts in a Teams Channel
+        /// </summary>
+        public ChannelModerationSettings ModerationSettings { get; set; } = new();
 
         #endregion
     }
