@@ -122,7 +122,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                         throw new PSArgumentException("File specified for logo does not exist.");
                     }
                 }
-                var newGroup = new Microsoft365Group()
+                var newGroup = new Microsoft365Group
                 {
                     DisplayName = DisplayName,
                     Description = Description,
