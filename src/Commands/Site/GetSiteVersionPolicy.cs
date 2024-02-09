@@ -13,16 +13,16 @@ namespace PnP.PowerShell.Commands.Site
     {
         protected override void ExecuteCmdlet()
         {
-            ClientContext.Load(ClientContext.Site, s => s.Url, s => s.VersionPolicyForNewLibrariesTemplate, s => s.VersionPolicyForNewLibrariesTemplate.VersionPolicies);
+            ClientContext.Load(ClientContext.Site, s => s.Url, s => s.VersionPolicyForNewLibrariesTemplate, s => s.VersionPolicyForNewLibrariesTemplate.MajorVersionLimit);
             ClientContext.ExecuteQueryRetry();
             var site = ClientContext.Site;
 
             var vp = new SiteVersionPolicy();
             vp.Url = site.Url;
 
-            if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.ServerObjectIsNull == true)
+            if (site.VersionPolicyForNewLibrariesTemplate.MajorVersionLimit == -1)
             {
-                vp.Description = "No Site Level Policy Set";
+                vp.Description = "No Site Level Policy Set for new document libraries";
             }
             else
             {
@@ -32,18 +32,18 @@ namespace PnP.PowerShell.Commands.Site
 
                 if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.AutoExpiration)
                 {
-                    vp.Description = "Site has Automatic Policy Set";
+                    vp.Description = "Site has Automatic Policy Set for new document libraries";
                 }
                 else
                 {
                     if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.ExpireAfter)
                     {
                         vp.DefaultExpireAfterDays = site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultExpireAfterDays.ToString();
-                        vp.Description = "Site has Manual settings with specific count and time limits";
+                        vp.Description = "Site has Manual settings with specific count and time limits for new document libraries";
                     }
                     else if (site.VersionPolicyForNewLibrariesTemplate.VersionPolicies.DefaultTrimMode == VersionPolicyTrimMode.NoExpiration)
                     {
-                        vp.Description = "Site has Manual settings with specific version count limit and no time limits";
+                        vp.Description = "Site has Manual settings with specific version count limit and no time limits for new document libraries";
                     }
                     vp.MajorVersionLimit = site.VersionPolicyForNewLibrariesTemplate.MajorVersionLimit.ToString();
                 }

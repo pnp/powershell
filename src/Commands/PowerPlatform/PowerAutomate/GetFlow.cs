@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
@@ -31,7 +32,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         protected override void ExecuteCmdlet()
         {
             string environmentName = null;
-            string baseUrl = "https://api.flow.microsoft.com/";
+            string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
             if (ParameterSpecified(nameof(Environment)))
             {
                 environmentName = Environment.GetName();

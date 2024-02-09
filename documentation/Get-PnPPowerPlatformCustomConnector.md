@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformConnector.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformCustomConnector.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPPowerPlatformConnector
+title: Get-PnPPowerPlatformCustomConnector
 ---
   
-# Get-PnPPowerPlatformConnector
+# Get-PnPPowerPlatformCustomConnector
 
 ## SYNOPSIS
 
@@ -15,12 +15,12 @@ title: Get-PnPPowerPlatformConnector
 
 * Azure: management.azure.com
 
-Returns the Custom Power Platform Connectors for a given environment
+Returns the custom Power Platform Connectors for a given environment
 
 ## SYNTAX
 
 ```powershell
-Get-PnPPowerPlatformConnector [-Environment <PowerPlatformEnvironmentPipeBind>] [-Identity <PowerPlatformConnectorPipeBind>] [-AsAdmin] [-Verbose]
+Get-PnPPowerPlatformCustomConnector [-Environment <PowerPlatformEnvironmentPipeBind>] [-Identity <PowerPlatformConnectorPipeBind>] [-AsAdmin] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -30,7 +30,7 @@ This cmdlet returns the custom connectors on a given enviroment.
 
 ### Example 1
 ```powershell
-Get-PnPPowerPlatformConnector -Environment (Get-PnPPowerPlatformEnvironment)
+Get-PnPPowerPlatformCustomConnector -Environment (Get-PnPPowerPlatformEnvironment)
 ```
 This returns all the custom connectors for a given Power Platform environment
 

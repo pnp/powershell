@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using PnP.Framework;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities.REST;
 
@@ -14,7 +15,7 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class PowerAppsUtility
     {
-        internal static async Task<Model.PowerPlatform.PowerApp.PowerAppPackageWrapper> GetWrapper(HttpClient connection, string environmentName, string accessToken, string appName)
+        internal static async Task<Model.PowerPlatform.PowerApp.PowerAppPackageWrapper> GetWrapper(HttpClient connection, string environmentName, string accessToken, string appName, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var postData = new
             {
@@ -22,14 +23,14 @@ namespace PnP.PowerShell.Commands.Utilities
                     $"/providers/Microsoft.PowerApps/apps/{appName}"
                 }
             };
+            string baseUrl = PowerPlatformUtility.GetBapEndpoint(azureEnvironment);
+            var wrapper = await RestHelper.PostAsync<Model.PowerPlatform.PowerApp.PowerAppPackageWrapper>(connection, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", accessToken, payload: postData);
 
-            var wrapper = await RestHelper.PostAsync<Model.PowerPlatform.PowerApp.PowerAppPackageWrapper>(connection, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", accessToken, payload: postData);
-            
 
             return wrapper;
         }
 
-        internal static HttpResponseHeaders GetResponseHeader(HttpClient connection, string environmentName, string accessToken, string appName,Model.PowerPlatform.PowerApp.PowerAppPackageWrapper wrapper, object details)
+        internal static HttpResponseHeaders GetResponseHeader(HttpClient connection, string environmentName, string accessToken, string appName, Model.PowerPlatform.PowerApp.PowerAppPackageWrapper wrapper, object details, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var exportPostData = new
             {
@@ -41,13 +42,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 resources = wrapper.Resources
             };
 
-            var responseHeader = RestHelper.PostAsyncGetResponseHeader<string>(connection, $"https://api.bap.microsoft.com/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", accessToken, payload: exportPostData).GetAwaiter().GetResult();
+            string baseUrl = PowerPlatformUtility.GetBapEndpoint(azureEnvironment);
+            var responseHeader = RestHelper.PostAsyncGetResponseHeader<string>(connection, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", accessToken, payload: exportPostData).GetAwaiter().GetResult();
 
 
             return responseHeader;
         }
 
-        internal static string GetPackageLink(HttpClient connection,string location,string accessToken)
+        internal static string GetPackageLink(HttpClient connection, string location, string accessToken)
         {
             var status = Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Running;
             var packageLink = "";
@@ -94,7 +96,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var byteArray = fileresponse.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
                 return byteArray;
             }
-           
+
         }
     }
 }

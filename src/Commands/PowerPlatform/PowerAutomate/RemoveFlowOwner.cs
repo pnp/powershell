@@ -1,5 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
@@ -74,8 +75,9 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             if(Force || ShouldContinue($"Remove flow owner with id '{user.Id.Value}' from flow '{flowName}'?", "Remove flow owner"))
             {
+                string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
                 WriteVerbose($"Removing user {user.Id.Value} permissions from flow {flowName} in environment {environmentName}");
-                RestHelper.PostAsync(Connection.HttpClient, $"https://api.flow.microsoft.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/modifyPermissions?api-version=2016-11-01", AccessToken, payload).GetAwaiter().GetResult();
+                RestHelper.PostAsync(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/modifyPermissions?api-version=2016-11-01", AccessToken, payload).GetAwaiter().GetResult();
             }
         }
     }
