@@ -55,7 +55,7 @@ Specifies the full URL of the SharePoint Online site collection that needs to be
 Type: SPOSitePipeBind
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True
