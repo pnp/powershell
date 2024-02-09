@@ -20,7 +20,7 @@ Gets the channels for a specified Team.
 ## SYNTAX
 
 ```powershell
-Get-PnPTeamsChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPipeBind>] [-UseBeta <SwitchParameter>]
+Get-PnPTeamsChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPipeBind>] [-IncludeModerationSettings <SwitchParameter>]
  
 ```
 
@@ -28,7 +28,7 @@ Get-PnPTeamsChannel -Team <TeamsTeamPipeBind> [-Identity <TeamsChannelPipeBind>]
 
 Allows to retrieve list of channels for a specified team.
 
-Note that the ModerationSettings are only being returned when providing the channel Id of a specific channel through -Identity and by providing -UseBeta (Example 4). They will not be returned when retrieving all channels for a team or when omitting -UseBeta. This is because of a design choice in Microsoft Graph.
+Note that the ModerationSettings are only being returned when providing the channel Id of a specific channel through -Identity and by providing -IncludeModerationSettings (Example 4). They will not be returned when retrieving all channels for a team or when omitting -IncludeModerationSettings. This is because of a design choice in Microsoft Graph and the moderationsettings currently only being available through its beta endpoint, which will be used when -IncludeModerationSettings is provided.
 
 ## EXAMPLES
 
@@ -55,7 +55,7 @@ Retrieves the channel specified by its channel id
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPTeamsChannel -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity "19:796d063b63e34497aeaf092c8fb9b44e@thread.skype" -UseBeta
+Get-PnPTeamsChannel -Team a6c1e0d7-f579-4993-81ab-4b666f8edea8 -Identity "19:796d063b63e34497aeaf092c8fb9b44e@thread.skype" -IncludeModerationSettings
 ```
 
 Retrieves the channel specified by its channel id which will include the ModerationSettings
@@ -90,7 +90,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -UseBeta
+### -IncludeModerationSettings
 When provided, it will use the beta endpoint of Microsoft Graph to retrieve the information. This will include the ModerationSettings if used in combination with -Identity <channelId>.
 
 ```yaml

@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Teams
         public TeamsChannelPipeBind Identity;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter UseBeta;
+        public SwitchParameter IncludeModerationSettings;
 
         protected override void ExecuteCmdlet()
         {
@@ -26,11 +26,11 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetChannel(Connection, AccessToken, groupId, useBeta: UseBeta.ToBool()));
+                WriteObject(Identity.GetChannel(Connection, AccessToken, groupId, useBeta: IncludeModerationSettings.ToBool()));
             }
             else
             {
-                WriteObject(TeamsUtility.GetChannelsAsync(AccessToken, Connection, groupId, useBeta: UseBeta.ToBool()).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetChannelsAsync(AccessToken, Connection, groupId, useBeta: IncludeModerationSettings.ToBool()).GetAwaiter().GetResult(), true);
             }
         }
     }
