@@ -20,7 +20,7 @@ Updates an existing Teams Channel
 ## SYNTAX
 
 ```powershell
-Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-DisplayName <String>] [-Description <String>] [-IsFavoriteByDefault <Boolean>]
+Set-PnPTeamsChannel -Team <TeamsTeamPipeBind> -Identity <TeamsChannelPipeBind> [-DisplayName <String>] [-Description <String>] [-IsFavoriteByDefault <Boolean>] [-AllowNewMessageFromBots <Boolean>] [-AllowNewMessageFromConnectors <Boolean>] [-ReplyRestriction <TeamChannelModerationSettingReplyRestriction>] [-UserNewMessageRestriction <TeamChannelModerationSettingNewMessageRestriction>]
   
 ```
 
@@ -45,6 +45,62 @@ Set-PnPTeamsChannel -Team "MyTeam" -Channel "MyChannel" -IsFavoriteByDefault $tr
 Updates the channel called 'MyChannel' to make it visible to members.
 
 ## PARAMETERS
+
+### -AllowNewMessageFromBots
+Allows configuring if bots are allowed to post messages in the channel
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowNewMessageFromConnectors
+Allows configuring if connectors are allowed to post messages in the channel
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReplyRestriction
+Allows configuring who can reply to posts in the channel
+
+```yaml
+Type: TeamChannelModerationSettingReplyRestriction
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UserNewMessageRestriction
+Allows configuring who can post new messages in the channel
+
+```yaml
+Type: TeamChannelModerationSettingNewMessageRestriction
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Description
 Changes the description of the specified channel.
@@ -119,4 +175,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-

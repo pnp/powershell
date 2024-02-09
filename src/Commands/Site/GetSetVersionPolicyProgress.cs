@@ -8,8 +8,8 @@ using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteSetVersionPolicyProgress")]
-    [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SetVersionPolicyProgress))]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteVersionPolicyProgress")]
+    [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SetVersionPolicyProgressClient))]
     public class GetSetVersionPolicyProgress : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
@@ -32,7 +32,24 @@ namespace PnP.PowerShell.Commands.Site
                 progress.CompleteTimeInUTC = string.Empty;
             }
 
-            WriteObject(progress);
+            // Display different property names in the results using Client object
+            var progressClient = new SetVersionPolicyProgressClient()
+            {
+                Url = progress.Url,
+                WorkItemId = progress.WorkItemId,
+                Status = progress.Status,
+                RequestTimeInUTC = progress.RequestTimeInUTC,
+                LastProcessTimeInUTC = progress.LastProcessTimeInUTC,
+                CompleteTimeInUTC = progress.CompleteTimeInUTC,
+                LibrariesProcessedInTotal = progress.ListsProcessedInTotal,
+                LibrariesFailedInTotal = progress.ListsFailedInTotal,
+                EnableAutomaticMode = progress.EnableAutoTrim,
+                ExpireAfterDays = progress.ExpireAfterDays,
+                MajorVersionLimit = progress.MajorVersionLimit,
+                MajorWithMinorVersionsLimit = progress.MajorWithMinorVersionsLimit
+            };
+
+            WriteObject(progressClient);
         }
     }
 }
