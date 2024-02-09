@@ -44,9 +44,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 
 - `-IsFavoriteByDefault` parameter is now obsolete in `Add-PnPTeamsChannel` cmdlet due to deprecation by Microsoft Graph API. [#3712](https://github.com/pnp/powershell/pull/3712)
+- `Get-PnPSiteTemplate` will now only contain `PersistPublishingFiles`, `IncludeNativePublishingFiles`, `IncludeTermGroupsSecurity`, `IncludeSearchConfiguration`, `SkipVersionCheck` and `PersistMultiLanguageResources` if these are provided with the cmdlet as switch parameters [#3715](https://github.com/pnp/powershell/pull/3715)
 
 ### Contributors
 
+- Nils Andresen [nils-a]
 - Gautam Sheth [gautamdsheth]
 - Nishkalank Bezawada [NishkalankBezawada]
 - Konrad K. [wilecoyotegenius]
