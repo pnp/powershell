@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Admin
     [Cmdlet(VerbsCommon.Set, "PnPSiteArchiveState")]
     public class SetSiteArchiveState : PnPAdminCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public SPOSitePipeBind Identity;
 
         [Parameter(Mandatory = true, Position = 1)]
@@ -25,11 +25,6 @@ namespace PnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            if (!ParameterSpecified(nameof(Identity)) || string.IsNullOrEmpty(Identity.Url))
-            {
-                throw new ArgumentNullException($"{nameof(Identity)} must be provided when setting {nameof(ArchiveState)} for a Site");
-            }
-
             SpoOperation spoOperation = null;
             switch (ArchiveState)
             {
