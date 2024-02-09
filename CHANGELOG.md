@@ -25,6 +25,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPContainerType` cmdlet which removes a specific container type. [#3689](https://github.com/pnp/powershell/pull/3689/)
 - Added `Restore-PnPDeletedContainer` cmdlet which recovers a deleted Container from the Recycle Bin. [#3661](https://github.com/pnp/powershell/pull/3661)
 - Added the ModerationSettings to be returned with `Get-PnPTeamsChannel` when passing in `-IncludeModerationSettings` and using `-Identity <channelId>` [#3580](https://github.com/pnp/powershell/pull/3580)
+- Added `AllowNewMessageFromBots`, `AllowNewMessageFromConnectors`, `ReplyRestriction` and `UserNewMessageRestriction` to `Set-PnPTeamsChannel` which allows setting the moderation settings on a Teams channel [#3580](https://github.com/pnp/powershell/pull/3580)
 
 ### Fixed
 
@@ -90,7 +91,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-BusinessConnectivityServiceDisabled` parameter to `Set-PnPTenant` cmdlt to allow disabling the Business Connectivity Service [#3562](https://github.com/pnp/powershell/pull/3562)
 - Added support for executing the 'Invoke-PnPSPRestMethod' cmdlet in a batch [#3565](https://github.com/pnp/powershell/pull/3565)
 - Added `Get-PnPSiteSetVersionPolicyProgress` cmdlet which allows for getting the progress of setting a version policy for existing document libraries on a site [#3564](https://github.com/pnp/powershell/pull/3564)
-- Added `AllowNewMessageFromBots`, `AllowNewMessageFromConnectors`, `ReplyRestriction` and `UserNewMessageRestriction` to `Set-PnPTeamsChannel` which allows setting the moderation settings on a Teams channel [#3580](https://github.com/pnp/powershell/pull/3580)
 - Added `EnableSensitivityLabelForPDF` to `Set-PnPTenant` and `Get-PnPTenant` [#3581](https://github.com/pnp/powershell/pull/3581)
 - Added the ability to set Manage and FullControl permissions directly when using Sites.Selected with `Grant-PnPAzureADAppSitePermission` [#3617](https://github.com/pnp/powershell/pull/3617)
 - Added `Remove-PnPMicrosoft365GroupPhoto` cmdlet which allows removal of profile picture of M365 Group. [#3607](https://github.com/pnp/powershell/pull/3607)
