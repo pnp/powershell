@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set-PnPLabel | PnP PowerShell </title>
+    <title>Set-PnPSiteArchiveState | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set-PnPLabel | PnP PowerShell ">
+    <meta name="title" content="Set-PnPSiteArchiveState | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,14 +77,78 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="set-pnplabel">Set-PnPLabel</h1>
+  <h1 id="set-pnpsitearchivestate">Set-PnPSiteArchiveState</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Set-PnPRetentionLabel.html">Set-PnPRetentionLabel</a>.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+</ul>
+<p>Sets the archived state of the site. Can be used to archive and reactivate sites.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Set-PnPSiteArchiveState -Identity &lt;SPOSitePipeBind&gt; -ArchiveState &lt;SPOArchiveState&gt; [-NoWait] [-Force]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Use this cmdlet to change the archive status of the site. You must be a SharePoint Online administrator or Global administrator and be a site collection administrator to run the cmdlet.
+Microsoft 365 Archive needs to be enabled for the organization to be able to use this feature.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">Example 1</h3>
+<pre><code class="lang-powershell">Set-PnPSiteArchiveState https://contoso.sharepoint.com/sites/Marketing -ArchiveState Archived
+</code></pre>
+<p>This example marks the site as Archived. For seven days after the operation, the site will remain in a &quot;RecentlyArchived&quot; state, where any reactivations will be free and instantaneous. If a site is reactivated after seven days, any reactivations will be charged and will take time.</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Set-PnPSiteArchiveState https://contoso.sharepoint.com/sites/Marketing -ArchiveState Active
+</code></pre>
+<p>This example triggers the reactivation of a site. If the site is reactivated from the &quot;RecentlyArchived&quot; state, it will become available instantaneously. If the site is reactivated from the &quot;FullyArchived&quot; state, it may take time for it to be reactivated.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>Specifies the full URL of the SharePoint Online site collection that needs to be renamed.</p>
+<pre><code class="lang-yaml">Type: SPOSitePipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-archivestate">-ArchiveState</h3>
+<p>Sets the archived state of the site. Valid values are Archived, Active.</p>
+<pre><code class="lang-yaml">Type: SPOArchiveState
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-nowait">-NoWait</h3>
+<p>If specified the task will return immediately after creating the archive state site job.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>If provided, no confirmation will be asked for changing the archive state.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

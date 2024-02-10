@@ -84,73 +84,7 @@
   <h1 id="get-pnppowerplatformconnector">Get-PnPPowerPlatformConnector</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Azure: management.azure.com</li>
-</ul>
-<p>Returns the Custom Power Platform Connectors for a given environment</p>
-<h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPPowerPlatformConnector [-Environment &lt;PowerPlatformEnvironmentPipeBind&gt;] [-Identity &lt;PowerPlatformConnectorPipeBind&gt;] [-AsAdmin] [-Verbose]
-</code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet returns the custom connectors on a given enviroment.</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Get-PnPPowerPlatformConnector -Environment (Get-PnPPowerPlatformEnvironment)
-</code></pre>
-<p>This returns all the custom connectors for a given Power Platform environment</p>
-<h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Get-PowerPlatformConnectorPipeBind -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity fba63225-baf9-4d76-86a1-1b42c917a182
-</code></pre>
-<p>This returns a specific custom connector on the default Power Platform environment</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-environment">-Environment</h3>
-<p>The name of the Power Platform environment or an Environment instance to retrieve the available custom connectors for. If omitted, the default environment will be used.</p>
-<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: The default environment
-Accept pipeline input: True
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The Id of the connector to retrieve. If not provided, all custom connectors will be returned.</p>
-<pre><code class="lang-yaml">Type: PowerPlatformConnectorPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-asadmin">-AsAdmin</h3>
-<p>If specified returns all the custom connectors as admin. If not specified only the custom connectors for the current user will be returned.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-verbose">-Verbose</h3>
-<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
+<p>This is an alias for <a href="Get-PnPPowerPlatformCustomConnector.html">Get-PnPPowerPlatformCustomConnector</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

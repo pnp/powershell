@@ -3005,6 +3005,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPowerPlatformConnector.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPowerPlatformConnector.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPPowerPlatformCustomConnector.md",
       "output": {
         ".html": {
@@ -3089,6 +3099,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPRequestAccessEmails.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPRetentionLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPRetentionLabel.html"
         }
       },
       "version": ""
@@ -6035,6 +6055,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Reset-PnPLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Reset-PnPLabel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Reset-PnPMicrosoft365GroupExpiration.md",
       "output": {
         ".html": {
@@ -6615,6 +6645,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPLabel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPList.md",
       "output": {
         ".html": {
@@ -6939,6 +6979,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSite.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSiteArchiveState.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSiteArchiveState.html"
         }
       },
       "version": ""

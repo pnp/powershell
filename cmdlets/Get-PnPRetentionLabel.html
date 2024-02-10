@@ -84,47 +84,9 @@
   <h1 id="get-pnpretentionlabel">Get-PnPRetentionLabel</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Gets the Microsoft Purview retention labels that are within the tenant</p>
-<h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPRetentionLabel [-Identity &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;] 
-</code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet allows retrieval of the available Microsoft Purview retention labels in the currently connected tenant. You can retrieve all the labels or a specific label.</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPRetentionLabel
-</code></pre>
-<p>Returns all the Microsoft Purview retention labels that exist on the tenant</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPRetentionLabel -Identity 58f77809-9738-5080-90f1-gh7afeba2995
-</code></pre>
-<p>Returns a specific Microsoft Purview retention label by its id</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-identity">-Identity</h3>
-<p>The Id of the Microsoft Purview retention label to retrieve</p>
-<pre><code class="lang-yaml">Type: Guid
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
+<p>This is an alias for <a href="Get-PnPTenantRetentionLabel.html">Get-PnPTenantRetentionLabel</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
-<a href="https://learn.microsoft.com/graph/api/informationprotectionpolicy-list-labels">Microsoft Graph documentation</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>
           </div>
