@@ -86,8 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Allows configuration of the &quot;Change the look&quot; Header</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPWebHeader [-SiteLogoUrl &lt;string&gt;] [-HeaderLayout &lt;HeaderLayoutType&gt;] [-HeaderEmphasis &lt;SPVariantThemeType&gt;] [-HideTitleInHeader]
-[-HeaderBackgroundImageUrl &lt;string&gt;] [-HeaderBackgroundImageFocalX &lt;double&gt;] [-HeaderBackgroundImageFocalY &lt;double&gt;] [-LogoAlignment &lt;LogoAlignment&gt;]
+<pre><code class="lang-powershell">Set-PnPWebHeader [-SiteLogoUrl &lt;string&gt;] [-SiteThumbnailUrl &lt;string&gt;] [-HeaderLayout &lt;HeaderLayoutType&gt;] [-HeaderEmphasis &lt;SPVariantThemeType&gt;] [-HideTitleInHeader] [-HeaderBackgroundImageUrl &lt;string&gt;] [-HeaderBackgroundImageFocalX &lt;double&gt;] [-HeaderBackgroundImageFocalY &lt;double&gt;] [-LogoAlignment &lt;LogoAlignment&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -188,6 +187,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-sitelogourl">-SiteLogoUrl</h3>
 <p>Sets the logo of the site shown at the top left to the provided server relative url, i.e. /sites/hrdepartment/siteassets/logo.png. Provide &quot;&quot; or $null to remove the logo.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sitethumbnailurl">-SiteThumbnailUrl</h3>
+<p>Sets the thumbnail of the site shown at the top left to the provided server relative url, i.e. /sites/hrdepartment/siteassets/thumbnail.png. Provide &quot;&quot; or $null to remove the thumbnail.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
