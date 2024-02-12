@@ -13,9 +13,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUnifiedAuditLog.
 
 **Required Permissions**
 
-  * Microsoft Office 365 Management API: ActivityFeed.Read
+  * Microsoft Office 365 Management API: ActivityFeed.Read, Microsoft Office 365 Management API: ActivityFeed.ReadDlp, Microsoft Office 365 Management API: ActivityReports.Read, Microsoft Office 365 Management API: ServiceHealth.Read and Microsoft Office 365 Management API:ThreatIntelligence.Read
 
-Gets unified audit logs from the Office 365 Management API. Requires the Azure Active Directory application permission 'ActivityFeed.Read'.
+Gets unified audit logs from the Office 365 Management API. Requires the Azure Entra application permission 'ActivityFeed.Read', 'ActivityFeed.ReadDlp', 'ActivityReports.Read', 'ServiceHealth.Read' and 'ThreatIntelligence.Read'.
 
 ## SYNTAX
 
