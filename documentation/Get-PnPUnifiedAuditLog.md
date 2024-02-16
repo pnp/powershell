@@ -40,6 +40,7 @@ Retrieves the audit logs of SharePoint happening between the current time yester
 ## PARAMETERS
 
 ### -ContentType
+
 Content type of logs to be retrieved, should be one of the following: AzureActiveDirectory, Exchange, SharePoint, General, DLP.
 
 ```yaml
@@ -55,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -EndTime
-End time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart.
+End time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart. If passed as a string this should be defined as a valid ISO 8601 string (2021-12-16T18:28:48.6964197Z).
 
 ```yaml
 Type: DateTime
@@ -69,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -StartTime
-Start time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart, with the start time prior to end time and start time no more than 7 days in the past.
+Start time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart, with the start time prior to end time and start time no more than 7 days in the past. If passed as a string this should be defined as a valid ISO 8601 string (2021-12-16T18:28:48.6964197Z).
 
 ```yaml
 Type: DateTime
