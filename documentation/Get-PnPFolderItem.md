@@ -28,6 +28,8 @@ Get-PnPFolderItem [-Identity <FolderPipeBind>] [-ItemType <String>] [-ItemName <
 
 This cmdlet allows listing of all the content in a folder. It can be used to list all files and folders in a folder and optionally all its subfolders.
 
+Use [Get-PnPFileInFolder](Get-PnPFileInFolder.md) to retrieve only files and [Get-PnPFolderInFolder](Get-PnPFolderInFolder.md) to retrieve only folders allowing additional properties of the returned items to be requested.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
