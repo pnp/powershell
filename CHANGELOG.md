@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-HorizontalQuickLaunch` parameter to `Set-PnPWeb` cmdlet to allow navigation orientation to be horizontal. [#3722](https://github.com/pnp/powershell/pull/3722)
 - Added support for different sovereign cloud environment for Power Platform related cmdlets [#3725](https://github.com/pnp/powershell/pull/3725)
 - Added `Set-PnPRetentionLabel` and `Reset-PnPRetentionLabel` cmdlets to support setting a retention label on one or more items [#3599](https://github.com/pnp/powershell/pull/3599)
+- Added `-SiteThumbnailUrl` parameter to `Set-PnPWebHeader` cmmdlet to support setting thumbnail of the site. [#3746](https://github.com/pnp/powershell/pull/3746)
 
 ### Fixed
 
