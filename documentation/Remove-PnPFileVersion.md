@@ -121,7 +121,7 @@ Specifies whether the version(s) should go to the recycle bin.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: By Id
 
 Required: False
 Position: Named
