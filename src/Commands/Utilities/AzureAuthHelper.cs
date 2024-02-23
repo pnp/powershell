@@ -19,7 +19,12 @@ namespace PnP.PowerShell.Commands.Utilities
 
             using (var authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(username, password, azureEnvironment))
             {
-                return await authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint(azureEnvironment)}/.default" });
+                var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
+                if (azureEnvironment == AzureEnvironment.Custom)
+                {
+                    graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                }
+                return await authManager.GetAccessTokenAsync(new[] { $"{graphEndpoint}/.default" });
             }
         }
 
@@ -46,7 +51,12 @@ namespace PnP.PowerShell.Commands.Utilities
                     authManager.ClearTokenCache();
                     try
                     {
-                        return authManager.GetAccessTokenAsync(new string[] { $"https://{GetGraphEndPoint(azureEnvironment)}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                        var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
+                        if (azureEnvironment == AzureEnvironment.Custom)
+                        {
+                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                        }
+                        return authManager.GetAccessTokenAsync(new string[] { $"{graphEndpoint}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
                     catch (Microsoft.Identity.Client.MsalException)
                     {
@@ -78,7 +88,12 @@ namespace PnP.PowerShell.Commands.Utilities
                     authManager.ClearTokenCache();
                     try
                     {
-                        return authManager.GetAccessTokenAsync(new string[] { $"https://{GetGraphEndPoint(azureEnvironment)}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
+                        var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
+                        if (azureEnvironment == AzureEnvironment.Custom)
+                        {
+                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                        }
+                        return authManager.GetAccessTokenAsync(new string[] { $"{graphEndpoint}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
                     catch (Microsoft.Identity.Client.MsalException)
                     {
@@ -91,11 +106,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 cancellationTokenSource.Cancel();
             }
             return null;
-        }
-
-        internal static string GetGraphEndPoint(AzureEnvironment azureEnvironment)
-        {
-            return PnP.Framework.AuthenticationManager.GetGraphEndPoint(azureEnvironment);
-        }
+        }        
     }
 }

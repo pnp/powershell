@@ -41,11 +41,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPPowerPlatformConnector`, `Get-PnPPowerPlatformEnvironment`, `Get-PnPPowerApp`, `Add-PnPFlowOwner`, `Disable-PnPFlow`, `Enable-PnPFlow`, `Export-PnPFlow`, `Get-PnPFlowOwner`, `Get-PnPFlowRun`, `Remove-PnPFlow`, `Remove-PnPFlowOwner` , `Restart-PnPFlow` and `Stop-PnPFlowRun` cmdlets to use the new HTTP endpoints. [#3687](https://github.com/pnp/powershell/pull/3687)
 - Fixed `Add-PnPHubSiteAssociation` cmdlet to allow support for multi-geo scenario. [#3568](https://github.com/pnp/powershell/pull/3568)
 - Fixed `Enable/Disable-PnPPageScheduling` cmdlet to also work with Viva connections enabled site. [#3713](https://github.com/pnp/powershell/pull/3713)
+- Fixed `Register-PnPManagementShellAccess` and `Register-PnPAzureADApp` cmdlets to also work with custom environment. [#3763](https://github.com/pnp/powershell/pull/3763)
 
 ### Changed
 
 - `-IsFavoriteByDefault` parameter is now obsolete in `Add-PnPTeamsChannel` cmdlet due to deprecation by Microsoft Graph API. [#3712](https://github.com/pnp/powershell/pull/3712)
 - `Get-PnPSiteTemplate` will now only contain `PersistPublishingFiles`, `IncludeNativePublishingFiles`, `IncludeTermGroupsSecurity`, `IncludeSearchConfiguration`, `SkipVersionCheck` and `PersistMultiLanguageResources` if these are provided with the cmdlet as switch parameters [#3715](https://github.com/pnp/powershell/pull/3715)
+- Due to backend changes in Microsoft Graph, `Get-PnPUnifiedAuditLog` cmdlet requires some more permissions. Updated the cmdlet to handle that. [#3745](https://github.com/pnp/powershell/pull/3745)
 
 ### Contributors
 
