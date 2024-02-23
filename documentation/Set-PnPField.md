@@ -15,7 +15,7 @@ Changes one or more properties of a field in a specific list or for the whole si
 ## SYNTAX
 
 ```powershell
-Set-PnPField [-List <ListPipeBind>] [-Identity <FieldPipeBind>] [-Values <Hashtable>] [-ShowInFiltersPane <ShowInFiltersPaneStatus>] [-UpdateExistingLists] [-Connection <PnPConnection>]
+Set-PnPField [-List <ListPipeBind>] [-Identity <FieldPipeBind>] [-Values <Hashtable>] [-ShowInFiltersPane <ShowInFiltersPaneStatus>] [-UpdateExistingLists] [-NoCrawl] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +44,14 @@ Set-PnPField -List "Tasks" -Identity "AssignedTo" -Values @{JSLink="customrender
 ```
 
 Updates the AssignedTo field on the Tasks list to use customrendering.js for the JSLink
+
+### EXAMPLE 5
+```powershell
+Set-PnPField -List "Tasks" -Identity "AssignedTo" -NoCrawl:$true
+```
+
+Prevents the field from being returned in search results
+
 
 ## PARAMETERS
 
@@ -128,6 +136,20 @@ Accepted values: Auto, Removed, Pinned
 Required: False
 Position: Named
 Default value: Auto
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoCrawl
+Indicates if this field should not be returned in search results ($true) or if it should be ($false)
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
