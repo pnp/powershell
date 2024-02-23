@@ -25,6 +25,9 @@ namespace PnP.PowerShell.Commands.Fields
 
         [Parameter(Mandatory = false)]
         public ShowInFiltersPaneStatus? ShowInFiltersPane;
+        
+        [Parameter(Mandatory = false)]
+        public SwitchParameter NoCrawl;
 
         protected override void ExecuteCmdlet()
         {
@@ -93,6 +96,13 @@ namespace PnP.PowerShell.Commands.Fields
                 field.ShowInFiltersPane = ShowInFiltersPane.Value;
                 field.Update();
             }
+            
+            if (ParameterSpecified(nameof(NoCrawl))){
+                WriteVerbose($"Updating field to no crawl setting {NoCrawl}");
+                field.NoCrawl = NoCrawl;
+                field.Update();
+            }
+            
             ClientContext.ExecuteQueryRetry();
 
             if (Values != null  && Values.Count > 0)
