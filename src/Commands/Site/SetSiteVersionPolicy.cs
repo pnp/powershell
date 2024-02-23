@@ -169,6 +169,7 @@ namespace PnP.PowerShell.Commands.Site
                             }
 
                             WriteWarning("The setting for existing libraries takes at least 24 hours to take effect. Please run Get-PnPSiteVersionPolicyProgress to check the progress.");
+                            WriteWarning("The setting for existing libraries does not trim existing versions.");
                         }
                     }
                     else

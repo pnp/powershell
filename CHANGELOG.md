@@ -51,6 +51,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Jenny Wu [msjennywu]
+- Aimery Thomas [a1mery]
 - Nils Andresen [nils-a]
 - Gautam Sheth [gautamdsheth]
 - Nishkalank Bezawada [NishkalankBezawada]
