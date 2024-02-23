@@ -208,7 +208,7 @@ Accept wildcard characters: False
 ```
 
 ### -LayoutType
-Sets the layout type of the page. (Default = Article)
+Sets the layout type of the page.
 
 ```yaml
 Type: PageLayoutType
