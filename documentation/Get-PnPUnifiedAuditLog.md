@@ -17,8 +17,6 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUnifiedAuditLog.
 
 Gets unified audit logs from the Office 365 Management API. Requires the Azure Entra application permission 'ActivityFeed.Read', 'ActivityFeed.ReadDlp', 'ActivityReports.Read', 'ServiceHealth.Read' and 'ThreatIntelligence.Read'.
 
-## Remarks
-
 Before you can access audit log data, you must enable unified audit logging for your Microsoft 365 tenant. For instructions, check out the page [Turn auditing on or off](https://learn.microsoft.com/microsoft-365/compliance/audit-log-enable-disable).
 
 When running this command for the first time for a certain content type, a subscription for this content type is created. It can take up to 12 hours for the first content blobs to become available for that subscription.
