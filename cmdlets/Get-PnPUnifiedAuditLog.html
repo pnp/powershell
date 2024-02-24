@@ -89,6 +89,9 @@
 <li>Microsoft Office 365 Management API: ActivityFeed.Read, Microsoft Office 365 Management API: ActivityFeed.ReadDlp, Microsoft Office 365 Management API: ActivityReports.Read, Microsoft Office 365 Management API: ServiceHealth.Read and Microsoft Office 365 Management API:ThreatIntelligence.Read</li>
 </ul>
 <p>Gets unified audit logs from the Office 365 Management API. Requires the Azure Entra application permission 'ActivityFeed.Read', 'ActivityFeed.ReadDlp', 'ActivityReports.Read', 'ServiceHealth.Read' and 'ThreatIntelligence.Read'.</p>
+<p>Before you can access audit log data, you must enable unified audit logging for your Microsoft 365 tenant. For instructions, check out the page <a href="https://learn.microsoft.com/microsoft-365/compliance/audit-log-enable-disable">Turn auditing on or off</a>.</p>
+<p>When running this command for the first time for a certain content type, a subscription for this content type is created. It can take up to 12 hours for the first content blobs to become available for that subscription.</p>
+<p>Retrieving audit logs is an intensive process, especially for large or active tenants. In this case it may take some time to retrieve all audit logs.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPUnifiedAuditLog [-ContentType &lt;AuditContentType&gt;] [-StartTime &lt;DateTime&gt;] [-EndTime &lt;DateTime&gt;]
   
@@ -97,7 +100,7 @@
 <p>Allows to retrieve unified audit logs from the Office 365 Management API.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPUnifiedAuditLog -ContentType SharePoint -StartTime (Get-Date).AddDays(-2) -EndTime (Get-Date).AddDays(-1)
+<pre><code class="lang-powershell">Get-PnPUnifiedAuditLog -ContentType SharePoint -StartTime (Get-Date -asUtc).AddDays(-2) -EndTime (Get-Date -asUtc).AddDays(-1)
 </code></pre>
 <p>Retrieves the audit logs of SharePoint happening between the current time yesterday and the current time the day before yesterday</p>
 <h2 id="parameters">PARAMETERS</h2>
@@ -114,7 +117,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-endtime">-EndTime</h3>
-<p>End time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart. If passed as a string this should be defined as a valid ISO 8601 string (2024-01-16T18:28:48.6964197Z).</p>
+<p>UTC end time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart. If passed as a string this should be defined as a valid ISO 8601 string (2024-01-16T18:28:48.6964197Z). If you don't include a timestamp in the value, the default timestamp is 12:00 AM (midnight) on the specified date.</p>
 <pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
 
@@ -125,7 +128,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-starttime">-StartTime</h3>
-<p>Start time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart, with the start time prior to end time and start time no more than 7 days in the past. If passed as a string this should be defined as a valid ISO 8601 string (2024-01-16T18:28:48.6964197Z).</p>
+<p>UTC start time of logs to be retrieved. Start time and end time must both be specified (or both omitted) and must be less than or equal to 24 hours apart, with the start time prior to end time and start time no more than 7 days in the past. If passed as a string this should be defined as a valid ISO 8601 string (2024-01-16T18:28:48.6964197Z). If you don't include a timestamp in the value, the default timestamp is 12:00 AM (midnight) on the specified date.</p>
 <pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
 
