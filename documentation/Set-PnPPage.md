@@ -105,6 +105,18 @@ Set-PnPPage -Identity "MyPage" -ShowPublishDate $true -Publish
 ```
 Display the date when the page was published in the header section of the page
 
+### EXAMPLE 12
+```powershell
+Set-PnPPage -Identity "MyPage.aspx" -Like
+```
+Likes the page
+
+### EXAMPLE 11
+```powershell
+Set-PnPPage -Identity "MyPage.aspx" -UnLike
+```
+Unlikes the page
+
 ## PARAMETERS
 
 ### -CommentsEnabled
@@ -354,6 +366,34 @@ Creates multilingual pages for specified languages.
 
 ```yaml
 Type: Integer array
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Like
+Likes the page
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UnLike
+Likes the page
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
