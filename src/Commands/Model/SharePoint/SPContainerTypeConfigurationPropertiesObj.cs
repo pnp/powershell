@@ -18,9 +18,9 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
 
         public SPContainerTypeBillingClassification Classification { get; private set; }
 
-        public bool DiscoverabilityDisabled { get; private set; }
+        public bool? DiscoverabilityDisabled { get; private set; }
 
-        public bool SharingRestricted { get; private set; }
+        public bool? SharingRestricted { get; private set; }
 
         internal SPContainerTypeConfigurationPropertiesObj(SPContainerTypeConfigurationProperties containerTypeConfigurationProperties)
         {
@@ -28,8 +28,31 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
             OwningApplicationId = containerTypeConfigurationProperties.OwningAppId;
             ContainerTypeName = containerTypeConfigurationProperties.ContainerTypeName;
             Classification = containerTypeConfigurationProperties.Classification;
-            DiscoverabilityDisabled = containerTypeConfigurationProperties.IsDiscoverablilityDisabled;
-            SharingRestricted = containerTypeConfigurationProperties.IsSharingRestricted;
+
+            switch (containerTypeConfigurationProperties.IsDiscoverablilityDisabled)
+            {
+                case NullableBoolean.TRUE:
+                    DiscoverabilityDisabled = true;
+                    break;
+                case NullableBoolean.FALSE:
+                    DiscoverabilityDisabled = false;
+                    break;
+                default:
+                    DiscoverabilityDisabled = null;
+                    break;
+            }
+            switch (containerTypeConfigurationProperties.IsSharingRestricted)
+            {
+                case NullableBoolean.TRUE:
+                    SharingRestricted = true;
+                    break;
+                case NullableBoolean.FALSE:
+                    SharingRestricted = false;
+                    break;
+                default:
+                    SharingRestricted = null;
+                    break;
+            }
         }
     }
 }
