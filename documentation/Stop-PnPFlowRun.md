@@ -19,7 +19,7 @@ Stops/cancels a specific run of a Microsoft flow.
 ## SYNTAX
 
 ```powershell
-Stop-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> -Identity <PowerAutomateFlowRunPipeBind> [-Force] 
+Stop-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> -Identity <PowerAutomateFlowRunPipeBind> [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -43,6 +43,20 @@ Stop-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917
 This cancels the specified flow run of the specified flow without confirmation
 
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Environment
 The name of the Power Platform environment or an Environment object to retrieve the available flows for.
