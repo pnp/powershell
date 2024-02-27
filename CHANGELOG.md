@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Add-PnPHubSiteAssociation` cmdlet to allow support for multi-geo scenario. [#3568](https://github.com/pnp/powershell/pull/3568)
 - Fixed `Enable/Disable-PnPPageScheduling` cmdlet to also work with Viva connections enabled site. [#3713](https://github.com/pnp/powershell/pull/3713)
 - Fixed `Register-PnPManagementShellAccess` and `Register-PnPAzureADApp` cmdlets to also work with custom environment. [#3763](https://github.com/pnp/powershell/pull/3763)
+- Fixed `Set-PnPPPage` cmdlet to only change layout of the page if the parameter is specified. [#3777](https://github.com/pnp/powershell/pull/3777)
 
 ### Changed
 
@@ -51,6 +52,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Jenny Wu [msjennywu]
+- Aimery Thomas [a1mery]
 - Nils Andresen [nils-a]
 - Gautam Sheth [gautamdsheth]
 - Nishkalank Bezawada [NishkalankBezawada]
