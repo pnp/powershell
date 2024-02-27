@@ -20,7 +20,7 @@ Checks the site collection and its contents.
 ## SYNTAX
 
 ```powershell
-Test-PnPSite -Identity <SitePipeBind> [-RuleId <Guid>]
+Test-PnPSite -Identity <SitePipeBind> [-RuleId <Guid>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
