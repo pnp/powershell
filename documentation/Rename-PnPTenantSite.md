@@ -72,7 +72,7 @@ Specifies the full URL of the SharePoint Online site collection to which it need
 Type: String
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
