@@ -9,8 +9,8 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.New, "ListLevelFileVersionBatchDeleteJob")]
-    public class NewListLevelFileVersionBatchDeleteJob : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.New, "LibraryLevelFileVersionBatchDeleteJob")]
+    public class NewLibraryLevelFileVersionBatchDeleteJob : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]        
         [ValidateNotNull]
