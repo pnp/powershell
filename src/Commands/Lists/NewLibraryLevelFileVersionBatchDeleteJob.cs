@@ -31,9 +31,9 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     list.StartDeleteFileVersions(DeleteBeforeDays);
                     ClientContext.ExecuteQueryRetry();
+                    
+                    WriteVerbose("Success. Versions specified will be permanently deleted in the upcoming days.");
                 }
-
-                WriteVerbose("Success. Versions specified will be permanently deleted in the upcoming days.");
             }
             else
             {
