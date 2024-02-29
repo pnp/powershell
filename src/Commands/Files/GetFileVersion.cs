@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Files
         public string Url;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter? UseVersionExpirationReport;
+        public SwitchParameter UseVersionExpirationReport;
 
         protected override void ExecuteCmdlet()
         {
@@ -34,10 +34,8 @@ namespace PnP.PowerShell.Commands.Files
             File file;
 
             file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
-            
-            var doesUseVersionExpirationReport = UseVersionExpirationReport.HasValue && UseVersionExpirationReport.Value;
-            
-            if (doesUseVersionExpirationReport)
+                        
+            if (UseVersionExpirationReport)
             {
                 ClientContext.Load(file, f => f.Exists, f => f.VersionExpirationReport.IncludeWithDefaultProperties(i => i.CreatedBy, i => i.SnapshotDate, i => i.ExpirationDate));
             }
@@ -50,7 +48,7 @@ namespace PnP.PowerShell.Commands.Files
 
             if (file.Exists)
             {
-                var versions = doesUseVersionExpirationReport ? file.VersionExpirationReport : file.Versions;
+                var versions = UseVersionExpirationReport ? file.VersionExpirationReport : file.Versions;
                 ClientContext.ExecuteQueryRetry();
                 WriteObject(versions, true);
             }
