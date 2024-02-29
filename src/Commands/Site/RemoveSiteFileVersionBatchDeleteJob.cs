@@ -23,11 +23,11 @@ namespace PnP.PowerShell.Commands.Sites
                 site.CancelDeleteFileVersions();
                 ClientContext.ExecuteQueryRetry();
 
-                WriteVerbose("Future deletion is successfully stopped.");
+                WriteObject("Future deletion is successfully stopped.");
             }
             else
             {
-                WriteVerbose("Did not receive confirmation to stop deletion. Continuing to delete specified versions.");
+                WriteObject("Did not receive confirmation to stop deletion. Continuing to delete specified versions.");
             }
         }
     }

@@ -26,11 +26,11 @@ namespace PnP.PowerShell.Commands.Sites
                 site.StartDeleteFileVersions(DeleteBeforeDays);
                 ClientContext.ExecuteQueryRetry();
 
-                WriteVerbose("Success. Versions specified will be permanently deleted in the upcoming days.");
+                WriteObject("Success. Versions specified will be permanently deleted in the upcoming days.");
             }
             else
             {
-                WriteVerbose("Cancelled. No versions will be deleted.");
+                WriteObject("Cancelled. No versions will be deleted.");
             }
         }
     }

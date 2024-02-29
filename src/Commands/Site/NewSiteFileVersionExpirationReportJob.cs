@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Sites
             site.StartFileVersionExpirationReport(ReportUrl);
             ClientContext.ExecuteQueryRetry();
 
-            WriteVerbose("Success. The file version expiration report will be gradually populated. It will take over 24 hours to complete for a small site, and a few days for a larger one.");
+            WriteObject("Success. The file version expiration report will be gradually populated. It will take over 24 hours to complete for a small site, and a few days for a larger one.");
         }
     }
 }

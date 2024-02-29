@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Lists
                 list.StartFileVersionExpirationReport(ReportUrl);
                 ClientContext.ExecuteQueryRetry();
 
-                WriteVerbose("Success. The file version expiration report will be gradually populated. It will take over 24 hours to complete for a small library, and a few days for a larger one.");
+                WriteObject("Success. The file version expiration report will be gradually populated. It will take over 24 hours to complete for a small library, and a few days for a larger one.");
             }
         }
     }
