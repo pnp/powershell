@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "LibraryLevelFileVersionExpirationReportJobProgress")]
+    [Cmdlet(VerbsCommon.Get, "PnPLibraryFileVersionExpirationReportJobProgress")]
     [OutputType(typeof(FileVersionExpirationReportJobProgress))]
-    public class GetLibraryLevelFileVersionExpirationReportJobProgress : PnPWebCmdlet
+    public class GetLibraryFileVersionExpirationReportJobProgress : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]        
         [ValidateNotNull]

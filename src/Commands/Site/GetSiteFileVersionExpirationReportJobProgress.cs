@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Sites
 {
-    [Cmdlet(VerbsCommon.Get, "SiteLevelFileVersionExpirationReportJobProgress")]
+    [Cmdlet(VerbsCommon.Get, "PnPSiteFileVersionExpirationReportJobProgress")]
     [OutputType(typeof(FileVersionExpirationReportJobProgress))]
-    public class GetSiteLevelFileVersionExpirationReportJobProgress : PnPSharePointCmdlet
+    public class GetSiteFileVersionExpirationReportJobProgress : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]
         public string ReportUrl;

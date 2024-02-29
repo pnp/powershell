@@ -7,8 +7,8 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Sites
 {
-    [Cmdlet(VerbsCommon.New, "SiteLevelFileVersionExpirationReportJob")]
-    public class NewSiteLevelFileVersionExpirationReportJob : PnPSharePointCmdlet
+    [Cmdlet(VerbsCommon.New, "PnPSiteFileVersionExpirationReportJob")]
+    public class NewSiteFileVersionExpirationReportJob : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]
         public string ReportUrl;

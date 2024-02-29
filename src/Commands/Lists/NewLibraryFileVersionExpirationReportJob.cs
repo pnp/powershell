@@ -7,8 +7,8 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.New, "LibraryLevelFileVersionExpirationReportJob")]
-    public class NewLibraryLevelFileVersionExpirationReportJob : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.New, "PnPLibraryFileVersionExpirationReportJob")]
+    public class NewLibraryFileVersionExpirationReportJob : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]        
         [ValidateNotNull]

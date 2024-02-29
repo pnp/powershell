@@ -9,32 +9,35 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "LibraryLevelFileVersionBatchDeleteJob")]
-    public class RemoveLibraryLevelFileVersionBatchDeleteJob : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.New, "PnPLibraryFileVersionBatchDeleteJob")]
+    public class NewLibraryFileVersionBatchDeleteJob : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]        
         [ValidateNotNull]
         public ListPipeBind Identity;
+
+        [Parameter(Mandatory = true)]
+        public int DeleteBeforeDays;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
-            if (Force || ShouldContinue("It will stop processing further version deletion batches. Are you sure you want to continue?", Resources.Confirm))
+            if (Force || ShouldContinue("By executing this command, versions specified will be permanently deleted. These versions cannot be restored from the recycle bin. Are you sure you want to continue?", Resources.Confirm))
             {
                 var list = Identity.GetList(CurrentWeb);
                 if (list != null)
                 {
-                    list.CancelDeleteFileVersions();
+                    list.StartDeleteFileVersions(DeleteBeforeDays);
                     ClientContext.ExecuteQueryRetry();
+                    
+                    WriteVerbose("Success. Versions specified will be permanently deleted in the upcoming days.");
                 }
-
-                WriteVerbose("Future deletion is successfully stopped.");
             }
             else
             {
-                WriteVerbose("Did not receive confirmation to stop deletion. Continuing to delete specified versions.");
+                WriteVerbose("Cancelled. No versions will be deleted.");
             }
         }
     }

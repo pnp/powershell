@@ -7,11 +7,15 @@ using System.Management.Automation;
 
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace PnP.PowerShell.Commands.Sites
+namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Remove, "SiteLevelFileVersionBatchDeleteJob")]
-    public class RemoveSiteLevelFileVersionBatchDeleteJob : PnPSharePointCmdlet
+    [Cmdlet(VerbsCommon.Remove, "PnPLibraryFileVersionBatchDeleteJob")]
+    public class RemoveLibraryFileVersionBatchDeleteJob : PnPWebCmdlet
     {
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]        
+        [ValidateNotNull]
+        public ListPipeBind Identity;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
@@ -19,9 +23,12 @@ namespace PnP.PowerShell.Commands.Sites
         {
             if (Force || ShouldContinue("It will stop processing further version deletion batches. Are you sure you want to continue?", Resources.Confirm))
             {
-                var site = ClientContext.Site;
-                site.CancelDeleteFileVersions();
-                ClientContext.ExecuteQueryRetry();
+                var list = Identity.GetList(CurrentWeb);
+                if (list != null)
+                {
+                    list.CancelDeleteFileVersions();
+                    ClientContext.ExecuteQueryRetry();
+                }
 
                 WriteVerbose("Future deletion is successfully stopped.");
             }
