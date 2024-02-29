@@ -2,13 +2,15 @@ using Microsoft.SharePoint.Client;
 
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.SharePoint;
 
 using System.Management.Automation;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Sites
 {
     [Cmdlet(VerbsCommon.Get, "SiteLevelFileVersionExpirationReportJobProgress")]
-    [OutputType(typeof(string))]
+    [OutputType(typeof(FileVersionExpirationReportJobProgress))]
     public class GetSiteLevelFileVersionExpirationReportJobProgress : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -17,8 +19,14 @@ namespace PnP.PowerShell.Commands.Sites
         protected override void ExecuteCmdlet()
         {
             var site = ClientContext.Site;
-            var status = site.GetProgressForFileVersionExpirationReport(ReportUrl);
+            ClientContext.Load(site, s => s.Url);
+            var ret = site.GetProgressForFileVersionExpirationReport(ReportUrl);
             ClientContext.ExecuteQueryRetry();
+
+            var status = JsonSerializer.Deserialize<FileVersionExpirationReportJobProgress>(ret.Value);
+            status.Url = site.Url;
+            status.ReportUrl = ReportUrl;
+            
             WriteObject(status);
         }
     }
