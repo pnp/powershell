@@ -5,11 +5,10 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 using System.Management.Automation;
 
-using Resources = PnP.PowerShell.Commands.Properties.Resources;
-
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "LibraryLevelFileVersionExpirationReportJobProgress")]
+    [OutputType(typeof(string))]
     public class GetLibraryLevelFileVersionExpirationReportJobProgress : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]        

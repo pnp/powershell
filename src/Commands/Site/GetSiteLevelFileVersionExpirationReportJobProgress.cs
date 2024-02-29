@@ -5,11 +5,10 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 using System.Management.Automation;
 
-using Resources = PnP.PowerShell.Commands.Properties.Resources;
-
 namespace PnP.PowerShell.Commands.Sites
 {
     [Cmdlet(VerbsCommon.Get, "SiteLevelFileVersionExpirationReportJobProgress")]
+    [OutputType(typeof(string))]
     public class GetSiteLevelFileVersionExpirationReportJobProgress : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]
