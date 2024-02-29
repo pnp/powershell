@@ -67,8 +67,6 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public SwitchParameter Like = false;
 
-        [Parameter(Mandatory = false)]
-        public SwitchParameter UnLike = false;
 
         private CustomHeaderDynamicParameters customHeaderParameters;
 
@@ -185,12 +183,8 @@ namespace PnP.PowerShell.Commands.Pages
                 if (Like)
                 {
                     clientSidePage.Like();
-                }
-            }
-
-            if (ParameterSpecified(nameof(UnLike)))
-            {
-                if (UnLike)
+                } 
+                else
                 {
                     clientSidePage.Unlike();
                 }

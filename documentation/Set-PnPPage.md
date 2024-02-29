@@ -113,7 +113,7 @@ Likes the page
 
 ### EXAMPLE 11
 ```powershell
-Set-PnPPage -Identity "MyPage.aspx" -UnLike
+Set-PnPPage -Identity "MyPage.aspx" -Like:$false
 ```
 Unlikes the page
 
@@ -376,7 +376,7 @@ Accept wildcard characters: False
 ```
 
 ### -Like
-Likes the page
+Likes the page, if parameter is set to false then it Unlikes the page
 
 ```yaml
 Type: SwitchParameter
@@ -389,19 +389,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UnLike
-Likes the page
 
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
