@@ -90,7 +90,7 @@
 </ul>
 <p>Checks the site collection and its contents.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Test-PnPSite -Identity &lt;SitePipeBind&gt; [-RuleId &lt;Guid&gt;]
+<pre><code class="lang-powershell">Test-PnPSite -Identity &lt;SitePipeBind&gt; [-RuleId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>The Test-PnPSite cmdlet runs one or all site collection health checks on the site collection and its contents. Tests are intended not to make any changes except in repair mode, which can be initiated by running the Repair-PnPSite cmdlet. This cmdlet reports the rules together with a summary of the results.</p>
@@ -104,6 +104,17 @@
 </code></pre>
 <p>This example runs the Missing Galleries Check rule in test mode on the <a href="https://contoso.sharepoint.com/sites/marketing">https://contoso.sharepoint.com/sites/marketing</a> site collection.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>Specifies the SharePoint Online site collection on which to run the repairs.</p>
 <pre><code class="lang-yaml">Type: SitePipeBind

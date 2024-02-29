@@ -84,10 +84,9 @@
   <h1 id="test-pnptenanttemplate">Test-PnPTenantTemplate</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Tests a tenant template for invalid references</p>
+<p>Tests a tenant template for invalid references.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Test-PnPTenantTemplate -Template &lt;ProvisioningHierarchy&gt; [-Connection &lt;PnPConnection&gt;]  
- 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to check if the tenant template has invalid references.</p>
@@ -95,7 +94,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Test-PnPTenantTemplate -Template $myTemplate
 </code></pre>
-<p>Checks for valid template references</p>
+<p>Checks for valid template references.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -109,23 +108,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-template">-Template</h3>
-<p>The in-memory template to test</p>
+<p>The in-memory template to test.</p>
 <pre><code class="lang-yaml">Type: ProvisioningHierarchy
 Parameter Sets: (All)
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

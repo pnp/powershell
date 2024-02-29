@@ -84,7 +84,7 @@
   <h1 id="set-pnpwikipagecontent">Set-PnPWikiPageContent</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets the contents of a wikipage</p>
+<p>Sets the contents of a wiki page.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="string">STRING</h3>
 <pre><code class="lang-powershell">Set-PnPWikiPageContent -Content &lt;String&gt; -ServerRelativePageUrl &lt;String&gt; 
@@ -95,7 +95,7 @@
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet updates the content of the specified wikipage to the value specified either in a string or a file.</p>
+<p>This cmdlet updates the content of the specified wiki page to the value specified either in a string or a file.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPWikiPageContent -ServerRelativePageUrl /sites/PnPWikiCollection/SitePages/OurWikiPage.aspx -Path .\sampleblog.html
@@ -105,7 +105,7 @@
 <pre><code class="lang-powershell">$htmlContent = &quot;&lt;div&gt;test&lt;/div&gt;&quot;
 Set-PnPWikiPageContent -ServerRelativePageUrl /sites/PnPWikiCollection/SitePages/OurWikiPage.aspx -Content $htmlContent
 </code></pre>
-<p>Sets the content of OurWikiPage as &quot;test&quot;.</p>
+<p>Sets the content of OurWikiPage as &quot;test&quot;. The existing content of the wiki page will be replaced with the new content provided.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -119,6 +119,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-content">-Content</h3>
+<p>HTML markup that represents the desired content of the wiki page. The HTML markup can include text, images, links, tables, formatting elements, and any other HTML elements supported by SharePoint's wiki pages.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: STRING
 
@@ -129,6 +130,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-path">-Path</h3>
+<p>The local file path of the HTML file containing the content for the wiki page.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: FILE
 
@@ -139,7 +141,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-serverrelativepageurl">-ServerRelativePageUrl</h3>
-<p>Site Relative Page Url</p>
+<p>The server-relative URL of the wiki page whose content should be updated.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases: PageUrl

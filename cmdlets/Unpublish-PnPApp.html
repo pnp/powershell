@@ -84,22 +84,22 @@
   <h1 id="unpublish-pnpapp">Unpublish-PnPApp</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Unpublishes/retracts an available add-in from the app catalog</p>
+<p>Unpublishes/retracts an available add-in from the app catalog.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Unpublish-PnPApp [-Identity] &lt;AppMetadataPipeBind&gt; [-Scope &lt;AppCatalogScope&gt;] [-Connection &lt;PnPConnection&gt;]
  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to unpublish an available add-in from the site.</p>
+<p>Allows to unpublish an available add-in from the site collection app catalog or tenant app catalog.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Unpublish-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe
 </code></pre>
-<p>This will retract, but not remove, the specified app from the tenant app catalog</p>
+<p>This will retract, but not remove, the specified app from the tenant app catalog.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Unpublish-PnPApp -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Site
 </code></pre>
-<p>This will retract, but not remove, the specified app from the site collection app catalog</p>
+<p>This will retract, but not remove, the specified app from the site collection app catalog.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -113,7 +113,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Specifies the Id of the Addin Instance</p>
+<p>Specifies the Id of the Addin Instance.</p>
 <pre><code class="lang-yaml">Type: AppMetadataPipeBind
 Parameter Sets: (All)
 
@@ -124,7 +124,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-scope">-Scope</h3>
-<p>Defines which app catalog to use. Defaults to Tenant</p>
+<p>Defines which app catalog to use. Defaults to Tenant.</p>
 <pre><code class="lang-yaml">Type: AppCatalogScope
 Parameter Sets: (All)
 Accepted values: Tenant, Site

@@ -90,7 +90,7 @@
 </ul>
 <p>Updates the role of a user in an existing Microsoft Teams private channel.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPTeamsChannelUser -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -Identity &lt;TeamsChannelMemberPipeBind&gt; -Role &lt;String&gt; 
+<pre><code class="lang-powershell">Set-PnPTeamsChannelUser -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -Identity &lt;TeamsChannelMemberPipeBind&gt; -Role &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to update the role of a user in an existing Microsoft Teams private channel.</p>
@@ -104,6 +104,17 @@
 </code></pre>
 <p>Updates the user john@doe.com as member of the specified Teams private channel.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-team">-Team</h3>
 <p>Specify the group id, mailNickname or display name of the team to use.</p>
 <pre><code class="lang-yaml">Type: TeamsTeamPipeBind
@@ -138,7 +149,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-role">-Role</h3>
-<p>Specify the role of the user</p>
+<p>Specify the role of the user.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Accepted values: Owner, Member

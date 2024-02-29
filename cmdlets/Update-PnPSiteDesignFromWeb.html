@@ -88,7 +88,7 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Updates an existing Site Design on the current tenant based on the site provided through -Url or the currently connected to site if -Url is omitted</p>
+<p>Updates an existing Site Design on the current tenant based on the site provided through -Url or the currently connected to site if -Url is omitted.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="specific-components">Specific components</h3>
 <pre><code class="lang-powershell">Update-PnPSiteDesignFromWeb -Identity &lt;TenantSiteDesignPipeBind&gt; -Url &lt;String&gt; [-Lists &lt;String[]&gt;] [-IncludeBranding &lt;SwitchParameter&gt;] [-IncludeLinksToExportedItems &lt;SwitchParameter&gt;]
@@ -112,24 +112,12 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Update-PnPSiteDesignFromWeb -Url https://contoso.sharepoint.com/sites/template -Identity &quot;Contoso Project&quot; -Lists &quot;/lists/Issue list&quot;
 </code></pre>
-<p>Generates a site script based on the list &quot;Issue list&quot; in the site provided through Url and based on the generated script it will update the site script in the site design with the provided name.</p>
+<p>Generates a site script based on the list &quot;Issue list&quot; in the site provided through Url. Based on the generated script it will update the site script in the site design with the provided name.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named
@@ -206,6 +194,17 @@ Accept wildcard characters: False
 <h3 id="-lists">-Lists</h3>
 <p>Allows specifying one or more site relative URLs of lists that should be included into the Site Script, i.e. &quot;Shared Documents&quot;,&quot;List\MyList&quot;</p>
 <pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-url">-Url</h3>
+<p>Specifies the URL of the site to generate a Site Script from. If omitted, the currently connected to site will be used.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
