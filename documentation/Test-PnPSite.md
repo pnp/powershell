@@ -20,7 +20,7 @@ Checks the site collection and its contents.
 ## SYNTAX
 
 ```powershell
-Test-PnPSite -Identity <SitePipeBind> [-RuleId <Guid>]
+Test-PnPSite -Identity <SitePipeBind> [-RuleId <Guid>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -44,6 +44,20 @@ Test-PnPSite -Identity "https://contoso.sharepoint.com/sites/marketing" -RuleID 
 This example runs the Missing Galleries Check rule in test mode on the https://contoso.sharepoint.com/sites/marketing site collection.
 
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Identity
 Specifies the SharePoint Online site collection on which to run the repairs.

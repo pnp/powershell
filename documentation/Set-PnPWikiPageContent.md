@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPWikiPageContent.
 # Set-PnPWikiPageContent
 
 ## SYNOPSIS
-Sets the contents of a wikipage
+Sets the contents of a wiki page.
 
 ## SYNTAX
 
@@ -27,7 +27,7 @@ Set-PnPWikiPageContent -Path <String> -ServerRelativePageUrl <String>
 ```
 
 ## DESCRIPTION
-This cmdlet updates the content of the specified wikipage to the value specified either in a string or a file.
+This cmdlet updates the content of the specified wiki page to the value specified either in a string or a file.
 
 ## EXAMPLES
 
@@ -42,8 +42,7 @@ Sets the content of OurWikiPage to the content of sampleblog.html file.
 $htmlContent = "<div>test</div>"
 Set-PnPWikiPageContent -ServerRelativePageUrl /sites/PnPWikiCollection/SitePages/OurWikiPage.aspx -Content $htmlContent
 ```
-
-Sets the content of OurWikiPage as "test". 
+Sets the content of OurWikiPage as "test". The existing content of the wiki page will be replaced with the new content provided.
 
 ## PARAMETERS
 
@@ -62,7 +61,7 @@ Accept wildcard characters: False
 ```
 
 ### -Content
-
+HTML markup that represents the desired content of the wiki page. The HTML markup can include text, images, links, tables, formatting elements, and any other HTML elements supported by SharePoint's wiki pages. 
 ```yaml
 Type: String
 Parameter Sets: STRING
@@ -75,6 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -Path
+The local file path of the HTML file containing the content for the wiki page.
 
 ```yaml
 Type: String
@@ -88,7 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -ServerRelativePageUrl
-Site Relative Page Url
+The server-relative URL of the wiki page whose content should be updated.
 
 ```yaml
 Type: String
