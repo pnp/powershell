@@ -64,6 +64,10 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public bool ShowPublishDate;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Like = false;
+
+
         private CustomHeaderDynamicParameters customHeaderParameters;
 
         public object GetDynamicParameters()
@@ -171,6 +175,18 @@ namespace PnP.PowerShell.Commands.Pages
                 else
                 {
                     clientSidePage.DisableComments();
+                }
+            }
+
+            if (ParameterSpecified(nameof(Like)))
+            {
+                if (Like)
+                {
+                    clientSidePage.Like();
+                } 
+                else
+                {
+                    clientSidePage.Unlike();
                 }
             }
 
