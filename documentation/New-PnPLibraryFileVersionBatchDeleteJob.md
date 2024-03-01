@@ -13,18 +13,15 @@ title: New-PnPLibraryFileVersionBatchDeleteJob
 
 Starts a file version batch trim job for a document library.
 
-
 ## SYNTAX
 
 ```powershell
-New-PnPLibraryFileVersionBatchDeleteJob [-Identity] <ListPipeBind> -DeleteBeforeDays <int> [-Force]
+New-PnPLibraryFileVersionBatchDeleteJob -Identity <ListPipeBind> -DeleteBeforeDays <int> [-Force]
 ```
-
 
 ## DESCRIPTION
 
 Starts a file version batch trim job for a document library.
-
 
 ## EXAMPLES
 
@@ -41,7 +38,6 @@ New-PnPLibraryFileVersionBatchDeleteJob -Identity "Documents" -DeleteBeforeDays 
 ```
 
 Starts a file version batch trim job that will delete all file verions that are over 360 days old in the document library, without prompting the user for confirmation.
-
 
 ## PARAMETERS
 
@@ -90,5 +86,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
