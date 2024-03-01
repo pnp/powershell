@@ -15,6 +15,9 @@ namespace PnP.PowerShell.Commands
         public string SiteLogoUrl;
 
         [Parameter(Mandatory = false)]
+        public string SiteThumbnailUrl;
+
+        [Parameter(Mandatory = false)]
         public HeaderLayoutType HeaderLayout = HeaderLayoutType.Standard;
 
         [Parameter(Mandatory = false)]
@@ -38,18 +41,17 @@ namespace PnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             var requiresWebUpdate = false;
-
+    
             if(ParameterSpecified(nameof(SiteLogoUrl)))
-            {               
-                WriteVerbose($"Setting site logo image to '{SiteLogoUrl}'");
+            {
+                SetSiteImage(SiteLogoUrl, "site logo", 1);
+            }
 
-                var stringContent = new StringContent("{\"relativeLogoUrl\":\"" + SiteLogoUrl + "\",\"type\":0,\"aspect\":1}");
-                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                CurrentWeb.EnsureProperties(p => p.Url);
-                var result = GraphHelper.PostAsync(Connection, $"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", AccessToken, stringContent).GetAwaiter().GetResult();
-                WriteVerbose($"Response from setsitelogo request: {result.StatusCode}");
-            }  
-
+            if(ParameterSpecified(nameof(SiteThumbnailUrl)))
+            {
+                SetSiteImage(SiteThumbnailUrl, "thumbnailurl", 0);
+            }
+            
             if(ParameterSpecified(nameof(LogoAlignment)))
             {
                 WriteVerbose($"Setting site logo alignment to '{LogoAlignment}'");
@@ -119,6 +121,16 @@ namespace PnP.PowerShell.Commands
                 CurrentWeb.Update();
                 ClientContext.ExecuteQueryRetry();
             }
+        }
+        private void SetSiteImage(string imageUrl, string imageType, int aspect)
+        {
+            WriteVerbose($"Setting site {imageType} image to '{imageUrl}'");
+
+            var stringContent = new StringContent($"{{\"relativeLogoUrl\":\"{imageUrl}\",\"type\":0,\"aspect\":{aspect}}}");
+            stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            CurrentWeb.EnsureProperties(p => p.Url);
+            var result = GraphHelper.PostAsync(Connection, $"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", AccessToken, stringContent).GetAwaiter().GetResult();
+            WriteVerbose($"Response from {imageType} request: {result.StatusCode}");
         }
     }
 }

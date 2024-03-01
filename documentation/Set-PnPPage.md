@@ -105,6 +105,18 @@ Set-PnPPage -Identity "MyPage" -ShowPublishDate $true -Publish
 ```
 Display the date when the page was published in the header section of the page
 
+### EXAMPLE 12
+```powershell
+Set-PnPPage -Identity "MyPage.aspx" -Like
+```
+Likes the page
+
+### EXAMPLE 11
+```powershell
+Set-PnPPage -Identity "MyPage.aspx" -Like:$false
+```
+Unlikes the page
+
 ## PARAMETERS
 
 ### -CommentsEnabled
@@ -140,6 +152,20 @@ Specify either the name, ID or an actual content type.
 
 ```yaml
 Type: ContentTypePipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DemoteNewsArticle
+Demotes an existing news post to a regular page
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -194,7 +220,7 @@ Accept wildcard characters: False
 ```
 
 ### -LayoutType
-Sets the layout type of the page. (Default = Article)
+Sets the layout type of the page.
 
 ```yaml
 Type: PageLayoutType
@@ -348,6 +374,22 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -Like
+Likes the page, if parameter is set to false then it Unlikes the page
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+
 
 ## RELATED LINKS
 

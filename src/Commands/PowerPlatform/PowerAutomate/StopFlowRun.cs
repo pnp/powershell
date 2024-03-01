@@ -3,6 +3,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Utilities.REST;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
@@ -43,7 +44,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             if (Force || ShouldContinue($"Stop flow run with name '{flowRunName}'?", Resources.Confirm))
             {
-                RestHelper.PostAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs/{flowRunName}/cancel?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
+                RestHelper.PostAsync(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs/{flowRunName}/cancel?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
             }
         }
     }

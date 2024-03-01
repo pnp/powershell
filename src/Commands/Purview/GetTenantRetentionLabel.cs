@@ -7,19 +7,20 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Purview
 {
-    [Cmdlet(VerbsCommon.Get, "PnPRetentionLabel")]
+    [Cmdlet(VerbsCommon.Get, "PnPTenantRetentionLabel")]
     [OutputType(typeof(IEnumerable<Model.Graph.Purview.RetentionLabel>))]
     [OutputType(typeof(Model.Graph.Purview.RetentionLabel))]
     [RequiredMinimalApiPermissions("RecordsManagement.Read.All")]
-    public class GetAvailableRetentionLabel : PnPGraphCmdlet
+    [WriteAliasWarning("Get-PnPRetentionLabel will be renamed to Get-PnPTenantRetentionLabel in a future version, please update your scripts now already to use this cmdlet name instead")]
+    [Alias("Get-PnPRetentionLabel")]
+    public class GetTenantRetentionLabel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
         public Guid Identity;
 
         protected override void ExecuteCmdlet()
         {
-            string url;
-            url = "/beta/security/labels/retentionLabels";
+            string url = "/beta/security/labels/retentionLabels";
 
             if (ParameterSpecified(nameof(Identity)))
             {

@@ -527,7 +527,14 @@ namespace PnP.PowerShell.Commands.AzureAD
         private bool AppExists(string appName, HttpClient httpClient, string token)
         {
             Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Checking if application '{appName}' does not exist yet...");
-            var azureApps = RestHelper.GetAsync<RestResultCollection<AzureADApp>>(httpClient, $@"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
+
+            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+            }
+
+            var azureApps = RestHelper.GetAsync<RestResultCollection<AzureADApp>>(httpClient, $"{graphEndpoint}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
             if (azureApps != null && azureApps.Items.Any())
             {
                 Host.UI.WriteLine();
@@ -571,7 +578,13 @@ namespace PnP.PowerShell.Commands.AzureAD
                 requiredResourceAccess = scopesPayload
             };
 
-            var azureApp = RestHelper.PostAsync<AzureADApp>(httpClient, $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", token, payload).GetAwaiter().GetResult();
+            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+            }
+
+            var azureApp = RestHelper.PostAsync<AzureADApp>(httpClient, $"{graphEndpoint}/v1.0/applications", token, payload).GetAwaiter().GetResult();
             if (azureApp != null)
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"App {azureApp.DisplayName} with id {azureApp.AppId} created.");
@@ -583,7 +596,13 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             //Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Starting consent flow.");
 
-            var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? $"https://{AzureAuthHelper.GetGraphEndPoint(AzureEnvironment)}/.default" : "https://microsoft.sharepoint-df.com/.default";
+            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+            }
+
+            var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? $"{graphEndpoint}/.default" : "https://microsoft.sharepoint-df.com/.default";
 
             var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope={resource}&redirect_uri={redirectUri}";
 
@@ -658,7 +677,13 @@ namespace PnP.PowerShell.Commands.AzureAD
                 {
                     WriteVerbose("Setting the logo for the Azure AD app");
 
-                    var endpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications/{azureApp.Id}/logo";
+                    var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
+                    if (AzureEnvironment == AzureEnvironment.Custom)
+                    {
+                        graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                    }
+
+                    var endpoint = $"{graphEndpoint}/v1.0/applications/{azureApp.Id}/logo";
 
                     var bytes = File.ReadAllBytes(LogoFilePath);
 

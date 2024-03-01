@@ -1,6 +1,7 @@
 ﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate;
+using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
@@ -32,7 +33,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 throw new PSArgumentException("Flow not found.", nameof(Identity));
             }
 
-            var flowOwners = GraphHelper.GetResultCollectionAsync<FlowPermission>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/permissions?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
+            var flowOwners = GraphHelper.GetResultCollectionAsync<FlowPermission>(Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/permissions?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
             WriteObject(flowOwners, true);
         }
     }

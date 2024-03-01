@@ -64,6 +64,10 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public bool ShowPublishDate;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Like = false;
+
+
         private CustomHeaderDynamicParameters customHeaderParameters;
 
         public object GetDynamicParameters()
@@ -92,7 +96,7 @@ namespace PnP.PowerShell.Commands.Pages
                 throw new Exception("Insufficient arguments to update a client side page");
 
             // Don't allow changing a topic page into a regular page as that could lead to data loss
-            if (clientSidePage.LayoutType != PageLayoutType.Topic)
+            if (ParameterSpecified(nameof(LayoutType)) && clientSidePage.LayoutType != PageLayoutType.Topic)
             {
                 clientSidePage.LayoutType = LayoutType;
             }
@@ -171,6 +175,18 @@ namespace PnP.PowerShell.Commands.Pages
                 else
                 {
                     clientSidePage.DisableComments();
+                }
+            }
+
+            if (ParameterSpecified(nameof(Like)))
+            {
+                if (Like)
+                {
+                    clientSidePage.Like();
+                } 
+                else
+                {
+                    clientSidePage.Unlike();
                 }
             }
 

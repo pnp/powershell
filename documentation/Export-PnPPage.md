@@ -33,6 +33,13 @@ Export-PnPPage -Identity Home.aspx
 
 Exports the page 'Home.aspx' to a new PnP Provisioning Template
 
+### EXAMPLE 2
+```powershell
+Export-PnPPage -Identity HR/Home.aspx -Out template.pnp
+```
+
+Exports the page 'Home.aspx' to a new PnP Provisioning Template
+
 ## PARAMETERS
 
 ### -Configuration
@@ -93,7 +100,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name of the page
+The name/identity of the page. This can be a page instance or the filename of the page. I.e. if the page is called MyPage.aspx and is located in the root of the Site Pages library, provide "MyPage" or "MyPage.aspx". If the page is called MyOtherPage.aspx and is located inside a subfolder called HR located in the root of the Site Pages library, provide "HR/MyOtherPage" or "HR/MyOtherPage.aspx
 
 ```yaml
 Type: ClientSidePagePipeBind

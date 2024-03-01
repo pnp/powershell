@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using InformationBarriersMode = PnP.PowerShell.Commands.Enums.InformationBarriersMode;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -183,6 +184,17 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? EnableSensitivityLabelForPDF { private set; get; }
 
+        public bool? IsDataAccessInCardDesignerEnabled { private set; get; }
+
+        public bool? ShowPeoplePickerGroupSuggestionsForIB { private set; get; }
+
+        public bool? InformationBarriersSuspension { private set; get; }
+        
+        public bool? IBImplicitGroupBased { private set; get; }
+        public bool? AppBypassInformationBarriers { private set; get; }
+
+        public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { private set; get; } 
+
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext)
@@ -219,6 +231,7 @@ namespace PnP.PowerShell.Commands.Model
             IsLoopEnabled = tenant.IsLoopEnabled;
             EnableAzureADB2BIntegration = tenant.EnableAzureADB2BIntegration;
             SiteOwnerManageLegacyServicePrincipalEnabled = tenant.SiteOwnerManageLegacyServicePrincipalEnabled;
+            IsDataAccessInCardDesignerEnabled = tenant.IsDataAccessInCardDesignerEnabled;
 
             try
             {
@@ -652,6 +665,49 @@ namespace PnP.PowerShell.Commands.Model
             catch 
             {
                 EnableSensitivityLabelForPDF = false;
+            }
+
+            try
+            {
+                ShowPeoplePickerGroupSuggestionsForIB = tenant.ShowPeoplePickerGroupSuggestionsForIB;
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                InformationBarriersSuspension = tenant.InformationBarriersSuspension;
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                IBImplicitGroupBased = tenant.IBImplicitGroupBased;
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                AppBypassInformationBarriers = tenant.AppBypassInformationBarriers;
+            }
+            catch
+            {
+            }
+
+            try
+            {
+                if (tenant.DefaultODBMode != null) 
+                {
+                    DefaultOneDriveInformationBarrierMode = Enum.Parse<InformationBarriersMode>(tenant.DefaultODBMode);
+                }
+            }
+            catch
+            {
             }
         }
     }

@@ -4,13 +4,16 @@ using System;
 using System.Management.Automation;
 using System.Linq;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 {
-    [Cmdlet(VerbsCommon.Get, "PnPPowerPlatformConnector")]
-    public class GetPowerPlatformConnector : PnPAzureManagementApiCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPPowerPlatformCustomConnector")]
+    [WriteAliasWarning("Get-PnPPowerPlatformConnector will be renamed to Get-PnPPowerPlatformCustomConnector in a future version, please update your scripts now already to use this cmdlet name instead")]
+    [Alias("Get-PnPPowerPlatformConnector")]
+    public class GetPowerPlatformCustomConnector : PnPAzureManagementApiCmdlet
     {
-      
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
@@ -18,11 +21,13 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
         public SwitchParameter AsAdmin;
 
         [Parameter(Mandatory = false)]
-        public PowerPlatformConnectorPipeBind Identity; 
+        public PowerPlatformConnectorPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
             string environmentName = null;
+            string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
+            string powerAppsUrl = PowerPlatformUtility.GetPowerAppsEndpoint(Connection.AzureEnvironment);
             if (ParameterSpecified(nameof(Environment)))
             {
                 environmentName = Environment.GetName();
@@ -30,7 +35,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
             }
             else
             {
-                var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, "https://management.azure.com/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 environmentName = environments.FirstOrDefault(e => e.Properties.IsDefault.HasValue && e.Properties.IsDefault == true)?.Name;
 
                 if (string.IsNullOrEmpty(environmentName))
@@ -47,14 +52,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
                 WriteVerbose($"Retrieving specific Custom Connector with the provided name '{appName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.GetAsync<Model.PowerPlatform.Environment.PowerPlatformConnector>(Connection, $"https://api.powerapps.com/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apis/{appName}?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetAsync<Model.PowerPlatform.Environment.PowerPlatformConnector>(Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apis/{appName}?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", AccessToken).GetAwaiter().GetResult();
                 WriteObject(result, false);
             }
             else
             {
                 WriteVerbose($"Retrieving all Connectors within environment '{environmentName}'");
 
-                var connectors = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.PowerPlatformConnector>(Connection, $"https://api.powerapps.com/providers/Microsoft.PowerApps/apis?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", AccessToken).GetAwaiter().GetResult();
+                var connectors = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.PowerPlatformConnector>(Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps/apis?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", AccessToken).GetAwaiter().GetResult();
                 WriteObject(connectors, true);
             }
         }

@@ -29,6 +29,26 @@
             "consentDescription": "Allows the application to read service health information for your organization.",
             "consentDisplayName": "Read service health information for your organization",
             "value": "ServiceHealth.Read"
+        },
+        {
+            "adminConsentDescription": "Allows the application to read service health information for your organization.",
+            "adminConsentDisplayName": "Read activity reports for your organization",
+            "id": "b3b78c39-cb1d-4d17-820a-25d9196a800e",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read service health information for your organization.",
+            "consentDisplayName": "Read service health information for your organization",
+            "value": "ActivityReports.Read"
+        },
+        {
+            "adminConsentDescription": "Allows the application to read threat intelligence data for your organization",
+            "adminConsentDisplayName": "Read threat intelligence data for your organization",
+            "id": "17f1c501-83cd-414c-9064-cd10f7aef836",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read threat intelligence data for your organization",
+            "consentDisplayName": "Read threat intelligence data for your organization",
+            "value": "ThreatIntelligence.Read"
         }
     ],
     "applicationScopesList": [
@@ -61,6 +81,26 @@
             "consentDescription": "Allows the application to read service health information for your organization.",
             "consentDisplayName": "Read service health information for your organization",
             "value": "ServiceHealth.Read"
+        },
+        {
+            "adminConsentDescription": "Allows the application to read service health information for your organization.",
+            "adminConsentDisplayName": "Read activity reports for your organization",
+            "id": "b3b78c39-cb1d-4d17-820a-25d9196a800e",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read service health information for your organization.",
+            "consentDisplayName": "Read service health information for your organization",
+            "value": "ActivityReports.Read"
+        },
+        {
+            "adminConsentDescription": "Allows the application to read threat intelligence data for your organization",
+            "adminConsentDisplayName": "Read threat intelligence data for your organization",
+            "id": "17f1c501-83cd-414c-9064-cd10f7aef836",
+            "isEnabled": true,
+            "isAdmin": true,
+            "consentDescription": "Allows the application to read threat intelligence data for your organization",
+            "consentDisplayName": "Read threat intelligence data for your organization",
+            "value": "ThreatIntelligence.Read"
         }
     ]
 }
