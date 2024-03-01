@@ -13,18 +13,15 @@ title: New-PnPSiteFileVersionBatchDeleteJob
 
 Starts a file version batch trim job targeting all document libraries in a site collection.
 
-
 ## SYNTAX
 
 ```powershell
 New-PnPSiteFileVersionBatchDeleteJob -DeleteBeforeDays <int> [-Force]
 ```
 
-
 ## DESCRIPTION
 
 Starts a file version batch trim job targeting all document libraries in a site collection.
-
 
 ## EXAMPLES
 
@@ -41,7 +38,6 @@ New-PnPSiteFileVersionBatchDeleteJob -DeleteBeforeDays 360 -Force
 ```
 
 Starts a file version batch trim job that will delete all file verions that are over 360 days old in all document libraries in the site collection, without prompting the user for confirmation.
-
 
 ## PARAMETERS
 
@@ -76,5 +72,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
