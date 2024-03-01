@@ -13,18 +13,15 @@ title: Get-PnPLibraryFileVersionExpirationReportJobProgress
 
 Gets the status for a file version usage report generation job for a document library.
 
-
 ## SYNTAX
 
 ```powershell
-Get-PnPLibraryFileVersionExpirationReportJobProgress [-Identity] <ListPipeBind> -ReportUrl <string>
+Get-PnPLibraryFileVersionExpirationReportJobProgress -Identity <ListPipeBind> -ReportUrl <string>
 ```
-
 
 ## DESCRIPTION
 
 Gets the status for a file version usage report generation job for a document library.
-
 
 ## EXAMPLES
 
@@ -34,7 +31,6 @@ Get-PnPLibraryFileVersionExpirationReportJobProgress -Identity "Documents" -Repo
 ```
 
 Gets the status for a file version usage report generation job for a document library.
-
 
 ## PARAMETERS
 
@@ -66,9 +62,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
