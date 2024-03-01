@@ -34,14 +34,14 @@ Retrieves the file version information for the specified file.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPFileVersion -Url "/sites/blah/Shared Documents/MyDocument.docx"
+Get-PnPFileVersion -Url "/sites/marketing/Shared Documents/MyDocument.docx"
 ```
 
 Retrieves the file version information for the specified file by specifying the path to the site and the document library's URL.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPFileVersion -Url "/sites/blah/Shared Documents/MyDocument.docx" -UseVersionExpirationReport
+Get-PnPFileVersion -Url "/sites/marketing/Shared Documents/MyDocument.docx" -UseVersionExpirationReport
 ```
 
 Retrieves the version expiration report for the specified file. 
@@ -89,10 +89,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
