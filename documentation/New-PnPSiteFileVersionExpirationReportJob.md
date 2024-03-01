@@ -13,18 +13,15 @@ title: New-PnPSiteFileVersionExpirationReportJob
 
 Starts generating file version usage report for a site collection.
 
-
 ## SYNTAX
 
 ```powershell
 New-PnPSiteFileVersionExpirationReportJob -ReportUrl <string>
 ```
 
-
 ## DESCRIPTION
 
 Starts generating file version usage report for a site collection.
-
 
 ## EXAMPLES
 
@@ -34,7 +31,6 @@ New-PnPSiteFileVersionExpirationReportJob -ReportUrl "https://contoso.sharepoint
 ```
 
 Starts generating file version usage report on for the site collection, saving the result to a csv file within the site collection.
-
 
 ## PARAMETERS
 
@@ -52,9 +48,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
