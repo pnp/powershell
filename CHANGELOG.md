@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPRetentionLabel` and `Reset-PnPRetentionLabel` cmdlets to support setting a retention label on one or more items [#3599](https://github.com/pnp/powershell/pull/3599)
 - Added `-SiteThumbnailUrl` parameter to `Set-PnPWebHeader` cmmdlet to support setting thumbnail of the site. [#3746](https://github.com/pnp/powershell/pull/3746)
 - Added `-Like` parameter to `Set-PnPPage` cmdlet to support liking/unliking a modern page. [#3788](https://github.com/pnp/powershell/pull/3788)
+- Added `Get-PnPPageLikedByInformation` cmdlet to retrieve list of users who liked a modern page. [#3781](https://github.com/pnp/powershell/pull/3781)
 
 ### Fixed
 
