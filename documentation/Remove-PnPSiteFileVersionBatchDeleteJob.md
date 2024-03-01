@@ -13,18 +13,15 @@ title: Remove-PnPSiteFileVersionBatchDeleteJob
 
 Cancels further processing of a file version batch trim job for a site collection.
 
-
 ## SYNTAX
 
 ```powershell
-Remove-PnPSiteFileVersionBatchDeleteJob -DeleteBeforeDays <int> [-Force]
+Remove-PnPSiteFileVersionBatchDeleteJob [-Force]
 ```
-
 
 ## DESCRIPTION
 
 Cancels further processing of a file version batch trim job for a site collection.
-
 
 ## EXAMPLES
 
@@ -41,7 +38,6 @@ Remove-PnPSiteFileVersionBatchDeleteJob -Force
 ```
 
 Cancels further processing of the file version batch trim job for the site collection, without prompting the user for confirmation.
-
 
 ## PARAMETERS
 
@@ -62,5 +58,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
