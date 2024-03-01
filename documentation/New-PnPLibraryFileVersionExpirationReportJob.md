@@ -13,18 +13,15 @@ title: New-PnPLibraryFileVersionExpirationReportJob
 
 Starts generating file version usage report for a document library.
 
-
 ## SYNTAX
 
 ```powershell
-New-PnPLibraryFileVersionExpirationReportJob [-Identity] <ListPipeBind> -ReportUrl <string>
+New-PnPLibraryFileVersionExpirationReportJob -Identity <ListPipeBind> -ReportUrl <string>
 ```
-
 
 ## DESCRIPTION
 
 Starts generating file version usage report for a document library.
-
 
 ## EXAMPLES
 
@@ -34,7 +31,6 @@ New-PnPLibraryFileVersionExpirationReportJob -Identity "Documents" -ReportUrl "h
 ```
 
 Starts generating file version usage report for a document library, saving the result to a csv file within the site collection.
-
 
 ## PARAMETERS
 
@@ -66,9 +62,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
