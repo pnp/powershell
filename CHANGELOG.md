@@ -10,6 +10,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+### Contributors
+
+## [2.4.0]
+
+### Added
+
 - Added `-IsDataAccessInCardDesignerEnabled` to `Set-PnPTenant` which allows for configuring Viva Connections Adaptive Cards to connect to backend services for their data [#3635](https://github.com/pnp/powershell/pull/3635)
 - Added `Remove-PnPContainer` cmdlet to remove the SharePoint embed container. [#3629](https://github.com/pnp/powershell/pull/3629)
 - Added `Convert-PnPFile` cmdlet which allows for a file to be converted to from one format to another. [#3435](https://github.com/pnp/powershell/pull/3435) & [#3643](https://github.com/pnp/powershell/pull/3643)
