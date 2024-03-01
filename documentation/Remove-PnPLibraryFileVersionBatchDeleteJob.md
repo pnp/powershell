@@ -13,18 +13,15 @@ title: Remove-PnPLibraryFileVersionBatchDeleteJob
 
 Cancels further processing of a file version batch trim job for a document library.
 
-
 ## SYNTAX
 
 ```powershell
-Remove-PnPLibraryFileVersionBatchDeleteJob [-Identity] <ListPipeBind> -DeleteBeforeDays <int> [-Force]
+Remove-PnPLibraryFileVersionBatchDeleteJob -Identity <ListPipeBind> [-Force]
 ```
-
 
 ## DESCRIPTION
 
 Cancels further processing of a file version batch trim job for a document library.
-
 
 ## EXAMPLES
 
@@ -41,7 +38,6 @@ Remove-PnPLibraryFileVersionBatchDeleteJob -Identity "Documents" -DeleteBeforeDa
 ```
 
 Cancels further processing of the file version batch trim job for the document library, without prompting the user for confirmation.
-
 
 ## PARAMETERS
 
@@ -76,5 +72,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
