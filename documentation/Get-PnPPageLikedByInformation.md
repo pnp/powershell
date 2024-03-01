@@ -49,16 +49,16 @@ Gets the LikedBy Information of page named 'MyPage.aspx' from the subsite named 
 ### Sample Output
 
 ```powershell
-Name         : Johnny Bravo
+Name         : User 1
 Mail         :
 Id           : 14
-LoginName    : i:0#.f|membership|johnny.bravo@contosso.onmicrosoft.com
+LoginName    : i:0#.f|membership|user1@contoso.onmicrosoft.com
 CreationDate : 2024-02-16 14:49:55
 
-Name         : Nishkalank Bezawada
-Mail         : SuperAdmin@contosso.onmicrosoft.com
+Name         : User 2
+Mail         : user2@contoso.onmicrosoft.com
 Id           : 6
-LoginName    : i:0#.f|membership|superadmin@contosso.onmicrosoft.com
+LoginName    : i:0#.f|membership|user2@contoso.onmicrosoft.com
 CreationDate : 2024-02-22 19:47:24
 ```
 
