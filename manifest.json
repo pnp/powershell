@@ -2642,6 +2642,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPLibraryFileVersionExpirationReportJobProgress.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPLibraryFileVersionExpirationReportJobProgress.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPList.md",
       "output": {
         ".html": {
@@ -2916,6 +2926,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPPageComponent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPageLikedByInformation.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPageLikedByInformation.html"
         }
       },
       "version": ""
@@ -3306,6 +3326,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSiteDesignTask.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSiteFileVersionExpirationReportJobProgress.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSiteFileVersionExpirationReportJobProgress.html"
         }
       },
       "version": ""
@@ -4502,6 +4532,26 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPLibraryFileVersionBatchDeleteJob.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPLibraryFileVersionBatchDeleteJob.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPLibraryFileVersionExpirationReportJob.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPLibraryFileVersionExpirationReportJob.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/New-PnPList.md",
       "output": {
         ".html": {
@@ -4576,6 +4626,26 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPSiteCollectionTermStore.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPSiteFileVersionBatchDeleteJob.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPSiteFileVersionBatchDeleteJob.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPSiteFileVersionExpirationReportJob.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPSiteFileVersionExpirationReportJob.html"
         }
       },
       "version": ""
@@ -5332,6 +5402,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPLibraryFileVersionBatchDeleteJob.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPLibraryFileVersionBatchDeleteJob.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPList.md",
       "output": {
         ".html": {
@@ -5646,6 +5726,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSiteDesignTask.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPSiteFileVersionBatchDeleteJob.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPSiteFileVersionBatchDeleteJob.html"
         }
       },
       "version": ""

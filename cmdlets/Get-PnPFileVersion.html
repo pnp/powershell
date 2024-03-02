@@ -86,19 +86,24 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Retrieves the previous versions of a file. Does not retrieve the current version of the file.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPFileVersion -Url &lt;String&gt; [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPFileVersion -Url &lt;String&gt; [-UseVersionExpirationReport] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Retrieves the version history of a file, not including its current version. To get the current version use the MajorVersion and MinorVersion properties returned from Get-PnPFile.</p>
+<p>It can optionally return the version expiration report, which contains the versions' SnapshotDate (or estimated SnapshotDate if it is not available) and estimated ExpirationDate based on the Automatic Version History Limits.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPFileVersion -Url Documents/MyDocument.docx
 </code></pre>
 <p>Retrieves the file version information for the specified file.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPFileVersion -Url &quot;/sites/blah/Shared Documents/MyDocument.docx&quot;
+<pre><code class="lang-powershell">Get-PnPFileVersion -Url &quot;/sites/marketing/Shared Documents/MyDocument.docx&quot;
 </code></pre>
 <p>Retrieves the file version information for the specified file by specifying the path to the site and the document library's URL.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPFileVersion -Url &quot;/sites/marketing/Shared Documents/MyDocument.docx&quot; -UseVersionExpirationReport
+</code></pre>
+<p>Retrieves the version expiration report for the specified file.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -116,6 +121,17 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-useversionexpirationreport">-UseVersionExpirationReport</h3>
+<p>Returns the file version expiration report. The versions contained in the report has the SnapshotDate (or estimated SnapshotDate if it is not available) and estimated ExpirationDate based on the Automatic Version History Limits.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

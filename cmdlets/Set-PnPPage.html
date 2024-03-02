@@ -140,6 +140,14 @@
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -ShowPublishDate $true -Publish
 </code></pre>
 <p>Display the date when the page was published in the header section of the page</p>
+<h3 id="example-12">EXAMPLE 12</h3>
+<pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage.aspx&quot; -Like
+</code></pre>
+<p>Likes the page</p>
+<h3 id="example-11-1">EXAMPLE 11</h3>
+<pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage.aspx&quot; -Like:$false
+</code></pre>
+<p>Unlikes the page</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-commentsenabled">-CommentsEnabled</h3>
 <p>Enables or Disables the comments on the page</p>
@@ -335,6 +343,17 @@ Accept wildcard characters: False
 <h3 id="-translationlanguagecodes">-TranslationLanguageCodes</h3>
 <p>Creates multilingual pages for specified languages.</p>
 <pre><code class="lang-yaml">Type: Integer array
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-like">-Like</h3>
+<p>Likes the page, if parameter is set to false then it Unlikes the page</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

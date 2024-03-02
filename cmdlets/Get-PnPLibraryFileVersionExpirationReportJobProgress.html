@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set-PnPRetentionLabel | PnP PowerShell </title>
+    <title>Get-PnPLibraryFileVersionExpirationReportJobProgress | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set-PnPRetentionLabel | PnP PowerShell ">
+    <meta name="title" content="Get-PnPLibraryFileVersionExpirationReportJobProgress | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,108 +77,27 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="set-pnpretentionlabel">Set-PnPRetentionLabel</h1>
+  <h1 id="get-pnplibraryfileversionexpirationreportjobprogress">Get-PnPLibraryFileVersionExpirationReportJobProgress</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets a retention label on the specified list or library, or on specified items within a list or library. Use ReSet-PnPRetentionLabel to remove the label again.</p>
+<p>Gets the status for a file version usage report generation job for a document library.</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="set-on-a-list">Set on a list</h3>
-<pre><code class="lang-powershell">Set-PnPRetentionLabel [-List] &lt;ListPipeBind&gt; -Label &lt;String&gt; [-SyncToItems &lt;Boolean&gt;] [-BlockDeletion &lt;Boolean&gt;]
- [-BlockEdit &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] 
-</code></pre>
-<h3 id="set-on-items-in-bulk">Set on items in bulk</h3>
-<pre><code class="lang-powershell">Set-PnPRetentionLabel [-List] &lt;ListPipeBind&gt; -Label &lt;String&gt; -ItemIds &lt;List&lt;Int32&gt;&gt; [-BatchSize &lt;Int32&gt;] 
- [-Connection &lt;PnPConnection&gt;] [-Verbose]
+<pre><code class="lang-powershell">Get-PnPLibraryFileVersionExpirationReportJobProgress -Identity &lt;ListPipeBind&gt; -ReportUrl &lt;string&gt;
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows setting a retention label on a list or library and its items, or sets the retention label for specified items in a list or a library. Does not work for sensitivity labels.
-When setting retention label to specified items, cmdlet allows passing of unlimited number of items - items will be split and processed in batches (CSOM method SetComplianceTagOnBulkItems has a hard count limit on number of processed items in one go). If needed, batch size may be adjusted with BatchSize parameter.</p>
+<p>Gets the status for a file version usage report generation job for a document library.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPRetentionLabel -List &quot;Demo List&quot; -Label &quot;Project Documentation&quot;
+<pre><code class="lang-powershell">Get-PnPLibraryFileVersionExpirationReportJobProgress -Identity &quot;Documents&quot; -ReportUrl &quot;https://contoso.sharepoint.com/sites/reports/MyReports/VersionReport.csv&quot;
 </code></pre>
-<p>This sets an O365 label on the specified list or library.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPRetentionLabel -List &quot;Demo List&quot; -Label &quot;Project Documentation&quot; -SyncToItems $true
-</code></pre>
-<p>This sets an O365 label on the specified list or library and sets the label to all the items in the list and library as well.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Set-PnPRetentionLabel -List &quot;Demo List&quot; -ItemIds @(1,2,3) -Label &quot;My demo label&quot;
-</code></pre>
-<p>Sets &quot;My demo label&quot; retention label for items with ids 1, 2 and 3 on a list &quot;Demo List&quot;</p>
+<p>Gets the status for a file version usage report generation job for a document library.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-batchsize">-BatchSize</h3>
-<p>Optional batch size when setting a label on specified items.</p>
-<pre><code class="lang-yaml">Type: Int32
-Parameter Sets: (BulkItems)
-
-Required: True
-Position: Named
-Default value: 25
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-blockdeletion">-BlockDeletion</h3>
-<p>Block deletion of items in the library. This parameter has been deprecated because overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (List)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-blockedit">-BlockEdit</h3>
-<p>Block editing of items in the library. This parameter has been deprecated because overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (List)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-itemids">-ItemIds</h3>
-<p>List of iist item IDs to set label.</p>
-<pre><code class="lang-yaml">Type: List&lt;Int32&gt;
-Parameter Sets: (BulkItems)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-label">-Label</h3>
-<p>The name of the retention label</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-list">-List</h3>
-<p>The ID or Url of the list.</p>
+<h3 id="-identity">-Identity</h3>
+<p>The ID, name or Url (Lists/MyList) of the document library to get the job status on.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 
@@ -188,34 +107,19 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-synctoitems">-SyncToItems</h3>
-<p>Apply label to existing items in the library</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (List)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-verbose">-Verbose</h3>
-<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
+<h3 id="-reporturl">-ReportUrl</h3>
+<p>The URL of the report to get the job status on.</p>
+<pre><code class="lang-yaml">Type: string
 Parameter Sets: (All)
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
-
-## RELATED LINKS
-
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Learn article on applying retention labels](https://learn.microsoft.com/en-us/sharepoint/dev/apis/csom-methods-for-applying-retention-labels)
-
 </code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>
           </div>
