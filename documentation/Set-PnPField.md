@@ -15,7 +15,7 @@ Changes one or more properties of a field in a specific list or for the whole si
 ## SYNTAX
 
 ```powershell
-Set-PnPField [-List <ListPipeBind>] [-Identity <FieldPipeBind>] [-Values <Hashtable>] [-ShowInFiltersPane <ShowInFiltersPaneStatus>] [-UpdateExistingLists] [-NoCrawl] [-Connection <PnPConnection>]
+Set-PnPField [-List <ListPipeBind>] [-Identity <FieldPipeBind>] [-Values <Hashtable>] [-ShowInFiltersPane <ShowInFiltersPaneStatus>] [-UpdateExistingLists] [-NoCrawl] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -97,6 +97,35 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
+### -NoCrawl
+Indicates if this field should not be returned in search results ($true) or if it should be ($false)
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ShowInFiltersPane
+Allows configuring a field to either always be shown (Pinned), never be shown (Removed) or have SharePoint define if it should be shown (Auto = default).
+
+```yaml
+Type: Commands.Enums.ShowInFiltersPaneStatus
+Parameter Sets: (All)
+Accepted values: Auto, Removed, Pinned
+
+Required: False
+Position: Named
+Default value: Auto
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -UpdateExistingLists
 If provided, the field will be updated on existing lists that use it as well. If not provided or set to $false, existing lists using the field will remain unchanged but new lists will get the updated field.
 
@@ -125,23 +154,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -ShowInFiltersPane
-Allows configuring a field to either always be shown (Pinned), never be shown (Removed) or have SharePoint define if it should be shown (Auto = default).
-
-```yaml
-Type: Commands.Enums.ShowInFiltersPaneStatus
-Parameter Sets: (All)
-Accepted values: Auto, Removed, Pinned
-
-Required: False
-Position: Named
-Default value: Auto
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NoCrawl
-Indicates if this field should not be returned in search results ($true) or if it should be ($false)
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
 
 ```yaml
 Type: SwitchParameter
