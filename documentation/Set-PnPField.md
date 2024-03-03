@@ -53,6 +53,14 @@ Set-PnPField -List "Tasks" -Identity "AssignedTo" -NoCrawl:$true
 Prevents the field from being returned in search results
 
 
+### EXAMPLE 5
+```powershell
+Set-PnPField -List "Tasks" -Identity "AssignedTo" -NoCrawl:$true
+```
+
+Prevents the field from being returned in search results
+
+
 ## PARAMETERS
 
 ### -Connection
