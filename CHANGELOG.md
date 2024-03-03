@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Koen Zomers [koenzomers]
 - Reshmee Auckloo [reshme011]
+- Arleta Wanat [PowershellScripts]
 
 ## [2.4.0]
 
