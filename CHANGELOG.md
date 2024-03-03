@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `-NoCrawl` parameter to `Set-PnPField` which allows for preventing the field from being returned in search results. [#3784](https://github.com/pnp/powershell/pull/3784)
+
 ### Fixed
 
 - Fixed `Get-PnPChangeLog -Version 2.3.0` not returning the changelog for that version [#3804](https://github.com/pnp/powershell/pull/3804)
@@ -17,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - Koen Zomers [koenzomers]
+- Reshmee Auckloo [reshme011]
 
 ## [2.4.0]
 
