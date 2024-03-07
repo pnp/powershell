@@ -32,7 +32,7 @@ Set-PnPUserProfileProperty -Account <String> -PropertyName <String> -Values <Str
 ```
 
 ## DESCRIPTION
-Updates the value of a specific user profile property for a single user profile in the SharePoint Online environment. Requires a connection to a SharePoint Tenant Admin site.
+Updates the value of a specific user profile property for a single user profile in the SharePoint Online environment. Requires a connection to the SharePoint Tenant Admin site.
 
 ## EXAMPLES
 
