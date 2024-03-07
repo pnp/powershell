@@ -14,10 +14,12 @@ Sets web permissions.
 
 ## SYNTAX
 
+### Set group permissions
 ```powershell
 Set-PnPWebPermission -Group <GroupPipeBind> [-Identity <WebPipeBind>] [-AddRole <String[]>] [-RemoveRole <String[]>]
 ```
 
+### Set user permissions
 ```powershell
 Set-PnPWebPermission -User <String> [-Identity <WebPipeBind>]  [-AddRole <String[]>] [-RemoveRole <String[]>]
 ```
