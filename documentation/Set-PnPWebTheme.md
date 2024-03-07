@@ -29,14 +29,14 @@ Sets the theme of the current web. * Requires SharePoint Online Administrator Ri
 Set-PnPWebTheme -Theme MyTheme
 ```
 
-Sets the theme named "MyTheme" to the current web
+Sets the theme named "MyTheme" to the current web.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPTenantTheme -Name "MyTheme" | Set-PnPWebTheme
 ```
 
-Sets the theme named "MyTheme" to the current web
+Sets the theme named "MyTheme" to the current web.
 
 ### EXAMPLE 3
 ```powershell
