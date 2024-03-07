@@ -43,7 +43,7 @@ Sets the theme named "MyTheme" to the current web.
 Set-PnPWebTheme -Theme "MyCompanyTheme" -WebUrl https://contoso.sharepoint.com/sites/MyWeb
 ```
 
-Sets the theme named "MyCompanyTheme" to MyWeb
+Sets the theme named "MyCompanyTheme" to MyWeb.
 
 ## PARAMETERS
 
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Theme
-Specifies the Color Palette Url based on the site or server relative url
+The name or ID of the theme that should be applied to the SharePoint site.
 
 ```yaml
 Type: ThemePipeBind
