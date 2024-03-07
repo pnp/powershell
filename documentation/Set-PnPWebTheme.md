@@ -75,8 +75,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-
-
 ### -WebUrl
 The URL of the web to apply the theme to. If not specified it will default to the current web based upon the URL specified with Connect-PnPOnline.
 
