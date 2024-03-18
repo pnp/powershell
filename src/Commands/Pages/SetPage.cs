@@ -16,9 +16,6 @@ namespace PnP.PowerShell.Commands.Pages
         public PagePipeBind Identity;
 
         [Parameter(Mandatory = false)]
-        public string Name = null;
-
-        [Parameter(Mandatory = false)]
         public string Title = null;
 
         [Parameter(Mandatory = false)]
@@ -91,7 +88,7 @@ namespace PnP.PowerShell.Commands.Pages
             }
 
             // We need to have the page name, if not found, raise an error
-            string name = PageUtilities.EnsureCorrectPageName(Name ?? Identity?.Name);
+            string name = PageUtilities.EnsureCorrectPageName(Identity?.Name);
             if (name == null)
                 throw new Exception("Insufficient arguments to update a client side page");
 

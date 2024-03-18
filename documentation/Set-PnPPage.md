@@ -234,20 +234,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Name
-Sets the name of the page.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -PromoteAs
 Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template)
 
