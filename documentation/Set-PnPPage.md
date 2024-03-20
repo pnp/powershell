@@ -15,7 +15,7 @@ Sets parameters of a page
 ## SYNTAX
 
 ```powershell
-Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
+Set-PnPPage [-Identity] <PagePipeBind> [-Title <String>]
  [-LayoutType <PageLayoutType>] [-PromoteAs <PagePromoteType>] [-CommentsEnabled]
  [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
  [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] [-ShowPublishDate <Boolean>]
