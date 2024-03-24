@@ -29,21 +29,21 @@ Sets the theme of the current web. * Requires SharePoint Online Administrator Ri
 Set-PnPWebTheme -Theme MyTheme
 ```
 
-Sets the theme named "MyTheme" to the current web
+Sets the theme named "MyTheme" to the current web.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPTenantTheme -Name "MyTheme" | Set-PnPWebTheme
 ```
 
-Sets the theme named "MyTheme" to the current web
+Sets the theme named "MyTheme" to the current web.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPWebTheme -Theme "MyCompanyTheme" -WebUrl https://contoso.sharepoint.com/sites/MyWeb
 ```
 
-Sets the theme named "MyCompanyTheme" to MyWeb
+Sets the theme named "MyCompanyTheme" to MyWeb.
 
 ## PARAMETERS
 
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Theme
-Specifies the Color Palette Url based on the site or server relative url
+The name or ID of the theme that should be applied to the SharePoint site.
 
 ```yaml
 Type: ThemePipeBind
@@ -74,8 +74,6 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
-
-
 
 ### -WebUrl
 The URL of the web to apply the theme to. If not specified it will default to the current web based upon the URL specified with Connect-PnPOnline.

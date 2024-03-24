@@ -347,7 +347,7 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? ShowPeoplePickerGroupSuggestionsForIB { get; set; }
 
         [Parameter(Mandatory = false)]
-        public int? OneDriveRequestFilesLinkExpirationInDays { get; set; }  
+        public int? OneDriveRequestFilesLinkExpirationInDays { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? BlockDownloadFileTypePolicy { get; set; }
@@ -361,13 +361,13 @@ namespace PnP.PowerShell.Commands.Admin
         public Guid[] ExcludedBlockDownloadGroupIds { get; set; }
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter Force;           
+        public SwitchParameter Force;
 
         [Parameter(Mandatory = false)]
         public string ArchiveRedirectUrl { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? BlockSendLabelMismatchEmail { get; set; }   
+        public bool? BlockSendLabelMismatchEmail { get; set; }
 
         [Parameter(Mandatory = false)]
         public MediaTranscriptionPolicyType? MediaTranscription { get; set; }
@@ -380,13 +380,13 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? ReduceTempTokenLifetimeEnabled { get; set; }
-        
+
         [Parameter(Mandatory = false)]
         public int? ReduceTempTokenLifetimeValue;
 
         [Parameter(Mandatory = false)]
         public bool? ViewersCanCommentOnMediaDisabled { get; set; }
-        
+
         [Parameter(Mandatory = false)]
         public bool? AllowGuestUserShareToUsersNotInSiteCollection { get; set; }
 
@@ -412,10 +412,13 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? IsDataAccessInCardDesignerEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? AppBypassInformationBarriers { get; set;}
+        public bool? AppBypassInformationBarriers { get; set; }
 
         [Parameter(Mandatory = false)]
-        public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { get; set;}
+        public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? DelayDenyAddAndCustomizePagesEnforcement;
 
         protected override void ExecuteCmdlet()
         {
@@ -1338,20 +1341,20 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.AllowGuestUserShareToUsersNotInSiteCollection = AllowGuestUserShareToUsersNotInSiteCollection.Value;
                 modified = true;
             }
-            
+
             if (IncludeAtAGlanceInShareEmails.HasValue)
             {
                 Tenant.IncludeAtAGlanceInShareEmails = IncludeAtAGlanceInShareEmails.Value;
                 modified = true;
             }
-            
+
             if (MassDeleteNotificationDisabled.HasValue)
             {
                 Tenant.MassDeleteNotificationDisabled = MassDeleteNotificationDisabled.Value;
                 modified = true;
             }
 
-            if(BusinessConnectivityServiceDisabled.HasValue)
+            if (BusinessConnectivityServiceDisabled.HasValue)
             {
                 Tenant.BusinessConnectivityServiceDisabled = BusinessConnectivityServiceDisabled.Value;
                 modified = true;
@@ -1378,6 +1381,12 @@ namespace PnP.PowerShell.Commands.Admin
             if (DefaultOneDriveInformationBarrierMode.HasValue)
             {
                 Tenant.DefaultODBMode = DefaultOneDriveInformationBarrierMode.Value.ToString();
+                modified = true;
+            }
+
+            if (DelayDenyAddAndCustomizePagesEnforcement.HasValue)
+            {
+                Tenant.DelayDenyAddAndCustomizePagesEnforcement = DelayDenyAddAndCustomizePagesEnforcement.Value;
                 modified = true;
             }
 
@@ -1423,7 +1432,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 Tenant.SetBlockDownloadFileTypePolicyExclusionList(ExcludedBlockDownloadGroupIds);
                 modified = true;
-            }            
+            }
 
             if (modified)
             {

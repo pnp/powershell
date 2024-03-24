@@ -46,7 +46,7 @@ This example sets the ExcludeRestrictedSiteClassifications policy for the select
 ## PARAMETERS
 
 ### -CdnType
-The type of cdn to retrieve the policies from
+The type of cdn to set the policies for.
 
 ```yaml
 Type: SPOTenantCdnType
@@ -75,7 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -PolicyType
-The type of the policy to set
+The type of the policy to set.
 
 ```yaml
 Type: SPOTenantCdnPolicyType
@@ -90,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -PolicyValue
-The value of the policy to set
+The value of the policy to set.
 
 ```yaml
 Type: String

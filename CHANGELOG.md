@@ -10,12 +10,21 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `New-PnPLibraryFileVersionBatchDeleteJob` and `New-PnPSiteFileVersionBatchDeleteJob` cmdlets to queue a job for deleting the file versions based on age. [#3799](https://github.com/pnp/powershell/pull/3799)
+- Added `New-PnPLibraryFileVersionExpirationReportJob` and `New-PnPSiteFileVersionExpirationReportJob` cmdlets to queue a job for generating a file version expiration report for all files in a document library or site. [#3799](https://github.com/pnp/powershell/pull/3799)
+- Added `Remove-PnPLibraryFileVersionBatchDeleteJob` and `Remove-PnPSiteFileVersionBatchDeleteJob` cmdlets to cancel the job for deleting file versions based on age. [#3799](https://github.com/pnp/powershell/pull/3799)
+- Added `Get-PnPLibraryFileVersionExpirationReportJobProgress` and `Get-PnPSiteFileVersionExpirationReportJobProgress` cmdlets to getting the progress for the job for file versions based on age. [#3799](https://github.com/pnp/powershell/pull/3799)
+- Added `-UseVersionExpirationReport` parameter to `Get-PnPFileVersion` cmdlet to get the version expiration report for a single file. [#3799](https://github.com/pnp/powershell/pull/3799)
+- Added `-DelayDenyAddAndCustomizePagesEnforcement` parameter to `Set-PnPTenant` cmdlet which allows delay of the change to custom script set on the Tenant until mid-November 2024. [#3815](https://github.com/pnp/powershell/pull/3815)
+- Added additional permissions for Graph application permission validate sets. [#3835](https://github.com/pnp/powershell/issues/3835)
+
 ### Fixed
 
 - Fixed `Get-PnPChangeLog -Version 2.3.0` not returning the changelog for that version [#3804](https://github.com/pnp/powershell/pull/3804)
 
 ### Contributors
 
+- [blarrywangmsft]
 - Koen Zomers [koenzomers]
 
 ## [2.4.0]
