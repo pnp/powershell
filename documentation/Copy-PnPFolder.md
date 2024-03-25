@@ -230,7 +230,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemoveAfterCopy
-When copying files from a local folder to SharePoint Online, this parameter will remove all files locally that have successfully been uploaded to SharePoint Online. If a file fails, it will not be removed locally. Local folders will never be removed.
+When copying files from a local folder to SharePoint Online, this parameter will remove all files locally that have successfully been uploaded to SharePoint Online. If a file fails, it will not be removed locally. Local folders will be removed after all files have been uploaded and the folder is empty.
 
 ```yaml
 Type: SwitchParameter
