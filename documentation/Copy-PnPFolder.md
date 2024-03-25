@@ -26,7 +26,7 @@ Copy-PnPFolder -SourceUrl <String> -TargetUrl <String> [-Overwrite] [-Force] [-I
 ## SYNTAX
 
 ```powershell
-Copy-PnPFolder -LocalPath <String> -TargetUrl <String> [-Overwrite [-Recurse] [-RemoveAfterCopy] [-Connection <PnPConnection>]  
+Copy-PnPFolder -LocalPath <String> -TargetUrl <String> [-Overwrite] [-Recurse] [-RemoveAfterCopy] [-Connection <PnPConnection>]  
   
 ```
 
