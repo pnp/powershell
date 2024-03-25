@@ -4,6 +4,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.Framework.Utilities;
+using System.Collections.Generic;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -99,12 +100,8 @@ namespace PnP.PowerShell.Commands.Files
             }
 
             WriteVerbose($"Copying folder from local path {LocalPath} to Microsoft 365 location {UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, TargetUrl)}");
-
-            // Ensure the destination folder exists on Microsoft 365
-            //WriteVerbose($"Ensuring Microsoft 365 location {TargetUrl} exists");
-            //var folder = CurrentWeb.EnsureFolderPath(TargetUrl);
-
             WriteVerbose($"Retrieving local files {(Recurse.ToBool() ? "recursively " : "")}to upload from {LocalPath}");
+
             var filesToCopy = System.IO.Directory.GetFiles(LocalPath, string.Empty, Recurse.ToBool() ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly);
 
             WriteVerbose($"Uploading {filesToCopy.Length} file{(filesToCopy.Length != 1 ? "s" : "")}");
@@ -112,6 +109,7 @@ namespace PnP.PowerShell.Commands.Files
             // Start with the root
             string currentRemotePath = null;
             Folder folder = null;
+            var folderPathsToRemove = new List<string>();
 
             foreach(var fileToCopy in filesToCopy)
             {
@@ -122,6 +120,14 @@ namespace PnP.PowerShell.Commands.Files
                 // Check if we're dealing with a different subfolder now as we did during the previous cycle
                 if(relativePath != currentRemotePath)
                 {
+                    // Check files should be removed after uploading and if so, if the previous folder is empty and should be removed. Skip the root folder, that should never be removed.
+                    if(RemoveAfterCopy.ToBool() && currentRemotePath != null)
+                    {
+                        // Add the folder to be examined at the end of the upload session. If we would do it now, we could still have subfolders of which the files have not been uploaded yet, so we cannot delete the folder yet
+                        var localFolder = System.IO.Path.Combine(LocalPath, relativePath);
+                        folderPathsToRemove.Add(localFolder);
+                    }
+
                     // New subfolder, ensure the folder exists remotely as well
                     currentRemotePath = relativePath;
                     
@@ -149,6 +155,36 @@ namespace PnP.PowerShell.Commands.Files
                     WriteWarning($"* Upload failed: {ex.Message}");
                 }
             }
+
+            // Check if we should and can clean up folders no longer containing files
+            if (RemoveAfterCopy.ToBool() && folderPathsToRemove.Count > 0)
+            {
+                WriteVerbose($"Checking if {folderPathsToRemove.Count} folder{(folderPathsToRemove.Count != 1 ? "s" : "")} are empty and can be removed");
+
+                // Reverse the list so we start with the deepest nested folder first
+                folderPathsToRemove.Reverse();
+
+                foreach (var folderPathToRemove in folderPathsToRemove)
+                {
+                    if (System.IO.Directory.GetFiles(folderPathToRemove).Length == 0)
+                    { 
+                        WriteVerbose($"* Removing empty folder {folderPathToRemove}");
+                        try
+                        {
+                            System.IO.Directory.Delete(folderPathToRemove);
+                        }
+                        catch(Exception ex)
+                        {
+                            WriteWarning($"* Failed to remove empty folder {folderPathToRemove}: {ex.Message}");
+                        }
+                    }
+                    else
+                    {
+                        WriteVerbose($"* Folder {folderPathToRemove} is not empty and thus will not be removed");
+                    }
+                }
+            }
+
         }
 
         /// <summary>
