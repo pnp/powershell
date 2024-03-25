@@ -92,7 +92,7 @@
  [-StakeholderToDelete &lt;String&gt;] [-IsAvailableForTagging &lt;Boolean&gt;] [-IsOpenForTermCreation &lt;Boolean&gt;]
  [-UseForSiteNavigation &lt;Boolean&gt;] [-UseForFacetedNavigation &lt;Boolean&gt;] [-SetTargetPageForTerms &lt;String&gt;]
  [-RemoveTargetPageForTerms] [-SetCatalogItemPageForCategories &lt;String&gt;] [-RemoveCatalogItemPageForCategories]
- 
+ [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows you to update an existing term set.</p>
@@ -100,18 +100,28 @@
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Set-PnPTermSet -Identity &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -Name &quot;Business Units&quot;
 </code></pre>
-<p>This example changes the name of a the &quot;Departments&quot; term set to &quot;Business Units&quot;</p>
+<p>This example changes the name of a the &quot;Departments&quot; term set to &quot;Business Units&quot;.</p>
 <h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">Set-PnPTermSet -Identity &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -UseForSiteNavigation $true
 </code></pre>
-<p>This example allows the terms in the term set &quot;Departments&quot; to be used for site navigation links</p>
+<p>This example allows the terms in the term set &quot;Departments&quot; to be used for site navigation links.</p>
 <h3 id="example-3">Example 3</h3>
 <pre><code class="lang-powershell">Set-PnPTermSet -Identity &quot;Departments&quot; -TermGroup &quot;Corporate&quot; -IsAvailableForTagging $false
 </code></pre>
-<p>This example makes the terms in the term set &quot;Departments&quot; unavailable to end users and content editors</p>
+<p>This example makes the terms in the term set &quot;Departments&quot; unavailable to end users and content editors.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-contact">-Contact</h3>
-<p>The contact information</p>
+<p>The contact information.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:

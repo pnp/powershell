@@ -88,18 +88,18 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Sets the quota on the OneDrive for Business site for a specific user</p>
+<p>Sets the quota on the OneDrive for Business site for a specific user.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPUserOneDriveQuota [-Account] &lt;String&gt; [-Quota] &lt;Int64&gt; [-QuotaWarning] &lt;Int64&gt;
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows you to set the quota on the OneDrive for Business site of a specific user. You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.</tenant></p>
+<p>This command allows you to set the quota on the OneDrive for Business site of a specific user. You must connect to the tenant admin website (https://&lt;tenant&gt;-admin.sharepoint.com) with Connect-PnPOnline in order to use this cmdlet.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPUserOneDriveQuota -Account 'user@domain.com' -Quota 5368709120 -QuotaWarning 4831838208
 </code></pre>
-<p>Sets the quota on the OneDrive for Business site for the specified user to 5GB (5368709120 bytes) and sets a warning to be shown at 4.5 GB (4831838208)</p>
+<p>Sets the quota on the OneDrive for Business site for the specified user to 5GB (5368709120 bytes) and sets a warning to be shown at 4.5 GB (4831838208).</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-account">-Account</h3>
 <p>The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com</p>
@@ -124,7 +124,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-quota">-Quota</h3>
-<p>The quota to set on the OneDrive for Business site of the user, in bytes</p>
+<p>The quota to set on the OneDrive for Business site of the user, in bytes.</p>
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: (All)
 
@@ -135,7 +135,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-quotawarning">-QuotaWarning</h3>
-<p>The quota to set on the OneDrive for Business site of the user when to start showing warnings about the drive nearing being full, in bytes</p>
+<p>The quota to set on the OneDrive for Business site of the user when to start showing warnings about the drive nearing being full, in bytes.</p>
 <pre><code class="lang-yaml">Type: Int64
 Parameter Sets: (All)
 

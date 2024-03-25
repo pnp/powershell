@@ -84,7 +84,7 @@
   <h1 id="set-pnpview">Set-PnPView</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Change view properties</p>
+<p>Change view properties.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPView [[-List] &lt;ListPipeBind&gt;] -Identity &lt;ViewPipeBind&gt; [-Values &lt;Hashtable&gt;] [-Fields &lt;String[]&gt;]
  [-Aggregations &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] 
@@ -95,26 +95,26 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPView -List &quot;Tasks&quot; -Identity &quot;All Tasks&quot; -Values @{JSLink=&quot;hierarchytaskslist.js|customrendering.js&quot;;Title=&quot;My view&quot;}
 </code></pre>
-<p>Updates the &quot;All Tasks&quot; view on list &quot;Tasks&quot; to use hierarchytaskslist.js and customrendering.js for the JSLink and changes the title of the view to &quot;My view&quot;</p>
+<p>Updates the &quot;All Tasks&quot; view on list &quot;Tasks&quot; to use hierarchytaskslist.js and customrendering.js for the JSLink and changes the title of the view to &quot;My view&quot;.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPList -Identity &quot;Tasks&quot; | Get-PnPView | Set-PnPView -Values @{JSLink=&quot;hierarchytaskslist.js|customrendering.js&quot;}
 </code></pre>
-<p>Updates all views on list &quot;Tasks&quot; to use hierarchytaskslist.js and customrendering.js for the JSLink</p>
+<p>Updates all views on list &quot;Tasks&quot; to use hierarchytaskslist.js and customrendering.js for the JSLink.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPView -List &quot;Documents&quot; -Identity &quot;Corporate Documents&quot; -Fields &quot;Title&quot;,&quot;Created&quot;
 </code></pre>
-<p>Updates the Corporate Documents view on the Documents library to have two fields</p>
+<p>Updates the Corporate Documents view on the Documents library to have two fields.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPView -List &quot;Documents&quot; -Identity &quot;Corporate Documents&quot; -Fields &quot;Title&quot;,&quot;Created&quot; -Aggregations &quot;&lt;FieldRef Name='Title' Type='COUNT'/&gt;&quot;
 </code></pre>
-<p>Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field</p>
+<p>Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPView -List &quot;Documents&quot; -Identity &quot;Dept Documents&quot; -Fields &quot;Title,&quot;Created&quot; -Values @{Paged=$true;RowLimit=[UInt32]&quot;100&quot;}
 </code></pre>
 <p>Updates the Dept Documents view on the Documents library to show items paged in batches of 100, note the type casting on the value to prevent warnings.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-aggregations">-Aggregations</h3>
-<p>A valid XML fragment containing one or more Aggregations</p>
+<p>A valid XML fragment containing one or more Aggregations.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -136,7 +136,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-fields">-Fields</h3>
-<p>An array of fields to use in the view. Notice that specifying this value will remove the existing fields</p>
+<p>An array of fields to use in the view. Notice that specifying this value will remove the existing fields.</p>
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
@@ -147,7 +147,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The Id, Title or instance of the view</p>
+<p>The Id, Title or instance of the view.</p>
 <pre><code class="lang-yaml">Type: ViewPipeBind
 Parameter Sets: (All)
 
@@ -158,7 +158,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
-<p>The Id, Title or Url of the list</p>
+<p>The Id, Title or Url of the list.</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 

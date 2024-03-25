@@ -84,19 +84,19 @@
   <h1 id="set-pnpterm">Set-PnPTerm</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Updates a term</p>
+<p>Updates a term.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-term-id">By Term Id</h3>
 <pre><code>Set-PnPTerm -Identity &lt;Guid&gt; [-Name &lt;String&gt;] [-Lcid &lt;Int32&gt;] [-Description &lt;String&gt;]
  [-CustomProperties &lt;Hashtable&gt;] [-LocalCustomProperties &lt;Hashtable&gt;] [-DeleteAllCustomProperties]
  [-DeleteAllLocalCustomProperties] [-Deprecated &lt;bool&gt;] [-AvailableForTagging &lt;bool&gt;] [-TermStore &lt;TaxonomyTermStorePipeBind&gt;]
- 
+ [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="by-term-name">By Term Name</h3>
 <pre><code>Set-PnPTerm -Identity &lt;String&gt; [-Name &lt;String&gt;] [-Lcid &lt;Int32&gt;] [-Description &lt;String&gt;]
  [-CustomProperties &lt;Hashtable&gt;] [-LocalCustomProperties &lt;Hashtable&gt;] [-DeleteAllCustomProperties]
  [-DeleteAllLocalCustomProperties] [-Deprecated &lt;bool&gt;] [-AvailableForTagging &lt;bool&gt;] -TermSet &lt;TaxonomyTermSetPipeBind&gt; -TermGroup &lt;TaxonomyTermGroupPipeBind&gt;
- [-TermStore &lt;TaxonomyTermStorePipeBind&gt;] 
+ [-TermStore &lt;TaxonomyTermStorePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows you to update an existing term.</p>
@@ -130,6 +130,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-customproperties">-CustomProperties</h3>
 <p>Sets custom properties.</p>
 <pre><code class="lang-yaml">Type: Hashtable
@@ -143,7 +154,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-deleteallcustomproperties">-DeleteAllCustomProperties</h3>
-<p>Removes all custom properties</p>
+<p>Removes all custom properties.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -155,7 +166,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-deletealllocalcustomproperties">-DeleteAllLocalCustomProperties</h3>
-<p>Removes all local custom properties</p>
+<p>Removes all local custom properties.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
@@ -215,7 +226,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-localcustomproperties">-LocalCustomProperties</h3>
-<p>Sets local custom properties</p>
+<p>Sets local custom properties.</p>
 <pre><code class="lang-yaml">Type: Hashtable
 Parameter Sets: (All)
 Aliases:
