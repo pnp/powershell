@@ -17,7 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-UseVersionExpirationReport` parameter to `Get-PnPFileVersion` cmdlet to get the version expiration report for a single file. [#3799](https://github.com/pnp/powershell/pull/3799)
 - Added `-DelayDenyAddAndCustomizePagesEnforcement` parameter to `Set-PnPTenant` cmdlet which allows delay of the change to custom script set on the Tenant until mid-November 2024. [#3815](https://github.com/pnp/powershell/pull/3815)
 - Added additional permissions for Graph application permission validate sets. [#3835](https://github.com/pnp/powershell/issues/3835)
-- Added the ability to upload entire local folders with files and optionally subfolders to SharePoint Online into 'Copy-PnPFolder'
+- Added the ability to upload entire local folders with files and optionally subfolders to SharePoint Online into 'Copy-PnPFolder' [#3850](https://github.com/pnp/powershell/pull/3850)
 
 ### Fixed
 
