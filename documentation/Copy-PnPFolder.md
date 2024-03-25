@@ -17,7 +17,7 @@ Copies a folder or file to a different location within SharePoint Online or allo
 ## SYNTAX
 
 ```powershell
-Copy-PnPFolder -SourceUrl <String> -TargetUrl <String> [-Overwrite] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>]  
+Copy-PnPFolder -SourceUrl <String> -TargetUrl <String> [-Overwrite] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
   
 ```
 
@@ -26,7 +26,7 @@ Copy-PnPFolder -SourceUrl <String> -TargetUrl <String> [-Overwrite] [-Force] [-I
 ## SYNTAX
 
 ```powershell
-Copy-PnPFolder -LocalPath <String> -TargetUrl <String> [-Overwrite] [-Recurse] [-RemoveAfterCopy] [-Connection <PnPConnection>]  
+Copy-PnPFolder -LocalPath <String> -TargetUrl <String> [-Overwrite] [-Recurse] [-RemoveAfterCopy] [-Connection <PnPConnection>] [-Verbose]
   
 ```
 
@@ -237,6 +237,20 @@ When copying files from a local folder to SharePoint Online, this parameter will
 ```yaml
 Type: SwitchParameter
 Parameter Sets: FROMLOCAL
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
