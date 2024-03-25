@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamsTag.html
 
   * Microsoft Graph API: TeamworkTag.ReadWrite, Group.Read.All
 
-Sets the Microsoft Teams Tag in a Team.
+Sets the Microsoft Teams tag in a Team.
 
 ## SYNTAX
 
@@ -25,18 +25,20 @@ Set-PnPTeamsTag -Team <TeamsTeamPipeBind> -Identity <TeamsTagPipeBind> -DisplayN
 
 ## DESCRIPTION
 
+Allows to set a Teams tag in Microsoft Teams.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
 Set-PnPTeamsTag -Team 5beb63c5-0571-499e-94d5-3279fdd9b6b5 -Identity "ZmY1ZjdmMjctZDhiNy00MWRkLTk2ZDQtYzcyYmVhMWIwOGYxIyM3ZTVhNGRmZS1kNWNlLTRkOTAtODM4MC04ZDIxM2FkYzYzOGIjI3RiVlVpR01rcg==" -DisplayName "Updated Tag"
 ```
-Sets the Tag with the specified Id from the Teams team.
+Sets the tag with the specified Id from the Teams team.
 
 ## PARAMETERS
 
 ### -DisplayName
-The updated display name of the Teams tag
+The updated display name of the Teams tag.
 
 ```yaml
 Type: String
@@ -50,7 +52,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specify the id of the Tag 
+Specify the id of the Tag.
 
 ```yaml
 Type: TeamsTagPipeBind
