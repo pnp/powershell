@@ -12,9 +12,9 @@ title: Copy-PnPFolder
 ## SYNOPSIS
 Copies a folder or file to a different location within SharePoint Online or allows uploading of an entire local folder with optionally subfolders to SharePoint Online.
 
-### Copy files within Microsoft 365
-
 ## SYNTAX
+
+### Copy files within Microsoft 365
 
 ```powershell
 Copy-PnPFolder -SourceUrl <String> -TargetUrl <String> [-Overwrite] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
@@ -22,8 +22,6 @@ Copy-PnPFolder -SourceUrl <String> -TargetUrl <String> [-Overwrite] [-Force] [-I
 ```
 
 ### Copy files from local to Microsoft 365
-
-## SYNTAX
 
 ```powershell
 Copy-PnPFolder -LocalPath <String> -TargetUrl <String> [-Overwrite] [-Recurse] [-RemoveAfterCopy] [-Connection <PnPConnection>] [-Verbose]
