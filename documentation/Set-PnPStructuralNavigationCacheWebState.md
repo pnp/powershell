@@ -19,7 +19,7 @@ Set-PnPStructuralNavigationCacheWebState -IsEnabled <Boolean> [-WebUrl <String>]
 ```
 
 ## DESCRIPTION
-The Set-PnPStructuralNavigationCacheWebState cmdlet can be used to enable or disable caching for a webs in a site collection. If the WebUrl parameter has not been specified the currently connected to site will be used. 
+The Set-PnPStructuralNavigationCacheWebState cmdlet can be used to enable or disable caching for a web. If the WebUrl parameter has not been specified the currently connected to web will be used. 
 
 ## EXAMPLES
 
