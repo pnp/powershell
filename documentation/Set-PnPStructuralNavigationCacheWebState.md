@@ -15,7 +15,7 @@ Enable or disable caching for all webs in a site collection.
 ## SYNTAX
 
 ```powershell
-Set-PnPStructuralNavigationCacheWebState -IsEnabled <Boolean> [-WebUrl <String>]
+Set-PnPStructuralNavigationCacheWebState -IsEnabled <Boolean> [-WebUrl <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -23,14 +23,14 @@ The Set-PnPStructuralNavigationCacheWebState cmdlet can be used to enable or dis
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```powershell
 Set-PnPStructuralNavigationCacheWebState -IsEnabled $true -WebUrl "https://contoso.sharepoint.com/sites/product/electronics" 
 ```
 
 This example enables caching for the web https://contoso.sharepoint.com/sites/product/electronics.
 
-### Example 2
+### EXAMPLE 2
 ```powershell
 Set-PnPStructuralNavigationCacheWebState -IsEnabled $false -WebUrl "https://contoso.sharepoint.com/sites/product/electronics" 
 ```
@@ -38,6 +38,19 @@ Set-PnPStructuralNavigationCacheWebState -IsEnabled $false -WebUrl "https://cont
 This example disables caching for the web https://contoso.sharepoint.com/sites/product/electronics.
 
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -IsEnabled
 $true to enable caching, $false to disable caching. 
