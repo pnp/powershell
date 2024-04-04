@@ -30,6 +30,12 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
         public string Status { get; set; }
 
         /// <summary>
+        /// The error meassage if there is any
+        /// </summary>
+        [JsonPropertyName("ErrorMessage")]
+        public string ErrorMessage { get; set; }
+
+        /// <summary>
         /// The UTC time user sent the request
         /// </summary>
         [JsonPropertyName("RequestTimeInUTC")]
