@@ -14,12 +14,14 @@ Sets web permissions.
 
 ## SYNTAX
 
+### Set group permissions
 ```powershell
-Set-PnPWebPermission -Group <GroupPipeBind> [-Identity <WebPipeBind>] [-AddRole <String[]>] [-RemoveRole <String[]>]
+Set-PnPWebPermission -Group <GroupPipeBind> [-Identity <WebPipeBind>] [-AddRole <String[]>] [-RemoveRole <String[]>] [-Connection <PnPConnection>]
 ```
 
+### Set user permissions
 ```powershell
-Set-PnPWebPermission -User <String> [-Identity <WebPipeBind>]  [-AddRole <String[]>] [-RemoveRole <String[]>]
+Set-PnPWebPermission -User <String> [-Identity <WebPipeBind>]  [-AddRole <String[]>] [-RemoveRole <String[]>] [-Connection <PnPConnection>]
 ```
 
 
@@ -57,6 +59,20 @@ Set-PnPWebPermission -User "user@contoso.com" -AddRole "Custom Role 1","Custom R
 Adds the specified permission roles to the user "user@contoso.com" in the current web.
 
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -User
 The name of the user.

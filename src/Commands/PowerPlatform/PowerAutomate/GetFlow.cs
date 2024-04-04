@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
                 WriteVerbose($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, baseUrl + $"providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, baseUrl + $"/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(result, false);
             }
             else
@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
                 WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'{(filter != null ? $" with filter '{filter}'" : "")}");
 
-                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, baseUrl + $"providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01{(filter != null ? $"&$filter={filter}" : "")}", AccessToken).GetAwaiter().GetResult();
+                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, baseUrl + $"/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01{(filter != null ? $"&$filter={filter}" : "")}", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flows, true);
 
             }
