@@ -77,8 +77,6 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? RequestFilesLinkEnabled { private set; get; }
         public int? RequestFilesLinkExpirationInDays { private set; get; }
-       
-       public bool? DefaultLinkToExistingAccessReset { get; set; }
         public Role LoopDefaultSharingLinkRole { get; set; }
         public SharingScope DefaultShareLinkScope { get; set; }
         public Role DefaultShareLinkRole { get; set; }

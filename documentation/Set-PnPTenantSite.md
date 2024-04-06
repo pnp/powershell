@@ -37,12 +37,9 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
  [-ExcludedBlockDownloadGroupIds <Guid[]>]
  [-ListsShowHeaderAndNavigation <Boolean>]
- [-BlockGuestsAsSiteAdmin<SharingState>]
- [-DefaultLinkToExistingAccessReset<SwitchParameter>]
- [-DefaultShareLinkRole<Role>]
- [-DefaultShareLinkScope<SharingScope>]
- [-LoopDefaultSharingLinkRole<Role>]
- [-LoopDefaultSharingLinkScope<SharingScope>]
+ [-DefaultLinkToExistingAccessReset <SwitchParameter>] [-DefaultShareLinkRole <Role>]
+ [-DefaultShareLinkScope <SharingScope>] [-LoopDefaultSharingLinkRole <Role>]
+ [-LoopDefaultSharingLinkScope <SharingScope>]
  [-Wait] 
  [-Connection <PnPConnection>] 
 ```
@@ -856,7 +853,7 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultShareLinkScope
-To set the sharing link scope. Available values are `Anyone`, `Organization`, `SpecificPeople`, `Uninitialized`.
+To set the default sharing link scope. Available values are `Anyone`, `Organization`, `SpecificPeople`, `Uninitialized`.
 
 ```yaml
 Type: SharingScope

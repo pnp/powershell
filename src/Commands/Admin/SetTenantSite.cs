@@ -194,16 +194,16 @@ namespace PnP.PowerShell.Commands
         public Guid[] RestrictedAccessControlGroups;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public Role DefaultShareLinkRole { get; private set; }
+        public Role DefaultShareLinkRole;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public SharingScope DefaultShareLinkScope { get; private set; }
+        public SharingScope DefaultShareLinkScope;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public Role LoopDefaultSharingLinkRole { get; private set; }
+        public Role LoopDefaultSharingLinkRole;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public SharingScope LoopDefaultSharingLinkScope { get; private set; }
+        public SharingScope LoopDefaultSharingLinkScope;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -350,11 +350,6 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(DefaultShareLinkRole)))
             {
                 props.DefaultShareLinkRole = DefaultShareLinkRole;
-                updateRequired = true;
-            }
-            if (ParameterSpecified(nameof(DefaultLinkToExistingAccessReset)))
-            {
-                props.DefaultLinkToExistingAccessReset = DefaultLinkToExistingAccessReset;
                 updateRequired = true;
             }
             if (ParameterSpecified(nameof(AllowDownloadingNonWebViewableFiles)))
