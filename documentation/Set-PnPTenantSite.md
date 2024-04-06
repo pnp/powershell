@@ -841,11 +841,13 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultShareLinkRole
-To set the default share link role. Available values are None, Edit, Review, RestrictedView and View.
+To set the default share link role. Available values are `None`, `Edit`, `Review`, `RestrictedView` and `View`.
 
 ```yaml
 Type: Role
 Parameter Sets: Set Properties
+Accepted values: None, Edit, Review, RestrictedView, View
+
 Required: False
 Position: Named
 Default value: None
@@ -854,11 +856,13 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultShareLinkScope
-To set the sharing link scope. Available values are Anyone, Organization, SpecificPeople, Uninitialized.
+To set the sharing link scope. Available values are `Anyone`, `Organization`, `SpecificPeople`, `Uninitialized`.
 
 ```yaml
 Type: SharingScope
 Parameter Sets: Set Properties
+Accepted values: Anyone, Organization, SpecificPeople, Uninitialized
+
 Required: False
 Position: Named
 Default value: None
@@ -867,24 +871,28 @@ Accept wildcard characters: False
 ```
 
 ### -LoopDefaultSharingLinkRole
-To set the loop default sharing link role. Available values are None, Edit, Review, RestrictedView and View.
+To set the loop default sharing link role. Available values are `None`, `Edit`, `Review`, `RestrictedView` and `View`.
 
 ```yaml
 Type: Role
 Parameter Sets: Set Properties
+Accepted values: None, Edit, Review, RestrictedView, View
+
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-s
+
 ### -LoopDefaultSharingLinkScope
 To set the loop default sharing link scope. Available values are Anyone, Organization, SpecificPeople, Uninitialized.
 
 ```yaml
 Type: SharingScope
 Parameter Sets: Set Properties
+Accepted values: Anyone, Organization, SpecificPeople, Uninitialized
+
 Required: False
 Position: Named
 Default value: None
