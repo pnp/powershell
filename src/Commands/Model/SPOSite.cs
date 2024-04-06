@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.SharePoint.Client.Sharing;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -76,7 +77,13 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? RequestFilesLinkEnabled { private set; get; }
         public int? RequestFilesLinkExpirationInDays { private set; get; }
-      
+       
+       public bool? DefaultLinkToExistingAccessReset { get; set; }
+        public Role LoopDefaultSharingLinkRole { get; set; }
+        public SharingScope DefaultShareLinkScope { get; set; }
+        public Role DefaultShareLinkRole { get; set; }
+        public SharingScope LoopDefaultSharingLinkScope { get; set; }
+
         #endregion
 
 
@@ -148,6 +155,10 @@ namespace PnP.PowerShell.Commands.Model
             InformationBarrierSegmentsToRemove = props.IBSegmentsToRemove;
             RequestFilesLinkEnabled = props.RequestFilesLinkEnabled;
             RequestFilesLinkExpirationInDays = props.RequestFilesLinkExpirationInDays;
+            LoopDefaultSharingLinkRole = props.LoopDefaultSharingLinkRole;
+            DefaultShareLinkScope = props.DefaultShareLinkScope;
+            DefaultShareLinkRole = props.DefaultShareLinkRole;
+            LoopDefaultSharingLinkScope = props.LoopDefaultSharingLinkScope;
         }
     }
 }
