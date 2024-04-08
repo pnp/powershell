@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPLibraryFileVersionBatchDeleteJobProgress")]
-    [OutputType(typeof(FileVersionBatchDeleteJobProgress))]
-    public class GetLibraryFileVersionBatchDeleteJobProgress : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPLibraryFileVersionBatchDeleteJobStatus")]
+    [OutputType(typeof(FileVersionBatchDeleteJobStatus))]
+    public class GetLibraryFileVersionBatchDeleteJobStatus : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [ValidateNotNull]
@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Lists
                 var ret = list.GetProgressForDeleteFileVersions();
                 ClientContext.ExecuteQueryRetry();
 
-                var progress = JsonSerializer.Deserialize<FileVersionBatchDeleteJobProgress>(ret.Value);
+                var progress = JsonSerializer.Deserialize<FileVersionBatchDeleteJobStatus>(ret.Value);
                 var connectionUrl = new Uri(Connection.Url);
                 var serverUrl = string.Concat("https://", connectionUrl.Host);
                 progress.Url = string.Concat(serverUrl, list.RootFolder.ServerRelativeUrl);

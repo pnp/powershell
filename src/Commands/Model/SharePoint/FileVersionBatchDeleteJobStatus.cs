@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
     /// <summary>
     /// The progress for the request that batch delete file versions
     /// </summary>
-    public class FileVersionBatchDeleteJobProgress
+    public class FileVersionBatchDeleteJobStatus
     {
         /// <summary>
         /// Site/Library Url

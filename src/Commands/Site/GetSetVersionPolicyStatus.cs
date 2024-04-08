@@ -8,9 +8,9 @@ using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Site
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteVersionPolicyProgress")]
-    [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SetVersionPolicyProgress))]
-    public class GetSetVersionPolicyProgress : PnPSharePointCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPSiteVersionPolicyStatus")]
+    [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SetVersionPolicyStatus))]
+    public class GetSetVersionPolicyStatus : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
         {
@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Site
             var ret = site.GetProgressForSetVersionPolicyForDocLibs();
             ClientContext.ExecuteQueryRetry();
 
-            var progress = JsonSerializer.Deserialize<SetVersionPolicyProgress>(ret.Value);
+            var progress = JsonSerializer.Deserialize<SetVersionPolicyStatus>(ret.Value);
             progress.Url = site.Url;
 
             if (string.Equals(progress.LastProcessTimeInUTC, DateTime.MinValue.ToString()))

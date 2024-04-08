@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPLibraryFileVersionExpirationReportJobProgress.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPLibraryFileVersionExpirationReportJobStatus.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPLibraryFileVersionExpirationReportJobProgress
+title: Get-PnPLibraryFileVersionExpirationReportJobStatus
 ---
   
-# Get-PnPLibraryFileVersionExpirationReportJobProgress
+# Get-PnPLibraryFileVersionExpirationReportJobStatus
 
 ## SYNOPSIS
 
@@ -16,7 +16,7 @@ Gets the status for a file version usage report generation job for a document li
 ## SYNTAX
 
 ```powershell
-Get-PnPLibraryFileVersionExpirationReportJobProgress -Identity <ListPipeBind> -ReportUrl <string>
+Get-PnPLibraryFileVersionExpirationReportJobStatus -Identity <ListPipeBind> -ReportUrl <string>
 ```
 
 ## DESCRIPTION
@@ -27,7 +27,7 @@ Gets the status for a file version usage report generation job for a document li
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPLibraryFileVersionExpirationReportJobProgress -Identity "Documents" -ReportUrl "https://contoso.sharepoint.com/sites/reports/MyReports/VersionReport.csv"
+Get-PnPLibraryFileVersionExpirationReportJobStatus -Identity "Documents" -ReportUrl "https://contoso.sharepoint.com/sites/reports/MyReports/VersionReport.csv"
 ```
 
 Gets the status for a file version usage report generation job for a document library.

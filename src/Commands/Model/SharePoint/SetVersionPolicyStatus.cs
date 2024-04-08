@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
     /// <summary>
     /// The progress for the request that settting version policy for existing document libraries of the site
     /// </summary>
-    public class SetVersionPolicyProgress
+    public class SetVersionPolicyStatus
     {
         /// <summary>
         /// Site Url

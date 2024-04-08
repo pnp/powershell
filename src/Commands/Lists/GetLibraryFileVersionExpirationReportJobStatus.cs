@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Get, "PnPLibraryFileVersionExpirationReportJobProgress")]
-    [OutputType(typeof(FileVersionExpirationReportJobProgress))]
-    public class GetLibraryFileVersionExpirationReportJobProgress : PnPWebCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPLibraryFileVersionExpirationReportJobStatus")]
+    [OutputType(typeof(FileVersionExpirationReportJobStatus))]
+    public class GetLibraryFileVersionExpirationReportJobStatus : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]        
         [ValidateNotNull]
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Lists
                 var ret = list.GetProgressForFileVersionExpirationReport(ReportUrl);
                 ClientContext.ExecuteQueryRetry();
 
-                var status = JsonSerializer.Deserialize<FileVersionExpirationReportJobProgress>(ret.Value);
+                var status = JsonSerializer.Deserialize<FileVersionExpirationReportJobStatus>(ret.Value);
                 status.Url = list.RootFolder.ServerRelativeUrl;
                 status.ReportUrl = ReportUrl;
 

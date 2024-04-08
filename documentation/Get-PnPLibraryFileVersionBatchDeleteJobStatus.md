@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPLibraryFileVersionBatchDeleteJobProgress.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPLibraryFileVersionBatchDeleteJobStatus.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPLibraryFileVersionBatchDeleteJobProgress
+title: Get-PnPLibraryFileVersionBatchDeleteJobStatus
 ---
   
-# Get-PnPLibraryFileVersionBatchDeleteJobProgress
+# Get-PnPLibraryFileVersionBatchDeleteJobStatus
 
 ## SYNOPSIS
 Get the progress of deleting existing file versions on the document library.
@@ -15,7 +15,7 @@ Get the progress of deleting existing file versions on the document library.
 ## SYNTAX
 
 ```powershell
-Get-PnPLibraryFileVersionBatchDeleteJobProgress -Identity <ListPipeBind> [-Connection <PnPConnection>] 
+Get-PnPLibraryFileVersionBatchDeleteJobStatus -Identity <ListPipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -25,7 +25,7 @@ This cmdlet allows retrieval of the progress of deleting existing file versions 
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPLibraryFileVersionBatchDeleteJobProgress -Identity "Documents"
+Get-PnPLibraryFileVersionBatchDeleteJobStatus -Identity "Documents"
 ```
 
 Returns the progress of deleting existing file versions on the document library.

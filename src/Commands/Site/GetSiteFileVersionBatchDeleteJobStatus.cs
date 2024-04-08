@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Sites
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteFileVersionBatchDeleteJobProgress")]
-    [OutputType(typeof(FileVersionBatchDeleteJobProgress))]
-    public class GetSiteFileVersionBatchDeleteJobProgress : PnPSharePointCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPSiteFileVersionBatchDeleteJobStatus")]
+    [OutputType(typeof(FileVersionBatchDeleteJobStatus))]
+    public class GetSiteFileVersionBatchDeleteJobStatus : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
         {
@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Sites
             var ret = site.GetProgressForDeleteFileVersions();
             ClientContext.ExecuteQueryRetry();
 
-            var progress = JsonSerializer.Deserialize<FileVersionBatchDeleteJobProgress>(ret.Value);
+            var progress = JsonSerializer.Deserialize<FileVersionBatchDeleteJobStatus>(ret.Value);
             progress.Url = site.Url;
 
             if (!string.Equals(progress.BatchDeleteMode, FileVersionBatchDeleteMode.DeleteOlderThanDays.ToString(), StringComparison.OrdinalIgnoreCase))

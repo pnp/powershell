@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteFileVersionBatchDeleteJobProgress.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteFileVersionBatchDeleteJobStatus.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPSiteFileVersionBatchDeleteJobProgress
+title: Get-PnPSiteFileVersionBatchDeleteJobStatus
 ---
   
-# Get-PnPSiteFileVersionBatchDeleteJobProgress
+# Get-PnPSiteFileVersionBatchDeleteJobStatus
 
 ## SYNOPSIS
 Get the progress of deleting existing file versions on the site.
@@ -15,7 +15,7 @@ Get the progress of deleting existing file versions on the site.
 ## SYNTAX
 
 ```powershell
-Get-PnPSiteFileVersionBatchDeleteJobProgress [-Connection <PnPConnection>] 
+Get-PnPSiteFileVersionBatchDeleteJobStatus [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -25,7 +25,7 @@ This cmdlet allows retrieval of the progress of deleting existing file versions 
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPSiteFileVersionBatchDeleteJobProgress
+Get-PnPSiteFileVersionBatchDeleteJobStatus
 ```
 
 Returns the progress of deleting existing file versions on the site.
