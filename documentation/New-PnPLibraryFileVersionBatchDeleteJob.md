@@ -30,14 +30,28 @@ Starts a file version batch trim job for a document library.
 New-PnPLibraryFileVersionBatchDeleteJob -Identity "Documents" -DeleteBeforeDays 360
 ```
 
-Starts a file version batch trim job that will delete all file verions that are over 360 days old in the document library.
+Starts a file version batch trim job that will delete all file versions that are over 360 days old in the document library.
 
 ### EXAMPLE 2
 ```powershell
 New-PnPLibraryFileVersionBatchDeleteJob -Identity "Documents" -DeleteBeforeDays 360 -Force
 ```
 
-Starts a file version batch trim job that will delete all file verions that are over 360 days old in the document library, without prompting the user for confirmation.
+Starts a file version batch trim job that will delete all file versions that are over 360 days old in the document library, without prompting the user for confirmation.
+
+### EXAMPLE 3
+```powershell
+New-PnPLibraryFileVersionBatchDeleteJob -Automatic
+```
+
+Starts a file version batch trim job that will delete file versions that expiread and set version expiration time for the ones not expired in the document library based on the backend algorithm.
+
+### EXAMPLE 4
+```powershell
+New-PnPLibraryFileVersionBatchDeleteJob -MajorVersionLimit 30 -MajorWithMinorVersionsLimit 10
+```
+
+Starts a file version batch trim job that will delete file versions in the document library based on the version count limits.
 
 ## PARAMETERS
 
@@ -60,9 +74,51 @@ The minimum age of file versions to trim. In other words, all file versions that
 
 ```yaml
 Type: int
-Parameter Sets: (All)
+Parameter Sets: DeleteOlderThanDays
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Automatic
+Trim file version using automatic trim.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: AutomaticTrim
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MajorVersionLimit
+Trim file version using version count limits. Need to specify MajorWithMinorVersionsLimit as well.
+
+```yaml
+Type: int
+Parameter Sets: CountLimits
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MajorWithMinorVersionsLimit
+Trim file version using version count limits. Need to specify MajorVersionLimit as well.
+
+```yaml
+Type: int
+Parameter Sets: CountLimits
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
