@@ -37,6 +37,9 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
  [-ExcludedBlockDownloadGroupIds <Guid[]>]
  [-ListsShowHeaderAndNavigation <Boolean>]
+ [-DefaultLinkToExistingAccessReset <SwitchParameter>] [-DefaultShareLinkRole <Role>]
+ [-DefaultShareLinkScope <SharingScope>] [-LoopDefaultSharingLinkRole <Role>]
+ [-LoopDefaultSharingLinkScope <SharingScope>]
  [-Wait] 
  [-Connection <PnPConnection>] 
 ```
@@ -821,6 +824,78 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DefaultLinkToExistingAccessReset
+To reset the default link to existing access configuration for a site.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultShareLinkRole
+To set the default share link role. Available values are `None`, `Edit`, `Review`, `RestrictedView` and `View`.
+
+```yaml
+Type: Role
+Parameter Sets: Set Properties
+Accepted values: None, Edit, Review, RestrictedView, View
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultShareLinkScope
+To set the default sharing link scope. Available values are `Anyone`, `Organization`, `SpecificPeople`, `Uninitialized`.
+
+```yaml
+Type: SharingScope
+Parameter Sets: Set Properties
+Accepted values: Anyone, Organization, SpecificPeople, Uninitialized
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LoopDefaultSharingLinkRole
+To set the loop default sharing link role. Available values are `None`, `Edit`, `Review`, `RestrictedView` and `View`.
+
+```yaml
+Type: Role
+Parameter Sets: Set Properties
+Accepted values: None, Edit, Review, RestrictedView, View
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LoopDefaultSharingLinkScope
+To set the loop default sharing link scope. Available values are Anyone, Organization, SpecificPeople, Uninitialized.
+
+```yaml
+Type: SharingScope
+Parameter Sets: Set Properties
+Accepted values: Anyone, Organization, SpecificPeople, Uninitialized
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 ### -Wait
 Wait for the operation to complete
 
