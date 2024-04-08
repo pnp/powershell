@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added additional permissions for Graph application permission validate sets. [#3835](https://github.com/pnp/powershell/issues/3835)
 - Added the ability to upload entire local folders with files and optionally subfolders to SharePoint Online into 'Copy-PnPFolder' [#3850](https://github.com/pnp/powershell/pull/3850)
 - Added `LoopDefaultSharingLinkRole`, `DefaultShareLinkScope`, `DefaultShareLinkRole`, `LoopDefaultSharingLinkScope` and `DefaultLinkToExistingAccessReset` parameters to `Set-PnPTenant` cmdlet. [#3874](https://github.com/pnp/powershell/pull/3874)
+- Added `Unlock-PnPSensitivityLabelEncryptedFile` which allows the encryption to be removed from a file [#3864](https://github.com/pnp/powershell/pull/3864)
 - Added `Get-PnPLibraryFileVersionBatchDeleteJobStatus` and `Get-PnPSiteFileVersionBatchDeleteJobStatus` to check on the status of applying file based version expiration based on age on a library and site level [#3828](https://github.com/pnp/powershell/pull/3828)
 
 ### Fixed
