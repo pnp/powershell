@@ -7,7 +7,6 @@ using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Alias("Copy-PnPFolder")]
     [Cmdlet(VerbsCommon.Copy, "PnPFile")]
     public class CopyFile : PnPWebCmdlet
     {
