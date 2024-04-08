@@ -22,9 +22,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - Fixed `Get-PnPChangeLog -Version 2.3.0` not returning the changelog for that version [#3804](https://github.com/pnp/powershell/pull/3804)
 - Fixed `Get-PnPFlow` cmdlet throwing time out error due to incorrect URL used in HTTP request. [#3820](https://github.com/pnp/powershell/pull/3820)
+- Fixed `Copy-PnPList` cmdlet to better handle lookup columns. [#3870](https://github.com/pnp/powershell/pull/3870)
 
 ### Contributors
 
+- Aimery Thomas [a1mery]
 - Arleta Wanat [PowershellScripts]
 - Giacomo Pozzoni [jackpoz]
 - [blarrywangmsft]
