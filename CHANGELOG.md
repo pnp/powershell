@@ -19,6 +19,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added additional permissions for Graph application permission validate sets. [#3835](https://github.com/pnp/powershell/issues/3835)
 - Added the ability to upload entire local folders with files and optionally subfolders to SharePoint Online into 'Copy-PnPFolder' [#3850](https://github.com/pnp/powershell/pull/3850)
 - Added `LoopDefaultSharingLinkRole`, `DefaultShareLinkScope`, `DefaultShareLinkRole`, `LoopDefaultSharingLinkScope` and `DefaultLinkToExistingAccessReset` parameters to `Set-PnPTenant` cmdlet. [#3874](https://github.com/pnp/powershell/pull/3874)
+- Added `Get-PnPLibraryFileVersionBatchDeleteJobStatus` and `Get-PnPSiteFileVersionBatchDeleteJobStatus` to check on the status of applying file based version expiration based on age on a library and site level [#3828](https://github.com/pnp/powershell/pull/3828)
 
 ### Fixed
 
@@ -26,8 +27,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPFlow` cmdlet throwing time out error due to incorrect URL used in HTTP request. [#3820](https://github.com/pnp/powershell/pull/3820)
 - Fixed `Copy-PnPList` cmdlet to better handle lookup columns. [#3870](https://github.com/pnp/powershell/pull/3870)
 
+## Changed
+- Renamed `Get-PnPSiteFileVersionExpirationReportJobProgress` to `Get-PnPSiteFileVersionExpirationReportJobStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
+- Renamed `Get-PnPSiteVersionPolicyProgress` to `Get-PnPSiteVersionPolicyStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
+
 ### Contributors
 
+- Jenny Wu [msjennywu]
 - Reshmee Auckloo [reshme011]
 - Aimery Thomas [a1mery]
 - Arleta Wanat [PowershellScripts]
