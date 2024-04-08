@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Aimery Thomas [a1mery]
 - Arleta Wanat [PowershellScripts]
 - Giacomo Pozzoni [jackpoz]
 - [blarrywangmsft]
