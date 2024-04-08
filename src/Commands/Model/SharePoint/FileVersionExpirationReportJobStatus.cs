@@ -5,7 +5,7 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
     /// <summary>
     /// The progress for generating the file version expiration report.
     /// </summary>
-    public class FileVersionExpirationReportJobProgress
+    public class FileVersionExpirationReportJobStatus
     {
         /// <summary>
         /// The URL to the site or library that the report is for

@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Sites
 {
-    [Cmdlet(VerbsCommon.Get, "PnPSiteFileVersionExpirationReportJobProgress")]
-    [OutputType(typeof(FileVersionExpirationReportJobProgress))]
-    public class GetSiteFileVersionExpirationReportJobProgress : PnPSharePointCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPSiteFileVersionExpirationReportJobStatus")]
+    [OutputType(typeof(FileVersionExpirationReportJobStatus))]
+    public class GetSiteFileVersionExpirationReportJobStatus : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = true)]
         public string ReportUrl;
@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Sites
             var ret = site.GetProgressForFileVersionExpirationReport(ReportUrl);
             ClientContext.ExecuteQueryRetry();
 
-            var status = JsonSerializer.Deserialize<FileVersionExpirationReportJobProgress>(ret.Value);
+            var status = JsonSerializer.Deserialize<FileVersionExpirationReportJobStatus>(ret.Value);
             status.Url = site.Url;
             status.ReportUrl = ReportUrl;
             
