@@ -30,19 +30,19 @@ Allows to set Storage Entities / Farm Properties in either the tenant scoped app
 Set-PnPStorageEntity -Key MyKey -Value "MyValue" -Comment "My Comment" -Description "My Description"
 ```
 
-Sets an existing or adds a new storage entity / farm property at tenant level.
+Sets an existing or adds a new storage entity / farm property at the tenant level.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPStorageEntity -Scope Site -Key MyKey -Value "MyValue" -Comment "My Comment" -Description "My Description"
 ```
 
-Sets an existing or adds a new storage entity site collection level.
+Sets an existing or adds a new storage entity at the site collection level.
 
 ## PARAMETERS
 
 ### -Comment
-The comment to set.
+Specifies additional comments related to the storage entity being set.
 
 ```yaml
 Type: String
@@ -107,7 +107,7 @@ Accepted values: Site, Tenant
 
 Required: False
 Position: Named
-Default value: None
+Default value: Tenant
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -126,20 +126,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 

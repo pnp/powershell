@@ -2,10 +2,10 @@
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
-using System.Text.RegularExpressions;
 using System.Linq;
 using PnP.PowerShell.Commands.Utilities.REST;
 using PnP.PowerShell.Commands.Model.SharePoint;
+using System.Text.Json.Nodes;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -69,9 +69,15 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (ParameterSpecified(nameof(Title)) && !string.IsNullOrWhiteSpace(Title))
             {
-                // Update the list name in the site script using a regular expression
+                // Update the list name in the site script in the first *_listName binding parameter 
                 WriteVerbose($"Setting list title to '{Title}'");
-                script = Regex.Replace(script, "(?<=\"listName\":\\s?\")(.*?)(?=\")", Title);
+
+                JsonNode scriptAsJson = JsonNode.Parse(script);
+
+                var listNameElement = scriptAsJson["bindings"].AsObject().Where(b => b.Key.EndsWith("_listName")).First();
+                listNameElement.Value["defaultValue"] = Title;
+
+                script = scriptAsJson.ToJsonString();
             }
 
             // Check if we need to set the destination to the current site
