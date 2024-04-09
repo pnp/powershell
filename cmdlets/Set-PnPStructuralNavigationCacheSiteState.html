@@ -91,15 +91,26 @@
 <h2 id="description">DESCRIPTION</h2>
 <p>The Set-PnPStructuralNavigationCacheSiteState cmdlet can be used to enable or disable caching for all webs in a site collection. If the SiteUrl parameter has not been specified the currently connected to site will be used.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
+<h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPStructuralNavigationCacheSiteState -IsEnabled $true -SiteUrl &quot;https://contoso.sharepoint.com/sites/product/&quot; 
 </code></pre>
 <p>This example enables caching for all webs in the site collection <a href="https://contoso.sharepoint.com/sites/product/">https://contoso.sharepoint.com/sites/product/</a>.</p>
-<h3 id="example-2">Example 2</h3>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPStructuralNavigationCacheSiteState -IsEnabled $false -SiteUrl &quot;https://contoso.sharepoint.com/sites/product/&quot; 
 </code></pre>
 <p>This example disables caching for all webs in the site collection <a href="https://contoso.sharepoint.com/sites/product/">https://contoso.sharepoint.com/sites/product/</a>.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-isenabled">-IsEnabled</h3>
 <p>$true to enable caching, $false to disable caching.</p>
 <pre><code class="lang-yaml">Type: Boolean
@@ -116,17 +127,6 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None

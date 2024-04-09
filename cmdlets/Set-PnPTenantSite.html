@@ -107,6 +107,9 @@
  [-BlockDownloadPolicy &lt;Boolean&gt;] [-ExcludeBlockDownloadPolicySiteOwners &lt;Boolean&gt;]
  [-ExcludedBlockDownloadGroupIds &lt;Guid[]&gt;]
  [-ListsShowHeaderAndNavigation &lt;Boolean&gt;]
+ [-DefaultLinkToExistingAccessReset &lt;SwitchParameter&gt;] [-DefaultShareLinkRole &lt;Role&gt;]
+ [-DefaultShareLinkScope &lt;SharingScope&gt;] [-LoopDefaultSharingLinkRole &lt;Role&gt;]
+ [-LoopDefaultSharingLinkScope &lt;SharingScope&gt;]
  [-Wait] 
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -704,6 +707,64 @@ Accept wildcard characters: False
 <p>To edit a restricted access control group for a non-group site</p>
 <pre><code class="lang-yaml">Type: GUID []
 Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultlinktoexistingaccessreset">-DefaultLinkToExistingAccessReset</h3>
+<p>To reset the default link to existing access configuration for a site.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultsharelinkrole">-DefaultShareLinkRole</h3>
+<p>To set the default share link role. Available values are <code>None</code>, <code>Edit</code>, <code>Review</code>, <code>RestrictedView</code> and <code>View</code>.</p>
+<pre><code class="lang-yaml">Type: Role
+Parameter Sets: Set Properties
+Accepted values: None, Edit, Review, RestrictedView, View
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-defaultsharelinkscope">-DefaultShareLinkScope</h3>
+<p>To set the default sharing link scope. Available values are <code>Anyone</code>, <code>Organization</code>, <code>SpecificPeople</code>, <code>Uninitialized</code>.</p>
+<pre><code class="lang-yaml">Type: SharingScope
+Parameter Sets: Set Properties
+Accepted values: Anyone, Organization, SpecificPeople, Uninitialized
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-loopdefaultsharinglinkrole">-LoopDefaultSharingLinkRole</h3>
+<p>To set the loop default sharing link role. Available values are <code>None</code>, <code>Edit</code>, <code>Review</code>, <code>RestrictedView</code> and <code>View</code>.</p>
+<pre><code class="lang-yaml">Type: Role
+Parameter Sets: Set Properties
+Accepted values: None, Edit, Review, RestrictedView, View
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-loopdefaultsharinglinkscope">-LoopDefaultSharingLinkScope</h3>
+<p>To set the loop default sharing link scope. Available values are Anyone, Organization, SpecificPeople, Uninitialized.</p>
+<pre><code class="lang-yaml">Type: SharingScope
+Parameter Sets: Set Properties
+Accepted values: Anyone, Organization, SpecificPeople, Uninitialized
 
 Required: False
 Position: Named

@@ -102,10 +102,14 @@
 </code></pre>
 <p>Creates a new termgroup, 'Company', a termset 'Locations' and a term 'Stockholm'</p>
 <h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Import-PnPTaxonomy -Terms 'Company|Locations|&quot;Stockholm,Central&quot;'
+</code></pre>
+<p>Creates a new termgroup, 'Company', a termset 'Locations', a term 'Stockholm,Central'</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Import-PnPTaxonomy -Terms 'Company|Locations|Stockholm|Central','Company|Locations|Stockholm|North'
 </code></pre>
 <p>Creates a new termgroup, 'Company', a termset 'Locations', a term 'Stockholm' and two subterms: 'Central', and 'North'</p>
-<h3 id="example-3">EXAMPLE 3</h3>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Import-PnPTaxonomy -Path ./mytaxonomyterms.txt
 </code></pre>
 <p>Imports the taxonomy from the file specified. Each line has to be in the format TERMGROUP|TERMSET|TERM. See example 2 for examples of the format.</p>

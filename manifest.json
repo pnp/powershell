@@ -2642,10 +2642,20 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPLibraryFileVersionExpirationReportJobProgress.md",
+      "source_relative_path": "cmdlets/Get-PnPLibraryFileVersionBatchDeleteJobStatus.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPLibraryFileVersionExpirationReportJobProgress.html"
+          "relative_path": "cmdlets/Get-PnPLibraryFileVersionBatchDeleteJobStatus.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPLibraryFileVersionExpirationReportJobStatus.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPLibraryFileVersionExpirationReportJobStatus.html"
         }
       },
       "version": ""
@@ -3332,10 +3342,20 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPSiteFileVersionExpirationReportJobProgress.md",
+      "source_relative_path": "cmdlets/Get-PnPSiteFileVersionBatchDeleteJobStatus.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPSiteFileVersionExpirationReportJobProgress.html"
+          "relative_path": "cmdlets/Get-PnPSiteFileVersionBatchDeleteJobStatus.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSiteFileVersionExpirationReportJobStatus.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSiteFileVersionExpirationReportJobStatus.html"
         }
       },
       "version": ""
@@ -3442,10 +3462,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPSiteVersionPolicyProgress.md",
+      "source_relative_path": "cmdlets/Get-PnPSiteVersionPolicyStatus.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPSiteVersionPolicyProgress.html"
+          "relative_path": "cmdlets/Get-PnPSiteVersionPolicyStatus.html"
         }
       },
       "version": ""
@@ -7646,6 +7666,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Uninstall-PnPApp.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Unlock-PnPSensitivityLabelEncryptedFile.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Unlock-PnPSensitivityLabelEncryptedFile.html"
         }
       },
       "version": ""

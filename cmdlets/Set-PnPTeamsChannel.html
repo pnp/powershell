@@ -88,10 +88,9 @@
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
 </ul>
-<p>Updates an existing Teams Channel</p>
+<p>Updates an existing Teams Channel.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -Identity &lt;TeamsChannelPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;] [-IsFavoriteByDefault &lt;Boolean&gt;] [-AllowNewMessageFromBots &lt;Boolean&gt;] [-AllowNewMessageFromConnectors &lt;Boolean&gt;] [-ReplyRestriction &lt;TeamChannelModerationSettingReplyRestriction&gt;] [-UserNewMessageRestriction &lt;TeamChannelModerationSettingNewMessageRestriction&gt;]
-  
+<pre><code class="lang-powershell">Set-PnPTeamsChannel -Team &lt;TeamsTeamPipeBind&gt; -Identity &lt;TeamsChannelPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;] [-IsFavoriteByDefault &lt;Boolean&gt;] [-AllowNewMessageFromBots &lt;Boolean&gt;] [-AllowNewMessageFromConnectors &lt;Boolean&gt;] [-ReplyRestriction &lt;TeamChannelModerationSettingReplyRestriction&gt;] [-UserNewMessageRestriction &lt;TeamChannelModerationSettingNewMessageRestriction&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to update an existing Teams Channel.</p>
@@ -99,14 +98,14 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPTeamsChannel -Team &quot;MyTeam&quot; -Channel &quot;MyChannel&quot; -DisplayName &quot;My Channel&quot;
 </code></pre>
-<p>Updates the channel called 'MyChannel' to have the display name set to 'My Channel'</p>
+<p>Updates the channel called 'MyChannel' to have the display name set to 'My Channel'.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPTeamsChannel -Team &quot;MyTeam&quot; -Channel &quot;MyChannel&quot; -IsFavoriteByDefault $true
 </code></pre>
 <p>Updates the channel called 'MyChannel' to make it visible to members.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allownewmessagefrombots">-AllowNewMessageFromBots</h3>
-<p>Allows configuring if bots are allowed to post messages in the channel</p>
+<p>Allows configuring if bots are allowed to post messages in the channel.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -117,7 +116,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-allownewmessagefromconnectors">-AllowNewMessageFromConnectors</h3>
-<p>Allows configuring if connectors are allowed to post messages in the channel</p>
+<p>Allows configuring if connectors are allowed to post messages in the channel.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -127,20 +126,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-replyrestriction">-ReplyRestriction</h3>
-<p>Allows configuring who can reply to posts in the channel</p>
-<pre><code class="lang-yaml">Type: TeamChannelModerationSettingReplyRestriction
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-usernewmessagerestriction">-UserNewMessageRestriction</h3>
-<p>Allows configuring who can post new messages in the channel</p>
-<pre><code class="lang-yaml">Type: TeamChannelModerationSettingNewMessageRestriction
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
 
 Required: False
@@ -183,9 +171,20 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-isfavoritebydefault">-IsFavoriteByDefault</h3>
-<p>Allows you to specify if the channel is by default visible for members</p>
+<p>Allows you to specify if the channel is by default visible for members.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: Public channel
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-replyrestriction">-ReplyRestriction</h3>
+<p>Allows configuring who can reply to posts in the channel.</p>
+<pre><code class="lang-yaml">Type: TeamChannelModerationSettingReplyRestriction
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -202,6 +201,17 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-usernewmessagerestriction">-UserNewMessageRestriction</h3>
+<p>Allows configuring who can post new messages in the channel.</p>
+<pre><code class="lang-yaml">Type: TeamChannelModerationSettingNewMessageRestriction
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

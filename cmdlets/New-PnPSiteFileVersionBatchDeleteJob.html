@@ -94,18 +94,59 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPSiteFileVersionBatchDeleteJob -DeleteBeforeDays 360
 </code></pre>
-<p>Starts a file version batch trim job that will delete all file verions that are over 360 days old in all document libraries in the site collection.</p>
+<p>Starts a file version batch trim job that will delete all file versions that are over 360 days old in all document libraries in the site collection.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">New-PnPSiteFileVersionBatchDeleteJob -DeleteBeforeDays 360 -Force
 </code></pre>
-<p>Starts a file version batch trim job that will delete all file verions that are over 360 days old in all document libraries in the site collection, without prompting the user for confirmation.</p>
+<p>Starts a file version batch trim job that will delete all file versions that are over 360 days old in all document libraries in the site collection, without prompting the user for confirmation.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">New-PnPSiteFileVersionBatchDeleteJob -Automatic
+</code></pre>
+<p>Starts a file version batch trim job that will delete file versions that expiread and set version expiration time for the ones not expired in the site collection based on the backend algorithm.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">New-PnPSiteFileVersionBatchDeleteJob -MajorVersionLimit 30 -MajorWithMinorVersionsLimit 10
+</code></pre>
+<p>Starts a file version batch trim job that will delete file versions in the site collection based on the version count limits.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-deletebeforedays">-DeleteBeforeDays</h3>
 <p>The minimum age of file versions to trim. In other words, all file versions that are older than this number of days will be deleted.</p>
 <pre><code class="lang-yaml">Type: int
-Parameter Sets: (All)
+Parameter Sets: DeleteOlderThanDays
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-automatic">-Automatic</h3>
+<p>Trim file version using automatic trim.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: AutomaticTrim
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-majorversionlimit">-MajorVersionLimit</h3>
+<p>Trim file version using version count limits. Need to specify MajorWithMinorVersionsLimit as well.</p>
+<pre><code class="lang-yaml">Type: int
+Parameter Sets: CountLimits
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-majorwithminorversionslimit">-MajorWithMinorVersionsLimit</h3>
+<p>Trim file version using version count limits. Need to specify MajorVersionLimit as well.</p>
+<pre><code class="lang-yaml">Type: int
+Parameter Sets: CountLimits
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
