@@ -101,7 +101,10 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException(errorMessage);
                 }
 
-                Connection.RestoreCachedContext(Connection.Url);
+                if (Connection.Context.Url != Connection.Url)
+                {
+                    Connection.RestoreCachedContext(Connection.Url);
+                }
 
                 // With ErrorAction:Ignore, the $Error variable should not be populated with the error, otherwise it should
                 if (!ParameterSpecified("ErrorAction") || !(new[] { "ignore" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant())))
