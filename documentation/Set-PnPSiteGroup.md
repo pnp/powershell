@@ -90,7 +90,7 @@ Accept wildcard characters: False
 
 ### -Owner
 
-Specifies the owner (individual or a security group) of the group to be created.
+Specifies the owner (individual or a security group) of the group to be set.
 
 ```yaml
 Type: String
