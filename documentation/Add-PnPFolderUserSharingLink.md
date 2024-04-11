@@ -15,7 +15,7 @@ Creates a sharing link to share a folder with a list of specified users.
 ## SYNTAX
 
 ```powershell
-Add-PnPFolderUserSharingLink -Folder <FolderPipeBind> -Type <PnP.Core.Model.Security.ShareType> -Users <String[]> [-Connection <PnPConnection>] 
+Add-PnPFolderUserSharingLink -Folder <FolderPipeBind> -ShareType <PnP.Core.Model.Security.ShareType> -Users <String[]> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -33,7 +33,7 @@ This will create an user sharing link for `Test` folder in the `Shared Documents
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPFolderUserSharingLink -Folder "/sites/demo/Shared Documents/Test" -Type Edit -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
+Add-PnPFolderUserSharingLink -Folder "/sites/demo/Shared Documents/Test" -ShareType Edit -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
 ```
 
 This will create an user sharing link for `Test` folder in the `Shared Documents` library which will be editable by specified users in the organization.
