@@ -54,11 +54,41 @@ This updates the task with the specified id and replaces the assigned users with
 
 ## PARAMETERS
 
+### -AssignedTo
+Specify the email(s) of the user to assign the task to. Notice that this will replace existing assignments with the ones specified here.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Bucket
 Specify the bucket name or ID to move the task to.
 
 ```yaml
 Type: PlannerBucketPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+Sets the description (notes) of the task.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -86,6 +116,25 @@ Accept wildcard characters: False
 
 ### -PercentComplete
 Defines the percentage of completeness of the task.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Priority
+Sets the priority of the task. Value should be a number between 0 and 10.
+- values 0 and 1 are interpreted as _Urgent_
+- values 2, 3 and 4 are interpreted as _Important_
+- values 5, 6 and 7 are interpreted as _Medium_
+- values 8, 9 and 10 are interpreted as _Low_
 
 ```yaml
 Type: Int32
@@ -143,58 +192,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
-### -AssignedTo
-Specify the email(s) of the user to assign the task to. Notice that this will replace existing assignments with the ones specified here.
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Priority
-Sets the priority of the task. Value should be a number between 0 and 10.
-- values 0 and 1 are interpreted as _Urgent_
-- values 2, 3 and 4 are interpreted as _Important_
-- values 5, 6 and 7 are interpreted as _Medium_
-- values 8, 9 and 10 are interpreted as _Low_
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Description
-Sets the description (notes) of the task.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## RELATED LINKS
 
