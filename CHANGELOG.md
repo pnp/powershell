@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- WCONFR [WCONFR]
 - Jenny Wu [msjennywu]
 - Reshmee Auckloo [reshme011]
 - Aimery Thomas [a1mery]
