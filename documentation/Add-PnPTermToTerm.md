@@ -15,7 +15,7 @@ Adds a new term to an existing term.
 ## SYNTAX
 
 ```powershell
-Add-PnPTermToTerm -ParentTerm <Guid|Term> -Name <String> [-Id <Guid>] [-Lcid <Int32>]
+Add-PnPTermToTerm -ParentTermId <Guid> -Name <String> [-Id <Guid>] [-Lcid <Int32>]
   [-LocalCustomProperties <Hashtable>]
  [-TermStore <Guid>]
  [-Connection <PnPConnection>] 
@@ -29,7 +29,7 @@ This cmdlet adds a new taxonomy term as a child term to an existing term.
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPTermToTerm -ParentTerm 2d1f298b-804a-4a05-96dc-29b667adec62 -Name SubTerm -CustomProperties @{"Department"="Marketing"}
+Add-PnPTermToTerm -ParentTermId 2d1f298b-804a-4a05-96dc-29b667adec62 -Name SubTerm -CustomProperties @{"Department"="Marketing"}
 ```
 
 Creates a new taxonomy child term named "SubTerm" in the specified term by id 2d1f298b-804a-4a05-96dc-29b667adec62.
@@ -37,18 +37,18 @@ Creates a new taxonomy child term named "SubTerm" in the specified term by id 2d
 ### EXAMPLE 2
 ```powershell
 $parentTerm = Get-PnPTerm -Name Marketing -TermSet Departments -TermGroup Corporate
-Add-PnPTermToTerm -ParentTerm $parentTerm -Name "Conference Team"
+Add-PnPTermToTerm -ParentTermId $parentTerm.Id -Name "Conference Team"
 ```
 
 Creates a new taxonomy child term named "Conference Team" in the specified term called Marketing which is located in the Departments term set.
 
 ## PARAMETERS
 
-### -ParentTerm
-The name of the term.
+### -ParentTermId
+The Id of the parent term.
 
 ```yaml
-Type: Guid or Term Object
+Type: Guid
 Parameter Sets: (All)
 
 Required: True
