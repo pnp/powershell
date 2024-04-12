@@ -64,6 +64,11 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     AdminContext.Load(userProfileProperties);
                     AdminContext.ExecuteQueryRetry();
 
+                    if (userProfileProperties.ServerObjectIsNull.GetValueOrDefault(true))
+                    {
+                        throw new PSArgumentException($"Account {currentAccount} not found", nameof(Account));
+                    }
+
                     // Check if we only need to output specific properties or all of them
                     if (ParameterSpecified(nameof(Properties)) && Properties != null && Properties.Length > 0)
                     {
