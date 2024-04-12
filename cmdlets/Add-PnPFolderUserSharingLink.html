@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a sharing link to share a folder with a list of specified users.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPFolderUserSharingLink -Folder &lt;FolderPipeBind&gt; -Type &lt;PnP.Core.Model.Security.ShareType&gt; -Users &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Add-PnPFolderUserSharingLink -Folder &lt;FolderPipeBind&gt; -ShareType &lt;PnP.Core.Model.Security.ShareType&gt; -Users &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Creates a new user sharing link for a folder.</p>
@@ -96,7 +96,7 @@
 </code></pre>
 <p>This will create an user sharing link for <code>Test</code> folder in the <code>Shared Documents</code> library which will be viewable to specified users in the organization.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPFolderUserSharingLink -Folder &quot;/sites/demo/Shared Documents/Test&quot; -Type Edit -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
+<pre><code class="lang-powershell">Add-PnPFolderUserSharingLink -Folder &quot;/sites/demo/Shared Documents/Test&quot; -ShareType Edit -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
 </code></pre>
 <p>This will create an user sharing link for <code>Test</code> folder in the <code>Shared Documents</code> library which will be editable by specified users in the organization.</p>
 <h2 id="parameters">PARAMETERS</h2>
