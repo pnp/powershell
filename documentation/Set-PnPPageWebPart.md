@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPageWebPart.html
 # Set-PnPPageWebPart
 
 ## SYNOPSIS
-Sets Web Part properties.
+Sets web part properties.
 
 ## SYNTAX
 
