@@ -21,7 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `LoopDefaultSharingLinkRole`, `DefaultShareLinkScope`, `DefaultShareLinkRole`, `LoopDefaultSharingLinkScope` and `DefaultLinkToExistingAccessReset` parameters to `Set-PnPTenant` cmdlet. [#3874](https://github.com/pnp/powershell/pull/3874)
 - Added `Unlock-PnPSensitivityLabelEncryptedFile` which allows the encryption to be removed from a file [#3864](https://github.com/pnp/powershell/pull/3864)
 - Added `Get-PnPLibraryFileVersionBatchDeleteJobStatus` and `Get-PnPSiteFileVersionBatchDeleteJobStatus` to check on the status of applying file based version expiration based on age on a library and site level [#3828](https://github.com/pnp/powershell/pull/3828)
-- Added support for `Get-PnPSiteCollectionAppCatalog` and `Get-PnPTenantSite` to be used on vanity domain tenants [#3895](https://github.com/pnp/powershell/pull/3895)
+- Added support for `Get-PnPSiteCollectionAppCatalog` and `Get-PnPTenantSite` to be used with vanity domain tenants [#3895](https://github.com/pnp/powershell/pull/3895)
 
 ### Fixed
 
