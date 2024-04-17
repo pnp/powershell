@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands
                 SiteProperties siteProperties;
                 if(Identity.Id.HasValue)
                 {
-                    siteProperties = Tenant.GetSitePropertiesById(Identity.Id.Value, Detailed);
+                    siteProperties = Tenant.GetSitePropertiesById(Identity.Id.Value, Detailed, Connection.TenantAdminUrl);
                     if(siteProperties == null) return;
                 }
                 else

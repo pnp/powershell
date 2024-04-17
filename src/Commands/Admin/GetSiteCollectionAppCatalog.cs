@@ -75,7 +75,7 @@ namespace PnP.PowerShell.Commands
                         WriteVerbose($"Validating site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl}");
 
                         // Deleted sites throw either an exception or return null
-                        appCatalogLocalModel.AbsoluteUrl = Tenant.GetSitePropertiesById(appCatalogLocalModel.SiteID.Value, false).Url;
+                        appCatalogLocalModel.AbsoluteUrl = Tenant.GetSitePropertiesById(appCatalogLocalModel.SiteID.Value, false, Connection.TenantAdminUrl).Url;
                         results.Add(appCatalogLocalModel);
                     }
                     catch (Exception e)
