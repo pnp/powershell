@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Adds a new term to an existing term.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPTermToTerm -ParentTerm &lt;Guid|Term&gt; -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;]
+<pre><code class="lang-powershell">Add-PnPTermToTerm -ParentTermId &lt;Guid&gt; -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Lcid &lt;Int32&gt;]
   [-LocalCustomProperties &lt;Hashtable&gt;]
  [-TermStore &lt;Guid&gt;]
  [-Connection &lt;PnPConnection&gt;] 
@@ -95,18 +95,18 @@
 <p>This cmdlet adds a new taxonomy term as a child term to an existing term.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPTermToTerm -ParentTerm 2d1f298b-804a-4a05-96dc-29b667adec62 -Name SubTerm -CustomProperties @{&quot;Department&quot;=&quot;Marketing&quot;}
+<pre><code class="lang-powershell">Add-PnPTermToTerm -ParentTermId 2d1f298b-804a-4a05-96dc-29b667adec62 -Name SubTerm -CustomProperties @{&quot;Department&quot;=&quot;Marketing&quot;}
 </code></pre>
 <p>Creates a new taxonomy child term named &quot;SubTerm&quot; in the specified term by id 2d1f298b-804a-4a05-96dc-29b667adec62.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">$parentTerm = Get-PnPTerm -Name Marketing -TermSet Departments -TermGroup Corporate
-Add-PnPTermToTerm -ParentTerm $parentTerm -Name &quot;Conference Team&quot;
+Add-PnPTermToTerm -ParentTermId $parentTerm.Id -Name &quot;Conference Team&quot;
 </code></pre>
 <p>Creates a new taxonomy child term named &quot;Conference Team&quot; in the specified term called Marketing which is located in the Departments term set.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-parentterm">-ParentTerm</h3>
-<p>The name of the term.</p>
-<pre><code class="lang-yaml">Type: Guid or Term Object
+<h3 id="-parenttermid">-ParentTermId</h3>
+<p>The Id of the parent term.</p>
+<pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
 Required: True
