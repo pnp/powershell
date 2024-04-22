@@ -126,9 +126,12 @@ if ($LASTEXITCODE -eq 0) {
 		# Load the Module in a new PowerShell session
 		$scriptBlock = {
 			$documentsFolder = [environment]::getfolderpath("mydocuments");
-
-			if ($IsLinux -or $isMacOS) {
+			
+			if ($IsLinux) {
 				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
+			}
+			elseif ($IsMacOS) {
+				$destinationFolder = "~/.local/share/powershell/Modules/PnP.PowerShell"
 			}
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
