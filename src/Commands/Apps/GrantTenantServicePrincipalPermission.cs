@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Apps
         public string Resource = "Microsoft Graph";
         protected override void ExecuteCmdlet()
         {
-            var tenantUrl = UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
+            var tenantUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
             using (var tenantContext = ClientContext.Clone(tenantUrl))
             {
                 var spoWebAppServicePrincipal = new SPOWebAppServicePrincipal(tenantContext);

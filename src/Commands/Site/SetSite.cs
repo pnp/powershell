@@ -237,7 +237,7 @@ namespace PnP.PowerShell.Commands.Site
 
             if (IsTenantProperty())
             {
-                var tenantAdminUrl = UrlUtilities.GetTenantAdministrationUrl(context.Url);
+                var tenantAdminUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(context.Url);
                 context = context.Clone(tenantAdminUrl);
 
                 executeQueryRequired = false;
