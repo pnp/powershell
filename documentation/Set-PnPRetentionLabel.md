@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPRetentionLabel.h
 # Set-PnPRetentionLabel
 
 ## SYNOPSIS
-Sets a retention label on the specified list or library, or on specified items within a list or library. Use ReSet-PnPRetentionLabel to remove the label again.
+Sets a retention label on the specified list or library, or on specified items within a list or library. Use Reset-PnPRetentionLabel to remove the label again.
 
 ## SYNTAX
 
@@ -51,7 +51,7 @@ This sets an O365 label on the specified list or library and sets the label to a
 Set-PnPRetentionLabel -List "Demo List" -ItemIds @(1,2,3) -Label "My demo label"
 ```
 
-Sets "My demo label" retention label for items with ids 1, 2 and 3 on a list "Demo List"
+Sets "My demo label" retention label for items with ids 1, 2 and 3 on a list "Demo List".
 
 ## PARAMETERS
 
@@ -111,7 +111,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 ### -ItemIds
-List of iist item IDs to set label. 
+List of item IDs to set label. 
 
 ```yaml
 Type: List<Int32>
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -Label
-The name of the retention label
+The name of the retention label.
 
 ```yaml
 Type: String
@@ -153,7 +153,7 @@ Accept wildcard characters: False
 ```
 
 ### -SyncToItems
-Apply label to existing items in the library
+Apply label to existing items in the library.
 
 ```yaml
 Type: Boolean

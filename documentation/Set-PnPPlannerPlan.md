@@ -21,13 +21,12 @@ Updates an existing Planner plan.
 
 ### By Group
 ```powershell
-Set-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Title <String>
-  
+Set-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Title <String> [-Connection <PnPConnection>]
 ```
 
 ### By Plan Id
 ```powershell
-Set-PnPPlannerPlan -PlanId <String> -Title <String>  
+Set-PnPPlannerPlan -PlanId <String> -Title <String>  [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -43,6 +42,22 @@ Set-PnPPlannerPlan -Group "Marketing" -Plan "Conference" -Title "Conference 2020
 This example renames the "Conference" plan to "Conference 2020".
 
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Group
 Specify the group id or name of the group owning the plan.
@@ -103,9 +118,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
-### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## RELATED LINKS
 

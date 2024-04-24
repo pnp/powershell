@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSiteTemplateMeta
 # Set-PnPSiteTemplateMetadata
 
 ## SYNOPSIS
-Sets metadata of a provisioning template
+Sets metadata of a provisioning template.
 
 ## SYNTAX
 
@@ -46,14 +46,14 @@ Sets the DisplayName property of a site template in Office Open XML format.
 Set-PnPSiteTemplateMetadata -Path template.xml -TemplateImagePreviewUrl "Full URL of the Image Preview"
 ```
 
-Sets the Url to the preview image of a site template in XML format.
+This example sets the image preview URL for a SharePoint site template stored in the file template.xml in Office Open XML format.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPSiteTemplateMetadata -Path template.pnp -TemplateImagePreviewUrl "Full URL of the Image Preview"
 ```
 
-Sets the to the preview image of a site template in Office Open XML format.
+This example sets the image preview URL for a SharePoint site template stored in the file template.pnp in Office Open XML format.
 
 ### EXAMPLE 5
 ```powershell
