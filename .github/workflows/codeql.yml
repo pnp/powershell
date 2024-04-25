@@ -39,7 +39,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: ${{ matrix.language }}
         # If you wish to specify custom queries, you can do so here or in a config file.
@@ -68,13 +68,12 @@ jobs:
       with:
         dotnet-version: | 
           6.x
-          7.x
-          8.x
+          7.x          
     - name: Install dependencies
       run: dotnet restore
       working-directory: src/Commands
     - name: Build ⚙
-      run:  dotnet build --configuration debug
+      run:  dotnet build --configuration debug --no-restore
       working-directory: src/Commands  
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
