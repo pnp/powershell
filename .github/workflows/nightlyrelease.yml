@@ -73,14 +73,14 @@ jobs:
     - name: Build an image
       run: |
         VERSION=$(cat ./version.txt)-nightly
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=alpine-3.14" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.14;
+        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=alpine-3.16.5" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.16.5;
     - name: Tag the image
       run: |
         VERSION=$(cat ./version.txt)-nightly
-        docker image tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.14 ${{ secrets.DOCKER_ORG }}/powershell:nightly
+        docker image tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.16.5 ${{ secrets.DOCKER_ORG }}/powershell:nightly
     - name: Push the image
       run: |
         VERSION=$(cat ./version.txt)-nightly
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.14
+        docker push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.16.5
         docker push ${{ secrets.DOCKER_ORG }}/powershell:nightly
