@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSearchSettings.h
 # Set-PnPSearchSettings
 
 ## SYNOPSIS
-Sets search settings for a site
+Sets search settings for a site.
 
 ## SYNTAX
 
@@ -31,49 +31,49 @@ Allows to modify search settings for a site.
 Set-PnPSearchSettings -SearchBoxInNavBar Hidden -Scope Site
 ```
 
-Hide the suite bar search box on all pages and sites in the site collection
+This example hides the suite bar search box on all pages and sites in the site collection.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPSearchSettings -SearchBoxInNavBar Hidden -Scope Web
 ```
 
-Hide the suite bar search box on all pages in the current site
+Example 2 hides the suite bar search box on all pages in the current site.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPSearchSettings -SearchPageUrl "https://contoso.sharepoint.com/sites/mysearch/SitePages/search.aspx"
 ```
 
-Redirect the suite bar search box in the site to a custom URL
+Redirects the suite bar search box in the site to a custom URL
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPSearchSettings -SearchPageUrl ""
 ```
 
-Clear the suite bar search box redirect URL and revert to the default behavior
+This example clears the suite bar search box redirect URL and reverts to the default behavior.
 
 ### EXAMPLE 5
 ```powershell
 Set-PnPSearchSettings -SearchPageUrl "https://contoso.sharepoint.com/sites/mysearch/SitePages/search.aspx" -Scope Site
 ```
 
-Redirect classic search to a custom URL
+Redirects classic search to a custom URL.
 
 ### EXAMPLE 6
 ```powershell
 Set-PnPSearchSettings -SearchScope Tenant
 ```
 
-Set default behavior of the suite bar search box to show tenant wide results instead of site or hub scoped results
+Example 6 sets default behavior of the suite bar search box to show tenant wide results instead of site or hub scoped results.
 
 ### EXAMPLE 7
 ```powershell
 Set-PnPSearchSettings -SearchScope Hub
 ```
 
-Set default behavior of the suite bar search box to show hub results instead of site results on an associated hub site
+Sets default behavior of the suite bar search box to show hub results instead of site results on an associated hub site.
 
 ## PARAMETERS
 
