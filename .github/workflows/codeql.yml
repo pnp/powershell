@@ -74,7 +74,7 @@ jobs:
       run: dotnet restore
       working-directory: src/Commands
     - name: Build ⚙
-      run:  dotnet build --configuration debug --no-restore --verbosity normal 
+      run:  dotnet build --configuration debug
       working-directory: src/Commands  
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
