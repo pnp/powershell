@@ -84,7 +84,7 @@
   <h1 id="set-pnpretentionlabel">Set-PnPRetentionLabel</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets a retention label on the specified list or library, or on specified items within a list or library. Use ReSet-PnPRetentionLabel to remove the label again.</p>
+<p>Sets a retention label on the specified list or library, or on specified items within a list or library. Use Reset-PnPRetentionLabel to remove the label again.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="set-on-a-list">Set on a list</h3>
 <pre><code class="lang-powershell">Set-PnPRetentionLabel [-List] &lt;ListPipeBind&gt; -Label &lt;String&gt; [-SyncToItems &lt;Boolean&gt;] [-BlockDeletion &lt;Boolean&gt;]
@@ -109,7 +109,7 @@ When setting retention label to specified items, cmdlet allows passing of unlimi
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPRetentionLabel -List &quot;Demo List&quot; -ItemIds @(1,2,3) -Label &quot;My demo label&quot;
 </code></pre>
-<p>Sets &quot;My demo label&quot; retention label for items with ids 1, 2 and 3 on a list &quot;Demo List&quot;</p>
+<p>Sets &quot;My demo label&quot; retention label for items with ids 1, 2 and 3 on a list &quot;Demo List&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-batchsize">-BatchSize</h3>
 <p>Optional batch size when setting a label on specified items.</p>
@@ -156,7 +156,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-itemids">-ItemIds</h3>
-<p>List of iist item IDs to set label.</p>
+<p>List of item IDs to set label.</p>
 <pre><code class="lang-yaml">Type: List&lt;Int32&gt;
 Parameter Sets: (BulkItems)
 
@@ -167,7 +167,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-label">-Label</h3>
-<p>The name of the retention label</p>
+<p>The name of the retention label.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -189,7 +189,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-synctoitems">-SyncToItems</h3>
-<p>Apply label to existing items in the library</p>
+<p>Apply label to existing items in the library.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (List)
 

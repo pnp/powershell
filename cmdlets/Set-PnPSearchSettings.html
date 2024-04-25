@@ -84,7 +84,7 @@
   <h1 id="set-pnpsearchsettings">Set-PnPSearchSettings</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets search settings for a site</p>
+<p>Sets search settings for a site.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPSearchSettings [-SearchBoxInNavBar &lt;SearchBoxInNavBarType&gt;] [-SearchPageUrl &lt;String&gt;]
  [-SearchBoxPlaceholderText &lt;String&gt;] [-SearchScope &lt;SearchScopeType&gt;] [-Scope &lt;SearchSettingsScope&gt;] [-Force]
@@ -96,31 +96,31 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchBoxInNavBar Hidden -Scope Site
 </code></pre>
-<p>Hide the suite bar search box on all pages and sites in the site collection</p>
+<p>This example hides the suite bar search box on all pages and sites in the site collection.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchBoxInNavBar Hidden -Scope Web
 </code></pre>
-<p>Hide the suite bar search box on all pages in the current site</p>
+<p>Example 2 hides the suite bar search box on all pages in the current site.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchPageUrl &quot;https://contoso.sharepoint.com/sites/mysearch/SitePages/search.aspx&quot;
 </code></pre>
-<p>Redirect the suite bar search box in the site to a custom URL</p>
+<p>Redirects the suite bar search box in the site to a custom URL</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchPageUrl &quot;&quot;
 </code></pre>
-<p>Clear the suite bar search box redirect URL and revert to the default behavior</p>
+<p>This example clears the suite bar search box redirect URL and reverts to the default behavior.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchPageUrl &quot;https://contoso.sharepoint.com/sites/mysearch/SitePages/search.aspx&quot; -Scope Site
 </code></pre>
-<p>Redirect classic search to a custom URL</p>
+<p>Redirects classic search to a custom URL.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchScope Tenant
 </code></pre>
-<p>Set default behavior of the suite bar search box to show tenant wide results instead of site or hub scoped results</p>
+<p>Example 6 sets default behavior of the suite bar search box to show tenant wide results instead of site or hub scoped results.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Set-PnPSearchSettings -SearchScope Hub
 </code></pre>
-<p>Set default behavior of the suite bar search box to show hub results instead of site results on an associated hub site</p>
+<p>Sets default behavior of the suite bar search box to show hub results instead of site results on an associated hub site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

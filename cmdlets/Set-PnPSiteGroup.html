@@ -87,7 +87,7 @@
 <p>Updates the SharePoint Online owner and permission levels on a group inside a site collection.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPSiteGroup -Identity &lt;String&gt; [-Name &lt;String&gt;] [-Owner &lt;String&gt;] [-PermissionLevelsToAdd &lt;String[]&gt;] 
-    [-PermissionLevelsToRemove &lt;String[]&gt;] [-Site &lt;PipeBind&gt;]
+    [-PermissionLevelsToRemove &lt;String[]&gt;] [-Site &lt;PipeBind&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>For permissions and the most current information about Windows PowerShell for SharePoint Online, see the online documentation at <a href="https://learn.microsoft.com/powershell/sharepoint/sharepoint-online/introduction-sharepoint-online-management-shell?view=sharepoint-ps">Intro to SharePoint Online Management Shell</a>.</p>
@@ -101,6 +101,17 @@
 </code></pre>
 <p>Example 2 sets user@domain.com as the owner of the ProjectViewers group.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>Specifies the name of the group.</p>
 <pre><code class="lang-yaml">Type: String
@@ -124,7 +135,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-owner">-Owner</h3>
-<p>Specifies the owner (individual or a security group) of the group to be created.</p>
+<p>Specifies the owner (individual or a security group) of the group to be set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:

@@ -84,9 +84,9 @@
   <h1 id="set-pnppagewebpart">Set-PnPPageWebPart</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Set Web Part properties</p>
+<p>Sets web part properties.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPPageWebPart [-Page] &lt;PagePipeBind&gt; -Identity &lt;WebPartPipeBind&gt;
+<pre><code class="lang-powershell">Set-PnPPageWebPart -Page &lt;PagePipeBind&gt; -Identity &lt;WebPartPipeBind&gt;
  [-Title &lt;String&gt;] [-PropertiesJson &lt;String&gt;] [-Connection &lt;PnPConnection&gt;]
  
 </code></pre>
@@ -114,7 +114,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The identity of the web part. This can be the web part instance id or the title of a web part</p>
+<p>The identity of the web part. This can be the web part instance id or the title of a web part.</p>
 <pre><code class="lang-yaml">Type: WebPartPipeBind
 Parameter Sets: (All)
 
@@ -125,7 +125,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-page">-Page</h3>
-<p>The name of the page</p>
+<p>The name of the page.</p>
 <pre><code class="lang-yaml">Type: PagePipeBind
 Parameter Sets: (All)
 

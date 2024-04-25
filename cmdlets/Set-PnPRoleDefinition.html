@@ -108,6 +108,51 @@
 </code></pre>
 <p>Changes the order in which the permission level is displayed.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-clear">-Clear</h3>
+<p>Specifies permission flag(s) to disable. Please visit <a href="https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)">https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)</a> for the PermissionKind enum.</p>
+<pre><code class="lang-yaml">Type: PermissionKind[]
+Parameter Sets: (All)
+Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-clearall">-ClearAll</h3>
+<p>Clears ​all permission flags.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-description">-Description</h3>
+<p>The new description for the permission level.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The identity of the role definition, either a RoleDefinition object or the name of the RoleDefinition.</p>
 <pre><code class="lang-yaml">Type: RoleDefinitionPipeBind
@@ -119,19 +164,8 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-rolename">-RoleName</h3>
+<h3 id="-newrolename">-NewRoleName</h3>
 <p>The new name for the permission level.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-description">-Description</h3>
-<p>The new description for the permission level.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -152,28 +186,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-selectall">-SelectAll</h3>
-<p>Sets all permission flags.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-clearall">-ClearAll</h3>
-<p>Clears ​all permission flags.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-select">-Select</h3>
 <p>Specifies permission flag(s) to enable. Please visit <a href="https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)">https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)</a> for the PermissionKind enum.</p>
 <pre><code class="lang-yaml">Type: PermissionKind[]
@@ -186,21 +198,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-clear">-Clear</h3>
-<p>Specifies permission flag(s) to disable. Please visit <a href="https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)">https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15)</a> for the PermissionKind enum.</p>
-<pre><code class="lang-yaml">Type: PermissionKind[]
-Parameter Sets: (All)
-Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-selectall">-SelectAll</h3>
+<p>Sets all permission flags.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

@@ -84,7 +84,7 @@
   <h1 id="set-pnpsitetemplatemetadata">Set-PnPSiteTemplateMetadata</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets metadata of a provisioning template</p>
+<p>Sets metadata of a provisioning template.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata [-Path] &lt;String&gt; [-TemplateDisplayName &lt;String&gt;]
  [-TemplateImagePreviewUrl &lt;String&gt;] [-TemplateProperties &lt;Hashtable&gt;]
@@ -105,11 +105,11 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata -Path template.xml -TemplateImagePreviewUrl &quot;Full URL of the Image Preview&quot;
 </code></pre>
-<p>Sets the Url to the preview image of a site template in XML format.</p>
+<p>This example sets the image preview URL for a SharePoint site template stored in the file template.xml in Office Open XML format.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata -Path template.pnp -TemplateImagePreviewUrl &quot;Full URL of the Image Preview&quot;
 </code></pre>
-<p>Sets the to the preview image of a site template in Office Open XML format.</p>
+<p>This example sets the image preview URL for a SharePoint site template stored in the file template.pnp in Office Open XML format.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPSiteTemplateMetadata -Path template.xml -TemplateProperties @{&quot;Property1&quot; = &quot;Test Value 1&quot;; &quot;Property2&quot;=&quot;Test Value 2&quot;}
 </code></pre>

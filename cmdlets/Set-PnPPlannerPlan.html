@@ -91,11 +91,10 @@
 <p>Updates an existing Planner plan.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-group">By Group</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerPlan -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Title &lt;String&gt;
-  
+<pre><code class="lang-powershell">Set-PnPPlannerPlan -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Title &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="by-plan-id">By Plan Id</h3>
-<pre><code class="lang-powershell">Set-PnPPlannerPlan -PlanId &lt;String&gt; -Title &lt;String&gt;  
+<pre><code class="lang-powershell">Set-PnPPlannerPlan -PlanId &lt;String&gt; -Title &lt;String&gt;  [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet updates an existing planner plan.</p>
@@ -105,6 +104,19 @@
 </code></pre>
 <p>This example renames the &quot;Conference&quot; plan to &quot;Conference 2020&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-group">-Group</h3>
 <p>Specify the group id or name of the group owning the plan.</p>
 <pre><code class="lang-yaml">Type: PlannerGroupPipeBind
@@ -153,8 +165,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

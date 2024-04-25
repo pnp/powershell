@@ -92,7 +92,7 @@
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPPlannerTask -TaskId &lt;String&gt; [-Title &lt;String&gt;] [-Bucket &lt;PlannerBucketPipeBind&gt;]
  [-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
- [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;]
+ [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] 
  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -111,9 +111,46 @@
 </code></pre>
 <p>This updates the task with the specified id and replaces the assigned users with the ones specified.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-assignedto">-AssignedTo</h3>
+<p>Specify the email(s) of the user to assign the task to. Notice that this will replace existing assignments with the ones specified here.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-bucket">-Bucket</h3>
 <p>Specify the bucket name or ID to move the task to.</p>
 <pre><code class="lang-yaml">Type: PlannerBucketPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-description">-Description</h3>
+<p>Sets the description (notes) of the task.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -137,6 +174,24 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-percentcomplete">-PercentComplete</h3>
 <p>Defines the percentage of completeness of the task.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-priority">-Priority</h3>
+<p>Sets the priority of the task. Value should be a number between 0 and 10.</p>
+<ul>
+<li>values 0 and 1 are interpreted as <em>Urgent</em></li>
+<li>values 2, 3 and 4 are interpreted as <em>Important</em></li>
+<li>values 5, 6 and 7 are interpreted as <em>Medium</em></li>
+<li>values 8, 9 and 10 are interpreted as <em>Low</em></li>
+</ul>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 Aliases:
@@ -183,50 +238,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-assignedto">-AssignedTo</h3>
-<p>Specify the email(s) of the user to assign the task to. Notice that this will replace existing assignments with the ones specified here.</p>
-<pre><code class="lang-yaml">Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-priority">-Priority</h3>
-<p>Sets the priority of the task. Value should be a number between 0 and 10.</p>
-<ul>
-<li>values 0 and 1 are interpreted as <em>Urgent</em></li>
-<li>values 2, 3 and 4 are interpreted as <em>Important</em></li>
-<li>values 5, 6 and 7 are interpreted as <em>Medium</em></li>
-<li>values 8, 9 and 10 are interpreted as <em>Low</em></li>
-</ul>
-<pre><code class="lang-yaml">Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-description">-Description</h3>
-<p>Sets the description (notes) of the task.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see <a href="http://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

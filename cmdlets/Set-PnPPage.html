@@ -84,9 +84,9 @@
   <h1 id="set-pnppage">Set-PnPPage</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Sets parameters of a page</p>
+<p>Sets parameters of a page.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPPage [-Identity] &lt;PagePipeBind&gt; [-Name &lt;String&gt;] [-Title &lt;String&gt;]
+<pre><code class="lang-powershell">Set-PnPPage -Identity &lt;PagePipeBind&gt; [-Name &lt;String&gt;] [-Title &lt;String&gt;]
  [-LayoutType &lt;PageLayoutType&gt;] [-PromoteAs &lt;PagePromoteType&gt;] [-CommentsEnabled]
  [-Publish] [-HeaderType &lt;PageHeaderType&gt;] [-HeaderLayoutType &lt;PageHeaderLayoutType&gt;] [-ScheduledPublishDate &lt;DateTime&gt;] 
  [-RemoveScheduledPublish] [-ContentType &lt;ContentTypePipeBind&gt;] [-ThumbnailUrl &lt;String&gt;] [-ShowPublishDate &lt;Boolean&gt;]
@@ -99,31 +99,31 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -LayoutType Home -Title &quot;My Page&quot;
 </code></pre>
-<p>Updates the properties of the page named 'MyPage'</p>
+<p>Updates the properties of the page named 'MyPage'.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -CommentsEnabled
 </code></pre>
-<p>Enables the comments on the page named 'MyPage'</p>
+<p>Enables the comments on the page named 'MyPage'.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -CommentsEnabled:$false
 </code></pre>
-<p>Disables the comments on the page named 'MyPage'</p>
+<p>Disables the comments on the page named 'MyPage'.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;hr/MyPage&quot; -HeaderType Default
 </code></pre>
-<p>Sets the header of the page called MyPage located in the folder hr inside the Site Pages library to the default header</p>
+<p>Sets the header of the page called MyPage located in the folder hr inside the Site Pages library to the default header.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -HeaderType None
 </code></pre>
-<p>Removes the header of the page</p>
+<p>Removes the header of the page.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -HeaderType Custom -ServerRelativeImageUrl &quot;/sites/demo1/assets/myimage.png&quot; -TranslateX 10.5 -TranslateY 11.0
 </code></pre>
-<p>Sets the header of the page to custom header, using the specified image and translates the location of the image in the header given the values specified</p>
+<p>Sets the header of the page to custom header, using the specified image and translates the location of the image in the header given the values specified.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -ScheduledPublishDate (Get-Date).AddHours(1)
 </code></pre>
-<p>Schedules the page &quot;MyPage&quot; to be published in one hour from now</p>
+<p>Schedules the page &quot;MyPage&quot; to be published in one hour from now.</p>
 <h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -Translate
 </code></pre>
@@ -139,18 +139,18 @@
 <h3 id="example-11">EXAMPLE 11</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage&quot; -ShowPublishDate $true -Publish
 </code></pre>
-<p>Display the date when the page was published in the header section of the page</p>
+<p>Display the date when the page was published in the header section of the page.</p>
 <h3 id="example-12">EXAMPLE 12</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage.aspx&quot; -Like
 </code></pre>
-<p>Likes the page</p>
+<p>Likes the page.</p>
 <h3 id="example-11-1">EXAMPLE 11</h3>
 <pre><code class="lang-powershell">Set-PnPPage -Identity &quot;MyPage.aspx&quot; -Like:$false
 </code></pre>
-<p>Unlikes the page</p>
+<p>Unlikes the page.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-commentsenabled">-CommentsEnabled</h3>
-<p>Enables or Disables the comments on the page</p>
+<p>Enables or disables the comments on the page.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -183,7 +183,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-demotenewsarticle">-DemoteNewsArticle</h3>
-<p>Demotes an existing news post to a regular page</p>
+<p>Demotes an existing news post to a regular page.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -194,7 +194,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-headertype">-HeaderType</h3>
-<p>Sets the page header type</p>
+<p>Sets the page header type.</p>
 <pre><code class="lang-yaml">Type: PageHeaderType
 Parameter Sets: (All)
 Accepted values: None, Default, Custom
@@ -206,7 +206,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-headerlayouttype">-HeaderLayoutType</h3>
-<p>Sets the page header layout type</p>
+<p>Sets the page header layout type.</p>
 <pre><code class="lang-yaml">Type: PageHeaderLayoutType
 Parameter Sets: (All)
 Accepted values: ColorBlock, CutInShape, FullWidthImage, NoImage
@@ -252,7 +252,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-promoteas">-PromoteAs</h3>
-<p>Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template)</p>
+<p>Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template).</p>
 <pre><code class="lang-yaml">Type: PagePromoteType
 Parameter Sets: (All)
 Accepted values: None, HomePage, NewsArticle, Template
@@ -275,7 +275,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-thumbnailurl">-ThumbnailUrl</h3>
-<p>Thumbnail Url</p>
+<p>Specifies the URL of a thumbnail image.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -286,7 +286,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-showpublishdate">-ShowPublishDate</h3>
-<p>Show Published Date in Header</p>
+<p>Shows Published Date in the header.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -330,7 +330,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-translate">-Translate</h3>
-<p>Creates multilingual pages for all the languages specified in the site collection</p>
+<p>Creates multilingual pages for all the languages specified in the site collection.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -352,7 +352,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-like">-Like</h3>
-<p>Likes the page, if parameter is set to false then it Unlikes the page</p>
+<p>Likes the page, if parameter is set to false then it Unlikes the page.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 

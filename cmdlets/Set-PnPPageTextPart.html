@@ -84,13 +84,13 @@
   <h1 id="set-pnppagetextpart">Set-PnPPageTextPart</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Set text part properties</p>
+<p>Sets text part properties.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPPageTextPart [-Page] &lt;PagePipeBind&gt; -InstanceId &lt;Guid&gt; -Text &lt;String&gt;
+<pre><code class="lang-powershell">Set-PnPPageTextPart -Page &lt;PagePipeBind&gt; -InstanceId &lt;Guid&gt; -Text &lt;String&gt;
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Sets the rendered text in existing client side text component</p>
+<p>Sets the rendered text in existing client side text component.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPPageTextPart -Page Home -InstanceId a2875399-d6ff-43a0-96da-be6ae5875f82 -Text &quot;MyText&quot;
@@ -109,7 +109,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-instanceid">-InstanceId</h3>
-<p>The instance id of the text component</p>
+<p>The instance id of the text component.</p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
@@ -120,7 +120,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-page">-Page</h3>
-<p>The name of the page</p>
+<p>The name of the page.</p>
 <pre><code class="lang-yaml">Type: PagePipeBind
 Parameter Sets: (All)
 
@@ -131,7 +131,7 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-text">-Text</h3>
-<p>Text to set</p>
+<p>Text to set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 

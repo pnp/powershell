@@ -88,7 +88,7 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Updates a Site Design on the current tenant.</p>
+<p>Updates a site design on the current tenant.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPSiteDesign -Identity &lt;TenantSiteDesignPipeBind&gt; [-Title &lt;String&gt;] [-SiteScriptIds &lt;GuidPipeBind[]&gt;]
  [-Description &lt;String&gt;] [-IsDefault] [-PreviewImageAltText &lt;String&gt;] [-PreviewImageUrl &lt;String&gt;]
@@ -96,21 +96,21 @@
  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to update a Site Design on the current tenant.</p>
+<p>Allows to update a site design on the current tenant.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7821e -Title &quot;My Updated Company Design&quot;
 </code></pre>
-<p>Updates an existing Site Design and sets a new title.</p>
+<p>Updates an existing site design and sets a new title.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">$design = Get-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7821e
 Set-PnPSiteDesign -Identity $design -Title &quot;My Updated Company Design&quot;
 </code></pre>
-<p>Updates an existing Site Design and sets a new title.</p>
+<p>Updates an existing site design and sets a new title.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7821e -Title &quot;My Company Design&quot; -Description &quot;My description&quot; -ThumbnailUrl &quot;https://contoso.sharepoint.com/sites/templates/my images/logo.png&quot;
 </code></pre>
-<p>Updates an existing Site Design, providing a new title, description and logo to be shown in the template picker. Notice that when the location for the ThumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.</p>
+<p>Updates an existing site design, providing a new title, description and logo to be shown in the template picker. Notice that when the location for the ThumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -124,7 +124,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
-<p>The description of the site design</p>
+<p>The description of the site design.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -134,8 +134,19 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-designpackageid">-DesignPackageId</h3>
+<p>Sets the design package Id of this site design.</p>
+<pre><code class="lang-yaml">Type: Guid
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The guid or an object representing the site design</p>
+<p>The guid or an object representing the site design.</p>
 <pre><code class="lang-yaml">Type: TenantSiteDesignPipeBind
 Parameter Sets: (All)
 
@@ -146,7 +157,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-isdefault">-IsDefault</h3>
-<p>Specifies if the site design is a default site design</p>
+<p>Specifies if the site design is a default site design.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -179,43 +190,9 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-sitescriptids">-SiteScriptIds</h3>
-<p>An array of guids of site scripts</p>
+<p>An array of guids of site scripts.</p>
 <pre><code class="lang-yaml">Type: Guid[]
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-title">-Title</h3>
-<p>The title of the site design</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-version">-Version</h3>
-<p>Specifies the version of the design</p>
-<pre><code class="lang-yaml">Type: Int32
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-webtemplate">-WebTemplate</h3>
-<p>Specifies the type of site to which this design applies</p>
-<pre><code class="lang-yaml">Type: SiteWebTemplate
-Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite, ChannelSite
 
 Required: False
 Position: Named
@@ -234,11 +211,33 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-designpackageid">-DesignPackageId</h3>
-<p>Sets the design package Id of this site design.</p>
+<h3 id="-title">-Title</h3>
+<p>The title of the site design.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-version">-Version</h3>
+<p>Specifies the version of the design.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-webtemplate">-WebTemplate</h3>
+<p>Specifies the type of site to which this design applies.</p>
 <pre><code class="lang-yaml">Type: SiteWebTemplate
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite
+Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite, ChannelSite
 
 Required: False
 Position: Named
