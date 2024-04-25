@@ -73,7 +73,7 @@ jobs:
       run: dotnet restore
       working-directory: src/Commands
     - name: Build ⚙
-      run:  dotnet build PnP.PowerShell.csproj --nologo --configuration Debug --no-incremental
+      run:  dotnet build PnP.PowerShell.csproj --nologo --configuration debug --no-incremental --verbosity diagnostic --disable-build-servers --force
       working-directory: src/Commands  
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
