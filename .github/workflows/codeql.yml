@@ -20,13 +20,16 @@ on:
   schedule:
     - cron: '36 19 * * 2'
 
-permissions: 
-  security-events: write  
+permissions: read-all
+  
 
-jobs:
+jobs:  
   analyze:
     name: Analyze
     runs-on: windows-latest
+    permissions:
+      security-events: write
+      contents: read
 
     strategy:
       fail-fast: false
