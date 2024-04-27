@@ -2,6 +2,7 @@ $ProgressPreference = "SilentlyContinue"
 $WarningPreference = "SilentlyContinue"
 
 if (-not (Test-Path $PSScriptRoot\bundle\SharePointPnPPowerShellOnline.psd1)) {
+    Invoke-RestMethod -Uri "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "$PSScriptRoot\nuget.exe"
     Set-Alias nuget "$PSScriptRoot\nuget.exe"
     nuget install SharePointPnPPowerShellOnline -configFile $PSScriptRoot\nuget.config -OutputDirectory $PSScriptRoot\bundle\
 
