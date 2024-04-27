@@ -12,6 +12,8 @@ on:
   #    - dev
   #  paths:
   #    - 'src/**'
+permissions: read-all
+
 jobs:
   build_dev_branch:
     runs-on: windows-latest
