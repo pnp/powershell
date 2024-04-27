@@ -56,7 +56,7 @@ $moduleVersions | % {
             $plainStringPassword = [System.Net.NetworkCredential]::new("", $DOCKER_PASSWORD).Password;
             docker login -u $DOCKER_USERNAME -p "$plainStringPassword";
             docker push $DOCKER_ORG/$DOCKER_IMAGE_NAME`:$imageVersion;
-            if ( $baseImageSuffix -eq "alpine-3.16") {
+            if ( $baseImageSuffix -eq "alpine-3.17") {
                 docker image tag $DOCKER_ORG/$DOCKER_IMAGE_NAME`:$imageVersion $DOCKER_ORG/$DOCKER_IMAGE_NAME`:latest;
                 docker push $DOCKER_ORG/$DOCKER_IMAGE_NAME`:latest;
             }
