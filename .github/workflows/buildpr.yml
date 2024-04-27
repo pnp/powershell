@@ -12,7 +12,7 @@ on:
   #    - dev
   #  paths:
   #    - 'src/**'
-permissions: read-all
+permissions: write-all
 
 jobs:
   build_dev_branch:
