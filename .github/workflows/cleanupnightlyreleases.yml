@@ -4,6 +4,8 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 3 * * *'
+
+permissions: read-all
     
 jobs:
   # This workflow contains a single job called "cleanup"
