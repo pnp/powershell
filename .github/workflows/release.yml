@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   schedule:
   - cron: '30 3 * * *'
+
+permissions: read-all
+  
 jobs:
   publish-docker-windows-2022:
     runs-on: windows-2022
