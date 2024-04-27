@@ -85,5 +85,5 @@ jobs:
       run: |
         VERSION=$(cat ./version.txt)-nightly
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.16
+        docker push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.17
         docker push ${{ secrets.DOCKER_ORG }}/powershell:nightly
