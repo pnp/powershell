@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using InformationBarriersMode = PnP.PowerShell.Commands.Enums.InformationBarriersMode;
 
 namespace PnP.PowerShell.Commands.Model
@@ -191,9 +192,32 @@ namespace PnP.PowerShell.Commands.Model
         public bool? InformationBarriersSuspension { private set; get; }
         
         public bool? IBImplicitGroupBased { private set; get; }
+
         public bool? AppBypassInformationBarriers { private set; get; }
 
-        public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { private set; get; } 
+        public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { private set; get; }
+        
+        public SharingCapabilities? CoreSharingCapability { private set; get; }
+
+        public bool? EnableVersionExpirationSetting { private set; get; }
+
+        public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInOneDrive { private set; get; }
+
+        public bool? AllowOverrideForBlockUserInfoVisibility { private set; get; }
+
+        public bool? AllowEveryoneExceptExternalUsersClaimInPrivateSite { private set; get; }
+
+        public bool? AIBuilderEnabled { private set; get; }
+
+        public bool? AllowSensitivityLabelOnRecords { private set; get; }
+
+        public bool? AnyoneLinkTrackUsers { private set; get; }
+
+        public bool? EnableSiteArchive { private set; get; }
+
+        public bool? ESignatureEnabled { private set; get; }
+
+        public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInSharePoint { private set; get; }
 
         #endregion
 
@@ -709,6 +733,19 @@ namespace PnP.PowerShell.Commands.Model
             catch
             {
             }
+
+            CoreSharingCapability = tenant.CoreSharingCapability;
+            EnableVersionExpirationSetting = tenant.EnableVersionExpirationSetting;
+            BlockUserInfoVisibilityInOneDrive = tenant.BlockUserInfoVisibilityInOneDrive;
+            AllowOverrideForBlockUserInfoVisibility = tenant.AllowOverrideForBlockUserInfoVisibility;
+            AllowEveryoneExceptExternalUsersClaimInPrivateSite = tenant.AllowEveryoneExceptExternalUsersClaimInPrivateSite;
+            AllowSensitivityLabelOnRecords = tenant.AllowSensitivityLabelOnRecords;
+            AnyoneLinkTrackUsers = tenant.AnyoneLinkTrackUsers;
+            AIBuilderEnabled = tenant.AIBuilderEnabled;
+            EnableSiteArchive = tenant.EnableSiteArchive;
+            ESignatureEnabled = tenant.ESignatureEnabled;
+            BlockUserInfoVisibilityInSharePoint = tenant.BlockUserInfoVisibilityInSharePoint;
+
         }
     }
 }
