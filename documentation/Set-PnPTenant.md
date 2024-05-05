@@ -148,6 +148,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableSiteArchive <Boolean>]
  [-ESignatureEnabled <Boolean>]
  [-BlockUserInfoVisibilityInSharePoint <TenantBrowseUserInfoPolicyValue>]
+ [-MarkNewFilesSensitiveByDefault <SensitiveByDefaultState>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2556,6 +2557,33 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### SyncAadB2BManagementPolicy
+Syncs Aad B2B Management Policy.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### MarkNewFilesSensitiveByDefault
+Marks new files as sensitive by default before DLP policies are applied.
+
+```yaml
+Type: SensitiveByDefaultState
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ### -Force
 If provided, no confirmation will be requested and the action will be performed
