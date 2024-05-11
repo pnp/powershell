@@ -13,7 +13,7 @@ title: Remove-PnPContainerType
 
 **Required Permissions**
 
-* SharePoint: Access to the SharePoint Tenant Administration site
+* SharePoint Embedded Administrator or Global Administrator role is required
 
 The Remove-PnPContainerType cmdlet removes a trial container from the SharePoint tenant. The container to remove is specified by the Identity parameter.
 

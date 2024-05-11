@@ -20,7 +20,7 @@ Returns one or more Containers in a SharePoint repository services application.
 ## SYNTAX
 
 ```powershell
-Get-PnPContainer [[-Identity] <ContainerPipeBind>] [-OwningApplicationId [Guid]] [-Paged [switchparameter]] [-PagingToken [string]][-Connection <PnPConnection>] 
+Get-PnPContainer [-Identity <ContainerPipeBind>] [-OwningApplicationId <Guid>] [-Paged <switchparameter>] [-PagingToken <string>][-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
