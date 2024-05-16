@@ -23,6 +23,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPLibraryFileVersionBatchDeleteJobStatus` and `Get-PnPSiteFileVersionBatchDeleteJobStatus` to check on the status of applying file based version expiration based on age on a library and site level [#3828](https://github.com/pnp/powershell/pull/3828)
 - Added support for `Get-PnPSiteCollectionAppCatalog` and `Get-PnPTenantSite` to be used with vanity domain tenants [#3895](https://github.com/pnp/powershell/pull/3895)
 - Added support for using vanity domain tenants with `Grant-PnPTenantServicePrincipalPermission`, `Revoke-PnPTenantServicePrincipalPermission`, `Set-PnPWebTheme`, `Invoke-PnPListDesign`, `Set-PnPSite`, `Add-PnPSiteDesignTask`, `Get-PnPSiteDesignRun`, `Get-PnPSiteDesignTask` and `Invoke-PnPSiteDesign` cmdlets [#3898](https://github.com/pnp/powershell/pull/3898)
+- Added `-Detailed` to `Get-PnPMicrosoft365Group` which allows retrieval of the AllowExternalSenders, IsSubscribedByMail and AutoSubscribeNewMembers properties of the group
+- Added `-RequireSenderAuthenticationEnabled` and `-AutoSubscribeNewMembers` to `Set-PnPMicrosoft365Group` which allows setting these properties on a group
 
 ### Fixed
 
