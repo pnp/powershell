@@ -249,10 +249,11 @@ Accept wildcard characters: False
 ### -RequireSenderAuthenticationEnabled
 Allows configuring if the Microsoft 365 Group should accept e-mail from senders outside of the organisation (false) or if both internal as well as external senders can send e-mail to the e-mail address of the Microsoft 365 group (true).
 
+Alias: AllowExternalSenders
+
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
-Alias: AllowExternalSenders
 Required: False
 Position: Named
 Default value: None
