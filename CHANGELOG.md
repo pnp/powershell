@@ -48,6 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Giacomo Pozzoni [jackpoz]
 - [blarrywangmsft]
 - Koen Zomers [koenzomers]
+- Christian Veenhuis [ChVeen]
 
 ## [2.4.0]
 
