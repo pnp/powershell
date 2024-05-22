@@ -38,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## Changed
 - Renamed `Get-PnPSiteFileVersionExpirationReportJobProgress` to `Get-PnPSiteFileVersionExpirationReportJobStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
 - Renamed `Get-PnPSiteVersionPolicyProgress` to `Get-PnPSiteVersionPolicyStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
+- `Remove-PnPGroupMember` cmdlet now supports removing members from pipeline. [#3955](https://github.com/pnp/powershell/pull/3955)
 
 ### Contributors
 
