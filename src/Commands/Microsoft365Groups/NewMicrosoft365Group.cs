@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (!Force)
             {
-                var candidate = Microsoft365GroupsUtility.GetGroupAsync(Connection, MailNickname, AccessToken, false, false).GetAwaiter().GetResult();
+                var candidate = Microsoft365GroupsUtility.GetGroupAsync(Connection, MailNickname, AccessToken, false, false, false).GetAwaiter().GetResult();
                 forceCreation = candidate == null || ShouldContinue($"The Microsoft 365 Group '{MailNickname} already exists. Do you want to create a new one?", Properties.Resources.Confirm);
             }
             else
@@ -180,7 +180,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     Microsoft365GroupsUtility.SetVisibilityAsync(Connection, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
                 }
 
-                var updatedGroup = Microsoft365GroupsUtility.GetGroupAsync(Connection, group.Id.Value, AccessToken, true, false).GetAwaiter().GetResult();
+                var updatedGroup = Microsoft365GroupsUtility.GetGroupAsync(Connection, group.Id.Value, AccessToken, true, false, false).GetAwaiter().GetResult();
 
                 WriteObject(updatedGroup);
             }
