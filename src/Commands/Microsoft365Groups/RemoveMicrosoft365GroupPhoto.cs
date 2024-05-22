@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(Connection, AccessToken, false, false);
+            var group = Identity.GetGroup(Connection, AccessToken, false, false, false);
             if (group != null)
             {
                 var response = Microsoft365GroupsUtility.DeletePhotoAsync(Connection, AccessToken, group.Id.Value).GetAwaiter().GetResult();

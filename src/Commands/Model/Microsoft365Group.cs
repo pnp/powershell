@@ -5,6 +5,9 @@ using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model
 {
+    /// <summary>
+    /// Properties of one Microsoft 365 Group
+    /// </summary>
     public class Microsoft365Group
     {
         [JsonPropertyName("owners@odata.bind")]
@@ -53,6 +56,9 @@ namespace PnP.PowerShell.Commands.Model
         public string SiteUrl { get; set; }
         public string[] GroupTypes { get; set; }
         public IEnumerable<Microsoft365User> Owners { get; set; }
+        public bool? AllowExternalSenders { get; set; }
+        public bool? IsSubscribedByMail { get; set; }
+        public bool? AutoSubscribeNewMembers { get; set; }
 
         public List<AssignedLabels> AssignedLabels { get; set; }
 
