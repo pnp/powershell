@@ -40,6 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Renamed `Get-PnPSiteFileVersionExpirationReportJobProgress` to `Get-PnPSiteFileVersionExpirationReportJobStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
 - Renamed `Get-PnPSiteVersionPolicyProgress` to `Get-PnPSiteVersionPolicyStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
 - `Remove-PnPGroupMember` cmdlet now supports removing members from pipeline. [#3955](https://github.com/pnp/powershell/pull/3955)
+- Changed `Set-PnPTenantCdnPolicy` cmdlet to allow PolicyValue parameter to be an empty string or $null, while still being mandatory. [#3937](https://github.com/pnp/powershell/pull/3937)
 
 ### Contributors
 
