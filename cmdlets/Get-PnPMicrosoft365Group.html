@@ -90,7 +90,7 @@
 </ul>
 <p>Gets one Microsoft 365 Group or a list of Microsoft 365 Groups</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-IncludeSiteUrl] [-IncludeOwners] [-Filter &lt;string&gt;]
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-IncludeSiteUrl] [-IncludeOwners] [-Detailed] [-Filter &lt;string&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to retrieve Microsoft 365 Groups. By using <code>Identity</code> option you may specify the exact group that will be retrieved.</p>
@@ -127,8 +127,24 @@ $g[0].Owners
 <h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">$groups = Get-PnPMicrosoft365Group -Filter &quot;startswith(description, 'contoso')&quot;
 </code></pre>
-<p>Retrieves all Microsoft 365 Groups in this tenant with description starting with Contoso. This example demonstrates using Advanced Query capabilities (see: <a href="https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties">https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties</a>).</p>
+<p>Retrieves all Microsoft 365 Groups in this tenant with description starting with Contoso. This example demonstrates using Advanced Query capabilities (see: <a href="https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties">https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties</a>).</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-detailed">-Detailed</h3>
+<p>When provided, the following properties originating from Exchange Online, will also be loaded into the returned group. Without providing this flag, they will not be populated. Providing this flag causes an extra call to be made to Microsoft Graph, so only add it when you need one of the properties below.</p>
+<ul>
+<li>AutoSubscribeNewMembers</li>
+<li>RequireSenderAuthenticationEnabled</li>
+<li>IsSubscribedByMail</li>
+</ul>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-includesiteurl">-IncludeSiteUrl</h3>
 <p>Include fetching the site URL for Microsoft 365 Groups. This slows down large listings.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter

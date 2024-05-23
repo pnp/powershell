@@ -90,10 +90,7 @@
 </ul>
 <p>Sets Microsoft 365 Group properties</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity &lt;Microsoft365GroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
- [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam]
- [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-MailNickname &lt;String&gt;] [-SensitivityLabels &lt;GUID[]&gt;]
- 
+<pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity &lt;Microsoft365GroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;] [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam]  [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-RequireSenderAuthenticationEnabled &lt;Boolean&gt;] [-AutoSubscribeNewMembers &lt;Boolean&gt;] [-MailNickname &lt;String&gt;] [-SensitivityLabels &lt;GUID[]&gt;] [-Verbose] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to modify Microsoft 365 Group.</p>
@@ -123,6 +120,20 @@
 </code></pre>
 <p>Sets the sensitivity label of the group</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-autosubscribenewmembers">-AutoSubscribeNewMembers</h3>
+<p>The AutoSubscribeNewMembers switch specifies whether to automatically subscribe new members that are added to the Microsoft 365 Group to conversations and calendar events. Only users that are added to the group after you enable this setting are automatically subscribed to the group.</p>
+<p>To subscribe new members to conversations and calendar events, use this exact syntax: -AutoSubscribeNewMembers:$true.
+If you don't want to subscribe new members to conversations and calendar events, use this exact syntax: -AutoSubscribeNewMembers:$false.</p>
+<p>Note: This property is evaluated only when you add internal members from your organization. Guest user accounts are always subscribed when added as a member.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-createteam">-CreateTeam</h3>
 <p>Creates a Microsoft Teams team associated with created group</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
@@ -244,10 +255,32 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-requiresenderauthenticationenabled">-RequireSenderAuthenticationEnabled</h3>
+<p>Allows configuring if the Microsoft 365 Group should accept e-mail from senders outside of the organisation (false) or if both internal as well as external senders can send e-mail to the e-mail address of the Microsoft 365 group (true).</p>
+<p>Alias: AllowExternalSenders</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-sensitivitylabels">-SensitivityLabels</h3>
 <p>The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sensitivity label Ids you can use <a href="Get-PnPAvailableSensitivityLabel.html">Get-PnPAvailableSensitivityLabel</a>.</p>
 <pre><code class="lang-yaml">Type: GUID[]
 Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None
