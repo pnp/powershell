@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Tests.WebParts
 				// This is a mandatory parameter
 				// From Cmdlet Help: Column number where the web part must be placed
 				var column = "";
-				// From Cmdlet Help: Must there be an extra space between the web part
+				// From Cmdlet Help: Must there be a extra space between the web part
 				var addSpace = "";
 
                 var results = scope.ExecuteCommand("Add-PnPWebPartToWikiPage",
