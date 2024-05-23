@@ -22,6 +22,9 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public SwitchParameter IncludeOwners;
 
         [Parameter(Mandatory = false)]
+        public SwitchParameter Detailed;
+
+        [Parameter(Mandatory = false)]
         public string Filter;
 
         protected override void ExecuteCmdlet()
@@ -30,7 +33,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (Identity != null)
             {
-                var group = Identity.GetGroup(Connection, AccessToken, includeSiteUrl, IncludeOwners);
+                var group = Identity.GetGroup(Connection, AccessToken, includeSiteUrl, IncludeOwners, Detailed.ToBool());
                 WriteObject(group);
             }
             else

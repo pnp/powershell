@@ -15,7 +15,7 @@ title: Add-PnPOrgAssetsLibrary
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Adds a given document library as a organizational asset source
+Adds a given document library as an organizational asset source
 
 ## SYNTAX
 

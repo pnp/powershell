@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = true)]
         public string LoginName = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [Alias("Identity")]
         public GroupPipeBind Group;
 

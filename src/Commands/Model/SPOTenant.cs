@@ -1,6 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Sharing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -218,6 +219,22 @@ namespace PnP.PowerShell.Commands.Model
         public bool? ESignatureEnabled { private set; get; }
 
         public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInSharePoint { private set; get; }
+
+        public SharingScope? OneDriveLoopDefaultSharingLinkScope { private set; get; }
+
+        public SharingScope? CoreLoopDefaultSharingLinkScope { private set; get; }
+
+        public SharingCapabilities? OneDriveLoopSharingCapability { private set; get; }
+
+        public SharingCapabilities? CoreLoopSharingCapability { private set; get; }
+
+        public Role? OneDriveLoopDefaultSharingLinkRole { private set; get; }
+
+        public Role? CoreLoopDefaultSharingLinkRole { private set; get; }
+
+        public bool? IsCollabMeetingNotesFluidEnabled { private set; get; }
+
+        public SharingState? AllowAnonymousMeetingParticipantsToAccessWhiteboards { private set; get; }
 
         #endregion
 
@@ -745,7 +762,14 @@ namespace PnP.PowerShell.Commands.Model
             EnableSiteArchive = tenant.EnableSiteArchive;
             ESignatureEnabled = tenant.ESignatureEnabled;
             BlockUserInfoVisibilityInSharePoint = tenant.BlockUserInfoVisibilityInSharePoint;
-
+            OneDriveLoopDefaultSharingLinkScope = tenant.OneDriveLoopDefaultSharingLinkScope;
+            CoreLoopDefaultSharingLinkScope = tenant.CoreLoopDefaultSharingLinkScope;
+            OneDriveLoopSharingCapability = tenant.OneDriveLoopSharingCapability;
+            CoreLoopSharingCapability = tenant.CoreLoopSharingCapability;
+            OneDriveLoopDefaultSharingLinkRole = tenant.OneDriveLoopDefaultSharingLinkRole;
+            CoreLoopDefaultSharingLinkRole = tenant.CoreLoopDefaultSharingLinkRole;
+            IsCollabMeetingNotesFluidEnabled = tenant.IsCollabMeetingNotesFluidEnabled;
+            AllowAnonymousMeetingParticipantsToAccessWhiteboards = tenant.AllowAnonymousMeetingParticipantsToAccessWhiteboards;
         }
     }
 }
