@@ -20,7 +20,7 @@ Returns container type configuration of a SharePoint repository services applica
 ## SYNTAX
 
 ```powershell
-Get-PnPContainerTypeConfiguration [[-Identity] <GUID>] [-Connection <PnPConnection>] 
+Get-PnPContainerTypeConfiguration [-Identity <GUID>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
