@@ -8,6 +8,8 @@ on:
 jobs:
   documentation:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write      
     steps:
       - name: Wait for actions to finish
         uses: softprops/turnstyle@v1
