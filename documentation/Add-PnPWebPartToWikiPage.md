@@ -49,7 +49,7 @@ This will add the web part as defined by the XML in the $webpart variable to the
 ## PARAMETERS
 
 ### -AddSpace
-Must there be a extra space between the web part
+Must there be an extra space between the web part
 
 ```yaml
 Type: SwitchParameter
