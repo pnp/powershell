@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return items;
         }
 
-        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners, bool detailed)
         {
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and id eq '{groupId}'", accessToken);
 
@@ -100,7 +100,6 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             if (iterations * 30 >= 300)
                             {
-                                wait = false;
                                 throw;
                             }
                             else
@@ -114,12 +113,19 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     group.Owners = await GetGroupMembersAsync("owners", connection, group.Id.Value, accessToken);
                 }
+                if (detailed)
+                {
+                    var exchangeOnlineProperties = await GetGroupExchangeOnlineSettingsAsync(connection, group.Id.Value, accessToken);
+                    group.AllowExternalSenders = exchangeOnlineProperties.AllowExternalSenders;
+                    group.AutoSubscribeNewMembers = exchangeOnlineProperties.AutoSubscribeNewMembers;
+                    group.IsSubscribedByMail = exchangeOnlineProperties.IsSubscribedByMail;
+                }
                 return group;
             }
             return null;
         }
 
-        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners, bool detailed)
         {
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (displayName eq '{displayName}' or mailNickName eq '{displayName}')", accessToken);
             if (results != null && results.Items.Any())
@@ -335,6 +341,12 @@ namespace PnP.PowerShell.Commands.Utilities
             return results;
         }
 
+        private static async Task<Microsoft365Group> GetGroupExchangeOnlineSettingsAsync(PnPConnection connection, Guid groupId, string accessToken)
+        {
+            var results = await GraphHelper.GetAsync<Microsoft365Group>(connection, $"v1.0/groups/{groupId}?$select=allowExternalSenders,isSubscribedByMail,autoSubscribeNewMembers", accessToken);
+            return results;
+        }
+
         internal static async Task ClearMembersAsync(PnPConnection connection, Guid groupId, string accessToken)
         {
             var members = await GetMembersAsync(connection, groupId, accessToken);
@@ -392,6 +404,22 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
         }
+
+        internal static async Task<Microsoft365Group> UpdateExchangeOnlineSettingAsync(PnPConnection connection, Guid groupId, string accessToken, Microsoft365Group group)
+        {
+            var patchData = new
+            {
+                group.AllowExternalSenders,
+                group.AutoSubscribeNewMembers
+            };
+
+            var result = await GraphHelper.PatchAsync(connection, accessToken, $"v1.0/groups/{groupId}", patchData);
+
+            group.AllowExternalSenders = result.AllowExternalSenders;
+            group.AutoSubscribeNewMembers = result.AutoSubscribeNewMembers;
+
+            return group;
+        }        
 
         internal static async Task<Dictionary<string, string>> GetSiteUrlBatchedAsync(PnPConnection connection, string accessToken, string[] groupIds)
         {
