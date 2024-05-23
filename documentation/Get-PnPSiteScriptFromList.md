@@ -22,7 +22,7 @@ Generates a Site Script from an existing list
 ### By List (Default)
 
 ```powershell
-Get-PnPSiteScriptFromList -Identity <ListPipeBind> [-Connection <PnPConnection>] [-Verbose]
+Get-PnPSiteScriptFromList -List <ListPipeBind> [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ### By Url
@@ -95,7 +95,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Identity
+### -List
 Specifies an instance, Id or, title of the list to generate a Site Script from
 
 ```yaml
