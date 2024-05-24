@@ -91,7 +91,7 @@
 <p>Generates a Site Script from an existing list</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-list-default">By List (Default)</h3>
-<pre><code class="lang-powershell">Get-PnPSiteScriptFromList -Identity &lt;ListPipeBind&gt; [-Connection &lt;PnPConnection&gt;] [-Verbose]
+<pre><code class="lang-powershell">Get-PnPSiteScriptFromList -List &lt;ListPipeBind&gt; [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h3 id="by-url">By Url</h3>
 <pre><code class="lang-powershell">Get-PnPSiteScriptFromList -Url &lt;String&gt; [-Connection &lt;PnPConnection&gt;] [-Verbose]
@@ -139,7 +139,7 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
+<h3 id="-list">-List</h3>
 <p>Specifies an instance, Id or, title of the list to generate a Site Script from</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: By List

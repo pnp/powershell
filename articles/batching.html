@@ -95,7 +95,7 @@
 <li>We update the item (this will be a CSOM request to the server)</li>
 </ol>
 <p>All in all you see we make around 6 requests, although the exact number depends a bit on what type of fields you are setting. So if you loop through 100 items, you get at least 600 requests.</p>
-<h2 id="adding-a-item-with-batching-rest">Adding a item with batching (REST)</h2>
+<h2 id="adding-an-item-with-batching-rest">Adding an item with batching (REST)</h2>
 <pre><code class="lang-powershell">$batch = New-PnPBatch
 1..100 | ForEach-Object{ Add-PnPListItem -List &quot;ItemTest&quot; -Values @{&quot;Title&quot;=&quot;Test Item Batched $_&quot;} -Batch $batch }
 Invoke-PnPBatch -Batch $batch
