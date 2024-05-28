@@ -418,40 +418,55 @@ namespace PnP.PowerShell.Commands.Admin
         public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? DelayDenyAddAndCustomizePagesEnforcement;
+        public bool? DelayDenyAddAndCustomizePagesEnforcement { get; set; }
 
         [Parameter(Mandatory = false)]
-        public SharingCapabilities? CoreSharingCapability;
+        public SharingCapabilities? CoreSharingCapability { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? EnableVersionExpirationSetting;
+        public bool? EnableVersionExpirationSetting { get; set; }
 
         [Parameter(Mandatory = false)]
         public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInOneDrive;
 
         [Parameter(Mandatory = false)]
-        public bool? AllowOverrideForBlockUserInfoVisibility;
+        public bool? AllowOverrideForBlockUserInfoVisibility { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? AllowEveryoneExceptExternalUsersClaimInPrivateSite;
+        public bool? AllowEveryoneExceptExternalUsersClaimInPrivateSite { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? AIBuilderEnabled;
+        public bool? AIBuilderEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? AllowSensitivityLabelOnRecords;
+        public bool? AllowSensitivityLabelOnRecords { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? AnyoneLinkTrackUsers;
+        public bool? AnyoneLinkTrackUsers { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? EnableSiteArchive;
+        public bool? EnableSiteArchive { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? ESignatureEnabled;
+        public bool? ESignatureEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
-        public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInSharePoint;
+        public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInSharePoint { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public SharingScope? OneDriveDefaultShareLinkScope { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public Role? OneDriveDefaultShareLinkRole { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? OneDriveDefaultLinkToExistingAccess { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public SharingState? OneDriveBlockGuestsAsSiteAdmin { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public int? RecycleBinRetentionPeriod { get; set; }
 
         protected override void ExecuteCmdlet()
         {
@@ -1470,6 +1485,31 @@ namespace PnP.PowerShell.Commands.Admin
             if (AllowOverrideForBlockUserInfoVisibility.HasValue)
             {
                 Tenant.AllowOverrideForBlockUserInfoVisibility = AllowOverrideForBlockUserInfoVisibility.Value;
+                modified = true;
+            }
+            if (OneDriveDefaultShareLinkScope.HasValue)
+            {
+                Tenant.OneDriveDefaultShareLinkScope = OneDriveDefaultShareLinkScope.Value;
+                modified = true;
+            }
+            if (OneDriveDefaultShareLinkRole.HasValue)
+            {
+                Tenant.OneDriveDefaultShareLinkRole = OneDriveDefaultShareLinkRole.Value;
+                modified = true;
+            }
+            if (OneDriveDefaultLinkToExistingAccess.HasValue)
+            {
+                Tenant.OneDriveDefaultLinkToExistingAccess = OneDriveDefaultLinkToExistingAccess.Value;
+                modified = true;
+            }
+            if (OneDriveBlockGuestsAsSiteAdmin.HasValue)
+            {
+                Tenant.OneDriveBlockGuestsAsSiteAdmin = OneDriveBlockGuestsAsSiteAdmin.Value;
+                modified = true;
+            }
+            if (RecycleBinRetentionPeriod.HasValue)
+            {
+                Tenant.RecycleBinRetentionPeriod = RecycleBinRetentionPeriod.Value;
                 modified = true;
             }
             if (BlockDownloadFileTypePolicy.HasValue)
