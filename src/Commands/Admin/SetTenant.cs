@@ -420,6 +420,39 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? DelayDenyAddAndCustomizePagesEnforcement;
 
+        [Parameter(Mandatory = false)]
+        public SharingCapabilities? CoreSharingCapability;
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableVersionExpirationSetting;
+
+        [Parameter(Mandatory = false)]
+        public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInOneDrive;
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowOverrideForBlockUserInfoVisibility;
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowEveryoneExceptExternalUsersClaimInPrivateSite;
+
+        [Parameter(Mandatory = false)]
+        public bool? AIBuilderEnabled;
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowSensitivityLabelOnRecords;
+
+        [Parameter(Mandatory = false)]
+        public bool? AnyoneLinkTrackUsers;
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableSiteArchive;
+
+        [Parameter(Mandatory = false)]
+        public bool? ESignatureEnabled;
+
+        [Parameter(Mandatory = false)]
+        public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInSharePoint;
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -460,7 +493,6 @@ namespace PnP.PowerShell.Commands.Admin
             }
             if (SharingCapability != null)
             {
-
                 Tenant.SharingCapability = SharingCapability.Value;
                 modified = true;
             }
@@ -526,13 +558,11 @@ namespace PnP.PowerShell.Commands.Admin
                     modified = true;
                 }
             }
-
             if (DisableBackToClassic.HasValue)
             {
                 Tenant.DisableBackToClassic = DisableBackToClassic.Value;
                 modified = true;
             }
-
             if (UsePersistentCookiesForExplorerView.HasValue)
             {
                 Tenant.UsePersistentCookiesForExplorerView = UsePersistentCookiesForExplorerView.Value;
@@ -775,8 +805,6 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw new InvalidOperationException("Setting the property DefaultSharingLinkType is not supported by your version of the service");
                 }
-
-
             }
             if (ODBMembersCanShare.HasValue)
             {
@@ -1389,7 +1417,61 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.DelayDenyAddAndCustomizePagesEnforcement = DelayDenyAddAndCustomizePagesEnforcement.Value;
                 modified = true;
             }
-
+            if (CoreSharingCapability.HasValue)
+            {
+                Tenant.CoreSharingCapability = CoreSharingCapability.Value;
+                modified = true;
+            }
+            if (EnableVersionExpirationSetting.HasValue)
+            {
+                Tenant.EnableVersionExpirationSetting = EnableVersionExpirationSetting.Value;
+                modified = true;
+            }
+            if (BlockUserInfoVisibilityInOneDrive.HasValue)
+            {
+                Tenant.BlockUserInfoVisibilityInOneDrive = BlockUserInfoVisibilityInOneDrive.Value;
+                modified = true;
+            }
+            if (BlockUserInfoVisibilityInSharePoint.HasValue)
+            {
+                Tenant.BlockUserInfoVisibilityInSharePoint = BlockUserInfoVisibilityInSharePoint.Value;
+                modified = true;
+            }
+            if (AllowEveryoneExceptExternalUsersClaimInPrivateSite.HasValue)
+            {
+                Tenant.AllowEveryoneExceptExternalUsersClaimInPrivateSite = AllowEveryoneExceptExternalUsersClaimInPrivateSite.Value;
+                modified = true;
+            }
+            if (AIBuilderEnabled.HasValue)
+            {
+                Tenant.AIBuilderEnabled = AIBuilderEnabled.Value;
+                modified = true;
+            }
+            if (AllowSensitivityLabelOnRecords.HasValue)
+            {
+                Tenant.AllowSensitivityLabelOnRecords = AllowSensitivityLabelOnRecords.Value;
+                modified = true;
+            }
+            if (AnyoneLinkTrackUsers.HasValue)
+            {
+                Tenant.AnyoneLinkTrackUsers = AnyoneLinkTrackUsers.Value;
+                modified = true;
+            }
+            if (EnableSiteArchive.HasValue)
+            {
+                Tenant.EnableSiteArchive = EnableSiteArchive.Value;
+                modified = true;
+            }
+            if (ESignatureEnabled.HasValue)
+            {
+                Tenant.ESignatureEnabled = ESignatureEnabled.Value;
+                modified = true;
+            }
+            if (AllowOverrideForBlockUserInfoVisibility.HasValue)
+            {
+                Tenant.AllowOverrideForBlockUserInfoVisibility = AllowOverrideForBlockUserInfoVisibility.Value;
+                modified = true;
+            }
             if (BlockDownloadFileTypePolicy.HasValue)
             {
                 if (!BlockDownloadFileTypePolicy.Value)

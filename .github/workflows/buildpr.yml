@@ -7,14 +7,12 @@ on:
       - dev
     paths: 
       - 'src/**'
-  #push: 
-  #  branches:
-  #    - dev
-  #  paths:
-  #    - 'src/**'
+  
+permissions: read-all
+
 jobs:
   build_dev_branch:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout PnP.Framework
       uses: actions/checkout@v4

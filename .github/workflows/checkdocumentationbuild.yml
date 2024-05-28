@@ -7,6 +7,9 @@ on:
     paths:
       - 'documentation/**'
       - 'pages/**'
+
+permissions: read-all
+
 jobs:
   docfx:
     

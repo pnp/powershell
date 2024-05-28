@@ -13,9 +13,9 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPContainerType.ht
 
 **Required Permissions**
 
-    * Microsoft 365 SharePoint Administrator role is required
+    * SharePoint Embedded Administrator or Global Administrator role is required
 
-Creates a new SharePoint Container Type. Refer to [Hands on Lab - Setup and Configure SharePoint Embedded](https://learn.microsoft.com/en-us/sharepoint/dev/embedded/mslearn/m01-05-hol) for more details.
+Create a Container Type for a SharePoint Embedded Application. Refer to [Hands on Lab - Setup and Configure SharePoint Embedded](https://learn.microsoft.com/en-us/sharepoint/dev/embedded/mslearn/m01-05-hol) for more details.
 
 ## SYNTAX
 
