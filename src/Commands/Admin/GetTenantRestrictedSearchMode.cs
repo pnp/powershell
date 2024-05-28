@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Files
         protected override void ExecuteCmdlet()
         {
             var results = Tenant.GetSPORestrictedSearchMode();
-            AdminContext.ExecuteQuery();
+            AdminContext.ExecuteQueryRetry();
             WriteObject(results, true);
         }
     }
