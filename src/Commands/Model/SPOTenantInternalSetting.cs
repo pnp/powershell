@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Model
 {
-     public class SPOTenantInternalSettings
+     public class SPOTenantInternalSetting
      {
         #region Internal Settings properties
         public bool SitePagesEnabled { private set; get; }
@@ -38,20 +38,20 @@ namespace PnP.PowerShell.Commands.Model
 
         #endregion
 
-        public SPOTenantInternalSettings(Tenant tenant, ClientContext clientContext)
+        public SPOTenantInternalSetting(Tenant tenant, ClientContext clientContext)
         {
             try
             {
-                this.initSPOTenantInternalSettings(clientContext);
+                this.initSPOTenantInternalSetting(clientContext);
             }
             catch
             {
             }
         }
-        private void initSPOTenantInternalSettings(ClientContext clientContext)
+        private void initSPOTenantInternalSetting(ClientContext clientContext)
         {
             var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(clientContext);
-            var internalSettingsData = Utilities.REST.RestHelper.GetAsync<TenantInternalSettings>(httpClient, $"{clientContext.Url}_api/SPOInternalUseOnly.TenantAdminSettings", clientContext.GetAccessToken(), false).GetAwaiter().GetResult();
+            var internalSettingsData = Utilities.REST.RestHelper.GetAsync<TenantInternalSetting>(httpClient, $"{clientContext.Url}_api/SPOInternalUseOnly.TenantAdminSettings", clientContext.GetAccessToken(), false).GetAwaiter().GetResult();
 
             SitePagesEnabled = internalSettingsData.SitePagesEnabled.Value;
             DisableSelfServiceSiteCreation = internalSettingsData.DisableSelfServiceSiteCreation.Value;
@@ -76,7 +76,7 @@ namespace PnP.PowerShell.Commands.Model
             TenantDefaultTimeZoneId = internalSettingsData.TenantDefaultTimeZoneId.Value;
             AvailableManagedPathsForSiteCreation = internalSettingsData.AvailableManagedPathsForSiteCreation;
         }
-        private class TenantInternalSettings
+        private class TenantInternalSetting
         {
             #region Properties
 

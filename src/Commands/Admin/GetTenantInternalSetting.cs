@@ -6,15 +6,15 @@ using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Get, "PnPTenantInternalSettings")]
-    public class GetTenantInternalSettings : PnPAdminCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPTenantInternalSetting")]
+    public class GetTenantInternalSetting : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
 
             AdminContext.ExecuteQueryRetry();
-            WriteObject(new SPOTenantInternalSettings(Tenant, AdminContext));
+            WriteObject(new SPOTenantInternalSetting(Tenant, AdminContext));
         }
     }
 }

@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Get-PnPTenantInternalSettings
+title: Get-PnPTenantInternalSetting
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInternalSettings.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInternalSetting.html
 ---
  
-# Get-PnPTenantInternalSettings
+# Get-PnPTenantInternalSetting
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Returns additional organization-level site collection properties available from 
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantInternalSettings [-Connection <PnPConnection>] 
+Get-PnPTenantInternalSetting [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -35,7 +35,7 @@ You must have the SharePoint Online admin or Global admin role to run the cmdlet
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPTenantInternalSettings
+Get-PnPTenantInternalSetting
 ```
 
 This example returns internal tenant settings.
