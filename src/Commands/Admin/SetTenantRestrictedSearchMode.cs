@@ -1,5 +1,6 @@
 using Microsoft.Online.SharePoint.TenantAdministration;
 using PnP.PowerShell.Commands.Base;
+using Microsoft.SharePoint.Client;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Files
