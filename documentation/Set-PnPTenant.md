@@ -149,6 +149,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ESignatureEnabled <Boolean>]
  [-BlockUserInfoVisibilityInSharePoint <TenantBrowseUserInfoPolicyValue>]
  [-MarkNewFilesSensitiveByDefault <SensitiveByDefaultState>]
+ [-OneDriveDefaultShareLinkScope <SharingScope>]
+ [-OneDriveDefaultShareLinkRole <Role>]
+ [-OneDriveDefaultLinkToExistingAccess <Boolean>]
+ [-OneDriveBlockGuestsAsSiteAdmin <SharingState>]
+ [-RecycleBinRetentionPeriod <Int32>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -1802,14 +1807,10 @@ Gets or sets default share link role for fluid on SharePoint sites.
 The valid values are:
 
 - Edit
-- LimitedEdit
-- LimitedView
-- ManageList
 - None
-- Owner
 - RestrictedView
 - Review
-- Submit
+- View
 
 ```yaml
 Type: Role
@@ -1984,14 +1985,10 @@ Gets or sets default share link role for fluid on OneDrive sites.
 The valid values are:
 
 - Edit
-- LimitedEdit
-- LimitedView
-- ManageList
 - None
-- Owner
 - RestrictedView
 - Review
-- Submit
+- View
 
 ```yaml
 Type: Role
@@ -2558,11 +2555,104 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### MarkNewFilesSensitiveByDefault
+### -MarkNewFilesSensitiveByDefault
 Marks new files as sensitive by default before DLP policies are applied.
 
 ```yaml
 Type: SensitiveByDefaultState
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveDefaultShareLinkScope
+
+Sets the default sharing link scope for OneDrive.
+
+The valid values are:
+
+- Anyone
+- Organization
+- SpecificPeople
+- Uninitialized
+
+```yaml
+Type: SharingScope
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveDefaultShareLinkRole
+
+Sets the default sharing link role for OneDrive.
+
+Valid values are :
+
+- Edit
+- None
+- RestrictedView
+- Review
+- View
+
+```yaml
+Type: Role
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveDefaultLinkToExistingAccess
+
+Sets whether OneDrive default links should grant access to existing users.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveBlockGuestsAsSiteAdmin
+
+Sets the sharing state for blocking guests as site admin in OneDrive.
+
+Valid values are
+
+- On
+- Off
+- Unspecified
+
+```yaml
+Type: SharingState
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RecycleBinRetentionPeriod
+
+Sets the retention period for the recycle bin.
+
+The value of Recycle Bin Retention Period must be between 14 and 93. By default it is set to 93.
+
+```yaml
+Type: Int32
 Parameter Sets: (All)
 Required: False
 Position: Named
