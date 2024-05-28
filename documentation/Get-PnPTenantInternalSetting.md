@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInternalSe
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Returns additional organization-level site collection properties available from endpoint _api/SPOInternalUseOnly.TenantAdminSettings.
+Returns additional organizational level site collection properties available from endpoint `/_api/SPOInternalUseOnly.TenantAdminSettings`. This is an undocumented endpoint. Usage of this cmdlet might be subject to change if Microsoft changes the response.
 
 ## SYNTAX
 
@@ -24,8 +24,8 @@ Get-PnPTenantInternalSetting [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Returns organization-level site collection properties such as SitePagesEnabled, DisableSelfServiceSiteCreation, EnableAutoNewsDigest,
-CustomFormUrl, AutoQuotaEnabled, DisableGroupify, IncludeAtAGlanceInShareEmails, MailFromAddress, MobileNotificationIsEnabledForSharepoint, NewSiteManagedPath, NewSubsiteInModernOffForAll, NewSubsiteInModernOffForModernTemplates, NewTeamSiteManagedPath, ParentSiteUrl, PolicyOption, RequireSecondaryContact, ShowSelfServiceSiteCreation, SiteCreationNewUX, SmtpServer, SPListModernUXOff, TenantDefaultTimeZoneId and AvailableManagedPathsForSiteCreation.
+Returns organizational level site collection properties such as `SitePagesEnabled`, `DisableSelfServiceSiteCreation`, `EnableAutoNewsDigest`,
+`CustomFormUrl`, `AutoQuotaEnabled`, `DisableGroupify`, `IncludeAtAGlanceInShareEmails`, `MailFromAddress`, `MobileNotificationIsEnabledForSharepoint`, `NewSiteManagedPath`, `NewSubsiteInModernOffForAll`, `NewSubsiteInModernOffForModernTemplates`, `NewTeamSiteManagedPath`, `ParentSiteUrl`, `PolicyOption`, `RequireSecondaryContact`, `ShowSelfServiceSiteCreation`, `SiteCreationNewUX`, `SmtpServer`, `SPListModernUXOff`, `TenantDefaultTimeZoneId` and `AvailableManagedPathsForSiteCreation`.
 
 Currently, there are no parameters for this cmdlet.
 
