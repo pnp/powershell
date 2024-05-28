@@ -26,6 +26,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Detailed` to `Get-PnPMicrosoft365Group` which allows retrieval of the AllowExternalSenders, IsSubscribedByMail and AutoSubscribeNewMembers properties of the group [#3958](https://github.com/pnp/powershell/pull/3958)
 - Added `-RequireSenderAuthenticationEnabled` and `-AutoSubscribeNewMembers` to `Set-PnPMicrosoft365Group` which allows setting these properties on a group [#3958](https://github.com/pnp/powershell/pull/3958)
 - Added `Get-PnPContainerType` cmdlet to retrieve the list of Container Types created for a SharePoint Embedded Application in the tenant. [#3946](https://github.com/pnp/powershell/pull/3946)
+- Added `-RecycleBinRetentionPeriod`,`-OneDriveBlockGuestsAsSiteAdmin`,`-OneDriveDefaultShareLinkRole`,`-OneDriveDefaultShareLinkScope` and `-OneDriveDefaultLinkToExistingAccess` parameters to the `Set-PnPTenant` cmdlet. [#3977](https://github.com/pnp/powershell/pull/3977)
 
 ### Fixed
 
