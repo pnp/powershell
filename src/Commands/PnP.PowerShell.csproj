@@ -1,4 +1,4 @@
-﻿<Project>
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<Import Project="WindowsSdk.targets" Condition="'$(OS)' == 'Windows_NT'" />
 	<Import Project="Sdk.targets" Condition="'$(OS)' != 'Windows_NT'" />
 
