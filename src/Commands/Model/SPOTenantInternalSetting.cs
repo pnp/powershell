@@ -1,11 +1,6 @@
 using Microsoft.Online.SharePoint.TenantAdministration;
-using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -79,69 +74,27 @@ namespace PnP.PowerShell.Commands.Model
         private class TenantInternalSetting
         {
             #region Properties
-
-            [JsonProperty("AutoQuotaEnabled")]
             public SettingsBoolProperty AutoQuotaEnabled { get; set; }
-
-            [JsonProperty("AvailableManagedPathsForSiteCreation")]
             public string[] AvailableManagedPathsForSiteCreation { get; set; }
-
-            [JsonProperty("IncludeAtAGlanceInShareEmails")]
             public SettingsBoolProperty IncludeAtAGlanceInShareEmails { get; set; }
-
-            [JsonProperty("MailFromAddress")]
             public SettingsStringProperty MailFromAddress { get; set; }
-
-            [JsonProperty("MobileNotificationIsEnabledForSharepoint")]
             public SettingsBoolProperty MobileNotificationIsEnabledForSharepoint { get; set; }
-
-            [JsonProperty("NewSiteManagedPath")]
             public SettingsStringProperty NewSiteManagedPath { get; set; }
-
-            [JsonProperty("ParentSiteUrl")]
             public SettingsStringProperty ParentSiteUrl { get; set; }
-
-            [JsonProperty("PolicyOption")]
             public SettingsStringProperty PolicyOption { get; set; }
-
-            [JsonProperty("RequireSecondaryContact")]
             public SettingsBoolProperty RequireSecondaryContact { get; set; }
-
-            [JsonProperty("ShowSelfServiceSiteCreation")]
             public SettingsBoolProperty ShowSelfServiceSiteCreation { get; set; }
-
-            [JsonProperty("SiteCreationNewUX")]
             public SettingsBoolProperty SiteCreationNewUX { get; set; }
-
-            [JsonProperty("SmtpServer")]
             public SettingsStringProperty SmtpServer { get; set; }
-
-            [JsonProperty("SPListModernUXOff")]
             public SettingsBoolProperty SPListModernUXOff { get; set; }
-
-            [JsonProperty("TenantDefaultTimeZoneId")]
             public SettingsIntProperty TenantDefaultTimeZoneId { get; set; }
-
-            [JsonProperty("SitePagesEnabled")]
             public SettingsBoolProperty SitePagesEnabled { get; set; }
-
-            [JsonProperty("DisableGroupify")]
             public SettingsBoolProperty DisableGroupify { get; set; }
-
-            [JsonProperty("CustomFormUrl")]
             public SettingsStringProperty CustomFormUrl { get; set; }
-
-            [JsonProperty("EnableAutoNewsDigest")]
             public SettingsBoolProperty EnableAutoNewsDigest { get; set; }
-
-            [JsonProperty("DisableSelfServiceSiteCreation")]
             public SettingsBoolProperty DisableSelfServiceSiteCreation { get; set; }
-
-            [JsonProperty("NewSubsiteInModernOffForAll")]
             public SettingsBoolProperty NewSubsiteInModernOffForAll { get; set; }
-            [JsonProperty("NewSubsiteInModernOffForModernTemplates")]
             public SettingsBoolProperty NewSubsiteInModernOffForModernTemplates { get; set; }
-            [JsonProperty("NewTeamSiteManagedPath")]
             public SettingsStringProperty NewTeamSiteManagedPath { get; set; }
 
             #endregion
@@ -149,26 +102,17 @@ namespace PnP.PowerShell.Commands.Model
             #region Helper Types
             public class SettingsBoolProperty
             {
-                [JsonProperty("IsReadOnly")]
                 public bool IsReadOnly { get; set; }
-
-                [JsonProperty("Value")]
                 public bool Value { get; set; }
             }
             public class SettingsIntProperty
             {
-                [JsonProperty("IsReadOnly")]
                 public bool IsReadOnly { get; set; }
-
-                [JsonProperty("Value")]
                 public int Value { get; set; }
             }
             public class SettingsStringProperty
             {
-                [JsonProperty("IsReadOnly")]
                 public bool IsReadOnly { get; set; }
-
-                [JsonProperty("Value")]
                 public string Value { get; set; }
             }
 
