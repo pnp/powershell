@@ -219,6 +219,11 @@
  [-ESignatureEnabled &lt;Boolean&gt;]
  [-BlockUserInfoVisibilityInSharePoint &lt;TenantBrowseUserInfoPolicyValue&gt;]
  [-MarkNewFilesSensitiveByDefault &lt;SensitiveByDefaultState&gt;]
+ [-OneDriveDefaultShareLinkScope &lt;SharingScope&gt;]
+ [-OneDriveDefaultShareLinkRole &lt;Role&gt;]
+ [-OneDriveDefaultLinkToExistingAccess &lt;Boolean&gt;]
+ [-OneDriveBlockGuestsAsSiteAdmin &lt;SharingState&gt;]
+ [-RecycleBinRetentionPeriod &lt;Int32&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -1492,14 +1497,10 @@ Accept wildcard characters: False
 <p>The valid values are:</p>
 <ul>
 <li>Edit</li>
-<li>LimitedEdit</li>
-<li>LimitedView</li>
-<li>ManageList</li>
 <li>None</li>
-<li>Owner</li>
 <li>RestrictedView</li>
 <li>Review</li>
-<li>Submit</li>
+<li>View</li>
 </ul>
 <pre><code class="lang-yaml">Type: Role
 Parameter Sets: (All)
@@ -1628,14 +1629,10 @@ Accept wildcard characters: False
 <p>The valid values are:</p>
 <ul>
 <li>Edit</li>
-<li>LimitedEdit</li>
-<li>LimitedView</li>
-<li>ManageList</li>
 <li>None</li>
-<li>Owner</li>
 <li>RestrictedView</li>
 <li>Review</li>
-<li>Submit</li>
+<li>View</li>
 </ul>
 <pre><code class="lang-yaml">Type: Role
 Parameter Sets: (All)
@@ -2055,9 +2052,81 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="marknewfilessensitivebydefault">MarkNewFilesSensitiveByDefault</h3>
+<h3 id="-marknewfilessensitivebydefault">-MarkNewFilesSensitiveByDefault</h3>
 <p>Marks new files as sensitive by default before DLP policies are applied.</p>
 <pre><code class="lang-yaml">Type: SensitiveByDefaultState
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedrivedefaultsharelinkscope">-OneDriveDefaultShareLinkScope</h3>
+<p>Sets the default sharing link scope for OneDrive.</p>
+<p>The valid values are:</p>
+<ul>
+<li>Anyone</li>
+<li>Organization</li>
+<li>SpecificPeople</li>
+<li>Uninitialized</li>
+</ul>
+<pre><code class="lang-yaml">Type: SharingScope
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedrivedefaultsharelinkrole">-OneDriveDefaultShareLinkRole</h3>
+<p>Sets the default sharing link role for OneDrive.</p>
+<p>Valid values are :</p>
+<ul>
+<li>Edit</li>
+<li>None</li>
+<li>RestrictedView</li>
+<li>Review</li>
+<li>View</li>
+</ul>
+<pre><code class="lang-yaml">Type: Role
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedrivedefaultlinktoexistingaccess">-OneDriveDefaultLinkToExistingAccess</h3>
+<p>Sets whether OneDrive default links should grant access to existing users.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-onedriveblockguestsassiteadmin">-OneDriveBlockGuestsAsSiteAdmin</h3>
+<p>Sets the sharing state for blocking guests as site admin in OneDrive.</p>
+<p>Valid values are</p>
+<ul>
+<li>On</li>
+<li>Off</li>
+<li>Unspecified</li>
+</ul>
+<pre><code class="lang-yaml">Type: SharingState
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-recyclebinretentionperiod">-RecycleBinRetentionPeriod</h3>
+<p>Sets the retention period for the recycle bin.</p>
+<p>The value of Recycle Bin Retention Period must be between 14 and 93. By default it is set to 93.</p>
+<pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 Required: False
 Position: Named
