@@ -75,6 +75,7 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string BccExternalSharingInvitationsList;
 
+        [Obsolete("Overriding UserVoiceForFeedbackEnabled property has been deprecated in SharePoint Online. This parameter will be removed in the next major release.")]
         [Parameter(Mandatory = false)]
         public bool? UserVoiceForFeedbackEnabled;
 
@@ -591,11 +592,6 @@ namespace PnP.PowerShell.Commands.Admin
             if (!string.IsNullOrEmpty(BccExternalSharingInvitationsList))
             {
                 Tenant.BccExternalSharingInvitationsList = BccExternalSharingInvitationsList;
-                modified = true;
-            }
-            if (UserVoiceForFeedbackEnabled.HasValue)
-            {
-                Tenant.UserVoiceForFeedbackEnabled = UserVoiceForFeedbackEnabled.Value;
                 modified = true;
             }
             if (PublicCdnEnabled != null)
