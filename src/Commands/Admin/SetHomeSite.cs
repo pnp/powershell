@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Admin
                         Tenant.RemoveTargetedSite(enumerable.First().SiteId);
                         AdminContext.ExecuteQueryRetry();
                         Tenant.AddHomeSite(HomeSiteUrl, 1, null);
-                        AdminContext.ExecuteQuery();
+                        AdminContext.ExecuteQueryRetry();
                         flag = true;
                     }
                     HomeSiteConfigurationParam configurationParam = new()

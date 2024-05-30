@@ -71,8 +71,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
                     if (ParameterSetName == ParamSet_BulkItems) 
                     {
                         PnPContext.Web.LoadAsync(i => i.Url);
-                        list.LoadAsync(i => i.RootFolder);
-                        
+                        list.LoadAsync(i => i.RootFolder);                        
 
                         var rootUrl = PnPContext.Web.Url.GetLeftPart(UriPartial.Authority);
                     
@@ -87,7 +86,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
                             WriteVerbose($"Setting retention label to batch {rangeIndex} of items");
                             Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetComplianceTagOnBulkItems(ClientContext, range, rootUrl + list.RootFolder.ServerRelativeUrl, Label);
-                            ClientContext.ExecuteQuery();
+                            ClientContext.ExecuteQueryRetry();
                             ItemIds.RemoveRange(0, itemsToProcess);
                         }
                     }
