@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
                         WriteVerbose($"Clearing retention label on batch {rangeIndex} of items");
                         Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetComplianceTagOnBulkItems(ClientContext, range, rootUrl + list.RootFolder.ServerRelativeUrl, string.Empty);
-                        ClientContext.ExecuteQuery();
+                        ClientContext.ExecuteQueryRetry();
 
                         ItemIds.RemoveRange(0, itemsToProcess);
                     }
