@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPContainerType` cmdlet to retrieve the list of Container Types created for a SharePoint Embedded Application in the tenant. [#3946](https://github.com/pnp/powershell/pull/3946)
 - Added `-RecycleBinRetentionPeriod`,`-OneDriveBlockGuestsAsSiteAdmin`,`-OneDriveDefaultShareLinkRole`,`-OneDriveDefaultShareLinkScope` and `-OneDriveDefaultLinkToExistingAccess` parameters to the `Set-PnPTenant` cmdlet. [#3977](https://github.com/pnp/powershell/pull/3977)
 - Added `Get-PnPTenantRestrictedSearchMode` and `Set-PnPTenantRestrictedSearchMode` cmdlets to enable and set up Restricted SharePoint Search. [#3976](https://github.com/pnp/powershell/pull/3976)
+- Added `Get-PnPTenantInternalSetting` cmdlet to retrieve internal tenant settings not exposed via CSOM SDK. [#3902](https://github.com/pnp/powershell/pull/3902)
 
 ### Fixed
 
@@ -43,6 +44,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Renamed `Get-PnPSiteVersionPolicyProgress` to `Get-PnPSiteVersionPolicyStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
 - `Remove-PnPGroupMember` cmdlet now supports removing members from pipeline. [#3955](https://github.com/pnp/powershell/pull/3955)
 - Changed `Set-PnPTenantCdnPolicy` cmdlet to allow PolicyValue parameter to be an empty string or $null, while still being mandatory. [#3937](https://github.com/pnp/powershell/pull/3937)
+- Marked `UserVoiceForFeedbackEnabled` as obsolete in `Set-PnPTenant` cmdlet as Microsoft doesn't support this. [#3985](https://github.com/pnp/powershell/pull/3985)
+- `Get-PnPTenantSite` cmdlet now returns additional properties like `ArchiveStatus`, `EnableAutoExpirationVersionTrim` and many more. [#3987](https://github.com/pnp/powershell/pull/3987)
 
 ### Contributors
 
