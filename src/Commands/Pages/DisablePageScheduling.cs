@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
 using PnP.PowerShell.Commands.Utilities;
 
-namespace PnP.PowerShell.Commands.Features
+namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPPageScheduling")]
     [OutputType(typeof(void))]
