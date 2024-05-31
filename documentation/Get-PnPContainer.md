@@ -20,7 +20,7 @@ Returns one or more Containers in a SharePoint repository services application.
 ## SYNTAX
 
 ```powershell
-Get-PnPContainer [-Identity <ContainerPipeBind>] [-OwningApplicationId <Guid>] [-Paged <switchparameter>] [-PagingToken <string>][-Connection <PnPConnection>] 
+Get-PnPContainer [-Identity <ContainerPipeBind>] [-OwningApplicationId <Guid>] [-Paged <switchparameter>] [-PagingToken <string>][-SortOrder <SortOrder>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -116,6 +116,7 @@ Accept wildcard characters: False
 ### -PagingToken
 
 Use this parameter to provide the <Paging Token> provided to view the remaining Containers as shown in Example 5. If there are no more Containers to display, the commandlet output will return the message End of Containers view. Otherwise, use the given <Paging Token> to retrieve the next batch of up to 5,000 ontainers.
+
 ```yaml
 Type: String
 Parameter Sets: (All)
@@ -126,6 +127,22 @@ Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -SortOrder
+
+Use this parameter to specify the sort order. The sorting will be done based on Storage used in ascending or descending order.
+
+```yaml
+Type: SortOrder
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
