@@ -592,6 +592,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPHomeSite.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPHomeSite.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPHtmlPublishingPageLayout.md",
       "output": {
         ".html": {
@@ -2956,6 +2966,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPPageLikedByInformation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPageSchedulingEnabled.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPageSchedulingEnabled.html"
         }
       },
       "version": ""
