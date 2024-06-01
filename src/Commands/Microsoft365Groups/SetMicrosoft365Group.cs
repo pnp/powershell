@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(Connection, AccessToken, false, false, false);
+            var group = Identity.GetGroup(Connection, AccessToken, false, false, false, false);
 
             if (group != null)
             {
