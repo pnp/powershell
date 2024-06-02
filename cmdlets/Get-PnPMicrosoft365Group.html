@@ -90,7 +90,7 @@
 </ul>
 <p>Gets one Microsoft 365 Group or a list of Microsoft 365 Groups</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-IncludeSiteUrl] [-IncludeOwners] [-Detailed] [-Filter &lt;string&gt;]
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Group [-Identity &lt;Microsoft365GroupPipeBind&gt;] [-IncludeSiteUrl] [-IncludeOwners] [-Detailed] [-Filter &lt;string&gt;] [-IncludeSensitivityLabels]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to retrieve Microsoft 365 Groups. By using <code>Identity</code> option you may specify the exact group that will be retrieved.</p>
@@ -182,6 +182,17 @@ Accept wildcard characters: False
 <p>Specify the query to pass to Graph API in $filter.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Filter
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includesensitivitylabels">-IncludeSensitivityLabels</h3>
+<p>Include fetching the sensitivity labels. This slows down large listings.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
