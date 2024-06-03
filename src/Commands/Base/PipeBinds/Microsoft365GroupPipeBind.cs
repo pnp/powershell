@@ -44,20 +44,20 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Guid GroupId => _groupId;
 
-        public Microsoft365Group GetGroup(PnPConnection connection, string accessToken, bool includeSite, bool includeOwners, bool detailed)
+        public Microsoft365Group GetGroup(PnPConnection connection, string accessToken, bool includeSite, bool includeOwners, bool detailed, bool includeSensitivityLabels)
         {
             Microsoft365Group group = null;
             if (Group != null)
             {
-                group = Microsoft365GroupsUtility.GetGroupAsync(connection, _group.Id.Value, accessToken, includeSite, includeOwners, detailed).GetAwaiter().GetResult();
+                group = Microsoft365GroupsUtility.GetGroupAsync(connection, _group.Id.Value, accessToken, includeSite, includeOwners, detailed, includeSensitivityLabels).GetAwaiter().GetResult();
             }
             else if (_groupId != Guid.Empty)
             {
-                group = Microsoft365GroupsUtility.GetGroupAsync(connection, _groupId, accessToken, includeSite, includeOwners, detailed).GetAwaiter().GetResult();
+                group = Microsoft365GroupsUtility.GetGroupAsync(connection, _groupId, accessToken, includeSite, includeOwners, detailed, includeSensitivityLabels).GetAwaiter().GetResult();
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                group = Microsoft365GroupsUtility.GetGroupAsync(connection, DisplayName, accessToken, includeSite, includeOwners, detailed).GetAwaiter().GetResult();
+                group = Microsoft365GroupsUtility.GetGroupAsync(connection, DisplayName, accessToken, includeSite, includeOwners, detailed, includeSensitivityLabels).GetAwaiter().GetResult();
             }
             return group;
         }
@@ -74,7 +74,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var group = Microsoft365GroupsUtility.GetGroupAsync(connection, DisplayName, accessToken, false, false, false).GetAwaiter().GetResult();
+                var group = Microsoft365GroupsUtility.GetGroupAsync(connection, DisplayName, accessToken, false, false, false, false).GetAwaiter().GetResult();
                 if (group != null)
                 {
                     return group.Id.Value;

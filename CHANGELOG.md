@@ -28,6 +28,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPContainerType` cmdlet to retrieve the list of Container Types created for a SharePoint Embedded Application in the tenant. [#3946](https://github.com/pnp/powershell/pull/3946)
 - Added `-RecycleBinRetentionPeriod`,`-OneDriveBlockGuestsAsSiteAdmin`,`-OneDriveDefaultShareLinkRole`,`-OneDriveDefaultShareLinkScope` and `-OneDriveDefaultLinkToExistingAccess` parameters to the `Set-PnPTenant` cmdlet. [#3977](https://github.com/pnp/powershell/pull/3977)
 - Added `Get-PnPTenantRestrictedSearchMode` and `Set-PnPTenantRestrictedSearchMode` cmdlets to enable and set up Restricted SharePoint Search. [#3976](https://github.com/pnp/powershell/pull/3976)
+- Added `Get-PnPTenantInternalSetting` cmdlet to retrieve internal tenant settings not exposed via CSOM SDK. [#3902](https://github.com/pnp/powershell/pull/3902)
+- Added `Add-PnPHomeSite` cmdlet to add a home site to your tenant. [#3989](https://github.com/pnp/powershell/pull/3989)
+- Added `Get-PnPPageSchedulingEnabled` cmdlet to get the state of the modern page schedule feature in the library. [PR](https://github.com/pnp/powershell/commit/4ac757fc2072233529b38b2b39c36ea6b941e003)
+- Added `-IncludeSensitivityLabels` parameter to `Get-PnPMicrosoft365Group` cmdlet to retrieve sensitivity labels assigned to M365 Groups. [#3991](https://github.com/pnp/powershell/pull/3991)
 
 ### Fixed
 
@@ -37,12 +41,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed NullDereferenceException happening when an exception is logged in PnPConnectedCmdlet but the connection passed through -Connection parameter is not the last one. [#3885](https://github.com/pnp/powershell/pull/3885)
 - Fixed NullDereferenceException in `Get-PnPUserProfileProperty` cmdlet when the user profile doesn't exist, showing a better error message. [#3891](https://github.com/pnp/powershell/pull/3891)
 - Fixed the dev build process on Mac OS devices. [#3907](https://github.com/pnp/powershell/pull/3907)
+- Fixed `Get-PnPContainer` cmdlet to also handle pagination in case of large no. of containers in a tenant. [#3990](https://github.com/pnp/powershell/pull/3990)
 
 ## Changed
 - Renamed `Get-PnPSiteFileVersionExpirationReportJobProgress` to `Get-PnPSiteFileVersionExpirationReportJobStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
 - Renamed `Get-PnPSiteVersionPolicyProgress` to `Get-PnPSiteVersionPolicyStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
 - `Remove-PnPGroupMember` cmdlet now supports removing members from pipeline. [#3955](https://github.com/pnp/powershell/pull/3955)
 - Changed `Set-PnPTenantCdnPolicy` cmdlet to allow PolicyValue parameter to be an empty string or $null, while still being mandatory. [#3937](https://github.com/pnp/powershell/pull/3937)
+- Marked `UserVoiceForFeedbackEnabled` as obsolete in `Set-PnPTenant` cmdlet as Microsoft doesn't support this. [#3985](https://github.com/pnp/powershell/pull/3985)
+- `Get-PnPTenantSite` cmdlet now returns additional properties like `ArchiveStatus`, `EnableAutoExpirationVersionTrim` and many more. [#3987](https://github.com/pnp/powershell/pull/3987)
 
 ### Contributors
 
