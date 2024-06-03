@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
 
         public string ParentLabelId { get; set; }
 
-        internal SPOFileSensitivityLabelInfo(FileSensitivityLabelInfo label)
+        public SPOFileSensitivityLabelInfo(FileSensitivityLabelInfo label)
         {
             DisplayName = label.DisplayName;
             LabelId = label.LabelId;            
