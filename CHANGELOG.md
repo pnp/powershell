@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPTenantInternalSetting` cmdlet to retrieve internal tenant settings not exposed via CSOM SDK. [#3902](https://github.com/pnp/powershell/pull/3902)
 - Added `Add-PnPHomeSite` cmdlet to add a home site to your tenant. [#3989](https://github.com/pnp/powershell/pull/3989)
 - Added `Get-PnPPageSchedulingEnabled` cmdlet to get the state of the modern page schedule feature in the library. [PR](https://github.com/pnp/powershell/commit/4ac757fc2072233529b38b2b39c36ea6b941e003)
+- Added `-IncludeSensitivityLabels` parameter to `Get-PnPMicrosoft365Group` cmdlet to retrieve sensitivity labels assigned to M365 Groups. [#3991](https://github.com/pnp/powershell/pull/3991)
 
 ### Fixed
 
@@ -63,6 +64,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Giacomo Pozzoni [jackpoz]
 - [blarrywangmsft]
 - Koen Zomers [koenzomers]
+- Erwin van Hunen [erwinvanhunen]
 
 ## [2.4.0]
 
