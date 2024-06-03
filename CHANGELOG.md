@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed NullDereferenceException in `Get-PnPUserProfileProperty` cmdlet when the user profile doesn't exist, showing a better error message. [#3891](https://github.com/pnp/powershell/pull/3891)
 - Fixed the dev build process on Mac OS devices. [#3907](https://github.com/pnp/powershell/pull/3907)
 - Fixed `Get-PnPContainer` cmdlet to also handle pagination in case of large no. of containers in a tenant. [#3990](https://github.com/pnp/powershell/pull/3990)
+- Fixed `New-PnPTeamsTeam` cmdlet to better handle error specifically such as `Conflict (409): Team already exists`. [#3992](https://github.com/pnp/powershell/pull/3992)
 
 ### Changed
 - Renamed `Get-PnPSiteFileVersionExpirationReportJobProgress` to `Get-PnPSiteFileVersionExpirationReportJobStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
