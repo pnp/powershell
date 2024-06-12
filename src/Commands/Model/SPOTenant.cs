@@ -59,9 +59,7 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool BccExternalSharingInvitations { private set; get; }
 
-        public string BccExternalSharingInvitationsList { private set; get; }
-
-        public bool UserVoiceForFeedbackEnabled { private set; get; }
+        public string BccExternalSharingInvitationsList { private set; get; }        
 
         public bool PublicCdnEnabled { private set; get; }
 
@@ -302,14 +300,7 @@ namespace PnP.PowerShell.Commands.Model
             {
                 UseFindPeopleInPeoplePicker = false;
             }
-            try
-            {
-                UserVoiceForFeedbackEnabled = tenant.UserVoiceForFeedbackEnabled;
-            }
-            catch
-            {
-                UserVoiceForFeedbackEnabled = true;
-            }
+            
             try
             {
                 RequireAnonymousLinksExpireInDays = tenant.RequireAnonymousLinksExpireInDays;

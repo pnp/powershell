@@ -1,8 +1,11 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.SharePoint;
 using System;
+using System.Collections.Generic;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -23,6 +26,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string PagingToken { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public SortOrder? SortByStorage { get; set; }
+
         protected override void ExecuteCmdlet()
         {
             if (Identity != null)
@@ -32,9 +38,36 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else if (OwningApplicationId != Guid.Empty)
             {
-                var containersProperties = Tenant.GetSPOContainersByApplicationId(OwningApplicationId, Paged, PagingToken);
+                ClientResult<SPContainerCollection> clientResult;
+                if (SortByStorage.HasValue)
+                {
+                    bool ascending = SortByStorage == SortOrder.Ascending;
+                    clientResult = Tenant.GetSortedSPOContainersByApplicationId(OwningApplicationId, ascending, Paged, PagingToken);
+                }
+                else
+                {
+                    clientResult = Tenant.GetSPOContainersByApplicationId(OwningApplicationId, Paged, PagingToken);
+                }
                 AdminContext.ExecuteQueryRetry();
-                WriteObject(containersProperties.Value.ContainerCollection);
+                IList<SPContainerProperties> containerCollection = clientResult.Value.ContainerCollection;
+                if (containerCollection != null && containerCollection.Count > 0)
+                {
+                    foreach (SPContainerProperties item in containerCollection)
+                    {
+                        WriteObject(new Model.SharePoint.SPConsumingTenantContainerByIdentity(item));
+                    }
+                    if (Paged)
+                    {
+                        if (!string.IsNullOrWhiteSpace(clientResult.Value.PagingToken))
+                        {
+                            WriteObject($"Retrieve remaining containers with token: {clientResult.Value.PagingToken}");
+                        }
+                        else
+                        {
+                            WriteObject("End of containers view.");
+                        }
+                    }                    
+                }                
             }
             else
             {
