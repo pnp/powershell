@@ -86,9 +86,10 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+<li>SharePoint: Sites.FullControl.All, TermStore.ReadWrite.All, User.ReadWrite.All</li>
+<li>Microsoft Graph: User.Read</li>
 </ul>
-<p>Office365 only: Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://&lt;tenant&gt;-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.</p>
+<p>Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://&lt;tenant&gt;-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="single">Single</h3>
 <pre><code class="lang-powershell">Set-PnPUserProfileProperty -Account &lt;String&gt; -PropertyName &lt;String&gt; -Value &lt;String&gt;
