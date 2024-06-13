@@ -54,9 +54,8 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = false)]
         public string MailNickname;
 
-        [Parameter(Mandatory = false)]
-        [Alias("AllowExternalSenders")] // This is the name used in Microsoft Graph while the name below is the one used within Exchange Online. They both are about the same feature.
-        public bool? RequireSenderAuthenticationEnabled;
+        [Parameter(Mandatory = false)] // This is the name used in Microsoft Graph while the name RequireSenderAuthenticationEnabled is the one used within Exchange Online, but there its inversed, so we cannot easily add it as an alias here. They both are about the same feature.
+        public bool? AllowExternalSenders;
 
         [Parameter(Mandatory = false)]
         public bool? AutoSubscribeNewMembers;
@@ -103,9 +102,9 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     group = Microsoft365GroupsUtility.UpdateAsync(Connection, AccessToken, group).GetAwaiter().GetResult();
                 }
 
-                if (ParameterSpecified(nameof(RequireSenderAuthenticationEnabled)) && RequireSenderAuthenticationEnabled.HasValue)
+                if (ParameterSpecified(nameof(AllowExternalSenders)) && AllowExternalSenders.HasValue)
                 {
-                    group.AllowExternalSenders = RequireSenderAuthenticationEnabled.Value;
+                    group.AllowExternalSenders = AllowExternalSenders.Value;
                     exchangeOnlinePropertiesChanged = true;
                 }
 
