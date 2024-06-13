@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         /// <param name="token">The oAuth JWT token</param>
         /// <returns>Enum indicating the type of oAuth JWT token</returns>
-        internal static Enums.IdType ValidateTokenType(string token)
+        internal static Enums.IdType RetrieveTokenType(string token)
         {
             var decodedToken = new JwtSecurityToken(token);
 
