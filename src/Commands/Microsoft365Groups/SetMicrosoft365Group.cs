@@ -104,7 +104,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
                 if (ParameterSpecified(nameof(AllowExternalSenders)) && AllowExternalSenders.HasValue)
                 {
-                    if(TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
+                    if(TokenHandler.ValidateTokenType(AccessToken) != Enums.IdType.Delegate)
                     {
                         WriteWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
                     }
@@ -115,7 +115,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
                 if (ParameterSpecified(nameof(AutoSubscribeNewMembers)) && AutoSubscribeNewMembers.HasValue)
                 {
-                    if (TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
+                    if (TokenHandler.ValidateTokenType(AccessToken) != Enums.IdType.Delegate)
                     {
                         WriteWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
                     }
