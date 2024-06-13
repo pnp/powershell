@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 ExecuteCmdlet();
             }
-            catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
+            catch (Model.Graph.GraphException gex)
             {
                 var errorMessage = gex.Error.Message;
 

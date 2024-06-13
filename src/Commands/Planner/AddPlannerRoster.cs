@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     {
         protected override void ExecuteCmdlet()
         {
-            PlannerUtility.CreateRosterAsync(Connection, AccessToken).GetAwaiter().GetResult();
+            PlannerUtility.CreateRosterAsync(this, Connection, AccessToken).GetAwaiter().GetResult();
         }
     }
 }

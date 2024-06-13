@@ -62,11 +62,11 @@ namespace PnP.PowerShell.Commands.Base
                 string errorMessage;
                 switch (ex)
                 {
-                    case PnP.PowerShell.Commands.Model.Graph.GraphException gex:
+                    case Model.Graph.GraphException gex:
                         errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {gex.Error.Message}";
                         break;
 
-                    case PnP.Core.SharePointRestServiceException rex:
+                    case Core.SharePointRestServiceException rex:
                         errorMessage = (rex.Error as PnP.Core.SharePointRestError).Message;
                         break;
 
@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Base
                             errorMessage = innermostException.Message;
                         }
                         break;
-                    case PnP.Core.MicrosoftGraphServiceException pgex:
+                    case Core.MicrosoftGraphServiceException pgex:
                         errorMessage = (pgex.Error as PnP.Core.MicrosoftGraphError).Message; 
                         break;
 

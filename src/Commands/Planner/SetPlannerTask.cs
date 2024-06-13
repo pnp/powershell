@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            var existingTask = PlannerUtility.GetTaskAsync(Connection, AccessToken, TaskId, false, false).GetAwaiter().GetResult();
+            var existingTask = PlannerUtility.GetTaskAsync(this, Connection, AccessToken, TaskId, false, false).GetAwaiter().GetResult();
             if (existingTask != null)
             {
                 var plannerTask = new PlannerTask();
@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Planner
                 }
                 if (ParameterSpecified(nameof(Bucket)))
                 {
-                    var bucket = Bucket.GetBucket(Connection, AccessToken, existingTask.PlanId);
+                    var bucket = Bucket.GetBucket(this, Connection, AccessToken, existingTask.PlanId);
                     if (bucket != null)
                     {
                         plannerTask.BucketId = bucket.Id;
@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands.Planner
                     var chunks = BatchUtility.Chunk(AssignedTo, 20);
                     foreach (var chunk in chunks)
                     {
-                        var userIds = BatchUtility.GetPropertyBatchedAsync(Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id").GetAwaiter().GetResult();
+                        var userIds = BatchUtility.GetPropertyBatchedAsync(this, Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id").GetAwaiter().GetResult();
                         foreach (var userId in userIds)
                         {
                             plannerTask.Assignments.Add(userId.Value, new TaskAssignment());
@@ -106,12 +106,12 @@ namespace PnP.PowerShell.Commands.Planner
                 }
 
 
-                PlannerUtility.UpdateTaskAsync(Connection, AccessToken, existingTask, plannerTask).GetAwaiter().GetResult();
+                PlannerUtility.UpdateTaskAsync(this, Connection, AccessToken, existingTask, plannerTask).GetAwaiter().GetResult();
 
                 if (ParameterSpecified(nameof(Description)))
                 {
-                    var existingTaskDetails = PlannerUtility.GetTaskDetailsAsync(Connection, AccessToken, TaskId, false).GetAwaiter().GetResult();
-                    PlannerUtility.UpdateTaskDetailsAsync(Connection, AccessToken, existingTaskDetails, Description).GetAwaiter().GetResult();
+                    var existingTaskDetails = PlannerUtility.GetTaskDetailsAsync(this, Connection, AccessToken, TaskId, false).GetAwaiter().GetResult();
+                    PlannerUtility.UpdateTaskDetailsAsync(this, Connection, AccessToken, existingTaskDetails, Description).GetAwaiter().GetResult();
                 }
             }
             else

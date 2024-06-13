@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            Microsoft365GroupsUtility.RenewAsync(Connection, AccessToken, Identity.GetGroupId(Connection, AccessToken)).GetAwaiter().GetResult();
+            Microsoft365GroupsUtility.RenewAsync(this, Connection, AccessToken, Identity.GetGroupId(this, Connection, AccessToken)).GetAwaiter().GetResult();
         }
     }
 }

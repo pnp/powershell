@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Purview
                 WriteVerbose($"Trying to remove the Microsoft Purview sensitivity label from the Microsoft 365 Group with Id {ClientContext.Site.GroupId} behind the current site {Connection.Url}");
                 var stringContent = new StringContent(JsonSerializer.Serialize(new { assignedLabels = new [] { new { labelId = "" }}}));
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                GraphHelper.PatchAsync(Connection, GraphAccessToken, stringContent, $"beta/groups/{ClientContext.Site.GroupId}").GetAwaiter().GetResult();;
+                GraphHelper.PatchAsync(this, Connection, GraphAccessToken, stringContent, $"beta/groups/{ClientContext.Site.GroupId}").GetAwaiter().GetResult();;
             }
             else
             {

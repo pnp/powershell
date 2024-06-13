@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Teams
             try
             {
 #pragma warning disable CS0618 // Type or member is obsolete
-                var channel = TeamsUtility.AddChannelAsync(AccessToken, Connection, groupId, DisplayName, Description, ChannelType, OwnerUPN, IsFavoriteByDefault).GetAwaiter().GetResult();
+                var channel = TeamsUtility.AddChannelAsync(this, AccessToken, Connection, groupId, DisplayName, Description, ChannelType, OwnerUPN, IsFavoriteByDefault).GetAwaiter().GetResult();
 #pragma warning restore CS0618 // Type or member is obsolete
                 WriteObject(channel);
             }

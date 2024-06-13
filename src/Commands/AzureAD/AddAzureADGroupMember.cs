@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(Connection, AccessToken);
+                group = Identity.GetGroup(this, Connection, AccessToken);
             }
             if (group != null)
             {
@@ -44,14 +44,14 @@ namespace PnP.PowerShell.Commands.AzureAD
 
                 if (userArray.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddMembersAsync(Connection, new System.Guid(group.Id), userArray, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.AddMembersAsync(this, Connection, new Guid(group.Id), userArray, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
                 }
 
                 var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
 
                 if (secGroups.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddDirectoryMembersAsync(Connection, new System.Guid(group.Id), secGroups, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.AddDirectoryMembersAsync(this, Connection, new Guid(group.Id), secGroups, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
                 }
             }
         }

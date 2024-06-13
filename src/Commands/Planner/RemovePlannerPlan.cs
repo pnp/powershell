@@ -19,15 +19,15 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Group.GetGroupId(Connection, AccessToken);
+            var groupId = Group.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                var planId = Identity.GetIdAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                var planId = Identity.GetIdAsync(this, Connection, AccessToken, groupId).GetAwaiter().GetResult();
                 if (!string.IsNullOrEmpty(planId))
                 {
                     if (ShouldProcess($"Delete plan with id {planId}"))
                     {
-                        PlannerUtility.DeletePlanAsync(Connection, AccessToken, planId).GetAwaiter().GetResult();
+                        PlannerUtility.DeletePlanAsync(this, Connection, AccessToken, planId).GetAwaiter().GetResult();
                     }
                 }
                 else

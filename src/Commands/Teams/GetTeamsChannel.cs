@@ -22,15 +22,15 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken) ?? throw new PSArgumentException("Team not found", nameof(Team));
+            var groupId = Team.GetGroupId(this, Connection, AccessToken) ?? throw new PSArgumentException("Team not found", nameof(Team));
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetChannel(Connection, AccessToken, groupId, useBeta: IncludeModerationSettings.ToBool()));
+                WriteObject(Identity.GetChannel(this, Connection, AccessToken, groupId, useBeta: IncludeModerationSettings.ToBool()));
             }
             else
             {
-                WriteObject(TeamsUtility.GetChannelsAsync(AccessToken, Connection, groupId, useBeta: IncludeModerationSettings.ToBool()).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetChannelsAsync(this, AccessToken, Connection, groupId, useBeta: IncludeModerationSettings.ToBool()).GetAwaiter().GetResult(), true);
             }
         }
     }

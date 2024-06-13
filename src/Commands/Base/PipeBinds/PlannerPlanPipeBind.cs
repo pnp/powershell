@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _plan = plan;
         }
 
-        public async Task<PlannerPlan> GetPlanAsync(PnPConnection connection, string accessToken, string groupId, bool resolveIdentities)
+        public async Task<PlannerPlan> GetPlanAsync(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId, bool resolveIdentities)
         {
             if (_plan != null)
             {
@@ -34,11 +34,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             // first try to get the plan by id
             try
             {
-                return await PlannerUtility.GetPlanAsync(connection, accessToken, _id, resolveIdentities);
+                return await PlannerUtility.GetPlanAsync(cmdlet, connection, accessToken, _id, resolveIdentities);
             }
             catch (GraphException)
             {
-                var plans = await PlannerUtility.GetPlansAsync(connection, accessToken, groupId, resolveIdentities);
+                var plans = await PlannerUtility.GetPlansAsync(cmdlet,connection, accessToken, groupId, resolveIdentities);
                 if (plans != null && plans.Any())
                 {
                     var collection = plans.Where(p => p.Title.Equals(_id));
@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return null;
         }
 
-        public async Task<string> GetIdAsync(PnPConnection connection, string accessToken, string groupId)
+        public async Task<string> GetIdAsync(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId)
         {
             if (_plan != null)
             {
@@ -64,12 +64,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             // first try to get the plan by id
             try
             {
-                var plan = await PlannerUtility.GetPlanAsync(connection, accessToken, _id, false);
+                var plan = await PlannerUtility.GetPlanAsync(cmdlet, connection, accessToken, _id, false);
                 return plan.Id;
             }
             catch (GraphException)
             {
-                var plans = await PlannerUtility.GetPlansAsync(connection, accessToken, groupId, false);
+                var plans = await PlannerUtility.GetPlansAsync(cmdlet, connection, accessToken, groupId, false);
                 if (plans != null && plans.Any())
                 {
                     var collection = plans.Where(p => p.Title.Equals(_id));

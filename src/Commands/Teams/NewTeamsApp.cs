@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Teams
                 try
                 {
                     var bytes = System.IO.File.ReadAllBytes(Path);
-                    TeamsUtility.AddAppAsync(Connection, AccessToken, bytes).GetAwaiter().GetResult();
+                    TeamsUtility.AddAppAsync(this, Connection, AccessToken, bytes).GetAwaiter().GetResult();
                 }
                 catch (GraphException ex)
                 {

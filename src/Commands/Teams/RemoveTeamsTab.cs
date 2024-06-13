@@ -27,10 +27,10 @@ namespace PnP.PowerShell.Commands.Teams
         protected override void ExecuteCmdlet()
         {
 
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(Connection, AccessToken, groupId);
+                var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
                 if (channelId != null)
                 {
                     var tab = Identity.GetTab(this, Connection, AccessToken, groupId, channelId);
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Teams
                     {
                         if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
                         {
-                            var response = TeamsUtility.DeleteTabAsync(AccessToken, Connection, groupId, channelId, tab.Id).GetAwaiter().GetResult();
+                            var response = TeamsUtility.DeleteTabAsync(this, AccessToken, Connection, groupId, channelId, tab.Id).GetAwaiter().GetResult();
                             if (!response.IsSuccessStatusCode)
                             {
                                 if (GraphHelper.TryGetGraphException(response, out GraphException ex))

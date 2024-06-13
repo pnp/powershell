@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(Connection, AccessToken);
+                group = Identity.GetGroup(this, Connection, AccessToken);
             }
 
             if (group != null)
@@ -41,14 +41,14 @@ namespace PnP.PowerShell.Commands.Graph
 
                 if (userArray.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddOwnersAsync(Connection, new System.Guid(group.Id), userArray, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.AddOwnersAsync(this, Connection, new System.Guid(group.Id), userArray, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
                 }
 
                 var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
 
                 if (secGroups.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddDirectoryOwnersAsync(Connection, new System.Guid(group.Id), secGroups, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.AddDirectoryOwnersAsync(this, Connection, new System.Guid(group.Id), secGroups, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
                 }
             }
         }

@@ -2,6 +2,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.ServiceHealth;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Collections.Generic;
+using System.Management.Automation;
 using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities
@@ -16,9 +17,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="connection">Connection to use for retrieval of the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>List with <see cref="ServiceUpdateMessage"> objects</returns>
-        public static async Task<IEnumerable<ServiceUpdateMessage>> GetServiceUpdateMessagesAsync(PnPConnection connection, string accessToken)
+        public static async Task<IEnumerable<ServiceUpdateMessage>> GetServiceUpdateMessagesAsync(Cmdlet cmdlet, PnPConnection connection, string accessToken)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<ServiceUpdateMessage>(connection, $"v1.0/admin/serviceAnnouncement/messages", accessToken);            
+            var collection = await GraphHelper.GetResultCollectionAsync<ServiceUpdateMessage>(cmdlet, connection, $"v1.0/admin/serviceAnnouncement/messages", accessToken);            
             return collection;
         }
 
@@ -29,9 +30,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="connection">Connection to use for retrieval of the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns><see cref="ServiceUpdateMessage"> containing the requested information</returns>
-        public static async Task<ServiceUpdateMessage> GetServiceUpdateMessageByIdAsync(string id, PnPConnection connection, string accessToken)
+        public static async Task<ServiceUpdateMessage> GetServiceUpdateMessageByIdAsync(Cmdlet cmdlet, string id, PnPConnection connection, string accessToken)
         {
-            var item = await GraphHelper.GetAsync<ServiceUpdateMessage>(connection, $"v1.0/admin/serviceAnnouncement/messages/{id}", accessToken);
+            var item = await GraphHelper.GetAsync<ServiceUpdateMessage>(cmdlet, connection, $"v1.0/admin/serviceAnnouncement/messages/{id}", accessToken);
             return item;
         }
 
@@ -42,9 +43,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsReadByIdAsync(string id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsReadByIdAsync(Cmdlet cmdlet, string id, PnPConnection connection, string accessToken)
         {
-            return await SetServiceUpdateMessageAsReadByIdAsync(new [] { id }, connection, accessToken);
+            return await SetServiceUpdateMessageAsReadByIdAsync(cmdlet, new [] { id }, connection, accessToken);
         }
 
         /// <summary>
@@ -54,10 +55,10 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsReadByIdAsync(string[] id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsReadByIdAsync(Cmdlet cmdlet, string[] id, PnPConnection connection, string accessToken)
         {
             var postBody = new PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody { MessageIds = id };
-            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(connection, "v1.0/admin/serviceAnnouncement/messages/markRead", postBody, accessToken);
+            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(cmdlet, connection, "v1.0/admin/serviceAnnouncement/messages/markRead", postBody, accessToken);
             return true;
         }
 
@@ -68,9 +69,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsUnreadByIdAsync(string id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsUnreadByIdAsync(Cmdlet cmdlet, string id, PnPConnection connection, string accessToken)
         {
-            return await SetServiceUpdateMessageAsUnreadByIdAsync(new [] { id }, connection, accessToken);
+            return await SetServiceUpdateMessageAsUnreadByIdAsync(cmdlet, new [] { id }, connection, accessToken);
         }
 
         /// <summary>
@@ -80,10 +81,10 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsUnreadByIdAsync(string[] id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsUnreadByIdAsync(Cmdlet cmdlet, string[] id, PnPConnection connection, string accessToken)
         {
             var postBody = new PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody { MessageIds = id };
-            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(connection, "v1.0/admin/serviceAnnouncement/messages/markUnread", postBody, accessToken);
+            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(cmdlet, connection, "v1.0/admin/serviceAnnouncement/messages/markUnread", postBody, accessToken);
             return true;
         }       
 
@@ -94,9 +95,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsArchivedByIdAsync(string id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsArchivedByIdAsync(Cmdlet cmdlet, string id, PnPConnection connection, string accessToken)
         {
-            return await SetServiceUpdateMessageAsArchivedByIdAsync(new [] { id }, connection, accessToken);
+            return await SetServiceUpdateMessageAsArchivedByIdAsync(cmdlet, new [] { id }, connection, accessToken);
         }
 
         /// <summary>
@@ -106,10 +107,10 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsArchivedByIdAsync(string[] id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsArchivedByIdAsync(Cmdlet cmdlet, string[] id, PnPConnection connection, string accessToken)
         {
-            var postBody = new PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody { MessageIds = id };
-            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(connection, "v1.0/admin/serviceAnnouncement/messages/archive", postBody, accessToken);
+            var postBody = new ServiceUpdateMessageReadStatusBody { MessageIds = id };
+            var item = await GraphHelper.PostAsync(cmdlet, connection, "v1.0/admin/serviceAnnouncement/messages/archive", postBody, accessToken);
             return true;
         }
 
@@ -120,9 +121,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsUnarchivedByIdAsync(string id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsUnarchivedByIdAsync(Cmdlet cmdlet, string id, PnPConnection connection, string accessToken)
         {
-            return await SetServiceUpdateMessageAsUnarchivedByIdAsync(new [] { id }, connection, accessToken);
+            return await SetServiceUpdateMessageAsUnarchivedByIdAsync(cmdlet, new [] { id }, connection, accessToken);
         }
 
         /// <summary>
@@ -132,10 +133,10 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsUnarchivedByIdAsync(string[] id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsUnarchivedByIdAsync(Cmdlet cmdlet, string[] id, PnPConnection connection, string accessToken)
         {
-            var postBody = new PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody { MessageIds = id };
-            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(connection, "v1.0/admin/serviceAnnouncement/messages/unarchive", postBody, accessToken);
+            var postBody = new ServiceUpdateMessageReadStatusBody { MessageIds = id };
+            var item = await GraphHelper.PostAsync(cmdlet, connection, "v1.0/admin/serviceAnnouncement/messages/unarchive", postBody, accessToken);
             return true;
         }
 
@@ -146,9 +147,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsFavoriteByIdAsync(string id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsFavoriteByIdAsync(Cmdlet cmdlet, string id, PnPConnection connection, string accessToken)
         {
-            return await SetServiceUpdateMessageAsFavoriteByIdAsync(new [] { id }, connection, accessToken);
+            return await SetServiceUpdateMessageAsFavoriteByIdAsync(cmdlet, new [] { id }, connection, accessToken);
         }
 
         /// <summary>
@@ -158,10 +159,10 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsFavoriteByIdAsync(string[] id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsFavoriteByIdAsync(Cmdlet cmdlet, string[] id, PnPConnection connection, string accessToken)
         {
             var postBody = new PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody { MessageIds = id };
-            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(connection, "v1.0/admin/serviceAnnouncement/messages/favorite", postBody, accessToken);
+            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(cmdlet, connection, "v1.0/admin/serviceAnnouncement/messages/favorite", postBody, accessToken);
             return true;
         }    
 
@@ -172,9 +173,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsNotfavoriteByIdAsync(string id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsNotfavoriteByIdAsync(Cmdlet cmdlet, string id, PnPConnection connection, string accessToken)
         {
-            return await SetServiceUpdateMessageAsNotfavoriteByIdAsync(new [] { id }, connection, accessToken);
+            return await SetServiceUpdateMessageAsNotfavoriteByIdAsync(cmdlet, new [] { id }, connection, accessToken);
         }
 
         /// <summary>
@@ -184,10 +185,10 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient to use for updating the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>Boolean indicating whether the request succeeded</returns>
-        public static async Task<bool> SetServiceUpdateMessageAsNotfavoriteByIdAsync(string[] id, PnPConnection connection, string accessToken)
+        public static async Task<bool> SetServiceUpdateMessageAsNotfavoriteByIdAsync(Cmdlet cmdlet, string[] id, PnPConnection connection, string accessToken)
         {
             var postBody = new PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody { MessageIds = id };
-            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(connection, "v1.0/admin/serviceAnnouncement/messages/unfavorite", postBody, accessToken);
+            var item = await GraphHelper.PostAsync<PnP.PowerShell.Commands.Model.ServiceHealth.ServiceUpdateMessageReadStatusBody>(cmdlet, connection, "v1.0/admin/serviceAnnouncement/messages/unfavorite", postBody, accessToken);
             return true;
         }
 
@@ -201,9 +202,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="connection">Connection to use for retrieval of the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>List with <see cref="ServiceHealthIssue"> objects</returns>
-        public static async Task<IEnumerable<ServiceHealthIssue>> GetServiceHealthIssuesAsync(PnPConnection connection, string accessToken)
+        public static async Task<IEnumerable<ServiceHealthIssue>> GetServiceHealthIssuesAsync(Cmdlet cmdlet, PnPConnection connection, string accessToken)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<ServiceHealthIssue>(connection, $"v1.0/admin/serviceAnnouncement/issues", accessToken);            
+            var collection = await GraphHelper.GetResultCollectionAsync<ServiceHealthIssue>(cmdlet, connection, $"v1.0/admin/serviceAnnouncement/issues", accessToken);            
             return collection;
         }
 
@@ -214,9 +215,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="connection">Connection to use for retrieval of the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns><see cref="ServiceHealthIssue"> containing the requested information</returns>
-        public static async Task<ServiceHealthIssue> GetServiceHealthIssueByIdAsync(string id, PnPConnection connection, string accessToken)
+        public static async Task<ServiceHealthIssue> GetServiceHealthIssueByIdAsync(Cmdlet cmdlet, string id, PnPConnection connection, string accessToken)
         {
-            var item = await GraphHelper.GetAsync<ServiceHealthIssue>(connection, $"v1.0/admin/serviceAnnouncement/issues/{id}", accessToken);
+            var item = await GraphHelper.GetAsync<ServiceHealthIssue>(cmdlet, connection, $"v1.0/admin/serviceAnnouncement/issues/{id}", accessToken);
             return item;
         }
 
@@ -230,9 +231,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="connection">Connection to use for retrieval of the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns>List with <see cref="ServiceHealthCurrent"> objects</returns>
-        public static async Task<IEnumerable<ServiceHealthCurrent>> GetServiceCurrentHealthAsync(PnPConnection connection, string accessToken)
+        public static async Task<IEnumerable<ServiceHealthCurrent>> GetServiceCurrentHealthAsync(Cmdlet cmdlet, PnPConnection connection, string accessToken)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<ServiceHealthCurrent>(connection, $"v1.0/admin/serviceAnnouncement/healthOverviews", accessToken);            
+            var collection = await GraphHelper.GetResultCollectionAsync<ServiceHealthCurrent>(cmdlet, connection, $"v1.0/admin/serviceAnnouncement/healthOverviews", accessToken);            
             return collection;
         }
 
@@ -243,9 +244,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="connection">Connection to use for retrieval of the data</param>
         /// <param name="accessToken">AccessToken to use for authentication of the request</param>
         /// <returns><see cref="ServiceHealthIssue"> containing the requested information</returns>
-        public static async Task<ServiceHealthCurrent> GetServiceCurrentHealthByIdAsync(string id, PnPConnection connection, string accessToken)
+        public static async Task<ServiceHealthCurrent> GetServiceCurrentHealthByIdAsync(Cmdlet cmdlet, string id, PnPConnection connection, string accessToken)
         {
-            var item = await GraphHelper.GetAsync<ServiceHealthCurrent>(connection, $"v1.0/admin/serviceAnnouncement/healthOverviews/{id}", accessToken);
+            var item = await GraphHelper.GetAsync<ServiceHealthCurrent>(cmdlet, connection, $"v1.0/admin/serviceAnnouncement/healthOverviews/{id}", accessToken);
             return item;
         }        
 

@@ -23,15 +23,15 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                var tag = Identity.GetTag(Connection, AccessToken, groupId);
+                var tag = Identity.GetTag(this, Connection, AccessToken, groupId);
                 if (tag != null)
                 {
                     if (Force || ShouldContinue("Do you want to remove this tag ?", Properties.Resources.Confirm))
                     {
-                        var response = TeamsUtility.DeleteTagAsync(Connection, AccessToken, groupId, tag.Id).GetAwaiter().GetResult();
+                        var response = TeamsUtility.DeleteTagAsync(this, Connection, AccessToken, groupId, tag.Id).GetAwaiter().GetResult();
                         if (!response.IsSuccessStatusCode)
                         {
                             if (GraphHelper.TryGetGraphException(response, out GraphException ex))

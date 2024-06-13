@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -60,7 +61,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         /// <param name="connection">Connection that can be used to query Microsoft Graph for the available sensitivity labels</param>
         /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
         /// <returns>The the sensitivity label that matches the name set in this pipebind or NULL if no match found</returns>
-        public Model.Graph.Purview.InformationProtectionLabel GetLabelByNameThroughGraph(PnPConnection connection, string accesstoken)
+        public Model.Graph.Purview.InformationProtectionLabel GetLabelByNameThroughGraph(Cmdlet cmdlet, PnPConnection connection, string accesstoken)
         {
             if (string.IsNullOrEmpty(_labelName)) return null;
 
@@ -74,7 +75,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 url = "/beta/me/security/informationProtection/sensitivityLabels";
             }
 
-            var availableLabels = Utilities.REST.GraphHelper.GetResultCollectionAsync<Model.Graph.Purview.InformationProtectionLabel>(connection, $"https://{connection.GraphEndPoint}/{url}", accesstoken).GetAwaiter().GetResult();
+            var availableLabels = Utilities.REST.GraphHelper.GetResultCollectionAsync<Model.Graph.Purview.InformationProtectionLabel>(cmdlet, connection, $"https://{connection.GraphEndPoint}/{url}", accesstoken).GetAwaiter().GetResult();
             return availableLabels.FirstOrDefault(l => l.Name == _labelName);
         }
     }

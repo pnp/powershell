@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(Connection, AccessToken);
+                group = Identity.GetGroup(this, Connection, AccessToken);
             }
 
             if (group != null)
@@ -77,22 +77,22 @@ namespace PnP.PowerShell.Commands.Graph
 
                     if (changed)
                     {
-                        AzureADGroupsUtility.UpdateAsync(Connection, AccessToken, group).GetAwaiter().GetResult();
+                        AzureADGroupsUtility.UpdateAsync(this, Connection, AccessToken, group).GetAwaiter().GetResult();
                     }
 
                     if (ParameterSpecified(nameof(Owners)))
                     {
-                        Microsoft365GroupsUtility.UpdateOwnersAsync(Connection, new Guid(group.Id), AccessToken, Owners).GetAwaiter().GetResult();
+                        Microsoft365GroupsUtility.UpdateOwnersAsync(this, Connection, new Guid(group.Id), AccessToken, Owners).GetAwaiter().GetResult();
                     }
                     if (ParameterSpecified(nameof(Members)))
                     {
-                        Microsoft365GroupsUtility.UpdateMembersAsync(Connection, new Guid(group.Id), AccessToken, Members).GetAwaiter().GetResult();
+                        Microsoft365GroupsUtility.UpdateMembersAsync(this, Connection, new Guid(group.Id), AccessToken, Members).GetAwaiter().GetResult();
                     }
 
                     if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                     {
                         // For this scenario a separate call needs to be made
-                        Utilities.Microsoft365GroupsUtility.SetVisibilityAsync(Connection, AccessToken, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+                        Utilities.Microsoft365GroupsUtility.SetVisibilityAsync(this, Connection, AccessToken, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
                     }
                 }
                 catch (Exception e)

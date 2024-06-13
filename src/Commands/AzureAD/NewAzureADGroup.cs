@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (!Force)
             {
-                var existingGroup = AzureADGroupsUtility.GetGroupAsync(Connection, MailNickname, AccessToken).GetAwaiter().GetResult();
+                var existingGroup = AzureADGroupsUtility.GetGroupAsync(this, Connection, MailNickname, AccessToken).GetAwaiter().GetResult();
 
                 forceCreation = existingGroup == null || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
             }
@@ -77,12 +77,12 @@ namespace PnP.PowerShell.Commands.Graph
 
                 if (Owners?.Length > 0)
                 {
-                    ownerData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(Connection, AccessToken, Owners).GetAwaiter().GetResult();
+                    ownerData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(this, Connection, AccessToken, Owners).GetAwaiter().GetResult();
                     postData.Add("owners@odata.bind", ownerData);
                 }
                 if (Members?.Length > 0)
                 {
-                    memberData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(Connection, AccessToken, Members).GetAwaiter().GetResult();
+                    memberData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(this, Connection, AccessToken, Members).GetAwaiter().GetResult();
                     postData.Add("members@odata.bind", memberData);
                 }               
 
@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands.Graph
                 var stringContent = new StringContent(data);
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-                var groupResult = GraphHelper.PostAsync<Group>(Connection, $"v1.0/groups", stringContent, AccessToken).GetAwaiter().GetResult();
+                var groupResult = GraphHelper.PostAsync<Group>(this, Connection, $"v1.0/groups", stringContent, AccessToken).GetAwaiter().GetResult();
 
                 WriteObject(groupResult);
             }

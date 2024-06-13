@@ -20,14 +20,14 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var app = Identity.GetApp(Connection, AccessToken);
+            var app = Identity.GetApp(this, Connection, AccessToken);
             if (app == null)
             {
                 throw new PSArgumentException("App not found");
             }
             if (Force || ShouldContinue($"Do you want to remove {app.DisplayName}?", Properties.Resources.Confirm))
             {
-                var response = TeamsUtility.DeleteAppAsync(Connection, AccessToken, app.Id).GetAwaiter().GetResult();
+                var response = TeamsUtility.DeleteAppAsync(this, Connection, AccessToken, app.Id).GetAwaiter().GetResult();
                 if (!response.IsSuccessStatusCode)
                 {
                     if (GraphHelper.TryGetGraphException(response, out GraphException ex))

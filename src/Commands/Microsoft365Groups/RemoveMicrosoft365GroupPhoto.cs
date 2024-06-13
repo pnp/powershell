@@ -18,10 +18,10 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(Connection, AccessToken, false, false, false, false);
+            var group = Identity.GetGroup(this, Connection, AccessToken, false, false, false, false);
             if (group != null)
             {
-                var response = Microsoft365GroupsUtility.DeletePhotoAsync(Connection, AccessToken, group.Id.Value).GetAwaiter().GetResult();
+                var response = Microsoft365GroupsUtility.DeletePhotoAsync(this, Connection, AccessToken, group.Id.Value).GetAwaiter().GetResult();
                 if (!response.IsSuccessStatusCode)
                 {
                     if (GraphHelper.TryGetGraphException(response, out GraphException ex))

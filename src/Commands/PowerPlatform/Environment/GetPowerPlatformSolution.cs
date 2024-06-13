@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
             string environmentName = null;
             string dynamicsScopeUrl = null;
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(this, Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
             if (ParameterSpecified(nameof(Environment)))
             {
                 environmentName = Environment.GetName().ToLower();
@@ -51,14 +51,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
                 WriteVerbose($"Retrieving specific solution with the provided name '{solutionName}' within the environment '{environmentName}'");
 
                 var requestUrl = dynamicsScopeUrl + "/api/data/v9.0/solutions?$filter=isvisible eq true and friendlyname eq '" + solutionName + "'&$expand=publisherid&api-version=9.1";
-                var solution = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Solution.PowerPlatformSolution>(Connection, requestUrl, accessTokenForGettingSolutions).GetAwaiter().GetResult();
+                var solution = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Solution.PowerPlatformSolution>(this, Connection, requestUrl, accessTokenForGettingSolutions).GetAwaiter().GetResult();
                 WriteObject(solution, false);
             }
             else
             {
                 WriteVerbose($"Retrieving all Solutions within environment '{environmentName}'");
                 var requestUrl = dynamicsScopeUrl + "/api/data/v9.0/solutions?$filter=isvisible eq true&$expand=publisherid($select=friendlyname)&api-version=9.1";
-                var solutions = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Solution.PowerPlatformSolution>(Connection, requestUrl, accessTokenForGettingSolutions).GetAwaiter().GetResult();
+                var solutions = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Solution.PowerPlatformSolution>(this, Connection, requestUrl, accessTokenForGettingSolutions).GetAwaiter().GetResult();
                 WriteObject(solutions, true);
             }
         }

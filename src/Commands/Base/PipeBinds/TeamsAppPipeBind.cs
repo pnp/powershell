@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
 using System.Management.Automation;
-using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -38,18 +37,18 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string StringValue => _stringValue;
 
-        public TeamApp GetApp(PnPConnection connection, string accessToken)
+        public TeamApp GetApp(Cmdlet cmdlet, PnPConnection connection, string accessToken)
         {
             if (Id != Guid.Empty)
             {
-                var collection = GraphHelper.GetAsync<RestResultCollection<TeamApp>>(connection, $"v1.0/appCatalogs/teamsApps?$filter=id eq '{_id}'", accessToken).GetAwaiter().GetResult();
+                var collection = GraphHelper.GetAsync<RestResultCollection<TeamApp>>(cmdlet, connection, $"v1.0/appCatalogs/teamsApps?$filter=id eq '{_id}'", accessToken).GetAwaiter().GetResult();
                 if (collection != null && collection.Items.Any())
                 {
                     return collection.Items.First();
                 }
                 else
                 {
-                    collection = GraphHelper.GetAsync<RestResultCollection<TeamApp>>(connection, $"v1.0/appCatalogs/teamsApps?$filter=externalId eq '{_id}'", accessToken).GetAwaiter().GetResult();
+                    collection = GraphHelper.GetAsync<RestResultCollection<TeamApp>>(cmdlet, connection, $"v1.0/appCatalogs/teamsApps?$filter=externalId eq '{_id}'", accessToken).GetAwaiter().GetResult();
                     if (collection != null && collection.Items.Any())
                     {
                         return collection.Items.First();
@@ -58,7 +57,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var collection = GraphHelper.GetAsync<RestResultCollection<TeamApp>>(connection, $"v1.0/appCatalogs/teamsApps?$filter=displayName eq '{_stringValue}'", accessToken).GetAwaiter().GetResult();
+                var collection = GraphHelper.GetAsync<RestResultCollection<TeamApp>>(cmdlet, connection, $"v1.0/appCatalogs/teamsApps?$filter=displayName eq '{_stringValue}'", accessToken).GetAwaiter().GetResult();
                 if (collection != null && collection.Items.Any())
                 {
                     if (collection.Items.Count() == 1)

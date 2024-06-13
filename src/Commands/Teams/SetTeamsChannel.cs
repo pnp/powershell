@@ -42,8 +42,8 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken) ?? throw new PSArgumentException("Group not found");
-            var teamChannel = Identity.GetChannel(Connection, AccessToken, groupId) ?? throw new PSArgumentException("Channel not found");
+            var groupId = Team.GetGroupId(this, Connection, AccessToken) ?? throw new PSArgumentException("Group not found");
+            var teamChannel = Identity.GetChannel(this, Connection, AccessToken, groupId) ?? throw new PSArgumentException("Channel not found");
 
             // Flag to indicate if we have to use the beta endpoint to perform the update
             var betaRequired = false;
@@ -102,7 +102,7 @@ namespace PnP.PowerShell.Commands.Teams
             teamChannel.MembershipType = null;
             try
             {
-                var updated = TeamsUtility.UpdateChannelAsync(Connection, AccessToken, groupId, teamChannel.Id, teamChannel, useBeta: betaRequired).GetAwaiter().GetResult();
+                var updated = TeamsUtility.UpdateChannelAsync(this, Connection, AccessToken, groupId, teamChannel.Id, teamChannel, useBeta: betaRequired).GetAwaiter().GetResult();
                 WriteObject(updated);
             }
             catch (GraphException ex)

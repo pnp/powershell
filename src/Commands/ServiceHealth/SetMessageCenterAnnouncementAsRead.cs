@@ -17,18 +17,18 @@ namespace PnP.PowerShell.Commands.ServiceHealth
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsReadByIdAsync(Identity, Connection, AccessToken).GetAwaiter().GetResult(), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsReadByIdAsync(this, Identity, Connection, AccessToken).GetAwaiter().GetResult(), true);
             }
             else
             {
                 // Retrieve all message center announcements
-                var messageCenterAnnouncements = ServiceHealthUtility.GetServiceUpdateMessagesAsync(Connection, AccessToken).GetAwaiter().GetResult();
+                var messageCenterAnnouncements = ServiceHealthUtility.GetServiceUpdateMessagesAsync(this, Connection, AccessToken).GetAwaiter().GetResult();
 
                 // Create an array of the Ids of all message center announcements
                 var messageCenterAnnouncementIds = messageCenterAnnouncements.Select(item => item.Id).ToArray();
 
                 // Mark all message center announcements as read
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsReadByIdAsync(messageCenterAnnouncementIds, Connection, AccessToken).GetAwaiter().GetResult(), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsReadByIdAsync(this, messageCenterAnnouncementIds, Connection, AccessToken).GetAwaiter().GetResult(), true);
             }
         }        
     }

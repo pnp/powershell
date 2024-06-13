@@ -1,3 +1,4 @@
+using System.Management.Automation;
 using System.Threading.Tasks;
 using PnP.PowerShell.Commands.Model.Planner;
 using PnP.PowerShell.Commands.Utilities;
@@ -22,13 +23,13 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _roster = roster;
         }
 
-        public async Task<PlannerRoster> GetPlannerRosterAsync(PnPConnection connection, string accessToken)
+        public async Task<PlannerRoster> GetPlannerRosterAsync(Cmdlet cmdlet, PnPConnection connection, string accessToken)
         {
             if (_roster != null)
             {
                 return _roster;
             }
-            return await PlannerUtility.GetRosterAsync(connection, accessToken, _id);
+            return await PlannerUtility.GetRosterAsync(cmdlet, connection, accessToken, _id);
         }
     }
 }

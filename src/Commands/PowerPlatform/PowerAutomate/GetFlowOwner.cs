@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             }
 
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            var flowOwners = GraphHelper.GetResultCollectionAsync<FlowPermission>(Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/permissions?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            var flowOwners = GraphHelper.GetResultCollectionAsync<FlowPermission>(this, Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/permissions?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
             WriteObject(flowOwners, true);
         }
     }

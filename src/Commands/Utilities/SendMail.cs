@@ -91,7 +91,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     WriteVerbose($"Sending e-mail using Microsoft Graph");
 
-                    MailUtility.SendGraphMail(Connection, GraphAccessToken, new Message
+                    MailUtility.SendGraphMail(this, Connection, GraphAccessToken, new Message
                     {
                         Subject = Subject,
                         MessageBody = new Body

@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.Search
             var graphApiUrl = $"v1.0/external/connections/{ConnectionId}/items/{ItemId}";
             WriteVerbose($"Calling Graph API at {graphApiUrl}");
 
-            var results = Utilities.REST.GraphHelper.PutAsync(Connection, graphApiUrl, AccessToken, jsonContent).GetAwaiter().GetResult();
+            var results = Utilities.REST.GraphHelper.PutAsync(this, Connection, graphApiUrl, AccessToken, jsonContent).GetAwaiter().GetResult();
 
             WriteVerbose($"Graph API responded with HTTP {results.StatusCode} {results.ReasonPhrase}");
 
@@ -148,7 +148,7 @@ namespace PnP.PowerShell.Commands.Search
 
             foreach (var group in groups)
             {
-                var userAclId = group.GroupId ?? group.GetGroup(Connection, AccessToken)?.Id;
+                var userAclId = group.GroupId ?? group.GetGroup(this, Connection, AccessToken)?.Id;
 
                 acls.Add(new Model.Graph.MicrosoftSearch.ExternalItemAcl
                 {

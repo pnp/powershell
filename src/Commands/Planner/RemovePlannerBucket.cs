@@ -28,19 +28,19 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         {
             if (ParameterSetName == ParameterName_BYNAME)
             {
-                var groupId = Group.GetGroupId(Connection, AccessToken);
+                var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetIdAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                    var planId = Plan.GetIdAsync(this, Connection, AccessToken, groupId).GetAwaiter().GetResult();
 
                     if (planId != null)
                     {
-                        var bucket = Identity.GetBucket(Connection, AccessToken, planId);
+                        var bucket = Identity.GetBucket(this, Connection, AccessToken, planId);
                         if (bucket != null)
                         {
                             if (ShouldProcess($"Remove bucket '{bucket.Name}'"))
                             {
-                                PlannerUtility.RemoveBucketAsync(Connection, AccessToken, bucket.Id).GetAwaiter().GetResult();
+                                PlannerUtility.RemoveBucketAsync(this, Connection, AccessToken, bucket.Id).GetAwaiter().GetResult();
                             }
                         }
                         else
@@ -60,12 +60,12 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             }
             else if (ParameterSetName == ParameterName_BYBUCKETID)
             {
-                var bucket = Identity.GetBucket(Connection, AccessToken, BucketId);
+                var bucket = Identity.GetBucket(this, Connection, AccessToken, BucketId);
                 if (bucket != null)
                 {
                     if (ShouldProcess($"Remove bucket '{bucket.Name}'"))
                     {
-                        PlannerUtility.RemoveBucketAsync(Connection, AccessToken, BucketId).GetAwaiter().GetResult();
+                        PlannerUtility.RemoveBucketAsync(this, Connection, AccessToken, BucketId).GetAwaiter().GetResult();
                     }
                 }
                 else

@@ -16,12 +16,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                var groupSettingTemplate = Microsoft365GroupsUtility.GetGroupTemplateSettingsAsync(Connection, AccessToken, Identity).GetAwaiter().GetResult();
+                var groupSettingTemplate = Microsoft365GroupsUtility.GetGroupTemplateSettingsAsync(this, Connection, AccessToken, Identity).GetAwaiter().GetResult();
                 WriteObject(groupSettingTemplate);
             }
             else
             {
-                var groupSettingTemplates = Microsoft365GroupsUtility.GetGroupTemplateSettingsAsync(Connection, AccessToken).GetAwaiter().GetResult();
+                var groupSettingTemplates = Microsoft365GroupsUtility.GetGroupTemplateSettingsAsync(this, Connection, AccessToken).GetAwaiter().GetResult();
                 WriteObject(groupSettingTemplates?.Value, true);
             }
         }

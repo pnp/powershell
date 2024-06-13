@@ -26,19 +26,19 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (string.IsNullOrEmpty(groupId))
             {
                 throw new PSArgumentException("Group not found");
             }
 
-            var channelId = Channel.GetId(Connection, AccessToken, groupId);
+            var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
             if (string.IsNullOrEmpty(channelId))
             {
                 throw new PSArgumentException("Channel not found in the specified team");
             }
 
-            var memberId = Identity.GetIdAsync(Connection, AccessToken, groupId, channelId).GetAwaiter().GetResult();
+            var memberId = Identity.GetIdAsync(this, Connection, AccessToken, groupId, channelId).GetAwaiter().GetResult();
             if (string.IsNullOrEmpty(memberId))
             {
                 throw new PSArgumentException("User was not found in the specified Teams channel");
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (Force || ShouldContinue("Remove specified member from the Microsoft Teams channel?", Resources.Confirm))
             {
-                var response = TeamsUtility.DeleteChannelMemberAsync(Connection, AccessToken, groupId, channelId, memberId).GetAwaiter().GetResult();
+                var response = TeamsUtility.DeleteChannelMemberAsync(this, Connection, AccessToken, groupId, channelId, memberId).GetAwaiter().GetResult();
 
                 if (!response.IsSuccessStatusCode)
                 {

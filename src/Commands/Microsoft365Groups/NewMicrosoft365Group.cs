@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (!Force)
             {
-                var candidate = Microsoft365GroupsUtility.GetGroupAsync(Connection, MailNickname, AccessToken, false, false, false, false).GetAwaiter().GetResult();
+                var candidate = Microsoft365GroupsUtility.GetGroupAsync(this, Connection, MailNickname, AccessToken, false, false, false, false).GetAwaiter().GetResult();
                 forceCreation = candidate == null || ShouldContinue($"The Microsoft 365 Group '{MailNickname} already exists. Do you want to create a new one?", Properties.Resources.Confirm);
             }
             else
@@ -173,14 +173,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     }
                 }
 
-                var group = Microsoft365GroupsUtility.CreateAsync(Connection, AccessToken, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels).GetAwaiter().GetResult();
+                var group = Microsoft365GroupsUtility.CreateAsync(this, Connection, AccessToken, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels).GetAwaiter().GetResult();
 
                 if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                 {
-                    Microsoft365GroupsUtility.SetVisibilityAsync(Connection, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+                    Microsoft365GroupsUtility.SetVisibilityAsync(this, Connection, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
                 }
 
-                var updatedGroup = Microsoft365GroupsUtility.GetGroupAsync(Connection, group.Id.Value, AccessToken, true, false, false, true).GetAwaiter().GetResult();
+                var updatedGroup = Microsoft365GroupsUtility.GetGroupAsync(this, Connection, group.Id.Value, AccessToken, true, false, false, true).GetAwaiter().GetResult();
 
                 WriteObject(updatedGroup);
             }

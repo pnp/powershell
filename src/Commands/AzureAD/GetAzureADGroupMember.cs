@@ -23,13 +23,13 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(Connection, AccessToken);
+                group = Identity.GetGroup(this, Connection, AccessToken);
             }
 
             if (group != null)
             {
                 // Get members of the group
-                var members = Microsoft365GroupsUtility.GetMembersAsync(Connection, new Guid(group.Id), AccessToken).GetAwaiter().GetResult();
+                var members = Microsoft365GroupsUtility.GetMembersAsync(this, Connection, new Guid(group.Id), AccessToken).GetAwaiter().GetResult();
                 WriteObject(members?.OrderBy(m => m.DisplayName), true);
             }
         }

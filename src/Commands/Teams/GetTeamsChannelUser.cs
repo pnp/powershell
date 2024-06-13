@@ -25,13 +25,13 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
             }
 
-            var channelId = Channel.GetId(Connection, AccessToken, groupId);
+            var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
             if (channelId == null)
             {
                 throw new PSArgumentException("Channel not found");
@@ -39,11 +39,11 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetMembershipAsync(Connection, AccessToken, groupId, channelId).GetAwaiter().GetResult());
+                WriteObject(Identity.GetMembershipAsync(this, Connection, AccessToken, groupId, channelId).GetAwaiter().GetResult());
             }
             else
             {
-                WriteObject(TeamsUtility.GetChannelMembersAsync(Connection, AccessToken, groupId, channelId, Role).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetChannelMembersAsync(this, Connection, AccessToken, groupId, channelId, Role).GetAwaiter().GetResult(), true);
             }
         }
     }

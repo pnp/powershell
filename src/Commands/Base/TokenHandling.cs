@@ -2,6 +2,7 @@
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
@@ -16,11 +17,11 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns the type of oAuth JWT token being passed in (Delegate/AppOnly)
         /// </summary>
-        /// <param name="token">The oAuth JWT token</param>
+        /// <param name="accessToken">The oAuth JWT token</param>
         /// <returns>Enum indicating the type of oAuth JWT token</returns>
-        internal static Enums.IdType RetrieveTokenType(string token)
+        internal static Enums.IdType RetrieveTokenType(string accessToken)
         {
-            var decodedToken = new JwtSecurityToken(token);
+            var decodedToken = new JwtSecurityToken(accessToken);
 
             // The idType is stored in the token as a claim
             var idType = decodedToken.Claims.FirstOrDefault(c => c.Type == "idtyp");
@@ -38,12 +39,26 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
+        /// Returns the permission scopes of the oAuth JWT token being passed in
+        /// </summary>
+        /// <param name="accessToken">The oAuth JWT token</param>
+        /// <returns>String array containing the scopes</returns>
+        internal static string[] ReturnScopes(string accessToken)
+        {
+            var decodedToken = new JwtSecurityToken(accessToken);
+
+            // The scopes can either be stored in the roles or scp claim, so we examine both
+            var scopes = decodedToken.Claims.Where(c => c.Type == "roles" || c.Type == "scp").Select(r => r.Value).ToArray();
+            return scopes.ToArray();
+        }
+
+        /// <summary>
         /// Extracts the oAuth JWT token to compare the permissions in it (roles) with the required permissions for the cmdlet provided through an attribute
         /// </summary>
         /// <param name="cmdletType">The cmdlet that will be executed. Used to check for the permissions attribute.</param>
-        /// <param name="token">The oAuth JWT token that needs to be validated for its roles</param>
+        /// <param name="accessToken">The oAuth JWT token that needs to be validated for its roles</param>
         /// <exception cref="PSArgumentException">Thrown if the permissions set through the permissions attribute do not match the roles in the JWT token</exception>
-        internal static void ValidateTokenForPermissions(Type cmdletType, string token)
+        internal static void ValidateTokenForPermissions(Type cmdletType, string accessToken)
         {
             string[] requiredScopes = null;
             var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
@@ -51,34 +66,28 @@ namespace PnP.PowerShell.Commands.Base
             {
                 requiredScopes = requiredScopesAttribute.PermissionScopes;
             }
-            if (requiredScopes?.Length > 0)
-            {
-                var decodedToken = new JwtSecurityToken(token);
-                var roles = decodedToken.Claims.FirstOrDefault(c => c.Type == "roles");
-                if (roles != null)
-                {
-                    foreach (var permission in requiredScopes)
-                    {
-                        if (!roles.Value.ToLower().Contains(permission.ToLower()))
-                        {
-                            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope '{permission}'");
-                        }
-                    }
-                }
-                roles = decodedToken.Claims.FirstOrDefault(c => c.Type == "scp");
-                if (roles != null)
-                {
-                    foreach (var permission in requiredScopes)
-                    {
-                        if (!roles.Value.ToLower().Contains(permission.ToLower()))
-                        {
-                            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope '{permission}'");
-                        }
-                    }
-                }
-            }
+
+            // Ensure there are permission attributes present on the cmdlet, otherwise we have nothing to compare it against
+            if (requiredScopes == null || requiredScopes.Length == 0) return;
+
+            // Retrieve the scopes we have in our AccessToken
+            var scopes = ReturnScopes(accessToken);
+
+            var missingScopes = requiredScopes.Where(rs => !scopes.Contains(rs)).ToArray();
+
+            if (missingScopes.Length == 0) return;
+
+            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope{(missingScopes.Length != 1 ? "s" : "")} {string.Concat(missingScopes, ", ")}");
         }
 
+        /// <summary>
+        /// Returns an oAuth JWT access token
+        /// </summary>
+        /// <param name="cmdlet">Cmdlet for which the token is requested</param>
+        /// <param name="appOnlyDefaultScope">Audience to retrieve the token for</param>
+        /// <param name="connection">The connection to use to make the token calls</param>
+        /// <returns>oAuth JWT token</returns>
+        /// <exception cref="PSInvalidOperationException">Thrown if retrieval of the token fails</exception>
         internal static string GetAccessToken(Cmdlet cmdlet, string appOnlyDefaultScope, PnPConnection connection)
         {
             var contextSettings = connection.Context.GetContextSettings();
@@ -111,8 +120,13 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(",", requiredScopes)}");
-                var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
-                cmdlet.WriteVerbose($"Access token acquired");
+                var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();                
+
+                // Retrieve the scopes from the access token
+                var scopes = ReturnScopes(accessToken);
+
+                cmdlet.WriteVerbose($"Access token acquired containing the following {(scopes.Length != 1 ? scopes.Length + " " : "")}scope{(scopes.Length == 1 ? "" : "s")}: {string.Join(", ", scopes)}");
+                
                 return accessToken;
             }
             return null;

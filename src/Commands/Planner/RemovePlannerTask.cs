@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            PlannerUtility.DeleteTaskAsync(Connection, AccessToken, Task.Id).GetAwaiter().GetResult();
+            PlannerUtility.DeleteTaskAsync(this, Connection, AccessToken, Task.Id).GetAwaiter().GetResult();
         }
     }
 }

@@ -714,7 +714,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     {
                         var byteArrayContent = new ByteArrayContent(bytes);
                         byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
-                        GraphHelper.PutAsync(PnPConnection.Current, endpoint, token, byteArrayContent).GetAwaiter().GetResult();
+                        GraphHelper.PutAsync(this, PnPConnection.Current, endpoint, token, byteArrayContent).GetAwaiter().GetResult();
 
                         WriteVerbose("Successfully set the logo for the Azure AD app");
                     }

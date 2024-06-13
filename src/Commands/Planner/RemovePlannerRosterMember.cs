@@ -18,14 +18,14 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            var roster = Identity.GetPlannerRosterAsync(Connection, AccessToken).GetAwaiter().GetResult();
+            var roster = Identity.GetPlannerRosterAsync(this, Connection, AccessToken).GetAwaiter().GetResult();
 
             if(roster == null)
             {
                 throw new PSArgumentException("Provided Planner Roster could not be found", nameof(Identity));
             }
 
-            PlannerUtility.RemoveRosterMemberAsync(Connection, AccessToken, roster.Id, User).GetAwaiter().GetResult();
+            PlannerUtility.RemoveRosterMemberAsync(this, Connection, AccessToken, roster.Id, User).GetAwaiter().GetResult();
         }
     }
 }

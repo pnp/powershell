@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                     {
                         // Had to add this because DELETE doesn't throw error if invalid Flow Id or Name is provided
                         WriteVerbose($"Retrieving Flow with name {flowName} in environment ${environmentName}");
-                        var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                        var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(this, Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                         if (result != null)
                         {
                             RestHelper.DeleteAsync(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();

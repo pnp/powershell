@@ -1,6 +1,7 @@
 ﻿using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
 using System;
+using System.Management.Automation;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
@@ -39,20 +40,20 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string GroupId => (_groupId);
 
-        public Group GetGroup(PnPConnection connection, string accessToken)
+        public Group GetGroup(Cmdlet cmdlet, PnPConnection connection, string accessToken)
         {
             Group group = null;
             if (Group != null)
             {
-                group = AzureADGroupsUtility.GetGroupAsync(connection, new Guid(Group.Id), accessToken).GetAwaiter().GetResult();
+                group = AzureADGroupsUtility.GetGroupAsync(cmdlet, connection, new Guid(Group.Id), accessToken).GetAwaiter().GetResult();
             }
             else if (!string.IsNullOrEmpty(GroupId))
             {
-                group = AzureADGroupsUtility.GetGroupAsync(connection, new Guid(GroupId), accessToken).GetAwaiter().GetResult();
+                group = AzureADGroupsUtility.GetGroupAsync(cmdlet, connection, new Guid(GroupId), accessToken).GetAwaiter().GetResult();
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                group = AzureADGroupsUtility.GetGroupAsync(connection, DisplayName, accessToken).GetAwaiter().GetResult();
+                group = AzureADGroupsUtility.GetGroupAsync(cmdlet, connection, DisplayName, accessToken).GetAwaiter().GetResult();
             }
             if (group != null)
             {

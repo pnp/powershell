@@ -18,11 +18,11 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                WriteObject(Identity.GetDeletedGroup(Connection, AccessToken));
+                WriteObject(Identity.GetDeletedGroup(this, Connection, AccessToken));
             }
             else
             {
-                var groups = Microsoft365GroupsUtility.GetDeletedGroupsAsync(Connection, AccessToken).GetAwaiter().GetResult();
+                var groups = Microsoft365GroupsUtility.GetDeletedGroupsAsync(this, Connection, AccessToken).GetAwaiter().GetResult();
                 WriteObject(groups.OrderBy(g => g.DisplayName), true);
             }
         }

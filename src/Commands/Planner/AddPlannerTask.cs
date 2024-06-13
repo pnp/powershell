@@ -94,7 +94,7 @@ namespace PnP.PowerShell.Commands.Planner
                 var chunks = BatchUtility.Chunk(AssignedTo, 20);
                 foreach (var chunk in chunks)
                 {
-                    var userIds = BatchUtility.GetPropertyBatchedAsync(Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id").GetAwaiter().GetResult();
+                    var userIds = BatchUtility.GetPropertyBatchedAsync(this, Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id").GetAwaiter().GetResult();
                     foreach (var userId in userIds)
                     {
                         newTask.Assignments.Add(userId.Value, new TaskAssignment());
@@ -105,32 +105,32 @@ namespace PnP.PowerShell.Commands.Planner
             // By Group
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(Connection, AccessToken);
+                var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 if (groupId == null)
                 {
                     throw new PSArgumentException("Group not found", nameof(Group));
                 }
 
-                var planId = Plan.GetIdAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                var planId = Plan.GetIdAsync(this, Connection, AccessToken, groupId).GetAwaiter().GetResult();
                 if (planId == null)
                 {
                     throw new PSArgumentException("Plan not found", nameof(Plan));
                 }
                 newTask.PlanId = planId;
 
-                var bucket = Bucket.GetBucket(Connection, AccessToken, planId);
+                var bucket = Bucket.GetBucket(this, Connection, AccessToken, planId);
                 if (bucket == null)
                 {
                     throw new PSArgumentException("Bucket not found", nameof(Bucket));
                 }
                 newTask.BucketId = bucket.Id;
 
-                createdTask = PlannerUtility.AddTaskAsync(Connection, AccessToken, newTask).GetAwaiter().GetResult();
+                createdTask = PlannerUtility.AddTaskAsync(this, Connection, AccessToken, newTask).GetAwaiter().GetResult();
             }
             // By PlanId
             else
             {
-                var bucket = Bucket.GetBucket(Connection, AccessToken, PlanId);
+                var bucket = Bucket.GetBucket(this, Connection, AccessToken, PlanId);
                 if (bucket == null)
                 {
                     throw new PSArgumentException("Bucket not found", nameof(Bucket));
@@ -139,13 +139,13 @@ namespace PnP.PowerShell.Commands.Planner
                 newTask.PlanId = PlanId;
                 newTask.BucketId = bucket.Id;
 
-                createdTask = PlannerUtility.AddTaskAsync(Connection, AccessToken, newTask).GetAwaiter().GetResult();
+                createdTask = PlannerUtility.AddTaskAsync(this, Connection, AccessToken, newTask).GetAwaiter().GetResult();
             }
 
             if (ParameterSpecified(nameof(Description)))
             {
-                var existingTaskDetails = PlannerUtility.GetTaskDetailsAsync(Connection, AccessToken, createdTask.Id, false).GetAwaiter().GetResult();
-                PlannerUtility.UpdateTaskDetailsAsync(Connection, AccessToken, existingTaskDetails, Description).GetAwaiter().GetResult();
+                var existingTaskDetails = PlannerUtility.GetTaskDetailsAsync(this, Connection, AccessToken, createdTask.Id, false).GetAwaiter().GetResult();
+                PlannerUtility.UpdateTaskDetailsAsync(this, Connection, AccessToken, existingTaskDetails, Description).GetAwaiter().GetResult();
             }
         }
     }

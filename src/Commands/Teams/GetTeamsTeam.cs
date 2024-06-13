@@ -28,19 +28,19 @@ namespace PnP.PowerShell.Commands.Teams
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var groupId = Identity.GetGroupId(Connection, AccessToken);
+                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
                 if(groupId == null)
                 {
                     throw new PSArgumentException("Team not found", nameof(Identity));
                 }
                 else
                 {                
-                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
+                    WriteObject(TeamsUtility.GetTeamAsync(this, AccessToken, Connection, groupId).GetAwaiter().GetResult());
                 }                
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, Connection, Filter).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetTeamsAsync(this, AccessToken, Connection, Filter).GetAwaiter().GetResult(), true);
             }
         }
     }

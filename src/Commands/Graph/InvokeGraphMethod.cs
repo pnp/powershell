@@ -167,7 +167,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 throw new NotSupportedException($"method [{Method}] not supported");
             }
-            catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
+            catch (Model.Graph.GraphException gex)
             {
                 if (gex.Error.Code == "Authorization_RequestDenied")
                 {
@@ -209,7 +209,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private void GetRequestWithPaging()
         {
-            var result = GraphHelper.GetAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
+            var result = GraphHelper.GetAsync(this, Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
             if (Raw.IsPresent)
             {
                 WriteObject(result);
@@ -233,7 +233,7 @@ namespace PnP.PowerShell.Commands.Base
                                 break;
                             }
                             var nextLink = nextLinkProperty.ToString();
-                            result = GraphHelper.GetAsync(Connection, nextLink, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
+                            result = GraphHelper.GetAsync(this, Connection, nextLink, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
                             element = JsonSerializer.Deserialize<JsonElement>(result);
                             dynamic nextObj = Deserialize(element);
                             if (nextObj != null && nextObj.value != null && (nextObj.value is List<object>))
@@ -259,35 +259,35 @@ namespace PnP.PowerShell.Commands.Base
         private void GetRequestWithoutPaging()
         {
             WriteVerbose($"Sending HTTP GET to {Url}");
-            using var response = GraphHelper.GetResponseAsync(Connection, Url, AccessToken).GetAwaiter().GetResult();
+            using var response = GraphHelper.GetResponseAsync(this, Connection, Url, AccessToken).GetAwaiter().GetResult();
             HandleResponse(response);
         }
 
         private void PostRequest()
         {
             WriteVerbose($"Sending HTTP POST to {Url}");
-            var response = GraphHelper.PostAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.PostAsync(this, Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
             HandleResponse(response);
         }
 
         private void PutRequest()
         {
             WriteVerbose($"Sending HTTP PUT to {Url}");
-            var response = GraphHelper.PutAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.PutAsync(this, Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
             HandleResponse(response);
         }
 
         private void PatchRequest()
         {
             WriteVerbose($"Sending HTTP PATCH to {Url}");
-            var response = GraphHelper.PatchAsync(Connection, AccessToken, GetHttpContent(), Url, AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.PatchAsync(this, Connection, AccessToken, GetHttpContent(), Url, AdditionalHeaders).GetAwaiter().GetResult();
             HandleResponse(response);
         }
 
         private void DeleteRequest()
         {
             WriteVerbose($"Sending HTTP DELETE to {Url}");
-            var response = GraphHelper.DeleteAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.DeleteAsync(this, Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
             HandleResponse(response);
         }
 

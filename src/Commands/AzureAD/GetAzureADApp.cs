@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         { "ConsistencyLevel", "eventual" }
                     };
                 }
-                var result = GraphHelper.GetResultCollectionAsync<AzureADApp>(Connection, requestUrl, AccessToken, additionalHeaders: additionalHeaders).GetAwaiter().GetResult();
+                var result = GraphHelper.GetResultCollectionAsync<AzureADApp>(this, Connection, requestUrl, AccessToken, additionalHeaders: additionalHeaders).GetAwaiter().GetResult();
                 WriteObject(result, true);
             }
         }

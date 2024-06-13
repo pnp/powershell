@@ -24,10 +24,10 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(Connection, AccessToken, groupId);
+                var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
                 if (channelId != null)
                 {
                     var tab = Identity.GetTab(this,Connection, AccessToken, groupId, channelId);
@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Teams
                         {
                             tab.DisplayName = DisplayName;
                         }
-                        TeamsUtility.UpdateTabAsync(Connection, AccessToken, groupId, channelId, tab).GetAwaiter().GetResult();
+                        TeamsUtility.UpdateTabAsync(this, Connection, AccessToken, groupId, channelId, tab).GetAwaiter().GetResult();
                     }
                     else
                     {

@@ -33,20 +33,20 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         {
             if (_id != Guid.Empty)
             {
-                var results = Utilities.REST.GraphHelper.GetAsync<RestResultCollection<AzureADApp>>(connection, $"/v1.0/applications?$filter=appId eq '{_id}'", accessToken).GetAwaiter().GetResult();
+                var results = Utilities.REST.GraphHelper.GetAsync<RestResultCollection<AzureADApp>>(cmdlet, connection, $"/v1.0/applications?$filter=appId eq '{_id}'", accessToken).GetAwaiter().GetResult();
                 if (results != null && results.Items.Any())
                 {
                     return results.Items.First();
                 }
                 else
                 {
-                    return Utilities.REST.GraphHelper.GetAsync<AzureADApp>(connection, $"/v1.0/applications/{_id}", accessToken).GetAwaiter().GetResult();
+                    return Utilities.REST.GraphHelper.GetAsync<AzureADApp>(cmdlet, connection, $"/v1.0/applications/{_id}", accessToken).GetAwaiter().GetResult();
                 }
 
             }
             if (!string.IsNullOrEmpty(_name))
             {
-                var results = Utilities.REST.GraphHelper.GetAsync<RestResultCollection<AzureADApp>>(connection, $"/v1.0/applications?$filter=displayName eq '{_name}'", accessToken).GetAwaiter().GetResult();
+                var results = Utilities.REST.GraphHelper.GetAsync<RestResultCollection<AzureADApp>>(cmdlet, connection, $"/v1.0/applications?$filter=displayName eq '{_name}'", accessToken).GetAwaiter().GetResult();
                 if (results != null && results.Items.Any())
                 {
                     return results.Items.First();
