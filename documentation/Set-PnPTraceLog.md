@@ -16,13 +16,13 @@ Turn log tracing on or off
 
 ### On
 ```powershell
-Set-PnPTraceLog [-On] [-LogFile <String>] [-WriteToConsole] [-Level <LogLevel>] [-Delimiter <String>]
+Set-PnPTraceLog -On [-LogFile <String>] [-WriteToConsole] [-Level <LogLevel>] [-Delimiter <String>]
  [-IndentSize <Int32>] [-AutoFlush <Boolean>] 
 ```
 
 ### Off
 ```powershell
-Set-PnPTraceLog [-Off] 
+Set-PnPTraceLog -Off
 ```
 
 ## DESCRIPTION
