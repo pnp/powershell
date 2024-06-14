@@ -120,11 +120,24 @@
 </code></pre>
 <p>Sets the sensitivity label of the group</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-allowexternalsenders">-AllowExternalSenders</h3>
+<p>Allows configuring if the Microsoft 365 Group should accept e-mail from senders outside of the organisation (true) or if both internal as well as external senders can send e-mail to the e-mail address of the Microsoft 365 group (false).</p>
+<p>In the Exchange Online PowerShell cmdlet this would be the RequireSenderAuthenticationEnabled property, but then inversed, so when that would be set to $true it would not accept e-mail from outside the organisation and when set to $false it would.</p>
+<p>This property can only be set using a Delegated logon, not with an Application logon.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-autosubscribenewmembers">-AutoSubscribeNewMembers</h3>
 <p>The AutoSubscribeNewMembers switch specifies whether to automatically subscribe new members that are added to the Microsoft 365 Group to conversations and calendar events. Only users that are added to the group after you enable this setting are automatically subscribed to the group.</p>
 <p>To subscribe new members to conversations and calendar events, use this exact syntax: -AutoSubscribeNewMembers:$true.
 If you don't want to subscribe new members to conversations and calendar events, use this exact syntax: -AutoSubscribeNewMembers:$false.</p>
 <p>Note: This property is evaluated only when you add internal members from your organization. Guest user accounts are always subscribed when added as a member.</p>
+<p>This property can only be set using a Delegated logon, not with an Application logon.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -249,17 +262,6 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-requiresenderauthenticationenabled">-RequireSenderAuthenticationEnabled</h3>
-<p>Allows configuring if the Microsoft 365 Group should accept e-mail from senders outside of the organisation (false) or if both internal as well as external senders can send e-mail to the e-mail address of the Microsoft 365 group (true).</p>
-<p>Alias: AllowExternalSenders</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
