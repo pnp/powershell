@@ -88,7 +88,8 @@
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
 </ul>
-<p>Adds a tab to an existing Channel. Note that the <code>-ContentUrl</code> is a 'dynamic' parameter and will only be valid for tab types that support it.</p>
+<p>Adds a tab to an existing Channel. Note that the <code>-ContentUrl</code> is a 'dynamic' parameter and will only be valid for tab types that support it.
+Also, some <code>-Type</code> values are not configurable due to Microsoft Graph API limitations (i.e.: PowerBI).</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPTeamsTab -Team &lt;TeamsTeamPipeBind&gt; -Channel &lt;TeamsChannelPipeBind&gt; -DisplayName &lt;String&gt;
  -Type &lt;TeamTabType&gt; -ContentUrl &lt;String&gt; 
