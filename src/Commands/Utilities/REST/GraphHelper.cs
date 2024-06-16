@@ -113,6 +113,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 }
             }
 
+            cmdlet.WriteVerbose($"Returning {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")}");
+
             return results;
         }
 

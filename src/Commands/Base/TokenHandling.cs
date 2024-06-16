@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Base
             var decodedToken = new JwtSecurityToken(accessToken);
 
             // The scopes can either be stored in the roles or scp claim, so we examine both
-            var scopes = decodedToken.Claims.Where(c => c.Type == "roles" || c.Type == "scp").Select(r => r.Value).ToArray();
+            var scopes = decodedToken.Claims.Where(c => c.Type == "roles" || c.Type == "scp").SelectMany(r => r.Value.Split(" "));
             return scopes.ToArray();
         }
 

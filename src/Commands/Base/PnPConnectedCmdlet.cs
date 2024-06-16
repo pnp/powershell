@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Base
                         break;
 
                     case Core.SharePointRestServiceException rex:
-                        errorMessage = (rex.Error as PnP.Core.SharePointRestError).Message;
+                        errorMessage = (rex.Error as Core.SharePointRestError).Message;
                         break;
 
                     case System.Reflection.TargetInvocationException tex:
@@ -87,7 +87,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         break;
                     case Core.MicrosoftGraphServiceException pgex:
-                        errorMessage = (pgex.Error as PnP.Core.MicrosoftGraphError).Message; 
+                        errorMessage = (pgex.Error as Core.MicrosoftGraphError).Message; 
                         break;
 
                     default:
@@ -107,7 +107,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 // With ErrorAction:Ignore, the $Error variable should not be populated with the error, otherwise it should
-                if (!ParameterSpecified("ErrorAction") || !(new[] { "ignore" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant())))
+                if (!ParameterSpecified("ErrorAction") || !new[] { "ignore" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant()))
                 {
                     ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
                     ex.Data["TimeStampUtc"] = DateTime.UtcNow;
