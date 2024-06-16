@@ -44,14 +44,14 @@ namespace PnP.PowerShell.Commands.AzureAD
 
                 if (userArray.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddMembersAsync(this, Connection, new Guid(group.Id), userArray, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
+                    ClearOwners.AddMembers(this, Connection, new Guid(group.Id), userArray, AccessToken, RemoveExisting.ToBool());
                 }
 
                 var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
 
                 if (secGroups.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddDirectoryMembersAsync(this, Connection, new Guid(group.Id), secGroups, AccessToken, RemoveExisting.ToBool()).GetAwaiter().GetResult();
+                    ClearOwners.AddDirectoryMembers(this, Connection, new Guid(group.Id), secGroups, AccessToken, RemoveExisting.ToBool());
                 }
             }
         }

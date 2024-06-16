@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
 
             WriteVerbose($"Requesting endpoints of Microsoft 365 Group with Id {groupId}");
-            var endpoints = GraphHelper.GetResultCollectionAsync<Model.AzureAD.AzureADGroupEndPoint>(this, Connection, $"/beta/groups/{groupId}/endpoints", AccessToken).GetAwaiter().GetResult();
+            var endpoints = GraphHelper.GetResultCollection<Model.AzureAD.AzureADGroupEndPoint>(this, Connection, $"/beta/groups/{groupId}/endpoints", AccessToken);
             WriteVerbose($"{endpoints.Count()} endpoint(s) found in total");
             WriteObject(endpoints, true);
         }

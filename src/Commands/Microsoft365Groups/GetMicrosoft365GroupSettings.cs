@@ -18,12 +18,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             if (Identity != null)
             {
                 var groupId = Identity.GetGroupId(this, Connection, AccessToken);
-                var groupSettings = Microsoft365GroupsUtility.GetGroupSettingsAsync(this, Connection, AccessToken, groupId.ToString()).GetAwaiter().GetResult();
+                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken, groupId.ToString());
                 WriteObject(groupSettings?.Value, true);
             }
             else
             {
-                var groupSettings = Microsoft365GroupsUtility.GetGroupSettingsAsync(this, Connection, AccessToken).GetAwaiter().GetResult();
+                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken);
                 WriteObject(groupSettings?.Value, true);
             }
         }

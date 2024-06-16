@@ -34,13 +34,13 @@ namespace PnP.PowerShell.Commands.Teams
                     throw new PSArgumentException("Team not found", nameof(Identity));
                 }
                 else
-                {                
-                    WriteObject(TeamsUtility.GetTeamAsync(this, AccessToken, Connection, groupId).GetAwaiter().GetResult());
+                {
+                    WriteObject(TeamsUtility.GetTeam(this, AccessToken, Connection, groupId));
                 }                
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeamsAsync(this, AccessToken, Connection, Filter).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetTeamUsingFilter(this, AccessToken, Connection, Filter));
             }
         }
     }

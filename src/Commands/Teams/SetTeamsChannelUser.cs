@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Teams
                 throw new PSArgumentException("Channel not found");
             }
 
-            var membershipId = Identity.GetIdAsync(this, Connection, AccessToken, groupId, channelId).GetAwaiter().GetResult();
+            var membershipId = Identity.GetId(this, Connection, AccessToken, groupId, channelId);
             if (string.IsNullOrEmpty(membershipId))
             {
                 throw new PSArgumentException("User was not found in the specified Teams channel");
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             try
             {
-                var updatedMember = TeamsUtility.UpdateChannelMemberAsync(this, Connection, AccessToken, groupId, channelId, membershipId, Role).GetAwaiter().GetResult();
+                var updatedMember = TeamsUtility.UpdateChannelMember(this, Connection, AccessToken, groupId, channelId, membershipId, Role);
                 WriteObject(updatedMember);
             }
             catch (GraphException ex)

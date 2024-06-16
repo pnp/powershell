@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Teams
                     channelMessage.Body.Content = Message;
                     channelMessage.Body.ContentType = ContentType == TeamChannelMessageContentType.Html ? "html" : "text";
 
-                    TeamsUtility.PostMessageAsync(this, Connection, AccessToken, groupId, channel.Id, channelMessage).GetAwaiter().GetResult();
+                    TeamsUtility.PostMessage(this, Connection, AccessToken, groupId, channel.Id, channelMessage);
                 }
                 else
                 {

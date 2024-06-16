@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                var groups = AzureADGroupsUtility.GetGroupsAsync(this, Connection, AccessToken).GetAwaiter().GetResult();
+                var groups = AzureADGroupsUtility.GetGroups(this, Connection, AccessToken);
                 if (groups != null)
                 {
                     WriteObject(groups?.OrderBy(m => m.DisplayName), true);

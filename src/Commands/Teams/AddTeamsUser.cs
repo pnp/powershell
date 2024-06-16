@@ -45,17 +45,17 @@ namespace PnP.PowerShell.Commands.Teams
                         {
                             throw new PSArgumentException("Channel not found");
                         }
-                        TeamsUtility.AddChannelMemberAsync(this, Connection, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
+                        TeamsUtility.AddChannelMember(this, Connection, AccessToken, groupId, channelId, User, Role);
                     }
                     else
                     {
                         if (ParameterSetName == ParamSet_ByUser)
                         {
-                            TeamsUtility.AddUserAsync(this, Connection, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
+                            TeamsUtility.AddUser(this, Connection, AccessToken, groupId, User, Role);
                         }
                         else
                         {
-                            TeamsUtility.AddUsersAsync(this, Connection, AccessToken, groupId, Users, Role).GetAwaiter().GetResult();
+                            TeamsUtility.AddUsers(this, Connection, AccessToken, groupId, Users, Role);
                         }
                     }
                 }

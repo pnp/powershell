@@ -32,12 +32,12 @@ namespace PnP.PowerShell.Commands.Planner
                 var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetIdAsync(this, Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                    var planId = Plan.GetId(this, Connection, AccessToken, groupId);
                     if (planId != null)
                     {
                         if (!ParameterSpecified(nameof(Identity)))
                         {
-                            WriteObject(PlannerUtility.GetBucketsAsync(this, Connection, AccessToken, planId).GetAwaiter().GetResult(), true);
+                            WriteObject(PlannerUtility.GetBuckets(this, Connection, AccessToken, planId), true);
                         }
                         else
                         {
@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else
             {
-                WriteObject(PlannerUtility.GetBucketsAsync(this, Connection, AccessToken, PlanId).GetAwaiter().GetResult(), true);
+                WriteObject(PlannerUtility.GetBuckets(this, Connection, AccessToken, PlanId), true);
             }
         }
     }

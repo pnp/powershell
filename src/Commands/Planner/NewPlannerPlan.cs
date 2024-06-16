@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Planner
             var groupId = Group.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                WriteObject(PlannerUtility.CreatePlanAsync(this, Connection, AccessToken, groupId, Title).GetAwaiter().GetResult());
+                WriteObject(PlannerUtility.CreatePlan(this, Connection, AccessToken, groupId, Title));
             }
             else
             {

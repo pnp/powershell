@@ -78,14 +78,14 @@ namespace PnP.PowerShell.Commands.Utilities
             if (string.IsNullOrWhiteSpace(Password) && string.IsNullOrWhiteSpace(From))
             {
                 WriteVerbose("Sending e-mail through SharePoint Online");
-                MailUtility.SendSharePointEmail(ClientContext, Subject, Body, To, Cc, Bcc).GetAwaiter().GetResult();
+                MailUtility.SendSharePointEmail(ClientContext, Subject, Body, To, Cc, Bcc);
             }
             else
             {
                 if (ParameterSpecified(nameof(Server)) && !string.IsNullOrWhiteSpace(Server))
                 {
                     WriteVerbose($"Sending e-mail directly through SMTP server {Server}");
-                    MailUtility.SendSmtpEmail(Subject, Body, From, To, Cc, Bcc, Importance, Server, ServerPort, EnableSsl, Username, Password, BodyContentType ?? MessageBodyContentType.Html).GetAwaiter().GetResult();
+                    MailUtility.SendSmtpEmail(Subject, Body, From, To, Cc, Bcc, Importance, Server, ServerPort, EnableSsl, Username, Password, BodyContentType ?? MessageBodyContentType.Html);
                 }
                 else
                 {
@@ -106,7 +106,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         ReplyTo = ReplyTo?.Select(t => new Recipient { EmailAddress = new EmailAddress { Address = t } }).ToList(),
                         Importance = Importance,
                         Attachments = MailUtility.GetListOfAttachments(Attachments, SessionState.Path.CurrentFileSystemLocation.Path)
-                    }, SaveToSentItems ?? true).GetAwaiter().GetResult();
+                    }, SaveToSentItems ?? true);
                 }
             }
 

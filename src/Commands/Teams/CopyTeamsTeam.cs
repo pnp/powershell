@@ -70,7 +70,7 @@ namespace PnP.PowerShell.Commands.Teams
             * but currently ignored and can't be set by user */
             teamClone.MailNickName = DisplayName;
             teamClone.Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString());
-            TeamsUtility.CloneTeamAsync(this, AccessToken, Connection, groupId, teamClone).GetAwaiter().GetResult();
+            TeamsUtility.CloneTeam(this, AccessToken, Connection, groupId, teamClone);
         }
     }
 }

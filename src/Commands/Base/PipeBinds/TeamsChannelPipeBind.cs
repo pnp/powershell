@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
 using System.Management.Automation;
-using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -45,7 +44,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var channels = TeamsUtility.GetChannelsAsync(cmdlet, accessToken, connection, groupId).GetAwaiter().GetResult();
+                var channels = TeamsUtility.GetChannels(cmdlet, accessToken, connection, groupId);
                 return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase))?.Id;
             }
         }
@@ -54,12 +53,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         {
             if (!string.IsNullOrEmpty(_id))
             {
-                var channel = TeamsUtility.GetChannelAsync(cmdlet, accessToken, connection, groupId, _id, useBeta).GetAwaiter().GetResult();
+                var channel = TeamsUtility.GetChannel(cmdlet, accessToken, connection, groupId, _id, useBeta);
                 return channel;
             }
             else
             {
-                var channels = TeamsUtility.GetChannelsAsync(cmdlet, accessToken, connection, groupId, useBeta).GetAwaiter().GetResult();
+                var channels = TeamsUtility.GetChannels(cmdlet, accessToken, connection, groupId, useBeta);
                 if (channels != null && channels.Any())
                 {
                     return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase));

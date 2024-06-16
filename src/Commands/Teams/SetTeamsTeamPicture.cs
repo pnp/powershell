@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands.Teams
                         throw new PSArgumentException("File is not of a supported content type (jpg/png)");
                     }
                     var byteArray = File.ReadAllBytes(Path);
-                    TeamsUtility.SetTeamPictureAsync(this, Connection, AccessToken, groupId, byteArray, contentType).GetAwaiter().GetResult();
+                    TeamsUtility.SetTeamPictureAsync(this, Connection, AccessToken, groupId, byteArray, contentType);
                 }
                 else
                 {

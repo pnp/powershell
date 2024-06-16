@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Graph
             if (group != null)
             {
                 // Get members of the group
-                var members = Microsoft365GroupsUtility.GetMembersAsync(this, Connection, new Guid(group.Id), AccessToken).GetAwaiter().GetResult();
+                var members = ClearOwners.GetMembers(this, Connection, new Guid(group.Id), AccessToken);
                 WriteObject(members?.OrderBy(m => m.DisplayName), true);
             }
         }

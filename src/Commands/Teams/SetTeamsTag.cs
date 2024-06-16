@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Teams
                 {
                     if (ParameterSpecified(nameof(DisplayName)) && tag.DisplayName != DisplayName)
                     {
-                        TeamsUtility.UpdateTagAsync(this, Connection, AccessToken, groupId, tag.Id, DisplayName).GetAwaiter().GetResult();
+                        TeamsUtility.UpdateTag(this, Connection, AccessToken, groupId, tag.Id, DisplayName);
                     }
                 }
                 else

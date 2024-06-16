@@ -31,11 +31,11 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetIdAsync(this, Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                    var planId = Plan.GetId(this, Connection, AccessToken, groupId);
 
                     if (planId != null)
                     {
-                        WriteObject(PlannerUtility.CreateBucketAsync(this, Connection, AccessToken, Name, planId).GetAwaiter().GetResult(), true);
+                        WriteObject(PlannerUtility.CreateBucket(this, Connection, AccessToken, Name, planId), true);
                     }
                     else
                     {
@@ -49,7 +49,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             }
             else if (ParameterSetName == ParameterName_BYPLANID)
             {
-                WriteObject(PlannerUtility.CreateBucketAsync(this, Connection, AccessToken, Name, PlanId).GetAwaiter().GetResult(), true);
+                WriteObject(PlannerUtility.CreateBucket(this, Connection, AccessToken, Name, PlanId), true);
             }
         }
     }

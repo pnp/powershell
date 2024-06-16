@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Admin
                 OperationId = Guid.Empty
             };
 
-            var results = Utilities.REST.RestHelper.PostAsync<SPOSiteRenameJob>(HttpClient, $"{AdminContext.Url.TrimEnd('/')}/_api/SiteRenameJobs?api-version=1.4.7", AdminContext, body, false).GetAwaiter().GetResult();
+            var results = Utilities.REST.RestHelper.Post<SPOSiteRenameJob>(HttpClient, $"{AdminContext.Url.TrimEnd('/')}/_api/SiteRenameJobs?api-version=1.4.7", AdminContext, body, false);
             if (!Wait.IsPresent)
             {
                 if (results != null)

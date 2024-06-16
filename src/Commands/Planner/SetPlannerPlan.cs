@@ -32,10 +32,10 @@ namespace PnP.PowerShell.Commands.Graph
                 var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var plan = Plan.GetPlanAsync(this, Connection, AccessToken, groupId, false).GetAwaiter().GetResult();
+                    var plan = Plan.GetPlan(this, Connection, AccessToken, groupId, false);
                     if (plan != null)
                     {
-                        WriteObject(PlannerUtility.UpdatePlanAsync(this, Connection, AccessToken, plan, Title).GetAwaiter().GetResult());
+                        WriteObject(PlannerUtility.UpdatePlan(this, Connection, AccessToken, plan, Title));
                     }
                     else
                     {
@@ -49,10 +49,10 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                var plan = PlannerUtility.GetPlanAsync(this, Connection, AccessToken, PlanId, false).GetAwaiter().GetResult();
+                var plan = PlannerUtility.GetPlan(this, Connection, AccessToken, PlanId, false);
                 if (plan != null)
                 {
-                    WriteObject(PlannerUtility.UpdatePlanAsync(this, Connection, AccessToken, plan, Title).GetAwaiter().GetResult());
+                    WriteObject(PlannerUtility.UpdatePlan(this, Connection, AccessToken, plan, Title));
                 }
                 else
                 {

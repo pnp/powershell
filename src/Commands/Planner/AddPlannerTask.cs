@@ -94,7 +94,7 @@ namespace PnP.PowerShell.Commands.Planner
                 var chunks = BatchUtility.Chunk(AssignedTo, 20);
                 foreach (var chunk in chunks)
                 {
-                    var userIds = BatchUtility.GetPropertyBatchedAsync(this, Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id").GetAwaiter().GetResult();
+                    var userIds = BatchUtility.GetPropertyBatched(this, Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id");
                     foreach (var userId in userIds)
                     {
                         newTask.Assignments.Add(userId.Value, new TaskAssignment());
@@ -111,7 +111,7 @@ namespace PnP.PowerShell.Commands.Planner
                     throw new PSArgumentException("Group not found", nameof(Group));
                 }
 
-                var planId = Plan.GetIdAsync(this, Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                var planId = Plan.GetId(this, Connection, AccessToken, groupId);
                 if (planId == null)
                 {
                     throw new PSArgumentException("Plan not found", nameof(Plan));
@@ -125,7 +125,7 @@ namespace PnP.PowerShell.Commands.Planner
                 }
                 newTask.BucketId = bucket.Id;
 
-                createdTask = PlannerUtility.AddTaskAsync(this, Connection, AccessToken, newTask).GetAwaiter().GetResult();
+                createdTask = PlannerUtility.AddTask(this, Connection, AccessToken, newTask);
             }
             // By PlanId
             else
@@ -139,13 +139,13 @@ namespace PnP.PowerShell.Commands.Planner
                 newTask.PlanId = PlanId;
                 newTask.BucketId = bucket.Id;
 
-                createdTask = PlannerUtility.AddTaskAsync(this, Connection, AccessToken, newTask).GetAwaiter().GetResult();
+                createdTask = PlannerUtility.AddTask(this, Connection, AccessToken, newTask);
             }
 
             if (ParameterSpecified(nameof(Description)))
             {
-                var existingTaskDetails = PlannerUtility.GetTaskDetailsAsync(this, Connection, AccessToken, createdTask.Id, false).GetAwaiter().GetResult();
-                PlannerUtility.UpdateTaskDetailsAsync(this, Connection, AccessToken, existingTaskDetails, Description).GetAwaiter().GetResult();
+                var existingTaskDetails = PlannerUtility.GetTaskDetails(this, Connection, AccessToken, createdTask.Id, false);
+                PlannerUtility.UpdateTaskDetails(this, Connection, AccessToken, existingTaskDetails, Description);
             }
         }
     }

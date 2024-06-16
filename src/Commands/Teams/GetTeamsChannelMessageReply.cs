@@ -54,12 +54,12 @@ namespace PnP.PowerShell.Commands.Teams
                         throw new PSArgumentException($"Don't specify {nameof(IncludeDeleted)} when using the {nameof(Identity)} parameter.");
                     }
 
-                    var reply = TeamsUtility.GetMessageReplyAsync(this, Connection, AccessToken, groupId, channelId, messageId, Identity.GetId()).GetAwaiter().GetResult();
+                    var reply = TeamsUtility.GetMessageReply(this, Connection, AccessToken, groupId, channelId, messageId, Identity.GetId());
                     WriteObject(reply);
                 }
                 else
                 {
-                    var replies = TeamsUtility.GetMessageRepliesAsync(this, Connection, AccessToken, groupId, channelId, messageId, IncludeDeleted).GetAwaiter().GetResult();
+                    var replies = TeamsUtility.GetMessageReplies(this, Connection, AccessToken, groupId, channelId, messageId, IncludeDeleted);
                     WriteObject(replies, true);
                 }
             }

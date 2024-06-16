@@ -31,7 +31,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetIdAsync(this, Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                    var planId = Plan.GetId(this, Connection, AccessToken, groupId);
 
                     if (planId != null)
                     {
@@ -40,7 +40,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                         {
                             if (ShouldProcess($"Remove bucket '{bucket.Name}'"))
                             {
-                                PlannerUtility.RemoveBucketAsync(this, Connection, AccessToken, bucket.Id).GetAwaiter().GetResult();
+                                PlannerUtility.RemoveBucket(this, Connection, AccessToken, bucket.Id);
                             }
                         }
                         else
@@ -65,7 +65,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 {
                     if (ShouldProcess($"Remove bucket '{bucket.Name}'"))
                     {
-                        PlannerUtility.RemoveBucketAsync(this, Connection, AccessToken, BucketId).GetAwaiter().GetResult();
+                        PlannerUtility.RemoveBucket(this, Connection, AccessToken, BucketId);
                     }
                 }
                 else

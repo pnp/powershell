@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             try
             {
-                TeamsUtility.AddChannelMemberAsync(this, Connection, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
+                TeamsUtility.AddChannelMember(this, Connection, AccessToken, groupId, channelId, User, Role);
             }
             catch (GraphException ex)
             {

@@ -39,11 +39,11 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetMembershipAsync(this, Connection, AccessToken, groupId, channelId).GetAwaiter().GetResult());
+                WriteObject(Identity.GetMembership(this, Connection, AccessToken, groupId, channelId));
             }
             else
             {
-                WriteObject(TeamsUtility.GetChannelMembersAsync(this, Connection, AccessToken, groupId, channelId, Role).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetChannelMembers(this, Connection, AccessToken, groupId, channelId, Role), true);
             }
         }
     }

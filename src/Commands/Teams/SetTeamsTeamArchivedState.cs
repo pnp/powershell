@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Teams
                 {
                     throw new PSInvalidOperationException($"Team {team.DisplayName} {(Archived ? "has already been" : "is not")} archived");
                 }
-                var response = TeamsUtility.SetTeamArchivedStateAsync(this, Connection, AccessToken, groupId, Archived, SetSiteReadOnlyForMembers).GetAwaiter().GetResult();
+                var response = TeamsUtility.SetTeamArchivedState(this, Connection, AccessToken, groupId, Archived, SetSiteReadOnlyForMembers);
                 if (!response.IsSuccessStatusCode)
                 {
                     if (GraphHelper.TryGetGraphException(response, out GraphException ex))

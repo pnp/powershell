@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Teams
             }
             else
             {
-                var tags = TeamsUtility.GetTagsAsync(this, AccessToken, Connection, groupId).GetAwaiter().GetResult();
+                var tags = TeamsUtility.GetTags(this, AccessToken, Connection, groupId);
                 WriteObject(tags, true);
             }
         }

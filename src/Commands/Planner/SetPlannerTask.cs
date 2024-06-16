@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            var existingTask = PlannerUtility.GetTaskAsync(this, Connection, AccessToken, TaskId, false, false).GetAwaiter().GetResult();
+            var existingTask = PlannerUtility.GetTask(this, Connection, AccessToken, TaskId, false, false);
             if (existingTask != null)
             {
                 var plannerTask = new PlannerTask();
@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands.Planner
                     var chunks = BatchUtility.Chunk(AssignedTo, 20);
                     foreach (var chunk in chunks)
                     {
-                        var userIds = BatchUtility.GetPropertyBatchedAsync(this, Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id").GetAwaiter().GetResult();
+                        var userIds = BatchUtility.GetPropertyBatched(this, Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id");
                         foreach (var userId in userIds)
                         {
                             plannerTask.Assignments.Add(userId.Value, new TaskAssignment());
@@ -106,12 +106,12 @@ namespace PnP.PowerShell.Commands.Planner
                 }
 
 
-                PlannerUtility.UpdateTaskAsync(this, Connection, AccessToken, existingTask, plannerTask).GetAwaiter().GetResult();
+                PlannerUtility.UpdateTask(this, Connection, AccessToken, existingTask, plannerTask);
 
                 if (ParameterSpecified(nameof(Description)))
                 {
-                    var existingTaskDetails = PlannerUtility.GetTaskDetailsAsync(this, Connection, AccessToken, TaskId, false).GetAwaiter().GetResult();
-                    PlannerUtility.UpdateTaskDetailsAsync(this, Connection, AccessToken, existingTaskDetails, Description).GetAwaiter().GetResult();
+                    var existingTaskDetails = PlannerUtility.GetTaskDetails(this, Connection, AccessToken, TaskId, false);
+                    PlannerUtility.UpdateTaskDetails(this, Connection, AccessToken, existingTaskDetails, Description);
                 }
             }
             else

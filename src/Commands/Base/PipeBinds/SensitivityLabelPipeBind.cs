@@ -75,7 +75,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 url = "/beta/me/security/informationProtection/sensitivityLabels";
             }
 
-            var availableLabels = Utilities.REST.GraphHelper.GetResultCollectionAsync<Model.Graph.Purview.InformationProtectionLabel>(cmdlet, connection, $"https://{connection.GraphEndPoint}/{url}", accesstoken).GetAwaiter().GetResult();
+            var availableLabels = Utilities.REST.GraphHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>(cmdlet, connection, $"https://{connection.GraphEndPoint}/{url}", accesstoken);
             return availableLabels.FirstOrDefault(l => l.Name == _labelName);
         }
     }

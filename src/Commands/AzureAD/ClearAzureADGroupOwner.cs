@@ -27,11 +27,11 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (group != null)
             {
-                var owners = Microsoft365GroupsUtility.GetOwnersAsync(this, Connection, new System.Guid(group.Id), AccessToken).GetAwaiter().GetResult();
+                var owners = ClearOwners.GetOwners(this, Connection, new System.Guid(group.Id), AccessToken);
 
                 var ownersToBeRemoved = owners?.Select(p => p.UserPrincipalName).ToArray();
 
-                Microsoft365GroupsUtility.RemoveOwnersAsync(this, Connection, new System.Guid(group.Id), ownersToBeRemoved, AccessToken).GetAwaiter().GetResult();
+                ClearOwners.RemoveOwners(this, Connection, new System.Guid(group.Id), ownersToBeRemoved, AccessToken);
             }
         }
     }

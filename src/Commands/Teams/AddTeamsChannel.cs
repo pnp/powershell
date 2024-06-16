@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Teams
             try
             {
 #pragma warning disable CS0618 // Type or member is obsolete
-                var channel = TeamsUtility.AddChannelAsync(this, AccessToken, Connection, groupId, DisplayName, Description, ChannelType, OwnerUPN, IsFavoriteByDefault).GetAwaiter().GetResult();
+                var channel = TeamsUtility.AddChannel(this, AccessToken, Connection, groupId, DisplayName, Description, ChannelType, OwnerUPN, IsFavoriteByDefault);
 #pragma warning restore CS0618 // Type or member is obsolete
                 WriteObject(channel);
             }

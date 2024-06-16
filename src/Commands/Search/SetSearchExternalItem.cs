@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.Search
             var graphApiUrl = $"v1.0/external/connections/{ConnectionId}/items/{ItemId}";
             WriteVerbose($"Calling Graph API at {graphApiUrl}");
 
-            var results = Utilities.REST.GraphHelper.PutAsync(this, Connection, graphApiUrl, AccessToken, jsonContent).GetAwaiter().GetResult();
+            var results = Utilities.REST.GraphHelper.Put(this, Connection, graphApiUrl, AccessToken, jsonContent);
 
             WriteVerbose($"Graph API responded with HTTP {results.StatusCode} {results.ReasonPhrase}");
 

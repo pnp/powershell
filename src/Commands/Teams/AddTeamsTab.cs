@@ -119,7 +119,7 @@ namespace PnP.PowerShell.Commands.Teams
                                     break;
                                 }
                         }
-                        WriteObject(TeamsUtility.AddTabAsync(this, Connection, AccessToken, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl).GetAwaiter().GetResult());
+                        WriteObject(TeamsUtility.AddTab(this, Connection, AccessToken, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl));
                     }
                     catch (GraphException ex)
                     {

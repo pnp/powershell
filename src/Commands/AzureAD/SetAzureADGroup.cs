@@ -77,22 +77,22 @@ namespace PnP.PowerShell.Commands.Graph
 
                     if (changed)
                     {
-                        AzureADGroupsUtility.UpdateAsync(this, Connection, AccessToken, group).GetAwaiter().GetResult();
+                        AzureADGroupsUtility.Update(this, Connection, AccessToken, group);
                     }
 
                     if (ParameterSpecified(nameof(Owners)))
                     {
-                        Microsoft365GroupsUtility.UpdateOwnersAsync(this, Connection, new Guid(group.Id), AccessToken, Owners).GetAwaiter().GetResult();
+                        ClearOwners.UpdateOwners(this, Connection, new Guid(group.Id), AccessToken, Owners);
                     }
                     if (ParameterSpecified(nameof(Members)))
                     {
-                        Microsoft365GroupsUtility.UpdateMembersAsync(this, Connection, new Guid(group.Id), AccessToken, Members).GetAwaiter().GetResult();
+                        ClearOwners.UpdateMembersAsync(this, Connection, new Guid(group.Id), AccessToken, Members);
                     }
 
                     if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                     {
                         // For this scenario a separate call needs to be made
-                        Utilities.Microsoft365GroupsUtility.SetVisibilityAsync(this, Connection, AccessToken, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+                        Utilities.ClearOwners.SetVisibility(this, Connection, AccessToken, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients);
                     }
                 }
                 catch (Exception e)

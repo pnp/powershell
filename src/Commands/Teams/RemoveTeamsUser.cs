@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Teams
                 {
                     if (Force || ShouldContinue($"Remove user with UPN {User}?", Properties.Resources.Confirm))
                     {
-                        TeamsUtility.DeleteUserAsync(this, Connection, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
+                        TeamsUtility.DeleteUser(this, Connection, AccessToken, groupId, User, Role);
                     }
                 }
                 catch (GraphException ex)

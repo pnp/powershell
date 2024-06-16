@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="message">The message to send</param>
         /// <param name="saveToSentItems">Boolean indicating if the sent message should be added to the sent items of the sender. Optional. Defaults to true.</param>
         /// <exception cref="System.Exception">Thrown if sending the e-mail failed</exception>
-        public static async Task SendGraphMail(Cmdlet cmdlet, PnPConnection connection, string accessToken, Message message, bool saveToSentItems = true)
+        public static void SendGraphMail(Cmdlet cmdlet, PnPConnection connection, string accessToken, Message message, bool saveToSentItems = true)
         {
             var jsonSerializer = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, };
             jsonSerializer.Converters.Add(new JsonStringEnumConverter());
@@ -38,11 +38,11 @@ namespace PnP.PowerShell.Commands.Utilities
             var stringContent = new StringContent(JsonSerializer.Serialize(new SendMailMessage { Message = message, SaveToSentItems = saveToSentItems }, jsonSerializer));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            var response = await GraphHelper.PostAsync(cmdlet, connection, $"v1.0/users/{message.Sender.EmailAddress.Address}/sendMail", accessToken, stringContent);
+            var response = GraphHelper.Post(cmdlet, connection, $"v1.0/users/{message.Sender.EmailAddress.Address}/sendMail", accessToken, stringContent);
 
             if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
             {
-                throw new System.Exception($"Error sending e-mail message: {response.ReasonPhrase}. {(await response.Content.ReadAsStringAsync())}");
+                throw new System.Exception($"Error sending e-mail message: {response.ReasonPhrase}. {(response.Content.ReadAsStringAsync().GetAwaiter().GetResult())}");
             }
         }
 
@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="to">List of TO addresses.</param>
         /// <param name="cc">List of CC addresses. Optional.</param>
         /// <param name="bcc">List of BCC addresses. Optional.</param>
-        public static async Task SendSharePointEmail(ClientContext context, string subject, string body, IEnumerable<string> to, IEnumerable<string> cc = null, IEnumerable<string> bcc = null)
+        public static void SendSharePointEmail(ClientContext context, string subject, string body, IEnumerable<string> to, IEnumerable<string> cc = null, IEnumerable<string> bcc = null)
         {
             EmailProperties properties = new EmailProperties
             {
@@ -75,8 +75,8 @@ namespace PnP.PowerShell.Commands.Utilities
             properties.Subject = subject;
             properties.Body = body;
 
-            Microsoft.SharePoint.Client.Utilities.Utility.SendEmail(context, properties);
-            await context.ExecuteQueryRetryAsync();
+            Utility.SendEmail(context, properties);
+            context.ExecuteQueryRetry();
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="username">Username to authenticate to the SMTP server with. Leave NULL to not authenticate.</param>
         /// <param name="password">Password to authenticate to the SMTP server with. Leave NULL to not authenticate.</param>
         /// <param name="contentType">Content type of the body. By default this is HTML.</param>
-        public static async Task SendSmtpEmail(string subject, string body, string fromAddress, IEnumerable<string> to, IEnumerable<string> cc = null, IEnumerable<string> bcc = null, MessageImportanceType? importance = null, string servername = "smtp.office365.com", short? serverPort = null, bool? enableSsl = null, string username = null, string password = null, MessageBodyContentType contentType = MessageBodyContentType.Html)
+        public static void SendSmtpEmail(string subject, string body, string fromAddress, IEnumerable<string> to, IEnumerable<string> cc = null, IEnumerable<string> bcc = null, MessageImportanceType? importance = null, string servername = "smtp.office365.com", short? serverPort = null, bool? enableSsl = null, string username = null, string password = null, MessageBodyContentType contentType = MessageBodyContentType.Html)
         {
             using SmtpClient client = new SmtpClient(servername)
             {
@@ -153,7 +153,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
 
-            await client.SendMailAsync(mail);
+            client.SendMailAsync(mail).GetAwaiter().GetResult();
         }
 
         /// <summary>

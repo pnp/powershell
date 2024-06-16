@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Teams
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetTabsAsync(this, AccessToken, Connection, groupId, channelId).GetAwaiter().GetResult(), true);
+                        WriteObject(TeamsUtility.GetTabs(this, AccessToken, Connection, groupId, channelId), true);
                     }
                 }
                 else

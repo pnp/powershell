@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 try
                 {
-                    var buckets = PlannerUtility.GetBucketsAsync(cmdlet, connection, accessToken, planId).GetAwaiter().GetResult();
+                    var buckets = PlannerUtility.GetBuckets(cmdlet, connection, accessToken, planId);
                     if (buckets != null)
                     {
                         PlannerBucket bucket = null;

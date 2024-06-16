@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Teams
                     {
                         if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
                         {
-                            var response = TeamsUtility.DeleteTabAsync(this, AccessToken, Connection, groupId, channelId, tab.Id).GetAwaiter().GetResult();
+                            var response = TeamsUtility.DeleteTab(this, AccessToken, Connection, groupId, channelId, tab.Id);
                             if (!response.IsSuccessStatusCode)
                             {
                                 if (GraphHelper.TryGetGraphException(response, out GraphException ex))

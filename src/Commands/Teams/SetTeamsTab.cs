@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Teams
                         {
                             tab.DisplayName = DisplayName;
                         }
-                        TeamsUtility.UpdateTabAsync(this, Connection, AccessToken, groupId, channelId, tab).GetAwaiter().GetResult();
+                        TeamsUtility.UpdateTab(this, Connection, AccessToken, groupId, channelId, tab);
                     }
                     else
                     {

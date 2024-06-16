@@ -34,11 +34,11 @@ namespace PnP.PowerShell.Commands.Planner
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        WriteObject(Identity.GetPlanAsync(this, Connection, AccessToken, groupId, ResolveIdentities).GetAwaiter().GetResult());
+                        WriteObject(Identity.GetPlan(this, Connection, AccessToken, groupId, ResolveIdentities));
                     }
                     else
                     {
-                        WriteObject(PlannerUtility.GetPlansAsync(this, Connection, AccessToken, groupId, ResolveIdentities).GetAwaiter().GetResult(), true);
+                        WriteObject(PlannerUtility.GetPlans(this, Connection, AccessToken, groupId, ResolveIdentities), true);
                     }
                 }
                 else
@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else
             {
-                WriteObject(PlannerUtility.GetPlanAsync(this, Connection, AccessToken, Id, ResolveIdentities).GetAwaiter().GetResult());
+                WriteObject(PlannerUtility.GetPlan(this, Connection, AccessToken, Id, ResolveIdentities));
             }
         }
     }

@@ -45,15 +45,15 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             Group group = null;
             if (Group != null)
             {
-                group = AzureADGroupsUtility.GetGroupAsync(cmdlet, connection, new Guid(Group.Id), accessToken).GetAwaiter().GetResult();
+                group = AzureADGroupsUtility.GetGroup(cmdlet, connection, new Guid(Group.Id), accessToken);
             }
             else if (!string.IsNullOrEmpty(GroupId))
             {
-                group = AzureADGroupsUtility.GetGroupAsync(cmdlet, connection, new Guid(GroupId), accessToken).GetAwaiter().GetResult();
+                group = AzureADGroupsUtility.GetGroup(cmdlet, connection, new Guid(GroupId), accessToken);
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                group = AzureADGroupsUtility.GetGroupAsync(cmdlet, connection, DisplayName, accessToken).GetAwaiter().GetResult();
+                group = AzureADGroupsUtility.GetGroup(cmdlet, connection, DisplayName, accessToken);
             }
             if (group != null)
             {

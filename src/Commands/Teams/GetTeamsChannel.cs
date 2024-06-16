@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Teams
             }
             else
             {
-                WriteObject(TeamsUtility.GetChannelsAsync(this, AccessToken, Connection, groupId, useBeta: IncludeModerationSettings.ToBool()).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetChannels(this, AccessToken, Connection, groupId, useBeta: IncludeModerationSettings.ToBool()), true);
             }
         }
     }

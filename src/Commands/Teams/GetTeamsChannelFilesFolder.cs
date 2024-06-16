@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Teams
                     throw new PSArgumentException("Channel not found");
                 }
                               
-                WriteObject(Utilities.TeamsUtility.GetChannelsFilesFolderAsync(this, Connection, AccessToken, groupId, channelId).GetAwaiter().GetResult());                                
+                WriteObject(Utilities.TeamsUtility.GetChannelsFilesFolder(this, Connection, AccessToken, groupId, channelId));                                
             }
             else
             {

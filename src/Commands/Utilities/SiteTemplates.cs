@@ -25,9 +25,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="script">The Site Script to invoke</param>
         /// <param name="siteUrl">The URL of the SharePoint site to invoke the Site Script on</param>
         /// <returns>HttpResponseMessage with the</returns>
-        public static async Task<RestResultCollection<InvokeSiteScriptActionResponse>> InvokeSiteScript(Cmdlet cmdlet, PnPConnection connection, string accessToken, TenantSiteScript script, string siteUrl)
+        public static RestResultCollection<InvokeSiteScriptActionResponse> InvokeSiteScript(Cmdlet cmdlet, PnPConnection connection, string accessToken, TenantSiteScript script, string siteUrl)
         {
-            return await InvokeSiteScript(cmdlet, connection, accessToken, script.Content, siteUrl);
+            return InvokeSiteScript(cmdlet, connection, accessToken, script.Content, siteUrl);
         }
 
         /// <summary>
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="scriptContent">The Site Script content to invoke</param>
         /// <param name="siteUrl">The URL of the SharePoint site to invoke the Site Script on</param>
         /// <returns></returns>
-        public static async Task<RestResultCollection<InvokeSiteScriptActionResponse>> InvokeSiteScript(Cmdlet cmdlet, PnPConnection connection, string accessToken, string scriptContent, string siteUrl)
+        public static RestResultCollection<InvokeSiteScriptActionResponse> InvokeSiteScript(Cmdlet cmdlet, PnPConnection connection, string accessToken, string scriptContent, string siteUrl)
         {
             // Properly encode the contents of the provided site script
             var escapedScript = Regex.Replace(scriptContent.Replace("\\\"", "\\\\\\\""), "(?<!\\\\)\"", "\\\"", RegexOptions.Singleline);
@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Utilities
             postBody.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
             // Execute the request to apply the site script
-            var results = await GraphHelper.PostAsync<RestResultCollection<InvokeSiteScriptActionResponse>>(cmdlet, connection, $"{siteUrl.TrimEnd('/')}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", postBody, accessToken, new Dictionary<string, string>{{ "Accept", "application/json" }});
+            var results = GraphHelper.Post<RestResultCollection<InvokeSiteScriptActionResponse>>(cmdlet, connection, $"{siteUrl.TrimEnd('/')}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", postBody, accessToken, new Dictionary<string, string>{{ "Accept", "application/json" }});
             return results;
         }
 

@@ -22,12 +22,12 @@ namespace PnP.PowerShell.Commands.Planner
             var groupId = Group.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                var planId = Identity.GetIdAsync(this, Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                var planId = Identity.GetId(this, Connection, AccessToken, groupId);
                 if (!string.IsNullOrEmpty(planId))
                 {
                     if (ShouldProcess($"Delete plan with id {planId}"))
                     {
-                        PlannerUtility.DeletePlanAsync(this, Connection, AccessToken, planId).GetAwaiter().GetResult();
+                        PlannerUtility.DeletePlan(this, Connection, AccessToken, planId);
                     }
                 }
                 else

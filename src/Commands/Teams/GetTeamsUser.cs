@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Teams
                 {
                     if (ParameterSpecified(nameof(Channel)))
                     {
-                        var teamChannels = TeamsUtility.GetChannelsAsync(this, AccessToken, Connection, groupId).GetAwaiter().GetResult();
+                        var teamChannels = TeamsUtility.GetChannels(this, AccessToken, Connection, groupId);
                         
                         var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
 
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Teams
 
                         if (!string.IsNullOrEmpty(channelId) && requestedChannel != null && requestedChannel.MembershipType.ToLower() == TeamChannelType.Private.ToString().ToLower())
                         {
-                            WriteObject(TeamsUtility.GetUsersAsync(this, Connection, AccessToken, groupId, channelId, Role).GetAwaiter().GetResult(), true);
+                            WriteObject(TeamsUtility.GetUsers(this, Connection, AccessToken, groupId, channelId, Role), true);
                         }
                         else
                         {
@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Teams
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetUsersAsync(this, Connection, AccessToken, groupId, Role).GetAwaiter().GetResult(), true);
+                        WriteObject(TeamsUtility.GetUsers(this, Connection, AccessToken, groupId, Role), true);
                     }
                 }
                 catch (GraphException ex)

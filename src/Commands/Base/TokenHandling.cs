@@ -125,7 +125,7 @@ namespace PnP.PowerShell.Commands.Base
                 // Retrieve the scopes from the access token
                 var scopes = ReturnScopes(accessToken);
 
-                cmdlet.WriteVerbose($"Access token acquired containing the following {(scopes.Length != 1 ? scopes.Length + " " : "")}scope{(scopes.Length == 1 ? "" : "s")}: {string.Join(", ", scopes)}");
+                cmdlet.WriteVerbose($"Access token acquired containing the following {(scopes.Length != 1 ? scopes.Length + " " : "")}{RetrieveTokenType(accessToken)} scope{(scopes.Length == 1 ? "" : "s")}: {string.Join(", ", scopes)}");
                 
                 return accessToken;
             }

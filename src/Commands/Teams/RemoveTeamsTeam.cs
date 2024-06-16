@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Teams
             {
                 if (Force || ShouldContinue("Removing the team will remove all messages in all channels in the team.", Properties.Resources.Confirm))
                 {
-                    var response = TeamsUtility.DeleteTeamAsync(this, AccessToken, Connection, groupId).GetAwaiter().GetResult();
+                    var response = TeamsUtility.DeleteTeam(this, AccessToken, Connection, groupId);
                     if (!response.IsSuccessStatusCode)
                     {
                         if (GraphHelper.TryGetGraphException(response, out GraphException ex))

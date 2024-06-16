@@ -43,10 +43,10 @@ namespace PnP.PowerShell.Commands.Planner
                 var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetIdAsync(this, Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                    var planId = Plan.GetId(this, Connection, AccessToken, groupId);
                     if (planId != null)
                     {
-                        WriteObject(PlannerUtility.GetTasksAsync(this, Connection, AccessToken, planId, ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
+                        WriteObject(PlannerUtility.GetTasks(this, Connection, AccessToken, planId, ResolveUserDisplayNames), true);
                     }
                     else
                     {
@@ -60,15 +60,15 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else if (ParameterSetName == ParameterSetName_BYPLANID)
             {
-                WriteObject(PlannerUtility.GetTasksAsync(this, Connection, AccessToken, PlanId, ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
+                WriteObject(PlannerUtility.GetTasks(this, Connection, AccessToken, PlanId, ResolveUserDisplayNames), true);
             }
             else if (ParameterSetName == ParameterSetName_BYBUCKET)
             {
-                WriteObject(PlannerUtility.GetBucketTasksAsync(this, Connection, AccessToken, Bucket.GetId(), ResolveUserDisplayNames).GetAwaiter().GetResult(), true);
+                WriteObject(PlannerUtility.GetBucketTasks(this, Connection, AccessToken, Bucket.GetId(), ResolveUserDisplayNames), true);
             }
             else if (ParameterSetName == ParameterSetName_BYTASKID)
             {
-                WriteObject(PlannerUtility.GetTaskAsync(this, Connection, AccessToken, TaskId, ResolveUserDisplayNames, IncludeDetails).GetAwaiter().GetResult());
+                WriteObject(PlannerUtility.GetTask(this, Connection, AccessToken, TaskId, ResolveUserDisplayNames, IncludeDetails));
             }
         }
     }

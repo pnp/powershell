@@ -534,7 +534,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
             }
 
-            var azureApps = RestHelper.GetAsync<RestResultCollection<AzureADApp>>(httpClient, $"{graphEndpoint}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
+            var azureApps = RestHelper.Get<RestResultCollection<AzureADApp>>(httpClient, $"{graphEndpoint}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token);
             if (azureApps != null && azureApps.Items.Any())
             {
                 Host.UI.WriteLine();
@@ -584,7 +584,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
             }
 
-            var azureApp = RestHelper.PostAsync<AzureADApp>(httpClient, $"{graphEndpoint}/v1.0/applications", token, payload).GetAwaiter().GetResult();
+            var azureApp = RestHelper.Post<AzureADApp>(httpClient, $"{graphEndpoint}/v1.0/applications", token, payload);
             if (azureApp != null)
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"App {azureApp.DisplayName} with id {azureApp.AppId} created.");
@@ -714,7 +714,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     {
                         var byteArrayContent = new ByteArrayContent(bytes);
                         byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
-                        GraphHelper.PutAsync(this, PnPConnection.Current, endpoint, token, byteArrayContent).GetAwaiter().GetResult();
+                        GraphHelper.Put(this, PnPConnection.Current, endpoint, token, byteArrayContent);
 
                         WriteVerbose("Successfully set the logo for the Azure AD app");
                     }

@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Teams
             }
             else
             {
-                WriteObject(TeamsUtility.GetAppsAsync(this, AccessToken, Connection).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetApps(this, AccessToken, Connection), true);
             }
         }
     }

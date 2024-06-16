@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Teams
                 {
                     if (Force || ShouldContinue("Do you want to remove this tag ?", Properties.Resources.Confirm))
                     {
-                        var response = TeamsUtility.DeleteTagAsync(this, Connection, AccessToken, groupId, tag.Id).GetAwaiter().GetResult();
+                        var response = TeamsUtility.DeleteTag(this, Connection, AccessToken, groupId, tag.Id);
                         if (!response.IsSuccessStatusCode)
                         {
                             if (GraphHelper.TryGetGraphException(response, out GraphException ex))

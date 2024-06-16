@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Teams
             var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             { 
-              WriteObject(TeamsUtility.GetPrimaryChannelAsync(this, AccessToken, Connection, groupId).GetAwaiter().GetResult());
+              WriteObject(TeamsUtility.GetPrimaryChannel(this, AccessToken, Connection, groupId));
             } else
             {
                 throw new PSArgumentException("Team not found", nameof(Team));

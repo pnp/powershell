@@ -27,11 +27,11 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             if (!ParameterSpecified(nameof(UserId)))
             {
-                RestHelper.PostAsync(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a)?@a='{normalizedUserName}'", AdminContext).GetAwaiter().GetResult();
+                RestHelper.Post(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a)?@a='{normalizedUserName}'", AdminContext);
             }
             else
             {
-                RestHelper.PostAsync(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a,userId='{UserId}')?@a='{normalizedUserName}'", AdminContext).GetAwaiter().GetResult();
+                RestHelper.Post(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a,userId='{UserId}')?@a='{normalizedUserName}'", AdminContext);
             }
 
             WriteVerbose($"Completed deletion of user profile {LoginName}");

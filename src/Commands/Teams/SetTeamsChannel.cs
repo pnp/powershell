@@ -102,7 +102,7 @@ namespace PnP.PowerShell.Commands.Teams
             teamChannel.MembershipType = null;
             try
             {
-                var updated = TeamsUtility.UpdateChannelAsync(this, Connection, AccessToken, groupId, teamChannel.Id, teamChannel, useBeta: betaRequired).GetAwaiter().GetResult();
+                var updated = TeamsUtility.UpdateChannel(this, Connection, AccessToken, groupId, teamChannel.Id, teamChannel, useBeta: betaRequired);
                 WriteObject(updated);
             }
             catch (GraphException ex)

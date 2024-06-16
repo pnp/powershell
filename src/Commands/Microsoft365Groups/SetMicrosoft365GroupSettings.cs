@@ -29,12 +29,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 var groupSettingObject = GroupSettingsObject();
 
-                Microsoft365GroupsUtility.UpdateGroupSetting(this, Connection, AccessToken, Identity, groupId.ToString(), groupSettingObject).GetAwaiter().GetResult();
+                ClearOwners.UpdateGroupSetting(this, Connection, AccessToken, Identity, groupId.ToString(), groupSettingObject).GetAwaiter().GetResult();
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
-                Microsoft365GroupsUtility.UpdateGroupSetting(this, Connection, AccessToken, Identity, groupSettingObject).GetAwaiter().GetResult();
+                ClearOwners.UpdateGroupSetting(this, Connection, AccessToken, Identity, groupSettingObject).GetAwaiter().GetResult();
             }
         }
 
