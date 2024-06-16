@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPHomeSite` cmdlet to add a home site to your tenant. [#3989](https://github.com/pnp/powershell/pull/3989)
 - Added `Get-PnPPageSchedulingEnabled` cmdlet to get the state of the modern page schedule feature in the library. [PR](https://github.com/pnp/powershell/commit/4ac757fc2072233529b38b2b39c36ea6b941e003)
 - Added `-IncludeSensitivityLabels` parameter to `Get-PnPMicrosoft365Group` cmdlet to retrieve sensitivity labels assigned to M365 Groups. [#3991](https://github.com/pnp/powershell/pull/3991)
+- Added `Get-PnPFileSensitivityLabelInfo` cmdlet to retrieve sensitivity label information about a file in a SharePoint site. [#3994](https://github.com/pnp/powershell/pull/3994)
 
 ### Fixed
 
@@ -42,8 +43,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed NullDereferenceException in `Get-PnPUserProfileProperty` cmdlet when the user profile doesn't exist, showing a better error message. [#3891](https://github.com/pnp/powershell/pull/3891)
 - Fixed the dev build process on Mac OS devices. [#3907](https://github.com/pnp/powershell/pull/3907)
 - Fixed `Get-PnPContainer` cmdlet to also handle pagination in case of large no. of containers in a tenant. [#3990](https://github.com/pnp/powershell/pull/3990)
+- Fixed `New-PnPTeamsTeam` cmdlet to better handle error specifically such as `Conflict (409): Team already exists`. [#3992](https://github.com/pnp/powershell/pull/3992)
 
-## Changed
+### Changed
 - Renamed `Get-PnPSiteFileVersionExpirationReportJobProgress` to `Get-PnPSiteFileVersionExpirationReportJobStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
 - Renamed `Get-PnPSiteVersionPolicyProgress` to `Get-PnPSiteVersionPolicyStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
 - `Remove-PnPGroupMember` cmdlet now supports removing members from pipeline. [#3955](https://github.com/pnp/powershell/pull/3955)
@@ -51,8 +53,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Marked `UserVoiceForFeedbackEnabled` as obsolete in `Set-PnPTenant` cmdlet as Microsoft doesn't support this. [#3985](https://github.com/pnp/powershell/pull/3985)
 - `Get-PnPTenantSite` cmdlet now returns additional properties like `ArchiveStatus`, `EnableAutoExpirationVersionTrim` and many more. [#3987](https://github.com/pnp/powershell/pull/3987)
 
+### Removed
+
+- Removed `UserVoiceForFeedbackEnabled` property from `Get-PnPTenant` as it is deprecated. [PR](https://github.com/pnp/powershell/commit/190ef864d2e20249658eff93feadf0effb24882d)
+
 ### Contributors
 
+- Marc Studer [Studermarc]
 - Mark Gort [markgort86]
 - Christian Veenhuis [ChVeen]
 - Tobias Maestrini [tmaestrini]
@@ -64,6 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Giacomo Pozzoni [jackpoz]
 - [blarrywangmsft]
 - Koen Zomers [koenzomers]
+- Erwin van Hunen [erwinvanhunen]
 
 ## [2.4.0]
 
