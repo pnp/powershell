@@ -343,7 +343,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                cmdlet.WriteVerbose($"Response successful with {response.StatusCode} containing {responseBody.Length} character{(responseBody.Length != 1 ? "s" : "")}");
+                cmdlet.WriteVerbose($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode} containing {responseBody.Length} character{(responseBody.Length != 1 ? "s" : "")}");
 
                 return responseBody;
             }
@@ -351,7 +351,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                cmdlet.WriteVerbose($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}");
+                cmdlet.WriteVerbose($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent}");
 
                 var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 exception.AccessToken = accessToken;
@@ -398,7 +398,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             else
             {
-                cmdlet.WriteVerbose($"Response successful with {response.StatusCode}");
+                cmdlet.WriteVerbose($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode}");
             }
 
             return response;
