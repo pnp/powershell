@@ -100,7 +100,8 @@ namespace PnP.PowerShell.Commands.Model
         public Guid[] RestrictedAccessControlGroupsToRemove { get; set; }
         public RestrictedToRegion RestrictedToRegion { get; set; }
         public bool SetOwnerWithoutUpdatingSecondaryAdmin { get; set; }
-
+        public bool RestrictContentOrgWideSearch { get; set; }
+        public bool ReadOnlyForUnmanagedDevices {  get; set; } 
         #endregion
 
 
@@ -192,7 +193,9 @@ namespace PnP.PowerShell.Commands.Model
             RestrictedAccessControlGroupsToAdd = props.RestrictedAccessControlGroupsToAdd;
             RestrictedAccessControlGroupsToRemove = props.RestrictedAccessControlGroupsToRemove;
             RestrictedToRegion = props.RestrictedToRegion;
-            SetOwnerWithoutUpdatingSecondaryAdmin = props.SetOwnerWithoutUpdatingSecondaryAdmin;            
+            SetOwnerWithoutUpdatingSecondaryAdmin = props.SetOwnerWithoutUpdatingSecondaryAdmin;
+            RestrictContentOrgWideSearch = props.RestrictContentOrgWideSearch;
+            ReadOnlyForUnmanagedDevices = props.ReadOnlyForUnmanagedDevices;
         }
     }
 }

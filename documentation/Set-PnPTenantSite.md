@@ -39,7 +39,9 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-ListsShowHeaderAndNavigation <Boolean>]
  [-DefaultLinkToExistingAccessReset <SwitchParameter>] [-DefaultShareLinkRole <Role>]
  [-DefaultShareLinkScope <SharingScope>] [-LoopDefaultSharingLinkRole <Role>]
- [-LoopDefaultSharingLinkScope <SharingScope>]
+ [-LoopDefaultSharingLinkScope <SharingScope>] [-RestrictContentOrgWideSearch <Boolean>] [-ReadOnlyForUnmanagedDevices <Boolean>]
+ [-MajorVersionLimit <Int32>] [-MajorWithMinorVersionsLimit <Int32>][-ExpireVersionsAfterDays <Int32>] [EnableAutoExpirationVersionTrim <Boolean>] [-ApplyToNewDocumentLibraries <SwitchParameter>] [-InheritVersionPolicyFromTenant <SwitchParameter>]
+ [-Force <SwitchParameter>]
  [-Wait] 
  [-Connection <PnPConnection>] 
 ```
@@ -896,6 +898,118 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -RestrictContentOrgWideSearch
+To restrict content from being searchable organization-wide and Copilot.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReadOnlyForUnmanagedDevices
+To set the site as read-only for unmanaged devices.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MajorVersionLimit
+To set the major version limit for documents in the site.
+
+```yaml
+Type: Int32
+Parameter Sets: Set Version Trim
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpireVersionsAfterDays
+To set the number of days after which document versions should expire.
+
+```yaml
+Type: Int32
+Parameter Sets: Set Version Trim
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ApplyToExistingDocumentLibraries
+Apply versioning settings to existing document libraries that have versioning enabled.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Version Trim
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableAutoExpirationVersionTrim
+Sets automatic version history limits at site level. Automatic setting will be applied to all new document libraries created in the site and a background request will be created to asynchronously process the update on existing document libraries that have versioning enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Version Trim
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InheritVersionPolicyFromTenant
+Clears the file version setting at site level.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Use the -Force flag to bypass the confirmation question
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: true
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Wait
 Wait for the operation to complete
 

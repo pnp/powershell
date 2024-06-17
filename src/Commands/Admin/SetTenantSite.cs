@@ -12,6 +12,7 @@ using System.Threading;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using Microsoft.SharePoint.Client.Sharing;
+using System.Windows.Forms;
 
 namespace PnP.PowerShell.Commands
 {
@@ -20,6 +21,7 @@ namespace PnP.PowerShell.Commands
     {
         private const string ParameterSet_LOCKSTATE = "Set Lock State";
         private const string ParameterSet_PROPERTIES = "Set Properties";
+        private const string ParameterSet_VERSIONTRIM = "Set Version Trim";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         [Alias("Url")]
@@ -204,6 +206,33 @@ namespace PnP.PowerShell.Commands
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingScope LoopDefaultSharingLinkScope;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool RestrictContentOrgWideSearch;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_VERSIONTRIM)]
+        public bool EnableAutoExpirationVersionTrim;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_VERSIONTRIM)]
+        public int ExpireVersionsAfterDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_VERSIONTRIM)]
+        public int MajorVersionLimit;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_VERSIONTRIM)]
+        public int MajorWithMinorVersionsLimit;
+        
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_VERSIONTRIM)]
+        public SwitchParameter ApplyToNewDocumentLibraries;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool ReadOnlyForUnmanagedDevices;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter InheritVersionPolicyFromTenant;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Force;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -611,6 +640,61 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(RestrictedAccessControlGroups)) && RestrictedAccessControlGroups.Length > 0)
             {
                 props.RestrictedAccessControlGroups = RestrictedAccessControlGroups;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RestrictContentOrgWideSearch)))
+            {
+                props.RestrictContentOrgWideSearch = RestrictContentOrgWideSearch;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(EnableAutoExpirationVersionTrim)) || ParameterSpecified(nameof(ExpireVersionsAfterDays)) || ParameterSpecified(nameof(MajorVersionLimit)) || ParameterSpecified(nameof(MajorWithMinorVersionsLimit)) || ParameterSpecified(nameof(ApplyToNewDocumentLibraries)))
+            {
+                if (!ParameterSpecified(nameof(EnableAutoExpirationVersionTrim)))
+                {
+                    throw new ArgumentException("You must specify a value for \"EnableAutoExpirationVersionTrim\" if \"ExpireVersionsAfterDays\", \"MajorVersionLimit\", \"MajorWithMinorVersionsLimit\" and \"ApplyToNewDocumentLibraries\" are specified.");
+                }
+
+                if (Force.IsPresent || ShouldContinue("Are you sure you want to perform this action?\nThe setting for new document libraries takes effect immediately.Please run Get-PnPTenantSite to check the newly set values on properties EnableAutoExpirationVersionTrim, ExpireVersionsAfterDays, MajorVersionLimit.The setting for existing document libraries may take 24 hours to take effect.Please run Get-SPOSiteVersionPolicyJobProgress to check the progress.The setting for existing libraries does not trim existing versions to meet the newly set limits.Continue?", string.Empty))
+                {
+                    props.EnableAutoExpirationVersionTrim = EnableAutoExpirationVersionTrim;
+                    updateRequired = true;
+
+                    if (ParameterSpecified(nameof(ExpireVersionsAfterDays)))
+                    {                 
+                        props.ExpireVersionsAfterDays = ExpireVersionsAfterDays;
+                        updateRequired = true;
+                    }
+
+                    if (ParameterSpecified(nameof(MajorVersionLimit)))
+                    {
+                        props.MajorVersionLimit = MajorVersionLimit;
+                        updateRequired = true;
+                    }
+
+                    if (ParameterSpecified(nameof(MajorWithMinorVersionsLimit)))
+                    {
+                        props.MajorWithMinorVersionsLimit = MajorWithMinorVersionsLimit;
+                        updateRequired = true;
+                    }
+
+                    if (ParameterSpecified(nameof(ApplyToNewDocumentLibraries)))
+                    {
+                        props.ApplyToNewDocumentLibraries = ApplyToNewDocumentLibraries;
+                        updateRequired = true;
+                    }
+                }
+            }
+            if (ParameterSpecified(nameof(InheritVersionPolicyFromTenant)))
+            {
+                props.InheritVersionPolicyFromTenant = InheritVersionPolicyFromTenant;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ReadOnlyForUnmanagedDevices)))
+            {
+                props.ReadOnlyForUnmanagedDevices = ReadOnlyForUnmanagedDevices;
                 updateRequired = true;
             }
 
