@@ -656,7 +656,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return GraphHelper.Delete(cmdlet, connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", accessToken);
         }
 
-        public static async Task<TeamChannel> AddChannel(Cmdlet cmdlet, string accessToken, PnPConnection connection, string groupId, string displayName, string description, TeamsChannelType channelType, string ownerUPN, bool isFavoriteByDefault)
+        public static TeamChannel AddChannel(Cmdlet cmdlet, string accessToken, PnPConnection connection, string groupId, string displayName, string description, TeamsChannelType channelType, string ownerUPN, bool isFavoriteByDefault)
         {
             var channel = new TeamChannel()
             {
