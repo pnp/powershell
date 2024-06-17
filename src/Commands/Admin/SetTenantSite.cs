@@ -12,7 +12,6 @@ using System.Threading;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using Microsoft.SharePoint.Client.Sharing;
-using System.Windows.Forms;
 
 namespace PnP.PowerShell.Commands
 {
