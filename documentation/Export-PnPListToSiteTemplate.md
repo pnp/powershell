@@ -17,7 +17,7 @@ Exports one or more lists to provisioning template
 ```powershell
 Export-PnPListToSiteTemplate -List <System.Collections.Generic.List`1[System.String]> [[-Out] <String>]
  [[-Schema] <XMLPnPSchemaVersion>] [-Force] [-OutputInstance] 
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION
@@ -133,7 +133,7 @@ The schema of the output to use, defaults to the latest schema
 ```yaml
 Type: XMLPnPSchemaVersion
 Parameter Sets: (All)
-Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002
+Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002, V202103, V202209
 
 Required: False
 Position: 1

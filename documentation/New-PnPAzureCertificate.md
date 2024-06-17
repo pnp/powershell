@@ -25,12 +25,12 @@ PrivateKey contains the PEM encoded private key of the certificate.
 ```powershell
 New-PnPAzureCertificate [-CommonName <String>] [-Country <String>] [-State <String>]
  [-Locality <String>] [-Organization <String>] [-OrganizationUnit <String>] [-OutPfx <String>]
- [-OutCert <String>] [-ValidYears <Int32>] [-CertificatePassword <SecureString>] [-Store <StoreLocation>] [<CommonParameters>]
+ [-OutCert <String>] [-ValidYears <Int32>] [-CertificatePassword <SecureString>] [-Store <StoreLocation>] [-SanNames <String[]>]
 ```
 
 ## DESCRIPTION
 
-Allows to create a self-signed certificate and manifest settings to be used with CSOM via an app-only ADAL application.
+Allows to create a self-signed certificate and manifest settings to be used with PnP PowerShell via an app-only application registration.
 
 ## EXAMPLES
 
@@ -39,21 +39,28 @@ Allows to create a self-signed certificate and manifest settings to be used with
 New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer
 ```
 
-This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file to disk. The private key file (pfx) will not be password protected.
+This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file to disk. The private key file (pfx) will not be password protected. It will have localhost and the machinename as the Subject Alternative Names.
 
 ### EXAMPLE 2
 ```powershell
 New-PnPAzureCertificate -CommonName "My Certificate" -ValidYears 30
 ```
 
-This will output a certificate named "My Certificate" which expires in 30 years from now to the screen. It will not write the certificate files to disk.
+This will output a certificate named "My Certificate" which expires in 30 years from now to the screen. It will not write the certificate files to disk. It will have localhost and the machinename as the Subject Alternative Names.
 
 ### EXAMPLE 3
 ```powershell
 New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer -CertificatePassword (ConvertTo-SecureString -String "pass@word1" -AsPlainText -Force)
 ```
 
-This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file to disk. The pfx file will have the password pass@word1 set on it.
+This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file to disk. The pfx file will have the password pass@word1 set on it. It will have localhost and the machinename as the Subject Alternative Names.
+
+### EXAMPLE 4
+```powershell
+New-PnPAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer -SanNames $null
+```
+
+This will generate a default self-signed certificate named "pnp.contoso.com" valid for 10 years and output a pfx and cer file to disk. There will not be any Subject Alternative Names in the generated certificate.
 
 ## PARAMETERS
 
@@ -160,6 +167,24 @@ Filename to write to, optionally including full path (.pfx)
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SanNames
+One or more DNS names to add to the certificate as Subject Alternative Names. Separate multiple names with a comma, i.e. "host1.domain.com","host2.domain.com".
+
+Provide $null to not add any Subject Alternative names to the certificate.
+
+Omit to add localhost and the machine name as Subject Alternative Names.
+
+```yaml
+Type: String[]
 Parameter Sets: (All)
 
 Required: False

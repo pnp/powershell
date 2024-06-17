@@ -8,6 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUserInfo")]
+    [OutputType(typeof(PSObject))]
     public class RemoveUserInfo : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -26,14 +27,14 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 siteUrl = Site;
             }
-            var hostUrl = ClientContext.Url;
+            var hostUrl = AdminContext.Url;
             if (hostUrl.EndsWith("/"))
             {
                 hostUrl = hostUrl.Substring(0, hostUrl.Length - 1);
             }
             var site = Tenant.GetSiteByUrl(siteUrl);
-            ClientContext.Load(site);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(site);
+            AdminContext.ExecuteQueryRetry();
             var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
             RestResultCollection<ExportEntity> results = null;
             if (!ParameterSpecified(nameof(RedactName)))

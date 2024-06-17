@@ -17,17 +17,17 @@ Removes a SharePoint Framework client side extension application customizer
 ### Custom Action Id
 ```powershell
 Remove-PnPApplicationCustomizer [[-Identity] <UserCustomActionPipeBind>] [-Scope <CustomActionScope>] [-Force]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   
 ```
 
 ### Client Side Component Id
 ```powershell
 Remove-PnPApplicationCustomizer -ClientSideComponentId <Guid> [-Scope <CustomActionScope>] [-Force]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION
-Removes a SharePoint Framework client side extension application customizer by removing a user custom action from a web or sitecollection
+Removes a SharePoint Framework client side extension application customizer by removing a user custom action from a web or sitecollection.
 
 ## EXAMPLES
 
@@ -48,7 +48,7 @@ Removes the custom action(s) being registered for a SharePoint Framework solutio
 ## PARAMETERS
 
 ### -ClientSideComponentId
-The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest for which existing custom action(s) should be removed
+The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest for which existing custom action(s) should be removed.
 
 ```yaml
 Type: Guid
@@ -91,7 +91,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Use the -Force flag to bypass the confirmation question
+Use the -Force flag to bypass the confirmation question.
 
 ```yaml
 Type: SwitchParameter
@@ -105,7 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The id or name of the CustomAction representing the client side extension registration that needs to be removed or a CustomAction instance itself
+The id or name of the CustomAction representing the client side extension registration that needs to be removed or a CustomAction instance itself.
 
 ```yaml
 Type: UserCustomActionPipeBind
@@ -125,23 +125,6 @@ Define if the CustomAction representing the client side extension registration i
 Type: CustomActionScope
 Parameter Sets: (All)
 Accepted values: Web, Site, All
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

@@ -1,12 +1,12 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteGroup", SupportsShouldProcess = true)]
+    [OutputType(typeof(void))]
     public class RemoveSiteGroup : PnPAdminCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Principals
                 var siteGroups = site.RootWeb.SiteGroups;
                 siteGroups.RemoveByLoginName(Identity);
                 site.RootWeb.Update();
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.ExecuteQueryRetry();
             }
         }
     }

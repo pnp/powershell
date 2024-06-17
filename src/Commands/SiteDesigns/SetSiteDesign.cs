@@ -10,6 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteDesign")]
+    [OutputType(typeof(TenantSiteDesign))]
     public class SetSiteDesign : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -47,9 +48,9 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            var design = Tenant.GetSiteDesign(ClientContext, Identity.Id);
-            ClientContext.Load(design);
-            ClientContext.ExecuteQueryRetry();
+            var design = Tenant.GetSiteDesign(AdminContext, Identity.Id);
+            AdminContext.Load(design);
+            AdminContext.ExecuteQueryRetry();
             if (design != null)
             {
                 var isDirty = false;
@@ -106,7 +107,7 @@ namespace PnP.PowerShell.Commands
                 if (isDirty)
                 {
                     Tenant.UpdateSiteDesign(design);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                 }
                 WriteObject(design);
             }

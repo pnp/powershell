@@ -16,19 +16,19 @@ Finds a file in the virtual file system of the web.
 
 ### Web (Default)
 ```powershell
-Find-PnPFile [-Match] <String> [-Connection <PnPConnection>] [<CommonParameters>]
+Find-PnPFile [-Match] <String> [-Connection <PnPConnection>] 
 ```
 
 ### List
 ```powershell
 Find-PnPFile [-Match] <String> -List <ListPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Folder
 ```powershell
 Find-PnPFile [-Match] <String> -Folder <FolderPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
@@ -103,7 +103,7 @@ Accept wildcard characters: False
 ```
 
 ### -Match
-Wildcard query
+Wildcard query using * (any number of charactes) and ? (single character)
 
 ```yaml
 Type: String
@@ -113,7 +113,7 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+Accept wildcard characters: True
 ```
 
 

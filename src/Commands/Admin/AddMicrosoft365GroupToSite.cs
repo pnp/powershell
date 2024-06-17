@@ -1,9 +1,8 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
-using System.Management.Automation;
 using PnP.Framework.Sites;
+using System.Management.Automation;
 using System;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -37,6 +36,7 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public string[] Owners;
+
         protected override void ExecuteCmdlet()
         {            
             var groupifyInformation = new TeamSiteCollectionGroupifyInformation()

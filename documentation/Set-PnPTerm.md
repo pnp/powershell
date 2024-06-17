@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTerm.html
 # Set-PnPTerm
 
 ## SYNOPSIS
-Updates a term
+Updates a term.
 
 ## SYNTAX
 
@@ -18,16 +18,16 @@ Updates a term
 ```
 Set-PnPTerm -Identity <Guid> [-Name <String>] [-Lcid <Int32>] [-Description <String>]
  [-CustomProperties <Hashtable>] [-LocalCustomProperties <Hashtable>] [-DeleteAllCustomProperties]
- [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] [-TermStore <TaxonomyTermStorePipeBind>]
- [<CommonParameters>]
+ [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] [-AvailableForTagging <bool>] [-TermStore <TaxonomyTermStorePipeBind>]
+ [-Connection <PnPConnection>]
 ```
 
 ### By Term Name
 ```
 Set-PnPTerm -Identity <String> [-Name <String>] [-Lcid <Int32>] [-Description <String>]
  [-CustomProperties <Hashtable>] [-LocalCustomProperties <Hashtable>] [-DeleteAllCustomProperties]
- [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] -TermSet <TaxonomyTermSetPipeBind> -TermGroup <TaxonomyTermGroupPipeBind>
- [-TermStore <TaxonomyTermStorePipeBind>] [<CommonParameters>]
+ [-DeleteAllLocalCustomProperties] [-Deprecated <bool>] [-AvailableForTagging <bool>] -TermSet <TaxonomyTermSetPipeBind> -TermGroup <TaxonomyTermGroupPipeBind>
+ [-TermStore <TaxonomyTermStorePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -58,12 +58,41 @@ Removes all custom properties and adds a new custom property to an existing term
 
 ### Example 4
 ```powershell
-Set-TermSet -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Deprecated $true
+Set-PnPTerm -Identity "Marketing" -TermSet "Departments" -TermGroup "Corporate" -Deprecated $true
 ```
 
 Marks an existing term as deprecated, hiding it from users.
 
 ## PARAMETERS
+
+### -AvailableForTagging
+Sets a term to be available for tagging or not.
+
+```yaml
+Type: boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -CustomProperties
 Sets custom properties. 
@@ -81,7 +110,7 @@ Accept wildcard characters: False
 ```
 
 ### -DeleteAllCustomProperties
-Removes all custom properties
+Removes all custom properties.
 
 ```yaml
 Type: SwitchParameter
@@ -96,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -DeleteAllLocalCustomProperties
-Removes all local custom properties
+Removes all local custom properties.
 
 ```yaml
 Type: SwitchParameter
@@ -170,7 +199,7 @@ Accept wildcard characters: False
 ```
 
 ### -LocalCustomProperties
-Sets local custom properties
+Sets local custom properties.
 
 ```yaml
 Type: Hashtable

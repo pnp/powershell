@@ -10,13 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Test-PnPTenantTemplate.
 # Test-PnPTenantTemplate
 
 ## SYNOPSIS
-Tests a tenant template for invalid references
+Tests a tenant template for invalid references.
 
 ## SYNTAX
 
 ```powershell
 Test-PnPTenantTemplate -Template <ProvisioningHierarchy> [-Connection <PnPConnection>]  
- [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -30,7 +29,7 @@ Allows to check if the tenant template has invalid references.
 Test-PnPTenantTemplate -Template $myTemplate
 ```
 
-Checks for valid template references
+Checks for valid template references.
 
 ## PARAMETERS
 
@@ -49,28 +48,13 @@ Accept wildcard characters: False
 ```
 
 ### -Template
-The in-memory template to test
+The in-memory template to test.
 
 ```yaml
 Type: ProvisioningHierarchy
 Parameter Sets: (All)
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

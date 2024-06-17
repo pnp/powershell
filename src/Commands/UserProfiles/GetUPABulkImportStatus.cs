@@ -18,13 +18,13 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
         protected override void ExecuteCmdlet()
         {
-            var o365 = new Office365Tenant(ClientContext);
+            var o365 = new Office365Tenant(AdminContext);
 
             if (ParameterSpecified(nameof(JobId)))
             {
                 var job = o365.GetImportProfilePropertyJob(JobId);
-                ClientContext.Load(job);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(job);
+                AdminContext.ExecuteQueryRetry();
 
                 GetErrorInfo(job);
                 WriteObject(job, true);
@@ -32,8 +32,8 @@ namespace PnP.PowerShell.Commands.UserProfiles
             else
             {
                 ImportProfilePropertiesJobStatusCollection jobs = o365.GetImportProfilePropertyJobs();
-                ClientContext.Load(jobs);
-                ClientContext.ExecuteQueryRetry();
+                AdminContext.Load(jobs);
+                AdminContext.ExecuteQueryRetry();
                 foreach (var job in jobs)
                 {
                     GetErrorInfo(job);
@@ -46,10 +46,10 @@ namespace PnP.PowerShell.Commands.UserProfiles
         {
             if (job.Error != ImportProfilePropertiesJobError.NoError && IncludeErrorDetails == true)
             {
-                var webUrl = Web.GetWebUrlFromPageUrl(ClientContext, job.LogFolderUri);
-                ClientContext.ExecuteQueryRetry();
-                string relativePath = job.LogFolderUri.Replace(webUrl.Value, "");
-                var webCtx = ClientContext.Clone(webUrl.Value);
+                var webUrl = Web.GetWebUrlFromPageUrl(AdminContext, job.LogFolderUri);
+                AdminContext.ExecuteQueryRetry();
+                string relativePath = new Uri(job.LogFolderUri).LocalPath;
+                var webCtx = AdminContext.Clone(webUrl.Value);
                 if (webCtx.Web.DoesFolderExists(relativePath))
                 {
                     var folder = webCtx.Web.GetFolderByServerRelativeUrl(relativePath);
@@ -60,8 +60,21 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     string message = string.Empty;
                     foreach (var logFile in files)
                         message += "\r\n" + webCtx.Web.GetFileAsString(logFile.ServerRelativeUrl);
-                    job.ErrorMessage = message;
+                    TrySetJobErrorMessage(job, message);
                 }
+            }
+        }
+
+        private void TrySetJobErrorMessage(ImportProfilePropertiesJobInfo job, string message)
+        {
+            try
+            {
+                job.ErrorMessage = message;
+            }
+            catch (ClientRequestException)
+            {
+                // Setting the ErrorMessage property to ImportProfilePropertiesJobInfo returned by GetImportProfilePropertyJobs() throws an exception sometimes as the Path is property is null.
+                // In this case the generic error message with the file location of the log in SPO will be returned.
             }
         }
     }

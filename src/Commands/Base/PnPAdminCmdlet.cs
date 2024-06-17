@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (_tenant == null)
                 {
-                    _tenant = new Tenant(ClientContext);
+                    _tenant = new Tenant(AdminContext);
                 }
                 return _tenant;
             }
@@ -36,9 +36,9 @@ namespace PnP.PowerShell.Commands.Base
         public Uri BaseUri => _baseUri;
 
         /// <summary>
-        /// ClientContext which was the active context before elevating to the admin context
+        /// ClientContext which points to the admin context
         /// </summary>
-        internal ClientContext SiteContext;
+        internal ClientContext AdminContext;        
 
         /// <summary>
         /// Checks if the current context has been set up using a device login. In that case we cannot elevate to an admin context.
@@ -60,9 +60,6 @@ namespace PnP.PowerShell.Commands.Base
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
-            
-            // Keep an instance of the client context which is currently active before elevating to an admin client context so we can restore it afterwards
-            SiteContext = Connection.Context;
             
             Connection.CacheContext();
 
@@ -102,7 +99,9 @@ namespace PnP.PowerShell.Commands.Base
                 else
                 {
                     // The current connection has been made to the SharePoint Online Admin Center URL already, we can use it as is
+                    WriteVerbose($"Already connect to the SharePoint Online Admin Center at '{ClientContext.Url}'");
                     _baseUri = new Uri($"{uri.Scheme}://{uriParts[0].ToLower().Replace("-admin", "")}{(uriParts.Length > 1 ? $".{string.Join(".", uriParts.Skip(1))}" : string.Empty)}{(!uri.IsDefaultPort ? ":" + uri.Port : "")}");
+                    AdminContext = ClientContext;
                     return;
                 }
             }
@@ -114,7 +113,7 @@ namespace PnP.PowerShell.Commands.Base
             WriteVerbose($"Connecting to the SharePoint Online Admin Center at '{tenantAdminUrl}' to run this cmdlet");
             try
             {
-                Connection.Context = Connection.CloneContext(tenantAdminUrl);
+                AdminContext = Connection.CloneContext(tenantAdminUrl);
             }
             catch(WebException e) when (e.Status == WebExceptionStatus.NameResolutionFailure)
             {
@@ -122,20 +121,9 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch(Exception e)
             {
-                throw new PSInvalidOperationException($"Unable to connect to the SharePoint Online Admin Center at '{tenantAdminUrl}' to run this cmdlet. Please ensure you pass in the correct Admin Center URL using Connect-PnPOnline -TenantAdminUrl and you have access to it. Error message: {e.Message}.", e);
+                throw new PSInvalidOperationException($"Unable to connect to the SharePoint Online Admin Center at '{tenantAdminUrl}' to run this cmdlet. If this URL is incorrect for your tenant, you can pass in the correct Admin Center URL using Connect-PnPOnline -TenantAdminUrl. If you are using Privileged Identity Management (PIM) on your tenant, please ensure you have activated at least the SharePoint Administrator role and allowed some time for it to activate. Error message: {e.Message}", e);
             }
             WriteVerbose($"Connected to the SharePoint Online Admin Center at '{tenantAdminUrl}' to run this cmdlet");
-        }
-
-        /// <summary>
-        /// Executed after completing the specific admin cmdlet logic
-        /// </summary>
-        protected override void EndProcessing()
-        {
-            base.EndProcessing();
-
-            // Restore the client context to the context which was used before the admin context elevation
-            Connection.Context = SiteContext;
         }
     }
 }

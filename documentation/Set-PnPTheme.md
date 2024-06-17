@@ -17,11 +17,11 @@ Sets the theme of the current web.
 ```powershell
 Set-PnPTheme [-ColorPaletteUrl <String>] [-FontSchemeUrl <String>] [-BackgroundImageUrl <String>]
  [-ResetSubwebsToInherit] [-UpdateRootWebOnly] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
- Sets the theme of the current web, if any of the attributes is not set, that value will be set to null
+ Sets the theme of the current web. If any of the attributes is not set, that value will be set to null.
 
 ## EXAMPLES
 
@@ -52,7 +52,7 @@ Sets the theme to the web, and updates all subwebs to inherit the theme from thi
 ## PARAMETERS
 
 ### -BackgroundImageUrl
-Specifies the Background Image Url based on the site or server relative url
+Specifies the Background Image Url based on the site or server relative url.
 
 ```yaml
 Type: String
@@ -66,7 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -ColorPaletteUrl
-Specifies the Color Palette Url based on the site or server relative url
+Specifies the Color Palette Url based on the site or server relative url.
 
 ```yaml
 Type: String
@@ -94,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -FontSchemeUrl
-Specifies the Font Scheme Url based on the site or server relative url
+Specifies the Font Scheme Url based on the site or server relative url.
 
 ```yaml
 Type: String
@@ -108,7 +108,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResetSubwebsToInherit
-Resets subwebs to inherit the theme from the rootweb
+Resets subwebs to inherit the theme from the rootweb.
 
 ```yaml
 Type: SwitchParameter

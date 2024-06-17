@@ -22,7 +22,7 @@ Grants the specified principals rights to use the site design.
 ```powershell
 Grant-PnPSiteDesignRights [-Identity] <TenantSiteDesignPipeBind> -Principals <String[]>
  [-Rights <TenantSiteDesignPrincipalRights>] [-Connection <PnPConnection>]  
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

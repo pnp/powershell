@@ -20,7 +20,7 @@ Removes the Knowledge Hub Site setting for your tenant
 ## SYNTAX
 
 ```powershell
-Remove-PnPKnowledgeHubSite [-Connection <PnPConnection>] [<CommonParameters>]
+Remove-PnPKnowledgeHubSite [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

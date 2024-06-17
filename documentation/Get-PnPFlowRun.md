@@ -21,7 +21,7 @@ Returns the flows runs for a given flow.
 
 ```powershell
 Get-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> [-Identity <PowerAutomateFlowRunPipeBind>]
-[-Connection <PnPConnection>] [<CommonParameters>]
+[-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -42,6 +42,63 @@ $environment = Get-PnPPowerPlatformEnvironment
 Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 ```
 This returns a specific flow run
+
+
+### Example 3
+```powershell
+$environment = Get-PnPPowerPlatformEnvironment
+$flowrun = Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
+$flowrun.Properties.trigger
+```
+This returns a specific flow run trigger information as below
+
+### Output
+```powershell
+Name              : Recurrence
+StartTime         : 2024-02-02 06:00:00
+EndTime           : 2024-02-02 06:00:00
+ScheduledTime     : 2024-02-02 06:00:00
+OriginHistoryName : 08584947532854535568834568113CU171
+Code              : OK
+Status            : Succeeded
+```
+
+
+### Example 4
+```powershell
+$environment = Get-PnPPowerPlatformEnvironment
+$flowruns = Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182
+$flowruns.Properties.trigger
+```
+This returns a specific flows trigger information as below
+
+### Output
+```powershell
+Name              : Recurrence
+StartTime         : 2024-02-02 06:00:00
+EndTime           : 2024-02-02 06:00:00
+ScheduledTime     : 2024-02-02 06:00:00
+OriginHistoryName : 08584947532854535568834568113CU171
+Code              : OK
+Status            : Succeeded
+
+Name              : Recurrence
+StartTime         : 2024-02-01 06:00:00
+EndTime           : 2024-02-01 06:00:00
+ScheduledTime     : 2024-02-01 06:00:00
+OriginHistoryName : 08584948396849679000001446214CU251
+Code              : OK
+Status            : Succeeded
+
+Name              : Recurrence
+StartTime         : 2024-01-31 06:00:00
+EndTime           : 2024-01-31 06:00:00
+ScheduledTime     : 2024-01-31 06:00:00
+OriginHistoryName : 08584949260853628013416159080CU185
+Code              : OK
+Status            : Succeeded
+```
+
 
 ## PARAMETERS
 

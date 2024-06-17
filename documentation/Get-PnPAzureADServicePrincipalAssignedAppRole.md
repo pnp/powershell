@@ -41,7 +41,7 @@ Retrieves all app roles currently assigned to the application registration with 
 Get-PnPAzureADServicePrincipalAssignedAppRole -Principal "My application"
 ```
 
-Retrieves all app roles currently assigned to the application registration with the name "My application"
+Retrieves all app roles currently assigned to the application registration with the name "My application".
 
 ### EXAMPLE 3
 ```powershell
@@ -53,7 +53,7 @@ Retrieves all app roles currently assigned to the application registration with 
 ## PARAMETERS
 
 ### -Principal
-The object id, name or instance of the service principal/application registration to list the currently assigned to app roles for
+The object id, name or instance of the service principal/application registration to list the currently assigned to app roles for.
 
 ```yaml
 Type: ServicePrincipalPipeBind
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The object id, name or instance of the application role to retrieve from the currently assigned approles of the service principal/application registration. If nothing returns, it means this specific role is currently not assigned to the service principal/application registration.
+The object id, name or instance of the application role to retrieve from the currently assigned app roles of the service principal/application registration. If nothing returns, it means this specific role is currently not assigned to the service principal/application registration.
 
 ```yaml
 Type: ServicePrincipalAppRoleBind

@@ -1,6 +1,7 @@
 ﻿using PnP.Framework;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Net.Http;
@@ -50,6 +51,12 @@ namespace PnP.PowerShell.Commands.AzureAD
                 WriteWarning("Please specify the Tenant name for non-commercial clouds, otherwise this operation will fail.");
             }
 
+            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+            }
+
             Task.Factory.StartNew(() =>
             {
                 if (ParameterSetName == ParameterSet_REGISTER)
@@ -64,7 +71,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     {
                         try
                         {
-                            authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, source.Token, Microsoft.Identity.Client.Prompt.Consent).GetAwaiter().GetResult();
+                            authManager.GetAccessTokenAsync(new[] { $"{graphEndpoint}/.default" }, source.Token, Microsoft.Identity.Client.Prompt.Consent).GetAwaiter().GetResult();
                         }
                         catch (Microsoft.Identity.Client.MsalException)
                         {
@@ -91,7 +98,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                             var accessToken = string.Empty;
                             try
                             {
-                                accessToken = authManager.GetAccessTokenAsync(new[] { $"https://{GetGraphEndPoint()}/.default" }, source.Token).GetAwaiter().GetResult();
+                                accessToken = authManager.GetAccessTokenAsync(new[] { $"{graphEndpoint}/.default" }, source.Token).GetAwaiter().GetResult();
                             }
                             catch (Microsoft.Identity.Client.MsalException)
                             {
@@ -100,7 +107,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                             if (!string.IsNullOrEmpty(accessToken))
                             {
                                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-                                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"https://{GetGraphEndPoint()}/v1.0/organization"))
+                                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, $"{graphEndpoint}/v1.0/organization"))
                                 {
                                     requestMessage.Version = new System.Version(2, 0);
                                     requestMessage.Headers.Add("Authorization", $"Bearer {accessToken}");
@@ -141,11 +148,6 @@ namespace PnP.PowerShell.Commands.AzureAD
         protected override void StopProcessing()
         {
             source.Cancel();
-        }
-
-        private string GetGraphEndPoint()
-        {
-            return PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment);
         }
     }
 }

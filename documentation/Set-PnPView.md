@@ -10,13 +10,13 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPView.html
 # Set-PnPView
 
 ## SYNOPSIS
-Change view properties
+Change view properties.
 
 ## SYNTAX
 
 ```powershell
 Set-PnPView [[-List] <ListPipeBind>] -Identity <ViewPipeBind> [-Values <Hashtable>] [-Fields <String[]>]
- [-Aggregations <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Aggregations <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -29,28 +29,28 @@ Sets one or more properties of an existing view, see here https://learn.microsof
 Set-PnPView -List "Tasks" -Identity "All Tasks" -Values @{JSLink="hierarchytaskslist.js|customrendering.js";Title="My view"}
 ```
 
-Updates the "All Tasks" view on list "Tasks" to use hierarchytaskslist.js and customrendering.js for the JSLink and changes the title of the view to "My view"
+Updates the "All Tasks" view on list "Tasks" to use hierarchytaskslist.js and customrendering.js for the JSLink and changes the title of the view to "My view".
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPList -Identity "Tasks" | Get-PnPView | Set-PnPView -Values @{JSLink="hierarchytaskslist.js|customrendering.js"}
 ```
 
-Updates all views on list "Tasks" to use hierarchytaskslist.js and customrendering.js for the JSLink
+Updates all views on list "Tasks" to use hierarchytaskslist.js and customrendering.js for the JSLink.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPView -List "Documents" -Identity "Corporate Documents" -Fields "Title","Created"
 ```
 
-Updates the Corporate Documents view on the Documents library to have two fields
+Updates the Corporate Documents view on the Documents library to have two fields.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPView -List "Documents" -Identity "Corporate Documents" -Fields "Title","Created" -Aggregations "<FieldRef Name='Title' Type='COUNT'/>"
 ```
 
-Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field
+Updates the Corporate Documents view on the Documents library and sets the totals (aggregations) to Count on the Title field.
 
 
 ### EXAMPLE 5
@@ -63,7 +63,7 @@ Updates the Dept Documents view on the Documents library to show items paged in 
 ## PARAMETERS
 
 ### -Aggregations
-A valid XML fragment containing one or more Aggregations
+A valid XML fragment containing one or more Aggregations.
 
 ```yaml
 Type: String
@@ -91,7 +91,7 @@ Accept wildcard characters: False
 ```
 
 ### -Fields
-An array of fields to use in the view. Notice that specifying this value will remove the existing fields
+An array of fields to use in the view. Notice that specifying this value will remove the existing fields.
 
 ```yaml
 Type: String[]
@@ -105,7 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Id, Title or instance of the view
+The Id, Title or instance of the view.
 
 ```yaml
 Type: ViewPipeBind
@@ -119,7 +119,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-The Id, Title or Url of the list
+The Id, Title or Url of the list.
 
 ```yaml
 Type: ListPipeBind

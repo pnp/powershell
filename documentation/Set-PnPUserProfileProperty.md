@@ -13,42 +13,43 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPUserProfilePrope
 
 **Required Permissions**
 
-* SharePoint: Access to the SharePoint Tenant Administration site
+* SharePoint: Sites.FullControl.All, TermStore.ReadWrite.All, User.ReadWrite.All
+* Microsoft Graph: User.Read
 
-Office365 only: Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://:<tenant>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.
+Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://\<tenant\>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.
 
 ## SYNTAX
 
 ### Single
 ```powershell
 Set-PnPUserProfileProperty -Account <String> -PropertyName <String> -Value <String>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Multi
 ```powershell
 Set-PnPUserProfileProperty -Account <String> -PropertyName <String> -Values <String[]>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-Requires a connection to a SharePoint Tenant Admin site.
+Updates the value of a specific user profile property for a single user profile in the SharePoint Online environment. Requires a connection to the SharePoint Tenant Admin site.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPUserProfileProperty -Account 'user@domain.com' -Property 'SPS-Location' -Value 'Stockholm'
+Set-PnPUserProfileProperty -Account 'john@domain.com' -Property 'SPS-Location' -Value 'Stockholm'
 ```
 
-Sets the SPS-Location property for the user as specified by the Account parameter
+Sets the SPS-Location property to 'Stockholm' for the user john@domain.com.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPUserProfileProperty -Account 'user@domain.com' -Property 'MyProperty' -Values 'Value 1','Value 2'
+Set-PnPUserProfileProperty -Account 'john@domain.com' -Property 'MyProperty' -Values 'Value 1','Value 2'
 ```
 
-Sets the MyProperty multi value property for the user as specified by the Account parameter
+Sets the MyProperty multi value property for the user john@domain.com.
 
 ## PARAMETERS
 
@@ -81,7 +82,7 @@ Accept wildcard characters: False
 ```
 
 ### -PropertyName
-The property to set, for instance SPS-Skills or SPS-Location
+The property to set, for instance SPS-Skills or SPS-Location.
 
 ```yaml
 Type: String
@@ -95,7 +96,7 @@ Accept wildcard characters: False
 ```
 
 ### -Value
-The value to set in the case of a single value property
+The value to set in the case of a single value property.
 
 ```yaml
 Type: String

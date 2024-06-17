@@ -19,7 +19,7 @@ Restarts/resubmits a specific flow run for the specified Microsoft Power Automat
 ## SYNTAX
 
 ```powershell
-Restart-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> -Identity <PowerAutomateFlowRunPipeBind> [-Force] [<CommonParameters>]
+Restart-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> -Identity <PowerAutomateFlowRunPipeBind> [-Force] 
 ```
 
 ## DESCRIPTION

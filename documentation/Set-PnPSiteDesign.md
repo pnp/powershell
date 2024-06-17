@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSiteDesign.html
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Updates a Site Design on the current tenant.
+Updates a site design on the current tenant.
 
 ## SYNTAX
 
@@ -23,12 +23,12 @@ Updates a Site Design on the current tenant.
 Set-PnPSiteDesign -Identity <TenantSiteDesignPipeBind> [-Title <String>] [-SiteScriptIds <GuidPipeBind[]>]
  [-Description <String>] [-IsDefault] [-PreviewImageAltText <String>] [-PreviewImageUrl <String>]
  [-WebTemplate <SiteWebTemplate>] [-Version <Int32>] [-ThumbnailUrl <String>] [-DesignPackageId <Guid>] [-Connection <PnPConnection>]  
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
 
-Allows to update a Site Design on the current tenant.
+Allows to update a site design on the current tenant.
 
 ## EXAMPLES
 
@@ -37,7 +37,7 @@ Allows to update a Site Design on the current tenant.
 Set-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7821e -Title "My Updated Company Design"
 ```
 
-Updates an existing Site Design and sets a new title.
+Updates an existing site design and sets a new title.
 
 ### EXAMPLE 2
 ```powershell
@@ -45,14 +45,14 @@ $design = Get-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7821e
 Set-PnPSiteDesign -Identity $design -Title "My Updated Company Design"
 ```
 
-Updates an existing Site Design and sets a new title.
+Updates an existing site design and sets a new title.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPSiteDesign -Identity 046e2e76-67ba-46ca-a5f6-8eb418a7821e -Title "My Company Design" -Description "My description" -ThumbnailUrl "https://contoso.sharepoint.com/sites/templates/my images/logo.png"
 ```
 
-Updates an existing Site Design, providing a new title, description and logo to be shown in the template picker. Notice that when the location for the TumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.
+Updates an existing site design, providing a new title, description and logo to be shown in the template picker. Notice that when the location for the ThumbnailUrl contains a space, it should be provided URL decoded, so i.e. no %20 for spaces.
 
 ## PARAMETERS
 
@@ -71,7 +71,7 @@ Accept wildcard characters: False
 ```
 
 ### -Description
-The description of the site design
+The description of the site design.
 
 ```yaml
 Type: String
@@ -84,8 +84,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DesignPackageId
+Sets the design package Id of this site design.
+
+```yaml
+Type: Guid
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Identity
-The guid or an object representing the site design
+The guid or an object representing the site design.
 
 ```yaml
 Type: TenantSiteDesignPipeBind
@@ -99,7 +113,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsDefault
-Specifies if the site design is a default site design
+Specifies if the site design is a default site design.
 
 ```yaml
 Type: SwitchParameter
@@ -141,54 +155,11 @@ Accept wildcard characters: False
 ```
 
 ### -SiteScriptIds
-An array of guids of site scripts
+An array of guids of site scripts.
 
 ```yaml
 Type: Guid[]
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Title
-The title of the site design
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Version
-Specifies the version of the design
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WebTemplate
-Specifies the type of site to which this design applies
-
-```yaml
-Type: SiteWebTemplate
-Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite, ChannelSite
 
 Required: False
 Position: Named
@@ -211,13 +182,41 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DesignPackageId
-Sets the design package Id of this site design.
+### -Title
+The title of the site design.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Version
+Specifies the version of the design.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WebTemplate
+Specifies the type of site to which this design applies.
 
 ```yaml
 Type: SiteWebTemplate
 Parameter Sets: (All)
-Accepted values: TeamSite, CommunicationSite
+Accepted values: TeamSite, CommunicationSite, GrouplessTeamSite, ChannelSite
 
 Required: False
 Position: Named

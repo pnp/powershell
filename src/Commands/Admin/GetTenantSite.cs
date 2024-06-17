@@ -40,27 +40,27 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             if (ParameterSpecified(nameof(Identity)))
             {
                 SiteProperties siteProperties;
                 if(Identity.Id.HasValue)
                 {
-                    siteProperties = Tenant.GetSitePropertiesById(Identity.Id.Value, Detailed);
+                    siteProperties = Tenant.GetSitePropertiesById(Identity.Id.Value, Detailed, Connection.TenantAdminUrl);
                     if(siteProperties == null) return;
                 }
                 else
                 {
                     siteProperties = Tenant.GetSitePropertiesByUrl(Identity.Url, Detailed);
-                    ClientContext.Load(siteProperties);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.Load(siteProperties);
+                    AdminContext.ExecuteQueryRetry();
                 }
                 Model.SPOSite site = null;
                 if (ParameterSpecified(nameof(DisableSharingForNonOwnersStatus)))
                 {
-                    var office365Tenant = new Office365Tenant(ClientContext);
+                    var office365Tenant = new Office365Tenant(AdminContext);
                     var clientResult = office365Tenant.IsSharingDisabledForNonOwnersOfSite(Identity.Url);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                     site = new Model.SPOSite(siteProperties, clientResult.Value);
                 }
                 else
@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands
                     Filter = Filter,
                 };
 
-                if (ClientContext.ServerVersion >= new Version(16, 0, 7708, 1200))
+                if (AdminContext.ServerVersion >= new Version(16, 0, 7708, 1200))
                 {
                     if (ParameterSpecified(nameof(GroupIdDefined)))
                     {

@@ -17,13 +17,13 @@ Imports a taxonomy from either a string array or a file
 ### Direct
 ```powershell
 Import-PnPTaxonomy [-Terms <String[]>] [-Lcid <Int32>] [-TermStoreName <String>] [-Delimiter <String>]
- [-SynchronizeDeletions] [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-SynchronizeDeletions] [-Connection <PnPConnection>]   
 ```
 
 ### File
 ```powershell
 Import-PnPTaxonomy -Path <String> [-Lcid <Int32>] [-TermStoreName <String>] [-Delimiter <String>]
- [-SynchronizeDeletions] [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-SynchronizeDeletions] [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION
@@ -41,12 +41,19 @@ Creates a new termgroup, 'Company', a termset 'Locations' and a term 'Stockholm'
 
 ### EXAMPLE 2
 ```powershell
+Import-PnPTaxonomy -Terms 'Company|Locations|"Stockholm,Central"'
+```
+
+Creates a new termgroup, 'Company', a termset 'Locations', a term 'Stockholm,Central'
+
+### EXAMPLE 3
+```powershell
 Import-PnPTaxonomy -Terms 'Company|Locations|Stockholm|Central','Company|Locations|Stockholm|North'
 ```
 
 Creates a new termgroup, 'Company', a termset 'Locations', a term 'Stockholm' and two subterms: 'Central', and 'North'
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Import-PnPTaxonomy -Path ./mytaxonomyterms.txt
 ```

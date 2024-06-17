@@ -1,40 +1,89 @@
-﻿using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
-    [Cmdlet(VerbsCommon.Get, "PnPFlow")]
-    [RequiredMinimalApiPermissions("https://management.azure.com/.default")]
-    public class GetFlow : PnPGraphCmdlet
+    [Cmdlet(VerbsCommon.Get, "PnPFlow", DefaultParameterSetName = ParameterSet_ALL)]
+    public class GetFlow : PnPAzureManagementApiCmdlet
     {
-        [Parameter(Mandatory = true)]
+        private const string ParameterSet_BYIDENTITY = "By Identity";
+        private const string ParameterSet_ALL = "All";
+
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_BYIDENTITY)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_ALL)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYIDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
         public SwitchParameter AsAdmin;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYIDENTITY)]
         public PowerAutomateFlowPipeBind Identity;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
+        public FlowSharingStatus SharingStatus = FlowSharingStatus.All;
 
         protected override void ExecuteCmdlet()
         {
-            var environmentName = Environment.GetName();
+            string environmentName = null;
+            string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
+            if (ParameterSpecified(nameof(Environment)))
+            {
+                environmentName = Environment.GetName();
+
+                WriteVerbose($"Using environment as provided '{environmentName}'");
+            }
+            else
+            {
+                var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection,  baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                environmentName = environments.FirstOrDefault(e => e.Properties.IsDefault.HasValue && e.Properties.IsDefault == true)?.Name;
+
+                if(string.IsNullOrEmpty(environmentName))
+                {
+                    throw new Exception($"No default environment found, please pass in a specific environment name using the {nameof(Environment)} parameter");
+                }
+
+                WriteVerbose($"Using default environment as retrieved '{environmentName}'");
+            }
 
             if (ParameterSpecified(nameof(Identity)))
             {
                 var flowName = Identity.GetName();
-                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+
+                WriteVerbose($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
+
+                var result = GraphHelper.GetAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, baseUrl + $"/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(result, false);
             }
             else
             {
-                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                string filter = null;
+                switch (SharingStatus)
+                {
+                    case FlowSharingStatus.SharedWithMe:
+                        filter = "search('team')";
+                        break;
+
+                    case FlowSharingStatus.Personal:
+                        filter = "search('personal')";
+                        break;
+
+                    case FlowSharingStatus.All:
+                        filter = "search('team AND personal')";
+                        break;
+                }
+
+                WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'{(filter != null ? $" with filter '{filter}'" : "")}");
+
+                var flows = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.PowerAutomate.Flow>(Connection, baseUrl + $"/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows?api-version=2016-11-01{(filter != null ? $"&$filter={filter}" : "")}", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flows, true);
+
             }
         }
     }

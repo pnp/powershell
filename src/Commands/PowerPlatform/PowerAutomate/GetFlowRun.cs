@@ -1,15 +1,14 @@
-﻿using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate;
+using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsCommon.Get, "PnPFlowRun")]
-    [RequiredMinimalApiPermissions("https://management.azure.com/.default")]
-    public class GetFlowRun : PnPGraphCmdlet
+    public class GetFlowRun : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = true)]
         public PowerPlatformEnvironmentPipeBind Environment;
@@ -22,6 +21,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
+            string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
             var environmentName = Environment.GetName();
             if (string.IsNullOrEmpty(environmentName))
             {
@@ -37,12 +37,12 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             if (ParameterSpecified(nameof(Identity)))
             {
                 var flowRunName = Identity.GetName();
-                var flowRun = GraphHelper.GetAsync<FlowRun>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs/{flowRunName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var flowRun = GraphHelper.GetAsync<FlowRun>(Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs/{flowRunName}?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flowRun, false);
             }
             else
             {
-                var flowRuns = GraphHelper.GetResultCollectionAsync<FlowRun>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var flowRuns = GraphHelper.GetResultCollectionAsync<FlowRun>(Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
                 WriteObject(flowRuns, true);
             }
         }

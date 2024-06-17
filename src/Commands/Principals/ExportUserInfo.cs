@@ -8,6 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsData.Export, "PnPUserInfo")]
+    [OutputType(typeof(PSObject))]
     public class ExportUserInfo : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -23,16 +24,16 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 siteUrl = Site;
             }
-            var hostUrl = ClientContext.Url;
+            var hostUrl = AdminContext.Url;
             if (hostUrl.EndsWith("/"))
             {
                 hostUrl = hostUrl.Substring(0, hostUrl.Length - 1);
             }
             var site = Tenant.GetSiteByUrl(siteUrl);
-            ClientContext.Load(site);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(site);
+            AdminContext.ExecuteQueryRetry();
             var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
-            var results = RestHelper.GetAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", ClientContext, false).GetAwaiter().GetResult();
+            var results = RestHelper.GetAsync<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", AdminContext, false).GetAwaiter().GetResult();
             var record = new PSObject();
             foreach (var item in results.Items)
             {

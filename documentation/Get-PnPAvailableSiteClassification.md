@@ -20,11 +20,11 @@ Returns the available classic Site Classifications for the tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPAvailableSiteClassification [-Connection <PnPConnection>] [<CommonParameters>]
+Get-PnPAvailableSiteClassification [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-This cmdlet allows for retrieving the configuration of the classic site classifications configured within the tenant. For the new Microsoft Purview sensitivity labels, use [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.html) instead.
+This cmdlet allows for retrieving the configuration of the classic site classifications configured within the tenant. For the new Microsoft Purview sensitivity labels, use [Get-PnPAvailableSensitivityLabel](Get-PnPAvailableSensitivityLabel.md) instead.
 
 ## EXAMPLES
 

@@ -17,17 +17,17 @@ Activates or deactivates the minimal downloading strategy.
 ### On
 ```powershell
 Set-PnPMinimalDownloadStrategy [-On] [-Force] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Off
 ```powershell
 Set-PnPMinimalDownloadStrategy [-Off] [-Force] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
-Activates or deactivates the minimal download strategy feature of a site
+Activates or deactivates the minimal download strategy feature of a site.
 
 ## EXAMPLES
 
@@ -76,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -Off
-Turn minimal download strategy off
+Turn minimal download strategy off.
 
 ```yaml
 Type: SwitchParameter
@@ -90,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -On
-Turn minimal download strategy on
+Turn minimal download strategy on.
 
 ```yaml
 Type: SwitchParameter

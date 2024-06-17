@@ -16,9 +16,9 @@ Adds group to the Site Groups List and returns a group object
 
 ```powershell
 New-PnPGroup -Title <String> [-Description <String>] [-Owner <String>] [-AllowRequestToJoinLeave]
- [-AutoAcceptRequestToJoinLeave] [-AllowMembersEditMembership] [-OnlyAllowMembersViewMembership]
- [-DisallowMembersViewMembership] [-RequestToJoinEmail <String>] [-SetAssociatedGroup <AssociatedGroupType>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-AutoAcceptRequestToJoinLeave] [-AllowMembersEditMembership] [-DisallowMembersViewMembership]
+[-RequestToJoinEmail <String>] [-SetAssociatedGroup <AssociatedGroupType>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -106,20 +106,6 @@ Accept wildcard characters: False
 
 ### -DisallowMembersViewMembership
 A switch parameter that disallows group members to view membership.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -OnlyAllowMembersViewMembership
-{{ Fill OnlyAllowMembersViewMembership Description }}
 
 ```yaml
 Type: SwitchParameter

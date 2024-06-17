@@ -20,12 +20,12 @@ Publishes or republishes a content type present on content type hub site.
 ## SYNTAX
 
 ```powershell
-Publish-PnPContentType -ContentType <ContentTypePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
+Publish-PnPContentType -ContentType <ContentTypePipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
 
-Allows to publish a content type present on content type hub site.
+Allows to publish a content type present on content type hub site. To check if a content type has been published already, you can use [Get-PnPContentTypePublishingStatus](Get-PnPContentTypePublishingStatus.md).
 
 ## EXAMPLES
 

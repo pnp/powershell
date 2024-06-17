@@ -15,7 +15,7 @@ Get a credential
 ## SYNTAX
 
 ```powershell
-Get-PnPStoredCredential -Name <String> [<CommonParameters>]
+Get-PnPStoredCredential -Name <String> 
 ```
 
 ## DESCRIPTION

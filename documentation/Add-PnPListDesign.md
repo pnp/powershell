@@ -19,6 +19,16 @@ Creates a new List Design on the current tenant
 
 ## SYNTAX
 
+### By SiteScript Instance (Default)
+
+```powershell
+Add-PnPListDesign -Title <String> -SiteScript <TenantSiteScriptPipeBind> [-Description <String>] 
+ [-ListColor<TenantListDesignIcon>] [-ListIcon <TenantListDesignColor>] [-ThumbnailUrl <String>] 
+ [-Connection <PnPConnection>]
+```
+
+### By SiteScript Ids
+
 ```powershell
 Add-PnPListDesign -Title <String> -SiteScriptIds <Guid[]> [-Description <String>] 
  [-ListColor<TenantListDesignIcon>] [-ListIcon <TenantListDesignColor>] [-ThumbnailUrl <String>] 
@@ -44,6 +54,20 @@ Add-PnPListDesign -Title "My Company Design" -SiteScriptIds "6def687f-0e08-4f1e-
 ```
 
 Adds a new List Design, with the specified title, description and list color, list icon and thumbnail to be shown in the template picker. When applied it will run the scripts as referenced by the IDs. Use Get-PnPSiteScript to receive Site Scripts. 
+
+### EXAMPLE 3
+```powershell
+Get-PnPSiteScript -Identity "My List Script" | Add-PnPListDesign -Title "My Custom List"
+```
+
+Adds a new List Design, with the specified title based on a site script with the title "My List Script"
+
+### EXAMPLE 4
+```powershell
+Get-PnPList -Identity "My List" | Get-PnPSiteScriptFromList | Add-PnPSiteScript -Title "My List Script" | Add-PnPListDesign -Title "My List"
+```
+
+Adds a new List Design and site script based on a list with the title "My List"
 
 ## PARAMETERS
 
@@ -75,12 +99,26 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -SiteScript
+An instance, id or title of a site script to use for the list design
+
+```yaml
+Type: TenantSiteScriptPipeBind
+Parameter Sets: By SiteScript Instance
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+```
+
 ### -SiteScriptIds
-An array of guids of site scripts
+An array of guids of site scripts to use for the list design
 
 ```yaml
 Type: Guid[]
-Parameter Sets: (All)
+Parameter Sets: By SiteScript Ids
 
 Required: True
 Position: Named
@@ -145,7 +183,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
 ### -WhatIf
 Shows what would happen if the cmdlet runs. The cmdlet is not run.
 
@@ -164,5 +201,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

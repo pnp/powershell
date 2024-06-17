@@ -20,7 +20,7 @@ Allows the SharePoint Online App Bar to be disabled. It may take some time for t
 ## SYNTAX
 
 ```powershell
-Set-PnPTemporarilyDisableAppBar -Enabled <Boolean> [<CommonParameters>]
+Set-PnPTemporarilyDisableAppBar -Enabled <Boolean>  [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -45,7 +45,21 @@ Shows the SharePoint Online App Bar.
 
 ## PARAMETERS
 
-### -Enable
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Enabled
 Specifies whether to show or hide SharePoint Online App Bar.
 
 ```yaml

@@ -15,12 +15,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Unregister-PnPHubSite.h
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Unregisters a site as a hubsite
+Unregister a site as a hubsite.
 
 ## SYNTAX
 
 ```powershell
-Unregister-PnPHubSite -Site <SitePipeBind> [-Connection <PnPConnection>] [<CommonParameters>]
+Unregister-PnPHubSite -Site <SitePipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -34,7 +34,7 @@ Allows to unregister a site as a hubsite.
 Unregister-PnPHubSite -Site "https://tenant.sharepoint.com/sites/myhubsite"
 ```
 
-This example unregisters the specified site as a hubsite
+This example unregisters the specified site as a hubsite.
 
 ## PARAMETERS
 
@@ -53,7 +53,7 @@ Accept wildcard characters: False
 ```
 
 ### -Site
-The site to unregister as a hubsite
+The site to unregister as a hubsite.
 
 ```yaml
 Type: SitePipeBind

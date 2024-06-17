@@ -15,18 +15,18 @@ title: Get-PnPAzureADApp
 
   * Microsoft Graph API: Application.Read.All
 
-Returns Azure AD App registrations
+Returns Azure AD App registrations.
 
 ## SYNTAX
 
-### Filter
-```
-Get-PnPAzureADApp [-Identity <AzureADAppPipeBind>]
+### Identity (Default)
+```powershell
+Get-PnPAzureADApp [-Identity <AzureADAppPipeBind>] [-Connection <PnPConnection>]
 ```
 
-### Identity (Default)
-```
-Get-PnPAzureADApp -Filter <string>
+### Filter
+```powershell
+Get-PnPAzureADApp -Filter <string> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -34,28 +34,28 @@ This cmdlets returns all app registrations, a specific one or ones matching a pr
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```powershell
 Get-PnPAzureADApp
 ```
 
-This returns all Azure AD App registrations
+This returns all Azure AD App registrations.
 
-### Example 2
+### EXAMPLE 2
 ```powershell
 Get-PnPAzureADApp -Identity MyApp
 ```
 
-This returns the Azure AD App registration with the display name as 'MyApp'
+This returns the Azure AD App registration with the display name as 'MyApp'.
 
-### Example 3
+### EXAMPLE 3
 ```powershell
 Get-PnPAzureADApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
 ```
 
 This returns the Azure AD App registration with the app id specified or the id specified.
 
-### Example 4
+### EXAMPLE 4
 ```powershell
 Get-PnPAzureADApp -Filter "startswith(description, 'contoso')"
 ```
@@ -85,6 +85,20 @@ Specify the query to pass to Graph API in $filter.
 ```yaml
 Type: String
 Parameter Sets: Filter
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
 
 Required: False
 Position: Named

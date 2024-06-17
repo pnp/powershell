@@ -40,11 +40,17 @@ namespace PnP.PowerShell.Commands
             {
                 if (Connection != null)
                 {
-                    if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
+                    if (Connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                     {
                         var resourceUri = new Uri(Connection.Url);
                         var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
                         return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, defaultResource, Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
+                    }
+                    else if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+                    {
+                        var resourceUri = new Uri(Connection.Url);
+                        var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
+                        return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, defaultResource).GetAwaiter().GetResult();
                     }
                     else
                     {
@@ -62,6 +68,7 @@ namespace PnP.PowerShell.Commands
                         }
                     }
                 }
+                WriteVerbose("Unable to acquire token for resource " + Connection.Url);
                 return null;
             }
         }
@@ -75,16 +82,20 @@ namespace PnP.PowerShell.Commands
             {
                 if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                 {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{Connection.GraphEndPoint}/").GetAwaiter().GetResult();
+                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{Connection.GraphEndPoint}/", Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
+                }
+                else if (Connection?.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+                {
+                    return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
                 }
                 else
                 {
                     if (Connection?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
+                        return TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
                     }
                 }
-
+                WriteVerbose("Unable to acquire token for resource " + Connection.GraphEndPoint);
                 return null;
             }
         }

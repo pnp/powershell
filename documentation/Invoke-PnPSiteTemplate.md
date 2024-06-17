@@ -21,7 +21,7 @@ Invoke-PnPSiteTemplate [-Path] <String> [-TemplateId <String>] [-ResourceFolder 
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Instance
@@ -31,7 +31,7 @@ Invoke-PnPSiteTemplate [-TemplateId <String>] [-ResourceFolder <String>]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-InputInstance <SiteTemplate>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -153,7 +153,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExtensibilityHandlers
-Allows you to specify ExtensbilityHandlers to execute while applying a template
+Allows you to specify ExtensibilityHandlers to execute while applying a template
 
 ```yaml
 Type: ExtensibilityHandler[]

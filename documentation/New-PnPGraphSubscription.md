@@ -10,18 +10,18 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPGraphSubscriptio
 # New-PnPGraphSubscription
 
 ## SYNOPSIS
-Creates a new Microsof Graph Subscription which allows your webhook API to be called when a change occurs in Microsoft Graph
+Creates a new Microsoft Graph Subscription which allows your webhook API to be called when a change occurs in Microsoft Graph
 
 ## SYNTAX
 
 ```powershell
 New-PnPGraphSubscription -ChangeType <GraphSubscriptionChangeType> -NotificationUrl <String> -Resource <String>
  [-ExpirationDateTime <DateTime>] [-ClientState <String>]
- [-LatestSupportedTlsVersion <GraphSubscriptionTlsVersion>]  [<CommonParameters>]
+ [-LatestSupportedTlsVersion <GraphSubscriptionTlsVersion>]  
 ```
 
 ## DESCRIPTION
-Creates a new Microsof Graph Subscription. The required Azure Active Directory application permission depends on the resource creating the subscription for, see https://learn.microsoft.com/graph/api/subscription-post-subscriptions#permissions. For a sample ASP.NET WebApi webhook implementation to receive the notifications from Microsoft Graph, see https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51.
+Creates a new Microsoft Graph Subscription. The required Azure Active Directory application permission depends on the resource creating the subscription for, see https://learn.microsoft.com/graph/api/subscription-post-subscriptions#permissions. For a sample ASP.NET WebApi webhook implementation to receive the notifications from Microsoft Graph, see https://github.com/microsoftgraph/msgraph-training-changenotifications/blob/b8d21ca7aa5feeece336287c9a781e71b7ba01c6/demos/01-create-application/Controllers/NotificationsController.cs#L51.
 
 ## EXAMPLES
 

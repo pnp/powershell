@@ -12,6 +12,7 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Admin
 {
+    [Obsolete("This usage of this cmdlet is not supported anymore and will be removed in the next version.")]
     [Cmdlet(VerbsData.Publish, "PnPCompanyApp")]
     public class BuildCompanyApp : PnPAdminCmdlet
     {
@@ -61,7 +62,7 @@ namespace PnP.PowerShell.Commands.Admin
         {
 
             var isValidCommSite = Tenant.IsValidCommSite(PortalUrl);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
             if (!isValidCommSite.Value)
             {
                 throw new PSInvalidOperationException("The site specified is not a Communication Site");

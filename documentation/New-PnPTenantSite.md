@@ -23,7 +23,7 @@ Creates a new (classic) site collection for the current tenant
 New-PnPTenantSite -Title <String> -Url <String> -Owner <String> [-Lcid <UInt32>] [-Template <String>]
  -TimeZone <Int32> [-ResourceQuota <Double>] [-ResourceQuotaWarningLevel <Double>] [-StorageQuota <Int64>]
  [-StorageQuotaWarningLevel <Int64>] [-RemoveDeletedSite] [-SharingCapability <SharingCapabilities>] [-Wait] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
@@ -104,7 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceQuota
-Specifies the quota for this site collection in Sandboxed Solutions units. This value must not exceed the company's aggregate available Sandboxed Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandboxed Solutions in SharePoint 2010 : https://learn.microsoft.com/previous-versions/office/developer/sharepoint-2010/gg615462(v=office.14).
+Specifies the quota for this site collection in Sandbox Solutions units. This value must not exceed the company's aggregate available Sandbox Solutions quota. The default value is 0. For more information, see Resource Usage Limits on Sandbox Solutions in SharePoint 2010 : https://learn.microsoft.com/previous-versions/office/developer/sharepoint-2010/gg615462(v=office.14).
 
 ```yaml
 Type: Double

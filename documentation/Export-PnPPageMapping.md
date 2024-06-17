@@ -1,4 +1,5 @@
 ---
+Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Export-PnPPageMapping.html
@@ -9,7 +10,7 @@ title: Export-PnPPageMapping
 # Export-PnPPageMapping
 
 ## SYNOPSIS
-Get's the built-in maping files or a custom mapping file for your publishing portal page layouts. These mapping files are used to tailor the page transformation experience.
+Get's the built-in mapping files or a custom mapping file for your publishing portal page layouts. These mapping files are used to tailor the page transformation experience.
 
 ## SYNTAX 
 
@@ -28,21 +29,21 @@ Export-PnPPageMapping [-BuiltInWebPartMapping [<SwitchParameter>]]
 
 ## EXAMPLES
 
-### ------------------EXAMPLE 1------------------
+### EXAMPLE 1
 ```powershell
 Export-PnPPageMapping -BuiltInPageLayoutMapping -CustomPageLayoutMapping -Folder c:\\temp -Overwrite
 ```
 
 Exports the built in page layout mapping and analyzes the current site's page layouts and exports these to files in folder c:\temp
 
-### ------------------EXAMPLE 2------------------
+### EXAMPLE 2
 ```powershell
 Export-PnPPageMapping -CustomPageLayoutMapping -PublishingPage mypage.aspx -Folder c:\\temp -Overwrite
 ```
 
 Analyzes the page layout of page mypage.aspx and exports this to a file in folder c:\temp
 
-### ------------------EXAMPLE 3------------------
+### EXAMPLE 3
 ```powershell
 Export-PnPPageMapping -BuiltInWebPartMapping -Folder c:\\temp -Overwrite
 ```
@@ -112,7 +113,7 @@ Accept pipeline input: False
 ```
 
 ### -Logging
-Outputs analyser logging to the console
+Outputs analyzer logging to the console
 
 ```yaml
 Type: SwitchParameter

@@ -33,8 +33,8 @@ namespace PnP.PowerShell.Commands.Admin
                     WriteVerbose($"Restoring site collection {Identity.Url}");
 
                     SpoOperation spoOperation = Tenant.RestoreDeletedSite(Identity.Url);
-                    ClientContext.Load(spoOperation);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.Load(spoOperation);
+                    AdminContext.ExecuteQueryRetry();
                     if (!NoWait.ToBool())
                     {
                         PollOperation(spoOperation);

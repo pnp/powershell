@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.SiteDesigns
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteDesignRunStatus")]
+    [OutputType(typeof(ClientObjectList<TenantSiteScriptActionStatus>))]
     public class GetSiteDesignRunStatus : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]

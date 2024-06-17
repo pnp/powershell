@@ -23,13 +23,13 @@ Returns all or a specific Planner bucket
 ### By Group
 ```powershell
 Get-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind>
- [-Identity <PlannerBucketPipeBind>] [<CommonParameters>]
+ [-Identity <PlannerBucketPipeBind>] 
 ```
 
 ### By Plan Id
 ```powershell
 Get-PnPPlannerBucket -PlanId <String> [-Identity <PlannerBucketPipeBind>] 
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

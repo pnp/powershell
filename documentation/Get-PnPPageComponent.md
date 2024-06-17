@@ -16,12 +16,12 @@ Retrieve one or more page components from a page
 
 ```powershell
 Get-PnPPageComponent [-Page] <PagePipeBind> [-InstanceId <Guid>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ```powershell
 Get-PnPPageComponent [-Page] <PagePipeBind> [-ListAvailable] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

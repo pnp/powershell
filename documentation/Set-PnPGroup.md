@@ -19,7 +19,7 @@ Set-PnPGroup -Identity <GroupPipeBind> [-SetAssociatedGroup <AssociatedGroupType
  [-RemoveRole <String>] [-Title <String>] [-Owner <String>] [-Description <String>]
  [-AllowRequestToJoinLeave <Boolean>] [-AutoAcceptRequestToJoinLeave <Boolean>]
  [-AllowMembersEditMembership <Boolean>] [-OnlyAllowMembersViewMembership <Boolean>]
- [-RequestToJoinEmail <String>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-RequestToJoinEmail <String>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

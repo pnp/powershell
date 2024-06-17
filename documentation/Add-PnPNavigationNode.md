@@ -14,8 +14,16 @@ Adds an item to a navigation element
 
 ## SYNTAX
 
+### Default
+
 ```powershell
-Add-PnPNavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Parent <Int32>] [-First] [-External] [-AudienceIds <Guid[]>] [-Connection <PnPConnection>]
+Add-PnPNavigationNode -Location <NavigationType> -Title <String> [-Url <String>] [-Parent <NavigationNodePipeBind>] [-First] [-External] [-AudienceIds <Guid[]> [-OpenInNewTab <SwitchParameter>] [-Connection <PnPConnection>]
+```
+
+### Provide PreviousNode
+
+```powershell
+Add-PnPNavigationNode -Location <NavigationType> -Title <String> -PreviousNode <NavigationNodePipeBind> [-Url <String>] [-Parent <NavigationNodePipeBind>] [-External] [-AudienceIds <Guid[]>] [-OpenInNewTab <SwitchParameter>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -65,6 +73,26 @@ Add-PnPNavigationNode -Title "Label" -Location "TopNavigationBar" -Url "http://l
 
 Adds a navigation node to the top navigation bar. The navigation node will be created as a label.
 
+### EXAMPLE 7
+```powershell
+Add-PnPNavigationNode -Title "Wiki" -Location "QuickLaunch" -Url "wiki/" -PreviousNode 2012
+```
+Adds a navigation node to the quicklaunch. The navigation node will have the title "Wiki" and will link to the Wiki library on the selected Web after the node with the ID 2012.
+
+### EXAMPLE 8
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com"
+Add-PnPNavigationNode -Title "Marketing" -Url "https://contoso.sharepoint.com/sites/Marketing" -Location TopNavigationBar -External
+```
+Adds the Marketing navigation node to the top navigation bar on the root site. NOTE that the `-External` switch is mandatory as the connection is made to the root site. This is currently a CSOM issue but once fixed, it will be fixed in PnP PowerShell automatically.
+
+### EXAMPLE 9
+```powershell
+Add-PnPNavigationNode -Title "Contoso" -Url "http://contoso.sharepoint.com/sites/contoso/" -Location "QuickLaunch" -OpenInNewTab
+```
+
+Adds a navigation node to the quicklaunch. The navigation node will have the title "Contoso" and will link to the url "http://contoso.sharepoint.com/sites/contoso/". It will also open the link in a new tab.
+
 ## PARAMETERS
 
 ### -Connection
@@ -100,7 +128,7 @@ Add the new menu item to beginning of the collection
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Default
 
 Required: False
 Position: Named
@@ -125,13 +153,27 @@ Accept wildcard characters: False
 ```
 
 ### -Parent
-The key of the parent. Leave empty to add to the top level
+The parent navigation node. Leave empty to add to the top level
 
 ```yaml
-Type: Int32
+Type: NavigationNodePipeBind
 Parameter Sets: (All)
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PreviousNode
+Specifies the navigation node after which the new navigation node will appear in the navigation node collection.
+
+```yaml
+Type: NavigationNodePipeBind
+Parameter Sets: Add node after another node
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -171,6 +213,20 @@ The Guids of the groups to which the navigation node should be visible. Leave em
 
 ```yaml
 Type: Guid array
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OpenInNewTab
+Indicates that the link will be opened in a new browser tab. This will only work if the navigation location is **QuickLaunch** due to SharePoint API limitation. 
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

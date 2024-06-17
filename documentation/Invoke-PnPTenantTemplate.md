@@ -26,7 +26,7 @@ Invoke-PnPTenantTemplate [-Path] <String> [-SequenceId <String>] [-ResourceFolde
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   
 ```
 
 ### By Object
@@ -36,7 +36,7 @@ Invoke-PnPTenantTemplate [-Template] <ProvisioningHierarchy> [-SequenceId <Strin
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-Parameters <Hashtable>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Configuration <ApplyConfigurationPipeBind>]
- [-Connection <PnPConnection>]   [<CommonParameters>]
+ [-Connection <PnPConnection>]   
 ```
 
 ## DESCRIPTION
@@ -128,7 +128,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExtensibilityHandlers
-Allows you to specify ExtensbilityHandlers to execute while applying a template
+Allows you to specify ExtensibilityHandlers to execute while applying a template
 
 ```yaml
 Type: ExtensibilityHandler[]

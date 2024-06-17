@@ -53,14 +53,16 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 extractConfiguration = new ExtractConfiguration();
             }
 
-            if (!string.IsNullOrEmpty(SiteUrl))
+            if (string.IsNullOrEmpty(SiteUrl))
             {
-                if (extractConfiguration.Tenant.Sequence == null)
-                {
-                    extractConfiguration.Tenant.Sequence = new Framework.Provisioning.Model.Configuration.Tenant.Sequence.ExtractSequenceConfiguration();
-                }
-                extractConfiguration.Tenant.Sequence.SiteUrls.Add(SiteUrl);
+                SiteUrl = Connection.Url;
             }
+
+            if (extractConfiguration.Tenant.Sequence == null)
+            {
+                extractConfiguration.Tenant.Sequence = new Framework.Provisioning.Model.Configuration.Tenant.Sequence.ExtractSequenceConfiguration();
+            }
+            extractConfiguration.Tenant.Sequence.SiteUrls.Add(SiteUrl);
 
             if (ParameterSetName == PARAMETERSET_ASFILE)
             {

@@ -17,13 +17,19 @@ Adds a user to a SharePoint group
 ### Internal
 ```powershell
 Add-PnPGroupMember -LoginName <String> -Group <GroupPipeBind> 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### External
 ```powershell
 Add-PnPGroupMember -Group <GroupPipeBind> -EmailAddress <String> [-SendEmail] [-EmailBody <String>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
+```
+
+### Batched
+```powershell
+Add-PnPGroupMember -LoginName <String> -Group <GroupPipeBind> 
+ [-Connection <PnPConnection>] -Batch <PnPBatch>
 ```
 
 ## DESCRIPTION
@@ -45,6 +51,16 @@ Add-PnPGroupMember -LoginName user@company.com -Group 5
 ```
 
 Add the specified user to the SharePoint group with Id 5
+
+### EXAMPLE 3
+```powershell
+$batch = New-PnPBatch
+Add-PnPGroupMember -LoginName user@company.com -Group 5 -Batch $batch
+Add-PnPGroupMember -LoginName user1@company.com -Group 5 -Batch $batch
+Invoke-PnPBatch $batch
+```
+
+Add the specified users to the SharePoint group with Id 5 in a batch.
 
 ## PARAMETERS
 
@@ -124,6 +140,19 @@ Type: SwitchParameter
 Parameter Sets: External
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Batch
+
+```yaml
+Type: PnPBatch
+Parameter Sets: Batched
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

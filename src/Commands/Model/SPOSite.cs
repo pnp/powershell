@@ -1,10 +1,13 @@
 using System;
 using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.Online.SharePoint.TenantManagement;
+using Microsoft.SharePoint.Client.Sharing;
 
 namespace PnP.PowerShell.Commands.Model
 {
     public class SPOSite
     {
+        #region Properties
         public bool AllowDownloadingNonWebViewableFiles { get; set; }
         public bool AllowEditing { get; set; }
         public bool AllowSelfServiceUpgrade { get; set; }
@@ -31,7 +34,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool IsTeamsConnected { get; }
         public DateTime LastContentModifiedDate { get; }
         public Microsoft.Online.SharePoint.TenantManagement.SPOLimitedAccessFileType LimitedAccessFileType { get; set; }
-        public UInt32 LocaleId { get; set; }
+        public uint LocaleId { get; set; }
         public string LockIssue { get; }
         public string LockState { get; set; }
         public bool OverrideTenantAnonymousLinkExpirationPolicy { get; set; }
@@ -67,6 +70,40 @@ namespace PnP.PowerShell.Commands.Model
         public string Title { get; set; }
         public string Url { get; set; }
         public int WebsCount { get; set; }
+
+        public string InformationBarrierMode { get; set; }
+        public Guid[] InformationBarrierSegments { get; set; }
+        public Guid[] InformationBarrierSegmentsToAdd { get; set; }
+        public Guid[] InformationBarrierSegmentsToRemove { get; set; }
+
+        public bool? RequestFilesLinkEnabled { set; get; }
+        public int? RequestFilesLinkExpirationInDays { set; get; }
+        public Role LoopDefaultSharingLinkRole { get; set; }
+        public SharingScope DefaultShareLinkScope { get; set; }
+        public Role DefaultShareLinkRole { get; set; }
+        public SharingScope LoopDefaultSharingLinkScope { get; set; }
+        public string ArchiveStatus { get; set; }
+        public bool EnableAutoExpirationVersionTrim {  get; set; }
+        public int ExpireVersionsAfterDays { get; set; }
+
+        public bool InheritVersionPolicyFromTenant { get; set; }
+        public bool IsGroupOwnerSiteAdmin { get; set; }
+        public bool ListsShowHeaderAndNavigation { get; set; }
+        public int LockReason { get; set; }
+        public bool LoopOverrideSharingCapability { get; set; }
+        public SharingCapabilities LoopSharingCapability { get; set; }
+        public int MajorVersionLimit { get; set; }
+        public int MajorWithMinorVersionsLimit { get; set; }
+        public bool RestrictedAccessControl { get; set; }
+        public Guid[] RestrictedAccessControlGroups { get; set; }
+        public Guid[] RestrictedAccessControlGroupsToAdd { get;  set; }
+        public Guid[] RestrictedAccessControlGroupsToRemove { get; set; }
+        public RestrictedToRegion RestrictedToRegion { get; set; }
+        public bool SetOwnerWithoutUpdatingSecondaryAdmin { get; set; }
+
+        #endregion
+
+
         public SPOSite(SiteProperties props, bool? disableSharingForNonOwnersStatus)
         {
             AllowDownloadingNonWebViewableFiles = props.AllowDownloadingNonWebViewableFiles;
@@ -128,8 +165,34 @@ namespace PnP.PowerShell.Commands.Model
             Template = props.Template;
             Title = props.Title;            
             WebsCount = props.WebsCount;
-            Url = props.Url;            
+            Url = props.Url;
+            InformationBarrierMode = props.IBMode;
+            InformationBarrierSegments = props.IBSegments;
+            InformationBarrierSegmentsToAdd = props.IBSegmentsToAdd;
+            InformationBarrierSegmentsToRemove = props.IBSegmentsToRemove;
+            RequestFilesLinkEnabled = props.RequestFilesLinkEnabled;
+            RequestFilesLinkExpirationInDays = props.RequestFilesLinkExpirationInDays;
+            LoopDefaultSharingLinkRole = props.LoopDefaultSharingLinkRole;
+            DefaultShareLinkScope = props.DefaultShareLinkScope;
+            DefaultShareLinkRole = props.DefaultShareLinkRole;
+            LoopDefaultSharingLinkScope = props.LoopDefaultSharingLinkScope;
+            ArchiveStatus = props.ArchiveStatus;
+            EnableAutoExpirationVersionTrim = props.EnableAutoExpirationVersionTrim;
+            ExpireVersionsAfterDays = props.ExpireVersionsAfterDays;
+            InheritVersionPolicyFromTenant = props.InheritVersionPolicyFromTenant;
+            IsGroupOwnerSiteAdmin = props.IsGroupOwnerSiteAdmin;
+            ListsShowHeaderAndNavigation = props.ListsShowHeaderAndNavigation;
+            LockReason = props.LockReason;
+            LoopOverrideSharingCapability = props.LoopOverrideSharingCapability;
+            LoopSharingCapability = props.LoopSharingCapability;
+            MajorVersionLimit = props.MajorVersionLimit;
+            MajorWithMinorVersionsLimit = props.MajorWithMinorVersionsLimit;
+            RestrictedAccessControl = props.RestrictedAccessControl;
+            RestrictedAccessControlGroups = props.RestrictedAccessControlGroups;
+            RestrictedAccessControlGroupsToAdd = props.RestrictedAccessControlGroupsToAdd;
+            RestrictedAccessControlGroupsToRemove = props.RestrictedAccessControlGroupsToRemove;
+            RestrictedToRegion = props.RestrictedToRegion;
+            SetOwnerWithoutUpdatingSecondaryAdmin = props.SetOwnerWithoutUpdatingSecondaryAdmin;            
         }
-
     }
 }

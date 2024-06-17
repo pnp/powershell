@@ -16,7 +16,7 @@ Saves a PnP provisioning hierarchy to the file system.
 
 ```powershell
 Save-PnPTenantTemplate -Template <ProvisioningHierarchyPipeBind> [-Out] <String>
- [-Schema <XMLPnPSchemaVersion>] [-Force] [<CommonParameters>]
+ [-Schema <XMLPnPSchemaVersion>] [-Force] 
 ```
 
 ## DESCRIPTION
@@ -90,7 +90,7 @@ The optional schema to use when creating the PnP file. Always defaults to the la
 ```yaml
 Type: XMLPnPSchemaVersion
 Parameter Sets: (All)
-Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002
+Accepted values: LATEST, V201503, V201505, V201508, V201512, V201605, V201705, V201801, V201805, V201807, V201903, V201909, V202002, V202103, V202209
 
 Required: False
 Position: Named

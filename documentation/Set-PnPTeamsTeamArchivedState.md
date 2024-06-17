@@ -21,7 +21,7 @@ Sets the archived state of a team.
 
 ```powershell
 Set-PnPTeamsTeamArchivedState -Identity <TeamsTeamPipeBind> -Archived <Boolean>
- [-SetSiteReadOnlyForMembers <Boolean>]  [<CommonParameters>]
+ [-SetSiteReadOnlyForMembers <Boolean>]  [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -42,14 +42,14 @@ Archives the team as identified.
 Set-PnPTeamsTeamArchivedState -Identity "My Team" -Archived $false
 ```
 
-Unarchives the team as identified.
+Un-archives the team as identified.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPTeamsTeamArchivedState -Identity "My Team" -Archived $true -SetSiteReadOnlyForMembers $true
 ```
 
-Archives the team as identified and sets the underlying SharePoint Online Site Collection as read only for members
+Archives the team as identified and sets the underlying SharePoint Online Site Collection as read only for members.
 
 ## PARAMETERS
 
@@ -61,6 +61,20 @@ Type: Boolean
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

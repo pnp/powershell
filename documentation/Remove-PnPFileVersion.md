@@ -17,19 +17,19 @@ Removes all or a specific file version.
 ### Return as file object (Default)
 ```powershell
 Remove-PnPFileVersion -Url <String> [-Recycle] [-Force] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### All
 ```powershell
 Remove-PnPFileVersion -Url <String> [-All] [-Recycle] [-Force] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### By Id
 ```powershell
 Remove-PnPFileVersion -Url <String> [-Identity <FileVersionPipeBind>] [-Recycle] [-Force] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -121,7 +121,7 @@ Specifies whether the version(s) should go to the recycle bin.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: By Id
 
 Required: False
 Position: Named

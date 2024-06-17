@@ -16,8 +16,8 @@ Returns a field from a list or site
 ## SYNTAX
 
 ```powershell
-Get-PnPField [-List <ListPipeBind>] [[-Identity] <FieldPipeBind>] [-Group <String>] [-InSiteHierarchy] [-ReturnTyped]
- [-Connection <PnPConnection>] [-Includes <String[]>] [<CommonParameters>]
+Get-PnPField [-List <ListPipeBind>] [[-Identity] <FieldPipeBind>] [-Group <String>] [-InSiteHierarchy]
+ [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION
@@ -47,14 +47,6 @@ Get-PnPField -Group "Custom Columns"
 ```
 
 Gets all the fields for the group called Custom Columns for the site currently connected to
-
-### EXAMPLE 4
-
-```powershell
-Get-PnPField -List "Demo list" -Identity "Speakers" -ReturnTyped
-```
-
-Gets the speakers field from the list Demo list and returns it as a typed field. So, if the field type is User, it will be returned as FieldUser.
 
 ## PARAMETERS
 
@@ -130,22 +122,6 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -ReturnTyped
-
-Returns the field as the specific field type instead of the generic field type when used with List parameter.
-For example, if the field type is User, it will be returned as FieldUser instead of generic Field type.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

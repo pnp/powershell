@@ -44,12 +44,15 @@ Set-PnPSite [-Identity <String>]
  [-SensitivityLabel <Guid>]
  [-RequestFilesLinkEnabled <Boolean>]
  [-ScriptSafeDomainName <string>]
+ [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
+ [-ExcludedBlockDownloadGroupIds <Guid[]>]
+ [-ListsShowHeaderAndNavigation <Boolean>]
  [-Connection <PnPConnection>]
 ```
 
 ### Set Lock State
 ```powershell
-Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPSite [-Identity <String>] [-LockState <SiteLockState>] [-Wait] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -70,7 +73,7 @@ Sets the current site classification tag to HBI
 Set-PnPSite -Classification $null
 ```
 
-Unsets the current site classification tag
+Un-sets the current site classification tag
 
 ### EXAMPLE 3
 ```powershell
@@ -235,7 +238,7 @@ Accept wildcard characters: False
 ```
 
 ### -DefaultLinkToExistingAccess
-When set to $true, the DefaultSharingLinkType will be overriden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
+When set to $true, the DefaultSharingLinkType will be overridden and the default sharing link will be All People with Existing Access link (which does not modify permissions). When set to $false (the default), the default sharing link type is controlled by the DefaultSharingLinkType parameter
 
 ```yaml
 Type: Boolean
@@ -336,7 +339,7 @@ Accept wildcard characters: False
 ```
 
 ### -LockState
-Sets the lockstate of a site collection.
+Sets the lockState of a site collection.
 
 ```yaml
 Type: SiteLockState
@@ -513,7 +516,7 @@ Accept wildcard characters: False
 ```
 
 ### -ScriptSafeDomainName
-Allow contributors to insert iframes only from the specified domains only
+Allow contributors to insert iframe only from the specified domains only
 
 ```yaml
 Type: String
@@ -532,6 +535,62 @@ To enable restricted access control on a group-connected or Teams-connected site
 ```yaml
 Type: Boolean
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadPolicy
+Set this to true to block download of files from SharePoint sites or OneDrive
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludeBlockDownloadPolicySiteOwners
+Set this to true to exempts site owners from the block download policy so that they can fully download any content for the site.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludedBlockDownloadGroupIds
+Exempts users from the mentioned groups from this policy and they can fully download any content for the site.
+
+```yaml
+Type: GUID[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ListsShowHeaderAndNavigation
+Set a property on a site collection to make all lists always load with the site elements intact.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named

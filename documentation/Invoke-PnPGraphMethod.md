@@ -14,6 +14,7 @@ Invokes a REST request towards the Microsoft Graph API
 
 ## SYNTAX
 
+### Out to console (Default)
 ```powershell
 Invoke-PnPGraphMethod -Url <String>
                       [-AdditionalHeaders <System.Collections.Generic.IDictionary`2[System.String,System.String]>]
@@ -24,11 +25,37 @@ Invoke-PnPGraphMethod -Url <String>
                       [-Raw]
                       [-All] 
                       [-Connection <PnPConnection>]
-                      [<CommonParameters>]
+                      [-Verbose]
+```
+
+### Out to file
+```powershell
+Invoke-PnPGraphMethod -Url <String>
+                      [-AdditionalHeaders <System.Collections.Generic.IDictionary`2[System.String,System.String]>]
+                      [[-Method] <HttpRequestMethod>] 
+                      [-Content <Object>] 
+                      [-ContentType <String>] 
+                      [-ConsistencyLevelEventual] 
+                      [-Connection <PnPConnection>]
+                      [-OutFile <String>]
+                      [-Verbose]
+```
+
+### Out to stream
+```powershell
+Invoke-PnPGraphMethod -Url <String>
+                      [-AdditionalHeaders <System.Collections.Generic.IDictionary`2[System.String,System.String]>]
+                      [[-Method] <HttpRequestMethod>] 
+                      [-Content <Object>] 
+                      [-ContentType <String>] 
+                      [-ConsistencyLevelEventual] 
+                      [-Connection <PnPConnection>]
+                      [-OutStream]
+                      [-Verbose]
 ```
 
 ## DESCRIPTION
-Invokes a REST request towards the Microsoft Graph API
+Invokes a REST request towards the Microsoft Graph API. It will take care of potential throttling retries that are needed to retrieve the data.
 
 ## EXAMPLES
 
@@ -61,6 +88,27 @@ Invoke-PnPGraphMethod -Url "v1.0/users?$filter=accountEnabled ne true&$count=tru
 
 Get users with advanced query capabilities. Use of -ConsistencyLevelEventual.
 
+### Example 5
+```powershell
+Invoke-PnPGraphMethod "https://graph.microsoft.com/v1.0/users"
+```
+
+Performs a GET request to retrieve users from the Microsoft Graph API using the full URL.
+
+### Example 6
+```powershell
+Invoke-PnPGraphMethod "https://graph.microsoft.com/v1.0/users/user@contoso.com/photo/`$value" -OutFile c:\temp\photo.jpg
+```
+
+Downloads the user profile photo of the specified user to the specified file.
+
+### Example 7
+```powershell
+Invoke-PnPGraphMethod "https://graph.microsoft.com/v1.0/users/user@contoso.com/photo/`$value" -OutStream | Add-PnPFile -FileName user.jpg -Folder "Shared Documents"
+```
+
+Takes the user profile photo of the specified user and uploads it to the specified library in SharePoint Online.
+
 ## PARAMETERS
 
 ### -AdditionalHeaders
@@ -83,7 +131,7 @@ Retrieve all pages of results. This will loop through all @odata.nextLink. This 
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Out to console
 Aliases:
 
 Required: False
@@ -171,12 +219,42 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -OutFile
+The full path including filename to write the output to, i.e. c:\temp\myfile.txt. Existing files will be overwritten.
+
+```yaml
+Type: String
+Parameter Sets: Out to file
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OutStream
+Indicates that the result of the request should be returned as a memory stream.
+
+```yaml
+Type: String
+Parameter Sets: Out to stream
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Raw
 If specified the returned data will not be converted to an object but returned as a JSON string.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: Out to console
 Aliases:
 
 Required: False

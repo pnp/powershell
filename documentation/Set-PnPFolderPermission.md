@@ -18,24 +18,24 @@ Sets or clears permissions on folders within SharePoint Online.
 ```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> -User <String> [-AddRole <String>]
  [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Group
 ```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> -Group <GroupPipeBind>
  [-AddRole <String>] [-RemoveRole <String>] [-ClearExisting] [-SystemUpdate] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Inherit
 ```powershell
 Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> [-InheritPermissions] [-SystemUpdate]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-Sets or clears permissions on folders within SharePoint Online. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.
+Sets or clears permissions on folders within SharePoint Online.  When adding permissions, so when not using -InheritPermissions, it will apply unique permissions to the library, inheriting the ones from its parent. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.
 
 ## EXAMPLES
 

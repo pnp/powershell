@@ -15,7 +15,7 @@ Returns a time zone ID
 ## SYNTAX
 
 ```powershell
-Get-PnPTimeZoneId [[-Match] <String>] [<CommonParameters>]
+Get-PnPTimeZoneId [[-Match] <String>] 
 ```
 
 ## DESCRIPTION

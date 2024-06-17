@@ -16,12 +16,12 @@ Move a folder to another location in the current web. If you want to move a fold
 
 ```powershell
 Move-PnPFolder -Folder <FolderPipeBind> -TargetFolder <String> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
 
-Allows to move folder to another location in the current web. If you want to move a folder to a different site collection, use the Move-PnPFile cmdlet instead, which also supports moving folders and also accross site collections. Move-PnPFolder can be used to move folders that are within the list view threshold, the commandlet will fail if the list view threshold is exceeded. 
+Allows to move folder to another location in the current web. If you want to move a folder to a different site collection, use the Move-PnPFile cmdlet instead, which also supports moving folders and also across site collections. Move-PnPFolder can be used to move folders that are within the list view threshold, the commandlet will fail if the list view threshold is exceeded. 
 
 ## EXAMPLES
 

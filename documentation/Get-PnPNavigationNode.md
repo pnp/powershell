@@ -17,13 +17,13 @@ Returns all or a specific navigation node
 ### All nodes by location (Default)
 ```powershell
 Get-PnPNavigationNode [-Location <NavigationType>] [-Tree] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### A single node by ID
 ```powershell
 Get-PnPNavigationNode [-Id <Int32>] [-Tree] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION

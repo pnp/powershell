@@ -10,13 +10,13 @@ online version: https://pnp.github.io/powershell/cmdlets/Register-PnPManagementS
 # Register-PnPManagementShellAccess
 
 ## SYNOPSIS
-Registers access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application
+Registers access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application.
 
 ## SYNTAX
 
 ### Main
 ```powershell
-Register-PnPManagementShellAccess [-AzureEnvironment <AzureEnvironment>] [<CommonParameters>]
+Register-PnPManagementShellAccess [-AzureEnvironment <AzureEnvironment>] 
 ```
 
 ### Show Consent Url
@@ -33,6 +33,8 @@ This cmdlet grants access to the tenant for the PnP Management Shell Multi-Tenan
 ```powershell
 Register-PnPManagementShellAccess
 ```
+
+Grants access to the tenant for the PnP Management Shell Multi-Tenant Azure AD Application.
 
 ### EXAMPLE 2
 ```powershell
@@ -64,7 +66,7 @@ Accept wildcard characters: False
 ```
 
 ### -AzureEnvironment
-The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.
+The Azure environment to use for authentication. It defaults to 'Production' which is the main Azure environment.
 
 ```yaml
 Type: AzureEnvironment

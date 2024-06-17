@@ -16,7 +16,7 @@ Adds and/or removes permissions of a specific SharePoint group.
 
 ```powershell
 Set-PnPGroupPermissions [-Identity] <GroupPipeBind> [-List <ListPipeBind>] [-AddRole <String[]>]
- [-RemoveRole <String[]>] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-RemoveRole <String[]>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

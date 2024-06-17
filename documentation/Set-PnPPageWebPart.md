@@ -10,14 +10,14 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPageWebPart.html
 # Set-PnPPageWebPart
 
 ## SYNOPSIS
-Set Web Part properties
+Sets web part properties.
 
 ## SYNTAX
 
 ```powershell
-Set-PnPPageWebPart [-Page] <PagePipeBind> -Identity <WebPartPipeBind>
+Set-PnPPageWebPart -Page <PagePipeBind> -Identity <WebPartPipeBind>
  [-Title <String>] [-PropertiesJson <String>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
@@ -56,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The identity of the web part. This can be the web part instance id or the title of a web part
+The identity of the web part. This can be the web part instance id or the title of a web part.
 
 ```yaml
 Type: WebPartPipeBind
@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -Page
-The name of the page
+The name of the page.
 
 ```yaml
 Type: PagePipeBind

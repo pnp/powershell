@@ -18,19 +18,19 @@ Add a field
 ```powershell
 Add-PnPField [-List <ListPipeBind>] -DisplayName <String> -InternalName <String> -Type <FieldType>
  [-Id <Guid>] [-Formula <String>] [-Choices <String>] [-AddToDefaultView] [-Required] [-Group <String>] [-ClientSideComponentId <Guid>]
- [-ClientSideComponentProperties <String>] [-AddToAllContentTypes] [-ReturnType <String>] [-Connection <PnPConnection>]
+ [-ClientSideComponentProperties <String>] [-AddToAllContentTypes] [-Connection <PnPConnection>]
 ```
 
 ### Add field reference to list
 ```powershell
 Add-PnPField -List <ListPipeBind> -Field <FieldPipeBind> [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ### Add field to web
 ```powershell
 Add-PnPField -DisplayName <String> -InternalName <String> -Type <FieldType> [-Id <Guid>] [-Formula <String>] [-Choices <String>]
- [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>] [-ReturnType <String>]
+ [-ClientSideComponentId <Guid>] [-ClientSideComponentProperties <String>]
  [-Connection <PnPConnection>]
 ```
 
@@ -79,7 +79,7 @@ This will add a site column of type Choice (only one choice value can be chosen 
 Add-PnPField -Type Calculated -ResultType Number -DisplayName "My Calculated Column" -InternalName "MyCalcCol" -Formula "=Today()"
 ```
 
-This will add a site column of type Caulculated called "My Calculated Column" which contains todays date.
+This will add a site column of type Calculated called "My Calculated Column" which contains todays date.
 
 ## PARAMETERS
 
@@ -300,21 +300,6 @@ Accepted values: Invalid, Integer, Text, Note, DateTime, Counter, Choice, Lookup
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ReturnType
-The return type of the calculated field. Only valid when Type Calculated is chosen.
-
-```yaml
-Type: FieldType
-Parameter Sets: Add field to list, Add field to web
-Accepted values: Integer, Text, DateTime, Boolean, Number, Currency
-
-Required: False
-Position: Named
-Default value: Text
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

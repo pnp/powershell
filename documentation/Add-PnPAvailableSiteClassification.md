@@ -15,17 +15,17 @@ title: Add-PnPAvailableSiteClassification
 
   * Microsoft Graph API: Directory.ReadWrite.All
 
-Adds one or more classic site classification values to the list of possible values
+Adds one or more classic site classification values to the list of possible values.
 
 ## SYNTAX
 
 ```powershell
-Add-PnPAvailableSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]> [<CommonParameters>]
+Add-PnPAvailableSiteClassification -Classifications <System.Collections.Generic.List`1[System.String]>  [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to add classic site classification values
+Allows to add classic site classification values.
 
 ## EXAMPLES
 
@@ -46,12 +46,26 @@ Adds the "Top Secret" and the "HBI" classifications to the already existing clas
 ## PARAMETERS
 
 ### -Classifications
+Classic classifications values to add. 
 
 ```yaml
 Type: System.Collections.Generic.List`1[System.String]
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

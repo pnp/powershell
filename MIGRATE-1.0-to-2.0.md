@@ -57,7 +57,7 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 | ----------- | ---------------------- | -------------------- | --------------------- |
 | New-PnPTenantSite | Force | - | The parameter was obsolete and not used. It has been removed. |
 | Set-PnPTenantSite | BlockDownloadOfNonViewableFiles | AllowDownloadingNonWebViewableFiles | The parameter was obsolete and hence removed. Use `AllowDownloadingNonWebViewableFiles` |
-| Connect-PnPOnline | NoTelemetry | - | The parameter was obsolete and hence removed. Use `$env:PNP_DISABLETELEMETRY` environment variable or `Disable-PnPTelemetry/Enable-PnPTelemetry` cmdlet |
+| Connect-PnPOnline | NoTelemetry | - | The parameter was obsolete and hence removed. Use `$env:PNPPOWERSHELL_DISABLETELEMETRY` environment variable or `Disable-PnPTelemetry/Enable-PnPTelemetry` cmdlet |
 | Connect-PnPOnline | NoVersionCheck | - | The parameter was obsolete and hence removed. Use `$env:PNPPOWERSHELL_UPDATECHECK` environment variable |
 | Disconnect-PnPOnline | Connection | - | The parameter was obsolete and hence removed. |
 | Request-PnPAccessToken | Resource | Scopes | The parameter was obsolete and hence removed. Use `Scopes` instead |
@@ -73,6 +73,9 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 | Add-PnPTeamsChannel | Private | ChannelType | The parameter was obsolete and hence removed. Use `-ChannelType` instead |
 | New-PnPTeamsTeam | Owner | Owners | The parameter was obsolete and hence removed. Use `-Owners` instead which supports setting multiple owner of a Teams team |
 | Export-PnPTaxonomy | - | - | The cmdlet does not support export of taxonomy using `UTF-7` encoding. If `UTF-7` is specified, it will switch to `UTF-8` encoding |
+| Get-PnPField | ReturnTyped | - | The cmdlet will always return the typed object of the field. |
+| Get-PnPUserProfileProperty | - | - | Additional user profile properties are no longer returned under UserProfileProperties but instead will be directly under the returned instance |
+| Get-PnPFlowEnvironment | - | - | The alias on the cmdlet has been removed. Use `PnPPowerPlatformEnvironment` instead. |
 
 ## Other notable changes
 
@@ -81,7 +84,10 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 
 ## Changes to output type
 
+- When using `Add-PnPTeamsTab` cmdlet, if you specify the `-Type SharePointPageAndList`, then `-WebSiteUrl` is mandatory.
+- When using `Add-PnPTeamsTab` cmdlet, if you specify the `-Type Planner`, then `-ContentUrl` is mandatory.
 - The output type of `Get-PnPAzureADGroupOwner` has changed to `PnP.PowerShell.Commands.Model.Microsoft365User`
 - The output type of `Get-PnPAzureADGroupMember` has changed to `PnP.PowerShell.Commands.Model.Microsoft365User`
 - The output type of `Get-PnPAzureADGroup` has changed to `PnP.PowerShell.Commands.Model.Graph.Group`
 - The output type of `New-PnPAzureADGroup` has changed to `PnP.PowerShell.Commands.Model.Graph.Group`
+- The output type of `Get-PnPUserProfileProperty` has changed to `SortedDictionary<string, object>`

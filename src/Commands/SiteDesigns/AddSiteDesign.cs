@@ -1,20 +1,29 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using System;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Add, "PnPSiteDesign")]
+    [Cmdlet(VerbsCommon.Add, "PnPSiteDesign", DefaultParameterSetName = ParameterSet_BYSITESCRIPTINSTANCE)]
+    [OutputType(typeof(TenantSiteDesign))]
     public class AddSiteDesign : PnPAdminCmdlet
     {
+        private const string ParameterSet_BYSITESCRIPTIDS = "By SiteScript Ids";
+        private const string ParameterSet_BYSITESCRIPTINSTANCE = "By SiteScript Instance";
+
         [Parameter(Mandatory = true)]
         public string Title;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYSITESCRIPTIDS)]
         public Guid[] SiteScriptIds;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYSITESCRIPTINSTANCE, ValueFromPipeline = true)]
+        public TenantSiteScriptPipeBind SiteScript;
 
         [Parameter(Mandatory = false)]
         public string Description;
@@ -42,7 +51,7 @@ namespace PnP.PowerShell.Commands
             TenantSiteDesignCreationInfo siteDesignInfo = new TenantSiteDesignCreationInfo
             {
                 Title = Title,
-                SiteScriptIds = SiteScriptIds,
+                SiteScriptIds = ParameterSpecified(nameof(SiteScriptIds)) ? SiteScriptIds : SiteScript.GetTenantSiteScript(Tenant).Select(sc => sc.Id).ToArray(),
                 Description = Description,
                 IsDefault = IsDefault,
                 PreviewImageAltText = PreviewImageAltText,
@@ -53,8 +62,8 @@ namespace PnP.PowerShell.Commands
             };
 
             var design = Tenant.CreateSiteDesign(siteDesignInfo);
-            ClientContext.Load(design);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(design);
+            AdminContext.ExecuteQueryRetry();
             WriteObject(design);
         }
     }

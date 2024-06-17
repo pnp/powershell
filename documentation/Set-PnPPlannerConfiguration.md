@@ -20,7 +20,7 @@ Allows the Microsoft Planner configuration of the tenant to be set.
 ## SYNTAX
 
 ```powershell
-Set-PnPPlannerConfiguration [-IsPlannerAllowed <boolean>] [-AllowRosterCreation <boolean>] [-AllowTenantMoveWithDataLoss <boolean>] [-AllowTenantMoveWithDataMigration <boolean>] [-AllowPlannerMobilePushNotifications <boolean>] [-AllowCalendarSharing <boolean>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPPlannerConfiguration [-IsPlannerAllowed <boolean>] [-AllowRosterCreation <boolean>] [-AllowTenantMoveWithDataLoss <boolean>] [-AllowTenantMoveWithDataMigration <boolean>] [-AllowPlannerMobilePushNotifications <boolean>] [-AllowCalendarSharing <boolean>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -28,13 +28,13 @@ This cmdlet allows the Microsoft Planner tenant configuration to be changed.
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```powershell
 Set-PnPPlannerConfiguration -AllowRosterCreation:$false -IsPlannerAllowed:$true
 ```
 This example configures Microsoft Planner to be enabled and disallows Roster plans to be created.
 
-### Example 2
+### EXAMPLE 2
 ```powershell
 Set-PnPPlannerConfiguration -AllowPlannerMobilePushNotifications $false
 ```

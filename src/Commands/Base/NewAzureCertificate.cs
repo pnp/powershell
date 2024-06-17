@@ -46,6 +46,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false)]
         public StoreLocation Store;
 
+        [Parameter(Mandatory = false)]
+        public string[] SanNames;
+
         protected override void ProcessRecord()
         {
             if (MyInvocation.BoundParameters.ContainsKey(nameof(Store)) && !Utilities.OperatingSystem.IsWindows())
@@ -60,7 +63,12 @@ namespace PnP.PowerShell.Commands.Base
             DateTime validFrom = DateTime.Today;
             DateTime validTo = validFrom.AddYears(ValidYears);
 
-            X509Certificate2 certificate = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
+            if(MyInvocation.BoundParameters.ContainsKey(nameof(SanNames)) && SanNames == null)
+            {
+                SanNames = Array.Empty<string>();
+            }
+
+            X509Certificate2 certificate = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo, SanNames);
 
             if (!string.IsNullOrWhiteSpace(OutPfx))
             {

@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class Microsoft365GroupsUtility
     {
-        internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(PnPConnection connection, string accessToken, bool includeSiteUrl, bool includeOwners, string filter = null)
+        internal static async Task<IEnumerable<Microsoft365Group>> GetGroupsAsync(PnPConnection connection, string accessToken, bool includeSiteUrl, bool includeOwners, string filter = null, bool includeSensitivityLabels = false)
         {
             var items = new List<Microsoft365Group>();
             string requestUrl = "v1.0/groups";
@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 items.AddRange(result);
             }
-            if (includeSiteUrl || includeOwners)
+            if (includeSiteUrl || includeOwners || includeSensitivityLabels)
             {
                 var chunks = BatchUtility.Chunk(items.Select(g => g.Id.ToString()), 20);
                 if (includeOwners)
@@ -55,11 +55,21 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var chunk in chunks)
                     {
-                        var results = await BatchUtility.GetPropertyBatchedAsync(connection, accessToken, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
-                        //var results = await GetSiteUrlBatchedAsync(connection, accessToken, chunk.ToArray());
+                        var results = await BatchUtility.GetPropertyBatchedAsync(connection, accessToken, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");                        
                         foreach (var batchResult in results)
                         {
                             items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
+                        }
+                    }
+                }
+                if (includeSensitivityLabels)
+                {
+                    foreach (var chunk in chunks)
+                    {
+                        var sensitivityLabelResults = await BatchUtility.GetObjectCollectionBatchedAsync<AssignedLabels>(connection, accessToken, chunk.ToArray(), "/groups/{0}/assignedLabels");
+                        foreach (var sensitivityLabel in sensitivityLabelResults)
+                        {
+                            items.First(i => i.Id.ToString() == sensitivityLabel.Key).AssignedLabels = sensitivityLabel.Value?.ToList();
                         }
                     }
                 }
@@ -67,7 +77,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return items;
         }
 
-        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, Guid groupId, string accessToken, bool includeSiteUrl, bool includeOwners, bool detailed, bool includeSensitivityLabels)
         {
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and id eq '{groupId}'", accessToken);
 
@@ -100,7 +110,6 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             if (iterations * 30 >= 300)
                             {
-                                wait = false;
                                 throw;
                             }
                             else
@@ -114,12 +123,24 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     group.Owners = await GetGroupMembersAsync("owners", connection, group.Id.Value, accessToken);
                 }
+                if (detailed)
+                {
+                    var exchangeOnlineProperties = await GetGroupExchangeOnlineSettingsAsync(connection, group.Id.Value, accessToken);
+                    group.AllowExternalSenders = exchangeOnlineProperties.AllowExternalSenders;
+                    group.AutoSubscribeNewMembers = exchangeOnlineProperties.AutoSubscribeNewMembers;
+                    group.IsSubscribedByMail = exchangeOnlineProperties.IsSubscribedByMail;
+                }
+                if (includeSensitivityLabels)
+                {
+                    var sensitivityLabels = await GetGroupSensitivityLabelsAsync(connection, group.Id.Value, accessToken);
+                    group.AssignedLabels = sensitivityLabels.AssignedLabels;
+                }
                 return group;
             }
             return null;
         }
 
-        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners)
+        internal static async Task<Microsoft365Group> GetGroupAsync(PnPConnection connection, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners, bool detailed, bool includeSensitivityLabels)
         {
             var results = await GraphHelper.GetAsync<RestResultCollection<Microsoft365Group>>(connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (displayName eq '{displayName}' or mailNickName eq '{displayName}')", accessToken);
             if (results != null && results.Items.Any())
@@ -137,6 +158,18 @@ namespace PnP.PowerShell.Commands.Utilities
                 if (includeOwners)
                 {
                     group.Owners = await GetGroupMembersAsync("owners", connection, group.Id.Value, accessToken);
+                }
+                if (detailed)
+                {
+                    var exchangeOnlineProperties = await GetGroupExchangeOnlineSettingsAsync(connection, group.Id.Value, accessToken);
+                    group.AllowExternalSenders = exchangeOnlineProperties.AllowExternalSenders;
+                    group.AutoSubscribeNewMembers = exchangeOnlineProperties.AutoSubscribeNewMembers;
+                    group.IsSubscribedByMail = exchangeOnlineProperties.IsSubscribedByMail;
+                }
+                if (includeSensitivityLabels)
+                {
+                    var sensitivityLabels = await GetGroupSensitivityLabelsAsync(connection, group.Id.Value, accessToken);
+                    group.AssignedLabels = sensitivityLabels.AssignedLabels;
                 }
                 return group;
             }
@@ -228,9 +261,19 @@ namespace PnP.PowerShell.Commands.Utilities
             await AddUsersToGroupAsync("owners", connection, groupId, users, accessToken, removeExisting);
         }
 
+        internal static async Task AddDirectoryOwnersAsync(PnPConnection connection, Guid groupId, Guid[] users, string accessToken, bool removeExisting)
+        {
+            await AddDirectoryObjectsToGroupAsync("owners", connection, groupId, users, accessToken, removeExisting);
+        }
+
         internal static async Task AddMembersAsync(PnPConnection connection, Guid groupId, string[] users, string accessToken, bool removeExisting)
         {
             await AddUsersToGroupAsync("members", connection, groupId, users, accessToken, removeExisting);
+        }
+
+        internal static async Task AddDirectoryMembersAsync(PnPConnection connection, Guid groupId, Guid[] users, string accessToken, bool removeExisting)
+        {
+            await AddDirectoryObjectsToGroupAsync("members", connection, groupId, users, accessToken, removeExisting);
         }
 
         internal static string GetUserGraphUrlForUPN(string upn)
@@ -261,6 +304,23 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     await GraphHelper.PostAsync(connection, $"v1.0/groups/{groupId}/{groupName}/$ref", accessToken, stringContent);
                 }
+            }
+        }
+
+        private static async Task AddDirectoryObjectsToGroupAsync(string groupName, PnPConnection connection, Guid groupId, Guid[] directoryObjects, string accessToken, bool removeExisting)
+        {
+            foreach (var dirObject in directoryObjects)
+            {
+                var postData = new Dictionary<string, string>() {
+                    {
+                        "@odata.id", $"https://{connection.GraphEndPoint}/v1.0/directoryObjects/{dirObject}"
+                    }
+                };
+
+                var stringContent = new StringContent(JsonSerializer.Serialize(postData));
+                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+
+                await GraphHelper.PostAsync(connection, $"v1.0/groups/{groupId}/{groupName}/$ref", accessToken, stringContent);
             }
         }
 
@@ -305,6 +365,18 @@ namespace PnP.PowerShell.Commands.Utilities
         private static async Task<IEnumerable<Microsoft365User>> GetGroupMembersAsync(string userType, PnPConnection connection, Guid groupId, string accessToken)
         {
             var results = await GraphHelper.GetResultCollectionAsync<Microsoft365User>(connection, $"v1.0/groups/{groupId}/{userType}?$select=*", accessToken);
+            return results;
+        }
+
+        private static async Task<Microsoft365Group> GetGroupExchangeOnlineSettingsAsync(PnPConnection connection, Guid groupId, string accessToken)
+        {
+            var results = await GraphHelper.GetAsync<Microsoft365Group>(connection, $"v1.0/groups/{groupId}?$select=allowExternalSenders,isSubscribedByMail,autoSubscribeNewMembers", accessToken);
+            return results;
+        }
+
+        private static async Task<Microsoft365Group> GetGroupSensitivityLabelsAsync(PnPConnection connection, Guid groupId, string accessToken)
+        {
+            var results = await GraphHelper.GetAsync<Microsoft365Group>(connection, $"v1.0/groups/{groupId}?$select=assignedLabels", accessToken);
             return results;
         }
 
@@ -365,6 +437,22 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
         }
+
+        internal static async Task<Microsoft365Group> UpdateExchangeOnlineSettingAsync(PnPConnection connection, Guid groupId, string accessToken, Microsoft365Group group)
+        {
+            var patchData = new
+            {
+                group.AllowExternalSenders,
+                group.AutoSubscribeNewMembers
+            };
+
+            var result = await GraphHelper.PatchAsync(connection, accessToken, $"v1.0/groups/{groupId}", patchData);
+
+            group.AllowExternalSenders = result.AllowExternalSenders;
+            group.AutoSubscribeNewMembers = result.AutoSubscribeNewMembers;
+
+            return group;
+        }        
 
         internal static async Task<Dictionary<string, string>> GetSiteUrlBatchedAsync(PnPConnection connection, string accessToken, string[] groupIds)
         {
@@ -583,7 +671,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             return await GraphHelper.PatchAsync(connection, accessToken, $"v1.0/groups/{group.Id}", group);
         }
-
+        
         internal static async Task SetVisibilityAsync(PnPConnection connection, string accessToken, Guid groupId, bool? hideFromAddressLists, bool? hideFromOutlookClients)
         {
             var patchData = new
@@ -707,6 +795,11 @@ namespace PnP.PowerShell.Commands.Utilities
                     retry = false;
                 }
             }
+        }
+        
+        internal static async Task<HttpResponseMessage> DeletePhotoAsync(PnPConnection connection, string accessToken, Guid groupId)
+        {
+            return await GraphHelper.DeleteAsync(connection, $"v1.0/groups/{groupId}/photo/$value", accessToken);
         }
     }
 }

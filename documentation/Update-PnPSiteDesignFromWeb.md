@@ -15,7 +15,7 @@ title: Update-PnPSiteDesignFromWeb
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Updates an existing Site Design on the current tenant based on the site provided through -Url or the currently connected to site if -Url is omitted
+Updates an existing Site Design on the current tenant based on the site provided through -Url or the currently connected to site if -Url is omitted.
 
 ## SYNTAX
 
@@ -56,7 +56,7 @@ Generates a site script based on all the components of the currently connected t
 Update-PnPSiteDesignFromWeb -Url https://contoso.sharepoint.com/sites/template -Identity "Contoso Project" -Lists "/lists/Issue list"
 ```
 
-Generates a site script based on the list "Issue list" in the site provided through Url and based on the generated script it will update the site script in the site design with the provided name.
+Generates a site script based on the list "Issue list" in the site provided through Url. Based on the generated script it will update the site script in the site design with the provided name.
 
 ## PARAMETERS
 
@@ -66,21 +66,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named
@@ -178,6 +163,20 @@ Allows specifying one or more site relative URLs of lists that should be include
 
 ```yaml
 Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Url
+Specifies the URL of the site to generate a Site Script from. If omitted, the currently connected to site will be used.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False

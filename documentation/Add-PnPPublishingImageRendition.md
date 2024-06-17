@@ -16,12 +16,12 @@ Adds an Image Rendition if the Name of the Image Rendition does not already exis
 
 ```powershell
 Add-PnPPublishingImageRendition -Name <String> -Width <Int32> -Height <Int32> 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
 
-Allowss to add an Image Rendition.
+Allows to add an Image Rendition.
 
 ## EXAMPLES
 

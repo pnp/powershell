@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Files
         [ValidateNotNullOrEmpty]
         public string NewFileName = string.Empty;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASSTREAM, ValueFromPipeline = true, Position = 0)]
         [ValidateNotNullOrEmpty]
         public Stream Stream;
 
@@ -104,7 +104,7 @@ namespace PnP.PowerShell.Commands.Files
             }
 
             // Check if the file exists
-            if (Checkout)
+            if (Checkout || ParameterSpecified(nameof(CheckinType)))
             {
                 try
                 {
@@ -165,7 +165,7 @@ namespace PnP.PowerShell.Commands.Files
                 item.UpdateOverwriteVersion();
             }
 
-            if (Checkout)
+            if (Checkout || ParameterSpecified(nameof(CheckinType)))
             {
                 CurrentWeb.CheckInFile(fileUrl, CheckinType, CheckInComment);
             }

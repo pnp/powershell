@@ -23,13 +23,13 @@ Returns all or a specific Planner plan for a Microsoft 365 Group.
 ### By Group
 ```powershell
 Get-PnPPlannerPlan -Group <PlannerGroupPipeBind> [-Identity <PlannerPlanPipeBind>] [-ResolveIdentities]
-  [<CommonParameters>]
+  
 ```
 
 ### By Plan Id
 ```powershell
 Get-PnPPlannerPlan -Id <String> [-ResolveIdentities]
-  [<CommonParameters>]
+  
 ```
 
 ## DESCRIPTION

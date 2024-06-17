@@ -10,17 +10,17 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPageTextPart.htm
 # Set-PnPPageTextPart
 
 ## SYNOPSIS
-Set text part properties
+Sets text part properties.
 
 ## SYNTAX
 
 ```powershell
-Set-PnPPageTextPart [-Page] <PagePipeBind> -InstanceId <Guid> -Text <String>
- [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPPageTextPart -Page <PagePipeBind> -InstanceId <Guid> -Text <String>
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-Sets the rendered text in existing client side text component
+Sets the rendered text in existing client side text component.
 
 ## EXAMPLES
 
@@ -48,7 +48,7 @@ Accept wildcard characters: False
 ```
 
 ### -InstanceId
-The instance id of the text component
+The instance id of the text component.
 
 ```yaml
 Type: Guid
@@ -62,7 +62,7 @@ Accept wildcard characters: False
 ```
 
 ### -Page
-The name of the page
+The name of the page.
 
 ```yaml
 Type: PagePipeBind
@@ -76,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -Text
-Text to set
+Text to set.
 
 ```yaml
 Type: String

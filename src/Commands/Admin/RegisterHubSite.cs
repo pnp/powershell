@@ -23,21 +23,21 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             HubSiteProperties hubSiteProperties = Tenant.RegisterHubSite(Site.Url);
-            ClientContext.Load(hubSiteProperties);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.Load(hubSiteProperties);
+            AdminContext.ExecuteQueryRetry();
 
             if (Principals != null && Principals.Length > 0)
             {
                 try
                 {
                     hubSiteProperties = Tenant.GrantHubSiteRightsById(hubSiteProperties.ID, Principals, SPOHubSiteUserRights.Join);
-                    ClientContext.Load(hubSiteProperties);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.Load(hubSiteProperties);
+                    AdminContext.ExecuteQueryRetry();
                 }
                 catch (Exception)
                 {
                     Tenant.UnregisterHubSite(Site.Url);
-                    ClientContext.ExecuteQueryRetry();
+                    AdminContext.ExecuteQueryRetry();
                     throw;
                 }                
             }

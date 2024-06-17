@@ -23,13 +23,13 @@ Generates a provisioning tenant template from a site. If the site is a hubsite a
 ```powershell
 Get-PnPTenantTemplate [-SiteUrl <String>] [-Out <String>] [-Force]
  [-Configuration <ExtractConfigurationPipeBind>] [-Connection <PnPConnection>]  
- [<CommonParameters>]
+ 
 ```
 
 ### Extract a template as an object
 ```powershell
 Get-PnPTenantTemplate [-SiteUrl <String>] [-AsInstance] [-Configuration <ExtractConfigurationPipeBind>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -43,7 +43,7 @@ Allows to generate a provisioning tenant template from a site. If the site is a 
 Get-PnPTenantTemplate -Out tenanttemplate.xml
 ```
 
-Extracts a tenant template
+Extracts a tenant template of the currently connected to site.
 
 ### EXAMPLE 2
 ```powershell
@@ -132,6 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -SiteUrl
+The URL of the site collection to create a tenant template out of. If omitted, the currently connected to site will be used.
 
 ```yaml
 Type: String

@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands
@@ -13,9 +12,9 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            var settings = TenantSettings.GetCurrent(ClientContext);
+            var settings = TenantSettings.GetCurrent(AdminContext);
             settings.SetCorporateCatalog(Url);
-            ClientContext.ExecuteQueryRetry();
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }

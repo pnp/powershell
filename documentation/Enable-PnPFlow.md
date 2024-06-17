@@ -21,7 +21,7 @@ Enables a specific flow
 
 ```powershell
 Enable-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] 
-[-Connection <PnPConnection>] [<CommonParameters>]
+[-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -70,7 +70,7 @@ Accept wildcard characters: False
 ```
 
 ### -AsAdmin
-Enable the flow as an adminstrator
+Enable the flow as an administrator
 
 ```yaml
 Type: SwitchParameter

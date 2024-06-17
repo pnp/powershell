@@ -10,13 +10,13 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPWebPartProperty.
 # Set-PnPWebPartProperty
 
 ## SYNOPSIS
-Sets a web part property
+Sets a web part property.
 
 ## SYNTAX
 
 ```powershell
 Set-PnPWebPartProperty -ServerRelativePageUrl <String> -Identity <Guid> -Key <String> -Value <PSObject>
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -49,7 +49,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Guid of the web part
+The Guid of the web part.
 
 ```yaml
 Type: Guid
@@ -63,7 +63,7 @@ Accept wildcard characters: False
 ```
 
 ### -Key
-Name of a single property to be set
+Name of a single property to be set.
 
 ```yaml
 Type: String
@@ -92,7 +92,7 @@ Accept wildcard characters: False
 ```
 
 ### -Value
-Value of the property to be set
+Value of the property to be set.
 
 ```yaml
 Type: PSObject

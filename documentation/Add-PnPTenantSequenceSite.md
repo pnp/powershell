@@ -10,18 +10,18 @@ title: Add-PnPTenantSequenceSite
 # Add-PnPTenantSequenceSite
 
 ## SYNOPSIS
-Adds a existing tenant sequence site object to a tenant template
+Adds an existing tenant sequence site object to a tenant template
 
 ## SYNTAX
 
 ```powershell
 Add-PnPTenantSequenceSite -Site <ProvisioningSitePipeBind> -Sequence <ProvisioningSequence> 
-  [<CommonParameters>]
+  
 ```
 
 ## DESCRIPTION
 
-Allows to add a existing tenant sequence site object to a tenant template.
+Allows to add an existing tenant sequence site object to a tenant template.
 
 ## EXAMPLES
 

@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model.Graph;
 using System.Text.RegularExpressions;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsTab")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
@@ -30,6 +30,7 @@ namespace PnP.PowerShell.Commands.Graph
         private DocumentLibraryParameters documentLibraryParameters;
         private SharePointPageAndListParameters sharePointPageAndListParameters;
         private CustomParameters customParameters;
+
         public object GetDynamicParameters()
         {
             switch (Type)
@@ -43,6 +44,7 @@ namespace PnP.PowerShell.Commands.Graph
                         return officeFileParameters;
                     }
                 case TeamTabType.DocumentLibrary:
+                case TeamTabType.Planner:
                 case TeamTabType.WebSite:
                     {
                         documentLibraryParameters = new DocumentLibraryParameters();
@@ -50,7 +52,7 @@ namespace PnP.PowerShell.Commands.Graph
                     }
                 case TeamTabType.SharePointPageAndList:
                     {
-                        sharePointPageAndListParameters= new SharePointPageAndListParameters();
+                        sharePointPageAndListParameters = new SharePointPageAndListParameters();
                         return sharePointPageAndListParameters;
                     }
                 case TeamTabType.Custom:
@@ -90,6 +92,7 @@ namespace PnP.PowerShell.Commands.Graph
                                     break;
                                 }
                             case TeamTabType.DocumentLibrary:
+                            case TeamTabType.Planner:
                             case TeamTabType.WebSite:
                                 {
                                     EnsureDynamicParameters(documentLibraryParameters);

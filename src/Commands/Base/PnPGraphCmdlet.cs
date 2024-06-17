@@ -44,24 +44,31 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
-                if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
+                if (Connection != null)
                 {
-                    WriteVerbose("Acquiring token for resource " + Connection.GraphEndPoint + " using Managed Identity");
-                    var accessToken = TokenHandler.GetManagedIdentityTokenAsync(this, Connection.HttpClient, $"https://{Connection.GraphEndPoint}/", Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-                    
-                    return accessToken;
-                }
-                else
-                {
-                    if (Connection?.Context != null)
+                    if (Connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
                     {
-                        WriteVerbose("Acquiring token for default permissions on resource " + Connection.GraphEndPoint + " using the current context");
-                        var accessToken = TokenHandler.GetAccessToken(GetType(), $"https://{Connection.GraphEndPoint}/.default", Connection);
-                        WriteVerbose("Access token acquired through the current context: " + accessToken);
+                        WriteVerbose("Acquiring token for resource " + Connection.GraphEndPoint + " using Managed Identity");
+                        var accessToken = TokenHandler.GetManagedIdentityTokenAsync(this, Connection.HttpClient, $"https://{Connection.GraphEndPoint}/", Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
+
                         return accessToken;
                     }
-                }
+                    else if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+                    {
+                        WriteVerbose("Acquiring token for resource " + Connection.GraphEndPoint + " using Azure AD Workload Identity");
+                        var accessToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
 
+                        return accessToken;
+                    }
+                    else
+                    {
+                        if (Connection.Context != null)
+                        {
+                            var accessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
+                            return accessToken;
+                        }
+                    }
+                }
                 WriteVerbose("Unable to acquire token for resource " + Connection.GraphEndPoint);
                 return null;
             }

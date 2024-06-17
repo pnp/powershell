@@ -20,7 +20,7 @@ Adds published content types from content type hub site to current site. If the 
 ## SYNTAX
 
 ```powershell
-Add-PnPContentTypesFromContentTypeHub -ContentTypes List<String> [-Site <SitePipeBind>] [-Connection <PnPConnection>] [<CommonParameters>]
+Add-PnPContentTypesFromContentTypeHub -ContentTypes List<String> [-Site <SitePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 ```
 
 ### -Site
-The site to which to add the content types coming from the hub. If omitted, it will be applied to the currently connected to site.
+The site to which to add the content types coming from the hub. If omitted, it will be applied to the currently connected site.
 
 ```yaml
 Type: SitePipeBind
@@ -85,7 +85,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: Currently connected to site
+Default value: Currently connected site
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

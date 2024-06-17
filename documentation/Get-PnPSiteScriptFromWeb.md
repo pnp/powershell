@@ -22,21 +22,21 @@ Generates a Site Script from an existing site
 ### All components
 ```powershell
 Get-PnPSiteScriptFromWeb -Url <String> [-Lists <String[]>] [-IncludeAll] [-Connection <PnPConnection>]
-   [<CommonParameters>]
+   
 ```
 
 ### Specific components
 ```powershell
 Get-PnPSiteScriptFromWeb [-Url <String>] [-Lists <String[]>] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### All lists
 ```powershell
 Get-PnPSiteScriptFromWeb [-Url <String>] [-IncludeAllLists] [-IncludeBranding] [-IncludeLinksToExportedItems]
  [-IncludeRegionalSettings] [-IncludeSiteExternalSharingCapability] [-IncludeTheme]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -78,6 +78,13 @@ Get-PnPSiteScriptFromWeb -IncludeAllLists
 ```
 
 Returns the generated Site Script JSON containing all lists from the currently connected to site
+
+### EXAMPLE 5
+```powershell
+Get-PnPSiteScriptFromWeb -IncludeAllLists | Add-PnPSiteScript -Title "My Site Script" | Add-PnPSiteDesign -Title "My Site Design" -WebTemplate TeamSite
+```
+
+Creates a new site script and site design based on the currently connected to site
 
 ## PARAMETERS
 

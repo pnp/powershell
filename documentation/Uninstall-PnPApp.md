@@ -16,7 +16,7 @@ Uninstalls an available add-in from the site
 
 ```powershell
 Uninstall-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
- [<CommonParameters>]
+ 
 ```
 
 ## DESCRIPTION
@@ -56,7 +56,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Specifies the Id of the Addin Instance
+Specifies the Id of the Add-In Instance
 
 ```yaml
 Type: AppMetadataPipeBind

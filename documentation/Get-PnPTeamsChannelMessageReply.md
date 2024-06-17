@@ -22,7 +22,7 @@ Returns replies from the specified Microsoft Teams channel message.
 ```powershell
 Get-PnPTeamsChannelMessageReply -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> -Message <TeamsChannelMessagePipeBind> 
 [-Identity <TeamsChannelMessageReplyPipeBind>] [-IncludeDeleted]
-[<CommonParameters>]
+
 ```
 
 ## DESCRIPTION

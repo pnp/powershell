@@ -5,56 +5,57 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.IO;
 using System.Management.Automation;
 
-[Cmdlet(VerbsCommon.Set, "PnPSiteScriptPackage")]
-public class SetSiteScriptPackage : PnPAdminCmdlet
+namespace PnP.PowerShell.Commands
 {
-    [Parameter(Mandatory = true)]
-    public TenantSiteScriptPipeBind Identity;
-
-    [Parameter(Mandatory = false)]
-    public string Title;
-
-    [Parameter(Mandatory = false)]
-    public string Description;
-
-    [Parameter(Mandatory = false)]
-    public string ContentPath;
-
-    [Parameter(Mandatory = false)]
-    public int Version;
-
-    protected override void ExecuteCmdlet()
+    [Cmdlet(VerbsCommon.Set, "PnPSiteScriptPackage")]
+    [OutputType(typeof(TenantSiteScript))]
+    public class SetSiteScriptPackage : PnPAdminCmdlet
     {
-        var siteScript = Tenant.GetSiteScript(ClientContext, Identity.Id);
-        ClientContext.Load(siteScript);
-        ClientContext.ExecuteQueryRetry();
+        [Parameter(Mandatory = true)]
+        public TenantSiteScriptPipeBind Identity;
 
-        if (!Path.IsPathRooted(ContentPath))
-        {
-            ContentPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, ContentPath);
-        }
+        [Parameter(Mandatory = false)]
+        public string Title;
 
-        using (var contentStream = (ContentPath == null) ? null : System.IO.File.OpenRead(ContentPath))
+        [Parameter(Mandatory = false)]
+        public string Description;
+
+        [Parameter(Mandatory = false)]
+        public string ContentPath;
+
+        [Parameter(Mandatory = false)]
+        public int Version;
+
+        protected override void ExecuteCmdlet()
         {
-            if(ParameterSpecified(nameof(Title)))
+            var siteScript = Tenant.GetSiteScript(AdminContext, Identity.Id);
+            AdminContext.Load(siteScript);
+            AdminContext.ExecuteQueryRetry();
+
+            if (!Path.IsPathRooted(ContentPath))
             {
-                siteScript.Title = Title;
+                ContentPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, ContentPath);
             }
-            if(ParameterSpecified(nameof(Description)))
+
+            using (var contentStream = (ContentPath == null) ? null : System.IO.File.OpenRead(ContentPath))
             {
-                siteScript.Description = Description;
+                if (ParameterSpecified(nameof(Title)))
+                {
+                    siteScript.Title = Title;
+                }
+                if (ParameterSpecified(nameof(Description)))
+                {
+                    siteScript.Description = Description;
+                }
+                if (ParameterSpecified(nameof(Version)))
+                {
+                    siteScript.Version = Version;
+                }
+                var tenantSiteScript = this.Tenant.UpdateSiteScriptPackage(siteScript);
+                AdminContext.Load(tenantSiteScript);
+                AdminContext.ExecuteQueryRetry();
+                WriteObject(tenantSiteScript);
             }
-            if(ParameterSpecified(nameof(Version)))
-            {
-                siteScript.Version = Version;
-            }
-            var tenantSiteScript = this.Tenant.UpdateSiteScriptPackage(siteScript);
-            ClientContext.Load(tenantSiteScript);
-            ClientContext.ExecuteQueryRetry();
-            WriteObject(tenantSiteScript);
         }
     }
 }
-
-
-

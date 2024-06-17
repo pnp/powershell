@@ -15,7 +15,7 @@ Updates an existing Role Definition (Permission Level) in the site collection in
 ## SYNTAX
 
 ```powershell
-Set-PnPRoleDefinition -Identity <RoleDefinitionPipeBind> [-NewRoleName <String>] [-Description <String>] [-Order <Int32>] [-SelectAll] [-ClearAll] [-Select <PermissionKind[]>] [-Clear <PermissionKind[]>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPRoleDefinition -Identity <RoleDefinitionPipeBind> [-NewRoleName <String>] [-Description <String>] [-Order <Int32>] [-SelectAll] [-ClearAll] [-Select <PermissionKind[]>] [-Clear <PermissionKind[]>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -52,8 +52,65 @@ Changes the order in which the permission level is displayed.
 
 ## PARAMETERS
 
+### -Clear
+Specifies permission flag(s) to disable. Please visit https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum.
+
+```yaml
+Type: PermissionKind[]
+Parameter Sets: (All)
+Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClearAll
+Clears ​all permission flags.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Description
+The new description for the permission level.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Identity
-The identity of the role definition, either a RoleDefinition object or the name of the roledefinition.
+The identity of the role definition, either a RoleDefinition object or the name of the RoleDefinition.
 
 ```yaml
 Type: RoleDefinitionPipeBind
@@ -66,22 +123,8 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -RoleName
+### -NewRoleName
 The new name for the permission level.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Description
-The new description for the permission level.
 
 ```yaml
 Type: String
@@ -108,34 +151,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SelectAll
-Sets all permission flags.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ClearAll
-Clears ​all permission flags.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Select
 Specifies permission flag(s) to enable. Please visit https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum.
 
@@ -151,26 +166,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Clear
-Specifies permission flag(s) to disable. Please visit https://learn.microsoft.com/previous-versions/office/sharepoint-csom/ee536458(v%3Doffice.15) for the PermissionKind enum.
+### -SelectAll
+Sets all permission flags.
 
 ```yaml
-Type: PermissionKind[]
-Parameter Sets: (All)
-Accepted values: EmptyMask, ViewListItems, AddListItems, EditListItems, DeleteListItems, ApproveItems, OpenItems, ViewVersions, DeleteVersions, CancelCheckout, ManagePersonalViews, ManageLists, ViewFormPages, AnonymousSearchAccessList, Open, ViewPages, AddAndCustomizePages, ApplyThemeAndBorder, ApplyStyleSheets, ViewUsageData, CreateSSCSite, ManageSubwebs, CreateGroups, ManagePermissions, BrowseDirectories, BrowseUserInfo, AddDelPrivateWebParts, UpdatePersonalWebParts, ManageWeb, AnonymousSearchAccessWebLists, UseClientIntegration, UseRemoteAPIs, ManageAlerts, CreateAlerts, EditMyUserInfo, EnumeratePermissions, FullMask
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

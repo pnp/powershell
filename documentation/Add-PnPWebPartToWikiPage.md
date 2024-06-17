@@ -17,13 +17,13 @@ Adds a web part to a wiki page in a specified table row and column
 ### XML
 ```powershell
 Add-PnPWebPartToWikiPage -ServerRelativePageUrl <String> -Xml <String> -Row <Int32> -Column <Int32> [-AddSpace]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### FILE
 ```powershell
 Add-PnPWebPartToWikiPage -ServerRelativePageUrl <String> -Path <String> -Row <Int32> -Column <Int32>
- [-AddSpace] [-Connection <PnPConnection>] [<CommonParameters>]
+ [-AddSpace] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -49,7 +49,7 @@ This will add the web part as defined by the XML in the $webpart variable to the
 ## PARAMETERS
 
 ### -AddSpace
-Must there be a extra space between the web part
+Must there be an extra space between the web part
 
 ```yaml
 Type: SwitchParameter

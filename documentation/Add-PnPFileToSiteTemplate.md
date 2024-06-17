@@ -19,14 +19,14 @@ Adds a file to a PnP Provisioning Template package
 Add-PnPFileToSiteTemplate [-Path] <String> [-Source] <String> [-Folder] <String>
  [[-Container] <String>] [[-FileLevel] <FileLevel>] [-FileOverwrite]
  [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>] 
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ### Remove File
 ```powershell
 Add-PnPFileToSiteTemplate [-Path] <String> [-SourceUrl] <String> [[-Container] <String>]
  [[-FileLevel] <FileLevel>] [-FileOverwrite] [[-TemplateProviderExtensions] <ITemplateProviderExtension[]>]
- [-Connection <PnPConnection>] [<CommonParameters>]
+ [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

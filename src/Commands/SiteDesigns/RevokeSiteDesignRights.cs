@@ -7,6 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsSecurity.Revoke, "PnPSiteDesignRights")]
+    [OutputType(typeof(void))]
     public class RevokeSiteDesignRights : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline =true)]
@@ -17,8 +18,8 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            Tenant.RevokeSiteDesignRights(ClientContext, Identity.Id, Principals);
-            ClientContext.ExecuteQueryRetry();
+            Tenant.RevokeSiteDesignRights(AdminContext, Identity.Id, Principals);
+            AdminContext.ExecuteQueryRetry();
         }
     }
 }
