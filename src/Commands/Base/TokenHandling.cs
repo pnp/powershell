@@ -150,7 +150,7 @@ namespace PnP.PowerShell.Commands.Base
                 // Retrieve the scopes from the access token
                 var scopes = ReturnScopes(accessToken);
 
-                cmdlet.WriteVerbose($"Access token acquired containing the following {(scopes.Length != 1 ? scopes.Length + " " : "")}{RetrieveTokenType(accessToken)} scope{(scopes.Length == 1 ? "" : "s")}: {string.Join(", ", scopes)}");
+                cmdlet.WriteVerbose($"Access token acquired containing the following {(scopes.Length != 1 ? scopes.Length + " " : "")}{RetrieveTokenType(accessToken).ToString().ToLowerInvariant()} scope{(scopes.Length == 1 ? "" : "s")}: {string.Join(", ", scopes)}");
                 
                 return accessToken;
             }
@@ -171,7 +171,6 @@ namespace PnP.PowerShell.Commands.Base
                 string[] requiredScopes = new string[1] { enviormentBaseUrl + "/.default" };
                 cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(",", requiredScopes)}");
                 var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
-                cmdlet.WriteVerbose($"Access token acquired for PowerPlatformSolutions: {accessToken}");
                 return accessToken;
             }
             return null;
