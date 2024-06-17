@@ -182,7 +182,7 @@ Accept wildcard characters: False
 ```
 
 ### -User
-A valid login name of a user (e.g. john@doe.com).
+A valid login name of a user (e.g. john@doe.com) or an Entra ID Group (ADGroup).
 
 ```yaml
 Type: String
