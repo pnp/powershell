@@ -154,6 +154,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-OneDriveDefaultLinkToExistingAccess <Boolean>]
  [-OneDriveBlockGuestsAsSiteAdmin <SharingState>]
  [-RecycleBinRetentionPeriod <Int32>]
+ [-IsSharePointAddInsDisabled <Boolean>] 
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -692,6 +693,24 @@ Accept wildcard characters: False
 
 ### -IsDataAccessInCardDesignerEnabled
 Allows turning on support for data access in the Viva Connections Adaptive Card Designer.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSharePointAddInsDisabled
+When the feature is enabled, all the add-ins features will be disabled.
+
+The valid values are:
+- False (default) - All the add-ins features are supported.
+- True - All the add-ins features will be disabled.
 
 ```yaml
 Type: Boolean
