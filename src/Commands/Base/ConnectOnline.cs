@@ -306,11 +306,14 @@ namespace PnP.PowerShell.Commands.Base
             {
                 credentials = Credentials.Credential;
             }
-            
-            if (PingHost(new Uri(Url).Host) == false)
+
+            if (ValidateConnection)
             {
-                throw new PSArgumentException("Host not reachable");
-            }
+                if (PingHost(new Uri(Url).Host) == false)
+                {
+                    throw new PSArgumentException("Host not reachable");
+                }
+            }            
 
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
