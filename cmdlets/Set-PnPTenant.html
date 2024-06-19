@@ -224,6 +224,7 @@
  [-OneDriveDefaultLinkToExistingAccess &lt;Boolean&gt;]
  [-OneDriveBlockGuestsAsSiteAdmin &lt;SharingState&gt;]
  [-RecycleBinRetentionPeriod &lt;Int32&gt;]
+ [-IsSharePointAddInsDisabled &lt;Boolean&gt;] 
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -636,6 +637,22 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-isdataaccessincarddesignerenabled">-IsDataAccessInCardDesignerEnabled</h3>
 <p>Allows turning on support for data access in the Viva Connections Adaptive Card Designer.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-issharepointaddinsdisabled">-IsSharePointAddInsDisabled</h3>
+<p>When the feature is enabled, all the add-ins features will be disabled.</p>
+<p>The valid values are:</p>
+<ul>
+<li>False (default) - All the add-ins features are supported.</li>
+<li>True - All the add-ins features will be disabled.</li>
+</ul>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 

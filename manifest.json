@@ -3842,6 +3842,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTenantRestrictedSearchAllowedList.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTenantRestrictedSearchAllowedList.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTenantRestrictedSearchMode.md",
       "output": {
         ".html": {
