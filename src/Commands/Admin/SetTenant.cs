@@ -469,6 +469,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public int? RecycleBinRetentionPeriod { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public bool? IsSharePointAddInsDisabled { get; set; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1506,6 +1509,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (RecycleBinRetentionPeriod.HasValue)
             {
                 Tenant.RecycleBinRetentionPeriod = RecycleBinRetentionPeriod.Value;
+                modified = true;
+            }
+            if (IsSharePointAddInsDisabled.HasValue)
+            {
+                Tenant.SharePointAddInsDisabled = IsSharePointAddInsDisabled.Value;
                 modified = true;
             }
             if (BlockDownloadFileTypePolicy.HasValue)
