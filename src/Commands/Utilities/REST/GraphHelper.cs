@@ -339,7 +339,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
 
                 cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
-                response = connection.HttpClient.Send(CloneMessage(message));
+                response = connection.HttpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
             }
             if (response.IsSuccessStatusCode)
             {
@@ -367,7 +367,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         {
             cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
 
-            var response = connection.HttpClient.Send(message);
+            var response = connection.HttpClient.SendAsync(message).GetAwaiter().GetResult();
             while (response.StatusCode == (HttpStatusCode)429)
             {
                 // throttled
@@ -378,7 +378,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
 
                 cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
-                response = connection.HttpClient.Send(CloneMessage(message));
+                response = connection.HttpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
             }
 
             // Validate if the response was successful, if not throw an exception
