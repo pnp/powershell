@@ -109,7 +109,8 @@
  [-ListsShowHeaderAndNavigation &lt;Boolean&gt;]
  [-DefaultLinkToExistingAccessReset &lt;SwitchParameter&gt;] [-DefaultShareLinkRole &lt;Role&gt;]
  [-DefaultShareLinkScope &lt;SharingScope&gt;] [-LoopDefaultSharingLinkRole &lt;Role&gt;]
- [-LoopDefaultSharingLinkScope &lt;SharingScope&gt;]
+ [-LoopDefaultSharingLinkScope &lt;SharingScope&gt;] [-RestrictContentOrgWideSearch &lt;Boolean&gt;] [-ReadOnlyForUnmanagedDevices &lt;Boolean&gt;]
+ [-InheritVersionPolicyFromTenant &lt;SwitchParameter&gt;]
  [-Wait] 
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -765,6 +766,39 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: SharingScope
 Parameter Sets: Set Properties
 Accepted values: Anyone, Organization, SpecificPeople, Uninitialized
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-restrictcontentorgwidesearch">-RestrictContentOrgWideSearch</h3>
+<p>To restrict content from being searchable organization-wide and Copilot.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-readonlyforunmanageddevices">-ReadOnlyForUnmanagedDevices</h3>
+<p>To set the site as read-only for unmanaged devices.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-inheritversionpolicyfromtenant">-InheritVersionPolicyFromTenant</h3>
+<p>Clears the file version setting at site level.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
