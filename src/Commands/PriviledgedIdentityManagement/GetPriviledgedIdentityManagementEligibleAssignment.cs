@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPPriviledgedIdentityManagementEligibleAssignment")]
     [OutputType(typeof(List<RoleEligibilitySchedule>))]
+    [OutputType(typeof(RoleEligibilitySchedule))]
     [RequiredMinimalApiPermissions("RoleAssignmentSchedule.Read.Directory")]
     public class GetPriviledgedIdentityManagementEligibleAssignment : PnPGraphCmdlet
     {
@@ -25,13 +26,13 @@ namespace PnP.PowerShell.Commands.Principals
             if (ParameterSpecified(nameof(Identity)))
             {
                 WriteVerbose("Retrieving specific eligible role assignment");
-                var role = Identity.GetInstance(Connection, AccessToken);
-                WriteObject(role);
+                var role = Identity.GetInstance(this, Connection, AccessToken);
+                WriteObject(role, false);
             }
             else
             {
                 WriteVerbose("Retrieving all eligible role assignments");
-                var roles = PriviledgedIdentityManagamentUtility.GetRoleEligibilitySchedules(Connection, AccessToken);
+                var roles = PriviledgedIdentityManagamentUtility.GetRoleEligibilitySchedules(this, Connection, AccessToken);
                 WriteObject(roles, true);
             }
         }

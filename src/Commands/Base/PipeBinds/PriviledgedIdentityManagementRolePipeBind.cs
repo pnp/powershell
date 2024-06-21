@@ -1,6 +1,7 @@
 ﻿using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
 using PnP.PowerShell.Commands.Utilities;
 using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -34,7 +35,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        internal RoleDefinition GetInstance(PnPConnection connection, string accessToken)
+        internal RoleDefinition GetInstance(Cmdlet cmdlet, PnPConnection connection, string accessToken)
         {
             if (Instance != null)
             {
@@ -42,11 +43,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             if (Id.HasValue)
             {
-                Instance = PriviledgedIdentityManagamentUtility.GetRoleDefinitionById(Id.Value, connection, accessToken);
+                Instance = PriviledgedIdentityManagamentUtility.GetRoleDefinitionById(cmdlet, Id.Value, connection, accessToken);
             }
             if (!string.IsNullOrEmpty(DisplayName))
             {
-                Instance = PriviledgedIdentityManagamentUtility.GetRoleDefinitionByName(DisplayName, connection, accessToken);
+                Instance = PriviledgedIdentityManagamentUtility.GetRoleDefinitionByName(cmdlet, DisplayName, connection, accessToken);
             }
             return Instance;
         }

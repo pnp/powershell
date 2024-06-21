@@ -1,6 +1,7 @@
 ﻿using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
 using PnP.PowerShell.Commands.Utilities;
 using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -28,7 +29,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        internal RoleEligibilitySchedule GetInstance(PnPConnection connection, string accessToken)
+        internal RoleEligibilitySchedule GetInstance(Cmdlet cmdlet, PnPConnection connection, string accessToken)
         {
             if (Instance != null)
             {
@@ -36,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             if (Id.HasValue)
             {
-                Instance = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleById(Id.Value, connection, accessToken);
+                Instance = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleById(cmdlet, Id.Value, connection, accessToken);
             }
             return Instance;
         }
