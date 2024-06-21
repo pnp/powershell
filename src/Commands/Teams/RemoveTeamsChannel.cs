@@ -48,15 +48,15 @@ namespace PnP.PowerShell.Commands.Teams
                                 WriteError(new ErrorRecord(new Exception($"Channel remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
                             }
                         }
-                        else
-                        {
-                            throw new PSArgumentException("Channel not found");
-                        }
                     }
                     else
                     {
-                        throw new PSArgumentException("Team not found");
+                        throw new PSArgumentException("Channel not found");
                     }
+                }
+                else
+                {
+                    throw new PSArgumentException("Team not found");
                 }
             }
         }

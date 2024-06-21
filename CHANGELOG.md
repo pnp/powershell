@@ -33,6 +33,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPPageSchedulingEnabled` cmdlet to get the state of the modern page schedule feature in the library. [PR](https://github.com/pnp/powershell/commit/4ac757fc2072233529b38b2b39c36ea6b941e003)
 - Added `-IncludeSensitivityLabels` parameter to `Get-PnPMicrosoft365Group` cmdlet to retrieve sensitivity labels assigned to M365 Groups. [#3991](https://github.com/pnp/powershell/pull/3991)
 - Added `Get-PnPFileSensitivityLabelInfo` cmdlet to retrieve sensitivity label information about a file in a SharePoint site. [#3994](https://github.com/pnp/powershell/pull/3994)
+- Added `Get-PnPTenantRestrictedSearchAllowedList` cmdlet to retrieve existing list of URLs in the allowed list. [#3997](https://github.com/pnp/powershell/pull/3997)
+- Added `-IsSharePointAddInsDisabled` to the `Set-PnPTenant` cmdlet which allows disabling SharePoint Add-ins [#4032](https://github.com/pnp/powershell/pull/4032)
+- Added `-RestrictContentOrgWideSearch`, `-ReadOnlyForUnmanagedDevices` and `-InheritVersionPolicyFromTenant` parameters to `Set-PnPTenantSite` cmdlet. [#4024](https://github.com/pnp/powershell/pull/4024)
 
 ### Fixed
 
@@ -44,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed the dev build process on Mac OS devices. [#3907](https://github.com/pnp/powershell/pull/3907)
 - Fixed `Get-PnPContainer` cmdlet to also handle pagination in case of large no. of containers in a tenant. [#3990](https://github.com/pnp/powershell/pull/3990)
 - Fixed `New-PnPTeamsTeam` cmdlet to better handle error specifically such as `Conflict (409): Team already exists`. [#3992](https://github.com/pnp/powershell/pull/3992)
+- Fixed `Remove-PnPTeamsChannel` issue where it was throwing incorrect exception. [#4036](https://github.com/pnp/powershell/pull/4036)
 
 ### Changed
 - Renamed `Get-PnPSiteFileVersionExpirationReportJobProgress` to `Get-PnPSiteFileVersionExpirationReportJobStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
@@ -59,6 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Paolo Pialorsi [PaoloPia]
 - Marc Studer [Studermarc]
 - Mark Gort [markgort86]
 - Christian Veenhuis [ChVeen]
