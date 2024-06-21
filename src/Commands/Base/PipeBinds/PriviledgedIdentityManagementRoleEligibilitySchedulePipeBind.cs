@@ -1,56 +1,44 @@
 ﻿using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Linq;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class PriviledgedIdentityManagementRoleEligibilitySchedulePipeBind
     {
-        private string _displayName;
-        private RoleEligibilitySchedule _instance;
-        private Guid _id;
+        public readonly Guid? Id;
+
+        public RoleEligibilitySchedule Instance { get; private set; }
 
         public PriviledgedIdentityManagementRoleEligibilitySchedulePipeBind(RoleEligibilitySchedule instance)
         {
-            _instance = instance;
+            Instance = instance;
         }
 
         public PriviledgedIdentityManagementRoleEligibilitySchedulePipeBind(Guid id)
         {
-            _id = id;
+            Id = id;
         }
 
         public PriviledgedIdentityManagementRoleEligibilitySchedulePipeBind(string id)
         {
-            if (!Guid.TryParse(id, out _id))
+            if (!string.IsNullOrEmpty(id) && Guid.TryParse(id, out Guid idGuid))
             {
-                _displayName = id;
+                Id = idGuid;
             }
         }
-
-        public Guid Id => _id;
-
-        public string DisplayName => _displayName;
-
-        public RoleEligibilitySchedule Instance => _instance;
 
         internal RoleEligibilitySchedule GetInstance(PnPConnection connection, string accessToken)
         {
             if (Instance != null)
             {
-                _instance = Instance;
+                return Instance;
             }
-            if (Id != Guid.Empty)
+            if (Id.HasValue)
             {
-                _instance = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleById(Id, connection, accessToken);
+                Instance = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleById(Id.Value, connection, accessToken);
             }
-            if (!string.IsNullOrEmpty(DisplayName))
-            {
-                var instances = PriviledgedIdentityManagamentUtility.GetRoleEligibilitySchedules(connection, accessToken);
-                _instance = instances.FirstOrDefault(i => i.RoleDefinition.DisplayName == DisplayName);
-            }
-            return _instance;
+            return Instance;
         }
     }
 }
