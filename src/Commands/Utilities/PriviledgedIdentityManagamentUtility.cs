@@ -79,21 +79,21 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Creates a scheduled assignment for a role to be activated at a certain time
         /// </summary>
-        public static HttpResponseMessage CreateRoleAssignmentScheduleRequest(Cmdlet cmdlet, RoleEligibilitySchedule role, PnPConnection connection, string accesstoken, string justification = null, DateTime? startDateTime = null, short? expiratonHours = null)
+        public static HttpResponseMessage CreateRoleAssignmentScheduleRequest(Cmdlet cmdlet, RoleEligibilitySchedule roleEligibilitySchedule, PnPConnection connection, string accesstoken, string justification = null, DateTime? startDateTime = null, short? expiratonHours = null)
         {
             string requestUrl = $"v1.0/roleManagement/directory/roleAssignmentScheduleRequests";
             var postData = new RoleAssignmentScheduleRequest
             {
-                DirectoryScopeId = role.DirectoryScopeId,
-                PrincipalId = role.PrincipalId,
-                RoleDefinitionId = role.RoleDefinition.Id,
+                DirectoryScopeId = roleEligibilitySchedule.DirectoryScopeId,
+                PrincipalId = roleEligibilitySchedule.PrincipalId,
+                RoleDefinitionId = roleEligibilitySchedule.RoleDefinition.Id,
                 Justification = justification ?? "Elevated by PnP PowerShell",
                 ScheduleInfo = new ScheduleInfo
                 {
                     StartDateTime = startDateTime ?? DateTime.UtcNow,
                     Expiration = new Expiration
                     {
-                        Duration = $"PT{expiratonHours.GetValueOrDefault(8)}H"
+                        Duration = $"PT{expiratonHours.GetValueOrDefault(1)}H"
                     }
                 }
             };
