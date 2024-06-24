@@ -105,6 +105,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 results.AddRange(request.Items);
                 while (!string.IsNullOrEmpty(request.NextLink))
                 {
+                    cmdlet.WriteVerbose($"Paged request. Thus far {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")} retrieved.");
+
                     request = Get<RestResultCollection<T>>(cmdlet, connection, request.NextLink, accessToken, camlCasePolicy, propertyNameCaseInsensitive, additionalHeaders);
                     if (request.Items.Any())
                     {

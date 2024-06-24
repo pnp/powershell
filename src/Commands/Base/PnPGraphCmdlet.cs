@@ -1,7 +1,6 @@
 ﻿using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
-using PnP.PowerShell.Commands.Model;
 using System.Management.Automation;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -40,39 +39,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
         /// </summary>
-        public string AccessToken
-        {
-            get
-            {
-                if (Connection != null)
-                {
-                    if (Connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-                    {
-                        WriteVerbose("Acquiring token for resource " + Connection.GraphEndPoint + " using Managed Identity");
-                        var accessToken = TokenHandler.GetManagedIdentityTokenAsync(this, Connection.HttpClient, $"https://{Connection.GraphEndPoint}/", Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-
-                        return accessToken;
-                    }
-                    else if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
-                    {
-                        WriteVerbose("Acquiring token for resource " + Connection.GraphEndPoint + " using Azure AD Workload Identity");
-                        var accessToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
-
-                        return accessToken;
-                    }
-                    else
-                    {
-                        if (Connection.Context != null)
-                        {
-                            var accessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
-                            return accessToken;
-                        }
-                    }
-                }
-                WriteVerbose("Unable to acquire token for resource " + Connection.GraphEndPoint);
-                return null;
-            }
-        }
+        public string AccessToken => TokenHandler.GetAccessToken(this, "https://graph.microsoft.com/.default", Connection);
 
         internal GraphServiceClient ServiceClient
         {
