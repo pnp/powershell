@@ -42,31 +42,6 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Extracts the oAuth JWT token to compare the permissions in it (roles) with the required permissions for the cmdlet provided through an attribute
-        /// </summary>
-        /// <param name="cmdletType">The cmdlet that will be executed. Used to check for the permissions attribute.</param>
-        /// <param name="token">The oAuth JWT token that needs to be validated for its roles</param>
-        /// <exception cref="PSArgumentException">Thrown if the permissions set through the permissions attribute do not match the roles in the JWT token</exception>
-        internal static void ValidateTokenForPermissions(Type cmdletType, string token)
-        {
-            var decodedToken = new JwtSecurityToken(accessToken);
-
-            // The idType is stored in the token as a claim
-            var idType = decodedToken.Claims.FirstOrDefault(c => c.Type == "idtyp");
-
-            // Check if the token contains an idType
-            if (idType == null) return Enums.IdType.Unknown;
-            
-            // Parse the idType to the corresponding enum value
-            return idType.Value.ToLowerInvariant() switch
-            {
-                "user" => Enums.IdType.Delegate,
-                "app" => Enums.IdType.Application,
-                _ => Enums.IdType.Unknown
-            };
-        }
-
-        /// <summary>
         /// Returns the permission scopes of the oAuth JWT token being passed in
         /// </summary>
         /// <param name="accessToken">The oAuth JWT token</param>
