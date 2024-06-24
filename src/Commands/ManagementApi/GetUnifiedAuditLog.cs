@@ -88,20 +88,20 @@ namespace PnP.PowerShell.Commands.ManagementApi
                 url += $"&endTime={EndTime:yyyy-MM-ddTHH:mm:ss}";
             }
 
-            List<ManagementApiSubscriptionContent> subscriptionContents = new List<ManagementApiSubscriptionContent>();
+            List<ManagementApiSubscriptionContent> subscriptionContents = new();
             var subscriptionResponse = GraphHelper.GetResponse(this, Connection, url, AccessToken);
             var content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
             if (subscriptionResponse.IsSuccessStatusCode)
             {
-                subscriptionContents.AddRange(System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, new System.Text.Json.JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
                 while (subscriptionResponse.Headers.Contains("NextPageUri"))
                 {
                     subscriptionResponse = GraphHelper.GetResponse(this, Connection, subscriptionResponse.Headers.GetValues("NextPageUri").First(), AccessToken);
                     if (subscriptionResponse.IsSuccessStatusCode)
                     {
                         content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                        subscriptionContents.AddRange(System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content));
+                        subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content));
                     }
                 }
             }

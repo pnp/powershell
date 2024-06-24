@@ -126,7 +126,7 @@ namespace PnP.PowerShell.Commands.Base
                             requiredScopes = new[] { audience };
                         }
 
-                        cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(",", requiredScopes)}");
+                        cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(", ", requiredScopes)}");
                         accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
 
                         // Retrieve the scopes from the access token
@@ -154,7 +154,7 @@ namespace PnP.PowerShell.Commands.Base
             var permissionEvaluation = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet.GetType(), accessToken);
             if (!permissionEvaluation.RequredPermissionsPresent)
             {
-                cmdlet.WriteVerbose($"Current access might not have the required permissions to execute this cmdlet. Required {(permissionEvaluation.RequiredPermissions.Length != 1 ? "${permissionEvaluation.RequiredPermissions.Length} " : "")}permission{(permissionEvaluation.RequiredPermissions.Length != 1 ? "s" : "")}: {string.Join(", ", permissionEvaluation.RequiredPermissions)}. Missing {(permissionEvaluation.MissingPermissions.Length != 1 ? $"{permissionEvaluation.MissingPermissions.Length} " : "")}permission{(permissionEvaluation.MissingPermissions.Length != 1 ? "s" : "")}: {string.Join(", ", permissionEvaluation.MissingPermissions)}.");
+                cmdlet.WriteVerbose($"Current access might not have the required permissions to execute this cmdlet. Required {(permissionEvaluation.RequiredPermissions.Length != 1 ? $"{permissionEvaluation.RequiredPermissions.Length} " : "")}permission{(permissionEvaluation.RequiredPermissions.Length != 1 ? "s" : "")}: {string.Join(", ", permissionEvaluation.RequiredPermissions)}. Missing {(permissionEvaluation.MissingPermissions.Length != 1 ? $"{permissionEvaluation.MissingPermissions.Length} " : "")}permission{(permissionEvaluation.MissingPermissions.Length != 1 ? "s" : "")}: {string.Join(", ", permissionEvaluation.MissingPermissions)}.");
             }
             else
             {
@@ -183,7 +183,7 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
                 }
                 string[] requiredScopes = new string[1] { enviormentBaseUrl + "/.default" };
-                cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(",", requiredScopes)}");
+                cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(", ", requiredScopes)}");
                 var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
                 return accessToken;
             }
