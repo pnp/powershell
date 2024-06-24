@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
                 WriteVerbose($"Using default environment as retrieved '{environmentName}'");
             }
 
-            string accessTokenForGettingSolutions = TokenHandler.GetAccessTokenforPowerPlatformSolutions(this, Connection, dynamicsScopeUrl); 
+            string accessTokenForGettingSolutions = TokenHandler.GetAccessToken(this, $"{dynamicsScopeUrl}/.default", Connection);
 
             if (ParameterSpecified(nameof(Name)))
             {

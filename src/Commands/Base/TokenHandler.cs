@@ -171,25 +171,6 @@ namespace PnP.PowerShell.Commands.Base
             return accessToken;
         }
 
-        internal static string GetAccessTokenforPowerPlatformSolutions(Cmdlet cmdlet, PnPConnection connection, string enviormentBaseUrl)
-        {
-            var contextSettings = connection.Context.GetContextSettings();
-            var authManager = contextSettings.AuthenticationManager;
-            if (authManager != null)
-            {
-                if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
-                {
-                    // When connected using ACS, we cannot get a token for another endpoint
-                    throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
-                }
-                string[] requiredScopes = new string[1] { enviormentBaseUrl + "/.default" };
-                cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(", ", requiredScopes)}");
-                var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
-                return accessToken;
-            }
-            return null;
-        }
-
         /// <summary>
         /// Returns an access token based on a Managed Identity. Only works within Azure components supporting managed identities such as Azure Functions and Azure Runbooks.
         /// </summary>
