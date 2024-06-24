@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPTenantRestrictedSearchAllowedList` cmdlet to retrieve existing list of URLs in the allowed list. [#3997](https://github.com/pnp/powershell/pull/3997)
 - Added `-IsSharePointAddInsDisabled` to the `Set-PnPTenant` cmdlet which allows disabling SharePoint Add-ins [#4032](https://github.com/pnp/powershell/pull/4032)
 - Added `-RestrictContentOrgWideSearch`, `-ReadOnlyForUnmanagedDevices` and `-InheritVersionPolicyFromTenant` parameters to `Set-PnPTenantSite` cmdlet. [#4024](https://github.com/pnp/powershell/pull/4024)
+- Added in depth verbose logging to all cmdlets which is revealed by adding `-Verbose` to the cmdlet execution [#4023](https://github.com/pnp/powershell/pull/4023)
 
 ### Fixed
 
