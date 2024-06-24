@@ -116,7 +116,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
                 foreach (var subscriptionContent in subscriptionContents)
                 {
                     var logs = GraphHelper.Get<IEnumerable<ManagementApiUnifiedLogRecord>>(this, Connection, subscriptionContent.ContentUri, AccessToken, false);
-                    ther opWriteObject(logs, true);
+                    WriteObject(logs, true);
                 }
             }
         }
