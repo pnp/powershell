@@ -56,6 +56,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Set-PnPTenantCdnPolicy` cmdlet to allow PolicyValue parameter to be an empty string or $null, while still being mandatory. [#3937](https://github.com/pnp/powershell/pull/3937)
 - Marked `UserVoiceForFeedbackEnabled` as obsolete in `Set-PnPTenant` cmdlet as Microsoft doesn't support this. [#3985](https://github.com/pnp/powershell/pull/3985)
 - `Get-PnPTenantSite` cmdlet now returns additional properties like `ArchiveStatus`, `EnableAutoExpirationVersionTrim` and many more. [#3987](https://github.com/pnp/powershell/pull/3987)
+- `Add-PnPListFoldersToSiteTemplate` cmdlet now wont export RoleBindings which are `Limited Access`. It caused issues while applying the template. [#3918](https://github.com/pnp/powershell/pull/3918)
 
 ### Removed
 
@@ -63,6 +64,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Maxime Hazebroucq [mhazebroucq]
 - Paolo Pialorsi [PaoloPia]
 - Marc Studer [Studermarc]
 - Mark Gort [markgort86]
