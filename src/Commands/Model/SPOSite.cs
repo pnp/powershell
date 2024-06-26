@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client.Sharing;
 
 namespace PnP.PowerShell.Commands.Model
@@ -33,7 +34,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool IsTeamsConnected { get; }
         public DateTime LastContentModifiedDate { get; }
         public Microsoft.Online.SharePoint.TenantManagement.SPOLimitedAccessFileType LimitedAccessFileType { get; set; }
-        public UInt32 LocaleId { get; set; }
+        public uint LocaleId { get; set; }
         public string LockIssue { get; }
         public string LockState { get; set; }
         public bool OverrideTenantAnonymousLinkExpirationPolicy { get; set; }
@@ -75,13 +76,30 @@ namespace PnP.PowerShell.Commands.Model
         public Guid[] InformationBarrierSegmentsToAdd { get; set; }
         public Guid[] InformationBarrierSegmentsToRemove { get; set; }
 
-        public bool? RequestFilesLinkEnabled { private set; get; }
-        public int? RequestFilesLinkExpirationInDays { private set; get; }
+        public bool? RequestFilesLinkEnabled { set; get; }
+        public int? RequestFilesLinkExpirationInDays { set; get; }
         public Role LoopDefaultSharingLinkRole { get; set; }
         public SharingScope DefaultShareLinkScope { get; set; }
         public Role DefaultShareLinkRole { get; set; }
         public SharingScope LoopDefaultSharingLinkScope { get; set; }
+        public string ArchiveStatus { get; set; }
+        public bool EnableAutoExpirationVersionTrim { get; set; }
+        public int ExpireVersionsAfterDays { get; set; }
 
+        public bool InheritVersionPolicyFromTenant { get; set; }
+        public bool IsGroupOwnerSiteAdmin { get; set; }
+        public bool ListsShowHeaderAndNavigation { get; set; }
+        public int LockReason { get; set; }
+        public int MajorVersionLimit { get; set; }
+        public int MajorWithMinorVersionsLimit { get; set; }
+        public bool RestrictedAccessControl { get; set; }
+        public Guid[] RestrictedAccessControlGroups { get; set; }
+        public Guid[] RestrictedAccessControlGroupsToAdd { get; set; }
+        public Guid[] RestrictedAccessControlGroupsToRemove { get; set; }
+        public RestrictedToRegion RestrictedToRegion { get; set; }
+        public bool SetOwnerWithoutUpdatingSecondaryAdmin { get; set; }
+        public bool RestrictContentOrgWideSearch { get; set; }
+        public bool ReadOnlyForUnmanagedDevices { get; set; }
         #endregion
 
 
@@ -144,7 +162,7 @@ namespace PnP.PowerShell.Commands.Model
             StorageUsageCurrent = props.StorageUsage;
             TeamsChannelType = props.TeamsChannelType;
             Template = props.Template;
-            Title = props.Title;            
+            Title = props.Title;
             WebsCount = props.WebsCount;
             Url = props.Url;
             InformationBarrierMode = props.IBMode;
@@ -157,6 +175,23 @@ namespace PnP.PowerShell.Commands.Model
             DefaultShareLinkScope = props.DefaultShareLinkScope;
             DefaultShareLinkRole = props.DefaultShareLinkRole;
             LoopDefaultSharingLinkScope = props.LoopDefaultSharingLinkScope;
+            ArchiveStatus = props.ArchiveStatus;
+            EnableAutoExpirationVersionTrim = props.EnableAutoExpirationVersionTrim;
+            ExpireVersionsAfterDays = props.ExpireVersionsAfterDays;
+            InheritVersionPolicyFromTenant = props.InheritVersionPolicyFromTenant;
+            IsGroupOwnerSiteAdmin = props.IsGroupOwnerSiteAdmin;
+            ListsShowHeaderAndNavigation = props.ListsShowHeaderAndNavigation;
+            LockReason = props.LockReason;
+            MajorVersionLimit = props.MajorVersionLimit;
+            MajorWithMinorVersionsLimit = props.MajorWithMinorVersionsLimit;
+            RestrictedAccessControl = props.RestrictedAccessControl;
+            RestrictedAccessControlGroups = props.RestrictedAccessControlGroups;
+            RestrictedAccessControlGroupsToAdd = props.RestrictedAccessControlGroupsToAdd;
+            RestrictedAccessControlGroupsToRemove = props.RestrictedAccessControlGroupsToRemove;
+            RestrictedToRegion = props.RestrictedToRegion;
+            SetOwnerWithoutUpdatingSecondaryAdmin = props.SetOwnerWithoutUpdatingSecondaryAdmin;
+            RestrictContentOrgWideSearch = props.RestrictContentOrgWideSearch;
+            ReadOnlyForUnmanagedDevices = props.ReadOnlyForUnmanagedDevices;
         }
     }
 }

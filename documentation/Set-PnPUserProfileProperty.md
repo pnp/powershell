@@ -13,9 +13,10 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPUserProfilePrope
 
 **Required Permissions**
 
-* SharePoint: Access to the SharePoint Tenant Administration site
+* SharePoint: Sites.FullControl.All, TermStore.ReadWrite.All, User.ReadWrite.All
+* Microsoft Graph: User.Read
 
-Office365 only: Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://\<tenant\>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.
+Uses the tenant API to retrieve site information. You must connect to the tenant admin website (https://\<tenant\>-admin.sharepoint.com) with Connect-PnPOnline in order to use this command.
 
 ## SYNTAX
 

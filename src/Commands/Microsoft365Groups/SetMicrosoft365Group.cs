@@ -54,16 +54,15 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = false)]
         public string MailNickname;
 
-        [Parameter(Mandatory = false)]
-        [Alias("AllowExternalSenders")] // This is the name used in Microsoft Graph while the name below is the one used within Exchange Online. They both are about the same feature.
-        public bool? RequireSenderAuthenticationEnabled;
+        [Parameter(Mandatory = false)] // This is the name used in Microsoft Graph while the name RequireSenderAuthenticationEnabled is the one used within Exchange Online, but there its inversed, so we cannot easily add it as an alias here. They both are about the same feature.
+        public bool? AllowExternalSenders;
 
         [Parameter(Mandatory = false)]
         public bool? AutoSubscribeNewMembers;
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(Connection, AccessToken, false, false, false);
+            var group = Identity.GetGroup(Connection, AccessToken, false, false, false, false);
 
             if (group != null)
             {
@@ -103,14 +102,24 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     group = Microsoft365GroupsUtility.UpdateAsync(Connection, AccessToken, group).GetAwaiter().GetResult();
                 }
 
-                if (ParameterSpecified(nameof(RequireSenderAuthenticationEnabled)) && RequireSenderAuthenticationEnabled.HasValue)
+                if (ParameterSpecified(nameof(AllowExternalSenders)) && AllowExternalSenders.HasValue)
                 {
-                    group.AllowExternalSenders = RequireSenderAuthenticationEnabled.Value;
+                    if(TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
+                    {
+                        WriteWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
+                    }
+
+                    group.AllowExternalSenders = AllowExternalSenders.Value;
                     exchangeOnlinePropertiesChanged = true;
                 }
 
                 if (ParameterSpecified(nameof(AutoSubscribeNewMembers)) && AutoSubscribeNewMembers.HasValue)
                 {
+                    if (TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
+                    {
+                        WriteWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
+                    }
+
                     group.AutoSubscribeNewMembers = AutoSubscribeNewMembers.Value;
                     exchangeOnlinePropertiesChanged = true;
                 }

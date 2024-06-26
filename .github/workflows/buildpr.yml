@@ -12,7 +12,7 @@ permissions: read-all
 
 jobs:
   build_dev_branch:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
     - name: Checkout PnP.Framework
       uses: actions/checkout@v4
@@ -53,5 +53,5 @@ jobs:
       run: dotnet restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\" -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\"
       working-directory: powershell/src
     - name: Build PnP.PowerShell
-      run: dotnet build --configuration Debug --no-restore -p:PnPFrameworkPath="/home/runner/work/powershell/powershell/pnpframework/src/lib/" -p:PnPCoreSdkPath="/home/runner/work/powershell/powershell/pnpcore/src/sdk/"
+      run: dotnet build --configuration Debug --no-restore -p:PnPFrameworkPath="/Users/runner/work/powershell/powershell/pnpframework/src/lib/" -p:PnPCoreSdkPath="/Users/runner/work/powershell/powershell/pnpcore/src/sdk/"
       working-directory: powershell/src

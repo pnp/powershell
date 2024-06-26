@@ -20,7 +20,7 @@ Gets one Microsoft 365 Group or a list of Microsoft 365 Groups
 ## SYNTAX
 
 ```powershell
-Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-IncludeSiteUrl] [-IncludeOwners] [-Detailed] [-Filter <string>]
+Get-PnPMicrosoft365Group [-Identity <Microsoft365GroupPipeBind>] [-IncludeSiteUrl] [-IncludeOwners] [-Detailed] [-Filter <string>] [-IncludeSensitivityLabels]
 ```
 
 ## DESCRIPTION
@@ -154,6 +154,21 @@ Specify the query to pass to Graph API in $filter.
 ```yaml
 Type: String
 Parameter Sets: Filter
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeSensitivityLabels
+
+Include fetching the sensitivity labels. This slows down large listings.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
