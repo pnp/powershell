@@ -4,8 +4,6 @@ using System;
 using System.Linq.Expressions;
 using System.Management.Automation;
 
-using PnP.PowerShell.Commands.Extensions;
-
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPWeb")]

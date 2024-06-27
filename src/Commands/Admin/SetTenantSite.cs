@@ -11,6 +11,7 @@ using System.Net;
 using System.Threading;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
+using Microsoft.SharePoint.Client.Sharing;
 
 namespace PnP.PowerShell.Commands
 {
@@ -192,6 +193,27 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public Guid[] RestrictedAccessControlGroups;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Role DefaultShareLinkRole;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SharingScope DefaultShareLinkScope;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Role LoopDefaultSharingLinkRole;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SharingScope LoopDefaultSharingLinkScope;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool RestrictContentOrgWideSearch;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool ReadOnlyForUnmanagedDevices;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter InheritVersionPolicyFromTenant;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
@@ -319,7 +341,26 @@ namespace PnP.PowerShell.Commands
                 props.DefaultLinkToExistingAccessReset = true;
                 updateRequired = true;
             }
-
+            if (ParameterSpecified(nameof(LoopDefaultSharingLinkScope)))
+            {
+                props.LoopDefaultSharingLinkScope = LoopDefaultSharingLinkScope;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(LoopDefaultSharingLinkRole)))
+            {
+                props.LoopDefaultSharingLinkRole = LoopDefaultSharingLinkRole;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(DefaultShareLinkScope)))
+            {
+                props.DefaultShareLinkScope = DefaultShareLinkScope;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(DefaultShareLinkRole)))
+            {
+                props.DefaultShareLinkRole = DefaultShareLinkRole;
+                updateRequired = true;
+            }
             if (ParameterSpecified(nameof(AllowDownloadingNonWebViewableFiles)))
             {
                 var value = AllowDownloadingNonWebViewableFiles;
@@ -579,6 +620,24 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(RestrictedAccessControlGroups)) && RestrictedAccessControlGroups.Length > 0)
             {
                 props.RestrictedAccessControlGroups = RestrictedAccessControlGroups;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RestrictContentOrgWideSearch)))
+            {
+                props.RestrictContentOrgWideSearch = RestrictContentOrgWideSearch;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(InheritVersionPolicyFromTenant)))
+            {
+                props.InheritVersionPolicyFromTenant = InheritVersionPolicyFromTenant;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ReadOnlyForUnmanagedDevices)))
+            {
+                props.ReadOnlyForUnmanagedDevices = ReadOnlyForUnmanagedDevices;
                 updateRequired = true;
             }
 

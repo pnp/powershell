@@ -10,12 +10,12 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPPage.html
 # Set-PnPPage
 
 ## SYNOPSIS
-Sets parameters of a page
+Sets parameters of a page.
 
 ## SYNTAX
 
 ```powershell
-Set-PnPPage [-Identity] <PagePipeBind> [-Name <String>] [-Title <String>]
+Set-PnPPage -Identity <PagePipeBind> [-Name <String>] [-Title <String>]
  [-LayoutType <PageLayoutType>] [-PromoteAs <PagePromoteType>] [-CommentsEnabled]
  [-Publish] [-HeaderType <PageHeaderType>] [-HeaderLayoutType <PageHeaderLayoutType>] [-ScheduledPublishDate <DateTime>] 
  [-RemoveScheduledPublish] [-ContentType <ContentTypePipeBind>] [-ThumbnailUrl <String>] [-ShowPublishDate <Boolean>]
@@ -34,49 +34,49 @@ Sets parameters of a page. All pages must be located inside the Site Pages libra
 Set-PnPPage -Identity "MyPage" -LayoutType Home -Title "My Page"
 ```
 
-Updates the properties of the page named 'MyPage'
+Updates the properties of the page named 'MyPage'.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPPage -Identity "MyPage" -CommentsEnabled
 ```
 
-Enables the comments on the page named 'MyPage'
+Enables the comments on the page named 'MyPage'.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPPage -Identity "MyPage" -CommentsEnabled:$false
 ```
 
-Disables the comments on the page named 'MyPage'
+Disables the comments on the page named 'MyPage'.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPPage -Identity "hr/MyPage" -HeaderType Default
 ```
 
-Sets the header of the page called MyPage located in the folder hr inside the Site Pages library to the default header
+Sets the header of the page called MyPage located in the folder hr inside the Site Pages library to the default header.
 
 ### EXAMPLE 5
 ```powershell
 Set-PnPPage -Identity "MyPage" -HeaderType None
 ```
 
-Removes the header of the page
+Removes the header of the page.
 
 ### EXAMPLE 6
 ```powershell
 Set-PnPPage -Identity "MyPage" -HeaderType Custom -ServerRelativeImageUrl "/sites/demo1/assets/myimage.png" -TranslateX 10.5 -TranslateY 11.0
 ```
 
-Sets the header of the page to custom header, using the specified image and translates the location of the image in the header given the values specified
+Sets the header of the page to custom header, using the specified image and translates the location of the image in the header given the values specified.
 
 ### EXAMPLE 7
 ```powershell
 Set-PnPPage -Identity "MyPage" -ScheduledPublishDate (Get-Date).AddHours(1)
 ```
 
-Schedules the page "MyPage" to be published in one hour from now
+Schedules the page "MyPage" to be published in one hour from now.
 
 ### EXAMPLE 8
 ```powershell
@@ -103,24 +103,24 @@ Creates the necessary translated page for the specified languages in the site co
 ```powershell
 Set-PnPPage -Identity "MyPage" -ShowPublishDate $true -Publish
 ```
-Display the date when the page was published in the header section of the page
+Display the date when the page was published in the header section of the page.
 
 ### EXAMPLE 12
 ```powershell
 Set-PnPPage -Identity "MyPage.aspx" -Like
 ```
-Likes the page
+Likes the page.
 
 ### EXAMPLE 11
 ```powershell
 Set-PnPPage -Identity "MyPage.aspx" -Like:$false
 ```
-Unlikes the page
+Unlikes the page.
 
 ## PARAMETERS
 
 ### -CommentsEnabled
-Enables or Disables the comments on the page
+Enables or disables the comments on the page.
 
 ```yaml
 Type: SwitchParameter
@@ -162,7 +162,7 @@ Accept wildcard characters: False
 ```
 
 ### -DemoteNewsArticle
-Demotes an existing news post to a regular page
+Demotes an existing news post to a regular page.
 
 ```yaml
 Type: SwitchParameter
@@ -176,7 +176,7 @@ Accept wildcard characters: False
 ```
 
 ### -HeaderType
-Sets the page header type
+Sets the page header type.
 
 ```yaml
 Type: PageHeaderType
@@ -191,7 +191,7 @@ Accept wildcard characters: False
 ```
 
 ### -HeaderLayoutType
-Sets the page header layout type
+Sets the page header layout type.
 
 ```yaml
 Type: PageHeaderLayoutType
@@ -249,7 +249,7 @@ Accept wildcard characters: False
 ```
 
 ### -PromoteAs
-Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template)
+Allows to promote the page for a specific purpose (None | HomePage | NewsArticle | Template).
 
 ```yaml
 Type: PagePromoteType
@@ -278,7 +278,7 @@ Accept wildcard characters: False
 ```
 
 ### -ThumbnailUrl
-Thumbnail Url
+Specifies the URL of a thumbnail image.
 
 ```yaml
 Type: String
@@ -292,7 +292,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowPublishDate
-Show Published Date in Header
+Shows Published Date in the header.
 
 ```yaml
 Type: Boolean
@@ -348,7 +348,7 @@ Accept wildcard characters: False
 ```
 
 ### -Translate
-Creates multilingual pages for all the languages specified in the site collection
+Creates multilingual pages for all the languages specified in the site collection.
 
 ```yaml
 Type: SwitchParameter
@@ -376,7 +376,7 @@ Accept wildcard characters: False
 ```
 
 ### -Like
-Likes the page, if parameter is set to false then it Unlikes the page
+Likes the page, if parameter is set to false then it Unlikes the page.
 
 ```yaml
 Type: SwitchParameter

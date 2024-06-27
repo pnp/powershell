@@ -14,11 +14,17 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = true)]
         public SPOTenantCdnPolicyType PolicyType;
 
+        [AllowEmptyString]
+        [AllowNull]
         [Parameter(Mandatory = true)]
         public string PolicyValue;
 
         protected override void ExecuteCmdlet()
         {
+            // A null PolicyValue throws an exception Microsoft.SharePoint.Client.UnknownError
+            if (PolicyValue == null)
+                PolicyValue = string.Empty;
+
             Tenant.SetTenantCdnPolicy(CdnType, PolicyType, PolicyValue);
             AdminContext.ExecuteQueryRetry();
         }

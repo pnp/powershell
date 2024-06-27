@@ -16,6 +16,7 @@ title: Add-PnPTeamsTab
   * Microsoft Graph API: Group.ReadWrite.All
 
 Adds a tab to an existing Channel. Note that the `-ContentUrl` is a 'dynamic' parameter and will only be valid for tab types that support it.
+Also, some `-Type` values are not configurable due to Microsoft Graph API limitations (i.e.: PowerBI).
 
 ## SYNTAX
 

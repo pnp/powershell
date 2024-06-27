@@ -5225,6 +5225,28 @@
         "isEnabled": true,
         "isAdmin": false,
         "value": "Mail.ReadBasic.All"
+      },
+      {
+        "allowedMemberTypes": [
+          "Application"
+        ],
+        "consentDescription": "Allows the app to create, read, update and delete all users' tasks and task lists in your organization, without a signed-in user.",
+        "consentDisplayName": "Read and write all users' tasks and tasklists",
+        "id": "44e666d1-d276-445b-a5fc-8815eeb81d55",
+        "isEnabled": true,
+        "isAdmin": false,
+        "value": "Tasks.ReadWrite.All"
+      },
+      {
+        "allowedMemberTypes": [
+          "Application"
+        ],
+        "consentDescription": "Allows the app to read all users' tasks and task lists in your organization, without a signed-in user.",
+        "consentDisplayName": "Read all users' tasks and tasklist",
+        "id": "f10e1f91-74ed-437f-a6fd-d6ae88e26c1f",
+        "isEnabled": true,
+        "isAdmin": false,
+        "value": "Tasks.Read.All"
       }
     ]
   }

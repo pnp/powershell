@@ -17,7 +17,7 @@ If you add a list item with Add-PnPListItem without batching, the following happ
 
 All in all you see we make around 6 requests, although the exact number depends a bit on what type of fields you are setting. So if you loop through 100 items, you get at least 600 requests.
 
-## Adding a item with batching (REST)
+## Adding an item with batching (REST)
 
 ```powershell
 $batch = New-PnPBatch

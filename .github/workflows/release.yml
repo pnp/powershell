@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   schedule:
   - cron: '30 3 * * *'
+
+permissions: read-all
+  
 jobs:
   publish-docker-windows-2022:
     runs-on: windows-2022
@@ -31,4 +34,4 @@ jobs:
       shell: pwsh
       run: |
         $securedPassword = ConvertTo-SecureString "${{ secrets.DOCKER_PASSWORD }}" -AsPlainText -Force
-        ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_ORG }} powershell $securedPassword "root" $false "alpine-3.14"
+        ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_ORG }} powershell $securedPassword "root" $false "alpine-3.17"

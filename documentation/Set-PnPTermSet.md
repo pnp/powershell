@@ -20,7 +20,7 @@ Set-PnPTermSet -Identity <TaxonomyTermSetPipeBind> [-TermGroup] <TaxonomyTermGro
  [-StakeholderToDelete <String>] [-IsAvailableForTagging <Boolean>] [-IsOpenForTermCreation <Boolean>]
  [-UseForSiteNavigation <Boolean>] [-UseForFacetedNavigation <Boolean>] [-SetTargetPageForTerms <String>]
  [-RemoveTargetPageForTerms] [-SetCatalogItemPageForCategories <String>] [-RemoveCatalogItemPageForCategories]
- 
+ [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -33,27 +33,39 @@ This cmdlet allows you to update an existing term set.
 Set-PnPTermSet -Identity "Departments" -TermGroup "Corporate" -Name "Business Units"
 ```
 
-This example changes the name of a the "Departments" term set to "Business Units"
+This example changes the name of a the "Departments" term set to "Business Units".
 
 ### Example 2
 ```powershell
 Set-PnPTermSet -Identity "Departments" -TermGroup "Corporate" -UseForSiteNavigation $true
 ```
 
-This example allows the terms in the term set "Departments" to be used for site navigation links
+This example allows the terms in the term set "Departments" to be used for site navigation links.
 
 ### Example 3
 ```powershell
 Set-PnPTermSet -Identity "Departments" -TermGroup "Corporate" -IsAvailableForTagging $false
 ```
 
-This example makes the terms in the term set "Departments" unavailable to end users and content editors
+This example makes the terms in the term set "Departments" unavailable to end users and content editors.
 
 ## PARAMETERS
 
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Contact
-The contact information
+The contact information.
 
 ```yaml
 Type: String

@@ -580,7 +580,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableModernAudienceTargeting
-Enable modern audience targeting in a SharePoint list.
+Enable modern audience targeting in a SharePoint list. Please make sure the following feature ModernAudienceTargeting with ID "bc13eaf7-67c7-4f85-a80f-a4b0dae5e5bd" is activated first on the site by using Enable-PnPFeature.
 
 ```yaml
 Type: Boolean

@@ -23,14 +23,14 @@ The Set-PnPStructuralNavigationCacheSiteState cmdlet can be used to enable or di
 
 ## EXAMPLES
 
-### Example 1
+### EXAMPLE 1
 ```powershell
 Set-PnPStructuralNavigationCacheSiteState -IsEnabled $true -SiteUrl "https://contoso.sharepoint.com/sites/product/" 
 ```
 
 This example enables caching for all webs in the site collection https://contoso.sharepoint.com/sites/product/.
 
-### Example 2
+### EXAMPLE 2
 ```powershell
 Set-PnPStructuralNavigationCacheSiteState -IsEnabled $false -SiteUrl "https://contoso.sharepoint.com/sites/product/" 
 ```
@@ -38,6 +38,20 @@ Set-PnPStructuralNavigationCacheSiteState -IsEnabled $false -SiteUrl "https://co
 This example disables caching for all webs in the site collection https://contoso.sharepoint.com/sites/product/.
 
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -IsEnabled
 $true to enable caching, $false to disable caching.
@@ -60,20 +74,6 @@ Specifies the absolute URL for the site collection's root web that needs its cac
 Type: String
 Parameter Sets: (All)
 Aliases:
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None

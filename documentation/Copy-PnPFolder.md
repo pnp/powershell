@@ -10,20 +10,31 @@ title: Copy-PnPFolder
 # Copy-PnPFolder
 
 ## SYNOPSIS
-Copies a folder or file to a different location
+Copies a folder or file to a different location within SharePoint Online or allows uploading of an entire local folder with optionally subfolders to SharePoint Online.
 
 ## SYNTAX
 
+### Copy files within Microsoft 365
+
 ```powershell
-Copy-PnPFolder [-SourceUrl] <String> [-TargetUrl] <String> [-Overwrite] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>]  
+Copy-PnPFolder -SourceUrl <String> -TargetUrl <String> [-Overwrite] [-Force] [-IgnoreVersionHistory] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
+  
+```
+
+### Copy files from local to Microsoft 365
+
+```powershell
+Copy-PnPFolder -LocalPath <String> -TargetUrl <String> [-Overwrite] [-Recurse] [-RemoveAfterCopy] [-Connection <PnPConnection>] [-Verbose]
   
 ```
 
 ## DESCRIPTION
 
-Copies a folder or file to a different location. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Notice that if copying between sites or to a subsite you cannot specify a target filename, only a folder name.
+Copies a folder or file to a different location within SharePoiint. This location can be within the same document library, same site, same site collection or even to another site collection on the same tenant. Notice that if copying between sites or to a subsite you cannot specify a target filename, only a folder name.
 
 Copying files and folders is bound to some restrictions. You can find more on it here: https://learn.microsoft.com/office365/servicedescriptions/sharepoint-online-service-description/sharepoint-online-limits#moving-and-copying-across-sites
+
+It can also accommodate copying an entire folder with all its files and optionally even subfolders and files from a local path onto SharePoint Online.
 
 ## EXAMPLES
 
@@ -109,6 +120,13 @@ if($jobStatus.JobState == 0)
 
 Copies a file named company.docx from the current document library to the documents library in SubSite2. It will not wait for the action to return but returns job information instead. The Receive-PnPCopyMoveJobStatus cmdlet will return the job status.
 
+### EXAMPLE 12
+```powershell
+Copy-PnPFolder -LocalPath "c:\temp" -TargetUrl "Subsite1/Shared Documents" -Recurse -Overwrite
+```
+
+Copies all the files and underlying folders from the local folder c:\temp to the document library Shared Documents in Subsite1. If a file already exists, it will be overwritten.
+
 ## PARAMETERS
 
 ### -Force
@@ -116,7 +134,7 @@ If provided, no confirmation will be requested and the action will be performed
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: WITHINM365
 
 Required: False
 Position: Named
@@ -130,7 +148,7 @@ If provided, only the latest version of the document will be copied and its hist
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: WITHINM365
 
 Required: False
 Position: Named
@@ -140,7 +158,7 @@ Accept wildcard characters: False
 ```
 
 ### -Overwrite
-If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location.
+If provided, if a file already exists at the TargetUrl, it will be overwritten. If omitted, the copy operation will be canceled if the file already exists at the TargetUrl location when copying between two locations on SharePoint Online. If copying files from a local path to SharePoint Online, it will skip any file that already exists and still continue with the next one.
 
 ```yaml
 Type: SwitchParameter
@@ -158,7 +176,7 @@ Site or server relative URL specifying the file or folder to copy. Must include 
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: WITHINM365
 Aliases: SiteRelativeUrl, ServerRelativeUrl
 
 Required: True
@@ -185,6 +203,48 @@ Accept wildcard characters: False
 
 ### -NoWait
 If specified the task will return immediately after creating the copy job. The cmdlet will return a job object which can be used with Receive-PnPCopyMoveJobStatus to retrieve the status of the job.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: WITHINM365
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Recurse
+When copying files from a local folder to SharePoint Online, this parameter will copy all files and folders within the local folder and all of its subfolders as well.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: FROMLOCAL
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoveAfterCopy
+When copying files from a local folder to SharePoint Online, this parameter will remove all files locally that have successfully been uploaded to SharePoint Online. If a file fails, it will not be removed locally. Local folders will be removed after all files have been uploaded and the folder is empty.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: FROMLOCAL
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
 
 ```yaml
 Type: SwitchParameter

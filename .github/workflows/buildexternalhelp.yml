@@ -7,6 +7,8 @@ on:
       - dev
     paths: 'documentation/**'
 
+permissions: read-all
+
 jobs:
   build:
 

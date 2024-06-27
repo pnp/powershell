@@ -209,7 +209,12 @@ namespace PnP.PowerShell.Commands.Utilities
                         }
                         retry = false;
                     }
-
+                    catch (GraphException ge) when (ge.HttpResponse.StatusCode == System.Net.HttpStatusCode.Conflict)
+                    {
+                        // Handle conflict exceptions as if it succeeded, as it means a previous request succeeded enabling teams
+                        returnTeam = await GetTeamAsync(accessToken, connection, group.Id);
+                        retry = false;
+                    }
                     catch (Exception)
                     {
                         await Task.Delay(5000);

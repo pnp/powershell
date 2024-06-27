@@ -137,6 +137,24 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-BusinessConnectivityServiceDisabled <Boolean>]
  [-EnableSensitivityLabelForPDF <Boolean>]
  [-IsDataAccessInCardDesignerEnabled <Boolean>]
+ [-CoreSharingCapability <SharingCapabilities>]
+ [-EnableVersionExpirationSetting <Boolean>]
+ [-BlockUserInfoVisibilityInOneDrive <TenantBrowseUserInfoPolicyValue>]
+ [-AllowOverrideForBlockUserInfoVisibility <Boolean>]
+ [-AllowEveryoneExceptExternalUsersClaimInPrivateSite <Boolean>]
+ [-AIBuilderEnabled <Boolean>]
+ [-AllowSensitivityLabelOnRecords <Boolean>]
+ [-AnyoneLinkTrackUsers <Boolean>]
+ [-EnableSiteArchive <Boolean>]
+ [-ESignatureEnabled <Boolean>]
+ [-BlockUserInfoVisibilityInSharePoint <TenantBrowseUserInfoPolicyValue>]
+ [-MarkNewFilesSensitiveByDefault <SensitiveByDefaultState>]
+ [-OneDriveDefaultShareLinkScope <SharingScope>]
+ [-OneDriveDefaultShareLinkRole <Role>]
+ [-OneDriveDefaultLinkToExistingAccess <Boolean>]
+ [-OneDriveBlockGuestsAsSiteAdmin <SharingState>]
+ [-RecycleBinRetentionPeriod <Int32>]
+ [-IsSharePointAddInsDisabled <Boolean>] 
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -675,6 +693,24 @@ Accept wildcard characters: False
 
 ### -IsDataAccessInCardDesignerEnabled
 Allows turning on support for data access in the Viva Connections Adaptive Card Designer.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSharePointAddInsDisabled
+When the feature is enabled, all the add-ins features will be disabled.
+
+The valid values are:
+- False (default) - All the add-ins features are supported.
+- True - All the add-ins features will be disabled.
 
 ```yaml
 Type: Boolean
@@ -1790,14 +1826,10 @@ Gets or sets default share link role for fluid on SharePoint sites.
 The valid values are:
 
 - Edit
-- LimitedEdit
-- LimitedView
-- ManageList
 - None
-- Owner
 - RestrictedView
 - Review
-- Submit
+- View
 
 ```yaml
 Type: Role
@@ -1972,14 +2004,10 @@ Gets or sets default share link role for fluid on OneDrive sites.
 The valid values are:
 
 - Edit
-- LimitedEdit
-- LimitedView
-- ManageList
 - None
-- Owner
 - RestrictedView
 - Review
-- Submit
+- View
 
 ```yaml
 Type: Role
@@ -2363,6 +2391,288 @@ For more information about information barriers, see [Use information barriers w
 Type: InformationBarriersMode
 Parameter Sets: (All)
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreSharingCapability
+Sets what level of sharing is available for SharePoint sites (not including OneDrive sites).
+
+```yaml
+Type: SharingCapabilities
+Parameter Sets: (All)
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableVersionExpirationSetting
+Sets intelligent version deleting options and default organization limits.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockUserInfoVisibilityInOneDrive
+Blocks users from accessing User Info if they have Limited Access permission only to the OneDrive. The policy applies to all OneDrives in the organization.
+
+The valid values are:
+
+ApplyToNoUsers (default) - No users are prevented from accessing User Info when they have Limited Access permission only.
+ApplyToAllUsers - All users (internal or external) are prevented from accessing User Info if they have Limited Access permission only.
+ApplyToGuestAndExternalUsers - Only external or guest users are prevented from accessing User Info if they have Limited Access permission only.
+ApplyToInternalUsers - Only internal users are prevented from accessing User Info if they have Limited Access permission only.
+
+```yaml
+Type: TenantBrowseUserInfoPolicyValue
+Parameter Sets: (All)
+Accepted values: ApplyToNoUsers (default), ApplyToAllUsers, ApplyToGuestAndExternalUsers, ApplyToInternalUsers
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+
+### -BlockUserInfoVisibilityInSharePoint
+Blocks users from accessing User Info if they have Limited Access permission only to a SharePoint site. The policy applies to all SharePoint sites in the organization.
+
+The valid values are:
+
+ApplyToNoUsers (default) - No users are prevented from accessing User Info when they have Limited Access permission only to a SharePoint site.
+
+ApplyToAllUsers - All users (internal or external) are prevented from accessing User Info if they have Limited Access permission only to a SharePoint site.
+
+ApplyToGuestAndExternalUsers - Only external or guest users are prevented from accessing User Info if they have Limited Access permission only to a SharePoint site.
+
+ApplyToInternalUsers - Only internal users are prevented from accessing User Info if they have Limited Access permission only to a SharePoint site.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowOverrideForBlockUserInfoVisibility
+Allow organization level policy for Block User Info Visibility to be overridden for a SharePoint site or OneDrive. 
+
+The valid values are:
+
+False (default) - Do not allow the Block User Info Visibility policy to be overridden for a SharePoint site or OneDrive.
+
+True - Allow the Block User Info Visibility policy to be overridden for a SharePoint site or OneDrive.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowEveryoneExceptExternalUsersClaimInPrivateSite
+When this parameter is true, the "Everyone except external users" claim is available in the People Picker of a private site. Set it to false to disable this feature.
+
+The valid values are:
+
+True - The "Everyone except external users" claim is available in People Picker of a private site.
+False (default) - The "Everyone except external users" claim is not available in People Picker of a private site.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AIBuilderEnabled
+Enables or disables AI Builder.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowSensitivityLabelOnRecords
+Allows sensitivity label on records.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AnyoneLinkTrackUsers
+Enables or disables tracking of users with anyone link.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableSiteArchive
+Enables or disables site archive.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ESignatureEnabled
+Enables or disables eSignature.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MarkNewFilesSensitiveByDefault
+Marks new files as sensitive by default before DLP policies are applied.
+
+```yaml
+Type: SensitiveByDefaultState
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveDefaultShareLinkScope
+
+Sets the default sharing link scope for OneDrive.
+
+The valid values are:
+
+- Anyone
+- Organization
+- SpecificPeople
+- Uninitialized
+
+```yaml
+Type: SharingScope
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveDefaultShareLinkRole
+
+Sets the default sharing link role for OneDrive.
+
+Valid values are :
+
+- Edit
+- None
+- RestrictedView
+- Review
+- View
+
+```yaml
+Type: Role
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveDefaultLinkToExistingAccess
+
+Sets whether OneDrive default links should grant access to existing users.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveBlockGuestsAsSiteAdmin
+
+Sets the sharing state for blocking guests as site admin in OneDrive.
+
+Valid values are
+
+- On
+- Off
+- Unspecified
+
+```yaml
+Type: SharingState
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RecycleBinRetentionPeriod
+
+Sets the retention period for the recycle bin.
+
+The value of Recycle Bin Retention Period must be between 14 and 93. By default it is set to 93.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
