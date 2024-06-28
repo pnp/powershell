@@ -10,6 +10,18 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+### Fixed
+
+### Changed
+
+### Removed
+
+### Contributors
+
+## [2.5.0]
+
+### Added
+
 - Added `New-PnPLibraryFileVersionBatchDeleteJob` and `New-PnPSiteFileVersionBatchDeleteJob` cmdlets to queue a job for deleting the file versions based on age. [#3799](https://github.com/pnp/powershell/pull/3799)
 - Added `New-PnPLibraryFileVersionExpirationReportJob` and `New-PnPSiteFileVersionExpirationReportJob` cmdlets to queue a job for generating a file version expiration report for all files in a document library or site. [#3799](https://github.com/pnp/powershell/pull/3799)
 - Added `Remove-PnPLibraryFileVersionBatchDeleteJob` and `Remove-PnPSiteFileVersionBatchDeleteJob` cmdlets to cancel the job for deleting file versions based on age. [#3799](https://github.com/pnp/powershell/pull/3799)
