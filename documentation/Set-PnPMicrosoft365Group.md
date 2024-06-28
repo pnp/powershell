@@ -20,10 +20,7 @@ Sets Microsoft 365 Group properties
 ## SYNTAX
 
 ```powershell
-Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>]
- [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam]
- [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-SensitivityLabels <GUID[]>]
- 
+Set-PnPMicrosoft365Group -Identity <Microsoft365GroupPipeBind> [-DisplayName <String>] [-Description <String>] [-Owners <String[]>] [-Members <String[]>] [-IsPrivate] [-LogoPath <String>] [-CreateTeam]  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] [-RequireSenderAuthenticationEnabled <Boolean>] [-AutoSubscribeNewMembers <Boolean>] [-MailNickname <String>] [-SensitivityLabels <GUID[]>] [-Verbose] 
 ```
 
 ## DESCRIPTION
@@ -75,6 +72,44 @@ Set-PnPMicrosoft365Group -Identity $group -SensitivityLabels "bc98af29-59eb-4869
 Sets the sensitivity label of the group
 
 ## PARAMETERS
+
+### -AllowExternalSenders
+Allows configuring if the Microsoft 365 Group should accept e-mail from senders outside of the organisation (true) or if both internal as well as external senders can send e-mail to the e-mail address of the Microsoft 365 group (false).
+
+In the Exchange Online PowerShell cmdlet this would be the RequireSenderAuthenticationEnabled property, but then inversed, so when that would be set to $true it would not accept e-mail from outside the organisation and when set to $false it would.
+
+This property can only be set using a Delegated logon, not with an Application logon.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AutoSubscribeNewMembers
+The AutoSubscribeNewMembers switch specifies whether to automatically subscribe new members that are added to the Microsoft 365 Group to conversations and calendar events. Only users that are added to the group after you enable this setting are automatically subscribed to the group.
+
+To subscribe new members to conversations and calendar events, use this exact syntax: -AutoSubscribeNewMembers:$true.
+If you don't want to subscribe new members to conversations and calendar events, use this exact syntax: -AutoSubscribeNewMembers:$false.
+
+Note: This property is evaluated only when you add internal members from your organization. Guest user accounts are always subscribed when added as a member.
+
+This property can only be set using a Delegated logon, not with an Application logon.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -CreateTeam
 Creates a Microsoft Teams team associated with created group
@@ -160,6 +195,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -MailNickname
+The mail alias for the group, unique for Microsoft 365 groups in the organization. Maximum length is 64 characters. This property can contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Identity
 The Identity of the Microsoft 365 Group
 
@@ -222,6 +271,20 @@ The Sensitivity label to be set to the Microsoft 365 Group. To retrieve the sens
 ```yaml
 Type: GUID[]
 Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None

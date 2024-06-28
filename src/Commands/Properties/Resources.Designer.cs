@@ -357,7 +357,7 @@ namespace PnP.PowerShell.Commands.Properties {
                 return ResourceManager.GetString("NoApiAccessToken", resourceCulture);
             }
         }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to There is currently no connection yet. Use Connect-PnPOnline to connect..
         /// </summary>
@@ -384,7 +384,7 @@ namespace PnP.PowerShell.Commands.Properties {
                 return ResourceManager.GetString("NoContextPresent", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument to connect..
         /// </summary>
@@ -393,13 +393,13 @@ namespace PnP.PowerShell.Commands.Properties {
                 return ResourceManager.GetString("NoDefaultSharePointConnection", resourceCulture);
             }
         }
-
+        
         internal static string NoSharePointConnectionInProvidedConnection {
             get {
                 return ResourceManager.GetString("NoSharePointConnectionInProvidedConnection", resourceCulture);
             }
         }
-
+        
         /// <summary>
         ///   Looks up a localized string similar to No Tenant Administration Url specified. Connect with Connect-PnPOnline and specify the TenantAdminUrl parameter..
         /// </summary>
@@ -725,6 +725,15 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restore &apos;{0}&apos;?.
+        /// </summary>
+        internal static string Restore {
+            get {
+                return ResourceManager.GetString("Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Restore {0} items from recycle bin to their original locations?.
         /// </summary>
         internal static string Restore0RecycleBinItems {
@@ -802,6 +811,15 @@ namespace PnP.PowerShell.Commands.Properties {
         internal static string WebhooksOnlySupportsLists {
             get {
                 return ResourceManager.GetString("WebhooksOnlySupportsLists", resourceCulture);
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The provided container could not be found.
+        /// </summary>
+        internal static string ContainerNotFound {
+            get {
+                return ResourceManager.GetString("ContainerNotFound", resourceCulture);
             }
         }
     }

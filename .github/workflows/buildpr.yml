@@ -7,37 +7,36 @@ on:
       - dev
     paths: 
       - 'src/**'
-  #push: 
-  #  branches:
-  #    - dev
-  #  paths:
-  #    - 'src/**'
+  
+permissions: read-all
+
 jobs:
   build_dev_branch:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
     - name: Checkout PnP.Framework
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: pnp/pnpframework
         path: pnpframework
         ref: 'dev'
     - name: Checkout PnP.Core
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         repository: pnp/pnpcore
         path: pnpcore
         ref: 'dev'  
     - name: Checkout PnP.PowerShell
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
         path: powershell
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |
            6.0.x
            7.0.x
+           8.0.x
     - name: Install PnP.Core dependencies
       run: dotnet restore
       working-directory: pnpcore/src/sdk
@@ -45,14 +44,14 @@ jobs:
       run: dotnet build --configuration Debug --no-restore -p:WarningLevel=0
       working-directory: pnpcore/src/sdk/PnP.Core
     - name: Install PnP.Framework dependencies
-      run: dotnet restore -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll" -p:PnPCoreSdkPathNet6="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net6.0\PnP.Core.dll" -p:PnPCoreSdkPathNet7="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net7.0\PnP.Core.dll"
+      run: dotnet restore -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll" -p:PnPCoreSdkPathNet6="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net6.0\PnP.Core.dll" -p:PnPCoreSdkPathNet7="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net7.0\PnP.Core.dll" -p:PnPCoreSdkPathNet8="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net8.0\PnP.Core.dll"
       working-directory: pnpframework/src/lib
     - name: Build PnP.Framework
-      run: dotnet build --configuration Debug --no-restore -p:WarningLevel=0 -p:PnPCoreSdkPath="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll" -p:PnPCoreSdkPathNet6="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net6.0\PnP.Core.dll" -p:PnPCoreSdkPathNet7="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net7.0\PnP.Core.dll"
+      run: dotnet build --configuration Debug --no-restore -p:WarningLevel=0 -p:PnPCoreSdkPath="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll" -p:PnPCoreSdkPathNet6="..\..\..\..\pnpcore/src/sdk\PnP.Core\bin\Debug\net6.0\PnP.Core.dll" -p:PnPCoreSdkPathNet7="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net7.0\PnP.Core.dll" -p:PnPCoreSdkPathNet8="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net8.0\PnP.Core.dll"
       working-directory: pnpframework/src/lib/PnP.Framework
     - name: Install PnP.PowerShell dependencies
       run: dotnet restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\" -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\"
       working-directory: powershell/src
     - name: Build PnP.PowerShell
-      run: dotnet build --configuration Debug --no-restore -p:PnPFrameworkPath="/home/runner/work/powershell/powershell/pnpframework/src/lib/" -p:PnPCoreSdkPath="/home/runner/work/powershell/powershell/pnpcore/src/sdk/"
+      run: dotnet build --configuration Debug --no-restore -p:PnPFrameworkPath="/Users/runner/work/powershell/powershell/pnpframework/src/lib/" -p:PnPCoreSdkPath="/Users/runner/work/powershell/powershell/pnpcore/src/sdk/"
       working-directory: powershell/src

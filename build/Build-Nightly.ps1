@@ -5,20 +5,16 @@ $existing_pnppowershell_hash = Get-Content ./pnppowershell_hash.txt -Raw -ErrorA
 
 $existing_pnpframework_hash = Get-Content ./pnpframework_hash.txt -Raw -ErrorAction SilentlyContinue
 $pnpframework_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpframework/branches/dev" -SkipHttpErrorCheck
-if($null -ne $pnpframework_response)
-{
-	if($null -ne $pnpframework_response.commit)
-	{
+if ($null -ne $pnpframework_response) {
+	if ($null -ne $pnpframework_response.commit) {
 		$pnpframework_hash = $pnpframework_response.commit.sha
 	}
 }
 
 $existing_pnpcoresdk_hash = Get-Content ./pnpcoresdk_hash.txt -Raw -ErrorAction SilentlyContinue
 $pnpcoresdk_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpcore/branches/dev" -SkipHttpErrorCheck
-if($null -ne $pnpcoresdk_response)
-{
-	if($null -ne $pnpcoresdk_response.commit)
-	{
+if ($null -ne $pnpcoresdk_response) {
+	if ($null -ne $pnpcoresdk_response.commit) {
 		$pnpcoresdk_hash = $pnpcoresdk_response.commit.sha
 	}
 }
@@ -28,22 +24,19 @@ if($null -ne $pnpcoresdk_response)
 #Write-host "Latest PnP Framework Commit hash $pnpframework_hash" -ForegroundColor Yellow
 #Write-Host "Stored PnP Framework Commit hash: $existing_pnpframework_hash" -ForegroundColor Yellow
 
-if ($existing_pnppowershell_hash -ne $pnppowershell_hash)
-{
+if ($existing_pnppowershell_hash -ne $pnppowershell_hash) {
 	Write-Host "PnP PowerShell is newer"
 	Set-Content ./pnppowershell_hash.txt -Value $pnppowershell_hash -NoNewline -Force
 	$runPublish = $true
 }
 
-if($runPublish -eq $false -and $existing_pnpframework_hash -ne $pnpframework_hash)
-{
+if ($runPublish -eq $false -and $existing_pnpframework_hash -ne $pnpframework_hash) {
 	Write-Host "PnP Framework is newer"
 	Set-Content ./pnpframework_hash.txt -Value $pnpframework_hash -NoNewline -Force
 	$runPublish = $true
 }
 
-if($runPublic -eq $false -and $existing_pnpcoresdk_hash -ne $pnpcoresdk_hash)
-{
+if ($runPublish -eq $false -and $existing_pnpcoresdk_hash -ne $pnpcoresdk_hash) {
 	Write-Host "PnP Core SDK is newer"
 	Set-Content ./pnpcoresdk_hash.txt -Value $pnpcoresdk_hash -NoNewLine -Force
 	$runPublish = $true
@@ -80,10 +73,13 @@ if ($runPublish -eq $true) {
 
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
 
-	if ($IsLinux -or $isMacOS) {
+	if ($IsLinux) {
 		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
 	}
- else {
+	elseif ($IsMacOS) {
+		$destinationFolder = "~/.local/share/powershell/Modules/PnP.PowerShell"
+	}
+	else {
 		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 	}
 
@@ -125,8 +121,11 @@ if ($runPublish -eq $true) {
 		$scriptBlock = {
 			$documentsFolder = [environment]::getfolderpath("mydocuments");
 
-			if ($IsLinux -or $isMacOS) {
+			if ($IsLinux) {
 				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
+			}
+			elseif ($IsMacOS) {
+				$destinationFolder = "~/.local/share/powershell/Modules/PnP.PowerShell"
 			}
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"

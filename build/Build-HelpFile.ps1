@@ -3,7 +3,7 @@ if($IsLinux -or $isMacOS)
 {
 	$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
 } else {
-	$destinationFolder = "$documentsFolder\PowerShell\Modules\PnP.PowerShell"
+	$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 }
 
 $tempFolder = [System.IO.Path]::GetTempPath()

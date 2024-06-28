@@ -73,6 +73,30 @@ namespace PnP.PowerShell.Commands.Principals
                 dirty = true;
             }
 
+            if (!string.IsNullOrEmpty(Description))
+            {
+                var groupItem = CurrentWeb.SiteUserInfoList.GetItemById(group.Id);
+                CurrentWeb.Context.Load(groupItem, g => g["Notes"]);
+                CurrentWeb.Context.ExecuteQueryRetry();
+
+                var groupDescription = groupItem["Notes"]?.ToString();
+
+                if (groupDescription != Description)
+                {
+                    groupItem["Notes"] = Description;
+                    groupItem.Update();
+                    dirty = true;
+                }
+
+                var plainTextDescription = Framework.Utilities.PnPHttpUtility.ConvertSimpleHtmlToText(Description, int.MaxValue);
+                if (group.Description != plainTextDescription)
+                {
+                    //If the description is more than 512 characters long a server exception will be thrown.
+                    group.Description = plainTextDescription;                    
+                    dirty = true;
+                }
+            }
+
             if (dirty)
             {
                 group.Update();

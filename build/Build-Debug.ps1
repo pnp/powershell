@@ -83,7 +83,7 @@ if ($LASTEXITCODE -eq 0) {
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
 
 	if ($IsLinux -or $isMacOS) {
-		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
+		$destinationFolder = "$HOME/.local/share/powershell/Modules/PnP.PowerShell"
 	}
 	else {
 		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
@@ -126,9 +126,12 @@ if ($LASTEXITCODE -eq 0) {
 		# Load the Module in a new PowerShell session
 		$scriptBlock = {
 			$documentsFolder = [environment]::getfolderpath("mydocuments");
-
-			if ($IsLinux -or $isMacOS) {
+			
+			if ($IsLinux) {
 				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
+			}
+			elseif ($IsMacOS) {
+				$destinationFolder = "~/.local/share/powershell/Modules/PnP.PowerShell"
 			}
 			else {
 				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
@@ -147,7 +150,7 @@ if ($LASTEXITCODE -eq 0) {
 	GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
-	CompatiblePSEditions = @(`"Core`",`"Desktop`")
+	CompatiblePSEditions = @('Core')
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)

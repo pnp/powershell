@@ -37,13 +37,8 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static async Task<IEnumerable<Group>> GetGroupsAsync(PnPConnection connection, string accessToken)
         {
-            var results = await GraphHelper.GetAsync<RestResultCollection<Group>>(connection, $"v1.0/groups", accessToken, propertyNameCaseInsensitive: true);
-
-            if (results != null && results.Items.Any())
-            {
-                return results.Items;
-            }
-            return null;
+            var results = await GraphHelper.GetResultCollectionAsync<Group>(connection, $"v1.0/groups", accessToken, propertyNameCaseInsensitive: true);
+            return results;            
         }
 
         internal static async Task<Group> UpdateAsync(PnPConnection connection, string accessToken, Group group)

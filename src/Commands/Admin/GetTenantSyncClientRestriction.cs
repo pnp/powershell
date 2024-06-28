@@ -10,8 +10,7 @@ namespace PnP.PowerShell.Commands.Admin
     {
         protected override void ExecuteCmdlet()
         {
-            AdminContext.Load(Tenant);
-            AdminContext.Load(Tenant, t => t.HideDefaultThemes);
+            AdminContext.Load(Tenant);            
             AdminContext.ExecuteQueryRetry();
             WriteObject(new SPOTenantSyncClientRestriction(Tenant));
         }

@@ -33,7 +33,15 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-DisableAppViews <AppViewsPolicy>] [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
  [-DisableFlows <FlowsPolicy>] [-AnonymousLinkExpirationInDays <Int32>] [-SensitivityLabel <String>] [-RemoveLabel] [-AddInformationSegment <Guid[]>] [-RemoveInformationSegment <Guid[]>]
  [-OverrideTenantAnonymousLinkExpirationPolicy] [-InformationBarriersMode <InformationBarriersMode>] 
- [-MediaTranscription <MediaTranscriptionPolicyType>] [-Wait] 
+ [-MediaTranscription <MediaTranscriptionPolicyType>] 
+ [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
+ [-ExcludedBlockDownloadGroupIds <Guid[]>]
+ [-ListsShowHeaderAndNavigation <Boolean>]
+ [-DefaultLinkToExistingAccessReset <SwitchParameter>] [-DefaultShareLinkRole <Role>]
+ [-DefaultShareLinkScope <SharingScope>] [-LoopDefaultSharingLinkRole <Role>]
+ [-LoopDefaultSharingLinkScope <SharingScope>] [-RestrictContentOrgWideSearch <Boolean>] [-ReadOnlyForUnmanagedDevices <Boolean>]
+ [-InheritVersionPolicyFromTenant <SwitchParameter>]
+ [-Wait] 
  [-Connection <PnPConnection>] 
 ```
 
@@ -272,6 +280,20 @@ Determines whether the App Views feature is disabled in the site collection.
 Type: AppViewsPolicy
 Parameter Sets: Set Properties
 Accepted values: Unknown, Disabled, NotDisabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableSharingForNonOwners
+Specifies whether non-owners should be prevented from inviting new users to the site. Setting this will also disable Access Request Emails.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
@@ -669,6 +691,247 @@ When the feature is enabled, videos can have transcripts generated on demand or 
 Type: MediaTranscriptionPolicyType
 Parameter Sets: Set Properties
 Accepted values: Enabled, Disabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadPolicy
+Set this to true to block download of files from SharePoint sites or OneDrive
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludeBlockDownloadPolicySiteOwners
+Set this to true to exempts site owners from the block download policy so that they can fully download any content for the site.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludedBlockDownloadGroupIds
+Exempts users from the mentioned groups from this policy and they can fully download any content for the site.
+
+```yaml
+Type: GUID[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ListsShowHeaderAndNavigation
+Set a property on a site collection to make all lists always load with the site elements intact.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedAccessControl
+To apply restricted access control to a group-connected or Teams-connected site.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClearRestrictedAccessControl
+To reset restricted access control configuration for a site.
+
+```yaml
+Type: Switch Parameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RemoveRestrictedAccessControlGroups
+You can remove the specified security group from restricted access control configuration. Members of the security group are no longer be able to access site content while the policy is enforced on the site. 
+
+```yaml
+Type: GUID []
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AddRestrictedAccessControlGroups
+You can add the specified security groups for restricted access control configuration.
+
+```yaml
+Type: GUID []
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedAccessControlGroups
+To edit a restricted access control group for a non-group site
+
+```yaml
+Type: GUID []
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultLinkToExistingAccessReset
+To reset the default link to existing access configuration for a site.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultShareLinkRole
+To set the default share link role. Available values are `None`, `Edit`, `Review`, `RestrictedView` and `View`.
+
+```yaml
+Type: Role
+Parameter Sets: Set Properties
+Accepted values: None, Edit, Review, RestrictedView, View
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultShareLinkScope
+To set the default sharing link scope. Available values are `Anyone`, `Organization`, `SpecificPeople`, `Uninitialized`.
+
+```yaml
+Type: SharingScope
+Parameter Sets: Set Properties
+Accepted values: Anyone, Organization, SpecificPeople, Uninitialized
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LoopDefaultSharingLinkRole
+To set the loop default sharing link role. Available values are `None`, `Edit`, `Review`, `RestrictedView` and `View`.
+
+```yaml
+Type: Role
+Parameter Sets: Set Properties
+Accepted values: None, Edit, Review, RestrictedView, View
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LoopDefaultSharingLinkScope
+To set the loop default sharing link scope. Available values are Anyone, Organization, SpecificPeople, Uninitialized.
+
+```yaml
+Type: SharingScope
+Parameter Sets: Set Properties
+Accepted values: Anyone, Organization, SpecificPeople, Uninitialized
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictContentOrgWideSearch
+To restrict content from being searchable organization-wide and Copilot.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReadOnlyForUnmanagedDevices
+To set the site as read-only for unmanaged devices.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -InheritVersionPolicyFromTenant
+Clears the file version setting at site level.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named

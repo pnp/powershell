@@ -15,31 +15,48 @@ title: Get-PnPFlow
 
 * Azure: management.azure.com
 
-Returns the flows for a given environment
+Returns Power Automate Flows
 
 ## SYNTAX
 
+### All (Default)
 ```powershell
-Get-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] [-AsAdmin] [-Identity <PowerPlatformPipeBind>] 
-[-Connection <PnPConnection>] [-Verbose]
+Get-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] [-AsAdmin] [-SharingStatus <FlowSharingStatus>] [-Connection <PnPConnection>] [-Verbose]
+```
+
+### By Identity
+```powershell
+Get-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] [-AsAdmin] [-Identity <PowerPlatformPipeBind>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
-This cmdlet returns the flows for a given environment.
+This cmdlet returns Power Automate Flows meeting the specified criteria.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Get-PnPPowerPlatformEnvironment -Identity "MyOrganization (default)" | Get-PnPFlow
+Get-PnPFlow -AsAdmin
 ```
-This returns all the flows for a given Power Platform environment
+Returns all the flows in the default Power Platform environment belonging to any user
 
 ### Example 2
 ```powershell
+Get-PnPPowerPlatformEnvironment -Identity "MyOrganization (default)" | Get-PnPFlow
+```
+Returns all the flows for a given Power Platform environment belonging to the current user
+
+### Example 3
+```powershell
+Get-PnPFlow -SharingStatus SharedWithMe
+```
+Returns all the flows which have been shared with the current user in the default Power Platform environment
+
+### Example 4
+```powershell
 Get-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
-This returns a specific flow from the default environment
+Returns a specific flow from the default Power Platform environment
 
 ## PARAMETERS
 
@@ -63,7 +80,7 @@ The Name/Id of the flow to retrieve.
 
 ```yaml
 Type: PowerPlatformPipeBind
-Parameter Sets: (All)
+Parameter Sets: By Identity
 Aliases:
 
 Required: False
@@ -100,6 +117,20 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SharingStatus
+Allows specifying the type of Power Automate Flows that should be returned. Valid values: All, SharedWithMe, Personal.
+
+```yaml
+Type: FlowSharingStatus
+Parameter Sets: All
+
+Required: False
+Position: Named
+Default value: All
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

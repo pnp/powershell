@@ -6,6 +6,9 @@ using System;
 using Microsoft.Online.SharePoint.TenantManagement;
 using System.Collections.Generic;
 using Microsoft.SharePoint.Client.Sharing;
+using Microsoft.SharePoint.Client.Administration;
+using System.Linq;
+using InformationBarriersMode = PnP.PowerShell.Commands.Enums.InformationBarriersMode;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -72,6 +75,7 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string BccExternalSharingInvitationsList;
 
+        [Obsolete("Overriding UserVoiceForFeedbackEnabled property has been deprecated in SharePoint Online. This parameter will be removed in the next major release.")]
         [Parameter(Mandatory = false)]
         public bool? UserVoiceForFeedbackEnabled;
 
@@ -208,6 +212,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? CommentsOnFilesDisabled;
 
         [Parameter(Mandatory = false)]
+        public bool? AllowCommentsTextOnEmailEnabled;
+
+        [Parameter(Mandatory = false)]
         public SensitiveByDefaultState? MarkNewFilesSensitiveByDefault;
 
         [Parameter(Mandatory = false)]
@@ -269,9 +276,6 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? EnableAzureADB2BIntegration;
 
         [Parameter(Mandatory = false)]
-        public bool? SyncAadB2BManagementPolicy;
-
-        [Parameter(Mandatory = false)]
         public bool? CoreRequestFilesLinkEnabled;
 
         [Parameter(Mandatory = false)]
@@ -282,9 +286,6 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? DisableDocumentLibraryDefaultLabeling { get; set; }
-
-        [Parameter(Mandatory = false)]
-        public bool? DisableListSync { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? IsEnableAppAuthPopUpEnabled { get; set; }
@@ -350,7 +351,126 @@ namespace PnP.PowerShell.Commands.Admin
         public int? OneDriveRequestFilesLinkExpirationInDays { get; set; }
 
         [Parameter(Mandatory = false)]
+        public bool? BlockDownloadFileTypePolicy { get; set; }
+
+        [Parameter(Mandatory = false)]
+        [ValidateNotNull]
+        public SPBlockDownloadFileTypeId[] BlockDownloadFileTypeIds { get; set; }
+
+        [Parameter(Mandatory = false)]
+        [ValidateNotNull]
+        public Guid[] ExcludedBlockDownloadGroupIds { get; set; }
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
+
+        [Parameter(Mandatory = false)]
+        public string ArchiveRedirectUrl { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? BlockSendLabelMismatchEmail { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public MediaTranscriptionPolicyType? MediaTranscription { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public MediaTranscriptionAutomaticFeaturesPolicyType? MediaTranscriptionAutomaticFeatures { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? SiteOwnerManageLegacyServicePrincipalEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? ReduceTempTokenLifetimeEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public int? ReduceTempTokenLifetimeValue;
+
+        [Parameter(Mandatory = false)]
+        public bool? ViewersCanCommentOnMediaDisabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowGuestUserShareToUsersNotInSiteCollection { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public string ConditionalAccessPolicyErrorHelpLink;
+
+        [Parameter(Mandatory = false)]
+        public string CustomizedExternalSharingServiceUrl;
+
+        [Parameter(Mandatory = false)]
+        public bool? IncludeAtAGlanceInShareEmails { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? MassDeleteNotificationDisabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? BusinessConnectivityServiceDisabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableSensitivityLabelForPDF { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? IsDataAccessInCardDesignerEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AppBypassInformationBarriers { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? DelayDenyAddAndCustomizePagesEnforcement { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public SharingCapabilities? CoreSharingCapability { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableVersionExpirationSetting { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInOneDrive;
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowOverrideForBlockUserInfoVisibility { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowEveryoneExceptExternalUsersClaimInPrivateSite { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AIBuilderEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowSensitivityLabelOnRecords { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AnyoneLinkTrackUsers { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableSiteArchive { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? ESignatureEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInSharePoint { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public SharingScope? OneDriveDefaultShareLinkScope { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public Role? OneDriveDefaultShareLinkRole { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? OneDriveDefaultLinkToExistingAccess { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public SharingState? OneDriveBlockGuestsAsSiteAdmin { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public int? RecycleBinRetentionPeriod { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? IsSharePointAddInsDisabled { get; set; }
 
         protected override void ExecuteCmdlet()
         {
@@ -373,6 +493,13 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.NoAccessRedirectUrl = NoAccessRedirectUrl;
                 modified = true;
             }
+
+            if (CustomizedExternalSharingServiceUrl != null)
+            {
+                Tenant.CustomizedExternalSharingServiceUrl = CustomizedExternalSharingServiceUrl;
+                modified = true;
+            }
+
             if (ExternalServicesEnabled.HasValue)
             {
                 Tenant.ExternalServicesEnabled = ExternalServicesEnabled.Value;
@@ -385,7 +512,6 @@ namespace PnP.PowerShell.Commands.Admin
             }
             if (SharingCapability != null)
             {
-
                 Tenant.SharingCapability = SharingCapability.Value;
                 modified = true;
             }
@@ -451,13 +577,11 @@ namespace PnP.PowerShell.Commands.Admin
                     modified = true;
                 }
             }
-
             if (DisableBackToClassic.HasValue)
             {
                 Tenant.DisableBackToClassic = DisableBackToClassic.Value;
                 modified = true;
             }
-
             if (UsePersistentCookiesForExplorerView.HasValue)
             {
                 Tenant.UsePersistentCookiesForExplorerView = UsePersistentCookiesForExplorerView.Value;
@@ -471,11 +595,6 @@ namespace PnP.PowerShell.Commands.Admin
             if (!string.IsNullOrEmpty(BccExternalSharingInvitationsList))
             {
                 Tenant.BccExternalSharingInvitationsList = BccExternalSharingInvitationsList;
-                modified = true;
-            }
-            if (UserVoiceForFeedbackEnabled.HasValue)
-            {
-                Tenant.UserVoiceForFeedbackEnabled = UserVoiceForFeedbackEnabled.Value;
                 modified = true;
             }
             if (PublicCdnEnabled != null)
@@ -700,8 +819,6 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     throw new InvalidOperationException("Setting the property DefaultSharingLinkType is not supported by your version of the service");
                 }
-
-
             }
             if (ODBMembersCanShare.HasValue)
             {
@@ -946,6 +1063,11 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.CommentsOnFilesDisabled = CommentsOnFilesDisabled.Value;
                 modified = true;
             }
+            if (AllowCommentsTextOnEmailEnabled.HasValue)
+            {
+                Tenant.AllowCommentsTextOnEmailEnabled = AllowCommentsTextOnEmailEnabled.Value;
+                modified = true;
+            }
             if (MarkNewFilesSensitiveByDefault.HasValue)
             {
                 Tenant.MarkNewFilesSensitiveByDefault = MarkNewFilesSensitiveByDefault.Value;
@@ -1047,7 +1169,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (OneDriveRequestFilesLinkExpirationInDays.Value < 0 || OneDriveRequestFilesLinkExpirationInDays.Value > 730)
                 {
-                    throw new PSArgumentException($"{OneDriveRequestFilesLinkExpirationInDays} must have a value between 0 and 730", nameof(OneDriveRequestFilesLinkExpirationInDays));
+                    throw new PSArgumentException("OneDriveRequestFilesLinkExpirationInDays must have a value between 0 and 730", nameof(OneDriveRequestFilesLinkExpirationInDays));
                 }
 
                 Tenant.OneDriveRequestFilesLinkExpirationInDays = OneDriveRequestFilesLinkExpirationInDays.Value;
@@ -1057,12 +1179,6 @@ namespace PnP.PowerShell.Commands.Admin
             if (EnableRestrictedAccessControl.HasValue)
             {
                 Tenant.EnableRestrictedAccessControl = EnableRestrictedAccessControl.Value;
-                modified = true;
-            }            
-
-            if (SyncAadB2BManagementPolicy.HasValue)
-            {
-                Tenant.SyncAadB2BManagementPolicy = SyncAadB2BManagementPolicy.Value;
                 modified = true;
             }
 
@@ -1082,10 +1198,21 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (CoreRequestFilesLinkExpirationInDays.Value < 0 || CoreRequestFilesLinkExpirationInDays > 730)
                 {
-                    throw new PSArgumentException($"{CoreRequestFilesLinkExpirationInDays} must have a value between 0 and 730", nameof(CoreRequestFilesLinkExpirationInDays));
+                    throw new PSArgumentException("CoreRequestFilesLinkExpirationInDays must have a value between 0 and 730", nameof(CoreRequestFilesLinkExpirationInDays));
                 }
 
                 Tenant.CoreRequestFilesLinkExpirationInDays = CoreRequestFilesLinkExpirationInDays.Value;
+                modified = true;
+            }
+
+            if (ReduceTempTokenLifetimeValue.HasValue)
+            {
+                if (ReduceTempTokenLifetimeValue.Value < 5 || ReduceTempTokenLifetimeValue > 15)
+                {
+                    throw new PSArgumentException("ReduceTempTokenLifetimeValue must have a value between 5 and 15", nameof(ReduceTempTokenLifetimeValue));
+                }
+
+                Tenant.ReduceTempTokenLifetimeValue = ReduceTempTokenLifetimeValue.Value;
                 modified = true;
             }
 
@@ -1095,15 +1222,15 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if (DisableDocumentLibraryDefaultLabeling.HasValue)
+            if (ConditionalAccessPolicyErrorHelpLink != null)
             {
-                Tenant.DisableDocumentLibraryDefaultLabeling = DisableDocumentLibraryDefaultLabeling.Value;
+                Tenant.ConditionalAccessPolicyErrorHelpLink = ConditionalAccessPolicyErrorHelpLink;
                 modified = true;
             }
 
-            if (DisableListSync.HasValue)
+            if (DisableDocumentLibraryDefaultLabeling.HasValue)
             {
-                Tenant.DisableListSync = DisableListSync.Value;
+                Tenant.DisableDocumentLibraryDefaultLabeling = DisableDocumentLibraryDefaultLabeling.Value;
                 modified = true;
             }
 
@@ -1206,6 +1333,230 @@ namespace PnP.PowerShell.Commands.Admin
             if (ShowPeoplePickerGroupSuggestionsForIB.HasValue)
             {
                 Tenant.ShowPeoplePickerGroupSuggestionsForIB = ShowPeoplePickerGroupSuggestionsForIB.Value;
+                modified = true;
+            }
+
+            if (ArchiveRedirectUrl != null)
+            {
+                Tenant.ArchiveRedirectUrl = ArchiveRedirectUrl;
+                modified = true;
+            }
+
+            if (MediaTranscription.HasValue)
+            {
+                Tenant.MediaTranscription = MediaTranscription.Value;
+                modified = true;
+            }
+
+            if (MediaTranscriptionAutomaticFeatures.HasValue)
+            {
+                Tenant.MediaTranscriptionAutomaticFeatures = MediaTranscriptionAutomaticFeatures.Value;
+                modified = true;
+            }
+
+            if (BlockSendLabelMismatchEmail.HasValue)
+            {
+                Tenant.BlockSendLabelMismatchEmail = BlockSendLabelMismatchEmail.Value;
+                modified = true;
+            }
+
+            if (SiteOwnerManageLegacyServicePrincipalEnabled.HasValue)
+            {
+                Tenant.SiteOwnerManageLegacyServicePrincipalEnabled = SiteOwnerManageLegacyServicePrincipalEnabled.Value;
+                modified = true;
+            }
+
+            if (ReduceTempTokenLifetimeEnabled.HasValue)
+            {
+                Tenant.ReduceTempTokenLifetimeEnabled = ReduceTempTokenLifetimeEnabled.Value;
+                modified = true;
+            }
+
+            if (ViewersCanCommentOnMediaDisabled.HasValue)
+            {
+                Tenant.ViewersCanCommentOnMediaDisabled = ViewersCanCommentOnMediaDisabled.Value;
+                modified = true;
+            }
+
+            if (AllowGuestUserShareToUsersNotInSiteCollection.HasValue)
+            {
+                Tenant.AllowGuestUserShareToUsersNotInSiteCollection = AllowGuestUserShareToUsersNotInSiteCollection.Value;
+                modified = true;
+            }
+
+            if (IncludeAtAGlanceInShareEmails.HasValue)
+            {
+                Tenant.IncludeAtAGlanceInShareEmails = IncludeAtAGlanceInShareEmails.Value;
+                modified = true;
+            }
+
+            if (MassDeleteNotificationDisabled.HasValue)
+            {
+                Tenant.MassDeleteNotificationDisabled = MassDeleteNotificationDisabled.Value;
+                modified = true;
+            }
+
+            if (BusinessConnectivityServiceDisabled.HasValue)
+            {
+                Tenant.BusinessConnectivityServiceDisabled = BusinessConnectivityServiceDisabled.Value;
+                modified = true;
+            }
+
+            if (EnableSensitivityLabelForPDF.HasValue)
+            {
+                Tenant.EnableSensitivityLabelForPDF = EnableSensitivityLabelForPDF.Value;
+                modified = true;
+            }
+
+            if (IsDataAccessInCardDesignerEnabled.HasValue)
+            {
+                Tenant.IsDataAccessInCardDesignerEnabled = IsDataAccessInCardDesignerEnabled.Value;
+                modified = true;
+            }
+
+            if (AppBypassInformationBarriers.HasValue)
+            {
+                Tenant.AppBypassInformationBarriers = AppBypassInformationBarriers.Value;
+                modified = true;
+            }
+
+            if (DefaultOneDriveInformationBarrierMode.HasValue)
+            {
+                Tenant.DefaultODBMode = DefaultOneDriveInformationBarrierMode.Value.ToString();
+                modified = true;
+            }
+
+            if (DelayDenyAddAndCustomizePagesEnforcement.HasValue)
+            {
+                Tenant.DelayDenyAddAndCustomizePagesEnforcement = DelayDenyAddAndCustomizePagesEnforcement.Value;
+                modified = true;
+            }
+            if (CoreSharingCapability.HasValue)
+            {
+                Tenant.CoreSharingCapability = CoreSharingCapability.Value;
+                modified = true;
+            }
+            if (EnableVersionExpirationSetting.HasValue)
+            {
+                Tenant.EnableVersionExpirationSetting = EnableVersionExpirationSetting.Value;
+                modified = true;
+            }
+            if (BlockUserInfoVisibilityInOneDrive.HasValue)
+            {
+                Tenant.BlockUserInfoVisibilityInOneDrive = BlockUserInfoVisibilityInOneDrive.Value;
+                modified = true;
+            }
+            if (BlockUserInfoVisibilityInSharePoint.HasValue)
+            {
+                Tenant.BlockUserInfoVisibilityInSharePoint = BlockUserInfoVisibilityInSharePoint.Value;
+                modified = true;
+            }
+            if (AllowEveryoneExceptExternalUsersClaimInPrivateSite.HasValue)
+            {
+                Tenant.AllowEveryoneExceptExternalUsersClaimInPrivateSite = AllowEveryoneExceptExternalUsersClaimInPrivateSite.Value;
+                modified = true;
+            }
+            if (AIBuilderEnabled.HasValue)
+            {
+                Tenant.AIBuilderEnabled = AIBuilderEnabled.Value;
+                modified = true;
+            }
+            if (AllowSensitivityLabelOnRecords.HasValue)
+            {
+                Tenant.AllowSensitivityLabelOnRecords = AllowSensitivityLabelOnRecords.Value;
+                modified = true;
+            }
+            if (AnyoneLinkTrackUsers.HasValue)
+            {
+                Tenant.AnyoneLinkTrackUsers = AnyoneLinkTrackUsers.Value;
+                modified = true;
+            }
+            if (EnableSiteArchive.HasValue)
+            {
+                Tenant.EnableSiteArchive = EnableSiteArchive.Value;
+                modified = true;
+            }
+            if (ESignatureEnabled.HasValue)
+            {
+                Tenant.ESignatureEnabled = ESignatureEnabled.Value;
+                modified = true;
+            }
+            if (AllowOverrideForBlockUserInfoVisibility.HasValue)
+            {
+                Tenant.AllowOverrideForBlockUserInfoVisibility = AllowOverrideForBlockUserInfoVisibility.Value;
+                modified = true;
+            }
+            if (OneDriveDefaultShareLinkScope.HasValue)
+            {
+                Tenant.OneDriveDefaultShareLinkScope = OneDriveDefaultShareLinkScope.Value;
+                modified = true;
+            }
+            if (OneDriveDefaultShareLinkRole.HasValue)
+            {
+                Tenant.OneDriveDefaultShareLinkRole = OneDriveDefaultShareLinkRole.Value;
+                modified = true;
+            }
+            if (OneDriveDefaultLinkToExistingAccess.HasValue)
+            {
+                Tenant.OneDriveDefaultLinkToExistingAccess = OneDriveDefaultLinkToExistingAccess.Value;
+                modified = true;
+            }
+            if (OneDriveBlockGuestsAsSiteAdmin.HasValue)
+            {
+                Tenant.OneDriveBlockGuestsAsSiteAdmin = OneDriveBlockGuestsAsSiteAdmin.Value;
+                modified = true;
+            }
+            if (RecycleBinRetentionPeriod.HasValue)
+            {
+                Tenant.RecycleBinRetentionPeriod = RecycleBinRetentionPeriod.Value;
+                modified = true;
+            }
+            if (IsSharePointAddInsDisabled.HasValue)
+            {
+                Tenant.SharePointAddInsDisabled = IsSharePointAddInsDisabled.Value;
+                modified = true;
+            }
+            if (BlockDownloadFileTypePolicy.HasValue)
+            {
+                if (!BlockDownloadFileTypePolicy.Value)
+                {
+                    Tenant.SetBlockDownloadFileTypePolicyData(BlockDownloadFileTypePolicy.Value, new SPBlockDownloadFileTypeId[0], new Guid[0]);
+                    modified = true;
+                }
+                else
+                {
+                    if (BlockDownloadFileTypeIds == null || BlockDownloadFileTypeIds.Length == 0)
+                    {
+                        throw new InvalidOperationException("Please specify the File Type Ids that you want to block for download.");
+                    }
+                    if (BlockDownloadFileTypeIds.Contains(SPBlockDownloadFileTypeId.TeamsMeetingRecording))
+                    {
+                        WriteWarning("Please note that this policy only prevents download of Teams Meeting Recording files saved in SharePoint Online by the Teams service. Only new meeting recordings saved after this policy is set will be impacted.");
+                    }
+                    BlockDownloadFileTypeIds = BlockDownloadFileTypeIds.Distinct().ToArray();
+                    if (ExcludedBlockDownloadGroupIds != null && ExcludedBlockDownloadGroupIds.Length != 0)
+                    {
+                        if (ExcludedBlockDownloadGroupIds.Length > 10)
+                        {
+                            throw new InvalidOperationException("You can only specify 10 IDs in the Block Download File Type Policy Invalid Exclusion List");
+                        }
+                        Tenant.SetBlockDownloadFileTypePolicyData(BlockDownloadFileTypePolicy.Value, BlockDownloadFileTypeIds, ExcludedBlockDownloadGroupIds);
+                    }
+                    else
+                    {
+                        Tenant.SetBlockDownloadFileTypePolicyData(BlockDownloadFileTypePolicy.Value, BlockDownloadFileTypeIds, new Guid[0]);
+                    }
+                    modified = true;
+                }
+
+            }
+            else if (ExcludedBlockDownloadGroupIds != null)
+            {
+                if (ExcludedBlockDownloadGroupIds.Length > 10)
+                {
+                    throw new InvalidOperationException("You can only specify 10 IDs in the Block Download File Type Policy Invalid Exclusion List");
+                }
+                Tenant.SetBlockDownloadFileTypePolicyExclusionList(ExcludedBlockDownloadGroupIds);
                 modified = true;
             }
 

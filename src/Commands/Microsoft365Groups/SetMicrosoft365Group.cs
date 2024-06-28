@@ -51,14 +51,24 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = false)]
         public Guid[] SensitivityLabels;
 
+        [Parameter(Mandatory = false)]
+        public string MailNickname;
+
+        [Parameter(Mandatory = false)] // This is the name used in Microsoft Graph while the name RequireSenderAuthenticationEnabled is the one used within Exchange Online, but there its inversed, so we cannot easily add it as an alias here. They both are about the same feature.
+        public bool? AllowExternalSenders;
+
+        [Parameter(Mandatory = false)]
+        public bool? AutoSubscribeNewMembers;
+
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(Connection, AccessToken, false, false);
-
+            var group = Identity.GetGroup(Connection, AccessToken, false, false, false, false);
 
             if (group != null)
             {
                 bool changed = false;
+                bool exchangeOnlinePropertiesChanged = false;
+
                 if (ParameterSpecified(nameof(DisplayName)))
                 {
                     group.DisplayName = DisplayName;
@@ -74,9 +84,50 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     group.Visibility = IsPrivate ? "Private" : "Public";
                     changed = true;
                 }
+                if (ParameterSpecified(nameof(MailNickname)))
+                {
+                    //Ensures mailNickname contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE.
+                    MailNickname = MailNickname.Replace("@", "").Replace("(", "").Replace(")", "").Replace("\\", "").Replace("[", "").Replace("]", "").Replace("\"", "").Replace(";", "").Replace(":", "").Replace(".", "").Replace("<", "").Replace(">", "").Replace(",", "").Replace(" ", "");
+                    // Ensures Maximum length is 64 characters. 
+                    if (MailNickname.Length > 64)
+                    {
+                        MailNickname = MailNickname.Substring(0, 64);
+                    }
+                    group.MailNickname = MailNickname;
+                    changed = true;
+                }
                 if (changed)
                 {
+                    WriteVerbose("Updating Microsoft 365 Group properties in Microsoft Graph");
                     group = Microsoft365GroupsUtility.UpdateAsync(Connection, AccessToken, group).GetAwaiter().GetResult();
+                }
+
+                if (ParameterSpecified(nameof(AllowExternalSenders)) && AllowExternalSenders.HasValue)
+                {
+                    if(TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
+                    {
+                        WriteWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
+                    }
+
+                    group.AllowExternalSenders = AllowExternalSenders.Value;
+                    exchangeOnlinePropertiesChanged = true;
+                }
+
+                if (ParameterSpecified(nameof(AutoSubscribeNewMembers)) && AutoSubscribeNewMembers.HasValue)
+                {
+                    if (TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
+                    {
+                        WriteWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
+                    }
+
+                    group.AutoSubscribeNewMembers = AutoSubscribeNewMembers.Value;
+                    exchangeOnlinePropertiesChanged = true;
+                }
+
+                if (exchangeOnlinePropertiesChanged)
+                {
+                    WriteVerbose("Updating Microsoft 365 Group Exchange Online properties through Microsoft Graph");
+                    group = Microsoft365GroupsUtility.UpdateExchangeOnlineSettingAsync(Connection, group.Id.Value, AccessToken, group).GetAwaiter().GetResult();
                 }
 
                 if (ParameterSpecified(nameof(Owners)))

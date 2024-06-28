@@ -4,11 +4,14 @@ on:
   workflow_dispatch:
   schedule:
   - cron: '30 3 * * *'
+
+permissions: read-all
+  
 jobs:
   publish-docker-windows-2022:
     runs-on: windows-2022
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build and Publish All
       shell: pwsh
       run: |
@@ -17,7 +20,7 @@ jobs:
   publish-docker-windows-2019:
     runs-on: windows-2019
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build and Publish All
       shell: pwsh
       run: |
@@ -26,9 +29,9 @@ jobs:
   publish-docker-linux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Build and Publish All
       shell: pwsh
       run: |
         $securedPassword = ConvertTo-SecureString "${{ secrets.DOCKER_PASSWORD }}" -AsPlainText -Force
-        ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_ORG }} powershell $securedPassword "root" $false "alpine-3.14"
+        ./docker/Publish-UnpublishedImage.ps1 PnP.PowerShell ${{ secrets.DOCKER_USERNAME }} ${{ secrets.DOCKER_ORG }} powershell $securedPassword "root" $false "alpine-3.17"

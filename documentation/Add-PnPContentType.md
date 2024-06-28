@@ -10,7 +10,7 @@ title: Add-PnPContentType
 # Add-PnPContentType
 
 ## SYNOPSIS
-Adds a new content type
+Adds a new content type.
 
 ## SYNTAX
 
@@ -36,7 +36,28 @@ This will add a new content type based on the parent content type stored in the 
 Add-PnPContentType -Name "Project Document" -Description "Use for Contoso projects" -Group "Contoso Content Types" -ParentContentType (Get-PnPContentType -Identity 0x0101) -DocumentTemplate "/_cts/Project Document/template.docx"
 ```
 
-This will add a new content type based on the standard document content type and assigns the document template template.docx to it
+This will add a new content type based on the standard document content type and assigns the document template template.docx to it.
+
+### EXAMPLE 3
+```powershell
+Add-PnPContentType -Name "Project Item" -Description "Use for Contoso projects" -Group "Contoso Content Types"
+```
+
+This will add a new content type based on the item content type. 
+
+### EXAMPLE 4
+```powershell
+Add-PnPContentType -Name "Project Item"
+```
+
+This will add a new content type based on the item content type to a group "Custom Content Types".
+
+### EXAMPLE 5
+```powershell
+Add-PnPContentType -Name "Project Document" -Description "Use for Contoso projects" -Group "Contoso Content Types" -ContentTypeId 0x010100CD5BDB7DDE03324794E155CE37E4B6BB
+```
+
+This will add a new content type to a group "Contoso Content Types". The content type will be based on the standard document content type, and with the specified content type id. Mind the content type id format: https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/aa543822(v=office.14)
 
 ## PARAMETERS
 
@@ -55,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -ContentTypeId
-If specified, in the format of 0x0100233af432334r434343f32f3, will create a content type with the specific ID
+If specified, in the format of 0x0100233af432334r434343f32f3, will create a content type with the specific ID.
 
 ```yaml
 Type: String
@@ -69,7 +90,7 @@ Accept wildcard characters: False
 ```
 
 ### -Description
-Specifies the description of the new content type
+Specifies the description of the new content type.
 
 ```yaml
 Type: String
@@ -83,7 +104,7 @@ Accept wildcard characters: False
 ```
 
 ### -Group
-Specifies the group of the new content type
+Specifies the group of the new content type.
 
 ```yaml
 Type: String
@@ -97,7 +118,7 @@ Accept wildcard characters: False
 ```
 
 ### -Name
-Specify the name of the new content type
+Specify the name of the new content type.
 
 ```yaml
 Type: String
@@ -111,7 +132,7 @@ Accept wildcard characters: False
 ```
 
 ### -ParentContentType
-Specifies the parent of the new content type
+Specifies the parent of the new content type.
 
 ```yaml
 Type: ContentType
@@ -125,7 +146,7 @@ Accept wildcard characters: False
 ```
 
 ### -DocumentTemplate
-Allows providing a server relative path to a file which should be used as the document template for this content type
+Allows providing a server relative path to a file which should be used as the document template for this content type.
 
 ```yaml
 Type: String

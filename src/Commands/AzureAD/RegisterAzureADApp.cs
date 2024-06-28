@@ -16,10 +16,12 @@ using System.Threading.Tasks;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base;
+using System.Diagnostics;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPAzureADApp")]
+    [Alias("Register-PnPEntraIDApp")]
     public class RegisterAzureADApp : BasePSCmdlet, IDynamicParameters
     {
         private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
@@ -108,7 +110,8 @@ namespace PnP.PowerShell.Commands.AzureAD
             }
 
             var redirectUri = "http://localhost";
-            if (ParameterSpecified(nameof(DeviceLogin)))
+            // if (ParameterSpecified(nameof(DeviceLogin)) || OperatingSystem.IsMacOS())
+            if (ParameterSpecified(nameof(DeviceLogin)) || OperatingSystem.IsMacOS())
             {
                 redirectUri = "https://pnp.github.io/powershell/consent.html";
             }
@@ -490,7 +493,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 DateTime validFrom = DateTime.Today;
                 DateTime validTo = validFrom.AddYears(ValidYears);
-                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo);
+                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo, Array.Empty<string>());
 
                 if (Directory.Exists(OutPath))
                 {
@@ -524,7 +527,14 @@ namespace PnP.PowerShell.Commands.AzureAD
         private bool AppExists(string appName, HttpClient httpClient, string token)
         {
             Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Checking if application '{appName}' does not exist yet...");
-            var azureApps = RestHelper.GetAsync<RestResultCollection<AzureADApp>>(httpClient, $@"https://{PnP.Framework.AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
+
+            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+            }
+
+            var azureApps = RestHelper.GetAsync<RestResultCollection<AzureADApp>>(httpClient, $"{graphEndpoint}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token).GetAwaiter().GetResult();
             if (azureApps != null && azureApps.Items.Any())
             {
                 Host.UI.WriteLine();
@@ -557,6 +567,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         displayName = cert.Subject,
                     }
                 },
+
                 publicClient = new
                 {
                     redirectUris = new[] {
@@ -567,7 +578,13 @@ namespace PnP.PowerShell.Commands.AzureAD
                 requiredResourceAccess = scopesPayload
             };
 
-            var azureApp = RestHelper.PostAsync<AzureADApp>(httpClient, $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications", token, payload).GetAwaiter().GetResult();
+            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+            }
+
+            var azureApp = RestHelper.PostAsync<AzureADApp>(httpClient, $"{graphEndpoint}/v1.0/applications", token, payload).GetAwaiter().GetResult();
             if (azureApp != null)
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"App {azureApp.DisplayName} with id {azureApp.AppId} created.");
@@ -577,49 +594,44 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         private void StartConsentFlow(string loginEndPoint, AzureADApp azureApp, string redirectUri, string token, HttpClient httpClient, PSObject record, CmdletMessageWriter messageWriter, List<PermissionScope> scopes)
         {
-            Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Starting consent flow.");
+            //Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Starting consent flow.");
 
-            var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? $"https://{AzureAuthHelper.GetGraphEndPoint(AzureEnvironment)}/.default" : "https://microsoft.sharepoint-df.com/.default";
+            var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
+            if (AzureEnvironment == AzureEnvironment.Custom)
+            {
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+            }
+
+            var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? $"{graphEndpoint}/.default" : "https://microsoft.sharepoint-df.com/.default";
 
             var consentUrl = $"{loginEndPoint}/{Tenant}/v2.0/adminconsent?client_id={azureApp.AppId}&scope={resource}&redirect_uri={redirectUri}";
 
+            var waitTime = 30;
+
+            var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to update Azure AD and launch consent flow");
+            for (var i = 0; i < waitTime; i++)
+            {
+                progressRecord.PercentComplete = Convert.ToInt32((Convert.ToDouble(i) / Convert.ToDouble(waitTime)) * 100);
+                WriteProgress(progressRecord);
+                Thread.Sleep(1000);
+
+                // Check if CTRL+C has been pressed and if so, abort the wait
+                if (Stopping)
+                {
+                    Host.UI.WriteLine("Wait cancelled. You can provide consent manually by navigating to");
+                    Host.UI.WriteLine(consentUrl);
+                    break;
+                }
+            }
+            progressRecord.RecordType = ProgressRecordType.Completed;
+            WriteProgress(progressRecord);
+
+
             if (OperatingSystem.IsWindows() && !NoPopup)
             {
-                var waitTime = 60;
-                // CmdletMessageWriter.WriteFormattedWarning(this, $"Waiting {waitTime} seconds to launch the consent flow in a popup window.\n\nThis wait is required to make sure that Azure AD is able to initialize all required artifacts. You can always navigate to the consent page manually:\n\n{consentUrl}");
-
-                var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to update the Azure AD and launch the consent flow in a popup window.");
-
-                for (var i = 0; i < waitTime; i++)
-                {
-                    progressRecord.PercentComplete = Convert.ToInt32((Convert.ToDouble(i) / Convert.ToDouble(waitTime)) * 100);
-                    WriteProgress(progressRecord);
-                    // if (Convert.ToDouble(i) % Convert.ToDouble(10) > 0)
-                    // {
-                    //     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "-");
-                    // }
-                    // else
-                    // {
-                    //     Host.UI.Write(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{i}]");
-                    // }
-                    Thread.Sleep(1000);
-
-                    // Check if CTRL+C has been pressed and if so, abort the wait
-                    if (Stopping)
-                    {
-                        Host.UI.WriteLine("Wait cancelled. You can provide consent manually by navigating to");
-                        Host.UI.WriteLine(consentUrl);
-                        break;
-                    }
-                }
-                progressRecord.RecordType = ProgressRecordType.Completed;
-                WriteProgress(progressRecord);
 
                 if (!Stopping)
                 {
-                    // Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"[{waitTime}]");
-
-                    // Host.UI.WriteLine();
 
                     if (ParameterSpecified(nameof(Interactive)))
                     {
@@ -641,7 +653,14 @@ namespace PnP.PowerShell.Commands.AzureAD
             }
             else
             {
-                Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
+                if (OperatingSystem.IsMacOS())
+                {
+                    Process.Start("open", consentUrl);
+                }
+                else
+                {
+                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
+                }
                 WriteObject(record);
             }
         }
@@ -658,7 +677,13 @@ namespace PnP.PowerShell.Commands.AzureAD
                 {
                     WriteVerbose("Setting the logo for the Azure AD app");
 
-                    var endpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}/v1.0/applications/{azureApp.Id}/logo";
+                    var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
+                    if (AzureEnvironment == AzureEnvironment.Custom)
+                    {
+                        graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                    }
+
+                    var endpoint = $"{graphEndpoint}/v1.0/applications/{azureApp.Id}/logo";
 
                     var bytes = File.ReadAllBytes(LogoFilePath);
 

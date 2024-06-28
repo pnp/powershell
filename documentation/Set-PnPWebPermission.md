@@ -1,5 +1,5 @@
 ---
-Module Name: 
+Module Name: PnP.PowerShell
 title: Set-PnPWebPermission
 schema: 2.0.0
 applicable: SharePoint Online
@@ -10,16 +10,18 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPWebPermission.ht
 # Set-PnPWebPermission
 
 ## SYNOPSIS
-Sets a web permissions
+Sets web permissions.
 
 ## SYNTAX
 
+### Set group permissions
 ```powershell
-Set-PnPWebPermission -Group <GroupPipeBind> [-Identity <WebPipeBind>] [-AddRole <String[]>] [-RemoveRole <String[]>]
+Set-PnPWebPermission -Group <GroupPipeBind> [-Identity <WebPipeBind>] [-AddRole <String[]>] [-RemoveRole <String[]>] [-Connection <PnPConnection>]
 ```
 
+### Set user permissions
 ```powershell
-Set-PnPWebPermission -User <String> [-Identity <WebPipeBind>]  [-AddRole <String[]>] [-RemoveRole <String[]>]
+Set-PnPWebPermission -User <String> [-Identity <WebPipeBind>]  [-AddRole <String[]>] [-RemoveRole <String[]>] [-Connection <PnPConnection>]
 ```
 
 
@@ -47,16 +49,30 @@ Adds the "Contribute" permission role to the "Project Managers" group in the cur
 Set-PnPWebPermission -Identity projectA -User "user@contoso.com" -AddRole "Contribute"
 ```
 
-Adds the "Contribute" permission role to the user "user@contoso.com" in the subweb of the current web with site relative url "projectA"
+Adds the "Contribute" permission role to the user "user@contoso.com" in the subweb of the current web with site relative url "projectA".
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPWebPermission -User "user@contoso.com" -AddRole "Custom Role 1","Custom Role 2"
 ```
 
-Adds the specified permission roles to the user "user@contoso.com" in the current web
+Adds the specified permission roles to the user "user@contoso.com" in the current web.
 
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -User
 The name of the user.
@@ -115,10 +131,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The guid or site relative url of the web to use
+The guid or site relative url of the web to use.
 
 ```yaml
-Type: Guid
+Type: WebPipeBind
 Parameter Sets: (All)
 
 Required: False

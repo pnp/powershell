@@ -59,7 +59,7 @@ body {
 
 button,
 a {
-  color: var(--highlight-dark);
+  color: var(--highlight-light);
   cursor: pointer;
 }
 
@@ -67,17 +67,17 @@ button:hover,
 button:focus,
 a:hover,
 a:focus {
-  color: var(--highlight-light);
+  color: var(--highlight-dark);
   text-decoration: none;
 }
 
 .toc .nav > li.active > a {
-  color: var(--highlight-dark);
+  color: var(--highlight-light);
 }
 
 .toc .nav > li.active > a:hover,
 .toc .nav > li.active > a:focus {
-  color: var(--highlight-light);
+  color: var(--highlight-dark);
 }
 
 .pagination > .active > a {

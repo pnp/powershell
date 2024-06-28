@@ -3,11 +3,13 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 using System.Collections.Generic;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPage")]
     [Alias("Set-PnPClientSidePage")]
+    [OutputType(typeof(PnP.Core.Model.SharePoint.IPage))]
     public class SetPage : PnPWebCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -59,6 +61,13 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public int[] TranslationLanguageCodes;
 
+        [Parameter(Mandatory = false)]
+        public bool ShowPublishDate;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Like = false;
+
+
         private CustomHeaderDynamicParameters customHeaderParameters;
 
         public object GetDynamicParameters()
@@ -87,11 +96,11 @@ namespace PnP.PowerShell.Commands.Pages
                 throw new Exception("Insufficient arguments to update a client side page");
 
             // Don't allow changing a topic page into a regular page as that could lead to data loss
-            if (clientSidePage.LayoutType != PageLayoutType.Topic)
+            if (ParameterSpecified(nameof(LayoutType)) && clientSidePage.LayoutType != PageLayoutType.Topic)
             {
                 clientSidePage.LayoutType = LayoutType;
             }
-                        
+
             if (Title != null)
             {
                 clientSidePage.PageTitle = Title;
@@ -128,6 +137,11 @@ namespace PnP.PowerShell.Commands.Pages
             {
                 clientSidePage.PageHeader.LayoutType = HeaderLayoutType;
             }
+            
+            if(ParameterSpecified(nameof(ShowPublishDate)))
+            {
+                clientSidePage.PageHeader.ShowPublishDate = ShowPublishDate;
+            }
 
             if (PromoteAs == PagePromoteType.Template)
             {
@@ -161,6 +175,18 @@ namespace PnP.PowerShell.Commands.Pages
                 else
                 {
                     clientSidePage.DisableComments();
+                }
+            }
+
+            if (ParameterSpecified(nameof(Like)))
+            {
+                if (Like)
+                {
+                    clientSidePage.Like();
+                } 
+                else
+                {
+                    clientSidePage.Unlike();
                 }
             }
 
@@ -203,15 +229,15 @@ namespace PnP.PowerShell.Commands.Pages
                     if (TranslationLanguageCodes != null && TranslationLanguageCodes.Length > 0)
                     {
                         var translationLanguagesList = new List<int>(TranslationLanguageCodes);
-                        
+
                         try
                         {
-                            PnPContext.Web.EnsureMultilingual(translationLanguagesList);    
+                            MultilingualHelper.EnsureMultilingual(Connection, translationLanguagesList);
                         }
                         catch
                         {
                             // swallow exception
-                        }                        
+                        }
 
                         foreach (int i in TranslationLanguageCodes)
                         {

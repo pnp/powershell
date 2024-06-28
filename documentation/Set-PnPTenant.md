@@ -84,6 +84,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableAutoNewsDigest <Boolean>]
  [-CommentsOnListItemsDisabled <Boolean>]
  [-CommentsOnFilesDisabled <Boolean>]
+ [-AllowCommentsTextOnEmailEnabled <Boolean>]
  [-DisableBackToClassic <Boolean>]
  [-InformationBarriersSuspension <Boolean>] 
  [-AllowFilesWithKeepLabelToBeDeletedODB <Boolean>]
@@ -92,13 +93,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ExternalUserExpireInDays <Boolean>]
  [-OneDriveRequestFilesLinkEnabled <Boolean>]
  [-EnableRestrictedAccessControl <Boolean>]
- [-SyncAadB2BManagementPolicy <Boolean>]
  [-EnableAzureADB2BIntegration <Boolean>]
  [-CoreRequestFilesLinkEnabled <Boolean>]
- [-CoreRequestFilesLinkExpirationInDays <Boolean>]
+ [-CoreRequestFilesLinkExpirationInDays <Int32>]
  [-LabelMismatchEmailHelpLink <String>]
  [-DisableDocumentLibraryDefaultLabeling <Boolean>]
- [-DisableListSync <Boolean>]
  [-IsEnableAppAuthPopUpEnabled <Boolean>]
  [-ExpireVersionsAfterDays <Int32>]
  [-MajorVersionLimit <Int32>]
@@ -119,6 +118,43 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IBImplicitGroupBased <Boolean>]
  [-ShowOpenInDesktopOptionForSyncedFiles <Boolean>]
  [-ShowPeoplePickerGroupSuggestionsForIB <Boolean>]
+ [-BlockDownloadFileTypePolicy <Boolean>]
+ [-BlockDownloadFileTypeIds <SPBlockDownloadFileTypeId[]>]
+ [-ExcludedBlockDownloadGroupIds <GUID[]>]
+ [-ArchiveRedirectUrl <String>]
+ [-StopNew2013Workflows <Boolean>]
+ [-MediaTranscription <MediaTranscriptionPolicyType>]
+ [-MediaTranscriptionAutomaticFeatures <MediaTranscriptionAutomaticFeaturesPolicyType>]
+ [-SiteOwnerManageLegacyServicePrincipalEnabled <Boolean>]
+ [-ReduceTempTokenLifetimeEnabled <Boolean>]
+ [-ReduceTempTokenLifetimeValue <Int32>]
+ [-ViewersCanCommentOnMediaDisabled <Boolean>]
+ [-AllowGuestUserShareToUsersNotInSiteCollection <Boolean>]
+ [-ConditionalAccessPolicyErrorHelpLink <String>]
+ [-CustomizedExternalSharingServiceUrl <String>]
+ [-IncludeAtAGlanceInShareEmails <Boolean>]
+ [-MassDeleteNotificationDisabled <Boolean>]
+ [-BusinessConnectivityServiceDisabled <Boolean>]
+ [-EnableSensitivityLabelForPDF <Boolean>]
+ [-IsDataAccessInCardDesignerEnabled <Boolean>]
+ [-CoreSharingCapability <SharingCapabilities>]
+ [-EnableVersionExpirationSetting <Boolean>]
+ [-BlockUserInfoVisibilityInOneDrive <TenantBrowseUserInfoPolicyValue>]
+ [-AllowOverrideForBlockUserInfoVisibility <Boolean>]
+ [-AllowEveryoneExceptExternalUsersClaimInPrivateSite <Boolean>]
+ [-AIBuilderEnabled <Boolean>]
+ [-AllowSensitivityLabelOnRecords <Boolean>]
+ [-AnyoneLinkTrackUsers <Boolean>]
+ [-EnableSiteArchive <Boolean>]
+ [-ESignatureEnabled <Boolean>]
+ [-BlockUserInfoVisibilityInSharePoint <TenantBrowseUserInfoPolicyValue>]
+ [-MarkNewFilesSensitiveByDefault <SensitiveByDefaultState>]
+ [-OneDriveDefaultShareLinkScope <SharingScope>]
+ [-OneDriveDefaultShareLinkRole <Role>]
+ [-OneDriveDefaultLinkToExistingAccess <Boolean>]
+ [-OneDriveBlockGuestsAsSiteAdmin <SharingState>]
+ [-RecycleBinRetentionPeriod <Int32>]
+ [-IsSharePointAddInsDisabled <Boolean>] 
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -201,6 +237,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ArchiveRedirectUrl
+Can be used to configure a custom page to show when a user is navigating to a SharePoint Online site that has been archived using Microsoft Syntex Archiving.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -BccExternalSharingInvitations
 When the feature is enabled, all external sharing invitations that are sent will blind copy the e-mail messages listed in the BccExternalSharingInvitationsList.
 
@@ -229,6 +279,58 @@ Single or Multiple e-mail addresses - joe@contoso.com or joe@contoso.com,bob@con
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockSendLabelMismatchEmail
+Allows blocking of the automated e-mail being sent when somebody uploads a document to a site that's protected with a sensitivity label and their document has a higher priority sensitivity label than the sensitivity label applied to the site. [More information](
+https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BusinessConnectivityServiceDisabled
+Allows blocking of Business Connectivity Services to be used on SharePoint Online. This feature is set to be retired on September 30, 2024. [More information](https://techcommunity.microsoft.com/t5/microsoft-sharepoint-blog/support-update-for-business-connectivity-services-in-microsoft/ba-p/3938773).
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableSensitivityLabelForPDF
+Allows turning on support for PDFs with sensitivity labels for the following scenarios:
+
+- Applying a sensitivity label in Office for the web.
+- Uploading a labeled document, and then extracting and displaying that sensitivity label.
+- Search, eDiscovery, and data loss prevention.
+- Auto-labeling policies and default sensitivity labels for SharePoint document libraries.
+
+The valid values are:
+True - Enables support for PDFs.
+False (default) - Disables support for PDFs.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -417,6 +519,7 @@ Accept wildcard characters: False
 ```
 
 ### -EmailAttestationRequired
+Sets email attestation to required.
 
 ```yaml
 Type: Boolean
@@ -579,6 +682,38 @@ Allows to set the session timeout. If you are a tenant administrator and you beg
 
 ```yaml
 Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsDataAccessInCardDesignerEnabled
+Allows turning on support for data access in the Viva Connections Adaptive Card Designer.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsSharePointAddInsDisabled
+When the feature is enabled, all the add-ins features will be disabled.
+
+The valid values are:
+- False (default) - All the add-ins features are supported.
+- True - All the add-ins features will be disabled.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
@@ -877,7 +1012,7 @@ True (default) - The Shared with Everyone folder is created.
 False - No folder is created when the site and OneDrive for Business document library is created.
 
 The default behavior of the Shared with Everyone folder changed in August 2015.
-For additional information about the change, see Provision the Shared with Everyone folder in OneDrive for Business (https://support.office.com/en-us/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2?ui=en-US&rs=en-US&ad=US)
+For additional information about the change, see Provision the Shared with Everyone folder in OneDrive for Business (https://support.office.com/article/Provision-the-Shared-with-Everyone-folder-in-OneDrive-for-Business-6bb02c91-fd0b-42ba-9457-3921cb6dc5b2)
 
 ```yaml
 Type: Boolean
@@ -891,6 +1026,7 @@ Accept wildcard characters: False
 ```
 
 ### -PublicCdnAllowedFileTypes
+Sets public CDN allowed file types, if the public CDN is enabled.
 
 ```yaml
 Type: String
@@ -904,6 +1040,7 @@ Accept wildcard characters: False
 ```
 
 ### -PublicCdnEnabled
+Enables or disables the public CDN.
 
 ```yaml
 Type: Boolean
@@ -917,6 +1054,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequireAcceptingAccountMatchInvitedAccount
+
 Ensures that an external user can only accept an external sharing invitation with an account matching the invited email address.
 
 Administrators who desire increased control over external collaborators should consider enabling this feature.
@@ -939,6 +1077,7 @@ Accept wildcard characters: False
 ```
 
 ### -RequireAnonymousLinksExpireInDays
+
 Specifies all anonymous links that have been created (or will be created) will expire after the set number of days .
 
 To remove the expiration requirement, set the value to zero (0).
@@ -955,6 +1094,7 @@ Accept wildcard characters: False
 ```
 
 ### -SearchResolveExactEmailOrUPN
+
 Removes the search capability from People Picker. Note, recently resolved names will still appear in the list until browser cache is cleared or expired.
 
 SharePoint Administrators will still be able to use starts with or partial name matching when enabled.
@@ -975,6 +1115,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingAllowedDomainList
+
 Specifies a list of email domains that is allowed for sharing with the external collaborators. Use the space character as the delimiter for entering multiple values. For example, "contoso.com fabrikam.com".
 
 For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business
@@ -991,6 +1132,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingBlockedDomainList
+
 Specifies a list of email domains that is blocked or prohibited for sharing with the external collaborators. Use space character as the delimiter for entering multiple values. For example, "contoso.com fabrikam.com".
 
 For additional information about how to restrict a domain sharing, see Restricted Domains Sharing in Office 365 SharePoint Online and OneDrive for Business
@@ -1007,6 +1149,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingCapability
+
 Determines what level of sharing is available for the site.
 
 The valid values are:
@@ -1028,6 +1171,7 @@ Accept wildcard characters: False
 ```
 
 ### -SharingDomainRestrictionMode
+
 Specifies the external sharing mode for domains.
 
 The following values are: None AllowList BlockList
@@ -1047,6 +1191,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowAllUsersClaim
+
 Enables the administrator to hide the All Users claim groups in People Picker.
 
 When users share an item with "All Users (x)", it is accessible to all organization members in the tenant's Azure Active Directory who have authenticated with via this method. When users share an item with "All Users (x)" it is accessible to all organization members in the tenant that used NTLM to authentication with SharePoint.
@@ -1069,6 +1214,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowEveryoneClaim
+
 Enables the administrator to hide the Everyone claim in the People Picker.
 When users share an item with Everyone, it is accessible to all authenticated users in the tenant's Azure Active Directory, including any active external users who have previously accepted invitations.
 
@@ -1090,6 +1236,7 @@ Accept wildcard characters: False
 ```
 
 ### -ShowEveryoneExceptExternalUsersClaim
+
 Enables the administrator to hide the "Everyone except external users" claim in the People Picker.
 When users share an item with "Everyone except external users", it is accessible to all organization members in the tenant's Azure Active Directory, but not to any users who have previously accepted invitations.
 
@@ -1110,6 +1257,7 @@ Accept wildcard characters: False
 
 ### -ShowPeoplePickerSuggestionsForGuestUsers
 
+Shows people picker suggestions for guest users. To enable the option to search for existing guest users at Tenant Level, set this parameter to $true.
 
 ```yaml
 Type: Boolean
@@ -1123,6 +1271,7 @@ Accept wildcard characters: False
 ```
 
 ### -SignInAccelerationDomain
+
 Specifies the home realm discovery value to be sent to Azure Active Directory (AAD) during the user sign-in process.
 
 When the organization uses a third-party identity provider, this prevents the user from seeing the Azure Active Directory Home Realm Discovery web page and ensures the user only sees their company's Identity Provider's portal.
@@ -1150,6 +1299,7 @@ Accept wildcard characters: False
 ```
 
 ### -SocialBarOnSitePagesDisabled
+
 Disables or enables the Social Bar which appears on all modern SharePoint pages with the exception of the home page of a site. It gives users the ability to like a page, see the number of views, likes, and comments on a page, and see the people who have liked a page.
 
 ```yaml
@@ -1290,8 +1440,22 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -AllowCommentsTextOnEmailEnabled
+When this parameter is set to true, an email notification that user receives when is mentioned, includes the surrounding document context. Set it to false to disable this feature.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -InformationBarriersSuspension
-Allows suspension of the information barriers future in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see https://learn.microsoft.com/sharepoint/information-barriers.
+Allows suspension of the information barriers feature in a Microsoft 365 tenant. Setting this to $true will disable information barriers, setting this to $false will enable information barriers. For more information, see https://learn.microsoft.com/sharepoint/information-barriers.
 
 ```yaml
 Type: Boolean
@@ -1361,7 +1525,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisablePersonalListCreation
-Allows configuring whether personal lists created within the OneDrive for Business site of the user is enabled or disabled in the tenant. If set to `$true`, personal lists will be allowed to be created in the tenant. If set to `$false`, it will be disabled in the tenant.
+Allows configuring whether personal lists created within the OneDrive for Business site of the user is enabled or disabled in the tenant. If set to `$false`, personal lists will be allowed to be created in the tenant. If set to `$true`, it will be disabled in the tenant.
 
 ```yaml
 Type: Boolean
@@ -1390,6 +1554,12 @@ Accept wildcard characters: False
 
 ### -EnableModernListTemplateIds
 Guids of out of the box modern list templates to show when creating a new list
+
+| Template  | Template Id |
+| ------------- | ------------- |
+| Media library | 7fdc8cba-3e07-4851-a7ac-b747040ff1ce |
+| Learning | 2a31cc9a-a7a2-4978-8104-6b7c0c0ff1ce |
+| Invoices | cb3f4b1a-d4d8-40b3-a3e8-c39c470ff1ce |
 
 ```yaml
 Type: Guid[]
@@ -1514,20 +1684,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SyncAadB2BManagementPolicy
-Allows enablement of Azure B2B Management Policies to be synced. See [this article](https://learn.microsoft.com/sharepoint/sharepoint-azureb2b-integration) for more information.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -CoreRequestFilesLinkEnabled
 Enable or disable the Request files link on the core partition for all SharePoint sites (not including OneDrive sites). If this value is not set, Request files will only show for OneDrives with Anyone links enabled.
 
@@ -1560,31 +1716,10 @@ Accept wildcard characters: False
 
 ### -LabelMismatchEmailHelpLink
 
-This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels.
+This parameter allows tenant admins to customize the "Help Link" in email with the subject "Incompatible sensitivity label detected." When a sensitivity label mismatch occurs between the label on the document uploaded and the label on the site, SharePoint Online captures an audit record and sends an Incompatible sensitivity label detected email notification to the person who uploaded the document and the site owner. The notification contains details of the document which caused the problem and the label assigned to the document and to the site. The comparison happens between the priority of these two labels. [More information](https://learn.microsoft.com/microsoft-365/compliance/sensitivity-labels-teams-groups-sites?view=o365-worldwide#auditing-sensitivity-label-activities).
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -CoreLoopSharingCapability
-Gets or sets collaboration type for fluid on core partition
-
-The valid values are:
-
-- Disabled
-- ExternalUserSharingOnly
-- ExternalUserAndGuestSharing
-- ExistingExternalUserSharingOnly
-
-```yaml
-Type: SharingCapabilities
 Parameter Sets: (All)
 
 Required: False
@@ -1691,14 +1826,10 @@ Gets or sets default share link role for fluid on SharePoint sites.
 The valid values are:
 
 - Edit
-- LimitedEdit
-- LimitedView
-- ManageList
 - None
-- Owner
 - RestrictedView
 - Review
-- Submit
+- View
 
 ```yaml
 Type: Role
@@ -1728,7 +1859,7 @@ Accept wildcard characters: False
 
 ### -IsCollabMeetingNotesFluidEnabled
 
-Gets or sets a value to specify whether CollabMeetingNotes Fluid Framework is enabled If IsFluidEnabled disabled, IsCollabMeetingNotesFluidEnabled will be disabled automatically If IsFluidEnabled enabled, IsCollabMeetingNotesFluidEnabled will be enabled automatically IsCollabMeetingNotesFluidEnabled can be enabled only when IsFluidEnabled is already enabled
+Gets or sets a value to specify whether CollabMeetingNotes Fluid Framework is enabled. If IsFluidEnabled disabled, IsCollabMeetingNotesFluidEnabled will be disabled automatically. If IsFluidEnabled enabled, IsCollabMeetingNotesFluidEnabled will be enabled automatically. IsCollabMeetingNotesFluidEnabled can be enabled only when IsFluidEnabled is already enabled.
 
 ```yaml
 Type: Boolean
@@ -1751,7 +1882,7 @@ In this case, Whiteboard provides temporary viewing and collaboration on the whi
 
 If you have external sharing enabled for OneDrive for Business, no further action is required.
 
-If you restrict external sharing for OneDrive for Business, you can keep it restricted, and just enable this new setting in order for external and shared device accounts to work. For more information, see [Manage sharing for Microsoft Whiteboard](https://learn.microsoft.com/en-us/microsoft-365/whiteboard/manage-sharing-organizations).
+If you restrict external sharing for OneDrive for Business, you can keep it restricted, and just enable this new setting in order for external and shared device accounts to work. For more information, see [Manage sharing for Microsoft Whiteboard](https://learn.microsoft.com/microsoft-365/whiteboard/manage-sharing-organizations).
 
 ```yaml
 Type: SharingState
@@ -1837,6 +1968,7 @@ Accept wildcard characters: False
 ```
 
 ### -CoreDefaultLinkToExistingAccess
+
 Gets or sets default share link to existing access on core partition
 
 ```yaml
@@ -1872,14 +2004,10 @@ Gets or sets default share link role for fluid on OneDrive sites.
 The valid values are:
 
 - Edit
-- LimitedEdit
-- LimitedView
-- ManageList
 - None
-- Owner
 - RestrictedView
 - Review
-- Submit
+- View
 
 ```yaml
 Type: Role
@@ -1894,6 +2022,8 @@ Accept wildcard characters: False
 
 ### -MajorVersionLimit
 
+When Version History Limits are managed Manually (EnableAutoExpirationVersionTrim $false), admins will need to set the limits to the number of major versions (MajorVersionLimit) and the time period the versions are stored (ExpireVersionsAfterDays).
+
 ```yaml
 Type: Int32
 Parameter Sets: (All)
@@ -1906,6 +2036,8 @@ Accept wildcard characters: False
 ```
 
 ### -ExpireVersionsAfterDays
+
+When Version History Limits are managed Manually (EnableAutoExpirationVersionTrim $false), admins will need to set the limits to the number of major versions (MajorVersionLimit) and the time period the versions are stored (ExpireVersionsAfterDays).
 
 ```yaml
 Type: Int32
@@ -1952,19 +2084,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DisableListSync
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -OneDriveRequestFilesLinkExpirationInDays
 
 Specifies the number of days before a Request files link expires for all OneDrive sites.
@@ -1991,6 +2110,569 @@ For more information on this feature, please take a look [here](https://learn.mi
 Type: Boolean
 Parameter Sets: (All)
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadFileTypePolicy
+
+You can block the download of Teams meeting recording files from SharePoint or OneDrive. This allows users to remain productive while addressing the risk of accidental data loss. Users have browser-only access to play the meeting recordings with no ability to download or sync files or access them through apps.
+
+This policy applies to new meeting recordings across the entire organization. You can exempt people who are members of specified security groups from the policy. This allows you to specify governance or compliance specialists who should have download access to meeting recordings.
+
+After the policy is turned on, any new Teams meeting recording files created by the Teams service and saved in SharePoint and OneDrive are blocked from download.
+
+Because this policy affects meeting recordings stored in OneDrive and SharePoint, you must be a SharePoint administrator to configure it.
+
+Note that this policy doesn't apply to manually uploaded meeting recording files. For more details, see [Block the download of Teams meeting recording files from SharePoint or OneDrive.](https://learn.microsoft.com/microsoftteams/block-download-meeting-recording)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockDownloadFileTypeIds
+
+The File Type IDs which need to specified to prevent download.
+
+```yaml
+Type: SPBlockDownloadFileTypeId[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludedBlockDownloadGroupIds
+
+This parameter exempts users in the specified security groups from this policy so that they can download meeting recording files.
+
+```yaml
+Type: GUID[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StopNew2013Workflows
+
+This parameter allows disablement of creation of new SharePoint 2013 workflows in the tenant
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MediaTranscription
+
+When the feature is enabled, videos can have transcripts generated on demand or generated automatically in certain scenarios. This is the default because the policy is default on. If a video owner decides they don’t want the transcript, they can always hide or delete it from that video. Possible values: Enabled, Disabled.
+
+```yaml
+Type: MediaTranscriptionPolicyType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MediaTranscriptionAutomaticFeatures
+
+When the feature is enabled, videos can have transcripts generated automatically on upload. The policy is default on. If a tenant admin decides to disable the feature, he can do so by disabling the policy at tenant level. This feature can not be enabled or disabled at site level. Possible values: Enabled, Disabled.
+
+```yaml
+Type: MediaTranscriptionAutomaticFeaturesPolicyType
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SiteOwnerManageLegacyServicePrincipalEnabled
+
+This parameter allows site owners to create or update the service principal.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReduceTempTokenLifetimeEnabled
+
+Enables reduced session timeout for temporary URLs used by apps for document download scenarios. Reduction occurs when an app redeeming an IP address does not match the original requesting IP. The default value is 15 minutes if ReduceTempTokenLifetimeValue is not set.
+
+Note: Reducing this value may bring degradation in end-user experience by requiring frequent authentication prompts to users.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReduceTempTokenLifetimeValue
+
+Optional parameter to set the session timeout value for temporary URLs. The value can be set between 5 and 15 minutes and the default value is 15 minutes.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ViewersCanCommentOnMediaDisabled
+
+Controls whether viewers commenting on media items is disabled or not.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowGuestUserShareToUsersNotInSiteCollection
+
+The AllowGuestUserShareToUsersNotInSiteCollection settings (defaulted to false) will allow guests to share to users not in the site.
+
+The valid values are:
+
+- False (default) - Guest users will only be able to share to users that exist within the current site.
+- True - Guest users will be able to find user accounts in the directory by typing in the exact email address match.
+
+Note: When the value is set to True, you will also need to enable [SharePoint and OneDrive integration with Azure AD B2B](https://learn.microsoft.com/en-us/sharepoint/sharepoint-azureb2b-integration) for the functionality to work.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ConditionalAccessPolicyErrorHelpLink
+
+A Link for help when Conditional Access Policy blocks a user. This should be in a valid URL format. A valid URL format that begins with http:// or https://.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CustomizedExternalSharingServiceUrl
+
+Specifies a URL that will be appended to the error message that is surfaced when a user is blocked from sharing externally by policy. This URL can be used to direct users to internal portals to request help or to inform them about your organization's policies. An example value is `https://www.contoso.com/sharingpolicies`.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeAtAGlanceInShareEmails
+
+Enables or disables the At A Glance feature in sharing e-mails. This provides the key points and time to read for the shared item if available.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MassDeleteNotificationDisabled
+
+Enables or disables the mass delete detection feature. When MassDeleteNotificationDisabled is set to $true, tenant admins can perform mass deletion operations without triggering notifications.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AppBypassInformationBarriers
+Enables of disables applications running in app-only mode to access IB sites.
+
+For more information about information barriers, see [Use information barriers with SharePoint](https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint) for your SharePoint Online environment.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultOneDriveInformationBarrierMode
+The DefaultOneDriveInformationBarrierMode sets the information barrier mode for all OneDrive sites.
+
+The valid values are:
+
+- Open
+- Explicit
+- Implicit
+- OwnerModerated
+- Mixed
+For more information about information barriers, see [Use information barriers with SharePoint](https://learn.microsoft.com/en-us/purview/information-barriers-sharepoint) for your SharePoint Online environment.
+
+```yaml
+Type: InformationBarriersMode
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreSharingCapability
+Sets what level of sharing is available for SharePoint sites (not including OneDrive sites).
+
+```yaml
+Type: SharingCapabilities
+Parameter Sets: (All)
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableVersionExpirationSetting
+Sets intelligent version deleting options and default organization limits.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -BlockUserInfoVisibilityInOneDrive
+Blocks users from accessing User Info if they have Limited Access permission only to the OneDrive. The policy applies to all OneDrives in the organization.
+
+The valid values are:
+
+ApplyToNoUsers (default) - No users are prevented from accessing User Info when they have Limited Access permission only.
+ApplyToAllUsers - All users (internal or external) are prevented from accessing User Info if they have Limited Access permission only.
+ApplyToGuestAndExternalUsers - Only external or guest users are prevented from accessing User Info if they have Limited Access permission only.
+ApplyToInternalUsers - Only internal users are prevented from accessing User Info if they have Limited Access permission only.
+
+```yaml
+Type: TenantBrowseUserInfoPolicyValue
+Parameter Sets: (All)
+Accepted values: ApplyToNoUsers (default), ApplyToAllUsers, ApplyToGuestAndExternalUsers, ApplyToInternalUsers
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+
+### -BlockUserInfoVisibilityInSharePoint
+Blocks users from accessing User Info if they have Limited Access permission only to a SharePoint site. The policy applies to all SharePoint sites in the organization.
+
+The valid values are:
+
+ApplyToNoUsers (default) - No users are prevented from accessing User Info when they have Limited Access permission only to a SharePoint site.
+
+ApplyToAllUsers - All users (internal or external) are prevented from accessing User Info if they have Limited Access permission only to a SharePoint site.
+
+ApplyToGuestAndExternalUsers - Only external or guest users are prevented from accessing User Info if they have Limited Access permission only to a SharePoint site.
+
+ApplyToInternalUsers - Only internal users are prevented from accessing User Info if they have Limited Access permission only to a SharePoint site.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowOverrideForBlockUserInfoVisibility
+Allow organization level policy for Block User Info Visibility to be overridden for a SharePoint site or OneDrive. 
+
+The valid values are:
+
+False (default) - Do not allow the Block User Info Visibility policy to be overridden for a SharePoint site or OneDrive.
+
+True - Allow the Block User Info Visibility policy to be overridden for a SharePoint site or OneDrive.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowEveryoneExceptExternalUsersClaimInPrivateSite
+When this parameter is true, the "Everyone except external users" claim is available in the People Picker of a private site. Set it to false to disable this feature.
+
+The valid values are:
+
+True - The "Everyone except external users" claim is available in People Picker of a private site.
+False (default) - The "Everyone except external users" claim is not available in People Picker of a private site.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AIBuilderEnabled
+Enables or disables AI Builder.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowSensitivityLabelOnRecords
+Allows sensitivity label on records.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AnyoneLinkTrackUsers
+Enables or disables tracking of users with anyone link.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableSiteArchive
+Enables or disables site archive.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ESignatureEnabled
+Enables or disables eSignature.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MarkNewFilesSensitiveByDefault
+Marks new files as sensitive by default before DLP policies are applied.
+
+```yaml
+Type: SensitiveByDefaultState
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveDefaultShareLinkScope
+
+Sets the default sharing link scope for OneDrive.
+
+The valid values are:
+
+- Anyone
+- Organization
+- SpecificPeople
+- Uninitialized
+
+```yaml
+Type: SharingScope
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveDefaultShareLinkRole
+
+Sets the default sharing link role for OneDrive.
+
+Valid values are :
+
+- Edit
+- None
+- RestrictedView
+- Review
+- View
+
+```yaml
+Type: Role
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveDefaultLinkToExistingAccess
+
+Sets whether OneDrive default links should grant access to existing users.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveBlockGuestsAsSiteAdmin
+
+Sets the sharing state for blocking guests as site admin in OneDrive.
+
+Valid values are
+
+- On
+- Off
+- Unspecified
+
+```yaml
+Type: SharingState
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RecycleBinRetentionPeriod
+
+Sets the retention period for the recycle bin.
+
+The value of Recycle Bin Retention Period must be between 14 and 93. By default it is set to 93.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None

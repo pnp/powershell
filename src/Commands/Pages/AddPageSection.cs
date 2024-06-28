@@ -6,6 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Add, "PnPPageSection")]
+    [OutputType(typeof(void))]
     public class AddPageSection : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -20,13 +21,16 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public int ZoneEmphasis = 0;
 
+        [Parameter(Mandatory = false)]
+        public int VerticalZoneEmphasis = 0;
+
         protected override void ExecuteCmdlet()
         {
             var page = Page?.GetPage(Connection);
 
             if (page != null)
             {
-                page.AddSection(SectionTemplate, Order, ZoneEmphasis);
+                page.AddSection(SectionTemplate, Order, ZoneEmphasis, VerticalZoneEmphasis);
                 page.Save();
             }
             else

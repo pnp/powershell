@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureADGroup")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [Alias("New-PnPEntraIDGroup")]
     public class NewAzureADGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -62,8 +63,8 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (forceCreation)
             {
-                var ownerData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(Connection, AccessToken, Owners).GetAwaiter().GetResult();
-                var memberData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(Connection, AccessToken, Members).GetAwaiter().GetResult();
+                string[] ownerData = null;
+                string[] memberData = null;
 
                 var postData = new Dictionary<string, object>() {
                     { "description" , string.IsNullOrEmpty(Description) ? null : Description },
@@ -71,10 +72,19 @@ namespace PnP.PowerShell.Commands.Graph
                     { "groupTypes", new List<string>(){} },
                     { "mailEnabled", IsMailEnabled.ToBool() },
                     { "mailNickname" , MailNickname },
-                    { "securityEnabled", IsSecurityEnabled.ToBool() },
-                    { "owners@odata.bind", ownerData },
-                    { "members@odata.bind", memberData },
+                    { "securityEnabled", IsSecurityEnabled.ToBool() }                    
                 };
+
+                if (Owners?.Length > 0)
+                {
+                    ownerData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(Connection, AccessToken, Owners).GetAwaiter().GetResult();
+                    postData.Add("owners@odata.bind", ownerData);
+                }
+                if (Members?.Length > 0)
+                {
+                    memberData = Microsoft365GroupsUtility.GetUsersDataBindValueAsync(Connection, AccessToken, Members).GetAwaiter().GetResult();
+                    postData.Add("members@odata.bind", memberData);
+                }               
 
                 var data = JsonSerializer.Serialize(postData);
                 var stringContent = new StringContent(data);

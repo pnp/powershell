@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate;
 using PnP.PowerShell.Commands.Properties;
+using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Linq;
 using System.Management.Automation;
@@ -25,6 +26,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
+            string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
             var environmentName = Environment.GetName();
             if (string.IsNullOrEmpty(environmentName))
             {
@@ -46,8 +48,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             if (!Force && !ShouldContinue($"Restart flow run with name '{flowRunName}'?", Resources.Confirm))
                 return;
 
-            var triggers = GraphHelper.GetResultCollectionAsync<FlowRunTrigger>(Connection, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
-            RestHelper.PostAsync(Connection.HttpClient, $"https://management.azure.com/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers/{triggers.First().Name}/histories/{flowRunName}/resubmit?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            var triggers = GraphHelper.GetResultCollectionAsync<FlowRunTrigger>(Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            RestHelper.PostAsync(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/triggers/{triggers.First().Name}/histories/{flowRunName}/resubmit?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
         }
     }
 }

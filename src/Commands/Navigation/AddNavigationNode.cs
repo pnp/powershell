@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
+using System.Text.Json;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Enums;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -47,6 +49,11 @@ namespace PnP.PowerShell.Commands.Branding
         [Parameter(ParameterSetName = ParameterSet_PreviousNode)]
         [Parameter(Mandatory = false)]
         public List<Guid> AudienceIds;
+
+        [Parameter(ParameterSetName = ParameterSet_Default)]
+        [Parameter(ParameterSetName = ParameterSet_PreviousNode)]
+        [Parameter(Mandatory = false)]
+        public SwitchParameter OpenInNewTab;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_PreviousNode)]
         public NavigationNodePipeBind PreviousNode;
@@ -115,8 +122,26 @@ namespace PnP.PowerShell.Commands.Branding
                 {
                     // Retrieve the menu definition and save it back again. This step is needed to enforce some properties of the menu to be shown, such as the audience targeting.
                     CurrentWeb.EnsureProperties(w => w.Url);
-                    var menuState = Utilities.REST.RestHelper.GetAsync(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/MenuState", ClientContext, "application/json;odata=nometadata").GetAwaiter().GetResult();
-                    Utilities.REST.RestHelper.PostAsync(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/SaveMenuState", ClientContext, @"{ ""menuState"": " + menuState + "}", "application/json", "application/json;odata=nometadata").GetAwaiter().GetResult();
+                    var menuState = Utilities.REST.RestHelper.GetAsync<Model.SharePoint.NavigationNodeCollection>(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/MenuState", ClientContext.GetAccessToken(), false).GetAwaiter().GetResult();
+
+                    var currentItem = menuState?.Nodes?.Select(node => SearchNodeById(node, addedNode.Id))
+                        .FirstOrDefault(result => result != null);
+                    if (currentItem != null)
+                    {
+                        currentItem.OpenInNewWindow = OpenInNewTab.ToBool();
+
+                        if (ParameterSpecified(nameof(AudienceIds)))
+                        {
+                            currentItem.AudienceIds = AudienceIds;
+                        }
+
+                        var payload = JsonSerializer.Serialize(menuState);
+                        Utilities.REST.RestHelper.PostAsync(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/SaveMenuState", ClientContext, @"{ ""menuState"": " + payload + "}", "application/json", "application/json;odata=nometadata").GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        WriteWarning("Something went wrong while trying to set AudienceIDs or Open in new tab property");
+                    }
                 }
 
                 WriteObject(addedNode);
@@ -126,5 +151,16 @@ namespace PnP.PowerShell.Commands.Branding
                 throw new Exception("Unable to define Navigation Node collection to add the node to");
             }
         }
+
+        private static Model.SharePoint.NavigationNode SearchNodeById(Model.SharePoint.NavigationNode root, int id)
+        {
+            if (root.Key == id.ToString())
+            {
+                return root;
+            }
+
+            return root.Nodes.Select(child => SearchNodeById(child, id)).FirstOrDefault(result => result != null);
+        }
+
     }
 }

@@ -1646,7 +1646,7 @@
         "id": "f6a3db3e-f7e8-4ed2-a414-557c8c9830be",
         "isEnabled": true,
         "isAdmin": true,
-        "consentDescription": "Allows the app to read the memberships of hidden groups or administrative units on your behalf, for those hidden groups or adminstrative units that you have access to.",
+        "consentDescription": "Allows the app to read the memberships of hidden groups or administrative units on your behalf, for those hidden groups or administrative units that you have access to.",
         "consentDisplayName": "Read your hidden memberships",
         "value": "Member.Read.Hidden"
       },
@@ -2739,6 +2739,26 @@
         "consentDescription": "Allows an app to read information protection sensitivity labels and label policy settings, on behalf of the signed-in user.",
         "consentDisplayName": "Read user sensitivity labels and label policies.",
         "value": "InformationProtectionPolicy.Read"
+      },
+      {
+        "adminConsentDescription": "Allows the application to read any data from Records Management, such as configuration, labels, and policies on behalf of the signed-in user.",
+        "adminConsentDisplayName": "Read Records Management configuration, labels, and policies.",
+        "id": "07f995eb-fc67-4522-ad66-2b8ca8ea3efd",
+        "isEnabled": true,
+        "isAdmin": false,
+        "consentDescription": "Allows the application to read any data from Records Management, such as configuration, labels, and policies on behalf of the signed-in user.",
+        "consentDisplayName": "Read Records Management configuration, labels, and policies.",
+        "value": "RecordsManagement.Read.All"
+      },
+      {
+        "adminConsentDescription": "Allows the application to create, update and delete any data from Records Management, such as configuration, labels, and policies on behalf of the signed-in user.",
+        "adminConsentDisplayName": "Read and write Records Management configuration, labels, and policies",
+        "id": "f2833d75-a4e6-40ab-86d4-6dfe73c97605",
+        "isEnabled": true,
+        "isAdmin": false,
+        "consentDescription": "Allows the application to create, update and delete any data from Records Management, such as configuration, labels, and policies on behalf of the signed-in user.",
+        "consentDisplayName": "Read and write Records Management configuration, labels, and policies.",
+        "value": "RecordsManagement.ReadWrite.All"
       },
       {
         "adminConsentDescription": "Allows the app to manage hybrid identity service configuration by creating, viewing, updating and deleting on-premises published resources, on-premises agents and agent groups, on behalf of the signed-in user.",
@@ -5205,6 +5225,28 @@
         "isEnabled": true,
         "isAdmin": false,
         "value": "Mail.ReadBasic.All"
+      },
+      {
+        "allowedMemberTypes": [
+          "Application"
+        ],
+        "consentDescription": "Allows the app to create, read, update and delete all users' tasks and task lists in your organization, without a signed-in user.",
+        "consentDisplayName": "Read and write all users' tasks and tasklists",
+        "id": "44e666d1-d276-445b-a5fc-8815eeb81d55",
+        "isEnabled": true,
+        "isAdmin": false,
+        "value": "Tasks.ReadWrite.All"
+      },
+      {
+        "allowedMemberTypes": [
+          "Application"
+        ],
+        "consentDescription": "Allows the app to read all users' tasks and task lists in your organization, without a signed-in user.",
+        "consentDisplayName": "Read all users' tasks and tasklist",
+        "id": "f10e1f91-74ed-437f-a6fd-d6ae88e26c1f",
+        "isEnabled": true,
+        "isAdmin": false,
+        "value": "Tasks.Read.All"
       }
     ]
   }

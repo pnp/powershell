@@ -39,8 +39,8 @@ This option requires the following:
 
 ```json
 {
-	"name": "PnP 1.11.0",
-	"image": "m365pnp/powershell:1.11.0-alpine-3.14",
+	"name": "PnP 2.4.0",
+	"image": "m365pnp/powershell:2.4.0-alpine-3.16.5",
 	"customizations": {
 		"vscode": {
 			"settings": {

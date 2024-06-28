@@ -11,6 +11,7 @@ using System.Net;
 using System.Threading;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
+using Microsoft.SharePoint.Client.Sharing;
 
 namespace PnP.PowerShell.Commands
 {
@@ -157,13 +158,61 @@ namespace PnP.PowerShell.Commands
         public BlockDownloadLinksFileTypes BlockDownloadLinksFileType;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
+        public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public InformationBarriersMode InformationBarriersMode;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public MediaTranscriptionPolicyType? MediaTranscription { get; set; }        
+        public MediaTranscriptionPolicyType? MediaTranscription;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? BlockDownloadPolicy;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ExcludeBlockDownloadPolicySiteOwners;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] ExcludedBlockDownloadGroupIds;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? ListsShowHeaderAndNavigation;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? RestrictedAccessControl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter ClearRestrictedAccessControl;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] RemoveRestrictedAccessControlGroups;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] AddRestrictedAccessControlGroups;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Guid[] RestrictedAccessControlGroups;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Role DefaultShareLinkRole;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SharingScope DefaultShareLinkScope;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public Role LoopDefaultSharingLinkRole;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SharingScope LoopDefaultSharingLinkScope;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool RestrictContentOrgWideSearch;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool ReadOnlyForUnmanagedDevices;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter InheritVersionPolicyFromTenant;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -292,7 +341,26 @@ namespace PnP.PowerShell.Commands
                 props.DefaultLinkToExistingAccessReset = true;
                 updateRequired = true;
             }
-
+            if (ParameterSpecified(nameof(LoopDefaultSharingLinkScope)))
+            {
+                props.LoopDefaultSharingLinkScope = LoopDefaultSharingLinkScope;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(LoopDefaultSharingLinkRole)))
+            {
+                props.LoopDefaultSharingLinkRole = LoopDefaultSharingLinkRole;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(DefaultShareLinkScope)))
+            {
+                props.DefaultShareLinkScope = DefaultShareLinkScope;
+                updateRequired = true;
+            }
+            if (ParameterSpecified(nameof(DefaultShareLinkRole)))
+            {
+                props.DefaultShareLinkRole = DefaultShareLinkRole;
+                updateRequired = true;
+            }
             if (ParameterSpecified(nameof(AllowDownloadingNonWebViewableFiles)))
             {
                 var value = AllowDownloadingNonWebViewableFiles;
@@ -501,6 +569,78 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
+            if (ParameterSpecified(nameof(BlockDownloadPolicy)) && BlockDownloadPolicy.HasValue)
+            {
+                props.BlockDownloadPolicy = BlockDownloadPolicy.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ExcludeBlockDownloadPolicySiteOwners)) && ExcludeBlockDownloadPolicySiteOwners.HasValue)
+            {
+                props.ExcludeBlockDownloadPolicySiteOwners = ExcludeBlockDownloadPolicySiteOwners.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) && ExcludedBlockDownloadGroupIds.Length > 0)
+            {
+                props.ExcludedBlockDownloadGroupIds = ExcludedBlockDownloadGroupIds;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ListsShowHeaderAndNavigation)) && ListsShowHeaderAndNavigation.HasValue)
+            {
+                props.ListsShowHeaderAndNavigation = ListsShowHeaderAndNavigation.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RestrictedAccessControl)) && RestrictedAccessControl.HasValue)
+            {
+                props.RestrictedAccessControl = RestrictedAccessControl.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ClearRestrictedAccessControl)))
+            {
+                props.ClearRestrictedAccessControl = true;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RemoveRestrictedAccessControlGroups)) && RemoveRestrictedAccessControlGroups.Length > 0)
+            {
+                props.RestrictedAccessControlGroupsToRemove = RemoveRestrictedAccessControlGroups;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(AddRestrictedAccessControlGroups)) && AddRestrictedAccessControlGroups.Length > 0)
+            {
+                props.RestrictedAccessControlGroupsToAdd = AddRestrictedAccessControlGroups;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RestrictedAccessControlGroups)) && RestrictedAccessControlGroups.Length > 0)
+            {
+                props.RestrictedAccessControlGroups = RestrictedAccessControlGroups;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RestrictContentOrgWideSearch)))
+            {
+                props.RestrictContentOrgWideSearch = RestrictContentOrgWideSearch;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(InheritVersionPolicyFromTenant)))
+            {
+                props.InheritVersionPolicyFromTenant = InheritVersionPolicyFromTenant;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ReadOnlyForUnmanagedDevices)))
+            {
+                props.ReadOnlyForUnmanagedDevices = ReadOnlyForUnmanagedDevices;
+                updateRequired = true;
+            }
+
             if (updateRequired)
             {
                 var op = props.Update();
@@ -541,11 +681,11 @@ namespace PnP.PowerShell.Commands
                 AdminContext.ExecuteQueryRetry();
             }
 
-            if(PrimarySiteCollectionAdmin != null)
+            if (PrimarySiteCollectionAdmin != null)
             {
                 using (var siteContext = Tenant.Context.Clone(Identity.Url))
                 {
-                    var spAdmin = PrimarySiteCollectionAdmin.GetUser(siteContext, true);                   
+                    var spAdmin = PrimarySiteCollectionAdmin.GetUser(siteContext, true);
                     siteContext.Load(spAdmin);
                     siteContext.ExecuteQueryRetry();
 

@@ -1,4 +1,5 @@
 ---
+Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPSPRestMethod.html
@@ -9,7 +10,7 @@ title: Invoke-PnPSPRestMethod
 # Invoke-PnPSPRestMethod
 
 ## SYNOPSIS
-Invokes a REST request towards a SharePoint site
+Invokes a REST request towards a SharePoint site.
 
 ## SYNTAX 
 
@@ -21,21 +22,22 @@ Invoke-PnPSPRestMethod -Url <String>
                        [-Raw]
                        [-Connection <PnPConnection>]
                        [-ResponseHeadersVariable <String>]
+                       [-Batch <PnPBatch>]
 ```
 
 ## DESCRIPTION
-Invokes a REST request towards a SharePoint site
+Invokes a REST request towards a SharePoint site.
 
 ## EXAMPLES
 
-### ------------------EXAMPLE 1------------------
+### EXAMPLE 1
 ```powershell
 Invoke-PnPSPRestMethod -Url /_api/web
 ```
 
-This example executes a GET request towards the current site collection and returns the properties of the current web
+This example executes a GET request towards the current site collection and returns the properties of the current web.
 
-### ------------------EXAMPLE 2------------------
+### EXAMPLE 2
 ```powershell
 $output = Invoke-PnPSPRestMethod -Url '/_api/web/lists?$select=Id,Title'
 $output.value
@@ -43,31 +45,31 @@ $output.value
 
 This example executes a GET request towards the current site collection and returns the id and title of all the lists and outputs them to the console. Notice the use of single quotes. If you want to use double quotes (") then you will have to escape the $ character with a backtick: `$
 
-### ------------------EXAMPLE 3------------------
+### EXAMPLE 3
 ```powershell
 $item = @{Title="Test"}
 Invoke-PnPSPRestMethod -Method Post -Url "/_api/web/lists/GetByTitle('Test')/items" -Content $item
 ```
 
-This example creates a new item in the list 'Test' and sets the title field to 'Test'
+This example creates a new item in the list 'Test' and sets the title field to 'Test'.
 
-### ------------------EXAMPLE 4------------------
+### EXAMPLE 4
 ```powershell
 $item = "{'Title':'Test'}"
 Invoke-PnPSPRestMethod -Method Post -Url "/_api/web/lists/GetByTitle('Test')/items" -Content $item
 ```
 
-This example creates a new item in the list 'Test' and sets the title field to 'Test'
+This example creates a new item in the list 'Test' and sets the title field to 'Test'.
 
-### ------------------EXAMPLE 5------------------
+### EXAMPLE 5
 ```powershell
 $item = "{ '__metadata': { 'type': 'SP.Data.TestListItem' }, 'Title': 'Test'}"
 Invoke-PnPSPRestMethod -Method Post -Url "/_api/web/lists/GetByTitle('Test')/items" -Content $item -ContentType "application/json;odata=verbose"
 ```
 
-This example creates a new item in the list 'Test' and sets the title field to 'Test'
+This example creates a new item in the list 'Test' and sets the title field to 'Test'.
 
-### ------------------EXAMPLE 6------------------
+### EXAMPLE 6
 ```powershell
 $output = Invoke-PnPSPRestMethod -Url '/_api/web/lists?$select=Id,Title' -ResponseHeadersVariable headers
 $output.value
@@ -78,10 +80,23 @@ This example executes a GET request towards the current site collection and retu
 
 It will also store the response headers values in the PowerShell variable name that you specify. Enter a variable name without the dollar sign ($) symbol.
 
+### EXAMPLE 7
+```powershell
+$batch = New-PnPBatch -RetainRequests
+Invoke-PnPSPRestMethod -Method Get -Url "https://tenant.sharepoint.com/sites/mysite/_api/web/lists" -Batch $batch
+$item = "{'Title':'Test'}"
+Invoke-PnPSPRestMethod -Method Post -Url "https://tenant.sharepoint.com/sites/mysite/_api/web/lists/GetByTitle('Test')/items" -Content $item -Batch $batch
+$response = Invoke-PnPBatch $batch -Details
+$response
+```
+
+This example executes a GET request to get all lists and a POST request to add an item to a list in a single batch request.
+It is necessary to create and invoke batch requests in the manner specified here if you want to process something later on with the response object.
+
 ## PARAMETERS
 
 ### -Content
-A string or object to send
+A string or object to send.
 
 ```yaml
 Type: Object

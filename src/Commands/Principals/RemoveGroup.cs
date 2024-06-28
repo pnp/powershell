@@ -6,6 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPGroup", DefaultParameterSetName = "All")]
+    [OutputType(typeof(void))]
     public class RemoveGroup : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
@@ -24,7 +25,4 @@ namespace PnP.PowerShell.Commands.Principals
             }
         }
     }
-
-
-
 }

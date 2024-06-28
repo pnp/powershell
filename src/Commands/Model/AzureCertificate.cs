@@ -1,15 +1,10 @@
-﻿using PnP.PowerShell.Commands.Utilities;
-
-using System;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+﻿using System;
 
 namespace PnP.PowerShell.Commands.Model
 {
     public sealed class AzureCertificate
     {
-        internal AzureCertificate(string subject, DateTime notBefore, DateTime notAfter, string thumbprint, string/*?*/ pfxBase64, string keyCredentials, string certificate, string privateKey)
+        internal AzureCertificate(string subject, DateTime notBefore, DateTime notAfter, string thumbprint, string/*?*/ pfxBase64, string keyCredentials, string certificate, string privateKey, string[] sanNames)
         {
             Subject = subject ?? throw new ArgumentNullException(nameof(subject));
             NotBefore = notBefore;
@@ -19,6 +14,7 @@ namespace PnP.PowerShell.Commands.Model
             KeyCredentials = keyCredentials ?? throw new ArgumentNullException(nameof(keyCredentials));
             Certificate = certificate ?? throw new ArgumentNullException(nameof(certificate));
             PrivateKey = privateKey ?? throw new ArgumentNullException(nameof(privateKey));
+            SanNames = sanNames;
         }
 
         public string Subject { get; }
@@ -29,6 +25,6 @@ namespace PnP.PowerShell.Commands.Model
         public string KeyCredentials { get; }
         public string Certificate { get; }
         public string PrivateKey { get; }
-
+        public string[] SanNames { get; }
     }
 }

@@ -15,7 +15,7 @@ title: Disable-PnPTenantServicePrincipal
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Enables the current tenant's "SharePoint Online Client" service principal.
+Disables the current tenant's "SharePoint Online Client" service principal.
 
 ## SYNTAX
 
@@ -24,7 +24,7 @@ Disable-PnPTenantServicePrincipal [-Force] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Enables the current tenant's "SharePoint Online Client" service principal.
+Disables the current tenant's "SharePoint Online Client" service principal.
 
 ## EXAMPLES
 

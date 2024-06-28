@@ -15,8 +15,7 @@ Allows configuration of the "Change the look" Header
 ## SYNTAX
 
 ```powershell
-Set-PnPWebHeader [-SiteLogoUrl <string>] [-HeaderLayout <HeaderLayoutType>] [-HeaderEmphasis <SPVariantThemeType>] [-HideTitleInHeader]
-[-HeaderBackgroundImageUrl <string>] [-HeaderBackgroundImageFocalX <double>] [-HeaderBackgroundImageFocalY <double>] [-LogoAlignment <LogoAlignment>]
+Set-PnPWebHeader [-SiteLogoUrl <string>] [-SiteThumbnailUrl <string>] [-HeaderLayout <HeaderLayoutType>] [-HeaderEmphasis <SPVariantThemeType>] [-HideTitleInHeader] [-HeaderBackgroundImageUrl <string>] [-HeaderBackgroundImageFocalX <double>] [-HeaderBackgroundImageFocalY <double>] [-LogoAlignment <LogoAlignment>]
  [-Connection <PnPConnection>] 
 ```
 
@@ -151,6 +150,20 @@ Accept wildcard characters: False
 
 ### -SiteLogoUrl
 Sets the logo of the site shown at the top left to the provided server relative url, i.e. /sites/hrdepartment/siteassets/logo.png. Provide "" or $null to remove the logo.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SiteThumbnailUrl
+Sets the thumbnail of the site shown at the top left to the provided server relative url, i.e. /sites/hrdepartment/siteassets/thumbnail.png. Provide "" or $null to remove the thumbnail.
 
 ```yaml
 Type: String

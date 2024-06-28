@@ -8,14 +8,14 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPGroupMember")]
-    
+    [OutputType(typeof(void))]    
     public class RemoveUserFromGroup : PnPWebCmdlet
     {
 
         [Parameter(Mandatory = true)]
         public string LoginName = string.Empty;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [Alias("Identity")]
         public GroupPipeBind Group;
 

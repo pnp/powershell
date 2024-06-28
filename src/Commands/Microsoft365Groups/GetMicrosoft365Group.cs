@@ -22,7 +22,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public SwitchParameter IncludeOwners;
 
         [Parameter(Mandatory = false)]
+        public SwitchParameter Detailed;
+
+        [Parameter(Mandatory = false)]
         public string Filter;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IncludeSensitivityLabels;
 
         protected override void ExecuteCmdlet()
         {
@@ -30,12 +36,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (Identity != null)
             {
-                var group = Identity.GetGroup(Connection, AccessToken, includeSiteUrl, IncludeOwners);
+                var group = Identity.GetGroup(Connection, AccessToken, includeSiteUrl, IncludeOwners, Detailed.ToBool(), IncludeSensitivityLabels);
                 WriteObject(group);
             }
             else
             {
-                var groups = Microsoft365GroupsUtility.GetGroupsAsync(Connection, AccessToken, includeSiteUrl, IncludeOwners, Filter).GetAwaiter().GetResult();
+                var groups = Microsoft365GroupsUtility.GetGroupsAsync(Connection, AccessToken, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels).GetAwaiter().GetResult();
 
                 WriteObject(groups.OrderBy(p => p.DisplayName), true);
             }

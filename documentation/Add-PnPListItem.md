@@ -187,45 +187,48 @@ Accept wildcard characters: False
 
 Use the internal names of the fields when specifying field names.
 
-Single line of text: -Values @{"Title" = "Title New"}
+Single line of text: ``` -Values @{"Title" = "Title New"} ```
 
-Multiple lines of text: -Values @{"MultiText" = "New text\n\nMore text"}
+Multiple lines of text:  ``` -Values @{"MultiText" = "New text\n\nMore text"} ```
 
-Rich text: -Values @{"MultiText" = "&lt;strong&gt;New&lt;/strong&gt; text"}
+Rich text: ``` -Values @{"MultiText" = "&lt;strong&gt;New&lt;/strong&gt; text"} ```
 
-Choice: -Values @{"Choice" = "Choice 1"}
-Multi-Choice: -Values @{"MultiChoice" = "Choice 1","Choice 2"}
+Choice: ``` -Values @{"Choice" = "Choice 1"} ```
 
-Number: -Values @{"Number" = "10"}
+Multi-Choice: ``` -Values @{"MultiChoice" = "Choice 1","Choice 2"} ```
 
-Currency: -Values @{"Currency" = "10"}
+Number: ``` -Values @{"Number" = "10"} ```
+
+Currency: ``` -Values @{"Currency" = "10"} ```
 
 > [!NOTE]
 > For numeric and currency fields, when using -Batch, provide the value using the comma and dots matching the regional setting of the site you're adding the listitem to. When not using batch, you must always provide the value in the American notation, so dot for decimals and comma for thousands separators.
 
-Date and Time: -Values @{"DateAndTime" = "03/13/2015 14:16"}
+Date and Time: ``` -Values @{"DateAndTime" = "03/13/2015 14:16"} ```
 
-Lookup (id of lookup value): -Values @{"Lookup" = "2"}
+Lookup (id of lookup value): ``` -Values @{"Lookup" = "2"} ```
 
-Multi value lookup (id of lookup values as array 1): -Values @{"MultiLookupField" = "1","2"}
+Multi value lookup (id of lookup values as array 1): ``` -Values @{"MultiLookupField" = "1","2"} ```
 
-Multi value lookup (id of lookup values as array 2): -Values @{"MultiLookupField" = 1,2}
+Multi value lookup (id of lookup values as array 2): ``` -Values @{"MultiLookupField" = 1,2} ```
 
-Multi value lookup (id of lookup values as string): -Values @{"MultiLookupField" = "1,2"}
+Multi value lookup (id of lookup values as string): ``` -Values @{"MultiLookupField" = "1,2"} ```
 
-Yes/No: -Values @{"YesNo" = $false}
+Yes/No: ``` -Values @{"YesNo" = $false} ```
 
-Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): -Values @{"Person" = "user1@domain.com","21"}
+Person/Group (id of user/group in Site User Info List or email of the user, separate multiple values with a comma): ``` -Values @{"Person" = "user1@domain.com","21"} ```
 
-Managed Metadata (single value with path to term): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"}
+**If the user is not present, in the site user information list, you need to add that user using `New-PnPUser` cmdlet.**
 
-Managed Metadata (single value with id of term): -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818"} with Id of term
+Managed Metadata (single value with path to term): ``` -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE"} ```
 
-Managed Metadata (multiple values with paths to terms): -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE","CORPORATE|DEPARTMENTS|HR"}
+Managed Metadata (single value with id of term): ``` -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818"} with Id of term ```
 
-Managed Metadata (multiple values with ids of terms): -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593"}
+Managed Metadata (multiple values with paths to terms): ``` -Values @{"MetadataField" = "CORPORATE|DEPARTMENTS|FINANCE","CORPORATE|DEPARTMENTS|HR"} ```
 
-Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, OfficePnP"}
+Managed Metadata (multiple values with ids of terms): ``` -Values @{"MetadataField" = "fe40a95b-2144-4fa2-b82a-0b3d0299d818","52d88107-c2a8-4bf0-adfa-04bc2305b593"} ```
+
+Hyperlink or Picture: ``` -Values @{"Hyperlink" = "https://github.com/OfficeDev/, OfficePnP"} ```
 
 ```yaml
 Type: Hashtable

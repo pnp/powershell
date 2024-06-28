@@ -8,8 +8,7 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Set, "PnPPageWebPart")]
-    [Alias("Set-PnPClientSideWebPart")]
-    [WriteAliasWarning("Please use 'Set-PnPPageWebPart'. The alias 'Set-PnPClientSideWebPart' will be removed in the 1.5.0 release")]
+    [OutputType(typeof(void))]
     public class SetClientSideWebPart : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

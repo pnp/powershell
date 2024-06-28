@@ -1,5 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -15,10 +16,25 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
-                if (Connection?.Context != null)
+                if (Connection != null)
                 {
-                    return TokenHandler.GetAccessToken(this, "https://management.azure.com/.default", Connection);
+                    if (Connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
+                    {
+                        return TokenHandler.GetManagedIdentityTokenAsync(this, Connection.HttpClient, "https://management.azure.com", Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
+                    }
+                    else if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+                    {
+                        return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, "https://management.azure.com/.default").GetAwaiter().GetResult();
+                    }
+                    else
+                    {
+                        if (Connection.Context != null)
+                        {
+                            return TokenHandler.GetAccessToken(this, "https://management.azure.com/.default", Connection);
+                        }
+                    }
                 }
+                WriteVerbose("Unable to acquire token for resource: https://management.azure.com/");
                 return null;
             }
         }

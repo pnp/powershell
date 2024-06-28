@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands
 
             if (MyInvocation.BoundParameters.ContainsKey(nameof(Release)))
             {
-                var url = $"https://api.github.com/repos/pnp/powershell/releases/tags/{Release.Major}.{Release.Minor}.{Release.Build}";
+                var url = $"https://api.github.com/repos/pnp/powershell/releases/tags/v{Release.Major}.{Release.Minor}.{Release.Build}";
                 var response = client.GetAsync(url).GetAwaiter().GetResult();
                 if (response.IsSuccessStatusCode)
                 {

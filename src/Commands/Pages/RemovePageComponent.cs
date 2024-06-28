@@ -8,8 +8,7 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.Pages
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPageComponent")]
-    [Alias("Remove-PnPClientSideComponent")]
-    [WriteAliasWarning("Please use 'Remove-PnPPageComponent'. The alias 'Remove-PnPClientSidecComponent' will be removed in the 1.5.0 release")]
+    [OutputType(typeof(void))]
     public class RemovePageComponent : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
