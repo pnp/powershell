@@ -635,13 +635,21 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static async Task<TeamChannel> GetChannelAsync(string accessToken, PnPConnection connection, string groupId, string channelId, bool useBeta = false)
         {
-            var channel = await GraphHelper.GetAsync<TeamChannel>(connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", accessToken);
+            var additionalHeaders = new Dictionary<string, string>()
+            {
+                { "Prefer", "include-unknown-enum-members" }
+            };
+            var channel = await GraphHelper.GetAsync<TeamChannel>(connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", accessToken, additionalHeaders: additionalHeaders);
             return channel;
         }
 
         public static async Task<IEnumerable<TeamChannel>> GetChannelsAsync(string accessToken, PnPConnection connection, string groupId, bool useBeta = false)
         {
-            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannel>(connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels", accessToken);
+            var additionalHeaders = new Dictionary<string, string>()
+            {
+                { "Prefer", "include-unknown-enum-members" }
+            };
+            var collection = await GraphHelper.GetResultCollectionAsync<TeamChannel>(connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels", accessToken, additionalHeaders: additionalHeaders);
             return collection;
         }
 
