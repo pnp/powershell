@@ -58,6 +58,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
         {
             var url = $"{ApiUrl}/subscriptions/list";
             return GraphHelper.Get<IEnumerable<ManagementApiSubscription>>(this, Connection, url, AccessToken);
+            return GraphHelper.Get<IEnumerable<ManagementApiSubscription>>(this, Connection, url, AccessToken);
         }
 
         private void EnsureSubscription(string contentType)
@@ -66,6 +67,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
             var subscription = subscriptions.FirstOrDefault(s => s.ContentType == contentType);
             if (subscription == null)
             {
+                subscription = GraphHelper.Post<ManagementApiSubscription>(this, Connection, $"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={TenantId}", AccessToken);
                 subscription = GraphHelper.Post<ManagementApiSubscription>(this, Connection, $"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={TenantId}", AccessToken);
                 if (!subscription.Status.Equals("enabled", StringComparison.OrdinalIgnoreCase))
                 {
@@ -98,6 +100,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
                 while (subscriptionResponse.Headers.Contains("NextPageUri"))
                 {
                     subscriptionResponse = GraphHelper.GetResponse(this, Connection, subscriptionResponse.Headers.GetValues("NextPageUri").First(), AccessToken);
+                    subscriptionResponse = GraphHelper.GetResponse(this, Connection, subscriptionResponse.Headers.GetValues("NextPageUri").First(), AccessToken);
                     if (subscriptionResponse.IsSuccessStatusCode)
                     {
                         content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -115,6 +118,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
             {
                 foreach (var subscriptionContent in subscriptionContents)
                 {
+                    var logs = GraphHelper.Get<IEnumerable<ManagementApiUnifiedLogRecord>>(this, Connection, subscriptionContent.ContentUri, AccessToken, false);
                     var logs = GraphHelper.Get<IEnumerable<ManagementApiUnifiedLogRecord>>(this, Connection, subscriptionContent.ContentUri, AccessToken, false);
                     WriteObject(logs, true);
                 }

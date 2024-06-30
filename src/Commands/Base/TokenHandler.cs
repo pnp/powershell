@@ -3,6 +3,7 @@ using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
@@ -20,11 +21,11 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns the type of oAuth JWT token being passed in (Delegate/AppOnly)
         /// </summary>
-        /// <param name="token">The oAuth JWT token</param>
+        /// <param name="accessToken">The oAuth JWT token</param>
         /// <returns>Enum indicating the type of oAuth JWT token</returns>
-        internal static Enums.IdType RetrieveTokenType(string token)
+        internal static Enums.IdType RetrieveTokenType(string accessToken)
         {
-            var decodedToken = new JwtSecurityToken(token);
+            var decodedToken = new JwtSecurityToken(accessToken);
 
             // The idType is stored in the token as a claim
             var idType = decodedToken.Claims.FirstOrDefault(c => c.Type == "idtyp");
