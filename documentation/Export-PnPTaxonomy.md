@@ -147,6 +147,20 @@ If specified will exclude the deprecated taxonomy items in the output. Applicabl
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludeDeprecated
+If specified will exclude the deprecated taxonomy items in the output. Applicable only if you specify TermSetId or TermStoreName.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: TermSet
 
 Required: False
