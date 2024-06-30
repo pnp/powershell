@@ -147,7 +147,7 @@ If specified will exclude the deprecated taxonomy items in the output. Applicabl
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named
@@ -161,7 +161,7 @@ Specify the language code for the exported terms
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named
@@ -189,7 +189,7 @@ If specified, will export the specified termset only
 
 ```yaml
 Type: Guid
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named
@@ -203,7 +203,7 @@ Term store to export; if not specified the default term store is used.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named

@@ -13,19 +13,21 @@ namespace PnP.PowerShell.Commands.Taxonomy
     [Cmdlet(VerbsData.Export, "PnPTaxonomy")]
     public class ExportTaxonomy : PnPSharePointCmdlet
     {
-        [Parameter(Mandatory = false, ParameterSetName = "TermSet")]
+        private const string ParameterSet_TermSet = "TermSet";
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TermSet)]
         public Guid TermSetId;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeID = false;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TermSet)]
         public SwitchParameter ExcludeDeprecated = false;
 
         [Parameter(Mandatory = false)]
         public string Path;
 
-        [Parameter(Mandatory = false, ParameterSetName = "TermSet")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TermSet)]
         public string TermStoreName;
 
         [Parameter(Mandatory = false)]
@@ -34,17 +36,16 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false)]
         public string Delimiter = "|";
 
-        [Parameter(Mandatory = false, ParameterSetName = "TermSet")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TermSet)]
         public int Lcid = 0;
 
         [Parameter(Mandatory = false)]
         public Encoding Encoding = Encoding.Unicode;
 
-
         protected override void ExecuteCmdlet()
         {
             List<string> exportedTerms;
-            if (ParameterSetName == "TermSet")
+            if (ParameterSetName == ParameterSet_TermSet)
             {
                 if (Delimiter != "|" && Delimiter == ";#")
                 {
@@ -53,7 +54,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
                 if (ExcludeDeprecated && Delimiter != "|")
                 {
-                    throw new Exception("ExcludeDeprecated works only on the default delimiter");
+                    throw new PSArgumentException($"{nameof(ExcludeDeprecated)} works only on the default delimiter", nameof(ExcludeDeprecated));
                 }
 
                 if (!string.IsNullOrEmpty(TermStoreName))
