@@ -122,7 +122,7 @@ namespace PnP.PowerShell.Commands.Branding
                 {
                     // Retrieve the menu definition and save it back again. This step is needed to enforce some properties of the menu to be shown, such as the audience targeting.
                     CurrentWeb.EnsureProperties(w => w.Url);
-                    var menuState = Utilities.REST.RestHelper.GetAsync<Model.SharePoint.NavigationNodeCollection>(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/MenuState", ClientContext.GetAccessToken(), false).GetAwaiter().GetResult();
+                    var menuState = Utilities.REST.RestHelper.Get<Model.SharePoint.NavigationNodeCollection>(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/MenuState", ClientContext.GetAccessToken(), false);
 
                     var currentItem = menuState?.Nodes?.Select(node => SearchNodeById(node, addedNode.Id))
                         .FirstOrDefault(result => result != null);
@@ -136,7 +136,7 @@ namespace PnP.PowerShell.Commands.Branding
                         }
 
                         var payload = JsonSerializer.Serialize(menuState);
-                        Utilities.REST.RestHelper.PostAsync(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/SaveMenuState", ClientContext, @"{ ""menuState"": " + payload + "}", "application/json", "application/json;odata=nometadata").GetAwaiter().GetResult();
+                        Utilities.REST.RestHelper.Post(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/SaveMenuState", ClientContext, @"{ ""menuState"": " + payload + "}", "application/json", "application/json;odata=nometadata");
                     }
                     else
                     {

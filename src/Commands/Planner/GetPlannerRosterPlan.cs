@@ -24,16 +24,16 @@ namespace PnP.PowerShell.Commands.Planner
             switch (ParameterSetName)
             {
                 case ParameterSet_BYUSER:
-                    WriteObject(PlannerUtility.GetRosterPlansByUserAsync(Connection, AccessToken, User).GetAwaiter().GetResult(), true);
+                    WriteObject(PlannerUtility.GetRosterPlansByUser(this, Connection, AccessToken, User), true);
                     break;
                     
                 case ParameterSet_BYROSTER:
-                    var plannerRoster = Identity.GetPlannerRosterAsync(Connection, AccessToken).GetAwaiter().GetResult();
+                    var plannerRoster = Identity.GetPlannerRoster(this, Connection, AccessToken);
                     if (plannerRoster == null)
                     {
                         throw new PSArgumentException($"Planner Roster provided through {nameof(Identity)} could not be found", nameof(Identity));
                     }
-                    WriteObject(PlannerUtility.GetRosterPlansByRosterAsync(Connection, AccessToken, plannerRoster.Id).GetAwaiter().GetResult(), true);
+                    WriteObject(PlannerUtility.GetRosterPlansByRoster(this, Connection, AccessToken, plannerRoster.Id), true);
                     break;
             }
         }

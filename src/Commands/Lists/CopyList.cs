@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             // Generate a site script from the list that needs to be copied
             WriteVerbose($"Generating script from list at {SourceListUrl}");
-            var generatedScript = RestHelper.PostAsync<RestResult<string>>(Connection.HttpClient, $"{Connection.Url}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.GetSiteScriptFromList()", ClientContext, new { listUrl = SourceListUrl}).GetAwaiter().GetResult();
+            var generatedScript = RestHelper.Post<RestResult<string>>(Connection.HttpClient, $"{Connection.Url}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.GetSiteScriptFromList()", ClientContext, new { listUrl = SourceListUrl});
 
             // Take the site script of the list to copy
             var script = generatedScript.Content;
@@ -94,7 +94,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             // Execute site script on destination site so the list will be created
             WriteVerbose($"Executing site script to site at {DestinationWebUrl}");
-            var actionResults = RestHelper.PostAsync<RestResultCollection<InvokeSiteScriptActionResponse>>(Connection.HttpClient, $"{DestinationWebUrl}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", ClientContext, new { script = script}).GetAwaiter().GetResult();
+            var actionResults = RestHelper.Post<RestResultCollection<InvokeSiteScriptActionResponse>>(Connection.HttpClient, $"{DestinationWebUrl}/_api/Microsoft.Sharepoint.Utilities.WebTemplateExtensions.SiteScriptUtility.ExecuteTemplateScript()", ClientContext, new { script = script});
             
             // Ensure site script actions have been executed
             if(actionResults.Items.Count() == 0)

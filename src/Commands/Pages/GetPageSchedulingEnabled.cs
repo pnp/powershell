@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Pages
                 }
             };
 
-            var results = Utilities.REST.RestHelper.PostAsync<JsonElement>(Connection.HttpClient, $"{PnPContext.Web.Url}/_api/web/lists(guid'{pagesList.Id}')/RenderListDataAsStream", ClientContext, payload, false).GetAwaiter().GetResult();
+            var results = Utilities.REST.RestHelper.Post<JsonElement>(Connection.HttpClient, $"{PnPContext.Web.Url}/_api/web/lists(guid'{pagesList.Id}')/RenderListDataAsStream", ClientContext, payload, false);
 
             var frameworkClientInfo = results.GetProperty("SPFrameworkClientInfo");
             var pageContextJson = frameworkClientInfo.GetProperty("PageContextJson");

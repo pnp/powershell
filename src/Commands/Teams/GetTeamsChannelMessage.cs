@@ -24,13 +24,13 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId == null)
             {
                 throw new PSArgumentException("Team not found");
             }
 
-            var channelId = Channel.GetId(Connection, AccessToken, groupId);
+            var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
             if (channelId == null)
             {
                 throw new PSArgumentException("Channel not found");
@@ -43,12 +43,12 @@ namespace PnP.PowerShell.Commands.Teams
                     throw new PSArgumentException($"Don't specify {nameof(IncludeDeleted)} when using the {nameof(Identity)} parameter.");
                 }
 
-                var message = TeamsUtility.GetMessageAsync(Connection, AccessToken, groupId, channelId, Identity.GetId()).GetAwaiter().GetResult();
+                var message = TeamsUtility.GetMessage(this, Connection, AccessToken, groupId, channelId, Identity.GetId());
                 WriteObject(message);
             }
             else
             {
-                var messages = TeamsUtility.GetMessagesAsync(Connection, AccessToken, groupId, channelId, IncludeDeleted).GetAwaiter().GetResult();
+                var messages = TeamsUtility.GetMessages(this, Connection, AccessToken, groupId, channelId, IncludeDeleted);
                 WriteObject(messages, true);
             }
         }

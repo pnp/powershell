@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Apps
                     roles = Permissions.Select(p => p.ToLower()).ToArray()
                 };
 
-                var results = Utilities.REST.RestHelper.PatchAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken, payload).GetAwaiter().GetResult();
+                var results = Utilities.REST.RestHelper.Patch<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken, payload);
                 WriteObject(results.Convert());
             }
         }

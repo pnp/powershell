@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            var principal = Principal.GetServicePrincipal(Connection, AccessToken);
+            var principal = Principal.GetServicePrincipal(this, Connection, AccessToken);
 
             if(principal == null)
             {

@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             if (Force || ShouldContinue($"Stop flow run with name '{flowRunName}'?", Resources.Confirm))
             {
                 string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-                RestHelper.PostAsync(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs/{flowRunName}/cancel?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                RestHelper.Post(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/runs/{flowRunName}/cancel?api-version=2016-11-01", AccessToken);
             }
         }
     }

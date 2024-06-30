@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 ExecuteCmdlet();
             }
-            catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
+            catch (Model.Graph.GraphException gex)
             {
                 var errorMessage = gex.Error.Message;
 
@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!string.IsNullOrEmpty(gex.AccessToken))
                     {
-                        TokenHandler.ValidateTokenForPermissions(GetType(), gex.AccessToken);
+                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessToken(GetType(), gex.AccessToken);
                     }
                 }
                 if(string.IsNullOrWhiteSpace(errorMessage) && gex.HttpResponse != null && gex.HttpResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)

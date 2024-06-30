@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
         private IEnumerable<ManagementApiSubscription> GetSubscriptions()
         {
             var url = $"{ApiUrl}/subscriptions/list";
-            return GraphHelper.GetAsync<IEnumerable<ManagementApiSubscription>>(Connection, url, AccessToken).GetAwaiter().GetResult();
+            return GraphHelper.Get<IEnumerable<ManagementApiSubscription>>(this, Connection, url, AccessToken);
         }
 
         private void EnsureSubscription(string contentType)
@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
             var subscription = subscriptions.FirstOrDefault(s => s.ContentType == contentType);
             if (subscription == null)
             {
-                subscription = GraphHelper.PostAsync<ManagementApiSubscription>(Connection, $"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={TenantId}", AccessToken).GetAwaiter().GetResult();
+                subscription = GraphHelper.Post<ManagementApiSubscription>(this, Connection, $"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={TenantId}", AccessToken);
                 if (!subscription.Status.Equals("enabled", StringComparison.OrdinalIgnoreCase))
                 {
                     throw new Exception($"Cannot enable subscription for {contentType}");
@@ -88,20 +88,20 @@ namespace PnP.PowerShell.Commands.ManagementApi
                 url += $"&endTime={EndTime:yyyy-MM-ddTHH:mm:ss}";
             }
 
-            List<ManagementApiSubscriptionContent> subscriptionContents = new List<ManagementApiSubscriptionContent>();
-            var subscriptionResponse = GraphHelper.GetResponseAsync(Connection, url, AccessToken).GetAwaiter().GetResult();
+            List<ManagementApiSubscriptionContent> subscriptionContents = new();
+            var subscriptionResponse = GraphHelper.GetResponse(this, Connection, url, AccessToken);
             var content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
             if (subscriptionResponse.IsSuccessStatusCode)
             {
-                subscriptionContents.AddRange(System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, new System.Text.Json.JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
                 while (subscriptionResponse.Headers.Contains("NextPageUri"))
                 {
-                    subscriptionResponse = GraphHelper.GetResponseAsync(Connection, subscriptionResponse.Headers.GetValues("NextPageUri").First(), AccessToken).GetAwaiter().GetResult();
+                    subscriptionResponse = GraphHelper.GetResponse(this, Connection, subscriptionResponse.Headers.GetValues("NextPageUri").First(), AccessToken);
                     if (subscriptionResponse.IsSuccessStatusCode)
                     {
                         content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                        subscriptionContents.AddRange(System.Text.Json.JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content));
+                        subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content));
                     }
                 }
             }
@@ -115,7 +115,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
             {
                 foreach (var subscriptionContent in subscriptionContents)
                 {
-                    var logs = GraphHelper.GetAsync<IEnumerable<ManagementApiUnifiedLogRecord>>(Connection, subscriptionContent.ContentUri, AccessToken, false).GetAwaiter().GetResult();
+                    var logs = GraphHelper.Get<IEnumerable<ManagementApiUnifiedLogRecord>>(this, Connection, subscriptionContent.ContentUri, AccessToken, false);
                     WriteObject(logs, true);
                 }
             }

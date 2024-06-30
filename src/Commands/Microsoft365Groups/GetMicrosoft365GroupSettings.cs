@@ -2,7 +2,6 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
-using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
@@ -18,13 +17,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                var groupId = Identity.GetGroupId(Connection, AccessToken);
-                var groupSettings = Microsoft365GroupsUtility.GetGroupSettingsAsync(Connection, AccessToken, groupId.ToString()).GetAwaiter().GetResult();
+                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken, groupId.ToString());
                 WriteObject(groupSettings?.Value, true);
             }
             else
             {
-                var groupSettings = Microsoft365GroupsUtility.GetGroupSettingsAsync(Connection, AccessToken).GetAwaiter().GetResult();
+                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken);
                 WriteObject(groupSettings?.Value, true);
             }
         }

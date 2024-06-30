@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -31,7 +32,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public string Id => _id;
         public AzureADServicePrincipalAppRoleAssignment AppRoleAssignment => _appRoleAssignment;
 
-        internal AzureADServicePrincipalAppRoleAssignment GetAssignedAppRole(PnPConnection connection, string accesstoken, string servicePrincipalObjectId = null)
+        internal AzureADServicePrincipalAppRoleAssignment GetAssignedAppRole(Cmdlet cmdlet, PnPConnection connection, string accesstoken, string servicePrincipalObjectId = null)
         {            
             AzureADServicePrincipalAppRoleAssignment appRoleAssignment = null;
 
@@ -42,7 +43,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 {
                     throw new ArgumentNullException(nameof(servicePrincipalObjectId), $"{nameof(servicePrincipalObjectId)} is required when the {GetType()} is created based on an Id");
                 }
-                appRoleAssignment = ServicePrincipalUtility.GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(connection, accesstoken, servicePrincipalObjectId, _id).FirstOrDefault();
+                appRoleAssignment = ServicePrincipalUtility.GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(cmdlet, connection, accesstoken, servicePrincipalObjectId, _id).FirstOrDefault();
             } 
 
             return appRoleAssignment;

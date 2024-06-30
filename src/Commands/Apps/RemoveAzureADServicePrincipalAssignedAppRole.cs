@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Apps
         {
             if(ParameterSetName == ParameterSet_BYASSIGNEDAPPROLE || ParameterSetName == ParameterSet_BYAPPROLENAME)
             {
-                var principal = Principal.GetServicePrincipal(Connection, AccessToken);
+                var principal = Principal.GetServicePrincipal(this, Connection, AccessToken);
 
                 if(principal == null)
                 {
@@ -46,23 +46,23 @@ namespace PnP.PowerShell.Commands.Apps
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        var appRoleAssignment = Identity.GetAssignedAppRole(Connection, AccessToken, principal.Id);
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(Connection, AccessToken, appRoleAssignment);
+                        var appRoleAssignment = Identity.GetAssignedAppRole(this, Connection, AccessToken, principal.Id);
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, appRoleAssignment);
                     }
                     else
                     {
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(Connection, AccessToken, principal);
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, principal);
                     }
                 }
                 else
                 {
-                    ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(Connection, AccessToken, principal, AppRoleName);
+                    ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, principal, AppRoleName);
                 }
             }
             else
             {
-                var appRoleAssignment = Identity.GetAssignedAppRole(Connection, AccessToken);
-                ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(Connection, AccessToken, appRoleAssignment);
+                var appRoleAssignment = Identity.GetAssignedAppRole(this, Connection, AccessToken);
+                ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, appRoleAssignment);
             }
         }
     }
