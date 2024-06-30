@@ -635,19 +635,34 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static TeamChannel GetChannel(Cmdlet cmdlet, string accessToken, PnPConnection connection, string groupId, string channelId, bool useBeta = false)
         {
-            var channel = GraphHelper.Get<TeamChannel>(cmdlet, connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", accessToken);
+            var additionalHeaders = new Dictionary<string, string>()
+            {
+                { "Prefer", "include-unknown-enum-members" }
+            };
+
+            var channel = GraphHelper.Get<TeamChannel>(cmdlet, connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", accessToken, additionalHeaders: additionalHeaders);
             return channel;
         }
 
         public static IEnumerable<TeamChannel> GetChannels(Cmdlet cmdlet, string accessToken, PnPConnection connection, string groupId, bool useBeta = false)
         {
-            var collection = GraphHelper.GetResultCollection<TeamChannel>(cmdlet, connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels", accessToken);
+            var additionalHeaders = new Dictionary<string, string>()
+            {
+                { "Prefer", "include-unknown-enum-members" }
+            };
+
+            var collection = GraphHelper.GetResultCollection<TeamChannel>(cmdlet, connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels", accessToken, additionalHeaders: additionalHeaders);
             return collection;
         }
 
         public static TeamChannel GetPrimaryChannel(Cmdlet cmdlet, string accessToken, PnPConnection connection, string groupId, bool useBeta = false)
         {
-            var collection = GraphHelper.Get<TeamChannel>(cmdlet, connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/primaryChannel", accessToken);
+            var additionalHeaders = new Dictionary<string, string>()
+            {
+                { "Prefer", "include-unknown-enum-members" }
+            };
+
+            var collection = GraphHelper.Get<TeamChannel>(cmdlet, connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/primaryChannel", accessToken, additionalHeaders: additionalHeaders);
             return collection;
         }
 
