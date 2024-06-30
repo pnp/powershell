@@ -640,7 +640,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 { "Prefer", "include-unknown-enum-members" }
             };
 
-            var channel = GraphHelper.Get<TeamChannel>(cmdlet, connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", accessToken, additionalHeaders: additionalHeaders););
+            var channel = GraphHelper.Get<TeamChannel>(cmdlet, connection, $"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", accessToken, additionalHeaders: additionalHeaders);
             return channel;
         }
 
