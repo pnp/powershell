@@ -387,7 +387,7 @@ namespace PnP.PowerShell.Commands.Lists
                         if (!string.IsNullOrEmpty(DefaultSensitivityLabelForLibrary.LabelName))
                         {
                             WriteVerbose($"Looking up sensitivity label id by label name '{DefaultSensitivityLabelForLibrary.LabelName}'");
-                            var label = DefaultSensitivityLabelForLibrary.GetLabelByNameThroughGraph(Connection, GraphAccessToken);
+                            var label = DefaultSensitivityLabelForLibrary.GetLabelByNameThroughGraph(this, Connection, GraphAccessToken);
 
                             if (label == null || !label.Id.HasValue)
                             {

@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Model
         private void initSPOTenantInternalSetting(ClientContext clientContext)
         {
             var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(clientContext);
-            var internalSettingsData = Utilities.REST.RestHelper.GetAsync<TenantInternalSetting>(httpClient, $"{clientContext.Url}_api/SPOInternalUseOnly.TenantAdminSettings", clientContext.GetAccessToken(), false).GetAwaiter().GetResult();
+            var internalSettingsData = Utilities.REST.RestHelper.Get<TenantInternalSetting>(httpClient, $"{clientContext.Url}_api/SPOInternalUseOnly.TenantAdminSettings", clientContext.GetAccessToken(), false);
 
             SitePagesEnabled = internalSettingsData.SitePagesEnabled.Value;
             DisableSelfServiceSiteCreation = internalSettingsData.DisableSelfServiceSiteCreation.Value;

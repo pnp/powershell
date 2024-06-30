@@ -24,12 +24,12 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(Connection, AccessToken);
+                group = Identity.GetGroup(this, Connection, AccessToken);
             }
 
             if (group != null)
             {
-                Microsoft365GroupsUtility.RemoveMembersAsync(Connection, new System.Guid(group.Id), Users, AccessToken).GetAwaiter().GetResult();
+                ClearOwners.RemoveMembers(this, Connection, new System.Guid(group.Id), Users, AccessToken);
             }
         }
     }

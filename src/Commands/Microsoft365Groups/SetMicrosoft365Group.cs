@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(Connection, AccessToken, false, false, false, false);
+            var group = Identity.GetGroup(this, Connection, AccessToken, false, false, false, false);
 
             if (group != null)
             {
@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 if (changed)
                 {
                     WriteVerbose("Updating Microsoft 365 Group properties in Microsoft Graph");
-                    group = Microsoft365GroupsUtility.UpdateAsync(Connection, AccessToken, group).GetAwaiter().GetResult();
+                    group = ClearOwners.Update(this, Connection, AccessToken, group);
                 }
 
                 if (ParameterSpecified(nameof(AllowExternalSenders)) && AllowExternalSenders.HasValue)
@@ -127,17 +127,17 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 if (exchangeOnlinePropertiesChanged)
                 {
                     WriteVerbose("Updating Microsoft 365 Group Exchange Online properties through Microsoft Graph");
-                    group = Microsoft365GroupsUtility.UpdateExchangeOnlineSettingAsync(Connection, group.Id.Value, AccessToken, group).GetAwaiter().GetResult();
+                    group = ClearOwners.UpdateExchangeOnlineSetting(this, Connection, group.Id.Value, AccessToken, group);
                 }
 
                 if (ParameterSpecified(nameof(Owners)))
                 {
-                    Microsoft365GroupsUtility.UpdateOwnersAsync(Connection, group.Id.Value, AccessToken, Owners).GetAwaiter().GetResult();
+                    ClearOwners.UpdateOwners(this, Connection, group.Id.Value, AccessToken, Owners);
                 }
 
                 if (ParameterSpecified(nameof(Members)))
                 {
-                    Microsoft365GroupsUtility.UpdateMembersAsync(Connection, group.Id.Value, AccessToken, Members).GetAwaiter().GetResult();
+                    ClearOwners.UpdateMembersAsync(this, Connection, group.Id.Value, AccessToken, Members);
                 }
 
                 if (ParameterSpecified(nameof(LogoPath)))
@@ -146,14 +146,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     {
                         LogoPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoPath);
                     }
-                    Microsoft365GroupsUtility.UploadLogoAsync(Connection, AccessToken, group.Id.Value, LogoPath).GetAwaiter().GetResult();
+                    ClearOwners.UploadLogoAsync(this, Connection, AccessToken, group.Id.Value, LogoPath);
                 }
 
                 if (ParameterSpecified(nameof(CreateTeam)))
                 {
                     if (!group.ResourceProvisioningOptions.Contains("Team"))
                     {
-                        Microsoft365GroupsUtility.CreateTeamAsync(Connection, AccessToken, group.Id.Value).GetAwaiter().GetResult();
+                        ClearOwners.CreateTeam(this, Connection, AccessToken, group.Id.Value);
                     }
                     else
                     {
@@ -164,7 +164,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                 {
                     // For this scenario a separate call needs to be made
-                    Microsoft365GroupsUtility.SetVisibilityAsync(Connection, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients).GetAwaiter().GetResult();
+                    ClearOwners.SetVisibility(this, Connection, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients);
                 }
 
                 var assignedLabels = new List<AssignedLabels>();
@@ -183,7 +183,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                                 });
                             }
                         }
-                        Microsoft365GroupsUtility.SetSensitivityLabelsAsync(Connection, AccessToken, group.Id.Value, assignedLabels).GetAwaiter().GetResult();
+                        ClearOwners.SetSensitivityLabels(this, Connection, AccessToken, group.Id.Value, assignedLabels);
                     }
                     else
                     {

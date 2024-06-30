@@ -1,5 +1,4 @@
-﻿using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Enums;
+﻿using PnP.PowerShell.Commands.Enums;
 using System;
 using System.Management.Automation;
 

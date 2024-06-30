@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             if (Force || ShouldContinue($"Remove app '{app.DisplayName}' with id '{app.Id}'", string.Empty))
             {
-                Utilities.REST.GraphHelper.DeleteAsync(Connection, $"/v1.0/applications/{app.Id}", AccessToken).GetAwaiter().GetResult();
+                Utilities.REST.GraphHelper.Delete(this, Connection, $"/v1.0/applications/{app.Id}", AccessToken);
             }
         }
     }

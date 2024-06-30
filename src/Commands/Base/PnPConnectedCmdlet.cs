@@ -62,12 +62,12 @@ namespace PnP.PowerShell.Commands.Base
                 string errorMessage;
                 switch (ex)
                 {
-                    case PnP.PowerShell.Commands.Model.Graph.GraphException gex:
+                    case Model.Graph.GraphException gex:
                         errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {gex.Error.Message}";
                         break;
 
-                    case PnP.Core.SharePointRestServiceException rex:
-                        errorMessage = (rex.Error as PnP.Core.SharePointRestError).Message;
+                    case Core.SharePointRestServiceException rex:
+                        errorMessage = (rex.Error as Core.SharePointRestError).Message;
                         break;
 
                     case System.Reflection.TargetInvocationException tex:
@@ -86,8 +86,8 @@ namespace PnP.PowerShell.Commands.Base
                             errorMessage = innermostException.Message;
                         }
                         break;
-                    case PnP.Core.MicrosoftGraphServiceException pgex:
-                        errorMessage = (pgex.Error as PnP.Core.MicrosoftGraphError).Message; 
+                    case Core.MicrosoftGraphServiceException pgex:
+                        errorMessage = (pgex.Error as Core.MicrosoftGraphError).Message; 
                         break;
 
                     default:
@@ -107,7 +107,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 // With ErrorAction:Ignore, the $Error variable should not be populated with the error, otherwise it should
-                if (!ParameterSpecified("ErrorAction") || !(new[] { "ignore" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant())))
+                if (!ParameterSpecified("ErrorAction") || !new[] { "ignore" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant()))
                 {
                     ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
                     ex.Data["TimeStampUtc"] = DateTime.UtcNow;

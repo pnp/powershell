@@ -20,12 +20,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Group != null)
             {
-                var groupId = Group.GetGroupId(Connection, AccessToken);
-                Microsoft365GroupsUtility.RemoveGroupSetting(Connection, AccessToken, Identity, groupId.ToString()).GetAwaiter().GetResult();
+                var groupId = Group.GetGroupId(this, Connection, AccessToken);
+                ClearOwners.RemoveGroupSetting(this, Connection, AccessToken, Identity, groupId.ToString());
             }
             else
             {
-                Microsoft365GroupsUtility.RemoveGroupSetting(Connection, AccessToken, Identity).GetAwaiter().GetResult();
+                ClearOwners.RemoveGroupSetting(this, Connection, AccessToken, Identity);
             }
         }
     }
