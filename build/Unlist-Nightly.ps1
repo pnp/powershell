@@ -26,4 +26,5 @@ function CleanPackage {
     }
 }
 
+Write-host "Starting cleanup old nightlies job"
 CleanPackage "PnP.PowerShell"
