@@ -24,7 +24,7 @@ function CleanPackage {
     $key = $("$env:POWERSHELLGALLERY_API_KEY")   
     foreach($entry in $entries)
     {
-        Write-host "entries loop"
+        Write-host "entries loop $($entry.properties.Version)"
         if(!$entriesToKeep.Contains($entry))
         {
             Write-Host $($entry.properties.Version)
