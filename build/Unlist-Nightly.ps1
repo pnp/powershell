@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version 2.0
 
 function CleanPackage {
-    param([string] $Package , [int] $VersionsToKeep, [string] $key)
+    param([string] $Package)
 
     $xml = Invoke-WebRequest -Uri "https://www.powershellgallery.com/api/v2/Search()?`$orderby=Id&`$skip=0&`$top=50&searchTerm='$Package'&targetFramework=''&includePrerelease=true"
 
@@ -15,7 +15,7 @@ function CleanPackage {
 
     # keep last 10
     $entriesToKeep = ($sortedEntries | Select-Object -Last 10) + $releasedEntries
-    
+    $key = $("$env:POWERSHELLGALLERY_API_KEY")   
     foreach($entry in $entries)
     {
         if(!$entriesToKeep.Contains($entry))
@@ -26,6 +26,4 @@ function CleanPackage {
     }
 }
 
-$ApiKey = $("$env:POWERSHELLGALLERY_API_KEY")
-
-CleanPackage "PnP.PowerShell" 10 $ApiKey
+CleanPackage "PnP.PowerShell"
