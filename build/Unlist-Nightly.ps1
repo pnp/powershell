@@ -3,7 +3,7 @@ Set-StrictMode -Version 2.0
 
 function CleanPackage {
     param([string] $Package)
-
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12 -bor [Net.SecurityProtocolType]::Tls13
     $xml = Invoke-WebRequest -Uri "https://www.powershellgallery.com/api/v2/Search()?`$orderby=Id&`$skip=0&`$top=50&searchTerm='$Package'&targetFramework=''&includePrerelease=true"
 
     $result = [xml] $xml
