@@ -13,8 +13,13 @@ function CleanPackage {
     $sortedEntries = $entries | Sort-Object -Property @{Expression = {[System.Management.Automation.SemanticVersion]::Parse($_.properties.version)}; Descending=$false} | Where-Object {[System.Management.Automation.SemanticVersion]::Parse($_.properties.version).PreReleaseLabel -eq "nightly"} 
     $releasedEntries = $entries.Where({[System.Management.Automation.SemanticVersion]::Parse($_.properties.version).PreReleaseLabel -ne "nightly"} );
 
+    Write-host "entries released"
+    Write-host $releasedEntries
     # keep last 10
     $entriesToKeep = ($sortedEntries | Select-Object -Last 10) + $releasedEntries
+    Write-host "entries to keep"
+    Write-host $entriesToKeep
+    
     $key = $("$env:POWERSHELLGALLERY_API_KEY")   
     foreach($entry in $entries)
     {
