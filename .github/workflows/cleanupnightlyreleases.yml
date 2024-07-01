@@ -18,11 +18,7 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@v4
       with: 
-        ref: dev
-    - name: Setup .NET 6.0
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '6.0.x'
+        ref: dev    
     - name: Unlist nightly nuget packages
       env:
         POWERSHELLGALLERY_API_KEY : ${{ secrets.POWERSHELLGALLERY_API_KEY }}
