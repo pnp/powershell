@@ -12,22 +12,16 @@ function CleanPackage {
     $entries = $result.feed.entry | Where-Object{$_.properties.Id -eq "PnP.PowerShell"}
     
     $sortedEntries = $entries | Sort-Object -Property @{Expression = {[System.Management.Automation.SemanticVersion]::Parse($_.properties.version)}; Descending=$false} | Where-Object {[System.Management.Automation.SemanticVersion]::Parse($_.properties.version).PreReleaseLabel -eq "nightly"} 
-    $releasedEntries = $entries.Where({[System.Management.Automation.SemanticVersion]::Parse($_.properties.version).PreReleaseLabel -ne "nightly"} );
-
-    Write-host "entries released"
-    Write-host $releasedEntries
+    $releasedEntries = $entries.Where({[System.Management.Automation.SemanticVersion]::Parse($_.properties.version).PreReleaseLabel -ne "nightly"} );    
     # keep last 10
     $entriesToKeep = ($sortedEntries | Select-Object -Last 10) + $releasedEntries
-    Write-host "entries to keep"
-    Write-host $entriesToKeep
     
     $key = $("$env:POWERSHELLGALLERY_API_KEY")   
     foreach($entry in $entries)
-    {
-        Write-host "entries loop $($entry.properties.Version)"
+    {        
         if(!$entriesToKeep.Contains($entry))
         {
-            Write-Host $($entry.properties.Version)
+            Write-host "Entry to be deleted - $($entry.properties.Version)"            
             nuget delete "package/$($entry.properties.Id)" $entry.properties.Version -ApiKey $key -Source https://www.powershellgallery.com/api/v2 -NonInteractive
         }
     }
