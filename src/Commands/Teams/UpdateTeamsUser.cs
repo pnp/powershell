@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Teams
                         {
                             // No easy way to get member Id for teams endpoint, need to rely on display name filter to fetch memberId of the specified user and then update
                             var teamUserWithDisplayName = TeamsUtility.GetTeamUsersWithDisplayName(this, Connection, AccessToken, groupId, specifiedUser.DisplayName);
-                            var userToUpdate = teamUserWithDisplayName.Find(u => u.UserId == specifiedUser.Id);
+                            var userToUpdate = teamUserWithDisplayName.Find(u => u.UserId == specifiedUser.Id) ?? throw new PSArgumentException($"User found in the M365 group but not in the team ");
 
                             // Pass the member id of the user whose role we are changing
                             WriteObject(TeamsUtility.UpdateTeamUserRole(this, Connection, AccessToken, groupId, userToUpdate.Id, Role));
