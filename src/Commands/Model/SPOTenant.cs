@@ -244,10 +244,13 @@ namespace PnP.PowerShell.Commands.Model
 
         public int? RecycleBinRetentionPeriod { private set; get; }
 
-        public bool EnableAIPIntegration { private set; get; }
-        #endregion
+        public bool? EnableAIPIntegration { private set; get; }
+        public SharingScope? CoreDefaultShareLinkScope { private set; get; }
+        public Role? CoreDefaultShareLinkRole { private set; get; }
+        public bool? SharePointAddInsDisabled { private set; get; }
+    #endregion
 
-        public SPOTenant(Tenant tenant, ClientContext clientContext)
+    public SPOTenant(Tenant tenant, ClientContext clientContext)
         {
             HideDefaultThemes = tenant.HideDefaultThemes;
             StorageQuota = tenant.StorageQuota;
@@ -779,6 +782,9 @@ namespace PnP.PowerShell.Commands.Model
             try { OneDriveBlockGuestsAsSiteAdmin = tenant.OneDriveBlockGuestsAsSiteAdmin; } catch { }
             try { RecycleBinRetentionPeriod = tenant.RecycleBinRetentionPeriod; } catch { }
             try { EnableAIPIntegration =  tenant.EnableAIPIntegration; } catch { }
+            try { CoreDefaultShareLinkScope = tenant.CoreDefaultShareLinkScope; } catch { }
+            try { CoreDefaultShareLinkRole = tenant.CoreDefaultShareLinkRole; } catch { }
+            try { SharePointAddInsDisabled = tenant.SharePointAddInsDisabled; } catch { }
         }
     }
 }

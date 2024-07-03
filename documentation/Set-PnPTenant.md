@@ -154,7 +154,9 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-OneDriveDefaultLinkToExistingAccess <Boolean>]
  [-OneDriveBlockGuestsAsSiteAdmin <SharingState>]
  [-RecycleBinRetentionPeriod <Int32>]
- [-IsSharePointAddInsDisabled <Boolean>] 
+ [-IsSharePointAddInsDisabled <Boolean>]
+ [-DefaultShareLinkScope <SharingScope>]
+ [-DefaultShareLinkRole <Role>] 
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2593,10 +2595,11 @@ Sets the default sharing link scope for OneDrive.
 
 The valid values are:
 
-- Anyone
-- Organization
-- SpecificPeople
-- Uninitialized
+- Anyone : Anyone with the link can access the content.
+- Organization : Only people within the organization can access the content.
+- SpecificPeople : Only specific individuals (specified by the user) can access the content.
+- Uninitialized : The default value, indicating that the default share link scope is not explicitly set
+
 
 ```yaml
 Type: SharingScope
@@ -2610,15 +2613,15 @@ Accept wildcard characters: False
 
 ### -OneDriveDefaultShareLinkRole
 
-Sets the default sharing link role for OneDrive.
+Sets the default sharing link role for OneDrive.  It replaces the DefaultSharingLinkType.
 
 Valid values are :
 
-- Edit
-- None
-- RestrictedView
-- Review
-- View
+- None: No permissions granted.
+- View: View-only permissions.
+- Edit: Edit permissions.
+- Review: Review permissions.
+- RestrictedView: Restricted view permissions.
 
 ```yaml
 Type: Role
@@ -2632,7 +2635,7 @@ Accept wildcard characters: False
 
 ### -OneDriveDefaultLinkToExistingAccess
 
-Sets whether OneDrive default links should grant access to existing users.
+Sets whether OneDrive default links should grant access to existing users.  It replaces the DefaultLinkPermission.
 
 ```yaml
 Type: Boolean
@@ -2672,6 +2675,49 @@ The value of Recycle Bin Retention Period must be between 14 and 93. By default 
 
 ```yaml
 Type: Int32
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultShareLinkScope
+
+Sets the default sharing link scope for SharePoint sites. It replaces the DefaultSharingLinkType.
+
+The valid values are:
+
+- Anyone : Anyone with the link can access the content.
+- Organization : Only people within the organization can access the content.
+- SpecificPeople : Only specific individuals (specified by the user) can access the content.
+- Uninitialized : The default value, indicating that the default share link scope is not explicitly set
+
+```yaml
+Type: SharingScope
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DefaultShareLinkRole
+
+Sets the default sharing link role for SharePoint sites.  It replaces the DefaultLinkPermission.
+
+Valid values are :
+
+- None: No permissions granted.
+- View: View-only permissions.
+- Edit: Edit permissions.
+- Review: Review permissions.
+- RestrictedView: Restricted view permissions.
+
+```yaml
+Type: Role
 Parameter Sets: (All)
 Required: False
 Position: Named
