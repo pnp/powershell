@@ -155,8 +155,8 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-OneDriveBlockGuestsAsSiteAdmin <SharingState>]
  [-RecycleBinRetentionPeriod <Int32>]
  [-IsSharePointAddInsDisabled <Boolean>]
- [-DefaultShareLinkScope <SharingScope>]
- [-DefaultShareLinkRole <Role>] 
+ [-CoreDefaultShareLinkScope <SharingScope>]
+ [-CoreDefaultShareLinkRole <Role>] 
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2683,7 +2683,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DefaultShareLinkScope
+### -CoreDefaultShareLinkScope
 
 Sets the default sharing link scope for SharePoint sites. It replaces the DefaultSharingLinkType.
 
@@ -2704,7 +2704,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -DefaultShareLinkRole
+### -CoreDefaultShareLinkRole
 
 Sets the default sharing link role for SharePoint sites.  It replaces the DefaultLinkPermission.
 
