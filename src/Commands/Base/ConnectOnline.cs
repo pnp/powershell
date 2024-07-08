@@ -419,7 +419,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
 
                     // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
-                    if (!ParameterSpecified("ErrorAction") || !new [] { "stop", "ignore", "silentlycontinue" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant()))
+                    if (!new [] { "stop", "ignore", "silentlycontinue" }.Contains(ErrorActionSetting.ToLowerInvariant()))
                     {
                         throw new PSInvalidOperationException(errorMessage);
                     }
