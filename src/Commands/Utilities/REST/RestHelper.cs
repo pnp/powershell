@@ -637,7 +637,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private static string SendMessage(HttpClient httpClient, HttpRequestMessage message)
         {
-            var response = httpClient.Send(message);
+            var response = httpClient.SendAsync(message).GetAwaiter().GetResult();
             while (response.StatusCode == (HttpStatusCode)429)
             {
                 // throttled
