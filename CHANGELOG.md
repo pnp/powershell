@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, `Get-PnPPriviledgedIdentityManagementRole` and `Enable-PnPPriviledgedIdentityManagement` cmdlets to allow scripting of enabling Privileged Identity Management roles for a user [#4039](https://github.com/pnp/powershell/pull/4039)
   
 ### Fixed
+- `Get-PnPTeamsChannel` and `Get-PnPTeamsPrimaryChannel` returning `unknownFutureValue` as MembershipType instead of `shared` [#4054]https://github.com/pnp/powershell/pull/4054
 
 ### Changed
 
@@ -20,6 +21,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Giacomo Pozzoni [jackpoz] 
 - Koen Zomers [koenzomers]
   
 ## [2.5.0]
