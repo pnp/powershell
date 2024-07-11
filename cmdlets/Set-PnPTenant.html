@@ -224,7 +224,9 @@
  [-OneDriveDefaultLinkToExistingAccess &lt;Boolean&gt;]
  [-OneDriveBlockGuestsAsSiteAdmin &lt;SharingState&gt;]
  [-RecycleBinRetentionPeriod &lt;Int32&gt;]
- [-IsSharePointAddInsDisabled &lt;Boolean&gt;] 
+ [-IsSharePointAddInsDisabled &lt;Boolean&gt;]
+ [-CoreDefaultShareLinkScope &lt;SharingScope&gt;]
+ [-CoreDefaultShareLinkRole &lt;Role&gt;] 
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -2083,10 +2085,10 @@ Accept wildcard characters: False
 <p>Sets the default sharing link scope for OneDrive.</p>
 <p>The valid values are:</p>
 <ul>
-<li>Anyone</li>
-<li>Organization</li>
-<li>SpecificPeople</li>
-<li>Uninitialized</li>
+<li>Anyone : Anyone with the link can access the content.</li>
+<li>Organization : Only people within the organization can access the content.</li>
+<li>SpecificPeople : Only specific individuals (specified by the user) can access the content.</li>
+<li>Uninitialized : The default value, indicating that the default share link scope is not explicitly set</li>
 </ul>
 <pre><code class="lang-yaml">Type: SharingScope
 Parameter Sets: (All)
@@ -2097,14 +2099,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-onedrivedefaultsharelinkrole">-OneDriveDefaultShareLinkRole</h3>
-<p>Sets the default sharing link role for OneDrive.</p>
+<p>Sets the default sharing link role for OneDrive.  It replaces the DefaultSharingLinkType.</p>
 <p>Valid values are :</p>
 <ul>
-<li>Edit</li>
-<li>None</li>
-<li>RestrictedView</li>
-<li>Review</li>
-<li>View</li>
+<li>None: No permissions granted.</li>
+<li>View: View-only permissions.</li>
+<li>Edit: Edit permissions.</li>
+<li>Review: Review permissions.</li>
+<li>RestrictedView: Restricted view permissions.</li>
 </ul>
 <pre><code class="lang-yaml">Type: Role
 Parameter Sets: (All)
@@ -2115,7 +2117,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-onedrivedefaultlinktoexistingaccess">-OneDriveDefaultLinkToExistingAccess</h3>
-<p>Sets whether OneDrive default links should grant access to existing users.</p>
+<p>Sets whether OneDrive default links should grant access to existing users.  It replaces the DefaultLinkPermission.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Required: False
@@ -2144,6 +2146,41 @@ Accept wildcard characters: False
 <p>Sets the retention period for the recycle bin.</p>
 <p>The value of Recycle Bin Retention Period must be between 14 and 93. By default it is set to 93.</p>
 <pre><code class="lang-yaml">Type: Int32
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coredefaultsharelinkscope">-CoreDefaultShareLinkScope</h3>
+<p>Sets the default sharing link scope for SharePoint sites. It replaces the DefaultSharingLinkType.</p>
+<p>The valid values are:</p>
+<ul>
+<li>Anyone : Anyone with the link can access the content.</li>
+<li>Organization : Only people within the organization can access the content.</li>
+<li>SpecificPeople : Only specific individuals (specified by the user) can access the content.</li>
+<li>Uninitialized : The default value, indicating that the default share link scope is not explicitly set</li>
+</ul>
+<pre><code class="lang-yaml">Type: SharingScope
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-coredefaultsharelinkrole">-CoreDefaultShareLinkRole</h3>
+<p>Sets the default sharing link role for SharePoint sites.  It replaces the DefaultLinkPermission.</p>
+<p>Valid values are :</p>
+<ul>
+<li>None: No permissions granted.</li>
+<li>View: View-only permissions.</li>
+<li>Edit: Edit permissions.</li>
+<li>Review: Review permissions.</li>
+<li>RestrictedView: Restricted view permissions.</li>
+</ul>
+<pre><code class="lang-yaml">Type: Role
 Parameter Sets: (All)
 Required: False
 Position: Named
