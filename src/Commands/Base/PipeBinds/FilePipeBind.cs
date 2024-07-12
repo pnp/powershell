@@ -64,33 +64,33 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         {
             if(CoreFile != null)
             {
-                cmdlet.WriteVerbose("File determined based on CoreFile instance");
+                cmdlet?.WriteVerbose("File determined based on CoreFile instance");
                 return CoreFile;
             }
 
             if (File != null)
             {
-                cmdlet.WriteVerbose("File will be retrieved based on CSOM File instance");
+                cmdlet?.WriteVerbose("File will be retrieved based on CSOM File instance");
                 File.EnsureProperties(f => f.UniqueId);
                 return context.Web.GetFileById(File.UniqueId);
             }
 
             if (ListItem != null)
             {
-                cmdlet.WriteVerbose("File will be retrieved based on CSOM ListItem instance");
+                cmdlet?.WriteVerbose("File will be retrieved based on CSOM ListItem instance");
                 ListItem.EnsureProperties(i => i.File);
                 return context.Web.GetFileById(ListItem.File.UniqueId);
             }
 
             if (Id.HasValue)
             {
-                cmdlet.WriteVerbose("File will be retrieved based on file id");
+                cmdlet?.WriteVerbose("File will be retrieved based on file id");
                 return context.Web.GetFileById(Id.Value);
             }
 
             if (!string.IsNullOrEmpty(ServerRelativeUrl))
             {
-                cmdlet.WriteVerbose("File will be retrieved based on server relative url");
+                cmdlet?.WriteVerbose("File will be retrieved based on server relative url");
                 return context.Web.GetFileByServerRelativeUrl(ServerRelativeUrl);
             }
 
@@ -101,33 +101,33 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         {
             if (File != null)
             {
-                cmdlet.WriteVerbose("File determined based on CSOM File instance");
+                cmdlet?.WriteVerbose("File determined based on CSOM File instance");
                 return File;
             }
 
             if (CoreFile != null)
             {
-                cmdlet.WriteVerbose("File will be retrieved based on PnP Core File instance");
+                cmdlet?.WriteVerbose("File will be retrieved based on PnP Core File instance");
                 CoreFile.EnsureProperties(f => f.UniqueId);
                 return context.Web.GetFileById(File.UniqueId);
             }
 
             if (ListItem != null)
             {
-                cmdlet.WriteVerbose("File will be retrieved based on CSOM ListItem instance");
+                cmdlet?.WriteVerbose("File will be retrieved based on CSOM ListItem instance");
                 ListItem.EnsureProperties(i => i.File);
                 return context.Web.GetFileById(ListItem.File.UniqueId);
             }
 
             if (Id.HasValue)
             {
-                cmdlet.WriteVerbose("File will be retrieved based on file id");
+                cmdlet?.WriteVerbose("File will be retrieved based on file id");
                 return context.Web.GetFileById(Id.Value);
             }
 
             if (!string.IsNullOrEmpty(ServerRelativeUrl))
             {
-                cmdlet.WriteVerbose("File will be retrieved based on server relative url");
+                cmdlet?.WriteVerbose("File will be retrieved based on server relative url");
                 return context.Web.GetFileByServerRelativeUrl(ServerRelativeUrl);
             }
 

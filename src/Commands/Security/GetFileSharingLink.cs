@@ -1,9 +1,9 @@
 ﻿using PnP.Core.Model.Security;
 using PnP.Core.Model.SharePoint;
 using PnP.Framework.Utilities;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Security
 {    
@@ -31,7 +31,6 @@ namespace PnP.PowerShell.Commands.Security
             }
             else
             {
-
                 var serverRelativeUrl = string.Empty;
                 var ctx = Connection.PnPContext;
 
