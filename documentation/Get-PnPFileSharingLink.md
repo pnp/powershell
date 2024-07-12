@@ -66,6 +66,13 @@ Get-PnPFileInFolder -Recurse -ExcludeSystemFolders -FolderSiteRelativeUrl "Share
 
 This will fetch sharing links for all files in the `Shared Documents` library, including the files in subfolders, excluding the ones in hidden internal system folders.
 
+### EXAMPLE 7
+```powershell
+Get-PnPFileInFolder -Recurse -ExcludeSystemFolders -FolderSiteRelativeUrl "Shared Documents"  | Get-PnPFileSharingLink | ? ExpirationDateTime -eq $null
+```
+
+This will fetch sharing links for all files in the `Shared Documents` library, including the files in subfolders, excluding the ones in hidden internal system folders where no expiration has been set on the sharing of the file.
+
 ## PARAMETERS
 
 ### -Connection
