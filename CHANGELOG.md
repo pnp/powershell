@@ -10,11 +10,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added in depth verbose logging to all cmdlets which is revealed by adding `-Verbose` to the cmdlet execution [#4023](https://github.com/pnp/powershell/pull/4023)
+- Added `-CoreDefaultShareLinkScope` and `-CoreDefaultShareLinkRole` parameters to `Set-PnPTenant` cmdlet. [#4067](https://github.com/pnp/powershell/pull/4067)
+- Added `-Identity` parameter to the `Get-PnPFileSharingLink` cmdlet allowing for the retrieval of sharing links based on the file's unique identifier, file instance, listitem instance, or server relative path and supporting retrieval of sharing links for multiple files, such as all in a document library [#4093](https://github.com/pnp/powershell/pull/4093)
   
 ### Fixed
 - `Get-PnPTeamsChannel` and `Get-PnPTeamsPrimaryChannel` returning `unknownFutureValue` as MembershipType instead of `shared` [#4054]https://github.com/pnp/powershell/pull/4054
 
 ### Changed
+- Fixed `Update-PnPTeamsUser` cmdlet to throw a better error message when after a user is removed from a Team but is still in the connected M365 group, for the few seconds that the 2 are out of sync. [#4068](https://github.com/pnp/powershell/pull/4068)
+- Changed `-FileUrl` on `Get-PnPFileSharingLink` to become obsolete. Please switch to using `-Identity` instead, passing in the same value [#4093](https://github.com/pnp/powershell/pull/4093)
 
 ### Removed
 

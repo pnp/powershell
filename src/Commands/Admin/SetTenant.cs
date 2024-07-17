@@ -472,6 +472,12 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? IsSharePointAddInsDisabled { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public SharingScope? CoreDefaultShareLinkScope { private set; get; }
+
+        [Parameter(Mandatory = false)]
+        public Role? CoreDefaultShareLinkRole { private set; get; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1514,6 +1520,16 @@ namespace PnP.PowerShell.Commands.Admin
             if (IsSharePointAddInsDisabled.HasValue)
             {
                 Tenant.SharePointAddInsDisabled = IsSharePointAddInsDisabled.Value;
+                modified = true;
+            }
+            if (CoreDefaultShareLinkScope.HasValue)
+            {
+                Tenant.CoreDefaultShareLinkScope = CoreDefaultShareLinkScope.Value;
+                modified = true;
+            }
+            if (CoreDefaultShareLinkRole.HasValue)
+            {
+                Tenant.CoreDefaultShareLinkRole = CoreDefaultShareLinkRole.Value;
                 modified = true;
             }
             if (BlockDownloadFileTypePolicy.HasValue)
