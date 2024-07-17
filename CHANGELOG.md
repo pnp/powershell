@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Reshmee Auckloo [reshmee011]
 - Giacomo Pozzoni [jackpoz] 
 - Koen Zomers [koenzomers]
   
