@@ -86,15 +86,39 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Retrieves sharing links to associated with the file.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPFileSharingLink -FileUrl &lt;String&gt; [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPFileSharingLink -Identity &lt;FilePipeBind&gt; [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Retrieves sharing links for a file.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPFileSharingLink -FileUrl &quot;/sites/demo/Shared Documents/Test.docx&quot;
+<pre><code class="lang-powershell">Get-PnPFileSharingLink -Identity &quot;/sites/demo/Shared Documents/Test.docx&quot;
 </code></pre>
-<p>This will fetch sharing links for <code>Test.docx</code> file in the <code>Shared Documents</code> library.</p>
+<p>This will fetch sharing links for <code>Test.docx</code> file in the <code>Shared Documents</code> library based on the server relative url.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPFileSharingLink -Identity eff4c8ca-7b92-4aa2-9744-855611c6ccf2
+</code></pre>
+<p>This will fetch sharing links for the file in the site with the provided unique identifier, regardless of where it is located.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPListItem -List &quot;Documents&quot; | Get-PnPFileSharingLink
+</code></pre>
+<p>This will fetch sharing links for all files in the <code>Documents</code> library.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPListItem -List &quot;Documents&quot; -Id 1 | Get-PnPFileSharingLink
+</code></pre>
+<p>This will fetch sharing links for the file in the <code>Documents</code> library with Id 1.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPFile -Url &quot;/sites/demo/Shared Documents/Test.docx&quot; | Get-PnPFileSharingLink
+</code></pre>
+<p>This will fetch sharing links for the passed in file.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPFileInFolder -Recurse -ExcludeSystemFolders -FolderSiteRelativeUrl &quot;Shared Documents&quot; | Get-PnPFileSharingLink
+</code></pre>
+<p>This will fetch sharing links for all files in the <code>Shared Documents</code> library, including the files in subfolders, excluding the ones in hidden internal system folders.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Get-PnPFileInFolder -Recurse -ExcludeSystemFolders -FolderSiteRelativeUrl &quot;Shared Documents&quot;  | Get-PnPFileSharingLink | ? ExpirationDateTime -eq $null
+</code></pre>
+<p>This will fetch sharing links for all files in the <code>Shared Documents</code> library, including the files in subfolders, excluding the ones in hidden internal system folders where no expiration has been set on the sharing of the file.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -107,12 +131,23 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-fileurl">-FileUrl</h3>
-<p>The file in the site</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-identity">-Identity</h3>
+<p>The server relative path to the file, the unique identifier of the file, the listitem representing the file, or the file object itself to retrieve the sharing links for.</p>
+<pre><code class="lang-yaml">Type: FilePipeBind
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
