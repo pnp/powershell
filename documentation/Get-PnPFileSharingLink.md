@@ -10,7 +10,7 @@ title: Get-PnPFileSharingLink
 # Get-PnPFileSharingLink
 
 ## SYNOPSIS
-Retrieves sharing links to associated with the file.
+Retrieves sharing links to associated with the file or list item.
 
 ## SYNTAX
 
@@ -20,7 +20,7 @@ Get-PnPFileSharingLink -Identity <FilePipeBind> [-Verbose] [-Connection <PnPConn
 
 ## DESCRIPTION
 
-Retrieves sharing links for a file.
+Retrieves sharing links for a file or list item.
 
 ## EXAMPLES
 
@@ -46,6 +46,7 @@ Get-PnPListItem -List "Documents" | Get-PnPFileSharingLink
 This will fetch sharing links for all files in the `Documents` library.
 
 ### EXAMPLE 4
+
 ```powershell
 Get-PnPListItem -List "Documents" -Id 1 | Get-PnPFileSharingLink
 ```
@@ -72,6 +73,13 @@ Get-PnPFileInFolder -Recurse -ExcludeSystemFolders -FolderSiteRelativeUrl "Share
 ```
 
 This will fetch sharing links for all files in the `Shared Documents` library, including the files in subfolders, excluding the ones in hidden internal system folders where no expiration has been set on the sharing of the file.
+
+### EXAMPLE 8
+```powershell	
+Get-PnPFileSharingLink -Identity /sites/demo/Lists/Issue tracker/1_.000
+```
+
+This will fetch sharing links for the list item with id `1` from list `Issue Tracker`
 
 ## PARAMETERS
 
