@@ -26,6 +26,7 @@ namespace PnP.PowerShell.Commands.Graph
             if (user == null)
             {
                 WriteWarning($"User provided through the {nameof(Identity)} parameter could not be found");
+                return;
             }
 
             if(WhatIf.ToBool())
