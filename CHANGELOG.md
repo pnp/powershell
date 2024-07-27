@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
   
 ### Fixed
 - `Get-PnPTeamsChannel` and `Get-PnPTeamsPrimaryChannel` returning `unknownFutureValue` as MembershipType instead of `shared` [#4054]https://github.com/pnp/powershell/pull/4054
+- Fixed using a AzureADUserPipeBind with `New-PnPAzureADUserTemporaryAccessPass`, `Get-PnPAvailableSensitivityLabel` and `Set-PnPSearchExternalItem` to not work when passing in the User ID GUID [#4123](https://github.com/pnp/powershell/pull/4123)
 
 ### Changed
 - Fixed `Update-PnPTeamsUser` cmdlet to throw a better error message when after a user is removed from a Team but is still in the connected M365 group, for the few seconds that the 2 are out of sync. [#4068](https://github.com/pnp/powershell/pull/4068)
