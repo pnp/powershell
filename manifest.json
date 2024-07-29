@@ -5152,6 +5152,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPAzureADUser.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPAzureADUser.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPClientSidePage.md",
       "output": {
         ".html": {
