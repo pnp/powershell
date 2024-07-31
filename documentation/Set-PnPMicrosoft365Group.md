@@ -34,11 +34,11 @@ Allows to modify Microsoft 365 Group.
 Set-PnPMicrosoft365Group -Identity $group -DisplayName "My DisplayName"
 ```
 
-Sets the display name of the group where $group is a Group entity
+Sets the display name of the group where $group is a Group entity.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPMicrosoft365Group -Identity $groupId -Descriptions "My Description" -DisplayName "My DisplayName"
+Set-PnPMicrosoft365Group -Identity $groupId -Description "My Description" -DisplayName "My DisplayName"
 ```
 
 Sets the display name and description of a group based upon its ID.
@@ -153,20 +153,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -LogoPath
-The path to the logo file of to set. Logo must be at least 48 pixels wide and may be at most 4 MB in size. Requires Site.ReadWrite.All permissions.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -HideFromAddressLists
 Controls whether the group is hidden or shown in the Global Address List (GAL).
 
@@ -195,20 +181,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -MailNickname
-The mail alias for the group, unique for Microsoft 365 groups in the organization. Maximum length is 64 characters. This property can contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Identity
 The Identity of the Microsoft 365 Group.
 
@@ -228,6 +200,34 @@ Makes the group private when selected.
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -LogoPath
+The path to the logo file of to set. Logo must be at least 48 pixels wide and may be at most 4 MB in size. Requires Site.ReadWrite.All permissions.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MailNickname
+The mail alias for the group, unique for Microsoft 365 groups in the organization. Maximum length is 64 characters. This property can contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] " ; : . <> , SPACE
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -278,6 +278,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 

@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMasterPage.html
 # Set-PnPMasterPage
 
 ## SYNOPSIS
-Set the masterpage
+Set the masterpage.
 
 ## SYNTAX
 
@@ -36,28 +36,28 @@ Sets the default master page of the current web.
 Set-PnPMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
 ```
 
-Sets the master page based on a server relative URL
+Sets the master page based on a server relative URL.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPMasterPage -MasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master -CustomMasterPageServerRelativeUrl /sites/projects/_catalogs/masterpage/oslo.master
 ```
 
-Sets the master page and custom master page based on a server relative URL
+Sets the master page and custom master page based on a server relative URL.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPMasterPage -MasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master
 ```
 
-Sets the master page based on a site relative URL
+Sets the master page based on a site relative URL.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPMasterPage -MasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master -CustomMasterPageSiteRelativeUrl _catalogs/masterpage/oslo.master
 ```
 
-Sets the master page and custom master page based on a site relative URL
+Sets the master page and custom master page based on a site relative URL.
 
 ## PARAMETERS
 
@@ -76,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -CustomMasterPageServerRelativeUrl
-Specifies the custom Master page URL based on the server relative URL
+Specifies the custom Master page URL based on the server relative URL.
 
 ```yaml
 Type: String
@@ -91,7 +91,7 @@ Accept wildcard characters: False
 ```
 
 ### -CustomMasterPageSiteRelativeUrl
-Specifies the custom Master page URL based on the site relative URL
+Specifies the custom Master page URL based on the site relative URL.
 
 ```yaml
 Type: String
@@ -105,7 +105,7 @@ Accept wildcard characters: False
 ```
 
 ### -MasterPageServerRelativeUrl
-Specifies the Master page URL based on the server relative URL
+Specifies the Master page URL based on the server relative URL.
 
 ```yaml
 Type: String
@@ -120,7 +120,7 @@ Accept wildcard characters: False
 ```
 
 ### -MasterPageSiteRelativeUrl
-Specifies the Master page URL based on the site relative URL
+Specifies the Master page URL based on the site relative URL.
 
 ```yaml
 Type: String
