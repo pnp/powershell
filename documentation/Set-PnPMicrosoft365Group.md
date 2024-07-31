@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMicrosoft365Grou
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Sets Microsoft 365 Group properties
+Sets Microsoft 365 Group properties.
 
 ## SYNTAX
 
@@ -41,35 +41,35 @@ Sets the display name of the group where $group is a Group entity
 Set-PnPMicrosoft365Group -Identity $groupId -Descriptions "My Description" -DisplayName "My DisplayName"
 ```
 
-Sets the display name and description of a group based upon its ID
+Sets the display name and description of a group based upon its ID.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPMicrosoft365Group -Identity $group -GroupLogoPath ".\MyLogo.png"
 ```
 
-Sets a specific Microsoft 365 Group logo
+Sets a specific Microsoft 365 Group logo.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPMicrosoft365Group -Identity $group -IsPrivate:$false
 ```
 
-Sets a group to be Public if previously Private
+Sets a group to be Public if previously Private.
 
 ### EXAMPLE 5
 ```powershell
 Set-PnPMicrosoft365Group -Identity $group -Owners demo@contoso.com
 ```
 
-Sets demo@contoso.com as owner of the group
+Sets demo@contoso.com as owner of the group.
 
 ### EXAMPLE 6
 ```powershell
 Set-PnPMicrosoft365Group -Identity $group -SensitivityLabels "bc98af29-59eb-4869-baaa-9a8dff631aa4"
 ```
 
-Sets the sensitivity label of the group
+Sets the sensitivity label of the group.
 
 ## PARAMETERS
 
@@ -112,7 +112,7 @@ Accept wildcard characters: False
 ```
 
 ### -CreateTeam
-Creates a Microsoft Teams team associated with created group
+Creates a Microsoft Teams team associated with the created group.
 
 ```yaml
 Type: SwitchParameter
@@ -126,7 +126,7 @@ Accept wildcard characters: False
 ```
 
 ### -Description
-The Description of the group to set
+The Description of the group to set.
 
 ```yaml
 Type: String
@@ -140,7 +140,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisplayName
-The DisplayName of the group to set
+The DisplayName of the group to set.
 
 ```yaml
 Type: String
@@ -210,7 +210,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Identity of the Microsoft 365 Group
+The Identity of the Microsoft 365 Group.
 
 ```yaml
 Type: Microsoft365GroupPipeBind
@@ -224,7 +224,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsPrivate
-Makes the group private when selected
+Makes the group private when selected.
 
 ```yaml
 Type: SwitchParameter
@@ -278,19 +278,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Verbose
-When provided, additional debug statements will be shown while executing the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ## RELATED LINKS
 
