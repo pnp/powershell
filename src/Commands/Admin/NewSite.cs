@@ -130,7 +130,8 @@ namespace PnP.PowerShell.Commands
 
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
-                    var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken, azureEnvironment: Connection?.AzureEnvironment ?? Framework.AzureEnvironment.Production);
+                    var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken, azureEnvironment: Connection?.AzureEnvironment ?? Framework.AzureEnvironment.Production) ?? throw new Exception("An error occurred while creating the site. Some settings might have not been set.");
+
                     if (ParameterSpecified(nameof(TimeZone)))
                     {
                         returnedContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
