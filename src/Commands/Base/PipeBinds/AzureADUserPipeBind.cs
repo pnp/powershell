@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public class AzureADUserPipeBind
     {
         private readonly User _user;
-        private readonly string _userId;
+        private readonly Guid? _userId;
         private readonly string _upn;
 
         public AzureADUserPipeBind()
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             Guid idValue;
             if (Guid.TryParse(input, out idValue))
             {
-                _userId = input;
+                _userId = idValue;
             }
             else
             {
@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         /// <summary>
         /// GUID of the user account
         /// </summary>
-        public string UserId => _userId;
+        public Guid? UserId => _userId;
 
         /// <summary>
         /// Tries to return the User instace based on the information this pipe has available
@@ -63,13 +63,13 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 return _user;
             }
-            if (_userId != null)
+            if (_userId.HasValue)
             {
-                return User.CreateFrom(PnP.Framework.Graph.UsersUtility.GetUser(accessToken, _userId, azureEnvironment: azureEnvironment));
+                return User.CreateFrom(Framework.Graph.UsersUtility.GetUser(accessToken, _userId.Value, azureEnvironment: azureEnvironment));
             }
             if (_upn != null)
             {                
-                return User.CreateFrom(PnP.Framework.Graph.UsersUtility.GetUser(accessToken, WebUtility.UrlEncode(_upn), azureEnvironment: azureEnvironment));
+                return User.CreateFrom(Framework.Graph.UsersUtility.GetUser(accessToken, WebUtility.UrlEncode(_upn), azureEnvironment: azureEnvironment));
             }
             return null;
         }

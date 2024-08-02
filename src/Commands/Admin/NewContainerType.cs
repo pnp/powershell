@@ -7,9 +7,10 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.New, "PnPContainerType")]
-    public class NewContainerType : PnPAdminCmdlet,IDynamicParameters
+    public class NewContainerType : PnPAdminCmdlet, IDynamicParameters
     {
         private const string ParameterSet_Standard = "Standard";
+        
         [Parameter(Mandatory = true)]
         public string ContainerTypeName;
 
@@ -28,6 +29,15 @@ namespace PnP.PowerShell.Commands.Admin
             }
             return null;        
         }
+
+        //
+        // NOTICE: The SharePoint API being used in this code is of temporary nature.
+        //         It will be replaced by Microsoft Graph in due time. 
+        //         This SharePoint API should not be called directly or implemented into your own tools or software.
+        //         When the Microsoft Graph alternative becomes available, this PnP cmdlet will be rewritten to use it instead.
+        //         So when using this PnP PowerShell cmdlet, the goal is to seemlessly transition to the new API.
+        //         When you would use it in your own code directly, it will stop working at some point in time without prior announcement.
+        //
 
         protected override void ExecuteCmdlet()
         {

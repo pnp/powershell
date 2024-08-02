@@ -128,7 +128,7 @@ namespace PnP.PowerShell.Commands.Search
 
             foreach (var user in users)
             {
-                var userAclId = user.UserId ?? user.GetUser(AccessToken)?.Id.Value.ToString();
+                var userAclId = user.UserId.HasValue ? user.UserId.Value.ToString() : user.GetUser(AccessToken)?.Id.Value.ToString();
 
                 acls.Add(new Model.Graph.MicrosoftSearch.ExternalItemAcl
                 {
