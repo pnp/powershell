@@ -44,7 +44,7 @@ Adds the 'Contribute' permission to the user 'user@contoso.com' for the list 'Do
 Set-PnPListPermission -Identity 'Documents' -User 'user@contoso.com' -RemoveRole 'Contribute'
 ```
 
-Removes the 'Contribute' permission to the user 'user@contoso.com' for the list 'Documents'.
+Removes the 'Contribute' permission from the user 'user@contoso.com' for the list 'Documents'.
 
 ## PARAMETERS
 
