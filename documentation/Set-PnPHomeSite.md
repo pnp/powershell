@@ -34,7 +34,7 @@ Allows to set the home site of the current tenant.
 Set-PnPHomeSite -HomeSiteUrl "https://yourtenant.sharepoint.com/sites/myhome"
 ```
 
-Sets the home site to the provided site collection url
+Sets the home site to the provided site collection url.
 
 ### EXAMPLE 2
 ```powershell
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -HomeSiteUrl
-The url of the site to set as the home site
+The url of the site to set as the home site.
 
 ```yaml
 Type: String
@@ -94,7 +94,7 @@ Accept wildcard characters: False
 ```
 
 ### -DraftMode
-When set to $true, the DraftMode parameter will keep the Viva Connections landing experience to the SharePoint home site in draf mode.
+When set to $true, the DraftMode parameter will keep the Viva Connections landing experience to the SharePoint home site in draft mode.
 
 ```yaml
 Type: SwitchParameter
@@ -107,7 +107,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-Use the -Force flag to bypass the confirmation question
+Use the -Force flag to bypass the confirmation question.
 
 ```yaml
 Type: SwitchParameter
