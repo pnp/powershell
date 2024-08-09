@@ -248,9 +248,11 @@ namespace PnP.PowerShell.Commands.Model
         public SharingScope? CoreDefaultShareLinkScope { private set; get; }
         public Role? CoreDefaultShareLinkRole { private set; get; }
         public bool? SharePointAddInsDisabled { private set; get; }
-    #endregion
+        public SharingCapabilities? OneDriveSharingCapability { private set; get; }
+        public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
+        #endregion
 
-    public SPOTenant(Tenant tenant, ClientContext clientContext)
+        public SPOTenant(Tenant tenant, ClientContext clientContext)
         {
             HideDefaultThemes = tenant.HideDefaultThemes;
             StorageQuota = tenant.StorageQuota;
@@ -785,6 +787,8 @@ namespace PnP.PowerShell.Commands.Model
             try { CoreDefaultShareLinkScope = tenant.CoreDefaultShareLinkScope; } catch { }
             try { CoreDefaultShareLinkRole = tenant.CoreDefaultShareLinkRole; } catch { }
             try { SharePointAddInsDisabled = tenant.SharePointAddInsDisabled; } catch { }
+            try { OneDriveSharingCapability = tenant.ODBSharingCapability; } catch { }
+            try { GuestSharingGroupAllowListInTenantByPrincipalIdentity = tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity?.ToArray(); } catch { }
         }
     }
 }
