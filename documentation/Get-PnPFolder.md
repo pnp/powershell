@@ -21,17 +21,17 @@ Get-PnPFolder [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
 
 ### Root folder of the current Web
 ```powershell
-Get-PnPFolder -CurrentWebRootFolder [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
+Get-PnPFolder -CurrentWebRootFolder [-Includes <String[]>] [-AsListItem <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ### Folder by url
 ```powershell
-Get-PnPFolder -Url <String> [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
+Get-PnPFolder -Url <String> [-Includes <String[]>] [-AsListItem <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ### Root folder of a list
 ```powershell
-Get-PnPFolder -ListRootFolder <ListPipeBind> [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
+Get-PnPFolder -ListRootFolder <ListPipeBind> [-Includes <String[]>] [-AsListItem <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ### Folders In List
@@ -90,6 +90,13 @@ Get-PnPFolder -List "Shared Documents"
 ```
 
 Returns the folders inside the root folder of the list called 'Shared Documents'. Please use Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead.
+
+### EXAMPLE 7
+```powershell
+Get-PnPFolder -Url "/sites/demo/Shared Documents/Test" -AsListItem
+```
+
+Returns the folder called 'Test' which is located in the root of the site collection located at '/sites/demo' inside 'Shared Documents' document library as a SharePoint list item.
 
 ## PARAMETERS
 
@@ -161,6 +168,20 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -AsListItem
+Returns the folder as a listitem showing all its properties
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Return as list item
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
