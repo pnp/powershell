@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.DocumentSets
         public string Name;
 
         [Parameter(Mandatory = false)]
-        public string Folder;
+        public FolderPipeBind Folder;
 
         [Parameter(Mandatory = true)]
         [ValidateNotNullOrEmpty]
@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.DocumentSets
             if (Folder != null)
             {
                 // Create the folder if it doesn't exist
-                targetFolder = CurrentWeb.EnsureFolder(list.RootFolder, Folder);
+                targetFolder = EnsureFolder();
             }
 
             // Create the document set
@@ -58,6 +58,32 @@ namespace PnP.PowerShell.Commands.DocumentSets
             ClientContext.ExecuteQueryRetry();
 
             WriteObject(result.Value);
+        }
+
+        /// <summary>
+        /// Ensures the folder to which the document set is to be created exists. Changed from using the EnsureFolder implementation in PnP Framework as that requires at least member rights to the entire site to work.
+        /// </summary>
+        /// <returns>The folder to which the document set needs to be created</returns>
+        private Folder EnsureFolder()
+        {
+            // First try to get the folder if it exists already. This avoids an Access Denied exception if the current user doesn't have Full Control access at Web level
+            CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
+
+            Folder folder = null;
+            try
+            {
+                folder = Folder.GetFolder(CurrentWeb);
+                folder.EnsureProperties(f => f.ServerRelativeUrl);
+                return folder;
+            }
+            // Exception will be thrown if the folder does not exist yet on SharePoint
+            catch (ServerException serverEx) when (serverEx.ServerErrorCode == -2147024894)
+            {
+                // Try to create the folder
+                folder = CurrentWeb.EnsureFolder(CurrentWeb.RootFolder, Folder.ServerRelativeUrl);
+                folder.EnsureProperties(f => f.ServerRelativeUrl);
+                return folder;
+            }
         }
     }
 }

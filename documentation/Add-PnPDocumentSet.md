@@ -15,7 +15,7 @@ Creates a new document set in a library.
 ## SYNTAX
 
 ```powershell
-Add-PnPDocumentSet [-List] <ListPipeBind> [-Name] <String> [-ContentType <ContentTypePipeBind>] [-Folder <String>]
+Add-PnPDocumentSet [-List] <ListPipeBind> [-Name] <String> [-ContentType <ContentTypePipeBind>] [-Folder <FolderPipeBind>]
  [-Connection <PnPConnection>] 
 ```
 
@@ -65,12 +65,12 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-### -Folder
 
-The list relative URL of a folder. E.g. "MyFolder" for a folder located in the root of the list, or "MyFolder/SubFolder" for a folder located in the MyFolder folder which is located in the root of the list.
+### -Folder
+The folder in the site/list where the document set needs to be created.
 
 ```yaml
-Type: String
+Type: FolderPipeBind
 Parameter Sets: (All)
 
 Required: False
