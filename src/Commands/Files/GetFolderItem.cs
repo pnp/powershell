@@ -30,6 +30,7 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false)]
         public string ItemName = string.Empty;
 
+        [Alias("Recurse")]
         [Parameter(Mandatory = false)]
         public SwitchParameter Recursive;
 

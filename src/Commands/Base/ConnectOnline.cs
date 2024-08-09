@@ -313,7 +313,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     throw new PSArgumentException("Host not reachable");
                 }
-            }            
+            }
 
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
@@ -419,11 +419,11 @@ namespace PnP.PowerShell.Commands.Base
                     }
 
                     // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
-                    if (!ParameterSpecified("ErrorAction") || !new [] { "stop", "ignore", "silentlycontinue" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant()))
+                    if (!new[] { "stop", "ignore", "silentlycontinue" }.Contains(ErrorActionSetting.ToLowerInvariant()))
                     {
                         throw new PSInvalidOperationException(errorMessage);
                     }
-                }             
+                }
             }
 
             if (ReturnConnection)
@@ -511,11 +511,23 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         ReuseAuthenticationManager();
                     }
-
-                    var clientId = PnPConnection.PnPManagementShellClientId;
+                    var clientId = "";
                     if (ParameterSpecified(nameof(ClientId)))
                     {
                         clientId = ClientId;
+                    }
+                    else
+                    {
+                        var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+                        if (!string.IsNullOrEmpty(environmentAppId))
+                        {
+                            clientId = environmentAppId;
+                        }
+                        else
+                        {
+                            clientId = PnPConnection.PnPManagementShellClientId;
+                            CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                        }
                     }
 
                     var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
@@ -632,7 +644,16 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (ClientId == null)
             {
-                ClientId = PnPConnection.PnPManagementShellClientId;
+                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+                if (!string.IsNullOrEmpty(environmentAppId))
+                {
+                    ClientId = environmentAppId;
+                }
+                else
+                {
+                    ClientId = PnPConnection.PnPManagementShellClientId;
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                }
             }
 
             if (Connection?.ClientId == ClientId)
@@ -683,7 +704,16 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (ClientId == null)
             {
-                ClientId = PnPConnection.PnPManagementShellClientId;
+                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+                if (!string.IsNullOrEmpty(environmentAppId))
+                {
+                    ClientId = environmentAppId;
+                }
+                else
+                {
+                    ClientId = PnPConnection.PnPManagementShellClientId;
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -Interactive uses the PnP Management Shell multi-tenant App Id for authentication. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                }
             }
             if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
             {
@@ -697,11 +727,11 @@ namespace PnP.PowerShell.Commands.Base
 
         private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
         {
-            string username = Environment.GetEnvironmentVariable("AZURE_USERNAME");
-            string password = Environment.GetEnvironmentVariable("AZURE_PASSWORD");
-            string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-            string azureCertificatePath = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH");
-            string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD");
+            string username = Environment.GetEnvironmentVariable("AZURE_USERNAME") ?? Environment.GetEnvironmentVariable("ENTRAID_USERNAME");
+            string password = Environment.GetEnvironmentVariable("AZURE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_PASSWORD");
+            string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+            string azureCertificatePath = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_CERTIFICATE_PATH") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_CERTIFICATE_PATH");
+            string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_CERTIFICATE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_CERTIFICATE_PASSWORD");
 
             if (!string.IsNullOrEmpty(azureCertificatePath) && !string.IsNullOrEmpty(azureCertPassword))
             {
@@ -743,6 +773,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (string.IsNullOrEmpty(azureClientId))
                 {
                     azureClientId = PnPConnection.PnPManagementShellClientId;
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
                 }
 
                 SecureString secPassword = StringToSecureString(password);
