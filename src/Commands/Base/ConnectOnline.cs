@@ -644,8 +644,16 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (ClientId == null)
             {
-                ClientId = PnPConnection.PnPManagementShellClientId;
-                CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+                if (!string.IsNullOrEmpty(environmentAppId))
+                {
+                    ClientId = environmentAppId;
+                }
+                else
+                {
+                    ClientId = PnPConnection.PnPManagementShellClientId;
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                }
             }
 
             if (Connection?.ClientId == ClientId)
@@ -719,11 +727,11 @@ namespace PnP.PowerShell.Commands.Base
 
         private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
         {
-            string username = Environment.GetEnvironmentVariable("AZURE_USERNAME");
-            string password = Environment.GetEnvironmentVariable("AZURE_PASSWORD");
-            string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-            string azureCertificatePath = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH");
-            string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD");
+            string username = Environment.GetEnvironmentVariable("AZURE_USERNAME") ?? Environment.GetEnvironmentVariable("ENTRAID_USERNAME");
+            string password = Environment.GetEnvironmentVariable("AZURE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_PASSWORD");
+            string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+            string azureCertificatePath = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_CERTIFICATE_PATH") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_CERTIFICATE_PATH");
+            string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_CERTIFICATE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_CERTIFICATE_PASSWORD");
 
             if (!string.IsNullOrEmpty(azureCertificatePath) && !string.IsNullOrEmpty(azureCertPassword))
             {
