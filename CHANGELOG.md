@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Identity` parameter to the `Get-PnPFileSharingLink` cmdlet allowing for the retrieval of sharing links based on the file's unique identifier, file instance, listitem instance, or server relative path and supporting retrieval of sharing links for multiple files, such as all in a document library [#4093](https://github.com/pnp/powershell/pull/4093)
 - Added `Remove-PnPAzureADUser` which allows removal of a user from Azure Active Directory / Entra ID [#4123](https://github.com/pnp/powershell/pull/4123)
 - Added support for `GuestSharingGroupAllowListInTenantByPrincipalIdentity` and `OneDriveSharingCapability` parameters in `Set-PnPTenant` cmdlet. [#4122](https://github.com/pnp/powershell/pull/4122)
+- Added `-AsListItem` paramter to `Get-PnPFolder` cmdlet to return as folder as a list item object. [#4151](https://github.com/pnp/powershell/pull/4151)
   
 ### Fixed
 - `Get-PnPTeamsChannel` and `Get-PnPTeamsPrimaryChannel` returning `unknownFutureValue` as MembershipType instead of `shared` [#4054]https://github.com/pnp/powershell/pull/4054
