@@ -571,7 +571,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 publicClient = new
                 {
                     redirectUris = new[] {
-                        $"{loginEndPoint}/common/oauth2/nativeclient",
+                        $"{loginEndPoint}/common/oauth2/nativeclient","http://localhost",
                         redirectUri
                     }
                 },
@@ -608,7 +608,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             var waitTime = 30;
 
-            var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to update Azure AD and launch consent flow");
+            var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to update EntraID and launch consent flow");
             for (var i = 0; i < waitTime; i++)
             {
                 progressRecord.PercentComplete = Convert.ToInt32((Convert.ToDouble(i) / Convert.ToDouble(waitTime)) * 100);
@@ -675,7 +675,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 try
                 {
-                    WriteVerbose("Setting the logo for the Azure AD app");
+                    WriteVerbose("Setting the logo for the En AD app");
 
                     var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
                     if (AzureEnvironment == AzureEnvironment.Custom)
@@ -716,7 +716,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
                         GraphHelper.Put(this, PnPConnection.Current, endpoint, token, byteArrayContent);
 
-                        WriteVerbose("Successfully set the logo for the Azure AD app");
+                        WriteVerbose("Successfully set the logo for the EntraID app");
                     }
                     else
                     {
