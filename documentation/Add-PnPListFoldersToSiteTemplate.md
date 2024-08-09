@@ -111,9 +111,9 @@ A switch parameter to include all folders in the list, or just top level folders
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
+Aliases: Recurse
 
 Required: False
-Alias: Recurse
 Position: 4
 Default value: None
 Accept pipeline input: False
