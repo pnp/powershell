@@ -19,6 +19,9 @@ namespace PnP.PowerShell.Commands.DocumentSets
         [ValidateNotNullOrEmpty]
         public string Name;
 
+        [Parameter(Mandatory = false)]
+        public string Folder;
+
         [Parameter(Mandatory = true)]
         [ValidateNotNullOrEmpty]
         public ContentTypePipeBind ContentType;
@@ -42,8 +45,16 @@ namespace PnP.PowerShell.Commands.DocumentSets
                 throw new PSArgumentException($"Content type '{ContentType}' does not inherit from the base Document Set content type. Document Set content type IDs start with 0x120D520");
             }
 
+            var targetFolder = list.RootFolder;
+
+            if (Folder != null)
+            {
+                // Create the folder if it doesn't exist
+                targetFolder = CurrentWeb.EnsureFolder(list.RootFolder, Folder);
+            }
+
             // Create the document set
-            var result = DocumentSet.Create(ClientContext, list.RootFolder, Name, listContentType.Id);
+            var result = DocumentSet.Create(ClientContext, targetFolder, Name, listContentType.Id);
             ClientContext.ExecuteQueryRetry();
 
             WriteObject(result.Value);
