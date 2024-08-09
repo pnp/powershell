@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(CurrentWeb, p => p.SiteLogoUrl, p => p.LogoAlignment, p => p.HeaderLayout, p => p.HeaderEmphasis, p => p.HideTitleInHeader, p => p.AllProperties);
-            ClientContext.ExecuteQueryRetry();
+            ClientContext.ExecuteQueryRetry();            
 
             var response = new SharePointWebHeader
             {
@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands
                 HeaderLayout = CurrentWeb.HeaderLayout,
                 HeaderEmphasis = CurrentWeb.HeaderEmphasis,
                 HideTitleInHeader = CurrentWeb.HideTitleInHeader,
-                HeaderBackgroundImageUrl = UrlUtilities.UrlDecode(CurrentWeb.AllProperties["BackgroundImageUrl"] as string)
+                HeaderBackgroundImageUrl = CurrentWeb.AllProperties.FieldValues.ContainsKey("BackgroundImageUrl") ? UrlUtilities.UrlDecode(CurrentWeb.AllProperties["BackgroundImageUrl"] as string) : string.Empty
             };
             WriteObject(response);
         }
