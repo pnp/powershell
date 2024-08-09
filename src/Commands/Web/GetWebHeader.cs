@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands
         protected override void ExecuteCmdlet()
         {
             ClientContext.Load(CurrentWeb, p => p.SiteLogoUrl, p => p.LogoAlignment, p => p.HeaderLayout, p => p.HeaderEmphasis, p => p.HideTitleInHeader, p => p.AllProperties);
-            ClientContext.ExecuteQueryRetry();            
+            ClientContext.ExecuteQueryRetry();
 
             var response = new SharePointWebHeader
             {
