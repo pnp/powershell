@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPAzureADUser` which allows removal of a user from Azure Active Directory / Entra ID [#4123](https://github.com/pnp/powershell/pull/4123)
 - Added support for `GuestSharingGroupAllowListInTenantByPrincipalIdentity` and `OneDriveSharingCapability` parameters in `Set-PnPTenant` cmdlet. [#4122](https://github.com/pnp/powershell/pull/4122)
 - Added `-AsListItem` paramter to `Get-PnPFolder` cmdlet to return as folder as a list item object. [#4151](https://github.com/pnp/powershell/pull/4151)
+- Added support for handling `$ErrorActionPreference` global variable to make it work with PnP PowerShell cmdlets. [#4079](https://github.com/pnp/powershell/pull/4079)
   
 ### Fixed
 - `Get-PnPTeamsChannel` and `Get-PnPTeamsPrimaryChannel` returning `unknownFutureValue` as MembershipType instead of `shared` [#4054]https://github.com/pnp/powershell/pull/4054
