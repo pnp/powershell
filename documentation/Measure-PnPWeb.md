@@ -90,6 +90,7 @@ Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
+Alias: Recurse
 Position: Named
 Default value: None
 Accept pipeline input: False

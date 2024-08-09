@@ -113,6 +113,7 @@ Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
+Alias: Recurse
 Position: 4
 Default value: None
 Accept pipeline input: False
