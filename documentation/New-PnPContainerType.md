@@ -22,13 +22,13 @@ Create a Container Type for a SharePoint Embedded Application. Refer to [Hands o
 ### Trial
 
 ```powershell
-New-PnPContainerType -ContainerTypeName <string> -OwningApplicationId <Guid> -TrialContainerType <SwitchParameter> [-Region <String>] [-AzureSubscriptionId <Guid>] [-ResourceGroup <String>]
+New-PnPContainerType -ContainerTypeName <string> -OwningApplicationId <Guid> -TrialContainerType [-Verbose]
 ```
 
 ### Standard
 
 ```powershell
-New-PnPContainerType -ContainerTypeName <string> -OwningApplicationId <Guid> -Region <String> -AzureSubscriptionId <Guid> -ResourceGroup <String>
+New-PnPContainerType -ContainerTypeName <string> -OwningApplicationId <Guid> -Region <String> -AzureSubscriptionId <Guid> -ResourceGroup <String> [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -40,7 +40,7 @@ Enables the creation of either a trial or standard SharePoint Container Type. Us
 ### EXAMPLE 1
 
 ```powershell
-New-PnPContainerType -ContainerTypeName "test1" -OwningApplicationId 50785fde-3082-47ac-a36d-06282ac5c7da  -AzureSubscription c7170373-eb8d-4984-8cc9-59bcc88c65a0 -ResouceGroup "SPEmbed" -Region "Uk-South"
+New-PnPContainerType -ContainerTypeName "test1" -OwningApplicationId 50785fde-3082-47ac-a36d-06282ac5c7da -AzureSubscription c7170373-eb8d-4984-8cc9-59bcc88c65a0 -ResouceGroup "SPEmbed" -Region "Uk-South"
 ```
 
 Creates a standard SharePoint Container Type.
@@ -149,4 +149,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[https://pnp.github.io/pnpframework/api/PnP.Framework.Enums.TimeZone.html](https://pnp.github.io/pnpframework/api/PnP.Framework.Enums.TimeZone.html)
+[SharePoint Online Embedded Container Types](https://learn.microsoft.com/sharepoint/dev/embedded/concepts/app-concepts/containertypes)
