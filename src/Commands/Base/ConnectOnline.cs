@@ -516,6 +516,8 @@ namespace PnP.PowerShell.Commands.Base
                     if (ParameterSpecified(nameof(ClientId)))
                     {
                         clientId = ClientId;
+                    } else {
+                        CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });                
                     }
 
                     var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
@@ -633,6 +635,7 @@ namespace PnP.PowerShell.Commands.Base
             if (ClientId == null)
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
+                CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });                
             }
 
             if (Connection?.ClientId == ClientId)
@@ -684,6 +687,7 @@ namespace PnP.PowerShell.Commands.Base
             if (ClientId == null)
             {
                 ClientId = PnPConnection.PnPManagementShellClientId;
+                CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -Interactive uses the PnP Management Shell multi-tenant App Id for authentication. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });                
             }
             if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
             {
@@ -743,6 +747,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (string.IsNullOrEmpty(azureClientId))
                 {
                     azureClientId = PnPConnection.PnPManagementShellClientId;
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own EntraID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });                
                 }
 
                 SecureString secPassword = StringToSecureString(password);
