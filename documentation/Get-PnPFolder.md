@@ -21,7 +21,7 @@ Get-PnPFolder [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
 
 ### Root folder of the current Web
 ```powershell
-Get-PnPFolder -CurrentWebRootFolder [-Includes <String[]>] [-AsListItem <SwitchParameter>] [-Connection <PnPConnection>] [-Verbose]
+Get-PnPFolder -CurrentWebRootFolder [-Includes <String[]>] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ### Folder by url
@@ -176,7 +176,7 @@ Returns the folder as a listitem showing all its properties
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Return as list item
+Parameter Sets: Folder by url, Root folder of a list
 
 Required: False
 Position: Named

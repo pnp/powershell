@@ -16,11 +16,9 @@ namespace PnP.PowerShell.Commands.Files
         private const string ParameterSet_CURRENTWEBROOTFOLDER = "Root folder of the current Web";
         private const string ParameterSet_LISTROOTFOLDER = "Root folder of a list";
         private const string ParameterSet_FOLDERSINLIST = "Folders In List";
-        private const string ParameterSet_FOLDERBYURL = "Folder by url";
-        private const string ParameterSet_URLASLISTITEM = "Return as list item";
+        private const string ParameterSet_FOLDERBYURL = "Folder by url";        
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERBYURL)]
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_URLASLISTITEM)]
         [Alias("RelativeUrl")]
         public string Url;
 
@@ -29,14 +27,13 @@ namespace PnP.PowerShell.Commands.Files
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_LISTROOTFOLDER)]
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_URLASLISTITEM)]
         public ListPipeBind ListRootFolder;
 
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_CURRENTWEBROOTFOLDER)]
-        [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_URLASLISTITEM)]
         public SwitchParameter CurrentWebRootFolder;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_URLASLISTITEM)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FOLDERBYURL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LISTROOTFOLDER)]        
         public SwitchParameter AsListItem;
 
         protected override void ExecuteCmdlet()
@@ -132,7 +129,7 @@ namespace PnP.PowerShell.Commands.Files
                 folder?.EnsureProperties(f => f.Exists, f => f.ListItemAllFields);
                 if (folder.Exists)
                 {
-                    WriteObject(folder.ListItemAllFields, false);
+                    WriteObject(folder.ListItemAllFields);
                 }
             }
             else
