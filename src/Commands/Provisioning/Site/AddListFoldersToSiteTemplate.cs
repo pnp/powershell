@@ -27,6 +27,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = true, Position = 2)]
         public ListPipeBind List;
 
+        [Alias("Recurse")]
         [Parameter(Mandatory = false, Position = 4)]
         public SwitchParameter Recursive;
 
