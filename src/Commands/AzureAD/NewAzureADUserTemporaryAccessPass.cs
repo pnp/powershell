@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Graph
         {
             var accessPass = UsersUtility.RequestTemporaryAccessPass(
                                 accessToken: AccessToken,
-                                userId: Identity.User?.Id?.ToString() ?? Identity.Upn ?? Identity.UserId,
+                                userId: Identity.User?.Id?.ToString() ?? Identity.Upn ?? (Identity.UserId.HasValue ? Identity.UserId.Value.ToString() : null),
                                 startDateTime: StartDateTime,
                                 lifeTimeInMinutes: LifeTimeInMinutes,
                                 isUsableOnce: IsUsableOnce, azureEnvironment: Connection.AzureEnvironment);
