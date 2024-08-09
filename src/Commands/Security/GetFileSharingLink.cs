@@ -36,6 +36,7 @@ namespace PnP.PowerShell.Commands.Security
 
                 ctx.Web.EnsureProperties(w => w.ServerRelativeUrl);
 
+#pragma warning disable CS0618
                 if (!FileUrl.ToLower().StartsWith(ctx.Web.ServerRelativeUrl.ToLower()))
                 {
                     serverRelativeUrl = UrlUtility.Combine(ctx.Web.ServerRelativeUrl, FileUrl);
@@ -44,7 +45,7 @@ namespace PnP.PowerShell.Commands.Security
                 {
                     serverRelativeUrl = FileUrl;
                 }
-
+#pragma warning restore CS0618
                 file = ctx.Web.GetFileByServerRelativeUrl(serverRelativeUrl);
             }
 
