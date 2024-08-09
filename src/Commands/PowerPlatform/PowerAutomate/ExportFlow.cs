@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
                 };
                 string baseUrl = PowerPlatformUtility.GetBapEndpoint(Connection.AzureEnvironment);
-                var wrapper = RestHelper.PostAsync<Model.PowerPlatform.PowerAutomate.FlowExportPackageWrapper>(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData).GetAwaiter().GetResult();
+                var wrapper = RestHelper.Post<Model.PowerPlatform.PowerAutomate.FlowExportPackageWrapper>(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", AccessToken, payload: postData);
 
                 if (wrapper.Status == Model.PowerPlatform.PowerAutomate.Enums.FlowExportStatus.Succeeded)
                 {
@@ -111,7 +111,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                         resources = wrapper.Resources
                     };
 
-                    var resultElement = RestHelper.PostAsync<JsonElement>(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", AccessToken, payload: exportPostData).GetAwaiter().GetResult();
+                    var resultElement = RestHelper.Post<JsonElement>(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", AccessToken, payload: exportPostData);
                     if (resultElement.TryGetProperty("status", out JsonElement statusElement))
                     {
                         if (statusElement.GetString() == "Succeeded")
@@ -164,7 +164,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             else
             {
                 string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-                var json = RestHelper.PostAsync(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/exportToARMTemplate?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var json = RestHelper.Post(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments/{environmentName}/flows/{flowName}/exportToARMTemplate?api-version=2016-11-01", AccessToken);
                 WriteObject(json);
             }
         }

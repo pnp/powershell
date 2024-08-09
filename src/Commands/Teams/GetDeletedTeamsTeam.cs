@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Teams
     {
         protected override void ExecuteCmdlet()
         {
-            WriteObject(TeamsUtility.GetDeletedTeamAsync(AccessToken, Connection).GetAwaiter().GetResult());
+            WriteObject(TeamsUtility.GetDeletedTeam(this, AccessToken, Connection));
         }
     }
 }

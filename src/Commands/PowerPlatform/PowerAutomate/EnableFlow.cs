@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             var environmentName = Environment.GetName();
             var flowName = Identity.GetName();
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            RestHelper.PostAsync(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/start?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+            RestHelper.Post(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/start?api-version=2016-11-01", AccessToken);
         }
     }
 }

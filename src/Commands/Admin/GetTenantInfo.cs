@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Admin
             var requestUrl = BuildRequestUrl();
 
             WriteVerbose($"Making call to {requestUrl} to request tenant information");
-            var results = RestHelper.GetAsync<Model.TenantInfo>(Connection.HttpClient, requestUrl, graphAccessToken).GetAwaiter().GetResult();
+            var results = RestHelper.Get<Model.TenantInfo>(Connection.HttpClient, requestUrl, graphAccessToken);
             WriteObject(results, true);
         }
 

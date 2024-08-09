@@ -16,10 +16,10 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             { 
-              WriteObject(TeamsUtility.GetPrimaryChannelAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
+              WriteObject(TeamsUtility.GetPrimaryChannel(this, AccessToken, Connection, groupId));
             } else
             {
                 throw new PSArgumentException("Team not found", nameof(Team));

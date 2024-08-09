@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Apps
 
             // Adding a fix for multi-geo issue
             // https://github.com/pnp/powershell/issues/2801
-            var multiGeoFix = Utilities.REST.RestHelper.GetAsync(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}", AccessToken).GetAwaiter().GetResult();
+            var multiGeoFix = Utilities.REST.RestHelper.Get(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}", AccessToken);
 
             // Construct the payload of the Graph request
             var payload = new
@@ -83,7 +83,7 @@ namespace PnP.PowerShell.Commands.Apps
             WriteVerbose($"Granting App with Id {AppId} the permission{(payload.roles.Length != 1 ? "s" : "")} {string.Join(',', payload.roles)}");
 
             // Make the Graph Grant request
-            var result = Utilities.REST.RestHelper.PostAsync<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload).GetAwaiter().GetResult();
+            var result = Utilities.REST.RestHelper.Post<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload);
             WriteObject(result.Convert());
         }
     }

@@ -22,16 +22,16 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(Connection, AccessToken);
+                group = Identity.GetGroup(this, Connection, AccessToken);
             }
 
             if (group != null)
             {
-                var members = Microsoft365GroupsUtility.GetMembersAsync(Connection, new System.Guid(group.Id), AccessToken).GetAwaiter().GetResult();
+                var members = ClearOwners.GetMembers(this, Connection, new System.Guid(group.Id), AccessToken);
 
                 var membersToBeRemoved = members?.Select(p => p.UserPrincipalName).ToArray();
 
-                Microsoft365GroupsUtility.RemoveMembersAsync(Connection, new System.Guid(group.Id), membersToBeRemoved, AccessToken).GetAwaiter().GetResult();
+                ClearOwners.RemoveMembers(this, Connection, new System.Guid(group.Id), membersToBeRemoved, AccessToken);
             }
         }
     }

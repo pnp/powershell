@@ -29,10 +29,10 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                var channel = Channel.GetChannel(Connection, AccessToken, groupId);
+                var channel = Channel.GetChannel(this, Connection, AccessToken, groupId);
                 if (channel != null)
                 {
                     var channelMessage = new TeamChannelMessage();
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Teams
                     channelMessage.Body.Content = Message;
                     channelMessage.Body.ContentType = ContentType == TeamChannelMessageContentType.Html ? "html" : "text";
 
-                    TeamsUtility.PostMessageAsync(Connection, AccessToken, groupId, channel.Id, channelMessage).GetAwaiter().GetResult();
+                    TeamsUtility.PostMessage(this, Connection, AccessToken, groupId, channel.Id, channelMessage);
                 }
                 else
                 {

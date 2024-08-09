@@ -84,12 +84,12 @@ namespace PnP.PowerShell.Commands.Teams
         public bool? AllowCreatePrivateChannels;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(Connection, AccessToken);
+            var groupId = Identity.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
                 try
                 {
-                    var team = TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult();
+                    var team = TeamsUtility.GetTeam(this, AccessToken, Connection, groupId);
                     var updateGroup = false;
                     var group = new Group();
                     if (team != null)
@@ -125,7 +125,7 @@ namespace PnP.PowerShell.Commands.Teams
 
                         if(updateGroup)
                         {
-                            TeamsUtility.UpdateGroupAsync(Connection, AccessToken, groupId, group).GetAwaiter().GetResult();
+                            TeamsUtility.UpdateGroup(this, Connection, AccessToken, groupId, group);
                         }
 
                         var teamCI = new TeamCreationInformation();
@@ -147,7 +147,7 @@ namespace PnP.PowerShell.Commands.Teams
                         teamCI.Classification = ParameterSpecified(nameof(Classification)) ? Classification : null;
                         teamCI.AllowCreatePrivateChannels = ParameterSpecified(nameof(AllowCreatePrivateChannels)) ? AllowCreatePrivateChannels : null;                        
 
-                        var updated = TeamsUtility.UpdateTeamAsync(Connection, AccessToken, groupId, teamCI.ToTeam(group.Visibility.Value)).GetAwaiter().GetResult();
+                        var updated = TeamsUtility.UpdateTeam(this, Connection, AccessToken, groupId, teamCI.ToTeam(group.Visibility.Value));
                         WriteObject(updated);
                     }
                 }

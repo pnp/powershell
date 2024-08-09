@@ -10,34 +10,9 @@ namespace PnP.PowerShell.Commands.Base
     public abstract class PnPAzureManagementApiCmdlet : PnPConnectedCmdlet
     {
         /// <summary>
-        /// Returns an Access Token for the Azure Management API, if available, otherwise NULL
+        /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL
         /// </summary>
-        public string AccessToken
-        {
-            get
-            {
-                if (Connection != null)
-                {
-                    if (Connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-                    {
-                        return TokenHandler.GetManagedIdentityTokenAsync(this, Connection.HttpClient, "https://management.azure.com", Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-                    }
-                    else if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
-                    {
-                        return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, "https://management.azure.com/.default").GetAwaiter().GetResult();
-                    }
-                    else
-                    {
-                        if (Connection.Context != null)
-                        {
-                            return TokenHandler.GetAccessToken(this, "https://management.azure.com/.default", Connection);
-                        }
-                    }
-                }
-                WriteVerbose("Unable to acquire token for resource: https://management.azure.com/");
-                return null;
-            }
-        }
+        public string AccessToken => TokenHandler.GetAccessToken(this, "https://management.azure.com/.default", Connection);
 
         protected override void BeginProcessing()
         {

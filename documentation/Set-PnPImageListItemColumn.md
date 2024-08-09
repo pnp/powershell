@@ -11,7 +11,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPImageListItemCol
 
 ## SYNOPSIS
 
-Updates the image column value of a list item
+Updates the image column value of a list item.
 
 ## SYNTAX
 
@@ -70,7 +70,7 @@ Accept wildcard characters: False
 
 ### -Identity
 
-The ID of the listitem, or actual ListItem object
+The ID of the list item, or actual ListItem object.
 
 ```yaml
 Type: ListItemPipeBind
@@ -130,7 +130,7 @@ Accept wildcard characters: False
 
 ### -Path
 
-Use the path from the local file system
+Use the path from the local file system.
 
 ```yaml
 Type: String

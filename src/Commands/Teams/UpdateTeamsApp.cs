@@ -29,12 +29,12 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (System.IO.File.Exists(Path))
             {
-                var app = Identity.GetApp(Connection, AccessToken);
+                var app = Identity.GetApp(this, Connection, AccessToken);
                 if (app != null)
                 {
 
                     var bytes = System.IO.File.ReadAllBytes(Path);
-                    var response = TeamsUtility.UpdateAppAsync(Connection, AccessToken, bytes, app.Id).GetAwaiter().GetResult();
+                    var response = TeamsUtility.UpdateApp(this, Connection, AccessToken, bytes, app.Id);
                     if (!response.IsSuccessStatusCode)
                     {
                         if (GraphHelper.TryGetGraphException(response, out GraphException ex))

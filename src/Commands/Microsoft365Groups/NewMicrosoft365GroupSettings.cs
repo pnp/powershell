@@ -30,17 +30,17 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                var groupId = Identity.GetGroupId(Connection, AccessToken);
+                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = Microsoft365GroupsUtility.CreateGroupSetting(Connection, AccessToken, groupId.ToString(), groupSettingObject).GetAwaiter().GetResult();
+                var responseValue = ClearOwners.CreateGroupSetting(this, Connection, AccessToken, groupId.ToString(), groupSettingObject).GetAwaiter().GetResult();
                 WriteObject(responseValue);
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = Microsoft365GroupsUtility.CreateGroupSetting(Connection, AccessToken, groupSettingObject).GetAwaiter().GetResult();
+                var responseValue = ClearOwners.CreateGroupSetting(this, Connection, AccessToken, groupSettingObject).GetAwaiter().GetResult();
                 WriteObject(responseValue);
             }
         }

@@ -9,6 +9,33 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added in depth verbose logging to all cmdlets which is revealed by adding `-Verbose` to the cmdlet execution [#4023](https://github.com/pnp/powershell/pull/4023)
+- Added `-CoreDefaultShareLinkScope` and `-CoreDefaultShareLinkRole` parameters to `Set-PnPTenant` cmdlet. [#4067](https://github.com/pnp/powershell/pull/4067)
+- Added `-Identity` parameter to the `Get-PnPFileSharingLink` cmdlet allowing for the retrieval of sharing links based on the file's unique identifier, file instance, listitem instance, or server relative path and supporting retrieval of sharing links for multiple files, such as all in a document library [#4093](https://github.com/pnp/powershell/pull/4093)
+- Added `Remove-PnPAzureADUser` which allows removal of a user from Azure Active Directory / Entra ID [#4123](https://github.com/pnp/powershell/pull/4123)
+- Added support for `GuestSharingGroupAllowListInTenantByPrincipalIdentity` and `OneDriveSharingCapability` parameters in `Set-PnPTenant` cmdlet. [#4122](https://github.com/pnp/powershell/pull/4122)
+  
+### Fixed
+- `Get-PnPTeamsChannel` and `Get-PnPTeamsPrimaryChannel` returning `unknownFutureValue` as MembershipType instead of `shared` [#4054]https://github.com/pnp/powershell/pull/4054
+- Fixed using a AzureADUserPipeBind with `New-PnPAzureADUserTemporaryAccessPass`, `Get-PnPAvailableSensitivityLabel` and `Set-PnPSearchExternalItem` to not work when passing in the User ID GUID [#4123](https://github.com/pnp/powershell/pull/4123)
+- Fixed issue with `Get-PnPWebHeader` cmdlet not working properly in Group connected SharePoint sites. [#4147](https://github.com/pnp/powershell/pull/4147)
+- Fixed issue with `Get-PnPTeamsChannelFilesFolder` cmdlet to work properly for channels having data more than 2 GB. [#4127](https://github.com/pnp/powershell/pull/4127)
+
+### Changed
+- Fixed `Update-PnPTeamsUser` cmdlet to throw a better error message when after a user is removed from a Team but is still in the connected M365 group, for the few seconds that the 2 are out of sync. [#4068](https://github.com/pnp/powershell/pull/4068)
+- Changed `-FileUrl` on `Get-PnPFileSharingLink` to become obsolete. Please switch to using `-Identity` instead, passing in the same value [#4093](https://github.com/pnp/powershell/pull/4093)
+
+### Removed
+
+### Contributors
+
+- Reshmee Auckloo [reshmee011]
+- Giacomo Pozzoni [jackpoz] 
+- Koen Zomers [koenzomers]
+  
+## [2.5.0]
+
+### Added
 
 - Added `New-PnPLibraryFileVersionBatchDeleteJob` and `New-PnPSiteFileVersionBatchDeleteJob` cmdlets to queue a job for deleting the file versions based on age. [#3799](https://github.com/pnp/powershell/pull/3799)
 - Added `New-PnPLibraryFileVersionExpirationReportJob` and `New-PnPSiteFileVersionExpirationReportJob` cmdlets to queue a job for generating a file version expiration report for all files in a document library or site. [#3799](https://github.com/pnp/powershell/pull/3799)
@@ -33,6 +60,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPPageSchedulingEnabled` cmdlet to get the state of the modern page schedule feature in the library. [PR](https://github.com/pnp/powershell/commit/4ac757fc2072233529b38b2b39c36ea6b941e003)
 - Added `-IncludeSensitivityLabels` parameter to `Get-PnPMicrosoft365Group` cmdlet to retrieve sensitivity labels assigned to M365 Groups. [#3991](https://github.com/pnp/powershell/pull/3991)
 - Added `Get-PnPFileSensitivityLabelInfo` cmdlet to retrieve sensitivity label information about a file in a SharePoint site. [#3994](https://github.com/pnp/powershell/pull/3994)
+- Added `Get-PnPTenantRestrictedSearchAllowedList` cmdlet to retrieve existing list of URLs in the allowed list. [#3997](https://github.com/pnp/powershell/pull/3997)
+- Added `-IsSharePointAddInsDisabled` to the `Set-PnPTenant` cmdlet which allows disabling SharePoint Add-ins [#4032](https://github.com/pnp/powershell/pull/4032)
+- Added `-RestrictContentOrgWideSearch`, `-ReadOnlyForUnmanagedDevices` and `-InheritVersionPolicyFromTenant` parameters to `Set-PnPTenantSite` cmdlet. [#4024](https://github.com/pnp/powershell/pull/4024)
 
 ### Fixed
 
@@ -44,6 +74,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed the dev build process on Mac OS devices. [#3907](https://github.com/pnp/powershell/pull/3907)
 - Fixed `Get-PnPContainer` cmdlet to also handle pagination in case of large no. of containers in a tenant. [#3990](https://github.com/pnp/powershell/pull/3990)
 - Fixed `New-PnPTeamsTeam` cmdlet to better handle error specifically such as `Conflict (409): Team already exists`. [#3992](https://github.com/pnp/powershell/pull/3992)
+- Fixed `Remove-PnPTeamsChannel` issue where it was throwing incorrect exception. [#4036](https://github.com/pnp/powershell/pull/4036)
 
 ### Changed
 - Renamed `Get-PnPSiteFileVersionExpirationReportJobProgress` to `Get-PnPSiteFileVersionExpirationReportJobStatus` [#3828](https://github.com/pnp/powershell/pull/3828)
@@ -52,6 +83,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Changed `Set-PnPTenantCdnPolicy` cmdlet to allow PolicyValue parameter to be an empty string or $null, while still being mandatory. [#3937](https://github.com/pnp/powershell/pull/3937)
 - Marked `UserVoiceForFeedbackEnabled` as obsolete in `Set-PnPTenant` cmdlet as Microsoft doesn't support this. [#3985](https://github.com/pnp/powershell/pull/3985)
 - `Get-PnPTenantSite` cmdlet now returns additional properties like `ArchiveStatus`, `EnableAutoExpirationVersionTrim` and many more. [#3987](https://github.com/pnp/powershell/pull/3987)
+- `Add-PnPListFoldersToSiteTemplate` cmdlet now wont export RoleBindings which are `Limited Access`. It caused issues while applying the template. [#3918](https://github.com/pnp/powershell/pull/3918)
 
 ### Removed
 
@@ -59,6 +91,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Maxime Hazebroucq [mhazebroucq]
+- Paolo Pialorsi [PaoloPia]
 - Marc Studer [Studermarc]
 - Mark Gort [markgort86]
 - Christian Veenhuis [ChVeen]

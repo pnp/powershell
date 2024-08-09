@@ -35,7 +35,7 @@ Set-PnPFolderPermission [-List] <ListPipeBind> -Identity <FolderPipeBind> [-Inhe
 ```
 
 ## DESCRIPTION
-Sets or clears permissions on folders within SharePoint Online.  When adding permissions, so when not using -InheritPermissions, it will apply unique permissions to the library, inheriting the ones from its parent. Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.
+Sets or clears permissions on folders within SharePoint Online. When adding permissions, if you don't use -InheritPermissions, the library will get unique permissions that initially match those of its parent. Use `Get-PnPRoleDefinition` to retrieve all available roles you can add or remove using this cmdlet.
 
 ## EXAMPLES
 
@@ -182,7 +182,7 @@ Accept wildcard characters: False
 ```
 
 ### -User
-A valid login name of a user (e.g. john@doe.com).
+A valid login name of a user (e.g. john@doe.com) or an Entra ID Group (ADGroup).
 
 ```yaml
 Type: String
