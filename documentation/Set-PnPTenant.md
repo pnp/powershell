@@ -157,6 +157,8 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IsSharePointAddInsDisabled <Boolean>]
  [-CoreDefaultShareLinkScope <SharingScope>]
  [-CoreDefaultShareLinkRole <Role>] 
+ [-GuestSharingGroupAllowListInTenantByPrincipalIdentity <string[]>]
+ [-OneDriveSharingCapability <SharingCapabilities>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -195,6 +197,20 @@ Set-PnPTenant -UsePersistentCookiesForExplorerView $true
 ```
 
 This example enables the use of special persisted cookie for Open with Explorer.
+
+### EXAMPLE 5
+```powershell
+Set-PnPTenant  -GuestSharingGroupAllowListInTenantByPrincipalIdentity {c:0o.c|federateddirectoryclaimprovider|ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e}
+```
+
+This example sets the guest sharing group allow list in the tenant to the specified principal identity.
+
+### EXAMPLE 6
+```powershell
+Set-PnPTenant  -GuestSharingGroupAllowListInTenantByPrincipalIdentity {}
+```
+
+This example clears the guest sharing group allow list in the tenant.
 
 ## PARAMETERS
 
@@ -1155,8 +1171,11 @@ Accept wildcard characters: False
 Determines what level of sharing is available for the site.
 
 The valid values are:
-ExternalUserAndGuestSharing (default) - External user sharing (share by email) and guest link sharing are both enabled. Disabled - External user sharing (share by email) and guest link sharing are both disabled.
-ExternalUserSharingOnly - External user sharing (share by email) is enabled, but guest link sharing is disabled.
+
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled. 
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
 
 For more information about sharing, see Manage external sharing for your SharePoint online environment (https://learn.microsoft.com/sharepoint/turn-external-sharing-on-or-off).
 
@@ -1736,14 +1755,15 @@ Gets or sets collaboration type for fluid on core partition
 
 The valid values are:
 
-- Disabled
-- ExternalUserSharingOnly
-- ExternalUserAndGuestSharing
-- ExistingExternalUserSharingOnly
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled.
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
 
 ```yaml
 Type: SharingCapabilities
 Parameter Sets: (All)
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 
 Required: False
 Position: Named
@@ -1762,14 +1782,16 @@ If you have the external sharing for OneDrive for Business allowed, no further a
 
 The valid values are:
 
-- Disabled
-- ExternalUserSharingOnly
-- ExternalUserAndGuestSharing
-- ExistingExternalUserSharingOnly
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled.
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
+
 
 ```yaml
 Type: SharingCapabilities
 Parameter Sets: (All)
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 
 Required: False
 Position: Named
@@ -2403,6 +2425,14 @@ Accept wildcard characters: False
 ### -CoreSharingCapability
 Sets what level of sharing is available for SharePoint sites (not including OneDrive sites).
 
+The valid values are:
+
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled.
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
+
+
 ```yaml
 Type: SharingCapabilities
 Parameter Sets: (All)
@@ -2719,6 +2749,45 @@ Valid values are :
 ```yaml
 Type: Role
 Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveSharingCapability
+
+Determines what level of sharing is available for  OneDrive for Business.
+
+The valid values are:
+
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled. 
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
+
+For more information about sharing, see Manage external sharing for your SharePoint online environment (https://learn.microsoft.com/sharepoint/turn-external-sharing-on-or-off).
+
+```yaml
+Type: SharingCapabilities
+Parameter Sets: (All)
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GuestSharingGroupAllowListInTenantByPrincipalIdentity
+Sets the guest sharing group allow list in the tenant by principal identity.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None
