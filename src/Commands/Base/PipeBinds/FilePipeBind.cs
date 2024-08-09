@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             if (ListItem != null)
             {
                 cmdlet?.WriteVerbose("File will be retrieved based on CSOM ListItem instance");
-                ListItem.EnsureProperties(i => i.File);
+                ListItem.EnsureProperties(i => i.File, i => i.File.UniqueId);
                 return context.Web.GetFileById(ListItem.File.UniqueId);
             }
 
