@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for `GuestSharingGroupAllowListInTenantByPrincipalIdentity` and `OneDriveSharingCapability` parameters in `Set-PnPTenant` cmdlet. [#4122](https://github.com/pnp/powershell/pull/4122)
 - Added `-AsListItem` paramter to `Get-PnPFolder` cmdlet to return as folder as a list item object. [#4151](https://github.com/pnp/powershell/pull/4151)
 - Added support for handling `$ErrorActionPreference` global variable to make it work with PnP PowerShell cmdlets. [#4079](https://github.com/pnp/powershell/pull/4079)
+- Added `-Folder` parameter to `Add-PnPDocumentSet` cmdlet to allow creation of document sets in a specific folder instead of the list root folder. [#4029](https://github.com/pnp/powershell/pull/4029)
   
 ### Fixed
 - `Get-PnPTeamsChannel` and `Get-PnPTeamsPrimaryChannel` returning `unknownFutureValue` as MembershipType instead of `shared` [#4054]https://github.com/pnp/powershell/pull/4054
@@ -31,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Dan Cecil [danielcecil]
 - Reshmee Auckloo [reshmee011]
 - Giacomo Pozzoni [jackpoz] 
 - Koen Zomers [koenzomers]
