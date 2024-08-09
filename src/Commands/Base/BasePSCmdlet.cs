@@ -41,6 +41,17 @@ namespace PnP.PowerShell.Commands.Base
             return MyInvocation.BoundParameters.ContainsKey(parameterName);
         }
 
+        protected string ErrorActionSetting
+        {
+            get
+            {
+                if (MyInvocation.BoundParameters.TryGetValue("ErrorAction", out object result))
+                    return result.ToString() ?? "";
+                else
+                    return SessionState.PSVariable.GetValue("ErrorActionPreference")?.ToString() ?? "";
+            }
+        }
+
         protected virtual void ExecuteCmdlet()
         { }
 
