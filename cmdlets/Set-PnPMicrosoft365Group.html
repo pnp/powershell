@@ -88,7 +88,7 @@
 <ul>
 <li>Microsoft Graph API: Group.ReadWrite.All</li>
 </ul>
-<p>Sets Microsoft 365 Group properties</p>
+<p>Sets Microsoft 365 Group properties.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity &lt;Microsoft365GroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;] [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-IsPrivate] [-LogoPath &lt;String&gt;] [-CreateTeam]  [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] [-RequireSenderAuthenticationEnabled &lt;Boolean&gt;] [-AutoSubscribeNewMembers &lt;Boolean&gt;] [-MailNickname &lt;String&gt;] [-SensitivityLabels &lt;GUID[]&gt;] [-Verbose] 
 </code></pre>
@@ -98,27 +98,27 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $group -DisplayName &quot;My DisplayName&quot;
 </code></pre>
-<p>Sets the display name of the group where $group is a Group entity</p>
+<p>Sets the display name of the group where $group is a Group entity.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $groupId -Descriptions &quot;My Description&quot; -DisplayName &quot;My DisplayName&quot;
+<pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $groupId -Description &quot;My Description&quot; -DisplayName &quot;My DisplayName&quot;
 </code></pre>
-<p>Sets the display name and description of a group based upon its ID</p>
+<p>Sets the display name and description of a group based upon its ID.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $group -GroupLogoPath &quot;.\MyLogo.png&quot;
 </code></pre>
-<p>Sets a specific Microsoft 365 Group logo</p>
+<p>Sets a specific Microsoft 365 Group logo.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $group -IsPrivate:$false
 </code></pre>
-<p>Sets a group to be Public if previously Private</p>
+<p>Sets a group to be Public if previously Private.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $group -Owners demo@contoso.com
 </code></pre>
-<p>Sets demo@contoso.com as owner of the group</p>
+<p>Sets demo@contoso.com as owner of the group.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Set-PnPMicrosoft365Group -Identity $group -SensitivityLabels &quot;bc98af29-59eb-4869-baaa-9a8dff631aa4&quot;
 </code></pre>
-<p>Sets the sensitivity label of the group</p>
+<p>Sets the sensitivity label of the group.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowexternalsenders">-AllowExternalSenders</h3>
 <p>Allows configuring if the Microsoft 365 Group should accept e-mail from senders outside of the organisation (true) or if both internal as well as external senders can send e-mail to the e-mail address of the Microsoft 365 group (false).</p>
@@ -148,7 +148,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-createteam">-CreateTeam</h3>
-<p>Creates a Microsoft Teams team associated with created group</p>
+<p>Creates a Microsoft Teams team associated with the created group.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -159,7 +159,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
-<p>The Description of the group to set</p>
+<p>The Description of the group to set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -170,18 +170,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-displayname">-DisplayName</h3>
-<p>The DisplayName of the group to set</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-logopath">-LogoPath</h3>
-<p>The path to the logo file of to set. Logo must be at least 48 pixels wide and may be at most 4 MB in size. Requires Site.ReadWrite.All permissions.</p>
+<p>The DisplayName of the group to set.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -213,19 +202,8 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-mailnickname">-MailNickname</h3>
-<p>The mail alias for the group, unique for Microsoft 365 groups in the organization. Maximum length is 64 characters. This property can contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] &quot; ; : . &lt;&gt; , SPACE</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The Identity of the Microsoft 365 Group</p>
+<p>The Identity of the Microsoft 365 Group.</p>
 <pre><code class="lang-yaml">Type: Microsoft365GroupPipeBind
 Parameter Sets: (All)
 
@@ -236,8 +214,30 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-isprivate">-IsPrivate</h3>
-<p>Makes the group private when selected</p>
+<p>Makes the group private when selected.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-logopath">-LogoPath</h3>
+<p>The path to the logo file of to set. Logo must be at least 48 pixels wide and may be at most 4 MB in size. Requires Site.ReadWrite.All permissions.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-mailnickname">-MailNickname</h3>
+<p>The mail alias for the group, unique for Microsoft 365 groups in the organization. Maximum length is 64 characters. This property can contain only characters in the ASCII character set 0 - 127 except the following: @ () \ [] &quot; ; : . &lt;&gt; , SPACE</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False

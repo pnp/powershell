@@ -84,7 +84,7 @@
   <h1 id="set-pnplist">Set-PnPList</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Updates list settings</p>
+<p>Updates list settings.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPList -Identity &lt;ListPipeBind&gt; [-EnableContentTypes &lt;Boolean&gt;] [-BreakRoleInheritance]
  [-ResetRoleInheritance] [-CopyRoleAssignments] [-ClearSubScopes] [-Title &lt;String&gt;] [-Description &lt;String&gt;]
@@ -102,7 +102,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableContentTypes $true
 </code></pre>
-<p>Switches the Enable Content Type switch on the list</p>
+<p>Switches the Enable Content Type switch on the list.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -Hidden $true
 </code></pre>
@@ -110,42 +110,42 @@
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableVersioning $true
 </code></pre>
-<p>Turns on major versions on a list</p>
+<p>Turns on major versions on a list.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableVersioning $true -MajorVersions 20
 </code></pre>
-<p>Turns on major versions on a list and sets the maximum number of Major Versions to keep to 20.</p>
+<p>Turns on major versions on a list and sets the maximum number of major versions to keep at 20.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo Library&quot; -EnableVersioning $true -EnableMinorVersions $true -MajorVersions 20 -MinorVersions 5
 </code></pre>
-<p>Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.</p>
+<p>Turns on major versions on a document library, sets the maximum number of major versions to keep at 20, and sets the maximum number of minor versions to 5.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableAttachments $true
 </code></pre>
-<p>Turns on attachments on a list</p>
+<p>Turns on attachments for a list.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -Title &quot;Demo List 2&quot; -Path &quot;Lists/DemoList2&quot;
 </code></pre>
-<p>Rename a list, including its' URL.</p>
+<p>Renames a list, including its URL.</p>
 <h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableAutoExpirationVersionTrim $true
 </code></pre>
-<p>Enable AutoExpiration file version trim mode on a document library.</p>
+<p>Enables AutoExpiration file version trim mode on a document library.</p>
 <h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVersions 500
 </code></pre>
-<p>Enable ExpireAfter file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.</p>
+<p>Enables ExpireAfter file version trim mode on a document library. MinorVersions parameter is also needed when minor version is enabled.</p>
 <h3 id="example-10">EXAMPLE 10</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVersions 500
 </code></pre>
-<p>Enable NoExpiration file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.</p>
+<p>Enables NoExpiration file version trim mode on a document library. MinorVersions parameter is also needed when minor version is enabled.</p>
 <h3 id="example-11">EXAMPLE 11</h3>
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -DefaultSensitivityLabelForLibrary &quot;Confidential&quot;
 </code></pre>
 <p>Sets the default sensitivity label for a document library to Confidential.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-breakroleinheritance">-BreakRoleInheritance</h3>
-<p>If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using <a href="Set-PnPListPermission.html">Set-PnPListPermission</a>.</p>
+<p>If used, the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using <a href="Set-PnPListPermission.html">Set-PnPListPermission</a>.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -156,7 +156,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-resetroleinheritance">-ResetRoleInheritance</h3>
-<p>If used the security inheritance is reset for this list meaning it will not copy the permissions from its parent, but will start with an empty list of permissions. Permissions can be added using <a href="Set-PnPListPermission.html">Set-PnPListPermission</a>.</p>
+<p>If used, the security inheritance is reset for this list, meaning it will not copy the permissions from its parent but will start with an empty list of permissions. Permissions can be added using <a href="Set-PnPListPermission.html">Set-PnPListPermission</a>.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -167,7 +167,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-clearsubscopes">-ClearSubScopes</h3>
-<p>If used the unique permissions are cleared from child objects and they can inherit role assignments from this object</p>
+<p>If used, the unique permissions are cleared from child objects and they can inherit role assignments from this object.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -189,7 +189,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-copyroleassignments">-CopyRoleAssignments</h3>
-<p>If used the roles are copied from the parent web</p>
+<p>If used, the role assignments are copied from the parent web.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -200,7 +200,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-description">-Description</h3>
-<p>The description of the list</p>
+<p>The description of the list.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -233,7 +233,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-enablecontenttypes">-EnableContentTypes</h3>
-<p>Set to $true to enable content types, set to $false to disable content types</p>
+<p>Set to $true to enable content types, set to $false to disable content types.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
@@ -355,7 +355,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-majorversions">-MajorVersions</h3>
-<p>Maximum major versions to keep</p>
+<p>Maximum major versions to keep.</p>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
 
@@ -366,7 +366,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-minorversions">-MinorVersions</h3>
-<p>Maximum major versions for which to keep minor versions</p>
+<p>Maximum major versions for which to keep minor versions.</p>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
 
@@ -377,7 +377,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-opendocumentsmode">-OpenDocumentsMode</h3>
-<p>Allows configuring the opening documents in the browser advanced setting on document libraries. Set to ClientApplication to have documents being opened in the locally installed Word, PowerPoint or Excel client or set to Browser to have documents being opened in the browser. It is not possible to set it to &quot;Use the server default mode&quot;.</p>
+<p>Allows configuring the &quot;Opening Documents in the Browser&quot; advanced setting on document libraries. Set to <code>ClientApplication</code> to have documents opened in the locally installed Word, PowerPoint, or Excel client, or set to <code>Browser</code> to have documents opened in the browser. It is not possible to set it to &quot;Use the server default mode&quot;.</p>
 <pre><code class="lang-yaml">Type: DocumentLibraryOpenDocumentsInMode
 Parameter Sets: (All)
 Accepted values: ClientApplication, Browser
@@ -389,7 +389,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-readsecurity">-ReadSecurity</h3>
-<p>Sets the read security for the list</p>
+<p>Sets the read security for the list.</p>
 <pre><code class="lang-yaml">Type: ListReadSecurity
 Parameter Sets: (All)
 Accepted values: AllUsersReadAccess, AllUsersReadAccessOnItemsTheyCreate
@@ -400,7 +400,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-writesecurity">-WriteSecurity</h3>
-<p>Sets the write security for the list</p>
+<p>Sets the write security for the list.</p>
 <pre><code class="lang-yaml">Type: ListWriteSecurity
 Parameter Sets: (All)
 Accepted values: WriteAllItems, WriteOnlyMyItems, WriteNoItems
@@ -411,7 +411,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-title">-Title</h3>
-<p>The title of the list</p>
+<p>The title of the list.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
@@ -422,7 +422,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-nocrawl">-NoCrawl</h3>
-<p>Switch parameter if this list should be indexed in search.</p>
+<p>Switch parameter to specify whether this list should be excluded from search indexing.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -491,7 +491,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-expireversionsafterdays">-ExpireVersionsAfterDays</h3>
-<p>Work with parameter EnableAutoExpirationVersionTrim. Please see description in EnableAutoExpirationVersionTrim.</p>
+<p>Works with parameter EnableAutoExpirationVersionTrim. Please see description in EnableAutoExpirationVersionTrim.</p>
 <pre><code class="lang-yaml">Type: UInt32
 Parameter Sets: (All)
 

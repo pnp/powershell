@@ -93,10 +93,10 @@
 <pre><code class="lang-powershell">Get-PnPFolder -CurrentWebRootFolder [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h3 id="folder-by-url">Folder by url</h3>
-<pre><code class="lang-powershell">Get-PnPFolder -Url &lt;String&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
+<pre><code class="lang-powershell">Get-PnPFolder -Url &lt;String&gt; [-Includes &lt;String[]&gt;] [-AsListItem &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h3 id="root-folder-of-a-list">Root folder of a list</h3>
-<pre><code class="lang-powershell">Get-PnPFolder -ListRootFolder &lt;ListPipeBind&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
+<pre><code class="lang-powershell">Get-PnPFolder -ListRootFolder &lt;ListPipeBind&gt; [-Includes &lt;String[]&gt;] [-AsListItem &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
 </code></pre>
 <h3 id="folders-in-list">Folders In List</h3>
 <pre><code class="lang-powershell">Get-PnPFolder -List &lt;ListPipeBind&gt; [-Includes &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
@@ -132,6 +132,10 @@ Use <a href="Get-PnPFolderItem.html">Get-PnPFolderItem</a> to retrieve files and
 <pre><code class="lang-powershell">Get-PnPFolder -List &quot;Shared Documents&quot;
 </code></pre>
 <p>Returns the folders inside the root folder of the list called 'Shared Documents'. Please use Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead.</folder></p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Get-PnPFolder -Url &quot;/sites/demo/Shared Documents/Test&quot; -AsListItem
+</code></pre>
+<p>Returns the folder called 'Test' which is located in the root of the site collection located at '/sites/demo' inside 'Shared Documents' document library as a SharePoint list item.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-currentwebrootfolder">-CurrentWebRootFolder</h3>
 <p>If provided, the folder representing the root of the current web will be returned</p>
@@ -187,6 +191,17 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-aslistitem">-AsListItem</h3>
+<p>Returns the folder as a listitem showing all its properties</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Folder by url, Root folder of a list
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-verbose">-Verbose</h3>

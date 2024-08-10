@@ -84,12 +84,12 @@
   <h1 id="get-pnpfilesharinglink">Get-PnPFileSharingLink</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Retrieves sharing links to associated with the file.</p>
+<p>Retrieves sharing links to associated with the file or list item.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPFileSharingLink -Identity &lt;FilePipeBind&gt; [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Retrieves sharing links for a file.</p>
+<p>Retrieves sharing links for a file or list item.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPFileSharingLink -Identity &quot;/sites/demo/Shared Documents/Test.docx&quot;
@@ -119,6 +119,10 @@
 <pre><code class="lang-powershell">Get-PnPFileInFolder -Recurse -ExcludeSystemFolders -FolderSiteRelativeUrl &quot;Shared Documents&quot;  | Get-PnPFileSharingLink | ? ExpirationDateTime -eq $null
 </code></pre>
 <p>This will fetch sharing links for all files in the <code>Shared Documents</code> library, including the files in subfolders, excluding the ones in hidden internal system folders where no expiration has been set on the sharing of the file.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Get-PnPFileSharingLink -Identity /sites/demo/Lists/Issue tracker/1_.000
+</code></pre>
+<p>This will fetch sharing links for the list item with id <code>1</code> from list <code>Issue Tracker</code></p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

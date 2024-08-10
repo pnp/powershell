@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a new document set in a library.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPDocumentSet -List &lt;ListPipeBind&gt; -Name &lt;String&gt; -ContentType &lt;ContentTypePipeBind&gt; 
+<pre><code class="lang-powershell">Add-PnPDocumentSet [-List] &lt;ListPipeBind&gt; [-Name] &lt;String&gt; [-ContentType &lt;ContentTypePipeBind&gt;] [-Folder &lt;FolderPipeBind&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -95,7 +95,10 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPDocumentSet -List &quot;Documents&quot; -ContentType &quot;Test Document Set&quot; -Name &quot;Test&quot;
 </code></pre>
-<p>This will add a new document set based upon the 'Test Document Set' content type to a list called 'Documents'. The document set will be named 'Test'</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPDocumentSet -List &quot;Documents&quot; -ContentType &quot;Test Document Set&quot; -Name &quot;Test&quot; -Folder &quot;Projects/Europe&quot;
+</code></pre>
+<p>This will add a new document set based upon the 'Test Document Set' content type to a list called 'Documents'. The document set will be named 'Test' and will be added to the 'Europe' folder which is located in the 'Projects' folder. Folders will be created if needed.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -114,6 +117,17 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-folder">-Folder</h3>
+<p>The folder in the site/list where the document set needs to be created.</p>
+<pre><code class="lang-yaml">Type: FolderPipeBind
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

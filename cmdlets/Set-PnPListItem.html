@@ -84,7 +84,7 @@
   <h1 id="set-pnplistitem">Set-PnPListItem</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Updates a list item</p>
+<p>Updates a list item.</p>
 <a href="https://pnp.github.io/powershell/articles/batching.html">
 <img src="https://raw.githubusercontent.com/pnp/powershell/gh-pages/images/batching/Batching.png" alt="Supports Batching">
 </a>
@@ -152,7 +152,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-contenttype">-ContentType</h3>
-<p>Specify either the name, ID or an actual content type</p>
+<p>Specify either the name, ID or an actual content type.</p>
 <pre><code class="lang-yaml">Type: ContentTypePipeBind
 Parameter Sets: (All)
 
@@ -163,7 +163,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>The ID of the listitem, or actual ListItem object</p>
+<p>The ID of the listitem, or actual ListItem object.</p>
 <pre><code class="lang-yaml">Type: ListItemPipeBind
 Parameter Sets: (All)
 
@@ -199,7 +199,7 @@ Accept wildcard characters: False
 <p>Specifies the update type to use when updating the listitem. Possible values are &quot;Update&quot;, &quot;SystemUpdate&quot;, &quot;UpdateOverwriteVersion&quot;.</p>
 <ul>
 <li><strong>Update</strong>: Sets field values and creates a new version if versioning is enabled for the list. The &quot;Modified By&quot; and &quot;Modified&quot; fields will be updated to reflect the time of the update and the user who made the change.</li>
-<li><strong>SystemUpdate</strong>: Sets field values and does not create a new version. Any events on the list will trigger. The &quot;Modified By&quot; and &quot;Modified&quot; fields not updated and can not be set.</li>
+<li><strong>SystemUpdate</strong>: Sets field values and does not create a new version. Any events on the list will trigger. The &quot;Modified By&quot; and &quot;Modified&quot; fields are not updated and can not be set.</li>
 <li><strong>UpdateOverwriteVersion</strong>: Sets field values and does not create a new version. No events on the list will trigger. The &quot;Modified By&quot; and &quot;Modified&quot; fields are not updated but can be set by passing the field values in the update. HINT: use 'Editor' to set the &quot;Modified By&quot; field.</li>
 </ul>
 <pre><code class="lang-yaml">Type: SwitchParameter

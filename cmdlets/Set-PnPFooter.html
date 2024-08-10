@@ -84,7 +84,7 @@
   <h1 id="set-pnpfooter">Set-PnPFooter</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Configures the footer of the current web</p>
+<p>Configures the footer of the current web.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPFooter [-Enabled] [-Layout &lt;FooterLayoutType&gt;] [-BackgroundTheme &lt;FooterVariantThemeType&gt;]
  [-Title &lt;String&gt;] [-LogoUrl &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] 
@@ -95,22 +95,22 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPFooter -Enabled:$true
 </code></pre>
-<p>Enables the footer to be shown on the current web</p>
+<p>Enables the footer to be shown on the current web.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Set-PnPFooter -Enabled:$true -Layout Extended -BackgroundTheme Neutral
 </code></pre>
-<p>Enables the footer to be shown on the current web with the extended layout using a neutral background</p>
+<p>Enables the footer to be shown on the current web with the extended layout using a neutral background.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPFooter -Title &quot;Contoso Inc.&quot; -LogoUrl &quot;/sites/communication/Shared Documents/logo.png&quot;
 </code></pre>
-<p>Sets the title and logo shown in the footer</p>
+<p>Sets the title and logo shown in the footer.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Set-PnPFooter -LogoUrl &quot;&quot;
 </code></pre>
-<p>Removes the current logo shown in the footer</p>
+<p>Removes the current logo shown in the footer.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-backgroundtheme">-BackgroundTheme</h3>
-<p>Defines the background emphasis of the content in the footer</p>
+<p>Defines the background emphasis of the content in the footer.</p>
 <pre><code class="lang-yaml">Type: FooterVariantThemeType
 Parameter Sets: (All)
 Accepted values: Strong, Neutral, Soft, None
@@ -133,7 +133,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-enabled">-Enabled</h3>
-<p>Indicates if the footer should be shown on the current web ($true) or if it should be hidden ($false)</p>
+<p>Indicates if the footer should be shown on the current web ($true) or if it should be hidden ($false).</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -144,7 +144,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-layout">-Layout</h3>
-<p>Defines how the footer should look like</p>
+<p>Defines how the footer should look like.</p>
 <pre><code class="lang-yaml">Type: FooterLayoutType
 Parameter Sets: (All)
 Accepted values: Simple, Extended, Stacked
@@ -167,7 +167,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-title">-Title</h3>
-<p>Defines the title displayed in the footer</p>
+<p>Defines the title displayed in the footer.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
