@@ -183,11 +183,12 @@ Ensure you have imported the private key certificate, typically the .pfx file, i
 
 ### EXAMPLE 8
 ```powershell
-Connect-PnPOnline -Url "contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -Tenant 'contoso.onmicrosoft.com'
+Connect-PnPOnline -Url "contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -X509KeyStorageFlags $keyStorageflags -Tenant 'contoso.onmicrosoft.com'
 ```
 
 Connects using an Azure Active Directory registered application using a certificate with a private key that has been base64 encoded.
 See https://learn.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread for a sample on how to get started.
+See https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509keystorageflags for information on how to configure key storage when creating the certificate.
 
 ### EXAMPLE 9
 ```powershell
