@@ -550,6 +550,11 @@ namespace PnP.PowerShell.Commands.AzureAD
             var startDate = cert.NotBefore.ToUniversalTime();
 
             var scopesPayload = GetScopesPayload(scopes);
+            var redirectUris = new List<string>() { $"{loginEndPoint}/common/oauth2/nativeclient", redirectUri };
+            if (redirectUri != "http://localhost")
+            {
+                redirectUris.Add("http://localhost");
+            }
             var payload = new
             {
                 isFallbackPublicClient = true,
@@ -570,10 +575,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
                 publicClient = new
                 {
-                    redirectUris = new[] {
-                        $"{loginEndPoint}/common/oauth2/nativeclient","http://localhost",
-                        redirectUri
-                    }
+                    redirectUris = redirectUris.ToArray()
                 },
                 requiredResourceAccess = scopesPayload
             };
