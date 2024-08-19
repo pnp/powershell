@@ -16,6 +16,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+## [2.9.0]
+
+### Fixed
+Fixed app registration on Windows
+
+### Contributors
+
+- Erwin van Hunen [erwinvanhunen]
 
 ## [2.8.0]
 
