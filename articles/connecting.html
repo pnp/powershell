@@ -86,7 +86,8 @@
 <p>PnP PowerShell offers many ways to connect to an environment. This page provides guidance on the various options you have and how they can be used against which environment(s).</p>
 <h2 id="connect-using-credentials">Connect using credentials</h2>
 <p>In order to connect with credentials you have two options:</p>
-<h3 id="connect-by-using-the-pnp-management-shell-multi-tenant-azure-ad-application">Connect by using the PnP Management Shell Multi-Tenant Azure AD Application</h3>
+<h3 id="connect-by-using-the-pnp-management-shell-multi-tenant-entra-id-application">Connect by using the PnP Management Shell Multi-Tenant Entra ID Application</h3>
+<p><strong>NOTICE: this functionality will stop working on the 9th of September 2024. Register your own Entra ID application instead. See below for more information on how to register your own application</strong></p>
 <p>You will have to consent / register the PnP Management Shell Multi-Tenant Azure AD Application in your own tenant:</p>
 <pre><code class="lang-powershell">Register-PnPManagementShellAccess
 </code></pre>
@@ -97,34 +98,34 @@
 <p>or in case the account you would like to use has MFA or any other authentication provider configured for it, instead use:</p>
 <pre><code class="lang-powershell">Connect-PnPOnline [tenant].sharepoint.com -Interactive
 </code></pre>
-<h3 id="connect-by-using-your-own-azure-ad-application">Connect by using your own Azure AD Application</h3>
-<p>You will have to create your own Azure AD Application registration, or you can create one:</p>
-<pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName &quot;YourApplicationName&quot; -Tenant [tenant].onmicrosoft.com -Interactive
+<h3 id="connect-by-using-your-own-entra-id-application">Connect by using your own Entra ID Application</h3>
+<p>You will have to create your own Entra ID Application registration, or you can create one:</p>
+<pre><code class="lang-powershell">Register-PnPEntraIDApp -ApplicationName &quot;YourApplicationName&quot; -Tenant [tenant].onmicrosoft.com -Interactive
 </code></pre>
 <p>This will launch an authentication dialog where you need to authenticate. After closing this window the cmdlet will continue to register a new application with a set of default permissions. By default a certificate will be generated and stored in the current folder, named after the application you want to create. You can specify your own certificate by using the <code>-CertificatePath</code> parameter and optional <code>-CertificatePassword</code> parameter.</p>
 <p>You can add permissions by using the <code>-GraphApplicationPermissions</code>, <code>-GraphDelegatePermissions</code>, <code>-SharePointApplicationPermissions</code> or <code>-SharePointDelegatePermissions</code> parameters. The cmdlet will output the Azure AppId/client id, the name and location of the certificates created (if any) and the thumbprint of the certificate. It is possible to add the certificate created to the certificate management store in Windows by adding the <code>-Store</code> parameter.</p>
 <p>Note if you are using Credential Based Authentication, you will need to make a change to the app registration manifest file. Go to the app registration, select Manifest under the Manage section, then change the &quot;allowPublicClient&quot; property to true and click save.</p>
 <pre><code class="lang-powershell">Connect-PnPOnline [tenant].sharepoint.com -Credentials (Get-Credential) -ClientId [clientid]
 </code></pre>
-<h2 id="connect-interactively-using-weblogin-supporting-mfa">Connect interactively using WebLogin supporting MFA</h2>
+<h2 id="connect-interactively-using-interactive-supporting-mfa">Connect interactively using Interactive supporting MFA</h2>
 <p>One of the easiest methods to use. However, notice that this connection method will have its limitation as we will utility cookie based authentication. For instance, we will not be able to make calls to the Microsoft Graph behind the scenes.</p>
-<pre><code class="lang-powershell">Connect-PnPOnline [tenant].sharepoint.com -UseWebLogin
+<pre><code class="lang-powershell">Connect-PnPOnline [tenant].sharepoint.com -Interactive
 </code></pre>
 <h2 id="connect-using-a-clientid-and-pfx-certificate-stored-on-your-local-machine">Connect using a ClientId and PFX certificate stored on your local machine</h2>
-<p>Allows using an Azure Active Directory app registration from your own Azure Active Directory with a certificate to connect. The private key certificate, typically the .pfx file, should be accessible on your local machine.</p>
-<p>The following will generate an Azure AD Application registration and create a certificate containing a public and private key.</p>
-<pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName &quot;PnPPowerShell&quot; -Tenant [tenant].onmicrosoft.com -Password (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force)
+<p>Allows using an Azure Entra ID app registration from your own Azure Entra ID with a certificate to connect. The private key certificate, typically the .pfx file, should be accessible on your local machine.</p>
+<p>The following will generate an Entra ID Application registration and create a certificate containing a public and private key.</p>
+<pre><code class="lang-powershell">Register-PnPEntraIDApp -ApplicationName &quot;PnPPowerShell&quot; -Tenant [tenant].onmicrosoft.com -Password (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force)
 </code></pre>
-<p>You will be asked to authenticate. After that the cmdlet will generate two files, PnPPowerShell.pfx and PnPPowerShell.cer and a new Azure AD Application will be registered with the specified name. The public key/CER file will be uploaded and registered with the newly create application registration. You will have to use the .pfx file to connect. Notice that the <code>Register-PnPAzureADApp</code> cmdlet only have to be executed once per tenant/application.</p>
+<p>You will be asked to authenticate. After that the cmdlet will generate two files, PnPPowerShell.pfx and PnPPowerShell.cer and a new Entra ID Application will be registered with the specified name. The public key/CER file will be uploaded and registered with the newly create application registration. You will have to use the .pfx file to connect. Notice that the <code>Register-PnPEntraIDApp</code> cmdlet only has to be executed once per tenant/application.</p>
 <pre><code class="lang-powershell">Connect-PnPOnline [tenant].sharepoint.com -ClientId [clientid] -Tenant [tenant].onmicrosoft.com -CertificatePath '.\PnPPowerShell.pfx' -CertificatePassword (ConvertTo-SecureString -AsPlainText -Force &quot;password&quot;)
 </code></pre>
 <h2 id="connect-using-a-clientid-and-pfx-certificate-stored-in-the-windows-certificate-management-store">Connect using a ClientId and PFX certificate stored in the Windows Certificate Management Store</h2>
-<p>Allows using an Azure Active Directory app registration from your own Azure Active Directory with a certificate to connect. The private key certificate, typically the .pfx file, should be accessible on your local machine in the Certificate Management Store.</p>
-<p>The following will generate an Azure AD Application registration and create a certificate containing a public and private key which will be stored for the current user in the Windows Certificate Management Store.</p>
+<p>Allows using an Azure Entra ID app registration from your own Azure Entra ID with a certificate to connect. The private key certificate, typically the .pfx file, should be accessible on your local machine in the Certificate Management Store.</p>
+<p>The following will generate an Entra ID Application registration and create a certificate containing a public and private key which will be stored for the current user in the Windows Certificate Management Store.</p>
 <pre><code class="lang-powershell">$password = ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force
-Register-PnPAzureADApp -ApplicationName &quot;PnPPowerShell&quot; -Tenant [tenant].onmicrosoft.com -Store CurrentUser
+Register-PnPEntraIDApp -ApplicationName &quot;PnPPowerShell&quot; -Tenant [tenant].onmicrosoft.com -Store CurrentUser
 </code></pre>
-<p>You will be asked to authenticate. After that the cmdlet will generate a certificate and will store it in the Windows Certificate Management Store and a new Azure AD Application will be registered with the specified name. The public key of the certificate file will be uploaded and registered with the newly create application registration. Notice that the <code>Register-PnPAzureADApp</code> cmdlet only have to be executed once per tenant/application. The output of the cmdlet contains the thumbprint to use.</p>
+<p>You will be asked to authenticate. After that the cmdlet will generate a certificate and will store it in the Windows Certificate Management Store and a new Entra ID Application will be registered with the specified name. The public key of the certificate file will be uploaded and registered with the newly create application registration. Notice that the <code>Register-PnPEntraIDApp</code> cmdlet only has to be executed once per tenant/application. The output of the cmdlet contains the thumbprint to use.</p>
 <pre><code class="lang-PowerShell">Connect-PnPOnline [tenant].sharepoint.com -ClientId [clientid] -Tenant [tenant].onmicrosoft.com -Thumbprint $thumbprint
 </code></pre>
 <h2 id="connect-using-a-clientid-and-pfx-certificate-being-base64-encoded">Connect using a ClientId and PFX certificate being Base64 encoded</h2>
