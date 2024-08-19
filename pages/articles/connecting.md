@@ -8,7 +8,8 @@ PnP PowerShell offers many ways to connect to an environment. This page provides
 In order to connect with credentials you have two options: 
 ### Connect by using the PnP Management Shell Multi-Tenant Entra ID Application
 
-**NOTICE: this functionality will stop working on the 9th of September 2024. Register your own Entra ID application instead. See below for more information on how to register your own application**
+> [!Important]
+> This cmdlet will stop working on the 9th of September of 2024. Register your own Entra ID application instead. See lower in this article for more information.
 
 You will have to consent / register the PnP Management Shell Multi-Tenant Azure AD Application in your own tenant:
 
