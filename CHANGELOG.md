@@ -17,7 +17,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 
-## [2.7.0]
+## [2.8.0]
 
 ### Added
 - Added in depth verbose logging to all cmdlets which is revealed by adding `-Verbose` to the cmdlet execution [#4023](https://github.com/pnp/powershell/pull/4023)
