@@ -85,10 +85,13 @@
 
 <h2 id="setting-up-access">Setting up Access</h2>
 <p>PnP PowerShell allows you to authenticate with credentials to your tenant. However, due to changes in the underlying SDKs we require you first to register a Entra ID Application which will allow you to authenticate.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>This functionality will stop working on the 9th of September of 2024. Register your own Entra ID application instead. See lower in this article for more information.</p>
+</div>
 <p>The easiest way to do this by using a built-in cmdlet:</p>
 <pre><code class="lang-powershell">Register-PnPManagementShellAccess
 </code></pre>
-<p><strong>NOTICE: This cmdlet will stop working on the 9th of September of 2024. Register your own Entra ID application instead. See lower in this article for more information.</strong></p>
 <p>You'll notice that the cmdlet is not called <code>Register-PnPPowerShellAccess</code>. This is because both PnP PowerShell and the CLI for Microsoft 365 make use of this Entra ID application.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
