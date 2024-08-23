@@ -88,12 +88,7 @@ namespace PnP.PowerShell.Commands.Base
             if (connection == null) return null;
 
             string accessToken = null;
-            if (connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-            {
-                cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Managed Identity");
-                accessToken = GetManagedIdentityTokenAsync(cmdlet, connection.HttpClient, $"{audience.TrimEnd('/')}/", connection.UserAssignedManagedIdentityObjectId, connection.UserAssignedManagedIdentityClientId, connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-            }
-            else if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+            if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
             {
                 cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Azure AD Workload Identity");
                 accessToken = GetAzureADWorkloadIdentityTokenAsync(cmdlet, $"{audience.TrimEnd('/')}/.default").GetAwaiter().GetResult();
