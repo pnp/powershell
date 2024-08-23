@@ -47,14 +47,14 @@ Registers an Entra ID App for use with the interactive login on Connect-PnPOnlin
 
 ### EXAMPLE 1
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Interactive
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Interactive
 ```
 
 Creates a new Entra ID Application registration. The application will be setup with the following delegate permissions to consent: AllSites.FullControl, Group.ReadWrite.All, User.ReadWrite.All, TermStore.ReadWrite.All. A browser window will be shown allowing you to authenticate.
 
 ### EXAMPLE 2
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -GraphDelegatePermissions "Group.Read.All" -SharePointDelegatePermissions "AllSites.FullControl" -Interactive
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -GraphDelegatePermissions "Group.Read.All" -SharePointDelegatePermissions "AllSites.FullControl" -Interactive
 ```
 
 Creates a new Entra ID Application registration. The application will be setup with the following delegate permissions to consent: Group.Read.All, AllSites.FullControl. A browser window will be shown allowing you to authenticate.
