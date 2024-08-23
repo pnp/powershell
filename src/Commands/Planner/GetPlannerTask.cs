@@ -8,6 +8,7 @@ namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerTask")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetPlannerTask : PnPGraphCmdlet
     {
         private const string ParameterSetName_BYGROUP = "By Group";

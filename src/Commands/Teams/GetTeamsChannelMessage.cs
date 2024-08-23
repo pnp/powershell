@@ -8,6 +8,8 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelMessage")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+
     public class GetTeamsChannelMessage : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
