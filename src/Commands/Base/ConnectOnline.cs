@@ -708,7 +708,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (ClientId == null)
             {
-                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
                 if (!string.IsNullOrEmpty(environmentAppId))
                 {
                     ClientId = environmentAppId;
