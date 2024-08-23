@@ -1,5 +1,4 @@
 using System.Management.Automation;
-using Microsoft.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -8,6 +7,8 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPlannerPlan", SupportsShouldProcess = true)]
+    [RequiredMinimalApiPermissions("Tasks.ReadWrite")]
+    [RequiredMinimalApiPermissions("Tasks.ReadWrite.All")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class RemovePlannerPlan : PnPGraphCmdlet
     {

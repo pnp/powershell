@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ProcessRecord()
         {
-            WriteWarning("This cmdlet will provide consent for the PnP Managment Shell EntraID multi-tenant app. It is strongly recommmended to register your own app in your EntraID and use that for authentication instead. See the documentation for Register-PnPEntraIDApp.");
+            WriteWarning("This cmdlet will provide consent for the PnP Managment Shell Entra ID multi-tenant app. It is strongly recommmended to register your own app in your Entra ID and use that for authentication instead. See the documentation for Register-PnPEntraIDApp.");
             source = new CancellationTokenSource();
             var messageWriter = new CmdletMessageWriter(this);
 
