@@ -8,13 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
-using System.Security;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
-using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base;
 using System.Diagnostics;
 using System.Dynamic;
@@ -35,13 +31,13 @@ namespace PnP.PowerShell.Commands.AzureAD
         [Parameter(Mandatory = false)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ParameterSetName = "DeviceLogin")]
         public SwitchParameter DeviceLogin;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter NoPopup;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ParameterSetName = ("Interactive"))]
         public SwitchParameter Interactive;
 
         [Parameter(Mandatory = false)]
@@ -123,13 +119,10 @@ namespace PnP.PowerShell.Commands.AzureAD
             if (!scopes.Any())
             {
                 messageWriter.WriteWarning("No permissions specified, using default permissions");
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "profile", "Scope")); // delegate
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "offline_access", "Scope")); // delegate
                 scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "TermStore.ReadWrite.All", "Scope")); // Delegate
                 scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "AllSites.FullControl", "Scope")); // Delegate
-                //scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "Group.Read.All", "Scope")); // Delegate
                 scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "Group.ReadWrite.All", "Scope")); // Delegate
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "User.ReadWrite.All", "Scope")); // AppOnly
+                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "User.ReadWrite.All", "Scope")); // Delegate
                 scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "User.ReadWrite.All", "Scope")); // Delegate
             }
             var record = new PSObject();
