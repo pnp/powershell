@@ -92,7 +92,6 @@ namespace PnP.PowerShell.Commands.AzureAD
         public string LogoFilePath;
 
         [Parameter(Mandatory = false)]
-        [Alias("ForInteractiveLoginOnly")]
         public SwitchParameter SkipCertCreation;
 
         protected override void ProcessRecord()
