@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
         /// </summary>
-        public string AccessToken => TokenHandler.GetAccessToken(this, "https://graph.microsoft.com/.default", Connection);
+        public string AccessToken => TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
 
         internal GraphServiceClient ServiceClient
         {
