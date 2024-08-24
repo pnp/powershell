@@ -5032,6 +5032,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Register-PnPEntraIDAppForInteractiveLogin.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Register-PnPEntraIDAppForInteractiveLogin.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Register-PnPHubSite.md",
       "output": {
         ".html": {
