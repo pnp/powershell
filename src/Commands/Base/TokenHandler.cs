@@ -132,14 +132,14 @@ namespace PnP.PowerShell.Commands.Base
                                     if (matchedScopes == requiredListedScope.PermissionScopes.Length)
                                     {
                                         scopesPresent = true;
-                                        accessToken = authManager.GetAccessTokenAsync(requiredListedScope.PermissionScopes).GetAwaiter().GetResult();
+                                        accessToken = authManager.GetAccessTokenAsync(requiredListedScope.PermissionScopes).GetAwaiter().GetResult();                                        
                                         break; // we have a match, jump out of the loop
                                     }
                                 }
 
                                 if (!scopesPresent)
                                 {
-                                    var requiredScopes = requiredListedScopes.First().PermissionScopes;
+                                    var requiredScopes = requiredListedScopes.Length > 0 ? requiredListedScopes.First().PermissionScopes : null;
 
                                     if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
                                     {
