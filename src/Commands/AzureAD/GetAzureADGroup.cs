@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADGroup")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     [Alias("Get-PnPEntraIDGroup")]
     public class GetAzureADGroup : PnPGraphCmdlet
     {
