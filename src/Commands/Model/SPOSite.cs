@@ -196,6 +196,7 @@ namespace PnP.PowerShell.Commands.Model
             RestrictContentOrgWideSearch = props.RestrictContentOrgWideSearch;
             ReadOnlyForUnmanagedDevices = props.ReadOnlyForUnmanagedDevices;
             OverrideSharingCapability = props.OverrideSharingCapability;
+            OverrideBlockUserInfoVisibility = props.OverrideBlockUserInfoVisibility;
         }
     }
 }
