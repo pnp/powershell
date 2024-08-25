@@ -652,7 +652,7 @@ namespace PnP.PowerShell.Commands
 
             if (ParameterSpecified(nameof(OverrideSharingCapability)))
             {
-                props.ReadOnlyForUnmanagedDevices = OverrideSharingCapability;
+                props.OverrideSharingCapability = OverrideSharingCapability;
                 updateRequired = true;
             }
 
