@@ -23,7 +23,23 @@ You'll notice that the cmdlet is not called `Register-PnPPowerShellAccess`. This
 
 During execution of the cmdlet you will be talked through the consent flow. This means that a browser window will open, you will be asked to authenticate, and you will be asked to consent to a number of permissions. After this permissions has been granted a new entry will show up if you navigate to `Enterprise Applications` in your Entra ID. If you want to revoke the consent you can simply remove the entry from the Enterprise Applications. 
 
-## Setting up access to your own Entra ID App
+## Setting up access to your own Entra ID App for Interactive Login
+
+PnP PowerShell has a cmdlet that allows you to register a new Entra ID App specifically for interactive login. Notice that you need to be able to create App registrations in your Entra ID.
+
+```powershell
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP Rocks" -Tenant [yourtenant].onmicrosoft.com -Interactive
+```
+
+When you run the cmdlet above you will be asked to authenticate with your username, password and an optional second factor. After that a new app will be registered in the Entra ID (make sure you have the rights to do this). By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (`GraphApplicationPermissions`, `GraphDelegatePermissions`, `SharePointApplicationPermissions`, `SharePointDelegatePermissions`) to provide your own permission scopes. After the app has been registered you will be asked to provide consent for the application. Alternatively you can ask with the appropriate access rights to navigate to the app registration in the Azure Portal. You will find the app under 'Enterprise Applications' and consent to the application there.
+
+After the application has been succesfully registered and consented to you can connect to your tenant using:
+
+```powershell
+Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid]
+```
+
+## Setting up access to your own Entra ID App for App Only Access
 
 PnP PowerShell has a cmdlet that allows you to register a new Entra ID App, and optionally generate the certificates for you to use to login with that app. 
 
