@@ -61,6 +61,18 @@ Creates a new Entra ID Application registration. The application will be setup w
 
 ## PARAMETERS
 
+### -Interactive
+If specified, an interactive authentication flow will be started, allowing your to authenticate with username, password and an optional second factor from your phone or other device.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ### -DeviceLogin
 If specified, a device login flow, supporting Multi-Factor Authentication will be used to authenticate towards the Microsoft Graph.
 
