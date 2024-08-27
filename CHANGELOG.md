@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+
 ## [Current Nightly]
 
 ### Added
@@ -15,6 +16,20 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Removed
 
 ### Contributors
+
+## [2.10.0]
+
+### Added
+
+- Added Register-PnPEntraIdAppForInteractiveLogin cmdlet
+
+### Fixed
+
+### Removed
+
+### Contributors
+
+- Erwin van Hunen [erwinvanhunen]
 
 ## [2.9.0]
 
