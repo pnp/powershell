@@ -18,7 +18,6 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base;
 using System.Diagnostics;
 using System.Dynamic;
-using System.Drawing.Drawing2D;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
