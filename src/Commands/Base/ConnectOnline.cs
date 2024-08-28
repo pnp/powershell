@@ -9,7 +9,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Net.Http;
 using System.Reflection;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
@@ -279,6 +278,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
         public SwitchParameter AzureADWorkloadIdentity;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        public SwitchParameter EnableLoginByWAM;
+
         protected override void ProcessRecord()
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -530,7 +532,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else
                     {
-                        var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+                        var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
                         if (!string.IsNullOrEmpty(environmentAppId))
                         {
                             clientId = environmentAppId;
@@ -656,7 +658,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (ClientId == null)
             {
-                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
                 if (!string.IsNullOrEmpty(environmentAppId))
                 {
                     ClientId = environmentAppId;
@@ -734,14 +736,14 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
             }
-            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant);
+            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, enableLoginWithWAM: EnableLoginByWAM);
         }
 
         private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
         {
             string username = Environment.GetEnvironmentVariable("AZURE_USERNAME") ?? Environment.GetEnvironmentVariable("ENTRAID_USERNAME");
             string password = Environment.GetEnvironmentVariable("AZURE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_PASSWORD");
-            string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_ID");
+            string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID");
             string azureCertificatePath = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_CERTIFICATE_PATH") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_CERTIFICATE_PATH");
             string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_CERTIFICATE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_CERTIFICATE_PASSWORD");
 
