@@ -84,7 +84,7 @@
   <h1 id="authentication">Authentication</h1>
 
 <h2 id="setting-up-access">Setting up Access</h2>
-<p>PnP PowerShell allows you to authenticate with credentials to your tenant. However, due to changes in the underlying SDKs we require you first to register a Entra ID Application which will allow you to authenticate.</p>
+<p>PnP PowerShell allows you to authenticate with credentials to your tenant. However, due to changes in the underlying SDKs we require you first to register an Entra ID Application which will allow you to authenticate.</p>
 <div class="IMPORTANT">
 <h5>Important</h5>
 <p>This functionality will stop working on the 9th of September of 2024. Register your own Entra ID application instead. See lower in this article for more information.</p>
@@ -99,7 +99,15 @@
 You are not creating a new application in the sense of something that runs in your Entra ID tenant. You're only adding a registration to your Entra ID, a so called 'consent' for people in your tenant to use that application. The access rights the application requires are delegate only, so you will always have to provide credentials or another way of identifying the user actually using that application.</p>
 </div>
 <p>During execution of the cmdlet you will be talked through the consent flow. This means that a browser window will open, you will be asked to authenticate, and you will be asked to consent to a number of permissions. After this permissions has been granted a new entry will show up if you navigate to <code>Enterprise Applications</code> in your Entra ID. If you want to revoke the consent you can simply remove the entry from the Enterprise Applications.</p>
-<h2 id="setting-up-access-to-your-own-entra-id-app">Setting up access to your own Entra ID App</h2>
+<h2 id="setting-up-access-to-your-own-entra-id-app-for-interactive-login">Setting up access to your own Entra ID App for Interactive Login</h2>
+<p>PnP PowerShell has a cmdlet that allows you to register a new Entra ID App specifically for interactive login. Notice that you need to be able to create App registrations in your Entra ID.</p>
+<pre><code class="lang-powershell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -Interactive
+</code></pre>
+<p>When you run the cmdlet above you will be asked to authenticate with your username, password and an optional second factor. After that a new app will be registered in the Entra ID (make sure you have the rights to do this). By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (<code>GraphApplicationPermissions</code>, <code>GraphDelegatePermissions</code>, <code>SharePointApplicationPermissions</code>, <code>SharePointDelegatePermissions</code>) to provide your own permission scopes. After the app has been registered you will be asked to provide consent for the application. Alternatively you can ask with the appropriate access rights to navigate to the app registration in the Azure Portal. You will find the app under 'Enterprise Applications' and consent to the application there.</p>
+<p>After the application has been succesfully registered and consented to you can connect to your tenant using:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid]
+</code></pre>
+<h2 id="setting-up-access-to-your-own-entra-id-app-for-app-only-access">Setting up access to your own Entra ID App for App Only Access</h2>
 <p>PnP PowerShell has a cmdlet that allows you to register a new Entra ID App, and optionally generate the certificates for you to use to login with that app.</p>
 <pre><code class="lang-powershell">$result = Register-PnPEntraIDApp -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
 $result

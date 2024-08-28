@@ -159,6 +159,15 @@
 </code></pre>
 <p>Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. It will also set the <code>logo.png</code> file as the logo for the Azure AD app.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-interactive">-Interactive</h3>
+<p>If specified, an interactive authentication flow will be started, allowing your to authenticate with username, password and an optional second factor from your phone or other device.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+</code></pre>
 <h3 id="-username">-Username</h3>
 <p>The username to use when logging into the Microsoft Graph. Notice that this user account needs to have write access to the Azure AD.</p>
 <pre><code class="lang-yaml">Type: String

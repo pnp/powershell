@@ -120,6 +120,15 @@
 </code></pre>
 <p>Creates a new Entra ID Application registration. The application will be setup with the following delegate permissions to consent: Group.Read.All, AllSites.FullControl. A browser window will be shown allowing you to authenticate.</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-interactive">-Interactive</h3>
+<p>If specified, an interactive authentication flow will be started, allowing your to authenticate with username, password and an optional second factor from your phone or other device.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+</code></pre>
 <h3 id="-devicelogin">-DeviceLogin</h3>
 <p>If specified, a device login flow, supporting Multi-Factor Authentication will be used to authenticate towards the Microsoft Graph.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
