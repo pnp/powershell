@@ -8,6 +8,7 @@ namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerBucket")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetPlannerBucket : PnPGraphCmdlet
     {
         private const string ParameterName_BYGROUP = "By Group";

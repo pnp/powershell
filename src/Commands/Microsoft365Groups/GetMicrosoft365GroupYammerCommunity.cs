@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupYammerCommunity")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetMicrosoft365GroupYammerCommunity : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

@@ -2,7 +2,7 @@
 
 namespace PnP.PowerShell.Commands.Attributes
 {
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class RequiredMinimalApiPermissions : Attribute
     {
         public string[] PermissionScopes { get; set; }

@@ -8,6 +8,7 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelUser")]
     [RequiredMinimalApiPermissions("ChannelMember.Read.All")]
+    [RequiredMinimalApiPermissions("ChannelMember.ReadWrite.All")]
     public class GetTeamsChannelUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

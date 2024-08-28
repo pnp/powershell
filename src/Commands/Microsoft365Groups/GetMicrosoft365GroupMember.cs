@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupMember")]
     [Alias("Get-PnPMicrosoft365GroupMembers")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetMicrosoft365GroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

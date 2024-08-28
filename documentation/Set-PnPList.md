@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPList.html
 # Set-PnPList
 
 ## SYNOPSIS
-Updates list settings
+Updates list settings.
 
 ## SYNTAX
 
@@ -36,7 +36,7 @@ Allows the configuration of a specific SharePoint Online list to be set.
 Set-PnPList -Identity "Demo List" -EnableContentTypes $true
 ```
 
-Switches the Enable Content Type switch on the list
+Switches the Enable Content Type switch on the list.
 
 ### EXAMPLE 2
 ```powershell
@@ -50,56 +50,56 @@ Hides the list from the SharePoint UI.
 Set-PnPList -Identity "Demo List" -EnableVersioning $true
 ```
 
-Turns on major versions on a list
+Turns on major versions on a list.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableVersioning $true -MajorVersions 20
 ```
 
-Turns on major versions on a list and sets the maximum number of Major Versions to keep to 20.
+Turns on major versions on a list and sets the maximum number of major versions to keep at 20.
 
 ### EXAMPLE 5
 ```powershell
 Set-PnPList -Identity "Demo Library" -EnableVersioning $true -EnableMinorVersions $true -MajorVersions 20 -MinorVersions 5
 ```
 
-Turns on major versions on a document library and sets the maximum number of Major versions to keep to 20 and sets the maximum of Minor versions to 5.
+Turns on major versions on a document library, sets the maximum number of major versions to keep at 20, and sets the maximum number of minor versions to 5.
 
 ### EXAMPLE 6
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableAttachments $true
 ```
 
-Turns on attachments on a list
+Turns on attachments for a list.
 
 ### EXAMPLE 7
 ```powershell
 Set-PnPList -Identity "Demo List" -Title "Demo List 2" -Path "Lists/DemoList2"
 ```
 
-Rename a list, including its' URL.
+Renames a list, including its URL.
 
 ### EXAMPLE 8
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $true
 ```
 
-Enable AutoExpiration file version trim mode on a document library.
+Enables AutoExpiration file version trim mode on a document library.
 
 ### EXAMPLE 9
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 30 -MajorVersions 500
 ```
 
-Enable ExpireAfter file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.
+Enables ExpireAfter file version trim mode on a document library. MinorVersions parameter is also needed when minor version is enabled.
 
 ### EXAMPLE 10
 ```powershell
 Set-PnPList -Identity "Demo List" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 0 -MajorVersions 500
 ```
 
-Enable NoExpiration file version trim mode on a document library. MinorVersions is also needed when minor version is enabled.
+Enables NoExpiration file version trim mode on a document library. MinorVersions parameter is also needed when minor version is enabled.
 
 ### EXAMPLE 11
 ```powershell
@@ -111,7 +111,7 @@ Sets the default sensitivity label for a document library to Confidential.
 ## PARAMETERS
 
 ### -BreakRoleInheritance
-If used the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.md).
+If used, the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.md).
 
 ```yaml
 Type: SwitchParameter
@@ -125,7 +125,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResetRoleInheritance
-If used the security inheritance is reset for this list meaning it will not copy the permissions from its parent, but will start with an empty list of permissions. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.md).
+If used, the security inheritance is reset for this list, meaning it will not copy the permissions from its parent but will start with an empty list of permissions. Permissions can be added using [Set-PnPListPermission](Set-PnPListPermission.md).
 
 ```yaml
 Type: SwitchParameter
@@ -139,7 +139,7 @@ Accept wildcard characters: False
 ```
 
 ### -ClearSubScopes
-If used the unique permissions are cleared from child objects and they can inherit role assignments from this object
+If used, the unique permissions are cleared from child objects and they can inherit role assignments from this object.
 
 ```yaml
 Type: SwitchParameter
@@ -167,7 +167,7 @@ Accept wildcard characters: False
 ```
 
 ### -CopyRoleAssignments
-If used the roles are copied from the parent web
+If used, the role assignments are copied from the parent web.
 
 ```yaml
 Type: SwitchParameter
@@ -181,7 +181,7 @@ Accept wildcard characters: False
 ```
 
 ### -Description
-The description of the list
+The description of the list.
 
 ```yaml
 Type: String
@@ -223,7 +223,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnableContentTypes
-Set to $true to enable content types, set to $false to disable content types
+Set to $true to enable content types, set to $false to disable content types.
 
 ```yaml
 Type: Boolean
@@ -378,7 +378,7 @@ Accept wildcard characters: False
 ```
 
 ### -MajorVersions
-Maximum major versions to keep
+Maximum major versions to keep.
 
 ```yaml
 Type: UInt32
@@ -392,7 +392,7 @@ Accept wildcard characters: False
 ```
 
 ### -MinorVersions
-Maximum major versions for which to keep minor versions
+Maximum major versions for which to keep minor versions.
 
 ```yaml
 Type: UInt32
@@ -406,7 +406,7 @@ Accept wildcard characters: False
 ```
 
 ### -OpenDocumentsMode
-Allows configuring the opening documents in the browser advanced setting on document libraries. Set to ClientApplication to have documents being opened in the locally installed Word, PowerPoint or Excel client or set to Browser to have documents being opened in the browser. It is not possible to set it to "Use the server default mode".
+Allows configuring the "Opening Documents in the Browser" advanced setting on document libraries. Set to `ClientApplication` to have documents opened in the locally installed Word, PowerPoint, or Excel client, or set to `Browser` to have documents opened in the browser. It is not possible to set it to "Use the server default mode".
 
 ```yaml
 Type: DocumentLibraryOpenDocumentsInMode
@@ -421,7 +421,7 @@ Accept wildcard characters: False
 ```
 
 ### -ReadSecurity
-Sets the read security for the list
+Sets the read security for the list.
 
 ```yaml
 Type: ListReadSecurity
@@ -435,7 +435,7 @@ Accept wildcard characters: False
 ```
 
 ### -WriteSecurity
-Sets the write security for the list
+Sets the write security for the list.
 
 ```yaml
 Type: ListWriteSecurity
@@ -449,7 +449,7 @@ Accept wildcard characters: False
 ```
 
 ### -Title
-The title of the list
+The title of the list.
 
 ```yaml
 Type: String
@@ -463,7 +463,7 @@ Accept wildcard characters: False
 ```
 
 ### -NoCrawl
-Switch parameter if this list should be indexed in search. 
+Switch parameter to specify whether this list should be excluded from search indexing.
 
 ```yaml
 Type: SwitchParameter
@@ -552,7 +552,7 @@ Accept wildcard characters: False
 ```
 
 ### -ExpireVersionsAfterDays
-Work with parameter EnableAutoExpirationVersionTrim. Please see description in EnableAutoExpirationVersionTrim.
+Works with parameter EnableAutoExpirationVersionTrim. Please see description in EnableAutoExpirationVersionTrim.
 
 ```yaml
 Type: UInt32
