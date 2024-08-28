@@ -625,7 +625,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithInteractiveLogin(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant)
+        internal static PnPConnection CreateWithInteractiveLogin(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant, bool enableLoginWithWAM)
         {
             PnP.Framework.AuthenticationManager authManager = null;
             if (PnPConnection.CachedAuthenticationManager != null && !forceAuthentication)
@@ -642,7 +642,7 @@ namespace PnP.PowerShell.Commands.Base
                 tenant,
                 successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(launchBrowser ? "tab" : "window")}.",
                 failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(launchBrowser ? "tab" : "window")}.",
-                azureEnvironment: azureEnvironment);
+                azureEnvironment: azureEnvironment, useWAM: enableLoginWithWAM);
             }
             using (authManager)
             {
