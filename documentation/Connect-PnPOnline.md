@@ -146,7 +146,7 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin
 ```
 
 This will authenticate you using the PnP Management Shell Multi-Tenant application.
-A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created.
+A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created and we will use that value and authenticate using that Entra ID app.
 
 ### EXAMPLE 5
 ```powershell
@@ -232,18 +232,24 @@ Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable -Tenant 'cont
 
 This example uses the `AZURE_CLIENT_CERTIFICATE_PATH` and `AZURE_CLIENT_CERTIFICATE_PASSWORD` environment variable values to authenticate. The `AZURE_CLIENT_ID` environment variable must be present and `Tenant` parameter value must be provided.
 
+If these environment variables are not present, it will try to find `ENTRAID_APP_CERTIFICATE_PATH` or `ENTRAID_CLIENT_CERTIFICATE_PATH` and for certificate password use `ENTRAID_APP_CERTIFICATE_PASSWORD` or `ENTRAID_CLIENT_CERTIFICATE_PASSWORD` as fallback.
+
 ### EXAMPLE 15
 ```powershell
 Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable
 ```
 
-This example uses the `AZURE_USERNAME` and `AZURE_PASSWORD` environment variables as credentials to authenticate. If `AZURE_CLIENT_ID` is not present, then it will try to use the default `PnP Management Shell Azure AD app` as fallback and attempt to authenticate.
+This example uses the `AZURE_USERNAME` and `AZURE_PASSWORD` environment variables as credentials to authenticate.  If these environment variables are not available, it will use `ENTRAID_USERNAME` and `ENTRAID_PASSWORD` environment variables as fallback.
+
+If `AZURE_CLIENT_ID` is not present, then it will try to use the default `PnP Management Shell Azure AD app` as fallback and attempt to authenticate. Starting from 9th Sept 2024, it will try to use `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` environment variables as fallback.
 
 This method assumes you have the necessary environment variables available. For more information about the required environment variables, please refer to this article, [Azure.Identity Environment Variables](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables) here.
 
 So, when using `-EnvironmentVariable` method for authenticating, we will require `AZURE_CLIENT_CERTIFICATE_PATH`, `AZURE_CLIENT_CERTIFICATE_PASSWORD` and `AZURE_CLIENT_ID` environment variables for using the service principal with certificate method for authentication.
 
 If `AZURE_USERNAME`, `AZURE_PASSWORD` and `AZURE_CLIENT_ID`, we will use these environment variables and authenticate using credentials flow.
+
+If `ENTRAID_USERNAME`, `ENTRAID_PASSWORD` and `ENTRAID_APP_ID` , we will use these environment variables and authenticate using credentials flow.
 
 We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used.
 
