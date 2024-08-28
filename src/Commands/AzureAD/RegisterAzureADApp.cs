@@ -18,6 +18,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base;
 using System.Diagnostics;
 using System.Dynamic;
+using System.Drawing.Drawing2D;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -567,7 +568,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             payload.isFallbackPublicClient = true;
             payload.displayName = ApplicationName;
             payload.signInAudience = "AzureADMyOrg";
-            payload.publicClient = new { redirectUris = redirectUris.ToArray()};
+            payload.publicClient = new { redirectUris = redirectUris.ToArray() };
             payload.requiredResourceAccess = scopesPayload;
 
             if (cert != null)
@@ -595,6 +596,33 @@ namespace PnP.PowerShell.Commands.AzureAD
             }
 
             var azureApp = RestHelper.Post<AzureADApp>(httpClient, $"{graphEndpoint}/v1.0/applications", token, payload);
+
+            var retry = true;
+            var iteration = 0;
+            while (retry)
+            {
+                try
+                {
+                    // Add redirectURI to support windows broker
+                    dynamic redirectUriPayload = new ExpandoObject();
+                    redirectUris.Add($"ms-appx-web://microsoft.aad.brokerplugin/{azureApp.AppId}");
+                    redirectUriPayload.publicClient = new { redirectUris = redirectUris.ToArray() };
+                    RestHelper.Patch(httpClient, $"{graphEndpoint}/v1.0/applications/{azureApp.Id}", token, redirectUriPayload);
+                    retry = false;
+                }
+
+                catch (Exception)
+                {
+                    Thread.Sleep(10000);
+                    iteration++;
+                }
+
+                if (iteration > 3) // don't try more than 3 times
+                {
+                    retry = false;
+                }
+            }
+
             if (azureApp != null)
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"App {azureApp.DisplayName} with id {azureApp.AppId} created.");
