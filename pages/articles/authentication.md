@@ -128,7 +128,7 @@ This will show a popup window which will allow to authenticate and step through 
 
 ## Authentication to GCC or National Cloud environments
 
-In order to authentication to a GCC or a national cloud environment you have to take a few steps. Notice that this will work as of release 1.3.9-nightly or later.
+In order to set up authentication to a GCC or a national cloud environment you have to take a few extra steps. Notice that this will work as of release 1.3.9-nightly or later.
 
 ### Register your own Entra ID App
 You are required to register your own Entra ID App in order to authentication
