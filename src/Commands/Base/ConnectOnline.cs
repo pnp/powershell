@@ -724,7 +724,7 @@ namespace PnP.PowerShell.Commands.Base
                 else
                 {
                     ClientId = PnPConnection.PnPManagementShellClientId;
-                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -Interactive uses the PnP Management Shell multi-tenant App Id for authentication. It is strongly recommended to register your own Entra ID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -Interactive uses the PnP Management Shell multi-tenant App Id for authentication. It is strongly recommended to register your own Entra ID App for authentication. See the documentation for Register-PnPEntraIDAppForInteractiveLogin.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
                 }
             }
             if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)

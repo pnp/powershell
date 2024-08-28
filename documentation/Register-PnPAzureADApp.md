@@ -115,6 +115,18 @@ Creates a new Azure AD Application registration which will use the existing priv
 
 ## PARAMETERS
 
+### -Interactive
+If specified, an interactive authentication flow will be started, allowing your to authenticate with username, password and an optional second factor from your phone or other device.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
 ### -Username
 The username to use when logging into the Microsoft Graph. Notice that this user account needs to have write access to the Azure AD.
 
