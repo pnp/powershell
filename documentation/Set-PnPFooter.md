@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPFooter.html
 # Set-PnPFooter
 
 ## SYNOPSIS
-Configures the footer of the current web
+Configures the footer of the current web.
 
 ## SYNTAX
 
@@ -29,33 +29,33 @@ Allows the footer to be enabled or disabled and fine tuned in the current web. F
 Set-PnPFooter -Enabled:$true
 ```
 
-Enables the footer to be shown on the current web
+Enables the footer to be shown on the current web.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPFooter -Enabled:$true -Layout Extended -BackgroundTheme Neutral
 ```
 
-Enables the footer to be shown on the current web with the extended layout using a neutral background
+Enables the footer to be shown on the current web with the extended layout using a neutral background.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPFooter -Title "Contoso Inc." -LogoUrl "/sites/communication/Shared Documents/logo.png"
 ```
 
-Sets the title and logo shown in the footer
+Sets the title and logo shown in the footer.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPFooter -LogoUrl ""
 ```
 
-Removes the current logo shown in the footer
+Removes the current logo shown in the footer.
 
 ## PARAMETERS
 
 ### -BackgroundTheme
-Defines the background emphasis of the content in the footer
+Defines the background emphasis of the content in the footer.
 
 ```yaml
 Type: FooterVariantThemeType
@@ -84,7 +84,7 @@ Accept wildcard characters: False
 ```
 
 ### -Enabled
-Indicates if the footer should be shown on the current web ($true) or if it should be hidden ($false)
+Indicates if the footer should be shown on the current web ($true) or if it should be hidden ($false).
 
 ```yaml
 Type: SwitchParameter
@@ -98,7 +98,7 @@ Accept wildcard characters: False
 ```
 
 ### -Layout
-Defines how the footer should look like
+Defines how the footer should look like.
 
 ```yaml
 Type: FooterLayoutType
@@ -127,7 +127,7 @@ Accept wildcard characters: False
 ```
 
 ### -Title
-Defines the title displayed in the footer
+Defines the title displayed in the footer.
 
 ```yaml
 Type: String

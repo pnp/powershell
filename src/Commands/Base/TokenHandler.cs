@@ -1,8 +1,10 @@
-﻿using Microsoft.Identity.Client;
+﻿using AngleSharp.Text;
+using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
@@ -31,7 +33,7 @@ namespace PnP.PowerShell.Commands.Base
 
             // Check if the token contains an idType
             if (idType == null) return Enums.IdType.Unknown;
-            
+
             // Parse the idType to the corresponding enum value
             return idType.Value.ToLowerInvariant() switch
             {
@@ -64,10 +66,13 @@ namespace PnP.PowerShell.Commands.Base
         /// <exception cref="PSArgumentException">Thrown if the permissions set through the permissions attribute do not match the roles in the JWT token</exception>
         internal static void EnsureRequiredPermissionsAvailableInAccessToken(Type cmdletType, string accessToken)
         {
-            var permissionEvaluationResponse = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdletType, accessToken);
-            if (permissionEvaluationResponse.RequredPermissionsPresent) return;
-            
-            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope{(permissionEvaluationResponse.MissingPermissions.Length != 1 ? "s" : "")} {string.Concat(permissionEvaluationResponse.MissingPermissions, ", ")}");
+            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdletType, accessToken);
+            foreach (var permissionEvaluationResponse in permissionEvaluationResponses)
+            {
+                if (permissionEvaluationResponse.RequiredPermissionsPresent) return;
+            }
+            var missingPermissions = permissionEvaluationResponses.Select(r => r.MissingPermissions);
+            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope{(missingPermissions.Count() != 1 ? "s" : "")} for one or more of these permissions: {string.Concat(missingPermissions, ", ")}");
         }
 
         /// <summary>
@@ -83,12 +88,7 @@ namespace PnP.PowerShell.Commands.Base
             if (connection == null) return null;
 
             string accessToken = null;
-            if (connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-            {
-                cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Managed Identity");
-                accessToken = GetManagedIdentityTokenAsync(cmdlet, connection.HttpClient, $"{audience.TrimEnd('/')}/", connection.UserAssignedManagedIdentityObjectId, connection.UserAssignedManagedIdentityClientId, connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-            }
-            else if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+            if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
             {
                 cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Azure AD Workload Identity");
                 accessToken = GetAzureADWorkloadIdentityTokenAsync(cmdlet, $"{audience.TrimEnd('/')}/.default").GetAwaiter().GetResult();
@@ -107,67 +107,91 @@ namespace PnP.PowerShell.Commands.Base
                             throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
                         }
 
-                        string[] requiredScopes = null;
-                        RequiredMinimalApiPermissions requiredScopesAttribute = null;
+                        accessToken = authManager.GetAccessToken(audience);
+                        var currentScopes = ReturnScopes(accessToken);
+
+                        var scopesPresent = false;
+
                         if (cmdlet != null && cmdlet.GetType() != null)
                         {
-                            requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
-                        }
-                        if (requiredScopesAttribute != null)
-                        {
-                            requiredScopes = requiredScopesAttribute.PermissionScopes;
-                        }
-                        if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
-                        {
-                            requiredScopes = new[] { audience }; // override for app only
-                        }
-                        if (requiredScopes == null && !string.IsNullOrEmpty(audience))
-                        {
-                            requiredScopes = new[] { audience };
-                        }
+                            var requiredListedScopes = (RequiredMinimalApiPermissions[])Attribute.GetCustomAttributes(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
+                            // assume these are 'or'
+                            if (requiredListedScopes != null)
+                            {
+                                foreach (var requiredListedScope in requiredListedScopes)
+                                {
+                                    var matchedScopes = 0;
+                                    // check if scopes are present
+                                    foreach (var permission in requiredListedScope.PermissionScopes)
+                                    {
+                                        if (currentScopes.Contains(permission, StringComparison.InvariantCultureIgnoreCase))
+                                        {
+                                            matchedScopes++;
+                                        }
+                                    }
+                                    if (matchedScopes == requiredListedScope.PermissionScopes.Length)
+                                    {
+                                        scopesPresent = true;
+                                        accessToken = authManager.GetAccessTokenAsync(requiredListedScope.PermissionScopes).GetAwaiter().GetResult();                                        
+                                        break; // we have a match, jump out of the loop
+                                    }
+                                }
 
-                        cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(", ", requiredScopes)}");
-                        accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
+                                if (!scopesPresent)
+                                {
+                                    var requiredScopes = requiredListedScopes.Length > 0 ? requiredListedScopes.First().PermissionScopes : null;
 
-                        // Retrieve the scopes from the access token
-                        var scopes = ReturnScopes(accessToken);
+                                    if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                                    {
+                                        requiredScopes = new[] { audience }; // override for app only
+                                    }
+                                    if (requiredScopes == null && !string.IsNullOrEmpty(audience))
+                                    {
+                                        requiredScopes = new[] { audience };
+                                    }
 
-                        // Perform logging on the scopes in the retrieved access token
-                        if (scopes.Length > 0)
-                        {
-                            cmdlet.WriteVerbose($"Access token acquired containing the following {(scopes.Length != 1 ? scopes.Length + " " : "")}{RetrieveTokenType(accessToken).ToString().ToLowerInvariant()} scope{(scopes.Length == 1 ? "" : "s")}: {string.Join(", ", scopes)}");
-                        }
-                        else
-                        {
-                            cmdlet.WriteVerbose($"No scopes could be determined from the access token");
+                                    cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(", ", requiredScopes)}");
+                                    accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
+
+                                    // Retrieve the scopes from the access token
+                                    var scopes = ReturnScopes(accessToken);
+
+                                    // Perform logging on the scopes in the retrieved access token
+                                    if (scopes.Length > 0)
+                                    {
+                                        cmdlet.WriteVerbose($"Access token acquired containing the following {(scopes.Length != 1 ? scopes.Length + " " : "")}{RetrieveTokenType(accessToken).ToString().ToLowerInvariant()} scope{(scopes.Length == 1 ? "" : "s")}: {string.Join(", ", scopes)}");
+                                    }
+                                    else
+                                    {
+                                        cmdlet.WriteVerbose($"No scopes could be determined from the access token");
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
-
             if (string.IsNullOrEmpty(accessToken))
             {
                 cmdlet.WriteVerbose($"Unable to acquire token for resource {connection.GraphEndPoint}");
                 return null;
             }
 
-            var permissionEvaluation = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet.GetType(), accessToken);
-            if (!permissionEvaluation.RequredPermissionsPresent)
+            var permissionEvaluations = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet.GetType(), accessToken);
+            var permissionsInPlace = false;
+            foreach (var permissionEvaluation in permissionEvaluations)
             {
-                cmdlet.WriteVerbose($"Current access might not have the required permissions to execute this cmdlet. Required {(permissionEvaluation.RequiredPermissions.Length != 1 ? $"{permissionEvaluation.RequiredPermissions.Length} " : "")}permission{(permissionEvaluation.RequiredPermissions.Length != 1 ? "s" : "")}: {string.Join(", ", permissionEvaluation.RequiredPermissions)}. Missing {(permissionEvaluation.MissingPermissions.Length != 1 ? $"{permissionEvaluation.MissingPermissions.Length} " : "")}permission{(permissionEvaluation.MissingPermissions.Length != 1 ? "s" : "")}: {string.Join(", ", permissionEvaluation.MissingPermissions)}.");
-            }
-            else
-            {
-                if (permissionEvaluation.RequiredPermissions.Length > 0)
+                if (permissionEvaluation.MissingPermissions.Length == 0)
                 {
-                    cmdlet.WriteVerbose($"Required {(permissionEvaluation.RequiredPermissions.Length != 1 ? $"{permissionEvaluation.RequiredPermissions.Length} " : "")}permission{(permissionEvaluation.RequiredPermissions.Length != 1 ? "s" : "")} to execute this cmdlet {(permissionEvaluation.RequiredPermissions.Length != 1 ? "are" : "is")} present: {string.Join(", ", permissionEvaluation.RequiredPermissions)}");
-                }
-                else
-                {
-                    cmdlet.WriteVerbose($"Required permissions could not be evaluated as they haven't been defined on the cmdlet {cmdlet.GetType()}");
+                    permissionsInPlace = true;
+                    break;
                 }
             }
-
+            if (!permissionsInPlace)
+            {
+                cmdlet.WriteVerbose($"The currect access token might not have the required permissions to execute this cmdlet. Required are one or more of the following: {string.Join(", ", permissionEvaluations.Select(p => p.MissingPermissions))}");
+            }
+        
             return accessToken;
         }
 
@@ -361,7 +385,7 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSInvalidOperationException(ex.Message);
             }
             catch (MsalServiceException ex)
-            {                
+            {
                 // Some other generic exception
                 throw new PSInvalidOperationException(ex.Message);
             }
