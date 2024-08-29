@@ -120,7 +120,7 @@
 </code></pre>
 <h3 id="interactive-for-multi-factor-authentication">Interactive for Multi Factor Authentication</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Interactive [-ReturnConnection] -Url &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-LaunchBrowser]
- [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-EnableLoginByWAM &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="on-premises-login-for-page-transformation-from-on-premises-sharepoint-to-sharepoint-online">On-premises login for page transformation from on-premises SharePoint to SharePoint Online</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &lt;String&gt; -TransformationOnPrem [-CurrentCredential]
@@ -162,11 +162,11 @@ See <a href="https://pnp.github.io/powershell/articles/connecting.html">https://
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot;
 </code></pre>
 <p>Connect to SharePoint prompting for the username and password.
-When a generic credential is added to the Windows Credential Manager with <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a>, PowerShell will not prompt for username and password and use those stored credentials instead.</p>
+When a generic credential is added to the Windows Credential Manager with <a href="https://contoso.sharepoint.com">https://contoso.sharepoint.com</a>, PowerShell will not prompt for username and password and use those stored credentials instead. You will have to register your own App first, by means of <code>Register-PnPEntraIDApp</code> to use this method. You will also have to provide the <code>-ClientId</code> parameter starting September 9, 2024. Alternatively, create an environment variable, call it <code>ENTRAID_APP_ID</code> or <code>ENTRAID_CLIENT_ID</code> and set the value to the app id you created</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Credentials (Get-Credential)
 </code></pre>
-<p>Connect to SharePoint prompting for the username and password to use to authenticate</p>
+<p>Connect to SharePoint prompting for the username and password to use to authenticate.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.de&quot; -ClientId 344b8aab-389c-4e4a-8fa1-4c1ae2c0a60d -ClientSecret $clientSecret
 </code></pre>
@@ -175,11 +175,11 @@ When a generic credential is added to the Windows Credential Manager with <a hre
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -DeviceLogin
 </code></pre>
 <p>This will authenticate you using the PnP Management Shell Multi-Tenant application.
-A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window.</p>
+A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window. Alternatively, create an environment variable, call it <code>ENTRAID_APP_ID</code> or <code>ENTRAID_CLIENT_ID</code> and set the value to the app id you created and we will use that value and authenticate using that Entra ID app.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -DeviceLogin -LaunchBrowser
 </code></pre>
-<p>This will authenticate you using the PnP Management Shell Multi-Tenant application.
+<p>This will authenticate you using the PnP Management Shell Multi-Tenant application. Alternatively, create an environment variable, call it <code>ENTRAID_APP_ID</code> or <code>ENTRAID_CLIENT_ID</code> and set the value to the app id you created.
 A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard.</p>
 <h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">$password = (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)
@@ -201,7 +201,7 @@ See <a href="https://learn.microsoft.com/sharepoint/dev/solution-guidance/securi
 <h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Interactive -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28
 </code></pre>
-<p>Connects to the Azure AD, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. Notice that you will have to register your own App first, by means of Register-PnPEntraIDAdd to use this method. You will also have to provide the -ClientId parameter starting September 9, 2024. Alternatively, create an environment variable, call it &quot;ENTRAID_APP_ID&quot; and set the value to the app id you created. If you use -Interactive and this environment variable is present you will not have to use -ClientId.</p>
+<p>Connects to the Azure AD, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. Notice that you will have to register your own App first, by means of <code>Register-PnPEntraIDApp</code> to use this method. You will also have to provide the <code>-ClientId</code> parameter starting September 9, 2024. Alternatively, create an environment variable, call it <code>ENTRAID_APP_ID</code> or <code>ENTRAID_CLIENT_ID</code> and set the value to the app id you created. If you use -Interactive and this environment variable is present you will not have to use -ClientId.</p>
 <h3 id="example-10">EXAMPLE 10</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://portal.contoso.com&quot; -TransformationOnPrem -CurrentCredential
 </code></pre>
@@ -228,13 +228,16 @@ Using this method PnP PowerShell will not acquire tokens dynamically and if the 
 <pre><code class="lang-powershell">Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable -Tenant 'contoso.onmicrosoft.com'
 </code></pre>
 <p>This example uses the <code>AZURE_CLIENT_CERTIFICATE_PATH</code> and <code>AZURE_CLIENT_CERTIFICATE_PASSWORD</code> environment variable values to authenticate. The <code>AZURE_CLIENT_ID</code> environment variable must be present and <code>Tenant</code> parameter value must be provided.</p>
+<p>If these environment variables are not present, it will try to find <code>ENTRAID_APP_CERTIFICATE_PATH</code> or <code>ENTRAID_CLIENT_CERTIFICATE_PATH</code> and for certificate password use <code>ENTRAID_APP_CERTIFICATE_PASSWORD</code> or <code>ENTRAID_CLIENT_CERTIFICATE_PASSWORD</code> as fallback.</p>
 <h3 id="example-15">EXAMPLE 15</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable
 </code></pre>
-<p>This example uses the <code>AZURE_USERNAME</code> and <code>AZURE_PASSWORD</code> environment variables as credentials to authenticate. If <code>AZURE_CLIENT_ID</code> is not present, then it will try to use the default <code>PnP Management Shell Azure AD app</code> as fallback and attempt to authenticate.</p>
+<p>This example uses the <code>AZURE_USERNAME</code> and <code>AZURE_PASSWORD</code> environment variables as credentials to authenticate.  If these environment variables are not available, it will use <code>ENTRAID_USERNAME</code> and <code>ENTRAID_PASSWORD</code> environment variables as fallback.</p>
+<p>If <code>AZURE_CLIENT_ID</code> is not present, then it will try to use the default <code>PnP Management Shell Azure AD app</code> as fallback and attempt to authenticate. Starting from 9th Sept 2024, it will try to use <code>ENTRAID_APP_ID</code> or <code>ENTRAID_CLIENT_ID</code> environment variables as fallback.</p>
 <p>This method assumes you have the necessary environment variables available. For more information about the required environment variables, please refer to this article, <a href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables">Azure.Identity Environment Variables</a> here.</p>
 <p>So, when using <code>-EnvironmentVariable</code> method for authenticating, we will require <code>AZURE_CLIENT_CERTIFICATE_PATH</code>, <code>AZURE_CLIENT_CERTIFICATE_PASSWORD</code> and <code>AZURE_CLIENT_ID</code> environment variables for using the service principal with certificate method for authentication.</p>
 <p>If <code>AZURE_USERNAME</code>, <code>AZURE_PASSWORD</code> and <code>AZURE_CLIENT_ID</code>, we will use these environment variables and authenticate using credentials flow.</p>
+<p>If <code>ENTRAID_USERNAME</code>, <code>ENTRAID_PASSWORD</code> and <code>ENTRAID_APP_ID</code> , we will use these environment variables and authenticate using credentials flow.</p>
 <p>We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used.</p>
 <h3 id="example-16">EXAMPLE 16</h3>
 <pre><code>Connect-PnPOnline -Url contoso.sharepoint.com -AzureEnvironment Custom -MicrosoftGraphEndPoint &quot;custom.graph.microsoft.com&quot; -AzureADLoginEndPoint &quot;https://custom.login.microsoftonline.com&quot;
@@ -244,6 +247,11 @@ Using this method PnP PowerShell will not acquire tokens dynamically and if the 
 <pre><code class="lang-powershell">Connect-PnPOnline -Url contoso.sharepoint.com -AzureADWorkloadIdentity
 </code></pre>
 <p>This example uses Azure AD Workload Identity to retrieve access tokens. For more information about this, please refer to this article, <a href="https://azure.github.io/azure-workload-identity/docs/introduction.html">Azure AD Workload Identity</a>. We are following the guidance mentioned in <a href="https://github.com/Azure/azure-workload-identity/blob/main/examples/msal-net/akvdotnet/TokenCredential.cs">this sample</a> to retrieve the access tokens.</p>
+<h3 id="example-18">EXAMPLE 18</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Interactive -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -EnableLoginByWAM
+</code></pre>
+<p>Connects to the Azure AD with WAM, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. Notice that you will have to register your own App first, by means of Register-PnPEntraIDAdd to use this method. You will also have to provide the -ClientId parameter starting September 9, 2024. Alternatively, create an environment variable, call it <code>ENTRAID_APP_ID</code> or <code>ENTRAID_CLIENT_ID</code> and set the value to the app id you created. If you use <code>-Interactive</code> and this environment variable is present you will not have to use -ClientId.</p>
+<p>WAM is a more secure way of authenticating in Windows OS. It supports Windows Hello, FIDO keys , conditional access policies and more.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-accesstoken">-AccessToken</h3>
 <p>Using this parameter you can provide your own access token.
@@ -569,7 +577,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-interactive">-Interactive</h3>
-<p>Connects to the Azure AD using interactive login, allowing you to authenticate using multi-factor authentication.
+<p>Connects to the Entra ID (Azure AD) using interactive login, allowing you to authenticate using multi-factor authentication.
 This parameter has preference over `-UseWebLogin`.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Interactive for Multi Factor Authentication
@@ -709,6 +717,18 @@ Parameter Sets: Azure AD Workload Identity
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enableloginbywam">-EnableLoginByWAM</h3>
+<p>Connects using Web Account Manager (WAM). This works only on Windows machines. Use this with <code>-Interactive</code> parameter to open the authentication broker. It supports Windows Hello, conditional access policies, FIDO keys. Requires that the Entra ID app registration  have <code>ms-appx-web://microsoft.aad.brokerplugin/{client_id}</code> as a redirect URI. For more information, visit this <a href="https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam">link</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Interactive for Multi Factor Authentication
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

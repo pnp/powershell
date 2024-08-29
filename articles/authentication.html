@@ -157,7 +157,7 @@ Set-Secret -Name &quot;yourlabel&quot; -Secret (Get-Credential)
 </code></pre>
 <p>This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow.</p>
 <h2 id="authentication-to-gcc-or-national-cloud-environments">Authentication to GCC or National Cloud environments</h2>
-<p>In order to authentication to a GCC or a national cloud environment you have to take a few steps. Notice that this will work as of release 1.3.9-nightly or later.</p>
+<p>In order to set up authentication to a GCC or a national cloud environment you have to take a few extra steps. Notice that this will work as of release 1.3.9-nightly or later.</p>
 <h3 id="register-your-own-entra-id-app">Register your own Entra ID App</h3>
 <p>You are required to register your own Entra ID App in order to authentication</p>
 <pre><code class="lang-powershell">Register-PnPEntraIDApp -ApplicationName &quot;PnP PowerShell&quot; -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China] -SharePointDelegatePermissions AllSites.FullControl -SharePointApplicationPermissions Sites.FullControl.All -GraphApplicationPermissions Group.ReadWrite.All -GraphDelegatePermissions Group.ReadWrite.All
