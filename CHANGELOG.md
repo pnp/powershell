@@ -12,10 +12,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 
 ### Fixed
+- Removed version check dependency on version.txt located in Github repo. Use metadata from powershellgallery.com instead.
 
 ### Removed
 
 ### Contributors
+- Erwin van Hunen [erwinvanhunen]
+
 
 ## [2.10.0]
 

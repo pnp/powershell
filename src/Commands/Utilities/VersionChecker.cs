@@ -1,8 +1,12 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Reflection;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -62,7 +66,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 cmdlet?.WriteVerbose($"Checking for updates, current version is {productVersion}. See https://pnp.github.io/powershell/articles/configuration.html#disable-or-enable-version-checks for more information.");
 
                 // Check for the latest available version
-                var onlineVersion = GetAvailableVersion(isNightly);
+                var onlineVersion = GetAvailableVersion2(isNightly);
 
                 if (IsNewer(onlineVersion))
                 {
@@ -74,7 +78,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else
                 {
-                    cmdlet?.WriteVerbose("No newer version of PnP PowerShell is available");
+                    cmdlet?.WriteVerbose($"No newer version of PnP PowerShell is available, latest available version is {onlineVersion}");
                 }
                 VersionChecked = true;
             }
@@ -93,9 +97,9 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             var assembly = Assembly.GetExecutingAssembly();
             var versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-            var productVersion = versionInfo.ProductVersion;
-
-            if (Version.TryParse(availableVersionString, out Version availableVersion))
+            var productVersion = versionInfo.ProductVersion;        
+            
+            if (SemanticVersion.TryParse(availableVersionString, out SemanticVersion availableVersion))
             {
                 if (availableVersion.Major > versionInfo.ProductMajorPart)
                 {
@@ -111,7 +115,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         if (productVersion.Contains("-"))
                         {
-                            if (versionInfo.ProductMajorPart == availableVersion.Major && versionInfo.ProductMinorPart == availableVersion.Minor && availableVersion.Build > versionInfo.ProductBuildPart)
+                            if (versionInfo.ProductMajorPart == availableVersion.Major && versionInfo.ProductMinorPart == availableVersion.Minor && availableVersion.Patch > versionInfo.ProductBuildPart)
                             {
                                 return true;
                             }
@@ -134,12 +138,43 @@ namespace PnP.PowerShell.Commands.Utilities
             httpClient.Timeout = TimeSpan.FromSeconds(VersionCheckTimeOut);
             var request = new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckUrl : ReleaseVersionCheckUrl);
             request.Version = new Version(2, 0);
+            
             var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
             {
                 var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
                 return onlineVersion;
+            }
+            return null;
+        }
+
+        internal static string GetAvailableVersion2(bool isNightly)
+        {
+            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            
+            // Deliberately lowering timeout as the version check is not critical so in case of a slower or blocked internet connection, this should not block the cmdlet for too long
+            httpClient.Timeout = TimeSpan.FromSeconds(VersionCheckTimeOut);
+            var request = new HttpRequestMessage(HttpMethod.Get, "https://www.powershellgallery.com/api/v2/FindPackagesById()?id='PnP.PowerShell'&$top=10&$orderby=Created%20desc");
+            request.Version = new Version(2, 0);
+            var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
+            if (response.IsSuccessStatusCode)
+            {
+                XNamespace atomNS = "http://www.w3.org/2005/Atom";
+                XNamespace metadataNS = "http://schemas.microsoft.com/ado/2007/08/dataservices/metadata";
+                XNamespace dataServicesNS = "http://schemas.microsoft.com/ado/2007/08/dataservices";
+                var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                var xml = XDocument.Parse(onlineVersion);
+                var entry = xml.Root.Elements(atomNS + "entry").FirstOrDefault();
+                if(entry!= null)
+                {
+                    var properties = entry.Elements(metadataNS + "properties").FirstOrDefault();
+                    if(properties != null)
+                    {
+                        var version = properties.Element(dataServicesNS + "Version").Value;
+                        return version;
+                    }
+                }
             }
             return null;
         }
