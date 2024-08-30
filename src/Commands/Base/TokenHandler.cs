@@ -132,7 +132,14 @@ namespace PnP.PowerShell.Commands.Base
                                     if (matchedScopes == requiredListedScope.PermissionScopes.Length)
                                     {
                                         scopesPresent = true;
-                                        accessToken = authManager.GetAccessTokenAsync(requiredListedScope.PermissionScopes).GetAwaiter().GetResult();                                        
+
+                                        var requiredScopes = requiredListedScope.PermissionScopes;
+                                        if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                                        {
+                                            requiredScopes = new[] { audience }; // override for app only
+                                        }
+
+                                        accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();                                        
                                         break; // we have a match, jump out of the loop
                                     }
                                 }
