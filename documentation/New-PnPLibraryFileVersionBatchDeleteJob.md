@@ -41,14 +41,14 @@ Starts a file version batch trim job that will delete all file versions that are
 
 ### EXAMPLE 3
 ```powershell
-New-PnPLibraryFileVersionBatchDeleteJob -Automatic
+New-PnPLibraryFileVersionBatchDeleteJob -Identity "Documents" -Automatic
 ```
 
-Starts a file version batch trim job that will delete file versions that expiread and set version expiration time for the ones not expired in the document library based on the backend algorithm.
+Starts a file version batch trim job that will delete file versions that expired and set version expiration time for the ones not expired in the document library based on the backend algorithm.
 
 ### EXAMPLE 4
 ```powershell
-New-PnPLibraryFileVersionBatchDeleteJob -MajorVersionLimit 30 -MajorWithMinorVersionsLimit 10
+New-PnPLibraryFileVersionBatchDeleteJob -Identity "Documents" -MajorVersionLimit 30 -MajorWithMinorVersionsLimit 10
 ```
 
 Starts a file version batch trim job that will delete file versions in the document library based on the version count limits.
