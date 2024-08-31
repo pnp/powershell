@@ -120,7 +120,7 @@
 </code></pre>
 <h3 id="interactive-for-multi-factor-authentication">Interactive for Multi Factor Authentication</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Interactive [-ReturnConnection] -Url &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] [-LaunchBrowser]
- [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-EnableLoginByWAM &lt;SwitchParameter&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="on-premises-login-for-page-transformation-from-on-premises-sharepoint-to-sharepoint-online">On-premises login for page transformation from on-premises SharePoint to SharePoint Online</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &lt;String&gt; -TransformationOnPrem [-CurrentCredential]
@@ -153,6 +153,10 @@
 <h3 id="azure-ad-workload-identity-1">Azure AD Workload Identity</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] &lt;String&gt;
  [-AzureADWorkloadIdentity] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="os-login">OS login</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] &lt;String&gt; [-CreateDrive] [-DriveName &lt;String&gt;] 
+ [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets.
@@ -248,10 +252,10 @@ Using this method PnP PowerShell will not acquire tokens dynamically and if the 
 </code></pre>
 <p>This example uses Azure AD Workload Identity to retrieve access tokens. For more information about this, please refer to this article, <a href="https://azure.github.io/azure-workload-identity/docs/introduction.html">Azure AD Workload Identity</a>. We are following the guidance mentioned in <a href="https://github.com/Azure/azure-workload-identity/blob/main/examples/msal-net/akvdotnet/TokenCredential.cs">this sample</a> to retrieve the access tokens.</p>
 <h3 id="example-18">EXAMPLE 18</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Interactive -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -EnableLoginByWAM
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -OSLogin
 </code></pre>
-<p>Connects to the Azure AD with WAM, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. Notice that you will have to register your own App first, by means of Register-PnPEntraIDAdd to use this method. You will also have to provide the -ClientId parameter starting September 9, 2024. Alternatively, create an environment variable, call it <code>ENTRAID_APP_ID</code> or <code>ENTRAID_CLIENT_ID</code> and set the value to the app id you created. If you use <code>-Interactive</code> and this environment variable is present you will not have to use -ClientId.</p>
-<p>WAM is a more secure way of authenticating in Windows OS. It supports Windows Hello, FIDO keys , conditional access policies and more.</p>
+<p>Connects to the Azure AD with WAM (aka native Windows authentication prompt), acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. Notice that you will have to register your own App first, by means of Register-PnPEntraIDAdd to use this method. You will also have to provide the -ClientId parameter starting September 9, 2024. Alternatively, create an environment variable, call it <code>ENTRAID_APP_ID</code> or <code>ENTRAID_CLIENT_ID</code> and set the value to the app id you created.</p>
+<p>WAM is a more secure &amp; faster way of authenticating in Windows OS. It supports Windows Hello, FIDO keys , conditional access policies and more.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-accesstoken">-AccessToken</h3>
 <p>Using this parameter you can provide your own access token.
@@ -720,13 +724,13 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-enableloginbywam">-EnableLoginByWAM</h3>
-<p>Connects using Web Account Manager (WAM). This works only on Windows machines. Use this with <code>-Interactive</code> parameter to open the authentication broker. It supports Windows Hello, conditional access policies, FIDO keys. Requires that the Entra ID app registration  have <code>ms-appx-web://microsoft.aad.brokerplugin/{client_id}</code> as a redirect URI. For more information, visit this <a href="https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam">link</a>.</p>
+<h3 id="-oslogin">-OSLogin</h3>
+<p>Connects using Web Account Manager (WAM). This works only on Windows machines, on other OS will open browser. Use this to open the native Windows authentication prompt. It supports Windows Hello, conditional access policies, FIDO keys and other OS integration auth options. Requires that the Entra ID app registration have <code>ms-appx-web://microsoft.aad.brokerplugin/{client_id}</code> as a redirect URI. For more information, visit this <a href="https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam">link</a>.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Interactive for Multi Factor Authentication
+Parameter Sets: OS login
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: False
 Accept pipeline input: False

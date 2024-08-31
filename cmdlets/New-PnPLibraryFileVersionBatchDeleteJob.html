@@ -100,11 +100,11 @@
 </code></pre>
 <p>Starts a file version batch trim job that will delete all file versions that are over 360 days old in the document library, without prompting the user for confirmation.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">New-PnPLibraryFileVersionBatchDeleteJob -Automatic
+<pre><code class="lang-powershell">New-PnPLibraryFileVersionBatchDeleteJob -Identity &quot;Documents&quot; -Automatic
 </code></pre>
-<p>Starts a file version batch trim job that will delete file versions that expiread and set version expiration time for the ones not expired in the document library based on the backend algorithm.</p>
+<p>Starts a file version batch trim job that will delete file versions that expired and set version expiration time for the ones not expired in the document library based on the backend algorithm.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">New-PnPLibraryFileVersionBatchDeleteJob -MajorVersionLimit 30 -MajorWithMinorVersionsLimit 10
+<pre><code class="lang-powershell">New-PnPLibraryFileVersionBatchDeleteJob -Identity &quot;Documents&quot; -MajorVersionLimit 30 -MajorWithMinorVersionsLimit 10
 </code></pre>
 <p>Starts a file version batch trim job that will delete file versions in the document library based on the version count limits.</p>
 <h2 id="parameters">PARAMETERS</h2>
