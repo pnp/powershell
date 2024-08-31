@@ -94,6 +94,12 @@ namespace PnP.PowerShell.Commands.AzureAD
         [Parameter(Mandatory = false)]
         public SwitchParameter SkipCertCreation;
 
+        [Parameter(Mandatory = false)]
+        public string MicrosoftGraphEndPoint;
+
+        [Parameter(Mandatory = false)]
+        public string EntraIDLoginEndPoint;
+
         protected override void ProcessRecord()
         {
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
@@ -128,7 +134,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             using (var authenticationManager = new AuthenticationManager())
             {
-                loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
+                loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment) ?? EntraIDLoginEndPoint;
             }
 
             var permissionScopes = new PermissionScopes();
@@ -423,7 +429,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
+                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -436,7 +442,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, Tenant);
+                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, Tenant, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -460,7 +466,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 {
                     throw new PSArgumentException("Password is required or use -DeviceLogin or -Interactive");
                 }
-                token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, AzureEnvironment).GetAwaiter().GetResult();
+                token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, AzureEnvironment, MicrosoftGraphEndPoint).GetAwaiter().GetResult();
             }
 
             return token;
@@ -542,7 +548,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
-                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
             }
 
             var azureApps = RestHelper.Get<RestResultCollection<AzureADApp>>(httpClient, $"{graphEndpoint}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token);
@@ -591,7 +597,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
-                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
             }
 
             var azureApp = RestHelper.Post<AzureADApp>(httpClient, $"{graphEndpoint}/v1.0/applications", token, payload);
@@ -636,7 +642,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
-                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
             }
 
             var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? $"{graphEndpoint}/.default" : "https://microsoft.sharepoint-df.com/.default";
@@ -712,12 +718,12 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 try
                 {
-                    WriteVerbose("Setting the logo for the En AD app");
+                    WriteVerbose("Setting the logo for the EntraID app");
 
                     var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
                     if (AzureEnvironment == AzureEnvironment.Custom)
                     {
-                        graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                        graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
                     }
 
                     var endpoint = $"{graphEndpoint}/v1.0/applications/{azureApp.Id}/logo";
