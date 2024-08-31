@@ -350,7 +350,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
+                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -363,7 +363,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, Tenant);
+                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, Tenant, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");

@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Utilities
     public static class AzureAuthHelper
     {
         private static string CLIENTID = "1950a258-227b-4e31-a9cf-717495945fc2"; // Well-known Azure Management App Id
-        internal static async Task<string> AuthenticateAsync(string tenantId, string username, SecureString password, AzureEnvironment azureEnvironment)
+        internal static async Task<string> AuthenticateAsync(string tenantId, string username, SecureString password, AzureEnvironment azureEnvironment, string customGraphEndpoint = "")
         {
             if (string.IsNullOrEmpty(tenantId))
             {
@@ -22,13 +22,13 @@ namespace PnP.PowerShell.Commands.Utilities
                 var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
                 if (azureEnvironment == AzureEnvironment.Custom)
                 {
-                    graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                    graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? customGraphEndpoint;
                 }
                 return await authManager.GetAccessTokenAsync(new[] { $"{graphEndpoint}/.default" });
             }
         }
 
-        internal static string AuthenticateDeviceLogin(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string clientId = "1950a258-227b-4e31-a9cf-717495945fc2")
+        internal static string AuthenticateDeviceLogin(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string clientId = "1950a258-227b-4e31-a9cf-717495945fc2", string customGraphEndpoint = "")
         {
             try
             {
@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
                         if (azureEnvironment == AzureEnvironment.Custom)
                         {
-                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? customGraphEndpoint;
                         }
                         return authManager.GetAccessTokenAsync(new string[] { $"{graphEndpoint}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
@@ -71,7 +71,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static string AuthenticateInteractive(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string tenantId)
+        internal static string AuthenticateInteractive(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string tenantId, string customGraphEndpoint = "")
         {
             try
             {
@@ -91,7 +91,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
                         if (azureEnvironment == AzureEnvironment.Custom)
                         {
-                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? customGraphEndpoint;
                         }
                         return authManager.GetAccessTokenAsync(new string[] { $"{graphEndpoint}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
