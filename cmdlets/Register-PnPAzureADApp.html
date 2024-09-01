@@ -109,6 +109,8 @@
                                        [-CertificatePassword &lt;SecureString&gt;]
                                        [-NoPopup]
                                        [-LogoFilePath &lt;string&gt;]
+                                       [-MicrosoftGraphEndPoint &lt;string&gt;]
+                                       [-EntraIDLoginEndPoint &lt;string&gt;]
 </code></pre>
 <h3 id="existing-certificate">Existing Certificate</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp  -CertificatePath &lt;String&gt;
@@ -360,6 +362,24 @@ Accept pipeline input: False
 </code></pre>
 <h3 id="-logofilepath">-LogoFilePath</h3>
 <p>Sets the logo for the Azure AD application. Provide a full path to a local image file on your disk which you want to use as the logo.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+</code></pre>
+<h3 id="-entraidloginendpoint">-EntraIDLoginEndPoint</h3>
+<p>Sets the EntraID login endpoint to be used for creation of the app. This only works if Azure Environment parameter is set to <code>Custom</code></p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+</code></pre>
+<h3 id="-microsoftgraphendpoint">-MicrosoftGraphEndPoint</h3>
+<p>Sets the Microsoft Graph endpoint to be used for creation of the app. This only works if Azure Environment parameter is set to <code>Custom</code></p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
