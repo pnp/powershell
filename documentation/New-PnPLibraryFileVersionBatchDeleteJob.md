@@ -16,7 +16,7 @@ Starts a file version batch trim job for a document library.
 ## SYNTAX
 
 ```powershell
-New-PnPLibraryFileVersionBatchDeleteJob -Identity <ListPipeBind> -DeleteBeforeDays <int> [-Force]
+New-PnPLibraryFileVersionBatchDeleteJob -Identity <ListPipeBind> [-DeleteBeforeDays <int>] [-MajorVersionLimit <int>] [-MajorWithMinorVersionsLimit <int>][Automatic][-Force]
 ```
 
 ## DESCRIPTION
@@ -76,7 +76,7 @@ The minimum age of file versions to trim. In other words, all file versions that
 Type: int
 Parameter Sets: DeleteOlderThanDays
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
