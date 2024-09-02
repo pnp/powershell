@@ -4,7 +4,6 @@ using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
@@ -132,15 +131,13 @@ namespace PnP.PowerShell.Commands.Base
                                     if (matchedScopes == requiredListedScope.PermissionScopes.Length)
                                     {
                                         scopesPresent = true;
-
                                         var requiredScopes = requiredListedScope.PermissionScopes;
-                                        if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                                        if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
                                         {
-                                            requiredScopes = new[] { audience }; // override for app only
+                                            accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
+                                            // we have a match, jump out of the loop
+                                            break;
                                         }
-
-                                        accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();                                        
-                                        break; // we have a match, jump out of the loop
                                     }
                                 }
 
@@ -198,7 +195,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 cmdlet.WriteVerbose($"The currect access token might not have the required permissions to execute this cmdlet. Required are one or more of the following: {string.Join(", ", permissionEvaluations.Select(p => p.MissingPermissions))}");
             }
-        
+
             return accessToken;
         }
 
@@ -366,10 +363,13 @@ namespace PnP.PowerShell.Commands.Base
             var clientID = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
             var tokenPath = Environment.GetEnvironmentVariable("AZURE_FEDERATED_TOKEN_FILE");
             var tenantID = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            var host = Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST");
 
             var _confidentialClientApp = ConfidentialClientApplicationBuilder.Create(clientID)
-                .WithClientAssertion(ReadJWTFromFS(tokenPath))
-                .WithTenantId(tenantID).Build();
+                .WithAuthority(host, tenantID)
+                .WithClientAssertion(() => ReadJWTFromFS(tokenPath))
+                .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
+                .Build();
 
             AuthenticationResult result = null;
             try
