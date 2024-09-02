@@ -122,6 +122,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/defaultclientid.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/defaultclientid.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/dev-containers.md",
       "output": {
         ".html": {
