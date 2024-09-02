@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Starts a file version batch trim job for a document library.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">New-PnPLibraryFileVersionBatchDeleteJob -Identity &lt;ListPipeBind&gt; -DeleteBeforeDays &lt;int&gt; [-Force]
+<pre><code class="lang-powershell">New-PnPLibraryFileVersionBatchDeleteJob -Identity &lt;ListPipeBind&gt; [-DeleteBeforeDays &lt;int&gt;] [-MajorVersionLimit &lt;int&gt;] [-MajorWithMinorVersionsLimit &lt;int&gt;][Automatic][-Force]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Starts a file version batch trim job for a document library.</p>
@@ -124,7 +124,7 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: int
 Parameter Sets: DeleteOlderThanDays
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
