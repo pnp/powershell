@@ -20,7 +20,7 @@ Adds or updates an external item in Microsoft Search
 ## SYNTAX
 
 ```powershell
-Set-PnPSearchExternalItem -ItemId <String> -ConnectionId <String> -Properties <Hashtable> [-ContentValue <String>] [-ContentType <SearchExternalItemContentType>] [-GrantUsers <AzureADUserPipeBind[]>] [-GrantGroups <AzureADGroupPipeBind[]>] [-DenyUsers <AzureADUserPipeBind[]>] [-DenyGroups <AzureADGroupPipeBind[]>] [-GrantExternalGroups <String[]>] [-DenyExternalGroups <String[]>] [-GrantEveryone <SwitchParameter>] [-Verbose] [-Connection <PnPConnection>] 
+Set-PnPSearchExternalItem -ItemId <String> -ConnectionId <SearchExternalConnectionPipeBind> -Properties <Hashtable> [-ContentValue <String>] [-ContentType <SearchExternalItemContentType>] [-GrantUsers <AzureADUserPipeBind[]>] [-GrantGroups <AzureADGroupPipeBind[]>] [-DenyUsers <AzureADUserPipeBind[]>] [-DenyGroups <AzureADGroupPipeBind[]>] [-GrantExternalGroups <String[]>] [-DenyExternalGroups <String[]>] [-GrantEveryone <SwitchParameter>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -72,14 +72,14 @@ Accept wildcard characters: False
 ```
 
 ### -ConnectionId
-The Connection ID of the custom connector to use. This is the ID that was entered when registering the custom connector and will indicate for which custom connector this external item is being added to the Microsoft Search index.
+The Connection ID or connection instance of the custom connector to use. This is the ID that was entered when registering the custom connector and will indicate for which custom connector this external item is being added to the Microsoft Search index.
 
 ```yaml
-Type: String
+Type: SearchExternalConnectionPipeBind
 Parameter Sets: (All)
 Required: True
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 
