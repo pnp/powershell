@@ -4,7 +4,8 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Attributes;
 using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Json;
+using System.Threading;
+using System;
 
 namespace PnP.PowerShell.Commands.Search
 {
@@ -25,6 +26,14 @@ namespace PnP.PowerShell.Commands.Search
 
         [Parameter(Mandatory = true, ParameterSetName = ParamSet_SchemaInstance)]
         public Model.Graph.MicrosoftSearch.ExternalSchema Schema;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParamSet_TextualSchema)]
+        [Parameter(Mandatory = false, ParameterSetName = ParamSet_SchemaInstance)]
+        public SwitchParameter Wait;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParamSet_TextualSchema)]
+        [Parameter(Mandatory = false, ParameterSetName = ParamSet_SchemaInstance)]
+        public short? OperationStatusPollingInterval = 30;
 
         protected override void ExecuteCmdlet()
         {
@@ -50,7 +59,38 @@ namespace PnP.PowerShell.Commands.Search
             WriteVerbose("Trying to retrieve location header from response which can be used to poll for the status of the schema operation");
             if(results.Headers.TryGetValues("Location", out var location) && location.Any())
             {
-                WriteObject(location.FirstOrDefault(), false);
+                var schemaOperationStatusUrl = location.FirstOrDefault();
+                WriteVerbose("Schema update has been scheduled");                
+
+                if(Wait.ToBool())
+                {
+                    WriteVerbose($"Waiting for schema operation to complete by polling {schemaOperationStatusUrl}");
+
+                    do
+                    {
+                        WriteVerbose("Polling schema operation status");
+                        var schemaOperationResult = Utilities.REST.GraphHelper.Get<Model.Graph.OperationStatus>(this, Connection, schemaOperationStatusUrl, AccessToken);
+
+                        if(!string.IsNullOrEmpty(schemaOperationResult.Status))
+                        {
+                            if (schemaOperationResult.Status.ToLowerInvariant() == "completed")
+                            {
+                                WriteVerbose("Schema operation has completed");
+                                break;
+                            }
+                            else
+                            {
+                                WriteVerbose($"Schema operation still in progress with status {schemaOperationResult.Status}");
+                            }
+                        }
+
+                        WriteVerbose($"Waiting for {OperationStatusPollingInterval.GetValueOrDefault(30)} seconds before polling again");
+                        Thread.Sleep(TimeSpan.FromSeconds(OperationStatusPollingInterval.GetValueOrDefault(30)));
+                    }
+                    while (true);
+                }
+
+                WriteObject(schemaOperationStatusUrl, false);
             }
             else
             {
