@@ -14,8 +14,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for `WAM` login for Windows OS to support Windows Hello, FIDO keys, Conditional Access policies and other secure authentication modes.
 - Added `-SkipCertCreation` parameter in `Register-PnPAzureADApp` cmdlet to prevent creation and uploading of certificates in the Entra ID app.
 - Added support to `-ValidateConnection` in managed identity authentication.
-- Added `New-PnPSearchExternalConnection`, `Get-PnPSearchExternalConnection`, `Set-PnPSearchExternalConnection` and `Remove-PnPSearchExternalConnection` cmdlets to manage external connections for Microsoft Search
-- Added `Get-PnPSearchExternalSchema` and `Set-PnPSearchExternalSchema` cmdlets to manage the schema for external connections for Microsoft Search
+- Added `New-PnPSearchExternalConnection`, `Get-PnPSearchExternalConnection`, `Set-PnPSearchExternalConnection` and `Remove-PnPSearchExternalConnection` cmdlets to manage external connections for Microsoft Search [#4231](https://github.com/pnp/powershell/pull/4231)
+- Added `Get-PnPSearchExternalSchema` and `Set-PnPSearchExternalSchema` cmdlets to manage the schema for external connections for Microsoft Search [#4231](https://github.com/pnp/powershell/pull/4231)
 
 ### Changed
 
