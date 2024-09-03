@@ -11,13 +11,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Added support for `WAM` login for Windows OS to support Windows Hello, FIDO keys, Conditional Access policies and other secure authentication modes.
+- Added support for `WAM` login for Windows OS to support Windows Hello, FIDO keys, Conditional Access policies and other secure authentication modes. 
 - Added `-SkipCertCreation` parameter in `Register-PnPAzureADApp` cmdlet to prevent creation and uploading of certificates in the Entra ID app.
 - Added support to `-ValidateConnection` in managed identity authentication.
+- Added `OverrideSharingCapability`, `RequestFilesLinkExpirationInDays` & `RequestFilesLinkEnabled` parameters to `Set-PnPTenantSite` cmdlet.
 
 ### Changed
 
 - Improved managed identity authentication for connecting to different M365 services.
+- Improved error message for `Export-PnPPage` cmdlet when the page doesn't exist.
+- Improved `Register-PnPEntraIDApp` & `Register-PnPEntraIDAppForInteractiveLogin` cmdlets to better work in non-commercial cloud environments.
+- Improved `Get-PnPDiagnostics` cmdlet to properly handle a scenrio where there's no correlationId.
 
 ### Fixed
 
@@ -26,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix issue with App-only authentication not properly fetching tokens.
 - Fix issue with Power Platform cmdlets not working correctly in non-commercial cloud environments.
 - Fix issue with `Get-PnPFlow` not working correctly when `-AsAdmin` parameter is specified due to API changes.
+- Fix `Connect-PnPOnline` not returning correct `ClientId` in the connection object.
 
 ### Removed
 
