@@ -33,7 +33,7 @@ Set-PnPSearchExternalSchema -ConnectionId <SearchExternalConnectionPipeBind> -Sc
 
 ## DESCRIPTION
 
-This cmdlet can be used to initially set or update the current schema set on a connection to an external datasource that is being indexed into Microsoft Search through a custom connector.
+This cmdlet can be used to initially set or update the current schema set on a connection to an external datasource that is being indexed into Microsoft Search through a custom connector. The URL returned can be queried in Microsoft Graph to check on the status of the schema update.
 
 ## EXAMPLES
 
