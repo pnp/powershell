@@ -16,6 +16,8 @@
       href: telemetry.md
     - name: Version checks
       href: updatenotifications.md
+    - name: Default Client Id
+      href: defaultclientid.md      
 - name: Using PnP PowerShell in Azure
   items:
     - name: Introduction

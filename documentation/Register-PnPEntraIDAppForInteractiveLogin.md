@@ -4,7 +4,7 @@ schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Register-PnPEntraIDAppForInteractiveLogin.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Register-PnPAzureADApp
+title: Register-PnPEntraIDAppForInteractiveLogin
 ---
  
 # Register-PnPEntraIDAppForInteractiveLogin
@@ -25,6 +25,8 @@ Register-PnPEntraIDAppForInteractiveLogin -ApplicationName <String>
                                        [-SharePointDelegatePermissions <Permission[]>]
                                        [-NoPopup]
                                        [-LogoFilePath <string>]
+                                       [-MicrosoftGraphEndPoint <string>]
+                                       [-EntraIDLoginEndPoint <string>]
 ```
 
 ### Generate App using Device Login
@@ -174,6 +176,32 @@ Accept pipeline input: False
 ### -LogoFilePath
 
 Sets the logo for the Azure AD application. Provide a full path to a local image file on your disk which you want to use as the logo.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -EntraIDLoginEndPoint
+
+Sets the EntraID login endpoint to be used for creation of the app. This only works if Azure Environment parameter is set to `Custom`
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+```
+
+### -MicrosoftGraphEndPoint
+
+Sets the Microsoft Graph endpoint to be used for creation of the app. This only works if Azure Environment parameter is set to `Custom`
 
 ```yaml
 Type: String
