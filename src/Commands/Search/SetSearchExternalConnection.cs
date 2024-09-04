@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Search
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public SearchExternalConnectionPipeBind Identity;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         [ValidateLength(1, 128)]
         public string Name;
 
