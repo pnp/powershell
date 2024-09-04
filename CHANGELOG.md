@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Improved `Invoke-PnPGraphMethod` cmdlet now to also support a hashtable value for the AdditionalHeaders parameter besides the current Dictionary<string,string>. See documentation.
 - Improved managed identity authentication for connecting to different M365 services.
 - Improved error message for `Export-PnPPage` cmdlet when the page doesn't exist.
 - Improved `Register-PnPEntraIDApp` & `Register-PnPEntraIDAppForInteractiveLogin` cmdlets to better work in non-commercial cloud environments.
