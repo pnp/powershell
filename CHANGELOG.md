@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-SkipCertCreation` parameter in `Register-PnPAzureADApp` cmdlet to prevent creation and uploading of certificates in the Entra ID app.
 - Added support to `-ValidateConnection` in managed identity authentication.
 - Added `OverrideSharingCapability`, `RequestFilesLinkExpirationInDays` & `RequestFilesLinkEnabled` parameters to `Set-PnPTenantSite` cmdlet.
+- Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document
 
 ### Changed
 
