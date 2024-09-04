@@ -16,12 +16,12 @@ List files in a folder
 
 ### Folder via url
 ```powershell
-Get-PnPFileInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-Recurse] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFileInFolder [-FolderSiteRelativeUrl <String>] [-ItemName <String>] [-Recurse] [-Includes <String[]>] [-ExcludeSystemFolders] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ### Folder via pipebind
 ```powershell
-Get-PnPFileInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-Recurse] [-Includes <String[]>] [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPFileInFolder [-Identity <FolderPipeBind>] [-ItemName <String>] [-Recurse] [-Includes <String[]>] [-ExcludeSystemFolders] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

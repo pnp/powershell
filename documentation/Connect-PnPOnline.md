@@ -59,7 +59,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 ### Interactive for Multi Factor Authentication
 ```powershell
 Connect-PnPOnline -Interactive [-ReturnConnection] -Url <String> [-CreateDrive] [-DriveName <String>] [-LaunchBrowser]
- [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-EnableLoginByWAM <SwitchParameter>] [-Connection <PnPConnection>]
+ [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ### On-premises login for page transformation from on-premises SharePoint to SharePoint Online
@@ -110,6 +110,12 @@ Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
  [-AzureADWorkloadIdentity] [-Connection <PnPConnection>]
+```
+
+### OS login
+```powershell
+Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] 
+ [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -269,12 +275,12 @@ This example uses Azure AD Workload Identity to retrieve access tokens. For more
 
 ### EXAMPLE 18
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Interactive -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -EnableLoginByWAM
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -OSLogin
 ```
 
-Connects to the Azure AD with WAM, acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. Notice that you will have to register your own App first, by means of Register-PnPEntraIDAdd to use this method. You will also have to provide the -ClientId parameter starting September 9, 2024. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created. If you use `-Interactive` and this environment variable is present you will not have to use -ClientId.
+Connects to the Azure AD with WAM (aka native Windows authentication prompt), acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. Notice that you will have to register your own App first, by means of Register-PnPEntraIDAdd to use this method. You will also have to provide the -ClientId parameter starting September 9, 2024. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created.
 
-WAM is a more secure way of authenticating in Windows OS. It supports Windows Hello, FIDO keys , conditional access policies and more.
+WAM is a more secure & faster way of authenticating in Windows OS. It supports Windows Hello, FIDO keys , conditional access policies and more.
 
 ## PARAMETERS
 
@@ -301,7 +307,7 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 
 ```yaml
 Type: AzureEnvironment
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive, Access Token, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity
 Aliases:
 Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, Custom
 
@@ -854,15 +860,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -EnableLoginByWAM
-Connects using Web Account Manager (WAM). This works only on Windows machines. Use this with `-Interactive` parameter to open the authentication broker. It supports Windows Hello, conditional access policies, FIDO keys. Requires that the Entra ID app registration  have `ms-appx-web://microsoft.aad.brokerplugin/{client_id}` as a redirect URI. For more information, visit this [link](https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam).
+### -OSLogin
+
+Connects using Web Account Manager (WAM). This works only on Windows machines, on other OS will open browser. Use this to open the native Windows authentication prompt. It supports Windows Hello, conditional access policies, FIDO keys and other OS integration auth options. Requires that the Entra ID app registration have `ms-appx-web://microsoft.aad.brokerplugin/{client_id}` as a redirect URI. For more information, visit this [link](https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam).
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Interactive for Multi Factor Authentication
+Parameter Sets: OS login
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: False
 Accept pipeline input: False

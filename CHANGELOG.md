@@ -11,14 +11,37 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added support for `WAM` login for Windows OS to support Windows Hello, FIDO keys, Conditional Access policies and other secure authentication modes. 
+- Added `-SkipCertCreation` parameter in `Register-PnPAzureADApp` cmdlet to prevent creation and uploading of certificates in the Entra ID app.
+- Added support to `-ValidateConnection` in managed identity authentication.
+- Added `OverrideSharingCapability`, `RequestFilesLinkExpirationInDays` & `RequestFilesLinkEnabled` parameters to `Set-PnPTenantSite` cmdlet.
+
+### Changed
+
+- Added `-OutputTask` switch to `Add-PnPPlannerTask` cmdlet which will return the just created task so inspect its ID, ETag, etc. values.
+- Improved `Invoke-PnPGraphMethod` cmdlet now to also support a hashtable value for the AdditionalHeaders parameter besides the current Dictionary<string,string>. See documentation.
+- Improved managed identity authentication for connecting to different M365 services.
+- Improved error message for `Export-PnPPage` cmdlet when the page doesn't exist.
+- Improved `Register-PnPEntraIDApp` & `Register-PnPEntraIDAppForInteractiveLogin` cmdlets to better work in non-commercial cloud environments.
+- Improved `Get-PnPDiagnostics` cmdlet to properly handle a scenrio where there's no correlationId.
+
 ### Fixed
+
 - Removed version check dependency on version.txt located in Github repo. Use metadata from powershellgallery.com instead.
+- Fix issue with `Get-PnPDiagnostics` cmdlet not working correctly if `CorrelationId` is null.
+- Fix issue with App-only authentication not properly fetching tokens.
+- Fix issue with Power Platform cmdlets not working correctly in non-commercial cloud environments.
+- Fix issue with `Get-PnPFlow` not working correctly when `-AsAdmin` parameter is specified due to API changes.
+- Fix `Connect-PnPOnline` not returning correct `ClientId` in the connection object.
 
 ### Removed
 
 ### Contributors
-- Erwin van Hunen [erwinvanhunen]
 
+- Erwin van Hunen [erwinvanhunen]
+- Giacomo Pozzoni [jackpoz]
+- Nishkalank Bezawada [NishkalankBezawada]
+- Reshmee Auckloo [reshmee011]
 
 ## [2.10.0]
 
