@@ -110,7 +110,9 @@
  [-DefaultLinkToExistingAccessReset &lt;SwitchParameter&gt;] [-DefaultShareLinkRole &lt;Role&gt;]
  [-DefaultShareLinkScope &lt;SharingScope&gt;] [-LoopDefaultSharingLinkRole &lt;Role&gt;]
  [-LoopDefaultSharingLinkScope &lt;SharingScope&gt;] [-RestrictContentOrgWideSearch &lt;Boolean&gt;] [-ReadOnlyForUnmanagedDevices &lt;Boolean&gt;]
- [-InheritVersionPolicyFromTenant &lt;SwitchParameter&gt;]
+ [-RequestFilesLinkExpirationInDays &lt;Int32&gt;] [-RequestFilesLinkEnabled &lt;Boolean&gt;] [-OverrideSharingCapability &lt;Boolean&gt;]
+ [-RestrictedAccessControl &lt;Boolean&gt;] [-ClearRestrictedAccessControl &lt;SwitchParameter&gt;] [-RestrictedAccessControlGroups &lt;Guid[]&gt;]
+ [-AddRestrictedAccessControlGroups &lt;Guid[]&gt;] [-RemoveRestrictedAccessControlGroups &lt;Guid[]&gt;][-InheritVersionPolicyFromTenant &lt;SwitchParameter&gt;]
  [-Wait] 
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -797,6 +799,40 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-inheritversionpolicyfromtenant">-InheritVersionPolicyFromTenant</h3>
 <p>Clears the file version setting at site level.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-requestfileslinkexpirationindays">-RequestFilesLinkExpirationInDays</h3>
+<p>Specifies the number of days after which the request files link will expire.
+The value can be from 0 to 730 days.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-overridesharingcapability">-OverrideSharingCapability</h3>
+<p>Specifies whether to override the sharing capability for the site.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-requestfileslinkenabled">-RequestFilesLinkEnabled</h3>
+<p>Enables or disables the Request Files link on the site.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: Set Properties
 
