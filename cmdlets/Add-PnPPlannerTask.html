@@ -93,13 +93,13 @@
 <h3 id="by-group">By Group</h3>
 <pre><code class="lang-powershell">Add-PnPPlannerTask -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Bucket &lt;PlannerBucketPipeBind&gt; -Title &lt;String&gt; 
 [-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
- [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;]
+ [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;] [-OutputTask]
  
 </code></pre>
 <h3 id="by-plan-id">By Plan Id</h3>
 <pre><code class="lang-powershell">Add-PnPPlannerTask -Bucket &lt;PlannerBucketPipeBind&gt; -PlanId &lt;String&gt; -Title &lt;String&gt; 
 [-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
- [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;]
+ [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;] [-OutputTask]
  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -117,6 +117,10 @@
 <pre><code class="lang-powershell">Add-PnPPlannerTask -Group &quot;Marketing&quot; -Plan &quot;Conference Plan&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot; -AssignedTo &quot;user@contoso.com&quot;,&quot;manager@contoso.com&quot;
 </code></pre>
 <p>This cmdlet adds a new task and assigns to user@contoso.com and manager@contoso.com</p>
+<h3 id="example-4">Example 4</h3>
+<pre><code class="lang-powershell">$task = Add-PnPPlannerTask -Group &quot;Marketing&quot; -Plan &quot;Conference Plan&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot; -AssignedTo &quot;user@contoso.com&quot;,&quot;manager@contoso.com&quot; -OutputTask
+</code></pre>
+<p>This returns the task as an object to inspect specific values</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-bucket">-Bucket</h3>
 <p>The bucket to add the task too</p>
@@ -249,6 +253,17 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-outputtask">-OutputTask</h3>
+<p>Returns the just created task as an object to inspect values</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named

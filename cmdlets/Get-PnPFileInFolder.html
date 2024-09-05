@@ -87,10 +87,10 @@
 <p>List files in a folder</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="folder-via-url">Folder via url</h3>
-<pre><code class="lang-powershell">Get-PnPFileInFolder [-FolderSiteRelativeUrl &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recurse] [-Includes &lt;String[]&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPFileInFolder [-FolderSiteRelativeUrl &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recurse] [-Includes &lt;String[]&gt;] [-ExcludeSystemFolders] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="folder-via-pipebind">Folder via pipebind</h3>
-<pre><code class="lang-powershell">Get-PnPFileInFolder [-Identity &lt;FolderPipeBind&gt;] [-ItemName &lt;String&gt;] [-Recurse] [-Includes &lt;String[]&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPFileInFolder [-Identity &lt;FolderPipeBind&gt;] [-ItemName &lt;String&gt;] [-Recurse] [-Includes &lt;String[]&gt;] [-ExcludeSystemFolders] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows listing of all the files in a folder. It can optionally also list all files in the underlying subfolders.</p>
