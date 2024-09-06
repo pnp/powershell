@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- Added output for clientid/Entra App Id when using `-Verbose` with `Connect-PnPOnline`
 - Added `-OutputTask` switch to `Add-PnPPlannerTask` cmdlet which will return the just created task so inspect its ID, ETag, etc. values.
 - Improved `Invoke-PnPGraphMethod` cmdlet now to also support a hashtable value for the AdditionalHeaders parameter besides the current Dictionary<string,string>. See documentation.
 - Improved managed identity authentication for connecting to different M365 services.
