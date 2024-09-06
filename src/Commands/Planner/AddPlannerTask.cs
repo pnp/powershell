@@ -51,6 +51,9 @@ namespace PnP.PowerShell.Commands.Planner
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string[] AssignedTo;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public SwitchParameter OutputTask;
+
         protected override void ExecuteCmdlet()
         {
             PlannerTask createdTask;
@@ -146,6 +149,12 @@ namespace PnP.PowerShell.Commands.Planner
             {
                 var existingTaskDetails = PlannerUtility.GetTaskDetails(this, Connection, AccessToken, createdTask.Id, false);
                 PlannerUtility.UpdateTaskDetails(this, Connection, AccessToken, existingTaskDetails, Description);
+                createdTask.HasDescription = true;
+            }
+
+            if(OutputTask.IsPresent)
+            {
+                WriteObject(createdTask);
             }
         }
     }

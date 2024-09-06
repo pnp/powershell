@@ -89,7 +89,7 @@ Returns the root folder of the list called 'Shared Documents'
 Get-PnPFolder -List "Shared Documents"
 ```
 
-Returns the folders inside the root folder of the list called 'Shared Documents'. Please use Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead.
+Returns the folders inside the root folder of the list called 'Shared Documents'. Please use Get-PnPFolder -ListRootFolder \<folder\> | Get-PnPFolderInFolder instead.
 
 ### EXAMPLE 7
 ```powershell

@@ -100,6 +100,9 @@ namespace PnP.PowerShell.Commands.Model
         public bool SetOwnerWithoutUpdatingSecondaryAdmin { get; set; }
         public bool RestrictContentOrgWideSearch { get; set; }
         public bool ReadOnlyForUnmanagedDevices { get; set; }
+        public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
+        public bool OverrideSharingCapability { get; set; }
+
         #endregion
 
 
@@ -192,6 +195,8 @@ namespace PnP.PowerShell.Commands.Model
             SetOwnerWithoutUpdatingSecondaryAdmin = props.SetOwnerWithoutUpdatingSecondaryAdmin;
             RestrictContentOrgWideSearch = props.RestrictContentOrgWideSearch;
             ReadOnlyForUnmanagedDevices = props.ReadOnlyForUnmanagedDevices;
+            OverrideSharingCapability = props.OverrideSharingCapability;
+            OverrideBlockUserInfoVisibility = props.OverrideBlockUserInfoVisibility;
         }
     }
 }
