@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365Group")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -36,12 +37,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (Identity != null)
             {
-                var group = Identity.GetGroup(Connection, AccessToken, includeSiteUrl, IncludeOwners, Detailed.ToBool(), IncludeSensitivityLabels);
+                var group = Identity.GetGroup(this, Connection, AccessToken, includeSiteUrl, IncludeOwners, Detailed.ToBool(), IncludeSensitivityLabels);
                 WriteObject(group);
             }
             else
             {
-                var groups = Microsoft365GroupsUtility.GetGroupsAsync(Connection, AccessToken, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels).GetAwaiter().GetResult();
+                var groups = ClearOwners.GetGroups(this, Connection, AccessToken, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels);
 
                 WriteObject(groups.OrderBy(p => p.DisplayName), true);
             }

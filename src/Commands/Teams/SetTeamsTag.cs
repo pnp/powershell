@@ -21,15 +21,15 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                var tag = Identity.GetTag(Connection, AccessToken, groupId);
+                var tag = Identity.GetTag(this, Connection, AccessToken, groupId);
                 if (tag != null)
                 {
                     if (ParameterSpecified(nameof(DisplayName)) && tag.DisplayName != DisplayName)
                     {
-                        TeamsUtility.UpdateTagAsync(Connection, AccessToken, groupId, tag.Id, DisplayName).GetAwaiter().GetResult();
+                        TeamsUtility.UpdateTag(this, Connection, AccessToken, groupId, tag.Id, DisplayName);
                     }
                 }
                 else

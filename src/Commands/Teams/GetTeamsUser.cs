@@ -12,6 +12,7 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsUser")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -25,22 +26,22 @@ namespace PnP.PowerShell.Commands.Teams
         public string Role;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
                 try
                 {
                     if (ParameterSpecified(nameof(Channel)))
                     {
-                        var teamChannels = TeamsUtility.GetChannelsAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult();
+                        var teamChannels = TeamsUtility.GetChannels(this, AccessToken, Connection, groupId);
                         
-                        var channelId = Channel.GetId(Connection, AccessToken, groupId);
+                        var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
 
                         var requestedChannel = teamChannels.FirstOrDefault(c => c.Id == channelId);
 
                         if (!string.IsNullOrEmpty(channelId) && requestedChannel != null && requestedChannel.MembershipType.ToLower() == TeamChannelType.Private.ToString().ToLower())
                         {
-                            WriteObject(TeamsUtility.GetUsersAsync(Connection, AccessToken, groupId, channelId, Role).GetAwaiter().GetResult(), true);
+                            WriteObject(TeamsUtility.GetUsers(this, Connection, AccessToken, groupId, channelId, Role), true);
                         }
                         else
                         {
@@ -49,7 +50,7 @@ namespace PnP.PowerShell.Commands.Teams
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetUsersAsync(Connection, AccessToken, groupId, Role).GetAwaiter().GetResult(), true);
+                        WriteObject(TeamsUtility.GetUsers(this, Connection, AccessToken, groupId, Role), true);
                     }
                 }
                 catch (GraphException ex)

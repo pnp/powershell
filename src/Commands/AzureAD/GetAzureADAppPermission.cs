@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             else
             {
                 List<PSObject> apps = new List<PSObject>();
-                var result = GraphHelper.GetResultCollectionAsync<AzureADApp>(Connection, "/v1.0/applications", AccessToken).GetAwaiter().GetResult();
+                var result = GraphHelper.GetResultCollection<AzureADApp>(this, Connection, "/v1.0/applications", AccessToken);
                 if (result != null && result.Any())
                 {
                     apps.AddRange(result.Select(p => ConvertToPSObject(p)));

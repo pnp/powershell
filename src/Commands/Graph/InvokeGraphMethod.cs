@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json.Serialization;
 using System.IO;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -59,31 +60,31 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public string ContentType = "application/json";
 
-        IDictionary<string, string> additionalHeaders = null;
-
+        
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
-        public IDictionary<string, string> AdditionalHeaders
-        {
-            get
-            {
-                if (ConsistencyLevelEventual.IsPresent)
-                {
-                    if (additionalHeaders == null)
-                    {
-                        additionalHeaders = new Dictionary<string, string>();
-                    }
-                    additionalHeaders.Remove("ConsistencyLevel");
-                    additionalHeaders.Add("ConsistencyLevel", "eventual");
-                }
-                return additionalHeaders;
-            }
-            set
-            {
-                additionalHeaders = value;
-            }
-        }
+        public GraphAdditionalHeadersPipeBind AdditionalHeaders;
+        // public IDictionary<string, string> AdditionalHeaders
+        // {
+        //     get
+        //     {
+        //         if (ConsistencyLevelEventual.IsPresent)
+        //         {
+        //             if (additionalHeaders == null)
+        //             {
+        //                 additionalHeaders = new Dictionary<string, string>();
+        //             }
+        //             additionalHeaders.Remove("ConsistencyLevel");
+        //             additionalHeaders.Add("ConsistencyLevel", "eventual");
+        //         }
+        //         return additionalHeaders;
+        //     }
+        //     set
+        //     {
+        //         additionalHeaders = value;
+        //     }
+        // }
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
@@ -167,13 +168,13 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 throw new NotSupportedException($"method [{Method}] not supported");
             }
-            catch (PnP.PowerShell.Commands.Model.Graph.GraphException gex)
+            catch (Model.Graph.GraphException gex)
             {
                 if (gex.Error.Code == "Authorization_RequestDenied")
                 {
                     if (!string.IsNullOrEmpty(gex.AccessToken))
                     {
-                        TokenHandler.ValidateTokenForPermissions(GetType(), gex.AccessToken);
+                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessToken(GetType(), gex.AccessToken);
                     }
                 }
                 throw new PSInvalidOperationException(gex.Error.Message);
@@ -209,7 +210,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private void GetRequestWithPaging()
         {
-            var result = GraphHelper.GetAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
+            var result = GraphHelper.Get(this, Connection, Url, AccessToken, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             if (Raw.IsPresent)
             {
                 WriteObject(result);
@@ -233,7 +234,7 @@ namespace PnP.PowerShell.Commands.Base
                                 break;
                             }
                             var nextLink = nextLinkProperty.ToString();
-                            result = GraphHelper.GetAsync(Connection, nextLink, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
+                            result = GraphHelper.Get(this, Connection, nextLink, AccessToken, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
                             element = JsonSerializer.Deserialize<JsonElement>(result);
                             dynamic nextObj = Deserialize(element);
                             if (nextObj != null && nextObj.value != null && (nextObj.value is List<object>))
@@ -259,35 +260,35 @@ namespace PnP.PowerShell.Commands.Base
         private void GetRequestWithoutPaging()
         {
             WriteVerbose($"Sending HTTP GET to {Url}");
-            using var response = GraphHelper.GetResponseAsync(Connection, Url, AccessToken).GetAwaiter().GetResult();
+            using var response = GraphHelper.GetResponse(this, Connection, Url, AccessToken);
             HandleResponse(response);
         }
 
         private void PostRequest()
         {
             WriteVerbose($"Sending HTTP POST to {Url}");
-            var response = GraphHelper.PostAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.Post(this, Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PutRequest()
         {
             WriteVerbose($"Sending HTTP PUT to {Url}");
-            var response = GraphHelper.PutAsync(Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.Put(this, Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PatchRequest()
         {
             WriteVerbose($"Sending HTTP PATCH to {Url}");
-            var response = GraphHelper.PatchAsync(Connection, AccessToken, GetHttpContent(), Url, AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.Patch(this, Connection, AccessToken, GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void DeleteRequest()
         {
             WriteVerbose($"Sending HTTP DELETE to {Url}");
-            var response = GraphHelper.DeleteAsync(Connection, Url, AccessToken, AdditionalHeaders).GetAwaiter().GetResult();
+            var response = GraphHelper.Delete(this, Connection, Url, AccessToken, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
@@ -308,7 +309,7 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         WriteVerbose($"Writing {responseStreamForFile.Length} bytes response to {OutFile}");
 
-                        using (var fileStream = new System.IO.FileStream(OutFile, System.IO.FileMode.Create, System.IO.FileAccess.Write))
+                        using (var fileStream = new FileStream(OutFile, FileMode.Create, FileAccess.Write))
                         {
                             responseStreamForFile.CopyTo(fileStream);
                             fileStream.Close();
@@ -321,7 +322,7 @@ namespace PnP.PowerShell.Commands.Base
                     
                     WriteVerbose($"Writing {responseStream.Length} bytes response to outputstream");
 
-                    var memoryStream = new System.IO.MemoryStream();
+                    var memoryStream = new MemoryStream();
                     responseStream.CopyTo(memoryStream);
                     memoryStream.Position = 0;
 

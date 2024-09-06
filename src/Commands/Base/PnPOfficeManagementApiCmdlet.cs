@@ -13,17 +13,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL
         /// </summary>
-        public string AccessToken
-        {
-            get
-            {
-                if (Connection?.Context != null)
-                {
-                    return TokenHandler.GetAccessToken(this, "https://manage.office.com/.default", Connection);
-                }
-                return null;
-            }
-        }
+        public string AccessToken => TokenHandler.GetAccessToken(this, "https://manage.office.com/.default", Connection);
 
         protected override void BeginProcessing()
         {

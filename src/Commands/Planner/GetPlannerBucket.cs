@@ -8,6 +8,7 @@ namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerBucket")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetPlannerBucket : PnPGraphCmdlet
     {
         private const string ParameterName_BYGROUP = "By Group";
@@ -29,19 +30,19 @@ namespace PnP.PowerShell.Commands.Planner
         {
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(Connection, AccessToken);
+                var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetIdAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                    var planId = Plan.GetId(this, Connection, AccessToken, groupId);
                     if (planId != null)
                     {
                         if (!ParameterSpecified(nameof(Identity)))
                         {
-                            WriteObject(PlannerUtility.GetBucketsAsync(Connection, AccessToken, planId).GetAwaiter().GetResult(), true);
+                            WriteObject(PlannerUtility.GetBuckets(this, Connection, AccessToken, planId), true);
                         }
                         else
                         {
-                            WriteObject(Identity.GetBucket(Connection, AccessToken, planId));
+                            WriteObject(Identity.GetBucket(this, Connection, AccessToken, planId));
                         }
                     }
                     else
@@ -56,7 +57,7 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else
             {
-                WriteObject(PlannerUtility.GetBucketsAsync(Connection, AccessToken, PlanId).GetAwaiter().GetResult(), true);
+                WriteObject(PlannerUtility.GetBuckets(this, Connection, AccessToken, PlanId), true);
             }
         }
     }

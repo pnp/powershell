@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(Connection, AccessToken);
+            var groupId = Identity.GetGroupId(this, Connection, AccessToken);
             
             if (groupId == null)
             {
@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.Teams
             if (!ParameterSpecified(nameof(PartsToClone)))
             {
                 // If no specific parts have been provided, all available parts will be copied
-                PartsToClone = Enum.GetValues(typeof(Microsoft.Graph.ClonableTeamParts)).Cast<Microsoft.Graph.ClonableTeamParts>().ToArray();
+                PartsToClone = Enum.GetValues(typeof(ClonableTeamParts)).Cast<ClonableTeamParts>().ToArray();
             }
 
             TeamCloneInformation teamClone = new TeamCloneInformation();
@@ -70,7 +70,7 @@ namespace PnP.PowerShell.Commands.Teams
             * but currently ignored and can't be set by user */
             teamClone.MailNickName = DisplayName;
             teamClone.Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString());
-            TeamsUtility.CloneTeamAsync(AccessToken, Connection, groupId, teamClone).GetAwaiter().GetResult();
+            TeamsUtility.CloneTeam(this, AccessToken, Connection, groupId, teamClone);
         }
     }
 }

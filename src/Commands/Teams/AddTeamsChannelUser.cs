@@ -26,13 +26,13 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
             }
 
-            var channelId = Channel.GetId(Connection, AccessToken, groupId);
+            var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
             if (channelId == null)
             {
                 throw new PSArgumentException("Channel not found");
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             try
             {
-                TeamsUtility.AddChannelMemberAsync(Connection, AccessToken, groupId, channelId, User, Role).GetAwaiter().GetResult();
+                TeamsUtility.AddChannelMember(this, Connection, AccessToken, groupId, channelId, User, Role);
             }
             catch (GraphException ex)
             {

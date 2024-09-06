@@ -1,5 +1,5 @@
-﻿using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Enums;
+﻿using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Utilities.Auth;
 using System;
 using System.Management.Automation;
 
@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Base
                         accessTokenValue = TokenHandler.GetAccessToken(this, rootUrl + "/.default", Connection);
                         break;
                     case ResourceTypeName.ARM:
-                        accessTokenValue = TokenHandler.GetAccessToken(this, "https://management.azure.com/.default", Connection);
+                        accessTokenValue = TokenHandler.GetAccessToken(this, ARMEndpoint.GetARMEndpoint(Connection), Connection);
                         break;
                 }
             }

@@ -25,14 +25,14 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
                 try
                 {
                     if (Force || ShouldContinue($"Remove user with UPN {User}?", Properties.Resources.Confirm))
                     {
-                        TeamsUtility.DeleteUserAsync(Connection, AccessToken, groupId, User, Role).GetAwaiter().GetResult();
+                        TeamsUtility.DeleteUser(this, Connection, AccessToken, groupId, User, Role);
                     }
                 }
                 catch (GraphException ex)

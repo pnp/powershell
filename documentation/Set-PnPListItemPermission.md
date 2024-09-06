@@ -11,9 +11,6 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListItemPermissi
 
 ## SYNOPSIS
 Sets list item permissions. 
-Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.
-Use Get-PnPGroup to retrieve all groups available that you can add or remove using this cmdlet when using the -group parameter.
-
 
 ## SYNTAX
 
@@ -40,6 +37,8 @@ Set-PnPListItemPermission [-List] <ListPipeBind> -Identity <ListItemPipeBind> [-
 ## DESCRIPTION
 
 Allows to modify list item permissions.
+Use Get-PnPRoleDefinition to retrieve all available roles you can add or remove using this cmdlet.
+Use Get-PnPGroup to retrieve all groups available that you can add or remove using this cmdlet when using the -group parameter.
 
 ## EXAMPLES
 
@@ -48,41 +47,41 @@ Allows to modify list item permissions.
 Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -AddRole 'Contribute'
 ```
 
-Adds the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents'
+Adds the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents'.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -RemoveRole 'Contribute'
 ```
 
-Removes the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents'
+Removes the 'Contribute' permission from the user 'user@contoso.com' for listitem with id 1 in the list 'Documents'.
 
 ### EXAMPLE 3
 ```powershell
 Set-PnPListItemPermission -List 'Documents' -Identity 1 -User 'user@contoso.com' -AddRole 'Contribute' -ClearExisting
 ```
 
-Adds the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents' and removes all other permissions
+Adds the 'Contribute' permission to the user 'user@contoso.com' for listitem with id 1 in the list 'Documents' and removes all other permissions.
 
 ### EXAMPLE 4
 ```powershell
 Set-PnPListItemPermission -List 'Documents' -Identity 1 -InheritPermissions
 ```
 
-Resets permissions for listitem with id 1 to inherit permissions from the list 'Documents'
+Resets permissions for listitem with id 1 to inherit permissions from the list 'Documents'.
 
 ### EXAMPLE 5
 ```powershell
 Set-PnPListItemPermission -List 'Documents' -Identity 1 -AddRole 'Read' -RemoveRole 'Contribute' -Group "Site collection Visitors"
 ```
 
-Adds the 'Read' permission to the group of Site collection Visitors while removing the 'Contribute' permissions
+Adds the 'Read' permission to the group of Site collection Visitors while removing the 'Contribute' permissions.
 
 
 ## PARAMETERS
 
 ### -AddRole
-The role that must be assigned to the group or user
+The role that must be assigned to the group or user.
 
 ```yaml
 Type: RoleDefinitionPipeBind
@@ -96,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -ClearExisting
-Clear all existing permissions
+Clear all existing permissions.
 
 ```yaml
 Type: SwitchParameter
@@ -138,7 +137,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The ID of the listitem, or actual ListItem object
+The ID of the listitem, or actual ListItem object.
 
 ```yaml
 Type: ListItemPipeBind
@@ -152,7 +151,7 @@ Accept wildcard characters: False
 ```
 
 ### -InheritPermissions
-Inherit permissions from the list, removing unique permissions
+Inherit permissions from the list, removing unique permissions.
 
 ```yaml
 Type: SwitchParameter
@@ -180,7 +179,7 @@ Accept wildcard characters: False
 ```
 
 ### -RemoveRole
-The role that must be removed from the group or user
+The role that must be removed from the group or user.
 
 ```yaml
 Type: RoleDefinitionPipeBind

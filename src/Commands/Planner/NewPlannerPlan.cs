@@ -7,7 +7,9 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.New, "PnPPlannerPlan")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("Tasks.ReadWrite")]
+    [RequiredMinimalApiPermissions("Tasks.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]    
     public class NewPlannerPlan : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specify the group id of the plans to retrieve.")]
@@ -17,10 +19,10 @@ namespace PnP.PowerShell.Commands.Planner
         public string Title;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Group.GetGroupId(Connection, AccessToken);
+            var groupId = Group.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                WriteObject(PlannerUtility.CreatePlanAsync(Connection, AccessToken, groupId, Title).GetAwaiter().GetResult());
+                WriteObject(PlannerUtility.CreatePlan(this, Connection, AccessToken, groupId, Title));
             }
             else
             {

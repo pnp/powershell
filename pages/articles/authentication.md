@@ -2,7 +2,10 @@
 
 ## Setting up Access
 
-PnP PowerShell allows you to authenticate with credentials to your tenant. However, due to changes in the underlying SDKs we require you first to register a Azure AD Application which will allow you to authenticate.
+PnP PowerShell allows you to authenticate with credentials to your tenant. However, due to changes in the underlying SDKs we require you first to register an Entra ID Application which will allow you to authenticate.
+
+> [!Important]
+> This functionality will stop working on the 9th of September of 2024. Register your own Entra ID application instead. See lower in this article for more information.
 
 The easiest way to do this by using a built-in cmdlet:
 
@@ -10,24 +13,40 @@ The easiest way to do this by using a built-in cmdlet:
 Register-PnPManagementShellAccess
 ```
 
-You'll notice that the cmdlet is not called `Register-PnPPowerShellAccess`. This is because both PnP PowerShell and the CLI for Microsoft 365 make use of this Azure AD application. 
+You'll notice that the cmdlet is not called `Register-PnPPowerShellAccess`. This is because both PnP PowerShell and the CLI for Microsoft 365 make use of this Entra ID application. 
 
 > [!Important]
-> You need to run this cmdlet with an identity that has write access to the Azure AD.
-> You are not creating a new application in the sense of something that runs in your Azure AD tenant. You're only adding a registration to your Azure AD, a so called 'consent' for people in your tenant to use that application. The access rights the application requires are delegate only, so you will always have to provide credentials or another way of identifying the user actually using that application.
+> You need to run this cmdlet with an identity that has write access to the Entra ID.
+> You are not creating a new application in the sense of something that runs in your Entra ID tenant. You're only adding a registration to your Entra ID, a so called 'consent' for people in your tenant to use that application. The access rights the application requires are delegate only, so you will always have to provide credentials or another way of identifying the user actually using that application.
 
-During execution of the cmdlet you will be talked through the consent flow. This means that a browser window will open, you will be asked to authenticate, and you will be asked to consent to a number of permissions. After this permissions has been granted a new entry will show up if you navigate to `Enterprise Applications` in your Azure AD. If you want to revoke the consent you can simply remove the entry from the Enterprise Applications. 
+During execution of the cmdlet you will be talked through the consent flow. This means that a browser window will open, you will be asked to authenticate, and you will be asked to consent to a number of permissions. After this permissions has been granted a new entry will show up if you navigate to `Enterprise Applications` in your Entra ID. If you want to revoke the consent you can simply remove the entry from the Enterprise Applications. 
 
-## Setting up access to your own Azure AD App
+## Setting up access to your own Entra ID App for Interactive Login
 
-PnP PowerShell has a cmdlet that allows you to register a new Azure AD App, and optionally generate the certificates for you to use to login with that app. 
+PnP PowerShell has a cmdlet that allows you to register a new Entra ID App specifically for interactive login. Notice that you need to be able to create App registrations in your Entra ID.
 
 ```powershell
-$result = Register-PnPAzureADApp -ApplicationName "PnP Rocks" -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP Rocks" -Tenant [yourtenant].onmicrosoft.com -Interactive
+```
+
+When you run the cmdlet above you will be asked to authenticate with your username, password and an optional second factor. After that a new app will be registered in the Entra ID (make sure you have the rights to do this). By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (`GraphApplicationPermissions`, `GraphDelegatePermissions`, `SharePointApplicationPermissions`, `SharePointDelegatePermissions`) to provide your own permission scopes. After the app has been registered you will be asked to provide consent for the application. Alternatively you can ask with the appropriate access rights to navigate to the app registration in the Azure Portal. You will find the app under 'Enterprise Applications' and consent to the application there.
+
+After the application has been succesfully registered and consented to you can connect to your tenant using:
+
+```powershell
+Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid]
+```
+
+## Setting up access to your own Entra ID App for App Only Access
+
+PnP PowerShell has a cmdlet that allows you to register a new Entra ID App, and optionally generate the certificates for you to use to login with that app. 
+
+```powershell
+$result = Register-PnPEntraIDApp -ApplicationName "PnP Rocks" -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
 $result
 ```
 
-When you run the cmdlet above you will be asked to navigate to the shown url and enter the code shown. After that a new app will be registered in the Azure AD (make sure you have the rights to do this), and a certificate will be generated and uploaded to that app. After this a URL will be shown which you have to navigate to to provide consent for this application. By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (`GraphApplicationPermissions`, `GraphDelegatePermissions`, `SharePointApplicationPermissions`, `SharePointDelegatePermissions`) to provide your own permission scopes.
+When you run the cmdlet above you will be asked to navigate to the shown url and enter the code shown. After that a new app will be registered in the Entra ID (make sure you have the rights to do this), and a certificate will be generated and uploaded to that app. After this a URL will be shown which you have to navigate to to provide consent for this application. By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (`GraphApplicationPermissions`, `GraphDelegatePermissions`, `SharePointApplicationPermissions`, `SharePointDelegatePermissions`) to provide your own permission scopes.
 
 It also returns the private key certificate encoded in base64 encoding. As it spans multiple lines, it is recommended to assign the outcome of `Register-PnPAzureAdApp` to a variable so you have access to this value more easily. The Base64 encoded private key certificate can be used in your Connect-PnPOnline voiding the need to have access to the physical file:
 
@@ -109,21 +128,21 @@ This will show a popup window which will allow to authenticate and step through 
 
 ## Authentication to GCC or National Cloud environments
 
-In order to authentication to a GCC or a national cloud environment you have to take a few steps. Notice that this will work as of release 1.3.9-nightly or later.
+In order to set up authentication to a GCC or a national cloud environment you have to take a few extra steps. Notice that this will work as of release 1.3.9-nightly or later.
 
-### Register your own Azure AD App
-You are required to register your own Azure AD App in order to authentication
+### Register your own Entra ID App
+You are required to register your own Entra ID App in order to authentication
 
 ```powershell
-Register-PnPAzureADApp -ApplicationName "PnP PowerShell" -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China] -SharePointDelegatePermissions AllSites.FullControl -SharePointApplicationPermissions Sites.FullControl.All -GraphApplicationPermissions Group.ReadWrite.All -GraphDelegatePermissions Group.ReadWrite.All
+Register-PnPEntraIDApp -ApplicationName "PnP PowerShell" -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China] -SharePointDelegatePermissions AllSites.FullControl -SharePointApplicationPermissions Sites.FullControl.All -GraphApplicationPermissions Group.ReadWrite.All -GraphDelegatePermissions Group.ReadWrite.All
 ```
 
 The AzureEnvironment parameter only allows one value. Select the correct one that matches your cloud deployment.
 
-The above statement grants a few permission scopes. You might want to add more if you want to. Alternatively, after registering the application, navigate to the Azure AD, locate the app registration, and grant more permissions and consent to them.
+The above statement grants a few permission scopes. You might want to add more if you want to. Alternatively, after registering the application, navigate to the Entra ID, locate the app registration, and grant more permissions and consent to them.
 
 ### Optionally modify the manifest for the app
-There is a limitation in the Azure AD for national cloud environments where you cannot select permission scopes for SharePoint Online. In order to add specific SharePoint rights you will have to manually add them to the manifest that you can edit in Azure AD:
+There is a limitation in the Entra ID for national cloud environments where you cannot select permission scopes for SharePoint Online. In order to add specific SharePoint rights you will have to manually add them to the manifest that you can edit in Entra ID:
 
 Locate the `requiredResourceAccess` section and add to or modify the existing entries. See the example below (notice, this is an example, do not copy and paste this as is as it will limit the permissions to only AllSites.FullControl):
 
@@ -158,7 +177,7 @@ The AzureEnvironment parameter only allows one value. Select the correct one tha
 
 ## Silent Authentication with Credentials for running in Pipelines
 
-For running `Connect-PnPOnline` with user credentials in Azure DevOps pipeline, you need to make sure that authentication in your Azure AD application is configured to allow public client. 
+For running `Connect-PnPOnline` with user credentials in Azure DevOps pipeline, you need to make sure that authentication in your Entra ID application is configured to allow public client. 
 
 Public client can be configured from the Azure portal from the Authentication Blade in the application or by setting the `allowPublicClient` property in the application's manifest to true.
 ![image](../images/authentication/allowPublicClient.png)
@@ -176,9 +195,9 @@ Public client can be configured from the Azure portal from the Authentication Bl
 
 For example, if your organization is located in the South East Asia region, you would map it to the format AzureCloud.SouthEastAsia.
 
-### Create a named location in Azure AD conditional access
+### Create a named location in Entra ID conditional access
 
-- Go to Azure AD conditional access
+- Go to Entra ID conditional access
 - Open named location blade, click on `+ IP Ranges Location`
 - Enter the IP ranges for Microsoft Hosted Agents, `Mark as trusted location` should be checked.
   ![image](../images/authentication/namedLocations.png)
@@ -186,7 +205,7 @@ For example, if your organization is located in the South East Asia region, you 
 
 ### Create a conditional access policy
 
-- Go to Azure AD conditional access, click on `+New Policy`.
+- Go to Entra ID conditional access, click on `+New Policy`.
 - Give a meaningful name, click on Users and Groups -> Include select users and groups, select the user with which you want to run your pipeline.
 - Include all cloud apps.
 - Under conditions -> locations include `any locations` and exclude the recently created named location.
@@ -200,5 +219,5 @@ For example, if your organization is located in the South East Asia region, you 
 ### Powershell script to be run in pipeline
 ```powershell
 $creds = New-Object System.Management.Automation.PSCredential -ArgumentList ($username, $password)
-Connect-PnPOnline -Url <site url> -Credentials $creds -ClientId <Application/Client ID of Azure AD app>
+Connect-PnPOnline -Url <site url> -Credentials $creds -ClientId <Application/Client ID of Entra ID app>
 ```

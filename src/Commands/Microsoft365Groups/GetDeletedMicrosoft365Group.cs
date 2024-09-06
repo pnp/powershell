@@ -9,6 +9,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPDeletedMicrosoft365Group")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetDeletedMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -18,11 +19,11 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                WriteObject(Identity.GetDeletedGroup(Connection, AccessToken));
+                WriteObject(Identity.GetDeletedGroup(this, Connection, AccessToken));
             }
             else
             {
-                var groups = Microsoft365GroupsUtility.GetDeletedGroupsAsync(Connection, AccessToken).GetAwaiter().GetResult();
+                var groups = ClearOwners.GetDeletedGroups(this, Connection, AccessToken);
                 WriteObject(groups.OrderBy(g => g.DisplayName), true);
             }
         }

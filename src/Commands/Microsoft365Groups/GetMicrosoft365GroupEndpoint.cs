@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupEndpoint")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetMicrosoft365GroupEndpoint : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
@@ -22,7 +23,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             if (ParameterSpecified(nameof(Identity)))
             {
                 WriteVerbose($"Defining Microsoft 365 Group based on {nameof(Identity)} parameter");
-                groupId = Identity.GetGroupId(Connection, AccessToken);
+                groupId = Identity.GetGroupId(this, Connection, AccessToken);
             }
             else
             {
@@ -43,7 +44,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
 
             WriteVerbose($"Requesting endpoints of Microsoft 365 Group with Id {groupId}");
-            var endpoints = GraphHelper.GetResultCollectionAsync<Model.AzureAD.AzureADGroupEndPoint>(Connection, $"/beta/groups/{groupId}/endpoints", AccessToken).GetAwaiter().GetResult();
+            var endpoints = GraphHelper.GetResultCollection<Model.AzureAD.AzureADGroupEndPoint>(this, Connection, $"/beta/groups/{groupId}/endpoints", AccessToken);
             WriteVerbose($"{endpoints.Count()} endpoint(s) found in total");
             WriteObject(endpoints, true);
         }

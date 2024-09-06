@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupMember")]
     [Alias("Get-PnPMicrosoft365GroupMembers")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetMicrosoft365GroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -17,7 +18,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var members = Microsoft365GroupsUtility.GetMembersAsync(Connection, Identity.GetGroupId(Connection, AccessToken), AccessToken).GetAwaiter().GetResult();
+            var members = ClearOwners.GetMembers(this, Connection, Identity.GetGroupId(this, Connection, AccessToken), AccessToken);
             WriteObject(members?.OrderBy(m => m.DisplayName), true);
         }
     }

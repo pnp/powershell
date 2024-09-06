@@ -40,13 +40,7 @@ namespace PnP.PowerShell.Commands
             {
                 if (Connection != null)
                 {
-                    if (Connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-                    {
-                        var resourceUri = new Uri(Connection.Url);
-                        var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
-                        return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, defaultResource, Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-                    }
-                    else if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+                    if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
                     {
                         var resourceUri = new Uri(Connection.Url);
                         var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
@@ -80,11 +74,7 @@ namespace PnP.PowerShell.Commands
         {
             get
             {
-                if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-                {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{Connection.GraphEndPoint}/", Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-                }
-                else if (Connection?.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+                if (Connection?.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
                 {
                     return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
                 }

@@ -29,14 +29,14 @@ Allows to set the home page of the current site.
 Set-PnPHomePage -RootFolderRelativeUrl SitePages/Home.aspx
 ```
 
-Sets the home page to the home.aspx file which resides in the SitePages library
+Sets the home page to the home.aspx file which resides in the SitePages library.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPHomePage -RootFolderRelativeUrl Lists/Sample/AllItems.aspx
 ```
 
-Sets the home page to be the Sample list
+Sets the home page to be the Sample list.
 
 ## PARAMETERS
 

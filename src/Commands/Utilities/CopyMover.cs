@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             };
 
-            var results = await REST.RestHelper.PostAsync<REST.RestResultCollection<Model.CopyMigrationInfo>>(httpClient, $"{currentContextUri}/_api/site/CreateCopyJobs", clientContext, body, false);
+            var results =  REST.RestHelper.Post<REST.RestResultCollection<Model.CopyMigrationInfo>>(httpClient, $"{currentContextUri}/_api/site/CreateCopyJobs", clientContext, body, false);
 
             if (results != null && results.Items.Any())
             {
@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     copyJobInfo = result
                 };
-                var copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
+                var copyJob = Utilities.REST.RestHelper.Post<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
                 if (copyJob != null)
                 {
                     if (noWait)
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         // sleep 1 second
                         await Task.Delay(1000);
-                        copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
+                        copyJob = Utilities.REST.RestHelper.Post<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
                     }
                     foreach (var log in copyJob.Logs)
                     {
@@ -83,7 +83,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 copyJobInfo = jobInfo
             };
-            var copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
+            var copyJob = Utilities.REST.RestHelper.Post<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
             if (copyJob != null)
             {
                 if (!noWait)
@@ -92,7 +92,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         // sleep 1 second
                         await Task.Delay(1000);
-                        copyJob = await Utilities.REST.RestHelper.PostAsync<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
+                        copyJob = Utilities.REST.RestHelper.Post<CopyMigrationJob>(httpClient, $"{currentContextUri}/_api/site/GetCopyJobProgress", clientContext, copyJobInfo, false);
                     }
                 }
             }
