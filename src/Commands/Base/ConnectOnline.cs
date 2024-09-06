@@ -532,7 +532,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectDeviceLogin()
         {
-            WriteVerbose("Connecting using the Device-Login");
+            WriteVerbose("Connecting using Device-Login");
 
             var messageWriter = new CmdletMessageWriter(this);
             PnPConnection connection = null;
