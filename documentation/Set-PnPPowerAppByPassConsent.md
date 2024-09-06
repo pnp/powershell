@@ -122,4 +122,6 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
+[Set-AdminPowerAppApisToBypassConsent](https://learn.microsoft.com/powershell/module/microsoft.powerapps.administration.powershell/set-adminpowerappapistobypassconsent)
+[Clear-AdminPowerAppApisToBypassConsent](https://learn.microsoft.com/powershell/module/microsoft.powerapps.administration.powershell/clear-adminpowerappapistobypassconsent)
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
