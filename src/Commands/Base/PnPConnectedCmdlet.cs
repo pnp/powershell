@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Base
                 switch (ex)
                 {
                     case Model.Graph.GraphException gex:
-                        errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {gex.Error.Message}";
+                        errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {(gex.Error != null ? gex.Error.Message : gex.HttpResponse.Content.ReadAsStringAsync().Result)}";
                         break;
 
                     case Core.SharePointRestServiceException rex:

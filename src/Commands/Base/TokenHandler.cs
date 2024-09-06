@@ -193,7 +193,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (!permissionsInPlace)
             {
-                cmdlet.WriteVerbose($"The currect access token might not have the required permissions to execute this cmdlet. Required are one or more of the following: {string.Join(", ", permissionEvaluations.Select(p => p.MissingPermissions))}");
+                cmdlet.WriteVerbose($"The currect access token might not have the required permissions to execute this cmdlet. Required are one or more of the following: {string.Join(", ", permissionEvaluations.Select(p => string.Join(", ", p.MissingPermissions)))}");
             }
 
             return accessToken;
