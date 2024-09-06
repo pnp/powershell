@@ -30,7 +30,7 @@ Another option is to manually create the application registration in Entra ID. W
 
 1. [Navigate to the Entra ID portal](https://entra.microsoft.com) and authenticate with an account that has permissions to create application registrations
 
-1. Using the menu on the left, go to _Identity_ > _Applications_ > _App registrations)
+1. Using the menu on the left, go to _Identity_ > _Applications_ > _App registrations_
    
    ![image](../images/registerapplication/entraid_navigate_to_app_registrations.png)
 
@@ -130,3 +130,48 @@ The cmdlet will also save both the CER and PFX files to the location specified w
 ```PowerShell
 Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -CertificatePath [certificate.pfx]
 ```
+## Special instructions for GCC or National Cloud environments
+
+In order to set up your application registration on a GCC or a national cloud environment, you will have to take a few extra steps. In the two methods described above for [interactive login](#automatically-create-an-app-registration-for-interactive-login) and [App Only access](#setting-up-access-to-your-own-entra-id-app-for-app-only-access), you will have to add `-AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]` to the cmdlet picking the one that applies to your environment to register your application in Entra ID.
+
+I.e. for an application registration meand for interactive login, use:
+
+```PowerShell
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP Rocks" -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+```
+
+And for an App Only application registration, use:
+
+```PowerShell
+$result = Register-PnPEntraIDApp -ApplicationName "PnP Rocks" -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+$result
+```
+
+The above statement grants a few permission scopes. You might want to add more if you want to. Alternatively, after registering the application, navigate to Entra ID, locate the app registration, and grant more permissions and consent to them.
+
+### Optionally modify the manifest for the app
+There is a limitation in the Entra ID for national cloud environments where you cannot select permission scopes for SharePoint Online. In order to add specific SharePoint rights you will have to manually add them to the manifest that you can edit in Entra ID:
+
+Locate the `requiredResourceAccess` section and add to or modify the existing entries. See the example below (notice, this is an example, do not copy and paste this as is as it will limit the permissions to only AllSites.FullControl):
+
+```json
+"requiredResourceAccess": [
+{
+    "resourceAppId": "00000003-0000-0ff1-ce00-000000000000",
+    "resourceAccess": [
+		{
+			"id": "56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0",
+			"type": "Scope"
+		}
+      ]
+}
+```
+
+You can add more permissions by using the following values:
+
+The resourceAppId for SharePoint = "00000003-0000-0ff1-ce00-000000000000" 
+
+Permission | Permission type | Id | Type
+| -------| ----------- | ------ | ----- |
+| Sites.FullControl.All | Application | 678536fe-1083-478a-9c59-b99265e6b0d3 | Role |
+| AllSites.FullControl | Delegate | 56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0 | Scope |
