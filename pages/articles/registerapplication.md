@@ -2,7 +2,7 @@
 
 It has always been a recommended practise to register your own Entra ID Application to use with PnP PowerShell. As of September 9<sup>th</sup>, 2024, [this has become mandatory step](https://pnp.github.io/blog/post/changes-pnp-management-shell-registration/). This article will guide you through how to do so.
 
-The first decission you will have to make is whether you are going to interactively log on through Pnp PowerShell to your tenant by providing your credentials (Interactive Login), or if you are aiming to write a script that will log on without requiring any user intervention (App Only Access). Depending on your scenario, continue reading in the appropriate section below.
+The first decission you will have to make is whether you are going to interactively log on through Pnp PowerShell to your tenant by providing your credentials, [Interactive Login](#setting-up-access-to-your-own-entra-id-app-for-interactive-login), or if you are aiming to write a script that will log on without requiring any user intervention, [App Only Access](#setting-up-access-to-your-own-entra-id-app-for-app-only-access). Depending on your scenario, continue reading in the appropriate section below.
 
 ## Setting up access to your own Entra ID App for Interactive Login
 
