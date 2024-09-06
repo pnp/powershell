@@ -1,15 +1,17 @@
-- name: Installation
-  href: installation.md
-- name: Authentication
-  href: authentication.md
-- name: Credential Management
-  href: credentialmanagement.md
-- name: Connecting
-  href: connecting.md
-- name: Batching in PnP PowerShell
-  href: batching.md
-- name: Upgrading from the Legacy version
-  href: upgrading.md  
+- name: Getting started
+  items:
+    - name: Installation
+      href: installation.md
+    - name: Register your application
+      href: registerapplication.md
+    - name: Determine permissions
+      href: determinepermissions.md      
+    - name: Authentication
+      href: authentication.md
+    - name: Credential Management
+      href: credentialmanagement.md
+    - name: Connecting
+      href: connecting.md
 - name: Configure PnP PowerShell
   items:
     - name: Telemetry
@@ -34,6 +36,12 @@
       href: docker.md
     - name: Visual Studio Development Containers
       href: dev-containers.md
+- name: Advanced topics
+  items:
+    - name: Batching in PnP PowerShell
+      href: batching.md
+    - name: Upgrading from the Legacy version
+      href: upgrading.md        
 - name: How to contribute
   items:
     - name: Getting started
