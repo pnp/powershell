@@ -36,8 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix issue with Power Platform cmdlets not working correctly in non-commercial cloud environments.
 - Fix issue with `Get-PnPFlow` not working correctly when `-AsAdmin` parameter is specified due to API changes.
 - Fix `Connect-PnPOnline` not returning correct `ClientId` in the connection object.
-- Fixed `Get-PnPFlow` not working without `-AsAdmin`
-
+- Fixed `Get-PnPFlow` not working without `-AsAdmin` [#4244](https://github.com/pnp/powershell/pull/4244)
 ### Removed
 
 ### Contributors
