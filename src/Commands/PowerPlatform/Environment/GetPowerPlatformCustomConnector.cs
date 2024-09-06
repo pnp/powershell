@@ -52,14 +52,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
                 WriteVerbose($"Retrieving specific Custom Connector with the provided name '{appName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.Get<Model.PowerPlatform.Environment.PowerPlatformConnector>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apis/{appName}?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", AccessToken);
+                var result = GraphHelper.Get<Model.PowerPlatform.Environment.PowerPlatformConnector>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apis/{appName}?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", PowerAppsServiceAccessToken);
                 WriteObject(result, false);
             }
             else
             {
                 WriteVerbose($"Retrieving all Connectors within environment '{environmentName}'");
 
-                var connectors = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.PowerPlatformConnector>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps/apis?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", AccessToken);
+                var connectors = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.PowerPlatformConnector>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps/apis?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", PowerAppsServiceAccessToken);
                 WriteObject(connectors, true);
             }
         }

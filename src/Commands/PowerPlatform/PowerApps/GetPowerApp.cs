@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 
                 WriteVerbose($"Retrieving specific PowerApp with the provided name '{appName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.Get<Model.PowerPlatform.PowerApp.PowerApp>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}?api-version=2016-11-01", AccessToken);
+                var result = GraphHelper.Get<Model.PowerPlatform.PowerApp.PowerApp>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}?api-version=2016-11-01", PowerAppsServiceAccessToken);
                  
                 WriteObject(result, false);
             }
@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             {
                 WriteVerbose($"Retrieving all PowerApps within environment '{environmentName}'");
 
-                var apps = GraphHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerApp>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'", AccessToken);
+                var apps = GraphHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerApp>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'", PowerAppsServiceAccessToken);
                 WriteObject(apps, true);
             }
         }

@@ -679,13 +679,13 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private static HttpResponseHeaders SendMessageGetResponseHeader(HttpClient httpClient, HttpRequestMessage message)
         {
-            var response = httpClient.Send(message);
+            var response = httpClient.SendAsync(message).GetAwaiter().GetResult();
             while (response.StatusCode == (HttpStatusCode)429)
             {
                 // throttled
                 var retryAfter = response.Headers.RetryAfter;
                 Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
-                response = httpClient.Send(CloneMessage(message));
+                response = httpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
             }
             if (response.IsSuccessStatusCode)
             {
