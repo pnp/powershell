@@ -3,13 +3,8 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Management.Automation;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading;
 using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
@@ -24,8 +19,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
         [Parameter(Mandatory = true)]
         public PowerAppPipeBind Identity;
 
-        [Parameter(Mandatory = true)]
-        public string BypassConsent;
+        [Parameter(Mandatory = false)]
+        public bool Enabled = true;
 
         protected override void ExecuteCmdlet()
         {
@@ -40,7 +35,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             else
             {
                 string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-                var environments = GraphHelper.GetResultCollectionAsync<Model.PowerPlatform.Environment.Environment>(Connection, baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken).GetAwaiter().GetResult();
+                var environments = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.Environment>(this, Connection, baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken);
                 environmentName = environments.FirstOrDefault(e => e.Properties.IsDefault.HasValue && e.Properties.IsDefault == true)?.Name;
 
                 if (string.IsNullOrEmpty(environmentName))
@@ -51,19 +46,17 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 WriteVerbose($"Using default environment as retrieved '{environmentName}'");
             }
 
-            if (ParameterSpecified(nameof(Identity)))
-            {
-                var appName = Identity.GetName();
+            var appName = Identity.GetName();
 
-                WriteVerbose($"Setting specific PowerApp with the provided name '{appName}' consent within the environment '{environmentName}'");
-                var postData = new
-                {
-                    bypassconsent = BypassConsent
-                };
-                var response = RestHelper.PostAsync(Connection.HttpClient, $"{powerAppsUrl}/providers/Microsoft.PowerApps/scopes/admin/environments/{environmentName}/apps/{appName}/setPowerAppConnectionDirectConsentBypass?api-version=2021-02-01", AccessToken, payload: postData).GetAwaiter().GetResult();
-                WriteObject(response, false);
-            }
+            WriteVerbose($"Setting specific PowerApp with the provided name '{appName}' consent within the environment '{environmentName}'");
+
+            var powerAppsAccessToken = TokenHandler.GetAccessToken(this, "https://service.powerapps.com//.default", Connection);
+            var postData = new
+            {
+                bypassconsent = Enabled.ToString()
+            };
+            var response = RestHelper.Post(Connection.HttpClient, $"{powerAppsUrl}/providers/Microsoft.PowerApps/scopes/admin/environments/{environmentName}/apps/{appName}/setPowerAppConnectionDirectConsentBypass?api-version=2021-02-01", powerAppsAccessToken, payload: postData);
+            WriteObject(response, false);
         }
     }
-
 }
