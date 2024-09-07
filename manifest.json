@@ -185,6 +185,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/microsoftsearch.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/microsoftsearch.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/powershellpredictor.md",
       "output": {
         ".html": {
