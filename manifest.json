@@ -41,6 +41,9 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "articles/azurecloudshell.md",
       "output": {
@@ -96,16 +99,6 @@
       "output": {
         ".html": {
           "relative_path": "articles/buildinglocalpnpbuild.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "articles/connecting.md",
-      "output": {
-        ".html": {
-          "relative_path": "articles/connecting.html"
         }
       },
       "version": ""
@@ -201,6 +194,9 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "articles/registerapplication.md",
       "output": {
