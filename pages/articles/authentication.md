@@ -74,6 +74,13 @@ Connect-PnPOnline [yourtenant].sharepoint.com -ClientId <client id of your Entra
 
 If your private key (.pfx) certificate has a password on it, add `-CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)` to the parameters.
 
+If you wish to convert a private key certificate file to its Base64 encoded equivalent, you can use:
+
+```powershell
+$bytes = Get-Content '.\PnPPowerShell.pfx' -AsByteStream
+$encodedPfx = [System.Convert]::ToBase64String($bytes)
+```
+
 ## Authenticating by providing an access token
 
 A really specific and limited scenario is where you provide the oAuth JWT access token yourself that needs to be used to access resources. You can only pass in one access token and you need to ensure the token is still within its validity period and has the proper audience and scopes for the cmdlets you are going to execute. I.e. if you pass in an access token for your SharePoint Online tenant, you can only execute cmdlets that will directly target your SharePoint Online environment. If you would use a cmdlet that communicates with Microsoft Graph behind the scenes, it will throw an access denied exception.
