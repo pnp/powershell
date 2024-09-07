@@ -132,6 +132,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/determinepermissions.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/determinepermissions.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/dev-containers.md",
       "output": {
         ".html": {
@@ -186,6 +196,16 @@
       "output": {
         ".html": {
           "relative_path": "articles/powershellpredictor.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/registerapplication.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/registerapplication.html"
         }
       },
       "version": ""
@@ -3222,6 +3242,26 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSearchExternalConnection.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSearchExternalConnection.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSearchExternalSchema.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSearchExternalSchema.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPSearchSettings.md",
       "output": {
         ".html": {
@@ -4712,6 +4752,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPSearchExternalConnection.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPSearchExternalConnection.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/New-PnPSite.md",
       "output": {
         ".html": {
@@ -5796,6 +5846,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSearchConfiguration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPSearchExternalConnection.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPSearchExternalConnection.html"
         }
       },
       "version": ""
@@ -7172,10 +7232,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSearchExternalConnection.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSearchExternalConnection.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPSearchExternalItem.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSearchExternalItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSearchExternalSchema.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSearchExternalSchema.html"
         }
       },
       "version": ""
@@ -9056,6 +9136,206 @@
       "output": {
         "resource": {
           "relative_path": "images/logo.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/README.md",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/README.md"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_navigate_to_app_registrations.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_navigate_to_app_registrations.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent_remove_other.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent_remove_other.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint_delegated.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint_delegated.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint_delegated_allsites_read.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint_delegated_allsites_read.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_apipermissions_menu.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_apipermissions_menu.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_apipermissions_minimal.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_apipermissions_minimal.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_apipermissions_removedefault.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_apipermissions_removedefault.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform_desktop.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform_desktop.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform_desktop_redirecturis.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform_desktop_redirecturis.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform_web.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform_web.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform_web_enterurl.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_authentication_add_platform_web_enterurl.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_authentication_menu.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_authentication_menu.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_clientid.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_clientid.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_registration.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_registration.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/registerapplication/entraid_new_app_registration_enter_name.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/registerapplication/entraid_new_app_registration_enter_name.png"
         }
       },
       "version": ""

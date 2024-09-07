@@ -90,7 +90,7 @@
 </ul>
 <p>Adds or updates an external item in Microsoft Search</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ItemId &lt;String&gt; -ConnectionId &lt;String&gt; -Properties &lt;Hashtable&gt; [-ContentValue &lt;String&gt;] [-ContentType &lt;SearchExternalItemContentType&gt;] [-GrantUsers &lt;AzureADUserPipeBind[]&gt;] [-GrantGroups &lt;AzureADGroupPipeBind[]&gt;] [-DenyUsers &lt;AzureADUserPipeBind[]&gt;] [-DenyGroups &lt;AzureADGroupPipeBind[]&gt;] [-GrantExternalGroups &lt;String[]&gt;] [-DenyExternalGroups &lt;String[]&gt;] [-GrantEveryone &lt;SwitchParameter&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ItemId &lt;String&gt; -ConnectionId &lt;SearchExternalConnectionPipeBind&gt; -Properties &lt;Hashtable&gt; [-ContentValue &lt;String&gt;] [-ContentType &lt;SearchExternalItemContentType&gt;] [-GrantUsers &lt;AzureADUserPipeBind[]&gt;] [-GrantGroups &lt;AzureADGroupPipeBind[]&gt;] [-DenyUsers &lt;AzureADUserPipeBind[]&gt;] [-DenyGroups &lt;AzureADGroupPipeBind[]&gt;] [-GrantExternalGroups &lt;String[]&gt;] [-DenyExternalGroups &lt;String[]&gt;] [-GrantEveryone &lt;SwitchParameter&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet can be used to add or update an external item in Microsoft Search on custom connectors. The cmdlet will create a new external item if the item does not exist yet. If the item already exists, it will be updated.</p>
@@ -125,12 +125,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-connectionid">-ConnectionId</h3>
-<p>The Connection ID of the custom connector to use. This is the ID that was entered when registering the custom connector and will indicate for which custom connector this external item is being added to the Microsoft Search index.</p>
-<pre><code class="lang-yaml">Type: String
+<p>The Connection ID or connection instance of the custom connector to use. This is the ID that was entered when registering the custom connector and will indicate for which custom connector this external item is being added to the Microsoft Search index.</p>
+<pre><code class="lang-yaml">Type: SearchExternalConnectionPipeBind
 Parameter Sets: (All)
 Required: True
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-properties">-Properties</h3>

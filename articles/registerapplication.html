@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Register an Entra ID Application to use with PnP PowerShell | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Register an Entra ID Application to use with PnP PowerShell | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/registerapplication.md/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="register-an-entra-id-application-to-use-with-pnp-powershell">Register an Entra ID Application to use with PnP PowerShell</h1>
+
+<p>It has always been a recommended practise to register your own Entra ID Application to use with PnP PowerShell. As of September 9<sup>th</sup>, 2024, <a href="https://pnp.github.io/blog/post/changes-pnp-management-shell-registration/">this has become mandatory step</a>. This article will guide you through how to do so.</p>
+<p>The first decission you will have to make is whether you are going to interactively log on through Pnp PowerShell to your tenant by providing your credentials, <a href="#setting-up-access-to-your-own-entra-id-app-for-interactive-login">Interactive Login</a>, or if you are aiming to write a script that will log on without requiring any user intervention, <a href="#setting-up-access-to-your-own-entra-id-app-for-app-only-access">App Only Access</a>. Depending on your scenario, continue reading in the appropriate section below.</p>
+<h2 id="setting-up-access-to-your-own-entra-id-app-for-interactive-login">Setting up access to your own Entra ID App for Interactive Login</h2>
+<p>In this scenario, you will be creating an application registration in Entra ID which will allow you to interactively log on to your tenant using PnP PowerShell. This means that each time you use PnP PowerShell, you will need to enter your credentials and comply with any multi factor authentication and conditional access policies that may have been set up on your tenant.</p>
+<p>There are two methods to create your application registration for this scenario: creating it <a href="#automatically-create-an-app-registration-for-interactive-login">automatically</a> (easiest) or creating it <a href="#manually-create-an-app-registration-for-interactive-login">manually</a>. Both will require you to have at least the <a href="https://learn.microsoft.com/entra/identity/role-based-access-control/permissions-reference#application-developer">Application Developer permission role</a> or the <a href="https://learn.microsoft.com/en-us/entra/identity/role-based-access-control/permissions-reference#global-administrator">Global Administrator permission role</a>. The first should be enough to create the application registration in Entra ID, whenever this has been disabled for normal users, but Global Administrator permissions might be needed after this to set the desired permissions on the application registration. See <a href="determinepermissions.html">determining which permissions you need</a> for more information.</p>
+<p>Proceed in the section below which matches with your desired option for creating the application registration, <a href="#automatically-create-an-app-registration-for-interactive-login">automatically</a> or <a href="#manually-create-an-app-registration-for-interactive-login">manually</a>.</p>
+<h3 id="automatically-create-an-app-registration-for-interactive-login">Automatically create an app registration for interactive login</h3>
+<p>PnP PowerShell has a cmdlet that allows you to register a new Entra ID Application specifically for interactive login. Notice that you need to be able to create App registrations in your Entra ID.</p>
+<pre><code class="lang-PowerShell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -Interactive
+</code></pre>
+<p>When you run the cmdlet above you will be asked to authenticate with your username, password and an optional second factor. After that a new app will be registered in the Entra ID (make sure you have the rights to do this). By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (<code>GraphApplicationPermissions</code>, <code>GraphDelegatePermissions</code>, <code>SharePointApplicationPermissions</code>, <code>SharePointDelegatePermissions</code>) to provide your own permission scopes.</p>
+<p>After the app has been registered you will be asked to provide consent for the application. Alternatively you can ask someone with the appropriate access rights to navigate to the app registration in the Entra ID portal to add them for you. See <a href="determinepermissions.html">determining which permissions you need</a> for more information.</p>
+<h3 id="manually-create-an-app-registration-for-interactive-login">Manually create an app registration for interactive login</h3>
+<p>Another option is to manually create the application registration in Entra ID. While the automatic method above is by far the easiest and quickest, for those that like to fully understand each step of the process, can follow this steps in this paragraph in order to create it manually.</p>
+<ol>
+<li><p><a href="https://entra.microsoft.com">Navigate to the Entra ID portal</a> and authenticate with an account that has permissions to create application registrations</p>
+</li>
+<li><p>Using the menu on the left, go to <em>Identity</em> &gt; <em>Applications</em> &gt; <em>App registrations</em></p>
+<p><img src="../images/registerapplication/entraid_navigate_to_app_registrations.png" alt="image"></p>
+</li>
+<li><p>At the top, click on <em>New registration</em></p>
+<p><img src="../images/registerapplication/entraid_new_app_registration.png" alt="image"></p>
+</li>
+<li><p>In the <em>Name</em> field, enter any name you would like which indicates to you what the purpose of this script is. Leave the rest of the fields as they are and click on <em>Register</em> at the bottom of the page.</p>
+<p><img src="../images/registerapplication/entraid_new_app_registration_enter_name.png" alt="image"></p>
+</li>
+<li><p>Take note of the <em>Application (client) ID</em> value, as you will use this to connect to PnP PowerShell using the application registration you have just created</p>
+<p><img src="../images/registerapplication/entraid_new_app_clientid.png" alt="image"></p>
+</li>
+<li><p>In the menu, look for <em>Manage</em> and click on <em>Authentication</em></p>
+<p><img src="../images/registerapplication/entraid_new_app_authentication_menu.png" alt="image"></p>
+</li>
+<li><p>Under <em>Platform configurations</em> on the page, click on <em>Add a platform</em></p>
+<p><img src="../images/registerapplication/entraid_new_app_authentication_add_platform.png" alt="image"></p>
+</li>
+<li><p>In the panel that shows up on the right, click on <em>Mobile and desktop applications</em></p>
+<p><img src="../images/registerapplication/entraid_new_app_authentication_add_platform_desktop.png" alt="image"></p>
+</li>
+<li><p>Leave the three boxes shown in the panel on the right unchecked and in the <em>Custom redirect URIs</em> field, enter:</p>
+<p>http://localhost</p>
+<p>Note that this should really be http and not https</p>
+<p>Click on <em>Configure</em> at the bottom</p>
+<p><img src="../images/registerapplication/entraid_new_app_authentication_add_platform_desktop_redirecturis.png" alt="image"></p>
+</li>
+<li><p>Under <em>Manage</em> go to <em>API permissions</em></p>
+<p><img src="../images/registerapplication/entraid_new_app_apipermissions_menu.png" alt="image"></p>
+</li>
+<li><p>In the <em>Configured permissions</em> section, click on the three dots in the line that reads <em>Microsoft Graph (1)</em> and click on <em>Remove all permissions</em> and click on <em>Yes, remove</em> in the confirmation dialog that will show up.</p>
+<p><img src="../images/registerapplication/entraid_new_app_apipermissions_removedefault.png" alt="image"></p>
+</li>
+<li><p>In the <em>Configured permissions</em> section, click on <em>Add a permission</em></p>
+<p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission.png" alt="image"></p>
+</li>
+<li><p>In the panel on the right, stay in the <em>Microsoft APIs</em> category and scroll down to <em>SharePoint</em> and click on it</p>
+<p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint.png" alt="image"></p>
+</li>
+<li><p>Click on <em>Delegated permissions</em></p>
+<p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint_delegated.png" alt="image"></p>
+</li>
+<li><p>Expand <em>AllSites</em> and check the box for <em>AllSites.Read</em> or any other permission you wish to use with your application registration and click on <em>Add permissions</em> at the bottom</p>
+<p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint_delegated_allsites_read.png" alt="image"></p>
+</li>
+<li><p>Under <em>Configured permissions</em> click on <em>Grant admin consent for -organization name-</em></p>
+<p>If this button is greyed out, it means you do not have the proper permissions to provide the consent. Log in using an account or ask someone having the Global Administrator role to perform this step for you if this is the case.</p>
+<p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent.png" alt="image"></p>
+</li>
+<li><p>In the panel on the right, select <em>No, remove other granted permissions</em> and click on <em>Grant admin consent</em> at the bottom. In the confirmation dialog that appears, click <em>Yes</em>.</p>
+<p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent_remove_other.png" alt="image"></p>
+</li>
+<li><p>The <em>Configured permissions</em> section should now look similar to the screenshot below. You can now use this application to <a href="connecting.html">connect to PnP PowerShell</a> or <a href="determinepermissions.html">add additional permissions</a> to this application registration as necessary.</p>
+<p><img src="../images/registerapplication/entraid_new_app_apipermissions_minimal.png" alt="image"></p>
+</li>
+</ol>
+<h2 id="setting-up-access-to-your-own-entra-id-app-for-app-only-access">Setting up access to your own Entra ID App for App Only Access</h2>
+<p>If you're looking to register an application in Entra ID to use PnP PowerShell with a script that will run without requiring user interaction, App Only described in this section is what you want to go with.</p>
+<p>PnP PowerShell has a cmdlet that allows you to register a new Entra ID App, and optionally generate the certificates for you to use to login with that app.</p>
+<pre><code class="lang-PowerShell">$result = Register-PnPEntraIDApp -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin
+$result
+</code></pre>
+<p>When you run the cmdlet above you will be asked to navigate to the shown url and enter the code shown. After that a new app will be registered in the Entra ID (make sure you have the rights to do this), and a certificate will be generated and uploaded to that app. After this a URL will be shown which you have to navigate to to provide consent for this application. By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (<code>GraphApplicationPermissions</code>, <code>GraphDelegatePermissions</code>, <code>SharePointApplicationPermissions</code>, <code>SharePointDelegatePermissions</code>) to provide your own permission scopes.</p>
+<p>It also returns the private key certificate encoded in base64 encoding. As it spans multiple lines, it is recommended to assign the outcome of <code>Register-PnPAzureAdApp</code> to a variable so you have access to this value more easily. The Base64 encoded private key certificate can be used in your Connect-PnPOnline voiding the need to have access to the physical file:</p>
+<pre><code class="lang-PowerShell">Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -CertificateBase64Encoded [pfx base64 encoded]
+</code></pre>
+<p>The cmdlet will also save both the CER and PFX files to the location specified with the -Outpath parameter. The names of the files will be matching the -ApplicationName parameter, e.g. in the example above the files will be called <code>PnP Rocks.cer</code> and <code>PnP Rocks.pfx</code>. The output of the cmdlet will show the clientid. After all is set up and consent has been provided you can login using:</p>
+<pre><code class="lang-PowerShell">Connect-PnPOnline [yourtenant].sharepoint.com -ClientId [clientid] -Tenant [yourtenant].onmicrosoft.com -CertificatePath [certificate.pfx]
+</code></pre>
+<h2 id="special-instructions-for-gcc-or-national-cloud-environments">Special instructions for GCC or National Cloud environments</h2>
+<p>In order to set up your application registration on a GCC or a national cloud environment, you will have to take a few extra steps. In the two methods described above for <a href="#automatically-create-an-app-registration-for-interactive-login">interactive login</a> and <a href="#setting-up-access-to-your-own-entra-id-app-for-app-only-access">App Only access</a>, you will have to add <code>-AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]</code> to the cmdlet picking the one that applies to your environment to register your application in Entra ID.</p>
+<p>I.e. for an application registration meand for interactive login, use:</p>
+<pre><code class="lang-PowerShell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+</code></pre>
+<p>And for an App Only application registration, use:</p>
+<pre><code class="lang-PowerShell">$result = Register-PnPEntraIDApp -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+$result
+</code></pre>
+<p>The above statement grants a few permission scopes. You might want to add more if you want to. Alternatively, after registering the application, navigate to Entra ID, locate the app registration, and grant more permissions and consent to them.</p>
+<h3 id="optionally-modify-the-manifest-for-the-app">Optionally modify the manifest for the app</h3>
+<p>There is a limitation in the Entra ID for national cloud environments where you cannot select permission scopes for SharePoint Online. In order to add specific SharePoint rights you will have to manually add them to the manifest that you can edit in Entra ID:</p>
+<p>Locate the <code>requiredResourceAccess</code> section and add to or modify the existing entries. See the example below (notice, this is an example, do not copy and paste this as is as it will limit the permissions to only AllSites.FullControl):</p>
+<pre><code class="lang-json">&quot;requiredResourceAccess&quot;: [
+{
+    &quot;resourceAppId&quot;: &quot;00000003-0000-0ff1-ce00-000000000000&quot;,
+    &quot;resourceAccess&quot;: [
+		{
+			&quot;id&quot;: &quot;56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0&quot;,
+			&quot;type&quot;: &quot;Scope&quot;
+		}
+      ]
+}
+</code></pre>
+<p>You can add more permissions by using the following values:</p>
+<p>The resourceAppId for SharePoint = &quot;00000003-0000-0ff1-ce00-000000000000&quot;</p>
+<table>
+<thead>
+<tr>
+<th>Permission</th>
+<th>Permission type</th>
+<th>Id</th>
+<th>Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sites.FullControl.All</td>
+<td>Application</td>
+<td>678536fe-1083-478a-9c59-b99265e6b0d3</td>
+<td>Role</td>
+</tr>
+<tr>
+<td>AllSites.FullControl</td>
+<td>Delegate</td>
+<td>56680e0d-d2a3-4ae1-80d8-3c4f2100e3d0</td>
+<td>Scope</td>
+</tr>
+</tbody>
+</table>
+
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>
