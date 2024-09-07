@@ -18,6 +18,72 @@ Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId <client id 
 
 This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow. Ensure you provide [the Client ID of your own Entra ID Application Registration](registerapplication.md) with the `-ClientId` parameter.
 
+## Authenticating from another device or specific browser
+
+In some scenarios it can happen that you need to authenticate to PnP PowerShell from a different device or through a specific browser. In these cases you can use the `-DeviceLogin` method to connect. A sample scenario could for example be when running PnP PowerShell scripts on a Raspberry Pi without a desktop environment installed on it. In this case there is no browser to authenticate through on the device itself.
+
+Connecting can be done using:
+
+```powershell
+Connect-PnPOnline [yourtenant].sharepoint.com -DeviceLogin -Tenant <tenant>.onmicrosoft.com -ClientId <client id of your Entra ID Application Registration>
+```
+
+When running this line, it will prompt in text to go to https://microsoft.com/devicelogin on any device and log in using a specific code which will be shown in the text. You can perform this step on any device. This does not have to be the same device as you're using PnP PowerShell on. After going to that website and entering the code shown in the text, you can complete the interactive login process as normal, including any multi factor authentication requirements that might have been set up for your account. Once the authentication completes, PnP PowerShell will automatically detect this and will be ready to be used.
+
+## Authenticating using Web Account Manager
+
+Another option to authenticate is using Web Account Manager (WAM). WAM is a more secure & faster way of authenticating in Windows OS. It supports Windows Hello, FIDO keys, single sign on, conditional access policies, and more. It only works on Windows 10 (Version 1703 - Creators Update) and above, as well as Windows Server 2019 and above.
+
+Connecting can be done using:
+
+```powershell
+Connect-PnPOnline [yourtenant].sharepoint.com -OSLogin -ClientId <client id of your Entra ID Application Registration>
+```
+
+## Non interactive Authentication
+
+If your goal is to automatically connect to PnP PowerShell without user intervention of having to enter credentials or perform multi factor authentication steps, this is the method to go with. Ensure you have gone through the [steps to set up an App Only application registration](registerapplication.md#setting-up-access-to-your-own-entra-id-app-for-app-only-access) first. Your application registration needs to use a public/private key pair certificate to authenticate. A client secret is not supported. The public key (.cer) goes into your application registration in Entra ID, the private key (.pfx) will be used to connect using PnP PowerShell.
+
+Depending on how you have the certificate available, choose the section below that matches your scenario.
+
+### Non interactive Authentication using a certificate file
+
+If you have the private key certificate (.pfx) stored as a physical file on your machine, you can connecting using:
+
+```powershell
+Connect-PnPOnline [yourtenant].sharepoint.com -ClientId <client id of your Entra ID Application Registration> -Tenant <tenant>.onmicrosoft.com -CertificatePath <path to your .pfx certificate> 
+```
+
+If your private key (.pfx) certificate has a password on it, add `-CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)` to the parameters.
+
+### Non interactive Authentication using a certificate in the Windows Certificate Store
+
+If you have the private key certificate (.pfx) added to the Windows Certificate Store (certmgr. msc) in the Personal > Certificates branch on your machine, you can connecting using:
+
+```powershell
+Connect-PnPOnline [yourtenant].sharepoint.com -ClientId <client id of your Entra ID Application Registration> -Tenant <tenant>.onmicrosoft.com -Thumbprint <thumbprint that can be found in the certificate> 
+```
+
+### Non interactive Authentication using a base64 representation of the certificate
+
+This scenario is typically used when having the private key certificate (.pfx) stored as base64. This can for example be the case when [using PnP PowerShell within Azure Functions](azurefunctions.md). In this case you can connect using:
+
+```powershell
+Connect-PnPOnline [yourtenant].sharepoint.com -ClientId <client id of your Entra ID Application Registration> -Tenant <tenant>.onmicrosoft.com -CertificateBase64Encoded <base64 encoded pfx certificate> 
+```
+
+If your private key (.pfx) certificate has a password on it, add `-CertificatePassword (ConvertTo-SecureString -AsPlainText 'myprivatekeypassword' -Force)` to the parameters.
+
+## Authenticating by providing an access token
+
+A really specific and limited scenario is where you provide the oAuth JWT access token yourself that needs to be used to access resources. You can only pass in one access token and you need to ensure the token is still within its validity period and has the proper audience and scopes for the cmdlets you are going to execute. I.e. if you pass in an access token for your SharePoint Online tenant, you can only execute cmdlets that will directly target your SharePoint Online environment. If you would use a cmdlet that communicates with Microsoft Graph behind the scenes, it will throw an access denied exception.
+
+Connecting can be done using:
+
+```powershell
+Connect-PnPOnline [yourtenant].sharepoint.com -AccessToken <oAuth JWT access token>
+```
+
 ## Authenticating with Credentials
 
 This method allows you to connect by just providing your username and password. It will not work with multi factor authentication. Therefore this method is less recommended.
