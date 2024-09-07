@@ -8548,6 +8548,66 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/configuration/README.md",
+      "output": {
+        "resource": {
+          "relative_path": "images/configuration/README.md"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_system.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_system.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings_envvariables.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings_envvariables.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings_envvariables_addentry.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings_envvariables_addentry.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/configuration/connecting_verbose_clientid.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/configuration/connecting_verbose_clientid.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/contributing/commitsahead.png",
       "output": {
         "resource": {
