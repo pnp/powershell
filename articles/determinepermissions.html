@@ -83,10 +83,69 @@
                   </div>
   <h1 id="how-to-determine-which-permissions-you-need">How to determine which permissions you need</h1>
 
-<p>As of September 9<sup>th</sup>, 2024, it is <a href="https://pnp.github.io/blog/post/changes-pnp-management-shell-registration/">required to use your own Entra ID Application Registration</a> to use PnP PowerShell. This introduces the complexity of trying to determining the minimum set of permissions you will need to be able to execute your script. This article aims to help you in determining the permissions you need to set on your Entra ID Application Registration.</p>
-<p>You will find the app under 'Application Registrations' and consent to the application there.</p>
+<p>As of September 9<sup>th</sup>, 2024, it is <a href="https://pnp.github.io/blog/post/changes-pnp-management-shell-registration/">required to use your own Entra ID Application Registration</a> to use PnP PowerShell. This introduces the complexity of trying to determine the minimum set of permissions you will need to be able to execute your script. This article aims to help you in determining the permissions you need to set on your Entra ID Application Registration.</p>
 <h2 id="creating-an-entra-id-application-registration">Creating an Entra ID Application Registration</h2>
 <p>In case you're starting from the beginning and you do not have your own Entra ID Application Registration yet to use with PnP Powershell, which is mandatory, you can <a href="registerapplication.html">follow these steps</a> to create your Entra ID Application Registration.</p>
+<h2 id="starting-with-minimal-permissions">Starting with minimal permissions</h2>
+<p>It is highly recommended to keep the permissions on your Entra ID Application Registration to a minimum to avoid risks when access through your application registration would somehow fall in the wrong hands. As PnP PowerShell always starts with connecting to SharePoint Online, you will at least need permissions to access SharePoint Online, regardless of whatever else you plan on doing with PnP PowerShell.</p>
+<h3 id="when-using-a-delegate-login">When using a delegate login</h3>
+<p>A delegate login means you will be interactively logging in to your tenant using PnP PowerShell by providing your credentials. There are <a href="authentication.html">several ways</a> of connecting in this way. Always remember that in this scenario, regardless of which permissions you assign to your Entra ID Application Registration, the user logging in through PnP PowerShell <em>must</em> also have the permissions for whatever the user is trying to do. I.e. if you would assign <code>AllSites.FullControl</code> permissions on your application registration, the user still can only access those SharePoint Online sites to which the user has been granted permissions directly to that site as well and will only have those permissions assigned to it (i.e. read or write).</p>
+<p>The lowest permission you can set on a delegate login will be <code>AllSites.Read</code> on the delegate scope of SharePoint:</p>
+<p><img src="../images/determinepermissions/entraid_permissions_delegate_minimal.png" alt="image"></p>
+<h3 id="when-using-an-app-only-context">When using an app only context</h3>
+<p>An app only context is being used when your intend is to run a script that does not require any user intervention to connect and authenticate to your tenant. There are <a href="authentication.html">several ways</a> of connecting in this way. In this scenario, exactly those permissions you assign to your Entra ID Application Registration are the ones the script that runs will have. Therefore, be extra careful in this scenario not to set too high permissions.</p>
+<p>The lowest permission you can set on an app only scenario will be <code>Sites.Selected</code> on the application scope of SharePoint:</p>
+<p><img src="../images/determinepermissions/entraid_permissions_apponly_minimal.png" alt="image"></p>
+<p>When using the <code>Sites.Selected</code> permission, you still must assign permissions to one or more sites where the script will have access to. Ensure you will assign at least <code>Read</code> permissions on the site of which you will use the URL in your <code>Connect-PnPOnline &lt;url&gt;</code> statement in your script. You can easily do so by utilizing the PnP PowerShell cmdlet <a href="../cmdlets/Grant-PnPAzureADAppSitePermission.html">Grant-PnPAzureADAppSitePermission</a> as shown here:</p>
+<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;&lt;Client ID of your Entra ID applicarion registration&gt;&quot; -DisplayName &quot;PnP PowerShell&quot; -Permissions Read -Site &lt;url of the SharePoint Online site to which you will connect&gt;
+</code></pre>
+<p>In order to be able to run this cmdlet, you will need to connect to PnP PowerShell using preferably another Entra ID application registration which will have the <code>AllSites.FullControl</code> permission on the delegate scope on SharePoint set to it and being logged on with a Global Administrator or SharePoint Administrator priviledged account.</p>
+<h2 id="adding-additional-permissions-as-needed">Adding additional permissions as needed</h2>
+<p>Once you've se the minimum permissions as described above, you can go ahead and test using your Entra ID application registration to connect to SharePoint Online using <a href="authentication.html">one of the available connect options</a>. You can add <code>-ValidateConnection -Verbose</code> to your <code>Connect-PnPOnline</code> cmdlet to instruct it to test the connection once established.</p>
+<p>Now you likely want to perform more than just a simple read using PnP PowerShell. Read on below to find out what you can do to find out about the additional permissions your application registration might need to operate correctly.</p>
+<h3 id="when-using-a-delegate-login-1">When using a delegate login</h3>
+<p>When planning to use your app registration for delegates, you could opt for simply starting to use it. Once you execute a cmdlet that requires more permissions, a dialog will pop up asking you to consent to these additional permissions being assigned to the application registration. An example of this is shown on the following screenshot:</p>
+<p><img src="../images/determinepermissions/entraid_permissions_delegate_requestadditionalpermissions.png" alt="image"></p>
+<p>What technically happens here when you provide consent through this dialog is that in the Entra ID Enterprise Application connected to your Entra ID application registration, the permission gets added. This means that on subsequent requests of this cmdlet using this client id, even in new sessions, these permissions will then be granted already. You can visualize this by going to <a href="https://entra.microsoft.com">Entra ID</a> &gt; Identity &gt; Applications &gt; Enterprise applications and looking for the registration with the same name as your Entra ID application registration. Once found, open it, in the menu click on <em>Permissions</em>, go to the <em>User consent</em> tab and look at the assigned permissions:</p>
+<p><img src="../images/determinepermissions/entraid_permissions_delegate_enterprisepermissionadded.png" alt="image"></p>
+<h3 id="when-using-an-app-only-context-1">When using an app only context</h3>
+<p>For an app only scenario, you will have to follow a different approach, as there is no way for it to interactively request for more permissions. If you try to execute a cmdlet for which the Entra ID application registration does not have permissions, it will return you an access denied notice.</p>
+<p>What you could try if you run into this, is to add <code>-Verbose</code> to your cmdlet. For many, but unfortunately not all, cmdlets, this will reveal which permissions it receives through the application registration and which permissions it actually needs to be able to execute properly. See the following example:</p>
+<p><img src="../images/determinepermissions/entraid_permissions_accessdenied_verbose.png" alt="image"></p>
+<p>In this scenario, you now know you need to add <code>Group.Read.All</code> on the applications scope of Microsoft Graph in your application registration in order to give it sufficient rights to execute this cmdlet.</p>
+<h2 id="help-i-cant-figure-out-which-permissions-i-need">Help, I can't figure out which permissions I need</h2>
+<p>As mentioned above, unfortunately, not for all cmdlets it will be clear which exact (minimum) permissions will be needed. Not even when using <code>-Verbose</code>. To give some guidance which permissions you could try for a minimum permissions approach, follow the table below.</p>
+<table>
+<thead>
+<tr>
+<th>What are you trying to do</th>
+<th>Permission type</th>
+<th>Permission(s) likely needed from least to most priviledged</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interact with SharePoint</td>
+<td>Delegate</td>
+<td>AllSites.Read / AllSites.Write / AllSites.Manage / AllSites.FullControl</td>
+</tr>
+<tr>
+<td>Interact with SharePoint</td>
+<td>App Only</td>
+<td>Sites.Selected / Sites.Read.All / Sites.ReadWrite.All / Sites.Manage.All / Sites.FullControl .All</td>
+</tr>
+<tr>
+<td>Interact with Microsoft Graph</td>
+<td>Delegate \ App Only</td>
+<td>Use <code>-Verbose</code> or look at <a href="../cmdlets/index.html">the documentation</a> to find the permissions needed</td>
+</tr>
+<tr>
+<td>Interact with Power Platform</td>
+<td>Delegate</td>
+<td><code>Azure Service Management\user_impersonation</code> AND <code>Dynamics CRM\user_impersonation</code> AND <code>PowerApps Service\User</code> (the last one you can find on the second tab: APIs that my organization uses)</td>
+</tr>
+</tbody>
+</table>
 
 </article>
           </div>
