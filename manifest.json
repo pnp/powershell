@@ -9128,6 +9128,66 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/determinepermissions/README.md",
+      "output": {
+        "resource": {
+          "relative_path": "images/determinepermissions/README.md"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/determinepermissions/entraid_permissions_accessdenied_verbose.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/determinepermissions/entraid_permissions_accessdenied_verbose.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/determinepermissions/entraid_permissions_apponly_minimal.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/determinepermissions/entraid_permissions_apponly_minimal.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/determinepermissions/entraid_permissions_delegate_enterprisepermissionadded.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/determinepermissions/entraid_permissions_delegate_enterprisepermissionadded.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/determinepermissions/entraid_permissions_delegate_minimal.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/determinepermissions/entraid_permissions_delegate_minimal.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/determinepermissions/entraid_permissions_delegate_requestadditionalpermissions.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/determinepermissions/entraid_permissions_delegate_requestadditionalpermissions.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/dev-containers/VScorner.png",
       "output": {
         "resource": {
