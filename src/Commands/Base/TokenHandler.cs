@@ -1,6 +1,8 @@
-﻿using Microsoft.Identity.Client;
+﻿using AngleSharp.Text;
+using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Model;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
@@ -11,6 +13,9 @@ using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base
 {
+    /// <summary>
+    /// Helper classes around oAuth Token Evaluation
+    /// </summary>
     internal static class TokenHandler
     {
         /// <summary>
@@ -27,7 +32,7 @@ namespace PnP.PowerShell.Commands.Base
 
             // Check if the token contains an idType
             if (idType == null) return Enums.IdType.Unknown;
-            
+
             // Parse the idType to the corresponding enum value
             return idType.Value.ToLowerInvariant() switch
             {
@@ -38,104 +43,160 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Extracts the oAuth JWT token to compare the permissions in it (roles) with the required permissions for the cmdlet provided through an attribute
+        /// Returns the permission scopes of the oAuth JWT token being passed in
+        /// </summary>
+        /// <param name="accessToken">The oAuth JWT token</param>
+        /// <returns>String array containing the scopes</returns>
+        internal static string[] ReturnScopes(string accessToken)
+        {
+            var decodedToken = new JwtSecurityToken(accessToken);
+
+            // The scopes can either be stored in the roles or scp claim, so we examine both
+            var scopes = decodedToken.Claims.Where(c => c.Type == "roles" || c.Type == "scp").SelectMany(r => r.Value.Split(" "));
+            return scopes.ToArray();
+        }
+
+        /// <summary>
+        /// Ensures the oAuth JWT token holds the permissions in it (roles) that match with with the required permissions for the cmdlet provided through the attributes on the cmdlet
         /// </summary>
         /// <param name="cmdletType">The cmdlet that will be executed. Used to check for the permissions attribute.</param>
-        /// <param name="token">The oAuth JWT token that needs to be validated for its roles</param>
+        /// <param name="accessToken">The oAuth JWT token that needs to be validated for its roles</param>
+        /// <param name="throwExceptionIfPermissionsNotPresent">Have this function throw an exception if the required permissions in the permission attribute do not match with the available permissions in the access token (true). Defaults to false.</param>
         /// <exception cref="PSArgumentException">Thrown if the permissions set through the permissions attribute do not match the roles in the JWT token</exception>
-        internal static void ValidateTokenForPermissions(Type cmdletType, string token)
+        internal static void EnsureRequiredPermissionsAvailableInAccessToken(Type cmdletType, string accessToken)
         {
-            string[] requiredScopes = null;
-            var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdletType, typeof(RequiredMinimalApiPermissions));
-            if (requiredScopesAttribute != null)
+            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdletType, accessToken);
+            foreach (var permissionEvaluationResponse in permissionEvaluationResponses)
             {
-                requiredScopes = requiredScopesAttribute.PermissionScopes;
+                if (permissionEvaluationResponse.RequiredPermissionsPresent) return;
             }
-            if (requiredScopes?.Length > 0)
+            var missingPermissions = permissionEvaluationResponses.Select(r => r.MissingPermissions);
+            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope{(missingPermissions.Count() != 1 ? "s" : "")} for one or more of these permissions: {string.Concat(missingPermissions, ", ")}");
+        }
+
+        /// <summary>
+        /// Returns an oAuth JWT access token
+        /// </summary>
+        /// <param name="cmdlet">Cmdlet for which the token is requested</param>
+        /// <param name="audience">Audience to retrieve the token for</param>
+        /// <param name="connection">The connection to use to make the token calls</param>
+        /// <returns>oAuth JWT token</returns>
+        /// <exception cref="PSInvalidOperationException">Thrown if retrieval of the token fails</exception>
+        internal static string GetAccessToken(Cmdlet cmdlet, string audience, PnPConnection connection)
+        {
+            if (connection == null) return null;
+
+            string accessToken = null;
+            if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
             {
-                var decodedToken = new JwtSecurityToken(token);
-                var roles = decodedToken.Claims.FirstOrDefault(c => c.Type == "roles");
-                if (roles != null)
+                cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Azure AD Workload Identity");
+                accessToken = GetAzureADWorkloadIdentityTokenAsync(cmdlet, $"{audience.TrimEnd('/')}/.default").GetAwaiter().GetResult();
+            }
+            else
+            {
+                if (connection.Context != null)
                 {
-                    foreach (var permission in requiredScopes)
+                    var contextSettings = connection.Context.GetContextSettings();
+                    var authManager = contextSettings.AuthenticationManager;
+                    if (authManager != null)
                     {
-                        if (!roles.Value.ToLower().Contains(permission.ToLower()))
+                        if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                         {
-                            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope '{permission}'");
+                            // When connected using ACS, we cannot get a token for another endpoint
+                            throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
+                        }
+
+                        accessToken = authManager.GetAccessToken(audience);
+                        var currentScopes = ReturnScopes(accessToken);
+
+                        var scopesPresent = false;
+
+                        if (cmdlet != null && cmdlet.GetType() != null)
+                        {
+                            var requiredListedScopes = (RequiredMinimalApiPermissions[])Attribute.GetCustomAttributes(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
+                            // assume these are 'or'
+                            if (requiredListedScopes != null)
+                            {
+                                foreach (var requiredListedScope in requiredListedScopes)
+                                {
+                                    var matchedScopes = 0;
+                                    // check if scopes are present
+                                    foreach (var permission in requiredListedScope.PermissionScopes)
+                                    {
+                                        if (currentScopes.Contains(permission, StringComparison.InvariantCultureIgnoreCase))
+                                        {
+                                            matchedScopes++;
+                                        }
+                                    }
+                                    if (matchedScopes == requiredListedScope.PermissionScopes.Length)
+                                    {
+                                        scopesPresent = true;
+                                        var requiredScopes = requiredListedScope.PermissionScopes;
+                                        if (contextSettings.Type != Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                                        {
+                                            accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
+                                            // we have a match, jump out of the loop
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (!scopesPresent)
+                                {
+                                    var requiredScopes = requiredListedScopes.Length > 0 ? requiredListedScopes.First().PermissionScopes : null;
+
+                                    if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+                                    {
+                                        requiredScopes = new[] { audience }; // override for app only
+                                    }
+                                    if (requiredScopes == null && !string.IsNullOrEmpty(audience))
+                                    {
+                                        requiredScopes = new[] { audience };
+                                    }
+
+                                    cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(", ", requiredScopes)}");
+                                    accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
+
+                                    // Retrieve the scopes from the access token
+                                    var scopes = ReturnScopes(accessToken);
+
+                                    // Perform logging on the scopes in the retrieved access token
+                                    if (scopes.Length > 0)
+                                    {
+                                        cmdlet.WriteVerbose($"Access token acquired containing the following {(scopes.Length != 1 ? scopes.Length + " " : "")}{RetrieveTokenType(accessToken).ToString().ToLowerInvariant()} scope{(scopes.Length == 1 ? "" : "s")}: {string.Join(", ", scopes)}");
+                                    }
+                                    else
+                                    {
+                                        cmdlet.WriteVerbose($"No scopes could be determined from the access token");
+                                    }
+                                }
+                            }
                         }
                     }
                 }
-                roles = decodedToken.Claims.FirstOrDefault(c => c.Type == "scp");
-                if (roles != null)
-                {
-                    foreach (var permission in requiredScopes)
-                    {
-                        if (!roles.Value.ToLower().Contains(permission.ToLower()))
-                        {
-                            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope '{permission}'");
-                        }
-                    }
-                }
             }
-        }
-
-        internal static string GetAccessToken(Cmdlet cmdlet, string appOnlyDefaultScope, PnPConnection connection)
-        {
-            var contextSettings = connection.Context.GetContextSettings();
-            var authManager = contextSettings.AuthenticationManager;
-            if (authManager != null)
+            if (string.IsNullOrEmpty(accessToken))
             {
-                if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
-                {
-                    // When connected using ACS, we cannot get a token for another endpoint
-                    throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
-                }
-
-                string[] requiredScopes = null;
-                RequiredMinimalApiPermissions requiredScopesAttribute = null;
-                if (cmdlet != null && cmdlet.GetType() != null)
-                {
-                    requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
-                }
-                if (requiredScopesAttribute != null)
-                {
-                    requiredScopes = requiredScopesAttribute.PermissionScopes;
-                }
-                if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
-                {
-                    requiredScopes = new[] { appOnlyDefaultScope }; // override for app only
-                }
-                if (requiredScopes == null && !string.IsNullOrEmpty(appOnlyDefaultScope))
-                {
-                    requiredScopes = new[] { appOnlyDefaultScope };
-                }
-
-                cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(",", requiredScopes)}");
-                var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
-                cmdlet.WriteVerbose($"Access token acquired");
-                return accessToken;
+                cmdlet.WriteVerbose($"Unable to acquire token for resource {connection.GraphEndPoint}");
+                return null;
             }
-            return null;
-        }
 
-        internal static string GetAccessTokenforPowerPlatformSolutions(Cmdlet cmdlet, PnPConnection connection, string enviormentBaseUrl)
-        {
-            var contextSettings = connection.Context.GetContextSettings();
-            var authManager = contextSettings.AuthenticationManager;
-            if (authManager != null)
+            var permissionEvaluations = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet.GetType(), accessToken);
+            var permissionsInPlace = false;
+            foreach (var permissionEvaluation in permissionEvaluations)
             {
-                if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
+                if (permissionEvaluation.MissingPermissions.Length == 0)
                 {
-                    // When connected using ACS, we cannot get a token for another endpoint
-                    throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
+                    permissionsInPlace = true;
+                    break;
                 }
-                string[] requiredScopes = new string[1] { enviormentBaseUrl + "/.default" };
-                cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(",", requiredScopes)}");
-                var accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
-                cmdlet.WriteVerbose($"Access token acquired for PowerPlatformSolutions: {accessToken}");
-                return accessToken;
             }
-            return null;
+            if (!permissionsInPlace)
+            {
+                cmdlet.WriteVerbose($"The currect access token might not have the required permissions to execute this cmdlet. Required are one or more of the following: {string.Join(", ", permissionEvaluations.Select(p => string.Join(", ", p.MissingPermissions)))}");
+            }
+
+            return accessToken;
         }
 
         /// <summary>
@@ -302,10 +363,13 @@ namespace PnP.PowerShell.Commands.Base
             var clientID = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
             var tokenPath = Environment.GetEnvironmentVariable("AZURE_FEDERATED_TOKEN_FILE");
             var tenantID = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            var host = Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST");
 
             var _confidentialClientApp = ConfidentialClientApplicationBuilder.Create(clientID)
-                .WithClientAssertion(ReadJWTFromFS(tokenPath))
-                .WithTenantId(tenantID).Build();
+                .WithAuthority(host, tenantID)
+                .WithClientAssertion(() => ReadJWTFromFS(tokenPath))
+                .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
+                .Build();
 
             AuthenticationResult result = null;
             try
@@ -328,7 +392,7 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSInvalidOperationException(ex.Message);
             }
             catch (MsalServiceException ex)
-            {                
+            {
                 // Some other generic exception
                 throw new PSInvalidOperationException(ex.Message);
             }

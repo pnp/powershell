@@ -8,6 +8,7 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsTeam", DefaultParameterSetName = ParameterSet_Identity)]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class GetTeamsTeam : PnPGraphCmdlet
     {
         private const string ParameterSet_Identity = "Identity";
@@ -28,19 +29,19 @@ namespace PnP.PowerShell.Commands.Teams
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var groupId = Identity.GetGroupId(Connection, AccessToken);
+                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
                 if(groupId == null)
                 {
                     throw new PSArgumentException("Team not found", nameof(Identity));
                 }
                 else
-                {                
-                    WriteObject(TeamsUtility.GetTeamAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult());
+                {
+                    WriteObject(TeamsUtility.GetTeam(this, AccessToken, Connection, groupId));
                 }                
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeamsAsync(AccessToken, Connection, Filter).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetTeamUsingFilter(this, AccessToken, Connection, Filter));
             }
         }
     }

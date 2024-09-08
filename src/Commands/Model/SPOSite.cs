@@ -83,23 +83,25 @@ namespace PnP.PowerShell.Commands.Model
         public Role DefaultShareLinkRole { get; set; }
         public SharingScope LoopDefaultSharingLinkScope { get; set; }
         public string ArchiveStatus { get; set; }
-        public bool EnableAutoExpirationVersionTrim {  get; set; }
+        public bool EnableAutoExpirationVersionTrim { get; set; }
         public int ExpireVersionsAfterDays { get; set; }
 
         public bool InheritVersionPolicyFromTenant { get; set; }
         public bool IsGroupOwnerSiteAdmin { get; set; }
         public bool ListsShowHeaderAndNavigation { get; set; }
         public int LockReason { get; set; }
-        public bool LoopOverrideSharingCapability { get; set; }
-        public SharingCapabilities LoopSharingCapability { get; set; }
         public int MajorVersionLimit { get; set; }
         public int MajorWithMinorVersionsLimit { get; set; }
         public bool RestrictedAccessControl { get; set; }
         public Guid[] RestrictedAccessControlGroups { get; set; }
-        public Guid[] RestrictedAccessControlGroupsToAdd { get;  set; }
+        public Guid[] RestrictedAccessControlGroupsToAdd { get; set; }
         public Guid[] RestrictedAccessControlGroupsToRemove { get; set; }
         public RestrictedToRegion RestrictedToRegion { get; set; }
         public bool SetOwnerWithoutUpdatingSecondaryAdmin { get; set; }
+        public bool RestrictContentOrgWideSearch { get; set; }
+        public bool ReadOnlyForUnmanagedDevices { get; set; }
+        public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
+        public bool OverrideSharingCapability { get; set; }
 
         #endregion
 
@@ -163,7 +165,7 @@ namespace PnP.PowerShell.Commands.Model
             StorageUsageCurrent = props.StorageUsage;
             TeamsChannelType = props.TeamsChannelType;
             Template = props.Template;
-            Title = props.Title;            
+            Title = props.Title;
             WebsCount = props.WebsCount;
             Url = props.Url;
             InformationBarrierMode = props.IBMode;
@@ -183,8 +185,6 @@ namespace PnP.PowerShell.Commands.Model
             IsGroupOwnerSiteAdmin = props.IsGroupOwnerSiteAdmin;
             ListsShowHeaderAndNavigation = props.ListsShowHeaderAndNavigation;
             LockReason = props.LockReason;
-            LoopOverrideSharingCapability = props.LoopOverrideSharingCapability;
-            LoopSharingCapability = props.LoopSharingCapability;
             MajorVersionLimit = props.MajorVersionLimit;
             MajorWithMinorVersionsLimit = props.MajorWithMinorVersionsLimit;
             RestrictedAccessControl = props.RestrictedAccessControl;
@@ -192,7 +192,11 @@ namespace PnP.PowerShell.Commands.Model
             RestrictedAccessControlGroupsToAdd = props.RestrictedAccessControlGroupsToAdd;
             RestrictedAccessControlGroupsToRemove = props.RestrictedAccessControlGroupsToRemove;
             RestrictedToRegion = props.RestrictedToRegion;
-            SetOwnerWithoutUpdatingSecondaryAdmin = props.SetOwnerWithoutUpdatingSecondaryAdmin;            
+            SetOwnerWithoutUpdatingSecondaryAdmin = props.SetOwnerWithoutUpdatingSecondaryAdmin;
+            RestrictContentOrgWideSearch = props.RestrictContentOrgWideSearch;
+            ReadOnlyForUnmanagedDevices = props.ReadOnlyForUnmanagedDevices;
+            OverrideSharingCapability = props.OverrideSharingCapability;
+            OverrideBlockUserInfoVisibility = props.OverrideBlockUserInfoVisibility;
         }
     }
 }

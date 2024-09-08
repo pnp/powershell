@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsTag")]
     [RequiredMinimalApiPermissions("TeamworkTag.Read")]
+    [RequiredMinimalApiPermissions("TeamworkTag.ReadWrite")]
     public class GetTeamsTag : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -20,7 +21,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (string.IsNullOrEmpty(groupId))
             {
                 throw new PSArgumentException("Team not found");
@@ -28,12 +29,12 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                var tags = Identity.GetTag(Connection, AccessToken, groupId);
+                var tags = Identity.GetTag(this, Connection, AccessToken, groupId);
                 WriteObject(tags, false);
             }
             else
             {
-                var tags = TeamsUtility.GetTagsAsync(AccessToken, Connection, groupId).GetAwaiter().GetResult();
+                var tags = TeamsUtility.GetTags(this, AccessToken, Connection, groupId);
                 WriteObject(tags, true);
             }
         }

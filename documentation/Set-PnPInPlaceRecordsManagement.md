@@ -29,14 +29,14 @@ Activates or deactivates in place records management feature in the site collect
 Set-PnPInPlaceRecordsManagement -Enabled $true
 ```
 
-Activates In Place Records Management.
+Activates in place records management.
 
 ### EXAMPLE 2
 ```powershell
 Set-PnPInPlaceRecordsManagement -Enabled $false
 ```
 
-Deactivates In Place Records Management.
+Deactivates in place records management.
 
 ## PARAMETERS
 

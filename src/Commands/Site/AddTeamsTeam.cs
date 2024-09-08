@@ -28,14 +28,13 @@ namespace PnP.PowerShell.Commands.Site
                 try
                 {
                     var groupId = ClientContext.Site.EnsureProperty(s => s.GroupId);
-                    Microsoft365GroupsUtility.CreateTeamAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                    ClearOwners.CreateTeam(this, Connection, AccessToken, groupId);
                 }
                 catch
                 {
                     throw;
                 }
             }
-
         }
     }
 }

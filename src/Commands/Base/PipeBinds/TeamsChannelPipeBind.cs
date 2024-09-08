@@ -2,7 +2,7 @@
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
-using System.Net.Http;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string Id => _id;
 
-        public string GetId(PnPConnection connection, string accessToken, string groupId)
+        public string GetId(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId)
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -44,21 +44,21 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var channels = TeamsUtility.GetChannelsAsync(accessToken, connection, groupId).GetAwaiter().GetResult();
+                var channels = TeamsUtility.GetChannels(cmdlet, accessToken, connection, groupId);
                 return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase))?.Id;
             }
         }
 
-        public TeamChannel GetChannel(PnPConnection connection, string accessToken, string groupId, bool useBeta = false)
+        public TeamChannel GetChannel(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId, bool useBeta = false)
         {
             if (!string.IsNullOrEmpty(_id))
             {
-                var channel = TeamsUtility.GetChannelAsync(accessToken, connection, groupId, _id, useBeta).GetAwaiter().GetResult();
+                var channel = TeamsUtility.GetChannel(cmdlet, accessToken, connection, groupId, _id, useBeta);
                 return channel;
             }
             else
             {
-                var channels = TeamsUtility.GetChannelsAsync(accessToken, connection, groupId, useBeta).GetAwaiter().GetResult();
+                var channels = TeamsUtility.GetChannels(cmdlet, accessToken, connection, groupId, useBeta);
                 if (channels != null && channels.Any())
                 {
                     return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase));

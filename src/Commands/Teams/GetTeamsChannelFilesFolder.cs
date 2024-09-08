@@ -7,6 +7,8 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelFilesFolder")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+
     public class GetTeamsChannelFilesFolder : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -17,18 +19,17 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(Connection, AccessToken);
+            var groupId = Team.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
 
-                var channelId = Channel.GetId(Connection, AccessToken, groupId);
+                var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
                 if (channelId == null)
                 {
                     throw new PSArgumentException("Channel not found");
                 }
-                              
-                WriteObject(Utilities.TeamsUtility.GetChannelsFilesFolderAsync(Connection, AccessToken, groupId, channelId).GetAwaiter().GetResult());
-                                
+
+                WriteObject(Utilities.TeamsUtility.GetChannelsFilesFolder(this, Connection, AccessToken, groupId, channelId));
             }
             else
             {

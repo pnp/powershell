@@ -23,7 +23,7 @@ Adds a new task to a planner bucket
 ```powershell
 Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bucket <PlannerBucketPipeBind> -Title <String> 
 [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
- [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>]
+ [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>] [-OutputTask]
  
 ```
 
@@ -31,7 +31,7 @@ Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bu
 ```powershell
 Add-PnPPlannerTask -Bucket <PlannerBucketPipeBind> -PlanId <String> -Title <String> 
 [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
- [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>]
+ [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>] [-OutputTask]
  
 ```
 
@@ -61,6 +61,12 @@ Add-PnPPlannerTask -Group "Marketing" -Plan "Conference Plan" -Bucket "Todos" -T
 
 This cmdlet adds a new task and assigns to user@contoso.com and manager@contoso.com
 
+### Example 4
+```powershell
+$task = Add-PnPPlannerTask -Group "Marketing" -Plan "Conference Plan" -Bucket "Todos" -Title "Design booth layout" -AssignedTo "user@contoso.com","manager@contoso.com" -OutputTask
+```
+
+This returns the task as an object to inspect specific values
 
 ## PARAMETERS
 
@@ -232,6 +238,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -OutputTask
+Returns the just created task as an object to inspect values
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).

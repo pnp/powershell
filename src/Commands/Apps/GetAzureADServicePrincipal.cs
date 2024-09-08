@@ -42,19 +42,19 @@ namespace PnP.PowerShell.Commands.Apps
             switch (ParameterSetName)
             {
                 case ParameterSet_BYAPPID:
-                    servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByAppId(Connection, AccessToken, AppId);
+                    servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByAppId(this, Connection, AccessToken, AppId);
                     break;
                 case ParameterSet_BYOBJECTID:
-                    servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByObjectId(Connection, AccessToken, ObjectId);
+                    servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByObjectId(this, Connection, AccessToken, ObjectId);
                     break;
                 case ParameterSet_BYAPPNAME:
-                    servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByAppName(Connection, AccessToken, AppName);
+                    servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByAppName(this, Connection, AccessToken, AppName);
                     break;
                 case ParameterSet_BYBUILTINTYPE:
-                    servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByBuiltInType(Connection, AccessToken, BuiltInType);
+                    servicePrincipal = ServicePrincipalUtility.GetServicePrincipalByBuiltInType(this, Connection, AccessToken, BuiltInType);
                     break;
                 case ParameterSet_ALL:
-                    var servicePrincipals = ServicePrincipalUtility.GetServicePrincipals(Connection, AccessToken, Filter);
+                    var servicePrincipals = ServicePrincipalUtility.GetServicePrincipals(this, Connection, AccessToken, Filter);
                     WriteObject(servicePrincipals, true);
                     return;
             }

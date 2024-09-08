@@ -49,12 +49,12 @@ namespace PnP.PowerShell.Commands.Purview
             {
                 url += $"/{Identity}";
 
-                var labels = GraphHelper.GetAsync<Model.Graph.Purview.InformationProtectionLabel>(Connection, url, AccessToken).GetAwaiter().GetResult();
+                var labels = GraphHelper.Get<Model.Graph.Purview.InformationProtectionLabel>(this, Connection, url, AccessToken);
                 WriteObject(labels, false);
             }
             else
             {
-                var labels = GraphHelper.GetResultCollectionAsync<Model.Graph.Purview.InformationProtectionLabel>(Connection, url, AccessToken).GetAwaiter().GetResult();
+                var labels = GraphHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>(this, Connection, url, AccessToken);
                 WriteObject(labels, true);
             }
         }

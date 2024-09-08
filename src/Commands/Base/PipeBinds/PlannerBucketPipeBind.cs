@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public PlannerBucket GetBucket(PnPConnection connection, string accessToken, string planId)
+        public PlannerBucket GetBucket(Cmdlet cmdlet, PnPConnection connection, string accessToken, string planId)
         {
             // first try to get the bucket by id
             if (_bucket != null)
@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 try
                 {
-                    var buckets = PlannerUtility.GetBucketsAsync(connection, accessToken, planId).GetAwaiter().GetResult();
+                    var buckets = PlannerUtility.GetBuckets(cmdlet, connection, accessToken, planId);
                     if (buckets != null)
                     {
                         PlannerBucket bucket = null;

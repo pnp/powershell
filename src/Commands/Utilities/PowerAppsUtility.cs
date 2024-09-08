@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using PnP.Framework;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class PowerAppsUtility
     {
-        internal static async Task<Model.PowerPlatform.PowerApp.PowerAppPackageWrapper> GetWrapper(HttpClient connection, string environmentName, string accessToken, string appName, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
+        internal static Model.PowerPlatform.PowerApp.PowerAppPackageWrapper GetWrapper(HttpClient connection, string environmentName, string accessToken, string appName, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             var postData = new
             {
@@ -24,7 +19,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             };
             string baseUrl = PowerPlatformUtility.GetBapEndpoint(azureEnvironment);
-            var wrapper = await RestHelper.PostAsync<Model.PowerPlatform.PowerApp.PowerAppPackageWrapper>(connection, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", accessToken, payload: postData);
+            var wrapper = RestHelper.Post<Model.PowerPlatform.PowerApp.PowerAppPackageWrapper>(connection, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/listPackageResources?api-version=2016-11-01", accessToken, payload: postData);
 
 
             return wrapper;
@@ -43,7 +38,7 @@ namespace PnP.PowerShell.Commands.Utilities
             };
 
             string baseUrl = PowerPlatformUtility.GetBapEndpoint(azureEnvironment);
-            var responseHeader = RestHelper.PostAsyncGetResponseHeader<string>(connection, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", accessToken, payload: exportPostData).GetAwaiter().GetResult();
+            var responseHeader = RestHelper.PostGetResponseHeader<string>(connection, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/exportPackage?api-version=2016-11-01", accessToken, payload: exportPostData);
 
 
             return responseHeader;
@@ -57,7 +52,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 do
                 {
-                    var runningresponse = RestHelper.GetAsync<JsonElement>(connection, location, accessToken).GetAwaiter().GetResult();
+                    var runningresponse = RestHelper.Get<JsonElement>(connection, location, accessToken);
 
                     if (runningresponse.TryGetProperty("properties", out JsonElement properties))
                     {

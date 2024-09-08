@@ -1,5 +1,4 @@
 using System.Management.Automation;
-using Microsoft.Graph;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -8,6 +7,8 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPlannerPlan", SupportsShouldProcess = true)]
+    [RequiredMinimalApiPermissions("Tasks.ReadWrite")]
+    [RequiredMinimalApiPermissions("Tasks.ReadWrite.All")]
     [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     public class RemovePlannerPlan : PnPGraphCmdlet
     {
@@ -19,15 +20,15 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Group.GetGroupId(Connection, AccessToken);
+            var groupId = Group.GetGroupId(this, Connection, AccessToken);
             if (groupId != null)
             {
-                var planId = Identity.GetIdAsync(Connection, AccessToken, groupId).GetAwaiter().GetResult();
+                var planId = Identity.GetId(this, Connection, AccessToken, groupId);
                 if (!string.IsNullOrEmpty(planId))
                 {
                     if (ShouldProcess($"Delete plan with id {planId}"))
                     {
-                        PlannerUtility.DeletePlanAsync(Connection, AccessToken, planId).GetAwaiter().GetResult();
+                        PlannerUtility.DeletePlan(this, Connection, AccessToken, planId);
                     }
                 }
                 else

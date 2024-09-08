@@ -313,6 +313,7 @@ Accept wildcard characters: False
 ```
 
 ### -TemplateId
+Specifies the predefined IRM (Information Rights Management) template.
 
 ```yaml
 Type: String

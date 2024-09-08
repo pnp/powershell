@@ -39,11 +39,11 @@ namespace PnP.PowerShell.Commands.Principals
             RestResultCollection<ExportEntity> results = null;
             if (!ParameterSpecified(nameof(RedactName)))
             {
-                results = RestHelper.PostAsync<RestResultCollection<ExportEntity>>(HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/RemoveSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", this.AccessToken, false).GetAwaiter().GetResult();
+                results = RestHelper.Post<RestResultCollection<ExportEntity>>(HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/RemoveSPUserInformation(accountName=@a,siteId=@b)?@a='{normalizedUserName}'&@b='{site.Id}'", this.AccessToken, false);
             }
             else
             {
-                results = RestHelper.PostAsync<RestResultCollection<ExportEntity>>(HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/RemoveSPUserInformation(accountName=@a,siteId=@b,redactName=@c)?@a='{normalizedUserName}'&@b='{site.Id}'&@c='{RedactName}'", this.AccessToken, false).GetAwaiter().GetResult();
+                results = RestHelper.Post<RestResultCollection<ExportEntity>>(HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/RemoveSPUserInformation(accountName=@a,siteId=@b,redactName=@c)?@a='{normalizedUserName}'&@b='{site.Id}'&@c='{RedactName}'", this.AccessToken, false);
             }
             var record = new PSObject();
             foreach (var item in results.Items)

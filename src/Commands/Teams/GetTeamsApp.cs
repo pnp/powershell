@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsApp")]
     [RequiredMinimalApiPermissions("Directory.Read.All")]
-
+    [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
     [TokenType(TokenType = TokenType.Delegate)]
     public class GetTeamsApp : PnPGraphCmdlet
     {
@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Teams
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var app = Identity.GetApp(Connection, AccessToken);
+                var app = Identity.GetApp(this, Connection, AccessToken);
                 if (app != null)
                 {
                     WriteObject(app);
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Teams
             }
             else
             {
-                WriteObject(TeamsUtility.GetAppsAsync(AccessToken, Connection).GetAwaiter().GetResult(), true);
+                WriteObject(TeamsUtility.GetApps(this, AccessToken, Connection), true);
             }
         }
     }

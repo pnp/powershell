@@ -27,6 +27,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Parameter(Mandatory = true, Position = 2)]
         public ListPipeBind List;
 
+        [Alias("Recurse")]
         [Parameter(Mandatory = false, Position = 4)]
         public SwitchParameter Recursive;
 
@@ -62,8 +63,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             var tokenParser = new Framework.Provisioning.ObjectHandlers.TokenParser(ClientContext.Web, template);
 
             //We will remove a list if it's found so we can get the list
-            ListInstance listInstance = template.Lists.Find(l => tokenParser.ParseString(l.Title) == spList.Title);            
-            
+            ListInstance listInstance = template.Lists.Find(l => tokenParser.ParseString(l.Title) == spList.Title);
+
             if (listInstance == null)
             {
                 throw new ApplicationException("List does not exist in the template file.");
@@ -158,6 +159,10 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                     var roleBindings = roleAssignment.RoleDefinitionBindings;
                     foreach (var roleBinding in roleBindings)
                     {
+                        if (roleBinding.Name == "Limited Access")
+                        {
+                            continue;
+                        }
                         retFolder.Security.RoleAssignments.Add(new PnP.Framework.Provisioning.Model.RoleAssignment() { Principal = principalName, RoleDefinition = roleBinding.Name });
                     }
                 }

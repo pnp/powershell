@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool BccExternalSharingInvitations { private set; get; }
 
-        public string BccExternalSharingInvitationsList { private set; get; }        
+        public string BccExternalSharingInvitationsList { private set; get; }
 
         public bool PublicCdnEnabled { private set; get; }
 
@@ -189,13 +189,13 @@ namespace PnP.PowerShell.Commands.Model
         public bool? ShowPeoplePickerGroupSuggestionsForIB { private set; get; }
 
         public bool? InformationBarriersSuspension { private set; get; }
-        
+
         public bool? IBImplicitGroupBased { private set; get; }
 
         public bool? AppBypassInformationBarriers { private set; get; }
 
         public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { private set; get; }
-        
+
         public SharingCapabilities? CoreSharingCapability { private set; get; }
 
         public bool? EnableVersionExpirationSetting { private set; get; }
@@ -235,14 +235,21 @@ namespace PnP.PowerShell.Commands.Model
         public SharingState? AllowAnonymousMeetingParticipantsToAccessWhiteboards { private set; get; }
 
         public SharingScope? OneDriveDefaultShareLinkScope { private set; get; }
-        
+
         public Role? OneDriveDefaultShareLinkRole { private set; get; }
-        
+
         public bool? OneDriveDefaultLinkToExistingAccess { private set; get; }
-        
+
         public SharingState? OneDriveBlockGuestsAsSiteAdmin { private set; get; }
 
         public int? RecycleBinRetentionPeriod { private set; get; }
+
+        public bool? EnableAIPIntegration { private set; get; }
+        public SharingScope? CoreDefaultShareLinkScope { private set; get; }
+        public Role? CoreDefaultShareLinkRole { private set; get; }
+        public bool? SharePointAddInsDisabled { private set; get; }
+        public SharingCapabilities? OneDriveSharingCapability { private set; get; }
+        public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext)
@@ -300,7 +307,7 @@ namespace PnP.PowerShell.Commands.Model
             {
                 UseFindPeopleInPeoplePicker = false;
             }
-            
+
             try
             {
                 RequireAnonymousLinksExpireInDays = tenant.RequireAnonymousLinksExpireInDays;
@@ -699,11 +706,11 @@ namespace PnP.PowerShell.Commands.Model
             OneDriveRequestFilesLinkExpirationInDays = tenant.OneDriveRequestFilesLinkExpirationInDays;
             BusinessConnectivityServiceDisabled = tenant.BusinessConnectivityServiceDisabled;
 
-            try 
+            try
             {
                 EnableSensitivityLabelForPDF = tenant.EnableSensitivityLabelForPDF;
             }
-            catch 
+            catch
             {
                 EnableSensitivityLabelForPDF = false;
             }
@@ -742,7 +749,7 @@ namespace PnP.PowerShell.Commands.Model
 
             try
             {
-                if (tenant.DefaultODBMode != null) 
+                if (tenant.DefaultODBMode != null)
                 {
                     DefaultOneDriveInformationBarrierMode = Enum.Parse<InformationBarriersMode>(tenant.DefaultODBMode);
                 }
@@ -752,30 +759,36 @@ namespace PnP.PowerShell.Commands.Model
             }
 
 
-            try{CoreSharingCapability = tenant.CoreSharingCapability;}catch{}
-            try{EnableVersionExpirationSetting = tenant.EnableVersionExpirationSetting;}catch{}
-            try{BlockUserInfoVisibilityInOneDrive = tenant.BlockUserInfoVisibilityInOneDrive;}catch{}
-            try{AllowOverrideForBlockUserInfoVisibility = tenant.AllowOverrideForBlockUserInfoVisibility;}catch{}
-            try{AllowEveryoneExceptExternalUsersClaimInPrivateSite = tenant.AllowEveryoneExceptExternalUsersClaimInPrivateSite;}catch{}
-            try{AllowSensitivityLabelOnRecords = tenant.AllowSensitivityLabelOnRecords;}catch{}
-            try{AnyoneLinkTrackUsers = tenant.AnyoneLinkTrackUsers;}catch{}
-            try{AIBuilderEnabled = tenant.AIBuilderEnabled;}catch{}
-            try{EnableSiteArchive = tenant.EnableSiteArchive;}catch{}
-            try{ESignatureEnabled = tenant.ESignatureEnabled;}catch{}
-            try{BlockUserInfoVisibilityInSharePoint = tenant.BlockUserInfoVisibilityInSharePoint;}catch{}
-            try{OneDriveLoopDefaultSharingLinkScope = tenant.OneDriveLoopDefaultSharingLinkScope;}catch{}
-            try{CoreLoopDefaultSharingLinkScope = tenant.CoreLoopDefaultSharingLinkScope;}catch{}
-            try{OneDriveLoopSharingCapability = tenant.OneDriveLoopSharingCapability;}catch{}
-            try{CoreLoopSharingCapability = tenant.CoreLoopSharingCapability;}catch{}
-            try{OneDriveLoopDefaultSharingLinkRole = tenant.OneDriveLoopDefaultSharingLinkRole;}catch{}
-            try{CoreLoopDefaultSharingLinkRole = tenant.CoreLoopDefaultSharingLinkRole;}catch{}
-            try{IsCollabMeetingNotesFluidEnabled = tenant.IsCollabMeetingNotesFluidEnabled;}catch{}
-            try{AllowAnonymousMeetingParticipantsToAccessWhiteboards = tenant.AllowAnonymousMeetingParticipantsToAccessWhiteboards;}catch{}
-            try{OneDriveDefaultShareLinkScope = tenant.OneDriveDefaultShareLinkScope;}catch{}
-            try{OneDriveDefaultShareLinkRole = tenant.OneDriveDefaultShareLinkRole;}catch{}
-            try{OneDriveDefaultLinkToExistingAccess = tenant.OneDriveDefaultLinkToExistingAccess;}catch{}
-            try{OneDriveBlockGuestsAsSiteAdmin = tenant.OneDriveBlockGuestsAsSiteAdmin;}catch{}
-            try{RecycleBinRetentionPeriod = tenant.RecycleBinRetentionPeriod;}catch{}
+            try { CoreSharingCapability = tenant.CoreSharingCapability; } catch { }
+            try { EnableVersionExpirationSetting = tenant.EnableVersionExpirationSetting; } catch { }
+            try { BlockUserInfoVisibilityInOneDrive = tenant.BlockUserInfoVisibilityInOneDrive; } catch { }
+            try { AllowOverrideForBlockUserInfoVisibility = tenant.AllowOverrideForBlockUserInfoVisibility; } catch { }
+            try { AllowEveryoneExceptExternalUsersClaimInPrivateSite = tenant.AllowEveryoneExceptExternalUsersClaimInPrivateSite; } catch { }
+            try { AllowSensitivityLabelOnRecords = tenant.AllowSensitivityLabelOnRecords; } catch { }
+            try { AnyoneLinkTrackUsers = tenant.AnyoneLinkTrackUsers; } catch { }
+            try { AIBuilderEnabled = tenant.AIBuilderEnabled; } catch { }
+            try { EnableSiteArchive = tenant.EnableSiteArchive; } catch { }
+            try { ESignatureEnabled = tenant.ESignatureEnabled; } catch { }
+            try { BlockUserInfoVisibilityInSharePoint = tenant.BlockUserInfoVisibilityInSharePoint; } catch { }
+            try { OneDriveLoopDefaultSharingLinkScope = tenant.OneDriveLoopDefaultSharingLinkScope; } catch { }
+            try { CoreLoopDefaultSharingLinkScope = tenant.CoreLoopDefaultSharingLinkScope; } catch { }
+            try { OneDriveLoopSharingCapability = tenant.OneDriveLoopSharingCapability; } catch { }
+            try { CoreLoopSharingCapability = tenant.CoreLoopSharingCapability; } catch { }
+            try { OneDriveLoopDefaultSharingLinkRole = tenant.OneDriveLoopDefaultSharingLinkRole; } catch { }
+            try { CoreLoopDefaultSharingLinkRole = tenant.CoreLoopDefaultSharingLinkRole; } catch { }
+            try { IsCollabMeetingNotesFluidEnabled = tenant.IsCollabMeetingNotesFluidEnabled; } catch { }
+            try { AllowAnonymousMeetingParticipantsToAccessWhiteboards = tenant.AllowAnonymousMeetingParticipantsToAccessWhiteboards; } catch { }
+            try { OneDriveDefaultShareLinkScope = tenant.OneDriveDefaultShareLinkScope; } catch { }
+            try { OneDriveDefaultShareLinkRole = tenant.OneDriveDefaultShareLinkRole; } catch { }
+            try { OneDriveDefaultLinkToExistingAccess = tenant.OneDriveDefaultLinkToExistingAccess; } catch { }
+            try { OneDriveBlockGuestsAsSiteAdmin = tenant.OneDriveBlockGuestsAsSiteAdmin; } catch { }
+            try { RecycleBinRetentionPeriod = tenant.RecycleBinRetentionPeriod; } catch { }
+            try { EnableAIPIntegration =  tenant.EnableAIPIntegration; } catch { }
+            try { CoreDefaultShareLinkScope = tenant.CoreDefaultShareLinkScope; } catch { }
+            try { CoreDefaultShareLinkRole = tenant.CoreDefaultShareLinkRole; } catch { }
+            try { SharePointAddInsDisabled = tenant.SharePointAddInsDisabled; } catch { }
+            try { OneDriveSharingCapability = tenant.ODBSharingCapability; } catch { }
+            try { GuestSharingGroupAllowListInTenantByPrincipalIdentity = tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity?.ToArray(); } catch { }
         }
     }
 }

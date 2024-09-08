@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADGroupMember")]
     [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
     [Alias("Get-PnPEntraIDGroupMember")]
     public class GetAzureADGroupMember : PnPGraphCmdlet
     {
@@ -23,13 +24,13 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(Connection, AccessToken);
+                group = Identity.GetGroup(this, Connection, AccessToken);
             }
 
             if (group != null)
             {
                 // Get members of the group
-                var members = Microsoft365GroupsUtility.GetMembersAsync(Connection, new Guid(group.Id), AccessToken).GetAwaiter().GetResult();
+                var members = ClearOwners.GetMembers(this, Connection, new Guid(group.Id), AccessToken);
                 WriteObject(members?.OrderBy(m => m.DisplayName), true);
             }
         }

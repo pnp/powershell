@@ -27,13 +27,13 @@ namespace PnP.PowerShell.Commands.Teams
         {
             if (Force || ShouldContinue("Removing the channel will also remove all the messages in the channel.", Properties.Resources.Confirm))
             {
-                var groupId = Team.GetGroupId(Connection, AccessToken);
+                var groupId = Team.GetGroupId(this, Connection, AccessToken);
                 if (groupId != null)
                 {
-                    var channel = Identity.GetChannel(Connection, AccessToken, groupId);
+                    var channel = Identity.GetChannel(this, Connection, AccessToken, groupId);
                     if (channel != null)
                     {
-                        var response = TeamsUtility.DeleteChannelAsync(AccessToken, Connection, groupId, channel.Id).GetAwaiter().GetResult();
+                        var response = TeamsUtility.DeleteChannel(this, AccessToken, Connection, groupId, channel.Id);
                         if (!response.IsSuccessStatusCode)
                         {
                             if (GraphHelper.TryGetGraphException(response, out GraphException ex))
@@ -48,15 +48,15 @@ namespace PnP.PowerShell.Commands.Teams
                                 WriteError(new ErrorRecord(new Exception($"Channel remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
                             }
                         }
-                        else
-                        {
-                            throw new PSArgumentException("Channel not found");
-                        }
                     }
                     else
                     {
-                        throw new PSArgumentException("Team not found");
+                        throw new PSArgumentException("Channel not found");
                     }
+                }
+                else
+                {
+                    throw new PSArgumentException("Team not found");
                 }
             }
         }

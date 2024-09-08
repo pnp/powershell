@@ -205,6 +205,24 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SharingScope LoopDefaultSharingLinkScope;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool RestrictContentOrgWideSearch;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool ReadOnlyForUnmanagedDevices;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter InheritVersionPolicyFromTenant;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool OverrideSharingCapability;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int RequestFilesLinkExpirationInDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool RequestFilesLinkEnabled;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
@@ -611,6 +629,42 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(RestrictedAccessControlGroups)) && RestrictedAccessControlGroups.Length > 0)
             {
                 props.RestrictedAccessControlGroups = RestrictedAccessControlGroups;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RestrictContentOrgWideSearch)))
+            {
+                props.RestrictContentOrgWideSearch = RestrictContentOrgWideSearch;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(InheritVersionPolicyFromTenant)))
+            {
+                props.InheritVersionPolicyFromTenant = InheritVersionPolicyFromTenant;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ReadOnlyForUnmanagedDevices)))
+            {
+                props.ReadOnlyForUnmanagedDevices = ReadOnlyForUnmanagedDevices;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(OverrideSharingCapability)))
+            {
+                props.OverrideSharingCapability = OverrideSharingCapability;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RequestFilesLinkExpirationInDays)))
+            {
+                props.RequestFilesLinkExpirationInDays = RequestFilesLinkExpirationInDays;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RequestFilesLinkEnabled)))
+            {
+                props.RequestFilesLinkEnabled = RequestFilesLinkEnabled;
                 updateRequired = true;
             }
 
