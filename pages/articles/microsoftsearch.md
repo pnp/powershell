@@ -35,7 +35,7 @@ In this step we're going to create a new custom connector. A custom connector is
 Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId <client id of your Entra ID Application Registration>
 ```
 
-![image](../images/microsoftsearch/connect_interactively.png)
+   ![image](../images/microsoftsearch/connect_interactively.png)
 
 2. Use the [New-PnPSearchExternalConnection](/cmdlets/New-PnPSearchExternalConnection.md) cmdlet to create the new custom connector to your data. Be sure to replace the identity, name and description values with something meaningful that indicates the source of the data you're going to add to the index.
 
@@ -43,9 +43,11 @@ Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId <client id 
 New-PnPSearchExternalConnection -Identity "mycustomdatasource" -Name "My custom data source" -Description "External content ingested using PnP PowerShell"
 ```
 
-![image](../images/microsoftsearch/create_externalconnection.png)
+   ![image](../images/microsoftsearch/create_externalconnection.png)
 
 3. You can optionally validate that the custom connector has been created by going to the [Microsoft 365 Admin Center](https://admin.microsoft.com) > Settings > Search & intelligence > Data sources ([direct link](https://admin.microsoft.com/#/MicrosoftSearch/connectors)) where it should now show up.
+
+   ![image](../images/microsoftsearch/create_externalconnection_created.png)
 
 ## Step 2: Creating a search schema
 
@@ -98,7 +100,7 @@ In this JSON schema you will notice `isSearchable` and `isRetrievable`. The firs
 
 The script will wait and validate if the schema change has been applied and return to the prompt when it's ready to be used. If you don't want to wait and just let it create or update the schema in the background, remove the `-Wait` parameter. If you receive a response stating "The specified resource name already exists", it means that the connector is currently still busy updating its schema from a previous instruction. Wait a couple of minutes and try it again.
 
-2. You can optionally validate that the custom connector has recieved a schema by going to the [Microsoft 365 Admin Center](https://admin.microsoft.com) > Settings > Search & intelligence > Data sources ([direct link](https://admin.microsoft.com/#/MicrosoftSearch/connectors)) where it should show a Connection state of Ready to indicate that it's ready to receive ingested items. It may take 10 minutes or more for it to receive the Ready state.
+2. You can optionally validate that the custom connector has recieved a schema by going to the [Microsoft 365 Admin Center](https://admin.microsoft.com) > Settings > Search & intelligence > Data sources ([direct link](https://admin.microsoft.com/#/MicrosoftSearch/connectors)) where it should show a Connection state of Ready to indicate that it's ready to receive ingested items. It may take 10 minutes or more for it to reach the Ready state. If it's showing the Connection state _Preparing to sync_, it means it is still applying the schema.
 
 ### Step 3: Configure where your search results should be shown
 
