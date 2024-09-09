@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Administration;
+using Microsoft.SharePoint.BrandCenter;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -22,9 +23,15 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public OrgAssetType OrgAssetType = OrgAssetType.ImageDocumentLibrary;
 
+        [Parameter(Mandatory = false)]
+        public bool DefaultOriginAdded = true;
+
+        [Parameter(Mandatory = false)]
+        public bool IsCopilotSearchable = true;
+
         protected override void ExecuteCmdlet()
         {
-            Tenant.AddToOrgAssetsLibAndCdnWithType(CdnType, LibraryUrl, ThumbnailUrl, OrgAssetType);
+            Tenant.AddToOrgAssetsLibWithConfig(CdnType, LibraryUrl, ThumbnailUrl, OrgAssetType, DefaultOriginAdded, new OrgAssetsLibraryConfigParam { IsCopilotSearchable = IsCopilotSearchable});
             AdminContext.ExecuteQueryRetry();
         }
     }
