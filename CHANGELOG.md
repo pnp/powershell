@@ -10,8 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
-- Added optional `-IsCopilotSearchable` to `Add-PnPOrgAssetsLibrary` which allows for an organizational assets library to be accessible to Microsoft 365 CoPilot for searching corporate images.
-- Added `Set-PnPOrgAssetsLibrary` cmdlet which allows for updating the settings of an existing organizational assets library
+- Added optional `-IsCopilotSearchable` to `Add-PnPOrgAssetsLibrary` which allows for an organizational assets library to be accessible to Microsoft 365 CoPilot for searching corporate images [#4254](https://github.com/pnp/powershell/pull/4254)
+- Added `Set-PnPOrgAssetsLibrary` cmdlet which allows for updating the settings of an existing organizational assets library [#4254](https://github.com/pnp/powershell/pull/4254)
   
 ### Changed
 
