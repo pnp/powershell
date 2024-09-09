@@ -9278,6 +9278,276 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/additem_done.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/additem_done.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/all_vertical_include_link.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/all_vertical_include_link.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/all_vertical_include_link_confirm.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/all_vertical_include_link_confirm.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/connect_interactively.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/connect_interactively.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/create_externalconnection.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/create_externalconnection.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/create_externalconnection_created.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/create_externalconnection_created.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_add.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_add.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_complete.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_complete.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_contentsource.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_contentsource.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_designlayout.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_designlayout.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_done.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_done.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_name.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_name.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_picktemplate.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_picktemplate.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_rules.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_rules.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_templateproperties.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_templateproperties.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_templatepropertiesmapped.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_templatepropertiesmapped.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/resulttype_templatepropertiesmapped_paste.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/resulttype_templatepropertiesmapped_paste.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/schema_ready.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/schema_ready.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/vertical_add.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/vertical_add.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/vertical_connectors.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/vertical_connectors.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/vertical_connectors_add_vertical.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/vertical_connectors_add_vertical.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/vertical_connectors_addquery.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/vertical_connectors_addquery.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/vertical_connectors_filters.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/vertical_connectors_filters.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/vertical_connectors_select.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/vertical_connectors_select.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/vertical_enable.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/vertical_enable.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/vertical_name.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/vertical_name.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/vertical_validation.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/vertical_validation.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/registerapplication/README.md",
       "output": {
         "resource": {
