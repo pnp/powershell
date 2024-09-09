@@ -52,6 +52,11 @@ namespace PnP.PowerShell.Commands.Enums
         FileExtension,
 
         /// <summary>
+        /// Property stating a value has been returned that is not amongst the basic set of enums
+        /// </summary>
+        unknownFutureValue,
+
+        /// <summary>
         /// Property represents the icon to be shown with the item
         /// </summary>
         IconUrl
