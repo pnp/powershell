@@ -9268,6 +9268,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/README.md",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/README.md"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/registerapplication/README.md",
       "output": {
         "resource": {
