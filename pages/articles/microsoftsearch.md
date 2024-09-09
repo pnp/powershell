@@ -55,7 +55,7 @@ The second step consists out of creating a search schema for your custom connect
 
 1. In the PowerShell session we still have open from the first step, we're going to use the [Set-PnPSearchExternalSchema](/cmdlets/Set-PnPSearchExternalSchema.md) cmdlet to create the schema. If you later on want to update it, you can use the same cmdlet with the same parameters, hence the Set verb and not the New verb being used. The schema in the below sample is defined as JSON in text, so you can easily modify it to match your scenario. Ensure that the name for ConnectionId matches with the value you have used for Identity when creating the connection.
 
-```powershell
+  ```powershell
 Set-PnPSearchExternalSchema -ConnectionId "mycustomdatasource" -SchemaAsText '{
    "baseType": "microsoft.graph.externalItem",
    "properties": [
@@ -94,13 +94,15 @@ Set-PnPSearchExternalSchema -ConnectionId "mycustomdatasource" -SchemaAsText '{
      }
    ]
  }' -Wait
-```
+  ```
 
-In this JSON schema you will notice `isSearchable` and `isRetrievable`. The first means that Microsoft Search is allowed to use the content provided in that field to look for a match with what the user is searching for. The latter means the value of this field will be returned in the search results and can be used to display it to the user in the search results.
+  In this JSON schema you will notice `isSearchable` and `isRetrievable`. The first means that Microsoft Search is allowed to use the content provided in that field to look for a match with what the user is searching for. The latter means the value of this field will be returned in the search results and can be used to display it to the user in the search results.
 
-The script will wait and validate if the schema change has been applied and return to the prompt when it's ready to be used. If you don't want to wait and just let it create or update the schema in the background, remove the `-Wait` parameter. If you receive a response stating "The specified resource name already exists", it means that the connector is currently still busy updating its schema from a previous instruction. Wait a couple of minutes and try it again.
+  The script will wait and validate if the schema change has been applied and return to the prompt when it's ready to be used. If you don't want to wait and just let it create or update the schema in the background, remove the `-Wait` parameter. If you receive a response stating "The specified resource name already exists", it means that the connector is currently still busy updating its schema from a previous instruction. Wait a couple of minutes and try it again.
 
 2. You can optionally validate that the custom connector has recieved a schema by going to the [Microsoft 365 Admin Center](https://admin.microsoft.com) > Settings > Search & intelligence > Data sources ([direct link](https://admin.microsoft.com/#/MicrosoftSearch/connectors)) where it should show a Connection state of Ready to indicate that it's ready to receive ingested items. It may take 10 minutes or more for it to reach the Ready state. If it's showing the Connection state _Preparing to sync_, it means it is still applying the schema.
+
+   ![image](../images/microsoftsearch/schema_ready.png)
 
 ### Step 3: Configure where your search results should be shown
 
@@ -108,17 +110,20 @@ Ingesting items into the Microsoft Search index will only prove to be useful if 
 
 1. If you decide to go with the results showing up in the All tab, so along with results from other sources, simply go to the [Microsoft 365 Admin Center](https://admin.microsoft.com) > Settings > Search & intelligence > Data sources ([direct link](https://admin.microsoft.com/#/MicrosoftSearch/connectors)) and click on the link next to your custom connector that reads _Include Connector Results_.
 
-![image](../images/microsoftsearch/all_vertical_include_link.png)
+  ![image](../images/microsoftsearch/all_vertical_include_link.png)
 
-In the popup that appears after doing so, click _OK_ to confirm having items from this index show up in the All tab.
+  > [!IMPORTANT]
+  > If you want your ingested search items to be shown in Microsoft 365 Copilot results, at present you _must_ add your content to the All vertical, or else Copilot will be unable to find your content.
+
+  In the popup that appears after doing so, click _OK_ to confirm having items from this index show up in the All tab.
 
 ![image](../images/microsoftsearch/all_vertical_include_link_confirm.png)
 
 2. If you decide to (also?) give it its own tab in the Microsoft 365 Search instead, navigate to the [Microsoft 365 Admin Center](https://admin.microsoft.com) > Settings > Search & intelligence > Customizations > Verticals ([direct link](https://admin.microsoft.com/#/MicrosoftSearch/verticals)).
   
-3. Click on _+ Add_|
+3. Click on _+ Add_
 
-![image](../images/microsoftsearch/vertical_add.png)
+   ![image](../images/microsoftsearch/vertical_add.png)
 
 4. Enter the _Name_ you would like to show up as the tab in Microsoft 365 Search for this source and click _Next_
 
@@ -130,17 +135,27 @@ In the popup that appears after doing so, click _OK_ to confirm having items fro
   
 6. Check the box in front of the connector you have created in step 1 above. Click _Next_ to continue.
 
+   ![image](../images/microsoftsearch/vertical_connectors_select.png)
+
 7. The _Add a query_ step you can skip by clicking on _Next_ at the bottom.
+
+   ![image](../images/microsoftsearch/vertical_connectors_addquery.png)
 
 8. The _Filters_ step you can also skip by clicking on _Next_ at the bottom.
 
+   ![image](../images/microsoftsearch/vertical_connectors_filters.png)
+
 9. Click on _Add Vertical_ at the bottom of the _Review the vertical settings_ step to continue once again.
+
+   ![image](../images/microsoftsearch/vertical_connectors_add_vertical.png)
 
 10. Click on _Enable vertical_ to enable it. Once it's done spinning, click on _Done_ at the bottom to finalize adding the vertical.
 
     ![image](../images/microsoftsearch/vertical_enable.png)
 
-It may take up to an hour before the vertical/tab starts showing up in the Microsoft 365 Search results. To validate if the vertical has been added, go to https://www.microsoft365.com/search an dcheck if it shows a tab with the name you have used to create the vertical in this step at the top of the search results.
+It may take up to an hour before the vertical/tab starts showing up in the Microsoft 365 Search results. To validate if the vertical has been added, go to https://www.microsoft365.com/search and check if it shows a tab with the name you have used to create the vertical in this step at the top of the search results.
+
+![image](../images/microsoftsearch/vertical_validation.png)
 
 ### Step 4: Configure how the search results should be shown
 
@@ -158,17 +173,23 @@ You can define how the items coming from your custom source will be shown in the
   
 4. At the _Select a content source_ step, select the content source you have added in step 1 and click _Next_ at the bottom.
 
-5. Skip the _Set rules for the result type_ step by clicking _Next_ at the bottom.
+   ![image](../images/microsoftsearch/resulttype_contentsource.png)
+   
+6. Skip the _Set rules for the result type_ step by clicking _Next_ at the bottom.
 
-6. In the _Design your layout_ step, notice the properties shown at the bottom of this step under _Available properties_ and click on the _Launch Layout Designer_ button.
+   ![image](../images/microsoftsearch/resulttype_rules.png)
+   
+8. In the _Design your layout_ step, notice the properties shown at the bottom of this step under _Available properties_ and click on the _Launch Layout Designer_ button.
 
-7. In the _Search Layout designer_ website that opens, pick a design that you like best for rendering the search results coming from your custom connector, i.e. the first one, and click _Get Started_ at the bottom.
+   ![image](../images/microsoftsearch/resulttype_designlayout.png)
+   
+10. In the _Search Layout designer_ website that opens, pick a design that you like best for rendering the search results coming from your custom connector, i.e. the first one, and click _Get Started_ at the bottom.
 
    ![image](../images/microsoftsearch/resulttype_picktemplate.png)
 
-8. Click on each element in the visual sample of the search result and ensure that each element gets a property mapping. You can find which ones you can use back in the wizard we just came from, under the _Available properties_ section. Just type over the name of the property you would like to link to each element in the result. If there's an element in the result you don't want to map or use, you must delete it by clicking on the _Edit layout_ button at the top, selecting the element to remove, and clicking on the circle with the X next to it to remove it. Only after you provided a property mapping for each of the elements, the _Create layout_ button at the bottom will become available and you can continue by clicking on that button.
+11. Click on each element in the visual sample of the search result and ensure that each element gets a property mapping. You can find which ones you can use back in the wizard we just came from, under the _Available properties_ section. Just type over the name of the property you would like to link to each element in the result. If there's an element in the result you don't want to map or use, you must delete it by clicking on the _Edit layout_ button at the top, selecting the element to remove, and clicking on the circle with the X next to it to remove it. Only after you provided a property mapping for each of the elements, the _Create layout_ button at the bottom will become available and you can continue by clicking on that button.
 
-  ![image](../images/microsoftsearch/resulttype_templateproperties.png)
+   ![image](../images/microsoftsearch/resulttype_templateproperties.png)
 
 9. Click on _Okay_ in the dialog that will show to confirm. Return back to your browser tab with the _Design your layout_ step in the wizard.
 
@@ -214,7 +235,7 @@ You can define how the items coming from your custom source will be shown in the
                                     "items": [
                                         {
                                             "type": "TextBlock",
-                                            "text": "[${title}](${titleUrl})",
+                                            "text": "[${title}](${url})",
                                             "weight": "Bolder",
                                             "size": "Medium",
                                             "maxLines": 3,
@@ -228,7 +249,7 @@ You can define how the items coming from your custom source will be shown in the
                         },
                         {
                             "type": "TextBlock",
-                            "text": "[${titleUrl}](${titleUrl})",
+                            "text": "[${url}](${url})",
                             "spacing": "Small",
                             "weight": "Bolder",
                             "color": "Dark"
@@ -251,4 +272,28 @@ You can define how the items coming from your custom source will be shown in the
 }
    ```
 
-11. Click on _Add result type_ at the bottom and on _Done_ on the _Your result type is added_ page to complete this step.
+11. Click on _Add result type_ at the bottom
+
+    ![image](../images/microsoftsearch/resulttype_complete.png)
+
+12. Click on _Done_ on the _Your result type is added_ page to complete this step.
+
+    ![image](../images/microsoftsearch/resulttype_done.png)
+    
+### Step 5: Ingesting content into Microsoft 365 Search
+
+Now we're finally ready to start ingesting our content into the Microsoft 365 Search index. How or where you get the actual content from varies largely on the system you wish to pull the data from and is therefore out of scope of this article. Once you have the content, you can create new items into the Microsoft 365 Search Index by executing the cmdlet [Set-PnPSearchExternalItem](../cmdlets/Set-PnPSearchExternalItem.md):
+
+```powershell
+Set-PnPSearchExternalItem -ConnectionId "mycustomdatasource" -ItemId "1" -Properties @{ "title"="Test of this PnP PowerShell Connector"; "description"="This is a sample item"; "url"="https://microsoft.com/articlexyz"; "iconUrl"="https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png" } -ContentValue "This is sample content that will be indexed. By searching for something that appears in this content, it should be returned by Microsoft 365 Search." -ContentType Text -GrantEveryone
+```
+![image](../images/microsoftsearch/additem_done.png)
+
+Few things to notice with this cmdlet:
+
+- Ensure the `-ConnectionId` matches the `-Identity` name you have used for your custom connector in step 1.
+- The `-ItemId` is unique for this result. You can pick whatever you wish, but you need this exact same Id again to update or remove this result. At present, there is no cmdlet or API to retrieve all Ids of all items that are in the Microsoft 365 Search index already, so you may even want to keep a record of this somewhere yourself.
+- The Properties match with the property names you have used in the schema in step 2. These values are mapped to the elemets you defined in step 4.
+- The ContentValue is the content of the item you are indexing. Microsoft Search uses this content to try to match this as a result when searching for something.
+- It will take up to an hour before ingested items will start to appear in search or Copilot results. Be patient.
+- You can restrict who can see the result with the grant options. Check the [documentation of the cmdlet](../cmdlets/Set-PnPSearchExternalItem.md) for all possibilities. This sample sets it so that any user in the tenant can see the result.
