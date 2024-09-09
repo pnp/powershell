@@ -49,7 +49,7 @@ New-PnPSearchExternalConnection -Identity "mycustomdatasource" -Name "My custom 
 
    ![image](../images/microsoftsearch/create_externalconnection_created.png)
 
-## Step 2: Creating a search schema
+### Step 2: Creating a search schema
 
 The second step consists out of creating a search schema for your custom connector. The search schema simply tells Microsoft Search what kind of data it can expect and through which of this data it can search to look for matches to what end users will be searching for. I.e. will it have a title, description, person last modifying the content, priority, or other fields. This is totally up to you to define based on what makes sense with regards to the data source you're going to be indexing from.
 
