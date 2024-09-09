@@ -6,8 +6,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [Current nightly]
 
-## [Current Nightly]
+### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
+### Contributors
+
+
+## [2.12.0]
 
 ### Added
 
@@ -20,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- *Release due to deprecation/shutdown of support for the PnP Management Shell* Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to registration your own application
 - Added output for clientid/Entra App Id when using `-Verbose` with `Connect-PnPOnline`
 - Added `-OutputTask` switch to `Add-PnPPlannerTask` cmdlet which will return the just created task so inspect its ID, ETag, etc. values.
 - Improved `Invoke-PnPGraphMethod` cmdlet now to also support a hashtable value for the AdditionalHeaders parameter besides the current Dictionary<string,string>. See documentation.
