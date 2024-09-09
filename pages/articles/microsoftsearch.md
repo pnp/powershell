@@ -110,14 +110,14 @@ Ingesting items into the Microsoft Search index will only prove to be useful if 
 
 1. If you decide to go with the results showing up in the All tab, so along with results from other sources, simply go to the [Microsoft 365 Admin Center](https://admin.microsoft.com) > Settings > Search & intelligence > Data sources ([direct link](https://admin.microsoft.com/#/MicrosoftSearch/connectors)) and click on the link next to your custom connector that reads _Include Connector Results_.
 
-  ![image](../images/microsoftsearch/all_vertical_include_link.png)
+   ![image](../images/microsoftsearch/all_vertical_include_link.png)
 
   > [!IMPORTANT]
   > If you want your ingested search items to be shown in Microsoft 365 Copilot results, at present you _must_ add your content to the All vertical, or else Copilot will be unable to find your content.
 
-  In the popup that appears after doing so, click _OK_ to confirm having items from this index show up in the All tab.
+   In the popup that appears after doing so, click _OK_ to confirm having items from this index show up in the All tab.
 
-![image](../images/microsoftsearch/all_vertical_include_link_confirm.png)
+   ![image](../images/microsoftsearch/all_vertical_include_link_confirm.png)
 
 2. If you decide to (also?) give it its own tab in the Microsoft 365 Search instead, navigate to the [Microsoft 365 Admin Center](https://admin.microsoft.com) > Settings > Search & intelligence > Customizations > Verticals ([direct link](https://admin.microsoft.com/#/MicrosoftSearch/verticals)).
   
@@ -197,11 +197,9 @@ You can define how the items coming from your custom source will be shown in the
 
 10. Paste the contents of your clipboard (CTRL+V) into the _Paste the JSON script that you created with Layout Designer_ field and click _Next_ at the bottom.
 
-    ![image](../images/microsoftsearch/resulttype_templatepropertiesmapped.png)
+    Alternatively, if you're having problems creating your own design layout, if you stuck with the samples used above, you can use this schema which maps all the fields used in the sample above to the layout:
 
-   Alternatively, if you're having problems creating your own design layout, if you stuck with the samples used above, you can use this schema which maps all the fields used in the sample above to the layout:
-
-   ```JSON
+```JSON
 {
     "type": "AdaptiveCard",
     "version": "1.3",
@@ -270,7 +268,7 @@ You can define how the items coming from your custom source will be shown in the
     "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
     "$data": {}
 }
-   ```
+```
 
 11. Click on _Add result type_ at the bottom
 
