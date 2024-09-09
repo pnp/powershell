@@ -14,10 +14,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Fixed
 
+- Fixed issue with `Set-PnPSearchExternalSchema` cmdlet when used with the `-Wait` parameter throwing a warning
+  
 ### Removed
 
 ### Contributors
 
+- Koen Zomers [koenzomers]
 
 ## [2.12.0]
 
