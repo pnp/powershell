@@ -83,7 +83,10 @@
                   </div>
   <h1 id="register-an-entra-id-application-to-use-with-pnp-powershell">Register an Entra ID Application to use with PnP PowerShell</h1>
 
-<p>It has always been a recommended practise to register your own Entra ID Application to use with PnP PowerShell. As of September 9<sup>th</sup>, 2024, <a href="https://pnp.github.io/blog/post/changes-pnp-management-shell-registration/">this has become mandatory step</a>. This article will guide you through how to do so.</p>
+<div class="IMPORTANT">
+<h5>Important</h5>
+<p>It has always been a recommended practise to register your own Entra ID Application to use with PnP PowerShell. As of September 9<sup>th</sup>, 2024, <a href="https://github.com/pnp/powershell/issues/4250">this has become mandatory step</a>. This article will guide you through how to do so.</p>
+</div>
 <p>The first decission you will have to make is whether you are going to interactively log on through PnP PowerShell to your tenant by providing your credentials, <a href="#setting-up-access-to-your-own-entra-id-app-for-interactive-login">Interactive Login</a>, or if you are aiming to write a script that will log on without requiring any user intervention, <a href="#setting-up-access-to-your-own-entra-id-app-for-app-only-access">App Only Access</a>. Depending on your scenario, continue reading in the appropriate section below.</p>
 <h2 id="setting-up-access-to-your-own-entra-id-app-for-interactive-login">Setting up access to your own Entra ID App for Interactive Login</h2>
 <p>In this scenario, you will be creating an application registration in Entra ID which will allow you to interactively log on to your tenant using PnP PowerShell. This means that each time you use PnP PowerShell, you will need to enter your credentials and comply with any multi factor authentication and conditional access policies that may have been set up on your tenant.</p>
