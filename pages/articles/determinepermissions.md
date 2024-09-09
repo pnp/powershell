@@ -1,6 +1,7 @@
 # How to determine which permissions you need
 
-As of September 9<sup>th</sup>, 2024, it is [required to use your own Entra ID Application Registration](https://pnp.github.io/blog/post/changes-pnp-management-shell-registration/) to use PnP PowerShell. This introduces the complexity of trying to determine the minimum set of permissions you will need to be able to execute your script. This article aims to help you in determining the permissions you need to set on your Entra ID Application Registration.
+> [!IMPORTANT]
+> As of September 9<sup>th</sup>, 2024, it is [required to use your own Entra ID Application Registration](https://github.com/pnp/powershell/issues/4250) to use PnP PowerShell. This introduces the complexity of trying to determine the minimum set of permissions you will need to be able to execute your script. This article aims to help you in determining the permissions you need to set on your Entra ID Application Registration.
 
 ## Creating an Entra ID Application Registration
 
