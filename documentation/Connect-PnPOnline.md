@@ -48,7 +48,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
  [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
-### PnP Management Shell / DeviceLogin
+### DeviceLogin
 ```powershell
 Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] [-DeviceLogin]
  [-LaunchBrowser] [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] 
@@ -148,18 +148,18 @@ This will authenticate you to the site using Legacy ACS authentication
 
 ### EXAMPLE 4
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28
 ```
 
-This will authenticate you using the PnP Management Shell Multi-Tenant application.
+This will authenticate you using the specified Entra ID App Registration.
 A browser window will have to be opened where you have to enter a code that is shown in your PowerShell window. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created and we will use that value and authenticate using that Entra ID app.
 
 ### EXAMPLE 5
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin -LaunchBrowser
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -DeviceLogin -LaunchBrowser -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28
 ```
 
-This will authenticate you using the PnP Management Shell Multi-Tenant application. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created.
+This will authenticate you using the specified Entra ID App registration. Alternatively, create an environment variable, call it `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` and set the value to the app id you created.
 A browser window will automatically open and the code you need to enter will be automatically copied to your clipboard. 
 
 ### EXAMPLE 6
@@ -247,7 +247,7 @@ Connect-PnPOnline -Url contoso.sharepoint.com -EnvironmentVariable
 
 This example uses the `AZURE_USERNAME` and `AZURE_PASSWORD` environment variables as credentials to authenticate.  If these environment variables are not available, it will use `ENTRAID_USERNAME` and `ENTRAID_PASSWORD` environment variables as fallback.
 
-If `AZURE_CLIENT_ID` is not present, then it will try to use the default `PnP Management Shell Azure AD app` as fallback and attempt to authenticate. Starting from 9th Sept 2024, it will try to use `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` environment variables as fallback.
+If `AZURE_CLIENT_ID` is not present, alternatively it will try to use `ENTRAID_APP_ID` or `ENTRAID_CLIENT_ID` environment variables as fallback.
 
 This method assumes you have the necessary environment variables available. For more information about the required environment variables, please refer to this article, [Azure.Identity Environment Variables](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables) here.
 
@@ -307,7 +307,7 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 
 ```yaml
 Type: AzureEnvironment
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity
 Aliases:
 Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, Custom
 
@@ -353,7 +353,7 @@ The Client ID of the Azure AD Application
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, PnP Management Shell / DeviceLogin, Interactive
+Parameter Sets: Credentials, DeviceLogin, Interactive
 Aliases: ApplicationId
 
 Required: False
@@ -395,7 +395,7 @@ Optional connection to be reused by the new connection. Retrieve the value for t
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable
 
 Required: False
 Position: Named
@@ -409,7 +409,7 @@ If you want to create a PSDrive connected to the URL
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
 Aliases:
 
 Required: False
@@ -457,7 +457,7 @@ Name of the PSDrive to create (default: SPO)
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
 Aliases:
 
 Required: False
@@ -472,7 +472,7 @@ Launch a browser automatically and copy the code to enter to the clipboard
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: PnP Management Shell / DeviceLogin, Interactive
+Parameter Sets: DeviceLogin, Interactive
 Aliases:
 
 Required: False
@@ -484,7 +484,6 @@ Accept wildcard characters: False
 
 ### -DeviceLogin
 Log in using the Device Code flow.
-By default it will use the PnP Management Shell multi-tenant Azure AD application registration.
 You will be asked to consent to:
 
 * Read and write managed metadata
@@ -498,8 +497,7 @@ You will be asked to consent to:
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: PnP Management Shell / DeviceLogin
-Aliases: PnPManagementShell, PnPO365ManagementShell
+Parameter Sets: DeviceLogin
 
 Required: True
 Position: Named
@@ -544,7 +542,7 @@ Returns the connection for use with the -Connection parameter on cmdlets. It wil
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
 Aliases:
 
 Required: False
@@ -605,7 +603,7 @@ The Url of the site collection or subsite to connect to, i.e. tenant.sharepoint.
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
 Aliases:
 
 Required: True (Except when using -ManagedIdentity and -AzureADWorkloadIdentity)
@@ -620,7 +618,7 @@ When provided, the cmdlet will check to ensure the SharePoint Online site specif
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, PnP Management Shell / DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
 Aliases:
 
 Required: False
@@ -803,7 +801,7 @@ Accept wildcard characters: False
 ```
 
 ### -EnvironmentVariable
-Connects using the necessary environment variables. For more information the required environment variables, please refer to this article, [Azure.Identity Environment Variables](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables) here. We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used. By default, it will use the `-ClientId` specified in `AZURE_CLIENT_ID` environment variable. If that value is empty, it will fallback to the PnP Management Shell Azure AD App.
+Connects using the necessary environment variables. For more information the required environment variables, please refer to this article, [Azure.Identity Environment Variables](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables) here. We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used. By default, it will use the `-ClientId` specified in `AZURE_CLIENT_ID` environment variable.
 
 ```yaml
 Type: SwitchParameter
@@ -821,7 +819,7 @@ Custom Microsoft Graph endpoint to be used if we are using Azure Custom environm
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive, Access Token, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable
 Aliases:
 
 Required: False
@@ -836,7 +834,7 @@ Custom Azure AD login endpoint to be used if we are using Azure Custom environme
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, PnP Management Shell / DeviceLogin, Interactive, Access Token, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable
 Aliases:
 
 Required: False

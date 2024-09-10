@@ -10,8 +10,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupYammerCommunity")]
-    [RequiredMinimalApiPermissions("Group.Read.All")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.Read.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class GetMicrosoft365GroupYammerCommunity : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]

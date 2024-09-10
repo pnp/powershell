@@ -12,7 +12,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Set, "PnPAzureADAppSitePermission")]
-    [RequiredMinimalApiPermissions("Sites.FullControl.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Sites.FullControl.All")]
     [Alias("Set-PnPEntraIDAppSitePermission")]
     public class SetPnPAzureADAppSitePermission : PnPGraphCmdlet
     {

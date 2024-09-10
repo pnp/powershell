@@ -10,12 +10,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document [#4238](https://github.com/pnp/powershell/pull/4238)
+
 ### Changed
 
 ### Fixed
 
-- Fixed issue with `Set-PnPSearchExternalSchema` cmdlet when used with the `-Wait` parameter throwing a warning
-  
+- Fixed issue with `Set-PnPSearchExternalSchema` cmdlet when used with the `-Wait` parameter throwing a warning [#4253](https://github.com/pnp/powershell/pull/4253)
+- Fix `Get-PnPSearchExternalSchema` not returning the label properly for a property linked to 'iconUrl' [#4245](https://github.com/pnp/powershell/pull/4245)
+
 ### Removed
 
 ### Contributors

@@ -6,7 +6,7 @@ using System.Net.Http.Json;
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.New, "PnPSearchExternalConnection")]
-    [RequiredMinimalApiPermissions("ExternalConnection.ReadWrite.OwnedBy")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/ExternalConnection.ReadWrite.OwnedBy")]
     [OutputType(typeof(Model.Graph.MicrosoftSearch.ExternalConnection))]
     public class NewSearchExternalConnection : PnPGraphCmdlet
     {
