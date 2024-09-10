@@ -19,7 +19,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class InvokeTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";

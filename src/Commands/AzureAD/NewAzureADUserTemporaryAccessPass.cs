@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureADUserTemporaryAccessPass")]
-    [RequiredMinimalApiPermissions("UserAuthenticationMethod.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/UserAuthenticationMethod.ReadWrite.All")]
     [Alias("New-PnPEntraIDUserTemporaryAccessPass")]
     public class NewAzureADUserTemporaryAccessPass : PnPGraphCmdlet
     {

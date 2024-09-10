@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsData.Update, "PnPAvailableSiteClassification")]
-    [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
     [Alias("Update-SiteClassification")]
     [WriteAliasWarning("Please use 'Update-PnPAvailableSiteClassification'. The alias 'Update-PnPSiteClassification' will be removed in a future release.")]
     [OutputType(typeof(void))]
