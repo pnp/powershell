@@ -1,5 +1,4 @@
-using System;
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.Graph
 {
@@ -11,19 +10,19 @@ namespace PnP.PowerShell.Commands.Model.Graph
         /// <summary>
         /// Unique identifier of the operation
         /// </summary>
-        [JsonProperty("id")]
-        public Guid? Id { get; set; }
+        [JsonPropertyName("id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// The status of the operation
         /// </summary>
-        [JsonProperty("status")]
+        [JsonPropertyName("status")]
         public string Status { get; set; }
 
         /// <summary>
         /// The error message, if anything went wrong
         /// </summary>
-        [JsonProperty("error")]
+        [JsonPropertyName("error")]
         public string Error { get; set; }
     }
 }
