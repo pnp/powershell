@@ -15,7 +15,7 @@ Adds site URLs to the allowed list when Restricted SharePoint Search is enabled.
 ## SYNTAX
 
 ```powershell
-Add-PnPTenantRestrictedSearchAllowedList [-SitesListFileUrl <String>] [-SiteList <String[]>] [-ContainsHeaders <SwitchParameter>] [-Connection <PnPConnection>] 
+Add-PnPTenantRestrictedSearchAllowedList [-SitesListFileUrl <String>] [-SitesList <String[]>] [-ContainsHeaders <SwitchParameter>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -40,7 +40,7 @@ Adds site URLs to the allowed list from a CSV file.
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPTenantRestrictedSearchAllowedList  @("https://contoso.sharepoint.com/sites/Company311","https://contoso.sharepoint.com/sites/contosoportal")
+Add-PnPTenantRestrictedSearchAllowedList -SitesList @("https://contoso.sharepoint.com/sites/Company311","https://contoso.sharepoint.com/sites/contosoportal")
 ```
 Adds the specified sites to the allowed list.
 

@@ -8,46 +8,37 @@ using System;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Add, "PnPTenantRestrictedSearchAllowedList")]
-    public class AddTenantRestrictedSearchAllowedList : PnPAdminCmdlet,IDynamicParameters
+    [Cmdlet(VerbsCommon.Add, "PnPTenantRestrictedSearchAllowedList", DefaultParameterSetName = ParameterSet_SiteList)]
+    public class AddTenantRestrictedSearchAllowedList : PnPAdminCmdlet
     {
-        private const string ParameterSet_file = "file";
-        private FileParameters _fileParameters;
+        private const string ParameterSet_SiteList = "SiteList";
+        private const string ParameterSet_File = "File";
 
-        [Parameter(Mandatory = false)]
-        public string[] SiteList;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SiteList)]
+        public string[] SitesList;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_File)]
         public string SitesListFileUrl;
-        public object GetDynamicParameters()
-        {
-            if (!ParameterSpecified(nameof(SiteList)) && !ParameterSpecified(nameof(SitesListFileUrl)))
-            {
-                throw new ArgumentException("Parameter set cannot be resolved using the specified named parameters.");
-            }
-            else if (ParameterSpecified(nameof(SitesListFileUrl)))
-            {
-                _fileParameters = new FileParameters();
-                return _fileParameters;
-            }
-            
-            return null;        
-        }
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_File)]
+        public SwitchParameter ContainsHeader;
+
         protected override void ExecuteCmdlet()
         {
             IList<string> _sitelist = null;
-            if (_fileParameters != null)
+            if (ParameterSetName == ParameterSet_File)
             {
                 _sitelist = ReadFileContents();
             }
-            else if (SiteList != null)
+            else if (ParameterSetName == ParameterSet_SiteList)
             {
-                _sitelist = SiteList;
+                _sitelist = SitesList;
             }
             else
             {
                 throw new ArgumentException("Parameter set cannot be resolved using the specified named parameters.");
             }
+
             if (_sitelist == null)
             {
                 throw new InvalidOperationException("SiteList cannot be null");
@@ -57,10 +48,10 @@ namespace PnP.PowerShell.Commands.Files
             AdminContext.ExecuteQueryRetry();
         }
 
-         public IList<string> ReadFileContents()
-         {
+        private IList<string> ReadFileContents()
+        {
             var lines = System.IO.File.ReadAllLines(SitesListFileUrl);
-            if (_fileParameters.ContainsHeader)
+            if (ContainsHeader)
             {
                 lines = lines.Skip(1).ToArray();
             }
@@ -76,10 +67,5 @@ namespace PnP.PowerShell.Commands.Files
 
             return lines.ToList();
         }
-        public class FileParameters
-        {
-            [Parameter(Mandatory = false,ParameterSetName = ParameterSet_file)]
-            public SwitchParameter ContainsHeader;
-        }   
     }
 }
