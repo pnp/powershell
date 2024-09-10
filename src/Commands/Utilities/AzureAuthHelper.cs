@@ -31,8 +31,8 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static string AuthenticateDeviceLogin(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string clientId = "1950a258-227b-4e31-a9cf-717495945fc2", string customGraphEndpoint = "")
         {
             try
-            {
-                using (var authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, (result) =>
+            {   
+                using (var authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin("1950a258-227b-4e31-a9cf-717495945fc2", (result) =>
                 {
 
                     if (Utilities.OperatingSystem.IsWindows() && !noPopup)

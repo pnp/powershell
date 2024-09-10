@@ -6,8 +6,27 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [Current nightly]
 
-## [Current Nightly]
+### Added
+
+- Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document [#4238](https://github.com/pnp/powershell/pull/4238)
+- Added `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, `Get-PnPPriviledgedIdentityManagementRole` and `Enable-PnPPriviledgedIdentityManagement` cmdlets to allow scripting of enabling Privileged Identity Management roles for a user [#4039](https://github.com/pnp/powershell/pull/4039)
+
+### Changed
+
+### Fixed
+
+- Fixed issue with `Set-PnPSearchExternalSchema` cmdlet when used with the `-Wait` parameter throwing a warning [#4253](https://github.com/pnp/powershell/pull/4253)
+- Fix `Get-PnPSearchExternalSchema` not returning the label properly for a property linked to 'iconUrl' [#4245](https://github.com/pnp/powershell/pull/4245)
+
+### Removed
+
+### Contributors
+
+- Koen Zomers [koenzomers]
+
+## [2.12.0]
 
 ### Added
 
@@ -20,6 +39,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- *Release due to deprecation/shutdown of support for the PnP Management Shell* Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to registration your own application
 - Added output for clientid/Entra App Id when using `-Verbose` with `Connect-PnPOnline`
 - Added `-OutputTask` switch to `Add-PnPPlannerTask` cmdlet which will return the just created task so inspect its ID, ETag, etc. values.
 - Improved `Invoke-PnPGraphMethod` cmdlet now to also support a hashtable value for the AdditionalHeaders parameter besides the current Dictionary<string,string>. See documentation.
@@ -73,6 +93,7 @@ Fixed app registration on Windows
 ## [2.8.0]
 
 ### Added
+
 - Added in depth verbose logging to all cmdlets which is revealed by adding `-Verbose` to the cmdlet execution [#4023](https://github.com/pnp/powershell/pull/4023)
 - Added `-CoreDefaultShareLinkScope` and `-CoreDefaultShareLinkRole` parameters to `Set-PnPTenant` cmdlet. [#4067](https://github.com/pnp/powershell/pull/4067)
 - Added `-Identity` parameter to the `Get-PnPFileSharingLink` cmdlet allowing for the retrieval of sharing links based on the file's unique identifier, file instance, listitem instance, or server relative path and supporting retrieval of sharing links for multiple files, such as all in a document library [#4093](https://github.com/pnp/powershell/pull/4093)
@@ -83,12 +104,14 @@ Fixed app registration on Windows
 - Added `-Folder` parameter to `Add-PnPDocumentSet` cmdlet to allow creation of document sets in a specific folder instead of the list root folder. [#4029](https://github.com/pnp/powershell/pull/4029)
   
 ### Fixed
+
 - `Get-PnPTeamsChannel` and `Get-PnPTeamsPrimaryChannel` returning `unknownFutureValue` as MembershipType instead of `shared` [#4054](https://github.com/pnp/powershell/pull/4054)
 - Fixed using a AzureADUserPipeBind with `New-PnPAzureADUserTemporaryAccessPass`, `Get-PnPAvailableSensitivityLabel` and `Set-PnPSearchExternalItem` to not work when passing in the User ID GUID [#4123](https://github.com/pnp/powershell/pull/4123)
 - Fixed issue with `Get-PnPWebHeader` cmdlet not working properly in Group connected SharePoint sites. [#4147](https://github.com/pnp/powershell/pull/4147)
 - Fixed issue with `Get-PnPTeamsChannelFilesFolder` cmdlet to work properly for channels having data more than 2 GB. [#4127](https://github.com/pnp/powershell/pull/4127)
 
 ### Changed
+
 - Fixed `Update-PnPTeamsUser` cmdlet to throw a better error message when after a user is removed from a Team but is still in the connected M365 group, for the few seconds that the 2 are out of sync. [#4068](https://github.com/pnp/powershell/pull/4068)
 - Changed `-FileUrl` on `Get-PnPFileSharingLink` to become obsolete. Please switch to using `-Identity` instead, passing in the same value [#4093](https://github.com/pnp/powershell/pull/4093)
 

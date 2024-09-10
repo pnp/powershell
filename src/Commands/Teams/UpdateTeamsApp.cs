@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsData.Update, "PnPTeamsApp")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class UpdateTeamsApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

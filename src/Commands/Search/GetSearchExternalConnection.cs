@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "PnPSearchExternalConnection")]
-    [RequiredMinimalApiPermissions("ExternalConnection.ReadWrite.OwnedBy")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/ExternalConnection.ReadWrite.OwnedBy")]
     [OutputType(typeof(IEnumerable<Model.Graph.MicrosoftSearch.ExternalConnection>))]
     [OutputType(typeof(Model.Graph.MicrosoftSearch.ExternalConnection))]
     public class GetSearchExternalConnection : PnPGraphCmdlet

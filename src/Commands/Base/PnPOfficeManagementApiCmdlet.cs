@@ -39,6 +39,5 @@ namespace PnP.PowerShell.Commands.Base
         /// Root URL to the Office 365 Management API
         /// </summary>
         protected string ApiRootUrl => $"https://manage.office.com/api/v1.0/{TenantId}/";
-        
     }
 }
