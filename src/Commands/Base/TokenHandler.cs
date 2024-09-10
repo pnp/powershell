@@ -8,6 +8,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -32,7 +33,7 @@ namespace PnP.PowerShell.Commands.Base
 
             // Check if the token contains an idType
             if (idType == null) return Enums.IdType.Unknown;
-            
+
             // Parse the idType to the corresponding enum value
             return idType.Value.ToLowerInvariant() switch
             {
@@ -62,30 +63,58 @@ namespace PnP.PowerShell.Commands.Base
         /// Returns the permission scopes of the oAuth JWT token being passed in
         /// </summary>
         /// <param name="accessToken">The oAuth JWT token</param>
-        /// <returns>String array containing the scopes</returns>
+        /// <returns>String array containing the scopes in the format <audience>/<scope></returns>
         internal static string[] ReturnScopes(string accessToken)
         {
             var decodedToken = new JwtSecurityToken(accessToken);
 
+            // Retrieve the audience the token was issued for
+            var audience = decodedToken.Audiences.FirstOrDefault();
+
             // The scopes can either be stored in the roles or scp claim, so we examine both
-            var scopes = decodedToken.Claims.Where(c => c.Type == "roles" || c.Type == "scp").SelectMany(r => r.Value.Split(" "));
+            var scopes = decodedToken.Claims.Where(c => c.Type == "roles" || c.Type == "scp").SelectMany(r => r.Value.Split(" ").Select(r => $"{audience}/{r}"));
             return scopes.ToArray();
         }
 
         /// <summary>
-        /// Ensures the oAuth JWT token holds the permissions in it (roles) that match with with the required permissions for the cmdlet provided through the attributes on the cmdlet
+        /// Ensures the oAuth JWT token holds the permissions in it (roles) that match with with the required permissions for the cmdlet provided through the attributes on the cmdlet that have the same audience
         /// </summary>
         /// <param name="cmdletType">The cmdlet that will be executed. Used to check for the permissions attribute.</param>
         /// <param name="accessToken">The oAuth JWT token that needs to be validated for its roles</param>
-        /// <param name="throwExceptionIfPermissionsNotPresent">Have this function throw an exception if the required permissions in the permission attribute do not match with the available permissions in the access token (true). Defaults to false.</param>
         /// <exception cref="PSArgumentException">Thrown if the permissions set through the permissions attribute do not match the roles in the JWT token</exception>
-        internal static void EnsureRequiredPermissionsAvailableInAccessToken(Type cmdletType, string accessToken)
+        internal static void EnsureRequiredPermissionsAvailableInAccessTokenAudience(Cmdlet cmdlet, string accessToken)
         {
-            var permissionEvaluationResponse = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdletType, accessToken);
-            if (permissionEvaluationResponse.RequredPermissionsPresent) return;
-            
-            throw new PSArgumentException($"Authorization Denied: Token used does not contain permission scope{(permissionEvaluationResponse.MissingPermissions.Length != 1 ? "s" : "")} {string.Concat(permissionEvaluationResponse.MissingPermissions, ", ")}");
-        }
+            // Decode the JWT token
+            var decodedToken = new JwtSecurityToken(accessToken);
+
+            // Retrieve the audience the token was issued for
+            var audience = decodedToken.Audiences.FirstOrDefault();            
+
+            // Validate the permissions in the access token against the permissions required for the cmdlet through the attributes provided at the class level of the cmdlet
+            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet, accessToken, audience);
+
+            // If any of the permission evaluations has the required permissions present, we can return and are good to go permission-wise
+            if (permissionEvaluationResponses.Any(p => p.RequiredPermissionsPresent)) return;
+
+            // Retrieve the scopes we have in our AccessToken
+            var scopes = ReturnScopes(accessToken);
+
+            // None of the permission attributes matched the permissions in the access token, so we throw an exception
+            var exceptionTextBuilder = new StringBuilder();
+            exceptionTextBuilder.AppendLine($"Authorization Denied: token misses the following permission scope(s) on the {audience} audience:");
+
+            for (int i = 0; i < permissionEvaluationResponses.Length; i++)
+            {
+                exceptionTextBuilder.AppendLine($"{string.Join(" and ", permissionEvaluationResponses[i].MissingPermissions.Select(s => s[(audience != null ? audience.Length + 1 : 0)..]))}");
+
+                if(i < permissionEvaluationResponses.Length - 1)
+                {
+                    exceptionTextBuilder.AppendLine(" or ");
+                }
+            }
+
+            throw new PSArgumentException(exceptionTextBuilder.ToString());
+        }        
 
         /// <summary>
         /// Returns an oAuth JWT access token
@@ -100,12 +129,7 @@ namespace PnP.PowerShell.Commands.Base
             if (connection == null) return null;
 
             string accessToken = null;
-            if (connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-            {
-                cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Managed Identity");
-                accessToken = GetManagedIdentityTokenAsync(cmdlet, connection.HttpClient, $"{audience.TrimEnd('/')}/", connection.UserAssignedManagedIdentityObjectId, connection.UserAssignedManagedIdentityClientId, connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-            }
-            else if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+            if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
             {
                 cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Azure AD Workload Identity");
                 accessToken = GetAzureADWorkloadIdentityTokenAsync(cmdlet, $"{audience.TrimEnd('/')}/.default").GetAwaiter().GetResult();
@@ -124,65 +148,14 @@ namespace PnP.PowerShell.Commands.Base
                             throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
                         }
 
-                        string[] requiredScopes = null;
-                        RequiredMinimalApiPermissions requiredScopesAttribute = null;
-                        if (cmdlet != null && cmdlet.GetType() != null)
-                        {
-                            requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
-                        }
-                        if (requiredScopesAttribute != null)
-                        {
-                            requiredScopes = requiredScopesAttribute.PermissionScopes;
-                        }
-                        if (contextSettings.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
-                        {
-                            requiredScopes = new[] { audience }; // override for app only
-                        }
-                        if (requiredScopes == null && !string.IsNullOrEmpty(audience))
-                        {
-                            requiredScopes = new[] { audience };
-                        }
-
-                        cmdlet.WriteVerbose($"Acquiring oAuth token for {(requiredScopes.Length != 1 ? requiredScopes.Length + " " : "")}permission scope{(requiredScopes.Length != 1 ? "s" : "")} {string.Join(", ", requiredScopes)}");
-                        accessToken = authManager.GetAccessTokenAsync(requiredScopes).GetAwaiter().GetResult();
-
-                        // Retrieve the scopes from the access token
-                        var scopes = ReturnScopes(accessToken);
-
-                        // Perform logging on the scopes in the retrieved access token
-                        if (scopes.Length > 0)
-                        {
-                            cmdlet.WriteVerbose($"Access token acquired containing the following {(scopes.Length != 1 ? scopes.Length + " " : "")}{RetrieveTokenType(accessToken).ToString().ToLowerInvariant()} scope{(scopes.Length == 1 ? "" : "s")}: {string.Join(", ", scopes)}");
-                        }
-                        else
-                        {
-                            cmdlet.WriteVerbose($"No scopes could be determined from the access token");
-                        }
+                        accessToken = authManager.GetAccessToken(audience);
                     }
                 }
             }
-
             if (string.IsNullOrEmpty(accessToken))
             {
                 cmdlet.WriteVerbose($"Unable to acquire token for resource {connection.GraphEndPoint}");
                 return null;
-            }
-
-            var permissionEvaluation = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet.GetType(), accessToken);
-            if (!permissionEvaluation.RequredPermissionsPresent)
-            {
-                cmdlet.WriteVerbose($"Current access might not have the required permissions to execute this cmdlet. Required {(permissionEvaluation.RequiredPermissions.Length != 1 ? $"{permissionEvaluation.RequiredPermissions.Length} " : "")}permission{(permissionEvaluation.RequiredPermissions.Length != 1 ? "s" : "")}: {string.Join(", ", permissionEvaluation.RequiredPermissions)}. Missing {(permissionEvaluation.MissingPermissions.Length != 1 ? $"{permissionEvaluation.MissingPermissions.Length} " : "")}permission{(permissionEvaluation.MissingPermissions.Length != 1 ? "s" : "")}: {string.Join(", ", permissionEvaluation.MissingPermissions)}.");
-            }
-            else
-            {
-                if (permissionEvaluation.RequiredPermissions.Length > 0)
-                {
-                    cmdlet.WriteVerbose($"Required {(permissionEvaluation.RequiredPermissions.Length != 1 ? $"{permissionEvaluation.RequiredPermissions.Length} " : "")}permission{(permissionEvaluation.RequiredPermissions.Length != 1 ? "s" : "")} to execute this cmdlet {(permissionEvaluation.RequiredPermissions.Length != 1 ? "are" : "is")} present: {string.Join(", ", permissionEvaluation.RequiredPermissions)}");
-                }
-                else
-                {
-                    cmdlet.WriteVerbose($"Required permissions could not be evaluated as they haven't been defined on the cmdlet {cmdlet.GetType()}");
-                }
             }
 
             return accessToken;
@@ -352,10 +325,13 @@ namespace PnP.PowerShell.Commands.Base
             var clientID = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
             var tokenPath = Environment.GetEnvironmentVariable("AZURE_FEDERATED_TOKEN_FILE");
             var tenantID = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
+            var host = Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST");
 
             var _confidentialClientApp = ConfidentialClientApplicationBuilder.Create(clientID)
-                .WithClientAssertion(ReadJWTFromFS(tokenPath))
-                .WithTenantId(tenantID).Build();
+                .WithAuthority(host, tenantID)
+                .WithClientAssertion(() => ReadJWTFromFS(tokenPath))
+                .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
+                .Build();
 
             AuthenticationResult result = null;
             try
@@ -378,7 +354,7 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSInvalidOperationException(ex.Message);
             }
             catch (MsalServiceException ex)
-            {                
+            {
                 // Some other generic exception
                 throw new PSInvalidOperationException(ex.Message);
             }

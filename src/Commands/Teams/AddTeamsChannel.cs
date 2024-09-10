@@ -10,7 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsChannel", DefaultParameterSetName = ParameterSET_STANDARD)]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class AddTeamsChannel : PnPGraphCmdlet
     {
         private const string ParameterSET_PRIVATE = "Private channel type";

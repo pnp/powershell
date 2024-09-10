@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands
                 HeaderLayout = CurrentWeb.HeaderLayout,
                 HeaderEmphasis = CurrentWeb.HeaderEmphasis,
                 HideTitleInHeader = CurrentWeb.HideTitleInHeader,
-                HeaderBackgroundImageUrl = UrlUtilities.UrlDecode(CurrentWeb.AllProperties["BackgroundImageUrl"] as string)
+                HeaderBackgroundImageUrl = CurrentWeb.AllProperties.FieldValues.ContainsKey("BackgroundImageUrl") ? UrlUtilities.UrlDecode(CurrentWeb.AllProperties["BackgroundImageUrl"] as string) : string.Empty
             };
             WriteObject(response);
         }

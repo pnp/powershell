@@ -56,15 +56,17 @@ namespace PnP.PowerShell.Commands.Files
                 if (folder == null)
                 {
                     WriteError(new ErrorRecord(new Exception("Folder not found"), "1", ErrorCategory.ObjectNotFound, null));
+                    return;
                 }
 
                 // Ensure we have access to the ListItemAllFields property of the folder
                 folder.EnsureProperty(f => f.ListItemAllFields);
 
                 // Validate that the ListItemAllFields contains the Id which represents the ListItem ID equivallent for this folder
-                if (folder.ListItemAllFields.Id <= 0)
+                if (folder.ListItemAllFields.ServerObjectIsNull.GetValueOrDefault(true) || folder.ListItemAllFields.Id <= 0)
                 {
                     WriteError(new ErrorRecord(new Exception("ListItemId on folder not found"), "1", ErrorCategory.InvalidData, null));
+                    return;
                 }
 
                 // Get the list item which is the equivallent of the folder

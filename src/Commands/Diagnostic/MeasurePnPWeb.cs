@@ -17,6 +17,7 @@ namespace PnP.PowerShell.Commands.Diagnostic
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
         public WebPipeBind Identity;
 
+        [Alias("Recurse")]
         [Parameter(Mandatory = false)]
         public SwitchParameter Recursive;
 

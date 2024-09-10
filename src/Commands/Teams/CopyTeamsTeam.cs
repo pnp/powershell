@@ -14,7 +14,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Copy, "PnPTeamsTeam")]
-    [RequiredMinimalApiPermissions("Team.Create")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Team.Create")]
     public class CopyTeamsTeam : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

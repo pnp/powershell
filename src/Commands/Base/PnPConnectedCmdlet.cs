@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Base
                 switch (ex)
                 {
                     case Model.Graph.GraphException gex:
-                        errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {gex.Error.Message}";
+                        errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {(gex.Error != null ? gex.Error.Message : gex.HttpResponse.Content.ReadAsStringAsync().Result)}";
                         break;
 
                     case Core.SharePointRestServiceException rex:
@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
-                if (!ParameterSpecified("ErrorAction") || !(new [] { "stop", "ignore", "silentlycontinue" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant())))
+                if (!(new [] { "stop", "ignore", "silentlycontinue" }.Contains(ErrorActionSetting.ToLowerInvariant())))
                 {
                     throw new PSInvalidOperationException(errorMessage);
                 }
@@ -107,7 +107,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 // With ErrorAction:Ignore, the $Error variable should not be populated with the error, otherwise it should
-                if (!ParameterSpecified("ErrorAction") || !new[] { "ignore" }.Contains(MyInvocation.BoundParameters["ErrorAction"].ToString().ToLowerInvariant()))
+                if (!new[] { "ignore" }.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
                     ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
                     ex.Data["TimeStampUtc"] = DateTime.UtcNow;

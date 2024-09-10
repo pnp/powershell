@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureADUserTemporaryAccessPass")]
-    [RequiredMinimalApiPermissions("UserAuthenticationMethod.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/UserAuthenticationMethod.ReadWrite.All")]
     [Alias("New-PnPEntraIDUserTemporaryAccessPass")]
     public class NewAzureADUserTemporaryAccessPass : PnPGraphCmdlet
     {
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Graph
         {
             var accessPass = UsersUtility.RequestTemporaryAccessPass(
                                 accessToken: AccessToken,
-                                userId: Identity.User?.Id?.ToString() ?? Identity.Upn ?? Identity.UserId,
+                                userId: Identity.User?.Id?.ToString() ?? Identity.Upn ?? (Identity.UserId.HasValue ? Identity.UserId.Value.ToString() : null),
                                 startDateTime: StartDateTime,
                                 lifeTimeInMinutes: LifeTimeInMinutes,
                                 isUsableOnce: IsUsableOnce, azureEnvironment: Connection.AzureEnvironment);

@@ -31,6 +31,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
+            _ = Identity.GetPage(Connection) ?? throw new Exception($"Page '{Identity?.Name}' does not exist");
+
             ExtractConfiguration extractConfiguration = null;
             if (ParameterSpecified(nameof(Configuration)))
             {

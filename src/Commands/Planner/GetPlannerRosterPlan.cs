@@ -7,7 +7,9 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerRosterPlan", DefaultParameterSetName = ParameterSet_BYROSTER)]
-    [RequiredMinimalApiPermissions("Tasks.Read")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.Read")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite")]
+
     public class GetPlannerRosterPlan : PnPGraphCmdlet
     {
         private const string ParameterSet_BYUSER = "Get by user";
@@ -26,7 +28,7 @@ namespace PnP.PowerShell.Commands.Planner
                 case ParameterSet_BYUSER:
                     WriteObject(PlannerUtility.GetRosterPlansByUser(this, Connection, AccessToken, User), true);
                     break;
-                    
+
                 case ParameterSet_BYROSTER:
                     var plannerRoster = Identity.GetPlannerRoster(this, Connection, AccessToken);
                     if (plannerRoster == null)

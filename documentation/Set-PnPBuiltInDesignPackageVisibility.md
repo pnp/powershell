@@ -15,7 +15,7 @@ Sets the visibility of the available built-in Design Packages at the moment of s
 ## SYNTAX
 
 ```powershell
-Set-PnPBuiltInDesignPackageVisibility [-IsVisible] <Boolean> [-DesignPackage] <DesignPackageType>
+Set-PnPBuiltInDesignPackageVisibility [-IsVisible] <Boolean> [-DesignPackage] <DesignPackageType> [-Connection <PnPConnection>]
  
 ```
 
@@ -39,6 +39,20 @@ Set-PnPBuiltInDesignPackageVisibility -DesignPackage TeamSite -IsVisible:$true
 This example sets the visibility state of TeamSite design package to true.
 
 ## PARAMETERS
+
+### -Connection
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -DesignPackage
 Name of the design package, available names are

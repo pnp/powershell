@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPlannerRosterMember")]
-    [RequiredMinimalApiPermissions("Tasks.ReadWrite")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite")]
     public class RemovePlannerRosterMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
