@@ -20,7 +20,7 @@ Add-PnPTenantRestrictedSearchAllowedList [-SitesListFileUrl <String>] [-SitesLis
 
 ## DESCRIPTION
 
-Adds site URLs to the allowed list when Restricted SharePoint Search is enabled. The URLs can be provided directly as a string array or read from a CSV file.
+Adds site URLs to the allowed list when Restricted SharePoint Search is enabled. The URLs can be provided directly as a string array or read from a CSV file. At present, a maximum of 100 sites can be added to the allowed list.
 
 ## EXAMPLES
 
@@ -65,9 +65,9 @@ Specifies the path of the CSV file that contains a list of site URLs to be added
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: File
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -79,7 +79,7 @@ Specifies a collection of sites to add to the allowed list.
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
+Parameter Sets: SiteList
 
 Required: True
 Position: Named
@@ -98,11 +98,12 @@ Parameter Sets: File
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ## RELATED LINKS
 
+[How does Restricted SharePoint Search work?](https://learn.microsoft.com/sharepoint/restricted-sharepoint-search)
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

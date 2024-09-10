@@ -6,7 +6,7 @@ using System.Management.Automation;
 using System.Linq;
 using System;
 
-namespace PnP.PowerShell.Commands.Files
+namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantRestrictedSearchAllowedList", DefaultParameterSetName = ParameterSet_SiteList)]
     public class AddTenantRestrictedSearchAllowedList : PnPAdminCmdlet
@@ -14,10 +14,10 @@ namespace PnP.PowerShell.Commands.Files
         private const string ParameterSet_SiteList = "SiteList";
         private const string ParameterSet_File = "File";
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SiteList)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SiteList)]
         public string[] SitesList;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_File)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_File)]
         public string SitesListFileUrl;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_File)]
@@ -44,6 +44,11 @@ namespace PnP.PowerShell.Commands.Files
                 throw new InvalidOperationException("SiteList cannot be null");
             }
 
+            if(_sitelist.Count > 100)
+            {
+                WriteWarning($"The maximum number of sites that can be added to the allowed list is 100. You have specified {_sitelist.Count} sites. Will try to add them anyway.");
+            }
+
             Tenant.AddSPORestrictedSearchAllowedList(_sitelist);
             AdminContext.ExecuteQueryRetry();
         }
@@ -58,10 +63,9 @@ namespace PnP.PowerShell.Commands.Files
 
             foreach (var line in lines)
             {
-                var columns = line.Split(',');
-                if (columns.Length != 1)
+                if (line.Contains(','))
                 {
-                    throw new InvalidOperationException("File should only contain one column");
+                    throw new InvalidOperationException("File should only contain one column and no commas");
                 }
             }
 
