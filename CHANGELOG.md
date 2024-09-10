@@ -10,6 +10,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document [#4238](https://github.com/pnp/powershell/pull/4238)
+
 ### Changed
 
 ### Fixed
@@ -29,7 +31,6 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `New-PnPSearchExternalConnection`, `Get-PnPSearchExternalConnection`, `Set-PnPSearchExternalConnection` and `Remove-PnPSearchExternalConnection` cmdlets to manage external connections for Microsoft Search [#4231](https://github.com/pnp/powershell/pull/4231)
 - Added `Get-PnPSearchExternalSchema` and `Set-PnPSearchExternalSchema` cmdlets to manage the schema for external connections for Microsoft Search [#4231](https://github.com/pnp/powershell/pull/4231)
 - Added `OverrideSharingCapability`, `RequestFilesLinkExpirationInDays` & `RequestFilesLinkEnabled` parameters to `Set-PnPTenantSite` cmdlet.
-- Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document [#4238](https://github.com/pnp/powershell/pull/4238)
 
 ### Changed
 
