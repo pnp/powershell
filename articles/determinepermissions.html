@@ -115,7 +115,7 @@
 <p>For an app only scenario, you will have to follow a different approach, as there is no way for it to interactively request for more permissions. If you try to execute a cmdlet for which the Entra ID application registration does not have permissions, it will return you an access denied notice.</p>
 <p>What you could try if you run into this, is to add <code>-Verbose</code> to your cmdlet. For many, but unfortunately not all, cmdlets, this will reveal which permissions it receives through the application registration and which permissions it actually needs to be able to execute properly. See the following example:</p>
 <p><img src="../images/determinepermissions/entraid_permissions_accessdenied_verbose.png" alt="image"></p>
-<p>In this scenario, you now know you need to add <code>Group.Read.All</code> on the applications scope of Microsoft Graph in your application registration in order to give it sufficient rights to execute this cmdlet.</p>
+<p>In this scenario, you now know you need to add <code>Application.Read.All</code> on the applications scope of Microsoft Graph in your application registration in order to give it sufficient rights to execute this cmdlet.</p>
 <h2 id="help-i-cant-figure-out-which-permissions-i-need">Help, I can't figure out which permissions I need</h2>
 <p>As mentioned above, unfortunately, not for all cmdlets it will be clear which exact (minimum) permissions will be needed. Not even when using <code>-Verbose</code>. To give some guidance which permissions you could try for a minimum permissions approach, follow the table below.</p>
 <table>

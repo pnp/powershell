@@ -7188,6 +7188,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPPowerAppByPassConsent.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPPowerAppByPassConsent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPPropertyBagValue.md",
       "output": {
         ".html": {

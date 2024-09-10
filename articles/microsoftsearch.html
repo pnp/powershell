@@ -122,7 +122,7 @@
 <p><img src="../images/microsoftsearch/create_externalconnection_created.png" alt="image"></p>
 </li>
 </ol>
-<h2 id="step-2-creating-a-search-schema">Step 2: Creating a search schema</h2>
+<h3 id="step-2-creating-a-search-schema">Step 2: Creating a search schema</h3>
 <p>The second step consists out of creating a search schema for your custom connector. The search schema simply tells Microsoft Search what kind of data it can expect and through which of this data it can search to look for matches to what end users will be searching for. I.e. will it have a title, description, person last modifying the content, priority, or other fields. This is totally up to you to define based on what makes sense with regards to the data source you're going to be indexing from.</p>
 <ol>
 <li>In the PowerShell session we still have open from the first step, we're going to use the <a href="/cmdlets/Set-PnPSearchExternalSchema.md">Set-PnPSearchExternalSchema</a> cmdlet to create the schema. If you later on want to update it, you can use the same cmdlet with the same parameters, hence the Set verb and not the New verb being used. The schema in the below sample is defined as JSON in text, so you can easily modify it to match your scenario. Ensure that the name for ConnectionId matches with the value you have used for Identity when creating the connection.</li>
