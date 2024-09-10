@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
     [Cmdlet(VerbsCommon.Set, "PnPPowerAppByPassConsent")]
-    [RequiredMinimalApiPermissions("https://management.azure.com/.default")]
+    [RequiredMinimalApiPermissions("https://management.azure.com/user_impersonation", "https://service.powerapps.com/user")]
     public class PnPPowerAppByPassConsent : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
@@ -50,12 +50,11 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 
             WriteVerbose($"Setting specific PowerApp with the provided name '{appName}' consent within the environment '{environmentName}'");
 
-            var powerAppsAccessToken = TokenHandler.GetAccessToken(this, "https://service.powerapps.com//.default", Connection);
             var postData = new
             {
                 bypassconsent = Enabled.ToString()
             };
-            var response = RestHelper.Post(Connection.HttpClient, $"{powerAppsUrl}/providers/Microsoft.PowerApps/scopes/admin/environments/{environmentName}/apps/{appName}/setPowerAppConnectionDirectConsentBypass?api-version=2021-02-01", powerAppsAccessToken, payload: postData);
+            var response = RestHelper.Post(Connection.HttpClient, $"{powerAppsUrl}/providers/Microsoft.PowerApps/scopes/admin/environments/{environmentName}/apps/{appName}/setPowerAppConnectionDirectConsentBypass?api-version=2021-02-01", PowerAppsServiceAccessToken, payload: postData);
             WriteObject(response, false);
         }
     }

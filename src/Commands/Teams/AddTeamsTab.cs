@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsTab")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class AddTeamsTab : PnPGraphCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
