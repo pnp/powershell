@@ -59,7 +59,7 @@ What you could try if you run into this, is to add `-Verbose` to your cmdlet. Fo
 
 ![image](../images/determinepermissions/entraid_permissions_accessdenied_verbose.png)
 
-In this scenario, you now know you need to add `Group.Read.All` on the applications scope of Microsoft Graph in your application registration in order to give it sufficient rights to execute this cmdlet.
+In this scenario, you now know you need to add `Application.Read.All` on the applications scope of Microsoft Graph in your application registration in order to give it sufficient rights to execute this cmdlet.
 
 ## Help, I can't figure out which permissions I need
 
