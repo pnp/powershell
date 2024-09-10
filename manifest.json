@@ -9348,6 +9348,36 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/endresult_all.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/endresult_all.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/endresult_copilot.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/endresult_copilot.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/microsoftsearch/endresult_vertical.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/microsoftsearch/endresult_vertical.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/microsoftsearch/resulttype_add.png",
       "output": {
         "resource": {
