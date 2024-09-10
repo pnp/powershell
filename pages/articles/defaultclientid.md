@@ -8,17 +8,21 @@ You can set an environment variable on your machine or in your profile to defaul
 
 As the value for the environment variable, set the GUID of the Client Id / App Id from Entra ID of [your own App Registration](registerapplication.md).
 
-### Steps for Windows
+### Steps for Windows using PowerShell
 
-To create an environment variable on a Windows machine, follow the below steps.
+Simply run this line:
 
-1. Right click on the Windows start icon on your Windows taskbar and click on _System_
+```powershell
+[System.Environment]::SetEnvironmentVariable('ENTRAID_CLIENT_ID', '<client id of your Entra ID App Registration>', [EnvironmentVariableTarget]::User)
+```
+
+### Steps for Windows using the user interface
+
+To create a persistent environment variable on a Windows machine, follow the below steps.
+
+1. Open the Windows start menu and search for _Environment variables_ and click on _Edit the system environment variables_
    
-   ![image](../images/configuration/configuration_defaultclientid_windowsmenu_system.png)
-
-1. Click on _Advanced system settings_
-   
-   ![image](../images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings.png)
+   ![image](../images/configuration/configuration_defaultclientid_windowsmenu_environmentvariables.png)
 
 1. Click on _Environment Variables_
    
@@ -34,6 +38,42 @@ To create an environment variable on a Windows machine, follow the below steps.
    
    ![image](../images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings_envvariables_addentry.png)
    
+### Steps for Linux
+
+To create a persistent environment variable on a Linux machine, follow the below steps.
+
+1. Connect to your Linux machine
+
+1. Execute:
+
+   ```bash
+   nano ~/.bashrc
+   ```
+
+1. Hit _CTRL+END_ to jump to the end of the file and add the line:
+
+   ```
+   export ENTRAID_CLIENT_ID=<client id of your Entra ID App Registration>
+   ```
+
+   ![image](../images/configuration/configuration_defaultclientid_linux_bashrc.png)
+
+1. Hit _CTRL+X_, type _Y_ to save and close the file
+
+1. Execute:
+
+   ```bash
+   source ~/.bashrc
+   ```
+   
+   This will load the newly added system variable into the current session.
+
+1. To validate that the environment variable is there, execute:
+
+   ```bash
+   echo $ENTRAID_CLIENT_ID
+   ```
+
 ## Troubleshooting
 
 In case you want to validate which ClientID is being used to connect, simply add `-Verbose` to your `Connect-PnPOnline` statement to see which ClientID is used to make the connection.
