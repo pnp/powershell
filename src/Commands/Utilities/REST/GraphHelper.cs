@@ -10,7 +10,6 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
@@ -51,9 +50,11 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 url = url.Substring(1);
             }
 
-            var message = new HttpRequestMessage();
-            message.Version = new Version(2, 0);
-            message.Method = method;
+            var message = new HttpRequestMessage
+            {
+                Version = new Version(2, 0),
+                Method = method
+            };
             message.Headers.TryAddWithoutValidation("Accept", "application/json");
             message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://{connection.GraphEndPoint}/{url}") : new Uri(url);
             message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", accessToken);
@@ -150,8 +151,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     var entity = JsonSerializer.Deserialize<T>(stringContent, options);
                     return entity;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    cmdlet.WriteWarning($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
                     return default(T);
                 }
             }
@@ -327,8 +329,11 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         }
 
         private static string SendMessage(Cmdlet cmdlet, PnPConnection connection, HttpRequestMessage message, string accessToken)
-        {
+        {            
             cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
+
+            // Ensure we have the required permissions in the access token to make the call
+            TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(cmdlet, accessToken);
 
             var response = connection.HttpClient.SendAsync(message).GetAwaiter().GetResult();
             while (response.StatusCode == (HttpStatusCode)429)

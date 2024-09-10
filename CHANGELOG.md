@@ -6,19 +6,35 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+## [Current nightly]
 
-## [Current Nightly]
+### Added
+
+### Changed
+
+### Fixed
+
+### Removed
+
+### Contributors
+
+
+## [2.12.0]
 
 ### Added
 
 - Added support for `WAM` login for Windows OS to support Windows Hello, FIDO keys, Conditional Access policies and other secure authentication modes. 
 - Added `-SkipCertCreation` parameter in `Register-PnPAzureADApp` cmdlet to prevent creation and uploading of certificates in the Entra ID app.
 - Added support to `-ValidateConnection` in managed identity authentication.
+- Added `New-PnPSearchExternalConnection`, `Get-PnPSearchExternalConnection`, `Set-PnPSearchExternalConnection` and `Remove-PnPSearchExternalConnection` cmdlets to manage external connections for Microsoft Search [#4231](https://github.com/pnp/powershell/pull/4231)
+- Added `Get-PnPSearchExternalSchema` and `Set-PnPSearchExternalSchema` cmdlets to manage the schema for external connections for Microsoft Search [#4231](https://github.com/pnp/powershell/pull/4231)
 - Added `OverrideSharingCapability`, `RequestFilesLinkExpirationInDays` & `RequestFilesLinkEnabled` parameters to `Set-PnPTenantSite` cmdlet.
 - Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document [#4238](https://github.com/pnp/powershell/pull/4238)
 
 ### Changed
 
+- *Release due to deprecation/shutdown of support for the PnP Management Shell* Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to registration your own application
+- Added output for clientid/Entra App Id when using `-Verbose` with `Connect-PnPOnline`
 - Added `-OutputTask` switch to `Add-PnPPlannerTask` cmdlet which will return the just created task so inspect its ID, ETag, etc. values.
 - Improved `Invoke-PnPGraphMethod` cmdlet now to also support a hashtable value for the AdditionalHeaders parameter besides the current Dictionary<string,string>. See documentation.
 - Improved managed identity authentication for connecting to different M365 services.
@@ -32,7 +48,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix issue with `Get-PnPDiagnostics` cmdlet not working correctly if `CorrelationId` is null.
 - Fix issue with App-only authentication not properly fetching tokens.
 - Fix issue with Power Platform cmdlets not working correctly in non-commercial cloud environments.
-- Fix issue with `Get-PnPFlow` not working correctly when `-AsAdmin` parameter is specified due to API changes.
+- Fix issue with `Get-PnPFlow` not working correctly when `-AsAdmin` parameter is specified due to API changes. [#4244](https://github.com/pnp/powershell/pull/4244)
 - Fix `Connect-PnPOnline` not returning correct `ClientId` in the connection object.
 
 ### Removed
@@ -43,6 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Giacomo Pozzoni [jackpoz]
 - Nishkalank Bezawada [NishkalankBezawada]
 - Reshmee Auckloo [reshmee011]
+- Koen Zomers [koenzomers]
 
 ## [2.10.0]
 

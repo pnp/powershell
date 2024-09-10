@@ -14,6 +14,11 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string AccessToken => TokenHandler.GetAccessToken(this, ARMEndpoint.GetARMEndpoint(Connection), Connection);
 
+        /// <summary>
+        /// Returns an Access Token for the Microsoft PowerApps Services, if available, otherwise NULL
+        /// </summary>
+        public string PowerAppsServiceAccessToken => TokenHandler.GetAccessToken(this, "https://service.powerapps.com/.default", Connection);
+        
         protected override void BeginProcessing()
         {
             base.BeginProcessing();

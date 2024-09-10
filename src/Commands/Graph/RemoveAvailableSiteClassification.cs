@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAvailableSiteClassification")]
-    [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
     [Alias("Remove-PnPSiteClassitication")]
     [WriteAliasWarning("Please use 'Remove-PnPAvailableSiteClassification'. The alias 'Remove-PnPSiteClassification' will be removed in a future release.")]
     [OutputType(typeof(void))]
