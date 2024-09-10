@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Add-PnPOrgAssetsLibrary | PnP PowerShell </title>
+    <title>Enable-PnPPriviledgedIdentityManagement | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Add-PnPOrgAssetsLibrary | PnP PowerShell ">
+    <meta name="title" content="Enable-PnPPriviledgedIdentityManagement | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,57 +77,54 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="add-pnporgassetslibrary">Add-PnPOrgAssetsLibrary</h1>
+  <h1 id="enable-pnppriviledgedidentitymanagement">Enable-PnPPriviledgedIdentityManagement</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+<li>Microsoft Graph: RoleAssignmentSchedule.ReadWrite.Directory</li>
 </ul>
-<p>Adds a given document library as an organizational asset source</p>
+<p>Temporarily enables a Privileged Identity Management role for a user</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &lt;String&gt; [-ThumbnailUrl &lt;String&gt;] [-CdnType &lt;SPOTenantCdnType&gt;] [-OrgAssetType &lt;OrgAssetType&gt;] [-DefaultOriginAdded &lt;bool&gt;] [-IsCopilotSearchable &lt;bool&gt;] [-Connection &lt;PnPConnection&gt;] 
+<h3 id="by-role-name-and-principal">By Role Name And Principal</h3>
+<pre><code class="lang-powershell">Enable-PnPPriviledgedIdentityManagement -Role &lt;PriviledgedIdentityManagementRolePipeBind&gt; [-PrincipalId &lt;Guid&gt;] [-Justification &lt;string&gt;] [-StartAt &lt;DateTime&gt;] [-ExpireInHours &lt;short&gt;] [-Connection &lt;PnPConnection&gt;] 
+</code></pre>
+<h3 id="by-role-name-and-user">By Role Name And User</h3>
+<pre><code class="lang-powershell">Enable-PnPPriviledgedIdentityManagement -Role &lt;PriviledgedIdentityManagementRolePipeBind&gt; -User &lt;AzureADUserPipeBind&gt; [-Justification &lt;string&gt;] [-StartAt &lt;DateTime&gt;] [-ExpireInHours &lt;short&gt;] [-Connection &lt;PnPConnection&gt;] 
+</code></pre>
+<h3 id="by-eligible-role-assignment">By Eligible Role Assignment</h3>
+<pre><code class="lang-powershell">Enable-PnPPriviledgedIdentityManagement -EligibleAssignment &lt;PriviledgedIdentityManagementRolePipeBind&gt; [-Justification &lt;string&gt;] [-StartAt &lt;DateTime&gt;] [-ExpireInHours &lt;short&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Adds a given document library as an organizational asset source in your SharePoint Online Tenant. You can specify multiple libraries, but all organizational asset sources you add must reside in the same site collection.</p>
-<p>Document libraries specified as organizational asset must be enabled as an Office 365 CDN source, either as private or public.</p>
-<p>The libraries must also have read rights for 'Everyone except external users' enabled on them. Either on library or on the entire site level.</p>
-<p>Only entire libraries can be configured as an organizational asset, folders cannot.</p>
-<p>It may take some time before this change will be reflected in the web interface.</p>
+<p>Temporarily enables a Privileged Identity Management role for the provided allowing the user to perform actions that require the role. The role will be enabled starting at the specified date and time and will expire after the specified number of hours. The reason for the elevation of rights can be provided as justification.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot;
+<h3 id="example-1">Example 1</h3>
+<pre><code class="lang-powershell">Enable-PnPPriviledgedIdentityManagement -Role &quot;Global Administrator&quot;
 </code></pre>
-<p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset not specifying a thumbnail image for it and enabling the document library as a public Office 365 CDN source</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -ThumbnailUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg&quot;
+<p>Enables the global administrator role for the current user through Privileged Identity Management starting immediately and expiring in 1 hour</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Enable-PnPPriviledgedIdentityManagement -Role &quot;Global Administrator&quot; -Justification &quot;Just because&quot;
 </code></pre>
-<p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset specifying the thumbnail image &quot;thumbnail.jpg&quot; residing in the same document library for it and enabling the document library as a public Office 365 CDN source</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -CdnType Private
+<p>Enables the global administrator role for the current user through Privileged Identity Management starting immediately and expiring in 1 hour, adding the justification provided to be logged as the reason for the elevation of rights</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="lang-powershell">Enable-PnPPriviledgedIdentityManagement -Role &quot;Global Administrator&quot; -Justification &quot;Just because&quot; -StartAt (Get-Date).AddHours(2) -ExpireInHours 2
 </code></pre>
-<p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset not specifying a thumbnail image for it and enabling the document library as a private Office 365 CDN source</p>
+<p>Enables the global administrator role for the current user through Privileged Identity Management starting in 2 hours from now and expiring 2 hours thereafter, adding the justification provided to be logged as the reason for the elevation of rights</p>
+<h3 id="example-4">Example 4</h3>
+<pre><code class="lang-powershell">Enable-PnPPriviledgedIdentityManagement -Role &quot;Global Administrator&quot; -User &quot;someone@contoso.onmicrosoft.com&quot;
+</code></pre>
+<p>Enables the global administrator role for the provided user through Privileged Identity Management starting immediately and expiring in 1 hour</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-cdntype">-CdnType</h3>
-<p>Indicates what type of Office 365 CDN source the document library will be added to</p>
-<pre><code class="lang-yaml">Type: SPOTenantCdnType
-Parameter Sets: (All)
-Accepted values: Public, Private
-
-Required: False
-Position: Named
-Default value: Public
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
@@ -135,58 +132,73 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-defaultoriginadded">-DefaultOriginAdded</h3>
-<p>Indicates that if the OFfice 365 CDN would not be enabled yet for the tenant, that it should be enabled and <a href="https://learn.microsoft.com/microsoft-365/enterprise/use-microsoft-365-cdn-with-spo?view=o365-worldwide#default-cdn-origins">the default origins</a> should be added to the tenant. This is only applicable when the CDN has not been enabled yet on the tenant.</p>
-<pre><code class="lang-yaml">Type: Boolean
+<h3 id="-expireinhours">-ExpireInHours</h3>
+<p>Indication of after how many hours the elevation should expire. If omitted, the default value is 1 hour.</p>
+<pre><code class="lang-yaml">Type: short
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
-Default value: True
+Default value: 1
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-iscopilotsearchable">-IsCopilotSearchable</h3>
-<p>Indicates that the organizational assets library should be searchable in the CoPilot search experience in Office applications to locate corporate images. Only works when the OrgAssetType is set to ImageDocumentLibrary.</p>
-<pre><code class="lang-yaml">Type: Boolean
+<h3 id="-justification">-Justification</h3>
+<p>Text to be logged as the reason for the elevation of rights. If omitted, the default value is &quot;Elevated by PnP PowerShell&quot;.</p>
+<pre><code class="lang-yaml">Type: string
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
-Default value: True
+Default value: &quot;Elevated by PnP PowerShell&quot;
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-libraryurl">-LibraryUrl</h3>
-<p>The full url of the document library to be marked as one of organization's assets sources</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+<h3 id="-principalid">-PrincipalId</h3>
+<p>The Id of of the principal to elevate. If omitted, the default value is the current user, if the connection has been made using a delegated identity. With an application identity, this parameter is required.</p>
+<pre><code class="lang-yaml">Type: Guid
+Parameter Sets: By Role Name And Principal
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-role">-Role</h3>
+<p>The Id, name or instance of a role to elevate the current user to. Use <code>Get-PnPPriviledgedIdentityManagementRole</code> to retrieve the available roles.</p>
+<pre><code class="lang-yaml">Type: PriviledgedIdentityManagementRolePipeBind
+Parameter Sets: By Role Name And Principal, By Role Name And User
+Aliases:
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-orgassettype">-OrgAssetType</h3>
-<p>Indicates the type of content in this library. Currently supported values are &quot;ImageDocumentLibrary&quot; and &quot;OfficeTemplateLibrary&quot;.</p>
-<p>ImageDocumentLibrary is the default OrgAssetType and is best used for images. You can access the contents of this library from any site or page in the SharePoint filepicker. OfficeTemplateLibrary is the suggested type for Office files and will show up in the UI of all Office desktop apps and Office online in the templates section.</p>
-<pre><code class="lang-yaml">Type: OrgAssetType
+<h3 id="-startat">-StartAt</h3>
+<p>Date and time at which to start the elevation. If omitted, the default value is the current date and time, meaning the activation will happen immediately.</p>
+<pre><code class="lang-yaml">Type: DateTime
 Parameter Sets: (All)
-Accepted values: ImageDocumentLibrary, OfficeTemplateLibrary
+Aliases:
 
 Required: False
 Position: Named
-Default value: ImageDocumentLibrary
+Default value: Get-Date
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-thumbnailurl">-ThumbnailUrl</h3>
-<p>The full url to an image that should be used as a thumbnail for showing this source. The image must reside in the same site as the document library you specify.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+<h3 id="-user">-User</h3>
+<p>The Id, username or instance of a user which needs to be elevated</p>
+<pre><code class="lang-yaml">Type: AzureADUserPipeBind
+Parameter Sets: By Role Name And User
+Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

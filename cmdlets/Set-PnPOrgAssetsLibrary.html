@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Add-PnPOrgAssetsLibrary | PnP PowerShell </title>
+    <title>Set-PnPOrgAssetsLibrary | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Add-PnPOrgAssetsLibrary | PnP PowerShell ">
+    <meta name="title" content="Set-PnPOrgAssetsLibrary | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,53 +77,34 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="add-pnporgassetslibrary">Add-PnPOrgAssetsLibrary</h1>
+  <h1 id="set-pnporgassetslibrary">Set-PnPOrgAssetsLibrary</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Adds a given document library as an organizational asset source</p>
+<p>Updates a document library which was already defined as an organizational asset source</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &lt;String&gt; [-ThumbnailUrl &lt;String&gt;] [-CdnType &lt;SPOTenantCdnType&gt;] [-OrgAssetType &lt;OrgAssetType&gt;] [-DefaultOriginAdded &lt;bool&gt;] [-IsCopilotSearchable &lt;bool&gt;] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Set-PnPOrgAssetsLibrary -LibraryUrl &lt;String&gt; [-ThumbnailUrl &lt;String&gt;] [-OrgAssetType &lt;OrgAssetType&gt;] [-IsCopilotSearchable &lt;bool&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Adds a given document library as an organizational asset source in your SharePoint Online Tenant. You can specify multiple libraries, but all organizational asset sources you add must reside in the same site collection.</p>
-<p>Document libraries specified as organizational asset must be enabled as an Office 365 CDN source, either as private or public.</p>
-<p>The libraries must also have read rights for 'Everyone except external users' enabled on them. Either on library or on the entire site level.</p>
-<p>Only entire libraries can be configured as an organizational asset, folders cannot.</p>
+<p>Updates a document library which was already set as an organizational asset source in your SharePoint Online Tenant.</p>
 <p>It may take some time before this change will be reflected in the web interface.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot;
+<pre><code class="lang-powershell">Set-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -ThumbnailUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg&quot;
 </code></pre>
-<p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset not specifying a thumbnail image for it and enabling the document library as a public Office 365 CDN source</p>
+<p>Updates the tumbnail for the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot;</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -ThumbnailUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos/thumbnail.jpg&quot;
+<pre><code class="lang-powershell">Set-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -IsCopilotSearchable:$true
 </code></pre>
-<p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset specifying the thumbnail image &quot;thumbnail.jpg&quot; residing in the same document library for it and enabling the document library as a public Office 365 CDN source</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPOrgAssetsLibrary -LibraryUrl &quot;https://yourtenant.sharepoint.com/sites/branding/logos&quot; -CdnType Private
-</code></pre>
-<p>Adds the document library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; as an organizational asset not specifying a thumbnail image for it and enabling the document library as a private Office 365 CDN source</p>
+<p>Enables Microsoft 365 Copilot to use the organizational assets library with the url &quot;logos&quot; located in the sitecollection at &quot;https://yourtenant.sharepoint.com/sites/branding&quot; for searching corporate images</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-cdntype">-CdnType</h3>
-<p>Indicates what type of Office 365 CDN source the document library will be added to</p>
-<pre><code class="lang-yaml">Type: SPOTenantCdnType
-Parameter Sets: (All)
-Accepted values: Public, Private
-
-Required: False
-Position: Named
-Default value: Public
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -135,17 +116,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-defaultoriginadded">-DefaultOriginAdded</h3>
-<p>Indicates that if the OFfice 365 CDN would not be enabled yet for the tenant, that it should be enabled and <a href="https://learn.microsoft.com/microsoft-365/enterprise/use-microsoft-365-cdn-with-spo?view=o365-worldwide#default-cdn-origins">the default origins</a> should be added to the tenant. This is only applicable when the CDN has not been enabled yet on the tenant.</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: True
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-iscopilotsearchable">-IsCopilotSearchable</h3>
 <p>Indicates that the organizational assets library should be searchable in the CoPilot search experience in Office applications to locate corporate images. Only works when the OrgAssetType is set to ImageDocumentLibrary.</p>
 <pre><code class="lang-yaml">Type: Boolean
@@ -153,7 +123,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: True
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

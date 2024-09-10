@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set a default Client ID | PnP PowerShell </title>
+    <title>Get-PnPPriviledgedIdentityManagementRole | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set a default Client ID | PnP PowerShell ">
+    <meta name="title" content="Get-PnPPriviledgedIdentityManagementRole | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,65 +77,64 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/defaultclientid.md/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="set-a-default-client-id">Set a default Client ID</h1>
+  <h1 id="get-pnppriviledgedidentitymanagementrole">Get-PnPPriviledgedIdentityManagementRole</h1>
 
-<p>As of September 9<sup>th</sup>, 2024, it is no longer possible to use PnP PowerShell with <code>-Interactive</code> without <a href="registerapplication.html">providing your own Entra ID App Registration</a> by passing in <code>-ClientId</code> as well. To avoid having to add <code>-ClientId</code> on every connect, you can also perform the below task to set the default ClientId for your environment. This avoids you having to update all of your scripts to include <code>-ClientId</code> in the Connect-PnPOnline statements, making the impact of this change smaller by not having to update existing scripts.</p>
-<h2 id="by-setting-an-environment-variable">By setting an environment variable</h2>
-<p>You can set an environment variable on your machine or in your profile to default to the ClientId you configure in it. The name of the environment variable should be either: <code>ENTRAID_APP_ID</code>, or <code>ENTRAID_CLIENT_ID</code>, or <code>AZURE_CLIENT_ID</code>. You only need one of these, not all of them. They will be used in the order shown, i.e. if you set a value for <code>AZURE_CLIENT_ID</code> and another one for <code>ENTRAID_APP_ID</code>, the <code>ENTRAID_APP_ID</code> entry will be used and the other will be ignored.</p>
-<p>As the value for the environment variable, set the GUID of the Client Id / App Id from Entra ID of <a href="registerapplication.html">your own App Registration</a>.</p>
-<h3 id="steps-for-windows-using-powershell">Steps for Windows using PowerShell</h3>
-<p>Simply run this line:</p>
-<pre><code class="lang-powershell">[System.Environment]::SetEnvironmentVariable('ENTRAID_CLIENT_ID', '&lt;client id of your Entra ID App Registration&gt;', [EnvironmentVariableTarget]::User)
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph: RoleManagement.Read.Directory</li>
+</ul>
+<p>Retrieve the available Privileged Identity Management roles that exist within the tenant</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Get-PnPPriviledgedIdentityManagementRole [-Identity &lt;PriviledgedIdentityManagementRolePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
-<h3 id="steps-for-windows-using-the-user-interface">Steps for Windows using the user interface</h3>
-<p>To create a persistent environment variable on a Windows machine, follow the below steps.</p>
-<ol>
-<li><p>Open the Windows start menu and search for <em>Environment variables</em> and click on <em>Edit the system environment variables</em></p>
-<p><img src="../images/configuration/configuration_defaultclientid_windowsmenu_environmentvariables.png" alt="image"></p>
-</li>
-<li><p>Click on <em>Environment Variables</em></p>
-<p><img src="../images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings_envvariables.png" alt="image"></p>
-</li>
-<li><p>Under <em>User variables for &lt;username&gt;</em>, click the <em>New</em> button. As the <em>Variable name</em>, enter:</p>
-<p>ENTRAID_CLIENT_ID</p>
-<p>As the <em>Variable value</em> enter the Client ID of your Entra ID application registration which you would like to use as the default for all Connect-PnPOnline executions.</p>
-<p>Close all open dialog boxes by clicking on <em>OK</em></p>
-<p><img src="../images/configuration/configuration_defaultclientid_windowsmenu_system_advancedsettings_envvariables_addentry.png" alt="image"></p>
-</li>
-</ol>
-<h3 id="steps-for-linux">Steps for Linux</h3>
-<p>To create a persistent environment variable on a Linux machine, follow the below steps.</p>
-<ol>
-<li><p>Connect to your Linux machine</p>
-</li>
-<li><p>Execute:</p>
-<pre><code class="lang-bash">nano ~/.bashrc
+<h2 id="description">DESCRIPTION</h2>
+<p>Retrieve the available Privileged Identity Management roles that exist within the tenant. These are the roles to which elevation can take place.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">Example 1</h3>
+<pre><code class="lang-powershell">Get-PnPPriviledgedIdentityManagementRole
 </code></pre>
-</li>
-<li><p>Hit <em>CTRL+END</em> to jump to the end of the file and add the line:</p>
-<pre><code>export ENTRAID_CLIENT_ID=&lt;client id of your Entra ID App Registration&gt;
+<p>Retrieves the available Privileged Identity Management roles</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Get-PnPPriviledgedIdentityManagementRole -Identity &quot;Global Administrator&quot;
 </code></pre>
-<p><img src="../images/configuration/configuration_defaultclientid_linux_bashrc.png" alt="image"></p>
-</li>
-<li><p>Hit <em>CTRL+X</em>, type <em>Y</em> to save and close the file</p>
-</li>
-<li><p>Execute:</p>
-<pre><code class="lang-bash">source ~/.bashrc
+<p>Retrieves the Privileged Identity Management with the provided name</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="lang-powershell">Get-PnPPriviledgedIdentityManagementRole -Identity 62e90394-69f5-4237-9190-012177145e10
 </code></pre>
-<p>This will load the newly added system variable into the current session.</p>
-</li>
-<li><p>To validate that the environment variable is there, execute:</p>
-<pre><code class="lang-bash">echo $ENTRAID_CLIENT_ID
+<p>Retrieves the Privileged Identity Management role with the provided id</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
 </code></pre>
-</li>
-</ol>
-<h2 id="troubleshooting">Troubleshooting</h2>
-<p>In case you want to validate which ClientID is being used to connect, simply add <code>-Verbose</code> to your <code>Connect-PnPOnline</code> statement to see which ClientID is used to make the connection.</p>
-<p><img src="../images/configuration/connecting_verbose_clientid.png" alt="image"></p>
+<h3 id="-identity">-Identity</h3>
+<p>The name, id or instance of a Priviledged Identity Management role to retrieve the details of</p>
+<pre><code class="lang-yaml">Type: PriviledgedIdentityManagementRolePipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>
           </div>

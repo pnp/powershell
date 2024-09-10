@@ -1118,6 +1118,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPTenantRestrictedSearchAllowedList.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPTenantRestrictedSearchAllowedList.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPTenantSequence.md",
       "output": {
         ".html": {
@@ -1612,6 +1622,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Enable-PnPPowerShellTelemetry.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Enable-PnPPriviledgedIdentityManagement.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Enable-PnPPriviledgedIdentityManagement.html"
         }
       },
       "version": ""
@@ -3152,6 +3172,26 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPPowerShellTelemetryEnabled.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementEligibleAssignment.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementEligibleAssignment.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementRole.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementRole.html"
         }
       },
       "version": ""
@@ -6328,6 +6368,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Reset-PnPDocumentId.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Reset-PnPDocumentId.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Reset-PnPFileVersion.md",
       "output": {
         ".html": {
@@ -7102,6 +7152,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMinimalDownloadStrategy.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPOrgAssetsLibrary.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPOrgAssetsLibrary.html"
         }
       },
       "version": ""
@@ -8572,6 +8632,26 @@
       "output": {
         "resource": {
           "relative_path": "images/configuration/README.md"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/configuration/configuration_defaultclientid_linux_bashrc.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/configuration/configuration_defaultclientid_linux_bashrc.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_environmentvariables.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/configuration/configuration_defaultclientid_windowsmenu_environmentvariables.png"
         }
       },
       "version": ""
