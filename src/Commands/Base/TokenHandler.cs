@@ -3,6 +3,7 @@ using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
@@ -21,11 +22,11 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns the type of oAuth JWT token being passed in (Delegate/AppOnly)
         /// </summary>
-        /// <param name="token">The oAuth JWT token</param>
+        /// <param name="accessToken">The oAuth JWT token</param>
         /// <returns>Enum indicating the type of oAuth JWT token</returns>
-        internal static Enums.IdType RetrieveTokenType(string token)
+        internal static Enums.IdType RetrieveTokenType(string accessToken)
         {
-            var decodedToken = new JwtSecurityToken(token);
+            var decodedToken = new JwtSecurityToken(accessToken);
 
             // The idType is stored in the token as a claim
             var idType = decodedToken.Claims.FirstOrDefault(c => c.Type == "idtyp");
@@ -40,6 +41,22 @@ namespace PnP.PowerShell.Commands.Base
                 "app" => Enums.IdType.Application,
                 _ => Enums.IdType.Unknown
             };
+        }
+
+        /// <summary>
+        /// Returns the userId of the user who's token is being passed in
+        /// </summary>
+        /// <param name="accessToken">The oAuth JWT token</param>
+        /// <returns>The userId of the user for which the passed in delegate token is for</returns>
+        internal static Guid? RetrieveTokenUser(string accessToken)
+        {
+            var decodedToken = new JwtSecurityToken(accessToken);
+
+            // The objectId is stored in the token as a claim
+            var objectId = decodedToken.Claims.FirstOrDefault(c => c.Type == "oid");
+
+            // Check if the token contains an objectId and if its a valid Guid
+            return objectId == null || !Guid.TryParse(objectId.Value, out Guid objectIdGuid) ? null : objectIdGuid;
         }
 
         /// <summary>
