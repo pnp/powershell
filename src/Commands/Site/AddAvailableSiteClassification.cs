@@ -19,11 +19,6 @@ namespace PnP.PowerShell.Commands.Site
 
         protected override void ExecuteCmdlet()
         {
-            if (Connection.ClientId == PnPConnection.PnPManagementShellClientId)
-            {
-                Connection.Scopes = new[] { "Directory.ReadWrite.All" };
-            }
-
             try
             {
                 var settings = PnP.Framework.Graph.SiteClassificationsUtility.GetSiteClassificationsSettings(AccessToken);

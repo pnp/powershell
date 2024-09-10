@@ -1,4 +1,5 @@
-﻿using Microsoft.SharePoint.Client;
+﻿using Microsoft.Graph;
+using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
@@ -352,7 +353,7 @@ namespace PnP.PowerShell.Commands.Base
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
                 SetCustomEndpoints();
-            }            
+            }
 
             // Connect using the used set parameters
             switch (ParameterSetName)
@@ -399,7 +400,7 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_OSLOGIN:
                     newConnection = ConnectWithOSLogin();
                     break;
-            }            
+            }
 
             // Ensure a connection instance has been created by now
             if (newConnection == null)
@@ -410,7 +411,7 @@ namespace PnP.PowerShell.Commands.Base
 
             // Connection has been established
             WriteVerbose($"Connected");
-            
+
             if (newConnection.Url != null)
             {
                 var hostUri = new Uri(newConnection.Url);
@@ -532,7 +533,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectDeviceLogin()
         {
-            WriteVerbose("Connecting using Device-Login");
+            WriteVerbose("Connecting using Device Login");
 
             var messageWriter = new CmdletMessageWriter(this);
             PnPConnection connection = null;
@@ -572,11 +573,12 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            clientId = PnPConnection.PnPManagementShellClientId;
-                            CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own Entra ID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                            //clientId = PnPConnection.PnPManagementShellClientId;
+                            CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -DeviceLogin used the PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                            ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
                         }
                     }
-                    
+
                     var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
                     connection = returnedConnection;
                     messageWriter.Finished = true;
@@ -613,9 +615,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword);
-                if (PnPConnection.Current?.ClientId == ClientId &&
-                    PnPConnection.Current?.Tenant == Tenant &&
-                    PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
+                if (Connection?.ClientId == ClientId &&
+                    Connection?.Tenant == Tenant &&
+                    Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -706,8 +708,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    ClientId = PnPConnection.PnPManagementShellClientId;
-                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own Entra ID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                    //   ClientId = PnPConnection.PnPManagementShellClientId;
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "As of September 9th, 2024 the option to use the PnP Management Shell app registration for authentication is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                    ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
                 }
             }
 
@@ -772,8 +775,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    ClientId = PnPConnection.PnPManagementShellClientId;
-                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -Interactive uses the PnP Management Shell multi-tenant App Id for authentication. It is strongly recommended to register your own Entra ID App for authentication. See the documentation for Register-PnPEntraIDAppForInteractiveLogin.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                    //ClientId = PnPConnection.PnPManagementShellClientId;
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -Interactive used the PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                    ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
                 }
             }
             if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
@@ -824,9 +828,9 @@ namespace PnP.PowerShell.Commands.Base
                 SecureString secPassword = StringToSecureString(azureCertPassword);
 
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, azureCertificatePath, secPassword);
-                if (PnPConnection.Current?.ClientId == azureClientId &&
-                    PnPConnection.Current?.Tenant == Tenant &&
-                    PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
+                if (Connection?.ClientId == azureClientId &&
+                    Connection?.Tenant == Tenant &&
+                    Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
                 {
                     ReuseAuthenticationManager();
                 }
@@ -841,7 +845,8 @@ namespace PnP.PowerShell.Commands.Base
                 if (string.IsNullOrEmpty(azureClientId))
                 {
                     azureClientId = PnPConnection.PnPManagementShellClientId;
-                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "You are authenticating using the PnP Management Shell multi-tenant App Id. It is strongly recommended to register your own Entra ID App for authentication. See the documentation for Register-PnPEntraIDApp.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting without an Azure Client ID used then PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                    ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
                 }
 
                 SecureString secPassword = StringToSecureString(password);
@@ -895,7 +900,7 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
             }
-            
+
             WriteVerbose($"Using ClientID {ClientId}");
 
             return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true);

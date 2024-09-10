@@ -1,13 +1,19 @@
 # PnP PowerShell
-PnP PowerShell is a cross-platform PowerShell Module providing over 700 cmdlets that work with Microsoft 365 environments and products such as SharePoint Online, Microsoft Teams, Microsoft Planner, Microsoft Flow and more. It runs on Windows, Linux and MacOS.
+PnP PowerShell is a cross-platform PowerShell Module providing over 700 cmdlets that work with Microsoft 365 environments and products such as SharePoint Online, Microsoft Teams, Microsoft Planner, Microsoft Power Platform, Microsoft Entra, Microsoft Purview, Microsoft Search, and more. It runs on Windows, Linux and MacOS.
 
 ## Getting up and running
 
-Follow the [installation steps](/powershell/articles/installation.html) to get up and running in minutes.
+Starting to use PnP PowerShell consists out of 3 steps:
 
-See the [articles](/powershell/articles) section for more information on authentication and configuration. All [cmdlets](/powershell/cmdlets) have been documented too.
+1. [Installing the PnP.PowerShell module](./articles/installation.md)
+   
+2. [Registering your own Entra ID Application](./articles/registerapplication.md)
+   
+3. [Connecting and authenticating](./articles/authentication.md)
 
-See [Using PnP PowerShell in Docker containers](/powershell/articles/docker.html) article for information how to run PnP.PowerShell without installing it.
+Once you're set up, check out the [cmdlets](/powershell/cmdlets) section to discover what you can do and how to use the cmdlets.
+
+Have a look at the [articles](/powershell/articles) section covering various topics how to get the most out of using PnP PowerShell. 
 
 ## I've found a bug, where do I need to log an issue or create a PR
 
