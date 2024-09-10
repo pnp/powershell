@@ -10,7 +10,7 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Add, "PnPAzureADGroupMember")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     [Alias("Add-PnPEntraIDGroupMember")]
     public class AddAzureADGroupMember : PnPGraphCmdlet
     {
@@ -25,11 +25,6 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ExecuteCmdlet()
         {
-            if (Connection.ClientId == PnPConnection.PnPManagementShellClientId)
-            {
-                Connection.Scopes = new[] { "Group.ReadWrite.All" };
-            }
-
             Group group = null;
 
             if (Identity != null)

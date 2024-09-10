@@ -13,7 +13,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.New, "PnPTeamsTeam")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class NewTeamsTeam : PnPGraphCmdlet
     {
         private const string ParameterSet_EXISTINGGROUP = "For an existing group";

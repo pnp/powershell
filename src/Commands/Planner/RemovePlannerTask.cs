@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPlannerTask")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class RemovePlannerTask : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specify the id or Task object to delete.")]

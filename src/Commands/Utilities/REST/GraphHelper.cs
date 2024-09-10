@@ -329,8 +329,11 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         }
 
         private static string SendMessage(Cmdlet cmdlet, PnPConnection connection, HttpRequestMessage message, string accessToken)
-        {
+        {            
             cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
+
+            // Ensure we have the required permissions in the access token to make the call
+            TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(cmdlet, accessToken);
 
             var response = connection.HttpClient.SendAsync(message).GetAwaiter().GetResult();
             while (response.StatusCode == (HttpStatusCode)429)

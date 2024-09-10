@@ -11,7 +11,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Set, "PnPSearchExternalItem")]
-    [RequiredMinimalApiPermissions("ExternalItem.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/ExternalItem.ReadWrite.All")]
     [OutputType(typeof(Model.Graph.MicrosoftSearch.ExternalItem))]
     public class SetSearchExternalItem : PnPGraphCmdlet
     {
