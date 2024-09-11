@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Extensions;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -71,7 +73,29 @@ namespace PnP.PowerShell.Commands.Lists
                     var field = fields.FirstOrDefault(f => f.InternalName == fieldValue.Key || f.Title == fieldValue.Key);
                     if (field is { ReadOnlyField: false, Hidden: false } && !UnsupportedFieldTypes.Contains(field.FieldTypeKind))
                     {
-                        item[field.InternalName] = fieldValue.Value;
+                        if (field is TaxonomyField)
+                        {
+                            TaxonomyField taxField = ClientContext.CastTo<TaxonomyField>(field);
+                            taxField.EnsureProperty(tf => tf.AllowMultipleValues);
+                            if (taxField.AllowMultipleValues)
+                            {
+                                TaxonomyFieldValueCollection values = (TaxonomyFieldValueCollection)(fieldValue.Value);
+                                var termValuesString = String.Empty;
+                                if (values.Count > 0)
+                                {
+                                    foreach (var term in values)
+                                    {
+                                        termValuesString += "-1;#" + term.Label + "|" + term.TermGuid + ";#";
+                                    }
+                                    termValuesString = termValuesString.Substring(0, termValuesString.Length - 2);
+                                }
+
+                                var newTaxFieldValue = new TaxonomyFieldValueCollection(ClientContext, termValuesString, taxField);
+                                taxField.SetFieldValueByValueCollection(item, newTaxFieldValue);
+                                continue;
+                            }   
+                        }
+                       item[field.InternalName] = fieldValue.Value; 
                     }
                 }
 
