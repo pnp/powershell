@@ -295,3 +295,13 @@ Few things to notice with this cmdlet:
 - The ContentValue is the content of the item you are indexing. Microsoft Search uses this content to try to match this as a result when searching for something.
 - It will take up to an hour before ingested items will start to appear in search or Copilot results. Be patient.
 - You can restrict who can see the result with the grant options. Check the [documentation of the cmdlet](../cmdlets/Set-PnPSearchExternalItem.md) for all possibilities. This sample sets it so that any user in the tenant can see the result.
+  
+## The end result
+
+After giving it some time to process and index the content you have ingested, depending on the options you have chosen above, you will see the results popping up in the All vertical, designated vertical and in Microsoft 365 Copilot.
+
+![image](../images/microsoftsearch/endresult_all.png)
+
+![image](../images/microsoftsearch/endresult_vertical.png)
+
+![image](../images/microsoftsearch/endresult_copilot.png)
