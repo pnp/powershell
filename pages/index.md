@@ -1,6 +1,9 @@
 # PnP PowerShell
 PnP PowerShell is a cross-platform PowerShell Module providing over 700 cmdlets that work with Microsoft 365 environments and products such as SharePoint Online, Microsoft Teams, Microsoft Planner, Microsoft Power Platform, Microsoft Entra, Microsoft Purview, Microsoft Search, and more. It runs on Windows, Linux and MacOS.
 
+> [!NOTE]
+> As part of a focus on improving the security posture, the multi-tenant PnP Management Shell Entra ID app (with Client/ApplicationID: '31359c7f-bd7e-475c-86db-fdb8c937548e') has been deleted. It will impact credentials(username + password) & Interactive auth flow. It has always been a recommended practice to register your own Entra ID Application to use with PnP PowerShell. As of September 9<sup>th</sup>, 2024, [this has become mandatory step](https://github.com/pnp/powershell/discussions/4249). This post has more details and it guide you through how to do so and get your scripts back up & running with minimal code changes.
+
 ## Getting up and running
 
 Starting to use PnP PowerShell consists out of 3 steps:
