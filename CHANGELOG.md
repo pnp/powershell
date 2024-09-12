@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get-PnPSearchExternalSchema` not returning the label properly for a property linked to 'iconUrl' [#4245](https://github.com/pnp/powershell/pull/4245)
 - Fix `Restore-PnPListItemVersion` cmdlet to also restore fields with TaxonomyFieldType. [#4262](https://github.com/pnp/powershell/pull/4262)
 - Fix `Set-PnPMicrosoft365GroupSetting` cmdlet to not throw runtime error. [#4274](https://github.com/pnp/powershell/pull/4274)
+- Fix `New-PnPMicrosoft365GroupSetting` cmdlet to not throw runtime error. [#4277](https://github.com/pnp/powershell/pull/4277)
 
 ### Removed
 
