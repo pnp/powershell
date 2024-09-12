@@ -23,11 +23,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Set-PnPSearchExternalSchema` cmdlet when used with the `-Wait` parameter throwing a warning [#4253](https://github.com/pnp/powershell/pull/4253)
 - Fix `Get-PnPSearchExternalSchema` not returning the label properly for a property linked to 'iconUrl' [#4245](https://github.com/pnp/powershell/pull/4245)
 - Fix `Restore-PnPListItemVersion` cmdlet to also restore fields with TaxonomyFieldType. [#4262](https://github.com/pnp/powershell/pull/4262)
+- Fix `Set-PnPMicrosoft365GroupSetting` cmdlet to not throw runtime error. [#4274](https://github.com/pnp/powershell/pull/4274)
 
 ### Removed
 
 ### Contributors
 
+- Giacomo Pozzoni [jackpoz]
 - wuxiaojun514
 - Reshmee Auckloo [reshmee011]
 - Koen Zomers [koenzomers]
