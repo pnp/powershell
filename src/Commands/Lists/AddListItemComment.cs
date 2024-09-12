@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Lists
                 throw new PSArgumentException($"Comment Text must contain a value", nameof(Text));
             }
 
-            var comments = item.GetCommentsAsync().GetAwaiter().GetResult();
+            var comments = item.GetComments();
 
             var addedComment = comments.Add(Text);
 

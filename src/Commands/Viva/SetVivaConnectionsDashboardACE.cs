@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Viva
         {
             if (PnPContext.Site.IsHomeSite())
             {
-                IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
+                IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboard();
 
                 var aceToUpdate = Identity.GetACE(dashboard, this);
 
@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.Viva
 
                         dashboard.Save();
 
-                        dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
+                        dashboard = PnPContext.Web.GetVivaDashboard();
                         WriteObject(dashboard, true);
                     }
                 }
