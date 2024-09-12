@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Viva
         {
             if (PnPContext.Site.IsHomeSite())
             {
-                IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
+                IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboard();
                 var aceToRemove = Identity.GetACE(dashboard, this);
 
                 if (aceToRemove != null)

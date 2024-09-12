@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Security
         {
             var ctx = Connection.PnPContext;
 
-            var unfurledResource = ctx.Web.UnfurlLinkAsync(Url).GetAwaiter().GetResult();
+            var unfurledResource = ctx.Web.UnfurlLink(Url);
 
             WriteObject(unfurledResource);
         }

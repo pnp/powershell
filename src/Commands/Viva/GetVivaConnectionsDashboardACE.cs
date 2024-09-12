@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Viva
         {
             if (PnPContext.Site.IsHomeSite())
             {
-                IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
+                IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboard();
 
                 if (ParameterSpecified(nameof(Identity)))
                 {

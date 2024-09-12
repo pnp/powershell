@@ -5,7 +5,6 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Principals

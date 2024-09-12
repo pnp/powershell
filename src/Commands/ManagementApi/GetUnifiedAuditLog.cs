@@ -58,7 +58,6 @@ namespace PnP.PowerShell.Commands.ManagementApi
         {
             var url = $"{ApiUrl}/subscriptions/list";
             return GraphHelper.Get<IEnumerable<ManagementApiSubscription>>(this, Connection, url, AccessToken);
-            return GraphHelper.Get<IEnumerable<ManagementApiSubscription>>(this, Connection, url, AccessToken);
         }
 
         private void EnsureSubscription(string contentType)
