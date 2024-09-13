@@ -1,6 +1,7 @@
 ﻿using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
+using PnP.PowerShell.Commands.Apps;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
@@ -768,16 +769,20 @@ namespace PnP.PowerShell.Commands.Base
 
             if (ClientId == null)
             {
-                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-                if (!string.IsNullOrEmpty(environmentAppId))
+                ClientId = GetAppId();
+                if (ClientId == null)
                 {
-                    ClientId = environmentAppId;
-                }
-                else
-                {
-                    //ClientId = PnPConnection.PnPManagementShellClientId;
-                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -Interactive used the PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
-                    ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                    var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+                    if (!string.IsNullOrEmpty(environmentAppId))
+                    {
+                        ClientId = environmentAppId;
+                    }
+                    else
+                    {
+                        //ClientId = PnPConnection.PnPManagementShellClientId;
+                        CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -Interactive used the PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                        ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                    }
                 }
             }
             if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
@@ -969,6 +974,54 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             return credentials;
+        }
+
+        private string GetAppId()
+        {
+            var connectionUri = new Uri(Url);
+
+            // Try to get the credentials by full url
+            string appId = Utilities.CredentialManager.GetAppId(Url);
+            if (appId == null)
+            {
+                // Try to get the credentials by splitting up the path
+                var pathString = $"{connectionUri.Scheme}://{(connectionUri.IsDefaultPort ? connectionUri.Host : $"{connectionUri.Host}:{connectionUri.Port}")}";
+                var path = connectionUri.AbsolutePath;
+                while (path.IndexOf('/') != -1)
+                {
+                    path = path.Substring(0, path.LastIndexOf('/'));
+                    if (!string.IsNullOrEmpty(path))
+                    {
+                        var pathUrl = $"{pathString}{path}";
+                        appId = Utilities.CredentialManager.GetAppId(pathUrl);
+                        if (appId != null)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                if (appId == null)
+                {
+                    // Try to find the credentials by schema and hostname
+                    appId = Utilities.CredentialManager.GetAppId(connectionUri.Scheme + "://" + connectionUri.Host);
+
+                    if (appId == null)
+                    {
+                        // Maybe added with an extra slash?
+                        appId = Utilities.CredentialManager.GetAppId(connectionUri.Scheme + "://" + connectionUri.Host + "/");
+
+                        if (appId == null)
+                        {
+                            // try to find the credentials by hostname
+                            appId = Utilities.CredentialManager.GetAppId(connectionUri.Host);
+                        }
+                    }
+                }
+
+            }
+
+            return appId;
         }
 
         private bool IsSameOrAdminHost(Uri currentUri, Uri previousUri)
