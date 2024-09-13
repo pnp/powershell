@@ -15,6 +15,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPTenantRestrictedSearchAllowedList` which allows setting up a list of allowed URLs for Restricted SharePoint Search [#3993](https://github.com/pnp/powershell/pull/3993)
 - Added optional `-IsCopilotSearchable` to `Add-PnPOrgAssetsLibrary` which allows for an organizational assets library to be accessible to Microsoft 365 CoPilot for searching corporate images [#4254](https://github.com/pnp/powershell/pull/4254)
 - Added `Set-PnPOrgAssetsLibrary` cmdlet which allows for updating the settings of an existing organizational assets library [#4254](https://github.com/pnp/powershell/pull/4254)
+- Added additional Graph permissions to the GraphPermissions parameter set. [#4283](https://github.com/pnp/powershell/pull/4283)
 
 ### Changed
 
@@ -30,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Peter Paul Kirschner [petkir]
 - Giacomo Pozzoni [jackpoz]
 - wuxiaojun514
 - Reshmee Auckloo [reshmee011]
