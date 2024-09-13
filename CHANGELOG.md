@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-IsCopilotSearchable` to `Add-PnPOrgAssetsLibrary` which allows for an organizational assets library to be accessible to Microsoft 365 CoPilot for searching corporate images [#4254](https://github.com/pnp/powershell/pull/4254)
 - Added `Set-PnPOrgAssetsLibrary` cmdlet which allows for updating the settings of an existing organizational assets library [#4254](https://github.com/pnp/powershell/pull/4254)
 - Added additional Graph permissions to the GraphPermissions parameter set. [#4283](https://github.com/pnp/powershell/pull/4283)
+- Added `-SignInAudience` parameter to `Register-PnPEntraIDApp` and `Register-PnPEntraIDAppForInteractiveLogin` which allows you to make the EntraID app support creation of multi-tenant apps. [#4289](https://github.com/pnp/powershell/pull/4289)
 
 ### Changed
 

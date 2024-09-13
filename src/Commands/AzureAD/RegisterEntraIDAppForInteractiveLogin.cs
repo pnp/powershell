@@ -14,6 +14,7 @@ using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using PnP.PowerShell.Commands.Base;
 using System.Diagnostics;
 using System.Dynamic;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -48,6 +49,9 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         [Parameter(Mandatory = false)]
         public string EntraIDLoginEndPoint;
+
+        [Parameter(Mandatory = false)]
+        public EntraIDSignInAudience SignInAudience;
 
         protected override void ProcessRecord()
         {
@@ -404,10 +408,17 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 redirectUris.Add("http://localhost");
             }
+
+            string audience = "AzureADMyOrg";
+            if (ParameterSpecified(nameof(SignInAudience)))
+            {
+                audience = SignInAudience.ToString();
+            }
+
             dynamic payload = new ExpandoObject();
             payload.isFallbackPublicClient = true;
             payload.displayName = ApplicationName;
-            payload.signInAudience = "AzureADMyOrg";
+            payload.signInAudience = audience;
             payload.publicClient = new { redirectUris = redirectUris.ToArray() };
             payload.requiredResourceAccess = scopesPayload;
 
