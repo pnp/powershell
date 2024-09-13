@@ -507,6 +507,14 @@ namespace PnP.PowerShell.Commands.Base
                 ReuseAuthenticationManager();
             }
 
+            if (ClientId == null)
+            {
+                ClientId = GetAppId();
+                if (ClientId != null)
+                {
+                    WriteVerbose("Using Managed AppId from secure store");
+                }
+            }
             WriteVerbose($"Using ClientID {ClientId}");
 
             return PnPConnection.CreateWithACSAppOnly(new Uri(Url), Realm, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
@@ -567,16 +575,24 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else
                     {
-                        var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-                        if (!string.IsNullOrEmpty(environmentAppId))
+                        clientId = GetAppId();
+                        if (clientId == null)
                         {
-                            clientId = environmentAppId;
+                            var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+                            if (!string.IsNullOrEmpty(environmentAppId))
+                            {
+                                clientId = environmentAppId;
+                            }
+                            else
+                            {
+                                //clientId = PnPConnection.PnPManagementShellClientId;
+                                CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -DeviceLogin used the PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                                ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                            }
                         }
                         else
                         {
-                            //clientId = PnPConnection.PnPManagementShellClientId;
-                            CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -DeviceLogin used the PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
-                            ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                            WriteVerbose("Using Managed AppId from secure store");
                         }
                     }
 
@@ -702,16 +718,24 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (ClientId == null)
             {
-                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-                if (!string.IsNullOrEmpty(environmentAppId))
+                ClientId = GetAppId();
+                if (ClientId == null)
                 {
-                    ClientId = environmentAppId;
+                    var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+                    if (!string.IsNullOrEmpty(environmentAppId))
+                    {
+                        ClientId = environmentAppId;
+                    }
+                    else
+                    {
+                        //   ClientId = PnPConnection.PnPManagementShellClientId;
+                        CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "As of September 9th, 2024 the option to use the PnP Management Shell app registration for authentication is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                        ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                    }
                 }
                 else
                 {
-                    //   ClientId = PnPConnection.PnPManagementShellClientId;
-                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "As of September 9th, 2024 the option to use the PnP Management Shell app registration for authentication is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
-                    ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                    WriteVerbose("Using Managed AppId from secure store");
                 }
             }
 
@@ -732,6 +756,7 @@ namespace PnP.PowerShell.Commands.Base
                                                                ClientId,
                                                                RedirectUri, TransformationOnPrem, initializationType);
         }
+
 
         private PnPConnection ConnectManagedIdentity()
         {
@@ -784,6 +809,10 @@ namespace PnP.PowerShell.Commands.Base
                         ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
                     }
                 }
+                else
+                {
+                    WriteVerbose("Using Managed AppId from secure store");
+                }
             }
             if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
             {
@@ -806,6 +835,15 @@ namespace PnP.PowerShell.Commands.Base
             string azureClientId = Environment.GetEnvironmentVariable("AZURE_CLIENT_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID");
             string azureCertificatePath = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PATH") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_CERTIFICATE_PATH") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_CERTIFICATE_PATH");
             string azureCertPassword = Environment.GetEnvironmentVariable("AZURE_CLIENT_CERTIFICATE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_APP_CERTIFICATE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_CERTIFICATE_PASSWORD");
+
+            if (azureClientId == null)
+            {
+                azureClientId = GetAppId();
+                if (azureClientId != null)
+                {
+                    WriteVerbose("Using Managed AppId from secure store");
+                }
+            }
 
             if (!string.IsNullOrEmpty(azureCertificatePath) && !string.IsNullOrEmpty(azureCertPassword))
             {
@@ -849,7 +887,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (string.IsNullOrEmpty(azureClientId))
                 {
-                    azureClientId = PnPConnection.PnPManagementShellClientId;
+                    //azureClientId = PnPConnection.PnPManagementShellClientId;
                     CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting without an Azure Client ID used then PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
                     ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
                 }
@@ -892,10 +930,18 @@ namespace PnP.PowerShell.Commands.Base
 
             if (ClientId == null)
             {
-                var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
-                if (!string.IsNullOrEmpty(environmentAppId))
+                ClientId = GetAppId();
+                if (ClientId == null)
                 {
-                    ClientId = environmentAppId;
+                    var environmentAppId = Environment.GetEnvironmentVariable("ENTRAID_APP_ID") ?? Environment.GetEnvironmentVariable("ENTRAID_CLIENT_ID") ?? Environment.GetEnvironmentVariable("AZURE_CLIENT_ID");
+                    if (!string.IsNullOrEmpty(environmentAppId))
+                    {
+                        ClientId = environmentAppId;
+                    }
+                }
+                else
+                {
+                    WriteVerbose("Using Managed AppId from secure store");
                 }
             }
             if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
@@ -981,7 +1027,7 @@ namespace PnP.PowerShell.Commands.Base
             var connectionUri = new Uri(Url);
 
             // Try to get the credentials by full url
-            string appId = Utilities.CredentialManager.GetAppId(Url);
+            string appId = Utilities.CredentialManager.GetAppId(connectionUri.ToString());
             if (appId == null)
             {
                 // Try to get the credentials by splitting up the path
