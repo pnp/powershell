@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                WriteError(new ErrorRecord(new System.Exception("App Id not found"), "APPIDNOTFOUND", ErrorCategory.AuthenticationError, this));
+                WriteError(new ErrorRecord(new System.Exception("AppId not found"), "APPIDNOTFOUND", ErrorCategory.AuthenticationError, this));
             }
         }
     }

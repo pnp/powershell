@@ -22,15 +22,15 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (Force || ShouldContinue($"Remove App Id: {Url}?", Properties.Resources.Confirm))
                 {
-                    if (!Utilities.CredentialManager.RemoveAppid(Url))
+                    if (!Utilities.CredentialManager.RemoveAppid(uri.ToString()))
                     {
-                        WriteError(new ErrorRecord(new System.Exception($"AppId {Url} not removed"), "APPIDNOTREMOVED", ErrorCategory.WriteError, Url));
+                        WriteError(new ErrorRecord(new System.Exception($"AppId for {Url} not removed"), "APPIDNOTREMOVED", ErrorCategory.WriteError, Url));
                     }
                 }
             }
             else
             {
-                WriteError(new ErrorRecord(new System.Exception($"AppId {Url} not found"), "APPIDNOTFOUND", ErrorCategory.ObjectNotFound, Url));
+                WriteError(new ErrorRecord(new System.Exception($"AppId not found for {Url}"), "APPIDNOTFOUND", ErrorCategory.ObjectNotFound, Url));
             }
         }
     }

@@ -116,9 +116,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static string GetAppId(string name)
         {
-            if (!name.StartsWith("PNPPSAppId:"))
+            if (!name.StartsWith("PnPPSAppId:"))
             {
-                name = $"PNPPSAppId:{name}";
+                name = $"PnPPSAppId:{name}";
             }
             // check if Microsoft.PowerShell.SecretManagement is available
             if (HasSecretManagement())
@@ -191,9 +191,9 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static bool RemoveAppid(string name)
         {
-            if(!name.StartsWith("PNPPSAppId:"))
+            if(!name.StartsWith("PnPPSAppId:"))
             {
-                name = $"PNPPSAppId:{name}";
+                name = $"PnPPSAppId:{name}";
             }
             bool success = false;
 
