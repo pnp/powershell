@@ -165,6 +165,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/handlingmultitenantauth.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/handlingmultitenantauth.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/index.md",
       "output": {
         ".html": {
@@ -237,6 +247,9 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Toc",
       "source_relative_path": "articles/toc.yml",
       "output": {
