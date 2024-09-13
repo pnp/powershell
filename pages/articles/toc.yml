@@ -34,6 +34,8 @@
       href: dev-containers.md
 - name: Advanced topics
   items:
+    - name: How to handle authenticating to multiple tenants
+      href: handlingmultitenantauth
     - name: Using Microsoft Search with PnP PowerShell
       href: microsoftsearch.md  
     - name: Batching in PnP PowerShell
