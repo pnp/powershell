@@ -83,6 +83,48 @@
                   </div>
   <h1 id="how-to-handle-authenticating-to-multiple-tenants">How to handle authenticating to multiple tenants</h1>
 
+<p>One question that may come up when working with multiple tenants is how to handle authenticating to multiple tenants, especially since we now require you to register your own Entra ID Application Registration. This is a common scenario when you have a separate development, test and production tenant setup. Or if you are working with multiple customers' tenants. This can be challenging because each tenant requires its own application registration, having it's own application ID / Client ID and may have different authentication requirements, such as different identity providers or different authentication mechanisms.</p>
+<p>In this article, we will try to inspire you on some methods you could apply to handle authenticating to multiple tenants in more convient ways.</p>
+<h2 id="how-could-this-be-a-challenge">How could this be a challenge?</h2>
+<p>One might wonder why this could even be a challenge. After all, you could just <a href="registerapplication.html">create an application registration</a> in each tenant and use the corresponding application ID / Client ID when authenticating.</p>
+<p>Let's suppose you do so and say we have created these:</p>
+<table>
+<thead>
+<tr>
+<th>Client ID</th>
+<th>Tenant</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>12345678-1234-1234-1234-123456789012</code></td>
+<td>contosodev.onmicrosoft.com</td>
+<td>Development Tenant</td>
+</tr>
+<tr>
+<td><code>23456789-2345-2345-2345-234567890123</code></td>
+<td>contosotest.onmicrosoft.com</td>
+<td>Test Tenant</td>
+</tr>
+<tr>
+<td><code>34567890-3456-3456-3456-345678901234</code></td>
+<td>contoso.onmicrosoft.com</td>
+<td>Production Tenant</td>
+</tr>
+</tbody>
+</table>
+<p>You now have multiple application registrations, each with its own application ID / Client ID. This means you need to keep track of all these application IDs / Client IDs and use the correct one when authenticating. This can be cumbersome and error-prone, especially if you have many tenants. When connecting to one of these tenants, you will need to connect like this:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline contosodev.sharepoint.com -Interactive -ClientId 12345678-1234-1234-1234-123456789012
+Connect-PnPOnline contosotest.sharepoint.com -Interactive -ClientId 23456789-2345-2345-2345-234567890123
+Connect-PnPOnline contoso.sharepoint.com -Interactive -ClientId 34567890-3456-3456-3456-345678901234
+</code></pre>
+<p>This could lead to mistakes, such as using the wrong application ID / Client ID when connecting to a tenant. This could lead to authentication errors, which might lead to confusion and frustration.</p>
+<h2 id="idea-1-create-your-own-function-to-encapsulate-the-connection-logic">Idea 1: Create your own function to encapsulate the connection logic</h2>
+<p>Content to follow</p>
+<h2 id="idea-2-create-your-own-multi-tenant-application-registration">Idea 2: Create your own multi tenant application registration</h2>
+<p>Content to follow</p>
+<h2 id="idea-3-utilize-the-credential-manager-to-store-your-client-ids">Idea 3: Utilize the credential manager to store your client IDs</h2>
 <p>Content to follow</p>
 
 </article>

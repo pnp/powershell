@@ -111,6 +111,7 @@
                                        [-LogoFilePath &lt;string&gt;]
                                        [-MicrosoftGraphEndPoint &lt;string&gt;]
                                        [-EntraIDLoginEndPoint &lt;string&gt;]
+                                       [-SignInAudience &lt;EntraIDSignInAudience&gt;]
 </code></pre>
 <h3 id="existing-certificate">Existing Certificate</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp  -CertificatePath &lt;String&gt;
@@ -382,6 +383,15 @@ Accept pipeline input: False
 <p>Sets the Microsoft Graph endpoint to be used for creation of the app. This only works if Azure Environment parameter is set to <code>Custom</code></p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Accept pipeline input: False
+</code></pre>
+<h3 id="-signinaudience">-SignInAudience</h3>
+<p>Sets the sign in audience. Use this to make the app support Single tenant accounts, Multi-tenant accounts, Multi-tenant + personal accounts &amp; personal accounts only.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Generate Certificate
 
 Required: False
 Position: Named
