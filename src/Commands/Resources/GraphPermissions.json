@@ -5247,6 +5247,27 @@
         "isEnabled": true,
         "isAdmin": false,
         "value": "Tasks.Read.All"
+      },
+      {
+        "allowedMemberTypes": [
+          "Application"
+        ],
+        "consentDescription": "Allows the app to read and query your audit log activities, without a signed-in user.",
+        "consentDisplayName": "Read audit logs data from all services",
+        "id": "5e1e9171-754d-478c-812c-f1755a9a4c2d",
+        "isEnabled": true,
+        "isAdmin": false,
+        "value": "AuditLogsQuery.Read.All"
+      },
+      {
+        "adminConsentDescription": "Allows the app to read and query audit logs from all services, on behalf of a signed-in user.",
+        "adminConsentDisplayName": "Read audit logs data from all services",
+        "id": "1d9e7ac3-0eca-442c-82f9-e92625af6e6d",
+        "isEnabled": true,
+        "isAdmin": true,
+        "consentDescription": "Allows the app to read and query audit logs from all services, on your behalf.",
+        "consentDisplayName": "Read audit logs data from all services",
+        "value": "AuditLogsQuery.Read.All"
       }
     ]
   }
