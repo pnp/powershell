@@ -2861,6 +2861,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPManagedAppId.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPManagedAppId.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPMasterPage.md",
       "output": {
         ".html": {
@@ -5711,6 +5721,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPManagedAppId.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPManagedAppId.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPMicrosoft365Group.md",
       "output": {
         ".html": {
@@ -7065,6 +7085,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListRecordDeclaration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPManagedAppId.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPManagedAppId.html"
         }
       },
       "version": ""
