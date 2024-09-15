@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Files
                 case URLTOPATH:
 
                     // Get a reference to the file to download
-                    IFile fileToDownload = PnPContext.Web.GetFileByServerRelativeUrlAsync(serverRelativeUrl).GetAwaiter().GetResult();
+                    IFile fileToDownload = PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl);
                     string fileToDownloadName = !string.IsNullOrEmpty(Filename) ? Filename : fileToDownload.Name;
                     string fileOut = System.IO.Path.Combine(Path, fileToDownloadName);
 

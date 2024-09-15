@@ -320,8 +320,6 @@ namespace PnP.PowerShell.Commands.Utilities
 
         private static string GetVaultAppId(string vaultName, string name)
         {
-            PSCredential creds = null;
-
             InitialSessionState iss = InitialSessionState.CreateDefault();
 
             using (Runspace myRunSpace = RunspaceFactory.CreateRunspace(iss))
