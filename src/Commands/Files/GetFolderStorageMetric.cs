@@ -83,7 +83,7 @@ namespace PnP.PowerShell.Commands.Files
                     }
                 }
 
-                IFolder folderWithStorageMetrics = PnPContext.Web.GetFolderByServerRelativeUrlAsync(targetFolder.ServerRelativeUrl, f => f.StorageMetrics).GetAwaiter().GetResult();
+                IFolder folderWithStorageMetrics = PnPContext.Web.GetFolderByServerRelativeUrl(targetFolder.ServerRelativeUrl, f => f.StorageMetrics);
                 var storageMetrics = folderWithStorageMetrics.StorageMetrics;
 
                 WriteObject(new Model.SharePoint.FolderStorageMetric

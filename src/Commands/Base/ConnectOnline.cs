@@ -769,7 +769,7 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectWebLogin()
         {
             WriteVerbose("Connecting using WebLogin");
-            WriteWarning("Consider using -Interactive instead, which provides better functionality. See the documentation at https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html#interactive-for-multi-factor-authentication");
+            WriteWarning("Consider using -Interactive or -OSLogin instead, which provides better functionality. This will be removed in a future release. See the documentation at https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html#interactive-for-multi-factor-authentication");
 
             if (Utilities.OperatingSystem.IsWindows())
             {
