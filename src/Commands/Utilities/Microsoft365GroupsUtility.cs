@@ -9,6 +9,7 @@ using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using System.Threading;
+using System.Net;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -144,6 +145,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static Microsoft365Group GetGroup(Cmdlet cmdlet, PnPConnection connection, string displayName, string accessToken, bool includeSiteUrl, bool includeOwners, bool detailed, bool includeSensitivityLabels)
         {
+            displayName = WebUtility.UrlEncode(displayName.Replace("'", "''"));
             var results = GraphHelper.Get<RestResultCollection<Microsoft365Group>>(cmdlet, connection, $"v1.0/groups?$filter=groupTypes/any(c:c+eq+'Unified') and (displayName eq '{displayName}' or mailNickName eq '{displayName}')", accessToken);
             if (results != null && results.Items.Any())
             {
