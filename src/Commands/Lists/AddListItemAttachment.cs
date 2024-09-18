@@ -84,7 +84,7 @@ namespace PnP.PowerShell.Commands.Lists
             switch (ParameterSetName)
             {
                 case ParameterSet_ASFILE:
-                    addedAttachment = item.AttachmentFiles.AddAsync(FileName, File.OpenRead(Path)).GetAwaiter().GetResult();
+                    addedAttachment = item.AttachmentFiles.Add(FileName, File.OpenRead(Path));
                     WriteObject(addedAttachment);
                     break;
 
@@ -96,14 +96,14 @@ namespace PnP.PowerShell.Commands.Lists
                             writer.Write(Content);
                             writer.Flush();
                             stream.Position = 0;
-                            addedAttachment = item.AttachmentFiles.AddAsync(FileName, stream).GetAwaiter().GetResult();
+                            addedAttachment = item.AttachmentFiles.Add(FileName, stream);
                             WriteObject(addedAttachment);
                         }
                     }
                     break;
 
                 default:
-                    addedAttachment = item.AttachmentFiles.AddAsync(FileName, Stream).GetAwaiter().GetResult();
+                    addedAttachment = item.AttachmentFiles.Add(FileName, Stream);
                     WriteObject(addedAttachment);
                     break;
             }

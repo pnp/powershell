@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Base
     {
         [Parameter(Mandatory = false)]
         [Alias("ApplicationId")]
-        public string ClientId = PnPConnection.PnPManagementShellClientId; // defaults to PnPManagementShell
+        public string ClientId;
 
         [Parameter(Mandatory = false)]
         public string[] Scopes = new string[] { "AllSites.FullControl" };

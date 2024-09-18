@@ -127,6 +127,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Includes
+Optionally allows properties to be retrieved for the returned application customizer which are not included in the response by default
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 
 ### -WhatIf

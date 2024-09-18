@@ -7,7 +7,12 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerPlan")]
-    [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.Read")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.Read.All")]    
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.Read.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class GetPlannerPlan : PnPGraphCmdlet
     {
         private const string ParameterName_BYGROUP = "By Group";

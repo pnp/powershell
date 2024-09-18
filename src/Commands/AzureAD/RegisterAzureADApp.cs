@@ -17,6 +17,8 @@ using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base;
 using System.Diagnostics;
+using System.Dynamic;
+using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -90,6 +92,18 @@ namespace PnP.PowerShell.Commands.AzureAD
         [Parameter(Mandatory = false)]
         public string LogoFilePath;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter SkipCertCreation;
+
+        [Parameter(Mandatory = false)]
+        public string MicrosoftGraphEndPoint;
+
+        [Parameter(Mandatory = false)]
+        public string EntraIDLoginEndPoint;
+
+        [Parameter(Mandatory = false)]
+        public EntraIDSignInAudience SignInAudience;
+
         protected override void ProcessRecord()
         {
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
@@ -124,7 +138,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             using (var authenticationManager = new AuthenticationManager())
             {
-                loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment);
+                loginEndPoint = authenticationManager.GetAzureADLoginEndPoint(AzureEnvironment) ?? EntraIDLoginEndPoint;
             }
 
             var permissionScopes = new PermissionScopes();
@@ -195,7 +209,11 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             if (!string.IsNullOrEmpty(token))
             {
-                var cert = GetCertificate(record);
+                X509Certificate2 cert = null;
+                if (!SkipCertCreation)
+                {
+                    cert = GetCertificate(record);
+                }
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
                 if (!AppExists(ApplicationName, httpClient, token))
@@ -203,10 +221,13 @@ namespace PnP.PowerShell.Commands.AzureAD
                     var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri, scopes);
 
                     record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
-                    record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
-                    byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
-                    var base64String = Convert.ToBase64String(certPfxData);
-                    record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
+                    if (cert != null)
+                    {
+                        record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
+                        byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
+                        var base64String = Convert.ToBase64String(certPfxData);
+                        record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
+                    }
                     StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter, scopes);
 
                     if (ParameterSpecified(nameof(LogoFilePath)) && !string.IsNullOrEmpty(LogoFilePath))
@@ -412,7 +433,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment);
+                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -425,7 +446,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, Tenant);
+                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, Tenant, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -449,7 +470,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 {
                     throw new PSArgumentException("Password is required or use -DeviceLogin or -Interactive");
                 }
-                token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, AzureEnvironment).GetAwaiter().GetResult();
+                token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, AzureEnvironment, MicrosoftGraphEndPoint).GetAwaiter().GetResult();
             }
 
             return token;
@@ -531,7 +552,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
-                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
             }
 
             var azureApps = RestHelper.Get<RestResultCollection<AzureADApp>>(httpClient, $"{graphEndpoint}/v1.0/applications?$filter=displayName eq '{appName}'&$select=Id", token);
@@ -546,16 +567,31 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         private AzureADApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri, List<PermissionScope> scopes)
         {
-            var expirationDate = cert.NotAfter.ToUniversalTime();
-            var startDate = cert.NotBefore.ToUniversalTime();
-
             var scopesPayload = GetScopesPayload(scopes);
-            var payload = new
+            var redirectUris = new List<string>() { $"{loginEndPoint}/common/oauth2/nativeclient", redirectUri };
+            if (redirectUri != "http://localhost")
             {
-                isFallbackPublicClient = true,
-                displayName = ApplicationName,
-                signInAudience = "AzureADMyOrg",
-                keyCredentials = new[] {
+                redirectUris.Add("http://localhost");
+            }
+
+            string audience = "AzureADMyOrg";
+            if (ParameterSpecified(nameof(SignInAudience)))
+            {
+                audience = SignInAudience.ToString();
+            }
+
+            dynamic payload = new ExpandoObject();
+            payload.isFallbackPublicClient = true;
+            payload.displayName = ApplicationName;
+            payload.signInAudience = audience;
+            payload.publicClient = new { redirectUris = redirectUris.ToArray() };
+            payload.requiredResourceAccess = scopesPayload;
+
+            if (cert != null)
+            {
+                var expirationDate = cert.NotAfter.ToUniversalTime();
+                var startDate = cert.NotBefore.ToUniversalTime();
+                payload.keyCredentials = new[] {
                     new {
                         customKeyIdentifier = cert.GetCertHashString(),
                         endDateTime = expirationDate,
@@ -566,25 +602,43 @@ namespace PnP.PowerShell.Commands.AzureAD
                         key = Convert.ToBase64String(cert.GetRawCertData()),
                         displayName = cert.Subject,
                     }
-                },
-
-                publicClient = new
-                {
-                    redirectUris = new[] {
-                        $"{loginEndPoint}/common/oauth2/nativeclient",
-                        redirectUri
-                    }
-                },
-                requiredResourceAccess = scopesPayload
-            };
+                };
+            }
 
             var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
-                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
             }
 
             var azureApp = RestHelper.Post<AzureADApp>(httpClient, $"{graphEndpoint}/v1.0/applications", token, payload);
+
+            var retry = true;
+            var iteration = 0;
+            while (retry)
+            {
+                try
+                {
+                    // Add redirectURI to support windows broker
+                    dynamic redirectUriPayload = new ExpandoObject();
+                    redirectUris.Add($"ms-appx-web://microsoft.aad.brokerplugin/{azureApp.AppId}");
+                    redirectUriPayload.publicClient = new { redirectUris = redirectUris.ToArray() };
+                    RestHelper.Patch(httpClient, $"{graphEndpoint}/v1.0/applications/{azureApp.Id}", token, redirectUriPayload);
+                    retry = false;
+                }
+
+                catch (Exception)
+                {
+                    Thread.Sleep(10000);
+                    iteration++;
+                }
+
+                if (iteration > 3) // don't try more than 3 times
+                {
+                    retry = false;
+                }
+            }
+
             if (azureApp != null)
             {
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"App {azureApp.DisplayName} with id {azureApp.AppId} created.");
@@ -599,7 +653,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
-                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
             }
 
             var resource = scopes.FirstOrDefault(s => s.resourceAppId == PermissionScopes.ResourceAppId_Graph) != null ? $"{graphEndpoint}/.default" : "https://microsoft.sharepoint-df.com/.default";
@@ -608,7 +662,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             var waitTime = 30;
 
-            var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to update Azure AD and launch consent flow");
+            var progressRecord = new ProgressRecord(1, "Please wait...", $"Waiting {waitTime} seconds to update Entra ID and launch consent flow");
             for (var i = 0; i < waitTime; i++)
             {
                 progressRecord.PercentComplete = Convert.ToInt32((Convert.ToDouble(i) / Convert.ToDouble(waitTime)) * 100);
@@ -675,12 +729,12 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 try
                 {
-                    WriteVerbose("Setting the logo for the Azure AD app");
+                    WriteVerbose("Setting the logo for the EntraID app");
 
                     var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
                     if (AzureEnvironment == AzureEnvironment.Custom)
                     {
-                        graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                        graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? MicrosoftGraphEndPoint;
                     }
 
                     var endpoint = $"{graphEndpoint}/v1.0/applications/{azureApp.Id}/logo";
@@ -716,7 +770,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
                         GraphHelper.Put(this, PnPConnection.Current, endpoint, token, byteArrayContent);
 
-                        WriteVerbose("Successfully set the logo for the Azure AD app");
+                        WriteVerbose("Successfully set the logo for the Entra ID app");
                     }
                     else
                     {

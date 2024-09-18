@@ -69,7 +69,7 @@ Returns all subfolders of the folder SitePages which is located in the root of t
 
 ### EXAMPLE 6
 ```powershell
-Get-PnPFolder -Identity "Shared Documents" | Get-PnPFolderItem -ItemType File
+Get-PnPFolder -Url "Shared Documents" | Get-PnPFolderItem -ItemType File
 ```
 
 Returns all files in the "Shared Documents" folder which is located in the root of the current web
@@ -160,6 +160,7 @@ A switch parameter to include contents of all subfolders in the specified folder
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
+Aliases: Recurse
 
 Required: False
 Position: 4

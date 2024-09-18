@@ -12,7 +12,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Add, "PnPPlannerTask")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class AddPlannerTask : PnPGraphCmdlet
     {
         private const string ParameterName_BYGROUP = "By Group";
@@ -50,6 +50,9 @@ namespace PnP.PowerShell.Commands.Planner
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string[] AssignedTo;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public SwitchParameter OutputTask;
 
         protected override void ExecuteCmdlet()
         {
@@ -146,6 +149,12 @@ namespace PnP.PowerShell.Commands.Planner
             {
                 var existingTaskDetails = PlannerUtility.GetTaskDetails(this, Connection, AccessToken, createdTask.Id, false);
                 PlannerUtility.UpdateTaskDetails(this, Connection, AccessToken, existingTaskDetails, Description);
+                createdTask.HasDescription = true;
+            }
+
+            if(OutputTask.IsPresent)
+            {
+                WriteObject(createdTask);
             }
         }
     }

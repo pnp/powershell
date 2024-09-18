@@ -36,7 +36,7 @@ Adds the 'Contribute' permission to the SharePoint group with the name 'My Site 
 Set-PnPGroupPermissions -Identity 'My Site Members' -RemoveRole 'Full Control' -AddRole 'Read'
 ```
 
-Removes the 'Full Control' from and adds the 'Contribute' permissions to the SharePoint group with the name 'My Site Members'.
+Removes the 'Full Control' from and adds the 'Read' permissions to the SharePoint group with the name 'My Site Members'.
 
 ### EXAMPLE 3
 ```powershell

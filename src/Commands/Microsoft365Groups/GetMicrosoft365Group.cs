@@ -9,7 +9,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365Group")]
-    [RequiredMinimalApiPermissions("Group.Read.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.Read.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class GetMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
