@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 throw new ArgumentException($"{nameof(tenantId)} is required");
             }
 
-            using (var authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(username, password, azureEnvironment))
+            using (var authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(CLIENTID , username, password, azureEnvironment: azureEnvironment))
             {
                 var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
                 if (azureEnvironment == AzureEnvironment.Custom)
