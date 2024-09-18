@@ -496,7 +496,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(credentials.UserName, credentials.Password, azureEnvironment);
+                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, azureEnvironment: azureEnvironment);
                         }
                         using (authManager)
                         {
