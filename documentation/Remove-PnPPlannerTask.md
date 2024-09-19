@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPPlannerTask.h
 
 **Required Permissions**
 
-  * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: One of Tasks.ReadWrite, Tasks.ReadWrite.All, Group.ReadWrite.All
 
 Removes a Planner task.
 

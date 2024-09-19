@@ -13,7 +13,7 @@ title: Add-PnPPlannerTask
 
 **Required Permissions**
 
-  * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: One of Tasks.ReadWrite, Tasks.ReadWrite.All, Group.ReadWrite.All
 
 Adds a new task to a planner bucket
 
