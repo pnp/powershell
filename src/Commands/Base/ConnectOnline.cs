@@ -1,4 +1,4 @@
-﻿using Microsoft.Graph;
+using Microsoft.Graph;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.PowerShell.Commands.Apps;
@@ -190,6 +190,7 @@ namespace PnP.PowerShell.Commands.Base
         public string CertificateBase64Encoded;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public X509KeyStorageFlags X509KeyStorageFlags;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
@@ -626,12 +627,19 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!Path.IsPathRooted(CertificatePath))
                 {
-                    CertificatePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
+                    CertificatePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
                                CertificatePath);
                 }
                 if (!File.Exists(CertificatePath))
                 {
                     throw new FileNotFoundException("Certificate not found");
+                }
+
+                if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
+                {
+                    X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet;
                 }
 
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
@@ -880,7 +888,14 @@ namespace PnP.PowerShell.Commands.Base
 
                 SecureString secPassword = StringToSecureString(azureCertPassword);
 
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, azureCertificatePath, secPassword);
+                if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
+                {
+                    X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet;
+                }
+
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, azureCertificatePath, secPassword, X509KeyStorageFlags);
                 if (Connection?.ClientId == azureClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
