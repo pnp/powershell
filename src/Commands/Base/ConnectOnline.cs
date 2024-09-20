@@ -635,9 +635,9 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
-                if (PnPConnection.Current?.ClientId == ClientId &&
-                    PnPConnection.Current?.Tenant == Tenant &&
-                    PnPConnection.Current?.Certificate?.Thumbprint == certificate.Thumbprint)
+                if (Connection?.ClientId == ClientId &&
+                    Connection?.Tenant == Tenant &&
+                    Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
 
                 {
                     ReuseAuthenticationManager();
@@ -648,8 +648,11 @@ namespace PnP.PowerShell.Commands.Base
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
                 var certificateBytes = Convert.FromBase64String(CertificateBase64Encoded);
-                if (!ParameterSpecified(nameof(X509KeyStorageFlags))) {
-                    X509KeyStorageFlags = X509KeyStorageFlags.DefaultKeySet;
+                if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
+                {
+                    X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet;
                 }
                 var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags);
 

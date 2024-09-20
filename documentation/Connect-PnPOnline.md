@@ -284,13 +284,15 @@ WAM is a more secure & faster way of authenticating in Windows OS. It supports W
 
 ### EXAMPLE 9
 ```powershell
+$keyStorageflags = [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::MachineKeySet -bor [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::PersistKeySet
+
 Connect-PnPOnline -Url "contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -X509KeyStorageFlags $keyStorageflags -Tenant 'contoso.onmicrosoft.com'
 ```
 
 Connects using an Azure Active Directory registered application using a certificate with a private key that has been base64 encoded.
 See [Security App-only EntraId guidance](https://learn.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread) for a sample on how to get started.
 
-See [X509 key storage flags]https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509keystorageflags)for information on how to configure key storage when creating the certificate.
+See [X509 key storage flags](https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509keystorageflags) for information on how to configure key storage when creating the certificate.
 
 ## PARAMETERS
 
@@ -880,6 +882,24 @@ Aliases:
 Required: True
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -X509KeyStorageFlags
+
+Defines where and how to import the private key of an X.509 certificate.
+
+This enumeration supports a bitwise combination of its member values.
+
+```yaml
+Type: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags
+Parameter Sets: App-Only with Azure Active Directory
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
