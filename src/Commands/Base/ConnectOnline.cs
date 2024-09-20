@@ -190,6 +190,9 @@ namespace PnP.PowerShell.Commands.Base
         public string CertificateBase64Encoded;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        public X509KeyStorageFlags X509KeyStorageFlags;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         public SecureString CertificatePassword;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
@@ -631,10 +634,11 @@ namespace PnP.PowerShell.Commands.Base
                     throw new FileNotFoundException("Certificate not found");
                 }
 
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword);
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
                 if (Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
+
                 {
                     ReuseAuthenticationManager();
                 }
@@ -644,7 +648,13 @@ namespace PnP.PowerShell.Commands.Base
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
                 var certificateBytes = Convert.FromBase64String(CertificateBase64Encoded);
-                var certificate = new X509Certificate2(certificateBytes, CertificatePassword);
+                if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
+                {
+                    X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet;
+                }
+                var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags);
 
                 if (Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
