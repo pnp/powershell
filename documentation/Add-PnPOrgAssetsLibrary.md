@@ -20,8 +20,7 @@ Adds a given document library as an organizational asset source
 ## SYNTAX
 
 ```powershell
-Add-PnPOrgAssetsLibrary -LibraryUrl <String> [-ThumbnailUrl <String>] [-CdnType <SPOTenantCdnType>] [-OrgAssetType <OrgAssetType>]
- [-Connection <PnPConnection>] 
+Add-PnPOrgAssetsLibrary -LibraryUrl <String> [-ThumbnailUrl <String>] [-CdnType <SPOTenantCdnType>] [-OrgAssetType <OrgAssetType>] [-DefaultOriginAdded <bool>] [-IsCopilotSearchable <bool>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -89,6 +88,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DefaultOriginAdded
+Indicates that if the OFfice 365 CDN would not be enabled yet for the tenant, that it should be enabled and [the default origins](https://learn.microsoft.com/microsoft-365/enterprise/use-microsoft-365-cdn-with-spo?view=o365-worldwide#default-cdn-origins) should be added to the tenant. This is only applicable when the CDN has not been enabled yet on the tenant.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsCopilotSearchable
+Indicates that the organizational assets library should be searchable in the CoPilot search experience in Office applications to locate corporate images. Only works when the OrgAssetType is set to ImageDocumentLibrary.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -LibraryUrl
 The full url of the document library to be marked as one of organization's assets sources
 
@@ -137,5 +164,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-

@@ -167,7 +167,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 if (returnList == null)
                 {
                     var url = _name;
-                    context.Web.EnsurePropertiesAsync(w => w.ServerRelativeUrl).GetAwaiter().GetResult();
+                    context.Web.EnsureProperties(w => w.ServerRelativeUrl);
                     if (!_name.ToLower().StartsWith(context.Web.ServerRelativeUrl.ToLower()))
                     {
                         url = $"{context.Web.ServerRelativeUrl}/{url.TrimStart('/')}";

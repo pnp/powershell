@@ -11,7 +11,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.New, "PnPMicrosoft365GroupSettings")]
-    [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
     public class NewPnPMicrosoft365GroupSettings : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -33,14 +33,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 var groupId = Identity.GetGroupId(this, Connection, AccessToken);
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = ClearOwners.CreateGroupSetting(this, Connection, AccessToken, groupId.ToString(), groupSettingObject).GetAwaiter().GetResult();
+                var responseValue = ClearOwners.CreateGroupSetting(this, Connection, AccessToken, groupId.ToString(), groupSettingObject);
                 WriteObject(responseValue);
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = ClearOwners.CreateGroupSetting(this, Connection, AccessToken, groupSettingObject).GetAwaiter().GetResult();
+                var responseValue = ClearOwners.CreateGroupSetting(this, Connection, AccessToken, groupSettingObject);
                 WriteObject(responseValue);
             }
         }

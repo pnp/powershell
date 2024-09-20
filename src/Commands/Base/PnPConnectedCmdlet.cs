@@ -63,13 +63,14 @@ namespace PnP.PowerShell.Commands.Base
                 switch (ex)
                 {
                     case Model.Graph.GraphException gex:
-                        errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {gex.Error.Message}";
+                        errorMessage = $"{gex.HttpResponse.ReasonPhrase} ({(int)gex.HttpResponse.StatusCode}): {(gex.Error != null ? gex.Error.Message : gex.HttpResponse.Content.ReadAsStringAsync().Result)}";
                         break;
-
+                    case Core.CsomServiceException cex:
+                        errorMessage = (cex.Error as Core.CsomError).Message;
+                        break;
                     case Core.SharePointRestServiceException rex:
                         errorMessage = (rex.Error as Core.SharePointRestError).Message;
                         break;
-
                     case System.Reflection.TargetInvocationException tex:
                         Exception innermostException = tex;
                         while (innermostException.InnerException != null) innermostException = innermostException.InnerException;
@@ -89,7 +90,6 @@ namespace PnP.PowerShell.Commands.Base
                     case Core.MicrosoftGraphServiceException pgex:
                         errorMessage = (pgex.Error as Core.MicrosoftGraphError).Message; 
                         break;
-
                     default:
                         errorMessage = ex.Message;
                         break;

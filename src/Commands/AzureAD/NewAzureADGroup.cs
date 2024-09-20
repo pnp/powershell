@@ -14,7 +14,7 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureADGroup")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     [Alias("New-PnPEntraIDGroup")]
     public class NewAzureADGroup : PnPGraphCmdlet
     {

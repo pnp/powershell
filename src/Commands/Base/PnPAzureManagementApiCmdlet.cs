@@ -1,6 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities.Auth;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -12,8 +12,13 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL
         /// </summary>
-        public string AccessToken => TokenHandler.GetAccessToken(this, "https://management.azure.com/.default", Connection);
+        public string AccessToken => TokenHandler.GetAccessToken(this, ARMEndpoint.GetARMEndpoint(Connection), Connection);
 
+        /// <summary>
+        /// Returns an Access Token for the Microsoft PowerApps Services, if available, otherwise NULL
+        /// </summary>
+        public string PowerAppsServiceAccessToken => TokenHandler.GetAccessToken(this, "https://service.powerapps.com/.default", Connection);
+        
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
@@ -24,6 +29,6 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException("This cmdlet not work with a WebLogin/Cookie based connection towards SharePoint.");
                 }
             }
-        }
+        }        
     }
 }

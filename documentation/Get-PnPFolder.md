@@ -89,7 +89,7 @@ Returns the root folder of the list called 'Shared Documents'
 Get-PnPFolder -List "Shared Documents"
 ```
 
-Returns the folders inside the root folder of the list called 'Shared Documents'. Please use Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead.
+Returns the folders inside the root folder of the list called 'Shared Documents'. Please use Get-PnPFolder -ListRootFolder \<folder\> | Get-PnPFolderInFolder instead.
 
 ### EXAMPLE 7
 ```powershell
@@ -190,6 +190,20 @@ When provided, additional debug statements will be shown while executing the cmd
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Includes
+Optionally allows properties to be retrieved for the returned folders which are not included in the response by default
+
+```yaml
+Type: String[]
 Parameter Sets: (All)
 
 Required: False

@@ -1,6 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
+using PnP.Framework.Provisioning.ObjectHandlers.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Extensions;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -65,14 +69,43 @@ namespace PnP.PowerShell.Commands.Lists
                 var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, 
                     f => f.Title, f => f.Hidden, f => f.ReadOnlyField, f => f.FieldTypeKind));
                 ClientContext.ExecuteQueryRetry();
+                var itemValues = new List<FieldUpdateValue>();
 
                 foreach (var fieldValue in version.FieldValues)
                 {
                     var field = fields.FirstOrDefault(f => f.InternalName == fieldValue.Key || f.Title == fieldValue.Key);
                     if (field is { ReadOnlyField: false, Hidden: false } && !UnsupportedFieldTypes.Contains(field.FieldTypeKind))
                     {
-                        item[field.InternalName] = fieldValue.Value;
+                        if (field is TaxonomyField)
+                        {
+                            TaxonomyField taxField = ClientContext.CastTo<TaxonomyField>(field);
+                            taxField.EnsureProperty(tf => tf.AllowMultipleValues);
+                            if (taxField.AllowMultipleValues)
+                            {
+                                TaxonomyFieldValueCollection values = (TaxonomyFieldValueCollection)(fieldValue.Value);
+                                var termValuesString = String.Empty;
+                                if (values.Count > 0)
+                                {
+                                    foreach (var term in values)
+                                    {
+                                        termValuesString += "-1;#" + term.Label + "|" + term.TermGuid + ";#";
+                                    }
+                                    termValuesString = termValuesString.Substring(0, termValuesString.Length - 2);
+                                }
+
+                                var newTaxFieldValue = new TaxonomyFieldValueCollection(ClientContext, termValuesString, taxField);
+                                itemValues.Add(new FieldUpdateValue(field.InternalName, newTaxFieldValue));
+                                continue;
+                            }   
+                        }
+                        itemValues.Add(new FieldUpdateValue(field.InternalName, fieldValue.Value));
+                        
                     }
+                }
+
+                foreach (var itemValue in itemValues)
+                {
+                    item[itemValue.Key] = itemValue.Value;
                 }
 
                 item.Update();

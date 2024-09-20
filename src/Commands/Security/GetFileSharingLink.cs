@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Security
             }
 
             WriteVerbose("Retrieving file sharing details from Microsoft Graph");
-            var sharingLinks = file.GetShareLinks();
+            var sharingLinks = file?.GetShareLinks();
 
             WriteObject(sharingLinks?.RequestedItems, true);
         }

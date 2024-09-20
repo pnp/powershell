@@ -11,7 +11,9 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Set, "PnPPlannerTask")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class SetPlannerTask : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
