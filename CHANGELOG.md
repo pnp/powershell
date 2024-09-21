@@ -29,6 +29,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Restore-PnPListItemVersion` cmdlet to also restore fields with TaxonomyFieldType. [#4262](https://github.com/pnp/powershell/pull/4262)
 - Fix `Set-PnPMicrosoft365GroupSetting` cmdlet to not throw runtime error. [#4274](https://github.com/pnp/powershell/pull/4274)
 - Fix `New-PnPMicrosoft365GroupSetting` cmdlet to not throw runtime error. [#4277](https://github.com/pnp/powershell/pull/4277)
+- Fix `Get-PnPSiteTemplate -PersistMultiLanguageResources` not working correctly for xml file types. [#4326](https://github.com/pnp/powershell/pull/4326)
+- Fix `Add-PnPDataRowsToSiteTemplate` setting keyColumn to null when not passed. [#4325](https://github.com/pnp/powershell/pull/4325)
 
 ### Removed
 
