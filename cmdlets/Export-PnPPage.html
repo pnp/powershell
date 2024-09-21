@@ -87,7 +87,7 @@
 <p>Exports a Client Side Page to a PnP Provisioning Template</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Export-PnPPage [-Identity] &lt;PagePipeBind&gt; [-PersistBrandingFiles] [-Out &lt;String&gt;] [-Force]
- [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] 
+ [-Configuration &lt;ExtractConfigurationPipeBind&gt;] [-OutputInstance]  [-Connection &lt;PnPConnection&gt;] 
   
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -180,11 +180,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
+<h3 id="-outputinstance">-OutputInstance</h3>
+<p>Returns the template as an in-memory object, which is an instance of the SiteTemplate type of the PnP Core Component. It cannot be used together with the -Out parameter.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named
