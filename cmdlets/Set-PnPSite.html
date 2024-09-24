@@ -118,6 +118,7 @@
  [-BlockDownloadPolicy &lt;Boolean&gt;] [-ExcludeBlockDownloadPolicySiteOwners &lt;Boolean&gt;]
  [-ExcludedBlockDownloadGroupIds &lt;Guid[]&gt;]
  [-ListsShowHeaderAndNavigation &lt;Boolean&gt;]
+ [-RestrictContentOrgWideSearch &lt;Boolean&gt;]
  [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
@@ -486,6 +487,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-restrictedaccesscontrol">-RestrictedAccessControl</h3>
 <p>To enable restricted access control on a group-connected or Teams-connected site</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-restrictcontentorgwidesearch">-RestrictContentOrgWideSearch</h3>
+<p>Allows for applying the Restricted Content Discoverability (RCD) setting to a site</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
