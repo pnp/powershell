@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `New-PnPMicrosoft365GroupSetting` cmdlet to not throw runtime error. [#4277](https://github.com/pnp/powershell/pull/4277)
 - Fix `Get-PnPSiteTemplate -PersistMultiLanguageResources` not working correctly for xml file types. [#4326](https://github.com/pnp/powershell/pull/4326)
 - Fix `Add-PnPDataRowsToSiteTemplate` setting keyColumn to null when not passed. [#4325](https://github.com/pnp/powershell/pull/4325)
+- Fix `Connect-PnPOnline` not working correctly when `-DeviceLogin` and `-LaunchBrowser` both are specified. It used to open it in a popup. Now it correctly launches the browser. [#4325](https://github.com/pnp/powershell/pull/4345)
 
 ### Removed
 
