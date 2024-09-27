@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         [Parameter(Mandatory = false)]
         public EntraIDSignInAudience SignInAudience;
 
-        [Parameter(Mandatory = false, ParameterSetName = "DeviceLogin")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter LaunchBrowser;
 
         protected override void ProcessRecord()
@@ -509,7 +509,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     {
                         using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(azureApp.AppId, (url, port) =>
                          {
-                             BrowserHelper.OpenBrowserForInteractiveLogin(url, port, true, cancellationTokenSource);
+                             BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !LaunchBrowser, cancellationTokenSource);
                          }, Tenant, "You successfully provided consent", "You failed to provide consent.", AzureEnvironment))
                         {
                             authManager.ClearTokenCache();
@@ -545,6 +545,10 @@ namespace PnP.PowerShell.Commands.AzureAD
                 if (OperatingSystem.IsMacOS())
                 {
                     Process.Start("open", consentUrl);
+                }
+                else if (OperatingSystem.IsLinux())
+                {
+                    Process.Start("xdg-open", consentUrl);
                 }
                 else
                 {
