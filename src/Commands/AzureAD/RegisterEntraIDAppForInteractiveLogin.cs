@@ -15,6 +15,7 @@ using PnP.PowerShell.Commands.Base;
 using System.Diagnostics;
 using System.Dynamic;
 using PnP.PowerShell.Commands.Enums;
+using TextCopy;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -52,6 +53,9 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         [Parameter(Mandatory = false)]
         public EntraIDSignInAudience SignInAudience;
+
+        [Parameter(Mandatory = false, ParameterSetName = "DeviceLogin")]
+        public SwitchParameter LaunchBrowser;
 
         protected override void ProcessRecord()
         {
@@ -354,7 +358,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, MicrosoftGraphEndPoint);
+                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, MicrosoftGraphEndPoint, launchBrowser: LaunchBrowser);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -497,13 +501,10 @@ namespace PnP.PowerShell.Commands.AzureAD
             progressRecord.RecordType = ProgressRecordType.Completed;
             WriteProgress(progressRecord);
 
-
             if (OperatingSystem.IsWindows() && !NoPopup)
             {
-
                 if (!Stopping)
                 {
-
                     if (ParameterSpecified(nameof(Interactive)))
                     {
                         using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(azureApp.AppId, (url, port) =>
@@ -511,6 +512,21 @@ namespace PnP.PowerShell.Commands.AzureAD
                              BrowserHelper.OpenBrowserForInteractiveLogin(url, port, true, cancellationTokenSource);
                          }, Tenant, "You successfully provided consent", "You failed to provide consent.", AzureEnvironment))
                         {
+                            authManager.ClearTokenCache();
+                            authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
+                        }
+                    }
+                    else if (ParameterSpecified(nameof(DeviceLogin)) && LaunchBrowser)
+                    {
+                        using (var authManager = AuthenticationManager.CreateWithDeviceLogin(azureApp.AppId, Tenant, (deviceCodeResult) =>
+                        {
+                            ClipboardService.SetText(deviceCodeResult.UserCode);
+                            messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                            BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), false, cancellationTokenSource);
+                            return Task.FromResult(0);
+                        }, AzureEnvironment))
+                        {
+                            authManager.ClearTokenCache();
                             authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
                         }
                     }

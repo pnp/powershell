@@ -28,6 +28,7 @@ Register-PnPEntraIDAppForInteractiveLogin -ApplicationName <String>
                                        [-MicrosoftGraphEndPoint <string>]
                                        [-EntraIDLoginEndPoint <string>]
                                        [-SignInAudience <EntraIDSignInAudience>]
+                                       [-LaunchBrowser <SwitchParameter>]
 ```
 
 ### Generate App using Device Login
@@ -42,6 +43,7 @@ Register-PnPEntraIDAppForInteractiveLogin -ApplicationName <String>
                                        [-NoPopup]
                                        [-LogoFilePath <string>]
                                        [-SignInAudience <EntraIDSignInAudience>]
+                                       [-LaunchBrowser <SwitchParameter>]
 ```
 
 ## DESCRIPTION
@@ -225,6 +227,21 @@ Parameter Sets: Generate Certificate
 Required: False
 Position: Named
 Accept pipeline input: False
+```
+
+### -LaunchBrowser
+Launch a browser automatically and copy the code to enter to the clipboard
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: DeviceLogin
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
 ```
 
 ## RELATED LINKS
