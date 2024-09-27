@@ -43,6 +43,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var result = GraphHelper.Post<GraphBatchResponse>(cmdlet, connection, "v1.0/$batch", stringContent, accessToken);
             if (result.Responses != null && result.Responses.Any())
             {
+                var errors = new List<Exception>();
+
                 foreach (var response in result.Responses)
                 {
                     var userId = requests.First(r => r.Key == response.Id).Value;
@@ -54,8 +56,13 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     else if (response.Body.TryGetValue("error", out object errorObject))
                     {
                         var error = (JsonElement)errorObject;
-                        throw new Exception(error.ToString());
+                        errors.Add(new Exception(error.ToString()));
                     }
+                }
+
+                if (errors.Any())
+                {
+                    throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
                 }
             }
             return returnValue;
