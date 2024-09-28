@@ -112,6 +112,7 @@
                                        [-MicrosoftGraphEndPoint &lt;string&gt;]
                                        [-EntraIDLoginEndPoint &lt;string&gt;]
                                        [-SignInAudience &lt;EntraIDSignInAudience&gt;]
+                                       [-LaunchBrowser &lt;SwitchParameter&gt;]
 </code></pre>
 <h3 id="existing-certificate">Existing Certificate</h3>
 <pre><code class="lang-powershell">Register-PnPAzureADApp  -CertificatePath &lt;String&gt;
@@ -128,6 +129,7 @@
                         [-CertificatePassword &lt;SecureString&gt;]
                         [-NoPopup]
                         [-LogoFilePath &lt;string&gt;]
+                        [-LaunchBrowser &lt;SwitchParameter&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication.</p>
@@ -396,6 +398,18 @@ Parameter Sets: Generate Certificate
 Required: False
 Position: Named
 Accept pipeline input: False
+</code></pre>
+<h3 id="-launchbrowser">-LaunchBrowser</h3>
+<p>Launch a browser automatically and copy the code to enter to the clipboard</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: DeviceLogin
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>

@@ -99,6 +99,7 @@
                                        [-MicrosoftGraphEndPoint &lt;string&gt;]
                                        [-EntraIDLoginEndPoint &lt;string&gt;]
                                        [-SignInAudience &lt;EntraIDSignInAudience&gt;]
+                                       [-LaunchBrowser &lt;SwitchParameter&gt;]
 </code></pre>
 <h3 id="generate-app-using-device-login">Generate App using Device Login</h3>
 <pre><code class="lang-powershell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &lt;String&gt;
@@ -111,6 +112,7 @@
                                        [-NoPopup]
                                        [-LogoFilePath &lt;string&gt;]
                                        [-SignInAudience &lt;EntraIDSignInAudience&gt;]
+                                       [-LaunchBrowser &lt;SwitchParameter&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Registers an Entra ID App for use with the interactive login on Connect-PnPOnline. You will have to specify either -Interactive or -DeviceLogin to authenticate.</p>
@@ -241,6 +243,18 @@ Parameter Sets: Generate Certificate
 Required: False
 Position: Named
 Accept pipeline input: False
+</code></pre>
+<h3 id="-launchbrowser">-LaunchBrowser</h3>
+<p>Launch a browser automatically and copy the code to enter to the clipboard</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: DeviceLogin
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>

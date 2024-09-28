@@ -87,7 +87,8 @@
 <p>Creates a communication site, Microsoft 365 group-connected team site or Modern team site not connected to M365 group.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="teamsite">TeamSite</h3>
-<pre><code class="lang-powershell">New-PnPSite -Type TeamSite -Title &lt;String&gt; -Alias &lt;String&gt; [-Description &lt;String&gt;] [-Classification &lt;String&gt;] [-IsPublic] [-Lcid &lt;UInt&gt;] [-Owners &lt;String[]&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;] [-HubSiteId &lt;Guid&gt;] [-SiteAlias &lt;String&gt;] [-TimeZone &lt;PnP.Framework.Enums.TimeZone&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSite -Title &lt;String&gt; -Alias &lt;String&gt; [-Description &lt;String&gt;] [-Classification &lt;String&gt;] [-IsPublic] [-Lcid &lt;UInt&gt;] [-Owners &lt;String[]&gt;] [-PreferredDataLocation &lt;Office365Geography&gt;] [-SensitivityLabel &lt;String&gt;] [-HubSiteId &lt;Guid&gt;] [-SiteAlias &lt;String&gt;] [-TimeZone &lt;PnP.Framework.Enums.TimeZone&gt;] [-Members &lt;String[]&gt;] [-WelcomeEmailDisabled &lt;SwitchParameter&gt;] [-SubscribeNewGroupMembers &lt;SwitchParameter&gt;] [-AllowOnlyMembersToPost &lt;SwitchParameter&gt;] [-CalendarMemberReadOnly &lt;SwitchParameter&gt;] 
+[-ConnectorsDisabled &lt;SwitchParameter&gt;] [-HideGroupInOutlook &lt;SwitchParameter&gt;] [-SubscribeMembersToCalendarEventsDisabled &lt;SwitchParameter&gt;] [-SiteDesignId &lt;Guid&gt;] [-Wait] [-Connection &lt;PnPConnection&gt;]
  
 </code></pre>
 <h3 id="communicationsite">CommunicationSite</h3>
@@ -163,6 +164,10 @@
 <pre><code class="lang-powershell">New-PnPSite -Type TeamSite -TimeZone UTCPLUS0200_HELSINKI_KYIV_RIGA_SOFIA_TALLINN_VILNIUS -Title &quot;Contoso&quot; -Alias &quot;Contoso&quot;
 </code></pre>
 <p>This will create a new Modern team site collection connected to a Microsoft 365 Group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the timezone to UTC + 2 which is the Eastern European time zone.</p>
+<h3 id="example-17">EXAMPLE 17</h3>
+<pre><code class="lang-powershell">New-PnPSite -Type TeamSite -TimeZone UTCPLUS0200_HELSINKI_KYIV_RIGA_SOFIA_TALLINN_VILNIUS -Title &quot;Contoso&quot; -Alias &quot;Contoso&quot; -WelcomeEmailDisabled -SubscribeNewGroupMembers -AllowOnlyMembersToPost -CalendarMemberReadOnly -ConnectorsDisabled -HideGroupInOutlook -SubscribeMembersToCalendarEventsDisabled
+</code></pre>
+<p>This will create a new Modern team site collection connected to a Microsoft 365 Group with the title 'Contoso' and the url 'https://tenant.sharepoint.com/sites/contoso' and sets the timezone to UTC + 2 which is the Eastern European time zone. In addition to that, <strong>if application permissions are used</strong> , it will also set resource behavior options to disable welcome mails, make calendar read only , hide the group visibility in outlook and other options</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-alias">-Alias</h3>
 <p>The alias to use for the team site.</p>
@@ -220,7 +225,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-hubsiteid">-HubSiteId</h3>
-<p>If specified the site will be associated to the hubsite as identified by this id</p>
+<p>If specified the site will be associated to the hubsite as identified by this id.
+<strong>Note: Only applicable when delegated permissions are used.</strong></p>
 <pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
@@ -336,7 +342,7 @@ Accept wildcard characters: False
 <h3 id="-sitedesignid">-SiteDesignId</h3>
 <p>Allows to specify a custom site design</p>
 <pre><code class="lang-yaml">Type: Guid
-Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group
+Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group, TeamSite
 
 Required: False
 Position: Named
@@ -360,6 +366,113 @@ Accept wildcard characters: False
 To get the full list of timezone that you can select, you can visit <a href="https://pnp.github.io/pnpframework/api/PnP.Framework.Enums.TimeZone.html">https://pnp.github.io/pnpframework/api/PnP.Framework.Enums.TimeZone.html</a></p>
 <pre><code class="lang-yaml">Type: Framework.Enums.TimeZone
 Parameter Sets: CommunicationSite, TeamSiteWithoutMicrosoft365Group, TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-members">-Members</h3>
+<p>Set the members of the team site connected group. Specify the UPN values in a string array.
+<strong>Note: Only applicable when application permissions are used.</strong></p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-welcomeemaildisabled">-WelcomeEmailDisabled</h3>
+<p>If true, welcome emails are not sent to new members.
+<strong>Note: Only applicable when application permissions are used.</strong></p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-subscribenewgroupmembers">-SubscribeNewGroupMembers</h3>
+<p>If true, group members are subscribed to receive group conversations.
+<strong>Note: Only applicable when application permissions are used.</strong></p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-subscribememberstocalendareventsdisabled">-SubscribeMembersToCalendarEventsDisabled</h3>
+<p>If true, members are not subscribed to the group's calendar events in Outlook.
+<strong>Note: Only applicable when application permissions are used.</strong></p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-hidegroupinoutlook">-HideGroupInOutlook</h3>
+<p>If true, members are not subscribed to the group's calendar events in Outlook.
+<strong>Note: Only applicable when application permissions are used.</strong></p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connectorsdisabled">-ConnectorsDisabled</h3>
+<p>If true, changes made to the group in Exchange Online are not synced back to on-premises Active Directory. <strong>Note: Only applicable when application permissions are used.</strong></p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-calendarmemberreadonly">-CalendarMemberReadOnly</h3>
+<p>If true, members can view the group calendar in Outlook but cannot make changes.
+<strong>Note: Only applicable when application permissions are used.</strong></p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowonlymemberstopost">-AllowOnlyMembersToPost</h3>
+<p>If true, only group members can post conversations to the group.
+<strong>Note: Only applicable when application permissions are used.</strong></p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: TeamSite
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sitedesignid-1">-SiteDesignId</h3>
+<p>The ID of the Site Design to apply.
+<strong>Note: Only applicable when delegated permissions are used.</strong></p>
+<pre><code class="lang-yaml">Type: GUID
+Parameter Sets: TeamSite
 
 Required: False
 Position: Named
