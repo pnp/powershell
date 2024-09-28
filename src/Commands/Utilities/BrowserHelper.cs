@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -311,7 +312,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (OperatingSystem.IsWindows() && usePopup)
                 {
-                    BrowserHelper.GetWebBrowserPopup(url, "Please login for PnP PowerShell", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource, cancelOnClose: true, scriptErrorsSuppressed: false);
+                    GetWebBrowserPopup(url, "Please login for PnP PowerShell", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource, cancelOnClose: true, scriptErrorsSuppressed: false);
                 }
                 else
                 {
@@ -345,5 +346,18 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        internal static int FindFreeLocalhostRedirectUri()
+        {
+            TcpListener listener = new TcpListener(IPAddress.Loopback, 0);
+            try
+            {
+                listener.Start();
+                return ((IPEndPoint)listener.LocalEndpoint).Port;                
+            }
+            finally
+            {
+                listener?.Stop();
+            }
+        }
     }
 }
