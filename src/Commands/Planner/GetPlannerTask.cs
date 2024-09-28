@@ -7,6 +7,10 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerTask")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.Read")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.Read.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite.All")]    
     [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.Read.All")]
     [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class GetPlannerTask : PnPGraphCmdlet

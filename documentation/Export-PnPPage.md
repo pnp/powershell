@@ -16,7 +16,7 @@ Exports a Client Side Page to a PnP Provisioning Template
 
 ```powershell
 Export-PnPPage [-Identity] <PagePipeBind> [-PersistBrandingFiles] [-Out <String>] [-Force]
- [-Configuration <ExtractConfigurationPipeBind>] [-Connection <PnPConnection>] 
+ [-Configuration <ExtractConfigurationPipeBind>] [-OutputInstance]  [-Connection <PnPConnection>] 
   
 ```
 
@@ -141,15 +141,12 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
+### -OutputInstance
+Returns the template as an in-memory object, which is an instance of the SiteTemplate type of the PnP Core Component. It cannot be used together with the -Out parameter.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

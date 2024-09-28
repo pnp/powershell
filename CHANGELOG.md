@@ -17,6 +17,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPOrgAssetsLibrary` cmdlet which allows for updating the settings of an existing organizational assets library [#4254](https://github.com/pnp/powershell/pull/4254)
 - Added additional Graph permissions to the GraphPermissions parameter set. [#4283](https://github.com/pnp/powershell/pull/4283)
 - Added `-SignInAudience` parameter to `Register-PnPEntraIDApp` and `Register-PnPEntraIDAppForInteractiveLogin` which allows you to make the EntraID app support creation of multi-tenant apps. [#4289](https://github.com/pnp/powershell/pull/4289)
+- Added `-OutputInstance` parameter to `Export-PnPPage` cmdlet to allow export of the page as in-memory template. [#4323](https://github.com/pnp/powershell/pull/4323)
+- Added `-X509KeyStorageFlags` parameter to `Connect-PnPOnline` cmdlet which allows setting of how private keys are to be imported. [#4324](https://github.com/pnp/powershell/pull/4324)
+- Added `-RestrictContentOrgWideSearch` parameter to `Set-PnPSite` which allows for applying the Restricted Content Discoverability (RCD) setting to a site [#4335](https://github.com/pnp/powershell/pull/4335)
+- Added `-LaunchBrowser` parameter to `Register-PnPEntraIDAppForInteractiveLogin` and `Register-PnPEntraIDApp` cmdlets to open browser and continue app registration in the browser. [#4347](https://github.com/pnp/powershell/pull/4347) & [#4348](https://github.com/pnp/powershell/pull/4348)
 
 ### Changed
 
@@ -27,11 +31,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Restore-PnPListItemVersion` cmdlet to also restore fields with TaxonomyFieldType. [#4262](https://github.com/pnp/powershell/pull/4262)
 - Fix `Set-PnPMicrosoft365GroupSetting` cmdlet to not throw runtime error. [#4274](https://github.com/pnp/powershell/pull/4274)
 - Fix `New-PnPMicrosoft365GroupSetting` cmdlet to not throw runtime error. [#4277](https://github.com/pnp/powershell/pull/4277)
+- Fix `Get-PnPSiteTemplate -PersistMultiLanguageResources` not working correctly for xml file types. [#4326](https://github.com/pnp/powershell/pull/4326)
+- Fix `Add-PnPDataRowsToSiteTemplate` setting keyColumn to null when not passed. [#4325](https://github.com/pnp/powershell/pull/4325)
+- Fix `Connect-PnPOnline` not working correctly when `-DeviceLogin` and `-LaunchBrowser` both are specified. It used to open it in a popup. Now it correctly launches the browser. [#4325](https://github.com/pnp/powershell/pull/4345)
 
 ### Removed
 
 ### Contributors
 
+- [PeterRevsbech]
 - Peter Paul Kirschner [petkir]
 - Giacomo Pozzoni [jackpoz]
 - wuxiaojun514

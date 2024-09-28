@@ -128,10 +128,15 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="cmdlet">Cmdlet executing this function</param>
         /// <param name="certificatePath">Path to the private key certificate file</param>
         /// <param name="certificatePassword">Password to open the certificate or NULL if no password set on the certificate</param>
+        /// <param name="x509KeyStorageFlags">Key storage flags for created X509Certificate2</param>
         /// <returns>X509Certificate2 instance</returns>
         /// <exception cref="PSArgumentException">Thrown if the certificate cannot be read</exception>
         /// <exception cref="FileNotFoundException">Thrown if the certificate cannot be found at the provided path</exception>
-        internal static X509Certificate2 GetCertificateFromPath(Cmdlet cmdlet, string certificatePath, SecureString certificatePassword)
+        internal static X509Certificate2 GetCertificateFromPath(Cmdlet cmdlet, string certificatePath, SecureString certificatePassword, 
+            X509KeyStorageFlags x509KeyStorageFlags = 
+                        X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet)
         {
             if (System.IO.File.Exists(certificatePath))
             {
@@ -152,9 +157,8 @@ namespace PnP.PowerShell.Commands.Utilities
                     var certificate = new X509Certificate2(
                         certificateBytes,
                         certificatePassword,
-                        X509KeyStorageFlags.Exportable |
-                        X509KeyStorageFlags.MachineKeySet |
-                        X509KeyStorageFlags.PersistKeySet);
+                        x509KeyStorageFlags
+                        );
                     return certificate;
                 }
                 catch (CryptographicException e)
