@@ -24,6 +24,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
+- In case of errors when Graph batch method is used, it will now throw a clearer error message about what was the issue. [#4327](https://github.com/pnp/powershell/pull/4327/)
+
 ### Fixed
 
 - Fixed issue with `Set-PnPSearchExternalSchema` cmdlet when used with the `-Wait` parameter throwing a warning [#4253](https://github.com/pnp/powershell/pull/4253)
