@@ -89,8 +89,8 @@ namespace PnP.PowerShell.Commands.Base
             // TODO: Extend with all options
             Enums.ResourceTypeName resource = sanitizedAudience switch
             {
-                "graph.microsoft.com" or "graph.microsoft.us" or "00000003-0000-0000-c000-000000000000" => Enums.ResourceTypeName.Graph,
-                "management.azure.com" => Enums.ResourceTypeName.AzureManagementApi,
+                "graph.microsoft.com" or "graph.microsoft.us" or "graph.microsoft.de" or "microsoftgraph.chinacloudapi.cn" or "dod-graph.microsoft.us" or "00000003-0000-0000-c000-000000000000" => Enums.ResourceTypeName.Graph,
+                "management.azure.com" or "management.chinacloudapi.cn" or "management.usgovcloudapi.net" or "management.usgovcloudapi.net" or "management.usgovcloudapi.net" => Enums.ResourceTypeName.AzureManagementApi,
 
                 // We assume SharePoint as the default as vanity domains cause no fixed structure to be present in the audience name
                 _ => Enums.ResourceTypeName.SharePoint
