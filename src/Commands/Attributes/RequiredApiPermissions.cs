@@ -1,4 +1,5 @@
 ﻿using System;
+using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Attributes
 {
@@ -11,15 +12,15 @@ namespace PnP.PowerShell.Commands.Attributes
         /// <summary>
         /// All the permission scopes that are needed to call into the API. Multiple scopes can be provided and are assumed as ANDs towards eachother. 
         /// </summary>
-        public string[] PermissionScopes { get; set; }
+        public RequiredApiPermission[] PermissionScopes { get; set; }
 
         /// <summary>
         /// Declares a new set of required permissions for calling into an API. Multiple scopes can be provided and are assumed as ANDs towards eachother.
         /// </summary>
         /// <param name="permissionScopes"></param>
-        public RequiredMinimalApiPermissions(params string[] permissionScopes)
+        public RequiredMinimalApiPermissions(Enums.ResourceTypeName resourceType, string scope)
         {
-            PermissionScopes = permissionScopes;
+            //PermissionScopes = permissionScopes;
         }
     }
 }

@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Base
                         accessTokenValue = TokenHandler.GetAccessToken(this, rootUrl + "/.default", Connection);
                         break;
                     case ResourceTypeName.ARM:
-                        accessTokenValue = TokenHandler.GetAccessToken(this, ARMEndpoint.GetARMEndpoint(Connection), Connection);
+                        accessTokenValue = TokenHandler.GetAccessToken(this, $"{Endpoints.GetArmEndpoint(Connection)}/.default", Connection);
                         break;
                 }
             }
