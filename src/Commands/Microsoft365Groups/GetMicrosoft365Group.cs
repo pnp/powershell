@@ -1,17 +1,18 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
-using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365Group")]
-    [RequiredMinimalApiPermissions(Enums.ResourceTypeName.Graph, "Group.Read.All")]
-    //[RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/GroupMember.Read.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.Read.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Directory.Read.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
     public class GetMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

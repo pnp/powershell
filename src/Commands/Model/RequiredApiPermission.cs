@@ -22,10 +22,15 @@ namespace PnP.PowerShell.Commands.Model
         /// </summary>
         /// <param name="resourceTypeName">Type of resource for which the permission is required</param>
         /// <param name="scope">The permission scope required on the resource</param>
-        public RequiredApiPermission(ResourceTypeName resourceTypeName, string scope)
+        public RequiredApiPermission(ResourceTypeName? resourceTypeName, string scope)
         {
-            ResourceType = resourceTypeName;
+            ResourceType = resourceTypeName ?? ResourceTypeName.Unknown;
             Scope = scope;
         }
+
+        /// <summary>
+        /// Outputs the Resource Type: Scope
+        /// </summary>
+        public override string ToString() => $"{ResourceType}: {Scope}";
     }
 }
