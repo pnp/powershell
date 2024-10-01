@@ -4,12 +4,11 @@ All cmdlet classes in code can be decorated with permission attributes. These at
 
 Types of permissions that can be used in the permission attributes are:
 
-- [Working with permission attributes](#working-with-permission-attributes)
-  - [ApiNotAvailableUnderApplicationPermissions](#apinotavailableunderapplicationpermissions)
-  - [ApiNotAvailableUnderDelegatedPermissions](#apinotavailableunderdelegatedpermissions)
-  - [RequiredApiApplicationPermissions](#requiredapiapplicationpermissions)
-  - [RequiredApiDelegatedPermissions](#requiredapidelegatedpermissions)
-  - [RequiredApiDelegatedOrApplicationPermissions](#requiredapidelegatedorapplicationpermissions)
+- [ApiNotAvailableUnderApplicationPermissions](#apinotavailableunderapplicationpermissions)
+- [ApiNotAvailableUnderDelegatedPermissions](#apinotavailableunderdelegatedpermissions)
+- [RequiredApiApplicationPermissions](#requiredapiapplicationpermissions)
+- [RequiredApiDelegatedPermissions](#requiredapidelegatedpermissions)
+- [RequiredApiDelegatedOrApplicationPermissions](#requiredapidelegatedorapplicationpermissions)
 
 The attributes can be applied to the cmdlet class. The RequiredApi attributes take a string array as a parameter. The string array contains the permissions required to run the cmdlet. The permissions are defined in the format `resource/scope`. The resource is the resource that the permission is required for, and the permission is the permission that is required.
 
