@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPSiteClassification")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
     [OutputType(typeof(void))]
     public class DisableSiteClassification : PnPGraphCmdlet
     {

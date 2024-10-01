@@ -11,7 +11,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsChannel")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class RemoveTeamsChannel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

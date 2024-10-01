@@ -7,8 +7,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannel")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.Read.All")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Group.Read.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
 
     public class GetTeamsChannel : PnPGraphCmdlet
     {

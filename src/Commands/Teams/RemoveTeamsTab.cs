@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsTab")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     public class RemoveTeamsTab : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

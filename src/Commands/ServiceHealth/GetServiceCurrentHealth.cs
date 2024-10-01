@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Get, "PnPServiceCurrentHealth")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/ServiceHealth.Read.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/ServiceHealth.Read.All")]
     public class GetServiceCurrentHealth : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

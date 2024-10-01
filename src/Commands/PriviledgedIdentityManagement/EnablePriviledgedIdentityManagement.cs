@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPPriviledgedIdentityManagement")]
     [OutputType(typeof(bool))]
-    [RequiredMinimalApiPermissions("RoleAssignmentSchedule.ReadWrite.Directory")]
+    [RequiredApiApplicationPermissions("RoleAssignmentSchedule.ReadWrite.Directory")]
     public class EnablePriviledgedIdentityManagement : PnPGraphCmdlet
     {
         private const string ParameterName_BYELIGIBLEROLEASSIGNMENT = "By Eligible Role Assignment";

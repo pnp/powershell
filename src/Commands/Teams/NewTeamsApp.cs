@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.New, "PnPTeamsApp")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/AppCatalog.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/AppCatalog.ReadWrite.All")]
     public class NewTeamsApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

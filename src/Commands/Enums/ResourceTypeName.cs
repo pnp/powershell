@@ -28,6 +28,30 @@ namespace PnP.PowerShell.Commands.Enums
         /// Azure Resource Manager
         /// </summary>
         [Description("Azure ARM")]
-        AzureManagementApi = 3
+        AzureManagementApi = 3,
+
+        /// <summary>
+        /// Exchange Online
+        /// </summary>
+        [Description("Exchange Online")]
+        ExchangeOnline = 4,
+
+        /// <summary>
+        /// Power Automate
+        /// </summary>
+        [Description("Power Automate")]
+        PowerAutomate = 5,
+
+        /// <summary>
+        /// Power Apps
+        /// </summary>
+        [Description("Power Apps")]
+        PowerApps = 6,
+
+        /// <summary>
+        /// Dynamics CRM
+        /// </summary>
+        [Description("Dynamics CRM")]
+        DynamicsCRM = 7
     }
 }

@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADUser", DefaultParameterSetName = ParameterSet_LIST)]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/User.Read.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/User.Read.All")]
     [Alias("Get-PnPEntraIDUser")]
     public class GetAzureADUser : PnPGraphCmdlet
     {

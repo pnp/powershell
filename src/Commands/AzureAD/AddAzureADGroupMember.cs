@@ -10,7 +10,7 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Add, "PnPAzureADGroupMember")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     [Alias("Add-PnPEntraIDGroupMember")]
     public class AddAzureADGroupMember : PnPGraphCmdlet
     {

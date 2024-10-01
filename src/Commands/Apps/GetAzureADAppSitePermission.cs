@@ -11,7 +11,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADAppSitePermission", DefaultParameterSetName = ParameterSet_ALL)]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Sites.FullControl.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Sites.FullControl.All")]
     [Alias("Get-PnPEntraIDAppSitePermission")]
     public class GetPnPAzureADAppSitePermission : PnPGraphCmdlet
     {

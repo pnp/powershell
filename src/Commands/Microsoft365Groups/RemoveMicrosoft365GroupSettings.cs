@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365GroupSettings")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
     public class RemoveMicrosoft365GroupSettings : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

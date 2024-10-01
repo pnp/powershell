@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Set, "PnPSearchExternalConnection")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/ExternalConnection.ReadWrite.OwnedBy")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/ExternalConnection.ReadWrite.OwnedBy")]
     public class SetSearchExternalConnection : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

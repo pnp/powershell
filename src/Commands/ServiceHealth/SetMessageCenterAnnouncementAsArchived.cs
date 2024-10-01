@@ -7,7 +7,7 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Set, "PnPMessageCenterAnnouncementAsArchived")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/ServiceMessageViewpoint.Write")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/ServiceMessageViewpoint.Write")]
     public class SetMessageCenterAnnouncementAsArchived : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

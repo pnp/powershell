@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsChannelUser")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/ChannelMember.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/ChannelMember.ReadWrite.All")]
     public class RemoveTeamsChannelUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

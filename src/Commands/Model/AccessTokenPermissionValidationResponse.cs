@@ -46,8 +46,9 @@ namespace PnP.PowerShell.Commands.Model
         {
             cmdlet.WriteVerbose($"Evaluating {tokenType.GetDescription()} permissions in access token for audience {audience.GetDescription()}");
 
+            // Examine the permission attributes on the cmdlet class to determine the required permissions
             RequiredApiPermission[] requiredScopes = null;
-            var requiredScopesAttributes = (RequiredMinimalApiPermissions[])Attribute.GetCustomAttributes(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
+            var requiredScopesAttributes = ((RequiredApiPermissionsBase[])Attribute.GetCustomAttributes(cmdlet.GetType(), tokenType == Enums.IdType.Application ? typeof(RequiredApiApplicationPermissions) : typeof(RequiredApiDelegatedPermissions))).Concat((RequiredApiPermissionsBase[])Attribute.GetCustomAttributes(cmdlet.GetType(), typeof(RequiredApiDelegatedOrApplicationPermissions))).ToArray();
 
             // No permissions have been defined, so we assume that no permissions are required and thus the validation succeeds
             if (requiredScopesAttributes == null || requiredScopesAttributes.Length == 0)
@@ -76,7 +77,7 @@ namespace PnP.PowerShell.Commands.Model
             }
             else
             {
-                cmdlet.WriteVerbose($"Access token contains the following {scopes.Length} {tokenType.GetDescription()} permission scope{(scopes.Length != 1 ? "s" : "")} for resource {audience.GetDescription()}: {string.Join(", ", scopes.Select(s => s.Scope))}");
+                cmdlet.WriteVerbose($"Access token contains the following {(scopes.Length != 1 ? $"{scopes.Length} " : "")}{tokenType.GetDescription()} permission scope{(scopes.Length != 1 ? "s" : "")} for resource {audience.GetDescription()}: {string.Join(", ", scopes.Select(s => s.Scope))}");
             }
 
             // Each attribute specifies one or more required scopes which are considered as ANDs towards eachother. The attributes towards eachother are considered as ORs. So at least all of the scopes in one of the attributes should be present in the access token.

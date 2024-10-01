@@ -7,10 +7,9 @@ using PnP.PowerShell.Commands.Model;
 namespace PnP.PowerShell.Commands.Attributes
 {
     /// <summary>
-    /// Attribute to specify the required permissions for calling into an API. Multiple attributes can be provided and are assumed as ORs towards eachother.
+    /// Base class for attributes to specify the required permissions for calling into an API. Multiple attributes can be provided and are assumed as ORs towards eachother.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class RequiredMinimalApiPermissions : Attribute
+    public abstract class RequiredApiPermissionsBase : Attribute
     {
         /// <summary>
         /// All the permission scopes that are needed to call into the API. Multiple scopes can be provided and are assumed as ANDs towards eachother. 
@@ -22,7 +21,7 @@ namespace PnP.PowerShell.Commands.Attributes
         /// </summary>
         /// <param name="resourceType">Type of resource that access is needed to</param>
         /// <param name="scope">Scope on the resource that access is needed to</param>
-        public RequiredMinimalApiPermissions(Enums.ResourceTypeName resourceType, string scope)
+        public RequiredApiPermissionsBase(Enums.ResourceTypeName resourceType, string scope)
         {
             PermissionScopes = new[] { new RequiredApiPermission(resourceType, scope) };
         }
@@ -31,12 +30,12 @@ namespace PnP.PowerShell.Commands.Attributes
         /// Declares a new set of required permissions for calling into an API. Multiple scopes can be provided and are assumed as ANDs towards eachother.
         /// </summary>
         /// <param name="permissionScopes">One or more permission scopes in the format https://<resource>/<scope>, i.e. https://graph.microsoft.com/Group.Read.All</param>
-        public RequiredMinimalApiPermissions(params string[] permissionScopes)
+        public RequiredApiPermissionsBase(params string[] permissionScopes)
         {
             // Try to transform each of the permission scopes to a types model equivallent
             PermissionScopes = permissionScopes.Select(ps => {
                 // Use a regular expression to pull apart the resource and scope from the permission scope
-                var permissionScopeMatch = Regex.Match(ps, "https://(?<resource>[^/]*?)/(?<scope>.*)", RegexOptions.IgnoreCase);
+                var permissionScopeMatch = Regex.Match(ps, "(?:https://)?(?<resource>[^/]*?)/(?<scope>.*)", RegexOptions.IgnoreCase);
 
                 if (permissionScopeMatch.Success && permissionScopeMatch.Groups["resource"].Success && permissionScopeMatch.Groups["scope"].Success)
                 {

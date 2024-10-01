@@ -15,7 +15,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
     [Cmdlet(VerbsData.Export, "PnPPowerApp")]
-    [RequiredMinimalApiPermissions("https://management.azure.com/.default")]
+    [RequiredApiApplicationPermissions("https://management.azure.com/.default")]
     public class ExportPowerApp : PnPAzureManagementApiCmdlet
     {
 

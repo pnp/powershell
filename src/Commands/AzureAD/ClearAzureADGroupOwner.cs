@@ -9,7 +9,7 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Clear, "PnPAzureADGroupOwner")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
     [Alias("Clear-PnPEntraIDGroupOwner")]
     public class ClearAzureADGroupOwner : PnPGraphCmdlet
     {

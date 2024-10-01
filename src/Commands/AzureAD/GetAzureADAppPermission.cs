@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADAppPermission")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Application.Read.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Application.Read.All")]
     [Alias("Get-PnPEntraIDAppPermission")]
     public class GetAzureADAppPermission : PnPGraphCmdlet
     {

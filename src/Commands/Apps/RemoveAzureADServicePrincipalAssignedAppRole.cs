@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADServicePrincipalAssignedAppRole")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/AppRoleAssignment.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("https://graph.microsoft.com/AppRoleAssignment.ReadWrite.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRole>))]
     [Alias("Remove-PnPEntraIDServicePrincipalAssignedAppRole")]
     public class RemoveAzureADServicePrincipalAssignedAppRole : PnPGraphCmdlet
