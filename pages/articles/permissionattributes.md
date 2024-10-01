@@ -14,7 +14,7 @@ The attributes can be applied to the cmdlet class. The RequiredApi attributes ta
 
 You can use the below table to find the supported resources you can use and what they map to in an Entra ID Application Registration:
 
-| Resource | Entra ID API permsision | Microsoft APIs | APIs my organization uses |
+| Resource | Entra ID API permission | Microsoft APIs | APIs my organization uses |
 |----------|-------------|----------|-------------|
 | sharepoint | SharePoint | X | |
 | graph | Microsoft Graph | X | |
