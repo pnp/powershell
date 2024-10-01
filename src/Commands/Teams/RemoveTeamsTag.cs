@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsTag")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/TeamworkTag.ReadWrite")]
+    [RequiredApiApplicationPermissions("graph/TeamworkTag.ReadWrite")]
     public class RemoveTeamsTag : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

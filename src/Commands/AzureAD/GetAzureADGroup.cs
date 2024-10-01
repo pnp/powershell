@@ -8,8 +8,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADGroup")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Group.Read.All")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Get-PnPEntraIDGroup")]
     public class GetAzureADGroup : PnPGraphCmdlet
     {

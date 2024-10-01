@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPDeletedTeam")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Team.ReadBasic.All")]
+    [RequiredApiApplicationPermissions("graph/Team.ReadBasic.All")]
     [OutputType(typeof(Model.Teams.DeletedTeam))]
     public class GetDeletedTeamsTeam : PnPGraphCmdlet
     {

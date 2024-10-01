@@ -123,6 +123,9 @@ namespace PnP.PowerShell.Commands.Base
             // Validate the permissions in the access token against the permissions required for the cmdlet through the attributes provided at the class level of the cmdlet
             var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet, accessToken, resourceType, tokenType);
 
+            // If the permission evaluation returns null, it was unable to determine the permissions and it should stop
+            if (permissionEvaluationResponses == null) return;
+
             // If any of the permission evaluations has the required permissions present, we can return and are good to go permission-wise
             if (permissionEvaluationResponses.Any(p => p.RequiredPermissionsPresent)) return;
 

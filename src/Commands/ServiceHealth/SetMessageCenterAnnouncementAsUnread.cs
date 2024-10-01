@@ -7,7 +7,7 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Set, "PnPMessageCenterAnnouncementAsUnread")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/ServiceMessageViewpoint.Write")]
+    [RequiredApiApplicationPermissions("graph/ServiceMessageViewpoint.Write")]
     public class SetMessageCenterAnnouncementAsUnread : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

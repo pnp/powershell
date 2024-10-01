@@ -12,7 +12,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPAzureADAppSitePermission")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Sites.FullControl.All")]
+    [RequiredApiApplicationPermissions("graph/Sites.FullControl.All")]
     [Alias("Grant-PnPEntraIDAppSitePermission")]
     [OutputType(typeof(AzureADAppPermissionInternal))]
     public class GrantPnPAzureADAppSitePermission : PnPGraphCmdlet

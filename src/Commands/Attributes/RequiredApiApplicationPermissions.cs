@@ -6,7 +6,7 @@ namespace PnP.PowerShell.Commands.Attributes
     /// Attribute to specify the required application permissions for calling into an API. Multiple attributes can be provided and are assumed as ORs towards eachother.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class RequiredApiApplicationPermissions : RequiredApiPermissionsBase
+    public class RequiredApiApplicationPermissions : RequiredApiPermissionsBase
     {
         /// <summary>
         /// Declares one required permission for calling into an API

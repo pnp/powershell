@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Utilities;
+using System.Data;
 
 namespace PnP.PowerShell.Commands.Model
 {
@@ -41,7 +42,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="accessToken">The oAuth JWT token that needs to be validated for its roles</param>
         /// <param name="audience">The audience for which the permissions should be validated, i.e. Microsoft Graph</param>
         /// <param name="tokenType">The type of token that is being validated (delegate or app-only)</param>
-        /// <returns><see cref="AccessTokenPermissionValidationResponse[]"/> instance containing the results of the evaluation of each of the permission attributes on the cmdlet</returns>
+        /// <returns><see cref="AccessTokenPermissionValidationResponse[]"/> instance containing the results of the evaluation of each of the permission attributes on the cmdlet or NULL if the permission validation failed</returns>
         internal static AccessTokenPermissionValidationResponse[] EvaluatePermissions(Cmdlet cmdlet, string accessToken, Enums.ResourceTypeName audience, Enums.IdType tokenType)
         {
             cmdlet.WriteVerbose($"Evaluating {tokenType.GetDescription()} permissions in access token for audience {audience.GetDescription()}");
@@ -56,7 +57,15 @@ namespace PnP.PowerShell.Commands.Model
             else
             {
                 cmdlet.WriteVerbose($"Access token contains the following {(scopes.Length != 1 ? $"{scopes.Length} " : "")}{tokenType.GetDescription()} permission scope{(scopes.Length != 1 ? "s" : "")} for resource {audience.GetDescription()}: {string.Join(", ", scopes.Select(s => s.Scope))}");
-            }            
+            }
+
+            // Check if an attribute is present on the cmdlet that indicates that the cmdlet is not available under the current token type
+            if((Attribute.IsDefined(cmdlet.GetType(), typeof(ApiNotAvailableUnderDelegatedPermissions)) && tokenType == Enums.IdType.Delegate) ||
+               (Attribute.IsDefined(cmdlet.GetType(), typeof(ApiNotAvailableUnderApplicationPermissions)) && tokenType == Enums.IdType.Application))
+            {
+                cmdlet.WriteWarning($"This cmdlet is not available under {tokenType.GetDescription()} permissions");
+                return null;
+            }
 
             // Examine the permission attributes on the cmdlet class to determine the required permissions
             RequiredApiPermission[] requiredScopes = null;

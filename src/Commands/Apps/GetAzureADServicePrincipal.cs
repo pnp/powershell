@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADServicePrincipal", DefaultParameterSetName = ParameterSet_ALL)]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Application.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Application.Read.All")]
     [OutputType(typeof(List<AzureADServicePrincipal>))]
     [Alias("Get-PnPEntraIDServicePrincipal")]
     public class GetAzureADServicePrincipal : PnPGraphCmdlet

@@ -9,7 +9,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADServicePrincipalAssignedAppRole")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Application.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Application.Read.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRole>))]
     [Alias("Get-PnPEntraIDServicePrincipalAssignedAppRole")]
     public class GetAzureADServicePrincipalAssignedAppRole : PnPGraphCmdlet

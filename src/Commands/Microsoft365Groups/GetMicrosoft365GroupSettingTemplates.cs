@@ -6,8 +6,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupSettingTemplates")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Directory.Read.All")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Directory.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class GetMicrosoft365GroupSettingTemplates : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

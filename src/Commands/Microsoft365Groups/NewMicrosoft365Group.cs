@@ -10,7 +10,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.New, "PnPMicrosoft365Group", DefaultParameterSetName = ParameterSet_AssignedMembers)]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class NewPnPMicrosoft365Group : PnPGraphCmdlet
     {
         private const string ParameterSet_AssignedMembers = "Assigned membership";

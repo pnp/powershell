@@ -7,7 +7,7 @@ using System.Linq;
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Set, "PnPMessageCenterAnnouncementAsFavorite")]
-    [RequiredApiApplicationPermissions("https://graph.microsoft.com/ServiceMessageViewpoint.Write")]
+    [RequiredApiApplicationPermissions("graph/ServiceMessageViewpoint.Write")]
     public class SetMessageCenterAnnouncementAsFavorite : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
