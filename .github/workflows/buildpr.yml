@@ -44,10 +44,10 @@ jobs:
       run: dotnet build --configuration Debug --no-restore -p:WarningLevel=0
       working-directory: pnpcore/src/sdk/PnP.Core
     - name: Install PnP.Framework dependencies
-      run: dotnet restore -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll" -p:PnPCoreSdkPathNet6="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net6.0\PnP.Core.dll" -p:PnPCoreSdkPathNet7="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net7.0\PnP.Core.dll" -p:PnPCoreSdkPathNet8="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net8.0\PnP.Core.dll"
+      run: dotnet restore -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll" -p:PnPCoreSdkPathNet6="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net8.0\PnP.Core.dll" -p:PnPCoreSdkPathNet7="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net7.0\PnP.Core.dll" -p:PnPCoreSdkPathNet8="..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net8.0\PnP.Core.dll"
       working-directory: pnpframework/src/lib
     - name: Build PnP.Framework
-      run: dotnet build --configuration Debug --no-restore -p:WarningLevel=0 -p:PnPCoreSdkPath="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll" -p:PnPCoreSdkPathNet6="..\..\..\..\pnpcore/src/sdk\PnP.Core\bin\Debug\net6.0\PnP.Core.dll" -p:PnPCoreSdkPathNet7="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net7.0\PnP.Core.dll" -p:PnPCoreSdkPathNet8="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net8.0\PnP.Core.dll"
+      run: dotnet build --configuration Debug --no-restore -p:WarningLevel=0 -p:PnPCoreSdkPath="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll" -p:PnPCoreSdkPathNet6="..\..\..\..\pnpcore/src/sdk\PnP.Core\bin\Debug\net8.0\PnP.Core.dll" -p:PnPCoreSdkPathNet7="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net7.0\PnP.Core.dll" -p:PnPCoreSdkPathNet8="..\..\..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\net8.0\PnP.Core.dll"
       working-directory: pnpframework/src/lib/PnP.Framework
     - name: Install PnP.PowerShell dependencies
       run: dotnet restore -p:PnPFrameworkPath="..\..\..\pnpframework\src\lib\" -p:PnPCoreSdkPath="..\..\..\pnpcore\src\sdk\"

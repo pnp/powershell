@@ -36,13 +36,13 @@ PnP PowerShell only runs on PowerShell 7. If you don't have it installed yet, fo
 
    ![Installation of PowerShell 7 done](./../images/contributing/installps7done.png)
 
-## Installing the .NET SDK 6
+## Installing the .NET SDK 8
 
 To be able to compile the PnP PowerShell code, you need to have the .NET SDK 6 installed. If you don't have it installed yet, follow the steps below to install it. If you already have it installed, you can skip to the next paragraph.
 
-1. Navigate to the [.NET SDK 6 download page](https://dotnet.microsoft.com/download/dotnet/6.0) and download the latest version of the .NET SDK 6. It is available for Windows, Linux and Mac.
+1. Navigate to the [.NET SDK 8 download page](https://dotnet.microsoft.com/download/dotnet/8.0) and download the latest version of the .NET SDK 8. It is available for Windows, Linux and Mac.
 
-   ![Installing .NET SDK 6](./../images/contributing/dotnetsdk.png)
+   ![Installing .NET SDK 8](./../images/contributing/dotnetsdk.png)
 
 1. You can accept all the defaults and just do a next-next-finish installation.
 
