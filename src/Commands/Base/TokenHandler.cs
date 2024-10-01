@@ -113,8 +113,11 @@ namespace PnP.PowerShell.Commands.Base
             var audience = decodedToken.Audiences.FirstOrDefault();
             var resourceType = DefineResourceTypeFromAudience(audience);
 
+            // Determine the type of token (delegate or app-only)
+            var tokenType = RetrieveTokenType(accessToken);
+
             // Validate the permissions in the access token against the permissions required for the cmdlet through the attributes provided at the class level of the cmdlet
-            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet, accessToken, resourceType);
+            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet, accessToken, resourceType, tokenType);
 
             // If any of the permission evaluations has the required permissions present, we can return and are good to go permission-wise
             if (permissionEvaluationResponses.Any(p => p.RequiredPermissionsPresent)) return;
@@ -124,7 +127,7 @@ namespace PnP.PowerShell.Commands.Base
 
             // None of the permission attributes matched the permissions in the access token, so we throw an exception
             var exceptionTextBuilder = new StringBuilder();
-            exceptionTextBuilder.AppendLine($"Current access token lacks the following required permission scope(s) on the resource {resourceType.GetDescription()}:");
+            exceptionTextBuilder.AppendLine($"Current access token lacks {(permissionEvaluationResponses.Length != 1 ? "one of " : "")}the following required {tokenType.GetDescription()} permission scope{(permissionEvaluationResponses.Length != 1 ? "s" : "")} on the resource {resourceType.GetDescription()}:");
 
             for (int i = 0; i < permissionEvaluationResponses.Length; i++)
             {

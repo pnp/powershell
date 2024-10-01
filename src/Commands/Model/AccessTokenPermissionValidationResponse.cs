@@ -40,10 +40,11 @@ namespace PnP.PowerShell.Commands.Model
         /// <param name="cmdlet">The cmdlet that will be executed. Used to check for the permissions attribute.</param>
         /// <param name="accessToken">The oAuth JWT token that needs to be validated for its roles</param>
         /// <param name="audience">The audience for which the permissions should be validated, i.e. Microsoft Graph</param>
+        /// <param name="tokenType">The type of token that is being validated (delegate or app-only)</param>
         /// <returns><see cref="AccessTokenPermissionValidationResponse[]"/> instance containing the results of the evaluation of each of the permission attributes on the cmdlet</returns>
-        internal static AccessTokenPermissionValidationResponse[] EvaluatePermissions(Cmdlet cmdlet, string accessToken, Enums.ResourceTypeName audience)
+        internal static AccessTokenPermissionValidationResponse[] EvaluatePermissions(Cmdlet cmdlet, string accessToken, Enums.ResourceTypeName audience, Enums.IdType tokenType)
         {
-            cmdlet.WriteVerbose($"Evaluating permissions in access token for audience {audience.GetDescription()}");
+            cmdlet.WriteVerbose($"Evaluating {tokenType.GetDescription()} permissions in access token for audience {audience.GetDescription()}");
 
             RequiredApiPermission[] requiredScopes = null;
             var requiredScopesAttributes = (RequiredMinimalApiPermissions[])Attribute.GetCustomAttributes(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
@@ -71,11 +72,11 @@ namespace PnP.PowerShell.Commands.Model
 
             if (scopes.Length == 0)
             {
-                cmdlet.WriteVerbose($"Access token does not contain any scopes for resource {audience.GetDescription()}");
+                cmdlet.WriteVerbose($"Access token does not contain any {tokenType.GetDescription()} permission scopes for resource {audience.GetDescription()}");
             }
             else
             {
-                cmdlet.WriteVerbose($"Access token contains the following {scopes.Length} scope{(scopes.Length != 1 ? "s" : "")} for resource {audience.GetDescription()}: {string.Join(", ", scopes.Select(s => s.Scope))}");
+                cmdlet.WriteVerbose($"Access token contains the following {scopes.Length} {tokenType.GetDescription()} permission scope{(scopes.Length != 1 ? "s" : "")} for resource {audience.GetDescription()}: {string.Join(", ", scopes.Select(s => s.Scope))}");
             }
 
             // Each attribute specifies one or more required scopes which are considered as ANDs towards eachother. The attributes towards eachother are considered as ORs. So at least all of the scopes in one of the attributes should be present in the access token.
@@ -110,7 +111,7 @@ namespace PnP.PowerShell.Commands.Model
                     });
                 }
 
-                cmdlet.WriteVerbose($"Required permissions on {audience.GetDescription()}: {string.Join(" and ", requiredScopes.Select(s => s.Scope))} - {(responses.Last().RequiredPermissionsPresent ? "Present" : "Not present")}");
+                cmdlet.WriteVerbose($"Validating {tokenType.GetDescription()} permission{(requiredScopes.Length != 1 ? "s" : "")} on {audience.GetDescription()}: {string.Join(" and ", requiredScopes.Select(s => s.Scope))} - {(responses.Last().RequiredPermissionsPresent ? "Present" : "Not present")}");
             }
 
             if(responses.Any(r => r.RequiredPermissionsPresent))
