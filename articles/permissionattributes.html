@@ -86,15 +86,11 @@
 <p>All cmdlet classes in code can be decorated with permission attributes. These attributes are used to define the permissions required to run the cmdlet. The permissions are checked before the cmdlet is executed. If the user does not have the required permissions, the cmdlet will throw a warning. It will still attempt to execute the cmdlet, but it will not be able to complete the operation if the user does not have the required permissions. This has been done in case the permissions defined in the attribute are not accurate, so that it will still work.</p>
 <p>Types of permissions that can be used in the permission attributes are:</p>
 <ul>
-<li><a href="#working-with-permission-attributes">Working with permission attributes</a>
-<ul>
 <li><a href="#apinotavailableunderapplicationpermissions">ApiNotAvailableUnderApplicationPermissions</a></li>
 <li><a href="#apinotavailableunderdelegatedpermissions">ApiNotAvailableUnderDelegatedPermissions</a></li>
 <li><a href="#requiredapiapplicationpermissions">RequiredApiApplicationPermissions</a></li>
 <li><a href="#requiredapidelegatedpermissions">RequiredApiDelegatedPermissions</a></li>
 <li><a href="#requiredapidelegatedorapplicationpermissions">RequiredApiDelegatedOrApplicationPermissions</a></li>
-</ul>
-</li>
 </ul>
 <p>The attributes can be applied to the cmdlet class. The RequiredApi attributes take a string array as a parameter. The string array contains the permissions required to run the cmdlet. The permissions are defined in the format <code>resource/scope</code>. The resource is the resource that the permission is required for, and the permission is the permission that is required.</p>
 <p>You can use the below table to find the supported resources you can use and what they map to in an Entra ID Application Registration:</p>
