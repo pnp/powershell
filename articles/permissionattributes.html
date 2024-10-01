@@ -1,0 +1,225 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Working with permission attributes | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Working with permission attributes | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/permissionattributes.md/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="working-with-permission-attributes">Working with permission attributes</h1>
+
+<p>All cmdlet classes in code can be decorated with permission attributes. These attributes are used to define the permissions required to run the cmdlet. The permissions are checked before the cmdlet is executed. If the user does not have the required permissions, the cmdlet will throw a warning. It will still attempt to execute the cmdlet, but it will not be able to complete the operation if the user does not have the required permissions. This has been done in case the permissions defined in the attribute are not accurate, so that it will still work.</p>
+<p>Types of permissions that can be used in the permission attributes are:</p>
+<ul>
+<li><a href="#working-with-permission-attributes">Working with permission attributes</a>
+<ul>
+<li><a href="#apinotavailableunderapplicationpermissions">ApiNotAvailableUnderApplicationPermissions</a></li>
+<li><a href="#apinotavailableunderdelegatedpermissions">ApiNotAvailableUnderDelegatedPermissions</a></li>
+<li><a href="#requiredapiapplicationpermissions">RequiredApiApplicationPermissions</a></li>
+<li><a href="#requiredapidelegatedpermissions">RequiredApiDelegatedPermissions</a></li>
+<li><a href="#requiredapidelegatedorapplicationpermissions">RequiredApiDelegatedOrApplicationPermissions</a></li>
+</ul>
+</li>
+</ul>
+<p>The attributes can be applied to the cmdlet class. The RequiredApi attributes take a string array as a parameter. The string array contains the permissions required to run the cmdlet. The permissions are defined in the format <code>resource/scope</code>. The resource is the resource that the permission is required for, and the permission is the permission that is required.</p>
+<p>You can use the below table to find the supported resources you can use and what they map to in an Entra ID Application Registration:</p>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Entra ID API permsision</th>
+<th>Microsoft APIs</th>
+<th>APIs my organization uses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>sharepoint</td>
+<td>SharePoint</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>graph</td>
+<td>Microsoft Graph</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>exchangeonline</td>
+<td>Office 365 Exchange Online</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>azure</td>
+<td>Azure Service Management</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>flow</td>
+<td>Power Automate</td>
+<td>X</td>
+<td></td>
+</tr>
+<tr>
+<td>powerapps</td>
+<td>PowerApps Service</td>
+<td></td>
+<td>X</td>
+</tr>
+<tr>
+<td>dynamics</td>
+<td>Dynamics CRM</td>
+<td>X</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>You can combine multiple permissions in the same attribute. They can be from the same resource or from different resources. The syntax how to apply them would be like:</p>
+<pre><code class="lang-csharp">[RequiredApiApplicationPermissions(&quot;sharepoint/Sites.Read.All&quot;, &quot;graph/Group.Read.All&quot;)]
+</code></pre>
+<p>This sample would require both the <code>Sites.Read.All</code> on SharePoint and the <code>Group.Read.All</code> on Microsoft Graph permissions to be present in the application registration under the application permissions type.</p>
+<p>If multiple attributes are defined on a cmdlet, the cmdlet will require only one of the permissions defined in the attributes to run. They are treated as an OR condition towards eachother. I.e. the following permission attributes would define that only one of the permissions is required to run the cmdlet:</p>
+<pre><code class="lang-csharp">[RequiredApiDelegatedOrApplicationPermissions(&quot;graph/GroupMember.Read.All&quot;)]
+[RequiredApiDelegatedOrApplicationPermissions(&quot;graph/Group.Read.All&quot;)]
+[RequiredApiDelegatedOrApplicationPermissions(&quot;graph/Directory.Read.All&quot;)]
+[RequiredApiDelegatedOrApplicationPermissions(&quot;graph/Group.ReadWrite.All&quot;)]
+[RequiredApiDelegatedOrApplicationPermissions(&quot;graph/Directory.ReadWrite.All&quot;)]  
+</code></pre>
+<p>If you have a scenario that a combination of permissions is required, you can define multiple permissions in the same attribute to have them be handled as an AND. I.e. the following permission attributes would define that all of the permissions are required to run the cmdlet:</p>
+<pre><code class="lang-csharp">[RequiredApiDelegatedOrApplicationPermissions(&quot;graph/GroupMember.Read.All&quot;, &quot;graph/Group.Read.All&quot;)]
+</code></pre>
+<h2 id="apinotavailableunderapplicationpermissions">ApiNotAvailableUnderApplicationPermissions</h2>
+<p>This attribute indicates that the cmdlet cannot be run in the context of an application. If the cmdlet is run in the context of an application, a warning will be thrown.</p>
+<p>Sample of where application permissions are not allowed:
+<img src="../images/permissionattributes/applicationpermissionsnotallowed.png" alt="Sample where application permissions are not allowed"></p>
+<p>Sample of how the attribute can be applied:
+<img src="../images/permissionattributes/ApiNotAvailableUnderApplicationPermissionsSample.png" alt="Sample how the attribute can be applied"></p>
+<h2 id="apinotavailableunderdelegatedpermissions">ApiNotAvailableUnderDelegatedPermissions</h2>
+<p>This attribute indicates that the cmdlet cannot be run in the delegated context. If the cmdlet is run in a delegated context, a warning will be thrown.</p>
+<h2 id="requiredapiapplicationpermissions">RequiredApiApplicationPermissions</h2>
+<p>This attribute indicates that the cmdlet requires specific application permissions to run. If the application does not have the required permissions, a warning will be thrown.</p>
+<p>Sample of how the attribute can be applied:
+<img src="../images/permissionattributes/RequiredApiApplicationPermissionsSample.png" alt="Sample how the attribute can be applied"></p>
+<h2 id="requiredapidelegatedpermissions">RequiredApiDelegatedPermissions</h2>
+<p>This attribute indicates that the cmdlet requires specific delegated permissions to run. If the delegate does not have the required permissions, a warning will be thrown.</p>
+<p>Sample of how the attribute can be applied:
+<img src="../images/permissionattributes/RequiredApiApplicationPermissionsSample.png" alt="Sample how the attribute can be applied"></p>
+<h2 id="requiredapidelegatedorapplicationpermissions">RequiredApiDelegatedOrApplicationPermissions</h2>
+<p>This attribute indicates that the cmdlet requires specific permissions to run, which are the same for a delegate and an application context. If the delegate or application does not have the required permissions, a warning will be thrown.</p>
+<p>Sample of how the attribute can be applied:
+<img src="../images/permissionattributes/RequiredApiDelegatedOrApplicationPermissionsSample.png" alt="Sample how the attribute can be applied"></p>
+
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>

@@ -205,6 +205,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/permissionattributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/permissionattributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/powershellpredictor.md",
       "output": {
         ".html": {
@@ -9705,6 +9715,46 @@
       "output": {
         "resource": {
           "relative_path": "images/microsoftsearch/vertical_validation.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/permissionattributes/ApiNotAvailableUnderApplicationPermissionsSample.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/permissionattributes/ApiNotAvailableUnderApplicationPermissionsSample.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/permissionattributes/RequiredApiApplicationPermissionsSample.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/permissionattributes/RequiredApiApplicationPermissionsSample.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/permissionattributes/RequiredApiDelegatedOrApplicationPermissionsSample.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/permissionattributes/RequiredApiDelegatedOrApplicationPermissionsSample.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/permissionattributes/applicationpermissionsnotallowed.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/permissionattributes/applicationpermissionsnotallowed.png"
         }
       },
       "version": ""
