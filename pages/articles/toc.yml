@@ -56,7 +56,7 @@
       href: runningtests.md
     - name: Building using docker
       href: buildingdocker.md
-    - name: Working with permission attributed
+    - name: Working with permission attributes
       href: permissionattributes.md
 - name: Useful helper tools
   items:      
