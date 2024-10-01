@@ -46,6 +46,18 @@ namespace PnP.PowerShell.Commands.Model
         {
             cmdlet.WriteVerbose($"Evaluating {tokenType.GetDescription()} permissions in access token for audience {audience.GetDescription()}");
 
+            // Retrieve the scopes we have in our AccessToken
+            var scopes = TokenHandler.ReturnScopes(accessToken);
+
+            if (scopes.Length == 0)
+            {
+                cmdlet.WriteVerbose($"Access token does not contain any specific {tokenType.GetDescription()} permission scopes for resource {audience.GetDescription()}");
+            }
+            else
+            {
+                cmdlet.WriteVerbose($"Access token contains the following {(scopes.Length != 1 ? $"{scopes.Length} " : "")}{tokenType.GetDescription()} permission scope{(scopes.Length != 1 ? "s" : "")} for resource {audience.GetDescription()}: {string.Join(", ", scopes.Select(s => s.Scope))}");
+            }            
+
             // Examine the permission attributes on the cmdlet class to determine the required permissions
             RequiredApiPermission[] requiredScopes = null;
             var requiredScopesAttributes = ((RequiredApiPermissionsBase[])Attribute.GetCustomAttributes(cmdlet.GetType(), tokenType == Enums.IdType.Application ? typeof(RequiredApiApplicationPermissions) : typeof(RequiredApiDelegatedPermissions))).Concat((RequiredApiPermissionsBase[])Attribute.GetCustomAttributes(cmdlet.GetType(), typeof(RequiredApiDelegatedOrApplicationPermissions))).ToArray();
@@ -67,18 +79,6 @@ namespace PnP.PowerShell.Commands.Model
 
             // Create a list to hold the evaluation of the permissions in each attribute
             var responses = new List<AccessTokenPermissionValidationResponse>(requiredScopesAttributes.Length);
-
-            // Retrieve the scopes we have in our AccessToken
-            var scopes = TokenHandler.ReturnScopes(accessToken);
-
-            if (scopes.Length == 0)
-            {
-                cmdlet.WriteVerbose($"Access token does not contain any {tokenType.GetDescription()} permission scopes for resource {audience.GetDescription()}");
-            }
-            else
-            {
-                cmdlet.WriteVerbose($"Access token contains the following {(scopes.Length != 1 ? $"{scopes.Length} " : "")}{tokenType.GetDescription()} permission scope{(scopes.Length != 1 ? "s" : "")} for resource {audience.GetDescription()}: {string.Join(", ", scopes.Select(s => s.Scope))}");
-            }
 
             // Each attribute specifies one or more required scopes which are considered as ANDs towards eachother. The attributes towards eachother are considered as ORs. So at least all of the scopes in one of the attributes should be present in the access token.
             foreach (var requiredScopesAttribute in requiredScopesAttributes)
