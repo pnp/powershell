@@ -9,7 +9,7 @@ using System.Text;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADActivityReportSignIn")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/AuditLog.Read.All")]
+    [RequiredApiApplicationPermissions("graph/AuditLog.Read.All")]
     [Alias("Get-PnPEntraIDActivityReportSignIn")]
     public class GetAzureADActivityReportSignIn : PnPGraphCmdlet
     {

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsLifecycle.Submit, "PnPTeamsChannelMessage")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class SubmitTeamsChannelMessage : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

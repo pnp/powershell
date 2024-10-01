@@ -10,7 +10,7 @@ using System;
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Set, "PnPSearchExternalSchema")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/ExternalConnection.ReadWrite.OwnedBy")]
+    [RequiredApiApplicationPermissions("graph/ExternalConnection.ReadWrite.OwnedBy")]
     [OutputType(typeof(string))]
     public class SetSearchExternalSchema : PnPGraphCmdlet
     {

@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSearchExternalConnection")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/ExternalConnection.ReadWrite.OwnedBy")]
+    [RequiredApiApplicationPermissions("graph/ExternalConnection.ReadWrite.OwnedBy")]
     public class RemoveSearchExternalConnection : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]

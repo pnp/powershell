@@ -51,29 +51,21 @@ namespace PnP.PowerShell.Commands.Lists
         {
             if (ParameterSpecified(nameof(Batch)))
             {
-                var list = List.GetList(Batch, false);
-                if (list == null)
-                {
-                    throw new PSArgumentException("The specified list was not found. Notice that the title is case sensitive.", nameof(List));
-                }
+                var list = List.GetList(Batch, false) ?? throw new PSArgumentException($"The specified list through the {nameof(List)} parameter was not found. Notice that the title is case sensitive.", nameof(List));
 
                 var values = ListItemHelper.GetFieldValues(list, null, Values, ClientContext, Batch);
                 if (ContentType != null)
-                {
-                    var contentType = ContentType.GetContentType(Batch, list);
+                {                
+                    var contentType = ContentType.GetContentTypeOrWarn(this, Batch, list);
                     values.Add("ContentTypeId", contentType.StringId);
                 }
                 list.Items.AddBatch(Batch.Batch, values, Folder);
             }
             else
             {
-                List list = List.GetList(CurrentWeb);
-                if (list == null)
-                {
-                    throw new PSArgumentException("The specified list was not found. Notice that the title is case sensitive.", nameof(List));
-                }
+                List list = List.GetList(CurrentWeb) ?? throw new PSArgumentException($"The specified list through the {nameof(List)} parameter was not found. Notice that the title is case sensitive.", nameof(List));
 
-                ListItemCreationInformation liCI = new ListItemCreationInformation();
+                ListItemCreationInformation liCI = new();
                 if (Folder != null)
                 {
                     // Create the folder if it doesn't exist
@@ -103,7 +95,7 @@ namespace PnP.PowerShell.Commands.Lists
                     ListItemHelper.SetFieldValues(item, Values, this);
                 }
 
-                if (!String.IsNullOrEmpty(Label))
+                if (!string.IsNullOrEmpty(Label))
                 {
                     IList<Microsoft.SharePoint.Client.CompliancePolicy.ComplianceTag> tags = Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.GetAvailableTagsForSite(ClientContext, ClientContext.Url);
                     ClientContext.ExecuteQueryRetry();

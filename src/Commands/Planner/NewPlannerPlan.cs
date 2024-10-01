@@ -7,9 +7,9 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.New, "PnPPlannerPlan")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite.All")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]    
+    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]    
     public class NewPlannerPlan : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, HelpMessage = "Specify the group id of the plans to retrieve.")]

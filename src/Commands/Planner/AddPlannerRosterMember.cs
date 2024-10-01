@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Add, "PnPPlannerRosterMember")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Tasks.ReadWrite")]
+    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
     public class AddPlannerRosterMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

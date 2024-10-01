@@ -1,16 +1,13 @@
 ﻿using Microsoft.Identity.Client;
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Model;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
-using System.Net.Http;
 using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -63,17 +60,46 @@ namespace PnP.PowerShell.Commands.Base
         /// Returns the permission scopes of the oAuth JWT token being passed in
         /// </summary>
         /// <param name="accessToken">The oAuth JWT token</param>
-        /// <returns>String array containing the scopes in the format <audience>/<scope></returns>
-        internal static string[] ReturnScopes(string accessToken)
+        /// <returns><see cref="RequiredApiPermission"/> array containing the scopes</returns>
+        internal static RequiredApiPermission[] ReturnScopes(string accessToken)
         {
             var decodedToken = new JwtSecurityToken(accessToken);
 
             // Retrieve the audience the token was issued for
             var audience = decodedToken.Audiences.FirstOrDefault();
+            var resourceType = DefineResourceTypeFromAudience(audience);
 
             // The scopes can either be stored in the roles or scp claim, so we examine both
-            var scopes = decodedToken.Claims.Where(c => c.Type == "roles" || c.Type == "scp").SelectMany(r => r.Value.Split(" ").Select(r => $"{audience}/{r}"));
-            return scopes.ToArray();
+            var scopes = decodedToken.Claims.Where(c => c.Type == "roles" || c.Type == "scp").SelectMany(r => r.Value.Split(" ").Select(r => new RequiredApiPermission(resourceType, r))).ToArray();
+            return scopes;
+        }
+
+        /// <summary>
+        /// Defines the type of resource based on a passed in audience
+        /// </summary>
+        /// <param name="audience">Audience, i.e. https://graph.microsoft.com, which could be localized, i.e. https://graph.microsoft.us</param>
+        /// <returns>Type of resource it represents</returns>
+        internal static Enums.ResourceTypeName DefineResourceTypeFromAudience(string audience)
+        {
+            // Clean up the audience to only leave the main part which allows our switch below to be cleaner and more readable
+            var sanitizedAudience = audience?.TrimEnd('/').ToLowerInvariant();
+            if (sanitizedAudience.StartsWith("http://")) sanitizedAudience = sanitizedAudience.Substring(7);
+            if (sanitizedAudience.StartsWith("https://")) sanitizedAudience = sanitizedAudience.Substring(8);
+            
+            // TODO: Extend with all options
+            Enums.ResourceTypeName resource = sanitizedAudience switch
+            {
+                "graph" or "graph.microsoft.com" or "graph.microsoft.us" or "graph.microsoft.de" or "microsoftgraph.chinacloudapi.cn" or "dod-graph.microsoft.us" or "00000003-0000-0000-c000-000000000000" => Enums.ResourceTypeName.Graph,
+                "azure" or  "management.azure.com" or "management.chinacloudapi.cn" or "management.usgovcloudapi.net" or "management.usgovcloudapi.net" or "management.usgovcloudapi.net" => Enums.ResourceTypeName.AzureManagementApi,
+                "exchangeonline" or "outlook.office.com" or "outlook.office365.com" => Enums.ResourceTypeName.ExchangeOnline,
+                "flow" or "service.flow.microsoft.com" => Enums.ResourceTypeName.PowerAutomate,
+                "powerapps" or "api.powerapps.com" => Enums.ResourceTypeName.PowerApps,
+                "dynamics" or "admin.services.crm.dynamics.com" or "api.crm.dynamics.com" => Enums.ResourceTypeName.DynamicsCRM,
+
+                // We assume SharePoint as the default as vanity domains cause no fixed structure to be present in the audience name
+                _ => Enums.ResourceTypeName.SharePoint
+            };
+            return resource;
         }
 
         /// <summary>
@@ -88,10 +114,17 @@ namespace PnP.PowerShell.Commands.Base
             var decodedToken = new JwtSecurityToken(accessToken);
 
             // Retrieve the audience the token was issued for
-            var audience = decodedToken.Audiences.FirstOrDefault();            
+            var audience = decodedToken.Audiences.FirstOrDefault();
+            var resourceType = DefineResourceTypeFromAudience(audience);
+
+            // Determine the type of token (delegate or app-only)
+            var tokenType = RetrieveTokenType(accessToken);
 
             // Validate the permissions in the access token against the permissions required for the cmdlet through the attributes provided at the class level of the cmdlet
-            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet, accessToken, audience);
+            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet, accessToken, resourceType, tokenType);
+
+            // If the permission evaluation returns null, it was unable to determine the permissions and it should stop
+            if (permissionEvaluationResponses == null) return;
 
             // If any of the permission evaluations has the required permissions present, we can return and are good to go permission-wise
             if (permissionEvaluationResponses.Any(p => p.RequiredPermissionsPresent)) return;
@@ -101,11 +134,11 @@ namespace PnP.PowerShell.Commands.Base
 
             // None of the permission attributes matched the permissions in the access token, so we throw an exception
             var exceptionTextBuilder = new StringBuilder();
-            exceptionTextBuilder.AppendLine($"Authorization Denied: token misses the following permission scope(s) on the {audience} audience:");
+            exceptionTextBuilder.AppendLine($"Current access token lacks {(permissionEvaluationResponses.Length != 1 ? "one of " : "")}the following required {tokenType.GetDescription()} permission scope{(permissionEvaluationResponses.Length != 1 ? "s" : "")} on the resource {resourceType.GetDescription()}:");
 
             for (int i = 0; i < permissionEvaluationResponses.Length; i++)
             {
-                exceptionTextBuilder.AppendLine($"{string.Join(" and ", permissionEvaluationResponses[i].MissingPermissions.Select(s => s[(audience != null ? audience.Length + 1 : 0)..]))}");
+                exceptionTextBuilder.AppendLine($"{string.Join(" and ", permissionEvaluationResponses[i].MissingPermissions.Select(s => s.Scope))}");
 
                 if(i < permissionEvaluationResponses.Length - 1)
                 {
@@ -113,7 +146,8 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
-            throw new PSArgumentException(exceptionTextBuilder.ToString());
+            // Log a warning that the permission check failed. Deliberately not throwing an exception here, as the permission attributes might be wrong, thus will try to execute anyway.
+            cmdlet.WriteWarning(exceptionTextBuilder.ToString());
         }        
 
         /// <summary>
@@ -162,160 +196,15 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Returns an access token based on a Managed Identity. Only works within Azure components supporting managed identities such as Azure Functions and Azure Runbooks.
-        /// </summary>
-        /// <param name="cmdlet">The cmdlet scope in which this code runs. Used to write logging to.</param>
-        /// <param name="httpClient">The HttpClient that will be reused to fetch the token to avoid port exhaustion</param>
-        /// <param name="defaultResource">If the cmdlet being executed does not have an attribute to indicate the required permissions, this permission will be requested instead. Optional.</param>
-        /// <param name="userAssignedManagedIdentityObjectId">The object/principal Id of the user assigned managed identity to be used. If userAssignedManagedIdentityObjectId. userAssignedManagedIdentityClientId and userAssignedManagedIdentityAzureResourceId are omitted, a system assigned managed identity will be used.</param>
-        /// <param name="userAssignedManagedIdentityClientId">The client Id of the user assigned managed identity to be used. If userAssignedManagedIdentityObjectId, userAssignedManagedIdentityClientId and userAssignedManagedIdentityAzureResourceId are omitted, a system assigned managed identity will be used.</param>
-        /// <param name="userAssignedManagedIdentityAzureResourceId">The Azure Resource Id of the user assigned managed identity to be used. If userAssignedManagedIdentityObjectId, userAssignedManagedIdentityClientId and userAssignedManagedIdentityAzureResourceId are omitted, a system assigned managed identity will be used.</param>
-        /// <returns>Access token</returns>
-        /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
-        internal static async Task<string> GetManagedIdentityTokenAsync(Cmdlet cmdlet, HttpClient httpClient, string defaultResource, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
-        {
-            string requiredScope = null;
-            var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
-            if (requiredScopesAttribute != null)
-            {
-                requiredScope = requiredScopesAttribute.PermissionScopes.First();
-                if (requiredScope.ToLower().StartsWith("https://"))
-                {
-                    var uri = new Uri(requiredScope);
-                    requiredScope = $"https://{uri.Host}/";
-                }
-                else
-                {
-                    requiredScope = defaultResource;
-                }
-
-                cmdlet.WriteVerbose($"Using scope {requiredScope} for managed identity token coming from the cmdlet permission attribute");
-            }
-            else
-            {
-                requiredScope = defaultResource;
-
-                cmdlet.WriteVerbose($"Using scope {requiredScope} for managed identity token coming from the passed in default resource");
-            }
-
-            var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
-            cmdlet.WriteVerbose($"Using identity endpoint: {endPoint}");
-
-            var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
-            cmdlet.WriteVerbose($"Using identity header: {identityHeader}");
-
-            if (string.IsNullOrEmpty(endPoint))
-            {
-                endPoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
-                identityHeader = Environment.GetEnvironmentVariable("MSI_SECRET");
-            }
-            if (string.IsNullOrEmpty(endPoint))
-            {
-                // additional fallback
-                // using well-known endpoint for Instance Metadata Service, useful in Azure VM scenario.
-                // https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
-                endPoint = "http://169.254.169.254/metadata/identity/oauth2/token";
-            }
-            if (!string.IsNullOrEmpty(endPoint))
-            {
-                var tokenRequestUrl = $"{endPoint}?resource={requiredScope}&api-version=2019-08-01";
-
-                // Check if we're using a user assigned managed identity
-                if (!string.IsNullOrEmpty(userAssignedManagedIdentityClientId))
-                {
-                    // User assigned managed identity will be used, provide the client Id of the user assigned managed identity to use
-                    cmdlet.WriteVerbose($"Using the user assigned managed identity with client ID: {userAssignedManagedIdentityClientId}");
-                    tokenRequestUrl += $"&client_id={userAssignedManagedIdentityClientId}";
-                }
-                else if (!string.IsNullOrEmpty(userAssignedManagedIdentityObjectId))
-                {
-                    // User assigned managed identity will be used, provide the object/pricipal Id of the user assigned managed identity to use
-                    // Note 16-02-2023: principal_id is an alias of object_id, but does not work on Azure Automation at the time of writing, while object_id works on both.
-                    cmdlet.WriteVerbose($"Using the user assigned managed identity with object/principal ID: {userAssignedManagedIdentityObjectId}");
-                    tokenRequestUrl += $"&object_id={userAssignedManagedIdentityObjectId}";
-                }
-                else if (!string.IsNullOrEmpty(userAssignedManagedIdentityAzureResourceId))
-                {
-                    // User assigned managed identity will be used, provide the Azure Resource Id of the user assigned managed identity to use
-                    cmdlet.WriteVerbose($"Using the user assigned managed identity with Azure Resource ID: {userAssignedManagedIdentityAzureResourceId}");
-                    tokenRequestUrl += $"&mi_res_id={userAssignedManagedIdentityAzureResourceId}";
-                }
-                else
-                {
-                    cmdlet.WriteVerbose("Using the system assigned managed identity");
-                }
-
-                using (var requestMessage = new HttpRequestMessage(HttpMethod.Get, tokenRequestUrl))
-                {
-                    requestMessage.Version = new Version(2, 0);
-                    requestMessage.Headers.Add("Metadata", "true");
-                    if (!string.IsNullOrEmpty(identityHeader))
-                    {
-                        requestMessage.Headers.Add("X-IDENTITY-HEADER", identityHeader);
-                    }
-
-                    cmdlet.WriteVerbose($"Sending token request to {tokenRequestUrl}");
-
-                    var response = await httpClient.SendAsync(requestMessage).ConfigureAwait(false);
-
-                    if (response.IsSuccessStatusCode)
-                    {
-                        var responseContent = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-                        var responseElement = JsonSerializer.Deserialize<JsonElement>(responseContent);
-                        if (responseElement.TryGetProperty("access_token", out JsonElement accessTokenElement))
-                        {
-                            var accessToken = accessTokenElement.GetString();
-                            return accessToken;
-                        }
-                    }
-                    else
-                    {
-                        var errorMessage = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                        throw new PSInvalidOperationException(errorMessage);
-                    }
-                }
-            }
-            else
-            {
-                throw new PSInvalidOperationException("Cannot determine Managed Identity Endpoint URL to acquire token.");
-            }
-            return null;
-        }
-
-        /// <summary>
         /// Returns an access token based on a Azure AD Workload Identity. Only works within Azure components supporting workload identities.
         /// </summary>
         /// <param name="cmdlet">The cmdlet scope in which this code runs. Used to write logging to.</param>
         /// <param name="httpClient">The HttpClient that will be reused to fetch the token to avoid port exhaustion</param>
-        /// <param name="defaultResource">If the cmdlet being executed does not have an attribute to indicate the required permissions, this permission will be requested instead. Optional.</param>
+        /// <param name="requiredScope">The permission scope to be requested, in the format https://<resource>/<scope>, i.e. https://graph.microsoft.com/Group.Read.All</param>
         /// <returns>Access token</returns>
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
-        internal static async Task<string> GetAzureADWorkloadIdentityTokenAsync(Cmdlet cmdlet, string defaultResource)
+        internal static async Task<string> GetAzureADWorkloadIdentityTokenAsync(Cmdlet cmdlet, string requiredScope)
         {
-            string requiredScope = null;
-            var requiredScopesAttribute = (RequiredMinimalApiPermissions)Attribute.GetCustomAttribute(cmdlet.GetType(), typeof(RequiredMinimalApiPermissions));
-            if (requiredScopesAttribute != null)
-            {
-                requiredScope = requiredScopesAttribute.PermissionScopes.First();
-                if (requiredScope.ToLower().StartsWith("https://"))
-                {
-                    var uri = new Uri(requiredScope);
-                    requiredScope = $"https://{uri.Host}/.default";
-                }
-                else
-                {
-                    requiredScope = defaultResource;
-                }
-
-                cmdlet.WriteVerbose($"Using scope {requiredScope} for Azure AD Workload identity token coming from the cmdlet permission attribute");
-            }
-            else
-            {
-                requiredScope = defaultResource;
-                cmdlet.WriteVerbose($"Using scope {requiredScope} for Azure AD Workload identity token coming from the passed in default resource");
-            }
-
             // <authentication>
             // Azure AD Workload Identity webhook will inject the following env vars
             // 	AZURE_CLIENT_ID with the clientID set in the service account annotation
@@ -329,7 +218,7 @@ namespace PnP.PowerShell.Commands.Base
 
             var _confidentialClientApp = ConfidentialClientApplicationBuilder.Create(clientID)
                 .WithAuthority(host, tenantID)
-                .WithClientAssertion(() => ReadJWTFromFS(tokenPath))
+                .WithClientAssertion(() => System.IO.File.ReadAllText(tokenPath))
                 .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
                 .Build();
 
@@ -359,12 +248,6 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSInvalidOperationException(ex.Message);
             }
             return result.AccessToken;
-        }
-
-        private static string ReadJWTFromFS(string tokenPath)
-        {
-            string text = System.IO.File.ReadAllText(tokenPath);
-            return text;
         }
     }
 }

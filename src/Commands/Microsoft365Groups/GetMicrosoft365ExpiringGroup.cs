@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365ExpiringGroup")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
     public class GetMicrosoft365ExpiringGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

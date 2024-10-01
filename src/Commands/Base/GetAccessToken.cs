@@ -47,8 +47,8 @@ namespace PnP.PowerShell.Commands.Base
                         var rootUrl = new Uri(currentUrl).GetLeftPart(UriPartial.Authority);
                         accessTokenValue = TokenHandler.GetAccessToken(this, rootUrl + "/.default", Connection);
                         break;
-                    case ResourceTypeName.ARM:
-                        accessTokenValue = TokenHandler.GetAccessToken(this, ARMEndpoint.GetARMEndpoint(Connection), Connection);
+                    case ResourceTypeName.AzureManagementApi:
+                        accessTokenValue = TokenHandler.GetAccessToken(this, $"{Endpoints.GetArmEndpoint(Connection)}/.default", Connection);
                         break;
                 }
             }

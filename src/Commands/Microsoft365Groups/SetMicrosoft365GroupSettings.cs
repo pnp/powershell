@@ -10,7 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Set, "PnPMicrosoft365GroupSettings")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Directory.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class SetMicrosoft365GroupSettings : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
