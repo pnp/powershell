@@ -477,7 +477,7 @@ namespace PnP.PowerShell.Commands.Base
                             cmdlet.WriteVerbose("Acquiring token");
                             var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
                             cmdlet.WriteVerbose("Token acquired");
-                            var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accesstoken);
+                            var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accesstoken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                         }
                     }
@@ -502,7 +502,7 @@ namespace PnP.PowerShell.Commands.Base
                             context.ExecuteQueryRetry();
 
                             var accessToken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
-                            var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
+                            var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                         }
                     }
