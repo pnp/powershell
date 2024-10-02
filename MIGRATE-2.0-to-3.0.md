@@ -54,4 +54,4 @@ Recommend referring to these 2 links:
 
 ## Changes to output type
 
-- ...
+- `Get-PnPAccessToken`, `Request-PnPAccessToken` and `Get-PnPGraphAccessToken` now return tokens of type `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`. Earlier they returned `System.IdentityModel.Tokens.Jwt`.

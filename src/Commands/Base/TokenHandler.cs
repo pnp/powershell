@@ -2,7 +2,6 @@
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Model;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
 using System.Text;
@@ -23,7 +22,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>Enum indicating the type of oAuth JWT token</returns>
         internal static Enums.IdType RetrieveTokenType(string accessToken)
         {
-            var decodedToken = new JwtSecurityToken(accessToken);
+            var decodedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
 
             // The idType is stored in the token as a claim
             var idType = decodedToken.Claims.FirstOrDefault(c => c.Type == "idtyp");
@@ -47,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>The userId of the user for which the passed in delegate token is for</returns>
         internal static Guid? RetrieveTokenUser(string accessToken)
         {
-            var decodedToken = new JwtSecurityToken(accessToken);
+            var decodedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
 
             // The objectId is stored in the token as a claim
             var objectId = decodedToken.Claims.FirstOrDefault(c => c.Type == "oid");
@@ -63,7 +62,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns><see cref="RequiredApiPermission"/> array containing the scopes</returns>
         internal static RequiredApiPermission[] ReturnScopes(string accessToken)
         {
-            var decodedToken = new JwtSecurityToken(accessToken);
+            var decodedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
 
             // Retrieve the audience the token was issued for
             var audience = decodedToken.Audiences.FirstOrDefault();
@@ -111,7 +110,7 @@ namespace PnP.PowerShell.Commands.Base
         internal static void EnsureRequiredPermissionsAvailableInAccessTokenAudience(Cmdlet cmdlet, string accessToken)
         {
             // Decode the JWT token
-            var decodedToken = new JwtSecurityToken(accessToken);
+            var decodedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
 
             // Retrieve the audience the token was issued for
             var audience = decodedToken.Audiences.FirstOrDefault();

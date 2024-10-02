@@ -1,6 +1,5 @@
 ﻿using PnP.Framework;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Management.Automation;
 using System.Security;
@@ -92,7 +91,7 @@ namespace PnP.PowerShell.Commands.Base
 
             if (Decoded.IsPresent)
             {
-                WriteObject(new JwtSecurityToken(token));
+                WriteObject(new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(token));
             }
             else
             {

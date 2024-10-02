@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = ResourceTypeParam)]
-    [OutputType(typeof(System.IdentityModel.Tokens.Jwt.JwtSecurityToken), ParameterSetName = new[] { ResourceTypeParam_Decoded, ResourceUrlParam_Decoded })]
+    [OutputType(typeof(Microsoft.IdentityModel.JsonWebTokens.JsonWebToken), ParameterSetName = new[] { ResourceTypeParam_Decoded, ResourceUrlParam_Decoded })]
     [OutputType(typeof(string), ParameterSetName = new[] { ResourceTypeParam, ResourceUrlParam })]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.Base
 
             if (Decoded.IsPresent)
             {
-                WriteObject(new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessTokenValue));
+                WriteObject(new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessTokenValue));
             }
             else
             {
