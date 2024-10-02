@@ -58,6 +58,7 @@
 		<PackageReference Include="Microsoft.Graph" Version="3.33.0" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.64.0" />
 		<PackageReference Include="Microsoft.Identity.Client.Broker" Version="4.64.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.1.0" />
 		<PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="8.1.0" />
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
 		<PackageReference Include="PnP.Framework" Version="1.17.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
