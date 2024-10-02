@@ -1,6 +1,6 @@
 # Installing PnP PowerShell
 
-You need PowerShell 7.2 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be [installed through here](https://learn.microsoft.com/powershell/scripting/install/installing-powershell).
+You need PowerShell 7.4 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be [installed through here](https://learn.microsoft.com/powershell/scripting/install/installing-powershell).
 
 ## Stable build
 
@@ -23,7 +23,7 @@ Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisher
 To use PnP.PowerShell in a Windows container:
 
 ```powershell
-docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
+docker run -it m365pnp/powershell:2.12.0-nanoserver-1809
 ```
 
 To use PnP.PowerShell in a Linux container:
@@ -34,7 +34,7 @@ docker run -it m365pnp/powershell
 
 # Updating PnP PowerShell
 
-If you already have PnP PowerShell installed and just want to update to the latest version you can follow these steps. If you're not sure if your version is already up to date, it does no harm to run it anyway. If there's no new version available, it will not do anything. You need PowerShell 7.2 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be [installed through here](https://learn.microsoft.com/powershell/scripting/install/installing-powershell).
+If you already have PnP PowerShell installed and just want to update to the latest version you can follow these steps. If you're not sure if your version is already up to date, it does no harm to run it anyway. If there's no new version available, it will not do anything. You need PowerShell 7.4 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be [installed through here](https://learn.microsoft.com/powershell/scripting/install/installing-powershell).
 
 ## Stable build
 

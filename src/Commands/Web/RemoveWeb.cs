@@ -1,10 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using web = Microsoft.SharePoint.Client.Web;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using PnP.PowerShell.Commands.Extensions;
 
 namespace PnP.PowerShell.Commands
 {
