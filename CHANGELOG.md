@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `-Interactive` login is now the default.
 - In case of errors when Graph batch method is used, it will now throw a clearer error message about what was the issue. [#4327](https://github.com/pnp/powershell/pull/4327/)
 - `Get-PnPAccessToken`, `Request-PnPAccessToken` and `Get-PnPGraphAccessToken` output type is changed to `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`. Earlier they returned `System.IdentityModel.Tokens.Jwt`.
+- `New-PnPContainerType` will temporarily disable standard containers to be created due to changed being applied at Microsoft to allow this to be possible in the future [#4125](https://github.com/pnp/powershell/pull/4125)
 
 ### Fixed
 
@@ -39,7 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get-PnPSiteTemplate -PersistMultiLanguageResources` not working correctly for xml file types. [#4326](https://github.com/pnp/powershell/pull/4326)
 - Fix `Add-PnPDataRowsToSiteTemplate` setting keyColumn to null when not passed. [#4325](https://github.com/pnp/powershell/pull/4325)
 - Fix `Connect-PnPOnline` not working correctly when `-DeviceLogin` and `-LaunchBrowser` both are specified. It used to open it in a popup. Now it correctly launches the browser. [#4325](https://github.com/pnp/powershell/pull/4345)
-
+ 
 ### Removed
 
 ### Contributors
