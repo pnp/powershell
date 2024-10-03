@@ -15,7 +15,7 @@ title: Add-PnPAzureADGroupOwner
 
   *  Microsoft Graph API: All of Group.ReadWrite.All, User.ReadWrite.All
 
-Adds users to the owners of an Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Adds users to the owners of an Azure Active Directory group. This can be a security or Microsoft 365 group. Distribution lists are not currently supported by Graph API.
 
 ## SYNTAX
 

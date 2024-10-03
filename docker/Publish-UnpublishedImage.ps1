@@ -1,42 +1,42 @@
 Param(
     [Parameter(Position = 0,
-    Mandatory = $true,
-    ValueFromPipeline = $false)]
+        Mandatory = $true,
+        ValueFromPipeline = $false)]
     [String]
     $PS_MODULE_NAME,
     [Parameter(Position = 1,
-    Mandatory = $true,
-    ValueFromPipeline = $false)]
+        Mandatory = $true,
+        ValueFromPipeline = $false)]
     [String]
     $DOCKER_USERNAME,
     [Parameter(Position = 2,
-    Mandatory = $true,
-    ValueFromPipeline = $false)]
+        Mandatory = $true,
+        ValueFromPipeline = $false)]
     [String]
     $DOCKER_ORG,
     [Parameter(Position = 3,
-    Mandatory = $true,
-    ValueFromPipeline = $false)]
+        Mandatory = $true,
+        ValueFromPipeline = $false)]
     [String]
     $DOCKER_IMAGE_NAME,
     [Parameter(Position = 4,
-    Mandatory = $true,
-    ValueFromPipeline = $false)]
+        Mandatory = $true,
+        ValueFromPipeline = $false)]
     [Security.SecureString]
     $DOCKER_PASSWORD,
     [Parameter(Position = 5,
-    Mandatory = $false,
-    ValueFromPipeline = $false)]
+        Mandatory = $false,
+        ValueFromPipeline = $false)]
     [String]
     $DOCKER_INSTALL_USER = "ContainerAdministrator",
     [Parameter(Position = 6,
-    Mandatory = $false,
-    ValueFromPipeline = $false)]
+        Mandatory = $false,
+        ValueFromPipeline = $false)]
     [bool]
     $SKIP_PUBLISHER_CHECK = $false,
     [Parameter(Position = 7,
-    Mandatory = $false,
-    ValueFromPipeline = $false)]
+        Mandatory = $false,
+        ValueFromPipeline = $false)]
     [String]
     $DOCKER_IMAGE_SUFFIX_ARRAY = "nanoserver-ltsc2022"
 )
@@ -56,7 +56,7 @@ $moduleVersions | % {
             $plainStringPassword = [System.Net.NetworkCredential]::new("", $DOCKER_PASSWORD).Password;
             docker login -u $DOCKER_USERNAME -p "$plainStringPassword";
             docker push $DOCKER_ORG/$DOCKER_IMAGE_NAME`:$imageVersion;
-            if ( $baseImageSuffix -eq "alpine-3.17") {
+            if ( $baseImageSuffix -eq "lts-alpine-3.17") {
                 docker image tag $DOCKER_ORG/$DOCKER_IMAGE_NAME`:$imageVersion $DOCKER_ORG/$DOCKER_IMAGE_NAME`:latest;
                 docker push $DOCKER_ORG/$DOCKER_IMAGE_NAME`:latest;
             }
