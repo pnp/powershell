@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsData.Restore, "PnPDeletedMicrosoft365Group")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class RestoreDeletedMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

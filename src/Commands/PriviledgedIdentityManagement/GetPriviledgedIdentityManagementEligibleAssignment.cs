@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Principals
     [Cmdlet(VerbsCommon.Get, "PnPPriviledgedIdentityManagementEligibleAssignment")]
     [OutputType(typeof(List<RoleEligibilitySchedule>))]
     [OutputType(typeof(RoleEligibilitySchedule))]
-    [RequiredMinimalApiPermissions("RoleAssignmentSchedule.Read.Directory")]
+    [RequiredApiApplicationPermissions("RoleAssignmentSchedule.Read.Directory")]
     public class GetPriviledgedIdentityManagementEligibleAssignment : PnPGraphCmdlet
     {
         /// <summary>

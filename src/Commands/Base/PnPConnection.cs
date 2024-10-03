@@ -266,20 +266,14 @@ namespace PnP.PowerShell.Commands.Base
                 authManager = Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
                  {
                      if (launchBrowser)
-                     {
-                         if (Utilities.OperatingSystem.IsWindows())
-                         {
-                             ClipboardService.SetText(deviceCodeResult.UserCode);
-                             messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
-                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false, scriptErrorsSuppressed: false);
-                         }
-                         else
-                         {
-                             messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
-                         }
+                     {                         
+                         ClipboardService.SetText(deviceCodeResult.UserCode);
+                         messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                         BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), false, cancellationTokenSource);
                      }
                      else
                      {
+                         ClipboardService.SetText(deviceCodeResult.UserCode);
                          messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
                      }
                      return Task.FromResult(0);
@@ -483,7 +477,7 @@ namespace PnP.PowerShell.Commands.Base
                             cmdlet.WriteVerbose("Acquiring token");
                             var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
                             cmdlet.WriteVerbose("Token acquired");
-                            var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accesstoken);
+                            var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accesstoken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                         }
                     }
@@ -508,7 +502,7 @@ namespace PnP.PowerShell.Commands.Base
                             context.ExecuteQueryRetry();
 
                             var accessToken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
-                            var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
+                            var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                         }
                     }

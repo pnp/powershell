@@ -1,5 +1,5 @@
 ARG BASE_IMAGE_SUFFIX=alpine-3.17
-ARG BASE_IMAGE=mcr.microsoft.com/powershell:lts-7.2-$BASE_IMAGE_SUFFIX
+ARG BASE_IMAGE=mcr.microsoft.com/powershell:lts-7.4-$BASE_IMAGE_SUFFIX
 FROM $BASE_IMAGE
 
 SHELL ["pwsh", "-command"]

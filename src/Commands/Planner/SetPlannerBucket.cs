@@ -7,7 +7,9 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPPlannerBucket")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class SetPlannerBucket : PnPGraphCmdlet
     {
         private const string ParameterName_BYGROUP = "By Group";

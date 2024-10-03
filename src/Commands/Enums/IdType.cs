@@ -1,4 +1,6 @@
-﻿namespace PnP.PowerShell.Commands.Enums
+﻿using System.ComponentModel;
+
+namespace PnP.PowerShell.Commands.Enums
 {
     /// <summary>
     /// Possible IdType values inside an oAuth JWT token
@@ -13,11 +15,13 @@
         /// <summary>
         /// IdType user, indicates a delegate token
         /// </summary>
+        [Description("delegated")]
         Delegate,
 
         /// <summary>
         /// IdType app, indicates an application token
         /// </summary>
+        [Description("application")]
         Application
     }
 }

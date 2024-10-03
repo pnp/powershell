@@ -17,9 +17,9 @@ As the UI in [the Azure Portal](https://portal.azure.com) changes every now and 
 
    ![Creating a function app resource](./../images/azurefunctions/createfunctionappresource.png)
 
-1. Choose runtime stack `PowerShell Core` and version `7.2` (7.0 is not longer an option as of December 3rd, 2022)
+1. Choose runtime stack `PowerShell Core` and version `7.4` (7.0 is not longer an option as of December 3rd, 2022)
 
-   ![Create function app basics](./../images/azurefunctions/createfunctionappbasics.png)
+   ![Create function app basics](./../images/azurefunctions/createfunctionappbasics2.png)
 
 1. Select `Windows` as the operating system or else you will not be able to perform the following steps from your browser.
 

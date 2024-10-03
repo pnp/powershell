@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Principals
     [Cmdlet(VerbsCommon.Get, "PnPPriviledgedIdentityManagementRole")]
     [OutputType(typeof(List<RoleDefinition>))]
     [OutputType(typeof(RoleDefinition))]
-    [RequiredMinimalApiPermissions("RoleManagement.Read.Directory")]
+    [RequiredApiApplicationPermissions("RoleManagement.Read.Directory")]
     public class GetPriviledgedIdentityManagementRole : PnPGraphCmdlet
     {
         /// <summary>

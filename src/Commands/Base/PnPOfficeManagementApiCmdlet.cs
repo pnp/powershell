@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
-                var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
+                var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(AccessToken);
                 return Guid.TryParse(parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value, out Guid tenandIdGuid) ? (Guid?)tenandIdGuid : null;
             }
         }

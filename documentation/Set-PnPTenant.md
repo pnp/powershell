@@ -159,6 +159,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-CoreDefaultShareLinkRole <Role>] 
  [-GuestSharingGroupAllowListInTenantByPrincipalIdentity <string[]>]
  [-OneDriveSharingCapability <SharingCapabilities>]
+ [-DelayDenyAddAndCustomizePagesEnforcement <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -424,11 +425,29 @@ For additional information about how to change the default link type, see Change
 Note:
 Setting this value to "none" will default "get a link" to the most permissive link available. If anonymous links are enabled, the default link will be anonymous access; if they are disabled, then the default link will be internal.
 
-
 ```yaml
 Type: SharingLinkType
 Parameter Sets: (All)
 Accepted values: None, Direct, Internal, AnonymousAccess
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DelayDenyAddAndCustomizePagesEnforcement
+This parameter controls how SharePoint will deal with sites where custom scripts are allowed.
+
+The valid values are:
+
+False (default) - for site collections where administrators enabled the ability to add custom script, SharePoint will revoke that ability within 24 hours from the last time this setting was changed.
+True - All changes performed by administrators to custom script settings are preserved.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
 
 Required: False
 Position: Named

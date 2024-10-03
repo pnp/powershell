@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using PnP.Framework.Provisioning.ObjectHandlers.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Extensions;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -67,6 +69,7 @@ namespace PnP.PowerShell.Commands.Lists
                 var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, 
                     f => f.Title, f => f.Hidden, f => f.ReadOnlyField, f => f.FieldTypeKind));
                 ClientContext.ExecuteQueryRetry();
+                var itemValues = new List<FieldUpdateValue>();
 
                 foreach (var fieldValue in version.FieldValues)
                 {
@@ -91,12 +94,18 @@ namespace PnP.PowerShell.Commands.Lists
                                 }
 
                                 var newTaxFieldValue = new TaxonomyFieldValueCollection(ClientContext, termValuesString, taxField);
-                                taxField.SetFieldValueByValueCollection(item, newTaxFieldValue);
+                                itemValues.Add(new FieldUpdateValue(field.InternalName, newTaxFieldValue));
                                 continue;
                             }   
                         }
-                       item[field.InternalName] = fieldValue.Value; 
+                        itemValues.Add(new FieldUpdateValue(field.InternalName, fieldValue.Value));
+                        
                     }
+                }
+
+                foreach (var itemValue in itemValues)
+                {
+                    item[itemValue.Key] = itemValue.Value;
                 }
 
                 item.Update();

@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerConfiguration")]
-    [RequiredMinimalApiPermissions("https://tasks.office.com/.default")]
+    [RequiredApiApplicationPermissions("https://tasks.office.com/.default")]
     public class GetPlannerConfiguration : PnPGraphCmdlet
     {
         protected override void ExecuteCmdlet()

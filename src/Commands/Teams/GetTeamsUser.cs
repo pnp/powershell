@@ -11,8 +11,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsUser")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.Read.All")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class GetTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

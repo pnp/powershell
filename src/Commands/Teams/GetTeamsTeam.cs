@@ -7,8 +7,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsTeam", DefaultParameterSetName = ParameterSet_Identity)]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.Read.All")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class GetTeamsTeam : PnPGraphCmdlet
     {
         private const string ParameterSet_Identity = "Identity";

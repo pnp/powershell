@@ -4,12 +4,16 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Base;
+using PnP.Core.Admin.Model.SharePoint;
+using PnP.Core.Services;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.Core.Admin.Model.Microsoft365;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPSite")]
-    [RequiredMinimalApiPermissions("https://graph.microsoft.com/Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class NewSite : PnPSharePointCmdlet, IDynamicParameters
     {
         private const string ParameterSet_COMMUNICATIONBUILTINDESIGN = "Communication Site with Built-In Site Design";
@@ -66,7 +70,7 @@ namespace PnP.PowerShell.Commands
                 creationInformation.Title = _communicationSiteParameters.Title;
                 creationInformation.Url = _communicationSiteParameters.Url;
                 creationInformation.Description = _communicationSiteParameters.Description;
-                creationInformation.Classification = _communicationSiteParameters.Classification;                
+                creationInformation.Classification = _communicationSiteParameters.Classification;
                 creationInformation.ShareByEmailEnabled = _communicationSiteParameters.ShareByEmailEnabled;
                 creationInformation.Lcid = _communicationSiteParameters.Lcid;
                 if (ParameterSpecified(nameof(HubSiteId)))
@@ -109,40 +113,84 @@ namespace PnP.PowerShell.Commands
                     _teamSiteParameters.Lcid = ClientContext.Web.Language;
                 }
                 var creationInformation = new Framework.Sites.TeamSiteCollectionCreationInformation();
-                creationInformation.DisplayName = _teamSiteParameters.Title;
-                creationInformation.Alias = _teamSiteParameters.Alias;
-                creationInformation.Classification = _teamSiteParameters.Classification;
-                creationInformation.Description = _teamSiteParameters.Description;
-                creationInformation.IsPublic = _teamSiteParameters.IsPublic;
-                creationInformation.Lcid = _teamSiteParameters.Lcid;
+
+                var groupVisibility = Core.Model.Security.GroupVisibility.Private;
+                if (_teamSiteParameters.IsPublic == true)
+                {
+                    groupVisibility = Core.Model.Security.GroupVisibility.Public;
+                }
+
+                var teamSiteOptions = new TeamSiteOptions(_teamSiteParameters.Alias, _teamSiteParameters.Title)
+                {
+                    Classification = _teamSiteParameters.Classification,
+                    Description = _teamSiteParameters.Description,
+                    Visibility = groupVisibility,
+                    Owners = _teamSiteParameters.Owners,
+                    Language = (Core.Admin.Model.SharePoint.Language)_teamSiteParameters.Lcid,
+                    Members = _teamSiteParameters.Members,
+                    WelcomeEmailDisabled = _teamSiteParameters.WelcomeEmailDisabled,
+                    SubscribeNewGroupMembers = _teamSiteParameters.SubscribeNewGroupMembers,
+                    AllowOnlyMembersToPost = _teamSiteParameters.AllowOnlyMembersToPost,
+                    CalendarMemberReadOnly = _teamSiteParameters.CalendarMemberReadOnly,
+                    ConnectorsDisabled = _teamSiteParameters.ConnectorsDisabled,
+                    HideGroupInOutlook = _teamSiteParameters.HideGroupInOutlook,
+                    SubscribeMembersToCalendarEventsDisabled = _teamSiteParameters.SubscribeMembersToCalendarEventsDisabled,
+                    SensitivityLabelId = GetSensitivityLabelGuid(_teamSiteParameters.SensitivityLabel),
+                    SiteDesignId = _teamSiteParameters.SiteDesignId
+                };
+
                 if (ParameterSpecified(nameof(HubSiteId)))
                 {
-                    creationInformation.HubSiteId = HubSiteId;
+                    teamSiteOptions.HubSiteId = HubSiteId;
                 }
-                creationInformation.Owners = _teamSiteParameters.Owners;
-                creationInformation.PreferredDataLocation = _teamSiteParameters.PreferredDataLocation;
-                creationInformation.SensitivityLabel = _teamSiteParameters.SensitivityLabel;
 
                 if (ParameterSpecified("SiteAlias"))
                 {
-                    creationInformation.SiteAlias = _teamSiteParameters.SiteAlias;
+                    teamSiteOptions.SiteAlias = _teamSiteParameters.SiteAlias;
                 }
+
+                if (ParameterSpecified("PreferredDataLocation") && _teamSiteParameters.PreferredDataLocation.HasValue)
+                {
+                    teamSiteOptions.PreferredDataLocation = GetGeoLocation(_teamSiteParameters.PreferredDataLocation.Value);
+                }
+
+                SiteCreationOptions siteCreationOptions = new()
+                {
+                    WaitForAsyncProvisioning = Wait
+                };
+
+                var tenantUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
+                VanityUrlOptions vanityUrlOptions = new()
+                {
+                    AdminCenterUri = new Uri(tenantUrl)
+                };
 
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
-                    var returnedContext = Framework.Sites.SiteCollection.Create(ClientContext, creationInformation, noWait: !Wait, graphAccessToken: GraphAccessToken, azureEnvironment: Connection?.AzureEnvironment ?? Framework.AzureEnvironment.Production);
-                    if (ParameterSpecified(nameof(TimeZone)))
+                    try
                     {
-                        returnedContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
-                        returnedContext.Web.RegionalSettings.TimeZone = returnedContext.Web.RegionalSettings.TimeZones.Where(t => t.Id == ((int)TimeZone)).First();
-                        returnedContext.Web.RegionalSettings.Update();
-                        returnedContext.ExecuteQueryRetry();
-                        returnedContext.Site.EnsureProperty(s => s.Url);
-                        WriteObject(returnedContext.Site.Url);
+                        var rc = Connection.PnPContext.GetSiteCollectionManager().CreateSiteCollection(teamSiteOptions, siteCreationOptions, vanityUrlOptions);
+
+                        if (ParameterSpecified(nameof(TimeZone)))
+                        {
+                            using (var newSiteContext = ClientContext.Clone(rc.Uri.AbsoluteUri))
+                            {
+                                newSiteContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
+                                newSiteContext.Web.RegionalSettings.TimeZone = newSiteContext.Web.RegionalSettings.TimeZones.Where(t => t.Id == ((int)TimeZone)).First();
+                                newSiteContext.Web.RegionalSettings.Update();
+                                newSiteContext.ExecuteQueryRetry();
+                                newSiteContext.Site.EnsureProperty(s => s.Url);
+                                WriteObject(rc.Uri.AbsoluteUri);
+                            }
+                        }
+                        else
+                        {
+                            WriteObject(rc.Uri.AbsoluteUri);
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        WriteObject(returnedContext.Url);
+                        WriteError(ex, ErrorCategory.WriteError);
                     }
                 }
                 else
@@ -162,7 +210,7 @@ namespace PnP.PowerShell.Commands
                 creationInformation.Title = _teamSiteWithoutMicrosoft365GroupParameters.Title;
                 creationInformation.Url = _teamSiteWithoutMicrosoft365GroupParameters.Url;
                 creationInformation.Description = _teamSiteWithoutMicrosoft365GroupParameters.Description;
-                creationInformation.Classification = _teamSiteWithoutMicrosoft365GroupParameters.Classification;                
+                creationInformation.Classification = _teamSiteWithoutMicrosoft365GroupParameters.Classification;
                 creationInformation.ShareByEmailEnabled = _teamSiteWithoutMicrosoft365GroupParameters.ShareByEmailEnabled;
                 creationInformation.Lcid = _teamSiteWithoutMicrosoft365GroupParameters.Lcid;
                 if (ParameterSpecified(nameof(HubSiteId)))
@@ -275,6 +323,33 @@ namespace PnP.PowerShell.Commands
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
             public string SiteAlias;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public string[] Members;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public SwitchParameter WelcomeEmailDisabled;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public SwitchParameter SubscribeNewGroupMembers;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public SwitchParameter AllowOnlyMembersToPost;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public SwitchParameter CalendarMemberReadOnly;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public SwitchParameter ConnectorsDisabled;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public SwitchParameter HideGroupInOutlook;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public SwitchParameter SubscribeMembersToCalendarEventsDisabled;
+
+            [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAM)]
+            public Guid SiteDesignId;
         }
 
         public class TeamSiteWithoutMicrosoft365Group
@@ -308,6 +383,52 @@ namespace PnP.PowerShell.Commands
 
             [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TEAMSITENOGROUP)]
             public string SensitivityLabel;
+        }
+
+        private GeoLocation GetGeoLocation(PnP.Framework.Enums.Office365Geography office365Geography)
+        {
+            switch (office365Geography)
+            {
+                case Framework.Enums.Office365Geography.APC: return GeoLocation.APC;
+                case Framework.Enums.Office365Geography.ARE: return GeoLocation.ARE;
+                case Framework.Enums.Office365Geography.AUS: return GeoLocation.AUS;
+                case Framework.Enums.Office365Geography.BRA: return GeoLocation.BRA;
+                case Framework.Enums.Office365Geography.CAN: return GeoLocation.CAN;
+                case Framework.Enums.Office365Geography.CHE: return GeoLocation.CHE;
+                case Framework.Enums.Office365Geography.DEU: return GeoLocation.DEU;
+                case Framework.Enums.Office365Geography.EUR: return GeoLocation.EUR;
+                case Framework.Enums.Office365Geography.FRA: return GeoLocation.FRA;
+                case Framework.Enums.Office365Geography.GBR: return GeoLocation.GBR;
+                case Framework.Enums.Office365Geography.IND: return GeoLocation.IND;
+                case Framework.Enums.Office365Geography.JPN: return GeoLocation.JPN;
+                case Framework.Enums.Office365Geography.KOR: return GeoLocation.KOR;
+                case Framework.Enums.Office365Geography.NAM: return GeoLocation.NAM;
+                case Framework.Enums.Office365Geography.NOR: return GeoLocation.NOR;
+                case Framework.Enums.Office365Geography.QAT: return GeoLocation.QAT;
+                case Framework.Enums.Office365Geography.SWE: return GeoLocation.SWE;
+                case Framework.Enums.Office365Geography.ZAF: return GeoLocation.ZAF;
+            }
+            return default;
+        }
+
+        private Guid GetSensitivityLabelGuid(string sensitivityLabel)
+        {
+            if (string.IsNullOrEmpty(sensitivityLabel))
+                return Guid.Empty;
+
+            var sensitivityLabelsPayload = Utilities.REST.RestHelper.Get(Connection.HttpClient, $"{ClientContext.Url.TrimEnd('/')}/_api/groupsitemanager/GetGroupCreationContext", AccessToken);
+            var jsonDoc = JsonDocument.Parse(sensitivityLabelsPayload);
+
+            var root = jsonDoc.RootElement;
+            string sensitivityLabelStringId = "";
+            if (root.TryGetProperty("DataClassificationOptionsNew", out var dataClassificationOptions))
+            {
+                JsonElement? val = dataClassificationOptions.EnumerateArray()
+                    .FirstOrDefault(jt => jt.GetProperty("Value").GetString() == sensitivityLabel);
+
+                sensitivityLabelStringId = val?.GetProperty("Key").GetString();
+            }
+            return Guid.Parse(sensitivityLabelStringId);
         }
     }
 }

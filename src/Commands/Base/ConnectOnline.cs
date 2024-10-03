@@ -21,7 +21,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommunications.Connect, "PnPOnline", DefaultParameterSetName = ParameterSet_CREDENTIALS)]
+    [Cmdlet(VerbsCommunications.Connect, "PnPOnline", DefaultParameterSetName = ParameterSet_INTERACTIVE)]
     public class ConnectOnline : BasePSCmdlet
     {
         private CancellationTokenSource cancellationTokenSource;
@@ -154,7 +154,6 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter SPOManagementShell;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        [Alias("PnPManagementShell", "PnPO365ManagementShell")]
         public SwitchParameter DeviceLogin;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
@@ -188,6 +187,10 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         public string CertificateBase64Encoded;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
+        public X509KeyStorageFlags X509KeyStorageFlags;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         public SecureString CertificatePassword;
@@ -256,7 +259,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
         public SwitchParameter ForceAuthentication;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public SwitchParameter Interactive;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ACCESSTOKEN)]
@@ -527,7 +530,7 @@ namespace PnP.PowerShell.Commands.Base
         private PnPConnection ConnectSpoManagement()
         {
             WriteVerbose("Connecting using the SharePoint Online Management Shell App Registration");
-
+            WriteWarning("This option will be removed in release 3.2. Please register your own Entra ID App Registration use that client id to authenticate.");
             ClientId = SPOManagementClientId;
             RedirectUri = SPOManagementRedirectUri;
 
@@ -585,9 +588,8 @@ namespace PnP.PowerShell.Commands.Base
                             }
                             else
                             {
-                                //clientId = PnPConnection.PnPManagementShellClientId;
-                                CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -DeviceLogin used the PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
-                                ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                                CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Please specify a valid client id for an Entra ID App Registration.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                                ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "CLIENTIDREQUIRED", ErrorCategory.AuthenticationError, this));
                             }
                         }
                         else
@@ -623,7 +625,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!Path.IsPathRooted(CertificatePath))
                 {
-                    CertificatePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
+                    CertificatePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path,
                                CertificatePath);
                 }
                 if (!File.Exists(CertificatePath))
@@ -631,10 +633,18 @@ namespace PnP.PowerShell.Commands.Base
                     throw new FileNotFoundException("Certificate not found");
                 }
 
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword);
+                if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
+                {
+                    X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet;
+                }
+
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
                 if (Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
+
                 {
                     ReuseAuthenticationManager();
                 }
@@ -644,7 +654,13 @@ namespace PnP.PowerShell.Commands.Base
             else if (ParameterSpecified(nameof(CertificateBase64Encoded)))
             {
                 var certificateBytes = Convert.FromBase64String(CertificateBase64Encoded);
-                var certificate = new X509Certificate2(certificateBytes, CertificatePassword);
+                if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
+                {
+                    X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet;
+                }
+                var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags);
 
                 if (Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
@@ -728,9 +744,8 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else
                     {
-                        //   ClientId = PnPConnection.PnPManagementShellClientId;
-                        CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "As of September 9th, 2024 the option to use the PnP Management Shell app registration for authentication is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
-                        ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                        CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Please specify a valid client id for an Entra ID App Registration.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                        ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "CLIENTIDREQUIRED", ErrorCategory.AuthenticationError, this));
                     }
                 }
                 else
@@ -804,9 +819,8 @@ namespace PnP.PowerShell.Commands.Base
                     }
                     else
                     {
-                        //ClientId = PnPConnection.PnPManagementShellClientId;
-                        CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with -Interactive used the PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
-                        ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                        CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Please specify a valid client id for an Entra ID App Registration.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                        ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "CLIENTIDREQUIRED", ErrorCategory.AuthenticationError, this));
                     }
                 }
                 else
@@ -870,7 +884,14 @@ namespace PnP.PowerShell.Commands.Base
 
                 SecureString secPassword = StringToSecureString(azureCertPassword);
 
-                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, azureCertificatePath, secPassword);
+                if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
+                {
+                    X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
+                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.PersistKeySet;
+                }
+
+                X509Certificate2 certificate = CertificateHelper.GetCertificateFromPath(this, azureCertificatePath, secPassword, X509KeyStorageFlags);
                 if (Connection?.ClientId == azureClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
@@ -887,9 +908,8 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (string.IsNullOrEmpty(azureClientId))
                 {
-                    //azureClientId = PnPConnection.PnPManagementShellClientId;
-                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting without an Azure Client ID used then PnP Management Shell multi-tenant App Id for authentication. As of September 9th, 2024 this option is not available anymore. Refer to https://pnp.github.io/powershell/articles/registerapplication.html on how to register your own application.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
-                    ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "PNPMGTSHELLNOTSUPPORTED", ErrorCategory.AuthenticationError, this));
+                    CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Please specify a valid client id for an Entra ID App Registration.", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
+                    ThrowTerminatingError(new ErrorRecord(new NotSupportedException(), "CLIENTIDREQUIRED", ErrorCategory.AuthenticationError, this)); ;
                 }
 
                 SecureString secPassword = StringToSecureString(password);
@@ -919,7 +939,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private PnPConnection ConnectAzureADWorkloadIdentity()
         {
-            WriteVerbose("Connecting using Azure AD Workload Identity");
+            WriteVerbose("Connecting using Entra ID Workload Identity");
 
             return PnPConnection.CreateWithAzureADWorkloadIdentity(this, Url, TenantAdminUrl);
         }

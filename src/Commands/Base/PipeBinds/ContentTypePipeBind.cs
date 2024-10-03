@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Model;
 using PnPCore = PnP.Core.Model.SharePoint;
 
@@ -11,7 +10,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public sealed class ContentTypePipeBind
     {
         private readonly string _idOrName;
-        private readonly ContentType _contentType;
+        public ContentType ContentTypeInstance { get; private set; }
 
         private readonly PnPCore.IContentType _coreContentType;
 
@@ -31,7 +30,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public ContentTypePipeBind(ContentType contentType)
         {
-            _contentType = contentType
+            ContentTypeInstance = contentType
                 ?? throw new ArgumentNullException(nameof(contentType));
         }
 
@@ -47,9 +46,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 _coreContentType.EnsurePropertiesAsync(ct => ct.StringId);
                 return _coreContentType.StringId;
             }
-            if (_contentType != null)
+            if (ContentTypeInstance != null)
             {
-                return _contentType.EnsureProperty(ct => ct.StringId);
+                return ContentTypeInstance.EnsureProperty(ct => ct.StringId);
             }
             if (_idOrName.ToLower().StartsWith("0x0"))
             {
@@ -116,9 +115,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal ContentType GetContentType(Web web, bool searchInSiteHierarchy = true)
         {
-            if (_contentType is object)
+            if (ContentTypeInstance is object)
             {
-                return _contentType;
+                return ContentTypeInstance;
             }
 
             var id = GetId();
@@ -153,9 +152,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         }
         internal ContentType GetContentType(List list)
         {
-            if (_contentType is object)
+            if (ContentTypeInstance is object)
             {
-                return _contentType;
+                return ContentTypeInstance;
             }
 
             var id = GetId();
@@ -172,9 +171,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal PnP.Core.Model.SharePoint.IContentType GetContentType(PnP.Core.Model.SharePoint.IList list)
         {
-            if (_contentType is object)
+            if (ContentTypeInstance is object)
             {
-                var stringId = _contentType.EnsureProperty(c => c.StringId);
+                var stringId = ContentTypeInstance.EnsureProperty(c => c.StringId);
                 return list.ContentTypes.FirstOrDefault(c => c.StringId == stringId);
             }
             var id = _idOrName.ToLower().StartsWith("0x0") ? _idOrName : null;
@@ -189,34 +188,40 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         internal PnP.Core.Model.SharePoint.IContentType GetContentType(PnPBatch batch, PnP.Core.Model.SharePoint.IList list)
         {
             PnPCore.IContentType returnCt = null;
-            if (_contentType is object)
+            if (ContentTypeInstance is object)
             {
-                var stringId = _contentType.EnsureProperty(c => c.StringId);
+                var stringId = ContentTypeInstance.EnsureProperty(c => c.StringId);
                 var batchedCt = batch.GetCachedContentType(stringId);
                 if (batchedCt != null)
                 {
                     return batchedCt;
                 }
+                list.EnsureProperties(l => l.ContentTypes);
                 returnCt = list.ContentTypes.FirstOrDefault(c => c.StringId == stringId);
-            }
-            var id = _idOrName.ToLower().StartsWith("0x0") ? _idOrName : null;
-            if (!string.IsNullOrEmpty(id))
-            {
-                var batchedCt = batch.GetCachedContentType(id);
-                if (batchedCt != null)
-                {
-                    return batchedCt;
-                }
-                returnCt = list.ContentTypes.FirstOrDefault(c => c.Id == id);
             }
             else
             {
-                var batchedCt = batch.GetCachedContentType(_idOrName);
-                if (batchedCt != null)
+                var id = _idOrName.ToLower().StartsWith("0x0") ? _idOrName : null;
+                if (!string.IsNullOrEmpty(id))
                 {
-                    return batchedCt;
+                    var batchedCt = batch.GetCachedContentType(id);
+                    if (batchedCt != null)
+                    {
+                        return batchedCt;
+                    }
+                    list.EnsureProperties(l => l.ContentTypes);
+                    returnCt = list.ContentTypes.FirstOrDefault(c => c.Id == id);
                 }
-                returnCt = list.ContentTypes.FirstOrDefault(c => c.Name == _idOrName);
+                else
+                {
+                    var batchedCt = batch.GetCachedContentType(_idOrName);
+                    if (batchedCt != null)
+                    {
+                        return batchedCt;
+                    }
+                    list.EnsureProperties(l => l.ContentTypes);
+                    returnCt = list.ContentTypes.FirstOrDefault(c => c.Name == _idOrName);
+                }
             }
             if (returnCt != null)
             {
@@ -335,9 +340,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                if (_contentType != null)
+                if (ContentTypeInstance != null)
                 {
-                    return _contentType.Name;
+                    return ContentTypeInstance.Name;
                 }
                 if (_coreContentType != null)
                 {
