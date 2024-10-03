@@ -42,20 +42,26 @@ namespace PnP.PowerShell.Commands.Admin
             }
 
             SPContainerTypeProperties sPContainerTypeProperties;
-
             if (!ParameterSpecified(nameof(TrialContainerType)) || !TrialContainerType.ToBool())
             {
-                WriteVerbose("Creating a standard container type");
+                WriteWarning($"Creation of standard container types is not yet supported. This will be enabled in the future. For now, only trial container types can be created by adding the -{nameof(TrialContainerType)} parameter.");
+                return;
 
-                sPContainerTypeProperties = new SPContainerTypeProperties
-                {
-                    DisplayName = ContainerTypeName,
-                    OwningAppId = OwningApplicationId,
-                    AzureSubscriptionId = AzureSubscriptionId.Value,
-                    ResourceGroup = ResourceGroup,
-                    Region = Region,
-                    SPContainerTypeBillingClassification = SPContainerTypeBillingClassification.Standard
-                };
+                // NOTICE:
+                // Currently disabled by request of the product group as it doesn't work reliably yet
+                // Once the official endpoint to create standard container types is available, this code can be enabled again and will point to the proper API to use
+
+                // WriteVerbose("Creating a standard container type");
+
+                // sPContainerTypeProperties = new SPContainerTypeProperties
+                // {
+                //     DisplayName = ContainerTypeName,
+                //     OwningAppId = OwningApplicationId,
+                //     AzureSubscriptionId = AzureSubscriptionId.Value,
+                //     ResourceGroup = ResourceGroup,
+                //     Region = Region,
+                //     SPContainerTypeBillingClassification = SPContainerTypeBillingClassification.Standard
+                // };
             }
             else
             {
