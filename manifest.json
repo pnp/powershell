@@ -8581,6 +8581,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/azurefunctions/createfunctionappbasics2.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/azurefunctions/createfunctionappbasics2.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/azurefunctions/createfunctionappcompleted.png",
       "output": {
         "resource": {

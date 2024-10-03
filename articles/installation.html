@@ -83,7 +83,7 @@
                   </div>
   <h1 id="installing-pnp-powershell">Installing PnP PowerShell</h1>
 
-<p>You need PowerShell 7.2 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">installed through here</a>.</p>
+<p>You need PowerShell 7.4 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">installed through here</a>.</p>
 <h2 id="stable-build">Stable build</h2>
 <p>You can run the following commands to install the latest stable PowerShell cmdlets for the current user:</p>
 <pre><code class="lang-powershell">Install-Module PnP.PowerShell -Scope CurrentUser
@@ -94,13 +94,13 @@
 </code></pre>
 <h2 id="use-in-docker">Use in Docker</h2>
 <p>To use PnP.PowerShell in a Windows container:</p>
-<pre><code class="lang-powershell">docker run -it m365pnp/powershell:1.10.0-nanoserver-1809
+<pre><code class="lang-powershell">docker run -it m365pnp/powershell:2.12.0-nanoserver-1809
 </code></pre>
 <p>To use PnP.PowerShell in a Linux container:</p>
 <pre><code class="lang-powershell">docker run -it m365pnp/powershell
 </code></pre>
 <h1 id="updating-pnp-powershell">Updating PnP PowerShell</h1>
-<p>If you already have PnP PowerShell installed and just want to update to the latest version you can follow these steps. If you're not sure if your version is already up to date, it does no harm to run it anyway. If there's no new version available, it will not do anything. You need PowerShell 7.2 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">installed through here</a>.</p>
+<p>If you already have PnP PowerShell installed and just want to update to the latest version you can follow these steps. If you're not sure if your version is already up to date, it does no harm to run it anyway. If there's no new version available, it will not do anything. You need PowerShell 7.4 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">installed through here</a>.</p>
 <h2 id="stable-build-1">Stable build</h2>
 <p>You can run the following commands to update to the latest stable PowerShell cmdlets for the current user:</p>
 <pre><code class="lang-powershell">Update-Module PnP.PowerShell -Scope CurrentUser
