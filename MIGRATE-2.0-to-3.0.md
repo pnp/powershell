@@ -44,7 +44,7 @@ Recommend referring to these 2 links:
 | **Cmdlet** | **Comment** |
 | ----------- | ---------------------- |
 | Get-PnPRetentionLabel | The `Get-PnPRetentionLabel` cmdlet has been renamed to `Get-PnPTenantRetentionLabel` |
-| Get-PnPLabel | The `Get-PnPLabel` cmdlet has been renamed to `Get-PnRetentionLabel` |
+| Get-PnPLabel | The `Get-PnPLabel` cmdlet has been renamed to `Get-PnPRetentionLabel` |
 | Get-PnPPowerPlatformConnector | The `Get-PnPPowerPlatformConnector` cmdlet has been renamed to `Get-PnPPowerPlatformCustomConnector` |
 | Connect-PnPOnline | Using `Connect-PnPOnline` without specifying an authentication option will now default to using an interactive login. If you still want to use logon using client credentials, provide them using -Credentials instead |
 
