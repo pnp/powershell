@@ -88,7 +88,7 @@
 <ul>
 <li>Microsoft Graph API: All of Group.ReadWrite.All, User.ReadWrite.All</li>
 </ul>
-<p>Adds users to the owners of an Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
+<p>Adds users to the owners of an Azure Active Directory group. This can be a security or Microsoft 365 group. Distribution lists are not currently supported by Graph API.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPAzureADGroupOwner -Identity &lt;AzureADGroupPipeBind&gt; -Users &lt;String[]&gt; [-RemoveExisting] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
