@@ -15,7 +15,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAzureADGroup.
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Removes one Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Removes one Azure Active Directory group. This can be a security or Microsoft 365 group. Distribution lists are not currently supported by Graph API.
 
 ## SYNTAX
 
