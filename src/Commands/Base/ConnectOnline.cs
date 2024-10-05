@@ -304,6 +304,8 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_OSLOGIN)]
         public SwitchParameter OSLogin;
 
+        private static readonly string[] sourceArray = ["stop", "ignore", "silentlycontinue"];
+
         protected override void ProcessRecord()
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -461,7 +463,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
 
                     // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
-                    if (!new[] { "stop", "ignore", "silentlycontinue" }.Contains(ErrorActionSetting.ToLowerInvariant()))
+                    if (!sourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                     {
                         throw new PSInvalidOperationException(errorMessage);
                     }
@@ -1124,7 +1126,7 @@ namespace PnP.PowerShell.Commands.Base
             PnPConnection.CachedAuthenticationManager = contextSettings?.AuthenticationManager;
         }
 
-        private SecureString StringToSecureString(string inputString)
+        private static SecureString StringToSecureString(string inputString)
         {
             SecureString secPassword = new SecureString();
             foreach (char ch in inputString)

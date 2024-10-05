@@ -1,11 +1,8 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-
-using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.PowerShell.Commands.Base.PipeBinds;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ContentTypes
 {
-
     [Cmdlet(VerbsCommon.Remove, "PnPContentTypeFromList")]
     public class RemoveContentTypeFromList : PnPWebCmdlet
     {
@@ -19,13 +16,13 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetListOrThrow(nameof(List), CurrentWeb);
+            var list = List.GetListOrThrow(nameof(List), Connection.PnPContext);
             var ct = ContentType.GetContentTypeOrWarn(this, list);
             if (ct != null)
             {
-                CurrentWeb.RemoveContentTypeFromList(list, ct);
+                ct.Delete();
+                list.Update();
             }
         }
-
     }
 }
