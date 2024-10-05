@@ -159,6 +159,7 @@
 [RequiredApiDelegatedOrApplicationPermissions(&quot;graph/Group.ReadWrite.All&quot;)]
 [RequiredApiDelegatedOrApplicationPermissions(&quot;graph/Directory.ReadWrite.All&quot;)]  
 </code></pre>
+<p>These attributes should be added starting with the least priviledged one at the top going down towards the most priviledged permission.</p>
 <p>If you have a scenario that a combination of permissions is required, you can define multiple permissions in the same attribute to have them be handled as an AND. I.e. the following permission attributes would define that all of the permissions are required to run the cmdlet:</p>
 <pre><code class="lang-csharp">[RequiredApiDelegatedOrApplicationPermissions(&quot;graph/GroupMember.Read.All&quot;, &quot;graph/Group.Read.All&quot;)]
 </code></pre>
