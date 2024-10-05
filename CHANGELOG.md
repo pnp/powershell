@@ -31,6 +31,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `New-PnPContainerType` will temporarily disable standard containers to be created due to changed being applied at Microsoft to allow this to be possible in the future [#4125](https://github.com/pnp/powershell/pull/4125)
 - Renamed `Get-PnPLabel` cmdlet to `Get-PnPRetentionLabel`. [#4387](https://github.com/pnp/powershell/pull/4387)
 - `Add-PnPNavigationNode` cmdlet updated to now support `-OpenInNewTab` parameter for different types of navigation. [#3969](https://github.com/pnp/powershell/pull/3969)
+- `Remove-PnPFile` , `Rename-PnPFile`, `Set-PnPFileCheckedIn`, `Set-PnPFileCheckedOut` & `Undo-PnPFileCheckedOut` cmdlets now use PnP Core SDK behind the scenes.
+- `Set-PnPFileCheckedIn` cmdlet now expects `CheckInType` to be of type `PnP.Core.Model.SharePoint.CheckinType` instead of the earlier one based on CSOM.
 
 ### Fixed
 
@@ -42,6 +44,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get-PnPSiteTemplate -PersistMultiLanguageResources` not working correctly for xml file types. [#4326](https://github.com/pnp/powershell/pull/4326)
 - Fix `Add-PnPDataRowsToSiteTemplate` setting keyColumn to null when not passed. [#4325](https://github.com/pnp/powershell/pull/4325)
 - Fix `Connect-PnPOnline` not working correctly when `-DeviceLogin` and `-LaunchBrowser` both are specified. It used to open it in a popup. Now it correctly launches the browser. [#4325](https://github.com/pnp/powershell/pull/4345)
+- `Export-PnPUserInfo`, `Export-PnPUserProfile` and `Remove-PnPUserProfile` cmdlets now work properly with proper `-Connection` parameter if specified.
  
 ### Removed
 
