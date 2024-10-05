@@ -42,6 +42,8 @@ If multiple attributes are defined on a cmdlet, the cmdlet will require only one
 [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]  
 ```
 
+These attributes should be added starting with the least priviledged one at the top going down towards the most priviledged permission.
+
 If you have a scenario that a combination of permissions is required, you can define multiple permissions in the same attribute to have them be handled as an AND. I.e. the following permission attributes would define that all of the permissions are required to run the cmdlet:
 
 ```csharp
