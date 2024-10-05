@@ -10,8 +10,6 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 {
     [Cmdlet(VerbsCommon.Get, "PnPPowerPlatformCustomConnector")]
-    [WriteAliasWarning("Get-PnPPowerPlatformConnector will be renamed to Get-PnPPowerPlatformCustomConnector in a future version, please update your scripts now already to use this cmdlet name instead")]
-    [Alias("Get-PnPPowerPlatformConnector")]
     public class GetPowerPlatformCustomConnector : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]

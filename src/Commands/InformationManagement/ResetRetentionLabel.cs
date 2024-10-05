@@ -9,7 +9,6 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Reset, "PnPRetentionLabel", DefaultParameterSetName = ParamSet_List)]
-    [Alias("Reset-PnPLabel")]
     public class ResetRetentionLabel : PnPSharePointCmdlet
     {
         private const int MAXBATCHSIZE = 25;

@@ -1,6 +1,6 @@
 # Updating from PnP PowerShell 2.x to 3.x
 
-_This is a draft document, version 3 is not yet available_
+_This is a draft document, version 3 is not yet available. You can try this out with the nightly builds starting from 2.99.1 or later_
 
 The 3.x version of PnP PowerShell is based exclusively on .NET 8.0, which means that it will not work on older PowerShell editions like PowerShell 5.1, ISE or PowerShell 7.3 or older. PowerShell 7.4 or later is required.
 
@@ -47,6 +47,10 @@ Recommend referring to these 2 links:
 | Get-PnPLabel | The `Get-PnPLabel` cmdlet has been renamed to `Get-PnRetentionLabel` |
 | Get-PnPPowerPlatformConnector | The `Get-PnPPowerPlatformConnector` cmdlet has been renamed to `Get-PnPPowerPlatformCustomConnector` |
 | Connect-PnPOnline | Using `Connect-PnPOnline` without specifying an authentication option will now default to using an interactive login. If you still want to use logon using client credentials, provide them using -Credentials instead |
+| Publish-PnPCompanyApp | The `Publish-PnPCompanyApp` cmdlet has been removed |
+| Set-PnPLabel | Use `Set-PnPRetentionLabel` |
+| Reset-PnPLabel | Use `Reset-PnPRetentionLabel` |
+| Add-PnPTeamsChannel | The parameter `IsFavoriteByDefault` has been removed as it was not supported by Graph API |
 
 ## Other notable changes
 
@@ -54,4 +58,8 @@ Recommend referring to these 2 links:
 
 ## Changes to output type
 
-- `Get-PnPAccessToken`, `Request-PnPAccessToken` and `Get-PnPGraphAccessToken` now return tokens of type `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`. Earlier they returned `System.IdentityModel.Tokens.Jwt`.
+| **Cmdlet** | **Comment** |
+| ----------- | ---------------------- |
+| Get-PnPAccessToken | The output type is now `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`, earlier it was `System.IdentityModel.Tokens.Jwt` |
+| Request-PnPAccessToken | The output type is now `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`, earlier it was `System.IdentityModel.Tokens.Jwt` |
+| Get-PnPGraphAccessToken | The output type is now `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`, earlier it was `System.IdentityModel.Tokens.Jwt` |

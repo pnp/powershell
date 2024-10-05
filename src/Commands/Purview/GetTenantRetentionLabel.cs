@@ -12,8 +12,6 @@ namespace PnP.PowerShell.Commands.Purview
     [OutputType(typeof(Model.Graph.Purview.RetentionLabel))]
     [RequiredApiDelegatedPermissions("graph/RecordsManagement.Read.All")]
     [ApiNotAvailableUnderApplicationPermissions]
-    [WriteAliasWarning("Get-PnPRetentionLabel will be renamed to Get-PnPTenantRetentionLabel in a future version, please update your scripts now already to use this cmdlet name instead")]
-    [Alias("Get-PnPRetentionLabel")]
     public class GetTenantRetentionLabel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
