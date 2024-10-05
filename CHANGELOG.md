@@ -24,15 +24,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.
-- `-Interactive` login is now the default.
+- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.**
+- **`-Interactive` login is now the default.**
 - In case of errors when Graph batch method is used, it will now throw a clearer error message about what was the issue. [#4327](https://github.com/pnp/powershell/pull/4327/)
 - `Get-PnPAccessToken`, `Request-PnPAccessToken` and `Get-PnPGraphAccessToken` output type is changed to `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`. Earlier they returned `System.IdentityModel.Tokens.Jwt`.
 - `New-PnPContainerType` will temporarily disable standard containers to be created due to changed being applied at Microsoft to allow this to be possible in the future [#4125](https://github.com/pnp/powershell/pull/4125)
 - Renamed `Get-PnPLabel` cmdlet to `Get-PnPRetentionLabel`. [#4387](https://github.com/pnp/powershell/pull/4387)
 - `Add-PnPNavigationNode` cmdlet updated to now support `-OpenInNewTab` parameter for different types of navigation. [#3969](https://github.com/pnp/powershell/pull/3969)
-- `Remove-PnPFile` , `Rename-PnPFile`, `Set-PnPFileCheckedIn`, `Set-PnPFileCheckedOut` & `Undo-PnPFileCheckedOut` cmdlets now use PnP Core SDK behind the scenes.
-- `Set-PnPFileCheckedIn` cmdlet now expects `CheckInType` to be of type `PnP.Core.Model.SharePoint.CheckinType` instead of the earlier one based on CSOM.
+- `Remove-PnPFile` , `Rename-PnPFile`, `Set-PnPFileCheckedIn`, `Set-PnPFileCheckedOut` & `Undo-PnPFileCheckedOut` cmdlets now use PnP Core SDK behind the scenes. [#4389](https://github.com/pnp/powershell/pull/4389)
+- `Set-PnPFileCheckedIn` cmdlet now expects `CheckInType` to be of type `PnP.Core.Model.SharePoint.CheckinType` instead of the earlier one based on CSOM. [#4389](https://github.com/pnp/powershell/pull/4389)
+- `Disable-PnPFeature` and `Enable-PnPFeature` now use PnP Core SDK for processing requests. [#4390](https://github.com/pnp/powershell/pull/4390)
+- `Remove-PnPContentType` and `Remove-PnPContentTypeFromList` now use PnP Core SDK for processing requests. [#4390](https://github.com/pnp/powershell/pull/4390)
 
 ### Fixed
 
@@ -44,7 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get-PnPSiteTemplate -PersistMultiLanguageResources` not working correctly for xml file types. [#4326](https://github.com/pnp/powershell/pull/4326)
 - Fix `Add-PnPDataRowsToSiteTemplate` setting keyColumn to null when not passed. [#4325](https://github.com/pnp/powershell/pull/4325)
 - Fix `Connect-PnPOnline` not working correctly when `-DeviceLogin` and `-LaunchBrowser` both are specified. It used to open it in a popup. Now it correctly launches the browser. [#4325](https://github.com/pnp/powershell/pull/4345)
-- `Export-PnPUserInfo`, `Export-PnPUserProfile` and `Remove-PnPUserProfile` cmdlets now work properly with proper `-Connection` parameter if specified.
+- `Export-PnPUserInfo`, `Export-PnPUserProfile` and `Remove-PnPUserProfile` cmdlets now work properly with proper `-Connection` parameter if specified. [#4389](https://github.com/pnp/powershell/pull/4389)
  
 ### Removed
 
