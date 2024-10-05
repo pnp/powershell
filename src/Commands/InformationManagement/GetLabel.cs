@@ -19,13 +19,12 @@ namespace PnP.PowerShell.Commands.InformationManagement
         {
             if (!ParameterSpecified(nameof(List)))
             {
-                
-                var tags = PnPContext.Site.GetAvailableComplianceTags();
+                var tags = Connection.PnPContext.Site.GetAvailableComplianceTags();
                 WriteObject(tags, true);
             }
             else
             {
-                var list = List.GetList(PnPContext);
+                var list = List.GetList(Connection.PnPContext);
                 if (null != list)
                 {
                     var tag = list.GetComplianceTag();

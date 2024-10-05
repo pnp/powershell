@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(PnPContext);
+            var list = List.GetList(Connection.PnPContext);
 
             if (list == null)
             {

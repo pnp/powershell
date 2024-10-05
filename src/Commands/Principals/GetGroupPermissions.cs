@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(PnPContext);
+            var group = Identity.GetGroup(Connection.PnPContext);
 
             if (group == null)
                 throw new PSArgumentException("Site group not found", nameof(Identity));

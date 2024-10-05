@@ -6,7 +6,7 @@ using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Security
-{    
+{
     [Cmdlet(VerbsCommon.Get, "PnPFileSharingLink")]
     [OutputType(typeof(IGraphPermissionCollection))]
     public class GetFileSharingLink : PnPWebCmdlet
@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Security
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                file = Identity.GetCoreFile(PnPContext, this);
+                file = Identity.GetCoreFile(Connection.PnPContext, this);
             }
             else
             {
