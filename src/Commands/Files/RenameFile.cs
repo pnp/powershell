@@ -1,8 +1,7 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.Framework.Utilities;
+using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -28,20 +27,20 @@ namespace PnP.PowerShell.Commands.Files
         {
             if (ParameterSetName == "SITE")
             {
-                var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
-                ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
-            }
-            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
+                var pnpWeb = Connection.PnPContext.Web;
+                pnpWeb.EnsureProperties(w => w.ServerRelativeUrl);
 
-            ClientContext.Load(file, f => f.Name, f => f.ServerRelativePath);
-            ClientContext.ExecuteQueryRetry();
+                ServerRelativeUrl = UrlUtility.Combine(pnpWeb.ServerRelativeUrl, SiteRelativeUrl);
+            }
+
+            IFile file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(ServerRelativeUrl);
+            file.EnsureProperties(f => f.Name, f => f.ServerRelativeUrl);
 
             if (Force || ShouldContinue(string.Format(Resources.RenameFile0To1, file.Name, TargetFileName), Resources.Confirm))
             {
-                var targetPath = string.Concat(file.ServerRelativePath.DecodedUrl.Remove(file.ServerRelativePath.DecodedUrl.Length - file.Name.Length), TargetFileName);
-                file.MoveToUsingPath(ResourcePath.FromDecodedUrl(targetPath), OverwriteIfAlreadyExists ? MoveOperations.Overwrite : MoveOperations.None);
+                var targetPath = string.Concat(file.ServerRelativeUrl.Remove(file.ServerRelativeUrl.Length - file.Name.Length), TargetFileName);
 
-                ClientContext.ExecuteQueryRetry();
+                file.MoveTo(targetPath, OverwriteIfAlreadyExists ? MoveOperations.Overwrite : MoveOperations.None);
             }
         }
     }

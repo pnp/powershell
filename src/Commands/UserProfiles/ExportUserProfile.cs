@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 hostUrl = hostUrl.Substring(0, hostUrl.Length - 1);
             }
             var normalizedUserName = UrlUtilities.UrlEncode($"i:0#.f|membership|{LoginName}");
-            var results = RestHelper.Get<RestResultCollection<ExportEntity>>(this.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetUserProfileProperties(accountName=@a)?@a='{normalizedUserName}'", AdminContext, false);
+            var results = RestHelper.Get<RestResultCollection<ExportEntity>>(Connection.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/GetUserProfileProperties(accountName=@a)?@a='{normalizedUserName}'", AdminContext, false);
             var record = new PSObject();
             foreach (var item in results.Items)
             {
