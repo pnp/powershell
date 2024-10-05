@@ -10,7 +10,6 @@ using System.ComponentModel.DataAnnotations;
 namespace PnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Set, "PnPRetentionLabel", DefaultParameterSetName = ParamSet_List)]
-    [Alias("Set-PnPLabel")]
     public class SetRetentionLabel : PnPSharePointCmdlet
     {
         private const string ParamSet_List = "Set on a list";
@@ -32,15 +31,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
         public string Label;
 
         [Parameter(Mandatory = false, ParameterSetName = ParamSet_List)]
-        public bool SyncToItems;
-
-        [Obsolete("Overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParamSet_List)]
-        public bool BlockDeletion;
-
-        [Obsolete("Overriding Purview retention label settings has been deprecated in SharePoint Online. This parameter will be removed in the next major release.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParamSet_List)]
-        public bool BlockEdit;
+        public bool SyncToItems;        
 
         protected override void ExecuteCmdlet()
         {
