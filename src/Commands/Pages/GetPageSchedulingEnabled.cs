@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Pages
     {
         protected override void ExecuteCmdlet()
         {
-            var pagesList = PagesUtility.GetModernPagesLibrary(PnPContext.Web);
+            var pagesList = PagesUtility.GetModernPagesLibrary(Connection.PnPContext.Web);
             var payload = new
             {
                 parameters = new
@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Pages
                 }
             };
 
-            var results = Utilities.REST.RestHelper.Post<JsonElement>(Connection.HttpClient, $"{PnPContext.Web.Url}/_api/web/lists(guid'{pagesList.Id}')/RenderListDataAsStream", ClientContext, payload, false);
+            var results = Utilities.REST.RestHelper.Post<JsonElement>(Connection.HttpClient, $"{Connection.PnPContext.Web.Url}/_api/web/lists(guid'{pagesList.Id}')/RenderListDataAsStream", ClientContext, payload, false);
 
             var frameworkClientInfo = results.GetProperty("SPFrameworkClientInfo");
             var pageContextJson = frameworkClientInfo.GetProperty("PageContextJson");

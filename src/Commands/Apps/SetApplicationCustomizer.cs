@@ -41,9 +41,10 @@ namespace PnP.PowerShell.Commands.Branding
         protected override void ExecuteCmdlet()
         {
             IEnumerable<IUserCustomAction> actions = null;
+            var pnpContext = Connection.PnPContext;
             if (Identity != null)
             {
-                actions = Identity.GetCustomActions(PnPContext, Scope);
+                actions = Identity.GetCustomActions(pnpContext, Scope);
             }
 
             else
@@ -52,11 +53,11 @@ namespace PnP.PowerShell.Commands.Branding
 
                 if (Scope == CustomActionScope.Web || Scope == CustomActionScope.All)
                 {
-                    customActions.AddRange(PnPContext.Web.UserCustomActions.ToList());
+                    customActions.AddRange(pnpContext.Web.UserCustomActions.ToList());
                 }
                 if (Scope == CustomActionScope.Site || Scope == CustomActionScope.All)
                 {
-                    customActions.AddRange(PnPContext.Site.UserCustomActions.ToList());
+                    customActions.AddRange(pnpContext.Site.UserCustomActions.ToList());
                 }
 
                 actions = customActions.AsEnumerable();

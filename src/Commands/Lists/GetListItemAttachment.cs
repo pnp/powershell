@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            IList list = List.GetList(PnPContext);
+            IList list = List.GetList(Connection.PnPContext);
 
             if (list == null)
             {

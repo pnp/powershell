@@ -1,7 +1,4 @@
 ﻿using System.Management.Automation;
-
-using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
 
@@ -22,7 +19,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(CurrentWeb);
+            var list = List.GetList(Connection.PnPContext);
             if (list == null)
                 throw new PSArgumentException($"No list found with id, title or url '{List}'", "List");
             if (Identity != null)
@@ -31,8 +28,7 @@ namespace PnP.PowerShell.Commands.Lists
                 if (Force || ShouldContinue(string.Format(Properties.Resources.MoveListItemWithId0ToRecycleBin, item.Id), Properties.Resources.Confirm))
                 {
                     var recycleBinResult = item.Recycle();
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(new RecycleResult { RecycleBinItemId = recycleBinResult.Value });
+                    WriteObject(new RecycleResult { RecycleBinItemId = recycleBinResult });
                 }
             }
         }

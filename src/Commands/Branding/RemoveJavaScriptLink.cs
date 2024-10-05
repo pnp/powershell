@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            var rawActions = Identity.GetCustomActions(PnPContext, Scope);
+            var rawActions = Identity.GetCustomActions(Connection.PnPContext, Scope);
 
             var actions = rawActions.Where(ca => ca.Location == "ScriptLink");
 
