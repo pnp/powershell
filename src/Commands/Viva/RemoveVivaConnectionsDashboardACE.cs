@@ -1,10 +1,6 @@
 ﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Viva
 {
@@ -16,9 +12,10 @@ namespace PnP.PowerShell.Commands.Viva
         public VivaACEPipeBind Identity;
         protected override void ExecuteCmdlet()
         {
-            if (PnPContext.Site.IsHomeSite())
+            var pnpContext = Connection.PnPContext;
+            if (pnpContext.Site.IsHomeSite())
             {
-                IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
+                IVivaDashboard dashboard = pnpContext.Web.GetVivaDashboard();
                 var aceToRemove = Identity.GetACE(dashboard, this);
 
                 if (aceToRemove != null)

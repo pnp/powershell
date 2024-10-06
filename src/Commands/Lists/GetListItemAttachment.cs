@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            IList list = List.GetList(PnPContext);
+            IList list = List.GetList(Connection.PnPContext);
 
             if (list == null)
             {
@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Lists
                     else
                     {
                         // Start the download
-                        using (Stream downloadedContentStream = attachment.GetContentAsync().GetAwaiter().GetResult())
+                        using (Stream downloadedContentStream = attachment.GetContent())
                         {
                             // Download the file bytes in 2MB chunks and immediately write them to a file on disk 
                             // This approach avoids the file being fully loaded in the process memory

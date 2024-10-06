@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
@@ -24,7 +22,8 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(PnPContext);
+            var pnpContext = Connection.PnPContext;
+            var group = Identity.GetGroup(pnpContext);
 
             if (group == null)
                 throw new PSArgumentException("Site group not found", nameof(Identity));
@@ -32,7 +31,7 @@ namespace PnP.PowerShell.Commands.Principals
             PnP.Core.Model.SharePoint.IList list = null;
             if (ParameterSpecified(nameof(List)))
             {
-                list = List.GetListOrThrow(nameof(List), PnPContext);
+                list = List.GetListOrThrow(nameof(List), pnpContext);
             }
             if (AddRole != null)
             {

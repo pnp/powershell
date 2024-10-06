@@ -8,7 +8,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADUser")]
-    [RequiredMinimalApiPermissions("User.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/User.ReadWrite.All")]
     [Alias("Remove-PnPEntraIDUser")]
     public class RemoveAzureADUser : PnPGraphCmdlet
     {

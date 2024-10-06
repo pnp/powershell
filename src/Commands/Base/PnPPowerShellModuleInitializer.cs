@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Base
             s_binCommonPath = Path.Combine(Path.GetDirectoryName(s_binBasePath), "Common");
             if (Environment.GetEnvironmentVariable("PNP_PS_DEBUG_IN_VISUAL_STUDIO") == "True")
             {
-                s_binCommonPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..", "..", "..", "..", "..", "src", "ALC", "bin", "Debug", "net6.0"));
+                s_binCommonPath = Path.GetFullPath(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "..", "..", "..", "..", "..", "src", "ALC", "bin", "Debug", "net8.0"));
             }
 
             s_dependencies = new HashSet<string>(StringComparer.Ordinal);

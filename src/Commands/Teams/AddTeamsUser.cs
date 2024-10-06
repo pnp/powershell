@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsUser")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class AddTeamsUser : PnPGraphCmdlet
     {
         const string ParamSet_ByUser = "By User";

@@ -5,13 +5,14 @@ using System.Management.Automation;
 using System.Linq;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 {
     [Cmdlet(VerbsCommon.Get, "PnPPowerPlatformSolution")]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation")]
     public class GetPowerPlatformSolution: PnPAzureManagementApiCmdlet
     {
-      
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public PowerPlatformEnvironmentPipeBind Environment;
 

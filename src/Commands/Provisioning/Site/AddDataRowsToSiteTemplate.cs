@@ -83,7 +83,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 throw new ApplicationException("List does not exist in the template file!");
             }
 
-            if (string.IsNullOrEmpty(KeyColumn))
+            if (!string.IsNullOrEmpty(KeyColumn))
             {
                 listInstance.DataRows.KeyColumn = KeyColumn;
             }

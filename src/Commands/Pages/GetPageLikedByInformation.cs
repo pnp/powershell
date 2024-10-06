@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Pages
             if (clientSidePage == null)
                 throw new Exception($"Page '{Identity?.Name}' does not exist");
 
-            var pageLikeInformation = clientSidePage.GetLikedByInformationAsync().GetAwaiter().GetResult();
+            var pageLikeInformation = clientSidePage.GetLikedByInformation();
             
             var likes = pageLikeInformation.LikedBy.AsRequested();
 

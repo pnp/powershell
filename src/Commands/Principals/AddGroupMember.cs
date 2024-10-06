@@ -44,8 +44,9 @@ namespace PnP.PowerShell.Commands.Principals
             }
             else
             {
-                var group = Group.GetGroup(PnPContext);
-                var user = PnPContext.Web.EnsureUser(LoginName);
+                var pnpContext = Connection.PnPContext;
+                var group = Group.GetGroup(pnpContext);
+                var user = pnpContext.Web.EnsureUser(LoginName);
 
                 if (ParameterSetName == ParameterSet_BATCHED)
                 {

@@ -1,5 +1,5 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
+using System.Management.Automation;
 
 
 namespace PnP.PowerShell.Commands.ContentTypes
@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
         public ContentType ParentContentType;
 
         [Parameter(Mandatory = false)]
-        public string DocumentTemplate;        
+        public string DocumentTemplate;
 
         protected override void ExecuteCmdlet()
         {

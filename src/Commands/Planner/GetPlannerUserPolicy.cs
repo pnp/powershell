@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsCommon.Get, "PnPPlannerUserPolicy")]
-    [RequiredMinimalApiPermissions("https://tasks.office.com/.default")]
+    [RequiredApiApplicationPermissions("https://tasks.office.com/.default")]
     public class GetPlannerUserPolicy : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

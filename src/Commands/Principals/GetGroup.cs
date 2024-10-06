@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Principals
                 // Get group by name using Core SDK because of
                 // case sensitivity difference between Core SDK and CSOM
                 // Loads group using CSOM to bypass a breaking change
-                var pnpGroup = Identity.GetGroup(PnPContext);
+                var pnpGroup = Identity.GetGroup(Connection.PnPContext);
 
                 if (pnpGroup != null)
                 {

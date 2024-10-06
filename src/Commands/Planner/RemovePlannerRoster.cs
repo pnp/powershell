@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPlannerRoster", SupportsShouldProcess = true)]
-    [RequiredMinimalApiPermissions("Tasks.ReadWrite")]
+    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
     public class RemovePlannerRoster : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

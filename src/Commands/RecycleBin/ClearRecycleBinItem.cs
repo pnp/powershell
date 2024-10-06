@@ -1,8 +1,7 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-
+﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using System.Management.Automation;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.RecycleBin
@@ -34,12 +33,11 @@ namespace PnP.PowerShell.Commands.RecycleBin
             switch (ParameterSetName)
             {
                 case PARAMETERSET_IDENTITY:
-                    var recycleBinItem = Identity.GetRecycleBinItem(ClientContext.Site);
+                    var recycleBinItem = Identity.GetRecycleBinItem(Connection.PnPContext);
 
                     if (Force || ShouldContinue(string.Format(Resources.ClearRecycleBinItem, recycleBinItem.LeafName), Resources.Confirm))
                     {
-                        recycleBinItem.DeleteObject();
-                        ClientContext.ExecuteQueryRetry();
+                        recycleBinItem.Delete();
                     }
                     break;
                 case PARAMETERSET_ALL:
@@ -64,16 +62,14 @@ namespace PnP.PowerShell.Commands.RecycleBin
                         {
                             if (Force || ShouldContinue(Resources.ClearSecondStageRecycleBin, Resources.Confirm))
                             {
-                                ClientContext.Site.RecycleBin.DeleteAllSecondStageItems();
-                                ClientContext.ExecuteQueryRetry();
+                                Connection.PnPContext.Site.RecycleBin.DeleteAllSecondStageItems();
                             }
                         }
                         else
                         {
                             if (Force || ShouldContinue(Resources.ClearBothRecycleBins, Resources.Confirm))
                             {
-                                ClientContext.Site.RecycleBin.DeleteAll();
-                                ClientContext.ExecuteQueryRetry();
+                                Connection.PnPContext.Site.RecycleBin.DeleteAll();
                             }
                         }
                     }

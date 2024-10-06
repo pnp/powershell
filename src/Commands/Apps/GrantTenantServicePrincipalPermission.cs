@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPTenantServicePrincipalPermission")]
     // [MicrosoftGraphApiPermissionCheckAttribute(MicrosoftGraphApiPermission.Directory_ReadWrite_All)]
-    [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class GrantTenantServicePrincipalPermission : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

@@ -9,7 +9,7 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPAzureADGroup")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Set-PnPEntraIDGroup")]
     public class SetAzureADGroup : PnPGraphCmdlet
     {

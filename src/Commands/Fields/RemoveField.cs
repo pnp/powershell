@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Fields
         {
             if (List != null)
             {
-                var list = List.GetList(PnPContext);
+                var list = List.GetList(Connection.PnPContext);
                 list.EnsureProperties(l => l.Fields);
                 var fieldCollection = list.Fields.AsRequested();
                 var f = Identity.Field;

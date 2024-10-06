@@ -11,12 +11,12 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Set, "PnPSearchExternalItem")]
-    [RequiredMinimalApiPermissions("ExternalItem.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/ExternalItem.ReadWrite.All")]
     [OutputType(typeof(Model.Graph.MicrosoftSearch.ExternalItem))]
-    public class AddSearchExternalItem : PnPGraphCmdlet
+    public class SetSearchExternalItem : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true)]
-        public string ConnectionId;
+        [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        public SearchExternalConnectionPipeBind ConnectionId;
 
         [Parameter(Mandatory = true)]
         [ValidateLength(1,128)]
@@ -105,20 +105,10 @@ namespace PnP.PowerShell.Commands.Search
             var jsonContent = JsonContent.Create(bodyContent);
             WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
-            var graphApiUrl = $"v1.0/external/connections/{ConnectionId}/items/{ItemId}";
-            WriteVerbose($"Calling Graph API at {graphApiUrl}");
-
-            var results = Utilities.REST.GraphHelper.Put(this, Connection, graphApiUrl, AccessToken, jsonContent);
-
-            WriteVerbose($"Graph API responded with HTTP {results.StatusCode} {results.ReasonPhrase}");
-
-            var resultsContent = results.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-
-            WriteVerbose($"Graph API responded with payload: {resultsContent}");
-
-            var externalItemResult = System.Text.Json.JsonSerializer.Deserialize<Model.Graph.MicrosoftSearch.ExternalItem>(resultsContent);
-
-            WriteObject(externalItemResult, false);
+            var searchExternalConnection = ConnectionId.GetExternalConnection(this, Connection, AccessToken);
+            var graphApiUrl = $"v1.0/external/connections/{searchExternalConnection.Id}/items/{ItemId}";
+            var results = Utilities.REST.GraphHelper.Put<Model.Graph.MicrosoftSearch.ExternalItem>(this, Connection, graphApiUrl, AccessToken, jsonContent);
+            WriteObject(results, false);
         }
 
         private List<Model.Graph.MicrosoftSearch.ExternalItemAcl> GetUserAcls(AzureADUserPipeBind[] users, Enums.SearchExternalItemAclAccessType accessType)

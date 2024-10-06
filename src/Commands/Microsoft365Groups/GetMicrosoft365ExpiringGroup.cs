@@ -1,16 +1,14 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
-using System;
 using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365ExpiringGroup")]
-    [RequiredMinimalApiPermissions("Group.Read.All")]
-    public class GetExpiringMicrosoft365Group : PnPGraphCmdlet
+    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
+    public class GetMicrosoft365ExpiringGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
         public SwitchParameter IncludeSiteUrl;

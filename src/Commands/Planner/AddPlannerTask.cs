@@ -12,7 +12,9 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Add, "PnPPlannerTask")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
+    [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class AddPlannerTask : PnPGraphCmdlet
     {
         private const string ParameterName_BYGROUP = "By Group";

@@ -14,9 +14,10 @@ namespace PnP.PowerShell.Commands.Viva
         public VivaACEPipeBind Identity;
         protected override void ExecuteCmdlet()
         {
-            if (PnPContext.Site.IsHomeSite())
+            var pnpContext = Connection.PnPContext;
+            if (pnpContext.Site.IsHomeSite())
             {
-                IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
+                IVivaDashboard dashboard = pnpContext.Web.GetVivaDashboard();
 
                 if (ParameterSpecified(nameof(Identity)))
                 {

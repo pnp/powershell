@@ -8,8 +8,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsApp")]
-    [RequiredMinimalApiPermissions("Directory.Read.All")]
-    [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Directory.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
     [TokenType(TokenType = TokenType.Delegate)]
     public class GetTeamsApp : PnPGraphCmdlet
     {

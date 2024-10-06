@@ -43,7 +43,7 @@ To add PnP PowerShell to the Azure Automation Account, follow these steps:
 #### Specific stable version
 
    > [!Important]
-   > Currently stable PnP PowerShell version that works with Azure Automation 7.2 Runbooks is **2.1.1**. 
+   > Currently stable PnP PowerShell version that works with Azure Automation 7.2 Runbooks is **2.12.0**. 
    > If you would like to use a [latest nightly build](#latest-prerelease-version) instead, use the below instructions
 
    Select **Browse from gallery**, Runtime version **7.2 (preview)** and click on the **Click here to browse from gallery** link

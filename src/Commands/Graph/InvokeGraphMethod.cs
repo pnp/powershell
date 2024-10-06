@@ -174,7 +174,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!string.IsNullOrEmpty(gex.AccessToken))
                     {
-                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessToken(GetType(), gex.AccessToken);
+                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, gex.AccessToken);
                     }
                 }
                 throw new PSInvalidOperationException(gex.Error.Message);

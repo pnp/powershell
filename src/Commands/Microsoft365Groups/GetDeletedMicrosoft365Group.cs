@@ -8,8 +8,8 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPDeletedMicrosoft365Group")]
-    [RequiredMinimalApiPermissions("Group.Read.All")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class GetDeletedMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

@@ -13,8 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPlannerTask.html
 
 **Required Permissions**
 
-  * Microsoft Graph API: Group.ReadWrite.All
-  * Microsoft Graph API: Group.Read.All
+  * Microsoft Graph API: One of Tasks.Read, Tasks.ReadWrite, Tasks.Read.All, Tasks.ReadWrite.All, Group.Read.All, Group.ReadWrite.All
 
 Returns Planner tasks
 
