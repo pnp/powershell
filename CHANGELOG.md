@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Set-PnPFileCheckedIn` cmdlet now expects `CheckInType` to be of type `PnP.Core.Model.SharePoint.CheckinType` instead of the earlier one based on CSOM. [#4389](https://github.com/pnp/powershell/pull/4389)
 - `Disable-PnPFeature` and `Enable-PnPFeature` now use PnP Core SDK for processing requests. [#4390](https://github.com/pnp/powershell/pull/4390)
 - `Remove-PnPContentType` and `Remove-PnPContentTypeFromList` now use PnP Core SDK for processing requests. [#4390](https://github.com/pnp/powershell/pull/4390)
+- `Clear-PnPRecycleBinItem` , `Move-PnPRecycleBinItem` and `Restore-PnPRecycleBinItem` cmdlets now use PnP Core SDK for processing requests. [#4393](https://github.com/pnp/powershell/pull/4393/)
 
 ### Fixed
 
