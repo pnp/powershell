@@ -51,6 +51,9 @@ Recommend referring to these 2 links:
 | Set-PnPLabel | Use `Set-PnPRetentionLabel` |
 | Reset-PnPLabel | Use `Reset-PnPRetentionLabel` |
 | Add-PnPTeamsChannel | The parameter `IsFavoriteByDefault` has been removed as it was not supported by Graph API |
+| Get-PnPAppAuthAccessToken | It has been deleted. Use `Get-PnPAccessToken -ResourceTypeName SharePoint` instead to get SharePoint access token. |
+| Request-PnPAccessToken | It has been deleted. Use `Get-PnPAccessToken` instead. |
+| Get-PnPGraphAccessToken | It has been deleted. Use `Get-PnPAccessToken` instead. |
 
 ## Other notable changes
 
