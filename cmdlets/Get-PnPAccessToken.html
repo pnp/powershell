@@ -87,10 +87,10 @@
 <p>Returns the current Microsoft Graph OAuth Access token.
 If a Resource Type Name or Resource URL is specified, it will fetch the access token of the specified resource.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Scopes] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options. To retrieve the SharePoint Online access token, you can also use <code>Get-PnPAppAuthAccessToken</code>.</p>
+<p>Gets the OAuth 2.0 Access Token.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAccessToken
@@ -150,6 +150,17 @@ Accept wildcard characters: False
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-scopes">-Scopes</h3>
+<p>The scopes to retrieve the token for. Defaults to AllSites.FullControl</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
 Required: False

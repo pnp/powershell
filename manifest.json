@@ -1811,16 +1811,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPAppAuthAccessToken.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Get-PnPAppAuthAccessToken.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPAppErrors.md",
       "output": {
         ".html": {
@@ -2575,16 +2565,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPFooter.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPGraphAccessToken.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Get-PnPGraphAccessToken.html"
         }
       },
       "version": ""
@@ -6335,16 +6315,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Repair-PnPSite.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Request-PnPAccessToken.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Request-PnPAccessToken.html"
         }
       },
       "version": ""
