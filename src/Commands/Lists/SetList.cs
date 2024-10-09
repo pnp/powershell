@@ -110,6 +110,12 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public bool EnableModernAudienceTargeting;
 
+        [Parameter(Mandatory = false)]
+        public ListColor Color;
+
+        [Parameter(Mandatory = false)]
+        public ListIcon Icon;
+
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(CurrentWeb);
@@ -260,6 +266,18 @@ namespace PnP.PowerShell.Commands.Lists
             if (ParameterSpecified(nameof(DisableCommenting)))
             {
                 list.DisableCommenting = DisableCommenting;
+                updateRequired = true;
+            }
+
+
+            if (ParameterSpecified(nameof(Color))) {
+                list.Color = Color.ToString();
+                updateRequired = true;
+            }
+
+            if(ParameterSpecified(nameof(Icon))) 
+            {
+                list.Icon = Icon.ToString();
                 updateRequired = true;
             }
 

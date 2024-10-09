@@ -23,7 +23,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
  [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DisableCommenting <Boolean>] 
  [-EnableAutoExpirationVersionTrim <Boolean>] [-ExpireVersionsAfterDays <UInt32>]
- [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>] [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Connection <PnPConnection>]
+ [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>] [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Color <ListColor>] [-Icon <ListIcon>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -107,6 +107,12 @@ Set-PnPList -Identity "Demo List" -DefaultSensitivityLabelForLibrary "Confidenti
 ```
 
 Sets the default sensitivity label for a document library to Confidential.
+
+### EXAMPLE 12
+```powershell
+Set-PnPList -Identity "Demo List" -Color Green -Icon "Plane"
+```
+
 
 ## PARAMETERS
 
@@ -586,6 +592,36 @@ Enable modern audience targeting in a SharePoint list. Please make sure the foll
 Type: Boolean
 Parameter Sets: (All)
 
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Icon
+The icon of the list.
+
+```yaml
+Type: ListIcon
+Parameter Sets: (All)
+
+Accepted values:  Bug, Calendar, Target, Clipboard, Plane, Rocket, ColorPalette, Lightbulb, Cube, Beaker, Robot, PiggyBank, Playlist, Hospital, Bank, MapPin, CoffeCup, ShoppingCart, BirthdayCake
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Color
+The background color of the list icon.
+
+```yaml
+Type: ListColor
+Parameter Sets: (All)
+
+Accepted values: DarkRed, Red, Orange, Green, DarkGreen, Teal, Blue, NavyBlue, BluePurple, DarkBlue, Lavender , Pink
 Required: False
 Position: Named
 Default value: None
