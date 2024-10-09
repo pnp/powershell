@@ -271,13 +271,13 @@ namespace PnP.PowerShell.Commands.Lists
 
 
             if (ParameterSpecified(nameof(Color))) {
-                list.Color = Color.ToString();
+                list.Color = ((int)Color).ToString();
                 updateRequired = true;
             }
 
             if(ParameterSpecified(nameof(Icon))) 
             {
-                list.Icon = Icon.ToString();
+                list.Icon = ((int)Icon).ToString();
                 updateRequired = true;
             }
 
