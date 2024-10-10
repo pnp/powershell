@@ -34,6 +34,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// Timeout in seconds to allow for the version check to be performed at most. If it exceeds this time, the check will silently be skipped. Verbose output will show when this happens.
         /// </summary>
         public static short VersionCheckTimeOut = 10;
+        private static readonly char[] trimChars = ['\t', '\r', '\n'];
 
         /// <summary>
         /// Performs the check for a newer PnP PowerShell version
@@ -136,14 +137,16 @@ namespace PnP.PowerShell.Commands.Utilities
             
             // Deliberately lowering timeout as the version check is not critical so in case of a slower or blocked internet connection, this should not block the cmdlet for too long
             httpClient.Timeout = TimeSpan.FromSeconds(VersionCheckTimeOut);
-            var request = new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckUrl : ReleaseVersionCheckUrl);
-            request.Version = new Version(2, 0);
-            
+            var request = new HttpRequestMessage(HttpMethod.Get, isNightly ? NightlyVersionCheckUrl : ReleaseVersionCheckUrl)
+            {
+                Version = new Version(2, 0)
+            };
+
             var response = httpClient.SendAsync(request).GetAwaiter().GetResult();
             if (response.IsSuccessStatusCode)
             {
                 var onlineVersion = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                onlineVersion = onlineVersion.Trim(new char[] { '\t', '\r', '\n' });
+                onlineVersion = onlineVersion.Trim(trimChars);
                 return onlineVersion;
             }
             return null;

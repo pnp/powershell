@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter RetainRequests;
         protected override void ExecuteCmdlet()
         {
-            var batch = new PnPBatch(PnPContext, RetainRequests);
+            var batch = new PnPBatch(Connection.PnPContext, RetainRequests);
             WriteObject(batch);
         }
     }

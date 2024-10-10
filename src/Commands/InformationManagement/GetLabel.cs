@@ -1,11 +1,10 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.InformationManagement
 {
-    [Cmdlet(VerbsCommon.Get, "PnPLabel")]
+    [Cmdlet(VerbsCommon.Get, "PnPRetentionLabel")]
     public class GetLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
@@ -19,13 +18,12 @@ namespace PnP.PowerShell.Commands.InformationManagement
         {
             if (!ParameterSpecified(nameof(List)))
             {
-                
-                var tags = PnPContext.Site.GetAvailableComplianceTags();
+                var tags = Connection.PnPContext.Site.GetAvailableComplianceTags();
                 WriteObject(tags, true);
             }
             else
             {
-                var list = List.GetList(PnPContext);
+                var list = List.GetList(Connection.PnPContext);
                 if (null != list)
                 {
                     var tag = list.GetComplianceTag();

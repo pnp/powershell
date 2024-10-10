@@ -1,5 +1,4 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
 
 using PnP.Core.Model.Security;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -18,7 +17,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var list = Identity.GetListOrThrow(nameof(List), PnPContext);
+            var list = Identity.GetListOrThrow(nameof(Core.Model.SharePoint.IList), PnPContext);
             WriteObject(list.GetRoleDefinitions(PrincipalId).RequestedItems, true);
         }
     }

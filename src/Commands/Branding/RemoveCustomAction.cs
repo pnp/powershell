@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            var customActions = Identity.GetCustomActions(PnPContext, Scope);
+            var customActions = Identity.GetCustomActions(Connection.PnPContext, Scope);
             if (customActions != null && customActions.Any())
             {
                 foreach (var customAction in customActions)

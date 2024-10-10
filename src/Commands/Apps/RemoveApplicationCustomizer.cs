@@ -31,9 +31,10 @@ namespace PnP.PowerShell.Commands.Branding
         protected override void ExecuteCmdlet()
         {
             var actions = new List<IUserCustomAction>();
+            var pnpContext = Connection.PnPContext;
             if (Identity != null)
             {
-                var rawActions = Identity.GetCustomActions(PnPContext, Scope);
+                var rawActions = Identity.GetCustomActions(pnpContext, Scope);
 
                 // Only take the customactions which are application customizers
                 actions = rawActions.Where(a => a.Location == "ClientSideExtension.ApplicationCustomizer").ToList();
@@ -42,11 +43,11 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 if (Scope == CustomActionScope.Web || Scope == CustomActionScope.All)
                 {
-                    actions.AddRange(PnPContext.Web.UserCustomActions.ToList());
+                    actions.AddRange(pnpContext.Web.UserCustomActions.ToList());
                 }
                 if (Scope == CustomActionScope.Site || Scope == CustomActionScope.All)
                 {
-                    actions.AddRange(PnPContext.Site.UserCustomActions.ToList());
+                    actions.AddRange(pnpContext.Site.UserCustomActions.ToList());
                 }                
             }
 

@@ -40,11 +40,6 @@ namespace PnP.PowerShell.Commands.Teams
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_PRIVATE)]
         public string OwnerUPN;
 
-        [Obsolete("It is not supported by Microsoft Graph API now. It will be removed in the next major release.")]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSET_SPECIFIC)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSET_STANDARD)]
-        public bool IsFavoriteByDefault;
-
         protected override void ExecuteCmdlet()
         {
             var groupId = Team.GetGroupId(this, Connection, AccessToken);
@@ -61,7 +56,7 @@ namespace PnP.PowerShell.Commands.Teams
             try
             {
 #pragma warning disable CS0618 // Type or member is obsolete
-                var channel = TeamsUtility.AddChannel(this, AccessToken, Connection, groupId, DisplayName, Description, ChannelType, OwnerUPN, IsFavoriteByDefault);
+                var channel = TeamsUtility.AddChannel(this, AccessToken, Connection, groupId, DisplayName, Description, ChannelType, OwnerUPN, false);
 #pragma warning restore CS0618 // Type or member is obsolete
                 WriteObject(channel);
             }
