@@ -113,6 +113,7 @@ Sets the default sensitivity label for a document library to Confidential.
 Set-PnPList -Identity "Demo List" -Color Green -Icon "Plane"
 ```
 
+Changes the icon of the list to a plane, and the background color of the icon to green.
 
 ## PARAMETERS
 
