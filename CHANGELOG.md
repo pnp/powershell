@@ -21,6 +21,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-X509KeyStorageFlags` parameter to `Connect-PnPOnline` cmdlet which allows setting of how private keys are to be imported. [#4324](https://github.com/pnp/powershell/pull/4324)
 - Added `-RestrictContentOrgWideSearch` parameter to `Set-PnPSite` which allows for applying the Restricted Content Discoverability (RCD) setting to a site [#4335](https://github.com/pnp/powershell/pull/4335)
 - Added `-LaunchBrowser` parameter to `Register-PnPEntraIDAppForInteractiveLogin` and `Register-PnPEntraIDApp` cmdlets to open browser and continue app registration in the browser. [#4347](https://github.com/pnp/powershell/pull/4347) & [#4348](https://github.com/pnp/powershell/pull/4348)
+- Added `Get-PnPSearchExternalItem` which allows retrieving the current external items for a specific external connection [#4375](https://github.com/pnp/powershell/pull/4375)
+- Added `Remove-PnPSearchExternalItem` which allows for removal of an external item from the Microsoft Search index [#4378](https://github.com/pnp/powershell/pull/4378)
+- Added `-Scopes` parameter to `Get-PnPAccessToken` cmdlet to retrieve access token with specific scopes. [#4398](https://github.com/pnp/powershell/pull/4398)
+- Added `-Icon` and `-Color` parameters to `Set-PnPList` cmdlet. [#4409](https://github.com/pnp/powershell/pull/4409)
+- Added `Remove-PnPTenantRestrictedSearchAllowedList` cmdlet to removes site URLs from the allowed list when Restricted SharePoint Search is enabled. [#4399](https://github.com/pnp/powershell/pull/4399)
+- Added `Get-PnPDeletedFlow` cmdlet to retrieve a list of flows which are soft deleted. [#4396](https://github.com/pnp/powershell/pull/4396)
 
 ### Changed
 
@@ -36,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Disable-PnPFeature` and `Enable-PnPFeature` now use PnP Core SDK for processing requests. [#4390](https://github.com/pnp/powershell/pull/4390)
 - `Remove-PnPContentType` and `Remove-PnPContentTypeFromList` now use PnP Core SDK for processing requests. [#4390](https://github.com/pnp/powershell/pull/4390)
 - `Clear-PnPRecycleBinItem` , `Move-PnPRecycleBinItem` and `Restore-PnPRecycleBinItem` cmdlets now use PnP Core SDK for processing requests. [#4393](https://github.com/pnp/powershell/pull/4393/)
+- `Get-PnPSearchCrawlLog` cmdlet now shows a warning in case application permissions are used. [#4391](https://github.com/pnp/powershell/pull/4391)
 
 ### Fixed
 
@@ -56,9 +63,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Set-PnPLabel` and `Reset-PnPLabel` aliases. You need to use `Set-PnPRetentionLabel` and `Reset-PnPRetentionLabel` respectively. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `Get-PnPPowerPlatformConnector` alias. You need to use `Get-PnPPowerPlatformCustomConnector`. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `-IsFavoriteByDefault` parameter from `Add-PnPTeamsChannel` cmdlet. It was obsolete and not supported by Graph API. [#4387](https://github.com/pnp/powershell/pull/4387)
+- Removed `Get-PnPAppAuthAccessToken` , `Remove-PnPGraphAccessToken` and `Request-PnPAccessToken` cmdlets. Use `Get-PnPAccessToken` instead. [#4398](https://github.com/pnp/powershell/pull/4398)
  
 ### Contributors
 
+- Christian Veenhuis [ChVeen]
+- Nishkalank Bezawada [NishkalankBezawada]
+- Dan Toft [Tanddant]
 - Jürgen Rosenthal-Buroh [JuergenRB]
 - [PeterRevsbech]
 - Peter Paul Kirschner [petkir]
