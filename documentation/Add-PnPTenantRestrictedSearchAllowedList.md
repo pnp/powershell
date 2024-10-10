@@ -31,6 +31,11 @@ Add-PnPTenantRestrictedSearchAllowedList -SitesListFileUrl "C:\temp\sitelist.csv
 
 Adds site URLs to the allowed list from a CSV file. The first line, which is assumed to be a header, is skipped.
 
+Sample CSV file content with Header
+
+SiteUrl
+https://contoso.sharepoint.com/sites/Company311
+https://contoso.sharepoint.com/sites/contosoportal
 
 ### EXAMPLE 2
 ```powershell
@@ -38,6 +43,11 @@ Add-PnPTenantRestrictedSearchAllowedList -SitesListFileUrl "C:\temp\sitelist.csv
 ```
 
 Adds site URLs to the allowed list from a CSV file.
+
+Sample CSV file content without Header
+
+https://contoso.sharepoint.com/sites/Company311
+https://contoso.sharepoint.com/sites/contosoportal
 
 ### EXAMPLE 3
 ```powershell
@@ -103,23 +113,6 @@ Position: Named
 Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
-```
-
-## Sample CSV file content
-
-### With Header
-
-```csv
-SiteUrl
-https://contoso.sharepoint.com/sites/Company311
-https://contoso.sharepoint.com/sites/contosoportal
-```
-
-### With No Header
-
-```csv
-https://contoso.sharepoint.com/sites/Company311
-https://contoso.sharepoint.com/sites/contosoportal
 ```
 
 ## RELATED LINKS
