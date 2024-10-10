@@ -1,13 +1,12 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-
+using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Set, "PnPFileCheckedOut")]
     public class SetFileCheckedOut : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Url = string.Empty;
 
         protected override void ExecuteCmdlet()
@@ -15,7 +14,8 @@ namespace PnP.PowerShell.Commands.Files
             // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
             Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
 
-            CurrentWeb.CheckOutFile(Url);
+            IFile file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(Url);
+            file.Checkout();
         }
     }
 }

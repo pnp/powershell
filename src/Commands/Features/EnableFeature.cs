@@ -1,5 +1,4 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
 using System;
 using PnP.PowerShell.Commands.Enums;
 
@@ -9,7 +8,7 @@ namespace PnP.PowerShell.Commands.Features
     [OutputType(typeof(void))]
     public class EnableFeature : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public Guid Identity;
 
         [Parameter(Mandatory = false)]
@@ -20,13 +19,16 @@ namespace PnP.PowerShell.Commands.Features
 
         protected override void ExecuteCmdlet()
         {
-            if(Scope == FeatureScope.Web)
+            var pnpContext = Connection.PnPContext;
+            if (Scope == FeatureScope.Web)
             {
-                CurrentWeb.ActivateFeature(Identity);
+                pnpContext.Web.EnsureProperties(w => w.Features);
+                pnpContext.Web.Features.Enable(Identity);
             }
             else
             {
-                ClientContext.Site.ActivateFeature(Identity);
+                pnpContext.Site.EnsureProperties(s => s.Features);
+                pnpContext.Site.Features.Enable(Identity);
             }
         }
     }

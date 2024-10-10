@@ -1,4 +1,4 @@
-﻿using Microsoft.SharePoint.Client;
+﻿using PnP.Core.Model.SharePoint;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Model.SharePoint;
 using System.Management.Automation;
@@ -30,25 +30,25 @@ namespace PnP.PowerShell.Commands.Files
         {
             if (ParameterSpecified(nameof(SiteRelativeUrl)))
             {
-                var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
-                ServerRelativeUrl = UrlUtility.Combine(webUrl, SiteRelativeUrl);
+                var pnpWeb = Connection.PnPContext.Web;
+                pnpWeb.EnsureProperties(w => w.ServerRelativeUrl);
+
+                ServerRelativeUrl = UrlUtility.Combine(pnpWeb.ServerRelativeUrl, SiteRelativeUrl);
             }
-            var file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
-            ClientContext.Load(file, f => f.Name);
-            ClientContext.ExecuteQueryRetry();
+
+            IFile file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(ServerRelativeUrl);
+            file.EnsureProperties(f => f.Name);
 
             if (Force || ShouldContinue(string.Format(Resources.Delete0, file.Name), Resources.Confirm))
             {
                 if (Recycle)
                 {
                     var recycleResult = file.Recycle();
-                    ClientContext.ExecuteQueryRetry();
-                    WriteObject(new RecycleResult { RecycleBinItemId = recycleResult.Value });
+                    WriteObject(new RecycleResult { RecycleBinItemId = recycleResult });
                 }
                 else
                 {
-                    file.DeleteObject();
-                    ClientContext.ExecuteQueryRetry();
+                    file.Delete();
                 }
             }
         }

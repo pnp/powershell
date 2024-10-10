@@ -49,10 +49,10 @@ namespace PnP.PowerShell.Commands.InformationManagement
                     return;
                 }
             }
-            
 
-            var list = List.GetList(PnPContext);
-            var availableTags = PnPContext.Site.GetAvailableComplianceTags();
+            var pnpContext = Connection.PnPContext;
+            var list = List.GetList(pnpContext);
+            var availableTags = pnpContext.Site.GetAvailableComplianceTags();
 
             if (list != null)
             {
@@ -61,10 +61,10 @@ namespace PnP.PowerShell.Commands.InformationManagement
                 {
                     if (ParameterSetName == ParamSet_BulkItems) 
                     {
-                        PnPContext.Web.LoadAsync(i => i.Url);
+                        pnpContext.Web.LoadAsync(i => i.Url);
                         list.LoadAsync(i => i.RootFolder);                        
 
-                        var rootUrl = PnPContext.Web.Url.GetLeftPart(UriPartial.Authority);
+                        var rootUrl = pnpContext.Web.Url.GetLeftPart(UriPartial.Authority);
                     
                         var rangeIndex = 0;
 

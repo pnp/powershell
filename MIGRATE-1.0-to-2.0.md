@@ -6,7 +6,7 @@ The 2.x version of PnP PowerShell is based exclusively on .NET 6.0, which means 
 
 - We had to update the module to .NET 6.0 because Microsoft removed support for .NET 3.1 in early December 2022.
 
-- We decided to drop support for .NET Framework it is not actively developed, doesn't work across-platforms and only receives maintainence and security updates. So, it would add additional code complexity and maintainabilty issues for us going forward in the future.
+- We decided to drop support for .NET Framework it is not actively developed, doesn't work across-platforms and only receives maintenance and security updates. So, it would add additional code complexity and maintainability issues for us going forward in the future.
 
 - The 2.x version of PnP PowerShell will work only on PowerShell 7.2.x or later versions.
 
@@ -20,7 +20,7 @@ Or
 
 - For Linux based environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux?view=powershell-7.2)
 
-- For Mac OS envoronments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2)
+- For Mac OS environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos?view=powershell-7.2)
 
 Once the PowerShell 7.2.x or later is downloaded and installed in the environment, you can install the PnP PowerShell module like you normally do.
 
@@ -79,7 +79,7 @@ Using PnP PowerShell in Azure functions ? You might be required to change the Pn
 
 ## Other notable changes
 
-- We have removed support for `2019-03` version of the PnP Provisioning schema from all provisioning related cmdlets. You should be using atleast `2019-09` or a later version of the schema.
+- We have removed support for `2019-03` version of the PnP Provisioning schema from all provisioning related cmdlets. You should be using at least `2019-09` or a later version of the schema.
 - The `-Web` parameter, which was marked obsolete, was used in certain Web level cmdlets. We have removed that. You should use `Connect-PnPOnline -Url [subweburl]` instead to connect to a Web.
 
 ## Changes to output type

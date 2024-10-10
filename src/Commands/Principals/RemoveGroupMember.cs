@@ -21,13 +21,13 @@ namespace PnP.PowerShell.Commands.Principals
 
         protected override void ExecuteCmdlet()
         {
-            var group = Group.GetGroup(PnPContext);
+            var group = Group.GetGroup(Connection.PnPContext);
 
             if (group != null)
             {
                 try
                 {
-                    var user = PnPContext.Web.EnsureUser(LoginName);
+                    var user = Connection.PnPContext.Web.EnsureUser(LoginName);
                     group.RemoveUser(user.Id);
                 }
                 catch (PnP.Core.SharePointRestServiceException ex)
