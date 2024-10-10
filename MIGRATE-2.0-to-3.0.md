@@ -16,7 +16,7 @@ Or
 
 - For Linux based environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux)
 
-- For Mac OS envoronments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos)
+- For Mac OS environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos)
 
 Once the PowerShell 7.4 or later is downloaded and installed in the environment, you can install the PnP PowerShell module like you normally do.
 
