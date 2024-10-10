@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Enums;
+﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Utilities.Auth;
 using System;
 using System.Management.Automation;
@@ -6,8 +7,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = ResourceTypeParam)]
-    [OutputType(typeof(Microsoft.IdentityModel.JsonWebTokens.JsonWebToken), ParameterSetName = new[] { ResourceTypeParam_Decoded, ResourceUrlParam_Decoded })]
-    [OutputType(typeof(string), ParameterSetName = new[] { ResourceTypeParam, ResourceUrlParam })]
+    [OutputType(typeof(Microsoft.IdentityModel.JsonWebTokens.JsonWebToken), ParameterSetName = [ResourceTypeParam_Decoded, ResourceUrlParam_Decoded])]
+    [OutputType(typeof(string), ParameterSetName = [ResourceTypeParam, ResourceUrlParam])]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
         private const string ResourceTypeParam = "Resource Type Name";
@@ -27,6 +28,12 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ResourceTypeParam_Decoded)]
         [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam_Decoded)]
         public SwitchParameter Decoded;
+
+        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam)]
+        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam_Decoded)]
+        [Parameter(Mandatory = false, ParameterSetName = ResourceUrlParam)]
+        [Parameter(Mandatory = false, ParameterSetName = ResourceUrlParam_Decoded)]
+        public string[] Scopes = ["AllSites.FullControl"];
         protected override void ExecuteCmdlet()
         {
             string accessTokenValue = null;
@@ -55,6 +62,12 @@ namespace PnP.PowerShell.Commands.Base
             else if (ParameterSetName == ResourceUrlParam || ParameterSetName == ResourceUrlParam_Decoded)
             {
                 accessTokenValue = TokenHandler.GetAccessToken(this, ResourceUrl, Connection);
+            }
+
+            if (ParameterSpecified(nameof(Scopes)))
+            {
+                var authManager = Connection.Context.GetContextSettings().AuthenticationManager;
+                accessTokenValue = authManager.GetAccessTokenAsync(Scopes).GetAwaiter().GetResult();
             }
 
             if (accessTokenValue == null)
