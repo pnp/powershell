@@ -16,7 +16,7 @@ Or
 
 - For Linux based environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-linux)
 
-- For Mac OS envoronments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos)
+- For Mac OS environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos)
 
 Once the PowerShell 7.4 or later is downloaded and installed in the environment, you can install the PnP PowerShell module like you normally do.
 
@@ -51,6 +51,9 @@ Recommend referring to these 2 links:
 | Set-PnPLabel | Use `Set-PnPRetentionLabel` |
 | Reset-PnPLabel | Use `Reset-PnPRetentionLabel` |
 | Add-PnPTeamsChannel | The parameter `IsFavoriteByDefault` has been removed as it was not supported by Graph API |
+| Get-PnPAppAuthAccessToken | It has been removed. Use `Get-PnPAccessToken -ResourceTypeName SharePoint` instead to get SharePoint access token. |
+| Request-PnPAccessToken | It has been removed. Use `Get-PnPAccessToken` instead. |
+| Get-PnPGraphAccessToken | It has been removed. Use `Get-PnPAccessToken` instead. |
 
 ## Other notable changes
 
@@ -61,5 +64,3 @@ Recommend referring to these 2 links:
 | **Cmdlet** | **Comment** |
 | ----------- | ---------------------- |
 | Get-PnPAccessToken | The output type is now `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`, earlier it was `System.IdentityModel.Tokens.Jwt` |
-| Request-PnPAccessToken | The output type is now `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`, earlier it was `System.IdentityModel.Tokens.Jwt` |
-| Get-PnPGraphAccessToken | The output type is now `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`, earlier it was `System.IdentityModel.Tokens.Jwt` |

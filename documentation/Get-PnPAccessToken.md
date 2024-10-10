@@ -16,11 +16,11 @@ If a Resource Type Name or Resource URL is specified, it will fetch the access t
 ## SYNTAX
 
 ```powershell
-Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Connection <PnPConnection>]
+Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Scopes] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Gets the OAuth 2.0 Access Token to consume the Microsoft Graph API. Doesn't work with all Connect-PnPOnline options. To retrieve the SharePoint Online access token, you can also use `Get-PnPAppAuthAccessToken`.
+Gets the OAuth 2.0 Access Token.
 
 ## EXAMPLES
 
@@ -109,6 +109,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Scopes
+The scopes to retrieve the token for. Defaults to AllSites.FullControl
+
+```yaml
+Type: String[]
 Parameter Sets: (All)
 
 Required: False
