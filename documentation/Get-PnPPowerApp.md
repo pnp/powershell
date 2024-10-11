@@ -31,22 +31,20 @@ This cmdlet returns the Power Apps for a given enviroment.
 
 ### Example 1
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPPowerApp -Environment $environment
+Get-PnPPowerApp
 ```
-This returns all the apps for a given Power Platform environment
+This returns all the apps for the default environment
 
 ### Example 2
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPPowerApp -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Get-PnPPowerApp -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
-This returns a specific app
+This returns a specific app from a specific environment
 
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment object to retrieve the available Power Apps for.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
 Type: PowerPlatformEnvironmentPipeBind

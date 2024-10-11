@@ -1,15 +1,8 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Management.Automation;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading;
 using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
@@ -18,9 +11,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
     [RequiredApiApplicationPermissions("https://management.azure.com/.default")]
     public class ExportPowerApp : PnPAzureManagementApiCmdlet
     {
-
-        [Parameter(Mandatory = true)]
-
+        [Parameter(Mandatory = false)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
         [Parameter(Mandatory = true)]
@@ -66,7 +57,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 }
             }
 
-            var environmentName = Environment.GetName();
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
             var appName = Identity.GetName();
 
             var wrapper = PowerAppsUtility.GetWrapper(Connection.HttpClient, environmentName, AccessToken, appName, Connection.AzureEnvironment);

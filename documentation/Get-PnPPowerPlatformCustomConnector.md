@@ -30,20 +30,20 @@ This cmdlet returns the custom connectors on a given enviroment.
 
 ### Example 1
 ```powershell
-Get-PnPPowerPlatformCustomConnector -Environment (Get-PnPPowerPlatformEnvironment)
+Get-PnPPowerPlatformCustomConnector -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment")
 ```
 This returns all the custom connectors for a given Power Platform environment
 
 ### Example 2
 ```powershell
-Get-PowerPlatformConnectorPipeBind -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Get-PowerPlatformConnectorPipeBind -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 This returns a specific custom connector on the default Power Platform environment
 
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment instance to retrieve the available custom connectors for. If omitted, the default environment will be used.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
 Type: PowerPlatformEnvironmentPipeBind
