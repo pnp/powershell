@@ -130,7 +130,6 @@
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.1" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
-		<PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
 		<PackageReference Include="System.Management.Automation" Version="7.4.5" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 		<PackageReference Include="TextCopy" Version="6.2.1" />
