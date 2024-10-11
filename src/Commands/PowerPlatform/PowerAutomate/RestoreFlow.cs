@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
     [Cmdlet(VerbsData.Restore, "PnPFlow")]
     public class RestoreFlow : PnPAzureManagementApiCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
         [Parameter(Mandatory = true)]
@@ -19,23 +19,21 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         protected override void ExecuteCmdlet()
         {
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            var environmentName = Environment.GetName();
-            var flowName = Identity.GetName();
 
-            WriteVerbose($"Attempting to restore Flow with name {flowName}");
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+            var flowName = Identity.GetName();
+            
+            WriteVerbose($"Restoring soft-deleted flow {flowName} from environment {environmentName}");
 
             try
             {
-                WriteVerbose($"Restoring soft-deleted flow  {flowName} from environment ${environmentName}");
                 RestHelper.Post(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple/scopes/admin/environments/{environmentName}/flows/{flowName}/restore?api-version=2016-11-01", AccessToken);
                 WriteVerbose($"Flow with name {flowName} restored");
             }
-            catch
+            catch(Exception ex)
             {
-
-                throw new Exception($"Failed to restore flow with name {flowName}");
+                throw new Exception($"Failed to restore flow with name {flowName} from environment {environmentName} with exception: {ex.Message}", ex);
             }
         }
-
     }
 }

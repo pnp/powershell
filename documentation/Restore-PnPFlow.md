@@ -20,7 +20,7 @@ Restores a specific flow
 ## SYNTAX
 
 ```powershell
-Restore-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-Connection <PnPConnection>] 
+Restore-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] -Identity <PowerAutomateFlowPipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -30,11 +30,17 @@ This cmdlet Restores a specific flow
 
 ### Example 1
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment -isdefault
-Restore-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Restore-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 
-Restores the specified flow.
+Restores the specified flow located in the default environment.
+
+### Example 2
+```powershell
+Restore-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+```
+
+Restores the specified flow located in the specified environment
 
 ## PARAMETERS
 
@@ -55,17 +61,17 @@ Accept wildcard characters: False
 ```
 
 ### -Environment
-The name of the environment or an Environment object to retrieve the available flows for.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
-Type: PowerAutomateEnvironmentPipeBind
+Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 

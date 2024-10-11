@@ -20,7 +20,7 @@ Returns the owners of a Power Automate flow
 ## SYNTAX
 
 ```powershell
-Get-PnPFlowOwner -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin]
+Get-PnPFlowOwner [-Environment <PowerAutomateEnvironmentPipeBind>] -Identity <PowerAutomateFlowPipeBind> [-AsAdmin]
 ```
 
 ## DESCRIPTION
@@ -30,24 +30,30 @@ This cmdlet returns the Power Automate flow owners for a given Power Automate Fl
 
 ### Example 1
 ```powershell
-Get-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity 33f78dac-7e93-45de-ab85-67cad0f6ee30
+Get-PnPFlowOwner -Identity 33f78dac-7e93-45de-ab85-67cad0f6ee30
 ```
 Returns all the owners of the Power Automate Flow with the provided identifier on the default Power Platform environment
+
+### Example 2
+```powershell
+Get-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity 33f78dac-7e93-45de-ab85-67cad0f6ee30
+```
+Returns all the owners of the Power Automate Flow with the provided identifier on the specified Power Platform environment
 
 ## PARAMETERS
 
 ### -Environment
-The Power Platform environment that hosts the Power Automate Flow to retrieve the owners of.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
-Type: PowerAutomateEnvironmentPipeBind
+Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 
