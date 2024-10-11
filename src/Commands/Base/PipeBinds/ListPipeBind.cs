@@ -9,14 +9,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class ListPipeBind
     {
-        private readonly List _list;
+        public List ListInstance { get; private set; }
         private readonly PnPCore.IList _corelist;
         private readonly Guid _id;
         private readonly string _name;
 
         public ListPipeBind(List list)
         {
-            _list = list ?? throw new ArgumentNullException(nameof(list));
+            ListInstance = list ?? throw new ArgumentNullException(nameof(list));
         }
 
         public ListPipeBind(Guid guid)
@@ -45,9 +45,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         internal List GetList(Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
         {
             List list = null;
-            if (_list != null)
+            if (ListInstance != null)
             {
-                list = _list;
+                list = ListInstance;
             }
             else if (_id != Guid.Empty)
             {
@@ -85,14 +85,14 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 returnList = _corelist;
             }
-            if (_list != null)
+            if (ListInstance != null)
             {
-                var batchedList = batch.GetCachedList(_list.Id);
+                var batchedList = batch.GetCachedList(ListInstance.Id);
                 if (batchedList != null)
                 {
                     return batchedList;
                 }
-                returnList = batch.Context.Web.Lists.GetById(_list.Id, selectors);
+                returnList = batch.Context.Web.Lists.GetById(ListInstance.Id, selectors);
             }
             else if (_id != Guid.Empty)
             {
@@ -153,9 +153,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 returnList = _corelist;
             }
-            if (_list != null)
+            if (ListInstance != null)
             {
-                returnList = context.Web.Lists.GetById(_list.Id, selectors);
+                returnList = context.Web.Lists.GetById(ListInstance.Id, selectors);
             }
             else if (_id != Guid.Empty)
             {
@@ -167,7 +167,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 if (returnList == null)
                 {
                     var url = _name;
-                    context.Web.EnsurePropertiesAsync(w => w.ServerRelativeUrl).GetAwaiter().GetResult();
+                    context.Web.EnsureProperties(w => w.ServerRelativeUrl);
                     if (!_name.ToLower().StartsWith(context.Web.ServerRelativeUrl.ToLower()))
                     {
                         url = $"{context.Web.ServerRelativeUrl}/{url.TrimStart('/')}";
@@ -222,9 +222,9 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 return _corelist.Title;
             }
-            if (_list != null)
+            if (ListInstance != null)
             {
-                return _list.Title;
+                return ListInstance.Title;
             }
             return "Unknown list";
         }

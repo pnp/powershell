@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             get
             {
-                var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(AccessToken);
+                var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(AccessToken);
                 return Guid.TryParse(parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value, out Guid tenandIdGuid) ? (Guid?)tenandIdGuid : null;
             }
         }
@@ -39,6 +39,5 @@ namespace PnP.PowerShell.Commands.Base
         /// Root URL to the Office 365 Management API
         /// </summary>
         protected string ApiRootUrl => $"https://manage.office.com/api/v1.0/{TenantId}/";
-        
     }
 }

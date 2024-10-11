@@ -27,7 +27,7 @@ namespace PnP.PowerShell.ALC
             TelemetryConfiguration config = TelemetryConfiguration.CreateDefault();
             
             _telemetryClient = new TelemetryClient(config);
-            config.InstrumentationKey = "a301024a-9e21-4273-aca5-18d0ef5d80fb";
+            config.ConnectionString = "InstrumentationKey=a301024a-9e21-4273-aca5-18d0ef5d80fb;IngestionEndpoint=https://westeurope-4.in.applicationinsights.azure.com/;LiveEndpoint=https://westeurope.livediagnostics.monitor.azure.com/;ApplicationId=0224718b-f8f5-4252-bc7c-616e9a1adc1a";
             _telemetryClient.Context.Cloud.RoleInstance = "PnPPowerShell";
             _telemetryClient.Context.Device.OperatingSystem = Environment.OSVersion.ToString();
 

@@ -5,7 +5,7 @@ using System.Management.Automation;
 using System.Web;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Search.Administration;
-
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Search
@@ -36,6 +36,7 @@ namespace PnP.PowerShell.Commands.Search
     }
 
     [Cmdlet(VerbsCommon.Get, "PnPSearchCrawlLog", DefaultParameterSetName = "Xml")]
+    [ApiNotAvailableUnderApplicationPermissions]
     public class GetSearchCrawlLog : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]

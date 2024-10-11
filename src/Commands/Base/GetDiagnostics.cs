@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands.Base
                 var correlationId = string.Empty;
                 if (exception.Exception.Data.Contains("CorrelationId"))
                 {
-                    correlationId = exception.Exception.Data["CorrelationId"].ToString();
+                    correlationId = exception.Exception.Data["CorrelationId"]?.ToString();
                 }
                 var timeStampUtc = DateTime.MinValue;
                 if (exception.Exception.Data.Contains("TimeStampUtc"))

@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Model
         {
             if (Batch != null)
             {
-                var results = Context.ExecuteAsync(Batch, throwOnError).GetAwaiter().GetResult();
+                var results = Context.Execute(Batch, throwOnError);
 
                 ClearCache();
                 if (!RetainAfterExecute)

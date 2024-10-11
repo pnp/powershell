@@ -84,7 +84,10 @@ if ($runPublish -eq $true) {
 	}
 
 	$corePath = "$destinationFolder/Core"
-	$commonPath = "$destinationFolder/Common"	
+	$commonPath = "$destinationFolder/Common"
+	$coreRuntimePathWin64 = "$destinationFolder/Core/runtimes/win-x64/native"
+	$coreRuntimePathArm64 = "$destinationFolder/Core/runtimes/win-arm64/native"
+	$coreRuntimePathx86 = "$destinationFolder/Core/runtimes/win-x86/native"
 
 	$assemblyExceptions = @("System.Memory.dll");
 
@@ -98,14 +101,21 @@ if ($runPublish -eq $true) {
 		Write-Host "Creating target folders: $destinationFolder" -ForegroundColor Yellow
 		New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
 		New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
+		New-Item -Path "$destinationFolder\Core\runtimes" -ItemType Directory -Force | Out-Null
+		New-Item -Path "$destinationFolder\Core\runtimes\win-x64\native" -ItemType Directory -Force | Out-Null
+		New-Item -Path "$destinationFolder\Core\runtimes\win-arm64\native" -ItemType Directory -Force | Out-Null
+		New-Item -Path "$destinationFolder\Core\runtimes\win-x86\native" -ItemType Directory -Force | Out-Null
 		New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
 
 		Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
 		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
 		Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/net6.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net6.0-windows" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }		
+		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0-windows" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0-windows/runtimes/win-x64/native" -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathWin64 }
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0-windows/runtimes/win-arm64/native" -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathArm64 }
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0-windows/runtimes/win-x86/native" -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathx86 }
 	}
 	Catch {
 		Write-Host "Error: Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"

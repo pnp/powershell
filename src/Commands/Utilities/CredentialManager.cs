@@ -2,14 +2,16 @@
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
+using System.Net;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
+using PnP.Framework.Extensions;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
-[assembly:InternalsVisibleTo("PnP.PowerShell.Tests")]
+[assembly: InternalsVisibleTo("PnP.PowerShell.Tests")]
 namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class CredentialManager
@@ -40,6 +42,37 @@ namespace PnP.PowerShell.Commands.Utilities
                 else if (OperatingSystem.IsMacOS())
                 {
                     WriteMacOSKeyChainEntry(name, username, password, overwrite);
+                }
+            }
+            return true;
+        }
+
+        public static bool AddAppId(string name, string appid, bool overwrite)
+        {
+            if (!name.StartsWith("PnPPSAppId:"))
+            {
+                name = $"PnPPSAppId:{name}";
+            }
+            if (HasSecretManagement())
+            {
+                var defaultVault = GetDefaultVault();
+
+                if (!string.IsNullOrEmpty(defaultVault))
+                {
+                    AddVaultAppId(defaultVault, name, appid);
+                }
+            }
+            else
+            {
+                var secureAppId = new NetworkCredential(null, appid).SecurePassword;
+                if (OperatingSystem.IsWindows())
+                {
+
+                    WriteWindowsCredentialManagerEntry(name, null, secureAppId);
+                }
+                else if (OperatingSystem.IsMacOS())
+                {
+                    WriteMacOSKeyChainEntry(name, null, secureAppId, overwrite);
                 }
             }
             return true;
@@ -81,9 +114,46 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
+        public static string GetAppId(string name)
+        {
+            if (!name.StartsWith("PnPPSAppId:"))
+            {
+                name = $"PnPPSAppId:{name}";
+            }
+            // check if Microsoft.PowerShell.SecretManagement is available
+            if (HasSecretManagement())
+            {
+                var defaultVault = GetDefaultVault();
+
+                if (!string.IsNullOrEmpty(defaultVault))
+                {
+                    return GetVaultAppId(defaultVault, name);
+                }
+            }
+            else
+            {
+                if (OperatingSystem.IsWindows())
+                {
+                    var cred = ReadWindowsCredentialManagerEntry(name);
+                    if (cred != null)
+                    {
+                        return SecureStringToString(cred.Password);
+                    }
+                }
+                if (OperatingSystem.IsMacOS())
+                {
+                    var cred = ReadMacOSKeyChainEntry(name);
+                    if (cred != null)
+                    {
+                        return SecureStringToString(cred.Password);
+                    }
+                }
+            }
+            return null;
+        }
+
         public static bool RemoveCredential(string name)
         {
-
             bool success = false;
 
             if (HasSecretManagement())
@@ -113,6 +183,39 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         success = DeleteMacOSKeyChainEntry($"PnPPS:{name}");
                     }
+                    return success;
+                }
+            }
+            return success;
+        }
+
+        public static bool RemoveAppid(string name)
+        {
+            if(!name.StartsWith("PnPPSAppId:"))
+            {
+                name = $"PnPPSAppId:{name}";
+            }
+            bool success = false;
+
+            if (HasSecretManagement())
+            {
+                var defaultVault = GetDefaultVault();
+
+                if (!string.IsNullOrEmpty(defaultVault))
+                {
+                    RemoveVaultCredential(defaultVault, name);
+                    return true;
+                }
+            }
+            else
+            {
+                if (OperatingSystem.IsWindows())
+                {
+                    success = DeleteWindowsCredentialManagerEntry(name);
+                }
+                if (OperatingSystem.IsMacOS())
+                {
+                    success = DeleteMacOSKeyChainEntry(name);
                     return success;
                 }
             }
@@ -215,6 +318,35 @@ namespace PnP.PowerShell.Commands.Utilities
             return creds;
         }
 
+        private static string GetVaultAppId(string vaultName, string name)
+        {
+            InitialSessionState iss = InitialSessionState.CreateDefault();
+
+            using (Runspace myRunSpace = RunspaceFactory.CreateRunspace(iss))
+            {
+                myRunSpace.Open();
+                using (var powershell = System.Management.Automation.PowerShell.Create())
+                {
+                    powershell.Runspace = myRunSpace;
+
+                    // Create a pipeline with the Get-Command command.
+                    powershell.AddCommand("get-secret")
+                    .AddParameter("Vault", vaultName)
+                    .AddParameter("Name", name);
+
+                    foreach (var result in powershell.Invoke())
+                    {
+                        var secureAppId = (SecureString)result.BaseObject;
+                        return SecureStringToString(secureAppId);
+                    }
+
+                }
+                myRunSpace.Close();
+            }
+            return null;
+        }
+
+
         private static void AddVaultCredential(string vaultName, string name, string username, SecureString password)
         {
             PSCredential creds = new PSCredential(username, password);
@@ -233,6 +365,31 @@ namespace PnP.PowerShell.Commands.Utilities
                     .AddParameter("Vault", vaultName)
                     .AddParameter("Name", name)
                     .AddParameter("Secret", creds);
+
+                    powershell.Invoke();
+                }
+                myRunSpace.Close();
+            }
+        }
+
+        private static void AddVaultAppId(string vaultName, string name, string appId)
+        {
+            // PSCredential creds = new PSCredential(username, password);
+
+            InitialSessionState iss = InitialSessionState.CreateDefault();
+
+            using (Runspace myRunSpace = RunspaceFactory.CreateRunspace(iss))
+            {
+                myRunSpace.Open();
+                using (var powershell = System.Management.Automation.PowerShell.Create())
+                {
+                    powershell.Runspace = myRunSpace;
+
+                    // Create a pipeline with the Get-Command command.
+                    powershell.AddCommand("set-secret")
+                    .AddParameter("Vault", vaultName)
+                    .AddParameter("Name", name)
+                    .AddParameter("Secret", appId);
 
                     powershell.Invoke();
                 }

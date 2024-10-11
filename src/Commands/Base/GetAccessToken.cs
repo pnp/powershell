@@ -1,12 +1,14 @@
-﻿using PnP.PowerShell.Commands.Enums;
+﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Utilities.Auth;
 using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = ResourceTypeParam)]
-    [OutputType(typeof(System.IdentityModel.Tokens.Jwt.JwtSecurityToken), ParameterSetName = new[] { ResourceTypeParam_Decoded, ResourceUrlParam_Decoded })]
-    [OutputType(typeof(string), ParameterSetName = new[] { ResourceTypeParam, ResourceUrlParam })]
+    [OutputType(typeof(Microsoft.IdentityModel.JsonWebTokens.JsonWebToken), ParameterSetName = [ResourceTypeParam_Decoded, ResourceUrlParam_Decoded])]
+    [OutputType(typeof(string), ParameterSetName = [ResourceTypeParam, ResourceUrlParam])]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
         private const string ResourceTypeParam = "Resource Type Name";
@@ -26,6 +28,12 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ResourceTypeParam_Decoded)]
         [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam_Decoded)]
         public SwitchParameter Decoded;
+
+        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam)]
+        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam_Decoded)]
+        [Parameter(Mandatory = false, ParameterSetName = ResourceUrlParam)]
+        [Parameter(Mandatory = false, ParameterSetName = ResourceUrlParam_Decoded)]
+        public string[] Scopes = ["AllSites.FullControl"];
         protected override void ExecuteCmdlet()
         {
             string accessTokenValue = null;
@@ -46,14 +54,20 @@ namespace PnP.PowerShell.Commands.Base
                         var rootUrl = new Uri(currentUrl).GetLeftPart(UriPartial.Authority);
                         accessTokenValue = TokenHandler.GetAccessToken(this, rootUrl + "/.default", Connection);
                         break;
-                    case ResourceTypeName.ARM:
-                        accessTokenValue = TokenHandler.GetAccessToken(this, "https://management.azure.com/.default", Connection);
+                    case ResourceTypeName.AzureManagementApi:
+                        accessTokenValue = TokenHandler.GetAccessToken(this, $"{Endpoints.GetArmEndpoint(Connection)}/.default", Connection);
                         break;
                 }
             }
             else if (ParameterSetName == ResourceUrlParam || ParameterSetName == ResourceUrlParam_Decoded)
             {
                 accessTokenValue = TokenHandler.GetAccessToken(this, ResourceUrl, Connection);
+            }
+
+            if (ParameterSpecified(nameof(Scopes)))
+            {
+                var authManager = Connection.Context.GetContextSettings().AuthenticationManager;
+                accessTokenValue = authManager.GetAccessTokenAsync(Scopes).GetAwaiter().GetResult();
             }
 
             if (accessTokenValue == null)
@@ -63,7 +77,7 @@ namespace PnP.PowerShell.Commands.Base
 
             if (Decoded.IsPresent)
             {
-                WriteObject(new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessTokenValue));
+                WriteObject(new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessTokenValue));
             }
             else
             {

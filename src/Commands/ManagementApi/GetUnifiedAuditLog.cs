@@ -11,7 +11,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPUnifiedAuditLog")]
-    [RequiredMinimalApiPermissions("https://manage.office.com/ActivityFeed.Read","https://manage.office.com/ActivityFeed.ReadDlp","https://manage.office.com/ServiceHealth.Read","https://manage.office.com/ActivityReports.Read","https://manage.office.com/ThreatIntelligence.Read")]
+    [RequiredApiApplicationPermissions("https://manage.office.com/ActivityFeed.Read","https://manage.office.com/ActivityFeed.ReadDlp","https://manage.office.com/ServiceHealth.Read","https://manage.office.com/ActivityReports.Read","https://manage.office.com/ThreatIntelligence.Read")]
     [OutputType(typeof(ManagementApiUnifiedLogRecord))]
     public class GetUnifiedAuditLog : PnPOfficeManagementApiCmdlet
     {

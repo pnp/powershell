@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Get, "PnPMessageCenterAnnouncement")]
-    [RequiredMinimalApiPermissions("ServiceMessage.Read.All")]
+    [RequiredApiApplicationPermissions("graph/ServiceMessage.Read.All")]
     public class GetMessageCenterAnnouncement : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

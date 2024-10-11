@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsApp")]
-    [RequiredMinimalApiPermissions("AppCatalog.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/AppCatalog.ReadWrite.All")]
     public class RemoveTeamsApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

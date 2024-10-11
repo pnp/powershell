@@ -1,13 +1,13 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-
+using PnP.Core.Model.SharePoint;
+using CheckinType = PnP.Core.Model.SharePoint.CheckinType;
 
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Set, "PnPFileCheckedIn")]
     public class SetFileCheckedIn : PnPWebCmdlet
     {
-        [Parameter(Mandatory = true, Position=0, ValueFromPipeline=true)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Url = string.Empty;
 
         [Parameter(Mandatory = false)]
@@ -23,10 +23,15 @@ namespace PnP.PowerShell.Commands.Files
         {
             // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
             Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
-            
-            CurrentWeb.CheckInFile(Url, CheckinType, Comment);
+
+            IFile file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(Url);
+
+            file.Checkin(Comment, CheckinType);
+
             if (Approve)
-                CurrentWeb.ApproveFile(Url, Comment);
+            {
+                file.Approve(Comment);
+            }
         }
     }
 }

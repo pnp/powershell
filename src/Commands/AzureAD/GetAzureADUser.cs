@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADUser", DefaultParameterSetName = ParameterSet_LIST)]
-    [RequiredMinimalApiPermissions("User.Read.All")]
+    [RequiredApiApplicationPermissions("graph/User.Read.All")]
     [Alias("Get-PnPEntraIDUser")]
     public class GetAzureADUser : PnPGraphCmdlet
     {
@@ -50,16 +50,11 @@ namespace PnP.PowerShell.Commands.Principals
         public SwitchParameter IgnoreDefaultProperties;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
-        public SwitchParameter UseBeta;        
+        public SwitchParameter UseBeta;
 
         protected override void ExecuteCmdlet()
         {
-            if (Connection.ClientId == PnPConnection.PnPManagementShellClientId)
-            {
-                Connection.Scopes = new[] { "Directory.ReadWrite.All" };
-            }
-            
-            if(ParameterSpecified(nameof(IgnoreDefaultProperties)) && !ParameterSpecified(nameof(Select)))
+            if (ParameterSpecified(nameof(IgnoreDefaultProperties)) && !ParameterSpecified(nameof(Select)))
             {
                 throw new ArgumentException($"When providing {nameof(IgnoreDefaultProperties)}, you must provide {nameof(Select)}", nameof(Select));
             }
@@ -81,7 +76,7 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 var userDelta = Utilities.AzureAdUtility.ListUserDelta(AccessToken, DeltaToken, Filter, OrderBy, Select, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);
                 WriteObject(userDelta);
-            } 
+            }
             else
             {
                 var users = Utilities.AzureAdUtility.ListUsers(AccessToken, Filter, OrderBy, Select, ignoreDefaultProperties: IgnoreDefaultProperties, StartIndex, EndIndex, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);

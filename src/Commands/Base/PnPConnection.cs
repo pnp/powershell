@@ -141,7 +141,6 @@ namespace PnP.PowerShell.Commands.Base
         /// If applicable, will return the object/principal ID of the User Assigned Managed Identity that is being used for this connection
         /// </summary>
         public string UserAssignedManagedIdentityObjectId { get; set; }
-        
         /// <summary>
         /// If applicable, will return the client ID of the User Assigned Managed Identity that is being used for this connection
         /// </summary>
@@ -150,7 +149,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// If applicable, will return the Azure Resource ID of the User Assigned Managed Identity that is being used for this connection
         /// </summary>
-        public string UserAssignedManagedIdentityAzureResourceId { get; set; }        
+        public string UserAssignedManagedIdentityAzureResourceId { get; set; }
 
         /// <summary>
         /// Type of Azure cloud to connect to
@@ -267,20 +266,14 @@ namespace PnP.PowerShell.Commands.Base
                 authManager = Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
                  {
                      if (launchBrowser)
-                     {
-                         if (Utilities.OperatingSystem.IsWindows())
-                         {
-                             ClipboardService.SetText(deviceCodeResult.UserCode);
-                             messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard\n\n");
-                             BrowserHelper.GetWebBrowserPopup(deviceCodeResult.VerificationUrl, "Please log in", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false, scriptErrorsSuppressed: false);
-                         }
-                         else
-                         {
-                             messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
-                         }
+                     {                         
+                         ClipboardService.SetText(deviceCodeResult.UserCode);
+                         messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                         BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), false, cancellationTokenSource);
                      }
                      else
                      {
+                         ClipboardService.SetText(deviceCodeResult.UserCode);
                          messageWriter.WriteWarning($"\n\n{deviceCodeResult.Message}\n\n");
                      }
                      return Task.FromResult(0);
@@ -397,7 +390,7 @@ namespace PnP.PowerShell.Commands.Base
             ManagedIdentityType managedIdentityType = ManagedIdentityType.SystemAssigned;
             string managedIdentityUserAssignedIdentifier = null;
 
-            if(!string.IsNullOrEmpty(userAssignedManagedIdentityObjectId))
+            if (!string.IsNullOrEmpty(userAssignedManagedIdentityObjectId))
             {
                 managedIdentityType = ManagedIdentityType.UserAssignedByObjectId;
                 managedIdentityUserAssignedIdentifier = userAssignedManagedIdentityObjectId;
@@ -414,14 +407,13 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Ensure if its not a System Assigned Managed Identity, that we an identifier pointing to the user assigned Managed Identity
-            if(managedIdentityType != ManagedIdentityType.SystemAssigned && string.IsNullOrEmpty(managedIdentityUserAssignedIdentifier))
+            if (managedIdentityType != ManagedIdentityType.SystemAssigned && string.IsNullOrEmpty(managedIdentityUserAssignedIdentifier))
             {
                 throw new InvalidOperationException("Unable to use a User Assigned Managed Identity without passing in an identifier for the User Assigned Managed Identity.");
             }
 
             // Set up the AuthenticationManager in PnP Framework to use a Managed Identity context
             using var authManager = new Framework.AuthenticationManager(endPoint, identityHeader, managedIdentityType, managedIdentityUserAssignedIdentifier);
-            
             PnPClientContext context = null;
             ConnectionType connectionType = ConnectionType.O365;
             if (url != null)
@@ -485,7 +477,7 @@ namespace PnP.PowerShell.Commands.Base
                             cmdlet.WriteVerbose("Acquiring token");
                             var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
                             cmdlet.WriteVerbose("Token acquired");
-                            var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accesstoken);
+                            var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accesstoken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                         }
                     }
@@ -498,7 +490,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(credentials.UserName, credentials.Password, azureEnvironment);
+                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, azureEnvironment: azureEnvironment);
                         }
                         using (authManager)
                         {
@@ -510,7 +502,7 @@ namespace PnP.PowerShell.Commands.Base
                             context.ExecuteQueryRetry();
 
                             var accessToken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
-                            var parsedToken = new System.IdentityModel.Tokens.Jwt.JwtSecurityToken(accessToken);
+                            var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                         }
                     }
@@ -538,7 +530,8 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ConnectionMethod = Model.ConnectionMethod.Credentials,
                     AzureEnvironment = azureEnvironment,
-                    Tenant = tenantId
+                    Tenant = tenantId,
+                    ClientId = clientId
                 };
             }
             else
@@ -572,6 +565,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ConnectionMethod = Model.ConnectionMethod.Credentials,
                     AzureEnvironment = azureEnvironment,
+                    ClientId = clientId
                 };
             }
 
@@ -625,7 +619,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithInteractiveLogin(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant)
+        internal static PnPConnection CreateWithInteractiveLogin(Uri uri, string clientId, string tenantAdminUrl, bool launchBrowser, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant, bool enableLoginWithWAM)
         {
             PnP.Framework.AuthenticationManager authManager = null;
             if (PnPConnection.CachedAuthenticationManager != null && !forceAuthentication)
@@ -642,7 +636,7 @@ namespace PnP.PowerShell.Commands.Base
                 tenant,
                 successMessageHtml: $"You successfully authenticated with PnP PowerShell. Feel free to close this {(launchBrowser ? "tab" : "window")}.",
                 failureMessageHtml: $"You did not authenticate with PnP PowerShell. Feel free to close this browser {(launchBrowser ? "tab" : "window")}.",
-                azureEnvironment: azureEnvironment);
+                azureEnvironment: azureEnvironment, useWAM: enableLoginWithWAM);
             }
             using (authManager)
             {
@@ -676,7 +670,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
         /// <returns>Instantiated PnPConnection</returns>
         internal static PnPConnection CreateWithAzureADWorkloadIdentity(Cmdlet cmdlet, string url, string tenantAdminUrl)
-        {            
+        {
             string defaultResource = "https://graph.microsoft.com/.default";
             if (url != null)
             {
@@ -707,7 +701,6 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.AzureADWorkloadIdentity);
-                
                 return connection;
             }
         }
@@ -733,11 +726,11 @@ namespace PnP.PowerShell.Commands.Base
             InitializeTelemetry(context, initializationType);
 
             var connectionMethod = ConnectionMethod.Credentials;
-            if(initializationType == InitializationType.AzureADWorkloadIdentity)
+            if (initializationType == InitializationType.AzureADWorkloadIdentity)
             {
                 connectionMethod = ConnectionMethod.AzureADWorkloadIdentity;
             }
-            else if(initializationType == InitializationType.ManagedIdentity)
+            else if (initializationType == InitializationType.ManagedIdentity)
             {
                 connectionMethod = ConnectionMethod.ManagedIdentity;
             }

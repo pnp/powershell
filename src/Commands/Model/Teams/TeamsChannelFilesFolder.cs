@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace PnP.PowerShell.Commands.Model.Teams
 {
@@ -12,7 +9,7 @@ namespace PnP.PowerShell.Commands.Model.Teams
         public DateTime lastModifiedDateTime { get; set; }
         public string name { get; set; }
         public string webUrl { get; set; }
-        public int size { get; set; }
+        public long size { get; set; }
         public TeamChannelParentReference parentReference { get; set; }
         public TeamChannelFileSystemInfo fileSystemInfo { get; set; }
         public TeamChannelFolder folder { get; set; }

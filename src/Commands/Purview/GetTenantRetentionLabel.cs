@@ -10,9 +10,8 @@ namespace PnP.PowerShell.Commands.Purview
     [Cmdlet(VerbsCommon.Get, "PnPTenantRetentionLabel")]
     [OutputType(typeof(IEnumerable<Model.Graph.Purview.RetentionLabel>))]
     [OutputType(typeof(Model.Graph.Purview.RetentionLabel))]
-    [RequiredMinimalApiPermissions("RecordsManagement.Read.All")]
-    [WriteAliasWarning("Get-PnPRetentionLabel will be renamed to Get-PnPTenantRetentionLabel in a future version, please update your scripts now already to use this cmdlet name instead")]
-    [Alias("Get-PnPRetentionLabel")]
+    [RequiredApiDelegatedPermissions("graph/RecordsManagement.Read.All")]
+    [ApiNotAvailableUnderApplicationPermissions]
     public class GetTenantRetentionLabel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

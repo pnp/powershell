@@ -75,10 +75,6 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string BccExternalSharingInvitationsList;
 
-        [Obsolete("Overriding UserVoiceForFeedbackEnabled property has been deprecated in SharePoint Online. This parameter will be removed in the next major release.")]
-        [Parameter(Mandatory = false)]
-        public bool? UserVoiceForFeedbackEnabled;
-
         [Parameter(Mandatory = false)]
         public bool? PublicCdnEnabled;
 
@@ -471,6 +467,18 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? IsSharePointAddInsDisabled { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public SharingScope? CoreDefaultShareLinkScope { private set; get; }
+
+        [Parameter(Mandatory = false)]
+        public Role? CoreDefaultShareLinkRole { private set; get; }
+        
+        [Parameter(Mandatory = false)]
+        public SharingCapabilities? OneDriveSharingCapability { private set; get; }
+        
+        [Parameter(Mandatory = false)]
+        public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
 
         protected override void ExecuteCmdlet()
         {
@@ -1514,6 +1522,36 @@ namespace PnP.PowerShell.Commands.Admin
             if (IsSharePointAddInsDisabled.HasValue)
             {
                 Tenant.SharePointAddInsDisabled = IsSharePointAddInsDisabled.Value;
+                modified = true;
+            }
+            if (CoreDefaultShareLinkScope.HasValue)
+            {
+                Tenant.CoreDefaultShareLinkScope = CoreDefaultShareLinkScope.Value;
+                modified = true;
+            }
+            if (CoreDefaultShareLinkRole.HasValue)
+            {
+                Tenant.CoreDefaultShareLinkRole = CoreDefaultShareLinkRole.Value;
+                modified = true;
+            }
+            if(OneDriveSharingCapability.HasValue)
+            {
+                Tenant.ODBSharingCapability = OneDriveSharingCapability.Value;
+                modified = true;
+            }
+            if (GuestSharingGroupAllowListInTenantByPrincipalIdentity !=null)
+            {
+                if (GuestSharingGroupAllowListInTenantByPrincipalIdentity.Length > 0)
+                {
+                    if (!string.IsNullOrEmpty(GuestSharingGroupAllowListInTenantByPrincipalIdentity[0].ToString()))
+                    {
+                        Tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity = GuestSharingGroupAllowListInTenantByPrincipalIdentity;
+                    }
+                    else
+                    {
+                        Tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity = new string[0];
+                    }
+                }
                 modified = true;
             }
             if (BlockDownloadFileTypePolicy.HasValue)

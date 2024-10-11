@@ -19,7 +19,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
-    [RequiredMinimalApiPermissions("Group.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
     public class InvokeTenantTemplate : PnPAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
@@ -295,7 +295,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                 }
                 catch
                 {
-                    throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for https://{Connection.GraphEndPoint}. Please provide consent to the PnP Management Shell application first by executing: Register-PnPManagementShellAccess");
+                    throw new PSInvalidOperationException($"Your template contains artifacts that require an access token for https://{Connection.GraphEndPoint}. Please provide consent to the EntraID application first by executing: Register-PnPEntraIDApp or Register-PnPEntraIDAppForInteractiveLogin");
                 }
             }
 

@@ -48,9 +48,10 @@ namespace PnP.PowerShell.Commands.Viva
 
         protected override void ExecuteCmdlet()
         {
-            if (PnPContext.Site.IsHomeSite())
+            var pnpContext = Connection.PnPContext;
+            if (pnpContext.Site.IsHomeSite())
             {
-                IVivaDashboard dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
+                IVivaDashboard dashboard = pnpContext.Web.GetVivaDashboard();
 
                 var aceToUpdate = Identity.GetACE(dashboard, this);
 
@@ -108,7 +109,7 @@ namespace PnP.PowerShell.Commands.Viva
 
                         dashboard.Save();
 
-                        dashboard = PnPContext.Web.GetVivaDashboardAsync().GetAwaiter().GetResult();
+                        dashboard = pnpContext.Web.GetVivaDashboard();
                         WriteObject(dashboard, true);
                     }
                 }

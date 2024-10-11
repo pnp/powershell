@@ -47,6 +47,7 @@ Set-PnPSite [-Identity <String>]
  [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
  [-ExcludedBlockDownloadGroupIds <Guid[]>]
  [-ListsShowHeaderAndNavigation <Boolean>]
+ [-RestrictContentOrgWideSearch <Boolean>]
  [-Connection <PnPConnection>]
 ```
 
@@ -531,6 +532,20 @@ Accept wildcard characters: False
 
 ### -RestrictedAccessControl
 To enable restricted access control on a group-connected or Teams-connected site
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictContentOrgWideSearch 
+Allows for applying the Restricted Content Discoverability (RCD) setting to a site
 
 ```yaml
 Type: Boolean

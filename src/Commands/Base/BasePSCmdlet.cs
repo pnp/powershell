@@ -41,6 +41,17 @@ namespace PnP.PowerShell.Commands.Base
             return MyInvocation.BoundParameters.ContainsKey(parameterName);
         }
 
+        protected string ErrorActionSetting
+        {
+            get
+            {
+                if (MyInvocation.BoundParameters.TryGetValue("ErrorAction", out object result))
+                    return result.ToString() ?? "";
+                else
+                    return SessionState.PSVariable.GetValue("ErrorActionPreference")?.ToString() ?? "";
+            }
+        }
+
         protected virtual void ExecuteCmdlet()
         { }
 
@@ -58,7 +69,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!string.IsNullOrEmpty(gex.AccessToken))
                     {
-                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessToken(GetType(), gex.AccessToken);
+                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, gex.AccessToken);
                     }
                 }
                 if(string.IsNullOrWhiteSpace(errorMessage) && gex.HttpResponse != null && gex.HttpResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)
@@ -76,7 +87,7 @@ namespace PnP.PowerShell.Commands.Base
 
         internal void WriteError(Exception exception, ErrorCategory errorCategory, object target = null)
         {
-            this.WriteError(new ErrorRecord(exception, string.Empty, errorCategory, target));
+            WriteError(new ErrorRecord(exception, string.Empty, errorCategory, target));
         }
     }
 }

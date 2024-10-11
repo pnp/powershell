@@ -25,51 +25,53 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            List list = null;
-            if (List != null)
+            List list = List.GetList(CurrentWeb);
+
+            if (list.BaseTemplate == (int)ListTemplateType.DocumentLibrary || list.BaseTemplate == (int)ListTemplateType.WebPageLibrary || list.BaseTemplate == (int)ListTemplateType.PictureLibrary)
             {
-                list = List.GetList(CurrentWeb);
-            }
-            if (list != null)
-            {
-                if (list.BaseTemplate == (int)ListTemplateType.DocumentLibrary || list.BaseTemplate == (int)ListTemplateType.WebPageLibrary || list.BaseTemplate == (int)ListTemplateType.PictureLibrary)
+                Field field = null;
+                // Get the field
+                if (Field.Field != null)
                 {
-                    Field field = null;
-                    // Get the field
-                    if (Field.Field != null)
-                    {
-                        field = Field.Field;
+                    field = Field.Field;
 
-                        ClientContext.Load(field);
-                        ClientContext.ExecuteQueryRetry();
+                    ClientContext.Load(field);
+                    ClientContext.ExecuteQueryRetry();
 
-                        field.EnsureProperties(f => f.TypeAsString, f => f.InternalName);
-                    }
-                    else if (Field.Id != Guid.Empty)
+                    field.EnsureProperties(f => f.TypeAsString, f => f.InternalName);
+                }
+                else if (Field.Id != Guid.Empty)
+                {
+                    field = list.Fields.GetById(Field.Id);
+                    ClientContext.Load(field, f => f.InternalName, f => f.TypeAsString);
+                    ClientContext.ExecuteQueryRetry();
+                }
+                else if (!string.IsNullOrEmpty(Field.Name))
+                {
+                    field = list.Fields.GetByInternalNameOrTitle(Field.Name);
+                    ClientContext.Load(field, f => f.InternalName, f => f.TypeAsString);
+                    ClientContext.ExecuteQueryRetry();
+                }
+                if (field != null)
+                {
+                    // Folder must be the relative path to the library with "/" prefix
+                    if (Folder != null && !Folder.StartsWith("/"))
                     {
-                        field = list.Fields.GetById(Field.Id);
-                        ClientContext.Load(field, f => f.InternalName, f => f.TypeAsString);
-                        ClientContext.ExecuteQueryRetry();
+                        Folder = $"/{Folder}";
                     }
-                    else if (!string.IsNullOrEmpty(Field.Name))
-                    {
-                        field = list.Fields.GetByInternalNameOrTitle(Field.Name);
-                        ClientContext.Load(field, f => f.InternalName, f => f.TypeAsString);
-                        ClientContext.ExecuteQueryRetry();
-                    }
-                    if (field != null)
-                    {
-                        IDefaultColumnValue defaultColumnValue = field.GetDefaultColumnValueFromField(ClientContext, Folder, new string[0]);
-                        list.ClearDefaultColumnValues(new List<IDefaultColumnValue>() { defaultColumnValue });
-                    }
+
+                    IDefaultColumnValue defaultColumnValue = field.GetDefaultColumnValueFromField(ClientContext, Folder, new string[0]);
+                    list.ClearDefaultColumnValues(new List<IDefaultColumnValue>() { defaultColumnValue });
                 }
                 else
                 {
-                    WriteWarning("List is not a document library");
+                    throw new PSArgumentException("Field not found", nameof(Field));
                 }
-
+            }
+            else
+            {
+                WriteWarning("List is not a document library");
             }
         }
     }
-
 }

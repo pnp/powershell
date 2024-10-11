@@ -154,7 +154,12 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-OneDriveDefaultLinkToExistingAccess <Boolean>]
  [-OneDriveBlockGuestsAsSiteAdmin <SharingState>]
  [-RecycleBinRetentionPeriod <Int32>]
- [-IsSharePointAddInsDisabled <Boolean>] 
+ [-IsSharePointAddInsDisabled <Boolean>]
+ [-CoreDefaultShareLinkScope <SharingScope>]
+ [-CoreDefaultShareLinkRole <Role>] 
+ [-GuestSharingGroupAllowListInTenantByPrincipalIdentity <string[]>]
+ [-OneDriveSharingCapability <SharingCapabilities>]
+ [-DelayDenyAddAndCustomizePagesEnforcement <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -193,6 +198,20 @@ Set-PnPTenant -UsePersistentCookiesForExplorerView $true
 ```
 
 This example enables the use of special persisted cookie for Open with Explorer.
+
+### EXAMPLE 5
+```powershell
+Set-PnPTenant  -GuestSharingGroupAllowListInTenantByPrincipalIdentity {c:0o.c|federateddirectoryclaimprovider|ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e}
+```
+
+This example sets the guest sharing group allow list in the tenant to the specified principal identity.
+
+### EXAMPLE 6
+```powershell
+Set-PnPTenant  -GuestSharingGroupAllowListInTenantByPrincipalIdentity {}
+```
+
+This example clears the guest sharing group allow list in the tenant.
 
 ## PARAMETERS
 
@@ -406,11 +425,29 @@ For additional information about how to change the default link type, see Change
 Note:
 Setting this value to "none" will default "get a link" to the most permissive link available. If anonymous links are enabled, the default link will be anonymous access; if they are disabled, then the default link will be internal.
 
-
 ```yaml
 Type: SharingLinkType
 Parameter Sets: (All)
 Accepted values: None, Direct, Internal, AnonymousAccess
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DelayDenyAddAndCustomizePagesEnforcement
+This parameter controls how SharePoint will deal with sites where custom scripts are allowed.
+
+The valid values are:
+
+False (default) - for site collections where administrators enabled the ability to add custom script, SharePoint will revoke that ability within 24 hours from the last time this setting was changed.
+True - All changes performed by administrators to custom script settings are preserved.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -1153,8 +1190,11 @@ Accept wildcard characters: False
 Determines what level of sharing is available for the site.
 
 The valid values are:
-ExternalUserAndGuestSharing (default) - External user sharing (share by email) and guest link sharing are both enabled. Disabled - External user sharing (share by email) and guest link sharing are both disabled.
-ExternalUserSharingOnly - External user sharing (share by email) is enabled, but guest link sharing is disabled.
+
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled. 
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
 
 For more information about sharing, see Manage external sharing for your SharePoint online environment (https://learn.microsoft.com/sharepoint/turn-external-sharing-on-or-off).
 
@@ -1734,14 +1774,15 @@ Gets or sets collaboration type for fluid on core partition
 
 The valid values are:
 
-- Disabled
-- ExternalUserSharingOnly
-- ExternalUserAndGuestSharing
-- ExistingExternalUserSharingOnly
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled.
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
 
 ```yaml
 Type: SharingCapabilities
 Parameter Sets: (All)
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 
 Required: False
 Position: Named
@@ -1760,14 +1801,16 @@ If you have the external sharing for OneDrive for Business allowed, no further a
 
 The valid values are:
 
-- Disabled
-- ExternalUserSharingOnly
-- ExternalUserAndGuestSharing
-- ExistingExternalUserSharingOnly
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled.
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
+
 
 ```yaml
 Type: SharingCapabilities
 Parameter Sets: (All)
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 
 Required: False
 Position: Named
@@ -2401,6 +2444,14 @@ Accept wildcard characters: False
 ### -CoreSharingCapability
 Sets what level of sharing is available for SharePoint sites (not including OneDrive sites).
 
+The valid values are:
+
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled.
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
+
+
 ```yaml
 Type: SharingCapabilities
 Parameter Sets: (All)
@@ -2593,10 +2644,11 @@ Sets the default sharing link scope for OneDrive.
 
 The valid values are:
 
-- Anyone
-- Organization
-- SpecificPeople
-- Uninitialized
+- Anyone : Anyone with the link can access the content.
+- Organization : Only people within the organization can access the content.
+- SpecificPeople : Only specific individuals (specified by the user) can access the content.
+- Uninitialized : The default value, indicating that the default share link scope is not explicitly set
+
 
 ```yaml
 Type: SharingScope
@@ -2610,15 +2662,15 @@ Accept wildcard characters: False
 
 ### -OneDriveDefaultShareLinkRole
 
-Sets the default sharing link role for OneDrive.
+Sets the default sharing link role for OneDrive.  It replaces the DefaultSharingLinkType.
 
 Valid values are :
 
-- Edit
-- None
-- RestrictedView
-- Review
-- View
+- None: No permissions granted.
+- View: View-only permissions.
+- Edit: Edit permissions.
+- Review: Review permissions.
+- RestrictedView: Restricted view permissions.
 
 ```yaml
 Type: Role
@@ -2632,7 +2684,7 @@ Accept wildcard characters: False
 
 ### -OneDriveDefaultLinkToExistingAccess
 
-Sets whether OneDrive default links should grant access to existing users.
+Sets whether OneDrive default links should grant access to existing users.  It replaces the DefaultLinkPermission.
 
 ```yaml
 Type: Boolean
@@ -2673,6 +2725,88 @@ The value of Recycle Bin Retention Period must be between 14 and 93. By default 
 ```yaml
 Type: Int32
 Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreDefaultShareLinkScope
+
+Sets the default sharing link scope for SharePoint sites. It replaces the DefaultSharingLinkType.
+
+The valid values are:
+
+- Anyone : Anyone with the link can access the content.
+- Organization : Only people within the organization can access the content.
+- SpecificPeople : Only specific individuals (specified by the user) can access the content.
+- Uninitialized : The default value, indicating that the default share link scope is not explicitly set
+
+```yaml
+Type: SharingScope
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CoreDefaultShareLinkRole
+
+Sets the default sharing link role for SharePoint sites.  It replaces the DefaultLinkPermission.
+
+Valid values are :
+
+- None: No permissions granted.
+- View: View-only permissions.
+- Edit: Edit permissions.
+- Review: Review permissions.
+- RestrictedView: Restricted view permissions.
+
+```yaml
+Type: Role
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveSharingCapability
+
+Determines what level of sharing is available for  OneDrive for Business.
+
+The valid values are:
+
+- ExternalUserAndGuestSharing (default) : External user sharing (share by email) and guest link sharing are both enabled. 
+- Disabled : External user sharing (share by email) and guest link sharing are both disabled.
+- ExternalUserSharingOnly : External user sharing (share by email) is enabled, but guest link sharing is disabled.
+- ExistingExternalUserSharingOnly : Only guests already in your organization's directory.
+
+For more information about sharing, see Manage external sharing for your SharePoint online environment (https://learn.microsoft.com/sharepoint/turn-external-sharing-on-or-off).
+
+```yaml
+Type: SharingCapabilities
+Parameter Sets: (All)
+Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -GuestSharingGroupAllowListInTenantByPrincipalIdentity
+Sets the guest sharing group allow list in the tenant by principal identity.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None

@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsChannelUser")]
-    [RequiredMinimalApiPermissions("ChannelMember.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/ChannelMember.ReadWrite.All")]
     public class AddTeamsChannelUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

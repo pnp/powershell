@@ -10,7 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Set, "PnPMicrosoft365GroupSettings")]
-    [RequiredMinimalApiPermissions("Directory.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class SetMicrosoft365GroupSettings : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -29,12 +29,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 var groupId = Group.GetGroupId(this, Connection, AccessToken);
                 var groupSettingObject = GroupSettingsObject();
 
-                ClearOwners.UpdateGroupSetting(this, Connection, AccessToken, Identity, groupId.ToString(), groupSettingObject).GetAwaiter().GetResult();
+                ClearOwners.UpdateGroupSetting(this, Connection, AccessToken, Identity, groupId.ToString(), groupSettingObject);
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
-                ClearOwners.UpdateGroupSetting(this, Connection, AccessToken, Identity, groupSettingObject).GetAwaiter().GetResult();
+                ClearOwners.UpdateGroupSetting(this, Connection, AccessToken, Identity, groupSettingObject);
             }
         }
 

@@ -10,35 +10,40 @@ namespace PnP.PowerShell.Commands.Utilities
     public static class AzureAuthHelper
     {
         private static string CLIENTID = "1950a258-227b-4e31-a9cf-717495945fc2"; // Well-known Azure Management App Id
-        internal static async Task<string> AuthenticateAsync(string tenantId, string username, SecureString password, AzureEnvironment azureEnvironment)
+        internal static async Task<string> AuthenticateAsync(string tenantId, string username, SecureString password, AzureEnvironment azureEnvironment, string customGraphEndpoint = "")
         {
             if (string.IsNullOrEmpty(tenantId))
             {
                 throw new ArgumentException($"{nameof(tenantId)} is required");
             }
 
-            using (var authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(username, password, azureEnvironment))
+            using (var authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(CLIENTID, username, password, azureEnvironment: azureEnvironment))
             {
                 var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
                 if (azureEnvironment == AzureEnvironment.Custom)
                 {
-                    graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                    graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? customGraphEndpoint;
                 }
                 return await authManager.GetAccessTokenAsync(new[] { $"{graphEndpoint}/.default" });
             }
         }
 
-        internal static string AuthenticateDeviceLogin(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string clientId = "1950a258-227b-4e31-a9cf-717495945fc2")
+        internal static string AuthenticateDeviceLogin(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string clientId = "1950a258-227b-4e31-a9cf-717495945fc2", string customGraphEndpoint = "", bool launchBrowser = false)
         {
             try
             {
-                using (var authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, (result) =>
+                using (var authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(CLIENTID, (result) =>
                 {
-
-                    if (Utilities.OperatingSystem.IsWindows() && !noPopup)
+                    if (launchBrowser)
                     {
                         ClipboardService.SetText(result.UserCode);
-                        messageWriter.WriteWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the popup after you authenticated successfully to continue the process.");
+                        messageWriter.WriteWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the browser tab after you authenticated successfully to continue the process.");
+                        BrowserHelper.OpenBrowserForInteractiveLogin(result.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), false, cancellationTokenSource);
+                    }
+                    else if (!noPopup)
+                    {
+                        ClipboardService.SetText(result.UserCode);
+                        messageWriter.WriteWarning($"Please login.\n\nWe opened a popup window and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the popup after you authenticated successfully to continue the process.");
                         BrowserHelper.GetWebBrowserPopup(result.VerificationUrl, "Please login for PnP PowerShell", cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
                     }
                     else
@@ -54,7 +59,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
                         if (azureEnvironment == AzureEnvironment.Custom)
                         {
-                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? customGraphEndpoint;
                         }
                         return authManager.GetAccessTokenAsync(new string[] { $"{graphEndpoint}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
@@ -71,7 +76,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static string AuthenticateInteractive(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string tenantId)
+        internal static string AuthenticateInteractive(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, bool noPopup, AzureEnvironment azureEnvironment, string tenantId, string customGraphEndpoint = "")
         {
             try
             {
@@ -91,7 +96,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(azureEnvironment)}";
                         if (azureEnvironment == AzureEnvironment.Custom)
                         {
-                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process);
+                            graphEndpoint = Environment.GetEnvironmentVariable("MicrosoftGraphEndPoint", EnvironmentVariableTarget.Process) ?? customGraphEndpoint;
                         }
                         return authManager.GetAccessTokenAsync(new string[] { $"{graphEndpoint}/.default" }, cancellationTokenSource.Token).GetAwaiter().GetResult();
                     }
@@ -106,6 +111,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 cancellationTokenSource.Cancel();
             }
             return null;
-        }        
+        }
     }
 }

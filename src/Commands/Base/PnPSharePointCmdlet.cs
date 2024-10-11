@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands
         /// <summary>
         /// HttpClient based off of the ClientContext that can be used to make raw HTTP calls to SharePoint Online
         /// </summary>
-        public HttpClient HttpClient => PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
+        public HttpClient HttpClient => Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
         /// <summary>
         /// The current Bearer access token for SharePoint Online
@@ -40,13 +40,7 @@ namespace PnP.PowerShell.Commands
             {
                 if (Connection != null)
                 {
-                    if (Connection.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-                    {
-                        var resourceUri = new Uri(Connection.Url);
-                        var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}";
-                        return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, defaultResource, Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-                    }
-                    else if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+                    if (Connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
                     {
                         var resourceUri = new Uri(Connection.Url);
                         var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
@@ -80,11 +74,7 @@ namespace PnP.PowerShell.Commands
         {
             get
             {
-                if (Connection?.ConnectionMethod == ConnectionMethod.ManagedIdentity)
-                {
-                    return TokenHandler.GetManagedIdentityTokenAsync(this, HttpClient, $"https://{Connection.GraphEndPoint}/", Connection.UserAssignedManagedIdentityObjectId, Connection.UserAssignedManagedIdentityClientId, Connection.UserAssignedManagedIdentityAzureResourceId).GetAwaiter().GetResult();
-                }
-                else if (Connection?.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
+                if (Connection?.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
                 {
                     return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
                 }
@@ -103,7 +93,7 @@ namespace PnP.PowerShell.Commands
         protected override void BeginProcessing()
         {
             // Call the base but instruct it not to check if there's an active connection as we will do that in this method already
-            base.BeginProcessing(true);
+            base.BeginProcessing(true);            
 
             // Ensure there is an active connection to work with
             if (Connection == null || ClientContext == null)
@@ -127,6 +117,11 @@ namespace PnP.PowerShell.Commands
                 tag = tag.Substring(0, 32);
             }
             ClientContext.ClientTag = tag;
+            
+            WriteVerbose("Making call to SharePoint Online using the Client Side Object Model (CSOM)");
+
+            // Validate the permissions in the access token for SharePoint Online
+            TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, AccessToken);
 
             base.ProcessRecord();
         }

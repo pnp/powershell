@@ -29,8 +29,13 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         [Parameter(Mandatory = false)]
         public ExtractConfigurationPipeBind Configuration;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter OutputInstance;
+
         protected override void ProcessRecord()
         {
+            _ = Identity.GetPage(Connection) ?? throw new Exception($"Page '{Identity?.Name}' does not exist");
+
             ExtractConfiguration extractConfiguration = null;
             if (ParameterSpecified(nameof(Configuration)))
             {
@@ -93,9 +98,15 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             }
             else
             {
-                WriteObject(outputTemplate.ToXML());
+                if (OutputInstance)
+                {
+                    WriteObject(outputTemplate);
+                }
+                else
+                {
+                    WriteObject(outputTemplate.ToXML());
+                }                
             }
         }
     }
-
 }

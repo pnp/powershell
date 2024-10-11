@@ -249,7 +249,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 creationInformation.ContentTypeGroupsToInclude = ContentTypeGroups.ToList();
             }
-            if (ParameterSpecified(nameof(PersistMultiLanguageResources)) && ContentTypeGroups != null)
+            if (ParameterSpecified(nameof(PersistMultiLanguageResources)))
             {
                 creationInformation.PersistMultiLanguageResources = PersistMultiLanguageResources;
             }

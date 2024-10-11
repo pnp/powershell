@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(PnPContext);
+            var list = List.GetList(Connection.PnPContext);
 
             if (list == null)
             {
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Lists
                 throw new PSArgumentException($"Comment Text must contain a value", nameof(Text));
             }
 
-            var comments = item.GetCommentsAsync().GetAwaiter().GetResult();
+            var comments = item.GetComments();
 
             var addedComment = comments.Add(Text);
 

@@ -84,6 +84,26 @@ namespace PnP.PowerShell.Commands.Branding
             }
 
             NavigationNodeCollection nodeCollection = null;
+
+            string menuNodeKey = string.Empty;
+            switch (Location)
+            {
+                case NavigationType.QuickLaunch:
+                    menuNodeKey = "1025";
+                    break;
+                case NavigationType.TopNavigationBar:
+                    menuNodeKey = "1002";
+                    break;
+                case NavigationType.Footer:
+                    menuNodeKey = "3a94b35f-030b-468e-80e3-b75ee84ae0ad";
+                    break;
+                case NavigationType.SearchNav:
+                    menuNodeKey = "1040";
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException("Location");
+            }
+
             if (ParameterSpecified(nameof(Parent)))
             {
                 var parentNode = Parent.GetNavigationNode(CurrentWeb);
@@ -99,57 +119,59 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 nodeCollection = CurrentWeb.LoadFooterNavigation();
             }
+            else if(Location == NavigationType.QuickLaunch)
+            {
+                nodeCollection = CurrentWeb.Navigation.QuickLaunch;
+                ClientContext.Load(nodeCollection);
+            } 
             else
             {
-                nodeCollection = Location == NavigationType.QuickLaunch ? CurrentWeb.Navigation.QuickLaunch : CurrentWeb.Navigation.TopNavigationBar;
+                nodeCollection = CurrentWeb.Navigation.TopNavigationBar;
                 ClientContext.Load(nodeCollection);
             }
 
-            if (nodeCollection != null)
-            {
-                var addedNode = nodeCollection.Add(navigationNodeCreationInformation);
-
-                if (ParameterSpecified(nameof(AudienceIds)))
-                {
-                    addedNode.AudienceIds = AudienceIds;
-                    addedNode.Update();
-                }
-
-                ClientContext.Load(addedNode);
-                ClientContext.ExecuteQueryRetry();
-
-                if (Location == NavigationType.QuickLaunch)
-                {
-                    // Retrieve the menu definition and save it back again. This step is needed to enforce some properties of the menu to be shown, such as the audience targeting.
-                    CurrentWeb.EnsureProperties(w => w.Url);
-                    var menuState = Utilities.REST.RestHelper.Get<Model.SharePoint.NavigationNodeCollection>(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/MenuState", ClientContext.GetAccessToken(), false);
-
-                    var currentItem = menuState?.Nodes?.Select(node => SearchNodeById(node, addedNode.Id))
-                        .FirstOrDefault(result => result != null);
-                    if (currentItem != null)
-                    {
-                        currentItem.OpenInNewWindow = OpenInNewTab.ToBool();
-
-                        if (ParameterSpecified(nameof(AudienceIds)))
-                        {
-                            currentItem.AudienceIds = AudienceIds;
-                        }
-
-                        var payload = JsonSerializer.Serialize(menuState);
-                        Utilities.REST.RestHelper.Post(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/SaveMenuState", ClientContext, @"{ ""menuState"": " + payload + "}", "application/json", "application/json;odata=nometadata");
-                    }
-                    else
-                    {
-                        WriteWarning("Something went wrong while trying to set AudienceIDs or Open in new tab property");
-                    }
-                }
-
-                WriteObject(addedNode);
-            }
-            else
+            
+            if (nodeCollection == null)
             {
                 throw new Exception("Unable to define Navigation Node collection to add the node to");
             }
+
+            var addedNode = nodeCollection.Add(navigationNodeCreationInformation);
+
+            if (ParameterSpecified(nameof(AudienceIds)))
+            {
+                addedNode.AudienceIds = AudienceIds;
+                addedNode.Update();
+            }
+
+            ClientContext.Load(addedNode);
+            ClientContext.ExecuteQueryRetry();
+
+            // Retrieve the menu definition and save it back again. This step is needed to enforce some properties of the menu to be shown, such as the audience targeting.
+            CurrentWeb.EnsureProperties(w => w.Url);
+            var menuState = Utilities.REST.RestHelper.Get<Model.SharePoint.NavigationNodeCollection>(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/MenuState?menuNodeKey='{menuNodeKey}'", ClientContext.GetAccessToken(), false);
+
+            var currentItem = menuState?.Nodes?.Select(node => SearchNodeById(node, addedNode.Id))
+                .FirstOrDefault(result => result != null);
+            if (currentItem != null)
+            {
+                currentItem.OpenInNewWindow = OpenInNewTab.ToBool();
+
+                if (ParameterSpecified(nameof(AudienceIds)))
+                {
+                    currentItem.AudienceIds = AudienceIds;
+                }
+
+                var payload = JsonSerializer.Serialize(menuState);
+                Utilities.REST.RestHelper.Post(Connection.HttpClient, $"{CurrentWeb.Url}/_api/navigation/SaveMenuState", ClientContext, @"{ ""menuState"": " + payload + "}", "application/json", "application/json;odata=nometadata");
+            }
+            else
+            {
+                WriteWarning("Something went wrong while trying to set AudienceIDs or Open in new tab property");
+            }
+            
+
+            WriteObject(addedNode);
         }
 
         private static Model.SharePoint.NavigationNode SearchNodeById(Model.SharePoint.NavigationNode root, int id)

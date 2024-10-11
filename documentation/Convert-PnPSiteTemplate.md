@@ -122,4 +122,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Encoding documentation](https://learn.microsoft.com/dotnet/api/system.text.encoding?view=net-6.0)
+[Encoding documentation](https://learn.microsoft.com/dotnet/api/system.text.encoding?view=net-8.0)

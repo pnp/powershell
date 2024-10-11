@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         protected override void ExecuteCmdlet()
         {
-            var list = List.GetList(PnPContext);
+            var list = List.GetList(Connection.PnPContext);
 
             if (list == null)
             {
@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Lists
                 throw new PSArgumentException($"Cannot find list item provided through -{nameof(Identity)}", nameof(Identity));
             }
 
-            var commentsCollection = item.GetCommentsAsync().GetAwaiter().GetResult();
+            var commentsCollection = item.GetComments();
 
             var comments = commentsCollection.AsRequested();
 

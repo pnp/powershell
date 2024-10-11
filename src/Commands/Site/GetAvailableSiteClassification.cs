@@ -8,7 +8,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPAvailableSiteClassification")]
-    [RequiredMinimalApiPermissions("Directory.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Directory.Read.All")]
+    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
     [OutputType(typeof(SiteClassificationsSettings))]
     [Alias("Get-PnPSiteClassification")]
     [WriteAliasWarning("Please use 'Get-PnPAvailableSiteClassification'. The alias 'Get-PnPSiteClassification' will be removed in a future release.")]

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -6,6 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
@@ -41,6 +43,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var result = GraphHelper.Post<GraphBatchResponse>(cmdlet, connection, "v1.0/$batch", stringContent, accessToken);
             if (result.Responses != null && result.Responses.Any())
             {
+                var errors = new List<Exception>();
+
                 foreach (var response in result.Responses)
                 {
                     var userId = requests.First(r => r.Key == response.Id).Value;
@@ -49,6 +53,16 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                         var element = (JsonElement)webUrlObject;
                         returnValue.Add(userId, element.GetString());
                     }
+                    else if (response.Body.TryGetValue("error", out object errorObject))
+                    {
+                        var error = (JsonElement)errorObject;
+                        errors.Add(new Exception(error.ToString()));
+                    }
+                }
+
+                if (errors.Any())
+                {
+                    throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
                 }
             }
             return returnValue;

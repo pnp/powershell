@@ -88,6 +88,7 @@ Iterate all sub webs recursively
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
+Aliases: Recurse
 
 Required: False
 Position: Named
