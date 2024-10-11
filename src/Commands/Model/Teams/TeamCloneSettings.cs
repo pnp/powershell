@@ -1,5 +1,5 @@
 ﻿using System.Text.Json.Serialization;
-using Microsoft.Graph;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Model.Teams
