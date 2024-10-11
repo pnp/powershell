@@ -134,7 +134,6 @@
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.1" />
 		<PackageReference Include="System.Security.Cryptography.ProtectedData" Version="8.0.0" />
 		<PackageReference Include="System.Security.Cryptography.OpenSsl" Version="5.0.0" />
-		<PackageReference Include="System.Text.Encodings.Web" Version="8.0.0" />
 		<PackageReference Include="System.Management.Automation" Version="7.4.5" />
 		<PackageReference Include="System.Text.Json" Version="8.0.5" />
 		<PackageReference Include="TextCopy" Version="6.2.1" />
