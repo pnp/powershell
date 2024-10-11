@@ -405,6 +405,8 @@ Accept wildcard characters: False
 ### -Connection
 Optional connection to be reused by the new connection. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
+When passed in, the ClientId/AppId used for the passed in connection will be used for the new connection. It will override any -ClientId or -AppId parameter passed in.
+
 ```yaml
 Type: PnPConnection
 Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable
