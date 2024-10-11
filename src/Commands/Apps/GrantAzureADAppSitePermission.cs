@@ -12,7 +12,7 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPAzureADAppSitePermission")]
-    [RequiredApiApplicationPermissions("graph/Sites.FullControl.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Sites.FullControl.All")]
     [Alias("Grant-PnPEntraIDAppSitePermission")]
     [OutputType(typeof(AzureADAppPermissionInternal))]
     public class GrantPnPAzureADAppSitePermission : PnPGraphCmdlet
@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Apps
             else
             {
                 WriteVerbose($"No specific site passed in through -{nameof(Site)}, taking the currently connected to site");
-                siteId = PnPContext.Site.Id;
+                siteId = new SitePipeBind(Connection.Url).GetSiteIdThroughGraph(Connection, AccessToken);
                 WriteVerbose($"Currently connected to site has Id {siteId}");
             }
 
