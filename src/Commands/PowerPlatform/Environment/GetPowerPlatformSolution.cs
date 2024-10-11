@@ -21,19 +21,17 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
         protected override void ExecuteCmdlet()
         {
-            string environmentName = null;
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
             string dynamicsScopeUrl = null;
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
             var environments = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.Environment>(this, Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken);
             if (ParameterSpecified(nameof(Environment)))
             {
-                environmentName = Environment.GetName().ToLower();
                 WriteVerbose($"Using environment as provided '{environmentName}'");
                 dynamicsScopeUrl = environments.FirstOrDefault(e => e.Properties.DisplayName.ToLower() == environmentName || e.Name.ToLower() == environmentName)?.Properties.LinkedEnvironmentMetadata.InstanceApiUrl;
             }
             else
             {
-                environmentName = environments.FirstOrDefault(e => e.Properties.IsDefault.HasValue && e.Properties.IsDefault == true)?.Name;
                 dynamicsScopeUrl = environments.FirstOrDefault(e => e.Properties.IsDefault.HasValue && e.Properties.IsDefault == true)?.Properties.LinkedEnvironmentMetadata.InstanceApiUrl;
                 if (string.IsNullOrEmpty(environmentName))
                 {

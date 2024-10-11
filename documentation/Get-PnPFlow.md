@@ -61,17 +61,17 @@ Returns a specific flow from the default Power Platform environment
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment object to retrieve the available flows for.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
-Type: PowerAutomateEnvironmentPipeBind
+Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: Named
 Default value: The default environment
-Accept pipeline input: False
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 

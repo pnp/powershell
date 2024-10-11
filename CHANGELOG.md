@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Icon` and `-Color` parameters to `Set-PnPList` cmdlet. [#4409](https://github.com/pnp/powershell/pull/4409)
 - Added `Remove-PnPTenantRestrictedSearchAllowedList` cmdlet to removes site URLs from the allowed list when Restricted SharePoint Search is enabled. [#4399](https://github.com/pnp/powershell/pull/4399)
 - Added `Get-PnPDeletedFlow` cmdlet to retrieve a list of flows which are soft deleted. [#4396](https://github.com/pnp/powershell/pull/4396)
+- Added `Restore-PnPFlow` cmdlet which allows for undeleting a flow within 21 days of deletion. [#4415](https://github.com/pnp/powershell/pull/4415)
 - Added `-ExcludeDeprecated` to `Export-PnpTaxonomy` which allows for deprecated terms to be excluded from the export [#4053](https://github.com/pnp/powershell/pull/4053)
 
 ### Changed
@@ -44,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Remove-PnPContentType` and `Remove-PnPContentTypeFromList` now use PnP Core SDK for processing requests. [#4390](https://github.com/pnp/powershell/pull/4390)
 - `Clear-PnPRecycleBinItem` , `Move-PnPRecycleBinItem` and `Restore-PnPRecycleBinItem` cmdlets now use PnP Core SDK for processing requests. [#4393](https://github.com/pnp/powershell/pull/4393/)
 - `Get-PnPSearchCrawlLog` cmdlet now shows a warning in case application permissions are used. [#4391](https://github.com/pnp/powershell/pull/4391)
+- All Power Platform cmdlets no longer require an environment to be specified. If omitted, the default environment will be retrieved and used. [#4415](https://github.com/pnp/powershell/pull/4415)
 
 ### Fixed
 
