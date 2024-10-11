@@ -78,9 +78,7 @@
 		
 		<!-- <PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
-		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.14.*-*" />		
-
-		<PackageReference Include="PowerShellStandard.Library" Version="5.1.1" />
+		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.14.*-*" />
 		<PackageReference Include="System.Reflection.Emit" Version="4.7.0" />
 		<PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />

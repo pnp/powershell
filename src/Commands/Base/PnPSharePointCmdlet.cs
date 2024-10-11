@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands
                     {
                         if (Connection.Context != null)
                         {
-                            var settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(Connection.Context);
+                            Framework.Utilities.Context.ClientContextSettings settings = Microsoft.SharePoint.Client.InternalClientContextExtensions.GetContextSettings(Connection.Context);
                             if (settings != null)
                             {
                                 var authManager = settings.AuthenticationManager;
