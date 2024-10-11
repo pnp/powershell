@@ -53,7 +53,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Identity.Client" Version="4.65.0" />
 		<PackageReference Include="Microsoft.Identity.Client.Broker" Version="4.65.0" />
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
 		<PackageReference Include="PnP.Framework" Version="1.17.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
