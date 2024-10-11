@@ -15,7 +15,7 @@ Exports a taxonomy to either the output or to a file.
 ## SYNTAX
 
 ```powershell
-Export-PnPTaxonomy [-TermSetId <Guid>] [-IncludeID] [-Path <String>] [-TermStoreName <String>] [-Force]
+Export-PnPTaxonomy [-TermSetId <Guid>] [-IncludeID] [-ExcludeDeprecated] [-Path <String>] [-TermStoreName <String>] [-Force]
  [-Delimiter <String>] [-Lcid <Int32>] [-Encoding <Encoding>] [-Connection <PnPConnection>] 
   
 ```
@@ -142,12 +142,40 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ExcludeDeprecated
+If specified will exclude the deprecated taxonomy items in the output. Applicable only if you specify TermSetId or TermStoreName.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExcludeDeprecated
+If specified will exclude the deprecated taxonomy items in the output. Applicable only if you specify TermSetId or TermStoreName.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: TermSet
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Lcid
 Specify the language code for the exported terms
 
 ```yaml
 Type: Int32
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named
@@ -175,7 +203,7 @@ If specified, will export the specified termset only
 
 ```yaml
 Type: Guid
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named
@@ -189,7 +217,7 @@ Term store to export; if not specified the default term store is used.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named

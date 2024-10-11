@@ -27,6 +27,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Icon` and `-Color` parameters to `Set-PnPList` cmdlet. [#4409](https://github.com/pnp/powershell/pull/4409)
 - Added `Remove-PnPTenantRestrictedSearchAllowedList` cmdlet to removes site URLs from the allowed list when Restricted SharePoint Search is enabled. [#4399](https://github.com/pnp/powershell/pull/4399)
 - Added `Get-PnPDeletedFlow` cmdlet to retrieve a list of flows which are soft deleted. [#4396](https://github.com/pnp/powershell/pull/4396)
+- Added `-ExcludeDeprecated` to `Export-PnpTaxonomy` which allows for deprecated terms to be excluded from the export [#4053](https://github.com/pnp/powershell/pull/4053)
 
 ### Changed
 
@@ -67,6 +68,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
 ### Contributors
 
+- San [sankarkumar23]
 - Christian Veenhuis [ChVeen]
 - Nishkalank Bezawada [NishkalankBezawada]
 - Dan Toft [Tanddant]
