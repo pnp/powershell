@@ -2201,6 +2201,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPDeletedFlow.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPDeletedFlow.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPDeletedMicrosoft365Group.md",
       "output": {
         ".html": {
@@ -3285,6 +3295,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSearchExternalConnection.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSearchExternalItem.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSearchExternalItem.html"
         }
       },
       "version": ""
@@ -5911,6 +5931,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPSearchExternalItem.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPSearchExternalItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPSiteClassitication.md",
       "output": {
         ".html": {
@@ -6125,6 +6155,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPTenantDeletedSite.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPTenantRestrictedSearchAllowedList.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPTenantRestrictedSearchAllowedList.html"
         }
       },
       "version": ""
