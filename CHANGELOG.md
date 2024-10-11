@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPTenantRestrictedSearchAllowedList` cmdlet to removes site URLs from the allowed list when Restricted SharePoint Search is enabled. [#4399](https://github.com/pnp/powershell/pull/4399)
 - Added `Get-PnPDeletedFlow` cmdlet to retrieve a list of flows which are soft deleted. [#4396](https://github.com/pnp/powershell/pull/4396)
 - Added `-ExcludeDeprecated` to `Export-PnpTaxonomy` which allows for deprecated terms to be excluded from the export [#4053](https://github.com/pnp/powershell/pull/4053)
+- Added `-HidePeoplePreviewingFiles` to `Set-PnPSite` which allows for hiding the people previewing files feature on a site
 
 ### Changed
 
