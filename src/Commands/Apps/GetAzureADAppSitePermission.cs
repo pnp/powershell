@@ -11,7 +11,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADAppSitePermission", DefaultParameterSetName = ParameterSet_ALL)]
-    [RequiredApiApplicationPermissions("graph/Sites.FullControl.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Sites.FullControl.All")]
     [Alias("Get-PnPEntraIDAppSitePermission")]
     public class GetPnPAzureADAppSitePermission : PnPGraphCmdlet
     {
@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Apps
             }
             else
             {
-                siteId = PnPContext.Site.Id;
+                siteId = new SitePipeBind(Connection.Url).GetSiteIdThroughGraph(Connection, AccessToken);
             }
 
             if (siteId != Guid.Empty)
