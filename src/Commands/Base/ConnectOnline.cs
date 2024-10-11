@@ -1,7 +1,5 @@
-﻿using Microsoft.Graph;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Framework;
-using PnP.PowerShell.Commands.Apps;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
