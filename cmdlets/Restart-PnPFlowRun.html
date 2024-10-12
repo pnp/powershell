@@ -90,32 +90,31 @@
 </ul>
 <p>Restarts/resubmits a specific flow run for the specified Microsoft Power Automate flow.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Restart-PnPFlowRun -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Flow &lt;PowerAutomateFlowPipeBind&gt; -Identity &lt;PowerAutomateFlowRunPipeBind&gt; [-Force] 
+<pre><code class="lang-powershell">Restart-PnPFlowRun [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Flow &lt;PowerAutomateFlowPipeBind&gt; -Identity &lt;PowerAutomateFlowRunPipeBind&gt; [-Force] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet restarts/resubmits a specific Power Automate flow run.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Restart-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
+<pre><code class="lang-powershell">Restart-PnPFlowRun -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 </code></pre>
-<p>This restarts the specified flow run of the specified flow</p>
+<p>This restarts the specified flow run of the specified flow located in the default environment</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Restart-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230 -Force
+<pre><code class="lang-powershell">$environment = 
+Restart-PnPFlowRun -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230 -Force
 </code></pre>
-<p>This restarts the specified flow run of the specified flow without confirmation</p>
+<p>This restarts the specified flow run of the specified flow without confirmation located in the specified environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
-<p>The name of the Power Platform environment or an Environment object to retrieve the available flows for.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-flow">-Flow</h3>

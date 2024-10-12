@@ -96,16 +96,16 @@
 <p>This cmdlet returns the PowerPlatform solution on a given enviroment.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Get-PnPPowerPlatformSolution -Environment (Get-PnPPowerPlatformEnvironment)
+<pre><code class="lang-powershell">Get-PnPPowerPlatformSolution -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;)
 </code></pre>
 <p>This returns all the solutions for a given Power Platform environment</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Get-PnPPowerPlatformSolution -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Name 'My Solution Name'
+<pre><code class="lang-powershell">Get-PnPPowerPlatformSolution -Name 'My Solution Name'
 </code></pre>
 <p>This returns a specific solution on the default Power Platform environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
-<p>The name of the Power Platform environment or an Environment instance to retrieve the available solutions for. If omitted, the default environment will be used.</p>
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
 <pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:

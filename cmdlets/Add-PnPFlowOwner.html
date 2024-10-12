@@ -90,38 +90,38 @@
 </ul>
 <p>Assigns/updates permissions to a Power Automate flow</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPFlowOwner -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerPlatformPipeBind&gt; -User &lt;String&gt; -Role &lt;FlowAccessRole&gt; [-AsAdmin] [-Verbose]
+<pre><code class="lang-powershell">Add-PnPFlowOwner [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerPlatformPipeBind&gt; -User &lt;String&gt; -Role &lt;FlowAccessRole&gt; [-AsAdmin] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet assigns/updates permissions for a user to a Power Automate flow.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -Role CanEdit
+<pre><code class="lang-powershell">Add-PnPFlowOwner -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -Role CanEdit
 </code></pre>
-<p>Assigns the specified user with 'CanEdit' access level to the specified flow</p>
+<p>Assigns the specified user with 'CanEdit' access level to the specified flow in the default environment</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04 -Role CanView
+<pre><code class="lang-powershell">Add-PnPFlowOwner -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04 -Role CanView
 </code></pre>
-<p>Assigns the specified user with 'CanView' access level to the specified flow</p>
+<p>Assigns the specified user with 'CanView' access level to the specified flow in the default environment</p>
 <h3 id="example-3">Example 3</h3>
-<pre><code class="lang-powershell">Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04 -Role CanViewWithShare
+<pre><code class="lang-powershell">Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04 -Role CanViewWithShare
 </code></pre>
-<p>Assigns the specified user with 'CanViewWithShare' access level to the specified flow</p>
+<p>Assigns the specified user with 'CanViewWithShare' access level to the specified flow in the specified environment</p>
 <h3 id="example-4">Example 4</h3>
-<pre><code class="lang-powershell">Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin -Role CanEdit
+<pre><code class="lang-powershell">Add-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin -Role CanEdit
 </code></pre>
-<p>Assigns the specified user with 'CanEdit' access level to the specified flow as admin</p>
+<p>Assigns the specified user with 'CanEdit' access level to the specified flow as admin in the specified environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
-<p>The Power Platform environment that hosts the Power Automate Flow to add the permissions to.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>

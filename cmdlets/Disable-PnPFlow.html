@@ -90,16 +90,19 @@
 </ul>
 <p>Disables a specific flow</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Disable-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Disable-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet disables a specific flow</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPFlowEnvironment
-Disable-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">Disable-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>Disables the specified flow.</p>
+<p>Disables the specified flow in the default environment</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Disable-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+</code></pre>
+<p>Disables the specified flow in the specified environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-asadmin">-AsAdmin</h3>
 <p>Disable the flow as an administrator.</p>
@@ -127,15 +130,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-environment">-Environment</h3>
-<p>The name of the environment or an Environment object to retrieve the available flows for.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>

@@ -97,18 +97,16 @@
 <p>This cmdlet returns the Power Apps for a given enviroment.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPPowerApp -Environment $environment
+<pre><code class="lang-powershell">Get-PnPPowerApp
 </code></pre>
-<p>This returns all the apps for a given Power Platform environment</p>
+<p>This returns all the apps for the default environment</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPPowerApp -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">Get-PnPPowerApp -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>This returns a specific app</p>
+<p>This returns a specific app from a specific environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
-<p>The name of the Power Platform environment or an Environment object to retrieve the available Power Apps for.</p>
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
 <pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:

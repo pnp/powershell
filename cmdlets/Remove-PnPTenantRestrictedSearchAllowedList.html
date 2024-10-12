@@ -95,10 +95,17 @@
 <pre><code class="lang-powershell">Remove-PnPTenantRestrictedSearchAllowedList -SitesListFileUrl &quot;C:\temp\sitelist.csv&quot; -ContainsHeader
 </code></pre>
 <p>Removes site URLs from the allowed list from a CSV file. The first line, which is assumed to be a header, is skipped.</p>
+<p>Sample CSV file content with Header</p>
+<p>SiteUrl
+<a href="https://contoso.sharepoint.com/sites/Company311">https://contoso.sharepoint.com/sites/Company311</a>
+<a href="https://contoso.sharepoint.com/sites/contosoportal">https://contoso.sharepoint.com/sites/contosoportal</a></p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Remove-PnPTenantRestrictedSearchAllowedList -SitesListFileUrl &quot;C:\temp\sitelist.csv&quot; 
 </code></pre>
 <p>Removes site URLs from the allowed list from a CSV file.</p>
+<p>Sample CSV file content without Header</p>
+<p><a href="https://contoso.sharepoint.com/sites/Company311">https://contoso.sharepoint.com/sites/Company311</a>
+<a href="https://contoso.sharepoint.com/sites/contosoportal">https://contoso.sharepoint.com/sites/contosoportal</a></p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Remove-PnPTenantRestrictedSearchAllowedList -SitesList @(&quot;https://contoso.sharepoint.com/sites/Company311&quot;,&quot;https://contoso.sharepoint.com/sites/contosoportal&quot;)
 </code></pre>

@@ -90,38 +90,38 @@
 </ul>
 <p>Removes owner permissions to a Power Automate flow</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPFlowOwner -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerPlatformPipeBind&gt; -User &lt;String&gt; [-AsAdmin] [-Force] [-Verbose]
+<pre><code class="lang-powershell">Remove-PnPFlowOwner [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerPlatformPipeBind&gt; -User &lt;String&gt; [-AsAdmin] [-Force] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet removes owner permissions for a user from a Power Automate flow.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com
+<pre><code class="lang-powershell">Remove-PnPFlowOwner -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com
 </code></pre>
-<p>Removes the specified user from the specified Power Automate flow</p>
+<p>Removes the specified user from the specified Power Automate flow located in the default environment</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04
+<pre><code class="lang-powershell">Remove-PnPFlowOwner -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04
 </code></pre>
-<p>Removes the specified user from the specified Power Automate flow</p>
+<p>Removes the specified user from the specified Power Automate flow located in the default environment</p>
 <h3 id="example-3">Example 3</h3>
-<pre><code class="lang-powershell">Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin
+<pre><code class="lang-powershell">Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin
 </code></pre>
-<p>Removes the specified user from the specified Power Automate flow as an admin</p>
+<p>Removes the specified user from the specified Power Automate flow as an admin in the specified environment</p>
 <h3 id="example-4">Example 4</h3>
-<pre><code class="lang-powershell">Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin -Force
+<pre><code class="lang-powershell">Remove-PnPFlowOwner (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin -Force
 </code></pre>
-<p>Removes the specified user from the specified Power Automate Flow as admin, without asking for confirmation</p>
+<p>Removes the specified user from the specified Power Automate Flow as admin, without asking for confirmation, in the specified environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
-<p>The Power Platform environment that hosts the Power Automate Flow to remove the permissions from.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>

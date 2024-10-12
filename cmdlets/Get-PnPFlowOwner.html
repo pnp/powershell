@@ -90,26 +90,30 @@
 </ul>
 <p>Returns the owners of a Power Automate flow</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPFlowOwner -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin]
+<pre><code class="lang-powershell">Get-PnPFlowOwner [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet returns the Power Automate flow owners for a given Power Automate Flow in a Power Platform environment.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Get-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity 33f78dac-7e93-45de-ab85-67cad0f6ee30
+<pre><code class="lang-powershell">Get-PnPFlowOwner -Identity 33f78dac-7e93-45de-ab85-67cad0f6ee30
 </code></pre>
 <p>Returns all the owners of the Power Automate Flow with the provided identifier on the default Power Platform environment</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Get-PnPFlowOwner -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity 33f78dac-7e93-45de-ab85-67cad0f6ee30
+</code></pre>
+<p>Returns all the owners of the Power Automate Flow with the provided identifier on the specified Power Platform environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
-<p>The Power Platform environment that hosts the Power Automate Flow to retrieve the owners of.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>

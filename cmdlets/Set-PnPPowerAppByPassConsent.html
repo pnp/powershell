@@ -97,17 +97,16 @@
 <p>This command can be used to set the bypassConsent flag of an PowerApps to true or false. Set the value as true so users aren't required to authorize API connections for the targeted app. To Remove the consent set the value false so users are required to authorize API connections for the targeted app</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Set-PnPPowerAppByPassConsent -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -ByPassConsent true
+<pre><code class="lang-powershell">Set-PnPPowerAppByPassConsent -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -ByPassConsent true
 </code></pre>
-<p>This sets the bypassConsent flag on the specified Power App to true</p>
+<p>This sets the bypassConsent flag on the specified Power App in the provided environment to true</p>
 <h3 id="example-2">Example 2</h3>
 <pre><code class="lang-powershell">Set-PnPPowerAppByPassConsent -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -ByPassConsent false
 </code></pre>
-<p>This sets the bypassConsent flag on the specified Power App to flag on the default environment</p>
+<p>This sets the bypassConsent flag on the specified Power App in the default environment</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
-<p>The name of the Power Platform environment or an Environment object to retrieve the available Power Apps for.</p>
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
 <pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:

@@ -90,28 +90,25 @@
 </ul>
 <p>Returns the flows runs for a given flow.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPFlowRun -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Flow &lt;PowerAutomateFlowPipeBind&gt; [-Identity &lt;PowerAutomateFlowRunPipeBind&gt;]
+<pre><code class="lang-powershell">Get-PnPFlowRun [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Flow &lt;PowerAutomateFlowPipeBind&gt; [-Identity &lt;PowerAutomateFlowRunPipeBind&gt;]
 [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet returns the flow runs for a given flow.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">Get-PnPFlowRun -Flow fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>This returns all the flow runs for a given flow</p>
+<p>This returns all the flow runs for a given flow in the default environment</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
+<pre><code class="lang-powershell">Get-PnPFlowRun -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 </code></pre>
-<p>This returns a specific flow run</p>
+<p>This returns a specific flow run for a given flow in a specific environment</p>
 <h3 id="example-3">Example 3</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-$flowrun = Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
+<pre><code class="lang-powershell">$flowrun = Get-PnPFlowRun -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 $flowrun.Properties.trigger
 </code></pre>
-<p>This returns a specific flow run trigger information as below</p>
+<p>This returns the trigger information of a run of a specific flow located in the default environment as shown below</p>
 <h3 id="output">Output</h3>
 <pre><code class="lang-powershell">Name              : Recurrence
 StartTime         : 2024-02-02 06:00:00
@@ -122,11 +119,10 @@ Code              : OK
 Status            : Succeeded
 </code></pre>
 <h3 id="example-4">Example 4</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment
-$flowruns = Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">$flowruns = Get-PnPFlowRun -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Flow fba63225-baf9-4d76-86a1-1b42c917a182
 $flowruns.Properties.trigger
 </code></pre>
-<p>This returns a specific flows trigger information as below</p>
+<p>This returns the trigger information of a run of a specific flow located in the specified environment as shown below</p>
 <h3 id="output-1">Output</h3>
 <pre><code class="lang-powershell">Name              : Recurrence
 StartTime         : 2024-02-02 06:00:00
@@ -154,15 +150,15 @@ Status            : Succeeded
 </code></pre>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-environment">-Environment</h3>
-<p>The name of the Power Platform environment or an Environment object to retrieve the available flows for.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-flow">-Flow</h3>

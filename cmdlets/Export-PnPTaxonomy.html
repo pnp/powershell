@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Exports a taxonomy to either the output or to a file.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Export-PnPTaxonomy [-TermSetId &lt;Guid&gt;] [-IncludeID] [-Path &lt;String&gt;] [-TermStoreName &lt;String&gt;] [-Force]
+<pre><code class="lang-powershell">Export-PnPTaxonomy [-TermSetId &lt;Guid&gt;] [-IncludeID] [-ExcludeDeprecated] [-Path &lt;String&gt;] [-TermStoreName &lt;String&gt;] [-Force]
  [-Delimiter &lt;String&gt;] [-Lcid &lt;Int32&gt;] [-Encoding &lt;Encoding&gt;] [-Connection &lt;PnPConnection&gt;] 
   
 </code></pre>
@@ -178,10 +178,32 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-excludedeprecated">-ExcludeDeprecated</h3>
+<p>If specified will exclude the deprecated taxonomy items in the output. Applicable only if you specify TermSetId or TermStoreName.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-excludedeprecated-1">-ExcludeDeprecated</h3>
+<p>If specified will exclude the deprecated taxonomy items in the output. Applicable only if you specify TermSetId or TermStoreName.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: TermSet
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-lcid">-Lcid</h3>
 <p>Specify the language code for the exported terms</p>
 <pre><code class="lang-yaml">Type: Int32
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named
@@ -203,7 +225,7 @@ Accept wildcard characters: False
 <h3 id="-termsetid">-TermSetId</h3>
 <p>If specified, will export the specified termset only</p>
 <pre><code class="lang-yaml">Type: Guid
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named
@@ -214,7 +236,7 @@ Accept wildcard characters: False
 <h3 id="-termstorename">-TermStoreName</h3>
 <p>Term store to export; if not specified the default term store is used.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: TermSet
 
 Required: False
 Position: Named

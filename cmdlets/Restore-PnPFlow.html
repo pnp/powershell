@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Enable-PnPFlow | PnP PowerShell </title>
+    <title>Restore-PnPFlow | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Enable-PnPFlow | PnP PowerShell ">
+    <meta name="title" content="Restore-PnPFlow | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,34 +77,46 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="enable-pnpflow">Enable-PnPFlow</h1>
+  <h1 id="restore-pnpflow">Restore-PnPFlow</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
 <li>Azure: management.azure.com</li>
 </ul>
-<p>Enables a specific flow</p>
+<p>Restores a specific flow</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Enable-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin] 
-[-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Restore-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerAutomateFlowPipeBind&gt; [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet enables a specific flow</p>
+<p>This cmdlet Restores a specific flow</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Enable-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">Restore-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>Enables the specified flow in the default environment</p>
+<p>Restores the specified flow located in the default environment.</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Enable-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">Restore-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>Enables the specified flow in the specified environment</p>
+<p>Restores the specified flow located in the specified environment</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet.
+Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-environment">-Environment</h3>
 <p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
 <pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
@@ -118,37 +130,12 @@ Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Identity of the flow to enable</p>
+<p>Identity of the flow to Restore.</p>
 <pre><code class="lang-yaml">Type: PowerAutomateFlowPipeBind
 Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-asadmin">-AsAdmin</h3>
-<p>Enable the flow as an administrator</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet.
-Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-Aliases:
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -90,22 +90,20 @@
 </ul>
 <p>Removes the specified flow.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin]
+<pre><code class="lang-powershell">Remove-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerAutomateFlowPipeBind&gt; [-AsAdmin]
  [-Force] [-ThrowExceptionIfPowerAutomateNotFound] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet removes the specified flow.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPFlowEnvironment
-Remove-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">Remove-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
-<p>This removes the specified flow.</p>
-<h3 id="example-1-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPFlowEnvironment
-Remove-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -ThrowExceptionIfPowerAutomateNotFound
+<p>This removes the specified flow from the default environment.</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Remove-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -ThrowExceptionIfPowerAutomateNotFound
 </code></pre>
-<p>This removes the specified flow and throws an exception if the specified flow is not present.</p>
+<p>This removes the specified flow located in the specified environment and throws an exception if the specified flow is not present.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-asadmin">-AsAdmin</h3>
 <p>If specified removes the flow as an administrator.</p>
@@ -133,15 +131,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-environment">-Environment</h3>
-<p>The name of the environment which contains the flow.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>

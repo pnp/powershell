@@ -91,13 +91,13 @@
 <p>Exports a Microsoft Power Automate Flow</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="as-zip-package">As ZIP Package</h3>
-<pre><code class="lang-powershell">Export-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt;
+<pre><code class="lang-powershell">Export-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerAutomateFlowPipeBind&gt;
  [-AsZipPackage] [-PackageDisplayName &lt;String&gt;] [-PackageDescription &lt;String&gt;] [-PackageCreatedBy &lt;String&gt;]
  [-PackageSourceEnvironment &lt;String&gt;] [-OutPath &lt;String&gt;] [-Force] [-Connection &lt;PnPConnection&gt;]
  
 </code></pre>
 <h3 id="as-json">As Json</h3>
-<pre><code class="lang-powershell">Export-PnPFlow -Environment &lt;PowerAutomateEnvironmentPipeBind&gt; -Identity &lt;PowerAutomateFlowPipeBind&gt;
+<pre><code class="lang-powershell">Export-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerAutomateFlowPipeBind&gt;
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -105,11 +105,14 @@
 <p>Many times exporting a Microsoft Power Automate Flow will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the Flow. To display these errors when trying to export a Flow, provide the -Verbose flag with your export request. If not provided, these errors will silently be ignored.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment -IsDefault $true
-Export-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+<pre><code class="lang-powershell">Export-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+</code></pre>
+<p>This will export the specified Microsoft Power Automate Flow from the specified Power Platform environment as an output to the current output of PowerShell</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Export-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 </code></pre>
 <p>This will export the specified Microsoft Power Automate Flow from the default Power Platform environment as an output to the current output of PowerShell</p>
-<h3 id="example-2">Example 2</h3>
+<h3 id="example-3">Example 3</h3>
 <pre><code class="lang-powershell">Get-PnPPowerPlatformEnvironment | foreach { Get-PnPFlow -Environment $_.Name } | foreach { Export-PnPFlow -Environment $_.Properties.EnvironmentDetails.Name -Identity $_ -OutPath &quot;c:\flows\$($_.Name).zip&quot; -AsZipPackage }
 </code></pre>
 <p>This will export all the Microsoft Power Automate Flows available within the tenant from all users from all the available Power Platform environments as a ZIP package for each of them to a local folder c:\flows</p>
@@ -140,15 +143,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-environment">-Environment</h3>
-<p>The environment which contains the flow.</p>
-<pre><code class="lang-yaml">Type: PowerAutomateEnvironmentPipeBind
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>

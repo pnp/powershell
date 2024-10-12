@@ -6501,6 +6501,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Restore-PnPFlow.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Restore-PnPFlow.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Restore-PnPListItemVersion.md",
       "output": {
         ".html": {

@@ -90,7 +90,7 @@
 </ul>
 <p>Exports a Microsoft Power App</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code>Export-PnPPowerApp -Environment &lt;PowerPlatformEnvironmentPipeBind&gt; -Identity &lt;PowerAppPipeBind&gt;
+<pre><code>Export-PnPPowerApp [-Environment &lt;PowerPlatformEnvironmentPipeBind&gt;] -Identity &lt;PowerAppPipeBind&gt;
  [-PackageDisplayName &lt;String&gt;] [-PackageDescription &lt;String&gt;] [-PackageCreatedBy &lt;String&gt;]
  [-PackageSourceEnvironment &lt;String&gt;] [-OutPath &lt;String&gt;] [-Force] [-Connection &lt;PnPConnection&gt;]
  [&lt;CommonParameters&gt;]
@@ -100,15 +100,13 @@
 <p>Many times exporting a Microsoft Power App will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the App. To display these errors when trying to export a App, provide the -Verbose flag with your export request. If not provided, these errors will silently be ignored.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment -IsDefault $true
-Export-PnPPowerApp -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath &quot;C:\Users\user1\Downloads\test_20230408152624.zip&quot;
+<pre><code class="lang-powershell">Export-PnPPowerApp -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath &quot;C:\Users\user1\Downloads\test_20230408152624.zip&quot;
 </code></pre>
 <p>This will export the specified Microsoft Power App from the default Power Platform environment as an output to the path specified in the command as -OutPath</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">$environment = Get-PnPPowerPlatformEnvironment -IsDefault $true
-Export-PnPPowerApp -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath &quot;C:\Users\user1\Downloads\test_20230408152624.zip&quot; -PackageDisplayName &quot;MyAppDisplayName&quot; -PackageDescription &quot;Package exported using PnP Powershell&quot; -PackageCreatedBy &quot;Siddharth Vaghasia&quot; -PackageSourceEnvironment &quot;UAT Environment&quot;
+<pre><code class="lang-powershell">Export-PnPPowerApp -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath &quot;C:\Users\user1\Downloads\test_20230408152624.zip&quot; -PackageDisplayName &quot;MyAppDisplayName&quot; -PackageDescription &quot;Package exported using PnP Powershell&quot; -PackageCreatedBy &quot;Siddharth Vaghasia&quot; -PackageSourceEnvironment &quot;UAT Environment&quot;
 </code></pre>
-<p>This will export the specified Microsoft Power App from the default Power Platform environment with metadata specified</p>
+<p>This will export the specified Microsoft Power App from the specified Power Platform environment with metadata specified</p>
 <h3 id="example-3">Example 3</h3>
 <pre><code class="lang-powershell">Get-PnPPowerPlatformEnvironment | foreach { Get-PnPPowerApp -Environment $_.Name } | foreach { Export-PnPPowerApp -Environment $_.Properties.EnvironmentDetails.Name -Identity $_ -OutPath &quot;C:\Users\user1\Downloads\$($_.Name).zip&quot; }
 </code></pre>
@@ -128,15 +126,15 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-environment">-Environment</h3>
-<p>The environment which contains the App.</p>
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
 <pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
