@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.Files
                 serverRelativeUrl = Url;
             }
 
-            IFile sourceFile = PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl, p => p.VroomDriveID, p => p.VroomItemID);
+            IFile sourceFile = Connection.PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl, p => p.VroomDriveID, p => p.VroomItemID);
 
             WriteVerbose("Converting file to the specified format");
             var convertedFile = sourceFile.ConvertTo(new ConvertToOptions { Format = ConvertToFormat });

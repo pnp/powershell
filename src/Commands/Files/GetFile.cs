@@ -1,6 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
-using PnP.Core.Services;
 using PnP.Framework.Utilities;
 using System.IO;
 using System.Management.Automation;
@@ -86,7 +85,7 @@ namespace PnP.PowerShell.Commands.Files
                 case URLTOPATH:
 
                     // Get a reference to the file to download
-                    IFile fileToDownload = PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl);
+                    IFile fileToDownload = Connection.PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl);
                     string fileToDownloadName = !string.IsNullOrEmpty(Filename) ? Filename : fileToDownload.Name;
                     string fileOut = System.IO.Path.Combine(Path, fileToDownloadName);
 
@@ -142,13 +141,13 @@ namespace PnP.PowerShell.Commands.Files
 
                     try
                     {
-                        fileMemoryStream = PnPContext.Web.GetFileByServerRelativeUrl(ResourcePath.FromDecodedUrl(serverRelativeUrl).DecodedUrl, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        fileMemoryStream = Connection.PnPContext.Web.GetFileByServerRelativeUrl(ResourcePath.FromDecodedUrl(serverRelativeUrl).DecodedUrl, f => f.Author, f => f.Length, f => f.ModifiedBy, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                     }
                     catch (ServerException)
                     {
                         // Assume the cause of the exception is that a principal cannot be found and try again without:
                         // Fallback in case the creator or person having last modified the file no longer exists in the environment such that the file can still be downloaded
-                        fileMemoryStream = PnPContext.Web.GetFileByServerRelativeUrl(ResourcePath.FromDecodedUrl(serverRelativeUrl).DecodedUrl, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
+                        fileMemoryStream = Connection.PnPContext.Web.GetFileByServerRelativeUrl(ResourcePath.FromDecodedUrl(serverRelativeUrl).DecodedUrl, f => f.Length, f => f.Name, f => f.TimeCreated, f => f.TimeLastModified, f => f.Title);
                     }
 
                     var stream = new System.IO.MemoryStream(fileMemoryStream.GetContentBytes());
@@ -175,7 +174,7 @@ namespace PnP.PowerShell.Commands.Files
                         content.Write(buffer, 0, read);
                     }
                 }
-            }                
+            }
         }
     }
 }

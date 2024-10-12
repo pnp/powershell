@@ -1,16 +1,16 @@
-﻿using System;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFolderStorageMetric", DefaultParameterSetName = ParameterSet_BYSITRERELATIVEURL)]
     [OutputType(typeof(Model.SharePoint.FolderStorageMetric))]
     public class GetFolderStorageMetric : PnPWebCmdlet
-    {        
+    {
         private const string ParameterSet_BYSITRERELATIVEURL = "Folder via site relative URL";
         private const string ParameterSet_BYLIST = "Folder via list";
         private const string ParameterSet_BYFOLDER = "Folder via pipebind";
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Files
                     string serverRelativeUrl = null;
                     if (!string.IsNullOrEmpty(FolderSiteRelativeUrl))
                     {
-                        if(FolderSiteRelativeUrl == "Microsoft.SharePoint.Client.Folder")
+                        if (FolderSiteRelativeUrl == "Microsoft.SharePoint.Client.Folder")
                         {
                             throw new PSArgumentException($"Please pass in a Folder instance using the -{nameof(Identity)} parameter instead of piping it to this cmdlet");
                         }
@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Files
 
                     targetFolder = (string.IsNullOrEmpty(FolderSiteRelativeUrl)) ? CurrentWeb.RootFolder : CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
                     break;
-                
+
                 default:
                     throw new NotImplementedException($"Parameter set {ParameterSetName} not implemented");
             }
@@ -71,7 +71,7 @@ namespace PnP.PowerShell.Commands.Files
                     ClientContext.Load(targetFolder, t => t.ServerRelativeUrl);
                     ClientContext.ExecuteQueryRetry();
                 }
-                catch(Microsoft.SharePoint.Client.ServerException e)
+                catch (Microsoft.SharePoint.Client.ServerException e)
                 {
                     if (e.ServerErrorTypeName == "System.IO.FileNotFoundException")
                     {
@@ -83,7 +83,7 @@ namespace PnP.PowerShell.Commands.Files
                     }
                 }
 
-                IFolder folderWithStorageMetrics = PnPContext.Web.GetFolderByServerRelativeUrl(targetFolder.ServerRelativeUrl, f => f.StorageMetrics);
+                IFolder folderWithStorageMetrics = Connection.PnPContext.Web.GetFolderByServerRelativeUrl(targetFolder.ServerRelativeUrl, f => f.StorageMetrics);
                 var storageMetrics = folderWithStorageMetrics.StorageMetrics;
 
                 WriteObject(new Model.SharePoint.FolderStorageMetric
@@ -98,6 +98,6 @@ namespace PnP.PowerShell.Commands.Files
             {
                 throw new PSArgumentException($"Can't find the specified folder.");
             }
-        }       
+        }
     }
 }

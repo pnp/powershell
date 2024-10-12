@@ -179,7 +179,7 @@ namespace PnP.PowerShell.Commands.Admin
 
         private void CallBatchRequest(HttpMethod method, string requestUrl)
         {
-            var web = PnPContext.Web;
+            var web = Connection.PnPContext.Web;
             string contentString = null;
             if (ParameterSpecified(nameof(Content)))
             {
