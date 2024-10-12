@@ -1,11 +1,11 @@
-﻿using System;
-using System.Linq;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
+using System;
+using System.Linq;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Fields
 {
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Fields
 
         [Parameter(Mandatory = false)]
         public PnPBatch Batch;
-        
+
         protected override void ExecuteCmdlet()
         {
             if (ParameterSpecified(nameof(Batch)))
@@ -77,8 +77,9 @@ namespace PnP.PowerShell.Commands.Fields
             else
             {
                 var f = Identity.Field;
-                PnPContext.Web.EnsureProperties(w => w.Fields);
-                var fieldCollection = PnPContext.Web.Fields.AsRequested();
+                var pnpWeb = Connection.PnPContext.Web;
+                pnpWeb.EnsureProperties(w => w.Fields);
+                var fieldCollection = pnpWeb.Fields.AsRequested();
                 IField pnpField = null;
                 if (f == null)
                 {
