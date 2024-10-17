@@ -19,7 +19,7 @@ Removes the specified flow.
 ## SYNTAX
 
 ```powershell
-Remove-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin]
+Remove-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] -Identity <PowerAutomateFlowPipeBind> [-AsAdmin]
  [-Force] [-ThrowExceptionIfPowerAutomateNotFound] [-Connection <PnPConnection>] 
 ```
 
@@ -30,19 +30,17 @@ This cmdlet removes the specified flow.
 
 ### Example 1
 ```powershell
-$environment = Get-PnPFlowEnvironment
-Remove-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Remove-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 
-This removes the specified flow.
+This removes the specified flow from the default environment.
 
-### Example 1
+### Example 2
 ```powershell
-$environment = Get-PnPFlowEnvironment
-Remove-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -ThrowExceptionIfPowerAutomateNotFound
+Remove-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -ThrowExceptionIfPowerAutomateNotFound
 ```
 
-This removes the specified flow and throws an exception if the specified flow is not present.
+This removes the specified flow located in the specified environment and throws an exception if the specified flow is not present.
 
 ## PARAMETERS
 
@@ -78,17 +76,17 @@ Accept wildcard characters: False
 ```
 
 ### -Environment
-The name of the environment which contains the flow.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
-Type: PowerAutomateEnvironmentPipeBind
+Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 

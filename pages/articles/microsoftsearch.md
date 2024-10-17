@@ -305,3 +305,9 @@ After giving it some time to process and index the content you have ingested, de
 ![image](../images/microsoftsearch/endresult_vertical.png)
 
 ![image](../images/microsoftsearch/endresult_copilot.png)
+
+## What's next
+
+Once you have the basics in place, give it some time to index and content to start showing up in Microsoft Search and Microsoft Copilot. It typically should not take more than a few hours and very likely will take much less for it to appear.
+
+Once you have items in your index, you can utilize PnP PowerShell to see all the items you have indexed using [Get-PnPSearchExternalItem](../cmdlets/Get-PnPSearchExternalItem.md) and use [Remove-PnPSearchExternalItem](../cmdlets/Remove-PnPSearchExternalItem.md) to remove specific items from the index. It's up to you to define the content freshness by utilizing the [Set-PnPSearchExternalItem](../cmdlets/Set-PnPSearchExternalItem.md) cmdlet to add new or update existing items as often as you would like to. Can be for example every hour, every day, every month or at any interval you think makes sense for your use case. It's totally up to you to ensure the index stays actual and correct.

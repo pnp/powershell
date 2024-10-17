@@ -354,6 +354,13 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
+            if (ParameterSpecified(nameof(Connection)))
+            {
+                // Reuse some parameters of the passed in connection
+                WriteVerbose("Reusing some of the connection parameters from passed in connection");
+                ClientId = Connection.ClientId;
+            }
+
             if (AzureEnvironment == AzureEnvironment.Custom)
             {
                 SetCustomEndpoints();

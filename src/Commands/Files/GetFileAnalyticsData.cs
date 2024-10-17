@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Files
                 serverRelativeUrl = Url;
             }
 
-            IFile analyticsFile = PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl, p => p.VroomItemID, p => p.VroomDriveID);
+            IFile analyticsFile = Connection.PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl, p => p.VroomItemID, p => p.VroomDriveID);
 
             switch (ParameterSetName)
             {
