@@ -310,6 +310,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -HidePeoplePreviewingFiles
+Allows hiding of the presence indicators of users simultaneously editing files.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Url
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Identity
 The url of the site collection.
 
