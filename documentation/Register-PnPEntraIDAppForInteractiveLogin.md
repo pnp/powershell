@@ -177,6 +177,22 @@ Position: Named
 Accept pipeline input: False
 ```
 
+### -AzureEnvironment
+The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.
+
+```yaml
+Type: AzureEnvironment
+Parameter Sets: (All)
+Aliases:
+Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, Custom
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -LogoFilePath
 
 Sets the logo for the Azure AD application. Provide a full path to a local image file on your disk which you want to use as the logo.
