@@ -152,7 +152,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 {
                     var terms = taxSession.GetTermsById(termGroup.ToArray());
                     ClientContext.Load(terms);
-                    ClientContext.ExecuteQuery();
+                    ClientContext.ExecuteQueryRetry();
                     var deprecatedTerms = terms.Where(t => t.IsDeprecated);
                     //remove all deprecated terms
                     foreach (var deprecatedTerm in deprecatedTerms)

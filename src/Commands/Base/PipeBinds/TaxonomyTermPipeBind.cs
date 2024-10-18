@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Taxonomy;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Taxonomy;
 
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
@@ -41,65 +41,76 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Term GetTerm(ClientContext clientContext, TermStore termStore, TermSet termSet, bool recursive, Expression<Func<Term, object>>[] expressions = null, bool includeDeprecated = false)
         {
-            Term term = null;
-            if (_id != Guid.Empty)
+            try
             {
-                term = termStore.GetTerm(_id);
-            }
-            else if (!string.IsNullOrEmpty(_title) && termSet != null && termStore != null)
-            {
-                var termName = TaxonomyExtensions.NormalizeName(_title);
-                if (!recursive)
+                Term term = null;
+                if (_id != Guid.Empty)
                 {
-                    term = termSet.Terms.GetByName(termName);
+                    term = termStore.GetTerm(_id);
                 }
-                else
+                else if (!string.IsNullOrEmpty(_title) && termSet != null && termStore != null)
                 {
-                    if (includeDeprecated)
+                    var termName = TaxonomyExtensions.NormalizeName(_title);
+                    if (!recursive)
                     {
-                        var allTerms = termSet.GetAllTermsIncludeDeprecated();
-                        clientContext.Load(allTerms);
-                        clientContext.ExecuteQueryRetry();
-
-                        if (allTerms.AreItemsAvailable)
-                        {
-                            term = allTerms.Where(t => t.Name == termName).FirstOrDefault();
-                        }
+                        term = termSet.Terms.GetByName(termName);
                     }
                     else
                     {
-                        var lmi = new LabelMatchInformation(clientContext)
+                        if (includeDeprecated)
                         {
-                            TrimUnavailable = true,
-                            TermLabel = termName
-                        };
+                            var allTerms = termSet.GetAllTermsIncludeDeprecated();
+                            clientContext.Load(allTerms);
+                            clientContext.ExecuteQueryRetry();
 
-                        var termMatches = termSet.GetTerms(lmi);
-                        clientContext.Load(termMatches);
-                        clientContext.ExecuteQueryRetry();
-
-                        if (termMatches.AreItemsAvailable)
-                        {
-                            term = termMatches.FirstOrDefault();
+                            if (allTerms.AreItemsAvailable)
+                            {
+                                term = allTerms.Where(t => t.Name == termName).FirstOrDefault();
+                            }
                         }
-                    }
+                        else
+                        {
+                            var lmi = new LabelMatchInformation(clientContext)
+                            {
+                                TrimUnavailable = true,
+                                TermLabel = termName
+                            };
 
+                            var termMatches = termSet.GetTerms(lmi);
+                            clientContext.Load(termMatches);
+                            clientContext.ExecuteQueryRetry();
+
+                            if (termMatches.AreItemsAvailable)
+                            {
+                                term = termMatches.FirstOrDefault();
+                            }
+                        }
+
+                    }
                 }
+                else
+                {
+                    throw new PSArgumentException("Not enough parameters specified to succesfully find the term");
+                }
+                if (expressions != null)
+                {
+                    clientContext.Load(term, expressions);
+                }
+                else
+                {
+                    clientContext.Load(term);
+                }
+                clientContext.ExecuteQueryRetry();
+                return term;
             }
-            else
+            catch (ServerException e)
             {
-                throw new PSArgumentException("Not enough parameters specified to succesfully find the term");
+                if (e.ServerErrorTypeName == "System.ArgumentOutOfRangeException")
+                {
+                    throw new PSArgumentException("The specified term does not exist");
+                }
+                throw;
             }
-            if (expressions != null)
-            {
-                clientContext.Load(term, expressions);
-            }
-            else
-            {
-                clientContext.Load(term);
-            }
-            clientContext.ExecuteQueryRetry();
-            return term;
         }
 
         public TaxonomyTermPipeBind()
