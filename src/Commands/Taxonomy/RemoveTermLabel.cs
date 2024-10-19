@@ -2,10 +2,7 @@
 using Microsoft.SharePoint.Client.Taxonomy;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Taxonomy
@@ -71,7 +68,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
             if (term != null)
             {
                 term.EnsureProperties(t => t.Name, t => t.Id);
-                if (ShouldProcess($"Delete label {Label} for language {Lcid} from Term {term.Name} with id {term.Id}"))
+                if (ShouldContinue($"Delete label {Label} for language {Lcid} from Term {term.Name} with id {term.Id}", Properties.Resources.Confirm))
                 {
                     var labels = term.GetAllLabels(Lcid);
                     ClientContext.Load(labels);

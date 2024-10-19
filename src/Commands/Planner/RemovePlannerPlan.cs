@@ -1,8 +1,8 @@
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Planner
 {
@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Planner
                 var planId = Identity.GetId(this, Connection, AccessToken, groupId);
                 if (!string.IsNullOrEmpty(planId))
                 {
-                    if (ShouldProcess($"Delete plan with id {planId}"))
+                    if (ShouldContinue($"Delete plan with id {planId}", Properties.Resources.Confirm))
                     {
                         PlannerUtility.DeletePlan(this, Connection, AccessToken, planId);
                     }
