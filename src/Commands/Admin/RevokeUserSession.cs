@@ -5,7 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsSecurity.Revoke, "PnPUserSession", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsSecurity.Revoke, "PnPUserSession")]
     public class RevokeUserSession : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Admin
         public string User;
         protected override void ExecuteCmdlet()
         {
-            if (ShouldProcess($"Sign out user {User} from all devices"))
+            if (ShouldContinue($"Sign out user {User} from all devices ?", Properties.Resources.Confirm))
             {
                 var office365Tenant = new Office365Tenant(AdminContext);
 

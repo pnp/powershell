@@ -1,8 +1,9 @@
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Properties;
 using PnP.PowerShell.Commands.Utilities;
+using System.Management.Automation;
 
 namespace SharePointPnP.PowerShell.Commands.Graph
 {
@@ -40,7 +41,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                         var bucket = Identity.GetBucket(this, Connection, AccessToken, planId);
                         if (bucket != null)
                         {
-                            if (ShouldProcess($"Remove bucket '{bucket.Name}'"))
+                            if (ShouldContinue($"Remove bucket '{bucket.Name}'", Resources.Confirm))
                             {
                                 PlannerUtility.RemoveBucket(this, Connection, AccessToken, bucket.Id);
                             }
@@ -65,7 +66,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
                 var bucket = Identity.GetBucket(this, Connection, AccessToken, BucketId);
                 if (bucket != null)
                 {
-                    if (ShouldProcess($"Remove bucket '{bucket.Name}'"))
+                    if (ShouldContinue($"Remove bucket '{bucket.Name}'", Resources.Confirm))
                     {
                         PlannerUtility.RemoveBucket(this, Connection, AccessToken, BucketId);
                     }

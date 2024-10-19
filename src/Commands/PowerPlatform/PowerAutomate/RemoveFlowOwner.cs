@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
 
             WriteVerbose("Microsoft Graph access token acquired");
-            
+
             Model.AzureAD.User user;
             if (Guid.TryParse(User, out Guid identityGuid))
             {
@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
             };
 
-            if(Force || ShouldContinue($"Remove flow owner with id '{user.Id.Value}' from flow '{flowName}'?", "Remove flow owner"))
+            if (Force || ShouldContinue($"Remove flow owner with id '{user.Id.Value}' from flow '{flowName}'?", Properties.Resources.Confirm))
             {
                 string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
                 WriteVerbose($"Removing user {user.Id.Value} permissions from flow {flowName} in environment {environmentName}");

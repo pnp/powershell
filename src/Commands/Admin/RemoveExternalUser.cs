@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Admin
             var office365Tenant = new Office365Tenant(AdminContext);
 
             var results = office365Tenant.RemoveExternalUsers(UniqueIDs);
-            if (this.ShouldProcess(nameof(UniqueIDs), "Remove External Users"))
+            if (ShouldContinue("Remove External Users ?", Properties.Resources.Confirm))
             {
                 var resultObject = new PSObject();
                 AdminContext.Load(results);

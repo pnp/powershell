@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            if (Force || ShouldContinue("Do you want to enable the Tenant Service Principal?", "Continue?"))
+            if (Force || ShouldContinue("Do you want to enable the Tenant Service Principal?", Properties.Resources.Confirm))
             {
                 var servicePrincipal = new SPOWebAppServicePrincipal(AdminContext);
                 servicePrincipal.AccountEnabled = true;

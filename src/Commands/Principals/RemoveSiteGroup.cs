@@ -1,7 +1,7 @@
-﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
@@ -23,8 +23,8 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 url = Site.Url;
             }
-            var site = this.Tenant.GetSiteByUrl(url);
-            if(ShouldProcess($"Deletes group {Identity} from the site {url}"))
+            var site = Tenant.GetSiteByUrl(url);
+            if (ShouldContinue($"Deletes group {Identity} from the site {url}", Properties.Resources.Confirm))
             {
                 var siteGroups = site.RootWeb.SiteGroups;
                 siteGroups.RemoveByLoginName(Identity);

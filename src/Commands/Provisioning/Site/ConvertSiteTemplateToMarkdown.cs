@@ -1,11 +1,10 @@
+using PnP.Framework.Provisioning.Providers;
+using PnP.Framework.Provisioning.Providers.Markdown;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Properties;
+using PnP.PowerShell.Commands.Utilities;
 using System.IO;
 using System.Management.Automation;
-using PnP.Framework.Provisioning.Providers;
-using PnP.Framework.Provisioning.Providers.Xml;
-using PnP.Framework.Provisioning.Providers.Markdown;
-using PnP.PowerShell.Commands.Properties;
-using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
@@ -35,8 +34,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 throw new PSArgumentException("File does not exist", nameof(TemplatePath));
             }
 
-
-            if (ShouldProcess($"Converts a PnP Site Template to markdown format"))
+            if (ShouldContinue($"Converts a PnP Site Template to markdown format", Properties.Resources.Confirm))
             {
                 var process = false;
                 var template = ProvisioningHelper.LoadSiteTemplateFromFile(TemplatePath, null, (exception) =>
