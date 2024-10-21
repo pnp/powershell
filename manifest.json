@@ -5941,16 +5941,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Remove-PnPSiteClassitication.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Remove-PnPSiteClassitication.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPSiteCollectionAdmin.md",
       "output": {
         ".html": {
