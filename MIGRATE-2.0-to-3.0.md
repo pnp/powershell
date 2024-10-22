@@ -2,9 +2,7 @@
 
 _This is a draft document, version 3 is not yet available. You can try this out with the nightly builds starting from 2.99.1 or later_
 
-The 3.x version of PnP PowerShell is based exclusively on .NET 8.0, which means that it will not work on older PowerShell editions like PowerShell 5.1, ISE or PowerShell 7.3 or older. PowerShell 7.4 or later is required.
-
-- The 3.x version of PnP PowerShell will work only on PowerShell 7.4 or later versions.
+The 3.x version of PnP PowerShell is based exclusively on .NET 8.0, which means that it will not work on older PowerShell editions like PowerShell 5.1, ISE or PowerShell 7.3 or older. It will work only on **PowerShell 7.4 or later editions.**
 
 ## Steps to update from 2.x to 3.x
 
@@ -39,7 +37,7 @@ Recommend referring to these 2 links:
 - [DevOps Snack: Change PowerShell version in YAML](https://microsoft-bitools.blogspot.com/2021/02/devops-snack-change-powershell-version.html)
 - [How to enable PowerShell core in Azure Pipeline?](https://theautomationcode.com/how-to-enable-powershell-core-in-azure-pipeline/)
 
-## Breaking changes
+## Breaking changes in 3.0
 
 | **Cmdlet** | **Comment** |
 | ----------- | ---------------------- |
@@ -54,10 +52,10 @@ Recommend referring to these 2 links:
 | Get-PnPAppAuthAccessToken | It has been removed. Use `Get-PnPAccessToken -ResourceTypeName SharePoint` instead to get SharePoint access token. |
 | Request-PnPAccessToken | It has been removed. Use `Get-PnPAccessToken` instead. |
 | Get-PnPGraphAccessToken | It has been removed. Use `Get-PnPAccessToken` instead. |
+| Remove-PnPUser | The parameter `-Confirm` has been removed. Use `-Force` instead. |
+| Remove-PnPAvailableSiteClassification | The parameter `-Confirm` has been removed. Use `-Force` instead. |
 
 ## Other notable changes
-
-- ...
 
 ## Changes to output type
 

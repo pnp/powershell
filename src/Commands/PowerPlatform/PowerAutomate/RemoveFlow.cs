@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
             var flowName = Identity.GetName();
 
-            if (Force || ShouldContinue($"Remove flow with name '{flowName}'?", "Remove flow"))
+            if (Force || ShouldContinue($"Remove flow with name '{flowName}'?", Properties.Resources.Confirm))
             {
                 WriteVerbose($"Attempting to delete Flow with name {flowName}");
                 if (ThrowExceptionIfPowerAutomateNotFound)

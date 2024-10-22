@@ -124,9 +124,8 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-		<PackageReference Include="System.Management.Automation" Version="7.4.5" />
-		<PackageReference Include="TextCopy" Version="6.2.1" />
-		
+		<PackageReference Include="System.Management.Automation" Version="7.4.4" />
+ 	  <PackageReference Include="TextCopy" Version="6.2.1" />		
 	</ItemGroup>
 
 	<ItemGroup>

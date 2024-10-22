@@ -58,7 +58,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Confirm
+### -Force
 If provided or set to $true, a confirmation will be asked before the actual remove takes place. If omitted or set to $false, it will remove the site classification(s) without asking for confirmation.
 
 ```yaml

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Globalization;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
@@ -55,7 +51,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 var termSet = TermSet.GetTermSet(termGroup);
                 term = Identity.GetTerm(ClientContext, termStore, termSet, false, null);
             }
-            if (ShouldProcess($"Delete term {term.Name} with id {term.Id}"))
+            if (ShouldContinue($"Delete term {term.Name} with id {term.Id}", Properties.Resources.Confirm))
             {
                 term.DeleteObject();
                 termStore.CommitAll();

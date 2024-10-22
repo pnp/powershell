@@ -47,6 +47,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Get-PnPSearchCrawlLog` cmdlet now shows a warning in case application permissions are used. [#4391](https://github.com/pnp/powershell/pull/4391)
 - All Power Platform cmdlets no longer require an environment to be specified. If omitted, the default environment will be retrieved and used. [#4415](https://github.com/pnp/powershell/pull/4415)
 - When passing in an existing connection using `-Connection` on `Connect-PnPOnline`, the clientid from the passed in connection will be used for the new connection [#4425](https://github.com/pnp/powershell/pull/4425)
+- Removed `-Confirm` parameter from `Remove-PnPUser` and `Remove-PnPAvailableSiteClassification` cmdlets. Use `-Force` instead. [#4455](https://github.com/pnp/powershell/pull/4455)
 
 ### Fixed
 
@@ -60,6 +61,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Connect-PnPOnline` not working correctly when `-DeviceLogin` and `-LaunchBrowser` both are specified. It used to open it in a popup. Now it correctly launches the browser. [#4325](https://github.com/pnp/powershell/pull/4345)
 - `Export-PnPUserInfo`, `Export-PnPUserProfile` and `Remove-PnPUserProfile` cmdlets now work properly with proper `-Connection` parameter if specified. [#4389](https://github.com/pnp/powershell/pull/4389)
 - Fixed `Get-PnPAzureADAppSitePermission`, `Grant-PnPAzureADAppSitePermission` and `Revoke-PnPAzureADAppSitePermission` cmdlets throwing an error when the site URL is not specified and the app registration used only having Graph permissions [#4421](https://github.com/pnp/powershell/pull/4421)
+- Fixed `Get-PnPTerm` cmdlet not working correctly when `-ParentTerm` parameter is specified. [#4454](https://github.com/pnp/powershell/pull/4454)
+- Fixed the PnP PowerShell version check to only check nightly version in nightly builds and major version in release builds. [#4453](https://github.com/pnp/powershell/pull/4453)
 
 ### Removed
 

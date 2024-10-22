@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            if (Force || ShouldContinue($"Approve request {RequestId}?", "Continue"))
+            if (Force || ShouldContinue($"Approve request {RequestId}?", Properties.Resources.Confirm))
             {
                 var servicePrincipal = new SPOWebAppServicePrincipal(AdminContext);
                 var request = servicePrincipal.PermissionRequests.GetById(RequestId);

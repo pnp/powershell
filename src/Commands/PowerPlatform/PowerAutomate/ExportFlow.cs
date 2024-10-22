@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
                 if (System.IO.File.Exists(OutPath))
                 {
-                    if (!Force && !ShouldContinue($"File '{OutPath}' exists. Overwrite?", "Export Flow"))
+                    if (!Force && !ShouldContinue($"File '{OutPath}' exists. Overwrite?", Properties.Resources.Confirm))
                     {
                         // Exit cmdlet
                         return;

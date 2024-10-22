@@ -47,26 +47,12 @@ Remove the user with e-mail address user@tenant.onmicrosoft.com from the User In
 
 ### EXAMPLE 4
 ```powershell
-Remove-PnPUser -Identity i:0#.f|membership|user@tenant.onmicrosoft.com -Confirm:$false
+Remove-PnPUser -Identity i:0#.f|membership|user@tenant.onmicrosoft.com -Force:$false
 ```
 
 Remove the user with LoginName i:0#.f|membership|user@tenant.onmicrosoft.com from the User Information List of the current site collection without asking to confirm the removal first
 
 ## PARAMETERS
-
-### -Confirm
-Specifying the Confirm parameter will allow the confirmation question to be skipped
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
@@ -109,8 +95,6 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
-
-
 
 ## RELATED LINKS
 

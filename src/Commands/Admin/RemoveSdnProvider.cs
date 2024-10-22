@@ -4,14 +4,14 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Admin
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPSdnProvider", SupportsShouldProcess = true)]
+    [Cmdlet(VerbsCommon.Remove, "PnPSdnProvider")]
     public class RemoveSdnProvider : PnPAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {
-            if (ShouldProcess("Removes a SDN Provider"))
+            if (ShouldContinue("Removes a SDN Provider", Properties.Resources.Confirm))
             {
-                this.Tenant.RemoveSdnProvider();
+                Tenant.RemoveSdnProvider();
                 AdminContext.ExecuteQueryRetry();
             }
         }

@@ -1,9 +1,7 @@
+using PnP.PowerShell.Commands.Model;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-
-using PnP.Core.Services;
-using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -35,7 +33,7 @@ namespace PnP.PowerShell.Commands.Base
             bool batchExecuted = Batch.Executed;
             if (batchExecuted)
             {
-                if (Force || ShouldContinue($"Batch has been invoked before with {Batch.Requests.Count} requests. Invoke again?", "Invoke Batch"))
+                if (Force || ShouldContinue($"Batch has been invoked before with {Batch.Requests.Count} requests. Invoke again?", Properties.Resources.Confirm))
                 {
                     batchExecuted = false;
                 }
