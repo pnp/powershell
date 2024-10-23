@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
@@ -7,6 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantInfo")]
+    [RequiredApiApplicationPermissions("graph/CrossTenantInformation.ReadBasic.All")]
     [OutputType(typeof(Model.TenantInfo))]
     public class GetTenantInfo : PnPAdminCmdlet
     {
@@ -35,13 +37,13 @@ namespace PnP.PowerShell.Commands.Admin
             var requestUrl = BuildRequestUrl();
 
             WriteVerbose($"Making call to {requestUrl} to request tenant information");
-            var results = RestHelper.Get<Model.TenantInfo>(Connection.HttpClient, requestUrl, graphAccessToken);
+            var results = GraphHelper.Get<Model.TenantInfo>(this, Connection, requestUrl, graphAccessToken);
             WriteObject(results, true);
         }
 
         private string BuildRequestUrl()
         {
-            var baseUrl = $"https://{Connection.GraphEndPoint}/v1.0/tenantRelationships/";
+            var baseUrl = $"/v1.0/tenantRelationships/";
             var query = string.Empty;
             switch (ParameterSetName)
             {
