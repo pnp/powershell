@@ -12,6 +12,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInfo.html
 ## SYNOPSIS
 Gets information about any tenant
 
+## Required Permissions
+Graph: CrossTenantInformation.ReadBasic.All
+
 ## SYNTAX
 
 ### Current Tenant (default)
