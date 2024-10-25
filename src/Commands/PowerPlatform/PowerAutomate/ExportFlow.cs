@@ -15,8 +15,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         private const string ParameterSet_ASJSON = "As Json";
         private const string ParameterSet_ASPACKAGE = "As ZIP Package";
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASPACKAGE)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASJSON)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ASPACKAGE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ASJSON)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASPACKAGE)]
@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
                 if (System.IO.File.Exists(OutPath))
                 {
-                    if (!Force && !ShouldContinue($"File '{OutPath}' exists. Overwrite?", "Export Flow"))
+                    if (!Force && !ShouldContinue($"File '{OutPath}' exists. Overwrite?", Properties.Resources.Confirm))
                     {
                         // Exit cmdlet
                         return;
@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
             }
 
-            var environmentName = Environment.GetName();
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
             var flowName = Identity.GetName();
 
             if (AsZipPackage)

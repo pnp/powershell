@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 user.EnsureProperty(u => u.LoginName);
             }
-            if (Force || ShouldContinue($"Remove alert {Identity.Id} for {user.LoginName}?", "Remove alert"))
+            if (Force || ShouldContinue($"Remove alert {Identity.Id} for {user.LoginName}?", Properties.Resources.Confirm))
             {
                 user.Alerts.DeleteAlert(Identity.Id);
                 ClientContext.ExecuteQueryRetry();

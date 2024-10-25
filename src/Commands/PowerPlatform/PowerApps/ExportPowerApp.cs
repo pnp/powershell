@@ -1,16 +1,9 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Utilities.REST;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Management.Automation;
-using System.Net.Http;
-using System.Text.Json;
-using System.Threading;
 using PnP.PowerShell.Commands.Utilities;
+using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
@@ -18,9 +11,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
     [RequiredApiApplicationPermissions("https://management.azure.com/.default")]
     public class ExportPowerApp : PnPAzureManagementApiCmdlet
     {
-
-        [Parameter(Mandatory = true)]
-
+        [Parameter(Mandatory = false)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
         [Parameter(Mandatory = true)]
@@ -58,7 +49,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 }
                 if (System.IO.File.Exists(OutPath))
                 {
-                    if (!Force && !ShouldContinue($"File '{OutPath}' exists. Overwrite?", "Export App"))
+                    if (!Force && !ShouldContinue($"File '{OutPath}' exists. Overwrite?", Properties.Resources.Confirm))
                     {
                         // Exit cmdlet
                         return;
@@ -66,13 +57,13 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 }
             }
 
-            var environmentName = Environment.GetName();
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
             var appName = Identity.GetName();
 
             var wrapper = PowerAppsUtility.GetWrapper(Connection.HttpClient, environmentName, AccessToken, appName, Connection.AzureEnvironment);
-           
+
             if (wrapper.Status == Model.PowerPlatform.PowerApp.Enums.PowerAppExportStatus.Succeeded)
-            { 
+            {
                 foreach (var resource in wrapper.Resources)
                 {
                     if (resource.Value.Type == "Microsoft.PowerApps/apps")
@@ -80,16 +71,17 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                         resource.Value.SuggestedCreationType = "Update";
                     }
                 }
-                var objectDetails = new {
-                        displayName = PackageDisplayName,
-                        description = PackageDescription,
-                        creator = PackageCreatedBy,
-                        sourceEnvironment = PackageSourceEnvironment
+                var objectDetails = new
+                {
+                    displayName = PackageDisplayName,
+                    description = PackageDescription,
+                    creator = PackageCreatedBy,
+                    sourceEnvironment = PackageSourceEnvironment
                 };
-                var responseHeader = PowerAppsUtility.GetResponseHeader(Connection.HttpClient, environmentName,AccessToken, appName, wrapper, objectDetails);
+                var responseHeader = PowerAppsUtility.GetResponseHeader(Connection.HttpClient, environmentName, AccessToken, appName, wrapper, objectDetails);
 
 
-                var packageLink = PowerAppsUtility.GetPackageLink(Connection.HttpClient,Convert.ToString(responseHeader.Location),AccessToken);
+                var packageLink = PowerAppsUtility.GetPackageLink(Connection.HttpClient, Convert.ToString(responseHeader.Location), AccessToken);
                 var getFileByteArray = PowerAppsUtility.GetFileByteArray(Connection.HttpClient, packageLink, AccessToken);
                 var fileName = string.Empty;
                 if (ParameterSpecified(nameof(OutPath)))
@@ -120,6 +112,6 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 }
             }
         }
-        
+
     }
 }

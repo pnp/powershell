@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Admin
 
             if (Tenant.IsMultipleVivaConnectionsFlightEnabled)
             {
-                if (Force.IsPresent || ShouldContinue("Before you update a home site or Viva Connections experiences, make sure you review the documentation at https://aka.ms/homesites. Continue?", string.Empty))
+                if (Force || ShouldContinue("Before you update a home site or Viva Connections experiences, make sure you review the documentation at https://aka.ms/homesites.", Properties.Resources.Confirm))
                 {
                     IEnumerable<TargetedSiteDetails> enumerable = Tenant.GetTargetedSitesDetails()?.Where((TargetedSiteDetails hs) => !hs.IsVivaBackendSite);
                     AdminContext.ExecuteQueryRetry();
@@ -61,9 +61,9 @@ namespace PnP.PowerShell.Commands.Admin
                     WriteObject(clientResult.Value);
                 }
             }
-            else if (Force.IsPresent || ShouldContinue("Before you set a Home site, make sure you review the documentation at https://aka.ms/homesites. Continue?", string.Empty))
+            else if (Force || ShouldContinue("Before you set a Home site, make sure you review the documentation at https://aka.ms/homesites.", Properties.Resources.Confirm))
             {
-                Tenant.ValidateVivaHomeParameterExists(VivaConnectionsDefaultStart);                
+                Tenant.ValidateVivaHomeParameterExists(VivaConnectionsDefaultStart);
                 HomeSiteConfigurationParam configuration = null;
                 if (VivaConnectionsDefaultStart || DraftMode)
                 {
@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Admin
                 ClientResult<string> clientResult = Tenant.SetSPHSiteWithConfiguration(HomeSiteUrl, configuration);
                 AdminContext.ExecuteQueryRetry();
                 WriteObject(clientResult.Value);
-            }            
+            }
         }
 
         private static bool IsSameSiteUrl(string url1, string url2)

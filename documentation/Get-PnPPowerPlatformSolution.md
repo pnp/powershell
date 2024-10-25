@@ -30,20 +30,20 @@ This cmdlet returns the PowerPlatform solution on a given enviroment.
 
 ### Example 1
 ```powershell
-Get-PnPPowerPlatformSolution -Environment (Get-PnPPowerPlatformEnvironment)
+Get-PnPPowerPlatformSolution -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment")
 ```
 This returns all the solutions for a given Power Platform environment
 
 ### Example 2
 ```powershell
-Get-PnPPowerPlatformSolution -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -Name 'My Solution Name'
+Get-PnPPowerPlatformSolution -Name 'My Solution Name'
 ```
 This returns a specific solution on the default Power Platform environment
 
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment instance to retrieve the available solutions for. If omitted, the default environment will be used.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
 Type: PowerPlatformEnvironmentPipeBind

@@ -19,7 +19,7 @@ Restarts/resubmits a specific flow run for the specified Microsoft Power Automat
 ## SYNTAX
 
 ```powershell
-Restart-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> -Identity <PowerAutomateFlowRunPipeBind> [-Force] 
+Restart-PnPFlowRun [-Environment <PowerAutomateEnvironmentPipeBind>] -Flow <PowerAutomateFlowPipeBind> -Identity <PowerAutomateFlowRunPipeBind> [-Force] 
 ```
 
 ## DESCRIPTION
@@ -29,33 +29,32 @@ This cmdlet restarts/resubmits a specific Power Automate flow run.
 
 ### Example 1
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Restart-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
+Restart-PnPFlowRun -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 ```
-This restarts the specified flow run of the specified flow
+This restarts the specified flow run of the specified flow located in the default environment
 
 
 ### Example 2
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Restart-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230 -Force
+$environment = 
+Restart-PnPFlowRun -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230 -Force
 ```
-This restarts the specified flow run of the specified flow without confirmation
+This restarts the specified flow run of the specified flow without confirmation located in the specified environment
 
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment object to retrieve the available flows for.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
-Type: PowerAutomateEnvironmentPipeBind
+Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 

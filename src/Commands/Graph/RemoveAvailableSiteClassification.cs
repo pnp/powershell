@@ -9,8 +9,6 @@ namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAvailableSiteClassification")]
     [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
-    [Alias("Remove-PnPSiteClassitication")]
-    [WriteAliasWarning("Please use 'Remove-PnPAvailableSiteClassification'. The alias 'Remove-PnPSiteClassification' will be removed in a future release.")]
     [OutputType(typeof(void))]
     public class RemoveSiteClassification : PnPGraphCmdlet
     {
@@ -18,7 +16,7 @@ namespace PnP.PowerShell.Commands.Graph
         public List<string> Classifications;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter Confirm;
+        public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
@@ -32,7 +30,7 @@ namespace PnP.PowerShell.Commands.Graph
 
                         if (existingSettings.DefaultClassification == classification)
                         {
-                            if ((ParameterSpecified("Confirm") && !bool.Parse(MyInvocation.BoundParameters["Confirm"].ToString())) || ShouldContinue(string.Format(Properties.Resources.RemoveDefaultClassification0, classification), Properties.Resources.Confirm))
+                            if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveDefaultClassification0, classification), Properties.Resources.Confirm))
                             {
                                 existingSettings.DefaultClassification = "";
                                 existingSettings.Classifications.Remove(classification);

@@ -20,7 +20,7 @@ Returns the flows runs for a given flow.
 ## SYNTAX
 
 ```powershell
-Get-PnPFlowRun -Environment <PowerAutomateEnvironmentPipeBind> -Flow <PowerAutomateFlowPipeBind> [-Identity <PowerAutomateFlowRunPipeBind>]
+Get-PnPFlowRun [-Environment <PowerAutomateEnvironmentPipeBind>] -Flow <PowerAutomateFlowPipeBind> [-Identity <PowerAutomateFlowRunPipeBind>]
 [-Connection <PnPConnection>] 
 ```
 
@@ -31,26 +31,23 @@ This cmdlet returns the flow runs for a given flow.
 
 ### Example 1
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182
+Get-PnPFlowRun -Flow fba63225-baf9-4d76-86a1-1b42c917a182
 ```
-This returns all the flow runs for a given flow
+This returns all the flow runs for a given flow in the default environment
 
 ### Example 2
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
+Get-PnPFlowRun -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 ```
-This returns a specific flow run
+This returns a specific flow run for a given flow in a specific environment
 
 
 ### Example 3
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-$flowrun = Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
+$flowrun = Get-PnPFlowRun -Flow fba63225-baf9-4d76-86a1-1b42c917a182 -Identity 08585531682024670884771461819CU230
 $flowrun.Properties.trigger
 ```
-This returns a specific flow run trigger information as below
+This returns the trigger information of a run of a specific flow located in the default environment as shown below
 
 ### Output
 ```powershell
@@ -63,14 +60,12 @@ Code              : OK
 Status            : Succeeded
 ```
 
-
 ### Example 4
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment
-$flowruns = Get-PnPFlowRun -Environment $environment -Flow fba63225-baf9-4d76-86a1-1b42c917a182
+$flowruns = Get-PnPFlowRun -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Flow fba63225-baf9-4d76-86a1-1b42c917a182
 $flowruns.Properties.trigger
 ```
-This returns a specific flows trigger information as below
+This returns the trigger information of a run of a specific flow located in the specified environment as shown below
 
 ### Output
 ```powershell
@@ -99,21 +94,20 @@ Code              : OK
 Status            : Succeeded
 ```
 
-
 ## PARAMETERS
 
 ### -Environment
-The name of the Power Platform environment or an Environment object to retrieve the available flows for.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
-Type: PowerAutomateEnvironmentPipeBind
+Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 

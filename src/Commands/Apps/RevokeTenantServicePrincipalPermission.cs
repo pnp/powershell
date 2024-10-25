@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Apps
                 var results = GraphHelper.Get<RestResultCollection<ServicePrincipal>>(this, Connection, $"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id", AccessToken);
                 if (results.Items.Any())
                 {
-                    if (Force || ShouldContinue($"Revoke permission {Scope}?", "Continue"))
+                    if (Force || ShouldContinue($"Revoke permission {Scope}?", Properties.Resources.Confirm))
                     {
                         var servicePrincipal = results.Items.First();
                         spoWebAppServicePrincipal.GrantManager.Remove(servicePrincipal.Id, Resource, Scope);

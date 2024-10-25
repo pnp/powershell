@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Revoke, "PnPAzureADAppSitePermission")]
-    [RequiredApiApplicationPermissions("graph/Sites.FullControl.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Sites.FullControl.All")]
     [Alias("Revoke-PnPEntraIDAppSitePermission")]
     public class RevokePnPAzureADAppSitePermission : PnPGraphCmdlet
     {
@@ -31,14 +31,14 @@ namespace PnP.PowerShell.Commands.Apps
             }
             else
             {
-                siteId = PnPContext.Site.Id;
+                siteId = new SitePipeBind(Connection.Url).GetSiteIdThroughGraph(Connection, AccessToken);
             }
 
             if (siteId != Guid.Empty)
             {
                 if (Force || ShouldContinue("Are you sure you want to revoke the permissions?", string.Empty))
                 {
-                    var results = PnP.PowerShell.Commands.Utilities.REST.RestHelper.Delete(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken);
+                    var results = Utilities.REST.RestHelper.Delete(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken);
                 }
             }
         }

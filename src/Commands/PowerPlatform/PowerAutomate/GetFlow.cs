@@ -1,8 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
-using System;
-using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Utilities;
@@ -31,26 +29,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
-            string environmentName = null;
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            if (ParameterSpecified(nameof(Environment)))
-            {
-                environmentName = Environment.GetName();
-
-                WriteVerbose($"Using environment as provided '{environmentName}'");
-            }
-            else
-            {
-                var environments = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.Environment>(this, Connection,  baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken);
-                environmentName = environments.FirstOrDefault(e => e.Properties.IsDefault.HasValue && e.Properties.IsDefault == true)?.Name;
-
-                if(string.IsNullOrEmpty(environmentName))
-                {
-                    throw new Exception($"No default environment found, please pass in a specific environment name using the {nameof(Environment)} parameter");
-                }
-
-                WriteVerbose($"Using default environment as retrieved '{environmentName}'");
-            }
 
             if (ParameterSpecified(nameof(Identity)))
             {

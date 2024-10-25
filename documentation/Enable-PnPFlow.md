@@ -20,7 +20,7 @@ Enables a specific flow
 ## SYNTAX
 
 ```powershell
-Enable-PnPFlow -Environment <PowerAutomateEnvironmentPipeBind> -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] 
+Enable-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] 
 [-Connection <PnPConnection>] 
 ```
 
@@ -31,26 +31,32 @@ This cmdlet enables a specific flow
 
 ### Example 1
 ```powershell
-$environment = Get-PnPFlowEnvironment
-Enable-PnPFlow -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Enable-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 
-Enables the specified flow
+Enables the specified flow in the default environment
+
+### Example 2
+```powershell
+Enable-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+```
+
+Enables the specified flow in the specified environment
 
 ## PARAMETERS
 
 ### -Environment
-The name of the environment or an Environment object to retrieve the available flows for.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
-Type: PowerAutomateEnvironmentPipeBind
+Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 

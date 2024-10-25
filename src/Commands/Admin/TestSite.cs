@@ -1,10 +1,10 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
-using System.Text;
 using System.Collections.Generic;
+using System.Management.Automation;
+using System.Text;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Admin
                 siteUrl = Identity.Url;
             }
 
-            var site = this.Tenant.GetSiteByUrl(siteUrl);
+            var site = Tenant.GetSiteByUrl(siteUrl);
             AdminContext.Load(site);
             AdminContext.ExecuteQueryRetry();
 
@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 builder.Append($", RuleId {RuleId}");
             }
-            if (this.ShouldProcess(builder.ToString()))
+            if (ShouldContinue(builder.ToString(), Properties.Resources.Confirm))
             {
                 var result = new PSObject();
                 result.Properties.Add(new PSNoteProperty("SiteUrl", site.Url));

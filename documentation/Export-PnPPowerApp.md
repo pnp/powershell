@@ -20,7 +20,7 @@ Exports a Microsoft Power App
 ## SYNTAX
 
 ```
-Export-PnPPowerApp -Environment <PowerPlatformEnvironmentPipeBind> -Identity <PowerAppPipeBind>
+Export-PnPPowerApp [-Environment <PowerPlatformEnvironmentPipeBind>] -Identity <PowerAppPipeBind>
  [-PackageDisplayName <String>] [-PackageDescription <String>] [-PackageCreatedBy <String>]
  [-PackageSourceEnvironment <String>] [-OutPath <String>] [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
@@ -35,18 +35,16 @@ Many times exporting a Microsoft Power App will not be possible due to various r
 
 ### Example 1
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment -IsDefault $true
-Export-PnPPowerApp -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath "C:\Users\user1\Downloads\test_20230408152624.zip"
+Export-PnPPowerApp -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath "C:\Users\user1\Downloads\test_20230408152624.zip"
 ```
 
 This will export the specified Microsoft Power App from the default Power Platform environment as an output to the path specified in the command as -OutPath
 
 ### Example 2
 ```powershell
-$environment = Get-PnPPowerPlatformEnvironment -IsDefault $true
-Export-PnPPowerApp -Environment $environment -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath "C:\Users\user1\Downloads\test_20230408152624.zip" -PackageDisplayName "MyAppDisplayName" -PackageDescription "Package exported using PnP Powershell" -PackageCreatedBy "Siddharth Vaghasia" -PackageSourceEnvironment "UAT Environment"
+Export-PnPPowerApp -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath "C:\Users\user1\Downloads\test_20230408152624.zip" -PackageDisplayName "MyAppDisplayName" -PackageDescription "Package exported using PnP Powershell" -PackageCreatedBy "Siddharth Vaghasia" -PackageSourceEnvironment "UAT Environment"
 ```
-This will export the specified Microsoft Power App from the default Power Platform environment with metadata specified
+This will export the specified Microsoft Power App from the specified Power Platform environment with metadata specified
 
 ### Example 3
 ```powershell
@@ -74,17 +72,17 @@ Accept wildcard characters: False
 ```
 
 ### -Environment
-The environment which contains the App.
+The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
 Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 

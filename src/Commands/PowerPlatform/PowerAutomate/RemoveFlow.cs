@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
     [Cmdlet(VerbsCommon.Remove, "PnPFlow")]
     public class RemoveFlow : PnPAzureManagementApiCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
         [Parameter(Mandatory = true)]
@@ -28,10 +28,10 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         protected override void ExecuteCmdlet()
         {
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            var environmentName = Environment.GetName();
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
             var flowName = Identity.GetName();
 
-            if (Force || ShouldContinue($"Remove flow with name '{flowName}'?", "Remove flow"))
+            if (Force || ShouldContinue($"Remove flow with name '{flowName}'?", Properties.Resources.Confirm))
             {
                 WriteVerbose($"Attempting to delete Flow with name {flowName}");
                 if (ThrowExceptionIfPowerAutomateNotFound)

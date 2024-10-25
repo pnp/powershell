@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
     [Cmdlet(VerbsCommon.Remove, "PnPFlowOwner")]
     public class RemoveFlowOwner : PnPAzureManagementApiCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
         [Parameter(Mandatory = true)]
@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
-            var environmentName = Environment.GetName();
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
             if (string.IsNullOrEmpty(environmentName))
             {
                 throw new PSArgumentException("Environment not found.", nameof(Environment));
@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
 
             WriteVerbose("Microsoft Graph access token acquired");
-            
+
             Model.AzureAD.User user;
             if (Guid.TryParse(User, out Guid identityGuid))
             {
@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
             };
 
-            if(Force || ShouldContinue($"Remove flow owner with id '{user.Id.Value}' from flow '{flowName}'?", "Remove flow owner"))
+            if (Force || ShouldContinue($"Remove flow owner with id '{user.Id.Value}' from flow '{flowName}'?", Properties.Resources.Confirm))
             {
                 string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
                 WriteVerbose($"Removing user {user.Id.Value} permissions from flow {flowName} in environment {environmentName}");

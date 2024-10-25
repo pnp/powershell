@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPFlow.html
+online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPFlow.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Disable-PnPFlow
+title: Restore-PnPFlow
 ---
   
-# Disable-PnPFlow
+# Restore-PnPFlow
 
 ## SYNOPSIS
 
@@ -15,49 +15,34 @@ title: Disable-PnPFlow
 
 * Azure: management.azure.com
 
-Disables a specific flow
+Restores a specific flow
 
 ## SYNTAX
 
 ```powershell
-Disable-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] [-Connection <PnPConnection>] 
+Restore-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] -Identity <PowerAutomateFlowPipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
-This cmdlet disables a specific flow
+This cmdlet Restores a specific flow
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Disable-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Restore-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 
-Disables the specified flow in the default environment
+Restores the specified flow located in the default environment.
 
 ### Example 2
 ```powershell
-Disable-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity fba63225-baf9-4d76-86a1-1b42c917a182
+Restore-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
 
-Disables the specified flow in the specified environment
+Restores the specified flow located in the specified environment
 
 ## PARAMETERS
-
-### -AsAdmin
-Disable the flow as an administrator.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Connection
 Optional connection to be used by the cmdlet.
@@ -91,7 +76,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Identity of the flow to disable.
+Identity of the flow to Restore.
 
 ```yaml
 Type: PowerAutomateFlowPipeBind
