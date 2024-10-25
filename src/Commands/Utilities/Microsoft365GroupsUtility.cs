@@ -715,7 +715,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static Microsoft365GroupSettingValueCollection GetGroupSettings(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId)
         {
-            var result = GraphHelper.Get<Microsoft365GroupSettingValueCollection>(cmdlet, connection, $"v1.0/groups/{groupId}/settings", accessToken, propertyNameCaseInsensitive: true);
+            var result = GraphHelper.Get<Microsoft365GroupSettingValueCollection>(cmdlet, connection, $"v1.0/groupSettings/{groupId}", accessToken, propertyNameCaseInsensitive: true);
             return result;
         }
 
