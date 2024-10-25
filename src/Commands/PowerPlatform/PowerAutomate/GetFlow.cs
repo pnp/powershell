@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsCommon.Get, "PnPFlow", DefaultParameterSetName = ParameterSet_ALL)]
     [ApiNotAvailableUnderApplicationPermissions]
-
+    [RequiredApiDelegatedPermissions("azure/user_impersonation")]
     public class GetFlow : PnPAzureManagementApiCmdlet
     {
         private const string ParameterSet_BYIDENTITY = "By Identity";
