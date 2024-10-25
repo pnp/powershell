@@ -12,17 +12,25 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
     public class GetMicrosoft365GroupSettings : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
-        public Microsoft365GroupPipeBind Identity;
+        public Microsoft365GroupPipeBind Group;
+        
+        [Parameter(Mandatory = false)]
+        public Microsoft365GroupSettingsPipeBind Identity;
         
         protected override void ExecuteCmdlet()
         {
-            if (Identity != null)
+            if (Identity != null && Group !=null)
             {
-                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
-                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken, groupId.ToString());
+                var groupId = Group.GetGroupId(this, Connection, AccessToken);
+                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken,Identity.Id.ToString ,groupId.ToString());
                 WriteObject(groupSettings?.Value, true);
             }
-            else
+            elseif(Identity != null && Group == null)
+            {
+                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken,Identity.Id.ToString());
+                WriteObject(groupSettings?.Value, true);
+            }
+            elseif(Identity == null && Group ==null)
             {
                 var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken);
                 WriteObject(groupSettings?.Value, true);

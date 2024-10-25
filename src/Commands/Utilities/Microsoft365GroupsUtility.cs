@@ -713,9 +713,15 @@ namespace PnP.PowerShell.Commands.Utilities
             return result;
         }
 
-        internal static Microsoft365GroupSettingValueCollection GetGroupSettings(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId)
+        internal static Microsoft365GroupSettingValueCollection GetGroupTenantSettings(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupSettingId)
         {
-            var result = GraphHelper.Get<Microsoft365GroupSettingValueCollection>(cmdlet, connection, $"v1.0/groupSettings/{groupId}", accessToken, propertyNameCaseInsensitive: true);
+            var result = GraphHelper.Get<Microsoft365GroupSettingValueCollection>(cmdlet, connection, $"v1.0/groupSettings/{groupSettingId}", accessToken, propertyNameCaseInsensitive: true);
+            return result;
+        }
+
+        internal static Microsoft365GroupSettingValueCollection GetGroupSettings(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupSettingId,string groupId)
+        {
+            var result = GraphHelper.Get<Microsoft365GroupSettingValueCollection>(cmdlet, connection, $"v1.0/groups/{groupId}/settings/{groupSettingId}", accessToken, propertyNameCaseInsensitive: true);
             return result;
         }
 
