@@ -127,6 +127,9 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool? RestrictContentOrgWideSearch;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? HidePeoplePreviewingFiles;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 
@@ -414,6 +417,12 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.RestrictContentOrgWideSearch = RestrictContentOrgWideSearch.Value;
                     executeQueryRequired = true;
                 }
+
+                if (ParameterSpecified(nameof(HidePeoplePreviewingFiles)) && HidePeoplePreviewingFiles.HasValue)
+                {
+                    siteProperties.HidePeoplePreviewingFiles = HidePeoplePreviewingFiles.Value;
+                    executeQueryRequired = true;
+                }                 
 
                 if (executeQueryRequired)
                 {
