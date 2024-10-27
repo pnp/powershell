@@ -40,15 +40,17 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Microsoft365GroupSetting Group => _group;
 
-        public String DisplayName => _displayName;
+        public string DisplayName => _displayName;
 
         public Guid GroupId => _groupId;
 
         public Guid GetGroupSettingId(Cmdlet cmdlet, PnPConnection connection, string accessToken)
         {
+            Guid idValue;
             if (Group != null)
             {
-                return _group.Id.Value;
+                Guid.TryParse(Group.Id, out idValue);
+                return idValue;
             }
             else if (_groupId != Guid.Empty)
             {
@@ -59,8 +61,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 var groups = ClearOwners.GetGroupSettings(cmdlet, connection, accessToken);
                 if (groups != null)
                 {
-                    var collection = groups.Where(p => p.displayName.Equals(displayName));
-                    return group.Id.Value;
+                    var group = groups.Value.Find(p => p.DisplayName.Equals(DisplayName));
+                    if (group != null)
+                    {
+                        Guid.TryParse(group.Id, out idValue);
+                        return idValue;
+                    }
                 }
             }
             throw new PSInvalidOperationException("Group not found");

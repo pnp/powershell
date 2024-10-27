@@ -12,25 +12,33 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
     public class GetMicrosoft365GroupSettings : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
-        public Microsoft365GroupPipeBind Group;
+        public Microsoft365GroupPipeBind Identity;
         
         [Parameter(Mandatory = false)]
-        public Microsoft365GroupSettingsPipeBind Identity;
+        public Microsoft365GroupSettingsPipeBind GroupSetting;
         
         protected override void ExecuteCmdlet()
         {
-            if (Identity != null && Group !=null)
+            if (Identity != null && GroupSetting != null)
             {
-                var groupId = Group.GetGroupId(this, Connection, AccessToken);
-                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken,Identity.Id.ToString ,groupId.ToString());
+                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+                var groupSettingId = GroupSetting.GetGroupSettingId(this, Connection, AccessToken);
+                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken, groupSettingId.ToString(), groupId.ToString());
+                WriteObject(groupSettings, true);
+            }
+            else if (Identity != null && GroupSetting == null)
+            {
+                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken, groupId.ToString());
                 WriteObject(groupSettings?.Value, true);
             }
-            elseif(Identity != null && Group == null)
+            else if (Identity == null && GroupSetting != null) 
             {
-                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken,Identity.Id.ToString());
-                WriteObject(groupSettings?.Value, true);
+                var groupSettingId = GroupSetting.GetGroupSettingId(this, Connection, AccessToken);
+                var groupSettings = ClearOwners.GetGroupTenantSettings(this, Connection, AccessToken, groupSettingId.ToString());
+                WriteObject(groupSettings, true);
             }
-            elseif(Identity == null && Group ==null)
+            else if(Identity == null && GroupSetting == null)
             {
                 var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken);
                 WriteObject(groupSettings?.Value, true);
