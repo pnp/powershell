@@ -282,7 +282,7 @@ Connects to the Azure AD with WAM (aka native Windows authentication prompt), ac
 
 WAM is a more secure & faster way of authenticating in Windows OS. It supports Windows Hello, FIDO keys , conditional access policies and more.
 
-### EXAMPLE 9
+### EXAMPLE 19
 ```powershell
 $keyStorageflags = [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::MachineKeySet -bor [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::PersistKeySet
 
@@ -293,6 +293,15 @@ Connects using an Azure Active Directory registered application using a certific
 See [Security App-only EntraId guidance](https://learn.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread) for a sample on how to get started.
 
 See [X509 key storage flags](https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509keystorageflags) for information on how to configure key storage when creating the certificate.
+
+### EXAMPLE 20
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Credentials "https://contoso.sharepoint.com"
+```
+
+Connect to SharePoint using Credentials (username and password) from Credential Manager (Windows) or Keychain (Mac) with the specified name to use to authenticate.
+
+On Windows, this entry needs to be under "Generic Credentials".
 
 ## PARAMETERS
 

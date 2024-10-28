@@ -1,7 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-
-using System;
-using System.Linq.Expressions;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site
@@ -12,7 +9,7 @@ namespace PnP.PowerShell.Commands.Site
     {
         protected override void ExecuteCmdlet()
         {
-            DefaultRetrievalExpressions = new Expression<Func<Microsoft.SharePoint.Client.Site, object>>[] { s => s.Url, s => s.CompatibilityLevel };
+            DefaultRetrievalExpressions = [s => s.Url, s => s.CompatibilityLevel];
             var site = ClientContext.Site;
             ClientContext.Load(site, RetrievalExpressions);
             ClientContext.ExecuteQueryRetry();
