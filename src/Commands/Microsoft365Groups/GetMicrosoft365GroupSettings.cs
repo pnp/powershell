@@ -14,15 +14,31 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = false)]
         public Microsoft365GroupPipeBind Identity;
         
+        [Parameter(Mandatory = false)]
+        public Microsoft365GroupSettingsPipeBind GroupSetting;
+        
         protected override void ExecuteCmdlet()
         {
-            if (Identity != null)
+            if (Identity != null && GroupSetting != null)
+            {
+                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+                var groupSettingId = GroupSetting.GetGroupSettingId(this, Connection, AccessToken);
+                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken, groupSettingId.ToString(), groupId.ToString());
+                WriteObject(groupSettings, true);
+            }
+            else if (Identity != null && GroupSetting == null)
             {
                 var groupId = Identity.GetGroupId(this, Connection, AccessToken);
                 var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken, groupId.ToString());
                 WriteObject(groupSettings?.Value, true);
             }
-            else
+            else if (Identity == null && GroupSetting != null) 
+            {
+                var groupSettingId = GroupSetting.GetGroupSettingId(this, Connection, AccessToken);
+                var groupSettings = ClearOwners.GetGroupTenantSettings(this, Connection, AccessToken, groupSettingId.ToString());
+                WriteObject(groupSettings, true);
+            }
+            else if(Identity == null && GroupSetting == null)
             {
                 var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken);
                 WriteObject(groupSettings?.Value, true);
