@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantInfo")]
-    [RequiredApiApplicationPermissions("graph/CrossTenantInformation.ReadBasic.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/CrossTenantInformation.ReadBasic.All")]
     [OutputType(typeof(Model.TenantInfo))]
     public class GetTenantInfo : PnPAdminCmdlet
     {
