@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base;
+﻿using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
@@ -10,6 +11,8 @@ namespace PnP.PowerShell.Commands.Purview
     [Cmdlet(VerbsCommon.Get, "PnPAvailableSensitivityLabel")]
     [OutputType(typeof(IEnumerable<Model.Graph.Purview.InformationProtectionLabel>))]
     [OutputType(typeof(Model.Graph.Purview.InformationProtectionLabel))]
+    [RequiredApiApplicationPermissions("graph/InformationProtectionPolicy.ReadAll")]
+    [RequiredApiDelegatedPermissions("graph/InformationProtectionPolicy.Read")]
     public class GetAvailableSensitivityLabel : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
