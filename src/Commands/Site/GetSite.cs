@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Site
     [RequiredApiDelegatedPermissions("sharepoint/AllSites.Read")]
     [RequiredApiDelegatedPermissions("sharepoint/AllSites.Write")]
     [RequiredApiDelegatedPermissions("sharepoint/AllSites.Manage")]
-    [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
+    [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")] 
     public class GetSite : PnPRetrievalsCmdlet<Microsoft.SharePoint.Client.Site>
     {
         protected override void ExecuteCmdlet()
