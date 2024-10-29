@@ -11,13 +11,6 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal class CertificateHelper
     {
-        private enum PemStringType
-        {
-            Certificate,
-            RsaPrivateKey
-        }
-
-
         internal static string PrivateKeyToBase64(X509Certificate2 certificate, bool useLineBreaks = false)
         {
 
