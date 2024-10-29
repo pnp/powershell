@@ -4,10 +4,14 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Attributes;
+using System;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsCommon.Get, "PnPFlow", DefaultParameterSetName = ParameterSet_ALL)]
+    [ApiNotAvailableUnderApplicationPermissions]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation")]
     public class GetFlow : PnPAzureManagementApiCmdlet
     {
         private const string ParameterSet_BYIDENTITY = "By Identity";
@@ -29,43 +33,50 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
-            string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-
-            if (ParameterSpecified(nameof(Identity)))
+            try
             {
-                var flowName = Identity.GetName();
+                var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+                string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
 
-                WriteVerbose($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
-
-                var result = GraphHelper.Get<Model.PowerPlatform.PowerAutomate.Flow>(this, Connection, baseUrl + $"/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken);
-                WriteObject(result, false);
-            }
-            else
-            {
-                string filter = null;
-                switch (SharingStatus)
+                if (ParameterSpecified(nameof(Identity)))
                 {
-                    case FlowSharingStatus.SharedWithMe:
-                        filter = "search('team')";
-                        break;
+                    var flowName = Identity.GetName();
 
-                    case FlowSharingStatus.Personal:
-                        filter = "search('personal')";
-                        break;
+                    WriteVerbose($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
 
-                    case FlowSharingStatus.All:
-                        filter = "search('team AND personal')";
-                        break;
+                    var result = GraphHelper.Get<Model.PowerPlatform.PowerAutomate.Flow>(this, Connection, baseUrl + $"/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken);
+                    WriteObject(result, false);
                 }
+                else
+                {
+                    string filter = null;
+                    switch (SharingStatus)
+                    {
+                        case FlowSharingStatus.SharedWithMe:
+                            filter = "search('team')";
+                            break;
 
-                WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'{(filter != null ? $" with filter '{filter}'" : "")}");
+                        case FlowSharingStatus.Personal:
+                            filter = "search('personal')";
+                            break;
 
-                var flowUrl = $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/{(AsAdmin ? "v2" : "")}/flows?api-version=2016-11-01{(filter != null ? $"&$filter={filter}" : "")}";
-                var flows = GraphHelper.GetResultCollection<Model.PowerPlatform.PowerAutomate.Flow>(this, Connection, flowUrl, AccessToken);
-                
-                WriteObject(flows, true);
+                        case FlowSharingStatus.All:
+                            filter = "search('team AND personal')";
+                            break;
+                    }
 
+                    WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'{(filter != null ? $" with filter '{filter}'" : "")}");
+
+                    var flowUrl = $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/{(AsAdmin ? "v2" : "")}/flows?api-version=2016-11-01{(filter != null ? $"&$filter={filter}" : "")}";
+                    var flows = GraphHelper.GetResultCollection<Model.PowerPlatform.PowerAutomate.Flow>(this, Connection, flowUrl, AccessToken);
+
+                    WriteObject(flows, true);
+
+                }
+            }
+            catch (Exception e)
+            {
+                WriteError(new ErrorRecord(new Exception("Make sure you have granted access to Azure AD App to Interact with Power Platform, To help understand the required permissions visit https://pnp.github.io/powershell/articles/determinepermissions.html#help-i-cant-figure-out-which-permissions-i-need"), e.Message, ErrorCategory.AuthenticationError, null));
             }
         }
     }
