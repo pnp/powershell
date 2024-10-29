@@ -256,7 +256,7 @@ Using this method PnP PowerShell will not acquire tokens dynamically and if the 
 </code></pre>
 <p>Connects to the Azure AD with WAM (aka native Windows authentication prompt), acquires an access token and allows PnP PowerShell to access both SharePoint and the Microsoft Graph. Notice that you will have to register your own App first, by means of Register-PnPEntraIDAdd to use this method. You will also have to provide the -ClientId parameter starting September 9, 2024. Alternatively, create an environment variable, call it <code>ENTRAID_APP_ID</code> or <code>ENTRAID_CLIENT_ID</code> and set the value to the app id you created.</p>
 <p>WAM is a more secure &amp; faster way of authenticating in Windows OS. It supports Windows Hello, FIDO keys , conditional access policies and more.</p>
-<h3 id="example-9-1">EXAMPLE 9</h3>
+<h3 id="example-19">EXAMPLE 19</h3>
 <pre><code class="lang-powershell">$keyStorageflags = [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::MachineKeySet -bor [System.Security.Cryptography.X509Certificates.X509KeyStorageFlags]::PersistKeySet
 
 Connect-PnPOnline -Url &quot;contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -CertificateBase64Encoded $base64encodedstring -X509KeyStorageFlags $keyStorageflags -Tenant 'contoso.onmicrosoft.com'
@@ -264,6 +264,11 @@ Connect-PnPOnline -Url &quot;contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05
 <p>Connects using an Azure Active Directory registered application using a certificate with a private key that has been base64 encoded.
 See <a href="https://learn.microsoft.com/sharepoint/dev/solution-guidance/security-apponly-azuread">Security App-only EntraId guidance</a> for a sample on how to get started.</p>
 <p>See <a href="https://learn.microsoft.com/dotnet/api/system.security.cryptography.x509certificates.x509keystorageflags">X509 key storage flags</a> for information on how to configure key storage when creating the certificate.</p>
+<h3 id="example-20">EXAMPLE 20</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -Credentials &quot;https://contoso.sharepoint.com&quot;
+</code></pre>
+<p>Connect to SharePoint using Credentials (username and password) from Credential Manager (Windows) or Keychain (Mac) with the specified name to use to authenticate.</p>
+<p>On Windows, this entry needs to be under &quot;Generic Credentials&quot;.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-accesstoken">-AccessToken</h3>
 <p>Using this parameter you can provide your own access token.
