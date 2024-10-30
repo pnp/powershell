@@ -4,10 +4,12 @@ using System;
 using System.Linq.Expressions;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Model.SharePoint;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteVersionPolicy")]
+    [RequiredApiDelegatedOrApplicationPermissions("sharepoint/AllSites.FullControl")]
     [OutputType(typeof(void))]
     public class SetSiteVersionPolicy : PnPSharePointCmdlet
     {
