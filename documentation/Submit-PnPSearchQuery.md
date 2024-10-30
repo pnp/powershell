@@ -12,6 +12,14 @@ online version: https://pnp.github.io/powershell/cmdlets/Submit-PnPSearchQuery.h
 ## SYNOPSIS
 Executes an arbitrary search query against the SharePoint search index.
 
+**Required Permissions**
+
+|        Type      |                    API/ Permission Name                    |                    Admin consent required                    |
+| --------------- | --------------------------------------- | -------- |
+| Application       | sharepoint/Sites.Read.All | yes                               |
+| Delegated       | sharepoint/Sites.Search.All | yes                               |
+
+
 ## SYNTAX
 
 ### Limit (Default)
