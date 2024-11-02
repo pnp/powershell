@@ -160,6 +160,9 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-GuestSharingGroupAllowListInTenantByPrincipalIdentity <string[]>]
  [-OneDriveSharingCapability <SharingCapabilities>]
  [-DelayDenyAddAndCustomizePagesEnforcement <Boolean>]
+ [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>]
+ [-SelfServiceSiteCreationDisabled <Boolean>]
+ [-SyncAadB2BManagementPolicy]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2805,6 +2808,49 @@ Sets the guest sharing group allow list in the tenant by principal identity.
 
 ```yaml
 Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled
+Sets whether web property bag update is allowed when DenyAddAndCustomizePages is enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SelfServiceSiteCreationDisabled
+Sets whether self-service site creation is disabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SyncAadB2BManagementPolicy
+This feature allows SharePoint Online to synchronize several Entra B2B collaboration settings [Guest user access restriction and collaboration restriction](https://learn.microsoft.com/en-us/entra/external-id/external-collaboration-settings-configure#configure-settings-in-the-portal), and store them on SharePoint Online tenant store. On sharing, SharePoint checks whether those synchronized settings are blocking sharing before sending invitation requests to Entra B2B invitation manager. The sync might take up to 24 hours to complete if you change those Entra B2B collaboration settings. To make the change effective on SharePoint Online immediately, run 'Set-PnPTenant -SyncAadB2BManagementPolicy' and it forces a sync from Microsoft Entra.
+
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
