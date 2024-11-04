@@ -480,6 +480,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
 
+        [Parameter(Mandatory = false)]
+        public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { private set; get; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1537,6 +1540,11 @@ namespace PnP.PowerShell.Commands.Admin
             if(OneDriveSharingCapability.HasValue)
             {
                 Tenant.ODBSharingCapability = OneDriveSharingCapability.Value;
+                modified = true;
+            }
+            if(AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue)
+            {
+                Tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.Value;
                 modified = true;
             }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity !=null)
