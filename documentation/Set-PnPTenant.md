@@ -160,6 +160,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-GuestSharingGroupAllowListInTenantByPrincipalIdentity <string[]>]
  [-OneDriveSharingCapability <SharingCapabilities>]
  [-DelayDenyAddAndCustomizePagesEnforcement <Boolean>]
+ [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -230,6 +231,20 @@ Accept wildcard characters: False
 
 ### -AllowEditing
 Prevents users from editing Office files in the browser and copying and pasting Office file contents out of the browser window.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled
+Enables or disables web property bag update when DenyAddAndCustomizePages is enabled. When AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled is set to $true, web property bag can be updated even if DenyAddAndCustomizePages is turned on when the user had AddAndCustomizePages (prior to DenyAddAndCustomizePages removing it).
 
 ```yaml
 Type: Boolean
