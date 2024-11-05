@@ -230,6 +230,7 @@
  [-GuestSharingGroupAllowListInTenantByPrincipalIdentity &lt;string[]&gt;]
  [-OneDriveSharingCapability &lt;SharingCapabilities&gt;]
  [-DelayDenyAddAndCustomizePagesEnforcement &lt;Boolean&gt;]
+ [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -274,6 +275,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowediting">-AllowEditing</h3>
 <p>Prevents users from editing Office files in the browser and copying and pasting Office file contents out of the browser window.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowwebpropertybagupdatewhendenyaddandcustomizepagesisenabled">-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled</h3>
+<p>Enables or disables web property bag update when DenyAddAndCustomizePages is enabled. When AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled is set to $true, web property bag can be updated even if DenyAddAndCustomizePages is turned on when the user had AddAndCustomizePages (prior to DenyAddAndCustomizePages removing it).</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
