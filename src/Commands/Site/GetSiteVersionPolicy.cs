@@ -1,7 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-
-using System;
-using System.Linq.Expressions;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Model.SharePoint;
 using PnP.PowerShell.Commands.Attributes;
@@ -9,8 +6,9 @@ using PnP.PowerShell.Commands.Attributes;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteVersionPolicy")]
-    [RequiredApiDelegatedOrApplicationPermissions("sharepoint/AllSites.FullControl")]
-    [OutputType(typeof(PnP.PowerShell.Commands.Model.SharePoint.SiteVersionPolicy))]
+    [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
+    [OutputType(typeof(SiteVersionPolicy))]
     public class GetSiteVersionPolicy : PnPSharePointCmdlet
     {
         protected override void ExecuteCmdlet()
