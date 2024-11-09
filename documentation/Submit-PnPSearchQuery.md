@@ -14,9 +14,9 @@ Executes an arbitrary search query against the SharePoint search index.
 
 **Required Permissions**
 
-|        Type      |                    API/ Permission Name                    |                    Admin consent required                    |
+|        Type     |                    API/ Permission Name                    |                    Admin consent required                    |
 | --------------- | --------------------------------------- | -------- |
-| Application       | sharepoint/Sites.Read.All | yes                               |
+| Application     | sharepoint/Sites.Read.All, sharepoint/Sites.ReadWrite.All, sharepoint/Sites.Manage.All or sharepoint/Sites.FullControl.All | yes                               |
 | Delegated       | sharepoint/Sites.Search.All | yes                               |
 
 
