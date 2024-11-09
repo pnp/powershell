@@ -4,10 +4,12 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 {
     [Cmdlet(VerbsCommon.Get, "PnPDeletedFlow", DefaultParameterSetName = ParameterSet_ALL)]
+    [RequiredApiDelegatedPermissions("azure/user_impersonation")]
     public class GetDeletedFlow : PnPAzureManagementApiCmdlet
     {
         private const string ParameterSet_ALL = "All";

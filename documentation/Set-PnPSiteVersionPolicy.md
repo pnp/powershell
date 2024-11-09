@@ -12,6 +12,13 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSiteVersionPolic
 ## SYNOPSIS
 Sets file version policy related properties on the site.
 
+**Required Permissions**
+
+|        Type      |                    API/ Permission Name                    |                    Admin consent required                    |
+| --------------- | --------------------------------------- | -------- |
+| Delegated       | AllSites.FullControl | yes                               |
+
+
 ## SYNTAX
 
 ```powershell

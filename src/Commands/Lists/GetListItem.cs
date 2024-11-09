@@ -4,13 +4,23 @@ using System.Management.Automation;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
     [Cmdlet(VerbsCommon.Get, "PnPListItem", DefaultParameterSetName = ParameterSet_ALLITEMS)]
     [OutputType(typeof(ListItem))]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.Selected")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.Read.All")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.Manage.All")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
+    [RequiredApiDelegatedPermissions("sharepoint/AllSites.Read")]
+    [RequiredApiDelegatedPermissions("sharepoint/AllSites.Write")]
+    [RequiredApiDelegatedPermissions("sharepoint/AllSites.Manage")]
+    [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
+
     public class GetListItem : PnPWebRetrievalsCmdlet<ListItem>
     {
         private const string ParameterSet_BYID = "By Id";
