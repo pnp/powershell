@@ -76,6 +76,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
 ### Contributors
 
+- Antti K. Koskela [koskila]
 - San [sankarkumar23]
 - Christian Veenhuis [ChVeen]
 - Nishkalank Bezawada [NishkalankBezawada]
