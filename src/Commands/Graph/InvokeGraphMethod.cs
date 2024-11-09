@@ -60,31 +60,10 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
         public string ContentType = "application/json";
 
-        
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
-        public GraphAdditionalHeadersPipeBind AdditionalHeaders = new GraphAdditionalHeadersPipeBind(new Dictionary<string, string>());
-        // public IDictionary<string, string> AdditionalHeaders
-        // {
-        //     get
-        //     {
-        //         if (ConsistencyLevelEventual.IsPresent)
-        //         {
-        //             if (additionalHeaders == null)
-        //             {
-        //                 additionalHeaders = new Dictionary<string, string>();
-        //             }
-        //             additionalHeaders.Remove("ConsistencyLevel");
-        //             additionalHeaders.Add("ConsistencyLevel", "eventual");
-        //         }
-        //         return additionalHeaders;
-        //     }
-        //     set
-        //     {
-        //         additionalHeaders = value;
-        //     }
-        // }
+        public GraphAdditionalHeadersPipeBind AdditionalHeaders = new(new Dictionary<string, string>());
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
@@ -101,7 +80,7 @@ namespace PnP.PowerShell.Commands.Base
         public string OutFile;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOSTREAM)]
-        public SwitchParameter OutStream;        
+        public SwitchParameter OutStream;
 
         protected override void ExecuteCmdlet()
         {
@@ -335,6 +314,6 @@ namespace PnP.PowerShell.Commands.Base
                 default:
                     throw new Exception($"Parameter set {ParameterSetName} not supported");
             }
-        }        
+        }
     }
 }
