@@ -1,6 +1,7 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Framework.Utilities;
+using System;
 using System.IO;
 using System.Management.Automation;
 using System.Threading.Tasks;
@@ -66,6 +67,12 @@ namespace PnP.PowerShell.Commands.Files
                 }
             }
 
+            if (Uri.IsWellFormedUriString(Url, UriKind.Absolute))
+            {
+                // We can't deal with absolute URLs
+                Url = UrlUtility.MakeRelativeUrl(Url);
+            }
+            
             // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
             Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
 

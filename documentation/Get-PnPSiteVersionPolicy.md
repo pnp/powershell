@@ -12,6 +12,12 @@ title: Get-PnPSiteVersionPolicy
 ## SYNOPSIS
 Get version policy setting of the site.
 
+**Required Permissions**
+
+|        Type      |                    API/ Permission Name                    |                    Admin consent required                    |
+| --------------- | --------------------------------------- | -------- |
+| Delegated       | AllSites.FullControl | yes                               |
+
 ## SYNTAX
 
 ```powershell
