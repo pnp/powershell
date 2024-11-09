@@ -251,6 +251,8 @@ namespace PnP.PowerShell.Commands.Model
         public SharingCapabilities? OneDriveSharingCapability { private set; get; }
         public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
         public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { private set; get; }
+        public bool? SelfServiceSiteCreationDisabled { private set; get; }
+
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext)
@@ -773,6 +775,8 @@ namespace PnP.PowerShell.Commands.Model
             try { OneDriveSharingCapability = tenant.ODBSharingCapability; } catch { }
             try { GuestSharingGroupAllowListInTenantByPrincipalIdentity = tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity?.ToArray(); } catch { }
             try { AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled; } catch { }
+            try { SelfServiceSiteCreationDisabled = tenant.SelfServiceSiteCreationDisabled; } catch { }
         }
     }
 }
+    
