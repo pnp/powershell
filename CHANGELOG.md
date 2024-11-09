@@ -65,6 +65,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPAzureADAppSitePermission`, `Grant-PnPAzureADAppSitePermission` and `Revoke-PnPAzureADAppSitePermission` cmdlets throwing an error when the site URL is not specified and the app registration used only having Graph permissions [#4421](https://github.com/pnp/powershell/pull/4421)
 - Fixed `Get-PnPTerm` cmdlet not working correctly when `-ParentTerm` parameter is specified. [#4454](https://github.com/pnp/powershell/pull/4454)
 - Fixed the PnP PowerShell version check to only check nightly version in nightly builds and major version in release builds. [#4453](https://github.com/pnp/powershell/pull/4453)
+- Fixed `Get-PnPServiceHealthIssue` returning an error when certain service states were active [#4530](https://github.com/pnp/powershell/pull/4530)
 
 ### Removed
 
