@@ -17,15 +17,6 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUPABulkImportSta
 
 Get user profile bulk import status.
 
-Possible status are defined in the [ImportProfilePropertiesJobState enumeration](https://learn.microsoft.com/previous-versions/office/sharepoint-csom/mt643017(v=office.15)):
-
-* Unknown 	
-* Submitted 	
-* Processing 	
-* Queued 	
-* Succeeded 	
-* Error
-
 ## SYNTAX
 
 ```powershell
@@ -35,6 +26,15 @@ Get-PnPUPABulkImportStatus [-JobId <Guid>] [-IncludeErrorDetails] [-Connection <
 
 ## DESCRIPTION
 Retrieve information about the status of submitted user profile bulk upload jobs.
+
+Possible statuses are defined in the [ImportProfilePropertiesJobState enumeration](https://learn.microsoft.com/previous-versions/office/sharepoint-csom/mt643017(v=office.15)):
+
+- Unknown
+- Submitted
+- Processing
+- Queued
+- Succeeded
+- Error
 
 ## EXAMPLES
 
@@ -113,4 +113,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
