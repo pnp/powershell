@@ -480,6 +480,15 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
 
+        [Parameter(Mandatory = false)]
+        public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { private set; get; }
+
+        [Parameter(Mandatory = false)]
+        public bool? SelfServiceSiteCreationDisabled { private set; get; }
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter SyncAadB2BManagementPolicy { private set; get; }
+        
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1539,6 +1548,21 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.ODBSharingCapability = OneDriveSharingCapability.Value;
                 modified = true;
             }
+            if(AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue)
+            {
+                Tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.Value;
+                modified = true;
+            }
+            if (SelfServiceSiteCreationDisabled.HasValue)
+            {
+                Tenant.SelfServiceSiteCreationDisabled = SelfServiceSiteCreationDisabled.Value;
+                modified = true;
+            }
+            if (SyncAadB2BManagementPolicy)
+            {
+                Tenant.SyncAadB2BManagementPolicy();
+                modified = true;
+            }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity !=null)
             {
                 if (GuestSharingGroupAllowListInTenantByPrincipalIdentity.Length > 0)
@@ -1586,7 +1610,6 @@ namespace PnP.PowerShell.Commands.Admin
                     }
                     modified = true;
                 }
-
             }
             else if (ExcludedBlockDownloadGroupIds != null)
             {
@@ -1597,7 +1620,6 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.SetBlockDownloadFileTypePolicyExclusionList(ExcludedBlockDownloadGroupIds);
                 modified = true;
             }
-
             if (modified)
             {
                 AdminContext.ExecuteQueryRetry();

@@ -6,10 +6,16 @@ using Microsoft.SharePoint.Client.Search.Query;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsLifecycle.Submit, "PnPSearchQuery", DefaultParameterSetName = "Limit")]
+    [RequiredApiDelegatedPermissions("sharepoint/Sites.Search.All")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.Read.All")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.ReadWrite.All")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.Manage.All")]
+    [RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
     [Alias("Invoke-PnPSearchQuery")]
     public class SubmitSearchQuery : PnPWebCmdlet
     {

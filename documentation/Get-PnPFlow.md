@@ -14,6 +14,10 @@ title: Get-PnPFlow
 **Required Permissions**
 
 * Azure: management.azure.com
+* Azure Service Management : user_impersonation
+* Dynamics CRM : user_impersonation
+* PowerApps Service : User
+* Link to Required permissions reference : https://pnp.github.io/powershell/articles/determinepermissions.html#help-i-cant-figure-out-which-permissions-i-need
 
 Returns Power Automate Flows
 
