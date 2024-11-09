@@ -213,7 +213,7 @@ You can define how the items coming from your custom source will be shown in the
                     "items": [
                         {
                             "type": "Image",
-                            "url": "https://searchuxcdn.blob.core.windows.net/designerapp/images/DefaultMRTIcon.png",
+                            "url": "${iconUrl}",
                             "horizontalAlignment": "Center",
                             "size": "Small"
                         }

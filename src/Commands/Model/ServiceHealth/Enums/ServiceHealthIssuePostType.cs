@@ -9,10 +9,17 @@ namespace PnP.PowerShell.Commands.Model.ServiceHealth.Enums
         /// Quick update
         /// </summary>
         Quick,
-
         /// <summary>
         /// Regular update
         /// </summary>
-        Regular
+        Regular,
+        /// <summary>
+        /// Strategic update
+        /// </summary>
+        Strategic,
+        /// <summary>
+        /// Unknown post type
+        /// </summary>
+        UnknownFutureValue
     }
 }

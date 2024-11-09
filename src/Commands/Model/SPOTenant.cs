@@ -252,6 +252,7 @@ namespace PnP.PowerShell.Commands.Model
         public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
         public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { private set; get; }
         public bool? SelfServiceSiteCreationDisabled { private set; get; }
+
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext)
@@ -741,26 +742,8 @@ namespace PnP.PowerShell.Commands.Model
             {
             }
 
-            try
-            {
-                AppBypassInformationBarriers = tenant.AppBypassInformationBarriers;
-            }
-            catch
-            {
-            }
-
-            try
-            {
-                if (tenant.DefaultODBMode != null)
-                {
-                    DefaultOneDriveInformationBarrierMode = Enum.Parse<InformationBarriersMode>(tenant.DefaultODBMode);
-                }
-            }
-            catch
-            {
-            }
-
-
+            try { AppBypassInformationBarriers = tenant.AppBypassInformationBarriers; } catch { }
+            try { if (tenant.DefaultODBMode != null) DefaultOneDriveInformationBarrierMode = Enum.Parse<InformationBarriersMode>(tenant.DefaultODBMode); } catch { }
             try { CoreSharingCapability = tenant.CoreSharingCapability; } catch { }
             try { EnableVersionExpirationSetting = tenant.EnableVersionExpirationSetting; } catch { }
             try { BlockUserInfoVisibilityInOneDrive = tenant.BlockUserInfoVisibilityInOneDrive; } catch { }

@@ -1548,7 +1548,7 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.ODBSharingCapability = OneDriveSharingCapability.Value;
                 modified = true;
             }
-            if (AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue)
+            if(AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue)
             {
                 Tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.Value;
                 modified = true;

@@ -41,13 +41,18 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 if (plans != null && plans.Any())
                 {
                     var collection = plans.Where(p => p.Title.Equals(_id));
-                    if (collection != null && collection.Any() && collection.Count() == 1)
+                    var plansCount = collection.Count();
+                    if (plansCount == 1)
                     {
                         return collection.First();
                     }
+                    else if (plansCount == 0)
+                    {
+                        throw new PSArgumentException($"No plan with the title '{_id}' found. Use Get-PnPPlannerPlan to list all plans.");
+                    }
                     else
                     {
-                        throw new PSArgumentException("More than one plan with the same title found. Use Get-PnPPlannerPlan to list all plans.");
+                        throw new PSArgumentException($"Found {plansCount} plans with the same title '{_id}'. Use Get-PnPPlannerPlan to list all plans.");
                     }
                 }
             }
