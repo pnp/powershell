@@ -2831,20 +2831,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled
-Sets whether web property bag update is allowed when DenyAddAndCustomizePages is enabled.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -SelfServiceSiteCreationDisabled
 Sets whether self-service site creation is disabled.
 
