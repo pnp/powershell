@@ -59,6 +59,7 @@ namespace PnP.PowerShell.Commands.Model
         public Microsoft.Online.SharePoint.TenantManagement.SharingDomainRestrictionModes SharingDomainRestrictionMode { get; set; }
         public bool ShowPeoplePickerSuggestionsForGuestUsers { get; set; }
         public Microsoft.Online.SharePoint.TenantManagement.SharingCapabilities SiteDefinedSharingCapability { get; set; }
+        public Guid SiteId { get; set; }
         public bool SocialBarOnSitePagesDisabled { get; set; }
         public string Status { get; set; }
         public long StorageQuota { get; set; }
@@ -157,6 +158,7 @@ namespace PnP.PowerShell.Commands.Model
             SharingDomainRestrictionMode = props.SharingDomainRestrictionMode;
             ShowPeoplePickerSuggestionsForGuestUsers = props.ShowPeoplePickerSuggestionsForGuestUsers;
             SiteDefinedSharingCapability = props.SiteDefinedSharingCapability;
+            SiteId = props.SiteId;
             SocialBarOnSitePagesDisabled = props.SocialBarOnSitePagesDisabled;
             Status = props.Status;
             StorageQuota = props.StorageMaximumLevel;

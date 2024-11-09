@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ExcludeDeprecated` to `Export-PnpTaxonomy` which allows for deprecated terms to be excluded from the export [#4053](https://github.com/pnp/powershell/pull/4053)
 - Added `-HidePeoplePreviewingFiles` to `Set-PnPSite` which allows for hiding the people previewing files feature on a site [#4416](https://github.com/pnp/powershell/pull/4416)
 - Added `-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled` to `Set-PnPTenant` which allows for updating of web property bag when DenyAddAndCustomizePages is enabled [#4508](https://github.com/pnp/powershell/pull/4508)
+- Added `SiteId` to the output of `Get-PnPTenantSite` [#4527](https://github.com/pnp/powershell/pull/4527)
 
 ### Changed
 
@@ -66,6 +67,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPTerm` cmdlet not working correctly when `-ParentTerm` parameter is specified. [#4454](https://github.com/pnp/powershell/pull/4454)
 - Fixed the PnP PowerShell version check to only check nightly version in nightly builds and major version in release builds. [#4453](https://github.com/pnp/powershell/pull/4453)
 - Fixed `-ConsistencyLevelEventual` flag on `Invoke-PnPGraphMethod` to work correctly. [#4523](https://github.com/pnp/powershell/pull/4523)
+- Fixed `Get-PnPServiceHealthIssue` returning an error when certain service states were active [#4530](https://github.com/pnp/powershell/pull/4530)
 
 ### Removed
 
@@ -79,6 +81,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Contributors
 
 - [reusto]
+- Fredrik Thorild [fthorild]
 - San [sankarkumar23]
 - Christian Veenhuis [ChVeen]
 - Nishkalank Bezawada [NishkalankBezawada]
