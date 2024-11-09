@@ -23,7 +23,7 @@ Add-PnPPage [-Name] <String> [-LayoutType <PageLayoutType>]
 ```
 
 ## DESCRIPTION
-Creates a new page. The page will be located inside the Site Pages library of the site currently connected to.
+Creates a new page. The page will be located inside the Site Pages library of the site currently connected to. If the library does not exist yet, tries to ensure it is created.
 
 ## EXAMPLES
 
@@ -32,21 +32,21 @@ Creates a new page. The page will be located inside the Site Pages library of th
 Add-PnPPage -Name "NewPage"
 ```
 
-Creates a new page named 'NewPage'
+Creates a new page named 'NewPage'. The resulting file will accordingly be named 'NewPage.aspx'. If a file with that name already exists, executing the commandlet will fail.
 
 ### EXAMPLE 2
 ```powershell
 Add-PnPPage -Name "NewPage" -Title "Welcome to my page"
 ```
 
-Creates a new page NewPage.aspx with the title as provided
+Creates a new page NewPage.aspx with the title as provided.
 
 ### EXAMPLE 3
 ```powershell
 Add-PnPPage -Name "NewPage" -ContentType "MyPageContentType"
 ```
 
-Creates a new page named 'NewPage' and sets the content type to the content type specified
+Creates a new page named 'NewPage' and sets the content type to the content type specified.
 
 ### EXAMPLE 4
 ```powershell
@@ -67,14 +67,14 @@ Creates a new page named 'NewPage' under 'Folder' folder and saves as a template
 Add-PnPPage -Name "NewPage" -HeaderLayoutType ColorBlock
 ```
 
-Creates a new page named 'NewPage' using the ColorBlock header layout
+Creates a new page named 'NewPage' using the ColorBlock header layout.
 
 ### EXAMPLE 7
 ```powershell
 Add-PnPPage -Name "NewPage" Article -ScheduledPublishDate (Get-Date).AddHours(1)
 ```
 
-Creates a new page named 'NewPage' using the article layout and schedule it to be published in 1 hour from now
+Creates a new page named 'NewPage' using the article layout and schedule it to be published in 1 hour from now.
 
 ### EXAMPLE 8
 ```powershell
@@ -116,7 +116,7 @@ Accept wildcard characters: False
 ```
 
 ### -CommentsEnabled
-Enables or Disables the comments on the page
+Enables or Disables the comments on the page.
 
 ```yaml
 Type: SwitchParameter
@@ -144,7 +144,7 @@ Accept wildcard characters: False
 ```
 
 ### -HeaderLayoutType
-Type of layout used for the header
+Type of layout used for the header.
 
 ```yaml
 Type: PageHeaderLayoutType
@@ -188,12 +188,12 @@ Accept wildcard characters: False
 ```
 
 ### -PromoteAs
-Allows to promote the page for a specific purpose (HomePage | NewsPage)
+Allows to promote the page for a specific purpose (HomePage | NewsPage).
 
 ```yaml
 Type: PagePromoteType
 Parameter Sets: (All)
-Accepted values: None, HomePage, NewsArticle, Template
+Accepted values: None, HomePage, NewsArticle
 
 Required: False
 Position: Named
@@ -231,7 +231,7 @@ Accept wildcard characters: False
 ```
 
 ### -Translate
-Creates multilingual pages for all the languages specified in the site collection
+Creates multilingual pages for all the languages specified in the site collection.
 
 ```yaml
 Type: SwitchParameter
