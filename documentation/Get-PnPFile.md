@@ -53,40 +53,47 @@ Retrieves the file and downloads it to the current folder
 
 ### EXAMPLE 2
 ```powershell
+Get-PnPFile -Url "https://contoso.sharepoint.com/sites/project/Shared Documents/Document.docx"
+```
+
+Retrieves the file and downloads it to the current folder
+
+### EXAMPLE 3
+```powershell
 Get-PnPFile -Url /sites/project/SiteAssets/image.jpg -Path c:\temp -FileName image.jpg -AsFile
 ```
 
 Retrieves the file and downloads it to c:\temp\image.jpg
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsString
 ```
 
 Retrieves the contents of the file as text and outputs its contents to the console
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```powershell
 Get-PnPFile -Url /sites/project/Shared Documents/Folder/Presentation.pptx -AsFileObject
 ```
 
 Retrieves the file and returns it as a File object
 
-### EXAMPLE 5
+### EXAMPLE 6
 ```powershell
 Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsListItem
 ```
 
 Retrieves the file and returns it as a ListItem object
 
-### EXAMPLE 6
+### EXAMPLE 7
 ```powershell
 Get-PnPFile -Url /personal/john_tenant_onmicrosoft_com/Documents/Sample.xlsx -Path c:\temp -FileName Project.xlsx -AsFile
 ```
 
 Retrieves the file Sample.xlsx by its site relative URL from a OneDrive for Business site and downloads it to c:\temp\Project.xlsx
 
-### EXAMPLE 7
+### EXAMPLE 8
 ```powershell
 Get-PnPFile -Url "/sites/templates/Shared Documents/HR Site.pnp" -AsMemoryStream
 ```

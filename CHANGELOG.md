@@ -51,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - All Power Platform cmdlets no longer require an environment to be specified. If omitted, the default environment will be retrieved and used. [#4415](https://github.com/pnp/powershell/pull/4415)
 - When passing in an existing connection using `-Connection` on `Connect-PnPOnline`, the clientid from the passed in connection will be used for the new connection [#4425](https://github.com/pnp/powershell/pull/4425)
 - Removed `-Confirm` parameter from `Remove-PnPUser` and `Remove-PnPAvailableSiteClassification` cmdlets. Use `-Force` instead. [#4455](https://github.com/pnp/powershell/pull/4455)
+- `Get-PnPFile` now also supports passing in a full SharePoint Online URL [#4480](https://github.com/pnp/powershell/pull/4480)
 
 ### Fixed
 
@@ -80,6 +81,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
 ### Contributors
 
+- Antti K. Koskela [koskila]
 - Steve Beaugé [stevebeauge]
 - [reusto]
 - Fredrik Thorild [fthorild]
