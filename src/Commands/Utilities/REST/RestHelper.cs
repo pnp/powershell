@@ -1,3 +1,4 @@
+using Microsoft.SharePoint.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,15 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
-using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
     internal static class RestHelper
-    {        
+    {
         #region GET
         public static T ExecuteGetRequest<T>(ClientContext context, string url, string select = null, string filter = null, string expand = null, uint? top = null)
         {
-            var returnValue = ExecuteGetRequest(context, url, select, filter, expand, top);           
+            var returnValue = ExecuteGetRequest(context, url, select, filter, expand, top);
 
             var returnObject = JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             return returnObject;
@@ -208,9 +208,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
-#endregion
+        #endregion
 
-#region POST
+        #region POST
 
         public static string Post(HttpClient httpClient, string url, string accessToken, string accept = "application/json")
         {
@@ -270,7 +270,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 message = GetMessage(url, HttpMethod.Post, clientContext, accept);
             }
             return SendMessage(httpClient, message);
-        }        
+        }
 
         public static T Post<T>(HttpClient httpClient, string url, string accessToken, object payload, bool camlCasePolicy = true)
         {
@@ -333,9 +333,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         }
 
 
-#endregion
+        #endregion
 
-#region PATCH
+        #region PATCH
         public static T Patch<T>(HttpClient httpClient, string url, string accessToken, object payload, bool camlCasePolicy = true)
         {
             var stringContent = Patch(httpClient, url, accessToken, payload);
@@ -360,7 +360,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public static string Patch(HttpClient httpClient, string url, string accessToken, object payload, string accept = "application/json")
         {
-            HttpRequestMessage message = null;            
+            HttpRequestMessage message = null;
             if (payload != null)
             {
                 var content = new StringContent(JsonSerializer.Serialize(payload, new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }));
@@ -373,9 +373,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             return SendMessage(httpClient, message);
         }
-#endregion
+        #endregion
 
-#region PUT
+        #region PUT
         public static T ExecutePutRequest<T>(ClientContext context, string url, string content, string select = null, string filter = null, string expand = null, string contentType = null)
         {
             HttpContent stringContent = new StringContent(content);
@@ -439,9 +439,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var returnValue = client.PutAsync(url, content).GetAwaiter().GetResult();
             return returnValue;
         }
-#endregion
+        #endregion
 
-#region MERGE
+        #region MERGE
         public static T ExecuteMergeRequest<T>(ClientContext context, string url, string content, string select = null, string filter = null, string expand = null, string contentType = null)
         {
             HttpContent stringContent = new StringContent(content);
@@ -506,9 +506,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var returnValue = client.PostAsync(url, content).GetAwaiter().GetResult();
             return returnValue;
         }
-#endregion
+        #endregion
 
-#region DELETE
+        #region DELETE
 
         public static string Delete(HttpClient httpClient, string url, string accessToken, string accept = "application/json")
         {
@@ -584,7 +584,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var returnValue = client.DeleteAsync(url).GetAwaiter().GetResult();
             return returnValue;
         }
-#endregion
+        #endregion
 
         private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, string accept = "application/json", HttpContent content = null)
         {
@@ -693,7 +693,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             else
             {
-                var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult(); ;
+                var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 throw new HttpRequestException(errorContent);
             }
         }
