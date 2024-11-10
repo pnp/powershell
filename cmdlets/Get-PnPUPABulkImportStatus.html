@@ -95,6 +95,15 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Retrieve information about the status of submitted user profile bulk upload jobs.</p>
+<p>Possible statuses are defined in the <a href="https://learn.microsoft.com/previous-versions/office/sharepoint-csom/mt643017(v=office.15)">ImportProfilePropertiesJobState enumeration</a>:</p>
+<ul>
+<li>Unknown</li>
+<li>Submitted</li>
+<li>Processing</li>
+<li>Queued</li>
+<li>Succeeded</li>
+<li>Error</li>
+</ul>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPUPABulkImportStatus

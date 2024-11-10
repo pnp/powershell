@@ -109,26 +109,30 @@
 </code></pre>
 <p>Retrieves the file and downloads it to the current folder</p>
 <h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPFile -Url &quot;https://contoso.sharepoint.com/sites/project/Shared Documents/Document.docx&quot;
+</code></pre>
+<p>Retrieves the file and downloads it to the current folder</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/SiteAssets/image.jpg -Path c:\temp -FileName image.jpg -AsFile
 </code></pre>
 <p>Retrieves the file and downloads it to c:\temp\image.jpg</p>
-<h3 id="example-3">EXAMPLE 3</h3>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsString
 </code></pre>
 <p>Retrieves the contents of the file as text and outputs its contents to the console</p>
-<h3 id="example-4">EXAMPLE 4</h3>
+<h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/Shared Documents/Folder/Presentation.pptx -AsFileObject
 </code></pre>
 <p>Retrieves the file and returns it as a File object</p>
-<h3 id="example-5">EXAMPLE 5</h3>
+<h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Get-PnPFile -Url /sites/project/_catalogs/themes/15/company.spcolor -AsListItem
 </code></pre>
 <p>Retrieves the file and returns it as a ListItem object</p>
-<h3 id="example-6">EXAMPLE 6</h3>
+<h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Get-PnPFile -Url /personal/john_tenant_onmicrosoft_com/Documents/Sample.xlsx -Path c:\temp -FileName Project.xlsx -AsFile
 </code></pre>
 <p>Retrieves the file Sample.xlsx by its site relative URL from a OneDrive for Business site and downloads it to c:\temp\Project.xlsx</p>
-<h3 id="example-7">EXAMPLE 7</h3>
+<h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">Get-PnPFile -Url &quot;/sites/templates/Shared Documents/HR Site.pnp&quot; -AsMemoryStream
 </code></pre>
 <p>Retrieves the file in memory for further processing</p>

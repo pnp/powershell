@@ -85,6 +85,28 @@
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Executes an arbitrary search query against the SharePoint search index.</p>
+<p><strong>Required Permissions</strong></p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>API/ Permission Name</th>
+<th>Admin consent required</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Application</td>
+<td>sharepoint/Sites.Read.All, sharepoint/Sites.ReadWrite.All, sharepoint/Sites.Manage.All or sharepoint/Sites.FullControl.All</td>
+<td>yes</td>
+</tr>
+<tr>
+<td>Delegated</td>
+<td>sharepoint/Sites.Search.All</td>
+<td>yes</td>
+</tr>
+</tbody>
+</table>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="limit-default">Limit (Default)</h3>
 <pre><code class="lang-powershell">Submit-PnPSearchQuery [-Query] &lt;String&gt; [-StartRow &lt;Int32&gt;] [-MaxResults &lt;Int32&gt;] [-TrimDuplicates &lt;Boolean&gt;]
