@@ -13,7 +13,7 @@ title: Get-PnPSearchExternalItem
 
 **Required Permissions**
 
-  * Microsoft Graph API: One of ExternalItem.ReadWrite.OwnedBy, ExternalItem.Read.All, ExternalItem.ReadWrite.All under a delegated context. Application context is not supported.
+  * Microsoft Graph API: ExternalItem.Read.All under a delegated context. Note that ExternalItem.ReadWrite.All will not work. Application context is not supported.
 
 Returns the external items indexed for a specific connector in Microsoft Search
 
