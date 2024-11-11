@@ -2461,6 +2461,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFileSensitivityLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFileSensitivityLabel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPFileSensitivityLabelInfo.md",
       "output": {
         ".html": {
