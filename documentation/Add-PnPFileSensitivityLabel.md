@@ -19,7 +19,7 @@ Add the sensitivity label information for a file in SharePoint.
 
 ## SYNTAX
 ```powershell
-Add-PnPFileSensitivityLabel -Url <String> -SensitivityLabelId <Guid> -AssignmentMethod <Enum> -JustificationText <string>
+Add-PnPFileSensitivityLabel -Identity <String> -SensitivityLabelId <Guid> -AssignmentMethod <Enum> -JustificationText <string>
 ```
 
 ## DESCRIPTION
@@ -32,22 +32,27 @@ The Add-PnPFileSensitivityLabel cmdlet adds the sensitivity label information fo
 This example adds the sensitivity label information for the file at the specified URL.
 
 ```powershell
-Add-PnPFileSensitivityLabel -Url "/sites/Marketing/Shared Documents/Report.pptx" -SensitivityLabelId b5b11b04-05b3-4fe4-baa9-b7f5f65b8b64 -JustificationText "Previous label no longer applies" -AssignmentMethod Privileged
+Add-PnPFileSensitivityLabel -Identity "/sites/Marketing/Shared Documents/Report.pptx" -SensitivityLabelId "b5b11b04-05b3-4fe4-baa9-b7f5f65b8b64" -JustificationText "Previous label no longer applies" -AssignmentMethod Privileged
 ```
 
-This example adds the sensitivity label information for the file at the specified URL.
+### Example 2
+This example removes the sensitivity label information for the file at the specified URL.
+
+```powershell
+Add-PnPFileSensitivityLabel -Identity "/sites/Marketing/Shared Documents/Report.pptx" -SensitivityLabelId "" -JustificationText "Previous label no longer applies" -AssignmentMethod Privileged
+```
 
 ## PARAMETERS
 
-### -Url
-Specifies the URL of the file on which we add the sensitivity label information.
+### -Identity
+The server relative path to the file, the unique identifier of the file, the listitem representing the file, or the file object itself on which we are adding the sensitivity label.
 
 ```yaml
-Type: String
+Type: FilePipeBind
 Parameter Sets: (All)
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
 Accept pipeline input: True
 Accept wildcard characters: False

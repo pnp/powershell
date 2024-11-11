@@ -1,9 +1,10 @@
-﻿using PnP.Framework.Utilities;
+﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities.REST;
-using System;
 using System.Management.Automation;
+using System.Net.Http.Headers;
 
 namespace PnP.PowerShell.Commands.Files
 {
@@ -13,8 +14,8 @@ namespace PnP.PowerShell.Commands.Files
 
     public class AddFileSensitivityLabel : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        public string Url = string.Empty;
+        [Parameter(Position = 0, Mandatory = true, ValueFromPipeline = true)]
+        public FilePipeBind Identity;
 
         [Parameter(Mandatory = true)]
         public string SensitivityLabelId;
@@ -29,29 +30,7 @@ namespace PnP.PowerShell.Commands.Files
         {
             var serverRelativeUrl = string.Empty;
 
-            if (Uri.IsWellFormedUriString(Url, UriKind.Absolute))
-            {
-                // We can't deal with absolute URLs
-                Url = UrlUtility.MakeRelativeUrl(Url);
-            }
-
-            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
-            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
-
-            Connection.PnPContext.Web.EnsureProperties(w => w.ServerRelativeUrl);
-
-            var webUrl = Connection.PnPContext.Web.ServerRelativeUrl;
-
-            if (!Url.ToLower().StartsWith(webUrl.ToLower()))
-            {
-                serverRelativeUrl = UrlUtility.Combine(webUrl, Url);
-            }
-            else
-            {
-                serverRelativeUrl = Url;
-            }
-
-            var file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(Url);
+            IFile file = Identity.GetCoreFile(Connection.PnPContext, this);
             file.EnsureProperties(f => f.VroomDriveID, f => f.VroomItemID);
 
             var requestUrl = $"https://{Connection.GraphEndPoint}/v1.0/drives/{file.VroomDriveID}/items/{file.VroomItemID}/assignSensitivityLabel";
@@ -63,9 +42,9 @@ namespace PnP.PowerShell.Commands.Files
                 justificationText = JustificationText
             };
 
-            var responseHeader = RestHelper.PostGetResponseHeader<string>(Connection.HttpClient, requestUrl, AccessToken, payload: payload);
+            HttpResponseHeaders responseHeader = RestHelper.PostGetResponseHeader<string>(Connection.HttpClient, requestUrl, AccessToken, payload: payload);
 
-            WriteVerbose($"File sensitivity label assigned to {Url}");
+            WriteVerbose($"File sensitivity label assigned to {file.Name}");
             WriteObject(responseHeader.Location);
         }
     }
