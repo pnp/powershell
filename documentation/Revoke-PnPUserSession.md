@@ -20,8 +20,7 @@ Provides IT administrators the ability to logout a user's O365 sessions across a
 ## SYNTAX
 
 ```powershell
-Revoke-PnPUserSession -User <String>
-    [-WhatIf]
+Revoke-PnPUserSession -User <String>    
     [-Confirm]
 ```
 
@@ -53,20 +52,6 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 

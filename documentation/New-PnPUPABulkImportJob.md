@@ -21,13 +21,13 @@ Submit up a new user profile bulk import job.
 
 ```powershell
 New-PnPUPABulkImportJob [-Folder] <String> [-Path] <String> [-UserProfilePropertyMapping] <Hashtable>
- [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Wait] [-Verbose] [-Connection <PnPConnection>]
+ [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Wait] [-Verbose] [-Connection <PnPConnection>] [-WhatIf]
  
 ```
 
 ```powershell
 New-PnPUPABulkImportJob -Url <String> [-UserProfilePropertyMapping] <Hashtable>
- [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Wait] [-Verbose] [-Connection <PnPConnection>]
+ [-IdProperty] <String> [[-IdType] <ImportProfilePropertiesUserIdType>] [-Wait] [-Verbose] [-Connection <PnPConnection>] [-WhatIf]
  
 ```
 
@@ -165,6 +165,21 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
 
 Required: False
 Position: Named

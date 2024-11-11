@@ -20,7 +20,7 @@ Removes one or more external users from the tenant.
 ## SYNTAX
 
 ```powershell
-Remove-PnPExternalUser -UniqueIDs <String[]> [-Confirm] [-WhatIf]
+Remove-PnPExternalUser -UniqueIDs <String[]> [-Confirm]
 ```
 
 ## DESCRIPTION
@@ -51,20 +51,6 @@ Parameter Sets: (All)
 
 Required: True
 Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: 0
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
