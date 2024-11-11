@@ -108,6 +108,13 @@ Set-PnPSearchExternalSchema -ConnectionId "mycustomdatasource" -SchemaAsText '{
 
 Ingesting items into the Microsoft Search index will only prove to be useful if they show up somewhere in search results. In this step we're going to take care of that. For this you have two options: have the results show up under the All vertical along with all the other items it matches with or give the results its own so called vertical. The latter means it will have its own tab in Microsoft 365 Search and only when clicked on that tab, it will show results from this source and this source only, so not mixed up with other results from other sources it may find.
 
+> [!TIP]
+> Once the schema has been defined and the data is starting to show up in the Microsoft Search index, you have a choice to make on how you want to show the results. One option is to read on and follow the steps below to surface the results in Out of the box Search. 
+> Another option is to use [PnP Modern Search](https://microsoft-search.github.io/pnp-modern-search/)
+> , which allows you to show the results in a SharePoint Online search results page or in Teams.  It is absolutely possible to use both PnP Modern Searhc and standard MS Search at the same time.
+> PnP Modern Search will provide you with a lot more flexibility in how you want to show the results, including custom display templates, custom refiners, custom sorting options and more. 
+
+
 1. If you decide to go with the results showing up in the All tab, so along with results from other sources, simply go to the [Microsoft 365 Admin Center](https://admin.microsoft.com) > Settings > Search & intelligence > Data sources ([direct link](https://admin.microsoft.com/#/MicrosoftSearch/connectors)) and click on the link next to your custom connector that reads _Include Connector Results_.
 
    ![image](../images/microsoftsearch/all_vertical_include_link.png)
