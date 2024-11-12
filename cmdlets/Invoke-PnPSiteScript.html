@@ -90,7 +90,7 @@
 <pre><code class="lang-powershell">Invoke-PnPSiteScript -Identity &lt;TenantSiteScriptPipeBind&gt; -WebUrl &lt;String&gt; [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="executing-a-site-script-by-passing-in-the-script-directly">Executing a site script by passing in the script directly</h3>
-<pre><code class="lang-powershell">Invoke-PnPSiteScript -Script &lt;String&gt; [-WebUrl &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Invoke-PnPSiteScript -Script &lt;String&gt; [-WebUrl &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] [-WhatIf] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Applies the Site Design provided through Identity to an existing site. When providing a site design name and multiple site designs exist with the same name, all of them will be invoked and applied. It is also possible to provide a site script directly without having to add it as a site script first. This could be ideal for making quick one time copies of i.e. lists and sites.</p>

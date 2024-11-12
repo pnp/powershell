@@ -88,12 +88,12 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-term-id">By Term Id</h3>
 <pre><code>Remove-PnPTerm -Identity &lt;Guid&gt; [-TermStore &lt;TaxonomyTermStorePipeBind&gt;]
- [-WhatIf] [-Confirm] 
+  [-Confirm] 
 </code></pre>
 <h3 id="by-term-name">By Term Name</h3>
 <pre><code>Remove-PnPTerm -Identity &lt;String&gt; -TermSet &lt;TaxonomyTermSetPipeBind&gt;
  -TermGroup &lt;TaxonomyTermGroupPipeBind&gt; [-TermStore &lt;TaxonomyTermStorePipeBind&gt;]
- [-Connection &lt;PnPConnection&gt;] [-WhatIf] [-Confirm] 
+ [-Connection &lt;PnPConnection&gt;] [-Confirm] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet removes a term from the term store.</p>
@@ -160,19 +160,6 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: TaxonomyTermStorePipeBind
 Parameter Sets: (All)
 Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs.
-The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

@@ -92,10 +92,10 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-name">By Name</h3>
 <pre><code class="lang-powershell">Remove-PnPPlannerBucket -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt;
- -Identity &lt;PlannerBucketPipeBind&gt;  [-WhatIf] [-Confirm] 
+ -Identity &lt;PlannerBucketPipeBind&gt; [-Confirm] 
 </code></pre>
 <h3 id="by-bucket-id">By Bucket Id</h3>
-<pre><code class="lang-powershell">Remove-PnPPlannerBucket -BucketId &lt;String&gt; -Identity &lt;PlannerBucketPipeBind&gt;  [-WhatIf]
+<pre><code class="lang-powershell">Remove-PnPPlannerBucket -BucketId &lt;String&gt; -Identity &lt;PlannerBucketPipeBind&gt;
  [-Confirm] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -161,19 +161,6 @@ Parameter Sets: By Name
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-whatif">-WhatIf</h3>
-<p>Shows what would happen if the cmdlet runs.
-The cmdlet is not run.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
