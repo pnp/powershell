@@ -14,6 +14,7 @@ using System.Management.Automation;
 using System.Text.RegularExpressions;
 using System.Text;
 using SPSite = Microsoft.SharePoint.Client.Site;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
@@ -26,6 +27,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         [Parameter(Mandatory = true)]
         [ValidateNotNullOrEmpty]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]

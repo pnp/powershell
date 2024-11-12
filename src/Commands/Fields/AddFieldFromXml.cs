@@ -1,6 +1,7 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Fields
@@ -10,6 +11,7 @@ namespace PnP.PowerShell.Commands.Fields
     public class AddFieldFromXml : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, Position = 0)]

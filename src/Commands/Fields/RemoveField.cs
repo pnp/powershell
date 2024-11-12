@@ -1,6 +1,7 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Core.QueryModel;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
 using System;
@@ -17,6 +18,7 @@ namespace PnP.PowerShell.Commands.Fields
         public FieldPipeBind Identity = new FieldPipeBind();
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 1)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]

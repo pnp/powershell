@@ -1,5 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using System;
@@ -12,6 +12,7 @@ namespace PnP.PowerShell.Commands.Lists
     public class SetList : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = false)]

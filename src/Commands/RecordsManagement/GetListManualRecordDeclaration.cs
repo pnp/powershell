@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Collections.Generic;
@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.RecordsManagement
     public class GetListRecordDeclaration : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()

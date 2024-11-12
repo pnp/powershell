@@ -3,6 +3,7 @@ using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.RecordsManagement
 {
@@ -10,6 +11,7 @@ namespace PnP.PowerShell.Commands.RecordsManagement
     public class SetListItemAsRecord : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

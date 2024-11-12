@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Events
@@ -14,6 +15,7 @@ namespace PnP.PowerShell.Commands.Events
         private const string ParameterSet_SCOPE = "On a web or site";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_LIST)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(ParameterSetName = ParameterSet_LIST)]

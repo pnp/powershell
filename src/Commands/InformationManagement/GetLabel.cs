@@ -1,5 +1,5 @@
 ﻿using System.Management.Automation;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.InformationManagement
@@ -8,6 +8,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
     public class GetLabel : PnPSharePointCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]

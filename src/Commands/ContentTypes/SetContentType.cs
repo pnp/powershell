@@ -1,4 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
@@ -17,6 +18,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_FormCustomizersParams)]
         [ValidateNotNullOrEmpty]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]

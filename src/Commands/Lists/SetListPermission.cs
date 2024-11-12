@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
@@ -13,6 +13,7 @@ namespace PnP.PowerShell.Commands.Lists
     public class SetListPermission : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = "Group")]

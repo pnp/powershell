@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using System.Text.Json;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Utilities;
@@ -17,6 +18,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ASServerRelativeUrl)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ASPath)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_ASServerRelativeUrl)]

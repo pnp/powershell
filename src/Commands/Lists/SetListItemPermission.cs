@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.Lists
         private const string ParameterSet_INHERIT = "Inherit";
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterAttribute.AllParameterSets)]

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.Files
         public string Match = string.Empty;
 
         [Parameter(Mandatory = true, ParameterSetName = "List")]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ParameterSetName = "Folder")]

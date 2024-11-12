@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using PnP.PowerShell.Commands.Base.Completers;
 
 
 namespace PnP.PowerShell.Commands.InformationManagement
@@ -17,6 +18,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
         private const string ParamSet_BulkItems = "Reset on items in bulk";
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ParameterSetName = ParamSet_BulkItems)]

@@ -1,6 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands
@@ -13,6 +13,7 @@ namespace PnP.PowerShell.Commands
         public string Key;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()
