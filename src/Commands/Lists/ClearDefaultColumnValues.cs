@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Entities;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.Lists
     public class ClearDefaultColumnValues : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]

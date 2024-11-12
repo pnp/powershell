@@ -1,6 +1,7 @@
 using Microsoft.SharePoint.Client;
 
 using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
 using System;
@@ -15,6 +16,7 @@ namespace PnP.PowerShell.Commands.Lists
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         [ValidateNotNull]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind Identity;
 
         protected override void ExecuteCmdlet()

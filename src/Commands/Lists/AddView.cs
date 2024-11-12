@@ -1,6 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
@@ -10,6 +10,8 @@ namespace PnP.PowerShell.Commands.Lists
     public class AddView : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
+
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]
@@ -32,7 +34,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = false)]
         public SwitchParameter SetAsDefault;
-        
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Paged;
 
@@ -46,7 +48,7 @@ namespace PnP.PowerShell.Commands.Lists
             {
                 var view = list.CreateView(Title, ViewType, Fields, RowLimit, SetAsDefault, Query, Personal, Paged);
 
-                if(ParameterSpecified(nameof(Aggregations)))
+                if (ParameterSpecified(nameof(Aggregations)))
                 {
                     view.Aggregations = Aggregations;
                     view.Update();

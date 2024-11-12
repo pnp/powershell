@@ -7,6 +7,7 @@ using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Base.Completers;
 
 // IMPORTANT: If you make changes to this cmdlet, also make the similar/same changes to the Set-PnPListItem Cmdlet
 
@@ -22,6 +23,7 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         [ValidateNotNull]
         public ListPipeBind List;
 

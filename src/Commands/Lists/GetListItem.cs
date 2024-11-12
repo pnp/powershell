@@ -5,6 +5,7 @@ using System.Text;
 using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
@@ -28,6 +29,7 @@ namespace PnP.PowerShell.Commands.Lists
         private const string ParameterSet_BYQUERY = "By Query";
         private const string ParameterSet_ALLITEMS = "All Items";
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID)]

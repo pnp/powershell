@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
 
@@ -9,6 +10,7 @@ namespace PnP.PowerShell.Commands.Lists
     public class MoveListItemToRecycleBin : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]

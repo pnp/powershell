@@ -1,4 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ASSTREAM)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ASFILE)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ASTEXT)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 1, ParameterSetName = ParameterSet_ASSTREAM)]
