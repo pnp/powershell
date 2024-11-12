@@ -5,6 +5,14 @@ using System.Linq.Expressions;
 using System;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Attributes;
+using System.Collections.Generic;
+using System.Management.Automation.Language;
+using System.Collections;
+using PnP.Core.Services;
+using PnP.PowerShell.Commands.Base;
+using System.Linq;
+using AngleSharp.Dom;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -21,15 +29,15 @@ namespace PnP.PowerShell.Commands.Lists
     [RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
     public class GetList : PnPWebRetrievalsCmdlet<List>
     {
-        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
-        public ListPipeBind Identity;
+        [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0), ArgumentCompleter(typeof(ListNameCompleter))]
+        public ListPipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false)]
         public SwitchParameter ThrowExceptionIfListNotFound;
 
         protected override void ExecuteCmdlet()
         {
-            DefaultRetrievalExpressions = new Expression<Func<List, object>>[] { l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.RootFolder.ServerRelativeUrl };
+            DefaultRetrievalExpressions = [l => l.Id, l => l.BaseTemplate, l => l.OnQuickLaunch, l => l.DefaultViewUrl, l => l.Title, l => l.Hidden, l => l.RootFolder.ServerRelativeUrl];
 
             if (Identity != null)
             {
@@ -52,3 +60,4 @@ namespace PnP.PowerShell.Commands.Lists
         }
     }
 }
+
