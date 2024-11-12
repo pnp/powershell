@@ -27,7 +27,7 @@ Invoke-PnPWebAction [-ListName <String>] [-Webs <Web[]>]
  [-ListProperties <String[]>] [-ListItemAction <System.Action`1[Microsoft.SharePoint.Client.ListItem]>]
  [-ShouldProcessListItemAction <System.Func`2[Microsoft.SharePoint.Client.ListItem,System.Boolean]>]
  [-ListItemProperties <String[]>] [-SubWebs] [-DisableStatisticsOutput] [-SkipCounting] 
- [-Connection <PnPConnection>]   
+ [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -327,21 +327,6 @@ Webs you want to process (for example different site collections), will use Web 
 ```yaml
 Type: Web[]
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

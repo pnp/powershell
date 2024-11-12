@@ -20,7 +20,7 @@ Removes a Planner plan.
 ## SYNTAX
 
 ```powershell
-Remove-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Identity <PlannerPlanPipeBind>  [-Connection <PnPConnection>] [-WhatIf] [-Confirm]
+Remove-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Identity <PlannerPlanPipeBind>  [-Connection <PnPConnection>] [-Confirm]
 ```
 
 ## DESCRIPTION
@@ -89,21 +89,6 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

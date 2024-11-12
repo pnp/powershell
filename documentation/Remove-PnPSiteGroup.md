@@ -15,8 +15,7 @@ Removes a group from a web.
 ## SYNTAX
 
 ```powershell
-Remove-PnPSiteGroup -Identity <String> [-Site <SitePipeBind>]
-    [-WhatIf]
+Remove-PnPSiteGroup -Identity <String> [-Site <SitePipeBind>]    
     [-Confirm]
 ```
 
@@ -61,20 +60,6 @@ Specifies the site collection to remove the group from.
 ```yaml
 Type: SitePipeBind
 Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None

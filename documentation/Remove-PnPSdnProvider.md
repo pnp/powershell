@@ -15,7 +15,7 @@ Removes Software-Defined Networking (SDN) Support in your SharePoint Online tena
 ## SYNTAX
 
 ```powershell
-Remove-PnPSdnProvider [-Confirm] [-WhatIf]
+Remove-PnPSdnProvider [-Confirm]
 ```
 
 ## DESCRIPTION
@@ -31,20 +31,6 @@ Remove-PnPSdnProvider -Confirm:false
 This command removes the SDN support for your Online Tenant without confirmation.
 
 ## PARAMETERS
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -Confirm
 Prompts you for confirmation before running the cmdlet.

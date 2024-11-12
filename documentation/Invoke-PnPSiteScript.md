@@ -23,7 +23,7 @@ Invoke-PnPSiteScript -Identity <TenantSiteScriptPipeBind> -WebUrl <String> [-Con
 ### Executing a site script by passing in the script directly
 
 ```powershell
-Invoke-PnPSiteScript -Script <String> [-WebUrl <String>] [-Connection <PnPConnection>] 
+Invoke-PnPSiteScript -Script <String> [-WebUrl <String>] [-Connection <PnPConnection>] [-WhatIf] 
 ```
 
 ## DESCRIPTION
