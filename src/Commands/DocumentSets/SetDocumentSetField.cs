@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.DocumentSets
@@ -15,7 +15,8 @@ namespace PnP.PowerShell.Commands.DocumentSets
         public DocumentSetPipeBind DocumentSet;
 
         [Parameter(Mandatory = true)]
-        public FieldPipeBind Field; 
+        [ArgumentCompleter(typeof(FieldInternalNameCompleter))]
+        public FieldPipeBind Field;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter SetSharedField;
@@ -41,9 +42,9 @@ namespace PnP.PowerShell.Commands.DocumentSets
                 WriteWarning("Cannot set and remove a welcome page field at the same time");
                 return;
             }
-         
+
             var docSetTemplate = DocumentSet.GetDocumentSetTemplate(CurrentWeb);
-            
+
 
             ClientContext.Load(docSetTemplate, dt => dt.AllowedContentTypes, dt => dt.SharedFields, dt => dt.WelcomePageFields);
             ClientContext.ExecuteQueryRetry();

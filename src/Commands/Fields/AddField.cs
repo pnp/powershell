@@ -24,6 +24,7 @@ namespace PnP.PowerShell.Commands.Fields
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDREFERENCETOLIST)]
+        [ArgumentCompleter(typeof(FieldInternalNameCompleter))]
         public FieldPipeBind Field;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]

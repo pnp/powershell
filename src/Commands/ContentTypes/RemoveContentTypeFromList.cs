@@ -14,6 +14,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
         [Parameter(Mandatory = true)]
         [ValidateNotNullOrEmpty]
+        [ArgumentCompleter(typeof(ContentTypeCompleter))]
         public ContentTypePipeBind ContentType;
 
         protected override void ExecuteCmdlet()

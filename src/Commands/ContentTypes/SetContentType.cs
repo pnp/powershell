@@ -13,6 +13,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FormCustomizersParams)]
+        [ArgumentCompleter(typeof(ContentTypeCompleter))]
         public ContentTypePipeBind Identity;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_FormCustomizersConvenienceParams)]
@@ -185,7 +186,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
                 if (updateRequired)
                 {
-                    if(list != null)
+                    if (list != null)
                     {
                         WriteVerbose("Updating content type on list");
                         ct.Update(false);

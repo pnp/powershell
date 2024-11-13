@@ -17,6 +17,7 @@ namespace PnP.PowerShell.Commands.Fields
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(FieldInternalNameCompleter))]
         public FieldPipeBind Identity = new FieldPipeBind();
 
         [Parameter(Mandatory = false)]

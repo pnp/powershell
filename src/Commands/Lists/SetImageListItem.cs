@@ -27,6 +27,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_ASServerRelativeUrl)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_ASPath)]
+        [ArgumentCompleter(typeof(FieldInternalNameCompleter))]
         public FieldPipeBind Field = new FieldPipeBind();
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ASServerRelativeUrl)]

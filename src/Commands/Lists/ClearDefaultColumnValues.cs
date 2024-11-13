@@ -19,6 +19,7 @@ namespace PnP.PowerShell.Commands.Lists
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]
+        [ArgumentCompleter(typeof(FieldInternalNameCompleter))]
         public FieldPipeBind Field;
 
         [Parameter(Mandatory = false)]

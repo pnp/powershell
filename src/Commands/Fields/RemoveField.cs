@@ -15,6 +15,7 @@ namespace PnP.PowerShell.Commands.Fields
     public class RemoveField : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(FieldInternalNameCompleter))]
         public FieldPipeBind Identity = new FieldPipeBind();
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 1)]

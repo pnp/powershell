@@ -17,6 +17,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         [ValidateNotNullOrEmpty]
+         [ArgumentCompleter(typeof(ContentTypeCompleter))]
         public ContentTypePipeBind Identity;
 
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
