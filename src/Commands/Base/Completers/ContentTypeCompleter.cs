@@ -16,9 +16,8 @@ namespace PnP.PowerShell.Commands.Base.Completers
             IEnumerable<ContentType> result = PnPConnection.Current.Context.LoadQuery(PnPConnection.Current.Context.Web.AvailableContentTypes.Include(f => f.Name));
             PnPConnection.Current.Context.ExecuteQueryRetry();
             foreach (var ct in result.Where(l => l.Name.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
-            {
-                var ctName = $"'{ct.Name}'";
-                yield return new CompletionResult(ctName);
+            {                
+                yield return new CompletionResult($"\"{ct.Name}\"");
             }
         }
     }
