@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Base.Completers
             PnPConnection.Current.Context.ExecuteQueryRetry();
             foreach (var ct in result.Where(l => l.Name.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
             {
-                var ctName = ct.Name.IndexOf(" ") > 0? $"'{ct.Name}'" : ct.Name;
+                var ctName = $"'{ct.Name}'";
                 yield return new CompletionResult(ctName);
             }
         }

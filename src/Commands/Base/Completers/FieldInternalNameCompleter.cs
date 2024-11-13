@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Base.Completers
             PnPConnection.Current.Context.ExecuteQueryRetry();
             foreach (var field in result.Where(l => l.InternalName.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
             {
-                yield return new CompletionResult(field.InternalName);
+                yield return new CompletionResult($"'{field.InternalName}'");
             }
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Base.Completers
 {
-     public sealed class ListNameCompleter : IArgumentCompleter
+    public sealed class ListNameCompleter : IArgumentCompleter
     {
         public IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
@@ -16,10 +16,9 @@ namespace PnP.PowerShell.Commands.Base.Completers
             PnPConnection.Current.Context.ExecuteQueryRetry();
             foreach (var list in result.Where(l => l.Title.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
             {
-                var listTitle = list.Title.IndexOf(" ") > 0 ? $"'{list.Title}'" : list.Title;
-                yield return new CompletionResult(listTitle,list.Title,CompletionResultType.ParameterValue,list.Title);
+                yield return new CompletionResult($"'{list.Title}'");
             }
 
-        }     
+        }
     }
 }
