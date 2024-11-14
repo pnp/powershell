@@ -13,6 +13,8 @@ namespace PnP.PowerShell.Commands.Base.Completers
     {
         public IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
+            wordToComplete = wordToComplete.Trim('"');
+
             IEnumerable<Field> result = PnPConnection.Current.Context.LoadQuery(PnPConnection.Current.Context.Web.AvailableFields.Include(f => f.InternalName));
             PnPConnection.Current.Context.ExecuteQueryRetry();
             foreach (var field in result.Where(l => l.InternalName.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
