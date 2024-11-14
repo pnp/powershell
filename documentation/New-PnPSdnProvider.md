@@ -15,7 +15,7 @@ Adds a new Software-Defined Networking (SDN) provider
 ## SYNTAX
 
 ```powershell
-New-PnPSdnProvider -Identity <String> -License <String> [-WhatIf]
+New-PnPSdnProvider -Identity <String> -License <String>
 ```
 
 ## DESCRIPTION
@@ -49,20 +49,6 @@ Accept wildcard characters: False
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs. The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

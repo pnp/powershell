@@ -16,14 +16,14 @@ Removes a taxonomy term from the term store.
 ### By Term Id
 ```
 Remove-PnPTerm -Identity <Guid> [-TermStore <TaxonomyTermStorePipeBind>]
- [-WhatIf] [-Confirm] 
+  [-Confirm] 
 ```
 
 ### By Term Name
 ```
 Remove-PnPTerm -Identity <String> -TermSet <TaxonomyTermSetPipeBind>
  -TermGroup <TaxonomyTermGroupPipeBind> [-TermStore <TaxonomyTermStorePipeBind>]
- [-Connection <PnPConnection>] [-WhatIf] [-Confirm] 
+ [-Connection <PnPConnection>] [-Confirm] 
 ```
 
 ## DESCRIPTION
@@ -114,22 +114,6 @@ Term store to use; if not specified the default term store is used.
 Type: TaxonomyTermStorePipeBind
 Parameter Sets: (All)
 Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
 
 Required: False
 Position: Named

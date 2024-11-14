@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.InformationManagement
@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
     public class SetListInformationRightsManagement : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]

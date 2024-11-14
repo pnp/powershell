@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Files
@@ -16,24 +16,26 @@ namespace PnP.PowerShell.Commands.Files
         private const string ParameterSet_CURRENTWEBROOTFOLDER = "Root folder of the current Web";
         private const string ParameterSet_LISTROOTFOLDER = "Root folder of a list";
         private const string ParameterSet_FOLDERSINLIST = "Folders In List";
-        private const string ParameterSet_FOLDERBYURL = "Folder by url";        
+        private const string ParameterSet_FOLDERBYURL = "Folder by url";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERBYURL)]
         [Alias("RelativeUrl")]
         public string Url;
 
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_FOLDERSINLIST)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         [Obsolete("Please transition to using Get-PnPFolder -ListRootFolder <folder> | Get-PnPFolderInFolder instead as this argument will be removed in a future version of the PnP PowerShell Cmdlets")]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_LISTROOTFOLDER)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind ListRootFolder;
 
         [Parameter(Mandatory = true, Position = 1, ParameterSetName = ParameterSet_CURRENTWEBROOTFOLDER)]
         public SwitchParameter CurrentWebRootFolder;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FOLDERBYURL)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LISTROOTFOLDER)]        
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LISTROOTFOLDER)]
         public SwitchParameter AsListItem;
 
         protected override void ExecuteCmdlet()

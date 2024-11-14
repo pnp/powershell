@@ -5,6 +5,7 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using PnP.PowerShell.Commands.Base.Completers;
 
 
 namespace PnP.PowerShell.Commands.InformationManagement
@@ -25,6 +26,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
         public List<int> ItemIds;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]

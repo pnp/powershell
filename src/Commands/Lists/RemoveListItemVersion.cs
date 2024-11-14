@@ -2,6 +2,7 @@
 using System.Management.Automation;
 using PnP.Core.Model.SharePoint;
 using PnP.Core.QueryModel;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
@@ -11,6 +12,7 @@ namespace PnP.PowerShell.Commands.Lists
     public class RemoveListItemVersion : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

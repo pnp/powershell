@@ -5,6 +5,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using PnP.Framework.Provisioning.ObjectHandlers.Utilities;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Extensions;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -15,11 +16,15 @@ namespace PnP.PowerShell.Commands.Lists
     public class RestoreListItemVersion : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
+
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public ListItemPipeBind Identity;
+
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public ListItemVersionPipeBind Version;
+        
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 

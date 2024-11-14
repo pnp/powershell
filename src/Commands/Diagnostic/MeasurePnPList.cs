@@ -7,6 +7,7 @@ using PnP.PowerShell.Commands.Extensions;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Diagnostic
 {
@@ -14,6 +15,7 @@ namespace PnP.PowerShell.Commands.Diagnostic
     public class MeasurePnPList : PnPWebRetrievalsCmdlet<List>
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = false)]

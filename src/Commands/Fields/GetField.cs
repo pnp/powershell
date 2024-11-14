@@ -3,6 +3,7 @@ using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Fields
@@ -12,9 +13,11 @@ namespace PnP.PowerShell.Commands.Fields
     public class GetField : PnPWebRetrievalsCmdlet<Field>
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(FieldInternalNameCompleter))]
         public FieldPipeBind Identity = new FieldPipeBind();
 
         [Parameter(Mandatory = false)]

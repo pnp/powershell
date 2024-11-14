@@ -6,6 +6,7 @@ using System.Linq;
 using PnP.PowerShell.Commands.Utilities.REST;
 using PnP.PowerShell.Commands.Model.SharePoint;
 using System.Text.Json.Nodes;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -26,6 +27,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(ParameterSetName = ParameterSet_TOCURRENTSITEBYPIPE, Mandatory = true)]
         [Parameter(ParameterSetName = ParameterSet_LISTBYPIPE, Mandatory = true, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind Identity;
 
         [Parameter(ParameterSetName = ParameterSet_TOCURRENTSITEBYURL, Mandatory = true)]

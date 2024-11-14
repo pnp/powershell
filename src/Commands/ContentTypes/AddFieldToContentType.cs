@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.ContentTypes
@@ -10,10 +10,12 @@ namespace PnP.PowerShell.Commands.ContentTypes
     public class AddFieldToContentType : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
+        [ArgumentCompleter(typeof(FieldInternalNameCompleter))]
         public FieldPipeBind Field;
 
         [Parameter(Mandatory = true)]
         [ValidateNotNullOrEmpty]
+        [ArgumentCompleter(typeof(ContentTypeCompleter))]
         public ContentTypePipeBind ContentType;
 
         [Parameter(Mandatory = false)]

@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client.DocumentSet;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.DocumentSets
 {
@@ -13,6 +14,7 @@ namespace PnP.PowerShell.Commands.DocumentSets
     {
         [Parameter(Mandatory = true)]
         [ValidateNotNullOrEmpty]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true)]

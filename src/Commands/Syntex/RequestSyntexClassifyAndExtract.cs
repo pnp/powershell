@@ -1,6 +1,7 @@
 ﻿using PnP.Core.Model.SharePoint;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Model.Syntex;
@@ -20,6 +21,7 @@ namespace PnP.PowerShell.Commands.Syntex
         const string Parameterset_FOLDER = "Folder";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_LIST)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]

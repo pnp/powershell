@@ -1,7 +1,7 @@
 ﻿using System.Management.Automation;
 
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
 
@@ -17,6 +17,7 @@ namespace PnP.PowerShell.Commands.Lists
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]        
         [ValidateNotNull]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Recycle)]

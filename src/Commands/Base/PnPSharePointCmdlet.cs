@@ -120,8 +120,12 @@ namespace PnP.PowerShell.Commands
             
             WriteVerbose("Making call to SharePoint Online using the Client Side Object Model (CSOM)");
 
-            // Validate the permissions in the access token for SharePoint Online
-            TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, AccessToken);
+            // Client Credentials based connections do not have an access token, so we can't validate permissions
+            if(Connection.ConnectionMethod != ConnectionMethod.Credentials)
+            {
+                // Validate the permissions in the access token for SharePoint Online
+                TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, AccessToken);
+            }
 
             base.ProcessRecord();
         }

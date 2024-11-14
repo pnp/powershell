@@ -12,8 +12,6 @@ namespace PnP.PowerShell.Commands.Search
 {
     [Cmdlet(VerbsCommon.Get, "PnPSearchExternalItem")]
     [RequiredApiDelegatedPermissions("graph/ExternalItem.Read.All")]
-    [RequiredApiDelegatedPermissions("graph/ExternalItem.ReadWrite.All")]
-    [RequiredApiDelegatedPermissions("graph/ExternalItem.ReadWrite.OwnedBy")]
     [ApiNotAvailableUnderApplicationPermissions]
     [OutputType(typeof(Model.Graph.MicrosoftSearch.ExternalItem[]))]
     public class GetSearchExternalItem : PnPGraphCmdlet

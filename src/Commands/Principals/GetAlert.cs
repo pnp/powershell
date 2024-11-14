@@ -1,5 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
@@ -16,6 +16,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_SPECIFICUSER)]
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_ALLUSERS)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPECIFICUSER)]

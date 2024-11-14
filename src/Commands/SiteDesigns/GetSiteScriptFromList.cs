@@ -1,6 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
@@ -17,6 +18,7 @@ namespace PnP.PowerShell.Commands
         public string Url;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_ByLIST)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()

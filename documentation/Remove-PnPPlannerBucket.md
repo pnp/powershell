@@ -22,12 +22,12 @@ Removes a planner bucket
 ### By Name
 ```powershell
 Remove-PnPPlannerBucket -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind>
- -Identity <PlannerBucketPipeBind>  [-WhatIf] [-Confirm] 
+ -Identity <PlannerBucketPipeBind> [-Confirm] 
 ```
 
 ### By Bucket Id
 ```powershell
-Remove-PnPPlannerBucket -BucketId <String> -Identity <PlannerBucketPipeBind>  [-WhatIf]
+Remove-PnPPlannerBucket -BucketId <String> -Identity <PlannerBucketPipeBind>
  [-Confirm] 
 ```
 
@@ -114,22 +114,6 @@ Parameter Sets: By Name
 Aliases:
 
 Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -WhatIf
-Shows what would happen if the cmdlet runs.
-The cmdlet is not run.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases: wi
-
-Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -1,6 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework.Entities;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -13,6 +13,7 @@ namespace PnP.PowerShell.Commands.Webhooks
     public class GetWebhookSubscription : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()

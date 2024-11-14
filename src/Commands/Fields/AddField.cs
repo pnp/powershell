@@ -5,6 +5,7 @@ using PnP.Framework.Entities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
 using Microsoft.SharePoint.Client.Taxonomy;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Fields
 {
@@ -19,9 +20,11 @@ namespace PnP.PowerShell.Commands.Fields
 
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_ADDFIELDREFERENCETOLIST)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDREFERENCETOLIST)]
+        [ArgumentCompleter(typeof(FieldInternalNameCompleter))]
         public FieldPipeBind Field;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ADDFIELDTOLIST)]
@@ -428,7 +431,7 @@ namespace PnP.PowerShell.Commands.Fields
                     f.Update();
                     ClientContext.Load(f);
                     ClientContext.ExecuteQueryRetry();
-                }                
+                }
                 switch (f.FieldTypeKind)
                 {
                     case FieldType.DateTime:

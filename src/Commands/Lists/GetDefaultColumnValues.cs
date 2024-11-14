@@ -7,6 +7,7 @@ using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -15,6 +16,7 @@ namespace PnP.PowerShell.Commands.Lists
     public class GetDefaultColumnValues : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         protected override void ExecuteCmdlet()

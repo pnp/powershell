@@ -1,4 +1,5 @@
 ﻿using System.Management.Automation;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Principals
@@ -12,6 +13,7 @@ namespace PnP.PowerShell.Commands.Principals
 
         [Parameter(Mandatory = false)]
         [ValidateNotNullOrEmpty]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]

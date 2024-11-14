@@ -6,6 +6,7 @@ using System.Management.Automation;
 
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.CompliancePolicy;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
@@ -25,6 +26,7 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BATCHED)]
         [Parameter(ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]

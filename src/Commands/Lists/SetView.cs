@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Fields
 {
@@ -12,6 +13,7 @@ namespace PnP.PowerShell.Commands.Fields
     public class SetView : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

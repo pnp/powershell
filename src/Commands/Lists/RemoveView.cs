@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
@@ -14,6 +14,7 @@ namespace PnP.PowerShell.Commands.Lists
         public ViewPipeBind Identity = new ViewPipeBind();
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 1)]
+        [ArgumentCompleter(typeof(ListNameCompleter))]
         public ListPipeBind List;
 
         [Parameter(Mandatory = false)]
