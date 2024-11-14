@@ -4,6 +4,7 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
 using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands
@@ -17,6 +18,7 @@ namespace PnP.PowerShell.Commands
         public const string ParameterSet_Key = "Key";
 
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_Key)]
+        [ArgumentCompleter(typeof(PropertyBagKeyCompleter))]
         public string Key = string.Empty;
 
         [Parameter(Mandatory = false)]
