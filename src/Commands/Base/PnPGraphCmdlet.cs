@@ -1,9 +1,6 @@
-﻿using Microsoft.Graph;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
 using System.Management.Automation;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -18,8 +15,6 @@ namespace PnP.PowerShell.Commands.Base
         public ClientContext ClientContext => Connection?.Context;
 
         public PnPContext PnPContext => Connection?.PnPContext;
-
-        private GraphServiceClient serviceClient;
 
         protected override void BeginProcessing()
         {
@@ -40,29 +35,5 @@ namespace PnP.PowerShell.Commands.Base
         /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
         /// </summary>
         public string AccessToken => TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
-
-        internal GraphServiceClient ServiceClient
-        {
-            get
-            {
-                if (serviceClient == null)
-                {
-                    var baseUrl = $"https://{Connection.GraphEndPoint}/v1.0";
-                    serviceClient = new GraphServiceClient(baseUrl, new DelegateAuthenticationProvider(
-                            async (requestMessage) =>
-                            {
-                                await Task.Run(() =>
-                                {
-                                    if (!string.IsNullOrEmpty(AccessToken))
-                                    {
-                                        // Configure the HTTP bearer Authorization Header
-                                        requestMessage.Headers.Authorization = new AuthenticationHeaderValue("bearer", AccessToken);
-                                    }
-                                });
-                            }), new HttpProvider());
-                }
-                return serviceClient;
-            }
-        }
     }
 }
