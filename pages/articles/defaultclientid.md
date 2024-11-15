@@ -2,6 +2,32 @@
 
 As of September 9<sup>th</sup>, 2024, it is no longer possible to use PnP PowerShell with `-Interactive` without [providing your own Entra ID App Registration](registerapplication.md) by passing in `-ClientId` as well. To avoid having to add `-ClientId` on every connect, you can also perform the below task to set the default ClientId for your environment. This avoids you having to update all of your scripts to include `-ClientId` in the Connect-PnPOnline statements, making the impact of this change smaller by not having to update existing scripts.
 
+## By storing a client id for a tenant
+
+> [!NOTE]
+> This functionality is only available in the versions *newer* than 2.12.0
+
+This options allows you to have different client ids for different tenant.
+
+To set this use the `Set-PnPManagedAppId` cmdlet. You do not have to be connected to a tenant for this.
+
+To set a client id for tenant with url `https://yourtenant.sharepoint.com`, you enter:
+
+```powershell
+Set-PnPManagedAppId -Url https://yourtenant.sharepoint.com -AppId f0e2b362-8973-4fc7-a293-3c73e2677e79
+```
+
+This will add an entry to your Windows Credential Manager or the MacOS keychain if your are on MacOS. Connect-PnPOnline will use this value to match the correct client id with the url you are connecting to and it is not needed use -ClientId anymore, e.g.
+
+```powershell
+Connect-PnPOnline -Url https://yourtenant.sharepoint.com -Interactive
+```
+
+
+
+You can manage entries using the `Get-PnPManagedAppId` and `Remove-PnPManagedAppId` cmdlets. Using these cmdlets it is possible to have different client/app ids for different tenants, which is usefull if you are a consultant serving multiple customers for instance.
+
+
 ## By setting an environment variable
 
 You can set an environment variable on your machine or in your profile to default to the ClientId you configure in it. The name of the environment variable should be either: `ENTRAID_APP_ID`, or `ENTRAID_CLIENT_ID`, or `AZURE_CLIENT_ID`. You only need one of these, not all of them. They will be used in the order shown, i.e. if you set a value for `AZURE_CLIENT_ID` and another one for `ENTRAID_APP_ID`, the `ENTRAID_APP_ID` entry will be used and the other will be ignored.  
