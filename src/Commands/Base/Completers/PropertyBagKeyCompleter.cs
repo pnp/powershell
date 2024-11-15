@@ -14,8 +14,6 @@ namespace PnP.PowerShell.Commands.Base.Completers
     {
         public IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
-            wordToComplete = wordToComplete.Trim('"');
-
             IEnumerable<string> keys = null;
             if (fakeBoundParameters["Folder"] == null)
             {

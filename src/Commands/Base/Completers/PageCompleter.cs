@@ -19,7 +19,6 @@ namespace PnP.PowerShell.Commands.Base.Completers
         public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
             List<CompletionResult> results = new List<CompletionResult>();
-            wordToComplete = wordToComplete.Trim('"');
             wordToComplete = wordToComplete.Replace('\\', '/');
             var pages = PnPConnection.Current.PnPContext.Web.GetPages(wordToComplete.TrimStart('/'));
             foreach (var page in pages.OrderBy(p => p.Name))

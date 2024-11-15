@@ -12,6 +12,7 @@ public abstract class PnPArgumentCompleter : IArgumentCompleter
     private const int Timeout = 2000;
     public IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
     {
+        wordToComplete = wordToComplete.Trim(['"', '\'']);
         var task = Task.Run(() => GetArguments(commandName, parameterName, wordToComplete, commandAst, fakeBoundParameters));
         return task.TimeoutAfter(TimeSpan.FromMilliseconds(GetTimeOut())).GetAwaiter().GetResult();
     }
