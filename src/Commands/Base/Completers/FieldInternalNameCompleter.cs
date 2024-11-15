@@ -9,9 +9,9 @@ using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Base.Completers
 {
-    public sealed class FieldInternalNameCompleter : IArgumentCompleter
+    public sealed class FieldInternalNameCompleter : PnPArgumentCompleter
     {
-        public IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
+        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
             wordToComplete = wordToComplete.Trim('"');
 

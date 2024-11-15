@@ -1,4 +1,5 @@
 ﻿
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
@@ -11,6 +12,7 @@ namespace PnP.PowerShell.Commands.Pages
     public class GetPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(PCompleter))]
         public PagePipeBind Identity;
 
         protected override void ExecuteCmdlet()

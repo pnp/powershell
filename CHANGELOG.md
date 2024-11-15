@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+- Added tab completers for all cmdlets using a ListPipeBind parameter (e.g. `Get-PnPList -Identity`), all cmdlets using a FieldPipeBind parameter (e.g. `Get-PnPField -Identity`), `Get-PnPPropertyBag` and `Get-PnPPage` cmdlets. The argument lookup will timeout after 2 seconds. This value can controlled by setting an environment variables called "PNPPSCOMPLETERTIMEOUT" and set the value to a number specifying milliseconds (e.g. 2000 is 2 seconds)
 - Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document [#4238](https://github.com/pnp/powershell/pull/4238)
 - Added `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, `Get-PnPPriviledgedIdentityManagementRole` and `Enable-PnPPriviledgedIdentityManagement` cmdlets to allow scripting of enabling Privileged Identity Management roles for a user [#4039](https://github.com/pnp/powershell/pull/4039)
 - Added `Add-PnPTenantRestrictedSearchAllowedList` which allows setting up a list of allowed URLs for Restricted SharePoint Search [#3993](https://github.com/pnp/powershell/pull/3993)
