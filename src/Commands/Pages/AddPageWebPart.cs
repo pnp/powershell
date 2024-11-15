@@ -1,4 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
@@ -17,6 +18,7 @@ namespace PnP.PowerShell.Commands.WebParts
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_DEFAULT3RDPARTY)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_POSITIONEDBUILTIN)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterSet_POSITIONED3RDPARTY)]
+        [ArgumentCompleter(typeof(PageCompleter))]
         public PagePipeBind Page;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEFAULTBUILTIN)]

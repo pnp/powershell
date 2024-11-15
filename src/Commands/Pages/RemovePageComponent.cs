@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Pages
 {
@@ -12,6 +13,7 @@ namespace PnP.PowerShell.Commands.Pages
     public class RemovePageComponent : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(PageCompleter))]
         public PagePipeBind Page;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

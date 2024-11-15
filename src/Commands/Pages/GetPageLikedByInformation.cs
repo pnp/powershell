@@ -1,5 +1,6 @@
 ﻿
 using PnP.Core.QueryModel;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
 using System;
@@ -14,6 +15,7 @@ namespace PnP.PowerShell.Commands.Pages
     public class GetPageLikedByInformation : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(PageCompleter))]
         public PagePipeBind Identity;
 
         protected override void ExecuteCmdlet()

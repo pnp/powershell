@@ -4,6 +4,7 @@ using System;
 using System.Management.Automation;
 using System.Collections.Generic;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Pages
 {
@@ -13,6 +14,7 @@ namespace PnP.PowerShell.Commands.Pages
     public class SetPage : PnPWebCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(PageCompleter))]
         public PagePipeBind Identity;
 
         [Parameter(Mandatory = false)]

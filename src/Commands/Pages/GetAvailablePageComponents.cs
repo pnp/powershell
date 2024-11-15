@@ -1,4 +1,5 @@
 ﻿
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
 using System.Management.Automation;
@@ -9,6 +10,7 @@ namespace PnP.PowerShell.Commands.Pages
     public class GetAvailablePageComponents : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(PageCompleter))]
         public PagePipeBind Page;
 
         [Parameter(Mandatory = false)]

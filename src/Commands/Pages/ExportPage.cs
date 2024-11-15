@@ -8,6 +8,7 @@ using System;
 using System.IO;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
@@ -15,6 +16,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
     public class ExportPage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+        [ArgumentCompleter(typeof(PageCompleter))]
         public PagePipeBind Identity;
 
         [Parameter(Mandatory = false)]
