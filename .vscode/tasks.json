@@ -10,7 +10,7 @@
                     "-NoProfile",
                     "-ExecutionPolicy",
                     "Bypass",
-                    "-File"
+                    "-Command"
                 ]
             }
         }
@@ -23,7 +23,7 @@
                     "-NoProfile",
                     "-ExecutionPolicy",
                     "Bypass",
-                    "-File"
+                    "-Command"
                 ]
             }
         }
@@ -33,7 +33,7 @@
             "label": "Build with nugets",
             "type": "shell",
             "command": "${cwd}/build/Build-Debug.ps1",
-            "problemMatcher":"$msCompile",
+            "problemMatcher": "$msCompile",
             "group": {
                 "kind": "build",
                 "isDefault": true
