@@ -551,6 +551,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPFileSensitivityLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPFileSensitivityLabel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPFileSharingInvite.md",
       "output": {
         ".html": {
