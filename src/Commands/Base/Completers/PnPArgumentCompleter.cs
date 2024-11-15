@@ -18,11 +18,27 @@ public abstract class PnPArgumentCompleter : IArgumentCompleter
             quoteChar = '\'';
         }
         wordToComplete = wordToComplete.Trim(['"', '\'']);
-        var task = Task.Run(() => GetArguments(commandName, parameterName, wordToComplete, commandAst, fakeBoundParameters, quoteChar));
-        return task.TimeoutAfter(TimeSpan.FromMilliseconds(GetTimeOut())).GetAwaiter().GetResult();
+        var task = Task.Run(() => GetArguments(commandName, parameterName, wordToComplete, commandAst, fakeBoundParameters));
+        
+        var results = task.TimeoutAfter(TimeSpan.FromMilliseconds(GetTimeOut())).GetAwaiter().GetResult();
+        foreach(var result in results)
+        {
+            var completionText = result.CompletionText;
+            if(quoteChar == '"')
+            {
+                  completionText = completionText.Replace("\"","`\"");
+            } else if(quoteChar == '\'')
+            {
+                completionText = completionText.Replace("'","`'");
+            }
+            yield return new CompletionResult($"{quoteChar}{completionText}{quoteChar}",result.ListItemText,result.ResultType,result.ToolTip);
+        }
     }
 
-    public abstract IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters, char quoteChar);
+    protected virtual IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
+    {
+        return null;
+    }
 
     private Int32 GetTimeOut()
     {

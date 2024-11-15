@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Base.Completers
 {
     public sealed class PropertyBagKeyCompleter : PnPArgumentCompleter
     {
-        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters, char quoteChar)
+        protected override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
             IEnumerable<string> keys = null;
             if (fakeBoundParameters["Folder"] == null)
@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Base.Completers
 
             foreach (var key in keys.Where(k => k.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
             {
-                yield return new CompletionResult($"{quoteChar}{key}{quoteChar}");
+                yield return new CompletionResult(key);
             }
         }
     }
