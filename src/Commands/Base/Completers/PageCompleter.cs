@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Base.Completers
 {
     public sealed class PageCompleter : PnPArgumentCompleter
     {
-        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
+        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters, char quoteChar)
         {
             List<CompletionResult> results = new List<CompletionResult>();
             wordToComplete = wordToComplete.Replace('\\', '/');
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Base.Completers
             foreach (var page in pages.OrderBy(p => p.Name))
             {
                 var result = string.IsNullOrEmpty(page.Folder) ? page.Name : page.Folder + "/" + page.Name;
-                results.Add(new CompletionResult($"\"{result}\""));
+                results.Add(new CompletionResult($"{quoteChar}{result}{quoteChar}"));
             }
             return results;
         }

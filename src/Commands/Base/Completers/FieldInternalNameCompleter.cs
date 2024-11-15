@@ -11,13 +11,13 @@ namespace PnP.PowerShell.Commands.Base.Completers
 {
     public sealed class FieldInternalNameCompleter : PnPArgumentCompleter
     {
-        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
+        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters, char quoteChar)
         {
             IEnumerable<Field> result = PnPConnection.Current.Context.LoadQuery(PnPConnection.Current.Context.Web.AvailableFields.Include(f => f.InternalName));
             PnPConnection.Current.Context.ExecuteQueryRetry();
             foreach (var field in result.Where(l => l.InternalName.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
             {
-                yield return new CompletionResult($"\"{field.InternalName}\"");
+                yield return new CompletionResult($"{quoteChar}{field.InternalName}{quoteChar}");
             }
         }
     }

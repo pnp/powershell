@@ -10,13 +10,18 @@ namespace PnP.PowerShell.Commands.Base.Completers
 {
     public sealed class ListNameCompleter : PnPArgumentCompleter
     {
-        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
+        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters, char quoteChar)
         {
             IEnumerable<List> result = PnPConnection.Current.Context.LoadQuery(PnPConnection.Current.Context.Web.Lists.Include(list => list.Title));
             PnPConnection.Current.Context.ExecuteQueryRetry();
             foreach (var list in result.Where(l => l.Title.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
             {
-                yield return new CompletionResult($"\"{list.Title.Replace("\"","`\"")}\"");
+                var listTitle = list.Title;
+                if(quoteChar == '"')
+                {
+                   listTitle = list.Title.Replace("\"","`\"");
+                }
+                yield return new CompletionResult($"{quoteChar}{listTitle}{quoteChar}");
             }
 
         }

@@ -11,13 +11,13 @@ namespace PnP.PowerShell.Commands.Base.Completers
 {
     public sealed class ContentTypeCompleter : PnPArgumentCompleter
     {
-        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
+        public override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters, char quoteChar)
         {
             IEnumerable<ContentType> result = PnPConnection.Current.Context.LoadQuery(PnPConnection.Current.Context.Web.AvailableContentTypes.Include(f => f.Name));
             PnPConnection.Current.Context.ExecuteQueryRetry();
             foreach (var ct in result.Where(l => l.Name.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
             {
-                yield return new CompletionResult($"\"{ct.Name}\"");
+                yield return new CompletionResult($"{quoteChar}{ct.Name}{quoteChar}");
             }
         }
     }
