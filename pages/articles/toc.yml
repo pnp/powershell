@@ -16,6 +16,8 @@
       href: updatenotifications.md
     - name: Default Client Id
       href: defaultclientid.md      
+    - name: Environment variables
+      href: environmentvariables.md
 - name: Using PnP PowerShell in Azure
   items:
     - name: Introduction
