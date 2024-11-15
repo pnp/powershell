@@ -4,7 +4,7 @@ PnP PowerShell is a cross-platform PowerShell Module providing over 700 cmdlets 
 > [!NOTE]
 > As of September 9<sup>th</sup>, 2024, as part of a focus on improving the security posture, the multi-tenant PnP Management Shell Entra ID app (with Client/ApplicationID: `31359c7f-bd7e-475c-86db-fdb8c937548e`) has been deleted. It impacts credentials(username + password), Interactive auth flow and Device login flow if it depended on the said multi-tenant app. 
 >
-> It has always been a recommended practice to register your own Entra ID Application with minimal permissions required for your scripts to use with PnP PowerShell. [This has become mandatory step now](https://github.com/pnp/powershell/discussions/4249). The linked post has more details and it will guide you through how to do so and get your scripts back up & running with minimal code changes.
+> It has always been a recommended practice to register your own Entra ID Application with minimal permissions required for your scripts to use with PnP PowerShell. [This has become a mandatory step now](https://github.com/pnp/powershell/discussions/4249). The linked post has more details and it will guide you through how to do so and get your scripts back up & running with minimal code changes.
 
 ## Getting up and running
 
