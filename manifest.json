@@ -154,6 +154,19 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/environmentvariables.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/environmentvariables.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "articles/gettingstartedcontributing.md",
       "output": {
