@@ -130,6 +130,9 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool? HidePeoplePreviewingFiles;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter? CanSyncHubSitePermissions;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 
@@ -186,6 +189,12 @@ namespace PnP.PowerShell.Commands.Site
                 {
                     WriteWarning($"Unable to add Domain Name as there is an existing domain name with the same name. Will be skipped.");
                 }
+            }
+
+            if (ParameterSpecified(nameof(CanSyncHubSitePermissions)) && CanSyncHubSitePermissions.HasValue)
+            {
+                site.CanSyncHubSitePermissions = CanSyncHubSitePermissions.Value;
+                context.ExecuteQueryRetry();
             }
 
             if (ParameterSpecified(nameof(LogoFilePath)))
@@ -422,7 +431,7 @@ namespace PnP.PowerShell.Commands.Site
                 {
                     siteProperties.HidePeoplePreviewingFiles = HidePeoplePreviewingFiles.Value;
                     executeQueryRequired = true;
-                }                 
+                }
 
                 if (executeQueryRequired)
                 {
