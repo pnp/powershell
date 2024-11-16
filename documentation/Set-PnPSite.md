@@ -48,6 +48,7 @@ Set-PnPSite [-Identity <String>]
  [-ExcludedBlockDownloadGroupIds <Guid[]>]
  [-ListsShowHeaderAndNavigation <Boolean>]
  [-RestrictContentOrgWideSearch <Boolean>]
+ [-CanSyncHubSitePermissions <SwitchParameter>]
  [-Connection <PnPConnection>]
 ```
 
@@ -620,6 +621,20 @@ Set a property on a site collection to make all lists always load with the site 
 
 ```yaml
 Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CanSyncHubSitePermissions
+Sets value if syncing hub site permissions to this associated site is allowed.
+
+```yaml
+Type: Switch Parameter
 Parameter Sets: Set Properties
 
 Required: False
