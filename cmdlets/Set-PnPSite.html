@@ -119,6 +119,7 @@
  [-ExcludedBlockDownloadGroupIds &lt;Guid[]&gt;]
  [-ListsShowHeaderAndNavigation &lt;Boolean&gt;]
  [-RestrictContentOrgWideSearch &lt;Boolean&gt;]
+ [-CanSyncHubSitePermissions &lt;SwitchParameter&gt;]
  [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
@@ -555,6 +556,17 @@ Accept wildcard characters: False
 <h3 id="-listsshowheaderandnavigation">-ListsShowHeaderAndNavigation</h3>
 <p>Set a property on a site collection to make all lists always load with the site elements intact.</p>
 <pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-cansynchubsitepermissions">-CanSyncHubSitePermissions</h3>
+<p>Sets value if syncing hub site permissions to this associated site is allowed.</p>
+<pre><code class="lang-yaml">Type: Switch Parameter
 Parameter Sets: Set Properties
 
 Required: False
