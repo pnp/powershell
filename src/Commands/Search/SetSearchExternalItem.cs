@@ -105,8 +105,8 @@ namespace PnP.PowerShell.Commands.Search
             var jsonContent = JsonContent.Create(bodyContent);
             WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
-            var searchExternalConnection = ConnectionId.GetExternalConnection(this, Connection, AccessToken);
-            var graphApiUrl = $"v1.0/external/connections/{searchExternalConnection.Id}/items/{ItemId}";
+            var externalConnectionId = ConnectionId.Identity ?? ConnectionId.SearchExternalConnection?.Id ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
+            var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}/items/{ItemId}";
             var results = Utilities.REST.GraphHelper.Put<Model.Graph.MicrosoftSearch.ExternalItem>(this, Connection, graphApiUrl, AccessToken, jsonContent);
             WriteObject(results, false);
         }

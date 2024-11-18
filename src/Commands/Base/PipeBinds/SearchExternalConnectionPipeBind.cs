@@ -4,34 +4,34 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public class SearchExternalConnectionPipeBind
     {
-        private readonly Model.Graph.MicrosoftSearch.ExternalConnection _searchExternalConnection;
-        private readonly string _identity;
+        public readonly Model.Graph.MicrosoftSearch.ExternalConnection SearchExternalConnection;
+        public readonly string Identity;
 
         public SearchExternalConnectionPipeBind()
         {
-            _searchExternalConnection = null;
-            _identity = null;
+            SearchExternalConnection = null;
+            Identity = null;
         }
 
         public SearchExternalConnectionPipeBind(Model.Graph.MicrosoftSearch.ExternalConnection searchExternalConnection)
         {
-            _searchExternalConnection = searchExternalConnection;
+            SearchExternalConnection = searchExternalConnection;
         }
 
         public SearchExternalConnectionPipeBind(string identity)
         {
-            _identity = identity;
+            Identity = identity;
         }
 
         public Model.Graph.MicrosoftSearch.ExternalConnection GetExternalConnection(PSCmdlet cmdlet, PnPConnection connection, string accessToken)
         {
-            if(_searchExternalConnection != null)
+            if(SearchExternalConnection != null)
             {
-                return _searchExternalConnection;
+                return SearchExternalConnection;
             }
             else
             {
-                var externalConnectionResult = Utilities.REST.GraphHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>(cmdlet, connection, $"v1.0/external/connections/{_identity}", accessToken);
+                var externalConnectionResult = Utilities.REST.GraphHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>(cmdlet, connection, $"v1.0/external/connections/{Identity}", accessToken);
                 return externalConnectionResult;
             }
         }

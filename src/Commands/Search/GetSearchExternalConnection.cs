@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Search
     [OutputType(typeof(Model.Graph.MicrosoftSearch.ExternalConnection))]
     public class GetSearchExternalConnection : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public string Identity;
 
         protected override void ExecuteCmdlet()
