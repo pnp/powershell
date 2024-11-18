@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var externalConnectionId = ConnectionId.Identity ?? ConnectionId.SearchExternalConnection?.Id ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
 
             var searchQuery = new Model.Graph.MicrosoftSearch.SearchRequests
             {

@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var searchExternalConnection = ConnectionId.GetExternalConnection(this, Connection, AccessToken);
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
 
             switch(ParameterSetName)
             {
@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Search
             var jsonContent = new StringContent(SchemaAsText);
             WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
-            var graphApiUrl = $"v1.0/external/connections/{searchExternalConnection.Id}/schema";
+            var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}/schema";
             var results = Utilities.REST.GraphHelper.Patch(this, Connection, AccessToken, jsonContent, graphApiUrl);
             
             WriteVerbose("Trying to retrieve location header from response which can be used to poll for the status of the schema operation");

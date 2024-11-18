@@ -21,16 +21,16 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var connection = ConnectionId.GetExternalConnection(this, Connection, AccessToken);
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
 
             try
             {
-                var response = GraphHelper.Delete(this, Connection, $"beta/external/connections/{connection.Id}/items/{ItemId}", AccessToken);
-                WriteVerbose($"External item with ID '{ItemId}' successfully removed from external connection '{connection.Id}'");
+                var response = GraphHelper.Delete(this, Connection, $"beta/external/connections/{externalConnectionId}/items/{ItemId}", AccessToken);
+                WriteVerbose($"External item with ID '{ItemId}' successfully removed from external connection '{externalConnectionId}'");
             }
             catch (PSInvalidOperationException ex)
             {
-                throw new PSInvalidOperationException($"Removing external item with ID '{ItemId}' from external connection '{connection.Id}' failed with message '{ex.Message}'", ex);
+                throw new PSInvalidOperationException($"Removing external item with ID '{ItemId}' from external connection '{externalConnectionId}' failed with message '{ex.Message}'", ex);
             }
         }
     }

@@ -4,34 +4,39 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public class SearchExternalConnectionPipeBind
     {
-        public readonly Model.Graph.MicrosoftSearch.ExternalConnection SearchExternalConnection;
-        public readonly string Identity;
+        private readonly Model.Graph.MicrosoftSearch.ExternalConnection _searchExternalConnection;
+        private readonly string _identity;
 
         public SearchExternalConnectionPipeBind()
         {
-            SearchExternalConnection = null;
-            Identity = null;
+            _searchExternalConnection = null;
+            _identity = null;
         }
 
         public SearchExternalConnectionPipeBind(Model.Graph.MicrosoftSearch.ExternalConnection searchExternalConnection)
         {
-            SearchExternalConnection = searchExternalConnection;
+            _searchExternalConnection = searchExternalConnection;
         }
 
         public SearchExternalConnectionPipeBind(string identity)
         {
-            Identity = identity;
+            _identity = identity;
+        }
+
+        public string GetExternalConnectionId(PSCmdlet cmdlet, PnPConnection connection, string accessToken)
+        {
+            return _identity ?? _searchExternalConnection?.Id ?? GetExternalConnection(cmdlet, connection, accessToken)?.Id;
         }
 
         public Model.Graph.MicrosoftSearch.ExternalConnection GetExternalConnection(PSCmdlet cmdlet, PnPConnection connection, string accessToken)
         {
-            if(SearchExternalConnection != null)
+            if(_searchExternalConnection != null)
             {
-                return SearchExternalConnection;
+                return _searchExternalConnection;
             }
             else
             {
-                var externalConnectionResult = Utilities.REST.GraphHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>(cmdlet, connection, $"v1.0/external/connections/{Identity}", accessToken);
+                var externalConnectionResult = Utilities.REST.GraphHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>(cmdlet, connection, $"v1.0/external/connections/{_identity}", accessToken);
                 return externalConnectionResult;
             }
         }
