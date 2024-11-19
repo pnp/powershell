@@ -38,7 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.**
+- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.3 or newer **
 - **`-Interactive` login is now the default.**
 - In case of errors when Graph batch method is used, it will now throw a clearer error message about what was the issue. [#4327](https://github.com/pnp/powershell/pull/4327/)
 - `Get-PnPAccessToken`, `Request-PnPAccessToken` and `Get-PnPGraphAccessToken` output type is changed to `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`. Earlier they returned `System.IdentityModel.Tokens.Jwt`.
