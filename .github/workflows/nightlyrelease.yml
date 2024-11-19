@@ -16,10 +16,9 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: | 
-          6.x
-          7.x
+        dotnet-version: |           
           8.x
+          9.x
     - uses: actions/checkout@v4
       with:
         ref: dev

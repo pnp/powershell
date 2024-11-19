@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var externalConnection = ConnectionId.GetExternalConnection(this, Connection, AccessToken);
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
 
             var searchQuery = new Model.Graph.MicrosoftSearch.SearchRequests
             {
@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Search
                         ],
                         ContentSources =
                         [
-                            $"/external/connections/{externalConnection.Id}"
+                            $"/external/connections/{externalConnectionId}"
                         ],
                         Query = new Model.Graph.MicrosoftSearch.SearchRequestQuery
                         {
@@ -59,11 +59,11 @@ namespace PnP.PowerShell.Commands.Search
 
             if(hits == null || hits.Count == 0)
             {
-                WriteVerbose($"No external items found{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnection.Id}'");
+                WriteVerbose($"No external items found{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnectionId}'");
                 return;
             }
 
-            WriteVerbose($"Found {hits.Count} external item{(hits.Count != 1 ? "s" : "")}{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnection.Id}'");
+            WriteVerbose($"Found {hits.Count} external item{(hits.Count != 1 ? "s" : "")}{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnectionId}'");
 
             var externalItems = hits.Select(s => new Model.Graph.MicrosoftSearch.ExternalItem {  
                 Id = s.Resource.Properties["fileID"].ToString()[(s.Resource.Properties["fileID"].ToString().LastIndexOf(',') + 1)..],

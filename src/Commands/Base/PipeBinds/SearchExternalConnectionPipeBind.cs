@@ -23,6 +23,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _identity = identity;
         }
 
+        public string GetExternalConnectionId(PSCmdlet cmdlet, PnPConnection connection, string accessToken)
+        {
+            return _identity ?? _searchExternalConnection?.Id ?? GetExternalConnection(cmdlet, connection, accessToken)?.Id;
+        }
+
         public Model.Graph.MicrosoftSearch.ExternalConnection GetExternalConnection(PSCmdlet cmdlet, PnPConnection connection, string accessToken)
         {
             if(_searchExternalConnection != null)

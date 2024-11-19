@@ -15,8 +15,8 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var searchExternalConnection = ConnectionId.GetExternalConnection(this, Connection, AccessToken);
-            var graphApiUrl = $"v1.0/external/connections/{searchExternalConnection.Id}/schema";
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
+            var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}/schema";
             var result = Utilities.REST.GraphHelper.Get<Model.Graph.MicrosoftSearch.ExternalSchema>(this, Connection, graphApiUrl, AccessToken, additionalHeaders: new System.Collections.Generic.Dictionary<string, string> { { "Prefer", "include-unknown-enum-members" } });
             WriteObject(result, false);
         }
