@@ -41,8 +41,8 @@ namespace PnP.PowerShell.Commands.Search
             var jsonContent = JsonContent.Create(bodyContent, null, new JsonSerializerOptions { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull });
             WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
-            var externalConnection = Identity.GetExternalConnection(this, Connection, AccessToken);
-            var graphApiUrl = $"v1.0/external/connections/{externalConnection.Id}";
+            var externalConnectionId = Identity.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(Identity));
+            var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}";
             Utilities.REST.GraphHelper.Patch(this, Connection, AccessToken, jsonContent, graphApiUrl);
         }
     }
