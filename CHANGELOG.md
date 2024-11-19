@@ -38,7 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.3 or newer **
+- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.4 or newer **
 - **`-Interactive` login is now the default.**
 - In case of errors when Graph batch method is used, it will now throw a clearer error message about what was the issue. [#4327](https://github.com/pnp/powershell/pull/4327/)
 - `Get-PnPAccessToken`, `Request-PnPAccessToken` and `Get-PnPGraphAccessToken` output type is changed to `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`. Earlier they returned `System.IdentityModel.Tokens.Jwt`.
@@ -55,6 +55,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - When passing in an existing connection using `-Connection` on `Connect-PnPOnline`, the clientid from the passed in connection will be used for the new connection [#4425](https://github.com/pnp/powershell/pull/4425)
 - Removed `-Confirm` parameter from `Remove-PnPUser` and `Remove-PnPAvailableSiteClassification` cmdlets. Use `-Force` instead. [#4455](https://github.com/pnp/powershell/pull/4455)
 - `Get-PnPFile` now also supports passing in a full SharePoint Online URL [#4480](https://github.com/pnp/powershell/pull/4480)
+- `Send-PnPMail` now throws a warning about the retirement of the SharePoint SendEmail API.
 
 ### Fixed
 
@@ -81,6 +82,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPPowerPlatformConnector` alias. You need to use `Get-PnPPowerPlatformCustomConnector`. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `-IsFavoriteByDefault` parameter from `Add-PnPTeamsChannel` cmdlet. It was obsolete and not supported by Graph API. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `Get-PnPAppAuthAccessToken` , `Remove-PnPGraphAccessToken` and `Request-PnPAccessToken` cmdlets. Use `Get-PnPAccessToken` instead. [#4398](https://github.com/pnp/powershell/pull/4398)
+- Removed support for sending mail via SMTP. It's usage is not recommended by .NET due to its lack of support for modern protocols.
  
 ### Contributors
 
