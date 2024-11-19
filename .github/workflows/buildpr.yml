@@ -33,10 +33,9 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: |
-           6.0.x
-           7.0.x
+        dotnet-version: |           
            8.0.x
+           9.0.x
     - name: Install PnP.Core dependencies
       run: dotnet restore
       working-directory: pnpcore/src/sdk
