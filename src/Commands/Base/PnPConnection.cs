@@ -266,7 +266,7 @@ namespace PnP.PowerShell.Commands.Base
                 authManager = Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
                  {
                      if (launchBrowser)
-                     {                         
+                     {
                          ClipboardService.SetText(deviceCodeResult.UserCode);
                          messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
                          BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), false, cancellationTokenSource);
@@ -640,7 +640,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             using (authManager)
             {
-                var clientContext = authManager.GetContext(uri.ToString(), cancellationTokenSource.Token);
+                var clientContext = authManager.GetContext(uri.ToString(), cancellationTokenSource.Token, "PnP PowerShell", "https://pnp.github.io/powershell");
                 var context = PnPClientContext.ConvertFrom(clientContext);
                 context.ExecutingWebRequest += (sender, e) =>
                 {
