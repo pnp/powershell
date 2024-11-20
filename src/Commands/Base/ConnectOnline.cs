@@ -601,7 +601,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            WriteVerbose("Using Managed AppId from secure store");
+                            messageWriter.WriteVerbose("Using Managed AppId from secure store");
                         }
                     }
 
