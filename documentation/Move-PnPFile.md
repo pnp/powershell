@@ -56,7 +56,7 @@ Moves a folder named Archive located in the document library named "Shared Docum
 ### EXAMPLE 5
 ```powershell
 $job = Move-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "SubSite2/Shared Documents" -NoWait
-$jobStatus = Receive-PnPCopyMoveJobStatus -Job $result
+$jobStatus = Receive-PnPCopyMoveJobStatus -Job $job
 if($jobStatus.JobState == 0)
 {
   Write-Host "Job finished"
