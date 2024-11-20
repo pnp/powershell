@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPFileSensitivityLabel` which allows for assigning sensitivity labels to SharePoint files [#4538](https://github.com/pnp/powershell/pull/4538)
 - Added `-CanSyncHubSitePermissions` parameter to `Set-PnPSite` cmdlet to set value of allowing syncing hub site permissions to this associated site.
 - Added `Get-PnPProfileCardProperty`, `New-PnPProfileCardProperty` and `Remove-PnPProfileCardProperty` cmdlets to manage showing additional properties on the Microsoft 365 user profile [#4548](https://github.com/pnp/powershell/pull/4548)
+- Added `Get-PnPCopilotAdminLimitedMode` and `Set-PnPCopilotAdminLimitedMode` which allows for managing the setting that controls whether Microsoft 365 Copilot in Teams Meetings users can receive responses to sentiment-related prompts
 
 ### Changed
 
