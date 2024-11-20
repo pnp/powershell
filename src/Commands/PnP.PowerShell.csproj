@@ -52,7 +52,7 @@
 	  <None Remove="Resources\parker.ico" />
 	</ItemGroup>
 
-	<ItemGroup>
+	<ItemGroup>		
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
 		<PackageReference Include="PnP.Framework" Version="1.17.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Framework" Version="1.17.*-*" Condition="'$(IsRelease)' == '1'" />
@@ -66,17 +66,8 @@
 		<PackageReference Include="PnP.Core.Admin" Version="1.14.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Admin" Version="1.14.*-*" Condition="'$(IsRelease)' == '1'" />
 
-		<!-- currently for the following packages we only refer to the nightlies -->
-		<!-- <PackageReference Include="PnP.Core.Transformation" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Transformation" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
-
-		<PackageReference Include="PnP.Core.Transformation" Version="1.14.*-*" />
-		
-		<!-- <PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
-		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.14.*-*" />
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-
+		
 	</ItemGroup>
 
 	<ItemGroup>

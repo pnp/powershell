@@ -77,6 +77,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Removed
 
+- Removed `Invoke-PnPTransformation` cmdlet as it was never supported.
 - Removed `Publish-PnPCompanyApp` cmdlet as it was not supported anymore. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `-UserVoiceForFeedbackEnabled` parameter from `Set-PnPTenant` cmdlet as it was obsolete. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `Set-PnPLabel` and `Reset-PnPLabel` aliases. You need to use `Set-PnPRetentionLabel` and `Reset-PnPRetentionLabel` respectively. [#4387](https://github.com/pnp/powershell/pull/4387)
