@@ -3244,6 +3244,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPProfileCardProperty.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPProfileCardProperty.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPProperty.md",
       "output": {
         ".html": {
@@ -5084,6 +5094,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnpProfileCardProperty.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnpProfileCardProperty.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Publish-PnPApp.md",
       "output": {
         ".html": {
@@ -5898,6 +5918,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPPlannerTask.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPProfileCardProperty.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPProfileCardProperty.html"
         }
       },
       "version": ""

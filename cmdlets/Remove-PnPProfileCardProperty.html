@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Installing PnP PowerShell | PnP PowerShell </title>
+    <title>Remove-PnPProfileCardProperty | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Installing PnP PowerShell | PnP PowerShell ">
+    <meta name="title" content="Remove-PnPProfileCardProperty | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,42 +77,63 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/installation.md/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="installing-pnp-powershell">Installing PnP PowerShell</h1>
+  <h1 id="remove-pnpprofilecardproperty">Remove-PnPProfileCardProperty</h1>
 
-<p>You need PowerShell 7.4.4 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">installed through here</a>.</p>
-<h2 id="stable-build">Stable build</h2>
-<p>You can run the following commands to install the latest stable PowerShell cmdlets for the current user:</p>
-<pre><code class="lang-powershell">Install-Module PnP.PowerShell -Scope CurrentUser
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API : PeopleSettings.ReadWrite.All</li>
+</ul>
+<p>Removes a specific property from user profile card</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Remove-PnPProfileCardProperty -PropertyName &lt;ProfileCardPropertyName&gt; [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
-<h2 id="nightly-build">Nightly build</h2>
-<p>If you want to install the latest nightly build prerelease of PnP PowerShell for the current user, run:</p>
-<pre><code class="lang-powershell">Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisherCheck
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet can be used to remove a property from user profile card</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Remove-PnPProfileCardProperty -PropertyName CustomAttribute1
 </code></pre>
-<h2 id="use-in-docker">Use in Docker</h2>
-<p>To use PnP.PowerShell in a Windows container:</p>
-<pre><code class="lang-powershell">docker run -it m365pnp/powershell:2.12.0-nanoserver-1809
+<p>This will remove the connection to the external datasource with the specified identity from Microsoft Search.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing <a href="Get-PnPConnection.html">Get-PnPConnection</a>.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
 </code></pre>
-<p>To use PnP.PowerShell in a Linux container:</p>
-<pre><code class="lang-powershell">docker run -it m365pnp/powershell
+<h3 id="-identity">-Identity</h3>
+<p>Unique identifier or an instance of the external connection in Microsoft Search that needs to be removed.</p>
+<pre><code class="lang-yaml">Type: SearchExternalConnectionPipeBind
+Parameter Sets: (All)
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
 </code></pre>
-<h1 id="updating-pnp-powershell">Updating PnP PowerShell</h1>
-<p>If you already have PnP PowerShell installed and just want to update to the latest version you can follow these steps. If you're not sure if your version is already up to date, it does no harm to run it anyway. If there's no new version available, it will not do anything. You need PowerShell 7.4.4 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">installed through here</a>.</p>
-<h2 id="stable-build-1">Stable build</h2>
-<p>You can run the following commands to update to the latest stable PowerShell cmdlets for the current user:</p>
-<pre><code class="lang-powershell">Update-Module PnP.PowerShell -Scope CurrentUser
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
 </code></pre>
-<h2 id="nightly-build-1">Nightly build</h2>
-<p>If you want to update to the latest nightly built prerelease of PnP PowerShell for the current user, run:</p>
-<pre><code class="lang-powershell">Update-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -Force
-</code></pre>
-<h1 id="uninstalling-pnp-powershell">Uninstalling PnP PowerShell</h1>
-<p>In case you would like to remove PnP PowerShell, you can run:</p>
-<pre><code class="lang-powershell">Uninstall-Module PnP.PowerShell -AllVersions
-</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/en-us/graph/add-properties-profilecard">Microsoft Graph documentation</a></p>
 
 </article>
           </div>
