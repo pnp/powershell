@@ -85,7 +85,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPPowerPlatformConnector` alias. You need to use `Get-PnPPowerPlatformCustomConnector`. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `-IsFavoriteByDefault` parameter from `Add-PnPTeamsChannel` cmdlet. It was obsolete and not supported by Graph API. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `Get-PnPAppAuthAccessToken` , `Remove-PnPGraphAccessToken` and `Request-PnPAccessToken` cmdlets. Use `Get-PnPAccessToken` instead. [#4398](https://github.com/pnp/powershell/pull/4398)
-- Removed support for sending mail via SMTP. It's usage is not recommended by .NET due to its lack of support for modern protocols.
+- Removed support for sending mail via SMTP in `Send-PnPMail`. It's usage is not recommended by .NET due to its lack of support for modern protocols.
+- Removed `-Title` and `-Header` parameters from `Remove-PnPNavigationNode`. They were marked obsolete.
+- Removed `-FileUrl` parameter from `Get-PnPSharingLink`. It was marked obsolete.
  
 ### Contributors
 

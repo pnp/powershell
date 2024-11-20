@@ -57,6 +57,8 @@ Recommend referring to these 2 links:
 | Send-PnPMail | It now throws a warning about the [retirement of SharePoint SendEmail API](https://devblogs.microsoft.com/microsoft365dev/retirement-of-the-sharepoint-sendemail-api/), if you are sending mails via SharePoint. To ignore the warning, use `-ErrorAction SilentlyContinue` along side the cmdlet. Recommendation is to use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
 | Send-PnPMail | The support for sending mails via SMTP servers is now removed. It is the recommendation of .NET as SMTP doesn't support modern protocols. So, the parameters `-EnableSSL` , `-UserName`, `-Password`, `-Server ` and `-ServerPort` are now removed. Use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
 | Invoke-PnPTransformation | It has been removed. Was never supported. |
+| Get-PnPSharingLink | The parameter `-FileUrl` has been removed. It was marked obsolete. Use `-Identity` instead. |
+| Remove-PnPNavigationNode | The parameters `-Title` and `-Header` have been removed. They were marked obsolete. Use `-Identity` instead. |
 
 
 ## Other notable changes
