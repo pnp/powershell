@@ -19,7 +19,7 @@ function UnlistNightlies {
 
     foreach ($entry in $tounlist) {        
         Write-host "Entry to be deleted - $($entry.Version.ToString())"            
-        nuget delete "package/$($entry.Id)" $entry.version.ToString() -ApiKey $key -Source https://www.powershellgallery.com/api/v2 -NonInteractive
+        nuget delete "package/PnP.PowerShell" $entry.version.ToString() -ApiKey $key -Source https://www.powershellgallery.com/api/v2 -NonInteractive
     }
 }
 
