@@ -110,7 +110,7 @@
 <p>Moves a folder named Archive located in the document library named &quot;Shared Documents&quot; in the current site to the document library named &quot;Project&quot; in another site collection &quot;archive&quot; not allowing it to overwrite an existing folder named &quot;Archive&quot; in the destination, allowing the fields to be different on the destination document library from the source document library and allowing a lower document version limit on the destination compared to the source.</p>
 <h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">$job = Move-PnPFile -SourceUrl &quot;Shared Documents/company.docx&quot; -TargetUrl &quot;SubSite2/Shared Documents&quot; -NoWait
-$jobStatus = Receive-PnPCopyMoveJobStatus -Job $result
+$jobStatus = Receive-PnPCopyMoveJobStatus -Job $job
 if($jobStatus.JobState == 0)
 {
   Write-Host &quot;Job finished&quot;
