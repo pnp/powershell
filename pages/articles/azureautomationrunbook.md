@@ -144,7 +144,7 @@ We're now ready to create a Runbook in which your PnP PowerShell script will run
 
    ![Create a Runbook](../images/azureautomation/azureportaladdrunbookoption.png)
 
-1. Give the Runbook a name, select the Runbook type **PowerShell** and for the Runtime version choose **7.2 (preview)** and click on **Create** at the bottom left.
+1. Give the Runbook a name, select the Runbook type **PowerShell** and for the Runtime version choose **7.2 (recommended)** and click on **Create** at the bottom left.
 
    ![Provide Runbook creation paramters](../images/azureautomation/azureportalcreaterunbook.png)
 
