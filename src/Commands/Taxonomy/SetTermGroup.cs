@@ -21,6 +21,12 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false)]
         public string Description { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public string[] Contributors { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public string[] Managers { get; set; }
+
         protected override void ExecuteCmdlet()
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
@@ -61,10 +67,31 @@ namespace PnP.PowerShell.Commands.Taxonomy
                         group.Description = Description;
                         updateRequired = true;
                     }
+                    if (Contributors != null && Contributors.Length > 0)
+                    {
+                        foreach (var contributor in Contributors)
+                        {
+                            group.AddContributor(contributor);
+                        }
+                        updateRequired = true;
+                    }
+                    if (Managers != null && Managers.Length > 0)
+                    {
+                        foreach (var manager in Managers)
+                        {
+                            group.AddGroupManager(manager);
+                        }
+                        updateRequired = true;
+                    }
                     if (updateRequired)
                     {
                         termStore.CommitAll();
+                        ClientContext.Load(group, group => group.GroupManagerPrincipalNames, group => group.ContributorPrincipalNames, group => group.Name, group => group.Description, group => group.Id);
+                        ClientContext.Load(termStore);
                         ClientContext.ExecuteQueryRetry();
+
+                        taxonomySession.UpdateCache();
+                        taxonomySession.Context.ExecuteQueryRetry();
                     }
                     WriteObject(group);
                 }
