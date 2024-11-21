@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.4 or newer**
 - **`-Interactive` login is now the default.**
+- **Rate limiting is now enabled by default for all cmdlets which are being executed under application permissions.**
 - Changed the UI experience when logging in with Interactive login and specifying `-LaunchBrowser` on `Connect-PnPOnline`. This experience is the default on MacOS.
 - In case of errors when Graph batch method is used, it will now throw a clearer error message about what was the issue. [#4327](https://github.com/pnp/powershell/pull/4327/)
 - `Get-PnPAccessToken`, `Request-PnPAccessToken` and `Get-PnPGraphAccessToken` output type is changed to `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`. Earlier they returned `System.IdentityModel.Tokens.Jwt`.
@@ -90,6 +91,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed support for sending mail via SMTP in `Send-PnPMail`. It's usage is not recommended by .NET due to its lack of support for modern protocols.
 - Removed `-Title` and `-Header` parameters from `Remove-PnPNavigationNode`. They were marked obsolete.
 - Removed `-FileUrl` parameter from `Get-PnPSharingLink`. It was marked obsolete.
+- Removed `-WebLogin` parameter from `Connect-PnPOnline` cmdlet. It was marked obsolete and was a security risk.
  
 ### Contributors
 
