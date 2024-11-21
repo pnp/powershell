@@ -75,7 +75,7 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
    ```powershell
    @{
-       'PnP.PowerShell' = '2.2.0'
+       'PnP.PowerShell' = '2.12.0'
    }
    ```
 
@@ -102,7 +102,7 @@ The Azure Function comes with the Azure cmdlets pre-installed. If you don't need
 
    ```powershell
    @{
-       'PnP.PowerShell' = '2.2.130-nightly'
+       'PnP.PowerShell' = '2.99.50-nightly'
     }
    ```   
 
