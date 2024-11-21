@@ -75,6 +75,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed the PnP PowerShell version check to only check nightly version in nightly builds and major version in release builds. [#4453](https://github.com/pnp/powershell/pull/4453)
 - Fixed `-ConsistencyLevelEventual` flag on `Invoke-PnPGraphMethod` to work correctly. [#4523](https://github.com/pnp/powershell/pull/4523)
 - Fixed `Get-PnPServiceHealthIssue` returning an error when certain service states were active [#4530](https://github.com/pnp/powershell/pull/4530)
+- Fixed `Add-PnPFileSensitivityLabel` cmdlet to allow empty string value to reset file sensitivity label.
 
 ### Removed
 
