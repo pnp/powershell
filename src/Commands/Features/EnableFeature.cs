@@ -22,13 +22,15 @@ namespace PnP.PowerShell.Commands.Features
             var pnpContext = Connection.PnPContext;
             if (Scope == FeatureScope.Web)
             {
-                pnpContext.Web.EnsureProperties(w => w.Features);
-                pnpContext.Web.Features.Enable(Identity);
+                pnpContext.Web.LoadAsync(w => w.Features).GetAwaiter().GetResult();
+                // pnpContext.Web.EnsureProperties(w => w.Features);
+                pnpContext.Web.Features.EnableAsync(Identity).GetAwaiter().GetResult();
             }
             else
             {
-                pnpContext.Site.EnsureProperties(s => s.Features);
-                pnpContext.Site.Features.Enable(Identity);
+                pnpContext.Site.LoadAsync(s => s.Features).GetAwaiter().GetResult();
+                // pnpContext.Site.EnsureProperties(s => s.Features);
+                pnpContext.Site.Features.EnableAsync(Identity).GetAwaiter().GetResult();
             }
         }
     }
