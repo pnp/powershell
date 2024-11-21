@@ -59,6 +59,8 @@ Recommend referring to these 2 links:
 | Invoke-PnPTransformation | It has been removed. Was never supported. |
 | Get-PnPSharingLink | The parameter `-FileUrl` has been removed. It was marked obsolete. Use `-Identity` instead. |
 | Remove-PnPNavigationNode | The parameters `-Title` and `-Header` have been removed. They were marked obsolete. Use `-Identity` instead. |
+| Connect-PnPOnline | The parameter `-WebLogin` has been removed. It was marked obsolete and was a security risk. Use `-Interactive` or `-OSLogin` or `-DeviceLogin` instead. |
+
 
 
 ## Other notable changes
