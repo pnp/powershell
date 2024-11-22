@@ -117,8 +117,6 @@ namespace PnP.PowerShell.Commands
                 tag = tag.Substring(0, 32);
             }
             ClientContext.ClientTag = tag;
-            
-            WriteVerbose("Making call to SharePoint Online using the Client Side Object Model (CSOM)");
 
             // Client Credentials based connections do not have an access token, so we can't validate permissions
             if(Connection.ConnectionMethod != ConnectionMethod.Credentials)
