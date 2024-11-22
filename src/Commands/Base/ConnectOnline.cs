@@ -149,7 +149,6 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter DeviceLogin;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         public SwitchParameter LaunchBrowser;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]

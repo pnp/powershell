@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -8,12 +7,8 @@ using System.Net.Http;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.SharePoint.Client;
-using PnP.Framework;
-using PnP.PowerShell.Commands.Utilities.Auth;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -33,96 +28,96 @@ namespace PnP.PowerShell.Commands.Utilities
             Contains
         }
 
-        internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationTokenSource cancellationTokenSource = null, bool cancelOnClose = true, bool scriptErrorsSuppressed = true)
-        {
-            bool success = false;
-#if Windows
+//         internal static bool GetWebBrowserPopup(string siteUrl, string title, (string url, UrlMatchType matchType)[] closeUrls = null, bool noThreadJoin = false, CancellationTokenSource cancellationTokenSource = null, bool cancelOnClose = true, bool scriptErrorsSuppressed = true)
+//         {
+//             bool success = false;
+// #if Windows
 
-            if (OperatingSystem.IsWindows())
-            {
-                var thread = new Thread(() =>
-                {
-                    var form = new System.Windows.Forms.Form();
+//             if (OperatingSystem.IsWindows())
+//             {
+//                 var thread = new Thread(() =>
+//                 {
+//                     var form = new System.Windows.Forms.Form();
 
-                    var browser = new System.Windows.Forms.WebBrowser
-                    {
-                        ScriptErrorsSuppressed = scriptErrorsSuppressed,
-                        Dock = System.Windows.Forms.DockStyle.Fill
-                    };
-                    var assembly = typeof(BrowserHelper).Assembly;
-                    form.Icon = new  System.Drawing.Icon(assembly.GetManifestResourceStream("PnP.PowerShell.Commands.Resources.parker.ico"));
-                    form.SuspendLayout();
-                    form.Width = 1024;
-                    form.Height = 768;
-                    form.MinimizeBox = false;
-                    form.MaximizeBox = false;
-                    form.Text = title;
-                    form.Controls.Add(browser);
-                    form.ResumeLayout(false);
+//                     var browser = new System.Windows.Forms.WebBrowser
+//                     {
+//                         ScriptErrorsSuppressed = scriptErrorsSuppressed,
+//                         Dock = System.Windows.Forms.DockStyle.Fill
+//                     };
+//                     var assembly = typeof(BrowserHelper).Assembly;
+//                     form.Icon = new  System.Drawing.Icon(assembly.GetManifestResourceStream("PnP.PowerShell.Commands.Resources.parker.ico"));
+//                     form.SuspendLayout();
+//                     form.Width = 1024;
+//                     form.Height = 768;
+//                     form.MinimizeBox = false;
+//                     form.MaximizeBox = false;
+//                     form.Text = title;
+//                     form.Controls.Add(browser);
+//                     form.ResumeLayout(false);
 
-                    form.FormClosed += (a, b) =>
-                    {
-                        if (!success && cancelOnClose)
-                        {
-                            cancellationTokenSource?.Cancel(false);
-                        }
-                    };
-                    browser.Navigate(siteUrl);
+//                     form.FormClosed += (a, b) =>
+//                     {
+//                         if (!success && cancelOnClose)
+//                         {
+//                             cancellationTokenSource?.Cancel(false);
+//                         }
+//                     };
+//                     browser.Navigate(siteUrl);
 
-                    browser.Navigated += (sender, args) =>
-                    {
-                        var navigatedUrl = args.Url.ToString();
-                        var matched = false;
-                        if (null != closeUrls && closeUrls.Length > 0)
-                        {
+//                     browser.Navigated += (sender, args) =>
+//                     {
+//                         var navigatedUrl = args.Url.ToString();
+//                         var matched = false;
+//                         if (null != closeUrls && closeUrls.Length > 0)
+//                         {
 
-                            foreach (var closeUrl in closeUrls)
-                            {
-                                switch (closeUrl.matchType)
-                                {
-                                    case UrlMatchType.FullMatch:
-                                        matched = navigatedUrl.Equals(closeUrl.url, StringComparison.OrdinalIgnoreCase);
-                                        break;
-                                    case UrlMatchType.StartsWith:
-                                        matched = navigatedUrl.StartsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
-                                        break;
-                                    case UrlMatchType.EndsWith:
-                                        matched = navigatedUrl.EndsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
-                                        break;
-                                    case UrlMatchType.Contains:
+//                             foreach (var closeUrl in closeUrls)
+//                             {
+//                                 switch (closeUrl.matchType)
+//                                 {
+//                                     case UrlMatchType.FullMatch:
+//                                         matched = navigatedUrl.Equals(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+//                                         break;
+//                                     case UrlMatchType.StartsWith:
+//                                         matched = navigatedUrl.StartsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+//                                         break;
+//                                     case UrlMatchType.EndsWith:
+//                                         matched = navigatedUrl.EndsWith(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+//                                         break;
+//                                     case UrlMatchType.Contains:
 
-                                        matched = navigatedUrl.Contains(closeUrl.url, StringComparison.OrdinalIgnoreCase);
-                                        break;
-                                }
-                                if (matched)
-                                {
-                                    break;
-                                }
-                            }
-                        }
-                        if (matched)
-                        {
-                            success = true;
-                            form.Close();
+//                                         matched = navigatedUrl.Contains(closeUrl.url, StringComparison.OrdinalIgnoreCase);
+//                                         break;
+//                                 }
+//                                 if (matched)
+//                                 {
+//                                     break;
+//                                 }
+//                             }
+//                         }
+//                         if (matched)
+//                         {
+//                             success = true;
+//                             form.Close();
 
-                        }
-                    };
+//                         }
+//                     };
 
-                    form.Focus();
-                    form.ShowDialog();
-                    browser.Dispose();
-                });
+//                     form.Focus();
+//                     form.ShowDialog();
+//                     browser.Dispose();
+//                 });
 
-                thread.SetApartmentState(ApartmentState.STA);
-                thread.Start();
-                if (!noThreadJoin)
-                {
-                    thread.Join();
-                }
-            }
-#endif
-            return success;
-        }
+//                 thread.SetApartmentState(ApartmentState.STA);
+//                 thread.Start();
+//                 if (!noThreadJoin)
+//                 {
+//                     thread.Join();
+//                 }
+//             }
+// #endif
+//             return success;
+//         }
 
         private static async Task<(string digestToken, DateTime expiresOn)> GetRequestDigestAsync(string siteUrl, CookieContainer cookieContainer)
         {
@@ -170,23 +165,18 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        internal static void OpenBrowserForInteractiveLogin(string url, int port, bool usePopup, CancellationTokenSource cancellationTokenSource)
+        internal static void OpenBrowserForInteractiveLogin(string url, int port, CancellationTokenSource cancellationTokenSource)
         {
             try
             {
-                if (OperatingSystem.IsWindows() && usePopup)
+
+                ProcessStartInfo psi = new ProcessStartInfo
                 {
-                    GetWebBrowserPopup(url, "Please login for PnP PowerShell", new[] { ($"http://localhost:{port}/?code=", BrowserHelper.UrlMatchType.StartsWith) }, noThreadJoin: true, cancellationTokenSource: cancellationTokenSource, cancelOnClose: true, scriptErrorsSuppressed: false);
-                }
-                else
-                {
-                    ProcessStartInfo psi = new ProcessStartInfo
-                    {
-                        FileName = url,
-                        UseShellExecute = true
-                    };
-                    Process.Start(psi);
-                }
+                    FileName = url,
+                    UseShellExecute = true
+                };
+                Process.Start(psi);
+
             }
             catch
             {
@@ -216,7 +206,7 @@ namespace PnP.PowerShell.Commands.Utilities
             try
             {
                 listener.Start();
-                return ((IPEndPoint)listener.LocalEndpoint).Port;                
+                return ((IPEndPoint)listener.LocalEndpoint).Port;
             }
             finally
             {

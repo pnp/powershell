@@ -269,7 +269,7 @@ namespace PnP.PowerShell.Commands.Base
                      {
                          ClipboardService.SetText(deviceCodeResult.UserCode);
                          messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
-                         BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), false, cancellationTokenSource);
+                         BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
                      }
                      else
                      {
@@ -587,7 +587,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 authManager = PnP.Framework.AuthenticationManager.CreateWithInteractiveWebBrowserLogin(clientId, (url, port) =>
                 {
-                    BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !launchBrowser, cancellationTokenSource);
+                    BrowserHelper.OpenBrowserForInteractiveLogin(url, port, cancellationTokenSource);
                 },
                 tenant,
                 htmlMessageSuccess,

@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="WindowsSdk.targets" Condition="'$(OS)' == 'Windows_NT'" />
-	<Import Project="Sdk.targets" Condition="'$(OS)' != 'Windows_NT'" />
-
+	
 	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
 		<LangVersion>12</LangVersion>
 	 </PropertyGroup>
 	 
@@ -114,8 +113,8 @@
 		</Reference>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-	  <PackageReference Include="System.Management.Automation" Version="7.4.4" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+	  <PackageReference Include="System.Management.Automation" Version="7.4.6" />
  	  <PackageReference Include="TextCopy" Version="6.2.1" />		
 	</ItemGroup>
 

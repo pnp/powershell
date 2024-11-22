@@ -437,7 +437,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, MicrosoftGraphEndPoint, launchBrowser: LaunchBrowser);
+                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, AzureEnvironment, MicrosoftGraphEndPoint, launchBrowser: LaunchBrowser);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -450,7 +450,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, NoPopup, AzureEnvironment, Tenant, MicrosoftGraphEndPoint);
+                    token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, AzureEnvironment, Tenant, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -692,7 +692,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     {
                         using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(azureApp.AppId, (url, port) =>
                          {
-                             BrowserHelper.OpenBrowserForInteractiveLogin(url, port, !LaunchBrowser, cancellationTokenSource);
+                             BrowserHelper.OpenBrowserForInteractiveLogin(url, port, cancellationTokenSource);
                          }, Tenant, "You successfully provided consent", "You failed to provide consent.", AzureEnvironment))
                         {
                             authManager.ClearTokenCache();
@@ -705,7 +705,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         {
                             ClipboardService.SetText(deviceCodeResult.UserCode);
                             messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
-                            BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), false, cancellationTokenSource);
+                            BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
                             return Task.FromResult(0);
                         }, AzureEnvironment))
                         {
@@ -713,10 +713,10 @@ namespace PnP.PowerShell.Commands.AzureAD
                             authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
                         }
                     }
-                    else
-                    {
-                        BrowserHelper.GetWebBrowserPopup(consentUrl, "Please provide consent", new[] { ("https://pnp.github.io/powershell/consent.html", BrowserHelper.UrlMatchType.StartsWith) }, cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
-                    }
+                    // else
+                    // {
+                    //     BrowserHelper.GetWebBrowserPopup(consentUrl, "Please provide consent", new[] { ("https://pnp.github.io/powershell/consent.html", BrowserHelper.UrlMatchType.StartsWith) }, cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
+                    // }
                     // Write results
                     WriteObject(record);
                 }
