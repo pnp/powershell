@@ -47,7 +47,7 @@ else {
 # 	$buildVersion = $versionObject.Patch + 1;
 # }
 
-$configuration = "net8.0-windows"
+$configuration = "net8.0"
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
