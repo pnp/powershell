@@ -1,9 +1,11 @@
 $runPublish = $false
 
-$pnppowershell_hash = git ls-files -s ./src | git hash-object --stdin
-$existing_pnppowershell_hash = Get-Content ./pnppowershell_hash.txt -Raw -ErrorAction SilentlyContinue
+$dependencies = Invoke-RestMethod -Method Get -Uri https://raw.githubusercontent.com/pnp/powershell/dev/dependencies.json
 
-$existing_pnpframework_hash = Get-Content ./pnpframework_hash.txt -Raw -ErrorAction SilentlyContinue
+$pnppowershell_hash = git ls-files -s ./src | git hash-object --stdin
+#$existing_pnppowershell_hash = Get-Content ./pnppowershell_hash.txt -Raw -ErrorAction SilentlyContinue
+
+#$existing_pnpframework_hash = Get-Content ./pnpframework_hash.txt -Raw -ErrorAction SilentlyContinue
 $pnpframework_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpframework/branches/dev" -SkipHttpErrorCheck
 if ($null -ne $pnpframework_response) {
 	if ($null -ne $pnpframework_response.commit) {
@@ -11,7 +13,7 @@ if ($null -ne $pnpframework_response) {
 	}
 }
 
-$existing_pnpcoresdk_hash = Get-Content ./pnpcoresdk_hash.txt -Raw -ErrorAction SilentlyContinue
+#$existing_pnpcoresdk_hash = Get-Content ./pnpcoresdk_hash.txt -Raw -ErrorAction SilentlyContinue
 $pnpcoresdk_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpcore/branches/dev" -SkipHttpErrorCheck
 if ($null -ne $pnpcoresdk_response) {
 	if ($null -ne $pnpcoresdk_response.commit) {
@@ -24,34 +26,37 @@ if ($null -ne $pnpcoresdk_response) {
 #Write-host "Latest PnP Framework Commit hash $pnpframework_hash" -ForegroundColor Yellow
 #Write-Host "Stored PnP Framework Commit hash: $existing_pnpframework_hash" -ForegroundColor Yellow
 
-if ($existing_pnppowershell_hash -ne $pnppowershell_hash) {
-	Write-Host "PnP PowerShell is newer"
-	Set-Content ./pnppowershell_hash.txt -Value $pnppowershell_hash -NoNewline -Force
+if ($dependencies.PnPPowershell -ne $pnppowershell_hash) {
+	Write-Host "PnP Powershell is newer"
+	$dependencies.PnPPowershell = $pnppowershell_hash
 	$runPublish = $true
 }
 
-if ($runPublish -eq $false -and $existing_pnpframework_hash -ne $pnpframework_hash) {
+if ($runPublish -eq $false -and $dependencies.PnPFramework -ne $pnpframework_hash) {
 	Write-Host "PnP Framework is newer"
-	Set-Content ./pnpframework_hash.txt -Value $pnpframework_hash -NoNewline -Force
+	$dependencies.PnPFramework = $pnppowershell_hash
 	$runPublish = $true
 }
 
-if ($runPublish -eq $false -and $existing_pnpcoresdk_hash -ne $pnpcoresdk_hash) {
+if ($runPublish -eq $false -and $dependencies.PnPCore -ne $pnpcoresdk_hash) {
 	Write-Host "PnP Core SDK is newer"
-	Set-Content ./pnpcoresdk_hash.txt -Value $pnpcoresdk_hash -NoNewLine -Force
+	$dependencies.PnPCore = $pnpcoresdk_hash
 	$runPublish = $true
 }
 
 if ($runPublish -eq $true) {
+	$dependencies.Updated = Get-Date -Format "yyyyMMdd-HHmmss"
+	Set-Content ./dependencies.json -Value $(ConvertTo-Json $dependencies) -Force
 
-	$versionFileContents = (Get-Content "$PSScriptRoot/../version.txt" -Raw).Trim()
-	if ($versionFileContents.Contains("%")) {
-		$versionString = $versionFileContents.Replace("%", "0");
+	$versionFileContents = Get-Content "$PSScriptRoot/../version.json" -Raw | ConvertFrom-Json
+
+	if ($versionFileContents.Version.Contains("%")) {
+		$versionString = $versionFileContents.Version.Replace("%", "0");
 		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
 		$buildVersion = $versionObject.Patch;
 	}
 	else {	
-		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents)
+		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents.Version)
 		$buildVersion = $versionObject.Patch + 1;
 	}
 
@@ -201,6 +206,6 @@ if ($runPublish -eq $true) {
 	Set-Content ./version.txt -Value $version -Force -NoNewline
 
 	# Write version back to version.json
-	$json = @{Version="$version";Message=""} | ConvertTo-Json
+	$json = @{Version = "$version"; Message = "" } | ConvertTo-Json
 	Set-Content ./version.json -Value $json -Force -NoNewline
 }
