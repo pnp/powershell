@@ -59,8 +59,9 @@ Recommend referring to these 2 links:
 | Invoke-PnPTransformation | It has been removed. It was never supported nor fully implemented. |
 | Get-PnPSharingLink | The parameter `-FileUrl` has been removed. It was marked obsolete. Use `-Identity` instead. |
 | Remove-PnPNavigationNode | The parameters `-Title` and `-Header` have been removed. They were marked obsolete. Use `-Identity` instead. |
-| Connect-PnPOnline |Removed `-UseWebLogin` on `Connect-PnPOnline`. It used a very outdated and questionable (reusing an auth cookie) authentication method which implementation broke easily. If you require an ACS connection for certain functionality, consider using `-ClientId` in combination with `-ClientSecret` instead.
-
+| Connect-PnPOnline | Removed `-UseWebLogin` on `Connect-PnPOnline`. It used a very outdated and questionable (reusing an auth cookie) authentication method which implementation broke easily. If you require an ACS connection for certain functionality, consider using `-ClientId` in combination with `-ClientSecret` instead. |
+| Connect-PnPOnline | Removed `-LaunchBrowser` option for Interactive login flows. It is the default now and removed the popup based authentication option |
+| Connect-PnPOnline | Removed `-LaunchBrowser` option for Device Login flows. It is the default now. | 
 
 ## Other notable changes
 

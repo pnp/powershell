@@ -43,6 +43,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 - **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.4 or newer**
 - **`-Interactive` login is now the default.**
+- The Popup based authentication for Interactive Login has been removed and replaced by a browser flow
+- `-LaunchBrowser` has been removed for interactive login
+- `-LaunchBrowser` for Device Login authentication flows has been renamed to `OpenBrowser`
 - **Rate limiting is now enabled by default for all cmdlets which are being executed under application permissions.**
 - Changed the UI experience when logging in with Interactive login and specifying `-LaunchBrowser` on `Connect-PnPOnline`. This experience is the default on MacOS.
 - In case of errors when Graph batch method is used, it will now throw a clearer error message about what was the issue. [#4327](https://github.com/pnp/powershell/pull/4327/)
@@ -82,6 +85,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Removed
 
+- Removed `-LaunchBrowser` option on `Connect-PnPOnline` for interactive logins and device logins as it is default now and the popup based authentication window has been removed.
 - Removed `-UseWebLogin` option on `Connect-PnPOnline`. It used a very old, questionable approach to authentication. Use `-Interactive` or if you require an ACS connection `-ClientId` and `-ClientSecret`
 - Removed `Invoke-PnPTransformation` cmdlet as it was never supported.
 - Removed `Publish-PnPCompanyApp` cmdlet as it was not supported anymore. [#4387](https://github.com/pnp/powershell/pull/4387)

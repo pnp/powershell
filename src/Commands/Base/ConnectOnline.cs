@@ -148,9 +148,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
         public SwitchParameter DeviceLogin;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        public SwitchParameter LaunchBrowser;
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
@@ -587,7 +584,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                     }
 
-                    var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, LaunchBrowser, messageWriter, AzureEnvironment, cancellationTokenSource);
+                    var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource);
                     connection = returnedConnection;
                     messageWriter.Finished = true;
                 }
@@ -804,7 +801,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             WriteVerbose($"Using ClientID {ClientId}");
 
-            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false);
+            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false);
         }
 
         private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
@@ -941,7 +938,7 @@ namespace PnP.PowerShell.Commands.Base
 
             WriteVerbose($"Using ClientID {ClientId}");
 
-            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, LaunchBrowser, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true);
+            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true);
         }
 
         #endregion
