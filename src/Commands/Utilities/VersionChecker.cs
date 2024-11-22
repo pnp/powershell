@@ -5,6 +5,7 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Reflection;
+using System.Text.Json.Serialization;
 using System.Xml;
 using System.Xml.Linq;
 
@@ -73,7 +74,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 if (onlineVersion != null)
                 {
 
-                    if (IsNewer(onlineVersion.Version))
+                    if (IsNewer(onlineVersion.SemanticVersion))
                     {
                         if (cmdlet != null)
                         {
@@ -229,7 +230,15 @@ namespace PnP.PowerShell.Commands.Utilities
 
     public class PnPVersionResult
     {
-        public SemanticVersion Version { get; set; }
+        public string Version { get; set; }
+        public SemanticVersion SemanticVersion
+        {
+            get
+            {
+                SemanticVersion.TryParse(Version, out SemanticVersion result);
+                return result;
+            }
+        }
         public string Message { get; set; }
     }
 }
