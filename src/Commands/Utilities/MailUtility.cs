@@ -1,19 +1,20 @@
-﻿using PnP.PowerShell.Commands.Base;
+﻿using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Utilities;
+using PnP.Core.Services;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model.Mail;
 using PnP.PowerShell.Commands.Utilities.REST;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Management.Automation;
+using System.Net;
 using System.Net.Http;
+using System.Net.Mail;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using PnP.PowerShell.Commands.Model.Mail;
-using Microsoft.SharePoint.Client;
-using System.Collections.Generic;
-using Microsoft.SharePoint.Client.Utilities;
-using System.Net.Mail;
-using System.Net;
-using PnP.PowerShell.Commands.Enums;
-using System.IO;
-using System;
-using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -190,6 +191,28 @@ namespace PnP.PowerShell.Commands.Utilities
                 messageAttachmentOptions.Add(item);
             }
 
+            return messageAttachmentOptions;
+        }
+
+        public static List<MessageAttachmentOptions> GetListOfFiles(FilePipeBind[] files, PnPContext context)
+        {
+            if (files == null || files?.Length == 0)
+            {
+                return null;
+            }
+            List<MessageAttachmentOptions> messageAttachmentOptions = new List<MessageAttachmentOptions>();
+            foreach (var file in files)
+            {
+                MessageAttachmentOptions item = new MessageAttachmentOptions();
+                var attachmentFile = file.GetCoreFile(context);
+                item.Type = "#microsoft.graph.fileAttachment";
+                item.Name = attachmentFile.Name;
+                var fileByteArray = attachmentFile.GetContentBytesAsync().GetAwaiter().GetResult();
+                item.ContentBytes = Convert.ToBase64String(fileByteArray);
+                MimeTypeMap.TryGetMimeType(attachmentFile.Name, out var mimeType);
+                item.ContentType = mimeType ?? "text/plain";
+                messageAttachmentOptions.Add(item);
+            }
             return messageAttachmentOptions;
         }
     }
