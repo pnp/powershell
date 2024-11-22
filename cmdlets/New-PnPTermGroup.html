@@ -87,7 +87,7 @@
 <p>Creates a taxonomy term group</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">New-PnPTermGroup -Name &lt;String&gt; [-Id &lt;Guid&gt;] [-Description &lt;String&gt;]
- [-TermStore &lt;PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]&gt;]
+ [-TermStore &lt;PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]&gt;] [-Contributors &lt;string []&gt;] [-Managers &lt;string []&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -97,6 +97,10 @@
 <pre><code class="lang-powershell">New-PnPTermGroup -GroupName &quot;Countries&quot;
 </code></pre>
 <p>Creates a new taxonomy term group named &quot;Countries&quot;</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">New-PnPTermGroup -GroupName &quot;Countries&quot; -Contributors @(&quot;i:0#.f|membership|pradeepg@gautamdev.onmicrosoft.com&quot;,&quot;i:0#.f|membership|adelev@gautamdev.onmicrosoft.com&quot;) -Managers @(&quot;i:0#.f|membership|alexw@gautamdev.onmicrosoft.com&quot;,&quot;i:0#.f|membership|diegos@gautamdev.onmicrosoft.com&quot;)
+</code></pre>
+<p>Creates a new taxonomy term group named &quot;Countries&quot; and sets the users as contributors and managers of the term group. <strong>The user names for contributors and managers need to be encoded claim for the specified login names.</strong></p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -149,6 +153,30 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
 Parameter Sets: (All)
 Aliases: TermStoreName
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-managers">-Managers</h3>
+<p>The manager of the term group who can create/edit term sets in the group as well as add/remove contributors. <strong>The user names for managers need to be encoded claim for the specified login names.</strong></p>
+<pre><code class="lang-yaml">Type: string[]
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-contributors">-Contributors</h3>
+<p>The contributor to the term group who can create/edit term sets in the group. <strong>The user names for contributors need to be encoded claim for the specified login names.</strong></p>
+<pre><code class="lang-yaml">Type: string[]
+Parameter Sets: (All)
+Aliases: 
 
 Required: False
 Position: Named
