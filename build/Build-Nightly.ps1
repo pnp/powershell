@@ -199,4 +199,8 @@ if ($runPublish -eq $true) {
 
 	# Write version back to version
 	Set-Content ./version.txt -Value $version -Force -NoNewline
+
+	# Write version back to version.json
+	$json = @{Version="$version";Message=""} | ConvertTo-Json
+	Set-Content ./version.json -Value $json -Force -NoNewline
 }

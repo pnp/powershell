@@ -24,16 +24,28 @@ $localPnPFrameworkPathValue = $env:PnPFrameworkPath
 $env:PnPCoreSdkPath = ""
 $env:PnPFrameworkPath = ""
 
-$versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
-if ($versionFileContents.Contains("%")) {
-	$versionString = $versionFileContents.Replace("%", "0");
+$versionFileContents = Get-Content "$PSScriptRoot/../version.json" -Raw | ConvertFrom-Json
+
+if ($versionFileContents.Version.Contains("%")) {
+	$versionString = $versionFileContents.Version.Replace("%", "0");
 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
 	$buildVersion = $versionObject.Patch;
 }
 else {	
-	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents)
+	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents.Version)
 	$buildVersion = $versionObject.Patch + 1;
 }
+
+# $versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
+# if ($versionFileContents.Contains("%")) {
+# 	$versionString = $versionFileContents.Replace("%", "0");
+# 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
+# 	$buildVersion = $versionObject.Patch;
+# }
+# else {	
+# 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents)
+# 	$buildVersion = $versionObject.Patch + 1;
+# }
 
 $configuration = "net8.0-windows"
 
