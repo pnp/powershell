@@ -1,8 +1,8 @@
-﻿using System;
-using Microsoft.SharePoint.Client;
-using System.Management.Automation;
+﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Core.Services;
+using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         internal IFile GetCoreFile(PnPContext context, Cmdlet cmdlet = null)
         {
-            if(CoreFile != null)
+            if (CoreFile != null)
             {
                 cmdlet?.WriteVerbose("File determined based on CoreFile instance");
                 return CoreFile;
@@ -128,7 +128,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             if (!string.IsNullOrEmpty(ServerRelativeUrl))
             {
                 cmdlet?.WriteVerbose("File will be retrieved based on server relative url");
-                return context.Web.GetFileByServerRelativeUrl(ServerRelativeUrl);
+                return context.Web.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(ServerRelativeUrl));
             }
 
             throw new PSInvalidOperationException("No information available to retrieve file");

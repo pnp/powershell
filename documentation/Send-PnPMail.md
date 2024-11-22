@@ -14,10 +14,16 @@ Allows sending an e-mail
 
 ## SYNTAX
 
-### Send through Microsoft Graph
+### Send through Microsoft Graph with attachments from local file system
 
 ```powershell
-Send-PnPMail -From <String> -To <String[]> -Subject <String> -Body <String> [-Cc <String[]>] [-Bcc <String[]>] [-ReplyTo <String[]>] [-Importance <MessageImportanceType>] [-BodyContentType <MessageBodyContentType>] [-SaveToSentItems <bool>] [-Connection <PnPConnection>] [-Verbose]
+Send-PnPMail -From <String> -To <String[]> -Subject <String> -Body <String> [-Cc <String[]>] [-Bcc <String[]>] [-ReplyTo <String[]>] [-Importance <MessageImportanceType>] [-BodyContentType <MessageBodyContentType>] [-SaveToSentItems <bool>] [-Connection <PnPConnection>] [-Verbose] [-Attachments <String[]>]
+```
+
+### Send through Microsoft Graph with attachments from SPO
+
+```powershell
+Send-PnPMail -From <String> -To <String[]> -Subject <String> -Body <String> [-Cc <String[]>] [-Bcc <String[]>] [-ReplyTo <String[]>] [-Importance <MessageImportanceType>] [-BodyContentType <MessageBodyContentType>] [-SaveToSentItems <bool>] [-Connection <PnPConnection>] [-Verbose] [-Files <String[]>]
 ```
 
 ### Send through SharePoint Online (Default)
@@ -52,6 +58,20 @@ Send-PnPMail -To "address@tenant.microsoftonline.com" -Subject "Test message" -B
 ```
 
 Sends an e-mail using the SharePoint Online SendEmail method using the current context. E-mail is sent from the SharePoint Online no-reply e-mail address and can only be sent to accounts in the same tenant. The from address will show the title of the site you are connected with along with the e-mail address no-reply@sharepointonline.com.
+
+### EXAMPLE 4
+```powershell
+Send-PnPMail -From "user@contoso.onmicrosoft.com" -To "recipient@contoso.com" -Subject "Test message" -Body "This is a test message" -Attachments "C:\PnPCommunity\Test\test.docx"
+```
+
+Sends an e-mail using Microsoft Graph to one recipient. E-mail is sent from the user specified in the From parameter and can be sent to both internal and external addresses. A copy of the sent e-mail will be stored in the mailbox of the user specified in the From parameter. It will also upload the file from the local file system as attachment.
+
+### EXAMPLE 5
+```powershell
+Send-PnPMail -From "user@contoso.onmicrosoft.com" -To "recipient@contoso.com" -Subject "Test message" -Body "This is a test message" -Files "/sites/test/Shared Documents/Test.docx"
+```
+
+Sends an e-mail using Microsoft Graph to one recipient. E-mail is sent from the user specified in the From parameter and can be sent to both internal and external addresses. A copy of the sent e-mail will be stored in the mailbox of the user specified in the From parameter. It will also upload the file from the SharePoint site collection and send it as attachment.
 
 ## PARAMETERS
 
@@ -102,7 +122,7 @@ Allows defining what type of content is in the Body parameter. Defaults to HTML.
 
 ```yaml
 Type: MessageBodyContentType
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 Accepted values: Html, Text
 
 Required: False
@@ -131,7 +151,7 @@ The sender of the e-mail. When Microsoft Graph is used, this can be a user or a 
 
 ```yaml
 Type: String
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 
 Required: True
 Position: Named
@@ -145,7 +165,7 @@ Allows defining what the importance of the e-mail is. Defaults to Normal.
 
 ```yaml
 Type: MessageImportanceType
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 Accepted values: Low, Normal, High
 
 Required: False
@@ -160,7 +180,7 @@ List of return addresses to use for the e-mail
 
 ```yaml
 Type: String[]
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 
 Required: False
 Position: Named
@@ -174,7 +194,7 @@ Allows indicating if the sent e-mail should be stored in the Sent Items of the m
 
 ```yaml
 Type: String[]
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 
 Required: False
 Position: Named
@@ -205,6 +225,34 @@ Type: String[]
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Attachments
+List of attachments from local file system to be uploaded and sent as attachments.
+
+```yaml
+Type: String[]
+Parameter Sets: Send through Microsoft Graph with attachments from local file system
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Files
+List of files from the SharePoint site collection to be sent as attachments.
+
+```yaml
+Type: String[]
+Parameter Sets: Send through Microsoft Graph with attachments from SPO
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

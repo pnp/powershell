@@ -37,6 +37,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-CanSyncHubSitePermissions` parameter to `Set-PnPSite` cmdlet to set value of allowing syncing hub site permissions to this associated site.
 - Added `Get-PnPProfileCardProperty`, `New-PnPProfileCardProperty` and `Remove-PnPProfileCardProperty` cmdlets to manage showing additional properties on the Microsoft 365 user profile [#4548](https://github.com/pnp/powershell/pull/4548)
 - Added `-Contributors` and `-Managers` parameters to `New-PnPTermGroup` and `Set-PnPTermGroup` cmdlets.
+- Added `-Files` parameter for `Send-PnPMail` cmdlet to allow files to be downloaded from SharePoint and then sent as attachments.
 
 ### Changed
 
