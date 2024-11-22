@@ -70,6 +70,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             lock (LockToken)
             {
+
                 Queue.Enqueue(new Message() { Formatted = formatted, Text = message, Type = MessageType.Warning });
             }
         }
@@ -84,9 +85,12 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public void WriteVerbose(string message)
         {
-            lock (LockToken)
+            if (Cmdlet.MyInvocation.BoundParameters.ContainsKey("Verbose"))
             {
-                Queue.Enqueue(new Message() { Formatted = false, Text = message, Type = MessageType.Verbose });
+                lock (LockToken)
+                {
+                    Queue.Enqueue(new Message() { Formatted = false, Text = message, Type = MessageType.Verbose });
+                }
             }
         }
 

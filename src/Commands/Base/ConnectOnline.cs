@@ -165,7 +165,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
         public string Tenant;
@@ -530,7 +530,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectDeviceLogin()
-        {
+        { 
             WriteVerbose("Connecting using Device Login");
 
             var messageWriter = new CmdletMessageWriter(this);

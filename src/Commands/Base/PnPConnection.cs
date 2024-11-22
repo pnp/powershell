@@ -298,7 +298,7 @@ namespace PnP.PowerShell.Commands.Base
                     if (msalServiceException.Message.StartsWith("AADSTS50059:"))
                     {
                         cancellationTokenSource.Cancel();
-                        throw new Exception("Please specify -Tenant with either the tenant id or hostname.");
+                        throw new Exception("Default authentication request failed. Please specify the -Tenant parameter with either the tenant id or hostname to authenticate.");
                     }
                     else
                     {
