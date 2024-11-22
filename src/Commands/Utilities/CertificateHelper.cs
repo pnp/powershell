@@ -265,7 +265,8 @@ namespace PnP.PowerShell.Commands.Utilities
             string distinguishedNameString = string.Join("; ", x500Values);
 
             X500DistinguishedName distinguishedName = new X500DistinguishedName(distinguishedNameString);
-                        
+
+#pragma warning disable CA1416 // Validate platform compatibility
             using (RSA rsa = Platform.IsWindows ? MakeExportable(new RSACng(2048)) : RSA.Create(2048))
             {                
                 var request = new CertificateRequest(distinguishedName, rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
@@ -288,6 +289,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 return new X509Certificate2(certificate.Export(X509ContentType.Pfx, password), password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
             }
+#pragma warning restore CA1416 // Validate platform compatibility
         }
 
         internal static RSA MakeExportable(RSA rsa)

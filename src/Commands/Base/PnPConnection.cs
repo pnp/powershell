@@ -925,6 +925,7 @@ namespace PnP.PowerShell.Commands.Base
                 // If somehow a public key certificate was passed in, we can't clean it up, thus we have nothing to do here
                 return;
             }
+            
             if (Utilities.OperatingSystem.IsWindows())
             {
                 var privateKey = (certificate.GetRSAPrivateKey() as RSACng)?.Key;
@@ -936,7 +937,9 @@ namespace PnP.PowerShell.Commands.Base
                 if (uniqueKeyContainerName == null)
                 {
                     RSACryptoServiceProvider rsaCSP = certificate.GetRSAPrivateKey() as RSACryptoServiceProvider;
+#pragma warning disable CA1416 // Validate platform compatibility
                     uniqueKeyContainerName = rsaCSP.CspKeyContainerInfo.KeyContainerName;
+#pragma warning restore CA1416 // Validate platform compatibility
                 }
                 certificate.Reset();
 
