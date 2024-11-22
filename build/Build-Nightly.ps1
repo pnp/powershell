@@ -21,31 +21,27 @@ if ($null -ne $pnpcoresdk_response) {
 	}
 }
 
-#Write-host "Latest PnP PowerShell Commit hash $pnppowershell_hash" -ForegroundColor Yellow
-#Write-Host "Stored PnP PowerShell Commit hash: $existing_pnppowershell_hash" -ForegroundColor Yellow
-#Write-host "Latest PnP Framework Commit hash $pnpframework_hash" -ForegroundColor Yellow
-#Write-Host "Stored PnP Framework Commit hash: $existing_pnpframework_hash" -ForegroundColor Yellow
-
 if ($dependencies.PnPPowershell -ne $pnppowershell_hash) {
 	Write-Host "PnP Powershell is newer"
-	$dependencies.PnPPowershell = $pnppowershell_hash
 	$runPublish = $true
 }
 
 if ($runPublish -eq $false -and $dependencies.PnPFramework -ne $pnpframework_hash) {
 	Write-Host "PnP Framework is newer"
-	$dependencies.PnPFramework = $pnppowershell_hash
 	$runPublish = $true
 }
 
 if ($runPublish -eq $false -and $dependencies.PnPCore -ne $pnpcoresdk_hash) {
 	Write-Host "PnP Core SDK is newer"
-	$dependencies.PnPCore = $pnpcoresdk_hash
 	$runPublish = $true
 }
 
 if ($runPublish -eq $true) {
 	$dependencies.Updated = Get-Date -Format "yyyyMMdd-HHmmss"
+	$dependencies.PnPCore = $pnpcoresdk_hash
+	$dependencies.PnPFramework = $pnppowershell_hash
+	$dependencies.PnPPowershell = $pnppowershell_hash
+
 	Set-Content ./dependencies.json -Value $(ConvertTo-Json $dependencies) -Force
 
 	$versionFileContents = Get-Content "$PSScriptRoot/../version.json" -Raw | ConvertFrom-Json
