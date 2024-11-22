@@ -666,29 +666,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -UseWebLogin
-Windows only: Connects to SharePoint using legacy cookie based authentication.
-Notice this type of authentication is limited in its functionality.
-We will for instance not be able to acquire an access token for the Graph, and as a result none of the Graph related cmdlets will work.
-Also some of the functionality of the provisioning engine (Get-PnPSiteTemplate, Get-PnPTenantTemplate, Invoke-PnPSiteTemplate, Invoke-PnPTenantTemplate) will not work because of this reason.
-The cookies will in general expire within a few days and if you use -UseWebLogin within that time popup window will appear that will disappear immediately, this is expected.
-Use -ForceAuthentication to reset the authentication cookies and force a new login.
-
-```yaml
-Type: SwitchParameter 
-Parameter Sets: Web Login for Multi Factor Authentication
-Aliases:
-
-Required: True
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -RelativeUrl
-The site-relative URL of the site you're collecting to. Only applies if you're using -UseWebLogin.
-
 ```yaml
 Type: String
 Parameter Sets: Web Login for Multi Factor Authentication
@@ -703,7 +680,6 @@ Accept wildcard characters: False
 
 ### -Interactive
 Connects to the Entra ID (Azure AD) using interactive login, allowing you to authenticate using multi-factor authentication.
-This parameter has preference over \`-UseWebLogin\`.
 
 ```yaml
 Type: SwitchParameter
@@ -718,7 +694,7 @@ Accept wildcard characters: False
 ```
 
 ### -ForceAuthentication
-Will clear the stored authentication information when using -UseWebLogin (Windows Only) or -Interactive (all platforms) and allows you to authenticate again towards a site with different credentials.
+Will clear the stored authentication information when using Interactive login (all platforms) and allows you to authenticate again towards a site with different credentials.
 
 ```yaml
 Type: SwitchParameter

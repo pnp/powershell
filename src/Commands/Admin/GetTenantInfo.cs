@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Admin
                     }
                     else
                     {
-                        throw new InvalidOperationException($"The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument to connect.");
+                        throw new InvalidOperationException($"You are not signed in. Please use Connect-PnPOnline to connect.");
                     }
                     break;
             }

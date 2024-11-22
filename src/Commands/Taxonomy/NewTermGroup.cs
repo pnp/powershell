@@ -1,9 +1,8 @@
-﻿using System;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Taxonomy
 {
@@ -25,6 +24,12 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Alias("TermStoreName")]
         public TaxonomyTermStorePipeBind TermStore;
 
+        [Parameter(Mandatory = false)]
+        public string[] Contributors;
+
+        [Parameter(Mandatory = false)]
+        public string[] Managers;
+
         protected override void ExecuteCmdlet()
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
@@ -40,6 +45,34 @@ namespace PnP.PowerShell.Commands.Taxonomy
             }
             // Create Group
             var group = termStore.CreateTermGroup(Name, Id, Description);
+            bool updateRequired = false;
+            if (Contributors != null && Contributors.Length > 0)
+            {
+                foreach (var contributor in Contributors)
+                {
+                    group.AddContributor(contributor);
+                }
+                updateRequired = true;
+            }
+            if (Managers != null && Managers.Length > 0)
+            {
+                foreach (var manager in Managers)
+                {
+                    group.AddGroupManager(manager);
+                }
+                updateRequired = true;
+            }
+
+            if (updateRequired)
+            {
+                termStore.CommitAll();
+                ClientContext.Load(group, group => group.GroupManagerPrincipalNames, group => group.ContributorPrincipalNames, group => group.Name, group => group.Description, group => group.Id);
+                ClientContext.Load(termStore);
+                ClientContext.ExecuteQueryRetry();
+
+                taxonomySession.UpdateCache();
+                taxonomySession.Context.ExecuteQueryRetry();
+            }
 
             WriteObject(group);
         }

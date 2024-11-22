@@ -5,16 +5,27 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": ".NET Core Launch with Nuget Build(console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build with nugets",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal",
+            "osx": {
+                "program": "pwsh",
+            },
+            "windows": {
+                "program": "pwsh.exe"
+            }
+        },
+        {
+            "preLaunchTask": "Build with nugets",
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
-            "processId": "${command:pickProcess}"
-        },
-        {
-            "name": ".NET Framework Attach",
-            "type": "clr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "processId": "${command:pickProcess}",
         }
     ]
 }

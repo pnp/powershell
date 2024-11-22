@@ -49,14 +49,17 @@ Recommend referring to these 2 links:
 | Set-PnPLabel | Use `Set-PnPRetentionLabel` |
 | Reset-PnPLabel | Use `Reset-PnPRetentionLabel` |
 | Add-PnPTeamsChannel | The parameter `IsFavoriteByDefault` has been removed as it was not supported by Graph API |
-| Get-PnPAppAuthAccessToken | It has been removed. Use `Get-PnPAccessToken -ResourceTypeName SharePoint` instead to get SharePoint access token. |
-| Request-PnPAccessToken | It has been removed. Use `Get-PnPAccessToken` instead. |
-| Get-PnPGraphAccessToken | It has been removed. Use `Get-PnPAccessToken` instead. |
+| Get-PnPAppAuthAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken -ResourceTypeName SharePoint` instead to get SharePoint access token. |
+| Request-PnPAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken` instead. |
+| Get-PnPGraphAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken` instead. |
 | Remove-PnPUser | The parameter `-Confirm` has been removed. Use `-Force` instead. |
 | Remove-PnPAvailableSiteClassification | The parameter `-Confirm` has been removed. Use `-Force` instead. |
 | Send-PnPMail | It now throws a warning about the [retirement of SharePoint SendEmail API](https://devblogs.microsoft.com/microsoft365dev/retirement-of-the-sharepoint-sendemail-api/), if you are sending mails via SharePoint. To ignore the warning, use `-ErrorAction SilentlyContinue` along side the cmdlet. Recommendation is to use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
 | Send-PnPMail | The support for sending mails via SMTP servers is now removed. It is the recommendation of .NET as SMTP doesn't support modern protocols. So, the parameters `-EnableSSL` , `-UserName`, `-Password`, `-Server ` and `-ServerPort` are now removed. Use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
-| Invoke-PnPTransformation | It has been removed. Was never supported. |
+| Invoke-PnPTransformation | It has been removed. It was never supported nor fully implemented. |
+| Get-PnPSharingLink | The parameter `-FileUrl` has been removed. It was marked obsolete. Use `-Identity` instead. |
+| Remove-PnPNavigationNode | The parameters `-Title` and `-Header` have been removed. They were marked obsolete. Use `-Identity` instead. |
+| Connect-PnPOnline |Removed `-UseWebLogin` on `Connect-PnPOnline`. It used a very outdated and questionable (reusing an auth cookie) authentication method which implementation broke easily. If you require an ACS connection for certain functionality, consider using `-ClientId` in combination with `-ClientSecret` instead.
 
 
 ## Other notable changes

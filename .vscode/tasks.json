@@ -37,7 +37,12 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "icon": {
+                "id": "run",
+                "color": "terminal.ansiYellow"
+            },
+            
         },
         {
             "label": "Build with local copy of PnP Framework/PnP Core SDK",

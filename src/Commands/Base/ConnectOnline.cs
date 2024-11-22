@@ -30,7 +30,6 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
         private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
-        private const string ParameterSet_WEBLOGIN = "Web Login for Multi Factor Authentication";
         private const string ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY = "System Assigned Managed Identity";
         private const string ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID = "User Assigned Managed Identity by Client Id";
         private const string ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID = "User Assigned Managed Identity by Principal Id";
@@ -49,7 +48,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
@@ -67,7 +65,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
@@ -86,7 +83,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_WEBLOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID, ValueFromPipeline = true)]
@@ -130,7 +126,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
@@ -142,7 +137,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
@@ -220,7 +214,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
@@ -246,13 +239,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         public SwitchParameter TransformationOnPrem;
 
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_WEBLOGIN)]
-        public SwitchParameter UseWebLogin;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
-        public string RelativeUrl;
-
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_WEBLOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
         public SwitchParameter ForceAuthentication;
@@ -395,9 +381,6 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID:
                 case ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID:
                     newConnection = ConnectManagedIdentity();
-                    break;
-                case ParameterSet_WEBLOGIN:
-                    newConnection = ConnectWebLogin();
                     break;
                 case ParameterSet_INTERACTIVE:
                     newConnection = ConnectInteractive();
@@ -601,7 +584,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            WriteVerbose("Using Managed AppId from secure store");
+                            messageWriter.WriteVerbose("Using Managed AppId from secure store");
                         }
                     }
 
@@ -786,28 +769,6 @@ namespace PnP.PowerShell.Commands.Base
 
             WriteVerbose($"ClientID: {UserAssignedManagedIdentityClientId}");
             return PnPConnection.CreateWithManagedIdentity(this, Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId);
-        }
-
-        private PnPConnection ConnectWebLogin()
-        {
-            WriteVerbose("Connecting using WebLogin");
-            WriteWarning("Consider using -Interactive or -OSLogin instead, which provides better functionality. This will be removed in a future release. See the documentation at https://pnp.github.io/powershell/cmdlets/Connect-PnPOnline.html#interactive-for-multi-factor-authentication");
-
-            if (Utilities.OperatingSystem.IsWindows())
-            {
-                if (!string.IsNullOrWhiteSpace(RelativeUrl))
-                {
-                    return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication, siteRelativeUrl: RelativeUrl);
-                }
-                else
-                {
-                    return PnPConnection.CreateWithWeblogin(new Uri(Url.ToLower()), TenantAdminUrl, ForceAuthentication);
-                }
-            }
-            else
-            {
-                throw new PSArgumentException("-UseWebLogin only works when running on Microsoft Windows due to the requirement to show a login window.");
-            }
         }
 
         private PnPConnection ConnectInteractive()

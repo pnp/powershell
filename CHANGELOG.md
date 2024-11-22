@@ -37,11 +37,14 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-CanSyncHubSitePermissions` parameter to `Set-PnPSite` cmdlet to set value of allowing syncing hub site permissions to this associated site.
 - Added `Get-PnPProfileCardProperty`, `New-PnPProfileCardProperty` and `Remove-PnPProfileCardProperty` cmdlets to manage showing additional properties on the Microsoft 365 user profile [#4548](https://github.com/pnp/powershell/pull/4548)
 - Added `Get-PnPCopilotAdminLimitedMode` and `Set-PnPCopilotAdminLimitedMode` which allows for managing the setting that controls whether Microsoft 365 Copilot in Teams Meetings users can receive responses to sentiment-related prompts [#4562](https://github.com/pnp/powershell/pull/4562)
+- Added `-Contributors` and `-Managers` parameters to `New-PnPTermGroup` and `Set-PnPTermGroup` cmdlets.
 
 ### Changed
 
-- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.4 or newer **
+- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.4 or newer**
 - **`-Interactive` login is now the default.**
+- **Rate limiting is now enabled by default for all cmdlets which are being executed under application permissions.**
+- Changed the UI experience when logging in with Interactive login and specifying `-LaunchBrowser` on `Connect-PnPOnline`. This experience is the default on MacOS.
 - In case of errors when Graph batch method is used, it will now throw a clearer error message about what was the issue. [#4327](https://github.com/pnp/powershell/pull/4327/)
 - `Get-PnPAccessToken`, `Request-PnPAccessToken` and `Get-PnPGraphAccessToken` output type is changed to `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`. Earlier they returned `System.IdentityModel.Tokens.Jwt`.
 - `New-PnPContainerType` will temporarily disable standard containers to be created due to changed being applied at Microsoft to allow this to be possible in the future [#4125](https://github.com/pnp/powershell/pull/4125)
@@ -75,9 +78,11 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed the PnP PowerShell version check to only check nightly version in nightly builds and major version in release builds. [#4453](https://github.com/pnp/powershell/pull/4453)
 - Fixed `-ConsistencyLevelEventual` flag on `Invoke-PnPGraphMethod` to work correctly. [#4523](https://github.com/pnp/powershell/pull/4523)
 - Fixed `Get-PnPServiceHealthIssue` returning an error when certain service states were active [#4530](https://github.com/pnp/powershell/pull/4530)
+- Fixed `Add-PnPFileSensitivityLabel` cmdlet to allow empty string value to reset file sensitivity label.
 
 ### Removed
 
+- Removed `-UseWebLogin` option on `Connect-PnPOnline`. It used a very old, questionable approach to authentication. Use `-Interactive` or if you require an ACS connection `-ClientId` and `-ClientSecret`
 - Removed `Invoke-PnPTransformation` cmdlet as it was never supported.
 - Removed `Publish-PnPCompanyApp` cmdlet as it was not supported anymore. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `-UserVoiceForFeedbackEnabled` parameter from `Set-PnPTenant` cmdlet as it was obsolete. [#4387](https://github.com/pnp/powershell/pull/4387)
@@ -85,7 +90,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Get-PnPPowerPlatformConnector` alias. You need to use `Get-PnPPowerPlatformCustomConnector`. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `-IsFavoriteByDefault` parameter from `Add-PnPTeamsChannel` cmdlet. It was obsolete and not supported by Graph API. [#4387](https://github.com/pnp/powershell/pull/4387)
 - Removed `Get-PnPAppAuthAccessToken` , `Remove-PnPGraphAccessToken` and `Request-PnPAccessToken` cmdlets. Use `Get-PnPAccessToken` instead. [#4398](https://github.com/pnp/powershell/pull/4398)
-- Removed support for sending mail via SMTP. It's usage is not recommended by .NET due to its lack of support for modern protocols.
+- Removed support for sending mail via SMTP in `Send-PnPMail`. It's usage is not recommended by .NET due to its lack of support for modern protocols.
+- Removed `-Title` and `-Header` parameters from `Remove-PnPNavigationNode`. They were marked obsolete.
+- Removed `-FileUrl` parameter from `Get-PnPSharingLink`. It was marked obsolete.
+- Removed `-WebLogin` parameter from `Connect-PnPOnline` cmdlet. It was marked obsolete and was a security risk.
  
 ### Contributors
 

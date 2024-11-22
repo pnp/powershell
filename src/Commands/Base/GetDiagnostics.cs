@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.Base
         void FillNewerVersionAvailable(Diagnostics result)
         {
             var versionAvailable = VersionChecker.GetAvailableVersion();
-            if (versionAvailable != null && VersionChecker.IsNewer(versionAvailable))
+            if (versionAvailable != null && VersionChecker.IsNewer(versionAvailable.SemanticVersion))
             {
                 result.NewerVersionAvailable = versionAvailable.ToString();
             }
