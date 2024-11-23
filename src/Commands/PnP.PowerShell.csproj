@@ -78,35 +78,25 @@
 
 	<ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(IsRelease)' != '1'">
 		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
-		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core\bin\Debug\net8.0\PnP.Core.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Auth" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<Reference Include="PnP.Core.Auth" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core.Auth\bin\Debug\net8.0\PnP.Core.Auth.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Admin" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<Reference Include="PnP.Core.Admin" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\net8.0\PnP.Core.Admin.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-		<Reference Include="PnP.Core.Transformation" Condition="'$(TargetFramework)' == 'net8.0-windows'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation\bin\Debug\net8.0\PnP.Core.Transformation.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-		<Reference Include="PnP.Core.Transformation.SharePoint" Condition="'$(TargetFramework)' == 'net8.0-windows'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation.SharePoint\bin\Debug\net8.0\PnP.Core.Transformation.SharePoint.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
+		</Reference>		
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
-		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\net8.0\PnP.Framework.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
