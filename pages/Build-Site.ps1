@@ -84,7 +84,7 @@ Try {
   		Install-Module PnP.PowerShell -AllowPrerelease -Force
 
   		Write-Host "Retrieving PnP PowerShell cmdlets"
-		$cmdlets = Get-Command -Module PnP.PowerShell | Select-Object Name
+		$cmdlets = Get-Command -Module PnP.PowerShell | Select-Object -ExpandProperty Name
 		$cmdlets
   		Write-Host "$($cmdlets.Length) cmdlets retrieved"
 	}
