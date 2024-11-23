@@ -39,7 +39,7 @@ if ($runPublish -eq $false -and $dependencies.PnPCore -ne $pnpcoresdk_hash) {
 if ($runPublish -eq $true) {
 	$dependencies.Updated = Get-Date -Format "yyyyMMdd-HHmmss"
 	$dependencies.PnPCore = $pnpcoresdk_hash
-	$dependencies.PnPFramework = $pnppowershell_hash
+	$dependencies.PnPFramework = $pnpframework_hash
 	$dependencies.PnPPowershell = $pnppowershell_hash
 
 	Set-Content ./dependencies.json -Value $(ConvertTo-Json $dependencies) -Force
