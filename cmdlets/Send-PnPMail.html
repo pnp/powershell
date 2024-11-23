@@ -86,8 +86,11 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Allows sending an e-mail</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="send-through-microsoft-graph">Send through Microsoft Graph</h3>
-<pre><code class="lang-powershell">Send-PnPMail -From &lt;String&gt; -To &lt;String[]&gt; -Subject &lt;String&gt; -Body &lt;String&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] [-ReplyTo &lt;String[]&gt;] [-Importance &lt;MessageImportanceType&gt;] [-BodyContentType &lt;MessageBodyContentType&gt;] [-SaveToSentItems &lt;bool&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
+<h3 id="send-through-microsoft-graph-with-attachments-from-local-file-system">Send through Microsoft Graph with attachments from local file system</h3>
+<pre><code class="lang-powershell">Send-PnPMail -From &lt;String&gt; -To &lt;String[]&gt; -Subject &lt;String&gt; -Body &lt;String&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] [-ReplyTo &lt;String[]&gt;] [-Importance &lt;MessageImportanceType&gt;] [-BodyContentType &lt;MessageBodyContentType&gt;] [-SaveToSentItems &lt;bool&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose] [-Attachments &lt;String[]&gt;]
+</code></pre>
+<h3 id="send-through-microsoft-graph-with-attachments-from-spo">Send through Microsoft Graph with attachments from SPO</h3>
+<pre><code class="lang-powershell">Send-PnPMail -From &lt;String&gt; -To &lt;String[]&gt; -Subject &lt;String&gt; -Body &lt;String&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] [-ReplyTo &lt;String[]&gt;] [-Importance &lt;MessageImportanceType&gt;] [-BodyContentType &lt;MessageBodyContentType&gt;] [-SaveToSentItems &lt;bool&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose] [-Files &lt;String[]&gt;]
 </code></pre>
 <h3 id="send-through-sharepoint-online-default">Send through SharePoint Online (Default)</h3>
 <pre><code class="lang-powershell">Send-PnPMail -To &lt;String[]&gt; -Subject &lt;String&gt; -Body &lt;String&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
@@ -107,6 +110,14 @@
 <pre><code class="lang-powershell">Send-PnPMail -To &quot;address@tenant.microsoftonline.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot;
 </code></pre>
 <p>Sends an e-mail using the SharePoint Online SendEmail method using the current context. E-mail is sent from the SharePoint Online no-reply e-mail address and can only be sent to accounts in the same tenant. The from address will show the title of the site you are connected with along with the e-mail address no-reply@sharepointonline.com.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Send-PnPMail -From &quot;user@contoso.onmicrosoft.com&quot; -To &quot;recipient@contoso.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot; -Attachments &quot;C:\PnPCommunity\Test\test.docx&quot;
+</code></pre>
+<p>Sends an e-mail using Microsoft Graph to one recipient. E-mail is sent from the user specified in the From parameter and can be sent to both internal and external addresses. A copy of the sent e-mail will be stored in the mailbox of the user specified in the From parameter. It will also upload the file from the local file system as attachment.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Send-PnPMail -From &quot;user@contoso.onmicrosoft.com&quot; -To &quot;recipient@contoso.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot; -Files &quot;/sites/test/Shared Documents/Test.docx&quot;
+</code></pre>
+<p>Sends an e-mail using Microsoft Graph to one recipient. E-mail is sent from the user specified in the From parameter and can be sent to both internal and external addresses. A copy of the sent e-mail will be stored in the mailbox of the user specified in the From parameter. It will also upload the file from the SharePoint site collection and send it as attachment.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-body">-Body</h3>
 <p>Body of the email. Accepts simple HTML as <code>&amp;lt;h1&amp;gt;&amp;lt;/h1&amp;gt;</code>, <code>&amp;lt;br/&amp;gt;</code> etc.</p>
@@ -144,7 +155,7 @@ Accept wildcard characters: False
 <h3 id="-bodycontenttype">-BodyContentType</h3>
 <p>Allows defining what type of content is in the Body parameter. Defaults to HTML.</p>
 <pre><code class="lang-yaml">Type: MessageBodyContentType
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 Accepted values: Html, Text
 
 Required: False
@@ -167,7 +178,7 @@ Accept wildcard characters: False
 <h3 id="-from">-From</h3>
 <p>The sender of the e-mail. When Microsoft Graph is used, this can be a user or a shared mailbox.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 
 Required: True
 Position: Named
@@ -178,7 +189,7 @@ Accept wildcard characters: False
 <h3 id="-importance">-Importance</h3>
 <p>Allows defining what the importance of the e-mail is. Defaults to Normal.</p>
 <pre><code class="lang-yaml">Type: MessageImportanceType
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 Accepted values: Low, Normal, High
 
 Required: False
@@ -190,7 +201,7 @@ Accept wildcard characters: False
 <h3 id="-replyto">-ReplyTo</h3>
 <p>List of return addresses to use for the e-mail</p>
 <pre><code class="lang-yaml">Type: String[]
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 
 Required: False
 Position: Named
@@ -201,7 +212,7 @@ Accept wildcard characters: False
 <h3 id="-savetosentitems">-SaveToSentItems</h3>
 <p>Allows indicating if the sent e-mail should be stored in the Sent Items of the mailbox used to send out the e-mail.</p>
 <pre><code class="lang-yaml">Type: String[]
-Parameter Sets: Send through Microsoft Graph
+Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
 
 Required: False
 Position: Named
@@ -226,6 +237,28 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-attachments">-Attachments</h3>
+<p>List of attachments from local file system to be uploaded and sent as attachments.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Send through Microsoft Graph with attachments from local file system
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-files">-Files</h3>
+<p>List of files from the SharePoint site collection to be sent as attachments.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Send through Microsoft Graph with attachments from SPO
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
