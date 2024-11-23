@@ -81,7 +81,7 @@ Try {
 
     $scriptBlockStableRelease = {
 		Write-Host "Installing latest stable release of PnP PowerShell"
-  		Install-Module PnP.PowerShell -AllowPrerelease -Force
+  		Install-Module PnP.PowerShell -Force
 
   		Write-Host "Retrieving PnP PowerShell cmdlets"
 		$cmdlets = Get-Command -Module PnP.PowerShell | Select-Object -ExpandProperty Name
