@@ -108,7 +108,7 @@ Write-Host "Copying documentation files to page cmdlets"
 Copy-Item -Path "./dev/documentation/*.md" -Destination "./dev/pages/cmdlets" -Force
 
 foreach ($nightlycmdlet in $nightlycmdlets) {
-    if (!$stableReleaseCmdlets.Contains($nightlycmdlet)) {
+    if (!($stableReleaseCmdlets -like $nightlycmdlet)) {
         Copy-Item "./dev/documentation/$nightlycmdlet.md" -Destination "./dev/pages/cmdlets" -Force | Out-Null
         # update the document to state it's only available in the nightly build
         $header = $fm.GetHeader("./dev/pages/cmdlets/$nightlycmdlet.md")
@@ -162,7 +162,7 @@ foreach ($cmdletPage in $cmdletPages)
     $cmdletIndexPageList += "- [$($cmdletPage.BaseName)]($($cmdletPage.Name))"
 
     # Check if the cmdlet only exists in the nightly build
-    if (!$stableReleaseCmdlets.Contains($cmdletPage.BaseName))
+    if (!($stableReleaseCmdlets -like $cmdletPage.BaseName))
     {
         # Add a 1 to the cmdlet name if it's only available in the nightly build
         $cmdletIndexPageList = $cmdletIndexPageList + " <sup>1</sup>"
