@@ -169,6 +169,8 @@ foreach ($cmdletPage in $cmdletPages)
     {
         # Add a 1 to the cmdlet name if it's only available in the nightly build
         $cmdletIndexPageList = $cmdletIndexPageList + " <sup>1</sup>"
+
+ 	Write-Host "  - Nightly only"
     }
 
     # Check if the cmdlet is an alias
@@ -176,6 +178,8 @@ foreach ($cmdletPage in $cmdletPages)
     {
         # Add a 2 to the cmdlet name if it's an alias
         $cmdletIndexPageList = $cmdletIndexPageList + " <sup>2</sup>"
+
+ 	Write-Host "  - Alias"
     }
     
     $cmdletIndexPageList = $cmdletIndexPageList + "`n"
