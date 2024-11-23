@@ -77,14 +77,11 @@ Try {
 	}
 	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlockNightlyRelease | Receive-Job -Wait
 
-    $aliasCmdletsCount = $aliasCmdlets.Length
+    	$aliasCmdletsCount = $aliasCmdlets.Length
 
-    $scriptBlockStableRelease = {
-		Write-Host "Installing latest stable release of PnP PowerShell"
-  		Install-Module PnP.PowerShell -Force
-
-  		Write-Host "Retrieving PnP PowerShell cmdlets"
-		$cmdlets = Get-Command -Module PnP.PowerShell | Select-Object -ExpandProperty Name
+    	$scriptBlockStableRelease = {
+  		Write-Host "Retrieving PnP PowerShell cmdlets from latest stable release"
+		$cmdlets = (Find-Module -Name PnP.PowerShell).AdditionalMetadata.Cmdlets.Split(" ")
 		$cmdlets
   		Write-Host "$($cmdlets.Length) cmdlets retrieved"
 	}
