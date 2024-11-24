@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: New-PnPBatch
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPBatch.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/New-PnPBatch.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: New-PnPBatch
 ---
- 
+
 # New-PnPBatch
 
 ## SYNOPSIS
@@ -17,9 +18,15 @@ Creates a new batch
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 New-PnPBatch [-RetainRequests]
 ```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -53,17 +60,32 @@ This will delete all the items with Id 1 to Id 50 in the specified list.
 
 ### -RetainRequests
 
+
+
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

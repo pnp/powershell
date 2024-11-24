@@ -1,23 +1,30 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPSiteDesignRun
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteDesignRun.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteDesignRun.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPSiteDesignRun
 ---
- 
+
 # Get-PnPSiteDesignRun
 
 ## SYNOPSIS
+
 Retrieves a list of site designs applied to a specified site collection. If the WebUrl parameter is not specified we show the list of designs applied to the current site. The returned output includes the ID of the scheduled job, the web and site IDs, and the site design ID, version, and title.
 
 ## SYNTAX
 
-```powershell
-Get-PnPSiteDesignRun [-SiteDesignId <Guid>] [-WebUrl <String>] 
- [-Connection <PnPConnection>]   
+### Default (Default)
+
 ```
+Get-PnPSiteDesignRun [-SiteDesignId <Guid>] [-WebUrl <String>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -26,6 +33,7 @@ Allows to retrieve a list of site designs applied to a specified site collection
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPSiteDesignRun
 ```
@@ -33,6 +41,7 @@ Get-PnPSiteDesignRun
 This example returns a list of the site designs applied to the current site. Providing a specific site design ID will return the details for just that applied site design.
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPSiteDesignRun -WebUrl "https://mytenant.sharepoint.com/sites/project"
 ```
@@ -42,47 +51,77 @@ This example returns a list of the site designs applied to the specified site. P
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -SiteDesignId
+
 The ID of the site design to apply.
 
 ```yaml
 Type: Guid
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -WebUrl
+
 The URL of the site collection where the site design will be applied. If not specified the design will be applied to the site you connected to with Connect-PnPOnline.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

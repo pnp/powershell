@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPDeletedContainer.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPDeletedContainer.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPDeletedContainer
 ---
-  
+
 # Get-PnPDeletedContainer
 
 ## SYNOPSIS
@@ -19,11 +20,27 @@ The Get-PnPDeletedContainer cmdlet returns a list of all deleted Containers in t
 
 ## SYNTAX
 
-```powershell
-Get-PnPDeletedContainer [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Get-PnPDeletedContainer [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
+## EXAMPLES
+
+### EXAMPLE 1
+
+```powershell
+Get-PnPDeletedContainer
+```
+
+Returns a list of the ContainerId, ContainerName, and CreatedDate of all deleted Containers in the Recycle Bin.
 
 ## EXAMPLES
 
@@ -43,15 +60,28 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

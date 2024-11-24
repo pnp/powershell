@@ -1,29 +1,39 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAuthenticationRealm.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPAuthenticationRealm.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPAuthenticationRealm
 ---
-  
+
 # Get-PnPAuthenticationRealm
 
 ## SYNOPSIS
+
 Returns the authentication realm
 
 ## SYNTAX
 
-```powershell
-Get-PnPAuthenticationRealm [[-Url] <String>] [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Get-PnPAuthenticationRealm [[-Url] <String>] [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Gets the authentication realm for the current web
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPAuthenticationRealm
 ```
@@ -31,6 +41,7 @@ Get-PnPAuthenticationRealm
 This will get the authentication realm for the current connected site
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPAuthenticationRealm -Url "https://contoso.sharepoint.com"
 ```
@@ -40,35 +51,55 @@ This will get the authentication realm for https://contoso.sharepoint.com
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Url
+
 Specifies the URL of the site
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

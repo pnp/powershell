@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPSiteFileVersionExpirationReportJob.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/New-PnPSiteFileVersionExpirationReportJob.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: New-PnPSiteFileVersionExpirationReportJob
 ---
-  
+
 # New-PnPSiteFileVersionExpirationReportJob
 
 ## SYNOPSIS
@@ -15,9 +16,15 @@ Starts generating file version usage report for a site collection.
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 New-PnPSiteFileVersionExpirationReportJob -ReportUrl <string>
 ```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -26,6 +33,7 @@ Starts generating file version usage report for a site collection.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 New-PnPSiteFileVersionExpirationReportJob -ReportUrl "https://contoso.sharepoint.com/sites/reports/MyReports/VersionReport.csv"
 ```
@@ -35,19 +43,33 @@ Starts generating file version usage report on for the site collection, saving t
 ## PARAMETERS
 
 ### -ReportUrl
+
 The URL of the report to save to.
 
 ```yaml
 Type: string
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

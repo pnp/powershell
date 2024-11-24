@@ -1,29 +1,39 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Receive-PnPCopyMoveJobStatus.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Receive-PnPCopyMoveJobStatus.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Receive-PnPCopyMoveJobStatus
 ---
- 
+
 # Receive-PnPCopyMoveJobStatus
 
 ## SYNOPSIS
+
 This cmdlets receives Copy or Move job status which is being returned by Copy-PnPFile or Move-PnPFile when using the -NoWait parameter
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Receive-PnPCopyMoveJobStatus -Job <CopyMigrationInfo> [-Wait]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 This cmdlets outputs the results of a pending/finished copy or move job.
 
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
 $job = Copy-PnPFile -SourceUrl "Shared Documents/company.docx" -TargetUrl "SubSite2/Shared Documents" -NoWait
 $jobStatus = Receive-PnPCopyMoveJobStatus -Job $job
@@ -38,52 +48,78 @@ Copies a file named company.docx from the current document library to the docume
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet.
 Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Job
+
 The job which is returned from Copy-PnPFile or Move-PnPFile
 
 ```yaml
 Type: CopyMigrationInfo
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Wait
+
 If specified the cmdlet will continue to poll the job to be finished.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

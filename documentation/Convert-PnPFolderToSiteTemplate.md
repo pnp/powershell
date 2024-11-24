@@ -1,22 +1,30 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Convert-PnPFolderToSiteTemplate.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Convert-PnPFolderToSiteTemplate.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Convert-PnPFolderToSiteTemplate
 ---
-  
+
 # Convert-PnPFolderToSiteTemplate
 
 ## SYNOPSIS
+
 Creates a pnp package file of an existing template xml, and includes all files in the current folder
 
 ## SYNTAX
 
-```powershell
-Convert-PnPFolderToSiteTemplate [-Out] <String> [[-Folder] <String>] [-Force] 
+### Default (Default)
+
 ```
+Convert-PnPFolderToSiteTemplate [-Out] <String> [[-Folder] <String>] [-Force]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -25,6 +33,7 @@ Allows to convert the current folder together with all files, to a pnp package f
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Convert-PnPFolderToSiteTemplate -Out template.pnp
 ```
@@ -32,6 +41,7 @@ Convert-PnPFolderToSiteTemplate -Out template.pnp
 Creates a pnp package file of an existing template xml, and includes all files in the current folder
 
 ### EXAMPLE 2
+
 ```powershell
 Convert-PnPFolderToSiteTemplate -Out template.pnp -Folder c:\temp
 ```
@@ -41,49 +51,77 @@ Creates a pnp package file of an existing template xml, and includes all files i
 ## PARAMETERS
 
 ### -Folder
+
 Folder to process. If not specified the current folder will be used.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 1
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Force
+
 Overwrites the output file if it exists.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Out
+
 Filename to write to, optionally including full path.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

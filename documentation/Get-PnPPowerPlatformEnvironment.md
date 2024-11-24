@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformEnvironment.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerPlatformEnvironment.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPPowerPlatformEnvironment
 ---
-  
+
 # Get-PnPPowerPlatformEnvironment
 
 ## SYNOPSIS
@@ -21,22 +22,30 @@ Retrieves the Microsoft Power Platform environments for the current tenant.
 
 ### Default (Default)
 
-```powershell
+```
 Get-PnPPowerPlatformEnvironment [-IsDefault] [-Connection <PnPConnection>] [-Verbose]
+ [<CommonParameters>]
 ```
 
 ### By Identity
 
-```powershell
-Get-PnPPowerPlatformEnvironment -Identity <PowerPlatformEnvironmentPipeBind> [-Connection <PnPConnection>] [-Verbose]
+```
+Get-PnPPowerPlatformEnvironment -Identity <PowerPlatformEnvironmentPipeBind>
+ [-Connection <PnPConnection>] [-Verbose] [<CommonParameters>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 This cmdlet retrieves all of the Microsoft Power Platform environments for the current tenant
 
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
 Get-PnPPowerPlatformEnvironment
 ```
@@ -44,6 +53,7 @@ Get-PnPPowerPlatformEnvironment
 This cmdlets returns all of the Power Platform environments for the current tenant.
 
 ### Example 2
+
 ```powershell
 Get-PnPPowerPlatformEnvironment -IsDefault $true
 ```
@@ -51,6 +61,7 @@ Get-PnPPowerPlatformEnvironment -IsDefault $true
 This cmdlets returns the default Power Platform environment for the current tenant.
 
 ### Example 3
+
 ```powershell
 Get-PnPPowerPlatformEnvironment -Identity "MyOrganization (default)"
 ```
@@ -59,66 +70,101 @@ This cmdlets returns the Power Platform environment with the provided display na
 
 ## PARAMETERS
 
-### -Identity
-Allows specifying an environment display name or internal name to retrieve a specific environment.
-
-```yaml
-Type: bool
-Parameter Sets: By Identity
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -IsDefault
-Allows retrieval of the default Power Platform environment by passing in `-IsDefault $true`. When passing in `-IsDefault $false` you will get all non default environments. If not provided at all, all available environments, both default and non-default, will be returned.
-
-```yaml
-Type: bool
-Parameter Sets: Default
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Connection
+
 Optional connection to be used by the cmdlet.
 Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-Aliases:
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Identity
+
+Allows specifying an environment display name or internal name to retrieve a specific environment.
+
+```yaml
+Type: bool
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: By Identity
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -IsDefault
+
+Allows retrieval of the default Power Platform environment by passing in `-IsDefault $true`. When passing in `-IsDefault $false` you will get all non default environments. If not provided at all, all available environments, both default and non-default, will be returned.
+
+```yaml
+Type: bool
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Default
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Verbose
+
 When provided, additional debug statements will be shown while executing the cmdlet.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPTeamsChannelUser
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelUser.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelUser.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPTeamsChannelUser
 ---
- 
+
 # Get-PnPTeamsChannelUser
 
 ## SYNOPSIS
@@ -19,10 +20,16 @@ Returns members from the specified Microsoft Teams private Channel.
 
 ## SYNTAX
 
-```powershell
-Get-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsChannelMemberPipeBind>] [-Role <String>]
-  
+### Default (Default)
+
 ```
+Get-PnPTeamsChannelUser -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind>
+ [-Identity <TeamsChannelMemberPipeBind>] [-Role <String>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -31,6 +38,7 @@ Allows to retrieve list of members of the specified private channel.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPTeamsChannelUser -Team "My Team" -Channel "My Channel"
 ```
@@ -63,63 +71,103 @@ Returns membership of the user with ID "00000000-0000-0000-0000-000000000000" fo
 
 ## PARAMETERS
 
-### -Identity
-Specify membership id, UPN or user ID of the channel member.
-
-```yaml
-Type: TeamsChannelMemberPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Channel
+
 Specify id or name of the channel to use.
 
 ```yaml
 Type: TeamsChannelPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -Team
-Specify the group id, mailNickname or display name of the team to use.
+### -Identity
+
+Specify membership id, UPN or user ID of the channel member.
 
 ```yaml
-Type: TeamsTeamPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: TeamsChannelMemberPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Role
+
 Specify to filter on the role of the user.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Accepted values: Owner, Member, Guest
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues:
+- Owner
+- Member
+- Guest
+HelpMessage: ''
 ```
+
+### -Team
+
+Specify the group id, mailNickname or display name of the team to use.
+
+```yaml
+Type: TeamsTeamPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

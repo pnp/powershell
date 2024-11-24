@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: New-PnPTeamsApp
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPTeamsApp.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/New-PnPTeamsApp.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: New-PnPTeamsApp
 ---
- 
+
 # New-PnPTeamsApp
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Adds an app to the Teams App Catalog.
 
 ## SYNTAX
 
-```powershell
-New-PnPTeamsApp -Path <String>  
+### Default (Default)
+
 ```
+New-PnPTeamsApp -Path <String>
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +37,7 @@ Allows to add an app to the Teams App Catalog.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 New-PnPTeamsApp -Path c:\myapp.zip
 ```
@@ -39,20 +47,33 @@ Adds the app as defined in the zip file to the Teams App Catalog
 ## PARAMETERS
 
 ### -Path
+
 The path pointing to the packaged/zip file containing the app
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

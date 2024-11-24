@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: New-PnPPlannerPlan
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPPlannerPlan.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/New-PnPPlannerPlan.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: New-PnPPlannerPlan
 ---
- 
+
 # New-PnPPlannerPlan
 
 ## SYNOPSIS
@@ -19,16 +20,24 @@ Creates a new Planner plan.
 
 ## SYNTAX
 
-```powershell
-New-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Title <String>  
+### Default (Default)
+
+```
+New-PnPPlannerPlan -Group <PlannerGroupPipeBind> -Title <String>
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 This cmdlet creates a new Planner plan.
 
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
 New-PnPPlannerPlan -Group "Marketing" -Title "Conference Plan"
 ```
@@ -37,41 +46,63 @@ This example will add a new plan called "Conference Plan" to the "Marketing" gro
 
 ## PARAMETERS
 
-
 ### -Group
+
 Specify the group name or id owning the plan.
 
 ```yaml
 Type: PlannerGroupPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Title
+
 Specify the name of the new plan.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

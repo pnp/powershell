@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPTenantTheme.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Add-PnPTenantTheme.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Add-PnPTenantTheme
 ---
-  
+
 # Add-PnPTenantTheme
 
 ## SYNOPSIS
@@ -19,17 +20,25 @@ Adds or updates a theme to the tenant.
 
 ## SYNTAX
 
-```powershell
-Add-PnPTenantTheme [-Overwrite] -Identity <ThemePipeBind> -Palette <ThemePalettePipeBind> -IsInverted <Boolean>
- [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Add-PnPTenantTheme -Identity <ThemePipeBind> -Palette <ThemePalettePipeBind> -IsInverted <Boolean>
+ [-Overwrite] [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Adds or updates a theme to the tenant.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 $themepalette = @{
   "themePrimary" = "#00ffff";
@@ -64,6 +73,7 @@ Add-PnPTenantTheme -Identity "MyCompanyTheme" -Palette $themepalette -IsInverted
 This example adds a theme to the current tenant.
 
 ### EXAMPLE 2
+
 ```powershell
 $themepalette = @{
   "themePrimary" = "#00ffff";
@@ -100,77 +110,121 @@ This example overwrites an existing theme on the current tenant.
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
+
 The name of the theme to add or update
 
 ```yaml
 Type: ThemePipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -IsInverted
+
 If the theme is inverted or not
 
 ```yaml
 Type: Boolean
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Overwrite
+
 Use this parameter to allow existing theme with the same name to be overwritten.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Palette
+
 The palette to add. See examples for more information.
 
 ```yaml
 Type: ThemePalettePipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

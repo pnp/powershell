@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Register-PnPHubSite
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Register-PnPHubSite.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Register-PnPHubSite.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Register-PnPHubSite
 ---
- 
+
 # Register-PnPHubSite
 
 ## SYNOPSIS
@@ -19,16 +20,24 @@ Registers a site as a hub site.
 
 ## SYNTAX
 
-```powershell
-Register-PnPHubSite -Site <SitePipeBind> [-Principals <String[][]>] [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Register-PnPHubSite -Site <SitePipeBind> [-Principals <String[][]>] [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Registers a site as a hub site.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Register-PnPHubSite -Site "https://tenant.sharepoint.com/sites/myhubsite"
 ```
@@ -36,6 +45,7 @@ Register-PnPHubSite -Site "https://tenant.sharepoint.com/sites/myhubsite"
 This example registers the specified site as a hub site.
 
 ### EXAMPLE 2
+
 ```powershell
 Register-PnPHubSite -Site "https://tenant.sharepoint.com/sites/myhubsite" -Principals "user@contoso.com"
 ```
@@ -45,48 +55,77 @@ This example registers the specified site as a hub site and specifies that 'user
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Site
-The site to register as a hub site.
-
-```yaml
-Type: SitePipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Principals
+
 Specifies one or more principals (user or group) to be granted rights to the specified hub site. Can be used to filter who can associate sites to this hub site.
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Site
+
+The site to register as a hub site.
+
+```yaml
+Type: SitePipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

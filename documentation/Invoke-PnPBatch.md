@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Invoke-PnPBatch
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPBatch.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Invoke-PnPBatch.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Invoke-PnPBatch
 ---
- 
+
 # Invoke-PnPBatch
 
 ## SYNOPSIS
@@ -17,9 +18,15 @@ Executes the batch
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Invoke-PnPBatch [-Batch] <PnPBatch> [-Details] [-StopOnException] [-Force]
 ```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -47,28 +54,20 @@ The batch to execute
 
 ```yaml
 Type: PnPBatch
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Force
-
-Once a batch has been executed you cannot execute it again. Using -Force will allow you to re-execute the batch again.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Details
@@ -77,13 +76,42 @@ Will return detailed information of the batch executed.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Force
+
+Once a batch has been executed you cannot execute it again. Using -Force will allow you to re-execute the batch again.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -StopOnException
@@ -92,15 +120,28 @@ By default the batch will be fully executed. If any exceptions occur during this
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -1,46 +1,60 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPFile.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Add-PnPFile.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Add-PnPFile
 ---
-  
+
 # Add-PnPFile
 
 ## SYNOPSIS
+
 Uploads a file to Web
 
 ## SYNTAX
 
 ### Upload file
-```powershell
-Add-PnPFile -Path <String> -Folder <FolderPipeBind> [-NewFileName <String>] [-Checkout] [-CheckInComment <String>] [-CheckinType <CheckinType>]
- [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] 
+
+```
+Add-PnPFile -Path <String> -Folder <FolderPipeBind> [-NewFileName <String>] [-Checkout]
+ [-CheckInComment <String>] [-CheckinType <CheckinType>] [-Approve] [-ApproveComment <String>]
+ [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ### Upload file from stream
-```powershell
-Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Checkout] [-CheckInComment <String>] [-CheckinType <CheckinType>]
- [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] 
+
+```
+Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Stream <Stream> [-Checkout]
+ [-CheckInComment <String>] [-CheckinType <CheckinType>] [-Approve] [-ApproveComment <String>]
+ [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ### Create or update file from text
-```powershell
-Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Content <text> [-Checkout] [-CheckInComment <String>] [-CheckinType <CheckinType>]
- [-Approve] [-ApproveComment <String>] [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
- [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>] 
+
+```
+Add-PnPFile -Folder <FolderPipeBind> -FileName <String> -Content <text> [-Checkout]
+ [-CheckInComment <String>] [-CheckinType <CheckinType>] [-Approve] [-ApproveComment <String>]
+ [-Publish] [-PublishComment <String>] [-UseWebDav] [-Values <Hashtable>]
+ [-ContentType <ContentTypePipeBind>] [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 This cmdlet uploads a local file, file from a stream or plain text to the specified folder.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Add-PnPFile -Path c:\temp\company.master -Folder "_catalogs/masterpage"
 ```
@@ -48,6 +62,7 @@ Add-PnPFile -Path c:\temp\company.master -Folder "_catalogs/masterpage"
 This will upload the file company.master to the masterpage catalog
 
 ### EXAMPLE 2
+
 ```powershell
 Add-PnPFile -Path .\displaytemplate.html -Folder "_catalogs/masterpage/display templates/test"
 ```
@@ -55,6 +70,7 @@ Add-PnPFile -Path .\displaytemplate.html -Folder "_catalogs/masterpage/display t
 This will upload the file displaytemplate.html to the test folder in the display templates folder. If the test folder does not exist it will create it.
 
 ### EXAMPLE 3
+
 ```powershell
 Add-PnPFile -Path .\sample.doc -Folder "Shared Documents" -Values @{Modified="12/28/2023"}
 ```
@@ -62,6 +78,7 @@ Add-PnPFile -Path .\sample.doc -Folder "Shared Documents" -Values @{Modified="12
 This will upload the file sample.doc to the Shared Documents folder. After uploading it will set the Modified date to 12/28/2023.
 
 ### EXAMPLE 4
+
 ```powershell
 Add-PnPFile -FileName sample.doc -Folder "Shared Documents" -Stream $fileStream -Values @{Modified="12/28/2023"}
 ```
@@ -69,6 +86,7 @@ Add-PnPFile -FileName sample.doc -Folder "Shared Documents" -Stream $fileStream 
 This will add a file sample.doc with the contents of the stream into the Shared Documents folder. After adding it will set the Modified date to 12/28/2023.
 
 ### EXAMPLE 5
+
 ```powershell
 Add-PnPFile -Path sample.doc -Folder "Shared Documents" -ContentType "Document" -Values @{Modified="12/28/2023"}
 ```
@@ -76,6 +94,7 @@ Add-PnPFile -Path sample.doc -Folder "Shared Documents" -ContentType "Document" 
 This will add a file sample.doc to the Shared Documents folder, with a ContentType of 'Documents'. After adding it will set the Modified date to 12/28/2023.
 
 ### EXAMPLE 6
+
 ```powershell
 Add-PnPFile -Path sample.docx -Folder "Documents" -Values @{Modified="12/28/2016"; Created="12/28/2023"; Editor=23}
 ```
@@ -83,6 +102,7 @@ Add-PnPFile -Path sample.docx -Folder "Documents" -Values @{Modified="12/28/2016
 This will add a file sample.docx to the Documents folder and will set the Modified date to 12/28/2016, Created date to 12/28/2023 and the Modified By field to the user with ID 23. To find out about the proper user ID to relate to a specific user, use Get-PnPUser.
 
 ### EXAMPLE 7
+
 ```powershell
 Add-PnPFile -Path sample.docx -Folder "Documents" -NewFileName "differentname.docx"
 ```
@@ -90,6 +110,7 @@ Add-PnPFile -Path sample.docx -Folder "Documents" -NewFileName "differentname.do
 This will upload a local file sample.docx to the Documents folder giving it the filename differentname.docx on SharePoint
 
 ### EXAMPLE 8
+
 ```powershell
 Add-PnPFile -FileName sample.txt -Folder "Shared Documents" -Content '{ "Test": "Value" }'
 ```
@@ -99,229 +120,359 @@ This will create a file sample.docx in the Documents library inserting the provi
 ## PARAMETERS
 
 ### -Approve
+
 Will auto approve the uploaded file
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ApproveComment
+
 The comment added to the approval
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -CheckInComment
+
 The comment added to the checkin
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -CheckinType
+
 Specifies the type of check-in for a file.
 
 ```yaml
 Type: Enum (Microsoft.SharePoint.Client.CheckinType)
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: MinorCheckIn
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: MinorCheckIn
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Checkout
+
 If versioning is enabled, this will check out the file first if it exists, upload the file, then check it in again
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ContentType
-Use to assign a ContentType to the file
-
-```yaml
-Type: ContentTypePipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -FileName
-Name for file
-
-```yaml
-Type: String
-Parameter Sets: Upload file from stream
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Folder
-The destination folder in the site
-
-```yaml
-Type: FolderPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NewFileName
-Filename to give the file on SharePoint
-
-```yaml
-Type: String
-Parameter Sets: Upload file
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Path
-The local file path
-
-```yaml
-Type: String
-Parameter Sets: Upload file
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Publish
-Will auto publish the file
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PublishComment
-The comment added to the publish action
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Stream
-Stream with the file contents
-
-```yaml
-Type: Stream
-Parameter Sets: Upload file from stream
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -UseWebDav
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Content
+
 Content to add to the file to create or overwrite on SharePoint. It will blindly overwrite the contents of the file if it already exists.
 
 ```yaml
 Type: String
-Parameter Sets: ASTEXT
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: ASTEXT
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -ContentType
+
+Use to assign a ContentType to the file
+
+```yaml
+Type: ContentTypePipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -FileName
+
+Name for file
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Upload file from stream
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Folder
+
+The destination folder in the site
+
+```yaml
+Type: FolderPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -NewFileName
+
+Filename to give the file on SharePoint
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Upload file
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Path
+
+The local file path
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Upload file
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Publish
+
+Will auto publish the file
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -PublishComment
+
+The comment added to the publish action
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Stream
+
+Stream with the file contents
+
+```yaml
+Type: Stream
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Upload file from stream
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -UseWebDav
+
+
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Values
+
 Use the internal names of the fields when specifying field names.
 
 Single line of text: -Values @{"Title" = "Title New"}
@@ -364,15 +515,28 @@ Hyperlink or Picture: -Values @{"Hyperlink" = "https://github.com/OfficeDev/, Of
 
 ```yaml
 Type: Hashtable
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

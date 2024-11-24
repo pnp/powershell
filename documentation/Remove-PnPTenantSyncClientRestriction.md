@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Remove-PnPTenantSyncClientRestriction
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTenantSyncClientRestriction.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Remove-PnPTenantSyncClientRestriction.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Remove-PnPTenantSyncClientRestriction
 ---
- 
+
 # Remove-PnPTenantSyncClientRestriction
 
 ## SYNOPSIS
@@ -19,23 +20,30 @@ Removes organization-level OneDrive synchronization restrictions
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Remove-PnPTenantSyncClientRestriction
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 The Remove-PnPTenantSyncClientRestriction cmdlet disables the feature for the tenant, but does not remove any present domain GUID entries from the safe sender recipient list. After the Remove-PnPTenantSyncClientRestriction cmdlet is run it can take up to 24 hours for change to take effect. This parameter will also remove any values set from the GrooveBlockOption parameter for syncing.
 
 ## EXAMPLES
 
-### EXAMPLE 1
-```powershell
-Remove-PnPTenantSyncClientRestriction
-```
+## PARAMETERS
 
-This example disables this feature for the tenant.
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

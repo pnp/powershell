@@ -1,22 +1,30 @@
 ---
-Module Name: PnP.PowerShell
-title: Update-PnPUserType
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Update-PnPUserType.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Update-PnPUserType.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Update-PnPUserType
 ---
- 
+
 # Update-PnPUserType
 
 ## SYNOPSIS
+
 Updates a user's UserType across all SharePoint Online sites.
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Update-PnPUserType -LoginName <String>
 ```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -25,6 +33,7 @@ This cmdlet retrieves the UserType value of the specified user and updates the U
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Update-PnPUserType -LoginName jdoe@contoso.com
 ```
@@ -33,20 +42,33 @@ Updates the jdoe@contoso.com's UserType on all SharePoint Online sites in the te
 ## PARAMETERS
 
 ### -LoginName
+
 The login name of the target user to update across SharePoint Online.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

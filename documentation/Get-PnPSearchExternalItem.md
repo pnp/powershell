@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchExternalItem.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchExternalItem.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPSearchExternalItem
 ---
-  
+
 # Get-PnPSearchExternalItem
 
 ## SYNOPSIS
@@ -19,9 +20,16 @@ Returns the external items indexed for a specific connector in Microsoft Search
 
 ## SYNTAX
 
-```powershell
-Get-PnPSearchExternalItem -ConnectionId <SearchExternalConnectionPipeBind> [-Identity <String>] [-Verbose] [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Get-PnPSearchExternalItem -ConnectionId <SearchExternalConnectionPipeBind> [-Identity <String>]
+ [-Verbose] [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -32,6 +40,7 @@ It is only possible to run this cmdlet under a delegated context, application co
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPSearchExternalItem -ConnectionId "pnppowershell" -ItemId "12345"
 ```
@@ -39,6 +48,7 @@ Get-PnPSearchExternalItem -ConnectionId "pnppowershell" -ItemId "12345"
 This will return the external item with the unique identifier "12345" for the custom connector with the Connection ID "pnppowershell".
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPSearchExternalItem -ConnectionId "pnppowershell"
 ```
@@ -48,58 +58,100 @@ This will return all external items for the custom connector with the Connection
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Identity
-Unique identifier of the external item in Microsoft Search. You can provide any identifier you want to retrieve or check for a specific item in the index. If you omit it, all external items for the specified connector will be returned.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ConnectionId
+
 The Connection ID or connection instance of the custom connector to use. This is the ID that was entered when registering the custom connector and will indicate for which custom connector the external items will be returned from the Microsoft Search index.
 
 ```yaml
 Type: SearchExternalConnectionPipeBind
-Parameter Sets: (All)
-Required: True
-Default value: None
-Accept pipeline input: True
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: ''
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Identity
+
+Unique identifier of the external item in Microsoft Search. You can provide any identifier you want to retrieve or check for a specific item in the index. If you omit it, all external items for the specified connector will be returned.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Verbose
+
 When provided, additional debug statements will be shown while executing the cmdlet.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://learn.microsoft.com/graph/search-concept-custom-types#example-1-retrieve-items-using-azure-sql-built-in-connector)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft Graph documentation](https://learn.microsoft.com/graph/search-concept-custom-types#example-1-retrieve-items-using-azure-sql-built-in-connector)

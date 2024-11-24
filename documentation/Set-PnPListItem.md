@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPListItem
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPListItem.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPListItem.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPListItem
 ---
- 
+
 # Set-PnPListItem
 
 ## SYNOPSIS
@@ -21,17 +22,23 @@ Updates a list item.
 
 ### Single
 
-```powershell
-Set-PnPListItem [-List <ListPipeBind>] -Identity <ListItemPipeBind> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Label <String>] [-ClearLabel] [-Force] [-Connection <PnPConnection>] 
+```
+Set-PnPListItem -Identity <ListItemPipeBind> [-List <ListPipeBind>]
+ [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>] [-UpdateType <UpdateType>]
+ [-Label <String>] [-ClearLabel] [-Force] [-Connection <PnPConnection>]
 ```
 
 ### Batched
 
-```powershell
-Set-PnPListItem [-List <ListPipeBind>] -Identity <ListItemPipeBind> -Batch <PnPBatch> [-ContentType <ContentTypePipeBind>]
- [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Force] [-Connection <PnPConnection>]
 ```
+Set-PnPListItem -Identity <ListItemPipeBind> -Batch <PnPBatch> [-List <ListPipeBind>]
+ [-ContentType <ContentTypePipeBind>] [-Values <Hashtable>] [-UpdateType <UpdateType>] [-Force]
+ [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -100,12 +107,42 @@ Optional batch object used to add items in a batched manner. See examples on how
 
 ```yaml
 Type: PnPBatch
-Parameter Sets: Batched
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Batched
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -ClearLabel
+
+Clears the retention label of the item.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Single
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Connection
@@ -114,13 +151,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ContentType
@@ -129,13 +173,42 @@ Specify either the name, ID or an actual content type.
 
 ```yaml
 Type: ContentTypePipeBind
-Parameter Sets: (All)
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Force
+
+Forces update of the list item even if there are no value changes. This can be useful for triggering webhooks, event receivers, Flows, etc.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
@@ -144,13 +217,20 @@ The ID of the listitem, or actual ListItem object.
 
 ```yaml
 Type: ListItemPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Label
@@ -159,13 +239,20 @@ The name of the retention label.
 
 ```yaml
 Type: String
-Parameter Sets: Single
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Single
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -List
@@ -174,13 +261,20 @@ The ID, Title or Url of the list.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -UpdateType
@@ -193,28 +287,20 @@ Specifies the update type to use when updating the listitem. Possible values are
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ClearLabel
-
-Clears the retention label of the item.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Single
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Values
@@ -263,30 +349,28 @@ Hyperlink or Picture: ``` -Values @{"HyperlinkField" = "https://pnp.github.com/p
 
 ```yaml
 Type: Hashtable
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -Force
+## INPUTS
 
-Forces update of the list item even if there are no value changes. This can be useful for triggering webhooks, event receivers, Flows, etc.
+## OUTPUTS
 
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

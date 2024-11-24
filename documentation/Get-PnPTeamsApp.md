@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPTeamsApp
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsApp.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsApp.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPTeamsApp
 ---
- 
+
 # Get-PnPTeamsApp
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Gets one Microsoft Teams App or a list of all apps.
 
 ## SYNTAX
 
-```powershell
-Get-PnPTeamsApp [-Identity <TeamsAppPipeBind>]  
+### Default (Default)
+
 ```
+Get-PnPTeamsApp [-Identity <TeamsAppPipeBind>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +37,7 @@ Allows to retrieve Microsoft Teams apps. By using `Identity` option it is possib
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPTeamsApp
 ```
@@ -37,6 +45,7 @@ Get-PnPTeamsApp
 Retrieves all the Microsoft Teams Apps
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPTeamsApp -Identity a54224d7-608b-4839-bf74-1b68148e65d4
 ```
@@ -44,6 +53,7 @@ Get-PnPTeamsApp -Identity a54224d7-608b-4839-bf74-1b68148e65d4
 Retrieves a specific Microsoft Teams App
 
 ### EXAMPLE 3
+
 ```powershell
 Get-PnPTeamsApp -Identity "MyTeamsApp"
 ```
@@ -53,20 +63,33 @@ Retrieves a specific Microsoft Teams App
 ## PARAMETERS
 
 ### -Identity
+
 Specify the name, id or external id of the app.
 
 ```yaml
 Type: TeamsAppPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

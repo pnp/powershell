@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPTenantCdnPolicy
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTenantCdnPolicy.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPTenantCdnPolicy.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPTenantCdnPolicy
 ---
- 
+
 # Set-PnPTenantCdnPolicy
 
 ## SYNOPSIS
@@ -19,17 +20,25 @@ Sets the CDN Policies for the specified CDN (Public | Private).
 
 ## SYNTAX
 
-```powershell
-Set-PnPTenantCdnPolicy -CdnType <SPOTenantCdnType> -PolicyType <SPOTenantCdnPolicyType> -PolicyValue <String>
- [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Set-PnPTenantCdnPolicy -CdnType <SPOTenantCdnType> -PolicyType <SPOTenantCdnPolicyType>
+ -PolicyValue <String> [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Sets the CDN Policies for the specified CDN (Public | Private).
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Set-PnPTenantCdnPolicy -CdnType Public -PolicyType IncludeFileExtensions -PolicyValue "CSS,EOT,GIF,ICO,JPEG,JPG,JS,MAP,PNG,SVG,TTF,WOFF"
 ```
@@ -37,6 +46,7 @@ Set-PnPTenantCdnPolicy -CdnType Public -PolicyType IncludeFileExtensions -Policy
 This example sets the IncludeFileExtensions policy to the specified value.
 
 ### EXAMPLE 2
+
 ```powershell
 Set-PnPTenantCdnPolicy -CdnType Public -PolicyType ExcludeRestrictedSiteClassifications -PolicyValue "Confidential,Restricted"
 ```
@@ -46,64 +56,104 @@ This example sets the ExcludeRestrictedSiteClassifications policy for the select
 ## PARAMETERS
 
 ### -CdnType
+
 The type of cdn to set the policies for.
 
 ```yaml
 Type: SPOTenantCdnType
-Parameter Sets: (All)
-Accepted values: Public, Private
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues:
+- Public
+- Private
+HelpMessage: ''
 ```
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PolicyType
+
 The type of the policy to set.
 
 ```yaml
 Type: SPOTenantCdnPolicyType
-Parameter Sets: (All)
-Accepted values: IncludeFileExtensions, ExcludeRestrictedSiteClassifications, ExcludeIfNoScriptDisabled
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues:
+- IncludeFileExtensions
+- ExcludeRestrictedSiteClassifications
+- ExcludeIfNoScriptDisabled
+HelpMessage: ''
 ```
 
 ### -PolicyValue
+
 The value of the policy to set.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

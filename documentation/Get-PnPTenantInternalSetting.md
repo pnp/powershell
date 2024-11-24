@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPTenantInternalSetting
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInternalSetting.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInternalSetting.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPTenantInternalSetting
 ---
- 
+
 # Get-PnPTenantInternalSetting
 
 ## SYNOPSIS
@@ -19,11 +20,18 @@ Returns additional organizational level site collection properties available fro
 
 ## SYNTAX
 
-```powershell
-Get-PnPTenantInternalSetting [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Get-PnPTenantInternalSetting [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Returns organizational level site collection properties such as `SitePagesEnabled`, `DisableSelfServiceSiteCreation`, `EnableAutoNewsDigest`,
 `CustomFormUrl`, `AutoQuotaEnabled`, `DisableGroupify`, `IncludeAtAGlanceInShareEmails`, `MailFromAddress`, `MobileNotificationIsEnabledForSharepoint`, `NewSiteManagedPath`, `NewSubsiteInModernOffForAll`, `NewSubsiteInModernOffForModernTemplates`, `NewTeamSiteManagedPath`, `ParentSiteUrl`, `PolicyOption`, `RequireSecondaryContact`, `ShowSelfServiceSiteCreation`, `SiteCreationNewUX`, `SmtpServer`, `SPListModernUXOff`, `TenantDefaultTimeZoneId` and `AvailableManagedPathsForSiteCreation`.
 
@@ -34,6 +42,7 @@ You must have the SharePoint Online admin or Global admin role to run the cmdlet
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPTenantInternalSetting
 ```
@@ -43,19 +52,33 @@ This example returns internal tenant settings.
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

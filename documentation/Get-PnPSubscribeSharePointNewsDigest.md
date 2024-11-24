@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPSubscribeSharePointNewsDigest
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSubscribeSharePointNewsDigest.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPSubscribeSharePointNewsDigest.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPSubscribeSharePointNewsDigest
 ---
- 
+
 # Get-PnPSubscribeSharePointNewsDigest
 
 ## SYNOPSIS
@@ -23,11 +24,18 @@ Note: The implementation behind this in SharePoint Online has changed causing th
 
 ## SYNTAX
 
-```powershell
-Get-PnPSubscribeSharePointNewsDigest -Account <String> [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Get-PnPSubscribeSharePointNewsDigest -Account <String> [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Requires a connection to a SharePoint Tenant Admin site.
 
 Retrieves if the SharePoint News Digest mails are enabled or disabled for a particular user.
@@ -35,6 +43,7 @@ Retrieves if the SharePoint News Digest mails are enabled or disabled for a part
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPSubscribeSharePointNewsDigest -Account 'user@domain.com'
 ```
@@ -44,34 +53,55 @@ Returns if this user will receive the SharePoint News digest mails
 ## PARAMETERS
 
 ### -Account
+
 The account of the user, formatted either as a login name, e.g. user@domain.com, or as a claims identity, e.g. i:0#.f|membership|user@domain.com
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

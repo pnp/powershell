@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPTeamsTeamPicture
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamsTeamPicture.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPTeamsTeamPicture.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPTeamsTeamPicture
 ---
- 
+
 # Set-PnPTeamsTeamPicture
 
 ## SYNOPSIS
@@ -19,16 +20,24 @@ Sets the picture of an existing team.
 
 ## SYNTAX
 
-```powershell
-Set-PnPTeamsTeamPicture -Team <TeamsTeamPipeBind> -Path <String>  [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Set-PnPTeamsTeamPicture -Team <TeamsTeamPipeBind> -Path <String> [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Notice that this cmdlet will immediately return but it can take a few hours before the changes are reflected in Microsoft Teams.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Set-PnPTeamsTeamPicture -Team "MyTeam" -Path "c:\myimage.jpg"
 ```
@@ -37,47 +46,77 @@ Updates a picture for the team called 'MyTeam' with the available at "c:\myimage
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Path
+
 The path to the image file.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Team
+
 Specify the group id, mailNickname or display name of the team to use.
 
 ```yaml
 Type: TeamsTeamPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

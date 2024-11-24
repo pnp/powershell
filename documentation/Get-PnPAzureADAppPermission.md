@@ -1,9 +1,10 @@
 ---
-external help file: PnP.PowerShell.dll-Help.xml
-Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADAppPermission.html
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
+external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADAppPermission.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPAzureADAppPermission
 ---
 
@@ -19,16 +20,24 @@ Returns app permissions for Microsoft SharePoint and Microsoft Graph.
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Get-PnPAzureADAppPermission [-Identity <AzureADAppPipeBind>] [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 This cmdlet returns the appid, displayname and permissions set for Microsoft SharePoint and the Microsoft Graph APIs.
 
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
 Get-PnPAzureADAppPermission
 ```
@@ -36,6 +45,7 @@ Get-PnPAzureADAppPermission
 Returns all apps with all permissions.
 
 ### Example 2
+
 ```powershell
 Get-PnPAzureADAppPermission -Identity MyApp
 ```
@@ -43,6 +53,7 @@ Get-PnPAzureADAppPermission -Identity MyApp
 Returns permissions for the specified app.
 
 ### Example 2
+
 ```powershell
 Get-PnPAzureADAppPermission -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
 ```
@@ -51,35 +62,56 @@ Returns permissions for the specified app.
 
 ## PARAMETERS
 
-### -Identity
-Specify the display name, id or app id.
-
-```yaml
-Type: AzureADAppPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Identity
+
+Specify the display name, id or app id.
+
+```yaml
+Type: AzureADAppPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

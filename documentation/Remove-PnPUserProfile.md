@@ -1,15 +1,17 @@
 ---
-Module Name: PnP.PowerShell
-title: Remove-PnPUserProfile
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPUserProfile.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Remove-PnPUserProfile.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Remove-PnPUserProfile
 ---
- 
+
 # Remove-PnPUserProfile
 
 ## SYNOPSIS
+
 Removes a SharePoint User Profile from the tenant.
 
 **Required Permissions**
@@ -18,9 +20,15 @@ Removes a SharePoint User Profile from the tenant.
 
 ## SYNTAX
 
-```powershell
-Remove-PnPUserProfile -LoginName <String> 
+### Default (Default)
+
 ```
+Remove-PnPUserProfile -LoginName <String>
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -32,8 +40,9 @@ Removes SharePoint User Profile data from the tenant.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
-Remove-PnPUserProfile -LoginName user@domain.com 
+Remove-PnPUserProfile -LoginName user@domain.com
 ```
 
 This removes user profile data with the email address user@domain.com.
@@ -41,20 +50,33 @@ This removes user profile data with the email address user@domain.com.
 ## PARAMETERS
 
 ### -LoginName
+
 Specifies the login name of the user to remove.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

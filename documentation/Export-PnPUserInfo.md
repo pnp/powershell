@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Export-PnPUserInfo.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Export-PnPUserInfo.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Export-PnPUserInfo
 ---
-  
+
 # Export-PnPUserInfo
 
 ## SYNOPSIS
@@ -19,18 +20,24 @@ Export user information from site user information list.
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Export-PnPUserInfo -LoginName <String> [-Site <String>]
 ```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
 Export user information from the site user information list. If the Site parameter has not been specified, the current connect to site will be used.
 
-
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Export-PnPUserInfo -LoginName user@domain.com -Site "https://yoursite.sharepoint.com/sites/team"
 ```
@@ -38,6 +45,7 @@ Export-PnPUserInfo -LoginName user@domain.com -Site "https://yoursite.sharepoint
 This exports user data with the email address user@domain.com from the site collection specified.
 
 ### EXAMPLE 2
+
 ```powershell
 Export-PnPUserInfo -LoginName user@domain.com -Site "https://yoursite.sharepoint.com/sites/team" | ConvertTo-Csv | Out-File MyFile.csv
 ```
@@ -47,35 +55,55 @@ This exports user data with the email address user@domain.com from the site coll
 ## PARAMETERS
 
 ### -LoginName
+
 Specifies the login name of the user to export.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Site
+
 Specifies the URL of the site collection to which you want to export the user.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

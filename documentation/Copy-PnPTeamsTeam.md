@@ -1,24 +1,32 @@
 ---
-Module Name: PnP.PowerShell
-title: Copy-PnPTeamsTeam
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Copy-PnPTeamsTeam.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Copy-PnPTeamsTeam.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Copy-PnPTeamsTeam
 ---
- 
+
 # Copy-PnPTeamsTeam
 
 ## SYNOPSIS
+
 Creates a copy of a Microsoft Teams team
 
 ## SYNTAX
 
 ### Clone a team
 
-```powershell
-Copy-PnPTeamsTeam -DisplayName <String> -Identity <TeamsTeamPipeBind> [-PartsToClone <ClonableTeamParts[]>] [-Description <String>] [-Visibility <TeamVisibility>] [-Classification <String>] [-Verbose] [-Connection <PnPConnection>]
 ```
+Copy-PnPTeamsTeam -DisplayName <String> -Identity <TeamsTeamPipeBind>
+ [-PartsToClone <ClonableTeamParts[]>] [-Description <String>] [-Visibility <TeamVisibility>]
+ [-Classification <String>] [-Verbose] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -37,10 +45,11 @@ When tabs are cloned, they are put into an un configured state -- they are displ
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Copy-PnPTeamsTeam -Identity ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e -DisplayName "Library Assist" -PartsToClone apps,tabs,settings,channels,members
 ```
-Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team ID ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e with the apps,tabs,settings,channels and members 
+Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft Teams team ID ee0f40fc-b2f7-45c7-b62d-11b90dd2ea8e with the apps,tabs,settings,channels and members
 
 ### EXAMPLE 2
 
@@ -65,89 +74,144 @@ Creates a clone of a Microsoft Teams team named "Library Assist" from Microsoft 
 
 ## PARAMETERS
 
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-### -Identity
-Specify the group id, mailNickname or display name of the team to use.
-
-```yaml
-Type: TeamsTeamPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DisplayName
-The display name for the group. This property is required when a group is created and it cannot be cleared during updates. Supports $filter and $orderby.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -PartsToClone
-A comma-separated list of the parts to clone. Allowed values are apps,channels,members,settings,tabs. When not provided, all available parts will be cloned.
-
-```yaml
-Type: ClonableTeamParts
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: apps,channels,members,settings,tabs
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Visibility
-Specifies the visibility of the group. Possible values are: Private, Public. If visibility is not specified, the visibility will be copied from the original team/group. If the team being cloned is an educationClass team, the visibility parameter is ignored, and the new group's visibility will be set to HiddenMembership.
-
-```yaml
-Type: teamVisibilityType
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Classification
+
 Describes a classification for the group (such as low, medium or high business impact). If classification is not specified, the classification will be copied from the original team/group.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Connection
+
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -DisplayName
+
+The display name for the group. This property is required when a group is created and it cannot be cleared during updates. Supports $filter and $orderby.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Identity
+
+Specify the group id, mailNickname or display name of the team to use.
+
+```yaml
+Type: TeamsTeamPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -PartsToClone
+
+A comma-separated list of the parts to clone. Allowed values are apps,channels,members,settings,tabs. When not provided, all available parts will be cloned.
+
+```yaml
+Type: ClonableTeamParts
+DefaultValue: apps,channels,members,settings,tabs
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Visibility
+
+Specifies the visibility of the group. Possible values are: Private, Public. If visibility is not specified, the visibility will be copied from the original team/group. If the team being cloned is an educationClass team, the visibility parameter is ignored, and the new group's visibility will be set to HiddenMembership.
+
+```yaml
+Type: teamVisibilityType
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

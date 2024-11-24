@@ -1,29 +1,39 @@
 ---
-Module Name: PnP.PowerShell
-title: Remove-PnPManagedAppId
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPManagedAppId.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Remove-PnPManagedAppId.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Remove-PnPManagedAppId
 ---
- 
+
 # Remove-PnPManagedAppId
 
 ## SYNOPSIS
+
 Removes an App Id from the Credential Manager
 
 ## SYNTAX
 
-```powershell
-Remove-PnPManagedAppId -Url <String> [-Force] 
+### Default (Default)
+
+```
+Remove-PnPManagedAppId -Url <String> [-Force]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Removes an App Id from the Credential Manager
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Remove-PnPManagedAppId -Url "https://tenant.sharepoint.com"
 ```
@@ -33,34 +43,55 @@ Removes the specified App Id from the Credential Manager
 ## PARAMETERS
 
 ### -Force
+
 If specified you will not be asked for confirmation
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Url
+
 The Url for which to remove the App Id
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

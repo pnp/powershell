@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Disable-PnPFlow.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Disable-PnPFlow.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Disable-PnPFlow
 ---
-  
+
 # Disable-PnPFlow
 
 ## SYNOPSIS
@@ -19,16 +20,25 @@ Disables a specific flow
 
 ## SYNTAX
 
-```powershell
-Disable-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] -Identity <PowerAutomateFlowPipeBind> [-AsAdmin] [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Disable-PnPFlow -Identity <PowerAutomateFlowPipeBind>
+ [-Environment <PowerAutomateEnvironmentPipeBind>] [-AsAdmin] [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 This cmdlet disables a specific flow
 
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
 Disable-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
@@ -36,6 +46,7 @@ Disable-PnPFlow -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 Disables the specified flow in the default environment
 
 ### Example 2
+
 ```powershell
 Disable-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity fba63225-baf9-4d76-86a1-1b42c917a182
 ```
@@ -45,69 +56,100 @@ Disables the specified flow in the specified environment
 ## PARAMETERS
 
 ### -AsAdmin
+
 Disable the flow as an administrator.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Connection
+
 Optional connection to be used by the cmdlet.
 Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Environment
+
 The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
 Type: PowerPlatformEnvironmentPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: The default environment
-Accept pipeline input: True
-Accept wildcard characters: False
+DefaultValue: The default environment
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
+
 Identity of the flow to disable.
 
 ```yaml
 Type: PowerAutomateFlowPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

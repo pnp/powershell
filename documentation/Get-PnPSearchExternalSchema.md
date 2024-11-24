@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchExternalSchema.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchExternalSchema.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPSearchExternalSchema
 ---
-  
+
 # Get-PnPSearchExternalSchema
 
 ## SYNOPSIS
@@ -19,9 +20,16 @@ Retrieves the schema set on a connection to an external datasource belonging to 
 
 ## SYNTAX
 
-```powershell
-Get-PnPSearchExternalSchema -ConnectionId <SearchExternalConnectionPipeBind> [-Verbose] [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Get-PnPSearchExternalSchema -ConnectionId <SearchExternalConnectionPipeBind> [-Verbose]
+ [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +38,7 @@ This cmdlet can be used to retrieve the current schema set on a connection to an
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPSearchExternalSchema -ConnectionId "pnppowershell"
 ```
@@ -39,45 +48,77 @@ This will return the current schema being used on the external Microsoft Search 
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing [Get-PnPConnection](Get-PnPConnection.md).
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ConnectionId
+
 Unique identifier or instance of the external connection in Microsoft Search to retrieve the schema for
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Verbose
+
 When provided, additional debug statements will be shown while executing the cmdlet.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

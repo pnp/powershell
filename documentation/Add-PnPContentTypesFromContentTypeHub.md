@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPContentTypesFromContentTypeHub.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Add-PnPContentTypesFromContentTypeHub.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Add-PnPContentTypesFromContentTypeHub
 ---
-  
+
 # Add-PnPContentTypesFromContentTypeHub
 
 ## SYNOPSIS
@@ -19,9 +20,16 @@ Adds published content types from content type hub site to current site. If the 
 
 ## SYNTAX
 
-```powershell
-Add-PnPContentTypesFromContentTypeHub -ContentTypes List<String> [-Site <SitePipeBind>] [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Add-PnPContentTypesFromContentTypeHub -ContentTypes [-Site <SitePipeBind>]
+ [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +38,7 @@ Allows to add content types from content type hub site to current site. In case 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
  Add-PnPContentTypesFromContentTypeHub -ContentTypes "0x0101", "0x01"
 ```
@@ -40,6 +49,7 @@ This will add the content types with the ids '0x0101' and '0x01' to the current 
   - `Enable-PnPFeature -Identity 73ef14b1-13a9-416b-a9b5-ececa2b0604c -Scope Site -Force`
 
 ### EXAMPLE 2
+
 ```powershell
  Add-PnPContentTypesFromContentTypeHub -ContentTypes "0x010057C83E557396744783531D80144BD08D" -Site https://tenant.sharepoint.com/sites/HR
 ```
@@ -49,47 +59,77 @@ This will add the content type with the id '0x010057C83E557396744783531D80144BD0
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ContentTypes
+
 The list of content type ids present in content type hub site that are required to be added/synced to the current site.
 
 ```yaml
 Type: List<String>
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Site
+
 The site to which to add the content types coming from the hub. If omitted, it will be applied to the currently connected site.
 
 ```yaml
 Type: SitePipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: Currently connected site
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: Currently connected site
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

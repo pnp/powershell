@@ -189,8 +189,10 @@ if ($runPublish -eq $true) {
 
 	Write-Host "Generating Documentation" -ForegroundColor Yellow
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
-	Install-Module PlatyPS -ErrorAction Stop
-	New-ExternalHelp -Path ./documentation -OutputPath $destinationFolder -Force
+	Install-Module -Name Microsoft.PowerShell.PlatyPS -AllowPrerelease -ErrorAction Stop
+	$mdFiles = Measure-PlatyPSMarkdown -Path ./documentation/*.md
+	$commandHelp = $mdFiles | Where-Object { $_.FileType -match 'CommandHelp'} | Import-MarkdownCommandHelp -Path {$_.FilePath}
+	Export-MamlCommandHelp -CommandHelp $commandHelp -OutputFolder $destinationFolder -Force
 
 	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 

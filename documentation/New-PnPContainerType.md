@@ -1,10 +1,11 @@
 ---
-Module Name: PnP.PowerShell
-title: New-PnPContainerType
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPContainerType.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/New-PnPContainerType.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: New-PnPContainerType
 ---
 
 # New-PnPContainerType
@@ -21,15 +22,21 @@ Create a Container Type for a SharePoint Embedded Application. Refer to [Hands o
 
 ### Trial
 
-```powershell
-New-PnPContainerType -ContainerTypeName <string> -OwningApplicationId <Guid> -TrialContainerType [-Verbose]
+```
+New-PnPContainerType -ContainerTypeName <string> -OwningApplicationId <Guid> -TrialContainerType
+ [-Verbose]
 ```
 
 ### Standard
 
-```powershell
-New-PnPContainerType -ContainerTypeName <string> -OwningApplicationId <Guid> -Region <String> -AzureSubscriptionId <Guid> -ResourceGroup <String> [-Verbose]
 ```
+New-PnPContainerType -ContainerTypeName <string> -OwningApplicationId <Guid> -Region <String>
+ -AzureSubscriptionId <Guid> -ResourceGroup <String> [-Verbose]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -53,53 +60,7 @@ New-SPOContainerType -TrialContainerType -ContainerTypeName "test1" -OwningAppli
 
 Creates a trial SharePoint Container Type.
 
-
 ## PARAMETERS
-
-### ContainerTypeName
-
-The name of the Container Type.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### OwningApplicationId
-
-The unique identifier of the owning application which is the value of the Microsoft Entra ID app ID set up as part of configuring SharePoint Embed.
-
-```yaml
-Type: Guid
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -TrialContainerType
-
-The billing classification of the Container Type.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -AzureSubscriptionId
 
@@ -107,13 +68,64 @@ The unique identifier of the Azure Active Directory profile (Microsoft Entra ID)
 
 ```yaml
 Type: Guid
-Parameter Sets: Standard
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Standard
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -ContainerTypeName
+
+The name of the Container Type.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -OwningApplicationId
+
+The unique identifier of the owning application which is the value of the Microsoft Entra ID app ID set up as part of configuring SharePoint Embed.
+
+```yaml
+Type: Guid
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Region
@@ -122,13 +134,20 @@ The region of the Container Type.
 
 ```yaml
 Type: String
-Parameter Sets: Standard
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Standard
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ResourceGroup
@@ -137,16 +156,51 @@ The resource group of the Container Type.
 
 ```yaml
 Type: String
-Parameter Sets: Standard
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Standard
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -TrialContainerType
+
+The billing classification of the Container Type.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[SharePoint Online Embedded Container Types](https://learn.microsoft.com/sharepoint/dev/embedded/concepts/app-concepts/containertypes)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [SharePoint Online Embedded Container Types](https://learn.microsoft.com/sharepoint/dev/embedded/concepts/app-concepts/containertypes)

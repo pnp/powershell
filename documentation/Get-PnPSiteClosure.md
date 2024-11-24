@@ -1,22 +1,30 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPSiteClosure
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteClosure.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteClosure.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPSiteClosure
 ---
- 
+
 # Get-PnPSiteClosure
 
 ## SYNOPSIS
+
 Get the site closure status of the site which has a site policy applied
 
 ## SYNTAX
 
-```powershell
-Get-PnPSiteClosure [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Get-PnPSiteClosure [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -25,6 +33,7 @@ Allows to retrieve current site closure status of the site which has a site poli
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPSiteClosure
 ```
@@ -34,22 +43,33 @@ Get the site closure status of the site.
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
+## INPUTS
 
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

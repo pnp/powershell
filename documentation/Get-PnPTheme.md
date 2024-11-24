@@ -1,23 +1,30 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPTheme
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTheme.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPTheme.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPTheme
 ---
- 
+
 # Get-PnPTheme
 
 ## SYNOPSIS
+
 Returns the current theme/composed look of the current web.
 
 ## SYNTAX
 
-```powershell
-Get-PnPTheme [-DetectCurrentComposedLook] [-Connection <PnPConnection>]
- 
+### Default (Default)
+
 ```
+Get-PnPTheme [-DetectCurrentComposedLook] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -26,6 +33,7 @@ Allows to retrieve current theme/composed look of the current web.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPTheme
 ```
@@ -33,6 +41,7 @@ Get-PnPTheme
 Returns the current composed look of the current web.
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPTheme -DetectCurrentComposedLook
 ```
@@ -42,36 +51,55 @@ Returns the current composed look of the current web, and will try to detect the
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -DetectCurrentComposedLook
+
 Specify this switch to not use the PnP Provisioning engine based composed look information but try to detect the current composed look as is.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
+## INPUTS
 
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

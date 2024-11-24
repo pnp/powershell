@@ -1,30 +1,39 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPInPlaceRecordsManagement
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPInPlaceRecordsManagement.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPInPlaceRecordsManagement.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPInPlaceRecordsManagement
 ---
- 
+
 # Set-PnPInPlaceRecordsManagement
 
 ## SYNOPSIS
+
 Activates or deactivates in place records management feature.
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Set-PnPInPlaceRecordsManagement -Enabled <Boolean> [-Connection <PnPConnection>]
- 
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Activates or deactivates in place records management feature in the site collection.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Set-PnPInPlaceRecordsManagement -Enabled $true
 ```
@@ -32,6 +41,7 @@ Set-PnPInPlaceRecordsManagement -Enabled $true
 Activates in place records management.
 
 ### EXAMPLE 2
+
 ```powershell
 Set-PnPInPlaceRecordsManagement -Enabled $false
 ```
@@ -40,33 +50,56 @@ Deactivates in place records management.
 
 ## PARAMETERS
 
-### -Enabled
-Specifies whether in place records management should be enabled.
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Enabled
+
+
+
+```yaml
+Type: Boolean
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

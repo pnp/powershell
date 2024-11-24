@@ -1,41 +1,51 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Convert-PnPFile.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Convert-PnPFile.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Convert-PnPFile
 ---
-  
+
 # Convert-PnPFile
 
 ## SYNOPSIS
+
 Converts a file to another format
 
 ## SYNTAX
 
-
 ### Save to local path
-```powershell
+
+```
 Convert-PnPFile -Url <String> -Path <String> [-Force]
 ```
 
 ### Return as memorystream
-```powershell
+
+```
 Convert-PnPFile -Url <String> -AsMemoryStream
 ```
 
 ### Save to SharePoint Online (Same SiteCollection)
-```powershell
-Convert-PnPFile -Url <String> -Folder <String> 
+
+```
+Convert-PnPFile -Url <String> -Folder <String>
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Allows converting of a file from SharePoint Online. The file contents can either be directly saved to local disk, or stored in memory for further processing, or Can be uploaded back to SharePoint Online SiteCollection
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Convert-PnPFile -Url "/sites/demo/Shared Documents/Document.docx" -AsMemoryStream
 ```
@@ -43,6 +53,7 @@ Convert-PnPFile -Url "/sites/demo/Shared Documents/Document.docx" -AsMemoryStrea
 Retrieves the file and converts to PDF, and outputs its content to the console as a Memory Stream
 
 ### EXAMPLE 2
+
 ```powershell
 Convert-PnPFile -Url "/sites/demo/Shared Documents/Document.docx"
 ```
@@ -50,6 +61,7 @@ Convert-PnPFile -Url "/sites/demo/Shared Documents/Document.docx"
 Retrieves the file and converts to PDF, and outputs its content to the console as a Memory Stream
 
 ### EXAMPLE 3
+
 ```powershell
 Convert-PnPFile -Url "/sites/demo/Shared Documents/Document.docx" -Path "C:\Temp"
 ```
@@ -57,6 +69,7 @@ Convert-PnPFile -Url "/sites/demo/Shared Documents/Document.docx" -Path "C:\Temp
 Retrieves the file and converts to PDF, and save it to the given local path
 
 ### EXAMPLE 4
+
 ```powershell
 Convert-PnPFile -Url "/sites/demo/Shared Documents/Document.docx" -Path "C:\Temp" -Force
 ```
@@ -64,6 +77,7 @@ Convert-PnPFile -Url "/sites/demo/Shared Documents/Document.docx" -Path "C:\Temp
 Retrieves the file and converts to PDF, and save it to the given local path. Force parameter will override the existing file in the location where the document gets saved.
 
 ### EXAMPLE 5
+
 ```powershell
 Convert-PnPFile -Url "/sites/demo/Shared Documents/Test/Book.xlsx" -Folder "/sites/demo/Shared Documents/Archive"
 ```
@@ -71,6 +85,7 @@ Convert-PnPFile -Url "/sites/demo/Shared Documents/Test/Book.xlsx" -Folder "/sit
 Retrieves the file and converts to PDF, and save it to the given Document library (Folder) in SharePoint Online (same site collection)
 
 ### EXAMPLE 6
+
 ```powershell
 Convert-PnPFile -Url "/sites/demo/Shared Documents/Test/Book.png" -ConvertToFormat Jpg  -Folder "/sites/demo/Shared Documents/Archive"
 ```
@@ -79,22 +94,30 @@ Retrieves the file and converts to JPG, and save it to the given Document librar
 
 ## PARAMETERS
 
-### -Url
-The URL (server or site relative) to the file
+### -AsMemoryStream
+
+
 
 ```yaml
-Type: String
-Parameter Sets: (All)
-Aliases: ServerRelativeUrl, SiteRelativeUrl
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Return as memorystream
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ConvertToFormat
+
 The format to which you want the file to be converted. Default is PDF.
 
 The following values are valid transformation targets and their supported source extensions:
@@ -108,75 +131,126 @@ The following values are valid transformation targets and their supported source
 
 For more information, check [this link](https://pnp.github.io/pnpcore/using-the-sdk/files-intro.html#converting-files).
 
-
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: Pdf
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
-### -AsMemoryStream
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Return as memorystream
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Path
-Local path where the file should be saved
-
-```yaml
-Type: String
-Parameter Sets: Save to local path
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-
-### -Force
-Overwrites the file if it exists.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: Save to local path, Upload to SharePoint
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: Pdf
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Folder
+
 The destination library in the site
 
 ```yaml
 Type: FolderPipeBind
-Parameter Sets: (UPLOADTOSHAREPOINT)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (UPLOADTOSHAREPOINT)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Force
+
+Overwrites the file if it exists.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Save to local path
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+- Name: Upload to SharePoint
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Path
+
+Local path where the file should be saved
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Save to local path
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Url
+
+The URL (server or site relative) to the file
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases:
+- ServerRelativeUrl
+- SiteRelativeUrl
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

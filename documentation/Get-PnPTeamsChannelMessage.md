@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPTeamsChannelMessage
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelMessage.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPTeamsChannelMessage.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPTeamsChannelMessage
 ---
- 
+
 # Get-PnPTeamsChannelMessage
 
 ## SYNOPSIS
@@ -19,10 +20,16 @@ Returns messages from the specified Microsoft Teams Channel.
 
 ## SYNTAX
 
-```powershell
-Get-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind> [-Identity <TeamsChannelMessagePipeBind>] [-IncludeDeleted]
-  
+### Default (Default)
+
 ```
+Get-PnPTeamsChannelMessage -Team <TeamsTeamPipeBind> -Channel <TeamsChannelPipeBind>
+ [-Identity <TeamsChannelMessagePipeBind>] [-IncludeDeleted]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -31,6 +38,7 @@ Allows to retrieve messages from the specified channel.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPTeamsChannelMessage -Team MyTestTeam -Channel "My Channel"
 ```
@@ -47,62 +55,100 @@ Gets a specific message of the specified channel
 
 ## PARAMETERS
 
-### -Team
-Specify the group id, mailNickname or display name of the team to use.
-
-```yaml
-Type: TeamsTeamPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Channel
+
 Specify id or name of the channel to use.
 
 ```yaml
 Type: TeamsChannelPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
+
 Specify the id of the message to use.
 
 ```yaml
 Type: TeamsChannelMessagePipeBind
-Parameter Sets: (All)
-Required: False
-
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -IncludeDeleted
+
 Specify to include deleted messages.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Team
+
+Specify the group id, mailNickname or display name of the team to use.
+
+```yaml
+Type: TeamsTeamPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPSiteFileVersionBatchDeleteJob.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Remove-PnPSiteFileVersionBatchDeleteJob.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Remove-PnPSiteFileVersionBatchDeleteJob
 ---
-  
+
 # Remove-PnPSiteFileVersionBatchDeleteJob
 
 ## SYNOPSIS
@@ -15,9 +16,15 @@ Cancels further processing of a file version batch trim job for a site collectio
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Remove-PnPSiteFileVersionBatchDeleteJob [-Force]
 ```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -26,6 +33,7 @@ Cancels further processing of a file version batch trim job for a site collectio
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Remove-PnPSiteFileVersionBatchDeleteJob
 ```
@@ -33,6 +41,7 @@ Remove-PnPSiteFileVersionBatchDeleteJob
 Cancels further processing of the file version batch trim job for the site collection.
 
 ### EXAMPLE 2
+
 ```powershell
 Remove-PnPSiteFileVersionBatchDeleteJob -Force
 ```
@@ -42,19 +51,33 @@ Cancels further processing of the file version batch trim job for the site colle
 ## PARAMETERS
 
 ### -Force
+
 When provided, no confirmation prompts will be shown to the user.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

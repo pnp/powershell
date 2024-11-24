@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPMessageCenterAnnouncementAsRead
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMessageCenterAnnouncementAsRead.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPMessageCenterAnnouncementAsRead.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPMessageCenterAnnouncementAsRead
 ---
- 
+
 # Set-PnPMessageCenterAnnouncementAsRead
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Marks one or multiple message center announcements of the Office 365 Services as
 
 ## SYNTAX
 
-```powershell
-Set-PnPMessageCenterAnnouncementAsRead [-Identity <Ids>] [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Set-PnPMessageCenterAnnouncementAsRead [-Identity <Ids>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +37,7 @@ Allows to mark message center announcements as read.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Set-PnPMessageCenterAnnouncementAsRead -Identity "MC123456"
 ```
@@ -37,6 +45,7 @@ Set-PnPMessageCenterAnnouncementAsRead -Identity "MC123456"
 Marks message center announcement MC123456 as read for the current user.
 
 ### EXAMPLE 2
+
 ```powershell
 Set-PnPMessageCenterAnnouncementAsRead -Identity "MC123456", "MC234567"
 ```
@@ -44,6 +53,7 @@ Set-PnPMessageCenterAnnouncementAsRead -Identity "MC123456", "MC234567"
 Marks message center announcements MC123456 and MC234567 as read for the current user.
 
 ### EXAMPLE 3
+
 ```powershell
 Set-PnPMessageCenterAnnouncementAsRead
 ```
@@ -53,32 +63,55 @@ Marks all message center announcements as read for the current user.
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
-Marks the message center announcement or announcements with the provided Ids as read.
+
+
+
 ```yaml
 Type: String[]
-Parameter Sets: None
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: None
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

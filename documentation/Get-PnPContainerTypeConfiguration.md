@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPContainerTypeConfiguration.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPContainerTypeConfiguration.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPContainerTypeConfiguration
 ---
-  
+
 # Get-PnPContainerTypeConfiguration
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Returns container type configuration of a SharePoint repository services applica
 
 ## SYNTAX
 
-```powershell
-Get-PnPContainerTypeConfiguration [-Identity <GUID>] [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Get-PnPContainerTypeConfiguration [-Identity <GUID>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -34,6 +41,15 @@ Get-PnPContainerTypeConfiguration -Identity a187e399-0c36-4b98-8f04-1edc167a0996
 
 Returns a container type configuration data of the application created under the specified SharePoint repository services application.
 
+## EXAMPLES
+
+### EXAMPLE 1
+
+```powershell
+Get-PnPContainerTypeConfiguration -Identity a187e399-0c36-4b98-8f04-1edc167a0996
+```
+
+Returns a container type configuration data of the application created under the specified SharePoint repository services application.
 
 ## PARAMETERS
 
@@ -43,13 +59,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
@@ -58,15 +81,28 @@ Specify container type GUID
 
 ```yaml
 Type: ContainerPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

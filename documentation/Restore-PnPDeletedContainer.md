@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPDeletedContainer.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Restore-PnPDeletedContainer.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Restore-PnPDeletedContainer
 ---
-  
+
 # Restore-PnPDeletedContainer
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ The Restore-PnPDeletedContainer recovers a deleted Container from the Recycle Bi
 
 ## SYNTAX
 
-```powershell
-Restore-PnPDeletedContainer -Identity <string> [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Restore-PnPDeletedContainer -Identity <string> [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -35,22 +42,17 @@ Restore-PnPDeletedContainer -Identity "b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjO
 
 Restores the Container with ContainerId "b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1" from the Recycle Bin.
 
-## PARAMETERS
+## EXAMPLES
 
-### -Identity
+### EXAMPLE 1
 
-The ContainerId of the deleted container to be restored.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+```powershell
+Restore-PnPDeletedContainer -Identity "b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1"
 ```
+
+Restores the Container with ContainerId "b!jKRbiovfMEWUWKabObEnjC5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1" from the Recycle Bin.
+
+## PARAMETERS
 
 ### -Connection
 
@@ -58,15 +60,50 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Identity
+
+The ContainerId of the deleted container to be restored.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

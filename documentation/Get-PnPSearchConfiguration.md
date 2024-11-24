@@ -1,10 +1,11 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPSearchConfiguration
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchConfiguration.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchConfiguration.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPSearchConfiguration
 ---
 
 # Get-PnPSearchConfiguration
@@ -17,24 +18,29 @@ Returns the search configuration
 
 ### Xml (Default)
 
-```powershell
+```
 Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-Path <String>]
- [-Connection <PnPConnection>] 
+ [-Connection <PnPConnection>]
 ```
 
 ### OutputFormat
 
-```powershell
+```
 Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-OutputFormat <OutputFormat>]
- [-Connection <PnPConnection>] 
+ [-Connection <PnPConnection>]
 ```
 
 ### BookmarksCSV
 
-```powershell
-Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-PromotedResultsToBookmarkCSV] [-ExcludeVisualPromotedResults <Boolean>] [-BookmarkStatus <BookmarkStatus>] [-Path <String>]
- [-Connection <PnPConnection>] 
 ```
+Get-PnPSearchConfiguration [-Scope <SearchConfigurationScope>] [-PromotedResultsToBookmarkCSV]
+ [-ExcludeVisualPromotedResults <Boolean>] [-BookmarkStatus <BookmarkStatus>] [-Path <String>]
+ [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -108,19 +114,72 @@ Export promoted results including visual ones from query rules on the tenant in 
 
 ## PARAMETERS
 
+### -BookmarkStatus
+
+Output bookmarks to be in suggested or published status upon CSV import. Defaults to suggested status.
+
+```yaml
+Type: BookmarkStatus
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: CSV
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues:
+- Suggested
+- Published
+HelpMessage: ''
+```
+
 ### -Connection
 
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -ExcludeVisualPromotedResults
+
+Exclude promoted results marked as "Render the URL as a banner instead of as a hyperlink". Defaults to true.
+
+```yaml
+Type: Boolean
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: CSV
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -OutputFormat
@@ -129,14 +188,22 @@ Output format for of the configuration. Defaults to complete XML
 
 ```yaml
 Type: OutputFormat
-Parameter Sets: OutputFormat
-Accepted values: CompleteXml, ManagedPropertyMappings
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: OutputFormat
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues:
+- CompleteXml
+- ManagedPropertyMappings
+HelpMessage: ''
 ```
 
 ### -Path
@@ -145,29 +212,20 @@ Local path where the search configuration will be saved
 
 ```yaml
 Type: String
-Parameter Sets: Xml
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Scope
-
-Scope to use. Either Web, Site, or Subscription. Defaults to Web
-
-```yaml
-Type: SearchConfigurationScope
-Parameter Sets: (All)
-Accepted values: Web, Site, Subscription
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Xml
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PromotedResultsToBookmarkCSV
@@ -182,45 +240,53 @@ Export details:
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: CSV
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: CSV
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -ExcludeVisualPromotedResults
+### -Scope
 
-Exclude promoted results marked as "Render the URL as a banner instead of as a hyperlink". Defaults to true.
+Scope to use. Either Web, Site, or Subscription. Defaults to Web
 
 ```yaml
-Type: Boolean
-Parameter Sets: CSV
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: SearchConfigurationScope
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues:
+- Web
+- Site
+- Subscription
+HelpMessage: ''
 ```
 
-### -BookmarkStatus
-Output bookmarks to be in suggested or published status upon CSV import. Defaults to suggested status.
+## INPUTS
 
-```yaml
-Type: BookmarkStatus
-Parameter Sets: CSV
-Accepted values: Suggested, Published
+## OUTPUTS
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

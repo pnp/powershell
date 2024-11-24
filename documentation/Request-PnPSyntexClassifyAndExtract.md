@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Request-PnPSyntexClassifyAndExtract
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Request-PnPSyntexClassifyAndExtract.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Request-PnPSyntexClassifyAndExtract.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Request-PnPSyntexClassifyAndExtract
 ---
- 
+
 # Request-PnPSyntexClassifyAndExtract
 
 ## SYNOPSIS
@@ -21,24 +22,27 @@ Requests for a file, folder or all files in a library to be classified and extra
 
 ### File
 
-```powershell
-Request-PnPSyntexClassifyAndExtract -FileUrl <string> [-Batch <PnPBatch>]  [-Connection <PnPConnection>] 
-
+```
+Request-PnPSyntexClassifyAndExtract -FileUrl <string> [-Batch <PnPBatch>]
+ [-Connection <PnPConnection>]
 ```
 
 ### Folder
 
-```powershell
-Request-PnPSyntexClassifyAndExtract -Folder <FolderPipeBind> [-Connection <PnPConnection>] 
-
+```
+Request-PnPSyntexClassifyAndExtract -Folder <FolderPipeBind> [-Connection <PnPConnection>]
 ```
 
 ### List
 
-```powershell
-Request-PnPSyntexClassifyAndExtract -List <ListPipeBind> [-OffPeak <SwitchParameter>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
-
 ```
+Request-PnPSyntexClassifyAndExtract -List <ListPipeBind> [-OffPeak <SwitchParameter>]
+ [-Force <SwitchParameter>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -51,7 +55,7 @@ When the list contains more than 5000 files or when using the folder parameter t
 ### EXAMPLE 1
 
 ```powershell
-Request-PnPSyntexClassifyAndExtract -FileUrl "/sites/finance/invoices/invoice1.docx" 
+Request-PnPSyntexClassifyAndExtract -FileUrl "/sites/finance/invoices/invoice1.docx"
 ```
 
 Requests the classification and extraction of invoice1.docx in library "Invoices".
@@ -74,79 +78,48 @@ Requests the classification and extraction of all files in the folder "jan" in l
 
 ## PARAMETERS
 
+### -Batch
+
+The batch to add this file classification and extraction request to.
+
+```yaml
+Type: PnPBatch
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: File
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
 ### -Connection
 
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -List
-
-The name or list holding the files to classify and extract.
-
-```yaml
-Type: ListPipeBind
-Parameter Sets: List
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Force
-
-If set, then all files (even if classified and extracted before) are classified and extracted. If the list contains more than 5000 items this option will not apply and off-peak processing is used.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: List
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -OffPeak
-
-If set, then the files to classify are sent to the off peak queue without enumerating them. If the list contains more than 5000 items then off-peak processing is always used.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: List
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Folder
-
-The folder holding the files to classify and extract. When using this parameter, files will be send to the off peak queue.
-
-```yaml
-Type: FolderPipeBind
-Parameter Sets: Folder
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -FileUrl
@@ -155,32 +128,116 @@ The server relative URL of the file to be classified and extracted.
 
 ```yaml
 Type: String
-Parameter Sets: File
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: File
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -Batch
+### -Folder
 
-The batch to add this file classification and extraction request to.
+The folder holding the files to classify and extract. When using this parameter, files will be send to the off peak queue.
 
 ```yaml
-Type: PnPBatch
-Parameter Sets: File
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+Type: FolderPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Folder
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Force
+
+If set, then all files (even if classified and extracted before) are classified and extracted. If the list contains more than 5000 items this option will not apply and off-peak processing is used.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: List
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -List
+
+The name or list holding the files to classify and extract.
+
+```yaml
+Type: ListPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: List
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -OffPeak
+
+If set, then the files to classify are sent to the off peak queue without enumerating them. If the list contains more than 5000 items then off-peak processing is always used.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: List
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

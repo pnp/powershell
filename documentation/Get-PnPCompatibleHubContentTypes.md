@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPCompatibleHubContentTypes.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPCompatibleHubContentTypes.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPCompatibleHubContentTypes
 ---
-  
+
 # Get-PnPCompatibleHubContentTypes
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Returns the list of content types present in content type hub site that can be a
 
 ## SYNTAX
 
-```powershell
- Get-PnPCompatibleHubContentTypes -WebUrl <String> [-ListUrl <String>] [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+ -WebUrl <String> [-ListUrl <String>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +37,7 @@ Allows to retrieve list of content types present in content type hub site that a
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
  Get-PnPCompatibleHubContentTypes -WebUrl 'https://contoso.sharepoint.com/web1'
 ```
@@ -37,6 +45,7 @@ Allows to retrieve list of content types present in content type hub site that a
 This will return the list of content types present in content type hub site that can be added to the root web of the site to which the provided web belongs.
 
 ### EXAMPLE 2
+
 ```powershell
  Get-PnPCompatibleHubContentTypes -WebUrl 'https://contoso.sharepoint.com/web1' -ListUrl 'https://contoso.sharepoint.com/web1/Shared Documents'
 ```
@@ -45,48 +54,78 @@ This will return the list of content types present in content type hub site that
 
 ## PARAMETERS
 
-### -WebUrl
-The full URL of the web for which compatible content types need to be fetched. In case of a list this should be the url of the web which contains the given list. I.e. 'https://contoso.sharepoint.com/web1'
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ListUrl
-The full URL to the list for which compatible content types need to be fetched, i.e. 'https://contoso.sharepoint.com/web1/Shared Documents'
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -ListUrl
+
+The full URL to the list for which compatible content types need to be fetched, i.e. 'https://contoso.sharepoint.com/web1/Shared Documents'
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -WebUrl
+
+The full URL of the web for which compatible content types need to be fetched. In case of a list this should be the url of the web which contains the given list. I.e. 'https://contoso.sharepoint.com/web1'
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

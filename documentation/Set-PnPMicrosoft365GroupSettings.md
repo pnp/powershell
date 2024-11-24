@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPMicrosoft365GroupSettings
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMicrosoft365GroupSettings.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPMicrosoft365GroupSettings.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPMicrosoft365GroupSettings
 ---
- 
+
 # Set-PnPMicrosoft365GroupSettings
 
 ## SYNOPSIS
@@ -19,10 +20,16 @@ Updates Microsoft 365 Group settings for the tenant or specified Group.
 
 ## SYNTAX
 
-```powershell
-Set-PnPMicrosoft365GroupSettings -Identity <string> [-Values <Hashtable>] [-Group <Microsoft365GroupPipeBind>]
- 
+### Default (Default)
+
 ```
+Set-PnPMicrosoft365GroupSettings -Identity <string> [-Values <Hashtable>]
+ [-Group <Microsoft365GroupPipeBind>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -31,6 +38,7 @@ Allows to modify Microsoft 365 Group settings for tenant or specified group.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Set-PnPMicrosoft365GroupSettings -Identity $groupSettingId -Values @{"AllowToAddGuests"="true"}
 ```
@@ -38,6 +46,7 @@ Set-PnPMicrosoft365GroupSettings -Identity $groupSettingId -Values @{"AllowToAdd
 Sets the properties of the setting where $groupSettingId is a Group setting ID. You can get the Group setting using the `Get-PnPMicrosoft365GroupSettings` cmdlet.
 
 ### EXAMPLE 2
+
 ```powershell
 Set-PnPMicrosoft365GroupSettings -Identity $groupSettingId -Values @{"AllowToAddGuests"="true"} -Group $groupId
 ```
@@ -46,49 +55,79 @@ Sets the properties of the Microsoft 365 group specific setting where $groupSett
 
 ## PARAMETERS
 
-### -Identity
-The Identity of the Microsoft 365 Group setting
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Values
-Hashtable of properties for the settings. Use the syntax @{AllowToAddGuests="false";GuestUsageGuidelinesUrl="https://google.com/privacy"}.
-
-```yaml
-Type: Hashtable
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Group
+
 The Identity of the Microsoft 365 Group for which you want to update setting.
 
 ```yaml
 Type: Microsoft365GroupPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Identity
+
+The Identity of the Microsoft 365 Group setting
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Values
+
+Hashtable of properties for the settings. Use the syntax @{AllowToAddGuests="false";GuestUsageGuidelinesUrl="https://google.com/privacy"}.
+
+```yaml
+Type: Hashtable
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/groupsetting-update)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/groupsetting-update)

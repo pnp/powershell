@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Publish-PnPSyntexModel
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Publish-PnPSyntexModel.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Publish-PnPSyntexModel.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Publish-PnPSyntexModel
 ---
- 
+
 # Publish-PnPSyntexModel
 
 ## SYNOPSIS
@@ -23,17 +24,22 @@ This cmdlet only works when you've connected to a Syntex Content Center site.
 
 ### Single
 
-```powershell
-Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -ListWebUrl <string> -List <ListPipeBind> [-PublicationViewOption <MachineLearningPublicationViewOption>]  [-Connection <PnPConnection>]
- 
+```
+Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -ListWebUrl <string> -List <ListPipeBind>
+ [-PublicationViewOption <MachineLearningPublicationViewOption>] [-Connection <PnPConnection>]
 ```
 
 ### Batched
 
-```powershell
-Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -TargetWebServerRelativeUrl <string> -TargetLibraryServerRelativeUrl <string> -Batch <PnPBatch>  [-PublicationViewOption <MachineLearningPublicationViewOption>]  [-Connection <PnPConnection>]
- 
 ```
+Publish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string>
+ -TargetWebServerRelativeUrl <string> -TargetLibraryServerRelativeUrl <string> -Batch <PnPBatch>
+ [-PublicationViewOption <MachineLearningPublicationViewOption>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -59,50 +65,48 @@ Adds the publishing of the document processing model named "Invoice model" to th
 
 ## PARAMETERS
 
+### -Batch
+
+The batch to add this publish request to.
+
+```yaml
+Type: PnPBatch
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Batched
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
 ### -Connection
 
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Model
-
-The name or id of the Syntex model.
-
-```yaml
-Type: SyntexModelPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -ListWebUrl
-
-Url of the web hosting the list to publish the model to.
-
-```yaml
-Type: String
-Parameter Sets: Single
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -List
@@ -111,77 +115,64 @@ The name or id of the list to publish the model to.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: Single
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Single
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -TargetSiteUrl
+### -ListWebUrl
 
-The fully qualified URL of the site collection hosting the library to publish the model to.
+Url of the web hosting the list to publish the model to.
 
 ```yaml
 Type: String
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Single
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -TargetWebServerRelativeUrl
+### -Model
 
-The server relative url of the web hosting the library to publish the model to.
-
-```yaml
-Type: String
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -TargetLibraryServerRelativeUrl
-
-The server relative url of the library to publish the model to.
+The name or id of the Syntex model.
 
 ```yaml
-Type: String
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Batch
-
-The batch to add this publish request to.
-
-```yaml
-Type: PnPBatch
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+Type: SyntexModelPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PublicationViewOption
@@ -190,16 +181,97 @@ The view options to apply when publishing the model to the list.
 
 ```yaml
 Type: MachineLearningPublicationViewOption
-Parameter Sets: (All)
-Accepted values: NewView, NewViewAsDefault, NoNewView
-
-Required: False
-Position: Named
-Default value: NewViewAsDefault
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: NewViewAsDefault
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues:
+- NewView
+- NewViewAsDefault
+- NoNewView
+HelpMessage: ''
 ```
+
+### -TargetLibraryServerRelativeUrl
+
+The server relative url of the library to publish the model to.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Batched
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -TargetSiteUrl
+
+The fully qualified URL of the site collection hosting the library to publish the model to.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Batched
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -TargetWebServerRelativeUrl
+
+The server relative url of the web hosting the library to publish the model to.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Batched
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

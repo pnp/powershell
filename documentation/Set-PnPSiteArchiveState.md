@@ -1,9 +1,10 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPSiteArchiveState.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPSiteArchiveState.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Set-PnPSiteArchiveState
 ---
 
@@ -19,9 +20,16 @@ Sets the archived state of the site. Can be used to archive and reactivate sites
 
 ## SYNTAX
 
-```powershell
-Set-PnPSiteArchiveState -Identity <SPOSitePipeBind> -ArchiveState <SPOArchiveState> [-NoWait] [-Force]
+### Default (Default)
+
 ```
+Set-PnPSiteArchiveState -Identity <SPOSitePipeBind> -ArchiveState <SPOArchiveState> [-NoWait]
+ [-Force]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -48,63 +56,100 @@ This example triggers the reactivation of a site. If the site is reactivated fro
 
 ## PARAMETERS
 
-### -Identity
-Specifies the full URL of the SharePoint Online site collection that needs to be renamed.
-
-```yaml
-Type: SPOSitePipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True
-Accept wildcard characters: False
-```
-
 ### -ArchiveState
 
 Sets the archived state of the site. Valid values are Archived, Active.
 
 ```yaml
 Type: SPOArchiveState
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NoWait
-If specified the task will return immediately after creating the archive state site job.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Force
+
 If provided, no confirmation will be asked for changing the archive state.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Identity
+
+Specifies the full URL of the SharePoint Online site collection that needs to be renamed.
+
+```yaml
+Type: SPOSitePipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -NoWait
+
+If specified the task will return immediately after creating the archive state site job.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

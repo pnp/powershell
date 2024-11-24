@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Unpublish-PnPSyntexModel
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/UnPublish-PnPSyntexModel.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/UnPublish-PnPSyntexModel.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Unpublish-PnPSyntexModel
 ---
- 
+
 # Unpublish-PnPSyntexModel
 
 ## SYNOPSIS
@@ -23,17 +24,22 @@ This cmdlet only works when you've connected to a Syntex Content Center site.
 
 ### Single
 
-```powershell
-Unpublish-PnPSyntexModel -Model <SyntexModelPipeBind> -ListWebUrl <string> -List <ListPipeBind> [-Connection <PnPConnection>]
- 
+```
+Unpublish-PnPSyntexModel -Model <SyntexModelPipeBind> -ListWebUrl <string> -List <ListPipeBind>
+ [-Connection <PnPConnection>]
 ```
 
 ### Batched
 
-```powershell
-Unpublish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string> -TargetWebServerRelativeUrl <string> -TargetLibraryServerRelativeUrl <string> -Batch <PnPBatch>  [-Connection <PnPConnection>]
- 
 ```
+Unpublish-PnPSyntexModel -Model <SyntexModelPipeBind> -TargetSiteUrl <string>
+ -TargetWebServerRelativeUrl <string> -TargetLibraryServerRelativeUrl <string> -Batch <PnPBatch>
+ [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -59,50 +65,48 @@ Adds the unpublishing of the document processing model named "Invoice model" fro
 
 ## PARAMETERS
 
+### -Batch
+
+The batch to add this unpublish request to.
+
+```yaml
+Type: PnPBatch
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Batched
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
 ### -Connection
 
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Model
-
-The name or id of the Syntex model.
-
-```yaml
-Type: SyntexModelPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -ListWebUrl
-
-Url of the web hosting the list to unpublish the model from.
-
-```yaml
-Type: String
-Parameter Sets: Single
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -List
@@ -111,45 +115,64 @@ The name or id of the list to unpublish the model from.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: Single
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Single
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -TargetSiteUrl
+### -ListWebUrl
 
-The fully qualified URL of the site collection hosting the library to unpublish the model from.
+Url of the web hosting the list to unpublish the model from.
 
 ```yaml
 Type: String
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Single
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -TargetWebServerRelativeUrl
+### -Model
 
-The server relative url of the web hosting the library to unpublish the model from.
+The name or id of the Syntex model.
 
 ```yaml
-Type: String
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+Type: SyntexModelPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -TargetLibraryServerRelativeUrl
@@ -158,32 +181,72 @@ The server relative url of the library to unpublish the model from.
 
 ```yaml
 Type: String
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Batched
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -Batch
+### -TargetSiteUrl
 
-The batch to add this unpublish request to.
+The fully qualified URL of the site collection hosting the library to unpublish the model from.
 
 ```yaml
-Type: PnPBatch
-Parameter Sets: Batched
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Batched
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -TargetWebServerRelativeUrl
+
+The server relative url of the web hosting the library to unpublish the model from.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Batched
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

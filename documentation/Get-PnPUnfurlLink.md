@@ -1,22 +1,30 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUnfurlLink.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPUnfurlLink.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPUnfurlLink
 ---
-  
+
 # Get-PnPUnfurlLink
 
 ## SYNOPSIS
+
 To unfurl a link for a given resource such as file, folder, list items etc.
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Get-PnPUnfurlLink -Url <String>
 ```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -25,6 +33,7 @@ Creates a new organization sharing link for a file.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPUnfurlLink -Url "https://contoso.sharepoint.com/:u:/s/testsitecol/ERs6pDuyD95LpUSUsJxi1EIBr9FMEYVBvMcs_B7cPdNPgQ?e=ZL3DPe"
 ```
@@ -36,34 +45,56 @@ SharePoint supports many different types of links, you have direct links to list
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Url
+
 The URL of the resource to be unfurled.
 For more information, you can visit the [PnP Core SDK documentation](https://pnp.github.io/pnpcore/using-the-sdk/unfurl-intro.html)
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

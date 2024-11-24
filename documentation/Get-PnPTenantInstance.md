@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInstance.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInstance.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPTenantInstance
 ---
-  
+
 # Get-PnPTenantInstance
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Retrieves the tenant instances in case of a Multi-GEO tenant. In case of a singl
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Get-PnPTenantInstance
 ```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -29,15 +36,14 @@ Allows to retrieve list of all instances of the tenant.
 
 ## EXAMPLES
 
-### EXAMPLE 1
-```powershell
-Get-PnPTenantInstance
-```
+## PARAMETERS
 
-Returns the tenant instances.
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

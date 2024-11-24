@@ -1,23 +1,30 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPViewsFromXML.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Add-PnPViewsFromXML.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Add-PnPViewsFromXML
 ---
-  
+
 # Add-PnPViewsFromXML
 
 ## SYNOPSIS
+
 Adds one or more views to a list from an XML string.
 
 ## SYNTAX
 
-```powershell
-Add-PnPViewsFromXML [-List] <ListPipeBind> [-ViewsXML <String>] 
- [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Add-PnPViewsFromXML [-List] <ListPipeBind> [-ViewsXML <String>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -26,6 +33,7 @@ This cmdlet allows the creation of one or more views on a SharePoint Online list
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 
 $viewsXML = @"
@@ -48,6 +56,7 @@ Add-PnPViewsFromXML -List "Demo List" -ViewsXML $viewsXML
 Adds one view named "Demo view" to the "Demo List" list from the XML string.
 
 ### EXAMPLE 2
+
 ```powershell
 
 $viewsXML = @"
@@ -89,47 +98,77 @@ Adds two views named "Demo view" and "Created By Me" to the "Demo List" list fro
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -List
+
 The ID or Url of the list to add the view to.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ViewsXML
+
 The XML string of the view(s) that you want to add to the list.
 
 ```yaml
 Type: string
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

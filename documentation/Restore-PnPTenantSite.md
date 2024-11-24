@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Restore-PnPTenantSite
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Restore-PnPTenantSite.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Restore-PnPTenantSite.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Restore-PnPTenantSite
 ---
- 
+
 # Restore-PnPTenantSite
 
 ## SYNOPSIS
@@ -19,16 +20,25 @@ Restores a site collection from the Tenant recycle bin.
 
 ## SYNTAX
 
-```powershell
-Restore-PnPTenantSite [-Identity] <String> [-Force] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
+### Default (Default)
+
+```
+Restore-PnPTenantSite [-Identity] <String> [-Force] [-NoWait] [-Connection <PnPConnection>]
+ [-Verbose] [<CommonParameters>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Restores a site collection which is listed in your tenant administration site from the tenant's recycle bin.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso"
 ```
@@ -36,6 +46,7 @@ Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso"
 This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin asking for confirmation to restore the site collection and will wait with the execution of the script until the site collection is restored.
 
 ### EXAMPLE 2
+
 ```powershell
 Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso" -Force
 ```
@@ -43,6 +54,7 @@ Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso" -F
 This will restore the site collection with the url 'https://tenant.sharepoint.com/sites/contoso' from the recycle bin not asking for confirmation to restore the site collection and will wait with the execution of the script until the site collection is restored.
 
 ### EXAMPLE 3
+
 ```powershell
 Restore-PnPTenantSite -Identity "https://tenant.sharepoint.com/sites/contoso" -Force -NoWait
 ```
@@ -51,76 +63,122 @@ This will restore the site collection with the url 'https://tenant.sharepoint.co
 
 ## PARAMETERS
 
-### -Identity
-Specifies the full URL of the site collection that needs to be restored.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Force
-Do not ask for confirmation.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -NoWait
-If specified the task will return immediately after creating the restore site job.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Force
+
+Do not ask for confirmation.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Identity
+
+Specifies the full URL of the site collection that needs to be restored.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -NoWait
+
+If specified the task will return immediately after creating the restore site job.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Verbose
+
 When provided, additional debug statements will be shown while executing the cmdlet.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

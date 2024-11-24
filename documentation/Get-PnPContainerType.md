@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPContainerType.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPContainerType.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPContainerType
 ---
-  
+
 # Get-PnPContainerType
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ title: Get-PnPContainerType
 
 ## SYNTAX
 
-```powershell
-Get-PnPContainerType [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Get-PnPContainerType [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -49,7 +56,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+## EXAMPLES
+
+## PARAMETERS
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
+
 ## RELATED LINKS
 
-[SharePoint Embedded Container Types](https://learn.microsoft.com/en-us/sharepoint/dev/embedded/concepts/app-concepts/containertypes)
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [SharePoint Embedded Container Types](https://learn.microsoft.com/en-us/sharepoint/dev/embedded/concepts/app-concepts/containertypes)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

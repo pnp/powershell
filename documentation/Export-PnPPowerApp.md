@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Export-PnPPowerApp.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Export-PnPPowerApp.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Export-PnPPowerApp
 ---
-  
+
 # Export-PnPPowerApp
 
 ## SYNOPSIS
@@ -19,14 +20,21 @@ Exports a Microsoft Power App
 
 ## SYNTAX
 
+### Default (Default)
+
 ```
-Export-PnPPowerApp [-Environment <PowerPlatformEnvironmentPipeBind>] -Identity <PowerAppPipeBind>
+Export-PnPPowerApp -Identity <PowerAppPipeBind> [-Environment <PowerPlatformEnvironmentPipeBind>]
  [-PackageDisplayName <String>] [-PackageDescription <String>] [-PackageCreatedBy <String>]
  [-PackageSourceEnvironment <String>] [-OutPath <String>] [-Force] [-Connection <PnPConnection>]
  [<CommonParameters>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 This cmdlet exports a Microsoft Power App as zip package.
 
 Many times exporting a Microsoft Power App will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the App. To display these errors when trying to export a App, provide the -Verbose flag with your export request. If not provided, these errors will silently be ignored.
@@ -34,6 +42,7 @@ Many times exporting a Microsoft Power App will not be possible due to various r
 ## EXAMPLES
 
 ### Example 1
+
 ```powershell
 Export-PnPPowerApp -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath "C:\Users\user1\Downloads\test_20230408152624.zip"
 ```
@@ -41,12 +50,14 @@ Export-PnPPowerApp -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath "C:\U
 This will export the specified Microsoft Power App from the default Power Platform environment as an output to the path specified in the command as -OutPath
 
 ### Example 2
+
 ```powershell
 Export-PnPPowerApp -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity fba63225-baf9-4d76-86a1-1b42c917a182 -OutPath "C:\Users\user1\Downloads\test_20230408152624.zip" -PackageDisplayName "MyAppDisplayName" -PackageDescription "Package exported using PnP Powershell" -PackageCreatedBy "Siddharth Vaghasia" -PackageSourceEnvironment "UAT Environment"
 ```
 This will export the specified Microsoft Power App from the specified Power Platform environment with metadata specified
 
 ### Example 3
+
 ```powershell
 Get-PnPPowerPlatformEnvironment | foreach { Get-PnPPowerApp -Environment $_.Name } | foreach { Export-PnPPowerApp -Environment $_.Properties.EnvironmentDetails.Name -Identity $_ -OutPath "C:\Users\user1\Downloads\$($_.Name).zip" }
 ```
@@ -56,141 +67,210 @@ This will export all the Microsoft Power Apps available within the tenant from a
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet.
 Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Environment
+
 The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.
 
 ```yaml
 Type: PowerPlatformEnvironmentPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: The default environment
-Accept pipeline input: True
-Accept wildcard characters: False
-```
-
-### -Identity
-The value of the Name property of a Microsoft Power App that you wish to export
-
-```yaml
-Type: PowerAppPipeBind
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: The default environment
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Force
+
 If specified and the file exported already exists it will be overwritten without confirmation.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Identity
+
+The value of the Name property of a Microsoft Power App that you wish to export
+
+```yaml
+Type: PowerAppPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -OutPath
+
 Optional file name of the file to export to. If not provided, it will store the ZIP package to the current location from where the cmdlet is being run.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PackageCreatedBy
+
 The name of the person to be used as the creator of the exported package
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PackageDescription
+
 The description to use in the exported package
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PackageDisplayName
+
 The display name to use in the exported package
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PackageSourceEnvironment
+
 The name of the source environment from which the exported package was taken
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp) 
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPServiceHealthIssue
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPServiceHealthIssue.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPServiceHealthIssue.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPServiceHealthIssue
 ---
- 
+
 # Get-PnPServiceHealthIssue
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Gets service health issues of the Office 365 Services from the Microsoft Graph A
 
 ## SYNTAX
 
-```powershell
-Get-PnPServiceHealthIssue [-Identity <Id>] 
+### Default (Default)
+
 ```
+Get-PnPServiceHealthIssue [-Identity <Id>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +37,7 @@ Allows to retrieve current service health issues of the Office 365 Services from
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPServiceHealthIssue
 ```
@@ -37,6 +45,7 @@ Get-PnPServiceHealthIssue
 Retrieves all the available service health issues
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPServiceHealthIssue -Identity "EX123456"
 ```
@@ -46,18 +55,33 @@ Retrieves the details of the service health issue with the Id EX123456
 ## PARAMETERS
 
 ### -Identity
-Allows retrieval of a particular service health issue with the provided Id
+
+
+
 ```yaml
 Type: Identity
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

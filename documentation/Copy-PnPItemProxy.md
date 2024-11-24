@@ -1,36 +1,33 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Copy-PnPItemProxy.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Copy-PnPItemProxy.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Copy-PnPItemProxy
 ---
-  
+
 # Copy-PnPItemProxy
 
 ## SYNOPSIS
+
 Copies an item from one location to another. It is an alias of the `Copy-Item` cmdlet.
 
 ## SYNTAX
 
-```powershell
-Copy-Item
-    [-Path] <String[]>
-    [[-Destination] <String>]
-    [-Container]
-    [-Force]
-    [-Filter <String>]
-    [-Include <String[]>]
-    [-Exclude <String[]>]
-    [-Recurse]
-    [-PassThru]
-    [-Credential <PSCredential>]    
-    [-Confirm]
-    [-FromSession <PSSession>]
-    [-ToSession <PSSession>]
-    
+### Default (Default)
+
 ```
+Copy-Item
+ [-Path] <String[]> [[-Destination] <String>] [-Container] [-Force] [-Filter <String>]
+ [-Include <String[]>] [-Exclude <String[]>] [-Recurse] [-PassThru] [-Credential <PSCredential>]
+ [-Confirm] [-FromSession <PSSession>] [-ToSession <PSSession>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -46,14 +43,14 @@ For more information and details, please refer to the official PowerShell docume
 
 ## EXAMPLES
 
-### EXAMPLE 1
-```powershell
-Copy-PnPItemProxy "C:\Users\Admin\seattle.master" -Destination "C:\Presentation"
-```
+## PARAMETERS
 
-This example copies the `seattle.master` file to the `C:\Presentation` directory. The original file isn't deleted.
-For more examples, please refer to the link mentioned above.
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

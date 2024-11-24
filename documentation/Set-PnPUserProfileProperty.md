@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPUserProfileProperty
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPUserProfileProperty.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPUserProfileProperty.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPUserProfileProperty
 ---
- 
+
 # Set-PnPUserProfileProperty
 
 ## SYNOPSIS
@@ -21,23 +22,31 @@ Uses the tenant API to retrieve site information. You must connect to the tenant
 ## SYNTAX
 
 ### Single
-```powershell
+
+```
 Set-PnPUserProfileProperty -Account <String> -PropertyName <String> -Value <String>
- [-Connection <PnPConnection>] 
+ [-Connection <PnPConnection>]
 ```
 
 ### Multi
-```powershell
+
+```
 Set-PnPUserProfileProperty -Account <String> -PropertyName <String> -Values <String[]>
- [-Connection <PnPConnection>] 
+ [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Updates the value of a specific user profile property for a single user profile in the SharePoint Online environment. Requires a connection to the SharePoint Tenant Admin site.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Set-PnPUserProfileProperty -Account 'john@domain.com' -Property 'SPS-Location' -Value 'Stockholm'
 ```
@@ -45,6 +54,7 @@ Set-PnPUserProfileProperty -Account 'john@domain.com' -Property 'SPS-Location' -
 Sets the SPS-Location property to 'Stockholm' for the user john@domain.com.
 
 ### EXAMPLE 2
+
 ```powershell
 Set-PnPUserProfileProperty -Account 'john@domain.com' -Property 'MyProperty' -Values 'Value 1','Value 2'
 ```
@@ -54,76 +64,121 @@ Sets the MyProperty multi value property for the user john@domain.com.
 ## PARAMETERS
 
 ### -Account
+
 The account of the user, formatted either as a login name, or as a claims identity, e.g. i:0#.f|membership|user@domain.com
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PropertyName
+
 The property to set, for instance SPS-Skills or SPS-Location.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Value
+
 The value to set in the case of a single value property.
 
 ```yaml
 Type: String
-Parameter Sets: Single
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Single
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Values
+
 The values set in the case of a multi value property, e.g. "Value 1","Value 2"
 
 ```yaml
 Type: String[]
-Parameter Sets: Multi
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: Multi
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

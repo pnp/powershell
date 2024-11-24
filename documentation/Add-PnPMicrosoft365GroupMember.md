@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPMicrosoft365GroupMember.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Add-PnPMicrosoft365GroupMember.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Add-PnPMicrosoft365GroupMember
 ---
-  
+
 # Add-PnPMicrosoft365GroupMember
 
 ## SYNOPSIS
@@ -19,9 +20,16 @@ Adds members to a particular Microsoft 365 Group.
 
 ## SYNTAX
 
-```powershell
-Add-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting] [-Connection <PnPConnection>]
+### Default (Default)
+
 ```
+Add-PnPMicrosoft365GroupMember -Identity <Microsoft365GroupPipeBind> -Users <String[]>
+ [-RemoveExisting] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +38,7 @@ Allows to add multiple users to Microsoft 365 Group.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Add-PnPMicrosoft365GroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
 ```
@@ -37,6 +46,7 @@ Add-PnPMicrosoft365GroupMember -Identity "Project Team" -Users "john@contoso.onm
 Adds the provided two users as additional members to the Microsoft 365 Group named "Project Team".
 
 ### EXAMPLE 2
+
 ```powershell
 Add-PnPMicrosoft365GroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
 ```
@@ -46,62 +56,100 @@ Sets the provided two users as the only members of the Microsoft 365 Group named
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
+
 The Identity of the Microsoft 365 Group to add members to.
 
 ```yaml
 Type: Microsoft365GroupPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -RemoveExisting
+
 If provided, all existing members will be removed and only those provided through Users will become members.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Users
+
 The UPN(s) of the user(s) to add to the Microsoft 365 Group as a member.
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/group-post-members)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/group-post-members)

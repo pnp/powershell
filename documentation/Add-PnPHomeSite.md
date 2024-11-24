@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Add-PnPHomeSite
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPHomeSite.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Add-PnPHomeSite.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Add-PnPHomeSite
 ---
- 
+
 # Add-PnPHomeSite
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Adds the home site to your tenant. The home site needs to be a communication sit
 
 ## SYNTAX
 
-```powershell
-Add-PnPHomeSite -HomeSiteUrl <String> [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Add-PnPHomeSite -HomeSiteUrl <String> [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +37,7 @@ Adds a home site to the current tenant.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Add-PnPHomeSite -HomeSiteUrl "https://yourtenant.sharepoint.com/sites/myhome"
 ```
@@ -39,35 +47,57 @@ Adds a home site with the provided site collection url
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -HomeSiteUrl
+
 The url of the site to set as the home site
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Set up a home site for your organization](https://learn.microsoft.com/sharepoint/home-site)
-[Customize and edit the Viva Connections home experience](https://learn.microsoft.com/en-us/viva/connections/edit-viva-home)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Set up a home site for your organization](https://learn.microsoft.com/sharepoint/home-site)
+- [Customize and edit the Viva Connections home experience](https://learn.microsoft.com/en-us/viva/connections/edit-viva-home)

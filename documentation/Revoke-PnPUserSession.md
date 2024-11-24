@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Revoke-PnPUserSession
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Revoke-PnPUserSession.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Revoke-PnPUserSession.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Revoke-PnPUserSession
 ---
- 
+
 # Revoke-PnPUserSession
 
 ## SYNOPSIS
@@ -19,10 +20,15 @@ Provides IT administrators the ability to logout a user's O365 sessions across a
 
 ## SYNTAX
 
-```powershell
-Revoke-PnPUserSession -User <String>    
-    [-Confirm]
+### Default (Default)
+
 ```
+Revoke-PnPUserSession -User <String> [-Confirm]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -33,6 +39,7 @@ It is not applicable to guest users.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Revoke-PnPUserSession -User user1@contoso.com
 ```
@@ -41,35 +48,56 @@ This example signs out user1 in the contoso tenancy from all devices.
 
 ## PARAMETERS
 
-### -User
-Specifies a user name. For example, user1@contoso.com
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
 ### -Confirm
+
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -User
+
+Specifies a user name. For example, user1@contoso.com
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

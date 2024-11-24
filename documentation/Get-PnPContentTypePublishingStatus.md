@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPContentTypePublishingStatus.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPContentTypePublishingStatus.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPContentTypePublishingStatus
 ---
-  
+
 # Get-PnPContentTypePublishingStatus
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Returns the publishing status of a content type present on content type hub site
 
 ## SYNTAX
 
-```powershell
-Get-PnPContentTypePublishingStatus -ContentType <ContentTypePipeBind> [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Get-PnPContentTypePublishingStatus -ContentType <ContentTypePipeBind> [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,41 +37,65 @@ Allows to retrieve the publishing status of a content type present on content ty
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
  Get-PnPContentTypePublishingStatus -ContentType 0x0101
 ```
 
 This will return `True` if content type is published in the content type hub site otherwise it will return `False`.
+
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ContentType
+
 The content type object in the content type hub site for which the publishing status needs to be fetched.
 
 ```yaml
 Type: ContentType
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

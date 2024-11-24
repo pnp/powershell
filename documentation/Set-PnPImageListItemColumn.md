@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPImageListItemColumn
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPImageListItemColumn.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPImageListItemColumn.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPImageListItemColumn
 ---
- 
+
 # Set-PnPImageListItemColumn
 
 ## SYNOPSIS
@@ -17,17 +18,22 @@ Updates the image column value of a list item.
 
 ### Upload an image and set it as thumbnail
 
-```powershell
-Set-PnPImageListItemColumn [-List <ListPipeBind>] -Identity <ListItemPipeBind> [-Field <FieldPipeBind>]
- [-Path <string>] [-UpdateType <UpdateType>] [-Connection <PnPConnection>] 
+```
+Set-PnPImageListItemColumn -Identity <ListItemPipeBind> [-List <ListPipeBind>]
+ [-Field <FieldPipeBind>] [-Path <string>] [-UpdateType <UpdateType>] [-Connection <PnPConnection>]
 ```
 
 ### Use an already uploaded image and set it as thumbnail
 
-```powershell
-Set-PnPImageListItemColumn [-List <ListPipeBind>] -Identity <ListItemPipeBind> [-Field <FieldPipeBind>]
- [-ServerRelativePath <string>] [-UpdateType <UpdateType>] [-Connection <PnPConnection>] 
 ```
+Set-PnPImageListItemColumn -Identity <ListItemPipeBind> [-List <ListPipeBind>]
+ [-Field <FieldPipeBind>] [-ServerRelativePath <string>] [-UpdateType <UpdateType>]
+ [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -59,43 +65,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Identity
-
-The ID of the list item, or actual ListItem object.
-
-```yaml
-Type: ListItemPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -List
-
-The ID, Title or Url of the list.
-
-```yaml
-Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Field
@@ -104,28 +87,64 @@ The ID, Title or Internal name of the field.
 
 ```yaml
 Type: FieldPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -ServerRelativePath
+### -Identity
 
-Use the server relative path of an existing image in your SharePoint document library.
+The ID of the list item, or actual ListItem object.
 
 ```yaml
-Type: String
-Parameter Sets: (ParameterSet_ASServerRelativeUrl)
+Type: ListItemPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -List
+
+The ID, Title or Url of the list.
+
+```yaml
+Type: ListPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Path
@@ -134,13 +153,42 @@ Use the path from the local file system.
 
 ```yaml
 Type: String
-Parameter Sets: (ParameterSet_ASPath)
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (ParameterSet_ASPath)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -ServerRelativePath
+
+Use the server relative path of an existing image in your SharePoint document library.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (ParameterSet_ASServerRelativeUrl)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -UpdateType
@@ -153,15 +201,28 @@ Specifies the update type to use when updating the listitem. Possible values are
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

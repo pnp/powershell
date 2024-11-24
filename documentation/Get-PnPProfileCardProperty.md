@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPProfileCardProperty.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPProfileCardProperty.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPProfileCardProperty
 ---
-  
+
 # Get-PnPProfileCardProperty
 
 ## SYNOPSIS
@@ -14,14 +15,21 @@ title: Get-PnPProfileCardProperty
 **Required Permissions**
 
   * Microsoft Graph API : One of PeopleSettings.Read.All, PeopleSettings.ReadWrite.All
-  
+
 Retrieves custom properties added to user profile cards
 
 ## SYNTAX
 
-```powershell
-Get-PnPProfileCardProperty [-PropertyName <ProfileCardPropertyName>] [-Verbose] [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Get-PnPProfileCardProperty [-PropertyName <ProfileCardPropertyName>] [-Verbose]
+ [-Connection <PnPConnection>] [<CommonParameters>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,6 +38,7 @@ This cmdlet may be used to retrieve custom properties added to user profile card
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPProfileCardProperty
 ```
@@ -37,6 +46,7 @@ Get-PnPProfileCardProperty
 This will retrieve all custom properties added to user profile card.
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPProfileCardProperty -PropertyName "pnppowershell"
 ```
@@ -46,46 +56,78 @@ This will return information about the specified property added to a profile car
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing [Get-PnPConnection](Get-PnPConnection.md).
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
+
 Name of the property to be retrieved. If not provided, all properties will be returned.
 
 ```yaml
 Type: Commands.Enums.ProfileCardPropertyName
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Verbose
+
 When provided, additional debug statements will be shown while executing the cmdlet.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://learn.microsoft.com/en-us/graph/add-properties-profilecard)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft Graph documentation](https://learn.microsoft.com/en-us/graph/add-properties-profilecard)

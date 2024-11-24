@@ -1,22 +1,31 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPContentType.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPContentType.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPContentType
 ---
-  
+
 # Get-PnPContentType
 
 ## SYNOPSIS
+
 Retrieves a content type
 
 ## SYNTAX
 
-```powershell
-Get-PnPContentType [-Identity <ContentTypePipeBind>] [-List <ListPipeBind>] [-InSiteHierarchy] [-Includes <String[]>] [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Get-PnPContentType [-Identity <ContentTypePipeBind>] [-List <ListPipeBind>] [-InSiteHierarchy]
+ [-Includes <String[]>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -25,6 +34,7 @@ Allows to get single or list of content types from site or list. Use the `Identi
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPContentType
 ```
@@ -32,6 +42,7 @@ Get-PnPContentType
 This will get a listing of all available content types within the current web
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPContentType -InSiteHierarchy
 ```
@@ -39,6 +50,7 @@ Get-PnPContentType -InSiteHierarchy
 This will get a listing of all available content types within the site collection
 
 ### EXAMPLE 3
+
 ```powershell
 Get-PnPContentType -Identity "Project Document"
 ```
@@ -46,6 +58,7 @@ Get-PnPContentType -Identity "Project Document"
 This will get the content type with the name "Project Document" within the current context
 
 ### EXAMPLE 4
+
 ```powershell
 Get-PnPContentType -List "Documents"
 ```
@@ -53,6 +66,7 @@ Get-PnPContentType -List "Documents"
 This will get a listing of all available content types within the list "Documents"
 
 ### EXAMPLE 5
+
 ```powershell
 Get-PnPContentType -Includes "SchemaXml"
 ```
@@ -62,79 +76,121 @@ This will get a listing of all available content types with the SchemaXml also b
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
+
 Name or ID of the content type to retrieve
 
 ```yaml
 Type: ContentTypePipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Includes
+
 List of properties to fetch about the ContentType(s) being returned
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -InSiteHierarchy
+
 Search site hierarchy for content types
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -List
+
 List to query
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
+## INPUTS
 
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -1,23 +1,30 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPPublishingImageRendition
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPublishingImageRendition.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPPublishingImageRendition.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPPublishingImageRendition
 ---
- 
+
 # Get-PnPPublishingImageRendition
 
 ## SYNOPSIS
+
 Returns all image renditions or if Identity is specified a specific one
 
 ## SYNTAX
 
-```powershell
-Get-PnPPublishingImageRendition [[-Identity] <ImageRenditionPipeBind>] 
- [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Get-PnPPublishingImageRendition [[-Identity] <ImageRenditionPipeBind>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -26,6 +33,7 @@ Allows to retrieve all image renditions or a specific one when `Identity` option
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPPublishingImageRendition
 ```
@@ -33,6 +41,7 @@ Get-PnPPublishingImageRendition
 Returns all Image Renditions
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPPublishingImageRendition -Identity "Test"
 ```
@@ -40,6 +49,7 @@ Get-PnPPublishingImageRendition -Identity "Test"
 Returns the image rendition named "Test"
 
 ### EXAMPLE 3
+
 ```powershell
 Get-PnPPublishingImageRendition -Identity 2
 ```
@@ -49,36 +59,55 @@ Returns the image rendition where its id equals 2
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
+
 Id or name of an existing image rendition
 
 ```yaml
 Type: ImageRenditionPipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
+## INPUTS
 
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

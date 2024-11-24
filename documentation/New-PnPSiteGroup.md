@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: New-PnPSiteGroup
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPSiteGroup.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/New-PnPSiteGroup.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: New-PnPSiteGroup
 ---
- 
+
 # New-PnPSiteGroup
 
 ## SYNOPSIS
@@ -19,19 +20,25 @@ Creates a new group in a SharePoint Online site collection.
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 New-PnPSiteGroup
-   -Name <String>
-   -PermissionLevels <String[]>
-   [-Site <SitePipeBind>]
+ -Name <String> -PermissionLevels <String[]> [-Site <SitePipeBind>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 A SharePoint group is a set of individual users. SharePoint groups enable you to manage sets of users instead of individual users.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 New-PnPSiteGroup -Site "https://contoso.sharepoint.com/sites/siteA" -Name "Project Leads" -PermissionLevels "Full Control"
 ```
@@ -39,6 +46,7 @@ New-PnPSiteGroup -Site "https://contoso.sharepoint.com/sites/siteA" -Name "Proje
 This example creates a group named Project Leads with the Full Control permission level on the site collection https://contoso.sharepoint.com/sites/siteA.
 
 ### EXAMPLE 2
+
 ```powershell
 New-PnPSiteGroup -Site "https://contoso.sharepoint.com/sites/marketing" -Name "NewGroupName" -PermissionLevels "Design"
 ```
@@ -47,20 +55,30 @@ This example creates a group named NewGroupName with the Design permission level
 ## PARAMETERS
 
 ### -Name
+
 Specifies the name of the group to add
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-Aliases: Group
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases:
+- Group
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -PermissionLevels
+
 Specifies the permission levels to grant to the newly created group. It can be any permission level that exists on the site collection on which the group is being created.
 
 > [!NOTE]
@@ -68,30 +86,50 @@ Specifies the permission levels to grant to the newly created group. It can be a
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Site
+
 Specifies the site collection to add the group to. If not specified the currently connected site collection will be used.
 
 ```yaml
 Type: SitePipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

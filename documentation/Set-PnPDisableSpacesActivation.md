@@ -1,29 +1,40 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPDisableSpacesActivation
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPDisableSpacesActivation.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPDisableSpacesActivation.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPDisableSpacesActivation
 ---
- 
+
 # Set-PnPDisableSpacesActivation
 
 ## SYNOPSIS
+
 Sets if SharePoint Spaces should be disabled.
 
 ## SYNTAX
 
-```powershell
-Set-PnPDisableSpacesActivation -Disable <SwitchParameter> [-Scope <String>] [-Identity <SitePipeBind>] [-Connection <PnPConnection>] 
+### Default (Default)
+
+```
+Set-PnPDisableSpacesActivation -Disable <SwitchParameter> [-Scope <String>]
+ [-Identity <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 This cmdlet disables or enables SharePoint Spaces for a specific site collection or entire SharePoint tenant.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Set-PnPDisableSpacesActivation -Disable:$true -Scope Tenant
 ```
@@ -31,6 +42,7 @@ Set-PnPDisableSpacesActivation -Disable:$true -Scope Tenant
 Disables SharePoint Spaces on the entire tenant.
 
 ### EXAMPLE 2
+
 ```powershell
 Set-PnPDisableSpacesActivation -Disable -Scope Site -Identity "https://contoso.sharepoint.com"
 ```
@@ -38,6 +50,7 @@ Set-PnPDisableSpacesActivation -Disable -Scope Site -Identity "https://contoso.s
 Disables SharePoint Spaces on https://contoso.sharepoint.com
 
 ### EXAMPLE 3
+
 ```powershell
 Set-PnPDisableSpacesActivation -Disable:$false -Scope Site -Identity "https://contoso.sharepoint.com"
 ```
@@ -46,64 +59,102 @@ Enables SharePoint Spaces on https://contoso.sharepoint.com
 
 ## PARAMETERS
 
-### -Disable
-Sets if SharePoint Spaces should be enabled or disabled.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Disable
+
+Sets if SharePoint Spaces should be enabled or disabled.
+
+```yaml
+Type: SwitchParameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Identity
+
 Specifies the URL of the SharePoint Site on which SharePoint Spaces should be disabled. Must be provided if Scope is set to Site.
 
 ```yaml
 Type: SPOSitePipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Scope
+
 Defines if SharePoint Spaces should be disabled for the entire tenant or for a specific site collection.
 
 ```yaml
 Type: DisableSpacesScope
-Parameter Sets: (All)
-Accepted values: Tenant, Site
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues:
+- Tenant
+- Site
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Set-PnPTemporarilyDisableAppBar
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTemporarilyDisableAppBar.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Set-PnPTemporarilyDisableAppBar.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Set-PnPTemporarilyDisableAppBar
 ---
- 
+
 # Set-PnPTemporarilyDisableAppBar
 
 ## SYNOPSIS
@@ -19,9 +20,15 @@ Allows the SharePoint Online App Bar to be disabled. It may take some time for t
 
 ## SYNTAX
 
-```powershell
-Set-PnPTemporarilyDisableAppBar -Enabled <Boolean>  [-Connection <PnPConnection>] 
+### Default (Default)
+
 ```
+Set-PnPTemporarilyDisableAppBar -Enabled <Boolean> [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -30,50 +37,73 @@ Allows to disable/enable SharePoint Online App Bar.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Set-PnPTemporarilyDisableAppBar $true
 ```
 
-Hides the SharePoint Online App Bar. 
+Hides the SharePoint Online App Bar.
 
 ### EXAMPLE 2
+
 ```powershell
 Set-PnPTemporarilyDisableAppBar $false
 ```
 
-Shows the SharePoint Online App Bar. 
+Shows the SharePoint Online App Bar.
 
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Enabled
+
 Specifies whether to show or hide SharePoint Online App Bar.
 
 ```yaml
 Type: Boolean
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: True
-Accept pipeline input: True
-Accept wildcard characters: False
+DefaultValue: True
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: true
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

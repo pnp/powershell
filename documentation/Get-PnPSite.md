@@ -1,22 +1,30 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPSite
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSite.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPSite.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPSite
 ---
- 
+
 # Get-PnPSite
 
 ## SYNOPSIS
+
 Returns the current site collection from the context.
 
 ## SYNTAX
 
-```powershell
-Get-PnPSite [-Connection <PnPConnection>] [-Includes <String[]>] 
+### Default (Default)
+
 ```
+Get-PnPSite [-Connection <PnPConnection>] [-Includes <String[]>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -25,6 +33,7 @@ Allows to retrieve current site collection from the context.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPSite
 ```
@@ -32,6 +41,7 @@ Get-PnPSite
 Gets the current site
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPSite -Includes RootWeb,ServerRelativeUrl
 ```
@@ -41,34 +51,55 @@ Gets the current site specifying to include RootWeb and ServerRelativeUrl proper
 ## PARAMETERS
 
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Includes
+
 Optionally allows properties to be retrieved for the returned site which are not included in the response by default
 
 ```yaml
 Type: String[]
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

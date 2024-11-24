@@ -1,23 +1,31 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPListItemAttachment.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPListItemAttachment.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: Get-PnPListItemAttachment
 ---
-  
+
 # Get-PnPListItemAttachment
 
 ## SYNOPSIS
+
 Downloads the list item attachments to a specified path on the file system.
 
 ## SYNTAX
 
 ### Get attachments from list item
-```powershell
-Get-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Path <String>] [-Force <SwitchParameter>] [-Connection <PnPConnection>] 
+
 ```
+Get-PnPListItemAttachment [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Path <String>]
+ [-Force <SwitchParameter>] [-Connection <PnPConnection>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -26,6 +34,7 @@ Allows to download the list item attachments to a specified path. Use `Force` op
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPListItemAttachment -List "Demo List" -Identity 1 -Path "C:\temp"
 ```
@@ -33,6 +42,7 @@ Get-PnPListItemAttachment -List "Demo List" -Identity 1 -Path "C:\temp"
 Downloads all attachments from the list item with Id "1" in the "Demo List" SharePoint list and stores them in the temp folder.
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPListItemAttachment -List "Demo List" -Identity 1 -Path "C:\temp" -Force
 ```
@@ -41,76 +51,122 @@ Downloads all attachments from the list item with Id "1" in the "Demo List" Shar
 
 ## PARAMETERS
 
-### -Path
-Specify the path on the local file system to download the list item attachments to.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -List
-The ID, Title or Url of the list. Note that when providing the name of the list, the name is case-sensitive.
-
-```yaml
-Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -Identity
-The ID of the listitem, or actual ListItem object
-
-```yaml
-Type: ListItemPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Force
-Specifying the Force parameter will skip the confirmation question and overwrite the files on the local disk, if they already exist.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Connection
+
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Force
+
+Specifying the Force parameter will skip the confirmation question and overwrite the files on the local disk, if they already exist.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Identity
+
+The ID of the listitem, or actual ListItem object
+
+```yaml
+Type: ListItemPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -List
+
+The ID, Title or Url of the list. Note that when providing the name of the list, the name is case-sensitive.
+
+```yaml
+Type: ListPipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Path
+
+Specify the path on the local file system to download the list item attachments to.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

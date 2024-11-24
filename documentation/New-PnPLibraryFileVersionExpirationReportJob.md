@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPLibraryFileVersionExpirationReportJob.html
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
+HelpUri: https://pnp.github.io/powershell/cmdlets/New-PnPLibraryFileVersionExpirationReportJob.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
 title: New-PnPLibraryFileVersionExpirationReportJob
 ---
-  
+
 # New-PnPLibraryFileVersionExpirationReportJob
 
 ## SYNOPSIS
@@ -15,9 +16,15 @@ Starts generating file version usage report for a document library.
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 New-PnPLibraryFileVersionExpirationReportJob -Identity <ListPipeBind> -ReportUrl <string>
 ```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -26,6 +33,7 @@ Starts generating file version usage report for a document library.
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 New-PnPLibraryFileVersionExpirationReportJob -Identity "Documents" -ReportUrl "https://contoso.sharepoint.com/sites/reports/MyReports/VersionReport.csv"
 ```
@@ -35,33 +43,55 @@ Starts generating file version usage report for a document library, saving the r
 ## PARAMETERS
 
 ### -Identity
+
 The ID, name or Url (Lists/MyList) of the document library to gather a file version usage report on.
 
 ```yaml
 Type: ListPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: true
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ReportUrl
+
 The URL of the report to save to.
 
 ```yaml
 Type: string
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

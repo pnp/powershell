@@ -1,15 +1,17 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPTenantInfo
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInfo.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantInfo.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPTenantInfo
 ---
- 
+
 # Get-PnPTenantInfo
 
 ## SYNOPSIS
+
 Gets information about any tenant
 
 ** Required Permissions **
@@ -17,20 +19,27 @@ Graph: CrossTenantInformation.ReadBasic.All
 
 ## SYNTAX
 
-### Current Tenant (default)
-```powershell
-Get-PnPTenantInfo [-Verbose]
+### Current Tenant (default) (Default)
+
+```
+Get-PnPTenantInfo [-Verbose] [<CommonParameters>]
 ```
 
 ### By TenantId
-```powershell
-Get-PnPTenantInfo -TenantId <String> [-Verbose]
+
+```
+Get-PnPTenantInfo -TenantId <String> [-Verbose] [<CommonParameters>]
 ```
 
 ### By Domain Name
-```powershell
-Get-PnPTenantInfo -DomainName <String> [-Verbose]
+
 ```
+Get-PnPTenantInfo -DomainName <String> [-Verbose] [<CommonParameters>]
+```
+
+## ALIASES
+
+This cmdlet has no aliases.
 
 ## DESCRIPTION
 
@@ -39,6 +48,7 @@ Gets the tenantId, federation brand name, company name and default domain name r
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPTenantInfo -TenantId "e65b162c-6f87-4eb1-a24e-1b37d3504663"
 ```
@@ -46,6 +56,7 @@ Get-PnPTenantInfo -TenantId "e65b162c-6f87-4eb1-a24e-1b37d3504663"
 Returns the tenant information of the specified TenantId.
 
 ### EXAMPLE 2
+
 ```powershell
 Get-PnPTenantInfo -DomainName "contoso.com"
 ```
@@ -53,6 +64,7 @@ Get-PnPTenantInfo -DomainName "contoso.com"
 Returns the Tenant Information for the tenant connected to the domain contoso.com.
 
 ### EXAMPLE 3
+
 ```powershell
 Get-PnPTenantInfo
 ```
@@ -60,6 +72,7 @@ Get-PnPTenantInfo
 Returns Tenant Information of the currently connected to tenant.
 
 ### EXAMPLE 4
+
 ```powershell
 Get-PnPTenantInfo -CurrentTenant
 ```
@@ -69,61 +82,99 @@ Returns Tenant Information of the currently connected to tenant.
 ## PARAMETERS
 
 ### -CurrentTenant
+
 Gets the Tenant Information of the currently connected to tenant.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: GETINFOOFCURRENTTENANT
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: GETINFOOFCURRENTTENANT
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -DomainName
+
 The Domain name of the tenant to lookup. You can use the onmicrosoft.com domain name such as "contoso.onmicrosoft.com" or use any domain that is connected to the tenant, i.e. "contoso.com".
 
 ```yaml
 Type: String
-Parameter Sets: GETINFOBYTDOMAINNAME
-
-Required: False
-Position: Named
-Default value: Production
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: Production
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: GETINFOBYTDOMAINNAME
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -TenantId
+
 The id of the tenant to retrieve the information about
 
 ```yaml
 Type: String
-Parameter Sets: GETINFOBYTENANTID
-
-Required: true
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: GETINFOBYTENANTID
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Verbose
+
 When provided, additional debug statements will be shown while executing the cmdlet.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

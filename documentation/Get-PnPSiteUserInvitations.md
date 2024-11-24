@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Get-PnPSiteUserInvitations
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteUserInvitations.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteUserInvitations.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Get-PnPSiteUserInvitations
 ---
- 
+
 # Get-PnPSiteUserInvitations
 
 ## SYNOPSIS
@@ -19,16 +20,24 @@ Searches against all stored sharing links and retrieves the email invites
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Get-PnPSiteUserInvitations [[-Site] <SitePipeBind>] -EmailAddress <string>
-   
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
-Searches against all stored sharing links on a Site and retrieves the email invites. If the site parameter is omitted the current site will be searched.
+
+
+
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Get-PnPSiteUserInvitations -Site "https://contoso.sharepoint.com/sites/ContosoWeb1/" -EmailAddress someone@example.com
 ```
@@ -37,35 +46,56 @@ This example retrieves email invites stored in the ContosoWeb1 site to the user 
 
 ## PARAMETERS
 
-### -Site
-Specifies the URL of the site collection.
-
-```yaml
-Type: SitePipeBind
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -EmailAddress
+
 Email Address of the user.
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+### -Site
+
+Specifies the URL of the site collection.
+
+```yaml
+Type: SitePipeBind
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

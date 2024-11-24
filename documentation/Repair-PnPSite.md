@@ -1,12 +1,13 @@
 ---
-Module Name: PnP.PowerShell
-title: Repair-PnPSite
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Repair-PnPSite.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Repair-PnPSite.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Repair-PnPSite
 ---
- 
+
 # Repair-PnPSite
 
 ## SYNOPSIS
@@ -19,19 +20,26 @@ Checks and repairs the site collection and its contents.
 
 ## SYNTAX
 
-```powershell
+### Default (Default)
+
+```
 Repair-PnPSite -Identity <SitePipeBind> [-RuleId <Guid>] [-RunAlways <SwitchParameter>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 The Repair-PnPSite cmdlet runs one or all site collection health checks on the site collection and its contents. This cmdlet will make changes if issues are found and automatically repairable.
 
 The cmdlet reports the health check rules with a summary of the results. The rules might not support automatic repair. Tests without repair mode can be initiated by running the Test-PnPSite cmdlet.
 
-
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Repair-PnPSite -Identity "https://contoso.sharepoint.com/sites/marketing"
 ```
@@ -39,6 +47,7 @@ Repair-PnPSite -Identity "https://contoso.sharepoint.com/sites/marketing"
 This example runs all the site collection health checks in repair mode on the https://contoso.sharepoint.com/sites/marketing site collection.
 
 ### EXAMPLE 2
+
 ```powershell
 Repair-PnPSite -Identity "https://contoso.sharepoint.com/sites/marketing" -RuleID "ee967197-ccbe-4c00-88e4-e6fab81145e1"
 ```
@@ -48,20 +57,29 @@ This example runs the Missing Galleries Check rule in repair mode on the https:/
 ## PARAMETERS
 
 ### -Identity
+
 Specifies the SharePoint Online site collection on which to run the repairs.
 
 ```yaml
 Type: SitePipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -RuleId
+
 Specifies a health check rule to run.
 
 For example:
@@ -75,30 +93,50 @@ For example:
 
 ```yaml
 Type: Guid
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -RunAlways
+
 Specifies whether the rules will be run as a result of this call or cached results from a previous run can be returned.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

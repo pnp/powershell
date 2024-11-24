@@ -1,24 +1,34 @@
 ---
-Module Name: PnP.PowerShell
-title: Invoke-PnPSiteSwap
-schema: 2.0.0
 applicable: SharePoint Online
+document type: cmdlet
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Invoke-PnPSiteSwap.html
+HelpUri: https://pnp.github.io/powershell/cmdlets/Invoke-PnPSiteSwap.html
+Module Name: PnP.PowerShell
+PlatyPS schema version: 2024-05-01
+title: Invoke-PnPSiteSwap
 ---
- 
+
 # Invoke-PnPSiteSwap
 
 ## SYNOPSIS
+
 Invokes a job to swap the location of a site with another site while archiving the original site.
 
 ## SYNTAX
 
-```powershell
-Invoke-PnPSiteSwap -SourceUrl <string> -TargetUrl <string> -ArchiveUrl <string> [-DisableRedirection] [-NoWait] [-Verbose] [-Connection <PnPConnection>]
+### Default (Default)
+
+```
+Invoke-PnPSiteSwap -SourceUrl <string> -TargetUrl <string> -ArchiveUrl <string>
+ [-DisableRedirection] [-NoWait] [-Verbose] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
+## ALIASES
+
+This cmdlet has no aliases.
+
 ## DESCRIPTION
+
 Swaps the location of a source site with a target site while archiving the original target site.
 
 Please note, the target site must be either:
@@ -39,6 +49,7 @@ The source and target sites can't be connected to an Office 365 group. They also
 ## EXAMPLES
 
 ### EXAMPLE 1
+
 ```powershell
 Invoke-PnPSiteSwap -SourceUrl https://contoso.sharepoint.com/sites/CommunicationSite -TargetUrl https://contoso.sharepoint.com -ArchiveUrl https://contoso.sharepoint.com/sites/Archive
 ```
@@ -46,6 +57,7 @@ Invoke-PnPSiteSwap -SourceUrl https://contoso.sharepoint.com/sites/Communication
 Archives the existing site at https://contoso.sharepoint.com to https://contoso.sharepoint.com/sites/Archive and moves https://contoso.sharepoint.com/sites/CommunicationSite to https://contoso.sharepoint.com. A site redirect will be created at https://contoso.sharepoint.com/sites/CommunicationSite that will redirect any requests to https://contoso.sharepoint.com.
 
 ### EXAMPLE 2
+
 ```powershell
 Invoke-PnPSiteSwap -SourceUrl https://contoso.sharepoint.com/sites/SearchSite -TargetUrl https://contoso.sharepoint.com/search -ArchiveUrl https://contoso.sharepoint.com/sites/Archive
 ```
@@ -53,16 +65,83 @@ Invoke-PnPSiteSwap -SourceUrl https://contoso.sharepoint.com/sites/SearchSite -T
 Archives the existing Search Center site at https://contoso.sharepoint.com/search to https://contoso.sharepoint.com/sites/Archive and moves the https://contoso.sharepoint.com/sites/SearchSite to https://contoso.sharepoint.com/search. A site redirect be created at https://contoso.sharepoint.com/sites/SearchSite that will redirect any requests to https://contoso.sharepoint.com/search.
 
 ### EXAMPLE 3
+
 ```powershell
 Invoke-PnPSiteSwap -SourceUrl https://contoso.sharepoint.com/sites/CommunicationSite -TargetUrl https://contoso.sharepoint.com -ArchiveUrl https://contoso.sharepoint.com/sites/Archive -DisableRedirection
 ```
 
 Archives the existing site at https://contoso.sharepoint.com to https://contoso.sharepoint.com/sites/Archive and moves https://contoso.sharepoint.com/sites/CommunicationSite to https://contoso.sharepoint.com. A site redirect will not be created at https://contoso.sharepoint.com/sites/CommunicationSite.
 
-
 ## PARAMETERS
 
+### -ArchiveUrl
+
+URL that the target site will be archived to. There should be no existing site, including a deleted site in the Recycle Bin, at this location before performing the swap.
+
+```yaml
+Type: String
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Connection
+
+Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
+
+```yaml
+Type: PnPConnection
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -DisableRedirection
+
+Disables the site redirect from being created at the Source URL location.
+
+```yaml
+Type: Switch Parameter
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
 ### -SourceUrl
+
 URL of the source site. The site at this location must exist before performing the swap.
 
 If the target is the root site at https://tenant-name.sharepoint.com then the source site must be either a Modern Team Site (STS#3) or a Communication Site (SITEPAGEPUBLISHING#0).
@@ -71,16 +150,24 @@ If the target is the search center site at https://tenant-name.sharepoint.com/se
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -TargetUrl
+
 URL of the target site that the source site will be swapped to. The site at this location must exist before performing the swap.
 
 The target site must be either:
@@ -90,71 +177,50 @@ The target site must be either:
 
 ```yaml
 Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ArchiveUrl
-URL that the target site will be archived to. There should be no existing site, including a deleted site in the Recycle Bin, at this location before performing the swap.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DisableRedirection
-Disables the site redirect from being created at the Source URL location.
-
-```yaml
-Type: Switch Parameter
-Parameter Sets: (All)
-
-Required: false
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Connection
-Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
-
-```yaml
-Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Verbose
+
 When provided, additional debug statements will be shown while executing the cmdlet.
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+DefaultValue: None
+SupportsWildcards: false
+ParameterValue: []
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
+
+## INPUTS
+
+## OUTPUTS
+
+## NOTES
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+- [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
