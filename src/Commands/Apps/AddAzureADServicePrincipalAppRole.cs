@@ -1,15 +1,17 @@
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Add, "PnPAzureADServicePrincipalAppRole")]
-    [RequiredApiApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All", "Application.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
     [Alias("Add-PnPEntraIDServicePrincipalAppRole")]
     public class AddAzureADServicePrincipalAppRole : PnPGraphCmdlet
     {
@@ -30,13 +32,13 @@ namespace PnP.PowerShell.Commands.Apps
         public ServicePrincipalPipeBind Resource;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYBUILTINTYPE)]
-        public ServicePrincipalBuiltInType BuiltInType;  
+        public ServicePrincipalBuiltInType BuiltInType;
 
         protected override void ExecuteCmdlet()
         {
             var principal = Principal.GetServicePrincipal(this, Connection, AccessToken);
 
-            if(principal == null)
+            if (principal == null)
             {
                 throw new PSArgumentException("Service principal not found", nameof(Principal));
             }
@@ -59,8 +61,8 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 appRole = AppRole.AppRole;
             }
-            
-            if(appRole == null)
+
+            if (appRole == null)
             {
                 throw new PSArgumentException("AppRole not found", nameof(AppRole));
             }

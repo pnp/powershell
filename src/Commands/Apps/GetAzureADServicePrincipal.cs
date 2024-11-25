@@ -1,16 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADServicePrincipal", DefaultParameterSetName = ParameterSet_ALL)]
-    [RequiredApiApplicationPermissions("graph/Application.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
     [OutputType(typeof(List<AzureADServicePrincipal>))]
     [Alias("Get-PnPEntraIDServicePrincipal")]
     public class GetAzureADServicePrincipal : PnPGraphCmdlet
