@@ -12,6 +12,12 @@ title: Get-PnPListItemComment
 ## SYNOPSIS
 Retrieves all comments from the list item in the specified list.
 
+## SYNTAX
+
+```powershell
+Get-PnPListItemComment -List <ListPipeBind> -Identity <ListItemPipeBind>
+```
+
 ## EXAMPLES
 
 ### EXAMPLE 1
