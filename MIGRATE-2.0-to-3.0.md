@@ -62,7 +62,8 @@ Recommend referring to these 2 links:
 | Connect-PnPOnline | Removed `-UseWebLogin` on `Connect-PnPOnline`. It used a very outdated and questionable (reusing an auth cookie) authentication method which implementation broke easily. If you require an ACS connection for certain functionality, consider using `-ClientId` in combination with `-ClientSecret` instead. |
 | Connect-PnPOnline | Removed `-LaunchBrowser` option for Interactive login flows. It is the default now and removed the popup based authentication option |
 | Connect-PnPOnline | Removed `-LaunchBrowser` option for Device Login flows. It is the default now. | 
-
+| Register-PnPEntraIDApp | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
+| Register-PnPEntraIDAppForInteractiveLogin | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
 ## Other notable changes
 
 ## Changes to output type
