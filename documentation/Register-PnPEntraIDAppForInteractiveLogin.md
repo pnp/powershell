@@ -18,17 +18,14 @@ Registers an Entra ID App for use with Interactive login
 ```powershell
 Register-PnPEntraIDAppForInteractiveLogin -ApplicationName <String>
                                        -Tenant <String>
-                                       -Interactive]
                                        [-GraphApplicationPermissions <Permission[]>]
                                        [-GraphDelegatePermissions <Permission[]>]
                                        [-SharePointApplicationPermissions <Permission[]>]
                                        [-SharePointDelegatePermissions <Permission[]>]
-                                       [-NoPopup]
                                        [-LogoFilePath <string>]
                                        [-MicrosoftGraphEndPoint <string>]
                                        [-EntraIDLoginEndPoint <string>]
                                        [-SignInAudience <EntraIDSignInAudience>]
-                                       [-LaunchBrowser <SwitchParameter>]
 ```
 
 ### Generate App using Device Login
@@ -40,44 +37,30 @@ Register-PnPEntraIDAppForInteractiveLogin -ApplicationName <String>
                                        [-GraphDelegatePermissions <Permission[]>]
                                        [-SharePointApplicationPermissions <Permission[]>]
                                        [-SharePointDelegatePermissions <Permission[]>]
-                                       [-NoPopup]
                                        [-LogoFilePath <string>]
                                        [-SignInAudience <EntraIDSignInAudience>]
-                                       [-LaunchBrowser <SwitchParameter>]
 ```
 
 ## DESCRIPTION
-Registers an Entra ID App for use with the interactive login on Connect-PnPOnline. You will have to specify either -Interactive or -DeviceLogin to authenticate.
+Registers an Entra ID App for use with the interactive login on Connect-PnPOnline. By default it assumes an Interactive login, but you can decide to use Device Login auth by specifying -DeviceLogin.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Interactive
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com
 ```
 
 Creates a new Entra ID Application registration. The application will be setup with the following delegate permissions to consent: AllSites.FullControl, Group.ReadWrite.All, User.ReadWrite.All, TermStore.ReadWrite.All. A browser window will be shown allowing you to authenticate.
 
 ### EXAMPLE 2
 ```powershell
-Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -GraphDelegatePermissions "Group.Read.All" -SharePointDelegatePermissions "AllSites.FullControl" -Interactive
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -GraphDelegatePermissions "Group.Read.All" -SharePointDelegatePermissions "AllSites.FullControl"
 ```
 
 Creates a new Entra ID Application registration. The application will be setup with the following delegate permissions to consent: Group.Read.All, AllSites.FullControl. A browser window will be shown allowing you to authenticate.
 
 ## PARAMETERS
-
-### -Interactive
-If specified, an interactive authentication flow will be started, allowing your to authenticate with username, password and an optional second factor from your phone or other device.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -DeviceLogin
 If specified, a device login flow, supporting Multi-Factor Authentication will be used to authenticate towards the Microsoft Graph.
@@ -163,20 +146,6 @@ Position: Named
 Accept pipeline input: False
 ```
 
-### -NoPopup
-This switch only applies to Windows and has no effect on Linux and MacOS.
-
-If not specified and running on Windows, all authentication and consent steps will be presented in a popup. If you want to open the URLs manually in a browser, specify this switch.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -AzureEnvironment
 The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.
 
@@ -243,21 +212,6 @@ Parameter Sets: Generate Certificate
 Required: False
 Position: Named
 Accept pipeline input: False
-```
-
-### -LaunchBrowser
-Launch a browser automatically and copy the code to enter to the clipboard
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: DeviceLogin
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
 ```
 
 ## RELATED LINKS

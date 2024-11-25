@@ -76,19 +76,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
         [Parameter(Mandatory = false)]
-        public string Username;
-
-        [Parameter(Mandatory = false)]
-        public SecureString Password;
-
-        [Parameter(Mandatory = false)]
         public SwitchParameter DeviceLogin;
-
-        [Parameter(Mandatory = false)]
-        public SwitchParameter NoPopup;
-
-        [Parameter(Mandatory = false)]
-        public SwitchParameter Interactive;
 
         [Parameter(Mandatory = false)]
         public string LogoFilePath;
@@ -104,9 +92,6 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         [Parameter(Mandatory = false)]
         public EntraIDSignInAudience SignInAudience;
-
-        [Parameter(Mandatory = false)]
-        public SwitchParameter LaunchBrowser;
 
         protected override void ProcessRecord()
         {
@@ -437,7 +422,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 Task.Factory.StartNew(() =>
                 {
-                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, AzureEnvironment, MicrosoftGraphEndPoint, launchBrowser: LaunchBrowser);
+                    token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, AzureEnvironment, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
                         messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
@@ -446,7 +431,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 });
                 messageWriter.Start();
             }
-            else if (Interactive.IsPresent)
+            else
             {
                 Task.Factory.StartNew(() =>
                 {
@@ -459,23 +444,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 });
                 messageWriter.Start();
             }
-            else
-            {
-                if (PnPConnection.Current?.PSCredential != null)
-                {
-                    Username = PnPConnection.Current.PSCredential.UserName;
-                    Password = PnPConnection.Current.PSCredential.Password;
-                }
-                if (string.IsNullOrEmpty(Username))
-                {
-                    throw new PSArgumentException("Username is required or use -DeviceLogin or -Interactive");
-                }
-                if (Password == null || Password.Length == 0)
-                {
-                    throw new PSArgumentException("Password is required or use -DeviceLogin or -Interactive");
-                }
-                token = AzureAuthHelper.AuthenticateAsync(Tenant, Username, Password, AzureEnvironment, MicrosoftGraphEndPoint).GetAwaiter().GetResult();
-            }
+
 
             return token;
         }
@@ -684,59 +653,38 @@ namespace PnP.PowerShell.Commands.AzureAD
             progressRecord.RecordType = ProgressRecordType.Completed;
             WriteProgress(progressRecord);
 
-            if (OperatingSystem.IsWindows() && !NoPopup)
+
+            if (!Stopping)
             {
-                if (!Stopping)
+                if (ParameterSpecified(nameof(DeviceLogin)))
                 {
-                    if (ParameterSpecified(nameof(Interactive)))
+                    using (var authManager = AuthenticationManager.CreateWithDeviceLogin(azureApp.AppId, Tenant, (deviceCodeResult) =>
                     {
-                        using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(azureApp.AppId, (url, port) =>
-                         {
-                             BrowserHelper.OpenBrowserForInteractiveLogin(url, port, cancellationTokenSource);
-                         }, Tenant, "You successfully provided consent", "You failed to provide consent.", AzureEnvironment))
-                        {
-                            authManager.ClearTokenCache();
-                            authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
-                        }
-                    }
-                    else if (ParameterSpecified(nameof(DeviceLogin)) && LaunchBrowser)
+                        ClipboardService.SetText(deviceCodeResult.UserCode);
+                        messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                        BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
+                        return Task.FromResult(0);
+                    }, AzureEnvironment))
                     {
-                        using (var authManager = AuthenticationManager.CreateWithDeviceLogin(azureApp.AppId, Tenant, (deviceCodeResult) =>
-                        {
-                            ClipboardService.SetText(deviceCodeResult.UserCode);
-                            messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
-                            BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
-                            return Task.FromResult(0);
-                        }, AzureEnvironment))
-                        {
-                            authManager.ClearTokenCache();
-                            authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
-                        }
+                        authManager.ClearTokenCache();
+                        authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
                     }
-                    // else
-                    // {
-                    //     BrowserHelper.GetWebBrowserPopup(consentUrl, "Please provide consent", new[] { ("https://pnp.github.io/powershell/consent.html", BrowserHelper.UrlMatchType.StartsWith) }, cancellationTokenSource: cancellationTokenSource, cancelOnClose: false);
-                    // }
-                    // Write results
-                    WriteObject(record);
-                }
-            }
-            else
-            {
-                if (OperatingSystem.IsMacOS())
-                {
-                    Process.Start("open", consentUrl);
-                }
-                else if (OperatingSystem.IsLinux())
-                {
-                    Process.Start("xdg-open", consentUrl);
                 }
                 else
                 {
-                    Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
+                    using (var authManager = AuthenticationManager.CreateWithInteractiveLogin(azureApp.AppId, (url, port) =>
+                     {
+                         BrowserHelper.OpenBrowserForInteractiveLogin(url, port, cancellationTokenSource);
+                     }, Tenant, "You successfully provided consent", "You failed to provide consent.", AzureEnvironment))
+                    {
+                        authManager.ClearTokenCache();
+                        authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
+                    }
                 }
                 WriteObject(record);
             }
+
+            WriteObject(record);
         }
 
         private void SetLogo(AzureADApp azureApp, string token)

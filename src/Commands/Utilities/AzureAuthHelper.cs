@@ -28,22 +28,17 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        internal static string AuthenticateDeviceLogin(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, string clientId = "1950a258-227b-4e31-a9cf-717495945fc2", string customGraphEndpoint = "", bool launchBrowser = false)
+        internal static string AuthenticateDeviceLogin(CancellationTokenSource cancellationTokenSource, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, string clientId = "1950a258-227b-4e31-a9cf-717495945fc2", string customGraphEndpoint = "")
         {
             try
             {
                 using (var authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(CLIENTID, (result) =>
                 {
-                    if (launchBrowser)
-                    {
-                        ClipboardService.SetText(result.UserCode);
-                        messageWriter.WriteWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the browser tab after you authenticated successfully to continue the process.");
-                        BrowserHelper.OpenBrowserForInteractiveLogin(result.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
-                    }
-                    else
-                    {
-                        messageWriter.WriteWarning(result.Message);
-                    }
+
+                    ClipboardService.SetText(result.UserCode);
+                    messageWriter.WriteWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the browser tab after you authenticated successfully to continue the process.");
+                    BrowserHelper.OpenBrowserForInteractiveLogin(result.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
+
                     return Task.FromResult(0);
                 }, azureEnvironment))
                 {
