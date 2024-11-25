@@ -106,12 +106,6 @@ Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
  [-AzureADWorkloadIdentity] [-Connection <PnPConnection>]
 ```
 
-### Azure AD Workload Identity
-```powershell
-Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
- [-AzureADWorkloadIdentity] [-Connection <PnPConnection>]
-```
-
 ### OS login
 ```powershell
 Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] 
