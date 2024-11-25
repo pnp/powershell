@@ -590,7 +590,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             using (authManager)
             {
-                var clientContext = authManager.GetContext(uri.ToString(), cancellationTokenSource.Token, "PnP PowerShell", "https://pnp.github.io/powershell");
+                var clientContext = authManager.GetContext(uri.ToString(), cancellationTokenSource.Token);
                 var context = PnPClientContext.ConvertFrom(clientContext);
                 context.ExecutingWebRequest += (sender, e) =>
                 {
