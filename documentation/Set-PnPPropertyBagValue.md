@@ -16,13 +16,13 @@ Adds a new or updates an existing property bag value.
 
 ### Web
 ```powershell
-Set-PnPPropertyBagValue -Key <String> -Value <String> [-Indexed] 
+Set-PnPPropertyBagValue -Key <String> -Value <String> [-Indexed] [-Force] 
  [-Connection <PnPConnection>] 
 ```
 
 ### Folder
 ```powershell
-Set-PnPPropertyBagValue -Key <String> -Value <String> [-Folder <String>] 
+Set-PnPPropertyBagValue -Key <String> -Value <String> [-Folder <String>] [-Force] 
  [-Connection <PnPConnection>] 
 ```
 
@@ -124,6 +124,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Force
+If provided, no confirmation will be asked to remove the value from the property bag. It will also temporarily enable scripts on the site and then disable it after setting property bag value.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 
 ## RELATED LINKS

@@ -1,16 +1,17 @@
-﻿using System;
+﻿using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.SharePoint.Client;
+using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Base;
+using System;
 using System.Linq;
 using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-
-using PnP.Framework.Utilities;
 
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPPropertyBagValue")]
     [Alias("Add-PnPPropertyBagValue")]
     [OutputType(typeof(void))]
-    public class SetPropertyBagValue : PnPWebCmdlet
+    public class SetPropertyBagValue : PnPAdminCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "Web")]
         [Parameter(Mandatory = true, ParameterSetName = "Folder")]
@@ -27,34 +28,55 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = "Folder")]
         public string Folder;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Force;
+
         protected override void ExecuteCmdlet()
         {
+            bool isScriptSettingUpdated = false;
             try
             {
+                WriteVerbose("Checking if the site is a no-script site");
+                var web = ClientContext.Web;
+                web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
+                if (web.IsNoScriptSite())
+                {
+                    if (Force || ShouldContinue("The current site is a no-script site. Do you want to temporarily enable scripting on it to allow setting property bag value?", Properties.Resources.Confirm))
+                    {
+                        WriteVerbose("Temporarily enabling scripting on the site");
+                        var tenant = new Tenant(AdminContext);
+                        tenant.SetSiteProperties(web.Url, noScriptSite: false);
+                        isScriptSettingUpdated = true;
+                    }
+                    else
+                    {
+                        ThrowTerminatingError(new ErrorRecord(new Exception($"Site has NoScript enabled, this prevents setting some property bag values."), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
+                        return;
+                    }
+                }
+
                 if (!ParameterSpecified(nameof(Folder)))
                 {
                     if (!Indexed)
                     {
                         // If it is already an indexed property we still have to add it back to the indexed properties
-                        Indexed = !string.IsNullOrEmpty(CurrentWeb.GetIndexedPropertyBagKeys().FirstOrDefault(k => k == Key));
+                        Indexed = !string.IsNullOrEmpty(web.GetIndexedPropertyBagKeys().FirstOrDefault(k => k == Key));
                     }
 
-                    CurrentWeb.SetPropertyBagValue(Key, Value);
+                    web.SetPropertyBagValue(Key, Value);
                     if (Indexed)
                     {
-                        CurrentWeb.AddIndexedPropertyBagKey(Key);
+                        web.AddIndexedPropertyBagKey(Key);
                     }
                     else
                     {
-                        CurrentWeb.RemoveIndexedPropertyBagKey(Key);
+                        web.RemoveIndexedPropertyBagKey(Key);
                     }
                 }
                 else
                 {
-                    CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
-
-                    var folderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
-                    var folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
+                    var folderUrl = UrlUtility.Combine(web.ServerRelativeUrl, Folder);
+                    var folder = web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
 
                     folder.EnsureProperty(f => f.Properties);
 
@@ -63,20 +85,17 @@ namespace PnP.PowerShell.Commands
                     ClientContext.ExecuteQueryRetry();
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                if (ex is ServerUnauthorizedAccessException)
+                throw;
+            }
+            finally
+            {
+                if (isScriptSettingUpdated)
                 {
-                    if (CurrentWeb.IsNoScriptSite())
-                    {
-                        ThrowTerminatingError(new ErrorRecord(new Exception($"{ex.Message} Site might have NoScript enabled, this prevents setting some property bag values.", ex), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
-                        return;
-                    }
-                    throw;
-                }
-                else
-                {
-                    throw;
+                    WriteVerbose("Disabling scripting on the site");
+                    var tenant = new Tenant(AdminContext);
+                    tenant.SetSiteProperties(ClientContext.Web.Url, noScriptSite: true);
                 }
             }
         }
