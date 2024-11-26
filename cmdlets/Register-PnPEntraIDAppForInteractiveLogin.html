@@ -89,17 +89,14 @@
 <h3 id="generate-app-using-interactive-login">Generate App using Interactive Login</h3>
 <pre><code class="lang-powershell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &lt;String&gt;
                                        -Tenant &lt;String&gt;
-                                       -Interactive]
                                        [-GraphApplicationPermissions &lt;Permission[]&gt;]
                                        [-GraphDelegatePermissions &lt;Permission[]&gt;]
                                        [-SharePointApplicationPermissions &lt;Permission[]&gt;]
                                        [-SharePointDelegatePermissions &lt;Permission[]&gt;]
-                                       [-NoPopup]
                                        [-LogoFilePath &lt;string&gt;]
                                        [-MicrosoftGraphEndPoint &lt;string&gt;]
                                        [-EntraIDLoginEndPoint &lt;string&gt;]
                                        [-SignInAudience &lt;EntraIDSignInAudience&gt;]
-                                       [-LaunchBrowser &lt;SwitchParameter&gt;]
 </code></pre>
 <h3 id="generate-app-using-device-login">Generate App using Device Login</h3>
 <pre><code class="lang-powershell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &lt;String&gt;
@@ -109,32 +106,21 @@
                                        [-GraphDelegatePermissions &lt;Permission[]&gt;]
                                        [-SharePointApplicationPermissions &lt;Permission[]&gt;]
                                        [-SharePointDelegatePermissions &lt;Permission[]&gt;]
-                                       [-NoPopup]
                                        [-LogoFilePath &lt;string&gt;]
                                        [-SignInAudience &lt;EntraIDSignInAudience&gt;]
-                                       [-LaunchBrowser &lt;SwitchParameter&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Registers an Entra ID App for use with the interactive login on Connect-PnPOnline. You will have to specify either -Interactive or -DeviceLogin to authenticate.</p>
+<p>Registers an Entra ID App for use with the interactive login on Connect-PnPOnline. By default it assumes an Interactive login, but you can decide to use Device Login auth by specifying -DeviceLogin.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Interactive
+<pre><code class="lang-powershell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com
 </code></pre>
 <p>Creates a new Entra ID Application registration. The application will be setup with the following delegate permissions to consent: AllSites.FullControl, Group.ReadWrite.All, User.ReadWrite.All, TermStore.ReadWrite.All. A browser window will be shown allowing you to authenticate.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -GraphDelegatePermissions &quot;Group.Read.All&quot; -SharePointDelegatePermissions &quot;AllSites.FullControl&quot; -Interactive
+<pre><code class="lang-powershell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -GraphDelegatePermissions &quot;Group.Read.All&quot; -SharePointDelegatePermissions &quot;AllSites.FullControl&quot;
 </code></pre>
 <p>Creates a new Entra ID Application registration. The application will be setup with the following delegate permissions to consent: Group.Read.All, AllSites.FullControl. A browser window will be shown allowing you to authenticate.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-interactive">-Interactive</h3>
-<p>If specified, an interactive authentication flow will be started, allowing your to authenticate with username, password and an optional second factor from your phone or other device.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-</code></pre>
 <h3 id="-devicelogin">-DeviceLogin</h3>
 <p>If specified, a device login flow, supporting Multi-Factor Authentication will be used to authenticate towards the Microsoft Graph.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
@@ -198,16 +184,6 @@ Required: True
 Position: Named
 Accept pipeline input: False
 </code></pre>
-<h3 id="-nopopup">-NoPopup</h3>
-<p>This switch only applies to Windows and has no effect on Linux and MacOS.</p>
-<p>If not specified and running on Windows, all authentication and consent steps will be presented in a popup. If you want to open the URLs manually in a browser, specify this switch.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-</code></pre>
 <h3 id="-azureenvironment">-AzureEnvironment</h3>
 <p>The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.</p>
 <pre><code class="lang-yaml">Type: AzureEnvironment
@@ -256,18 +232,6 @@ Parameter Sets: Generate Certificate
 Required: False
 Position: Named
 Accept pipeline input: False
-</code></pre>
-<h3 id="-launchbrowser">-LaunchBrowser</h3>
-<p>Launch a browser automatically and copy the code to enter to the clipboard</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: DeviceLogin
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
