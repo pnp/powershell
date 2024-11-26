@@ -15,7 +15,7 @@ title: Get-PnPContainer
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Returns one or more Containers in a SharePoint repository services application.
+Returns one or more Containers in a SharePoint Embedded application.
 
 ## SYNTAX
 

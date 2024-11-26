@@ -15,7 +15,7 @@ title: Get-PnPContainerTypeConfiguration
 
 * SharePoint: Access to the SharePoint Tenant Administration site
 
-Returns container type configuration of a SharePoint repository services application.
+Returns container type configuration of a SharePoint Embedded application.
 
 ## SYNTAX
 
