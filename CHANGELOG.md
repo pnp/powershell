@@ -104,6 +104,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `-Title` and `-Header` parameters from `Remove-PnPNavigationNode`. They were marked obsolete.
 - Removed `-FileUrl` parameter from `Get-PnPSharingLink`. It was marked obsolete.
 - Removed `-WebLogin` parameter from `Connect-PnPOnline` cmdlet. It was marked obsolete and was a security risk.
+- Removed `Set-PnPMinimalDownloadStrategy` as it's not applicable anymore to SharePoint Online. If you need the functionality you can always turn on the feature with `Enable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a` or turn it off with `Disable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a`
  
 ### Contributors
 
