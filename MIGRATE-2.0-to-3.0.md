@@ -71,3 +71,4 @@ Recommend referring to these 2 links:
 | **Cmdlet** | **Comment** |
 | ----------- | ---------------------- |
 | Get-PnPAccessToken | The output type is now `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`, earlier it was `System.IdentityModel.Tokens.Jwt` |
+| Get-PnPCustomAction "| The output type is now `PnP.Core.Model.SharePoint.UserCustomAction`, earlier it was `Microsoft.SharePoint.Client.UserCustomAction` |
