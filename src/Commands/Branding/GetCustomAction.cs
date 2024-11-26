@@ -38,13 +38,11 @@ namespace PnP.PowerShell.Commands.Branding
                 {
                     case CustomActionScope.Web:
                         {
-                            PnPContext.Web.LoadAsync(w => w.UserCustomActions).GetAwaiter().GetResult();
                             actions = PnPContext.Web.UserCustomActions.ToList();
                             break;
                         }
                     case CustomActionScope.Site:
                         {
-                            PnPContext.Site.LoadAsync(s => s.UserCustomActions).GetAwaiter().GetResult();
                             actions = PnPContext.Site.UserCustomActions.ToList();
                             break;
                         }

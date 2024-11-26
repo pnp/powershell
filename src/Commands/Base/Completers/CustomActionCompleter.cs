@@ -26,8 +26,6 @@ namespace PnP.PowerShell.Commands.Base.Completers
             {
                 case CustomActionScope.Web:
                     {
-                        PnPContext.Web.UserCustomActions.LoadAsync(u => u.Id);
-
                         foreach (var ca in PnPContext.Web.UserCustomActions)
                         {
                             results.Add(new CompletionResult(ca.Id.ToString()));
@@ -36,7 +34,6 @@ namespace PnP.PowerShell.Commands.Base.Completers
                     }
                 case CustomActionScope.Site:
                     {
-                        PnPContext.Site.UserCustomActions.LoadAsync(u => u.Id);
                         foreach (var ca in PnPContext.Site.UserCustomActions)
                         {
                             results.Add(new CompletionResult(ca.Id.ToString()));
@@ -45,9 +42,6 @@ namespace PnP.PowerShell.Commands.Base.Completers
                     }
                 default:
                     {
-                        PnPContext.Web.UserCustomActions.LoadAsync(u => u.Id);
-                        PnPContext.Site.UserCustomActions.LoadAsync(u => u.Id);
-
                         foreach (var ca in PnPContext.Web.UserCustomActions)
                         {
                             results.Add(new CompletionResult(ca.Id.ToString()));
