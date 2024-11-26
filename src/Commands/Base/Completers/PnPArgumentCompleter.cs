@@ -1,14 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Management.Automation;
 using System.Management.Automation.Language;
-using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.SharePoint.Client;
+using PnP.Core.Services;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Extensions;
 
 public abstract class PnPArgumentCompleter : IArgumentCompleter
 {
+    public Microsoft.SharePoint.Client.ClientContext ClientContext => PnPConnection.Current.Context;
+
+    public PnP.Core.Services.PnPContext PnPContext => PnPConnection.Current.PnPContext;
+
     private const int Timeout = 2000;
     public IEnumerable<CompletionResult> CompleteArgument(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
     {

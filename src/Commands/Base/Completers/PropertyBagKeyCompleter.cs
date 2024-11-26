@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
-using System.Reflection.Metadata;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 
@@ -17,17 +16,17 @@ namespace PnP.PowerShell.Commands.Base.Completers
             IEnumerable<string> keys = null;
             if (fakeBoundParameters["Folder"] == null)
             {
-                PnPConnection.Current.Context.Web.EnsureProperty(w => w.AllProperties);
+                ClientContext.Web.EnsureProperty(w => w.AllProperties);
 
-                keys = PnPConnection.Current.Context.Web.AllProperties.FieldValues.Select(x => x.Key);
+                keys = ClientContext.Web.AllProperties.FieldValues.Select(x => x.Key);
             }
             else
             {
                 var folderName = fakeBoundParameters["Folder"] as string;
-                PnPConnection.Current.Context.Web.EnsureProperty(w => w.ServerRelativeUrl);
+                ClientContext.Web.EnsureProperty(w => w.ServerRelativeUrl);
 
-                var folderUrl = UrlUtility.Combine(PnPConnection.Current.Context.Web.ServerRelativeUrl, folderName);
-                var folder = PnPConnection.Current.Context.Web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
+                var folderUrl = UrlUtility.Combine(ClientContext.Web.ServerRelativeUrl, folderName);
+                var folder = ClientContext.Web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
                 folder.EnsureProperty(f => f.Properties);
 
                 keys = folder.Properties.FieldValues.Select(x => x.Key);

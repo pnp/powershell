@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Base.Completers
         {
             List<CompletionResult> results = new List<CompletionResult>();
             wordToComplete = wordToComplete.Replace('\\', '/');
-            var pages = PnPConnection.Current.PnPContext.Web.GetPages(wordToComplete.TrimStart('/'));
+            var pages = PnPContext.Web.GetPages(wordToComplete.TrimStart('/'));
             foreach (var page in pages.OrderBy(p => p.Name))
             {
                 var result = string.IsNullOrEmpty(page.Folder) ? page.Name : page.Folder + "/" + page.Name;
