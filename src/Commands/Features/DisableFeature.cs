@@ -22,12 +22,12 @@ namespace PnP.PowerShell.Commands.Features
             var pnpContext = Connection.PnPContext;
             if (Scope == FeatureScope.Web)
             {
-                pnpContext.Web.EnsureProperties(w => w.Features);
+                pnpContext.Web.LoadAsync(w => w.Features).GetAwaiter().GetResult();
                 pnpContext.Web.Features.Disable(Identity);
             }
             else
             {
-                pnpContext.Site.EnsureProperties(s => s.Features);
+                pnpContext.Site.LoadAsync(s => s.Features).GetAwaiter().GetResult();
                 pnpContext.Site.Features.Disable(Identity);
             }
         }

@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
 using PnP.PowerShell.Commands.Utilities;
+using System.Collections.Generic;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPPriviledgedIdentityManagementEligibleAssignment")]
     [OutputType(typeof(List<RoleEligibilitySchedule>))]
     [OutputType(typeof(RoleEligibilitySchedule))]
-    [RequiredApiApplicationPermissions("RoleAssignmentSchedule.Read.Directory")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/RoleAssignmentSchedule.Read.Directory")]
     public class GetPriviledgedIdentityManagementEligibleAssignment : PnPGraphCmdlet
     {
         /// <summary>

@@ -16,7 +16,7 @@ Creates a taxonomy term group
 
 ```powershell
 New-PnPTermGroup -Name <String> [-Id <Guid>] [-Description <String>]
- [-TermStore <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]>]
+ [-TermStore <PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]>] [-Contributors <string []>] [-Managers <string []>]
  [-Connection <PnPConnection>] 
 ```
 
@@ -32,6 +32,13 @@ New-PnPTermGroup -GroupName "Countries"
 ```
 
 Creates a new taxonomy term group named "Countries"
+
+### EXAMPLE 2
+```powershell
+New-PnPTermGroup -GroupName "Countries" -Contributors @("i:0#.f|membership|pradeepg@gautamdev.onmicrosoft.com","i:0#.f|membership|adelev@gautamdev.onmicrosoft.com") -Managers @("i:0#.f|membership|alexw@gautamdev.onmicrosoft.com","i:0#.f|membership|diegos@gautamdev.onmicrosoft.com")
+```
+
+Creates a new taxonomy term group named "Countries" and sets the users as contributors and managers of the term group. **The user names for contributors and managers need to be encoded claim for the specified login names.**
 
 ## PARAMETERS
 
@@ -100,6 +107,36 @@ Term store to add the group to; if not specified the default term store is used.
 Type: PnP.PowerShell.Commands.Base.PipeBinds.GenericObjectNameIdPipeBind`1[Microsoft.SharePoint.Client.Taxonomy.TermStore]
 Parameter Sets: (All)
 Aliases: TermStoreName
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Managers
+The manager of the term group who can create/edit term sets in the group as well as add/remove contributors. **The user names for managers need to be encoded claim for the specified login names.**
+
+```yaml
+Type: string[]
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Contributors
+The contributor to the term group who can create/edit term sets in the group. **The user names for contributors need to be encoded claim for the specified login names.**
+
+```yaml
+Type: string[]
+Parameter Sets: (All)
+Aliases: 
 
 Required: False
 Position: Named

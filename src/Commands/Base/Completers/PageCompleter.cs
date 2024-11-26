@@ -1,16 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Language;
-using System.Reflection.Metadata;
-using System.Threading;
-using System.Threading.Tasks;
-using AngleSharp.Css.Values;
-using Microsoft.SharePoint.Client;
-using PnP.Core.Transformation.Model;
-using PnP.PowerShell.Commands.Extensions;
 
 namespace PnP.PowerShell.Commands.Base.Completers
 {

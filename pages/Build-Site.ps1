@@ -2,8 +2,7 @@
 #New-Item -Path "./dev/pages/cmdlets/released" -ItemType Directory
 #New-Item -Path "./dev/pages/cmdlets/nightly" -ItemType Directory
 
-$nightlycmdlets = Get-ChildItem "./dev/documentation/*.md" | ForEach-Object { $_ | Select-Object -ExpandProperty Name }
-$releasedcmdlets = Get-ChildItem "./master/documentation/*.md" | ForEach-Object { $_ | Select-Object -ExpandProperty Name }
+$nightlycmdlets = Get-ChildItem "./dev/documentation/*.md" | ForEach-Object { $_ | Select-Object -ExpandProperty BaseName }
 
 class FrontMatters {
     [hashtable] GetHeader($path) {
@@ -26,7 +25,6 @@ class FrontMatters {
         }
         return $header
     }
-
 
     [string] WriteHeader($path, $header) {
 
@@ -68,8 +66,8 @@ $aliasCmdlets = @()
 Try {
 	Write-Host "Generating documentation files for alias cmdlets" -ForegroundColor Yellow
 	# Load the Module in a new PowerShell session
-	$scriptBlock = {
-		Write-Host "Installing latest nightly of PnP PowerShell"
+	$scriptBlockNightlyRelease = {
+		Write-Host "Installing latest nightly release of PnP PowerShell"
   		Install-Module PnP.PowerShell -AllowPrerelease -Force
 
   		Write-Host "Retrieving PnP PowerShell alias cmdlets"
@@ -77,9 +75,17 @@ Try {
 		$cmdlets
   		Write-Host "$($cmdlets.Length) alias cmdlets retrieved"
 	}
-	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
+	$aliasCmdlets = Start-ThreadJob -ScriptBlock $scriptBlockNightlyRelease | Receive-Job -Wait
 
- 	$aliasCmdletsCount = $aliasCmdlets.Length
+    	$aliasCmdletsCount = $aliasCmdlets.Length
+
+    	$scriptBlockStableRelease = {
+  		Write-Host "Retrieving PnP PowerShell cmdlets from latest stable release"
+		$cmdlets = (Find-Module -Name PnP.PowerShell).AdditionalMetadata.Cmdlets.Split(" ")
+		$cmdlets
+  		Write-Host "$($cmdlets.Length) cmdlets retrieved"
+	}
+	$stableReleaseCmdlets = Start-ThreadJob -ScriptBlock $scriptBlockStableRelease | Receive-Job -Wait
 
   	Write-Host "- Retrieving alias template page"
 	$aliasTemplatePageContent = Get-Content -Path "./dev/pages/cmdlets/alias.template" -Raw
@@ -102,13 +108,13 @@ Write-Host "Copying documentation files to page cmdlets"
 Copy-Item -Path "./dev/documentation/*.md" -Destination "./dev/pages/cmdlets" -Force
 
 foreach ($nightlycmdlet in $nightlycmdlets) {
-    if (!$releasedcmdlets.Contains($nightlycmdlet)) {
-        Copy-Item "./dev/documentation/$nightlycmdlet" -Destination "./dev/pages/cmdlets" -Force | Out-Null
+    if (!($stableReleaseCmdlets -like $nightlycmdlet)) {
+        Copy-Item "./dev/documentation/$nightlycmdlet.md" -Destination "./dev/pages/cmdlets" -Force | Out-Null
         # update the document to state it's only available in the nightly build
-        $header = $fm.GetHeader("./dev/pages/cmdlets/$nightlycmdlet")
+        $header = $fm.GetHeader("./dev/pages/cmdlets/$nightlycmdlet.md")
         $header["tags"] = "Available in the current Nightly Release only."
-        #Write-Host "Writing $nightlycmdlet"
-        $fm.WriteHeader("./dev/pages/cmdlets/$nightlycmdlet",$header)
+        #Write-Host "Writing $nightlycmdlet.md"
+        $fm.WriteHeader("./dev/pages/cmdlets/$nightlycmdlet.md",$header)
     }
 }
 
@@ -156,10 +162,12 @@ foreach ($cmdletPage in $cmdletPages)
     $cmdletIndexPageList += "- [$($cmdletPage.BaseName)]($($cmdletPage.Name))"
 
     # Check if the cmdlet only exists in the nightly build
-    if (!$releasedcmdlets.Contains($cmdletPage.Name))
+    if (!($stableReleaseCmdlets -like $cmdletPage.BaseName))
     {
         # Add a 1 to the cmdlet name if it's only available in the nightly build
         $cmdletIndexPageList = $cmdletIndexPageList + " <sup>1</sup>"
+
+ 	Write-Host "  - Nightly only"
     }
 
     # Check if the cmdlet is an alias
@@ -167,6 +175,8 @@ foreach ($cmdletPage in $cmdletPages)
     {
         # Add a 2 to the cmdlet name if it's an alias
         $cmdletIndexPageList = $cmdletIndexPageList + " <sup>2</sup>"
+
+ 	Write-Host "  - Alias"
     }
     
     $cmdletIndexPageList = $cmdletIndexPageList + "`n"

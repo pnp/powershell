@@ -18,10 +18,7 @@ Registers an Azure AD App and optionally creates a new self-signed certificate t
 ```powershell
 Register-PnPAzureADApp -ApplicationName <String>
                                        -Tenant <String>
-                                       [-Username <String>]
-                                       [-Password <SecureString>]
                                        [-DeviceLogin]
-                                       [-Interactive]
                                        [-CommonName <String>]
                                        [-OutPath <String>]
                                        [-Store <StoreLocation>]
@@ -36,12 +33,10 @@ Register-PnPAzureADApp -ApplicationName <String>
                                        [-OrganizationUnit <String>]
                                        [-ValidYears <Int>]
                                        [-CertificatePassword <SecureString>]
-                                       [-NoPopup]
                                        [-LogoFilePath <string>]
                                        [-MicrosoftGraphEndPoint <string>]
                                        [-EntraIDLoginEndPoint <string>]
                                        [-SignInAudience <EntraIDSignInAudience>]
-                                       [-LaunchBrowser <SwitchParameter>]
 ```
 
 ### Existing Certificate
@@ -49,50 +44,46 @@ Register-PnPAzureADApp -ApplicationName <String>
 Register-PnPAzureADApp  -CertificatePath <String>
                         -ApplicationName <String>
                         -Tenant <String>
-                        [-Username <String>]
-                        [-Password <SecureString>]
                         [-DeviceLogin]
-                        [-Interactive]
                         [-GraphApplicationPermissions <Permission[]>]
                         [-GraphDelegatePermissions <Permission[]>]
                         [-SharePointApplicationPermissions <Permission[]>]
                         [-SharePointDelegatePermissions <Permission[]>]
                         [-CertificatePassword <SecureString>]
-                        [-NoPopup]
                         [-LogoFilePath <string>]
-                        [-LaunchBrowser <SwitchParameter>]
 ```
 
 ## DESCRIPTION
-Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. You can login either with username/password or you can use the -DeviceLogin option if your tenant has been configured for Multi-Factor Authentication. 
+Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. 
 
-Note: if you want to use the newly created app to authenticate with username/password you will have to make a modification to the app. Navigate to the application registration in your Azure AD, select the Authentication section, and set `Allow public client flows` to `yes`. Alternatively, navigate to the `Manifest` section and set `allowPublicClient` to `true`.
+Note: if you want to use the newly created app to authenticate with username/password. Use `Register-PnPEntraIDAppForInteractiveLogin` to create an app that allows users to login with.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -Interactive
+Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser
 ```
 
 Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. A browser window will be shown allowing you to authenticate.
 
 ### EXAMPLE 2
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) -Interactive
+Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force)
 ```
 
 Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. A browser window will be shown allowing you to authenticate.
+
 ### EXAMPLE 3
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -GraphApplicationPermissions "User.Read.All" -SharePointApplicationPermissions "Sites.Read.All" -Interactive
+Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -GraphApplicationPermissions "User.Read.All" -SharePointApplicationPermissions "Sites.Read.All"
 ```
 
 Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.Read.All, User.Read.All. A browser window will be shown allowing you to authenticate.
 
 ### EXAMPLE 4
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -OutPath c:\ -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) -Interactive
+Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -OutPath c:\ -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force)
 ```
 
 Creates a new Azure AD Application registration, creates a new self signed certificate, and stores the public and private key certificates in c:\. The private key certificate will be locked with the password "password". It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. A browser window will be shown allowing you to authenticate.
@@ -106,55 +97,19 @@ Creates a new Azure AD Application registration and asks you to authenticate usi
 
 ### EXAMPLE 6
 ```powershell
-Register-PnPAzureADApp -Interactive -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) 
+Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) 
 ```
 
 Creates a new Azure AD Application registration and asks you to authenticate using username and password, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All
 
 ### EXAMPLE 7
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) -Interactive -LogoFilePath c:\logo.png
+Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) -LogoFilePath c:\logo.png
 ```
 
 Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. It will also set the `logo.png` file as the logo for the Azure AD app.
 
 ## PARAMETERS
-
-### -Interactive
-If specified, an interactive authentication flow will be started, allowing your to authenticate with username, password and an optional second factor from your phone or other device.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Username
-The username to use when logging into the Microsoft Graph. Notice that this user account needs to have write access to the Azure AD.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
-### -Password
-The password to use when logging into the Microsoft Graph.
-
-```yaml
-Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
 
 ### -DeviceLogin
 If specified, a device login flow, supporting Multi-Factor Authentication will be used to authenticate towards the Microsoft Graph.
@@ -372,20 +327,6 @@ Position: 7
 Accept pipeline input: False
 ```
 
-### -NoPopup
-This switch only applies to Windows and has no effect on Linux and MacOS.
-
-If not specified and running on Windows, all authentication and consent steps will be presented in a popup. If you want to open the URLs manually in a browser, specify this switch.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Accept pipeline input: False
-```
-
 ### -AzureEnvironment
 The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.
 
@@ -452,21 +393,6 @@ Parameter Sets: Generate Certificate
 Required: False
 Position: Named
 Accept pipeline input: False
-```
-
-### -LaunchBrowser
-Launch a browser automatically and copy the code to enter to the clipboard
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: DeviceLogin
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
 ```
 
 ## RELATED LINKS

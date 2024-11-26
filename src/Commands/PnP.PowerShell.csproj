@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="WindowsSdk.targets" Condition="'$(OS)' == 'Windows_NT'" />
-	<Import Project="Sdk.targets" Condition="'$(OS)' != 'Windows_NT'" />
-
+	
 	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
 		<LangVersion>12</LangVersion>
 	 </PropertyGroup>
 	 
@@ -52,7 +51,7 @@
 	  <None Remove="Resources\parker.ico" />
 	</ItemGroup>
 
-	<ItemGroup>
+	<ItemGroup>		
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
 		<PackageReference Include="PnP.Framework" Version="1.17.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Framework" Version="1.17.*-*" Condition="'$(IsRelease)' == '1'" />
@@ -66,17 +65,8 @@
 		<PackageReference Include="PnP.Core.Admin" Version="1.14.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Admin" Version="1.14.*-*" Condition="'$(IsRelease)' == '1'" />
 
-		<!-- currently for the following packages we only refer to the nightlies -->
-		<!-- <PackageReference Include="PnP.Core.Transformation" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Transformation" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
-
-		<PackageReference Include="PnP.Core.Transformation" Version="1.14.*-*" />
-		
-		<!-- <PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.6.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="*" Condition="'$(IsRelease)' == '1'" /> -->
-		<PackageReference Include="PnP.Core.Transformation.SharePoint" Version="1.14.*-*" />
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-
+		
 	</ItemGroup>
 
 	<ItemGroup>
@@ -88,43 +78,33 @@
 
 	<ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(IsRelease)' != '1'">
 		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
-		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core\bin\Debug\net8.0\PnP.Core.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Auth" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<Reference Include="PnP.Core.Auth" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core.Auth\bin\Debug\net8.0\PnP.Core.Auth.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
-		<Reference Include="PnP.Core.Admin" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<Reference Include="PnP.Core.Admin" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\net8.0\PnP.Core.Admin.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-		<Reference Include="PnP.Core.Transformation" Condition="'$(TargetFramework)' == 'net8.0-windows'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation\bin\Debug\net8.0\PnP.Core.Transformation.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-		<Reference Include="PnP.Core.Transformation.SharePoint" Condition="'$(TargetFramework)' == 'net8.0-windows'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Transformation.SharePoint\bin\Debug\net8.0\PnP.Core.Transformation.SharePoint.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
+		</Reference>		
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
-		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net8.0-windows'">
+		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\net8.0\PnP.Framework.dll</HintPath>
 			<Private>true</Private>
 			<SpecificVersion>false</SpecificVersion>
 		</Reference>
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0-windows'">
-		<PackageReference Include="System.Management.Automation" Version="7.4.4" />
+	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+	  <PackageReference Include="System.Management.Automation" Version="7.4.4" />
  	  <PackageReference Include="TextCopy" Version="6.2.1" />		
 	</ItemGroup>
 

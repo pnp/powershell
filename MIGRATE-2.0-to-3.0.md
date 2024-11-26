@@ -2,7 +2,7 @@
 
 _This is a draft document, version 3 is not yet available. You can try this out with the nightly builds starting from 2.99.1 or later_
 
-The 3.x version of PnP PowerShell is based exclusively on .NET 8.0, which means that it will not work on older PowerShell editions like PowerShell 5.1, ISE or PowerShell 7.3 or older. It will work only on **PowerShell 7.4 or later editions.**
+The 3.x version of PnP PowerShell is based exclusively on .NET 8.0, which means that it will not work on older PowerShell editions like PowerShell 5.1, ISE or PowerShell 7.3 or older. It will work only on **PowerShell 7.4.4 or later editions.**
 
 ## Steps to update from 2.x to 3.x
 
@@ -16,7 +16,7 @@ Or
 
 - For Mac OS environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos)
 
-Once the PowerShell 7.4 or later is downloaded and installed in the environment, you can install the PnP PowerShell module like you normally do.
+Once the PowerShell 7.4.4 or later is downloaded and installed in the environment, you can install the PnP PowerShell module like you normally do.
 
 ```powershell
 Install-Module -Name "PnP.PowerShell"
@@ -30,7 +30,7 @@ Install-Module -Name "PnP.PowerShell" -AllowPrerelease
 
 ## Changes needed in Azure DevOps/GitHub Actions/Pipelines
 
-If you are using PnP PowerShell in Azure Devops, GitHub Actions or other pipeline infrastructure, you will have to update your PowerShell version from v5 to v7.4 or later.
+If you are using PnP PowerShell in Azure Devops, GitHub Actions or other pipeline infrastructure, you will have to update your PowerShell version from v5 to v7.4.4 or later.
 
 Recommend referring to these 2 links:
 
@@ -49,12 +49,21 @@ Recommend referring to these 2 links:
 | Set-PnPLabel | Use `Set-PnPRetentionLabel` |
 | Reset-PnPLabel | Use `Reset-PnPRetentionLabel` |
 | Add-PnPTeamsChannel | The parameter `IsFavoriteByDefault` has been removed as it was not supported by Graph API |
-| Get-PnPAppAuthAccessToken | It has been removed. Use `Get-PnPAccessToken -ResourceTypeName SharePoint` instead to get SharePoint access token. |
-| Request-PnPAccessToken | It has been removed. Use `Get-PnPAccessToken` instead. |
-| Get-PnPGraphAccessToken | It has been removed. Use `Get-PnPAccessToken` instead. |
+| Get-PnPAppAuthAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken -ResourceTypeName SharePoint` instead to get SharePoint access token. |
+| Request-PnPAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken` instead. |
+| Get-PnPGraphAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken` instead. |
 | Remove-PnPUser | The parameter `-Confirm` has been removed. Use `-Force` instead. |
 | Remove-PnPAvailableSiteClassification | The parameter `-Confirm` has been removed. Use `-Force` instead. |
-
+| Send-PnPMail | It now throws a warning about the [retirement of SharePoint SendEmail API](https://devblogs.microsoft.com/microsoft365dev/retirement-of-the-sharepoint-sendemail-api/), if you are sending mails via SharePoint. To ignore the warning, use `-ErrorAction SilentlyContinue` along side the cmdlet. Recommendation is to use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
+| Send-PnPMail | The support for sending mails via SMTP servers is now removed. It is the recommendation of .NET as SMTP doesn't support modern protocols. So, the parameters `-EnableSSL` , `-UserName`, `-Password`, `-Server ` and `-ServerPort` are now removed. Use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
+| Invoke-PnPTransformation | It has been removed. It was never supported nor fully implemented. |
+| Get-PnPSharingLink | The parameter `-FileUrl` has been removed. It was marked obsolete. Use `-Identity` instead. |
+| Remove-PnPNavigationNode | The parameters `-Title` and `-Header` have been removed. They were marked obsolete. Use `-Identity` instead. |
+| Connect-PnPOnline | Removed `-UseWebLogin` on `Connect-PnPOnline`. It used a very outdated and questionable (reusing an auth cookie) authentication method which implementation broke easily. If you require an ACS connection for certain functionality, consider using `-ClientId` in combination with `-ClientSecret` instead. |
+| Connect-PnPOnline | Removed `-LaunchBrowser` option for Interactive login flows. It is the default now and removed the popup based authentication option |
+| Connect-PnPOnline | Removed `-LaunchBrowser` option for Device Login flows. It is the default now. | 
+| Register-PnPEntraIDApp | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
+| Register-PnPEntraIDAppForInteractiveLogin | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
 ## Other notable changes
 
 ## Changes to output type

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Security.Cryptography.Pkcs;
 using System.Threading;
 
 namespace PnP.PowerShell.Commands.Utilities
@@ -38,7 +39,25 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                     else
                     {
-                        Cmdlet.Host.UI.WriteLine(message.Text);
+                        switch (message.Type)
+                        {
+                            case MessageType.Message:
+                                {
+                                    Cmdlet.Host.UI.WriteLine(message.Text);
+                                    break;
+                                }
+                            case MessageType.Warning:
+                                {
+                                    Cmdlet.Host.UI.WriteWarningLine(message.Text);
+                                    break;
+                                }
+                            case MessageType.Verbose:
+                                {
+                                    Cmdlet.Host.UI.WriteVerboseLine(message.Text);
+                                    break;
+                                }
+                        }
+
                     }
                     break;
                 }
@@ -51,6 +70,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             lock (LockToken)
             {
+
                 Queue.Enqueue(new Message() { Formatted = formatted, Text = message, Type = MessageType.Warning });
             }
         }
@@ -60,6 +80,17 @@ namespace PnP.PowerShell.Commands.Utilities
             lock (LockToken)
             {
                 Queue.Enqueue(new Message() { Formatted = formatted, Text = message, Type = MessageType.Message });
+            }
+        }
+
+        public void WriteVerbose(string message)
+        {
+            if (Cmdlet.MyInvocation.BoundParameters.ContainsKey("Verbose"))
+            {
+                lock (LockToken)
+                {
+                    Queue.Enqueue(new Message() { Formatted = false, Text = message, Type = MessageType.Verbose });
+                }
             }
         }
 
@@ -73,7 +104,8 @@ namespace PnP.PowerShell.Commands.Utilities
         internal enum MessageType
         {
             Message,
-            Warning
+            Warning,
+            Verbose
         }
 
         private static List<string> WordWrap(string text, int maxLineLength)
@@ -99,7 +131,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             WriteFormattedMessage(cmdlet, new Message { Text = message, Type = MessageType.Warning, Formatted = true });
         }
-        
+
         internal static void WriteFormattedMessage(PSCmdlet cmdlet, Message message)
         {
             if (cmdlet.Host.Name == "ConsoleHost" && cmdlet.Host.UI.RawUI.MaxWindowSize.Width > 8)
@@ -142,6 +174,11 @@ namespace PnP.PowerShell.Commands.Utilities
                             cmdlet.WriteWarning($"{notificationColor}\n{outMessage}{resetColor}\n");
                             break;
                         }
+                    case MessageType.Verbose:
+                        {
+                            cmdlet.WriteVerbose(outMessage);
+                            break;
+                        }
                 }
             }
             else
@@ -156,6 +193,11 @@ namespace PnP.PowerShell.Commands.Utilities
                     case MessageType.Warning:
                         {
                             cmdlet.WriteWarning(message.Text);
+                            break;
+                        }
+                    case MessageType.Verbose:
+                        {
+                            cmdlet.WriteVerbose(message.Text);
                             break;
                         }
                 }

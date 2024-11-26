@@ -24,18 +24,30 @@ $localPnPFrameworkPathValue = $env:PnPFrameworkPath
 $env:PnPCoreSdkPath = ""
 $env:PnPFrameworkPath = ""
 
-$versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
-if ($versionFileContents.Contains("%")) {
-	$versionString = $versionFileContents.Replace("%", "0");
+$versionFileContents = Get-Content "$PSScriptRoot/../version.json" -Raw | ConvertFrom-Json
+
+if ($versionFileContents.Version.Contains("%")) {
+	$versionString = $versionFileContents.Version.Replace("%", "0");
 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
 	$buildVersion = $versionObject.Patch;
 }
 else {	
-	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents)
+	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents.Version)
 	$buildVersion = $versionObject.Patch + 1;
 }
 
-$configuration = "net8.0-windows"
+# $versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
+# if ($versionFileContents.Contains("%")) {
+# 	$versionString = $versionFileContents.Replace("%", "0");
+# 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
+# 	$buildVersion = $versionObject.Patch;
+# }
+# else {	
+# 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents)
+# 	$buildVersion = $versionObject.Patch + 1;
+# }
+
+$configuration = "net8.0"
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
@@ -151,6 +163,7 @@ if ($LASTEXITCODE -eq 0) {
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @('Core')
+	PowerShellVersion = '7.4.4'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)

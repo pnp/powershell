@@ -4,7 +4,6 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Utilities;
-using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
@@ -30,7 +29,7 @@ namespace PnP.PowerShell.Commands.Teams
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_STANDARD)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_PRIVATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_SPECIFIC)]
-        public string Description;        
+        public string Description;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSET_STANDARD)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSET_SPECIFIC)]
@@ -48,16 +47,14 @@ namespace PnP.PowerShell.Commands.Teams
                 throw new PSArgumentException("Group not found");
             }
 
-            if(ChannelType != TeamsChannelType.Standard && !ParameterSpecified(nameof(OwnerUPN)))
+            if (ChannelType != TeamsChannelType.Standard && !ParameterSpecified(nameof(OwnerUPN)))
             {
                 throw new PSArgumentException("OwnerUPN is required when using the non standard channel type", nameof(OwnerUPN));
             }
 
             try
             {
-#pragma warning disable CS0618 // Type or member is obsolete
                 var channel = TeamsUtility.AddChannel(this, AccessToken, Connection, groupId, DisplayName, Description, ChannelType, OwnerUPN, false);
-#pragma warning restore CS0618 // Type or member is obsolete
                 WriteObject(channel);
             }
             catch (GraphException ex)

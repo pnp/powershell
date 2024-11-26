@@ -1,17 +1,17 @@
-﻿using System;
-using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Enums;
+using System;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPPriviledgedIdentityManagement")]
     [OutputType(typeof(bool))]
-    [RequiredApiApplicationPermissions("RoleAssignmentSchedule.ReadWrite.Directory")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/RoleAssignmentSchedule.ReadWrite.Directory")]
     public class EnablePriviledgedIdentityManagement : PnPGraphCmdlet
     {
         private const string ParameterName_BYELIGIBLEROLEASSIGNMENT = "By Eligible Role Assignment";
@@ -91,7 +91,7 @@ namespace PnP.PowerShell.Commands.Principals
                     // Check for the role to which elevation needs to take place
                     var role2 = Role.GetInstance(this, Connection, AccessToken);
 
-                    if(role2 == null)
+                    if (role2 == null)
                     {
                         throw new PSArgumentException("Provided role cannot be found", nameof(Role));
                     }

@@ -5,16 +5,44 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "PowerShell cmdlets: pwsh",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build with nugets",
+            "program": "pwsh",
+            "args": [
+                "-NoExit",
+                "-NoProfile",
+                "-Command",
+                "Import-Module ${userHome}/.local/share/powershell/Modules/PnP.PowerShell.psd1",
+            ],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal"
+        },
+        {
+            "name": ".NET Core Launch with Nuget Build(console)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build with nugets",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal",
+            "program": "pwsh",
+            "osx": {
+                "program": "pwsh",
+            },
+            "windows": {
+                "program": "pwsh.exe"
+            }
+        },
+        {
+            "preLaunchTask": "Build with nugets",
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
-            "processId": "${command:pickProcess}"
-        },
-        {
-            "name": ".NET Framework Attach",
-            "type": "clr",
-            "request": "attach",
-            "processId": "${command:pickProcess}"
+            "processId": "${command:pickProcess}",
         }
     ]
 }

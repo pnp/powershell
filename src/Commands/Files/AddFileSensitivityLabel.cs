@@ -18,6 +18,8 @@ namespace PnP.PowerShell.Commands.Files
         public FilePipeBind Identity;
 
         [Parameter(Mandatory = true)]
+        [AllowNull]
+        [AllowEmptyString]
         public string SensitivityLabelId;
 
         [Parameter(Mandatory = false)]

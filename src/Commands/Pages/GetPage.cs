@@ -1,6 +1,4 @@
-﻿
-using PnP.Core.Transformation.Model;
-using PnP.PowerShell.Commands.Base.Completers;
+﻿using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
