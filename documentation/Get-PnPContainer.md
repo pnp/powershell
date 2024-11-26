@@ -32,7 +32,7 @@ Get-PnPContainer [-Identity <ContainerPipeBind>] [-OwningApplicationId <Guid>] [
 Get-PnPContainer -OwningApplicationId a187e399-0c36-4b98-8f04-1edc167a0996
 ```
 
-Returns a tabular list of Containers created under the specified SharePoint repository services application.
+Returns a tabular list of Containers created under the specified SharePoint Embedded application.
 
 ### EXAMPLE 2
 ```powershell
@@ -100,7 +100,7 @@ Accept wildcard characters: False
 
 ### -Paged
 
-This parameter can be used when there are more than 5,000 Containers in a given SharePoint repository services application. Using -Paged will provide a <Paging Token> that will display the next 5,000 Containers.
+This parameter can be used when there are more than 5,000 Containers in a given SharePoint Embedded application. Using -Paged will provide a <Paging Token> that will display the next 5,000 Containers.
 
 ```yaml
 Type: SwitchParameter
