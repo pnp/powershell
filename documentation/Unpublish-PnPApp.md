@@ -15,7 +15,7 @@ Unpublishes/retracts an available add-in from the app catalog.
 ## SYNTAX
 
 ```powershell
-Unpublish-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
+Unpublish-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>] [-Force <SwitchParameter>]
  
 ```
 
@@ -76,6 +76,20 @@ Defines which app catalog to use. Defaults to Tenant.
 Type: AppCatalogScope
 Parameter Sets: (All)
 Accepted values: Tenant, Site
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+If provided, no confirmation will be asked to change no-script setting.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named

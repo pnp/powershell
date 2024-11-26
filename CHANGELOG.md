@@ -34,7 +34,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled` to `Set-PnPTenant` which allows for updating of web property bag when DenyAddAndCustomizePages is enabled [#4508](https://github.com/pnp/powershell/pull/4508)
 - Added `SiteId` to the output of `Get-PnPTenantSite` [#4527](https://github.com/pnp/powershell/pull/4527)
 - Added `Add-PnPFileSensitivityLabel` which allows for assigning sensitivity labels to SharePoint files [#4538](https://github.com/pnp/powershell/pull/4538)
-- Added `-CanSyncHubSitePermissions` parameter to `Set-PnPSite` cmdlet to set value of allowing syncing hub site permissions to this associated site.
+- `Add-PnPApp` , `Publish-PnPApp` , `Remove-PnPApp` and `Unpublish-PnPApp` now have `-Force` parameter to change the site to allow scripts to be temporarily enabled. [#4554](https://github.com/pnp/powershell/pull/4554)
+- Added `-CanSyncHubSitePermissions` parameter to `Set-PnPSite` cmdlet to set value of allowing syncing hub site permissions to this associated site. [#4555](https://github.com/pnp/powershell/pull/4555)
 - Added `Get-PnPProfileCardProperty`, `New-PnPProfileCardProperty` and `Remove-PnPProfileCardProperty` cmdlets to manage showing additional properties on the Microsoft 365 user profile [#4548](https://github.com/pnp/powershell/pull/4548)
 - Added `Get-PnPCopilotAdminLimitedMode` and `Set-PnPCopilotAdminLimitedMode` which allows for managing the setting that controls whether Microsoft 365 Copilot in Teams Meetings users can receive responses to sentiment-related prompts [#4562](https://github.com/pnp/powershell/pull/4562)
 - Added `-Contributors` and `-Managers` parameters to `New-PnPTermGroup` and `Set-PnPTermGroup` cmdlets.
@@ -64,8 +65,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - When passing in an existing connection using `-Connection` on `Connect-PnPOnline`, the clientid from the passed in connection will be used for the new connection [#4425](https://github.com/pnp/powershell/pull/4425)
 - Removed `-Confirm` parameter from `Remove-PnPUser` and `Remove-PnPAvailableSiteClassification` cmdlets. Use `-Force` instead. [#4455](https://github.com/pnp/powershell/pull/4455)
 - `Get-PnPFile` now also supports passing in a full SharePoint Online URL [#4480](https://github.com/pnp/powershell/pull/4480)
+- `Add-PnPApp` , `Publish-PnPApp` , `Remove-PnPApp` and `Unpublish-PnPApp` now support disabling script settings if tenant app catalog is a no-script site.
 - `Send-PnPMail` now throws a warning about the retirement of the SharePoint SendEmail API.
 - `Get-PnPCustomAction` now supports a completer for `-Identity` and uses the PnP Core SDK to return custom actions.
+
 
 ### Fixed
 
