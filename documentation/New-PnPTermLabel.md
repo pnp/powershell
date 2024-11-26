@@ -20,7 +20,7 @@ New-PnPTermLabel -Term <TaxonomyTermPipeBind> -Name <String> -Lcid <Int32> [-IsD
 ```
 
 ## DESCRIPTION
-Creates a localized label for a taxonomy term. Use Get-PnPTerm -Include Labels to request the current labels on a taxonomy term.
+Creates a localized label for a taxonomy term. Use Get-PnPTerm -Include Labels to request the current labels on a taxonomy term. Setting `-IsDefault:$false`, will make a new label a synonym. 
 
 ## EXAMPLES
 
@@ -37,6 +37,13 @@ Get-PnPTerm -Identity "Finance" -TermSet "Departments" -TermGroup "Corporate" | 
 ```
 
 Creates a new localized taxonomy label in German (LCID 1031) named "Finanzwesen" for the term "Finance" in the termset Departments which is located in the "Corporate" termgroup
+
+### EXAMPLE 3
+```powershell
+Get-PnPTerm -Identity "Finance" -TermSet "Departments" -TermGroup "Corporate" | New-PnPTermLabel -Name "Finanzwesen" -Lcid 1031 -IsDefault:$false
+```
+
+Creates a new localized taxonomy label in German (LCID 1031) named "Finanzwesen" for the term "Finance" in the termset Departments which is located in the "Corporate" termgroup and make it a synonym.
 
 ## PARAMETERS
 
