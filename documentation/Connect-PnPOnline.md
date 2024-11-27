@@ -404,7 +404,7 @@ When passed in, the ClientId/AppId used for the passed in connection will be use
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable
 
 Required: False
 Position: Named
@@ -418,7 +418,7 @@ If you want to create a PSDrive connected to the URL
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
 Aliases:
 
 Required: False
@@ -466,7 +466,7 @@ Name of the PSDrive to create (default: SPO)
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
 Aliases:
 
 Required: False
@@ -536,7 +536,7 @@ Returns the connection for use with the -Connection parameter on cmdlets. It wil
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
 Aliases:
 
 Required: False
@@ -567,7 +567,7 @@ If not specified, the cmdlets will assume to connect automatically to https://\[
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
 Aliases:
 
 Required: False
@@ -597,7 +597,7 @@ The Url of the site collection or subsite to connect to, i.e. tenant.sharepoint.
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
 Aliases:
 
 Required: True (Except when using -ManagedIdentity and -AzureADWorkloadIdentity)
@@ -612,7 +612,7 @@ When provided, the cmdlet will check to ensure the SharePoint Online site specif
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, SPO Management Shell Credentials, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
 Aliases:
 
 Required: False

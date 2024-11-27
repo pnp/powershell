@@ -205,8 +205,6 @@ namespace PnP.PowerShell.Tests.Base
 					new CommandParameter("AuthenticationMode", authenticationMode),
 					new CommandParameter("CreateDrive", createDrive),
 					new CommandParameter("DriveName", driveName),
-					new CommandParameter("SPOManagementShell", sPOManagementShell),
-					new CommandParameter("PnPO365ManagementShell", pnPO365ManagementShell),
 					new CommandParameter("LaunchBrowser", launchBrowser),
 					new CommandParameter("Graph", graph),
 					new CommandParameter("ClientId", clientId),
