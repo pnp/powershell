@@ -56,8 +56,6 @@ Specifies one or more user logins to be enqueued for the creation of a Personal 
 Type: String[]
 Parameter Sets: (All)
 Aliases:
-Applicable: SharePoint Online
-
 Required: True
 Position: Named
 Default value: None
@@ -73,8 +71,6 @@ Continues without the status being polled. Polling the action can slow its progr
 Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
-Applicable: SharePoint Online
-
 Required: False
 Position: Named
 Default value: None
@@ -88,7 +84,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 ```yaml
 Type: PnPConnection
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
@@ -102,7 +97,6 @@ When provided, additional debug statements will be shown while executing the cmd
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None

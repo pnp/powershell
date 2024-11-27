@@ -147,7 +147,6 @@ Specifies the site collection the group belongs to. If not defined, the currentl
 Type: SitePipeBind
 Parameter Sets: (All)
 Aliases:
-Applicable: SharePoint Online
 Required: False
 Position: Named
 Default value: None
