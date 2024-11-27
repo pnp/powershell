@@ -65,6 +65,7 @@ Recommend referring to these 2 links:
 | Register-PnPEntraIDApp | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
 | Register-PnPEntraIDAppForInteractiveLogin | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
 | Set-PnPMinimalDownloadStrategy | Removed cmdlet. If you need the functionality you can always turn on the feature with `Enable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a` or turn it off with `Disable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a` |
+| Connect-PnPOnline | Removed `-SPOManagementShell` option for authentication. It reduces the risk of changes from Microsoft which can potentially break the scripts . Use your own Entra ID app instead via `-ClientId` parameter. | 
 
 ## Other notable changes
 
