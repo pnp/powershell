@@ -1,24 +1,27 @@
-﻿using Microsoft.SharePoint.Client;
+﻿using Microsoft.Identity.Client;
+using Microsoft.Identity.Client.Extensions.Msal;
+using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
+using PnP.Framework;
+using PnP.Framework.Utilities.Context;
+using PnP.PowerShell.ALC;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using System.Net;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using PnP.Framework;
-using PnP.PowerShell.ALC;
-using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using System.Net;
-using TextCopy;
-using PnP.PowerShell.Commands.Utilities;
-using System.Threading.Tasks;
 using System.Threading;
-using System.Net.Http;
-using PnP.Framework.Utilities.Context;
+using System.Threading.Tasks;
+using TextCopy;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -265,13 +268,15 @@ namespace PnP.PowerShell.Commands.Base
             {
                 authManager = Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
                  {
-
                      ClipboardService.SetText(deviceCodeResult.UserCode);
                      messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
                      BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
 
                      return Task.FromResult(0);
-                 }, azureEnvironment);
+                 }, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
+                 {
+                     await MSALCacheHelper(tokenCache);
+                 });
             }
             using (authManager)
             {
@@ -304,7 +309,6 @@ namespace PnP.PowerShell.Commands.Base
                     {
                         throw;
                     }
-
                 }
             }
         }
@@ -458,7 +462,10 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment);
+                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
+                            {
+                                await MSALCacheHelper(tokenCache);
+                            });
                         }
                         using (authManager)
                         {
@@ -586,7 +593,10 @@ namespace PnP.PowerShell.Commands.Base
                 tenant,
                 htmlMessageSuccess,
                 htmlMessageFailure,
-                azureEnvironment: azureEnvironment, useWAM: enableLoginWithWAM);
+                azureEnvironment: azureEnvironment, tokenCacheCallback: async (tokenCache) =>
+                {
+                    await MSALCacheHelper(tokenCache);
+                }, useWAM: enableLoginWithWAM);
             }
             using (authManager)
             {
@@ -954,6 +964,44 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     // best effort cleanup
                 }
+            }
+        }
+
+        private static async Task MSALCacheHelper(ITokenCache tokenCache)
+        {
+            const string CacheSchemaName = "pnp.powershell.tokencache";
+            string cacheDir = Path.Combine(MsalCacheHelper.UserRootDirectory, @".m365pnppowershell");
+            try
+            {
+                var storage =
+                 new StorageCreationPropertiesBuilder("pnp.msal.cache", cacheDir)
+                 .WithMacKeyChain(
+                    serviceName: $"{CacheSchemaName}.service",
+                    accountName: $"{CacheSchemaName}.account")
+                .WithLinuxKeyring(
+                    schemaName: CacheSchemaName,
+                    collection: MsalCacheHelper.LinuxKeyRingDefaultCollection,
+                    secretLabel: "MSAL token cache for PnP PowerShell.",
+                    attribute1: new KeyValuePair<string, string>("Version", "1"),
+                    attribute2: new KeyValuePair<string, string>("Product", "PnPPowerShell"))
+                .Build();
+                var cacheHelper = await MsalCacheHelper.CreateAsync(storage).ConfigureAwait(false);
+                cacheHelper.VerifyPersistence();
+
+                cacheHelper.RegisterCache(tokenCache);
+            }
+            catch (MsalCachePersistenceException)
+            {
+                var storage =
+                 new StorageCreationPropertiesBuilder("pnp.msal.cache", cacheDir)
+                 .WithMacKeyChain(
+                    serviceName: $"{CacheSchemaName}.service",
+                    accountName: $"{CacheSchemaName}.account")
+                 .WithLinuxUnprotectedFile()
+                .Build();
+                var cacheHelper = await MsalCacheHelper.CreateAsync(storage).ConfigureAwait(false);
+
+                cacheHelper.RegisterCache(tokenCache);
             }
         }
         #endregion
