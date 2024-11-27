@@ -27,7 +27,6 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_ACSAPPONLY = "SharePoint ACS (Legacy) App Only";
         private const string ParameterSet_APPONLYAADCERTIFICATE = "App-Only with Azure Active Directory";
         private const string ParameterSet_APPONLYAADTHUMBPRINT = "App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint";
-        private const string ParameterSet_SPOMANAGEMENT = "SPO Management Shell Credentials";
         private const string ParameterSet_DEVICELOGIN = "PnP Management Shell / DeviceLogin";
         private const string ParameterSet_ACCESSTOKEN = "Access Token";
         private const string ParameterSet_SYSTEMASSIGNEDMANAGEDIDENTITY = "System Assigned Managed Identity";
@@ -39,14 +38,10 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_AZUREAD_WORKLOAD_IDENTITY = "Azure AD Workload Identity";
         private const string ParameterSet_OSLOGIN = "OS login";
 
-        private const string SPOManagementClientId = "9bc3ab49-b65d-410a-85ad-de819febfddc";
-        private const string SPOManagementRedirectUri = "https://oauth.spops.microsoft.com/";
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
@@ -63,7 +58,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
@@ -80,7 +74,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT, ValueFromPipeline = true)]
-        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_SPOMANAGEMENT, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ACCESSTOKEN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_DEVICELOGIN, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_INTERACTIVE, ValueFromPipeline = true)]
@@ -97,7 +90,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
@@ -106,11 +98,9 @@ namespace PnP.PowerShell.Commands.Base
         public PnPConnection Connection = PnPConnection.Current;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public CredentialPipeBind Credentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         public SwitchParameter CurrentCredentials;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
@@ -124,7 +114,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
@@ -135,15 +124,11 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
         public string DriveName = "SPO";
-
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
-        public SwitchParameter SPOManagementShell;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DEVICELOGIN)]
         public SwitchParameter DeviceLogin;
@@ -206,10 +191,8 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY)]
-        // [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETURL)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADTHUMBPRINT)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SPOMANAGEMENT)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
@@ -351,9 +334,6 @@ namespace PnP.PowerShell.Commands.Base
             // Connect using the used set parameters
             switch (ParameterSetName)
             {
-                case ParameterSet_SPOMANAGEMENT:
-                    newConnection = ConnectSpoManagement();
-                    break;
                 case ParameterSet_DEVICELOGIN:
                     newConnection = ConnectDeviceLogin();
                     break;
@@ -509,28 +489,13 @@ namespace PnP.PowerShell.Commands.Base
             return PnPConnection.CreateWithACSAppOnly(new Uri(Url), Realm, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
         }
 
-        /// <summary>
-        /// Connect using the parameter set SPOMANAGEMENT
-        /// </summary>
-        /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
-        private PnPConnection ConnectSpoManagement()
-        {
-            WriteVerbose("Connecting using the SharePoint Online Management Shell App Registration");
-            WriteWarning("This option will be removed in release 3.2. Please register your own Entra ID App Registration use that client id to authenticate.");
-            ClientId = SPOManagementClientId;
-            RedirectUri = SPOManagementRedirectUri;
-
-            WriteVerbose($"Using ClientID {ClientId}");
-
-            return ConnectCredentials(Credentials?.Credential, InitializationType.SPOManagementShell);
-        }
 
         /// <summary>
         /// Connect using the parameter set DEVICELOGIN
         /// </summary>
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectDeviceLogin()
-        { 
+        {
             WriteVerbose("Connecting using Device Login");
 
             var messageWriter = new CmdletMessageWriter(this);
