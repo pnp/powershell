@@ -31,8 +31,6 @@ $template = New-PnPSiteTemplate
 
 Creates a new instance of a site template object.
 
-## PARAMETERS
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
