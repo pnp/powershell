@@ -30,9 +30,6 @@ Get-PnPDiagnostics
 
 Returns basic diagnostic information, including the last error, the stacktrace, if applicable, etc.
 
-## PARAMETERS
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

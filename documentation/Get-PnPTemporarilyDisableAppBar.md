@@ -36,9 +36,6 @@ Get-PnPTemporarilyDisableAppBar
 
 Returns True if the the SharePoint Online App Bar is hidden or False if it is not.
 
-## PARAMETERS
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
