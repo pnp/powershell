@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPContainerType | PnP PowerShell </title>
+    <title>Get-PnPCopilotAdminLimitedMode | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPContainerType | PnP PowerShell ">
+    <meta name="title" content="Get-PnPCopilotAdminLimitedMode | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,31 +77,42 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="get-pnpcontainertype">Get-PnPContainerType</h1>
+  <h1 id="get-pnpcopilotadminlimitedmode">Get-PnPCopilotAdminLimitedMode</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>SharePoint Embedded Administrator or Global Administrator is required</li>
+<li>Microsoft Graph API: CopilotSettings-LimitedMode.Read or CopilotSettings-LimitedMode.ReadWrite as delegated permission. Application permission not supported.</li>
 </ul>
-<p>Returns the list of Container Types created for a SharePoint Embedded Application in the tenant.</p>
+<p>Returns the current configuration if Copilot in Teams Meetings should respond to sentiment related prompts.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPContainerType [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPCopilotAdminLimitedMode [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
+<p>Returns a setting that controls whether Microsoft 365 Copilot in Teams Meetings users can receive responses to sentiment-related prompts. If this setting is enabled, Copilot in Teams Meetings doesn't respond to sentiment-related prompts and questions asked by the user. If the setting is disabled, Copilot in Teams Meetings responds to sentiment-related prompts and questions asked by the user. Copilot in Teams Meetings currently honors this setting. By default, the setting is disabled.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPContainerType
+<pre><code class="lang-powershell">Get-PnPCopilotAdminLimitedMode
 </code></pre>
-<p>Returns the list of Container Types created for a SharePoint Embedded application in the tenant.</p>
+<p>This cmdlet will return the current configuration if Copilot in Teams Meetings should respond to sentiment related prompts.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing <a href="Get-PnPConnection.html">Get-PnPConnection</a>.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -111,8 +122,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://learn.microsoft.com/en-us/sharepoint/dev/embedded/concepts/app-concepts/containertypes">SharePoint Embedded Container Types</a>
-<a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/graph/api/copilotadminlimitedmode-get">Microsoft Graph documentation</a></p>
 
 </article>
           </div>

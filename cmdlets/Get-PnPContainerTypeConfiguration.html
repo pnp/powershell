@@ -88,7 +88,7 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Returns container type configuration of a SharePoint repository services application.</p>
+<p>Returns container type configuration of a SharePoint Embedded application.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPContainerTypeConfiguration [-Identity &lt;GUID&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -97,7 +97,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPContainerTypeConfiguration -Identity a187e399-0c36-4b98-8f04-1edc167a0996
 </code></pre>
-<p>Returns a container type configuration data of the application created under the specified SharePoint repository services application.</p>
+<p>Returns a container type configuration data of the application created under the specified SharePoint Embedded application.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>

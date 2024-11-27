@@ -88,7 +88,7 @@
 <ul>
 <li>SharePoint: Access to the SharePoint Tenant Administration site</li>
 </ul>
-<p>Returns one or more Containers in a SharePoint repository services application.</p>
+<p>Returns one or more Containers in a SharePoint Embedded application.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPContainer [-Identity &lt;ContainerPipeBind&gt;] [-OwningApplicationId &lt;Guid&gt;] [-Paged &lt;switchparameter&gt;] [-PagingToken &lt;string&gt;][-SortOrder &lt;SortOrder&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -97,7 +97,7 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPContainer -OwningApplicationId a187e399-0c36-4b98-8f04-1edc167a0996
 </code></pre>
-<p>Returns a tabular list of Containers created under the specified SharePoint repository services application.</p>
+<p>Returns a tabular list of Containers created under the specified SharePoint Embedded application.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPContainer -OwningApplicationId a187e399-0c36-4b98-8f04-1edc167a0996 -Identity &quot;b!aBrXSxKDdUKZsaK3Djug6C5rF4MG3pRBomypnjOHiSrjkM_EBk_1S57U3gD7oW-1&quot; 
 </code></pre>
@@ -143,7 +143,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-paged">-Paged</h3>
-<p>This parameter can be used when there are more than 5,000 Containers in a given SharePoint repository services application. Using -Paged will provide a <paging token=""> that will display the next 5,000 Containers.</paging></p>
+<p>This parameter can be used when there are more than 5,000 Containers in a given SharePoint Embedded application. Using -Paged will provide a <paging token=""> that will display the next 5,000 Containers.</paging></p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 

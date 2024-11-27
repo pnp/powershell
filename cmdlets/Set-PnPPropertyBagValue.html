@@ -87,11 +87,11 @@
 <p>Adds a new or updates an existing property bag value.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="web">Web</h3>
-<pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key &lt;String&gt; -Value &lt;String&gt; [-Indexed] 
+<pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key &lt;String&gt; -Value &lt;String&gt; [-Indexed] [-Force] 
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="folder">Folder</h3>
-<pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key &lt;String&gt; -Value &lt;String&gt; [-Folder &lt;String&gt;] 
+<pre><code class="lang-powershell">Set-PnPPropertyBagValue -Key &lt;String&gt; -Value &lt;String&gt; [-Folder &lt;String&gt;] [-Force] 
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -160,6 +160,17 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>If provided, no confirmation will be asked to remove the value from the property bag. It will also temporarily enable scripts on the site and then disable it after setting property bag value.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

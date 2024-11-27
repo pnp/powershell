@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Removes an app from the app catalog.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPApp [-Identity] &lt;AppMetadataPipeBind&gt; [-Scope &lt;AppCatalogScope&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Remove-PnPApp [-Identity] &lt;AppMetadataPipeBind&gt; [-Scope &lt;AppCatalogScope&gt;] [-Connection &lt;PnPConnection&gt;] [-Force &lt;SwitchParameter&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to remove an app from the app catalog.</p>
@@ -131,6 +131,17 @@ Accepted values: Tenant, Site
 Required: False
 Position: Named
 Default value: Tenant
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>If provided, no confirmation will be asked to change no-script setting.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>

@@ -86,8 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Add/uploads an available app to the app catalog</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPApp [-Path] &lt;String&gt; [-Scope &lt;AppCatalogScope&gt;] [-Overwrite] [-Timeout &lt;Int32&gt;] [-Publish [-SkipFeatureDeployment]]
- [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Add-PnPApp [-Path] &lt;String&gt; [-Scope &lt;AppCatalogScope&gt;] [-Overwrite] [-Timeout &lt;Int32&gt;] [-Publish [-SkipFeatureDeployment]] [-Connection &lt;PnPConnection&gt;] [-Force &lt;SwitchParameter&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to upload an app to the app catalog at tenant or site collection level. By specifying <code>-Publish</code> option it is possible to deploy/trust it at the same time.</p>
@@ -174,6 +173,17 @@ Accept wildcard characters: False
 <p>Specifies the timeout in seconds. Defaults to 200.</p>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>If provided, no confirmation will be asked to change no-script setting.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None

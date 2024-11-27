@@ -89,7 +89,7 @@
 <pre><code class="lang-powershell">New-PnPTermLabel -Term &lt;TaxonomyTermPipeBind&gt; -Name &lt;String&gt; -Lcid &lt;Int32&gt; [-IsDefault] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Creates a localized label for a taxonomy term. Use Get-PnPTerm -Include Labels to request the current labels on a taxonomy term.</p>
+<p>Creates a localized label for a taxonomy term. Use Get-PnPTerm -Include Labels to request the current labels on a taxonomy term. Setting <code>-IsDefault:$false</code>, will make a new label a synonym.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">New-PnPTermLabel -Name &quot;Finanzwesen&quot; -Lcid 1031 -Term (Get-PnPTerm -Identity &quot;Finance&quot; -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot;)
@@ -99,6 +99,10 @@
 <pre><code class="lang-powershell">Get-PnPTerm -Identity &quot;Finance&quot; -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot; | New-PnPTermLabel -Name &quot;Finanzwesen&quot; -Lcid 1031
 </code></pre>
 <p>Creates a new localized taxonomy label in German (LCID 1031) named &quot;Finanzwesen&quot; for the term &quot;Finance&quot; in the termset Departments which is located in the &quot;Corporate&quot; termgroup</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPTerm -Identity &quot;Finance&quot; -TermSet &quot;Departments&quot; -TermGroup &quot;Corporate&quot; | New-PnPTermLabel -Name &quot;Finanzwesen&quot; -Lcid 1031 -IsDefault:$false
+</code></pre>
+<p>Creates a new localized taxonomy label in German (LCID 1031) named &quot;Finanzwesen&quot; for the term &quot;Finance&quot; in the termset Departments which is located in the &quot;Corporate&quot; termgroup and make it a synonym.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-isdefault">-IsDefault</h3>
 <p>Makes this new label the default label</p>

@@ -2194,6 +2194,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPCopilotAdminLimitedMode.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPCopilotAdminLimitedMode.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPCustomAction.md",
       "output": {
         ".html": {
@@ -6834,6 +6844,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPCopilotAdminLimitedMode.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPCopilotAdminLimitedMode.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPDefaultColumnValues.md",
       "output": {
         ".html": {
@@ -7228,16 +7248,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPMicrosoft365GroupSettings.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Set-PnPMinimalDownloadStrategy.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Set-PnPMinimalDownloadStrategy.html"
         }
       },
       "version": ""
