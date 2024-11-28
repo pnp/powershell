@@ -1,6 +1,7 @@
 ﻿using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Microsoft.SharePoint.Client;
+using Microsoft.VisualBasic;
 using PnP.Core.Services;
 using PnP.Framework;
 using PnP.Framework.Utilities.Context;
@@ -1035,19 +1036,31 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static bool CacheEnabled(string url, string clientid)
         {
-            var tenantUri = new Uri(url);
-            var tenantUrl = $"https://{tenantUri.Authority}";
             var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
             if (System.IO.File.Exists(configFile))
             {
                 var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-                var entry = configs.FirstOrDefault(c => c.Url == tenantUrl && c.ClientId == clientid);
+                var urls = GetCheckUrls(url);
+                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
                 if (entry != null && entry.Enabled)
                 {
                     return true;
                 }
             }
             return false;
+        }
+
+        private static List<string> GetCheckUrls(string url)
+        {
+            var urls = new List<string>();
+            var uri = new Uri(url);
+            var baseAuthority = uri.Authority;
+            baseAuthority = baseAuthority.Replace("-admin.sharepoint.com", ".sharepoint.com").Replace("-my.sharepoint.com", ".sharepoint.com");
+            var baseUri = new Uri($"https://{baseAuthority}");
+            var host = baseUri.Host.Split('.')[0];
+            urls = [$"https://{host}.sharepoint.com", $"https://{host}-my.sharepoint.com", $"https://{host}-admin.sharepoint.com"];
+
+            return urls;
         }
 
         private static void EnableCaching(string url, string clientid)
