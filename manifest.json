@@ -2764,16 +2764,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPLabel.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Get-PnPLabel.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPLargeListOperationStatus.md",
       "output": {
         ".html": {
@@ -3314,6 +3304,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPRetentionLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPRetentionLabel.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPRoleDefinition.md",
       "output": {
         ".html": {
@@ -3718,16 +3718,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSubWeb.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPSubscribeSharePointNewsDigest.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Get-PnPSubscribeSharePointNewsDigest.html"
         }
       },
       "version": ""
@@ -5118,16 +5108,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Publish-PnPApp.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Publish-PnPCompanyApp.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Publish-PnPCompanyApp.html"
         }
       },
       "version": ""
@@ -7588,16 +7568,6 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPStructuralNavigationCacheWebState.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
-      "source_relative_path": "cmdlets/Set-PnPSubscribeSharePointNewsDigest.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Set-PnPSubscribeSharePointNewsDigest.html"
         }
       },
       "version": ""

@@ -84,7 +84,55 @@
   <h1 id="get-pnpretentionlabel">Get-PnPRetentionLabel</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Get-PnPTenantRetentionLabel.html">Get-PnPTenantRetentionLabel</a>.</p>
+<p>Gets the Office 365 retention label/tag of the specified list or library (if applicable)</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Get-PnPRetentionLabel [-List &lt;ListPipeBind&gt;] [-Raw] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Allows to retrieve all retention labels for current site or list. Use <code>Raw</code> option if you want will include more detailed information regarding labels.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPRetentionLabel
+</code></pre>
+<p>Returns all retention labels for the current web</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPRetentionLabel -List &quot;Demo List&quot; -ValuesOnly
+</code></pre>
+<p>This gets the retention label which is set to a list or a library</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>The ID or Url of the list</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-raw">-Raw</h3>
+<p>If provided, the results will be returned as values instead of in written text and will include more detailed information</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
