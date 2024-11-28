@@ -1,8 +1,6 @@
 ﻿using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.TenantCdn;
-using Microsoft.VisualBasic;
 using PnP.Core.Services;
 using PnP.Framework;
 using PnP.Framework.Utilities.Context;
@@ -11,21 +9,16 @@ using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Host;
-using System.Management.Automation.Language;
 using System.Net;
 using System.Net.Http;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -1066,12 +1059,19 @@ namespace PnP.PowerShell.Commands.Base
 
         private static void EnableCaching(string url, string clientid)
         {
+            bool folderExists = Directory.Exists(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
+            if (!folderExists)
+            {
+                Directory.CreateDirectory(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
+            }
+
             var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
             var configs = new List<TokenCacheConfiguration>();
             if (System.IO.File.Exists(configFile))
             {
                 configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
             }
+
             var urls = GetCheckUrls(url);
             var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
             if (entry != null)
@@ -1090,7 +1090,6 @@ namespace PnP.PowerShell.Commands.Base
         private static void WriteCacheEnabledMessage(PSHost host)
         {
             host.UI.WriteLine(ConsoleColor.Yellow, ConsoleColor.Black, "Secure token cache used for authentication. Clear the cache entry with Disconnect-PnPOnline -ClearPersistedLogin.");
-
         }
 
         internal static void ClearCache(PnPConnection connection)
