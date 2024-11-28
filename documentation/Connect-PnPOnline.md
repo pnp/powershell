@@ -16,13 +16,13 @@ Connect to a SharePoint site
 
 ### Interactive for Multi Factor Authentication (Default)
 ```powershell
-Connect-PnPOnline -Interactive [-ReturnConnection] -Url <String> [-CreateDrive] [-DriveName <String>]
+Connect-PnPOnline -Interactive [-ReturnConnection] -Url <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>]
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ### Credentials
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Credentials <CredentialPipeBind>] [-CurrentCredentials]
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-Credentials <CredentialPipeBind>] [-CurrentCredentials] [-PersistLogin]
  [-CreateDrive] [-DriveName <String>] [-ClientId <String>] [-RedirectUri <String>]
  [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>]
  [-TransformationOnPrem] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
@@ -56,7 +56,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 
 ### DeviceLogin
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] [-DeviceLogin]
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] [-DeviceLogin]
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] 
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
  [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -108,7 +108,7 @@ Connect-PnPOnline [-ReturnConnection] [-ValidateConnection] [-Url] <String>
 
 ### OS login
 ```powershell
-Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName <String>] 
+Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] 
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
@@ -492,6 +492,20 @@ You will be asked to consent to:
 ```yaml
 Type: SwitchParameter
 Parameter Sets: DeviceLogin
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PersistLogin
+Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline cmdlet, it will after that retain the information and reuse it for new connections to the same tenant. If you want to clear the cache entry, use `Disconnect-PnPOnline -ClearPersistedLogin`
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Credentials, DeviceLogin, Interactive, OSLogin
 
 Required: True
 Position: Named

@@ -15,7 +15,7 @@ Disconnects the current connection and clears its token cache.
 ## SYNTAX
 
 ```powershell
-Disconnect-PnPOnline 
+Disconnect-PnPOnline [-ClearPersistedLogin]
 ```
 
 ## DESCRIPTION
@@ -32,6 +32,23 @@ Disconnect-PnPOnline
 ```
 
 This will clear out all active tokens from the current connection
+
+## PARAMETERS
+
+### -ClearPersistedLogin
+Clears the entry in the token cache for this connection.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All))
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
