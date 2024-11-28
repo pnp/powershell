@@ -267,6 +267,12 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_OSLOGIN)]
         public SwitchParameter OSLogin;
 
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
+        public SwitchParameter PersistLogin;
+
         private static readonly string[] sourceArray = ["stop", "ignore", "silentlycontinue"];
 
         protected override void ProcessRecord()
@@ -765,8 +771,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
             WriteVerbose($"Using ClientID {ClientId}");
-
-            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false);
+            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host);
         }
 
         private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
@@ -902,8 +907,11 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             WriteVerbose($"Using ClientID {ClientId}");
-
-            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true);
+            if (PnPConnection.CacheEnabled(Url, ClientId))
+            {
+                WriteObject("Cache used. Clear the cache entry with Disconnect-PnPOnline");
+            }
+            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true, PersistLogin, Host);
         }
 
         #endregion

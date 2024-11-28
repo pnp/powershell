@@ -11,6 +11,10 @@ namespace PnP.PowerShell.Commands.Base
     [OutputType(typeof(void))]
     public class DisconnectOnline : PSCmdlet
     {
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter ClearCache;
+
         protected override void ProcessRecord()
         {
             if (PnPConnection.Current == null)
@@ -28,6 +32,11 @@ namespace PnP.PowerShell.Commands.Base
                     PnPConnection.CleanupCryptoMachineKey(PnPConnection.Current.Certificate);
                 }
                 PnPConnection.Current.Certificate = null;
+            }
+
+            if(ClearCache)
+            {
+                PnPConnection.ClearCache(PnPConnection.Current);
             }
 
             PnPConnection.Current = null;
