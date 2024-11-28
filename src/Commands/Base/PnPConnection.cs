@@ -1089,7 +1089,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private static void WriteCacheEnabledMessage(PSHost host)
         {
-            host.UI.WriteLine(ConsoleColor.Yellow, ConsoleColor.Black, "Secure token cache used for authentication. Clear the cache entry with Disconnect-PnPOnline -ClearCache.");
+            host.UI.WriteLine(ConsoleColor.Yellow, ConsoleColor.Black, "Secure token cache used for authentication. Clear the cache entry with Disconnect-PnPOnline -ClearPersistedLogin.");
 
         }
 
