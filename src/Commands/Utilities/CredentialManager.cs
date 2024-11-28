@@ -149,7 +149,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     var cred = ReadMacOSKeyChainEntry(name);
                     if (cred != null)
                     {
-                        return SecureStringToString(cred.Password);
+                        return SecureStringToString(cred.Password).Trim('"');
                     }
                 }
             }
