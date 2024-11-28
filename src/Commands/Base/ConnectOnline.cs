@@ -267,7 +267,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_OSLOGIN)]
         public SwitchParameter OSLogin;
 
-
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
@@ -556,7 +555,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                     }
 
-                    var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource);
+                    var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource, PersistLogin, Host);
                     connection = returnedConnection;
                     messageWriter.Finished = true;
                 }
@@ -725,6 +724,8 @@ namespace PnP.PowerShell.Commands.Base
                                                                credentials,
                                                                CurrentCredentials,
                                                                TenantAdminUrl,
+                                                               PersistLogin,
+                                                               Host,
                                                                AzureEnvironment,
                                                                ClientId,
                                                                RedirectUri, TransformationOnPrem, initializationType);
@@ -864,6 +865,8 @@ namespace PnP.PowerShell.Commands.Base
                                                                    credentials,
                                                                    CurrentCredentials,
                                                                    TenantAdminUrl,
+                                                                   PersistLogin,
+                                                                   Host,
                                                                    AzureEnvironment,
                                                                    azureClientId,
                                                                    RedirectUri, TransformationOnPrem, initializationType);

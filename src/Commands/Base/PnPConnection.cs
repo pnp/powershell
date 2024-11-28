@@ -258,8 +258,16 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection CreateWithDeviceLogin(string clientId, string url, string tenantId, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource)
+        internal static PnPConnection CreateWithDeviceLogin(string clientId, string url, string tenantId, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool persistLogin, System.Management.Automation.Host.PSHost host)
         {
+            if (persistLogin)
+            {
+                EnableCaching(url, clientId);
+            }
+            if (CacheEnabled(url, clientId))
+            {
+                WriteCacheEnabledMessage(host);
+            }
             var connectionUri = new Uri(url);
             var scopes = new[] { $"{connectionUri.Scheme}://{connectionUri.Authority}//.default" }; // the second double slash is not a typo.
             Framework.AuthenticationManager authManager = null;
@@ -444,8 +452,16 @@ namespace PnP.PowerShell.Commands.Base
             return connection;
         }
 
-        internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
+        internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, bool persistLogin, System.Management.Automation.Host.PSHost host, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
         {
+            if (persistLogin)
+            {
+                EnableCaching(url.ToString(), clientId);
+            }
+            if (CacheEnabled(url.ToString(), clientId))
+            {
+                WriteCacheEnabledMessage(host);
+            }
             var context = new PnPClientContext(url.AbsoluteUri)
             {
                 ApplicationName = Resources.ApplicationName,
@@ -1059,10 +1075,10 @@ namespace PnP.PowerShell.Commands.Base
 
         private static void EnableCaching(string url, string clientid)
         {
-            bool folderExists = Directory.Exists(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
+            bool folderExists = System.IO.Directory.Exists(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
             if (!folderExists)
             {
-                Directory.CreateDirectory(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
+                System.IO.Directory.CreateDirectory(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
             }
 
             var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
