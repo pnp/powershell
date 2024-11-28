@@ -1,6 +1,7 @@
 ﻿using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.TenantCdn;
 using Microsoft.VisualBasic;
 using PnP.Core.Services;
 using PnP.Framework;
@@ -1065,22 +1066,23 @@ namespace PnP.PowerShell.Commands.Base
 
         private static void EnableCaching(string url, string clientid)
         {
-            var tenantUri = new Uri(url);
-            var tenantUrl = $"https://{tenantUri.Authority}";
             var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
             var configs = new List<TokenCacheConfiguration>();
             if (System.IO.File.Exists(configFile))
             {
                 configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
             }
-            var entry = configs.FirstOrDefault(c => c.Url == tenantUrl && c.ClientId == clientid);
+            var urls = GetCheckUrls(url);
+            var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
             if (entry != null)
             {
                 entry.Enabled = true;
             }
             else
             {
-                configs.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = tenantUrl, Enabled = true });
+                var baseAuthority = new Uri(url).Authority.Replace("-admin.sharepoint.com", ".sharepoint.com").Replace("-my.sharepoint.com", ".sharepoint.com");
+                var baseUrl = $"https://{baseAuthority}";
+                configs.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = baseUrl, Enabled = true });
             }
             System.IO.File.WriteAllText(configFile, JsonSerializer.Serialize(configs));
         }
@@ -1093,14 +1095,12 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static void ClearCache(PnPConnection connection)
         {
-            var tenantUri = new Uri(connection.Url);
-            var tenantUrl = $"https://{tenantUri.Authority}";
             var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
-
             if (System.IO.File.Exists(configFile))
             {
                 var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-                var entry = configs.FirstOrDefault(c => c.Url == tenantUrl && c.ClientId == connection.ClientId);
+                var urls = GetCheckUrls(connection.Url);
+                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == connection.ClientId);
                 if (entry != null)
                 {
                     configs.Remove(entry);

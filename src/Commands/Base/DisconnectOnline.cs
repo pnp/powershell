@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Base
     {
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter ClearCache;
+        public SwitchParameter ClearPersistedLogin;
 
         protected override void ProcessRecord()
         {
@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Base
                 PnPConnection.Current.Certificate = null;
             }
 
-            if(ClearCache)
+            if(ClearPersistedLogin)
             {
                 PnPConnection.ClearCache(PnPConnection.Current);
             }
