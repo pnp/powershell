@@ -271,6 +271,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
         public SwitchParameter PersistLogin;
 
         private static readonly string[] sourceArray = ["stop", "ignore", "silentlycontinue"];
