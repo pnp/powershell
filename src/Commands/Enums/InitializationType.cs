@@ -13,7 +13,6 @@
         DeviceLogin,
         Graph,
         GraphDeviceLogin,
-        SPOManagementShell,
         ManagedIdentity,
         EnvironmentVariable,
         AzureADWorkloadIdentity

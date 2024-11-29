@@ -75,7 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -Force
-If provided, no confirmation will be asked to remove the value from the property bag.
+If provided, no confirmation will be asked to remove the value from the property bag. It will also temporarily enable scripts on the site and then disable it after removing property bag.
 
 ```yaml
 Type: SwitchParameter

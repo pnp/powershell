@@ -12,14 +12,18 @@ namespace PnP.PowerShell.Commands.Base.Completers
     {
         protected override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
-            IEnumerable<List> result = PnPConnection.Current.Context.LoadQuery(PnPConnection.Current.Context.Web.Lists.Include(list => list.Title));
-            PnPConnection.Current.Context.ExecuteQueryRetry();
-            foreach (var list in result.Where(l => l.Title.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
+            List<CompletionResult> arguments = new List<CompletionResult>();
+            IEnumerable<List> result = ClientContext.LoadQuery(ClientContext.Web.Lists.Include(list => list.Title, list => list.RootFolder.Name));
+            ClientContext.ExecuteQueryRetry();
+            foreach (var list in result.Where(l => l.Title.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase) || l.RootFolder.Name.StartsWith(wordToComplete, StringComparison.InvariantCultureIgnoreCase)))
             {
-                yield return new CompletionResult(list.Title);
-              
+                if (list.RootFolder.Name != list.Title)
+                {
+                    arguments.Add(new CompletionResult(list.RootFolder.Name));
+                }
+                arguments.Add(new CompletionResult(list.Title));
             }
-
+            return arguments.OrderBy(l => l.CompletionText);
         }
     }
 }

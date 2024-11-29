@@ -4,6 +4,11 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using System;
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Base.Completers;
+using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.Core.Model.SharePoint;
+using PnP.Core.Model;
+using PnP.Core.Auth.Services.Builder.Configuration;
 
 namespace PnP.PowerShell.Commands.Branding
 {
@@ -11,7 +16,8 @@ namespace PnP.PowerShell.Commands.Branding
     public class GetCustomAction : PnPWebRetrievalsCmdlet<UserCustomAction>
     {
         [Parameter(Mandatory = false)]
-        public Guid Identity;
+        [ArgumentCompleter(typeof(CustomerActionCompleter))]
+        public UserCustomActionPipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public CustomActionScope Scope = CustomActionScope.Web;
@@ -21,31 +27,27 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            List<UserCustomAction> actions = new List<UserCustomAction>();
-
-            if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
+            if (Identity != null)
             {
-                actions.AddRange(CurrentWeb.GetCustomActions(RetrievalExpressions));
-            }
-            if (Scope == CustomActionScope.All || Scope == CustomActionScope.Site)
-            {
-                actions.AddRange(ClientContext.Site.GetCustomActions(RetrievalExpressions));
-            }
-
-            if (Identity != Guid.Empty)
-            {
-                var foundAction = actions.FirstOrDefault(x => x.Id == Identity);
-                if (foundAction != null || !ThrowExceptionIfCustomActionNotFound)
-                {
-                    WriteObject(foundAction, true);
-                }
-                else
-                {
-                    throw new PSArgumentException($"No CustomAction found with the Identity '{Identity}' within the scope '{Scope}'", "Identity");
-                }
+                WriteObject(Identity.GetCustomActions(PnPContext, Scope).FirstOrDefault());
             }
             else
             {
+                List<IUserCustomAction> actions = null;
+                switch (Scope)
+                {
+                    case CustomActionScope.Web:
+                        {
+                            actions = PnPContext.Web.UserCustomActions.ToList();
+                            break;
+                        }
+                    case CustomActionScope.Site:
+                        {
+                            actions = PnPContext.Site.UserCustomActions.ToList();
+                            break;
+                        }
+
+                }
                 WriteObject(actions, true);
             }
         }

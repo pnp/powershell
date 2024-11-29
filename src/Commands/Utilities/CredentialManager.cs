@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
@@ -7,8 +8,11 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
+using Microsoft.Identity.Client.Extensions.Msal;
+using Microsoft.SharePoint.Client;
 using Microsoft.Win32.SafeHandles;
 using PnP.Framework.Extensions;
+using PnP.Framework.Modernization.Cache;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 [assembly: InternalsVisibleTo("PnP.PowerShell.Tests")]
@@ -41,7 +45,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else if (OperatingSystem.IsMacOS())
                 {
-                    WriteMacOSKeyChainEntry(name, username, password, overwrite);
+                    WriteMacOSKeyChainEntry(name, SecureStringToString(password));
                 }
             }
             return true;
@@ -72,7 +76,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else if (OperatingSystem.IsMacOS())
                 {
-                    WriteMacOSKeyChainEntry(name, null, secureAppId, overwrite);
+                    WriteMacOSKeyChainEntry(name, appid);
                 }
             }
             return true;
@@ -145,7 +149,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     var cred = ReadMacOSKeyChainEntry(name);
                     if (cred != null)
                     {
-                        return SecureStringToString(cred.Password);
+                        return SecureStringToString(cred.Password).Trim('"');
                     }
                 }
             }
@@ -191,7 +195,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static bool RemoveAppid(string name)
         {
-            if(!name.StartsWith("PnPPSAppId:"))
+            if (!name.StartsWith("PnPPSAppId:"))
             {
                 name = $"PnPPSAppId:{name}";
             }
@@ -482,49 +486,35 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        private static PSCredential ReadMacOSKeyChainEntry(string name)
+        private static PSCredential ReadMacOSKeyChainEntry(string applicationName)
         {
-            var cmd = $"/usr/bin/security find-generic-password -s '{name}'";
-            var output = Shell.Bash(cmd);
-            string username = null;
-            string password = null;
-            foreach (var line in output)
+            var keychain = new MacOSKeychain();
+            var credential = keychain.Get(applicationName, applicationName);
+            if (credential != null)
             {
-                if (line.Trim().StartsWith(@"""acct"""))
+                SecureString pw = new SecureString();
+                foreach (char c in credential.Password)
                 {
-                    var acctline = line.Trim().Split(new string[] { "<blob>=" }, StringSplitOptions.None);
-                    username = acctline[1].Trim(new char[] { '"' });
+                    pw.AppendChar(c);
                 }
-            }
-            cmd = $"/usr/bin/security find-generic-password -s '{name}' -w";
-            output = Shell.Bash(cmd);
-            if (output.Count == 1)
-            {
-                password = output[0];
-            }
-            if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(password))
-            {
-                return new PSCredential(username, StringToSecureString(password));
+                return new PSCredential(credential.Account, pw);
             }
             return null;
         }
-        private static void WriteMacOSKeyChainEntry(string applicationName, string username, SecureString password, bool overwrite)
+        private static void WriteMacOSKeyChainEntry(string applicationName,string password)
         {
-            var pw = SecureStringToString(password);
-            var cmd = $"/usr/bin/security add-generic-password -a '{username}' -w '{pw}' -s '{applicationName}'";
-            if (overwrite)
-            {
-                cmd += " -U";
-            }
-            Shell.Bash(cmd);
+            var keychain = new MacOSKeychain();
+            keychain.AddOrUpdate(applicationName, applicationName, password.ToByteArray());
         }
 
         private static bool DeleteMacOSKeyChainEntry(string name)
         {
-            var cmd = $"/usr/bin/security delete-generic-password -s '{name}'";
-            var output = Shell.Bash(cmd);
-            var success = output.Count > 1 && !output[0].StartsWith("security:");
-            return success;
+            var keychain = new MacOSKeychain();
+            return keychain.Remove(name,name);
+            // var cmd = $"/usr/bin/security delete-generic-password -s '{name}'";
+            // var output = Shell.Bash(cmd);
+            // var success = output.Count > 1 && !output[0].StartsWith("security:");
+            // return success;
         }
 
         private static string SecureStringToString(SecureString value)

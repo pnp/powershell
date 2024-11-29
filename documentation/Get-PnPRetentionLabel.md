@@ -4,10 +4,10 @@ schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/Get-PnPLabel.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPLabel
+title: Get-PnPRetentionLabel
 ---
   
-# Get-PnPLabel
+# Get-PnPRetentionLabel
 
 ## SYNOPSIS
 Gets the Office 365 retention label/tag of the specified list or library (if applicable)
@@ -15,8 +15,7 @@ Gets the Office 365 retention label/tag of the specified list or library (if app
 ## SYNTAX
 
 ```powershell
-Get-PnPLabel [-List <ListPipeBind>] [-Raw] [-Connection <PnPConnection>]
- 
+Get-PnPRetentionLabel [-List <ListPipeBind>] [-Raw] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -27,14 +26,14 @@ Allows to retrieve all retention labels for current site or list. Use `Raw` opti
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPLabel
+Get-PnPRetentionLabel
 ```
 
 Returns all retention labels for the current web
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPLabel -List "Demo List" -ValuesOnly
+Get-PnPRetentionLabel -List "Demo List" -ValuesOnly
 ```
 
 This gets the retention label which is set to a list or a library

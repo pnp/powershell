@@ -36,8 +36,6 @@ Disable-PnPSiteClassification
 
 Disables Site Classifications for your tenant.
 
-## PARAMETERS
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)

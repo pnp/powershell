@@ -15,8 +15,7 @@ Add/uploads an available app to the app catalog
 ## SYNTAX
 
 ```powershell
-Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Overwrite] [-Timeout <Int32>] [-Publish [-SkipFeatureDeployment]]
- [-Connection <PnPConnection>] 
+Add-PnPApp [-Path] <String> [-Scope <AppCatalogScope>] [-Overwrite] [-Timeout <Int32>] [-Publish [-SkipFeatureDeployment]] [-Connection <PnPConnection>] [-Force <SwitchParameter>]
 ```
 
 ## DESCRIPTION
@@ -140,6 +139,20 @@ Specifies the timeout in seconds. Defaults to 200.
 ```yaml
 Type: Int32
 Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+If provided, no confirmation will be asked to change no-script setting.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None

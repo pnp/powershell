@@ -1,4 +1,5 @@
 ---
+Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
 online version: https://pnp.github.io/powershell/cmdlets/ConvertTo-PnPPage.html

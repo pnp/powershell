@@ -32,7 +32,9 @@ Get-PnPContainerType [-Connection <PnPConnection>]
 Get-PnPContainerType
 ```
 
-Returns the list of Container Types created for a SharePoint Embedded Application in the tenant.pplication.
+Returns the list of Container Types created for a SharePoint Embedded application in the tenant.
+
+## PARAMETERS
 
 ### -Connection
 

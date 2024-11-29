@@ -62,6 +62,10 @@ Recommend referring to these 2 links:
 | Connect-PnPOnline | Removed `-UseWebLogin` on `Connect-PnPOnline`. It used a very outdated and questionable (reusing an auth cookie) authentication method which implementation broke easily. If you require an ACS connection for certain functionality, consider using `-ClientId` in combination with `-ClientSecret` instead. |
 | Connect-PnPOnline | Removed `-LaunchBrowser` option for Interactive login flows. It is the default now and removed the popup based authentication option |
 | Connect-PnPOnline | Removed `-LaunchBrowser` option for Device Login flows. It is the default now. | 
+| Register-PnPEntraIDApp | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
+| Register-PnPEntraIDAppForInteractiveLogin | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
+| Set-PnPMinimalDownloadStrategy | Removed cmdlet. If you need the functionality you can always turn on the feature with `Enable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a` or turn it off with `Disable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a` |
+| Connect-PnPOnline | Removed `-SPOManagementShell` option for authentication. It reduces the risk of changes from Microsoft which can potentially break the scripts . Use your own Entra ID app instead via `-ClientId` parameter. | 
 
 ## Other notable changes
 
@@ -70,3 +74,4 @@ Recommend referring to these 2 links:
 | **Cmdlet** | **Comment** |
 | ----------- | ---------------------- |
 | Get-PnPAccessToken | The output type is now `Microsoft.IdentityModel.JsonWebTokens.JsonWebToken`, earlier it was `System.IdentityModel.Tokens.Jwt` |
+| Get-PnPCustomAction "| The output type is now `PnP.Core.Model.SharePoint.UserCustomAction`, earlier it was `Microsoft.SharePoint.Client.UserCustomAction` |

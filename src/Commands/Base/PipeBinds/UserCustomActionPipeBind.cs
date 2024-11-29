@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public IEnumerable<IUserCustomAction> GetCustomActions(PnPContext context, CustomActionScope scope)
+                public IEnumerable<IUserCustomAction> GetCustomActions(PnPContext context, CustomActionScope scope)
         {
             if (_coreUserCustomAction != null)
             {

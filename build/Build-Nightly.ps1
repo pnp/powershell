@@ -76,12 +76,15 @@ if ($runPublish -eq $true) {
 
 	if ($IsLinux) {
 		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
+		$helpfileDestinationFolder = "$documentsFolder/.local/share/powershell/Modules"
 	}
 	elseif ($IsMacOS) {
-		$destinationFolder = "~/.local/share/powershell/Modules/PnP.PowerShell"
+		$destinationFolder = "$HOME/.local/share/powershell/Modules/PnP.PowerShell"
+		$helpfileDestinationFolder = "$HOME/.local/share/powershell/Modules"
 	}
 	else {
 		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
+		$helpfileDestinationFolder = "$documentsFolder/PowerShell/Modules"
 	}
 
 	$corePath = "$destinationFolder/Core"
@@ -189,8 +192,12 @@ if ($runPublish -eq $true) {
 
 	Write-Host "Generating Documentation" -ForegroundColor Yellow
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
-	Install-Module PlatyPS -ErrorAction Stop
-	New-ExternalHelp -Path ./documentation -OutputPath $destinationFolder -Force
+	Install-Module -Name Microsoft.PowerShell.PlatyPS -AllowPrerelease -RequiredVersion 1.0.0-preview1
+	Write-Host "Generating external help"
+	$mdFiles = Measure-PlatyPSMarkdown -Path ./documentation/*.md
+	$mdFiles | Import-MarkdownCommandHelp -Path {$_.FilePath} | Export-MamlCommandHelp -OutputFolder $helpfileDestinationFolder -Force
+	# Install-Module Microsoft.PlatyPS -ErrorAction Stop
+	# New-ExternalHelp -Path ./documentation -OutputPath $destinationFolder -Force
 
 	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 

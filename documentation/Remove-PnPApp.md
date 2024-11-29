@@ -15,7 +15,7 @@ Removes an app from the app catalog.
 ## SYNTAX
 
 ```powershell
-Remove-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>]
+Remove-PnPApp [-Identity] <AppMetadataPipeBind> [-Scope <AppCatalogScope>] [-Connection <PnPConnection>] [-Force <SwitchParameter>]
 ```
 
 ## DESCRIPTION
@@ -79,6 +79,20 @@ Accepted values: Tenant, Site
 Required: False
 Position: Named
 Default value: Tenant
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+If provided, no confirmation will be asked to change no-script setting.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
