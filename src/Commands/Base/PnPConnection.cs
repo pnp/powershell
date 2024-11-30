@@ -264,7 +264,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 EnableCaching(url, clientId);
             }
-            if (persistLogin && CacheEnabled(url, clientId))
+            if (CacheEnabled(url, clientId))
             {
                 WriteCacheEnabledMessage(host);
             }
@@ -287,10 +287,7 @@ namespace PnP.PowerShell.Commands.Base
                      return Task.FromResult(0);
                  }, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
                  {
-                     if (persistLogin)
-                     {
-                         await MSALCacheHelper(tokenCache, url, clientId);
-                     }
+                     await MSALCacheHelper(tokenCache, url, clientId);
                  });
             }
             using (authManager)
@@ -461,7 +458,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 EnableCaching(url.ToString(), clientId);
             }
-            if (persistLogin && CacheEnabled(url.ToString(), clientId))
+            if (CacheEnabled(url.ToString(), clientId))
             {
                 WriteCacheEnabledMessage(host);
             }
@@ -495,10 +492,7 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
                             {
-                                if (persistLogin)
-                                {
-                                    await MSALCacheHelper(tokenCache, url.ToString(), clientId);
-                                }
+                                await MSALCacheHelper(tokenCache, url.ToString(), clientId);
                             });
                         }
                         using (authManager)
@@ -609,7 +603,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 EnableCaching(uri.ToString(), clientId);
             }
-            if (persistLogin && CacheEnabled(uri.ToString(), clientId))
+            if (CacheEnabled(uri.ToString(), clientId))
             {
                 WriteCacheEnabledMessage(host);
             }
@@ -634,10 +628,7 @@ namespace PnP.PowerShell.Commands.Base
                 htmlMessageFailure,
                 azureEnvironment: azureEnvironment, tokenCacheCallback: async (tokenCache) =>
                 {
-                    if (persistLogin)
-                    {
-                        await MSALCacheHelper(tokenCache, uri.ToString(), clientId);
-                    }
+                    await MSALCacheHelper(tokenCache, uri.ToString(), clientId);
                 }, useWAM: enableLoginWithWAM);
             }
             using (authManager)
@@ -1067,6 +1058,22 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
             return false;
+        }
+
+        internal static string GetCacheClientId(string url)
+        {
+            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
+            if (System.IO.File.Exists(configFile))
+            {
+                var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
+                var urls = GetCheckUrls(url);
+                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url));
+                if (entry != null && entry.Enabled)
+                {
+                    return entry.ClientId;
+                }
+            }
+            return null;
         }
 
         private static List<string> GetCheckUrls(string url)

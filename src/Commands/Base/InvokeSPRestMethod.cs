@@ -38,17 +38,17 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
         public object Content;
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
         public string ContentType = "application/json";
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Parsed)]
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
         public string Accept = "application/json;odata=nometadata";
 
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Raw)]
         public string ResponseHeadersVariable;
 
-        [Parameter(Mandatory = false, Position = 0, ParameterSetName = PARAMETERSET_Batch)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
         public PnPBatch Batch;
 
         protected override void ExecuteCmdlet()

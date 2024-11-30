@@ -190,6 +190,21 @@ Position: Named
 Accept pipeline input: False
 ```
 
+### -Batch
+
+The batch to add this request to.
+
+```yaml
+Type: PnPBatch
+Parameter Sets: Batched
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
