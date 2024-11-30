@@ -42,6 +42,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Contributors` and `-Managers` parameters to `New-PnPTermGroup` and `Set-PnPTermGroup` cmdlets.
 - Added `-Files` parameter for `Send-PnPMail` cmdlet to allow files to be downloaded from SharePoint and then sent as attachments.
 - Added `-Force` parameter to `Set-PnPPropertyBagValue` cmdlet to toggle NoScript status of the site.
+- Added `-Batch` parameter to `Invoke-PnPGraphMethod` cmdlet to allow adding request in a batch.
 
 ### Changed
 
