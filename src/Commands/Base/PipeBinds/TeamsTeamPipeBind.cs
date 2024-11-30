@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = id.ToString();
         }
 
-        public string GetGroupId(GraphHelper requestHelper)
+        public string GetGroupId(ApiRequestHelper requestHelper)
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public Team GetTeam(GraphHelper requestHelper)
+        public Team GetTeam(ApiRequestHelper requestHelper)
         {
             try
             {

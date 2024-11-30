@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Utilities
         private const int PageSize = 100;
 
         #region Team
-        public static List<Group> GetGroupsWithTeam(GraphHelper requestHelper, string filter = null)
+        public static List<Group> GetGroupsWithTeam(ApiRequestHelper requestHelper, string filter = null)
         {
             Dictionary<string, string> additionalHeaders = null;
             string requestUrl;
@@ -55,12 +55,12 @@ namespace PnP.PowerShell.Commands.Utilities
             return collection.ToList();
         }
 
-        public static Group GetGroupWithTeam(GraphHelper requestHelper, string mailNickname)
+        public static Group GetGroupWithTeam(ApiRequestHelper requestHelper, string mailNickname)
         {
             return requestHelper.Get<Group>($"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{mailNickname}')&$select=Id,DisplayName,MailNickName,Description,Visibility");
         }
 
-        public static List<Team> GetTeamUsingFilter(GraphHelper requestHelper, String filter)
+        public static List<Team> GetTeamUsingFilter(ApiRequestHelper requestHelper, String filter)
         {
             List<Team> teams = new List<Team>();
 
@@ -80,7 +80,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return teams;
         }
 
-        public static Team GetTeam(GraphHelper requestHelper, string groupId)
+        public static Team GetTeam(ApiRequestHelper requestHelper, string groupId)
         {
             // get the group
             var group = requestHelper.Get<Group>($"v1.0/groups/{groupId}?$select=Id,DisplayName,MailNickName,Description,Visibility");
@@ -99,11 +99,11 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static HttpResponseMessage DeleteTeam(GraphHelper requestHelper, string groupId)
+        public static HttpResponseMessage DeleteTeam(ApiRequestHelper requestHelper, string groupId)
         {
             return requestHelper.Delete($"v1.0/groups/{groupId}");
         }
-        public static HttpResponseMessage CloneTeam(GraphHelper requestHelper, string groupId, TeamCloneInformation teamClone)
+        public static HttpResponseMessage CloneTeam(ApiRequestHelper requestHelper, string groupId, TeamCloneInformation teamClone)
         {
             StringContent content = new StringContent(JsonSerializer.Serialize(new
             {
@@ -117,7 +117,7 @@ namespace PnP.PowerShell.Commands.Utilities
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             return requestHelper.PostHttpContent($"v1.0/teams/{groupId}/clone", content);
         }
-        private static Team ParseTeamJson(GraphHelper requestHelper, string groupId)
+        private static Team ParseTeamJson(ApiRequestHelper requestHelper, string groupId)
         {
             // Get Settings
             try
@@ -148,7 +148,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static Team NewTeam(GraphHelper requestHelper, string groupId, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, Guid[] sensitivityLabels, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
+        public static Team NewTeam(ApiRequestHelper requestHelper, string groupId, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, TeamCreationInformation teamCI, string[] owners, string[] members, Guid[] sensitivityLabels, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
             Group group = null;
             Team returnTeam = null;
@@ -272,7 +272,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return $"users/{escapedUpn}";
         }
 
-        private static Group CreateGroup(GraphHelper requestHelper, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, string[] owners, Guid[] sensitivityLabels, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
+        private static Group CreateGroup(ApiRequestHelper requestHelper, string displayName, string description, string classification, string mailNickname, GroupVisibility visibility, string[] owners, Guid[] sensitivityLabels, TeamsTemplateType templateType = TeamsTemplateType.None, TeamResourceBehaviorOptions?[] resourceBehaviorOptions = null)
         {
             // When creating a group, we always need an owner, thus we'll try to define it from the passed in owners array
             string ownerId = null;
@@ -397,7 +397,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        private static string CreateAlias(GraphHelper requestHelper)
+        private static string CreateAlias(ApiRequestHelper requestHelper)
         {
             var guid = Guid.NewGuid().ToString();
             var teamName = string.Empty;
@@ -415,24 +415,24 @@ namespace PnP.PowerShell.Commands.Utilities
             return teamName;
         }
 
-        public static Team UpdateTeam(GraphHelper requestHelper, string groupId, Team team)
+        public static Team UpdateTeam(ApiRequestHelper requestHelper, string groupId, Team team)
         {
             return requestHelper.Patch<Team>($"v1.0/teams/{groupId}", team);
         }
 
-        public static Group UpdateGroup(GraphHelper requestHelper, string groupId, Group group)
+        public static Group UpdateGroup(ApiRequestHelper requestHelper, string groupId, Group group)
         {
             return requestHelper.Patch<Group>($"v1.0/groups/{groupId}", group);
         }
 
-        public static void SetTeamPictureAsync(GraphHelper requestHelper, string teamId, byte[] bytes, string contentType)
+        public static void SetTeamPictureAsync(ApiRequestHelper requestHelper, string teamId, byte[] bytes, string contentType)
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
             requestHelper.Put<string>($"v1.0/teams/{teamId}/photo/$value", byteArrayContent);
         }
 
-        public static HttpResponseMessage SetTeamArchivedState(GraphHelper requestHelper, string groupId, bool archived, bool? setSiteReadOnly)
+        public static HttpResponseMessage SetTeamArchivedState(ApiRequestHelper requestHelper, string groupId, bool archived, bool? setSiteReadOnly)
         {
             if (archived)
             {
@@ -448,7 +448,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static IEnumerable<DeletedTeam> GetDeletedTeam(GraphHelper requestHelper)
+        public static IEnumerable<DeletedTeam> GetDeletedTeam(ApiRequestHelper requestHelper)
         {
             // get the deleted team
             var deletedTeams = requestHelper.GetResultCollection<DeletedTeam>($"beta/teamwork/deletedTeams");
@@ -461,7 +461,7 @@ namespace PnP.PowerShell.Commands.Utilities
         #endregion
 
         #region Users
-        public static void AddUser(GraphHelper requestHelper, string groupId, string upn, string role)
+        public static void AddUser(ApiRequestHelper requestHelper, string groupId, string upn, string role)
         {
             var userIdResult = requestHelper.Get($"v1.0/{GetUserGraphUrlForUPN(upn)}?$select=Id");
             var resultElement = JsonSerializer.Deserialize<JsonElement>(userIdResult);
@@ -479,7 +479,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static void AddUsers(GraphHelper requestHelper, string groupId, string[] upn, string role)
+        public static void AddUsers(ApiRequestHelper requestHelper, string groupId, string[] upn, string role)
         {
             var teamChannelMember = new List<TeamChannelMember>();
             if (upn != null && upn.Length > 0)
@@ -499,7 +499,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static List<User> GetUsers(GraphHelper requestHelper, string groupId, string role)
+        public static List<User> GetUsers(ApiRequestHelper requestHelper, string groupId, string role)
         {
             var selectedRole = role != null ? role.ToLower() : null;
             var owners = new List<User>();
@@ -556,7 +556,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return finalList;
         }
 
-        public static IEnumerable<User> GetUsers(GraphHelper requestHelper, string groupId, string channelId, string role)
+        public static IEnumerable<User> GetUsers(ApiRequestHelper requestHelper, string groupId, string channelId, string role)
         {
             List<User> users = new List<User>();
             var selectedRole = role != null ? role.ToLower() : null;
@@ -577,7 +577,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static void DeleteUser(GraphHelper requestHelper, string groupId, string upn, string role)
+        public static void DeleteUser(ApiRequestHelper requestHelper, string groupId, string upn, string role)
         {
             var user = requestHelper.Get<User>($"v1.0/{GetUserGraphUrlForUPN(upn)}?$select=Id");
             if (user != null)
@@ -599,7 +599,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static List<TeamUser> GetTeamUsersWithDisplayName(GraphHelper requestHelper, string groupId, string userDisplayName)
+        public static List<TeamUser> GetTeamUsersWithDisplayName(ApiRequestHelper requestHelper, string groupId, string userDisplayName)
         {
             // multiple users can have same display name, so using list
             var teamUserWithDisplayName = new List<TeamUser>();
@@ -615,7 +615,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return teamUserWithDisplayName;
         }
 
-        public static TeamUser UpdateTeamUserRole(GraphHelper requestHelper, string groupId, string teamMemberId, string role)
+        public static TeamUser UpdateTeamUserRole(ApiRequestHelper requestHelper, string groupId, string teamMemberId, string role)
         {
             var teamUser = new TeamUser
             {
@@ -634,7 +634,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #region Channel
 
-        public static TeamChannel GetChannel(GraphHelper requestHelper, string groupId, string channelId, bool useBeta = false)
+        public static TeamChannel GetChannel(ApiRequestHelper requestHelper, string groupId, string channelId, bool useBeta = false)
         {
             var additionalHeaders = new Dictionary<string, string>()
             {
@@ -645,7 +645,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return channel;
         }
 
-        public static IEnumerable<TeamChannel> GetChannels(GraphHelper requestHelper, string groupId, bool useBeta = false)
+        public static IEnumerable<TeamChannel> GetChannels(ApiRequestHelper requestHelper, string groupId, bool useBeta = false)
         {
             var additionalHeaders = new Dictionary<string, string>()
             {
@@ -656,7 +656,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return collection;
         }
 
-        public static TeamChannel GetPrimaryChannel(GraphHelper requestHelper, string groupId, bool useBeta = false)
+        public static TeamChannel GetPrimaryChannel(ApiRequestHelper requestHelper, string groupId, bool useBeta = false)
         {
             var additionalHeaders = new Dictionary<string, string>()
             {
@@ -667,12 +667,12 @@ namespace PnP.PowerShell.Commands.Utilities
             return collection;
         }
 
-        public static HttpResponseMessage DeleteChannel(GraphHelper requestHelper, string groupId, string channelId, bool useBeta = false)
+        public static HttpResponseMessage DeleteChannel(ApiRequestHelper requestHelper, string groupId, string channelId, bool useBeta = false)
         {
             return requestHelper.Delete($"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}");
         }
 
-        public static TeamChannel AddChannel(GraphHelper requestHelper, string groupId, string displayName, string description, TeamsChannelType channelType, string ownerUPN, bool isFavoriteByDefault)
+        public static TeamChannel AddChannel(ApiRequestHelper requestHelper, string groupId, string displayName, string description, TeamsChannelType channelType, string ownerUPN, bool isFavoriteByDefault)
         {
             var channel = new TeamChannel()
             {
@@ -702,17 +702,17 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static void PostMessage(GraphHelper requestHelper, string groupId, string channelId, TeamChannelMessage message)
+        public static void PostMessage(ApiRequestHelper requestHelper, string groupId, string channelId, TeamChannelMessage message)
         {
             requestHelper.Post($"v1.0/teams/{groupId}/channels/{channelId}/messages", message);
         }
 
-        public static TeamChannelMessage GetMessage(GraphHelper requestHelper, string groupId, string channelId, string messageId)
+        public static TeamChannelMessage GetMessage(ApiRequestHelper requestHelper, string groupId, string channelId, string messageId)
         {
             return requestHelper.Get<TeamChannelMessage>($"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}");
         }
 
-        public static List<TeamChannelMessage> GetMessages(GraphHelper requestHelper, string groupId, string channelId, bool includeDeleted = false)
+        public static List<TeamChannelMessage> GetMessages(ApiRequestHelper requestHelper, string groupId, string channelId, bool includeDeleted = false)
         {
             List<TeamChannelMessage> messages = new List<TeamChannelMessage>();
             var collection = requestHelper.GetResultCollection<TeamChannelMessage>($"v1.0/teams/{groupId}/channels/{channelId}/messages");
@@ -731,7 +731,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// List all the replies to a message in a channel of a team.
         /// </summary>
-        public static List<TeamChannelMessageReply> GetMessageReplies(GraphHelper requestHelper, string groupId, string channelId, string messageId, bool includeDeleted = false)
+        public static List<TeamChannelMessageReply> GetMessageReplies(ApiRequestHelper requestHelper, string groupId, string channelId, string messageId, bool includeDeleted = false)
         {
             var replies = requestHelper.GetResultCollection<TeamChannelMessageReply>($"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies");
 
@@ -741,7 +741,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Get a specific reply of a message in a channel of a team.
         /// </summary>
-        public static TeamChannelMessageReply GetMessageReply(GraphHelper requestHelper, string groupId, string channelId, string messageId, string replyId)
+        public static TeamChannelMessageReply GetMessageReply(ApiRequestHelper requestHelper, string groupId, string channelId, string messageId, string replyId)
         {
             return requestHelper.Get<TeamChannelMessageReply>($"v1.0/teams/{groupId}/channels/{channelId}/messages/{messageId}/replies/{replyId}");
         }
@@ -749,7 +749,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Updates a Teams Channel
         /// </summary>
-        public static TeamChannel UpdateChannel(GraphHelper requestHelper, string groupId, string channelId, TeamChannel channel, bool useBeta = false)
+        public static TeamChannel UpdateChannel(ApiRequestHelper requestHelper, string groupId, string channelId, TeamChannel channel, bool useBeta = false)
         {
             return requestHelper.Patch($"{(useBeta ? "beta" : "v1.0")}/teams/{groupId}/channels/{channelId}", channel);
         }
@@ -761,7 +761,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// Get specific memberbership of user who has access to a certain Microsoft Teams channel.
         /// </summary>
         /// <returns>User channel membership.</returns>
-        public static TeamChannelMember GetChannelMember(GraphHelper requestHelper, string groupId, string channelId, string membershipId)
+        public static TeamChannelMember GetChannelMember(ApiRequestHelper requestHelper, string groupId, string channelId, string membershipId)
         {
             // Currently the Graph request to get a membership by id fails (v1.0/teams/{groupId}/channels/{channelId}/members/{membershipId}).
             // This is why the method below is used.
@@ -774,7 +774,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// Get list of all memberships of a certain Microsoft Teams channel.
         /// </summary>
         /// <returns>List of memberships.</returns>
-        public static IEnumerable<TeamChannelMember> GetChannelMembers(GraphHelper requestHelper, string groupId, string channelId, string role = null)
+        public static IEnumerable<TeamChannelMember> GetChannelMembers(ApiRequestHelper requestHelper, string groupId, string channelId, string role = null)
         {
             var collection = requestHelper.GetResultCollection<TeamChannelMember>($"v1.0/teams/{groupId}/channels/{channelId}/members");
 
@@ -792,7 +792,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// </summary>
         /// <param name="role">User role, valid values: Owner, Member</param>
         /// <returns>Added membership.</returns>
-        public static TeamChannelMember AddChannelMember(GraphHelper requestHelper, string groupId, string channelId, string upn, string role)
+        public static TeamChannelMember AddChannelMember(ApiRequestHelper requestHelper, string groupId, string channelId, string upn, string role)
         {
             var channelMember = new TeamChannelMember
             {
@@ -810,7 +810,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// Remove specified member of a specified Microsoft Teams channel.
         /// </summary>
         /// <returns>True when removal succeeded, else false.</returns>
-        public static HttpResponseMessage DeleteChannelMember(GraphHelper requestHelper, string groupId, string channelId, string membershipId)
+        public static HttpResponseMessage DeleteChannelMember(ApiRequestHelper requestHelper, string groupId, string channelId, string membershipId)
         {
             return requestHelper.Delete($"v1.0/teams/{groupId}/channels/{channelId}/members/{membershipId}");
         }
@@ -819,7 +819,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// Update the role of a specific member of a Microsoft Teams channel.
         /// </summary>
         /// <returns>Updated membership object.</returns>
-        public static TeamChannelMember UpdateChannelMember(GraphHelper requestHelper, string groupId, string channelId, string membershipId, string role)
+        public static TeamChannelMember UpdateChannelMember(ApiRequestHelper requestHelper, string groupId, string channelId, string membershipId, string role)
         {
             var channelMember = new TeamChannelMember();
 
@@ -830,7 +830,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return requestHelper.Patch($"v1.0/teams/{groupId}/channels/{channelId}/members/{membershipId}", channelMember);
         }
 
-        public static TeamsChannelFilesFolder GetChannelsFilesFolder(GraphHelper requestHelper, string groupId, string channelId)
+        public static TeamsChannelFilesFolder GetChannelsFilesFolder(ApiRequestHelper requestHelper, string groupId, string channelId)
         {
             var collection = requestHelper.Get<TeamsChannelFilesFolder>($"v1.0/teams/{groupId}/channels/{channelId}/filesFolder");
             return collection;
@@ -839,29 +839,29 @@ namespace PnP.PowerShell.Commands.Utilities
         #endregion
 
         #region Tabs
-        public static IEnumerable<TeamTab> GetTabs(GraphHelper requestHelper, string groupId, string channelId)
+        public static IEnumerable<TeamTab> GetTabs(ApiRequestHelper requestHelper, string groupId, string channelId)
         {
             var collection = requestHelper.GetResultCollection<TeamTab>($"v1.0/teams/{groupId}/channels/{channelId}/tabs");
             return collection;
         }
 
-        public static TeamTab GetTab(GraphHelper requestHelper, string groupId, string channelId, string tabId)
+        public static TeamTab GetTab(ApiRequestHelper requestHelper, string groupId, string channelId, string tabId)
         {
             return requestHelper.Get<TeamTab>($"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}?$expand=teamsApp", propertyNameCaseInsensitive: true);
         }
 
-        public static HttpResponseMessage DeleteTab(GraphHelper requestHelper, string groupId, string channelId, string tabId)
+        public static HttpResponseMessage DeleteTab(ApiRequestHelper requestHelper, string groupId, string channelId, string tabId)
         {
             return requestHelper.Delete($"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tabId}");
         }
 
-        public static void UpdateTab(GraphHelper requestHelper, string groupId, string channelId, TeamTab tab)
+        public static void UpdateTab(ApiRequestHelper requestHelper, string groupId, string channelId, TeamTab tab)
         {
             tab.Configuration = null;
             requestHelper.Patch($"v1.0/teams/{groupId}/channels/{channelId}/tabs/{tab.Id}", tab);
         }
 
-        public static TeamTab AddTab(GraphHelper requestHelper, string groupId, string channelId, string displayName, TeamTabType tabType, string teamsAppId, string entityId, string contentUrl, string removeUrl, string websiteUrl)
+        public static TeamTab AddTab(ApiRequestHelper requestHelper, string groupId, string channelId, string displayName, TeamTabType tabType, string teamsAppId, string entityId, string contentUrl, string removeUrl, string websiteUrl)
         {
             TeamTab tab = new TeamTab();
             switch (tabType)
@@ -984,13 +984,13 @@ namespace PnP.PowerShell.Commands.Utilities
         #endregion
 
         #region Apps
-        public static IEnumerable<TeamApp> GetApps(GraphHelper requestHelper)
+        public static IEnumerable<TeamApp> GetApps(ApiRequestHelper requestHelper)
         {
             var collection = requestHelper.GetResultCollection<TeamApp>($"v1.0/appCatalogs/teamsApps");
             return collection;
         }
 
-        public static TeamApp AddApp(GraphHelper requestHelper, byte[] bytes)
+        public static TeamApp AddApp(ApiRequestHelper requestHelper, byte[] bytes)
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
@@ -999,14 +999,14 @@ namespace PnP.PowerShell.Commands.Utilities
             return JsonSerializer.Deserialize<TeamApp>(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
         }
 
-        public static HttpResponseMessage UpdateApp(GraphHelper requestHelper, byte[] bytes, string appId)
+        public static HttpResponseMessage UpdateApp(ApiRequestHelper requestHelper, byte[] bytes, string appId)
         {
             var byteArrayContent = new ByteArrayContent(bytes);
             byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/zip");
             return requestHelper.PutHttpContent($"v1.0/appCatalogs/teamsApps/{appId}", byteArrayContent);
         }
 
-        public static HttpResponseMessage DeleteApp(GraphHelper requestHelper, string appId)
+        public static HttpResponseMessage DeleteApp(ApiRequestHelper requestHelper, string appId)
         {
             return requestHelper.Delete($"v1.0/appCatalogs/teamsApps/{appId}");
         }
@@ -1014,25 +1014,25 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #region Tags
 
-        public static IEnumerable<TeamTag> GetTags(GraphHelper requestHelper, string groupId)
+        public static IEnumerable<TeamTag> GetTags(ApiRequestHelper requestHelper, string groupId)
         {
             var collection = requestHelper.GetResultCollection<TeamTag>($"v1.0/teams/{groupId}/tags");
             return collection;
         }
 
-        public static TeamTag GetTagsWithId(GraphHelper requestHelper, string groupId, string tagId)
+        public static TeamTag GetTagsWithId(ApiRequestHelper requestHelper, string groupId, string tagId)
         {
             var tagInformation = requestHelper.Get<TeamTag>($"v1.0/teams/{groupId}/tags/{tagId}");
             return tagInformation;
         }
 
-        public static void UpdateTag(GraphHelper requestHelper, string groupId, string tagId, string displayName)
+        public static void UpdateTag(ApiRequestHelper requestHelper, string groupId, string tagId, string displayName)
         {
             var body = new { displayName = displayName };
             requestHelper.Patch($"v1.0/teams/{groupId}/tags/{tagId}", body);
         }
 
-        public static HttpResponseMessage DeleteTag(GraphHelper requestHelper, string groupId, string tagId)
+        public static HttpResponseMessage DeleteTag(ApiRequestHelper requestHelper, string groupId, string tagId)
         {
             return requestHelper.Delete($"v1.0/teams/{groupId}/tags/{tagId}");
         }

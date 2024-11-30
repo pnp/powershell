@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        internal static Dictionary<string, string> GetPropertyBatched(GraphHelper requestHelper, string[] lookupData, string urlTemplate, string property)
+        internal static Dictionary<string, string> GetPropertyBatched(ApiRequestHelper requestHelper, string[] lookupData, string urlTemplate, string property)
         {
             Dictionary<string, string> returnValue = new Dictionary<string, string>();
 
@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return returnValue;
         }
 
-        internal static Dictionary<string, IEnumerable<T>> GetObjectCollectionBatched<T>(GraphHelper requestHelper, string[] lookupData, string urlTemplate)
+        internal static Dictionary<string, IEnumerable<T>> GetObjectCollectionBatched<T>(ApiRequestHelper requestHelper, string[] lookupData, string urlTemplate)
         {
             Dictionary<string, IEnumerable<T>> returnValue = new Dictionary<string, IEnumerable<T>>();
 

@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Base
         /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL
         /// </summary>
         public string AccessToken => TokenHandler.GetAccessToken(this, "https://manage.office.com/.default", Connection);
-        public GraphHelper RequestHelper { get; set; }
+        public ApiRequestHelper RequestHelper { get; set; }
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException("This cmdlet not work with a WebLogin/Cookie based connection towards SharePoint.");
                 }
             }
-            RequestHelper = new GraphHelper(this, Connection, "https://manage.office.com/.default");
+            RequestHelper = new ApiRequestHelper(this, Connection, "https://manage.office.com/.default");
         }
 
         protected Guid? TenantId

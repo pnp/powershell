@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public string Id => _id;
         public AzureADServicePrincipalAppRoleAssignment AppRoleAssignment => _appRoleAssignment;
 
-        internal AzureADServicePrincipalAppRoleAssignment GetAssignedAppRole(GraphHelper requestHelper, string servicePrincipalObjectId = null)
+        internal AzureADServicePrincipalAppRoleAssignment GetAssignedAppRole(ApiRequestHelper requestHelper, string servicePrincipalObjectId = null)
         {            
             AzureADServicePrincipalAppRoleAssignment appRoleAssignment = null;
 

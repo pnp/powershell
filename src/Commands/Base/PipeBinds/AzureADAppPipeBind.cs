@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public AzureADApp GetApp(GraphHelper requestHelper)
+        public AzureADApp GetApp(ApiRequestHelper requestHelper)
         {
             if (_id != Guid.Empty)
             {

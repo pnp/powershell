@@ -21,8 +21,8 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         public string PowerAppsServiceAccessToken => TokenHandler.GetAccessToken(this, "https://service.powerapps.com/.default", Connection);
 
-        public GraphHelper ArmRequestHelper { get; private set; }
-        public GraphHelper PowerAppsServerRequestHelper { get; private set; }
+        public ApiRequestHelper ArmRequestHelper { get; private set; }
+        public ApiRequestHelper PowerAppsServerRequestHelper { get; private set; }
 
         public string PowerappServicesAudience => "https://service.powerapps.com/.default";
         protected override void BeginProcessing()
@@ -35,8 +35,8 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException("This cmdlet not work with a WebLogin/Cookie based connection towards SharePoint.");
                 }
             }
-            this.ArmRequestHelper = new GraphHelper(this, Connection, ArmAudience);
-            this.PowerAppsServerRequestHelper = new GraphHelper(this, Connection, PowerappServicesAudience);
+            this.ArmRequestHelper = new ApiRequestHelper(this, Connection, ArmAudience);
+            this.PowerAppsServerRequestHelper = new ApiRequestHelper(this, Connection, PowerappServicesAudience);
         }
     }
 }

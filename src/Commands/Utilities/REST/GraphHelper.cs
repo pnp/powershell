@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
     /// <summary>
     /// Helper class that aids in making calls towards the Microsoft Graph API
     /// </summary>
-    public class GraphHelper
+    public class ApiRequestHelper
     {
 
         public PnPConnection Connection { get; private set; }
@@ -27,11 +27,15 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         private string AccessToken => TokenHandler.GetAccessToken(Cmdlet, Audience, Connection);
         public string Audience {get; private set;}
         public string GraphEndPoint => Connection.GraphEndPoint;
-        public GraphHelper(Cmdlet cmdlet, PnPConnection connection, string audience = null)
+
+        private CmdletMessageWriter MessageWriter;
+
+        public ApiRequestHelper(PSCmdlet cmdlet, PnPConnection connection, string audience = null)
         {
             this.Connection = connection;
             this.Cmdlet = cmdlet;
             this.Audience = audience ?? $"https://{Connection.GraphEndPoint}/.default";
+            this.MessageWriter = new CmdletMessageWriter(cmdlet);
         }
     
         public bool TryGetGraphException(HttpResponseMessage responseMessage, out GraphException exception)
@@ -405,7 +409,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private string SendMessage(HttpRequestMessage message)
         {
-            Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
+            MessageWriter.WriteVerbose($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
 
             // Ensure we have the required permissions in the access token to make the call
             TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(Cmdlet, AccessToken);

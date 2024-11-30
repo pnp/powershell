@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _roster = roster;
         }
 
-        public PlannerRoster GetPlannerRoster(GraphHelper requestHelper)
+        public PlannerRoster GetPlannerRoster(ApiRequestHelper requestHelper)
         {
             if (_roster != null)
             {

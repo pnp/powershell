@@ -80,7 +80,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="accessToken">Optional access token to use to retrieve the default environment. When omitted, it will try to retrieve an access token for the call itself.</param>
         /// <param name="azureEnvironment">The type of cloud to communicate with</param>
         /// <returns></returns>
-        public static Model.PowerPlatform.Environment.Environment GetDefaultEnvironment(GraphHelper requestHelper, AzureEnvironment azureEnvironment)
+        public static Model.PowerPlatform.Environment.Environment GetDefaultEnvironment(ApiRequestHelper requestHelper, AzureEnvironment azureEnvironment)
         {
             requestHelper.Cmdlet.WriteVerbose("Retrieving default Power Platform environment");
 

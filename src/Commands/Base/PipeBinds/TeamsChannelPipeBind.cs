@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string Id => _id;
 
-        public string GetId(GraphHelper requestHelper, string groupId)
+        public string GetId(ApiRequestHelper requestHelper, string groupId)
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public TeamChannel GetChannel(GraphHelper requestHelper, string groupId, bool useBeta = false)
+        public TeamChannel GetChannel(ApiRequestHelper requestHelper, string groupId, bool useBeta = false)
         {
             if (!string.IsNullOrEmpty(_id))
             {

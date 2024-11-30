@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="message">The message to send</param>
         /// <param name="saveToSentItems">Boolean indicating if the sent message should be added to the sent items of the sender. Optional. Defaults to true.</param>
         /// <exception cref="System.Exception">Thrown if sending the e-mail failed</exception>
-        public static void SendGraphMail(GraphHelper requestHelper, Message message, bool saveToSentItems = true)
+        public static void SendGraphMail(ApiRequestHelper requestHelper, Message message, bool saveToSentItems = true)
         {
             var jsonSerializer = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, };
             jsonSerializer.Converters.Add(new JsonStringEnumConverter());

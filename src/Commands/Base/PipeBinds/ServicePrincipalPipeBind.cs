@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public Guid? Id => _id;
         public AzureADServicePrincipal ServicePrincipal => _servicePrincipal;
 
-        internal AzureADServicePrincipal GetServicePrincipal(GraphHelper requestHelper)
+        internal AzureADServicePrincipal GetServicePrincipal(ApiRequestHelper requestHelper)
         {
             if(_servicePrincipal != null) return _servicePrincipal;
             if(!string.IsNullOrEmpty(_displayName)) return ServicePrincipalUtility.GetServicePrincipalByAppName(requestHelper, _displayName);

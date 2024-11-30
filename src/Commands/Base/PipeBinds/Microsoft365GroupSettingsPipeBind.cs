@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Guid GroupId => _groupId;
 
-        public Guid GetGroupSettingId(GraphHelper requestHelper)
+        public Guid GetGroupSettingId(ApiRequestHelper requestHelper)
         {
             Guid idValue;
             if (Group != null)

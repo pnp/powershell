@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         }
 
 
-        public TeamTag GetTag(GraphHelper requestHelper, string groupId)
+        public TeamTag GetTag(ApiRequestHelper requestHelper, string groupId)
         {
             var tags = TeamsUtility.GetTags(requestHelper, groupId);
             if (tags != null && tags.Any())

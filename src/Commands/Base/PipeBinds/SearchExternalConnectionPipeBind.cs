@@ -24,12 +24,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _identity = identity;
         }
 
-        public string GetExternalConnectionId(GraphHelper requestHelper)
+        public string GetExternalConnectionId(ApiRequestHelper requestHelper)
         {
             return _identity ?? _searchExternalConnection?.Id ?? GetExternalConnection(requestHelper)?.Id;
         }
 
-        public Model.Graph.MicrosoftSearch.ExternalConnection GetExternalConnection(GraphHelper requestHelper)
+        public Model.Graph.MicrosoftSearch.ExternalConnection GetExternalConnection(ApiRequestHelper requestHelper)
         {
             if(_searchExternalConnection != null)
             {

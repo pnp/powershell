@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string Id => _id;
 
-        public TeamTab GetTab(GraphHelper requestHelper, string groupId, string channelId)
+        public TeamTab GetTab(ApiRequestHelper requestHelper, string groupId, string channelId)
         {
             if (_tab != null)
             {

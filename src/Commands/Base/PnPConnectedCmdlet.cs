@@ -2,10 +2,12 @@
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Base
 {
+
     /// <summary>
     /// Base class for all the PnP Cmdlets which require a connection to have been made
     /// </summary>
@@ -15,7 +17,6 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, HelpMessage = "Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.")]
         public PnPConnection Connection = null;
         // do not remove '#!#99'
-
 
         protected override void BeginProcessing()
         {

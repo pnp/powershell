@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public PlannerBucket GetBucket(GraphHelper requestHelper, string planId)
+        public PlannerBucket GetBucket(ApiRequestHelper requestHelper, string planId)
         {
             // first try to get the bucket by id
             if (_bucket != null)

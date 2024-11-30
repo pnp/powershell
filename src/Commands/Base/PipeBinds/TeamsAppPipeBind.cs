@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string StringValue => _stringValue;
 
-        public TeamApp GetApp(GraphHelper restHelper)
+        public TeamApp GetApp(ApiRequestHelper restHelper)
         {
             if (Id != Guid.Empty)
             {

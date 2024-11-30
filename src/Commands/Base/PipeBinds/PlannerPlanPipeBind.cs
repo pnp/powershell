@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _plan = plan;
         }
 
-        public PlannerPlan GetPlan(GraphHelper requestHelper, string groupId, bool resolveIdentities)
+        public PlannerPlan GetPlan(ApiRequestHelper requestHelper, string groupId, bool resolveIdentities)
         {
             if (_plan != null)
             {
@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return null;
         }
 
-        public string GetId(GraphHelper requestHelper, string groupId)
+        public string GetId(ApiRequestHelper requestHelper, string groupId)
         {
             if (_plan != null)
             {

@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        internal RoleEligibilitySchedule GetInstance(GraphHelper requestHelper)
+        internal RoleEligibilitySchedule GetInstance(ApiRequestHelper requestHelper)
         {
             if (Instance != null)
             {

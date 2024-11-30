@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = group.Id;
         }
 
-        public string GetGroupId(GraphHelper requestHelper)
+        public string GetGroupId(ApiRequestHelper requestHelper)
         {
             if (!string.IsNullOrEmpty(_id))
             {

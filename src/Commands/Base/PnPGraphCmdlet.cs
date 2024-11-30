@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Base
 
         public PnPContext PnPContext => Connection?.PnPContext;
 
-        public GraphHelper RequestHelper {get; private set;}
+        public ApiRequestHelper RequestHelper {get; private set;}
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException($"This cmdlet does not work with a {typeString} based connection towards SharePoint.");
                 }
             }
-            RequestHelper = new GraphHelper(this,Connection,$"https://{Connection.GraphEndPoint}/.default");
+            RequestHelper = new ApiRequestHelper(this,Connection,$"https://{Connection.GraphEndPoint}/.default");
         }
 
         /// <summary>

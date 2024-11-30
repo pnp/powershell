@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class AzureADGroupsUtility
     {
-        internal static Group GetGroup(GraphHelper requestHelper, Guid groupId)
+        internal static Group GetGroup(ApiRequestHelper requestHelper, Guid groupId)
         {
             var results = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=id eq '{groupId}'");
 
@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static Group GetGroup(GraphHelper requestHelper, string displayName)
+        internal static Group GetGroup(ApiRequestHelper requestHelper, string displayName)
         {
             var results = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(displayName eq '{displayName}' or mailNickName eq '{displayName}')");
 
@@ -34,13 +34,13 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static IEnumerable<Group> GetGroups(GraphHelper requestHelper)
+        internal static IEnumerable<Group> GetGroups(ApiRequestHelper requestHelper)
         {
             var results = requestHelper.GetResultCollection<Group>($"v1.0/groups", propertyNameCaseInsensitive: true);
             return results;
         }
 
-        internal static Group Update(GraphHelper requestHelper, Group group)
+        internal static Group Update(ApiRequestHelper requestHelper, Group group)
         {
             return requestHelper.Patch($"v1.0/groups/{group.Id}", group);
         }

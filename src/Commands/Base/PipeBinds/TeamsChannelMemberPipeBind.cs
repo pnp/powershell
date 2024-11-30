@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _membership = membership;
         }
 
-        public string GetId(GraphHelper requestHelper, string groupId, string channelId)
+        public string GetId(ApiRequestHelper requestHelper, string groupId, string channelId)
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return memberships.FirstOrDefault(m => !string.IsNullOrEmpty(m.UserId) && _userId.Equals(m.UserId, StringComparison.OrdinalIgnoreCase))?.Id;
         }
 
-        public TeamChannelMember GetMembership(GraphHelper requestHelper, string groupId, string channelId)
+        public TeamChannelMember GetMembership(ApiRequestHelper requestHelper, string groupId, string channelId)
         {
             if (_membership != null)
             {

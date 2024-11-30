@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Guid GroupId => _groupId;
 
-        public Microsoft365Group GetGroup(GraphHelper requestHelper, bool includeSite, bool includeOwners, bool detailed, bool includeSensitivityLabels)
+        public Microsoft365Group GetGroup(ApiRequestHelper requestHelper, bool includeSite, bool includeOwners, bool detailed, bool includeSensitivityLabels)
         {
             Microsoft365Group group = null;
             if (Group != null)
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return group;
         }
 
-        public Guid GetGroupId(GraphHelper requestHelper)
+        public Guid GetGroupId(ApiRequestHelper requestHelper)
         {
             if (Group != null)
             {
@@ -84,7 +84,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             throw new PSInvalidOperationException("Group not found");
         }
 
-        public Microsoft365Group GetDeletedGroup(GraphHelper requestHelper)
+        public Microsoft365Group GetDeletedGroup(ApiRequestHelper requestHelper)
         {
             if (_group != null)
             {
@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return null;
         }
 
-        public Guid GetDeletedGroupId(GraphHelper requestHelper)
+        public Guid GetDeletedGroupId(ApiRequestHelper requestHelper)
         {
             if (_group != null)
             {

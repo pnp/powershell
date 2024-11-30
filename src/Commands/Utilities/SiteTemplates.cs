@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="script">The Site Script to invoke</param>
         /// <param name="siteUrl">The URL of the SharePoint site to invoke the Site Script on</param>
         /// <returns>HttpResponseMessage with the</returns>
-        public static RestResultCollection<InvokeSiteScriptActionResponse> InvokeSiteScript(GraphHelper requestHelper, TenantSiteScript script, string siteUrl)
+        public static RestResultCollection<InvokeSiteScriptActionResponse> InvokeSiteScript(ApiRequestHelper requestHelper, TenantSiteScript script, string siteUrl)
         {
             return InvokeSiteScript(requestHelper, script.Content, siteUrl);
         }
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="scriptContent">The Site Script content to invoke</param>
         /// <param name="siteUrl">The URL of the SharePoint site to invoke the Site Script on</param>
         /// <returns></returns>
-        public static RestResultCollection<InvokeSiteScriptActionResponse> InvokeSiteScript(GraphHelper requestHelper, string scriptContent, string siteUrl)
+        public static RestResultCollection<InvokeSiteScriptActionResponse> InvokeSiteScript(ApiRequestHelper requestHelper, string scriptContent, string siteUrl)
         {
             // Properly encode the contents of the provided site script
             var escapedScript = Regex.Replace(scriptContent.Replace("\\\"", "\\\\\\\""), "(?<!\\\\)\"", "\\\"", RegexOptions.Singleline);

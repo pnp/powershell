@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Utilities
     internal static class PlannerUtility
     {
         #region Plans
-        public static IEnumerable<PlannerPlan> GetPlans(GraphHelper requestHelper, string groupId, bool resolveDisplayNames)
+        public static IEnumerable<PlannerPlan> GetPlans(ApiRequestHelper requestHelper, string groupId, bool resolveDisplayNames)
         {
             var returnCollection = new List<PlannerPlan>();
             var collection = requestHelper.GetResultCollection<PlannerPlan>($"v1.0/groups/{groupId}/planner/plans");
@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnCollection;
         }
 
-        public static PlannerPlan GetPlan(GraphHelper requestHelper, string planId, bool resolveDisplayNames)
+        public static PlannerPlan GetPlan(ApiRequestHelper requestHelper, string planId, bool resolveDisplayNames)
         {
             var plan = requestHelper.Get<PlannerPlan>($"v1.0/planner/plans/{planId}");
             if (resolveDisplayNames)
@@ -49,14 +49,14 @@ namespace PnP.PowerShell.Commands.Utilities
             return plan;
         }
 
-        public static PlannerPlan CreatePlan(GraphHelper requestHelper, string groupId, string title)
+        public static PlannerPlan CreatePlan(ApiRequestHelper requestHelper, string groupId, string title)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(new { owner = groupId, title = title }));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             return requestHelper.Post<PlannerPlan>("v1.0/planner/plans", stringContent);
         }
 
-        public static PlannerPlan UpdatePlan(GraphHelper requestHelper, PlannerPlan plan, string title)
+        public static PlannerPlan UpdatePlan(ApiRequestHelper requestHelper, PlannerPlan plan, string title)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(new { title }));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
@@ -75,7 +75,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        public static void DeletePlan(GraphHelper requestHelper, string planId)
+        public static void DeletePlan(ApiRequestHelper requestHelper, string planId)
         {
             var plan = GetPlan(requestHelper, planId, false);
             if (plan != null)
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #region Tasks
 
-        public static IEnumerable<PlannerTask> GetTasks(GraphHelper requestHelper, string planId, bool resolveDisplayNames)
+        public static IEnumerable<PlannerTask> GetTasks(ApiRequestHelper requestHelper, string planId, bool resolveDisplayNames)
         {
             var returnCollection = new List<PlannerTask>();
             var collection = requestHelper.GetResultCollection<PlannerTask>($"v1.0/planner/plans/{planId}/tasks");
@@ -118,7 +118,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnCollection;
         }
 
-        public static PlannerTask GetTask(GraphHelper requestHelper, string taskId, bool resolveDisplayNames, bool includeDetails)
+        public static PlannerTask GetTask(ApiRequestHelper requestHelper, string taskId, bool resolveDisplayNames, bool includeDetails)
         {
             var task = requestHelper.Get<PlannerTask>($"v1.0/planner/tasks/{taskId}");
             if (resolveDisplayNames)
@@ -133,7 +133,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return task;
         }
 
-        public static PlannerTaskDetails GetTaskDetails(GraphHelper requestHelper, string taskId, bool resolveDisplayNames)
+        public static PlannerTaskDetails GetTaskDetails(ApiRequestHelper requestHelper, string taskId, bool resolveDisplayNames)
         {
             var taskDetails = requestHelper.Get<PlannerTaskDetails>($"v1.0/planner/tasks/{taskId}/details");
             if (!resolveDisplayNames)
@@ -163,12 +163,12 @@ namespace PnP.PowerShell.Commands.Utilities
             return taskDetails;
         }
 
-        public static PlannerTask AddTask(GraphHelper requestHelper, PlannerTask task)
+        public static PlannerTask AddTask(ApiRequestHelper requestHelper, PlannerTask task)
         {
             return requestHelper.Post("v1.0/planner/tasks", task);
         }
 
-        public static void DeleteTask(GraphHelper requestHelper, string taskId)
+        public static void DeleteTask(ApiRequestHelper requestHelper, string taskId)
         {
             var task = requestHelper.Get<PlannerTask>($"v1.0/planner/tasks/{taskId}");
             if (task != null)
@@ -177,12 +177,12 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static PlannerTask UpdateTask(GraphHelper requestHelper, PlannerTask taskToUpdate, PlannerTask task)
+        public static PlannerTask UpdateTask(ApiRequestHelper requestHelper, PlannerTask taskToUpdate, PlannerTask task)
         {
             return requestHelper.Patch($"v1.0/planner/tasks/{taskToUpdate.Id}", task, new Dictionary<string, string> { { "IF-MATCH", taskToUpdate.ETag } });
         }
 
-        public static void UpdateTaskDetails(GraphHelper requestHelper, PlannerTaskDetails taskToUpdate, string description)
+        public static void UpdateTaskDetails(ApiRequestHelper requestHelper, PlannerTaskDetails taskToUpdate, string description)
         {
             var body = new PlannerTaskDetails
             {
@@ -201,7 +201,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerRoster</returns>
-        public static PlannerRoster CreateRoster(GraphHelper requestHelper)
+        public static PlannerRoster CreateRoster(ApiRequestHelper requestHelper)
         {
             var stringContent = new StringContent("{ \"@odata.type\": \"#microsoft.graph.plannerRoster\" }");
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
@@ -215,7 +215,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerRoster</returns>
-        public static PlannerRoster GetRoster(GraphHelper requestHelper, string rosterId)
+        public static PlannerRoster GetRoster(ApiRequestHelper requestHelper, string rosterId)
         {
             return requestHelper.Get<PlannerRoster>($"beta/planner/rosters/{rosterId}");
         }
@@ -227,7 +227,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>HttpResponseMessage</returns>
-        public static HttpResponseMessage DeleteRoster(GraphHelper requestHelper, string rosterId)
+        public static HttpResponseMessage DeleteRoster(ApiRequestHelper requestHelper, string rosterId)
         {
             return requestHelper.Delete($"beta/planner/rosters/{rosterId}");
         }
@@ -240,7 +240,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerRoster</returns>
-        public static PlannerRoster AddRosterMember(GraphHelper requestHelper, string rosterId, string userId)
+        public static PlannerRoster AddRosterMember(ApiRequestHelper requestHelper, string rosterId, string userId)
         {
             var stringContent = new StringContent("{ \"@odata.type\": \"#microsoft.graph.plannerRosterMember\", \"userId\": \"" + userId + "\" }");
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
@@ -255,7 +255,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>HttpResponseMessage</returns>
-        public static HttpResponseMessage RemoveRosterMember(GraphHelper requestHelper, string rosterId, string userId)
+        public static HttpResponseMessage RemoveRosterMember(ApiRequestHelper requestHelper, string rosterId, string userId)
         {
             return requestHelper.Delete($"beta/planner/rosters/{rosterId}/members/{userId}");
         }
@@ -267,7 +267,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>IEnumerable<PlannerRosterMember></returns>
-        public static IEnumerable<PlannerRosterMember> GetRosterMembers(GraphHelper requestHelper, string rosterId)
+        public static IEnumerable<PlannerRosterMember> GetRosterMembers(ApiRequestHelper requestHelper, string rosterId)
         {
             var returnCollection = new List<PlannerRosterMember>();
             var collection = requestHelper.GetResultCollection<PlannerRosterMember>($"beta/planner/rosters/{rosterId}/members");
@@ -285,7 +285,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerRoster</returns>
-        public static PlannerRoster GetRosterPlansByUser(GraphHelper requestHelper, string userId)
+        public static PlannerRoster GetRosterPlansByUser(ApiRequestHelper requestHelper, string userId)
         {
             return requestHelper.Get<PlannerRoster>($"beta/users/{userId}/planner/rosterPlans");
         }
@@ -297,7 +297,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerRoster</returns>
-        public static PlannerRoster GetRosterPlansByRoster(GraphHelper requestHelper, string rosterId)
+        public static PlannerRoster GetRosterPlansByRoster(ApiRequestHelper requestHelper, string rosterId)
         {
             return requestHelper.Get<PlannerRoster>($"beta/planner/rosters/{rosterId}/plans");
         }
@@ -312,7 +312,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerTenantConfig</returns>
-        public static PlannerTenantConfig GetPlannerConfig(GraphHelper requestHelper)
+        public static PlannerTenantConfig GetPlannerConfig(ApiRequestHelper requestHelper)
         {
             var result = requestHelper.Get<PlannerTenantConfig>("https://tasks.office.com/taskAPI/tenantAdminSettings/Settings");
             return result;
@@ -324,7 +324,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerTenantConfig</returns>
-        public static PlannerTenantConfig SetPlannerConfig(GraphHelper requestHelper, bool? isPlannerAllowed, bool? allowCalendarSharing, bool? allowTenantMoveWithDataLoss, bool? allowTenantMoveWithDataMigration, bool? allowRosterCreation, bool? allowPlannerMobilePushNotifications)
+        public static PlannerTenantConfig SetPlannerConfig(ApiRequestHelper requestHelper, bool? isPlannerAllowed, bool? allowCalendarSharing, bool? allowTenantMoveWithDataLoss, bool? allowTenantMoveWithDataMigration, bool? allowRosterCreation, bool? allowPlannerMobilePushNotifications)
         {
             var content = new PlannerTenantConfig
             {
@@ -346,7 +346,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerUserPolicy</returns>
-        public static PlannerUserPolicy GetPlannerUserPolicy(GraphHelper requestHelper, string userId)
+        public static PlannerUserPolicy GetPlannerUserPolicy(ApiRequestHelper requestHelper, string userId)
         {
             var result = requestHelper.Get<PlannerUserPolicy>($"https://tasks.office.com/taskAPI/tenantAdminSettings/UserPolicy('{userId}')");
             return result;
@@ -359,7 +359,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="httpClient">HttpClient instance to use to send out requests</param>
         /// <param name="accessToken">AccessToken to use to authenticate the request</param>
         /// <returns>PlannerUserPolicy</returns>
-        public static PlannerUserPolicy SetPlannerUserPolicy(GraphHelper requestHelper, string userId, bool? blockDeleteTasksNotCreatedBySelf)
+        public static PlannerUserPolicy SetPlannerUserPolicy(ApiRequestHelper requestHelper, string userId, bool? blockDeleteTasksNotCreatedBySelf)
         {
             var content = new PlannerUserPolicy
             {
@@ -371,7 +371,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #endregion
 
-        private static Identity ResolveIdentity(GraphHelper requestHelper, Identity identity)
+        private static Identity ResolveIdentity(ApiRequestHelper requestHelper, Identity identity)
         {
             if (identity == null)
             {
@@ -387,7 +387,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        private static string ResolveGroupName(GraphHelper requestHelper, string id)
+        private static string ResolveGroupName(ApiRequestHelper requestHelper, string id)
         {
             var group = requestHelper.Get<Group>($"v1.0/groups/{id}?$select=displayName");
             if (group != null)
@@ -402,19 +402,19 @@ namespace PnP.PowerShell.Commands.Utilities
 
         #region Buckets
 
-        public static IEnumerable<PlannerBucket> GetBuckets(GraphHelper requestHelper, string planId)
+        public static IEnumerable<PlannerBucket> GetBuckets(ApiRequestHelper requestHelper, string planId)
         {
             return requestHelper.GetResultCollection<PlannerBucket>($"v1.0/planner/plans/{planId}/buckets");
         }
 
-        public static PlannerBucket CreateBucket(GraphHelper requestHelper, string name, string planId)
+        public static PlannerBucket CreateBucket(ApiRequestHelper requestHelper, string name, string planId)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(new { name = name, planId = planId, orderHint = " !" }));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             return requestHelper.Post<PlannerBucket>($"v1.0/planner/buckets", stringContent);
         }
 
-        public static void RemoveBucket(GraphHelper requestHelper, string bucketId)
+        public static void RemoveBucket(ApiRequestHelper requestHelper, string bucketId)
         {
             var bucket = requestHelper.Get<PlannerBucket>($"v1.0/planner/buckets/{bucketId}");
             if (bucket != null)
@@ -424,7 +424,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
 
-        public static IEnumerable<PlannerTask> GetBucketTasks(GraphHelper requestHelper, string bucketId, bool resolveDisplayNames)
+        public static IEnumerable<PlannerTask> GetBucketTasks(ApiRequestHelper requestHelper, string bucketId, bool resolveDisplayNames)
         {
             var returnCollection = new List<PlannerTask>();
             var collection = requestHelper.Get<RestResultCollection<PlannerTask>>($"v1.0/planner/buckets/{bucketId}/tasks");
@@ -479,7 +479,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return returnCollection;
         }
 
-        public static PlannerBucket UpdateBucket(GraphHelper requestHelper, string name, string bucketId)
+        public static PlannerBucket UpdateBucket(ApiRequestHelper requestHelper, string name, string bucketId)
         {
             var bucket = requestHelper.Get<PlannerBucket>($"v1.0/planner/buckets/{bucketId}");
             if (bucket != null)

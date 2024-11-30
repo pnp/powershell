@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands
         public HttpClient HttpClient => Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
 
-        public GraphHelper RequestHelper {get;set;}
+        public ApiRequestHelper RequestHelper {get;set;}
         /// <summary>
         /// The current Bearer access token for SharePoint Online
         /// </summary>
@@ -110,7 +110,7 @@ namespace PnP.PowerShell.Commands
                     throw new InvalidOperationException(Resources.NoDefaultSharePointConnection);
                 }
             }
-            RequestHelper = new GraphHelper(this,Connection,$"https://{Connection.GraphEndPoint}/.default");
+            RequestHelper = new ApiRequestHelper(this,Connection,$"https://{Connection.GraphEndPoint}/.default");
         }
 
         protected override void ProcessRecord()

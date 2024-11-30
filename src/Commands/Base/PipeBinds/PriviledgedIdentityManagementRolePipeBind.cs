@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        internal RoleDefinition GetInstance(GraphHelper requestHelper)
+        internal RoleDefinition GetInstance(ApiRequestHelper requestHelper)
         {
             if (Instance != null)
             {

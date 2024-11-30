@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
            // string accessTokenForGettingSolutions = TokenHandler.GetAccessToken(this, $"{dynamicsScopeUrl}/.default", Connection);
 
-            var dynamicRequestHelper = new GraphHelper(this,this.Connection,$"{dynamicsScopeUrl}/.default");
+            var dynamicRequestHelper = new ApiRequestHelper(this,this.Connection,$"{dynamicsScopeUrl}/.default");
 
             if (ParameterSpecified(nameof(Name)))
             {
