@@ -54,6 +54,19 @@ Invoke-PnPGraphMethod -Url <String>
                       [-Verbose]
 ```
 
+### Batch
+```powershell
+Invoke-PnPGraphMethod -Url <String>
+                      [-AdditionalHeaders GraphAdditionalHeadersPipeBind]
+                      [[-Method] <HttpRequestMethod>] 
+                      [-Content <Object>] 
+                      [-ContentType <String>] 
+                      [-ConsistencyLevelEventual] 
+                      [-Connection <PnPConnection>]
+                      [-Batch <PnPBatch>]                      
+                      [-Verbose]
+```
+
 ## DESCRIPTION
 Invokes a REST request towards the Microsoft Graph API. It will take care of potential throttling retries that are needed to retrieve the data.
 
@@ -119,6 +132,18 @@ Invoke-PnPGraphMethod -Url "https://graph.microsoft.com/v1.0/planner/tasks/23fas
 ```
 
 This example retrieves a Planner task to find the etag value which is required to update the task. In order to update the task through call to the Microsoft Graph API we need to include an If-Match header with the value of the etag. It then creates the content to update, in this case the title of the task, and calls the PATCH method on the Graph end-point to update the specific task.
+
+### EXAMPLE 9
+```powershell
+$batch = New-PnPBatch -RetainRequests
+Invoke-PnPSPRestMethod -Method Get -Url "https://graph.microsoft.com/v1.0/users" -Batch $batch
+Invoke-PnPSPRestMethod -Method Get -Url "https://graph.microsoft.com/v1.0/groups" -Batch $batch
+$response = Invoke-PnPBatch $batch -Details
+$response
+```
+
+This example executes a GET request to get all users and a groups in a single batch request.
+It is necessary to create and invoke batch requests in the manner specified here if you want to process something later on with the response object.
 
 ## PARAMETERS
 
@@ -287,6 +312,21 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Batch
+
+The batch to add this request to.
+
+```yaml
+Type: PnPBatch
+Parameter Sets: Batched
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
