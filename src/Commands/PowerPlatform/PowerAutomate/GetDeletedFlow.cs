@@ -19,13 +19,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             var baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
 
             WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'");
 
             var flowUrl = $"{baseUrl}/providers/Microsoft.ProcessSimple/scopes/admin/environments/{environmentName}/v2/flows?api-version=2016-11-01&include=softDeletedFlows";
-            var results = GraphHelper.GetResultCollection<Model.PowerPlatform.PowerAutomate.Flow>(this, Connection, flowUrl, AccessToken);
+            var results = ArmRequestHelper.GetResultCollection<Model.PowerPlatform.PowerAutomate.Flow>(flowUrl);
 
             var deletedFlowList = results
                 .Where(flow => flow.Properties.StateRaw == "Deleted")

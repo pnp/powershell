@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         public string Identity;
         protected override void ExecuteCmdlet()
         {
-            var result = PlannerUtility.GetPlannerUserPolicy(this, Connection, AccessToken, Identity);
+            var result = PlannerUtility.GetPlannerUserPolicy(RequestHelper, Identity);
             WriteObject(result);
         }
     }

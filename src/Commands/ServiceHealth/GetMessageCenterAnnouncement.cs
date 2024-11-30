@@ -16,11 +16,11 @@ namespace PnP.PowerShell.Commands.ServiceHealth
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ServiceHealthUtility.GetServiceUpdateMessageById(this, Identity, Connection, AccessToken), false);
+                WriteObject(ServiceHealthUtility.GetServiceUpdateMessageById(RequestHelper, Identity), false);
             }
             else
             {
-                WriteObject(ServiceHealthUtility.GetServiceUpdateMessages(this, Connection, AccessToken), true);
+                WriteObject(ServiceHealthUtility.GetServiceUpdateMessages(RequestHelper), true);
             }
         }        
     }

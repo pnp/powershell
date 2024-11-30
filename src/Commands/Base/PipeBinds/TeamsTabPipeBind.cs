@@ -1,5 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -39,7 +40,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string Id => _id;
 
-        public TeamTab GetTab(BasePSCmdlet cmdlet, PnPConnection Connection, string accessToken, string groupId, string channelId)
+        public TeamTab GetTab(GraphHelper requestHelper, string groupId, string channelId)
         {
             if (_tab != null)
             {
@@ -47,25 +48,17 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var tab = TeamsUtility.GetTab(cmdlet, accessToken, Connection, groupId, channelId, _id);
+                var tab = TeamsUtility.GetTab(requestHelper, groupId, channelId, _id);
                 if (string.IsNullOrEmpty(tab.Id))
                 {
-                    var tabs = TeamsUtility.GetTabs(cmdlet, accessToken, Connection, groupId, channelId);
+                    var tabs = TeamsUtility.GetTabs(requestHelper, groupId, channelId);
                     if (tabs != null)
                     {
                         // find the tab by id
                         tab = tabs.FirstOrDefault(t => t.DisplayName.Equals(_displayName, System.StringComparison.OrdinalIgnoreCase));
                     }
                 }
-                if (tab != null)
-                {
-                    return tab;
-                }
-                else
-                {
-                    cmdlet.WriteError(new PSArgumentException("Cannot find tab"), ErrorCategory.ObjectNotFound);
-                    return  null;
-                }
+                return tab;
             }
         }
     }

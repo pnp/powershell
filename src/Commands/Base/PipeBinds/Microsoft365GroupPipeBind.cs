@@ -1,5 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
@@ -44,25 +45,25 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Guid GroupId => _groupId;
 
-        public Microsoft365Group GetGroup(Cmdlet cmdlet, PnPConnection connection, string accessToken, bool includeSite, bool includeOwners, bool detailed, bool includeSensitivityLabels)
+        public Microsoft365Group GetGroup(GraphHelper requestHelper, bool includeSite, bool includeOwners, bool detailed, bool includeSensitivityLabels)
         {
             Microsoft365Group group = null;
             if (Group != null)
             {
-                group = ClearOwners.GetGroup(cmdlet, connection, _group.Id.Value, accessToken, includeSite, includeOwners, detailed, includeSensitivityLabels);
+                group = ClearOwners.GetGroup(requestHelper, _group.Id.Value, includeSite, includeOwners, detailed, includeSensitivityLabels);
             }
             else if (_groupId != Guid.Empty)
             {
-                group = ClearOwners.GetGroup(cmdlet, connection, _groupId, accessToken, includeSite, includeOwners, detailed, includeSensitivityLabels);
+                group = ClearOwners.GetGroup(requestHelper, _groupId, includeSite, includeOwners, detailed, includeSensitivityLabels);
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                group = ClearOwners.GetGroup(cmdlet, connection, DisplayName, accessToken, includeSite, includeOwners, detailed, includeSensitivityLabels);
+                group = ClearOwners.GetGroup(requestHelper, DisplayName, includeSite, includeOwners, detailed, includeSensitivityLabels);
             }
             return group;
         }
 
-        public Guid GetGroupId(Cmdlet cmdlet, PnPConnection connection, string accessToken)
+        public Guid GetGroupId(GraphHelper requestHelper)
         {
             if (Group != null)
             {
@@ -74,7 +75,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var group = ClearOwners.GetGroup(cmdlet, connection, DisplayName, accessToken, false, false, false, false);
+                var group = ClearOwners.GetGroup(requestHelper, DisplayName, false, false, false, false);
                 if (group != null)
                 {
                     return group.Id.Value;
@@ -83,24 +84,24 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             throw new PSInvalidOperationException("Group not found");
         }
 
-        public Microsoft365Group GetDeletedGroup(Cmdlet cmdlet, PnPConnection connection, string accessToken)
+        public Microsoft365Group GetDeletedGroup(GraphHelper requestHelper)
         {
             if (_group != null)
             {
-                return ClearOwners.GetDeletedGroup(cmdlet, connection, _group.Id.Value, accessToken);
+                return ClearOwners.GetDeletedGroup(requestHelper, _group.Id.Value);
             }
             else if (_groupId != Guid.Empty)
             {
-                return ClearOwners.GetDeletedGroup(cmdlet, connection, _groupId, accessToken);
+                return ClearOwners.GetDeletedGroup(requestHelper, _groupId);
             }
             else if (!string.IsNullOrEmpty(_displayName))
             {
-                return ClearOwners.GetDeletedGroup(cmdlet, connection, _displayName, accessToken);
+                return ClearOwners.GetDeletedGroup(requestHelper, _displayName);
             }
             return null;
         }
 
-        public Guid GetDeletedGroupId(Cmdlet cmdlet, PnPConnection connection, string accessToken)
+        public Guid GetDeletedGroupId(GraphHelper requestHelper)
         {
             if (_group != null)
             {
@@ -112,7 +113,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(_displayName))
             {
-                var group = ClearOwners.GetDeletedGroup(cmdlet, connection, _displayName, accessToken);
+                var group = ClearOwners.GetDeletedGroup(requestHelper, _displayName);
                 if (group != null)
                 {
                     return group.Id.Value;

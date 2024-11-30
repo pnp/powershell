@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _id = group.Id;
         }
 
-        public string GetGroupId(Cmdlet cmdlet, PnPConnection connection, string accessToken)
+        public string GetGroupId(GraphHelper requestHelper)
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var collection = GraphHelper.Get<RestResultCollection<Model.Graph.Group>>(cmdlet, connection, $"v1.0/groups?$filter=mailNickname eq '{_stringValue}'&$select=Id", accessToken);
+                var collection = requestHelper.Get<RestResultCollection<Model.Graph.Group>>( $"v1.0/groups?$filter=mailNickname eq '{_stringValue}'&$select=Id");
                 if (collection != null && collection.Items.Any())
                 {
                     return collection.Items.First().Id;
@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 else
                 {
                     // find the team by displayName
-                    var byDisplayNamecollection = GraphHelper.Get<RestResultCollection<Model.Graph.Group>>(cmdlet, connection, $"v1.0/groups?$filter=displayName eq '{_stringValue}'&$select=Id", accessToken);
+                    var byDisplayNamecollection = requestHelper.Get<RestResultCollection<Model.Graph.Group>>( $"v1.0/groups?$filter=displayName eq '{_stringValue}'&$select=Id");
                     if (byDisplayNamecollection != null && byDisplayNamecollection.Items.Any())
                     {
                         if (byDisplayNamecollection.Items.Count() == 1)

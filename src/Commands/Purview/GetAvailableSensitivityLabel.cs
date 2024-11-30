@@ -52,12 +52,12 @@ namespace PnP.PowerShell.Commands.Purview
             {
                 url += $"/{Identity}";
 
-                var labels = GraphHelper.Get<Model.Graph.Purview.InformationProtectionLabel>(this, Connection, url, AccessToken);
+                var labels = RequestHelper.Get<Model.Graph.Purview.InformationProtectionLabel>(url);
                 WriteObject(labels, false);
             }
             else
             {
-                var labels = GraphHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>(this, Connection, url, AccessToken);
+                var labels = RequestHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>(url);
                 WriteObject(labels, true);
             }
         }

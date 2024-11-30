@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             WriteVerbose($"Deleting user with Id {user.Id}");
 
-            var graphResult = GraphHelper.Delete(this, Connection, $"v1.0/users/{user.Id}", AccessToken);
+            var graphResult = RequestHelper.Delete($"v1.0/users/{user.Id}");
 
             if(graphResult.StatusCode == System.Net.HttpStatusCode.NoContent)
             {

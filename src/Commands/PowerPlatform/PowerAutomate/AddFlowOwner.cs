@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             if (string.IsNullOrEmpty(environmentName))
             {
                 throw new PSArgumentException("Environment not found.", nameof(Environment));

@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetApp(this, Connection, AccessToken));
+                WriteObject(Identity.GetApp(RequestHelper));
             }
             else
             {
@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         { "ConsistencyLevel", "eventual" }
                     };
                 }
-                var result = GraphHelper.GetResultCollection<AzureADApp>(this, Connection, requestUrl, AccessToken, additionalHeaders: additionalHeaders);
+                var result = RequestHelper.GetResultCollection<AzureADApp>(requestUrl, additionalHeaders: additionalHeaders);
                 WriteObject(result, true);
             }
         }

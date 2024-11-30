@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Teams
                 try
                 {
                     var bytes = System.IO.File.ReadAllBytes(Path);
-                    TeamsUtility.AddApp(this, Connection, AccessToken, bytes);
+                    TeamsUtility.AddApp(RequestHelper, bytes);
                 }
                 catch (GraphException ex)
                 {

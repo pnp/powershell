@@ -80,16 +80,16 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="accessToken">Optional access token to use to retrieve the default environment. When omitted, it will try to retrieve an access token for the call itself.</param>
         /// <param name="azureEnvironment">The type of cloud to communicate with</param>
         /// <returns></returns>
-        public static Model.PowerPlatform.Environment.Environment GetDefaultEnvironment(Cmdlet cmdlet, PnPConnection connection, AzureEnvironment azureEnvironment, string accessToken = null)
+        public static Model.PowerPlatform.Environment.Environment GetDefaultEnvironment(GraphHelper requestHelper, AzureEnvironment azureEnvironment)
         {
-            cmdlet.WriteVerbose("Retrieving default Power Platform environment");
+            requestHelper.Cmdlet.WriteVerbose("Retrieving default Power Platform environment");
 
             // If we don't have an access token yet, try to retrieve one
-            accessToken ??= TokenHandler.GetAccessToken(cmdlet, $"{Endpoints.GetArmEndpoint(connection)}/.default", connection);
+            //accessToken ??= TokenHandler.GetAccessToken(cmdlet, $"{Endpoints.GetArmEndpoint(connection)}/.default", connection);
             
             // Request the available environments and try to define the one marked as default
             string baseUrl = GetPowerAutomateEndpoint(azureEnvironment);
-            return GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.Environment>(cmdlet, connection,  $"{baseUrl}/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", accessToken).FirstOrDefault(e => e.Properties.IsDefault.GetValueOrDefault(false));
+            return requestHelper.GetResultCollection<Model.PowerPlatform.Environment.Environment>($"{baseUrl}/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01").FirstOrDefault(e => e.Properties.IsDefault.GetValueOrDefault(false));
         }
     }
 }

@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Site
                 try
                 {
                     var groupId = ClientContext.Site.EnsureProperty(s => s.GroupId);
-                    ClearOwners.CreateTeam(this, Connection, AccessToken, groupId);
+                    ClearOwners.CreateTeam(RequestHelper, groupId);
                 }
                 catch
                 {

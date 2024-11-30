@@ -37,18 +37,18 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string StringValue => _stringValue;
 
-        public TeamApp GetApp(Cmdlet cmdlet, PnPConnection connection, string accessToken)
+        public TeamApp GetApp(GraphHelper restHelper)
         {
             if (Id != Guid.Empty)
             {
-                var collection = GraphHelper.Get<RestResultCollection<TeamApp>>(cmdlet, connection, $"v1.0/appCatalogs/teamsApps?$filter=id eq '{_id}'", accessToken);
+                var collection = restHelper.Get<RestResultCollection<TeamApp>>($"v1.0/appCatalogs/teamsApps?$filter=id eq '{_id}'");
                 if (collection != null && collection.Items.Any())
                 {
                     return collection.Items.First();
                 }
                 else
                 {
-                    collection = GraphHelper.Get<RestResultCollection<TeamApp>>(cmdlet, connection, $"v1.0/appCatalogs/teamsApps?$filter=externalId eq '{_id}'", accessToken);
+                    collection = restHelper.Get<RestResultCollection<TeamApp>>( $"v1.0/appCatalogs/teamsApps?$filter=externalId eq '{_id}'");
                     if (collection != null && collection.Items.Any())
                     {
                         return collection.Items.First();
@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var collection = GraphHelper.Get<RestResultCollection<TeamApp>>(cmdlet, connection, $"v1.0/appCatalogs/teamsApps?$filter=displayName eq '{_stringValue}'", accessToken);
+                var collection = restHelper.Get<RestResultCollection<TeamApp>>($"v1.0/appCatalogs/teamsApps?$filter=displayName eq '{_stringValue}'");
                 if (collection != null && collection.Items.Any())
                 {
                     if (collection.Items.Count() == 1)

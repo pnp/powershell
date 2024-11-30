@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
-            var result = PlannerUtility.SetPlannerUserPolicy(this, Connection, AccessToken, Identity, BlockDeleteTasksNotCreatedBySelf);
+            var result = PlannerUtility.SetPlannerUserPolicy(RequestHelper, Identity, BlockDeleteTasksNotCreatedBySelf);
             WriteObject(result);
         }
     }

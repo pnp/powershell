@@ -2,6 +2,7 @@ using System.Management.Automation;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Attributes;
+using AngleSharp.Io;
 
 namespace PnP.PowerShell.Commands.Search
 {
@@ -15,9 +16,9 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var externalConnectionId = ConnectionId.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(RequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
             var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}/schema";
-            var result = Utilities.REST.GraphHelper.Get<Model.Graph.MicrosoftSearch.ExternalSchema>(this, Connection, graphApiUrl, AccessToken, additionalHeaders: new System.Collections.Generic.Dictionary<string, string> { { "Prefer", "include-unknown-enum-members" } });
+            var result = RequestHelper.Get<Model.Graph.MicrosoftSearch.ExternalSchema>(graphApiUrl, additionalHeaders: new System.Collections.Generic.Dictionary<string, string> { { "Prefer", "include-unknown-enum-members" } });
             WriteObject(result, false);
         }
     }

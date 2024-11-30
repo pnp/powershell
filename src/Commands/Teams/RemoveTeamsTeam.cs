@@ -21,15 +21,15 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+            var groupId = Identity.GetGroupId(RequestHelper);
             if (groupId != null)
             {
                 if (Force || ShouldContinue("Removing the team will remove all messages in all channels in the team.", Properties.Resources.Confirm))
                 {
-                    var response = TeamsUtility.DeleteTeam(this, AccessToken, Connection, groupId);
+                    var response = TeamsUtility.DeleteTeam(RequestHelper, groupId);
                     if (!response.IsSuccessStatusCode)
                     {
-                        if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                        if (RequestHelper.TryGetGraphException(response, out GraphException ex))
                         {
                             if (ex.Error != null)
                             {

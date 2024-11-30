@@ -29,15 +29,15 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (System.IO.File.Exists(Path))
             {
-                var app = Identity.GetApp(this, Connection, AccessToken);
+                var app = Identity.GetApp(RequestHelper);
                 if (app != null)
                 {
 
                     var bytes = System.IO.File.ReadAllBytes(Path);
-                    var response = TeamsUtility.UpdateApp(this, Connection, AccessToken, bytes, app.Id);
+                    var response = TeamsUtility.UpdateApp(RequestHelper, bytes, app.Id);
                     if (!response.IsSuccessStatusCode)
                     {
-                        if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                        if (RequestHelper.TryGetGraphException(response, out GraphException ex))
                         {
                             throw new PSInvalidOperationException(ex.Error.Message);
                         }

@@ -11,7 +11,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPUnifiedAuditLog")]
-    [RequiredApiApplicationPermissions("https://manage.office.com/ActivityFeed.Read","https://manage.office.com/ActivityFeed.ReadDlp","https://manage.office.com/ServiceHealth.Read","https://manage.office.com/ActivityReports.Read","https://manage.office.com/ThreatIntelligence.Read")]
+    [RequiredApiApplicationPermissions("https://manage.office.com/ActivityFeed.Read", "https://manage.office.com/ActivityFeed.ReadDlp", "https://manage.office.com/ServiceHealth.Read", "https://manage.office.com/ActivityReports.Read", "https://manage.office.com/ThreatIntelligence.Read")]
     [OutputType(typeof(ManagementApiUnifiedLogRecord))]
     public class GetUnifiedAuditLog : PnPOfficeManagementApiCmdlet
     {
@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
         private IEnumerable<ManagementApiSubscription> GetSubscriptions()
         {
             var url = $"{ApiUrl}/subscriptions/list";
-            return GraphHelper.Get<IEnumerable<ManagementApiSubscription>>(this, Connection, url, AccessToken);
+            return RequestHelper.Get<IEnumerable<ManagementApiSubscription>>(url);
         }
 
         private void EnsureSubscription(string contentType)
@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
             var subscription = subscriptions.FirstOrDefault(s => s.ContentType == contentType);
             if (subscription == null)
             {
-                subscription = GraphHelper.Post<ManagementApiSubscription>(this, Connection, $"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={TenantId}", AccessToken);
+                subscription = RequestHelper.Post<ManagementApiSubscription>($"{ApiUrl}/subscriptions/start?contentType={contentType}&PublisherIdentifier={TenantId}");
                 if (!subscription.Status.Equals("enabled", StringComparison.OrdinalIgnoreCase))
                 {
                     throw new Exception($"Cannot enable subscription for {contentType}");
@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
             }
 
             List<ManagementApiSubscriptionContent> subscriptionContents = new();
-            var subscriptionResponse = GraphHelper.GetResponse(this, Connection, url, AccessToken);
+            var subscriptionResponse = RequestHelper.GetResponse(url);
             var content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
             if (subscriptionResponse.IsSuccessStatusCode)
@@ -97,7 +97,7 @@ namespace PnP.PowerShell.Commands.ManagementApi
                 subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
                 while (subscriptionResponse.Headers.Contains("NextPageUri"))
                 {
-                    subscriptionResponse = GraphHelper.GetResponse(this, Connection, subscriptionResponse.Headers.GetValues("NextPageUri").First(), AccessToken);
+                    subscriptionResponse = RequestHelper.GetResponse(subscriptionResponse.Headers.GetValues("NextPageUri").First());
                     if (subscriptionResponse.IsSuccessStatusCode)
                     {
                         content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -108,14 +108,14 @@ namespace PnP.PowerShell.Commands.ManagementApi
             else
             {
                 // Request was not successful
-                throw new PSInvalidOperationException($"Service responded with HTTP {(int) subscriptionResponse.StatusCode} {subscriptionResponse.ReasonPhrase}: {content}");
+                throw new PSInvalidOperationException($"Service responded with HTTP {(int)subscriptionResponse.StatusCode} {subscriptionResponse.ReasonPhrase}: {content}");
             }
 
             if (subscriptionContents.Any())
             {
                 foreach (var subscriptionContent in subscriptionContents)
                 {
-                    var logs = GraphHelper.Get<IEnumerable<ManagementApiUnifiedLogRecord>>(this, Connection, subscriptionContent.ContentUri, AccessToken, false);
+                    var logs = RequestHelper.Get<IEnumerable<ManagementApiUnifiedLogRecord>>(subscriptionContent.ContentUri, false);
                     WriteObject(logs, true);
                 }
             }

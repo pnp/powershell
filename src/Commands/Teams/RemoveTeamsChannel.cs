@@ -27,16 +27,16 @@ namespace PnP.PowerShell.Commands.Teams
         {
             if (Force || ShouldContinue("Removing the channel will also remove all the messages in the channel.", Properties.Resources.Confirm))
             {
-                var groupId = Team.GetGroupId(this, Connection, AccessToken);
+                var groupId = Team.GetGroupId(RequestHelper);
                 if (groupId != null)
                 {
-                    var channel = Identity.GetChannel(this, Connection, AccessToken, groupId);
+                    var channel = Identity.GetChannel(RequestHelper, groupId);
                     if (channel != null)
                     {
-                        var response = TeamsUtility.DeleteChannel(this, AccessToken, Connection, groupId, channel.Id);
+                        var response = TeamsUtility.DeleteChannel(RequestHelper, groupId, channel.Id);
                         if (!response.IsSuccessStatusCode)
                         {
-                            if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                            if (RequestHelper.TryGetGraphException(response, out GraphException ex))
                             {
                                 if (ex.Error != null)
                                 {

@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     messageAttachmentOptions = MailUtility.GetListOfFiles(Files, Connection.PnPContext);
                 }
 
-                MailUtility.SendGraphMail(this, Connection, GraphAccessToken, new Message
+                MailUtility.SendGraphMail(RequestHelper, new Message
                 {
                     Subject = Subject,
                     MessageBody = new Body

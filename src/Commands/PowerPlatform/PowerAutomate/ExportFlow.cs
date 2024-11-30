@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
             }
 
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             var flowName = Identity.GetName();
 
             if (AsZipPackage)

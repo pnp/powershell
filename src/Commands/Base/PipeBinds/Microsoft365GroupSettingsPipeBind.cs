@@ -1,5 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
@@ -44,7 +45,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public Guid GroupId => _groupId;
 
-        public Guid GetGroupSettingId(Cmdlet cmdlet, PnPConnection connection, string accessToken)
+        public Guid GetGroupSettingId(GraphHelper requestHelper)
         {
             Guid idValue;
             if (Group != null)
@@ -58,7 +59,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var groups = ClearOwners.GetGroupSettings(cmdlet, connection, accessToken);
+                var groups = ClearOwners.GetGroupSettings(requestHelper);
                 if (groups != null)
                 {
                     var group = groups.Value.Find(p => p.DisplayName.Equals(DisplayName));

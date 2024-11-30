@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using Microsoft.Graph;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
@@ -19,11 +20,11 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                WriteObject(Identity.GetDeletedGroup(this, Connection, AccessToken));
+                WriteObject(Identity.GetDeletedGroup(RequestHelper));
             }
             else
             {
-                var groups = ClearOwners.GetDeletedGroups(this, Connection, AccessToken);
+                var groups = ClearOwners.GetDeletedGroups(RequestHelper);
                 WriteObject(groups.OrderBy(g => g.DisplayName), true);
             }
         }

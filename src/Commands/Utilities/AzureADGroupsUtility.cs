@@ -10,9 +10,9 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class AzureADGroupsUtility
     {
-        internal static Group GetGroup(Cmdlet cmdlet, PnPConnection connection, Guid groupId, string accessToken)
+        internal static Group GetGroup(GraphHelper requestHelper, Guid groupId)
         {
-            var results = GraphHelper.Get<RestResultCollection<Group>>(cmdlet, connection, $"v1.0/groups?$filter=id eq '{groupId}'", accessToken);
+            var results = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=id eq '{groupId}'");
 
             if (results != null && results.Items.Any())
             {
@@ -22,9 +22,9 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static Group GetGroup(Cmdlet cmdlet, PnPConnection connection, string displayName, string accessToken)
+        internal static Group GetGroup(GraphHelper requestHelper, string displayName)
         {
-            var results = GraphHelper.Get<RestResultCollection<Group>>(cmdlet, connection, $"v1.0/groups?$filter=(displayName eq '{displayName}' or mailNickName eq '{displayName}')", accessToken);
+            var results = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(displayName eq '{displayName}' or mailNickName eq '{displayName}')");
 
             if (results != null && results.Items.Any())
             {
@@ -34,15 +34,15 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static IEnumerable<Group> GetGroups(Cmdlet cmdlet, PnPConnection connection, string accessToken)
+        internal static IEnumerable<Group> GetGroups(GraphHelper requestHelper)
         {
-            var results = GraphHelper.GetResultCollection<Group>(cmdlet, connection, $"v1.0/groups", accessToken, propertyNameCaseInsensitive: true);
-            return results;            
+            var results = requestHelper.GetResultCollection<Group>($"v1.0/groups", propertyNameCaseInsensitive: true);
+            return results;
         }
 
-        internal static Group Update(Cmdlet cmdlet, PnPConnection connection, string accessToken, Group group)
+        internal static Group Update(GraphHelper requestHelper, Group group)
         {
-            return GraphHelper.Patch(cmdlet, connection, accessToken, $"v1.0/groups/{group.Id}", group);
+            return requestHelper.Patch($"v1.0/groups/{group.Id}", group);
         }
 
     }

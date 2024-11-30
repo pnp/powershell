@@ -1,4 +1,5 @@
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -23,12 +24,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _identity = identity;
         }
 
-        public string GetExternalConnectionId(PSCmdlet cmdlet, PnPConnection connection, string accessToken)
+        public string GetExternalConnectionId(GraphHelper requestHelper)
         {
-            return _identity ?? _searchExternalConnection?.Id ?? GetExternalConnection(cmdlet, connection, accessToken)?.Id;
+            return _identity ?? _searchExternalConnection?.Id ?? GetExternalConnection(requestHelper)?.Id;
         }
 
-        public Model.Graph.MicrosoftSearch.ExternalConnection GetExternalConnection(PSCmdlet cmdlet, PnPConnection connection, string accessToken)
+        public Model.Graph.MicrosoftSearch.ExternalConnection GetExternalConnection(GraphHelper requestHelper)
         {
             if(_searchExternalConnection != null)
             {
@@ -36,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var externalConnectionResult = Utilities.REST.GraphHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>(cmdlet, connection, $"v1.0/external/connections/{_identity}", accessToken);
+                var externalConnectionResult = requestHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>($"v1.0/external/connections/{_identity}");
                 return externalConnectionResult;
             }
         }
