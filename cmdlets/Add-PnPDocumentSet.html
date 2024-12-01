@@ -90,15 +90,15 @@
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to add new document set to library.</p>
+<p>Allows to add new document set to the library.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Add-PnPDocumentSet -List &quot;Documents&quot; -ContentType &quot;Test Document Set&quot; -Name &quot;Test&quot;
 </code></pre>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPDocumentSet -List &quot;Documents&quot; -ContentType &quot;Test Document Set&quot; -Name &quot;Test&quot; -Folder &quot;Projects/Europe&quot;
+<pre><code class="lang-powershell">Add-PnPDocumentSet -List &quot;Documents&quot; -ContentType &quot;Test Document Set&quot; -Name &quot;Test&quot; -Folder &quot;Documents/Projects/Europe&quot;
 </code></pre>
-<p>This will add a new document set based upon the 'Test Document Set' content type to a list called 'Documents'. The document set will be named 'Test' and will be added to the 'Europe' folder which is located in the 'Projects' folder. Folders will be created if needed.</p>
+<p>This will add a new document set based upon the 'Test Document Set' content type to a list called 'Documents'. The document set will be named 'Test' and will be added to the 'Europe' folder, which is located in the 'Projects' folder. Folders will be created if needed.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -112,7 +112,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-contenttype">-ContentType</h3>
-<p>The name of the content type, its ID or an actual content object referencing to the document set</p>
+<p>The name of the content type, its ID, or an actual content object referencing the document set</p>
 <pre><code class="lang-yaml">Type: ContentTypePipeBind
 Parameter Sets: (All)
 
@@ -134,7 +134,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-list">-List</h3>
-<p>The name of the list, its ID or an actual list object from where the document set needs to be added</p>
+<p>The name of the list, its ID, or an actual list object from where the document set needs to be added</p>
 <pre><code class="lang-yaml">Type: ListPipeBind
 Parameter Sets: (All)
 

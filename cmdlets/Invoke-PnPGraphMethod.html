@@ -120,6 +120,17 @@
                       [-OutStream]
                       [-Verbose]
 </code></pre>
+<h3 id="batch">Batch</h3>
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &lt;String&gt;
+                      [-AdditionalHeaders GraphAdditionalHeadersPipeBind]
+                      [[-Method] &lt;HttpRequestMethod&gt;] 
+                      [-Content &lt;Object&gt;] 
+                      [-ContentType &lt;String&gt;] 
+                      [-ConsistencyLevelEventual] 
+                      [-Connection &lt;PnPConnection&gt;]
+                      [-Batch &lt;PnPBatch&gt;]                      
+                      [-Verbose]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Invokes a REST request towards the Microsoft Graph API. It will take care of potential throttling retries that are needed to retrieve the data.</p>
 <h2 id="examples">EXAMPLES</h2>
@@ -160,6 +171,15 @@ $content = @{&quot;title&quot;=&quot;My new task title&quot;}
 Invoke-PnPGraphMethod -Url &quot;https://graph.microsoft.com/v1.0/planner/tasks/23fasefxcvzvsdf32e&quot; -Method PATCH -Content $content -AdditionalHeaders $headers
 </code></pre>
 <p>This example retrieves a Planner task to find the etag value which is required to update the task. In order to update the task through call to the Microsoft Graph API we need to include an If-Match header with the value of the etag. It then creates the content to update, in this case the title of the task, and calls the PATCH method on the Graph end-point to update the specific task.</p>
+<h3 id="example-9">EXAMPLE 9</h3>
+<pre><code class="lang-powershell">$batch = New-PnPBatch -RetainRequests
+Invoke-PnPSPRestMethod -Method Get -Url &quot;https://graph.microsoft.com/v1.0/users&quot; -Batch $batch
+Invoke-PnPSPRestMethod -Method Get -Url &quot;https://graph.microsoft.com/v1.0/groups&quot; -Batch $batch
+$response = Invoke-PnPBatch $batch -Details
+$response
+</code></pre>
+<p>This example executes a GET request to get all users and a groups in a single batch request.
+It is necessary to create and invoke batch requests in the manner specified here if you want to process something later on with the response object.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-additionalheaders">-AdditionalHeaders</h3>
 <p>Additional request headers, either by providing a Dictionary&lt;string,string&gt; or a Hastable, .e.g -AdditionalHeaders @{&quot;If-Match&quot;=&quot;234567tysfssdvsadf&quot;}</p>
@@ -293,6 +313,17 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-batch">-Batch</h3>
+<p>The batch to add this request to.</p>
+<pre><code class="lang-yaml">Type: PnPBatch
+Parameter Sets: Batched
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
