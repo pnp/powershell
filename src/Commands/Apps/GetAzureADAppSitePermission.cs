@@ -52,14 +52,14 @@ namespace PnP.PowerShell.Commands.Apps
                     var accessToken = AccessToken;
 
                     // All permissions, first fetch just the Ids as the API works in a weird way that requesting all permissions does not reveal their roles, so we will request all permissions and then request each permission individually so we will also have the roles
-                    var permissions = this.RequestHelper.GetResultCollection<AzureADAppPermissionInternal>($"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions?$select=Id");
+                    var permissions = this.RequestHelper.GetResultCollection<AzureADAppPermissionInternal>($"v1.0/sites/{siteId}/permissions?$select=Id");
                     if (permissions.Any())
                     {
                         var results = new List<AzureADAppPermission>();
                         foreach (var permission in permissions)
                         {
                             // Request the permission individually so it will include the roles
-                            var detailedApp = this.RequestHelper.Get<AzureADAppPermissionInternal>($"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{permission.Id}");
+                            var detailedApp = this.RequestHelper.Get<AzureADAppPermissionInternal>($"v1.0/sites/{siteId}/permissions/{permission.Id}");
                             results.Add(detailedApp.Convert());
                         }
 
@@ -76,7 +76,7 @@ namespace PnP.PowerShell.Commands.Apps
                 }
                 else
                 {
-                    var results = RequestHelper.Get<AzureADAppPermissionInternal>($"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}");
+                    var results = RequestHelper.Get<AzureADAppPermissionInternal>($"v1.0/sites/{siteId}/permissions/{PermissionId}");
                     WriteObject(results.Convert());
                 }
             }
