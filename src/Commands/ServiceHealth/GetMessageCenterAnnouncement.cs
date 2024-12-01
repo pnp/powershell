@@ -7,6 +7,7 @@ namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Get, "PnPMessageCenterAnnouncement")]
     [RequiredApiApplicationPermissions("graph/ServiceMessage.Read.All")]
+    [RequiredApiDelegatedPermissions("graph/ServiceMessage.Read.All")]
     public class GetMessageCenterAnnouncement : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -22,6 +23,6 @@ namespace PnP.PowerShell.Commands.ServiceHealth
             {
                 WriteObject(ServiceHealthUtility.GetServiceUpdateMessages(RequestHelper), true);
             }
-        }        
+        }
     }
 }

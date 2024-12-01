@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             WriteVerbose("Acquiring access token for Microsoft Graph to look up user");
 
-            var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
+            var graphAccessToken = TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
 
             WriteVerbose("Microsoft Graph access token acquired");
 

@@ -738,7 +738,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     {
                         var byteArrayContent = new ByteArrayContent(bytes);
                         byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
-                        var requestHelper = new ApiRequestHelper(this,PnPConnection.Current);
+                        var requestHelper = new ApiRequestHelper(GetType(),PnPConnection.Current);
                         requestHelper.Put2(endpoint, byteArrayContent, token);
 
                         WriteVerbose("Successfully set the logo for the Entra ID app");

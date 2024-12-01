@@ -52,16 +52,16 @@ namespace PnP.PowerShell.Commands.Base
                             throw new PSArgumentException("No connection found, please login first.");
                         }
                         var rootUrl = new Uri(currentUrl).GetLeftPart(UriPartial.Authority);
-                        accessTokenValue = TokenHandler.GetAccessToken(this, rootUrl + "/.default", Connection);
+                        accessTokenValue = TokenHandler.GetAccessToken(rootUrl + "/.default", Connection);
                         break;
                     case ResourceTypeName.AzureManagementApi:
-                        accessTokenValue = TokenHandler.GetAccessToken(this, $"{Endpoints.GetArmEndpoint(Connection)}/.default", Connection);
+                        accessTokenValue = TokenHandler.GetAccessToken($"{Endpoints.GetArmEndpoint(Connection)}/.default", Connection);
                         break;
                 }
             }
             else if (ParameterSetName == ResourceUrlParam || ParameterSetName == ResourceUrlParam_Decoded)
             {
-                accessTokenValue = TokenHandler.GetAccessToken(this, ResourceUrl, Connection);
+                accessTokenValue = TokenHandler.GetAccessToken(ResourceUrl, Connection);
             }
 
             if (ParameterSpecified(nameof(Scopes)))

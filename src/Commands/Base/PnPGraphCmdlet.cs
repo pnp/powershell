@@ -31,12 +31,12 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException($"This cmdlet does not work with a {typeString} based connection towards SharePoint.");
                 }
             }
-            RequestHelper = new ApiRequestHelper(this,Connection,$"https://{Connection.GraphEndPoint}/.default");
+            RequestHelper = new ApiRequestHelper(this.GetType(),Connection,$"https://{Connection.GraphEndPoint}/.default");
         }
 
         /// <summary>
         /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
         /// </summary>
-        public string AccessToken => TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
+        public string AccessToken => TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
     }
 }

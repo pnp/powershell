@@ -13,13 +13,13 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns an Access Token for the Microsoft Office Management API, if available, otherwise NULL
         /// </summary>
-        public string AccessToken => TokenHandler.GetAccessToken(this, $"{Endpoints.GetArmEndpoint(Connection)}/.default", Connection);
+        public string AccessToken => TokenHandler.GetAccessToken($"{Endpoints.GetArmEndpoint(Connection)}/.default", Connection);
 
         public string ArmAudience => $"{Endpoints.GetArmEndpoint(Connection)}/.default";
         /// <summary>
         /// Returns an Access Token for the Microsoft PowerApps Services, if available, otherwise NULL
         /// </summary>
-        public string PowerAppsServiceAccessToken => TokenHandler.GetAccessToken(this, "https://service.powerapps.com/.default", Connection);
+        public string PowerAppsServiceAccessToken => TokenHandler.GetAccessToken("https://service.powerapps.com/.default", Connection);
 
         public ApiRequestHelper ArmRequestHelper { get; private set; }
         public ApiRequestHelper PowerAppsServerRequestHelper { get; private set; }
@@ -35,8 +35,8 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException("This cmdlet not work with a WebLogin/Cookie based connection towards SharePoint.");
                 }
             }
-            this.ArmRequestHelper = new ApiRequestHelper(this, Connection, ArmAudience);
-            this.PowerAppsServerRequestHelper = new ApiRequestHelper(this, Connection, PowerappServicesAudience);
+            this.ArmRequestHelper = new ApiRequestHelper(GetType(), Connection, ArmAudience);
+            this.PowerAppsServerRequestHelper = new ApiRequestHelper(GetType(), Connection, PowerappServicesAudience);
         }
     }
 }

@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using PnP.PowerShell.Commands.Base;
 using System.Linq;
 using PnP.PowerShell.Commands.Utilities.Auth;
+using PnP.Framework.Diagnostics;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -82,7 +83,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <returns></returns>
         public static Model.PowerPlatform.Environment.Environment GetDefaultEnvironment(ApiRequestHelper requestHelper, AzureEnvironment azureEnvironment)
         {
-            requestHelper.Cmdlet.WriteVerbose("Retrieving default Power Platform environment");
+            Log.Debug("PowerPlatformUtility","Retrieving default Power Platform environment");
 
             // If we don't have an access token yet, try to retrieve one
             //accessToken ??= TokenHandler.GetAccessToken(cmdlet, $"{Endpoints.GetArmEndpoint(connection)}/.default", connection);

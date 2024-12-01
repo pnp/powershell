@@ -1,5 +1,6 @@
 ﻿using PnP.Core.Model;
 using PnP.Core.Services;
+using PnP.Framework.Diagnostics;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
@@ -13,6 +14,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -173,7 +175,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!string.IsNullOrEmpty(gex.AccessToken))
                     {
-                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, gex.AccessToken);
+                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(GetType(), gex.AccessToken);
                     }
                 }
                 throw new PSInvalidOperationException(gex.Error.Message);
@@ -209,7 +211,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private void GetRequestWithPaging()
         {
-            var result = this.RequestHelper.Get(Url, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent) );
+            var result = this.RequestHelper.Get(Url, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
 
             if (Raw.IsPresent)
             {
@@ -234,7 +236,7 @@ namespace PnP.PowerShell.Commands.Base
                                 break;
                             }
                             var nextLink = nextLinkProperty.ToString();
-                            nextLink = nextLink.Replace("https://graph.microsoft.com/v1.0/","");
+                            nextLink = nextLink.Replace("https://graph.microsoft.com/v1.0/", "");
                             result = RequestHelper.Get(nextLink, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
                             element = JsonSerializer.Deserialize<JsonElement>(result);
                             dynamic nextObj = Deserialize(element);
@@ -268,7 +270,7 @@ namespace PnP.PowerShell.Commands.Base
         private void PostRequest()
         {
             WriteVerbose($"Sending HTTP POST to {Url}");
-            var response = RequestHelper.PostHttpContent( Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = RequestHelper.PostHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 

@@ -107,7 +107,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="cmdletType">The cmdlet that will be executed. Used to check for the permissions attribute.</param>
         /// <param name="accessToken">The oAuth JWT token that needs to be validated for its roles</param>
         /// <exception cref="PSArgumentException">Thrown if the permissions set through the permissions attribute do not match the roles in the JWT token</exception>
-        internal static void EnsureRequiredPermissionsAvailableInAccessTokenAudience(Cmdlet cmdlet, string accessToken)
+        internal static void EnsureRequiredPermissionsAvailableInAccessTokenAudience(Type cmdletType, string accessToken)
         {
             // Decode the JWT token
             var decodedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
@@ -120,7 +120,7 @@ namespace PnP.PowerShell.Commands.Base
             var tokenType = RetrieveTokenType(accessToken);
 
             // Validate the permissions in the access token against the permissions required for the cmdlet through the attributes provided at the class level of the cmdlet
-            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdlet, accessToken, resourceType, tokenType);
+            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdletType, accessToken, resourceType, tokenType);
 
             // If the permission evaluation returns null, it was unable to determine the permissions and it should stop
             if (permissionEvaluationResponses == null) return;
@@ -137,16 +137,17 @@ namespace PnP.PowerShell.Commands.Base
 
             for (int i = 0; i < permissionEvaluationResponses.Length; i++)
             {
-                exceptionTextBuilder.AppendLine($"{string.Join(" and ", permissionEvaluationResponses[i].MissingPermissions.Select(s => s.Scope))}");
+                exceptionTextBuilder.Append($"{string.Join(" and ", permissionEvaluationResponses[i].MissingPermissions.Select(s => s.Scope))}");
 
                 if(i < permissionEvaluationResponses.Length - 1)
                 {
-                    exceptionTextBuilder.AppendLine(" or ");
+                    exceptionTextBuilder.Append(" or ");
                 }
             }
 
             // Log a warning that the permission check failed. Deliberately not throwing an exception here, as the permission attributes might be wrong, thus will try to execute anyway.
-            cmdlet.WriteWarning(exceptionTextBuilder.ToString());
+            PnP.Framework.Diagnostics.Log.Error("TokenHandler",exceptionTextBuilder.ToString().Replace(Environment.NewLine," "));
+            //cmdlet.WriteWarning(exceptionTextBuilder.ToString());
         }        
 
         /// <summary>
@@ -157,15 +158,16 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="connection">The connection to use to make the token calls</param>
         /// <returns>oAuth JWT token</returns>
         /// <exception cref="PSInvalidOperationException">Thrown if retrieval of the token fails</exception>
-        internal static string GetAccessToken(Cmdlet cmdlet, string audience, PnPConnection connection)
+        internal static string GetAccessToken(string audience, PnPConnection connection)
         {
             if (connection == null) return null;
 
             string accessToken = null;
             if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
             {
-                cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Azure AD Workload Identity");
-                accessToken = GetAzureADWorkloadIdentityTokenAsync(cmdlet, $"{audience.TrimEnd('/')}/.default").GetAwaiter().GetResult();
+                PnP.Framework.Diagnostics.Log.Debug("TokenHandler",$"Acquiring token for resource {connection.GraphEndPoint} using Azure AD Workload Identity");
+                //cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Azure AD Workload Identity");
+                accessToken = GetAzureADWorkloadIdentityTokenAsync($"{audience.TrimEnd('/')}/.default").GetAwaiter().GetResult();
             }
             else
             {
@@ -187,7 +189,8 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (string.IsNullOrEmpty(accessToken))
             {
-                cmdlet.WriteVerbose($"Unable to acquire token for resource {connection.GraphEndPoint}");
+                PnP.Framework.Diagnostics.Log.Debug("TokenHandler",$"Unable to acquire token for resource {connection.GraphEndPoint}");
+                //cmdlet.WriteVerbose($"Unable to acquire token for resource {connection.GraphEndPoint}");
                 return null;
             }
 
@@ -202,7 +205,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="requiredScope">The permission scope to be requested, in the format https://<resource>/<scope>, i.e. https://graph.microsoft.com/Group.Read.All</param>
         /// <returns>Access token</returns>
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
-        internal static async Task<string> GetAzureADWorkloadIdentityTokenAsync(Cmdlet cmdlet, string requiredScope)
+        internal static async Task<string> GetAzureADWorkloadIdentityTokenAsync(string requiredScope)
         {
             // <authentication>
             // Azure AD Workload Identity webhook will inject the following env vars

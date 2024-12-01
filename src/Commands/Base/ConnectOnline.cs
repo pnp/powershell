@@ -737,7 +737,7 @@ namespace PnP.PowerShell.Commands.Base
             WriteVerbose("Connecting using an Azure Managed Identity");
 
             WriteVerbose($"ClientID: {UserAssignedManagedIdentityClientId}");
-            return PnPConnection.CreateWithManagedIdentity(this, Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId);
+            return PnPConnection.CreateWithManagedIdentity(Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId);
         }
 
         private PnPConnection ConnectInteractive()
@@ -879,7 +879,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             WriteVerbose("Connecting using Entra ID Workload Identity");
 
-            return PnPConnection.CreateWithAzureADWorkloadIdentity(this, Url, TenantAdminUrl);
+            return PnPConnection.CreateWithAzureADWorkloadIdentity(Url, TenantAdminUrl);
         }
 
         private PnPConnection ConnectWithOSLogin()

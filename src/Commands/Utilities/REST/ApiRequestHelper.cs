@@ -1,4 +1,6 @@
 ﻿using Newtonsoft.Json.Serialization;
+using PnP.Core.Services;
+using PnP.Framework.Diagnostics;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.Graph;
 using System;
@@ -20,16 +22,26 @@ namespace PnP.PowerShell.Commands.Utilities.REST
     {
 
         public PnPConnection Connection { get; private set; }
-        public Cmdlet Cmdlet { get; set; }
-        private string AccessToken => TokenHandler.GetAccessToken(Cmdlet, Audience, Connection);
+        public Type CmdletType { get; set; }
+        private string AccessToken => TokenHandler.GetAccessToken(Audience, Connection);
         public string Audience { get; private set; }
         public string GraphEndPoint => Connection.GraphEndPoint;
 
-        public ApiRequestHelper(PSCmdlet cmdlet, PnPConnection connection, string audience = null)
+        public ApiRequestHelper(Type cmdletType, PnPConnection connection, string audience = null)
         {
             this.Connection = connection;
-            this.Cmdlet = cmdlet;
+            this.CmdletType = cmdletType;
             this.Audience = audience ?? $"https://{Connection.GraphEndPoint}/.default";
+        }
+
+        private void LogDebug(string message)
+        {
+            Log.Debug("ApiRequestHelper",message);
+        }
+
+        private void LogError(string message)
+        {
+            Log.Error("ApiRequestHelper", message);
         }
 
         public bool TryGetGraphException(HttpResponseMessage responseMessage, out GraphException exception)
@@ -183,7 +195,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 results.AddRange(request.Items);
                 while (!string.IsNullOrEmpty(request.NextLink))
                 {
-                    Cmdlet.WriteVerbose($"Paged request. Thus far {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")} retrieved.");
+                    LogDebug($"Paged request. Thus far {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")} retrieved.");
+                    //Cmdlet.WriteVerbose($"Paged request. Thus far {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")} retrieved.");
 
                     request = Get<RestResultCollection<T>>(request.NextLink, camlCasePolicy, propertyNameCaseInsensitive, additionalHeaders);
                     if (request.Items.Any())
@@ -192,8 +205,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     }
                 }
             }
-
-            Cmdlet.WriteVerbose($"Returning {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")}");
+            LogDebug($"Returning {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")}");
+            //Cmdlet.WriteVerbose($"Returning {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")}");
 
             return results;
         }
@@ -228,7 +241,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 }
                 catch (Exception e)
                 {
-                    Cmdlet.WriteWarning($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
+                    LogError($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
+                    //Cmdlet.WriteWarning($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
                     return default(T);
                 }
             }
@@ -412,10 +426,11 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private string SendMessage(HttpRequestMessage message)
         {
-            Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
+            LogDebug($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
+           // Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
 
             // Ensure we have the required permissions in the access token to make the call
-            TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(Cmdlet, AccessToken);
+            TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(CmdletType, AccessToken);
 
             var response = Connection.HttpClient.SendAsync(message).GetAwaiter().GetResult();
             while (response.StatusCode == (HttpStatusCode)429)
@@ -423,18 +438,19 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 // throttled
                 var retryAfter = response.Headers.RetryAfter;
 
-                Cmdlet.WriteVerbose($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
+                LogDebug($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
+               // Cmdlet.WriteVerbose($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
 
                 Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
-
-                Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
+                LogDebug($"Making {message.Method} call to {message.RequestUri}");
+                //Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
                 response = Connection.HttpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
             }
             if (response.IsSuccessStatusCode)
             {
                 var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-
-                Cmdlet.WriteVerbose($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode} containing {responseBody.Length} character{(responseBody.Length != 1 ? "s" : "")}");
+                LogDebug($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode} containing {responseBody.Length} character{(responseBody.Length != 1 ? "s" : "")}");
+                //Cmdlet.WriteVerbose($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode} containing {responseBody.Length} character{(responseBody.Length != 1 ? "s" : "")}");
 
                 return responseBody;
             }
@@ -442,7 +458,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                Cmdlet.WriteVerbose($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent}");
+                LogError($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent}");
+                //Cmdlet.WriteVerbose($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent}");
 
                 var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 exception.AccessToken = AccessToken;
@@ -454,26 +471,29 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public HttpResponseMessage GetResponseMessage(HttpRequestMessage message)
         {
-            Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
+            LogDebug($"Making {message.Method} call to {message.RequestUri}");
+            //Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
 
             var response = Connection.HttpClient.SendAsync(message).GetAwaiter().GetResult();
             while (response.StatusCode == (HttpStatusCode)429)
             {
                 // throttled
                 var retryAfter = response.Headers.RetryAfter;
-
-                Cmdlet.WriteVerbose($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
+                LogDebug($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
+                //Cmdlet.WriteVerbose($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
 
                 Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
 
-                Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
+                LogDebug($"Making {message.Method} call to {message.RequestUri}");
+                //Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
                 response = Connection.HttpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
             }
 
             // Validate if the response was successful, if not throw an exception
             if (!response.IsSuccessStatusCode)
             {
-                Cmdlet.WriteVerbose($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode}");
+                LogDebug($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode}");
+                //Cmdlet.WriteVerbose($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode}");
 
                 if (TryGetGraphException(response, out GraphException ex))
                 {
@@ -489,7 +509,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             else
             {
-                Cmdlet.WriteVerbose($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode}");
+                LogDebug($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode}");
+                //Cmdlet.WriteVerbose($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode}");
             }
 
             return response;
