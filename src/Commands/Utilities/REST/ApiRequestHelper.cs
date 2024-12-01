@@ -3,10 +3,8 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.Graph;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Management.Automation;
-using System.Management.Automation.Language;
 using System.Net;
 using System.Net.Http;
 using System.Text.Json;
@@ -23,21 +21,17 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public PnPConnection Connection { get; private set; }
         public Cmdlet Cmdlet { get; set; }
-        
         private string AccessToken => TokenHandler.GetAccessToken(Cmdlet, Audience, Connection);
-        public string Audience {get; private set;}
+        public string Audience { get; private set; }
         public string GraphEndPoint => Connection.GraphEndPoint;
-
-        private CmdletMessageWriter MessageWriter;
 
         public ApiRequestHelper(PSCmdlet cmdlet, PnPConnection connection, string audience = null)
         {
             this.Connection = connection;
             this.Cmdlet = cmdlet;
             this.Audience = audience ?? $"https://{Connection.GraphEndPoint}/.default";
-            this.MessageWriter = new CmdletMessageWriter(cmdlet);
         }
-    
+
         public bool TryGetGraphException(HttpResponseMessage responseMessage, out GraphException exception)
         {
             if (responseMessage == null)
@@ -92,7 +86,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         {
             if (url.StartsWith("/"))
             {
-                url = url.Substring(1);
+                url = url[1..];
             }
 
             var message = new HttpRequestMessage
@@ -100,8 +94,17 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 Version = new Version(2, 0),
                 Method = method
             };
+            if (!url.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (!url.StartsWith("v1.0/", StringComparison.InvariantCultureIgnoreCase) && !url.StartsWith("beta/", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    // Assume v1.0
+                    url = $"v1.0/{url}";
+                }
+                url = $"https://{Connection.GraphEndPoint}/{url}";
+            }
             message.Headers.TryAddWithoutValidation("Accept", "application/json");
-            message.RequestUri = !url.StartsWith("https://", StringComparison.OrdinalIgnoreCase) ? new Uri($"https://{Connection.GraphEndPoint}/{url}") : new Uri(url);
+            message.RequestUri = new Uri(url);
             message.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", AccessToken);
             if (additionalHeaders != null)
             {
@@ -119,7 +122,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return message;
         }
 
-         private static HttpRequestMessage GetMessage2(string url, string accessToken, HttpMethod method, HttpContent content = null, IDictionary<string, string> additionalHeaders = null)
+        private static HttpRequestMessage GetMessage2(string url, string accessToken, HttpMethod method, HttpContent content = null, IDictionary<string, string> additionalHeaders = null)
         {
             if (url.StartsWith("/"))
             {
@@ -244,7 +247,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return GetResponseMessage(message);
         }
 
-         public HttpResponseMessage Put2(string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null)
+        public HttpResponseMessage Put2(string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null)
         {
             var message = GetMessage2(url, accessToken, HttpMethod.Put, content, additionalHeaders);
             return GetResponseMessage2(message);
@@ -260,7 +263,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public T Delete<T>(Cmdlet cmdlet, PnPConnection connection, string url, bool camlCasePolicy = true, IDictionary<string, string> additionalHeaders = null)
         {
-            var response = Delete( url);
+            var response = Delete(url);
             if (response.IsSuccessStatusCode)
             {
                 var stringContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
@@ -297,7 +300,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var requestContent = new StringContent(JsonSerializer.Serialize(content, serializerSettings));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var message = GetMessage(url, HttpMethod.Patch, requestContent, additionalHeaders);
-            var returnValue = SendMessage( message);
+            var returnValue = SendMessage(message);
             if (!string.IsNullOrEmpty(returnValue))
             {
                 return JsonSerializer.Deserialize<T>(returnValue);
@@ -310,7 +313,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public T Patch<T>(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Patch,  content, additionalHeaders);
+            var message = GetMessage(url, HttpMethod.Patch, content, additionalHeaders);
             var returnValue = SendMessage(message);
             if (!string.IsNullOrEmpty(returnValue))
             {
@@ -324,8 +327,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         public HttpResponseMessage Patch(HttpContent content, string url, IDictionary<string, string> additionalHeaders = null)
         {
-            var message = GetMessage(url, HttpMethod.Patch,content, additionalHeaders);
-            return GetResponseMessage( message);
+            var message = GetMessage(url, HttpMethod.Patch, content, additionalHeaders);
+            return GetResponseMessage(message);
         }
 
         #endregion
@@ -358,7 +361,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
             requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            return PostInternal<T>( url, requestContent);
+            return PostInternal<T>(url, requestContent);
         }
 
         public T Post<T>(string url)
@@ -409,7 +412,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private string SendMessage(HttpRequestMessage message)
         {
-            MessageWriter.WriteVerbose($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
+            Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
 
             // Ensure we have the required permissions in the access token to make the call
             TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(Cmdlet, AccessToken);
@@ -520,7 +523,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     throw new PSInvalidOperationException($"Call to Microsoft Graph URL {message.RequestUri} failed with status code {response.StatusCode}");
                 }
             }
-            
+
             return response;
         }
 
