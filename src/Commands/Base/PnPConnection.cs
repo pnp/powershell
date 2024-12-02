@@ -1060,6 +1060,22 @@ namespace PnP.PowerShell.Commands.Base
             return false;
         }
 
+        internal static string GetCacheClientId(string url)
+        {
+            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
+            if (System.IO.File.Exists(configFile))
+            {
+                var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
+                var urls = GetCheckUrls(url);
+                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url));
+                if (entry != null && entry.Enabled)
+                {
+                    return entry.ClientId;
+                }
+            }
+            return null;
+        }
+
         private static List<string> GetCheckUrls(string url)
         {
             var urls = new List<string>();

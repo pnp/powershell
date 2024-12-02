@@ -987,8 +987,9 @@ namespace PnP.PowerShell.Commands.Base
         {
             var connectionUri = new Uri(Url);
 
+            
             // Try to get the credentials by full url
-            string appId = Utilities.CredentialManager.GetAppId(connectionUri.ToString());
+            string appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.ToString());
             if (appId == null)
             {
                 // Try to get the credentials by splitting up the path
@@ -1000,7 +1001,7 @@ namespace PnP.PowerShell.Commands.Base
                     if (!string.IsNullOrEmpty(path))
                     {
                         var pathUrl = $"{pathString}{path}";
-                        appId = Utilities.CredentialManager.GetAppId(pathUrl);
+                        appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(pathUrl);
                         if (appId != null)
                         {
                             break;
@@ -1011,17 +1012,17 @@ namespace PnP.PowerShell.Commands.Base
                 if (appId == null)
                 {
                     // Try to find the credentials by schema and hostname
-                    appId = Utilities.CredentialManager.GetAppId(connectionUri.Scheme + "://" + connectionUri.Host);
+                    appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.Scheme + "://" + connectionUri.Host);
 
                     if (appId == null)
                     {
                         // Maybe added with an extra slash?
-                        appId = Utilities.CredentialManager.GetAppId(connectionUri.Scheme + "://" + connectionUri.Host + "/");
+                        appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.Scheme + "://" + connectionUri.Host + "/");
 
                         if (appId == null)
                         {
                             // try to find the credentials by hostname
-                            appId = Utilities.CredentialManager.GetAppId(connectionUri.Host);
+                            appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.Host);
                         }
                     }
                 }
