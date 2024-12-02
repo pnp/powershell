@@ -773,6 +773,8 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
             WriteVerbose($"Using ClientID {ClientId}");
+            Settings.Current.LastUserTenant = Url;
+            Settings.Current.Save();
             return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host);
         }
 
