@@ -163,6 +163,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>]
  [-SelfServiceSiteCreationDisabled <Boolean>]
  [-SyncAadB2BManagementPolicy]
+ [-ExtendPermissionsToUnprotectedFiles <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2851,6 +2852,20 @@ This feature allows SharePoint Online to synchronize several Entra B2B collabora
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExtendPermissionsToUnprotectedFiles
+This property can be used to turn on/off the capability called "Extended SharePoint permissions to unprotected files". To learn more about this feature check [here](https://learn.microsoft.com/en-us/purview/sensitivity-labels-sharepoint-extend-permissions)
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
