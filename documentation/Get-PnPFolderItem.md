@@ -161,6 +161,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -List
+The document library to retrieve the files and folders from. This parameter is required when working with document libraries containing over 5,000 items.
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: Folder via list pipebind
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+```
+
 ### -Recursive
 A switch parameter to include contents of all subfolders in the specified folder
 
