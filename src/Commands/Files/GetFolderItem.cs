@@ -92,19 +92,10 @@ namespace PnP.PowerShell.Commands.Files
             var query = CamlQuery.CreateAllItemsQuery();
             var queryElement = XElement.Parse(query.ViewXml);
 
-            var rowLimit = queryElement.Descendants("RowLimit").FirstOrDefault();
-            if (rowLimit != null)
-            {
-                rowLimit.RemoveAll();
-            }
-            else
-            {
-                rowLimit = new XElement("RowLimit");
-                queryElement.Add(rowLimit);
-            }
-
+            var rowLimit = new XElement("RowLimit");
             rowLimit.SetAttributeValue("Paged", "TRUE");
             rowLimit.SetValue(1000);
+            queryElement.Add(rowLimit);
 
             query.ViewXml = queryElement.ToString();
 
@@ -115,8 +106,19 @@ namespace PnP.PowerShell.Commands.Files
                 var listItems = documentLibrary.GetItems(query);
                 // Call ClientContext.Load() with and without retrievalExpressions to load FieldValues, otherwise no fields will be loaded (CSOM behavior)
                 ClientContext.Load(listItems);
-                ClientContext.Load(listItems, l => l.Include(l => l.FileSystemObjectType, l => l.File, l => l.Folder, l => l.Id, l => l.DisplayName, l => l["FileLeafRef"], l => l["FileRef"]));
-                //ClientContext.Load(listItems, l => l.Include(GetPropertyExpressions(new[] { "File.VersionExpirationReport" })));
+                ClientContext.Load(listItems, items => items.Include(item => item.FileSystemObjectType, 
+                                                                    item => item.Id, 
+                                                                    item => item.DisplayName, 
+                                                                    item => item["FileLeafRef"],
+                                                                    item => item["FileRef"], 
+                                                                    item => item.File,
+                                                                    item => item.Folder));
+                
+                if(ParameterSpecified(nameof(Includes)))
+                {
+                    var expressions = Includes.Select(i => (Expression<Func<ListItem, object>>)Utilities.DynamicExpression.ParseLambda(typeof(ListItem), typeof(object), i, null)).ToArray();
+                    ClientContext.Load(listItems, items => items.Include(expressions));
+                }
                 ClientContext.ExecuteQueryRetry();
 
                 foreach (var listItem in listItems)
@@ -130,24 +132,13 @@ namespace PnP.PowerShell.Commands.Files
                         results.Add(listItem.Folder);
                     }
                 }
+
                 results.AddRange(listItems);
 
                 query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
             } while (query.ListItemCollectionPosition != null);
 
             return results;
-        }
-
-        protected Expression<Func<ListItem, object>>[] GetPropertyExpressions(string[] fieldsToLoad)
-        {
-            var expressions = new List<Expression<Func<ListItem, object>>>();
-            foreach (var include in fieldsToLoad)
-            {
-                var exp = (Expression<Func<ListItem, object>>)Utilities.DynamicExpression.ParseLambda(typeof(ListItem), typeof(object), include, null);
-
-                expressions.Add(exp);
-            }
-            return expressions.ToArray();
         }
 
         private IEnumerable<object> GetContentsByUrl(string FolderSiteRelativeUrl)
