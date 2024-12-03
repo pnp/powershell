@@ -19,7 +19,7 @@ List files and/or subfolders in a folder
 Get-PnPFolderItem [-FolderSiteRelativeUrl <String>] [-ItemType <String>] [-ItemName <String>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
-### Folder via pipebind
+### Folder via folder pipebind
 ```powershell
 Get-PnPFolderItem [-Identity <FolderPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
 ```
