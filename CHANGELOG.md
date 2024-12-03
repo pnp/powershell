@@ -43,6 +43,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Files` parameter for `Send-PnPMail` cmdlet to allow files to be downloaded from SharePoint and then sent as attachments.
 - Added `-Force` parameter to `Set-PnPPropertyBagValue` cmdlet to toggle NoScript status of the site.
 - Added `-Batch` parameter to `Invoke-PnPGraphMethod` cmdlet to allow adding request in a batch.
+- Added `-List` parameter to `Get-PnPFolderItem`, `Get-PnPFileInFolder` and `Get-PnPFolderInFolder` which allows them to work with a document library containing more than 5,000 items [#4611](https://github.com/pnp/powershell/pull/4611)
 
 ### Changed
 
