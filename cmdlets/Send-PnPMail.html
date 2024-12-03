@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -89,7 +89,7 @@
 <h3 id="send-through-microsoft-graph-with-attachments-from-local-file-system">Send through Microsoft Graph with attachments from local file system</h3>
 <pre><code class="lang-powershell">Send-PnPMail -From &lt;String&gt; -To &lt;String[]&gt; -Subject &lt;String&gt; -Body &lt;String&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] [-ReplyTo &lt;String[]&gt;] [-Importance &lt;MessageImportanceType&gt;] [-BodyContentType &lt;MessageBodyContentType&gt;] [-SaveToSentItems &lt;bool&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose] [-Attachments &lt;String[]&gt;]
 </code></pre>
-<h3 id="send-through-microsoft-graph-with-attachments-from-spo">Send through Microsoft Graph with attachments from SPO</h3>
+<h3 id="send-through-microsoft-graph-with-attachments-from-sharepoint-online">Send through Microsoft Graph with attachments from SharePoint Online</h3>
 <pre><code class="lang-powershell">Send-PnPMail -From &lt;String&gt; -To &lt;String[]&gt; -Subject &lt;String&gt; -Body &lt;String&gt; [-Cc &lt;String[]&gt;] [-Bcc &lt;String[]&gt;] [-ReplyTo &lt;String[]&gt;] [-Importance &lt;MessageImportanceType&gt;] [-BodyContentType &lt;MessageBodyContentType&gt;] [-SaveToSentItems &lt;bool&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose] [-Files &lt;String[]&gt;]
 </code></pre>
 <h3 id="send-through-sharepoint-online-default">Send through SharePoint Online (Default)</h3>
@@ -97,6 +97,7 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows sending an e-mail through SharePoint Online or Microsoft Graph. Sending e-mail through Microsoft Graph requires the <strong>Mail.Send</strong> permission.</p>
+<p>In October 2025, <a href="https://support.microsoft.com/office/retirement-of-the-sharepoint-sendemail-api-b35bbab1-7d09-455f-8737-c2de63fe0821">Microsoft will remove the API</a> which is being used to send e-mail through SharePoint. It is therefore highly recommended to use the Microsoft Graph option listed above instead.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Send-PnPMail -From &quot;user@contoso.onmicrosoft.com&quot; -To &quot;recipient@contoso.com&quot; -Subject &quot;Test message&quot; -Body &quot;This is a test message&quot;
