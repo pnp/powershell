@@ -133,8 +133,6 @@ namespace PnP.PowerShell.Commands.Files
                     }
                 }
 
-                results.AddRange(listItems);
-
                 query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
             } while (query.ListItemCollectionPosition != null);
 
