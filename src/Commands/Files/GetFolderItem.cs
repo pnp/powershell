@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Management.Automation;
+using System.Xml.Linq;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -14,7 +16,8 @@ namespace PnP.PowerShell.Commands.Files
     [OutputType(typeof(IEnumerable<ClientObject>))]
     public class GetFolderItem : PnPWebCmdlet
     {
-        private const string ParameterSet_FOLDERSBYPIPE = "Folder via pipebind";
+        private const string ParameterSet_FOLDERSBYPIPE = "Folder via folder pipebind";
+        private const string ParameterSet_LISTSBYPIPE = "Folder via list pipebind";
         private const string ParameterSet_FOLDERBYURL = "Folder via url";
 
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERBYURL)]
@@ -22,6 +25,9 @@ namespace PnP.PowerShell.Commands.Files
 
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_FOLDERSBYPIPE)]
         public FolderPipeBind Identity;
+
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_LISTSBYPIPE)]
+        public ListPipeBind List;
 
         [Parameter(Mandatory = false)]
         [ValidateSet("Folder", "File", "All")]
@@ -31,14 +37,28 @@ namespace PnP.PowerShell.Commands.Files
         public string ItemName = string.Empty;
 
         [Alias("Recurse")]
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FOLDERBYURL)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FOLDERSBYPIPE)]
         public SwitchParameter Recursive;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LISTSBYPIPE)]
+        public string[] Includes;
 
         protected override void ExecuteCmdlet()
         {
             CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
-            var contents = GetContents(FolderSiteRelativeUrl);
+            IEnumerable<object> contents = null;
+            if (ParameterSetName == ParameterSet_LISTSBYPIPE)
+            {
+                // Get the files and folders from the list, supporting large lists
+                contents = GetContentsFromDocumentLibrary(List.GetList(CurrentWeb));
+            }
+            else
+            {
+                // Get the files and folders from the file system, not supporting large lists
+                contents = GetContentsByUrl(FolderSiteRelativeUrl);
+            }
 
             if (!string.IsNullOrEmpty(ItemName))
             {
@@ -67,7 +87,70 @@ namespace PnP.PowerShell.Commands.Files
             WriteObject(contents, true);
         }
 
-        private IEnumerable<object> GetContents(string FolderSiteRelativeUrl)
+        private IEnumerable<ClientObject> GetContentsFromDocumentLibrary(List documentLibrary)
+        {
+            var query = CamlQuery.CreateAllItemsQuery();
+            var queryElement = XElement.Parse(query.ViewXml);
+
+            var rowLimit = queryElement.Descendants("RowLimit").FirstOrDefault();
+            if (rowLimit != null)
+            {
+                rowLimit.RemoveAll();
+            }
+            else
+            {
+                rowLimit = new XElement("RowLimit");
+                queryElement.Add(rowLimit);
+            }
+
+            rowLimit.SetAttributeValue("Paged", "TRUE");
+            rowLimit.SetValue(1000);
+
+            query.ViewXml = queryElement.ToString();
+
+            List<ClientObject> results = [];
+
+            do
+            {
+                var listItems = documentLibrary.GetItems(query);
+                // Call ClientContext.Load() with and without retrievalExpressions to load FieldValues, otherwise no fields will be loaded (CSOM behavior)
+                ClientContext.Load(listItems);
+                ClientContext.Load(listItems, l => l.Include(l => l.FileSystemObjectType, l => l.File, l => l.Folder, l => l.Id, l => l.DisplayName, l => l["FileLeafRef"], l => l["FileRef"]));
+                //ClientContext.Load(listItems, l => l.Include(GetPropertyExpressions(new[] { "File.VersionExpirationReport" })));
+                ClientContext.ExecuteQueryRetry();
+
+                foreach (var listItem in listItems)
+                {
+                    if(listItem.FileSystemObjectType == FileSystemObjectType.File && (ItemType == "File" || ItemType == "All"))
+                    {
+                        results.Add(listItem.File);
+                    }
+                    if(listItem.FileSystemObjectType == FileSystemObjectType.Folder && (ItemType == "Folder" || ItemType == "All"))
+                    {
+                        results.Add(listItem.Folder);
+                    }
+                }
+                results.AddRange(listItems);
+
+                query.ListItemCollectionPosition = listItems.ListItemCollectionPosition;
+            } while (query.ListItemCollectionPosition != null);
+
+            return results;
+        }
+
+        protected Expression<Func<ListItem, object>>[] GetPropertyExpressions(string[] fieldsToLoad)
+        {
+            var expressions = new List<Expression<Func<ListItem, object>>>();
+            foreach (var include in fieldsToLoad)
+            {
+                var exp = (Expression<Func<ListItem, object>>)Utilities.DynamicExpression.ParseLambda(typeof(ListItem), typeof(object), include, null);
+
+                expressions.Add(exp);
+            }
+            return expressions.ToArray();
+        }
+
+        private IEnumerable<object> GetContentsByUrl(string FolderSiteRelativeUrl)
         {
             Folder targetFolder = null;
             if (string.IsNullOrEmpty(FolderSiteRelativeUrl) && ParameterSetName == ParameterSet_FOLDERSBYPIPE && Identity != null)
@@ -127,7 +210,7 @@ namespace PnP.PowerShell.Commands.Files
 
                     WriteVerbose($"Processing folder {relativeUrl}");
 
-                    var subFolderContents = GetContents(relativeUrl);
+                    var subFolderContents = GetContentsByUrl(relativeUrl);
                     folderContent = folderContent.Concat<object>(subFolderContents);
                 }
             }
