@@ -233,6 +233,7 @@
  [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled &lt;Boolean&gt;]
  [-SelfServiceSiteCreationDisabled &lt;Boolean&gt;]
  [-SyncAadB2BManagementPolicy]
+ [-ExtendPermissionsToUnprotectedFiles &lt;Boolean&gt;]
  [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -2285,6 +2286,17 @@ Accept wildcard characters: False
 <h3 id="-syncaadb2bmanagementpolicy">-SyncAadB2BManagementPolicy</h3>
 <p>This feature allows SharePoint Online to synchronize several Entra B2B collaboration settings <a href="https://learn.microsoft.com/en-us/entra/external-id/external-collaboration-settings-configure#configure-settings-in-the-portal">Guest user access restriction and collaboration restriction</a>, and store them on SharePoint Online tenant store. On sharing, SharePoint checks whether those synchronized settings are blocking sharing before sending invitation requests to Entra B2B invitation manager. The sync might take up to 24 hours to complete if you change those Entra B2B collaboration settings. To make the change effective on SharePoint Online immediately, run 'Set-PnPTenant -SyncAadB2BManagementPolicy' and it forces a sync from Microsoft Entra.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-extendpermissionstounprotectedfiles">-ExtendPermissionsToUnprotectedFiles</h3>
+<p>This property can be used to turn on/off the capability called &quot;Extended SharePoint permissions to unprotected files&quot;. To learn more about this feature check <a href="https://learn.microsoft.com/en-us/purview/sensitivity-labels-sharepoint-extend-permissions">here</a></p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
