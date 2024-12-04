@@ -1,6 +1,4 @@
-﻿using Microsoft.SharePoint.Client;
-using PnP.Framework;
-using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Provider;
@@ -15,7 +13,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using File = System.IO.File;
+using PnP.Framework;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -184,7 +184,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
-        public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
+        public Framework.AzureEnvironment AzureEnvironment = Framework.AzureEnvironment.Production;
 
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string AADDomain;
@@ -773,8 +773,6 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
             WriteVerbose($"Using ClientID {ClientId}");
-            Settings.Current.LastUserTenant = Url;
-            Settings.Current.Save();
             return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host);
         }
 

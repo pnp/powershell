@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Xml;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Microsoft.Office.Client.TranslationServices;
@@ -12,9 +13,24 @@ namespace PnP.PowerShell.Commands.Model
     {
         private static Settings _settings;
 
-        public List<TokenCacheConfiguration> Cache { get; set; }
+        [JsonPropertyName("Cache")]
+        private List<TokenCacheConfiguration> _cache { get; set; }
+        public List<TokenCacheConfiguration> Cache
+        {
+            get
+            {
+                if (_cache == null)
+                {
+                    _cache = new List<TokenCacheConfiguration>();
+                }
+                return _cache;
+            }
+            set {
+                _cache = value;
+            }
+        }
 
-        public string LastUserTenant { get; set; }
+        public string LastUsedTenant { get; set; }
 
         public static Settings Current
         {

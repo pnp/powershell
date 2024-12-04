@@ -27,19 +27,19 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
             }
-            if (PnPConnection.Current == null)
-            {
-                if (Settings.Current.LastUserTenant != null)
-                {
-                    var clientid = PnPConnection.GetCacheClientId(Settings.Current.LastUserTenant);
-                    if (clientid != null)
-                    {
-                        var  cancellationTokenSource = new CancellationTokenSource();
-                        PnPConnection.Current = PnPConnection.CreateWithInteractiveLogin(new Uri(Settings.Current.LastUserTenant.ToLower()), clientid, null, Framework.AzureEnvironment.Production, cancellationTokenSource, false, null, false, false, Host);
-                    }
+            // if (PnPConnection.Current == null)
+            // {
+            //     if (Settings.Current.LastUserTenant != null)
+            //     {
+            //         var clientid = PnPConnection.GetCacheClientId(Settings.Current.LastUserTenant);
+            //         if (clientid != null)
+            //         {
+            //             var  cancellationTokenSource = new CancellationTokenSource();
+            //             PnPConnection.Current = PnPConnection.CreateWithInteractiveLogin(new Uri(Settings.Current.LastUserTenant.ToLower()), clientid, null, Framework.AzureEnvironment.Production, cancellationTokenSource, false, null, false, false, Host);
+            //         }
 
-                }
-            }
+            //     }
+            // }
         }
 
         protected override void EndProcessing()

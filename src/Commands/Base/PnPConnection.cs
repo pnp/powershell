@@ -1,6 +1,8 @@
-﻿using Microsoft.Identity.Client;
+﻿using AngleSharp.Dom;
+using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.TenantCdn;
 using PnP.Core.Services;
 using PnP.Framework;
 using PnP.Framework.Utilities.Context;
@@ -379,11 +381,11 @@ namespace PnP.PowerShell.Commands.Base
         internal static PnPConnection CreateWithManagedIdentity(string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
         {
             var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
-            PnP.Framework.Diagnostics.Log.Debug("PnPConnection",$"Using identity endpoint: {endPoint}");
+            PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity endpoint: {endPoint}");
             //cmdlet.WriteVerbose($"Using identity endpoint: {endPoint}");
 
             var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
-            PnP.Framework.Diagnostics.Log.Debug("PnPConnection",$"Using identity header: {identityHeader}");
+            PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity header: {identityHeader}");
             //cmdlet.WriteVerbose($"Using identity header: {identityHeader}");
 
             if (string.IsNullOrEmpty(endPoint))
@@ -674,7 +676,7 @@ namespace PnP.PowerShell.Commands.Base
                 defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
             }
 
-            PnP.Framework.Diagnostics.Log.Debug("PnPConnection","Acquiring token for resource " + defaultResource);
+            PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
             var accessToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(defaultResource).GetAwaiter().GetResult();
 
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
@@ -1048,32 +1050,28 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static bool CacheEnabled(string url, string clientid)
         {
-            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
-            if (System.IO.File.Exists(configFile))
+            var settings = Settings.Current;
+
+            var cacheEntries = settings.Cache;
+            var urls = GetCheckUrls(url);
+            var entry = settings.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
+            if (entry != null && entry.Enabled)
             {
-                var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-                var urls = GetCheckUrls(url);
-                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
-                if (entry != null && entry.Enabled)
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }
 
         internal static string GetCacheClientId(string url)
         {
-            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
-            if (System.IO.File.Exists(configFile))
+            var settings = Settings.Current;
+
+            var cacheEntries = settings.Cache;
+            var urls = GetCheckUrls(url);
+            var entry = settings.Cache?.FirstOrDefault(c => urls.Contains(c.Url));
+            if (entry != null && entry.Enabled)
             {
-                var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-                var urls = GetCheckUrls(url);
-                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url));
-                if (entry != null && entry.Enabled)
-                {
-                    return entry.ClientId;
-                }
+                return entry.ClientId;
             }
             return null;
         }
@@ -1093,21 +1091,8 @@ namespace PnP.PowerShell.Commands.Base
 
         private static void EnableCaching(string url, string clientid)
         {
-            bool folderExists = System.IO.Directory.Exists(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
-            if (!folderExists)
-            {
-                System.IO.Directory.CreateDirectory(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
-            }
-
-            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
-            var configs = new List<TokenCacheConfiguration>();
-            if (System.IO.File.Exists(configFile))
-            {
-                configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-            }
-
             var urls = GetCheckUrls(url);
-            var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
+            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
             if (entry != null)
             {
                 entry.Enabled = true;
@@ -1116,29 +1101,24 @@ namespace PnP.PowerShell.Commands.Base
             {
                 var baseAuthority = new Uri(url).Authority.Replace("-admin.sharepoint.com", ".sharepoint.com").Replace("-my.sharepoint.com", ".sharepoint.com");
                 var baseUrl = $"https://{baseAuthority}";
-                configs.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = baseUrl, Enabled = true });
+                Settings.Current.Cache.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = baseUrl, Enabled = true });
             }
-            System.IO.File.WriteAllText(configFile, JsonSerializer.Serialize(configs));
+            Settings.Current.Save();
         }
 
         private static void WriteCacheEnabledMessage(PSHost host)
         {
             host.UI.WriteLine(ConsoleColor.Yellow, ConsoleColor.Black, "Secure token cache used for authentication. Clear the cache entry with Disconnect-PnPOnline -ClearPersistedLogin.");
         }
-        
+
         internal static void ClearCache(PnPConnection connection)
         {
-            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
-            if (System.IO.File.Exists(configFile))
+            var urls = GetCheckUrls(connection.Url);
+            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == connection.ClientId);
+            if (entry != null)
             {
-                var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-                var urls = GetCheckUrls(connection.Url);
-                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == connection.ClientId);
-                if (entry != null)
-                {
-                    configs.Remove(entry);
-                    System.IO.File.WriteAllText(configFile, JsonSerializer.Serialize(configs));
-                }
+                Settings.Current.Cache.Remove(entry);
+                Settings.Current.Save();
             }
             if (connection.AuthenticationManager != null)
             {
