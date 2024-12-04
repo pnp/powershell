@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.TenantCdn;
 using PnP.Core.Services;
 using PnP.Framework;
+using PnP.Framework.Diagnostics;
 using PnP.Framework.Utilities.Context;
 using PnP.PowerShell.ALC;
 using PnP.PowerShell.Commands.Enums;
@@ -48,17 +49,17 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         internal HttpClient HttpClient => Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
-        private PnPContext PnpContext { get; set; }
+        private PnPContext _pnpContext { get; set; }
 
         internal PnPContext PnPContext
         {
             get
             {
-                if (PnpContext == null && Context != null)
+                if (_pnpContext == null && Context != null)
                 {
-                    PnpContext = PnPCoreSdk.Instance.GetPnPContext(Context);
+                    _pnpContext = PnPCoreSdk.Instance.GetPnPContext(Context);
                 }
-                return PnpContext;
+                return _pnpContext;
             }
         }
         /// <summary>
@@ -507,9 +508,9 @@ namespace PnP.PowerShell.Commands.Base
                                 e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
                             };
                             context.ExecuteQueryRetry();
-                            cmdlet.WriteVerbose("Acquiring token");
+                            Log.Debug("PnPConnection","Acquiring token");
                             var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
-                            cmdlet.WriteVerbose("Token acquired");
+                            Log.Debug("PnPConnection","Token acquired");
                             var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accesstoken);
                             tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
                             spoConnection.AuthenticationManager = authManager;
@@ -757,7 +758,7 @@ namespace PnP.PowerShell.Commands.Base
         internal void RestoreCachedContext(string url)
         {
             Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
-            PnpContext = null;
+            _pnpContext = null;
         }
 
         internal void CacheContext()
@@ -780,7 +781,7 @@ namespace PnP.PowerShell.Commands.Base
                 context.ExecuteQueryRetry();
                 ContextCache.Add(context);
             }
-            PnpContext = null;
+            _pnpContext = null;
             return context;
         }
 
