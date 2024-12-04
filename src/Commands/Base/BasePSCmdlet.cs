@@ -13,6 +13,7 @@ namespace PnP.PowerShell.Commands.Base
     {
         protected override void BeginProcessing()
         {
+            Framework.Diagnostics.Log.Debug("PnPPowerShell", $"Executing {MyInvocation.MyCommand.Name}");
             base.BeginProcessing();
             PnP.Framework.Diagnostics.Log.Info("PnP.PowerShell", $"Executing {this.MyInvocation.InvocationName}");
             if (MyInvocation.MyCommand.Name.ToLower() != MyInvocation.InvocationName.ToLower())
