@@ -135,7 +135,6 @@ namespace PnP.PowerShell.Commands.Utilities
             if (System.IO.File.Exists(certificatePath))
             {
                 Log.Debug("CertificateHelper",$"Reading certificate from file '{certificatePath}'");
-                //cmdlet.WriteVerbose($"Reading certificate from file '{certificatePath}'");
 
                 var certFile = System.IO.File.OpenRead(certificatePath);
                 if (certFile.Length == 0)
@@ -147,7 +146,6 @@ namespace PnP.PowerShell.Commands.Utilities
                 certFile.Read(certificateBytes, 0, (int)certFile.Length);
 
                 Log.Debug("CertificateHelper",$"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
-               // cmdlet.WriteVerbose($"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
                 try
                 {
                     var certificate = new X509Certificate2(

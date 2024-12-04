@@ -196,7 +196,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 while (!string.IsNullOrEmpty(request.NextLink))
                 {
                     LogDebug($"Paged request. Thus far {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")} retrieved.");
-                    //Cmdlet.WriteVerbose($"Paged request. Thus far {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")} retrieved.");
 
                     request = Get<RestResultCollection<T>>(request.NextLink, camlCasePolicy, propertyNameCaseInsensitive, additionalHeaders);
                     if (request.Items.Any())
@@ -206,7 +205,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 }
             }
             LogDebug($"Returning {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")}");
-            //Cmdlet.WriteVerbose($"Returning {results.Count} {typeof(T)} item{(results.Count != 1 ? "s" : "")}");
 
             return results;
         }
@@ -427,7 +425,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         private string SendMessage(HttpRequestMessage message)
         {
             LogDebug($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
-           // Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
 
             // Ensure we have the required permissions in the access token to make the call
             TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(CmdletType, AccessToken);
@@ -439,18 +436,15 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 var retryAfter = response.Headers.RetryAfter;
 
                 LogDebug($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
-               // Cmdlet.WriteVerbose($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
 
                 Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
                 LogDebug($"Making {message.Method} call to {message.RequestUri}");
-                //Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
                 response = Connection.HttpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
             }
             if (response.IsSuccessStatusCode)
             {
                 var responseBody = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
                 LogDebug($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode} containing {responseBody.Length} character{(responseBody.Length != 1 ? "s" : "")}");
-                //Cmdlet.WriteVerbose($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode} containing {responseBody.Length} character{(responseBody.Length != 1 ? "s" : "")}");
 
                 return responseBody;
             }
@@ -459,7 +453,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
                 LogError($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent}");
-                //Cmdlet.WriteVerbose($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent}");
 
                 var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 exception.AccessToken = AccessToken;
@@ -472,7 +465,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         public HttpResponseMessage GetResponseMessage(HttpRequestMessage message)
         {
             LogDebug($"Making {message.Method} call to {message.RequestUri}");
-            //Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
 
             var response = Connection.HttpClient.SendAsync(message).GetAwaiter().GetResult();
             while (response.StatusCode == (HttpStatusCode)429)
@@ -480,12 +472,10 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 // throttled
                 var retryAfter = response.Headers.RetryAfter;
                 LogDebug($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
-                //Cmdlet.WriteVerbose($"Call got throttled. Retrying in {retryAfter.Delta.Value.Seconds} second{(retryAfter.Delta.Value.Seconds != 1 ? "s" : "")}.");
 
                 Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
 
                 LogDebug($"Making {message.Method} call to {message.RequestUri}");
-                //Cmdlet.WriteVerbose($"Making {message.Method} call to {message.RequestUri}");
                 response = Connection.HttpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
             }
 
@@ -493,7 +483,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             if (!response.IsSuccessStatusCode)
             {
                 LogDebug($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode}");
-                //Cmdlet.WriteVerbose($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode}");
 
                 if (TryGetGraphException(response, out GraphException ex))
                 {
@@ -510,7 +499,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             else
             {
                 LogDebug($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode}");
-                //Cmdlet.WriteVerbose($"Response successful with HTTP {(int)response.StatusCode} {response.StatusCode}");
             }
 
             return response;

@@ -403,9 +403,7 @@ namespace PnP.PowerShell.Commands.Base
             if (ValidateConnection)
             {
                 // Try requesting the site Id to validate that the site to which is being connected exists
-                WriteVerbose($"Validating if the site at {Url} exists");
                 newConnection.Context.Load(newConnection.Context.Site, p => p.Id);
-
                 try
                 {
                     newConnection.Context.ExecuteQueryRetry();

@@ -8,22 +8,13 @@ namespace PnP.PowerShell.Commands.Base
     [Cmdlet(VerbsLifecycle.Start, "PnPTraceLog")]
     public class StartTraceLog : PSCmdlet
     {
-        [Parameter(Mandatory = false, ParameterSetName = "On")]
-        public string LogFile;
+        [Parameter(Mandatory = false)]
+        public string Path;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On")]
-        public SwitchParameter WriteToConsole;
-
-        [Parameter(Mandatory = false, ParameterSetName = "On")]
+        [Parameter(Mandatory = false)]
         public PnP.Framework.Diagnostics.LogLevel Level = PnP.Framework.Diagnostics.LogLevel.Information;
 
-        [Parameter(Mandatory = false, ParameterSetName = "On")]
-        public string Delimiter;
-
-        [Parameter(Mandatory = false, ParameterSetName = "On")]
-        public int IndentSize = 4;
-
-        [Parameter(Mandatory = false, ParameterSetName = "On")]
+        [Parameter(Mandatory = false)]
         public bool AutoFlush = true;
 
         private const string FileListenername = "PNPPOWERSHELLFILETRACELISTENER";
@@ -32,7 +23,7 @@ namespace PnP.PowerShell.Commands.Base
         {
 
             // Setup Console Listener if Console switch has been specified or No file LogFile parameter has been set
-            if (WriteToConsole.IsPresent || string.IsNullOrEmpty(LogFile))
+            if (string.IsNullOrEmpty(Path))
             {
                 RemoveListener(ConsoleListenername);
                 ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
@@ -42,18 +33,16 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Setup File Listener
-            if (!string.IsNullOrEmpty(LogFile))
+            if (!string.IsNullOrEmpty(Path))
             {
                 RemoveListener(FileListenername);
 
-                if (!System.IO.Path.IsPathRooted(LogFile))
+                if (!System.IO.Path.IsPathRooted(Path))
                 {
-                    LogFile = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogFile);
+                    Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                 }
                 // Create DelimitedListTraceListener in case Delimiter parameter has been specified, if not create TextWritterTraceListener
-                TraceListener listener = !string.IsNullOrEmpty(Delimiter) ?
-                    new DelimitedListTraceListener(LogFile) { Delimiter = Delimiter, TraceOutputOptions = TraceOptions.DateTime } :
-                    new TextWriterTraceListener(LogFile);
+                TraceListener listener = new TextWriterTraceListener(Path);
 
                 listener.Name = FileListenername;
                 Trace.Listeners.Add(listener);
@@ -61,7 +50,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             Trace.AutoFlush = AutoFlush;
-            Trace.IndentSize = IndentSize;
+            Trace.IndentSize = 4;
 
         }
 
