@@ -1046,32 +1046,28 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static bool CacheEnabled(string url, string clientid)
         {
-            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
-            if (System.IO.File.Exists(configFile))
+            var settings = Settings.Current;
+
+            var cacheEntries = settings.Cache;
+            var urls = GetCheckUrls(url);
+            var entry = settings.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
+            if (entry != null && entry.Enabled)
             {
-                var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-                var urls = GetCheckUrls(url);
-                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
-                if (entry != null && entry.Enabled)
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }
 
         internal static string GetCacheClientId(string url)
         {
-            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
-            if (System.IO.File.Exists(configFile))
+            var settings = Settings.Current;
+
+            var cacheEntries = settings.Cache;
+            var urls = GetCheckUrls(url);
+            var entry = settings.Cache?.FirstOrDefault(c => urls.Contains(c.Url));
+            if (entry != null && entry.Enabled)
             {
-                var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-                var urls = GetCheckUrls(url);
-                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url));
-                if (entry != null && entry.Enabled)
-                {
-                    return entry.ClientId;
-                }
+                return entry.ClientId;
             }
             return null;
         }
@@ -1091,21 +1087,8 @@ namespace PnP.PowerShell.Commands.Base
 
         private static void EnableCaching(string url, string clientid)
         {
-            bool folderExists = System.IO.Directory.Exists(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
-            if (!folderExists)
-            {
-                System.IO.Directory.CreateDirectory(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));
-            }
-
-            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
-            var configs = new List<TokenCacheConfiguration>();
-            if (System.IO.File.Exists(configFile))
-            {
-                configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-            }
-
             var urls = GetCheckUrls(url);
-            var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
+            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == clientid);
             if (entry != null)
             {
                 entry.Enabled = true;
@@ -1114,9 +1097,9 @@ namespace PnP.PowerShell.Commands.Base
             {
                 var baseAuthority = new Uri(url).Authority.Replace("-admin.sharepoint.com", ".sharepoint.com").Replace("-my.sharepoint.com", ".sharepoint.com");
                 var baseUrl = $"https://{baseAuthority}";
-                configs.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = baseUrl, Enabled = true });
+                Settings.Current.Cache.Add(new TokenCacheConfiguration() { ClientId = clientid, Url = baseUrl, Enabled = true });
             }
-            System.IO.File.WriteAllText(configFile, JsonSerializer.Serialize(configs));
+            Settings.Current.Save();
         }
 
         private static void WriteCacheEnabledMessage(PSHost host)
@@ -1126,17 +1109,12 @@ namespace PnP.PowerShell.Commands.Base
 
         internal static void ClearCache(PnPConnection connection)
         {
-            var configFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "cachesettings.json");
-            if (System.IO.File.Exists(configFile))
+            var urls = GetCheckUrls(connection.Url);
+            var entry = Settings.Current.Cache?.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == connection.ClientId);
+            if (entry != null)
             {
-                var configs = JsonSerializer.Deserialize<List<TokenCacheConfiguration>>(System.IO.File.ReadAllText(configFile));
-                var urls = GetCheckUrls(connection.Url);
-                var entry = configs.FirstOrDefault(c => urls.Contains(c.Url) && c.ClientId == connection.ClientId);
-                if (entry != null)
-                {
-                    configs.Remove(entry);
-                    System.IO.File.WriteAllText(configFile, JsonSerializer.Serialize(configs));
-                }
+                Settings.Current.Cache.Remove(entry);
+                Settings.Current.Save();
             }
             if (connection.AuthenticationManager != null)
             {
