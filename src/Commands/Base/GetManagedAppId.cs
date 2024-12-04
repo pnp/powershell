@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Management.Automation;
-using System.Net;
-using Microsoft.SharePoint.Client;
-using PnP.Framework.Utilities;
-
-using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -12,7 +7,7 @@ namespace PnP.PowerShell.Commands.Base
     [OutputType(typeof(PSCredential))]
     public class GetManagedAppId : PSCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Url;
 
         protected override void ProcessRecord()
@@ -25,7 +20,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                WriteError(new ErrorRecord(new System.Exception("AppId not found"), "APPIDNOTFOUND", ErrorCategory.AuthenticationError, this));
+                WriteError(new ErrorRecord(new Exception("AppId not found"), "APPIDNOTFOUND", ErrorCategory.AuthenticationError, this));
             }
         }
     }
