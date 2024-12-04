@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Base
     {
         protected override void BeginProcessing()
         {
+            Framework.Diagnostics.Log.Debug("PnPPowerShell", $"Executing {MyInvocation.MyCommand.Name}");
             base.BeginProcessing();
             if (MyInvocation.MyCommand.Name.ToLower() != MyInvocation.InvocationName.ToLower())
             {
@@ -72,7 +73,7 @@ namespace PnP.PowerShell.Commands.Base
                         TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, gex.AccessToken);
                     }
                 }
-                if(string.IsNullOrWhiteSpace(errorMessage) && gex.HttpResponse != null && gex.HttpResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                if (string.IsNullOrWhiteSpace(errorMessage) && gex.HttpResponse != null && gex.HttpResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)
                 {
                     errorMessage = "Access denied. Check for the required permissions.";
                 }
