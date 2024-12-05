@@ -89,11 +89,15 @@
 <h3 id="folder-via-url">Folder via url</h3>
 <pre><code class="lang-powershell">Get-PnPFolderItem [-FolderSiteRelativeUrl &lt;String&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
-<h3 id="folder-via-pipebind">Folder via pipebind</h3>
+<h3 id="folder-via-folder-pipebind">Folder via folder pipebind</h3>
 <pre><code class="lang-powershell">Get-PnPFolderItem [-Identity &lt;FolderPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Recursive] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+</code></pre>
+<h3 id="folder-via-list-pipebind">Folder via list pipebind</h3>
+<pre><code class="lang-powershell">Get-PnPFolderItem [-List &lt;ListPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Includes &lt;string[]&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows listing of all the content in a folder. It can be used to list all files and folders in a folder and optionally all its subfolders.</p>
+<p>When working with a document library containing over 5,000 items in it, you will need to use the -List parameter to specify the document library in order to be able to retrieve the Files and Folders in it. It will always recursively retrieve all files and folders in the document library. It is still possible to use -ItemType to restrict the results to only files or folders. You can also use -Includes to fetch additional properties of the files and folders. Start the property name with &quot;File.&quot; or &quot;Folder.&quot; followed by the property name of the file or folder. For example, to include the file version history report, pass in -Includes &quot;File.VersionExpirationReport&quot;.</p>
 <p>Use <a href="Get-PnPFileInFolder.html">Get-PnPFileInFolder</a> to retrieve only files and <a href="Get-PnPFolderInFolder.html">Get-PnPFolderInFolder</a> to retrieve only folders allowing additional properties of the returned items to be requested.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
@@ -179,6 +183,17 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>The document library to retrieve the files and folders from. This parameter is required when working with document libraries containing over 5,000 items.</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: Folder via list pipebind
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-recursive">-Recursive</h3>

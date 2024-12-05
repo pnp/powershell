@@ -92,8 +92,12 @@
 <h3 id="folder-via-pipebind">Folder via pipebind</h3>
 <pre><code class="lang-powershell">Get-PnPFolderInFolder [-Identity &lt;FolderPipeBind&gt;] [-ItemName &lt;String&gt;] [-ExcludeSystemFolders] [-Includes &lt;String[]&gt;] [-Recurse] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
+<h3 id="folder-via-list-pipebind">Folder via list pipebind</h3>
+<pre><code class="lang-powershell">Get-PnPFolderInFolder [-List &lt;ListPipeBind&gt;] [-ItemType &lt;String&gt;] [-ItemName &lt;String&gt;] [-Includes &lt;String[]&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet allows listing of all the subfolders of a folder. It can optionally also list all folders in the underlying subfolders.</p>
+<p>When working with a document library containing over 5,000 items in it, you will need to use the -List parameter to specify the document library in order to be able to retrieve the Folders in it. It will always recursively retrieve all folders in the document library. You can also use -Includes to fetch additional properties of the folders.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPFolderInFolder
@@ -188,6 +192,17 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>The document library to retrieve the folders from. This parameter is required when working with document libraries containing over 5,000 items.</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: Folder via list pipebind
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-recurse">-Recurse</h3>

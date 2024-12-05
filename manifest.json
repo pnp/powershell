@@ -7774,16 +7774,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Set-PnPTraceLog.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Set-PnPTraceLog.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPUserOneDriveQuota.md",
       "output": {
         ".html": {
@@ -7904,10 +7894,30 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Start-PnPTraceLog.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Start-PnPTraceLog.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Stop-PnPFlowRun.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Stop-PnPFlowRun.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Stop-PnPTraceLog.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Stop-PnPTraceLog.html"
         }
       },
       "version": ""
