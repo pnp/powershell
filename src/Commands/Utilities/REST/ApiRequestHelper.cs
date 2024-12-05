@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.Graph;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Net;
