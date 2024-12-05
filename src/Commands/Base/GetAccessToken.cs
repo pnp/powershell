@@ -6,39 +6,51 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = ResourceTypeParam)]
-    [OutputType(typeof(Microsoft.IdentityModel.JsonWebTokens.JsonWebToken), ParameterSetName = [ResourceTypeParam_Decoded, ResourceUrlParam_Decoded])]
-    [OutputType(typeof(string), ParameterSetName = [ResourceTypeParam, ResourceUrlParam])]
+    [Cmdlet(VerbsCommon.Get, "PnPAccessToken", DefaultParameterSetName = ParameterSet_ResourceTypeName)]
+    [OutputType(typeof(Microsoft.IdentityModel.JsonWebTokens.JsonWebToken), ParameterSetName = [ParameterSet_TypeNameDecoded, ParameterSet_ResourceUrlDecoded])]
+    [OutputType(typeof(string), ParameterSetName = [ParameterSet_ResourceTypeName, ParameterSet_ResourceUrl])]
     public class GetPnPAccessToken : PnPGraphCmdlet
     {
-        private const string ResourceTypeParam = "Resource Type Name";
-        private const string ResourceUrlParam = "Resource Url";
-        private const string ResourceTypeParam_Decoded = "Resource Type Name (decoded)";
-        private const string ResourceUrlParam_Decoded = "Resource Url (decoded)";
+        private const string ParameterSet_ResourceTypeName = "Resource Type Name";
+        private const string ParameterSet_ResourceUrl = "Resource Url";
+        private const string ParameterSet_TypeNameDecoded = "Resource Type Name (decoded)";
+        private const string ParameterSet_ResourceUrlDecoded = "Resource Url (decoded)";
+        private const string ParameterSet_ListScopes = "List Permission Scopes";
 
-        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam)]
-        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam_Decoded)]
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ResourceTypeName)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TypeNameDecoded)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ListScopes)]
+
         public ResourceTypeName ResourceTypeName = ResourceTypeName.Graph;
 
-        [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam)]
-        [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam_Decoded)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ResourceUrl)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ResourceUrlDecoded)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ListScopes)]
+
         [ValidateNotNullOrEmpty]
         public string ResourceUrl;
 
-        [Parameter(Mandatory = true, ParameterSetName = ResourceTypeParam_Decoded)]
-        [Parameter(Mandatory = true, ParameterSetName = ResourceUrlParam_Decoded)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TypeNameDecoded)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_ResourceUrlDecoded)]
         public SwitchParameter Decoded;
 
-        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam)]
-        [Parameter(Mandatory = false, ParameterSetName = ResourceTypeParam_Decoded)]
-        [Parameter(Mandatory = false, ParameterSetName = ResourceUrlParam)]
-        [Parameter(Mandatory = false, ParameterSetName = ResourceUrlParam_Decoded)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ResourceTypeName)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TypeNameDecoded)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ResourceUrl)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ResourceUrlDecoded)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ListScopes)]
+
         public string[] Scopes = ["AllSites.FullControl"];
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ListScopes)]
+        public SwitchParameter ListPermissionScopes;
+
         protected override void ExecuteCmdlet()
         {
             string accessTokenValue = null;
 
-            if (ParameterSetName == ResourceTypeParam || ParameterSetName == ResourceTypeParam_Decoded)
+            if (ParameterSetName == ParameterSet_ResourceTypeName || ParameterSetName == ParameterSet_TypeNameDecoded)
             {
                 switch (ResourceTypeName)
                 {
@@ -59,7 +71,7 @@ namespace PnP.PowerShell.Commands.Base
                         break;
                 }
             }
-            else if (ParameterSetName == ResourceUrlParam || ParameterSetName == ResourceUrlParam_Decoded)
+            else if (ParameterSetName == ParameterSet_ResourceUrl || ParameterSetName == ParameterSet_ResourceUrlDecoded)
             {
                 accessTokenValue = TokenHandler.GetAccessToken(this, ResourceUrl, Connection);
             }
@@ -74,14 +86,20 @@ namespace PnP.PowerShell.Commands.Base
             {
                 WriteError(new PSArgumentException("Unable to retrieve access token"), ErrorCategory.InvalidResult);
             }
-
-            if (Decoded.IsPresent)
+            if (ListPermissionScopes.IsPresent)
             {
-                WriteObject(new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessTokenValue));
+                WriteObject(TokenHandler.ReturnScopes(accessTokenValue));
             }
             else
             {
-                WriteObject(accessTokenValue);
+                if (Decoded.IsPresent)
+                {
+                    WriteObject(new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessTokenValue));
+                }
+                else
+                {
+                    WriteObject(accessTokenValue);
+                }
             }
         }
     }
