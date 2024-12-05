@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using PnP.Framework.Sites;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;

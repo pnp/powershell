@@ -1,10 +1,8 @@
 ﻿using Group = PnP.PowerShell.Commands.Model.Graph.Group;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Utilities
 {

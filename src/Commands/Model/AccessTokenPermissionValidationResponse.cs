@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Utilities;
 using System.Data;
 using PnP.Framework.Diagnostics;

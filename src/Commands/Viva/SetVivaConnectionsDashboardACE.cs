@@ -1,7 +1,4 @@
 ﻿using PnP.Core.Model.SharePoint;
-
-using System;
-using System.Linq;
 using System.Text.Json;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;

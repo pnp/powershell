@@ -1,5 +1,4 @@
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
 using System.Management.Automation;

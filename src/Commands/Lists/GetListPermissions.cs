@@ -1,5 +1,4 @@
 ﻿using System.Management.Automation;
-
 using PnP.Core.Model.Security;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;

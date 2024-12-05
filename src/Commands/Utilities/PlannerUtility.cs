@@ -1,13 +1,10 @@
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Planner;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities
 {

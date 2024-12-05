@@ -2,8 +2,6 @@
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Base
 {

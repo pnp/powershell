@@ -2,7 +2,6 @@
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace PnP.PowerShell.Commands.Branding

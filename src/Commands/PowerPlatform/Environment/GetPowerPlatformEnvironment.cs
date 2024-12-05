@@ -1,5 +1,4 @@
 ﻿using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 using System.Linq;
 using PnP.PowerShell.Commands.Base.PipeBinds;

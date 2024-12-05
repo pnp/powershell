@@ -1,16 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Linq;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Text.Json;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Base;
-using System.Management.Automation;
 using System.Threading;
 using System.Net;
-using Microsoft.Office.Server.Search.REST;
 
 namespace PnP.PowerShell.Commands.Utilities
 {

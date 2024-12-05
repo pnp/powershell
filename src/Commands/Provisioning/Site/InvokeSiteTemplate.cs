@@ -11,7 +11,6 @@ using System.Linq;
 using PnP.Framework.Provisioning.Providers;
 using System.Collections.Generic;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Net.Http;

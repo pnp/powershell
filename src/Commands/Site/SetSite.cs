@@ -1,11 +1,9 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-
 using PnP.Framework;
 using PnP.Framework.Entities;
 using PnP.PowerShell.Commands.Utilities;
-
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;

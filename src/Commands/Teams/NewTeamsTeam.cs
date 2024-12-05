@@ -7,7 +7,6 @@ using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams

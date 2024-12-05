@@ -1,5 +1,4 @@
-﻿using PnP.Framework.Extensions;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace PnP.PowerShell.Commands.Model.PowerPlatform.Environment
 {

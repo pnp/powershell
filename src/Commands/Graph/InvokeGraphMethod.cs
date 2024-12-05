@@ -1,11 +1,9 @@
 ﻿using PnP.Core.Model;
 using PnP.Core.Services;
-using PnP.Framework.Diagnostics;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +12,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Base
 {

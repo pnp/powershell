@@ -1,8 +1,6 @@
-﻿using AngleSharp.Dom;
-using Microsoft.Identity.Client;
+﻿using Microsoft.Identity.Client;
 using Microsoft.Identity.Client.Extensions.Msal;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.TenantCdn;
 using PnP.Core.Services;
 using PnP.Framework;
 using PnP.Framework.Diagnostics;
@@ -22,7 +20,6 @@ using System.Net.Http;
 using System.Reflection;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using TextCopy;

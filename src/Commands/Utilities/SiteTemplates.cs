@@ -1,12 +1,9 @@
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using PnP.PowerShell.Commands.Model.SharePoint;
 using System.Collections.Generic;
-using PnP.PowerShell.Commands.Base;
-using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Utilities
 {

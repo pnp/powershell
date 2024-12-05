@@ -1,6 +1,5 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.AzureAD

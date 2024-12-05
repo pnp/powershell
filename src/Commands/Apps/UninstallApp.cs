@@ -1,9 +1,7 @@
 ﻿using PnP.Framework.Enums;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
-using System.Threading;
 
 namespace PnP.PowerShell.Commands.Apps
 {

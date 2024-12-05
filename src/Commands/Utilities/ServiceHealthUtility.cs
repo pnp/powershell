@@ -1,9 +1,6 @@
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.ServiceHealth;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System.Collections.Generic;
-using System.Management.Automation;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Utilities
 {

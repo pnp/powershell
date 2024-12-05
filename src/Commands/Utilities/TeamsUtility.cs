@@ -1,6 +1,4 @@
-﻿using AngleSharp.Dom.Events;
-using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Base;
+﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Model.Graph;
@@ -13,7 +11,6 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
-using System.Threading.Tasks;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 using Team = PnP.PowerShell.Commands.Model.Teams.Team;
 using TeamChannel = PnP.PowerShell.Commands.Model.Teams.TeamChannel;

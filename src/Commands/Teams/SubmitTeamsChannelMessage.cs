@@ -4,7 +4,6 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands.Teams
 {

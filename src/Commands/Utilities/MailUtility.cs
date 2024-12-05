@@ -1,7 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Utilities;
 using PnP.Core.Services;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.Mail;
@@ -9,7 +8,6 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Management.Automation;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;

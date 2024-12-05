@@ -3,7 +3,6 @@ using PnP.Core.Services;
 using PnP.Core.Model.SharePoint;
 using System.Collections.Generic;
 using System.Linq;
-using System.Globalization;
 using Microsoft.SharePoint.Client.Taxonomy;
 
 namespace PnP.PowerShell.Commands.Model

@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base;
-using System.Diagnostics;
 using System.Dynamic;
 using PnP.PowerShell.Commands.Enums;
 using TextCopy;

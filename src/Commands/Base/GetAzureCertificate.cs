@@ -3,7 +3,6 @@ using System;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
 using PnP.PowerShell.Commands.Utilities;
-using System.Runtime.ConstrainedExecution;
 using System.Security.Cryptography;
 using System.Linq;
 

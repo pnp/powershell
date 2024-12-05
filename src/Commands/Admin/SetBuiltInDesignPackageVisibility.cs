@@ -2,7 +2,6 @@
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Administration;
-using System;
 
 namespace PnP.PowerShell.Commands.Admin
 {

@@ -2,8 +2,6 @@
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Diagnostics;
 using System;
-using System.Diagnostics;
-using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Model
 {

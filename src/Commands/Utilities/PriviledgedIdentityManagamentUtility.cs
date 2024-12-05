@@ -1,10 +1,8 @@
-﻿using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
+﻿using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 

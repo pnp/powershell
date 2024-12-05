@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Properties;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPlannerBucket", SupportsShouldProcess = true)]
     [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]

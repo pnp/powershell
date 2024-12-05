@@ -1,5 +1,4 @@
 ﻿using PnP.Core.Model.SharePoint;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections.Generic;
 using System.Management.Automation;

@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;

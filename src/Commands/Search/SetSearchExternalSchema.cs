@@ -6,7 +6,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System;
-using AngleSharp.Io;
 
 namespace PnP.PowerShell.Commands.Search
 {

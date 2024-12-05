@@ -1,6 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
 using PnP.Framework;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;

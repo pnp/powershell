@@ -1,9 +1,6 @@
-﻿using System.Management.Automation;
-using PnP.Framework;
+﻿using PnP.Framework;
 using PnP.PowerShell.Commands.Utilities.REST;
-using PnP.PowerShell.Commands.Base;
 using System.Linq;
-using PnP.PowerShell.Commands.Utilities.Auth;
 using PnP.Framework.Diagnostics;
 
 namespace PnP.PowerShell.Commands.Utilities
