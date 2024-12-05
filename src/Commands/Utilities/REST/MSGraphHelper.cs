@@ -1,10 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
-using System.Security.Policy;
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
-using Microsoft.Graph;
 using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base;
 using HttpMethod = System.Net.Http.HttpMethod;
