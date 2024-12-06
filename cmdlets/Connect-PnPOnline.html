@@ -433,7 +433,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-persistlogin">-PersistLogin</h3>
-<p>Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline cmdlet, it will after that retain the information and reuse it for new connections to the same tenant. If you want to clear the cache entry, use <code>Disconnect-PnPOnline -ClearPersistedLogin</code></p>
+<p>Persist the current access token and related information in a locally stored cache. This cache will be retained between PowerShell sessions and will also be available after a reboot. You only need to provide this switch one time on Connect-PnPOnline cmdlet, it will after that retain the information and reuse it for new connections to the same tenant. Notice that while using a cached token, if you change the permissions of an application registration, the token associated with that registration will not be updated automatically in the cache. You will have to clear the cache entry first and reauthenticate: use <code>Disconnect-PnPOnline -ClearPersistedLogin</code></p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Credentials, DeviceLogin, Interactive, OSLogin
 

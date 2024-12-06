@@ -87,10 +87,20 @@
 <p>Returns the current Microsoft Graph OAuth Access token.
 If a Resource Type Name or Resource URL is specified, it will fetch the access token of the specified resource.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPAccessToken [-ResourceTypeName] [-ResourceUrl] [-Decoded] [-Scopes] [-Connection &lt;PnPConnection&gt;]
+<h3 id="graph-token">Graph Token</h3>
+<pre><code class="lang-powershell">Get-PnPAccessToken [-ResourceTypeName] [-Decoded] [-Scopes] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="specific-resource-by-type">Specific resource by type</h3>
+<pre><code class="lang-powershell">Get-PnPAccessToken -ResourceTypeName &lt;ResourceTypeName&gt; [-Decoded] [-Scopes] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="specific-resource-by-url">Specific resource by URL</h3>
+<pre><code class="lang-powershell">Get-PnPAccessToken -ResourceUrl &lt;String&gt; [-Decoded] [-Scopes] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="list-permission-scopes-in-current-access-token">List Permission Scopes in current access token</h3>
+<pre><code class="lang-powershell">Get-PnPAccessToken -ListPermissionScopes [-ResourceTypeName &lt;String&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Gets the OAuth 2.0 Access Token.</p>
+<p>Returns the OAuth 2.0 Access Token.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAccessToken
@@ -112,6 +122,10 @@ If a Resource Type Name or Resource URL is specified, it will fetch the access t
 <pre><code class="lang-powershell">Get-PnPAccessToken -ResourceUrl &quot;https://management.azure.com/.default&quot;
 </code></pre>
 <p>Gets the OAuth 2.0 Access Token to consume the SharePoint APIs and perform CSOM operations.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPAccessToken -ListPermissionScopes
+</code></pre>
+<p>Lists the current permission scopes for the Microsoft Graph API on the access token. Specify -ResourceTypeName to list permissions for other resource types, like SharePoint.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-resourcetypename">-ResourceTypeName</h3>
 <p>Specify the Resource Type for which you want the access token. If not specified, it will by default return a Microsoft Graph access token.</p>
@@ -164,6 +178,16 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listpermissionscopes">-ListPermissionScopes</h3>
+<p>If specified the current permission scopes on the access token will be listed</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameters Set: List Permission Scopes
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
