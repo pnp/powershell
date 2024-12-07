@@ -2204,6 +2204,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPCopilotAgent.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPCopilotAgent.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPCustomAction.md",
       "output": {
         ".html": {
