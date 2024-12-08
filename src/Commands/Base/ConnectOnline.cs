@@ -689,7 +689,7 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
             }
-            if (ClientId == null)
+            if (ClientId == null && !TransformationOnPrem)
             {
                 ClientId = GetAppId();
                 if (ClientId == null)
