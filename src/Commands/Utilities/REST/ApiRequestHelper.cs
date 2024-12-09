@@ -450,7 +450,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                LogError($"Response failed with HTTP {(int)response.StatusCode} {response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent}");
+                LogError($"Response failed with HTTP {(int)response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent.Replace("{","{{").Replace("}","}}")}");
 
                 var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 exception.AccessToken = AccessToken;
