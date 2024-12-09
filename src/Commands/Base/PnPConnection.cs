@@ -1030,6 +1030,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 catch (MsalCachePersistenceException)
                 {
+                    PnP.Framework.Diagnostics.Log.Debug("PnPConnection","Cache persistence failed. Trying again.");
                     var storage =
                      new StorageCreationPropertiesBuilder("pnp.msal.cache", cacheDir)
                      .WithMacKeyChain(
