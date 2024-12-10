@@ -261,6 +261,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "articles/scriptsamples.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/scriptsamples.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "articles/telemetry.md",
       "output": {
         ".html": {
