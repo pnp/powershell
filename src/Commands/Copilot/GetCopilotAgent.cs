@@ -3,13 +3,12 @@ using System.Text.Json;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Model.Copilot;
 using System.Linq;
-using System;
 
 namespace PnP.PowerShell.Commands.Copilot
 {
     [Cmdlet(VerbsCommon.Get, "PnPCopilotAgent")]
     [OutputType("PnP.PowerShell.Commands.Model.Copilot.CopilotAgent")]
-    public class NewCopilotAgent : PnPWebCmdlet
+    public class GetCopilotAgent : PnPWebCmdlet
     {
         [Parameter(Mandatory = false)]
         public string ServerRelativeUrl;
@@ -37,7 +36,6 @@ namespace PnP.PowerShell.Commands.Copilot
             }
             else
             {
-
                 // find all doclibraries
                 var doclibs = ClientContext.LoadQuery(CurrentWeb.Lists.Where(l => l.BaseTemplate == 101));
                 ClientContext.ExecuteQuery();
@@ -66,6 +64,7 @@ namespace PnP.PowerShell.Commands.Copilot
                 var agentContents = CurrentWeb.GetFileAsString(item.FieldValuesAsText["FileRef"]);
                 var agentObject = JsonSerializer.Deserialize<CopilotAgent>(agentContents);
                 agentObject.ServerRelativeUrl = item.FieldValuesAsText["FileRef"];
+               
                 WriteObject(agentObject);
             }
 
