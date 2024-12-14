@@ -3103,6 +3103,10 @@
             <Alignment>left</Alignment>
           </TableColumnHeader>
           <TableColumnHeader>
+            <Label>AgentType</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
             <Label>FileLocation</Label>
             <Alignment>left</Alignment>
           </TableColumnHeader>
@@ -3112,6 +3116,9 @@
             <TableColumnItems>
               <TableColumnItem>
                 <ScriptBlock>$_.CustomCopilotConfig.GPTDefinition.Name</ScriptBlock>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>AgentType</PropertyName>
               </TableColumnItem>
               <TableColumnItem>
                 <PropertyName>ServerRelativeUrl</PropertyName>
