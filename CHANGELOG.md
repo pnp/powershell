@@ -46,7 +46,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-List` parameter to `Get-PnPFolderItem`, `Get-PnPFileInFolder` and `Get-PnPFolderInFolder` which allows them to work with a document library containing more than 5,000 items [#4611](https://github.com/pnp/powershell/pull/4611)
 - Added `Start-PnPTraceLog`, `Stop-PnPTraceLog` and `Get-PnPTraceLog` cmdlets to handle tracelogging. Removed `Set-PnPTraceLog` cmdlet.
 - Added `-ListPermissionScopes` parameter on `Get-PnPAccessToken` cmdlet to list the current permission scopes on the current access token.
-- Added `Get-PnPCopilotAgent` cmdlet that returns the Microsoft Copilot Agents in a site collection
+- Added `Get-PnPCopilotAgent` cmdlet that returns the Microsoft Copilot Agents in a site collection.
+- Added `Get-PnPFileRetentionLabel` cmdlet to fetch the file retention labels. [#4603](https://github.com/pnp/powershell/pull/4603)
 
 ### Changed
 
