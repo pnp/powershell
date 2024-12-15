@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
 
-
 namespace PnP.PowerShell.Commands.Provider.SPOProxy
 {
     [Cmdlet(CmdletVerb, CmdletNoun, DefaultParameterSetName = "Path", SupportsShouldProcess = true, SupportsTransactions = true)]

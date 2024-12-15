@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Model.AzureAD;
-using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Graph
 {
@@ -37,7 +36,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             WriteVerbose($"Deleting user with Id {user.Id}");
 
-            var graphResult = GraphHelper.Delete(this, Connection, $"v1.0/users/{user.Id}", AccessToken);
+            var graphResult = RequestHelper.Delete($"v1.0/users/{user.Id}");
 
             if(graphResult.StatusCode == System.Net.HttpStatusCode.NoContent)
             {

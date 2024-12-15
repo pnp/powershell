@@ -39,12 +39,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (Identity != null)
             {
-                var group = Identity.GetGroup(this, Connection, AccessToken, includeSiteUrl, IncludeOwners, Detailed.ToBool(), IncludeSensitivityLabels);
+                var group = Identity.GetGroup(RequestHelper, includeSiteUrl, IncludeOwners, Detailed.ToBool(), IncludeSensitivityLabels);
                 WriteObject(group);
             }
             else
             {
-                var groups = ClearOwners.GetGroups(this, Connection, AccessToken, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels);
+                var groups = ClearOwners.GetGroups(RequestHelper, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels);
 
                 WriteObject(groups.OrderBy(p => p.DisplayName), true);
             }

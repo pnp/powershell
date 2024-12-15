@@ -1,6 +1,5 @@
 using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
-using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Model
 {

@@ -1,6 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Linq;
 using System.Management.Automation;

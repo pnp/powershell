@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            var result = PlannerUtility.SetPlannerConfig(this, Connection, AccessToken, IsPlannerAllowed, AllowCalendarSharing, AllowTenantMoveWithDataLoss, AllowTenantMoveWithDataMigration, AllowRosterCreation, AllowPlannerMobilePushNotifications);
+            var result = PlannerUtility.SetPlannerConfig(RequestHelper, IsPlannerAllowed, AllowCalendarSharing, AllowTenantMoveWithDataLoss, AllowTenantMoveWithDataMigration, AllowRosterCreation, AllowPlannerMobilePushNotifications);
             WriteObject(result);
         }
     }

@@ -3,10 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text.Json.Serialization;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace PnP.PowerShell.Commands.Utilities

@@ -4,7 +4,6 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -26,7 +25,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetApp(this, Connection, AccessToken));
+                WriteObject(Identity.GetApp(RequestHelper));
             }
             else
             {
@@ -41,7 +40,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         { "ConsistencyLevel", "eventual" }
                     };
                 }
-                var result = GraphHelper.GetResultCollection<AzureADApp>(this, Connection, requestUrl, AccessToken, additionalHeaders: additionalHeaders);
+                var result = RequestHelper.GetResultCollection<AzureADApp>(requestUrl, additionalHeaders: additionalHeaders);
                 WriteObject(result, true);
             }
         }

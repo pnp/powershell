@@ -24,12 +24,12 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(this, Connection, AccessToken);
+                group = Identity.GetGroup(RequestHelper);
             }
 
             if (group != null)
             {
-                ClearOwners.RemoveMembers(this, Connection, new System.Guid(group.Id), Users, AccessToken);
+                ClearOwners.RemoveMembers(RequestHelper, new System.Guid(group.Id), Users);
             }
         }
     }

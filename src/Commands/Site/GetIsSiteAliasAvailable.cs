@@ -1,5 +1,4 @@
 ﻿using System.Management.Automation;
-
 using System;
 
 namespace PnP.PowerShell.Commands

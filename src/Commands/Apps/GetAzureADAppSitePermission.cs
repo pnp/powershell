@@ -6,7 +6,6 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Apps
 {
@@ -52,14 +51,14 @@ namespace PnP.PowerShell.Commands.Apps
                     var accessToken = AccessToken;
 
                     // All permissions, first fetch just the Ids as the API works in a weird way that requesting all permissions does not reveal their roles, so we will request all permissions and then request each permission individually so we will also have the roles
-                    var permissions = GraphHelper.GetResultCollection<AzureADAppPermissionInternal>(this, Connection, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions?$select=Id", accessToken);
+                    var permissions = this.RequestHelper.GetResultCollection<AzureADAppPermissionInternal>($"v1.0/sites/{siteId}/permissions?$select=Id");
                     if (permissions.Any())
                     {
                         var results = new List<AzureADAppPermission>();
                         foreach (var permission in permissions)
                         {
                             // Request the permission individually so it will include the roles
-                            var detailedApp = GraphHelper.Get<AzureADAppPermissionInternal>(this, Connection, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{permission.Id}", accessToken);
+                            var detailedApp = this.RequestHelper.Get<AzureADAppPermissionInternal>($"v1.0/sites/{siteId}/permissions/{permission.Id}");
                             results.Add(detailedApp.Convert());
                         }
 
@@ -76,7 +75,7 @@ namespace PnP.PowerShell.Commands.Apps
                 }
                 else
                 {
-                    var results = GraphHelper.Get<AzureADAppPermissionInternal>(this, Connection, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions/{PermissionId}", AccessToken);
+                    var results = RequestHelper.Get<AzureADAppPermissionInternal>($"v1.0/sites/{siteId}/permissions/{PermissionId}");
                     WriteObject(results.Convert());
                 }
             }

@@ -8,6 +8,8 @@
       href: determinepermissions.md      
     - name: Connecting and authenticating
       href: authentication.md
+    - name: Samples
+      href: scriptsamples.md
 - name: Configure PnP PowerShell
   items:
     - name: Telemetry

@@ -1,5 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
@@ -16,6 +17,7 @@ namespace PnP.PowerShell.Commands.Base
 
         public PnPContext PnPContext => Connection?.PnPContext;
 
+        public ApiRequestHelper RequestHelper {get; private set;}
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
@@ -29,11 +31,12 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException($"This cmdlet does not work with a {typeString} based connection towards SharePoint.");
                 }
             }
+            RequestHelper = new ApiRequestHelper(this.GetType(),Connection,$"https://{Connection.GraphEndPoint}/.default");
         }
 
         /// <summary>
         /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
         /// </summary>
-        public string AccessToken => TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
+        public string AccessToken => TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
     }
 }

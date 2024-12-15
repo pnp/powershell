@@ -1,5 +1,4 @@
 ﻿using System.Management.Automation;
-using Microsoft.SharePoint.Client;
 using System;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;

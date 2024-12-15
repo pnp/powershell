@@ -2,7 +2,6 @@
 using System.IO;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.Publishing

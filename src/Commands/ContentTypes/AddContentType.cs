@@ -1,7 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using System.Management.Automation;
 
-
 namespace PnP.PowerShell.Commands.ContentTypes
 {
     [Cmdlet(VerbsCommon.Add, "PnPContentType")]

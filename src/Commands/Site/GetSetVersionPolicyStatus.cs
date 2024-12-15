@@ -1,7 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using System;
-using System.Linq.Expressions;
 using System.Management.Automation;
 using System.Text.Json;
 using PnP.PowerShell.Commands.Model.SharePoint;

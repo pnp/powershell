@@ -1,5 +1,4 @@
 ﻿using PnP.Framework.Sites;
-
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site

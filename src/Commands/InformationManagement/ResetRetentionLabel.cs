@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using PnP.PowerShell.Commands.Base.Completers;
 
-
 namespace PnP.PowerShell.Commands.InformationManagement
 {
     [Cmdlet(VerbsCommon.Reset, "PnPRetentionLabel", DefaultParameterSetName = ParamSet_List)]

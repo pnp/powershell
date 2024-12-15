@@ -1,7 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Utilities;
 using PnP.Core.Services;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.Mail;
@@ -9,7 +8,6 @@ using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Management.Automation;
 using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
@@ -31,7 +29,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="message">The message to send</param>
         /// <param name="saveToSentItems">Boolean indicating if the sent message should be added to the sent items of the sender. Optional. Defaults to true.</param>
         /// <exception cref="System.Exception">Thrown if sending the e-mail failed</exception>
-        public static void SendGraphMail(Cmdlet cmdlet, PnPConnection connection, string accessToken, Message message, bool saveToSentItems = true)
+        public static void SendGraphMail(ApiRequestHelper requestHelper, Message message, bool saveToSentItems = true)
         {
             var jsonSerializer = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, };
             jsonSerializer.Converters.Add(new JsonStringEnumConverter());
@@ -39,7 +37,7 @@ namespace PnP.PowerShell.Commands.Utilities
             var stringContent = new StringContent(JsonSerializer.Serialize(new SendMailMessage { Message = message, SaveToSentItems = saveToSentItems }, jsonSerializer));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            var response = GraphHelper.Post(cmdlet, connection, $"v1.0/users/{message.Sender.EmailAddress.Address}/sendMail", accessToken, stringContent);
+            var response = requestHelper.PostHttpContent($"v1.0/users/{message.Sender.EmailAddress.Address}/sendMail", stringContent);
 
             if (response.StatusCode != System.Net.HttpStatusCode.Accepted)
             {

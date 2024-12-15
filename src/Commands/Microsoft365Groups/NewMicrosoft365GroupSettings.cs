@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -30,17 +29,17 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+                var groupId = Identity.GetGroupId(RequestHelper);
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = ClearOwners.CreateGroupSetting(this, Connection, AccessToken, groupId.ToString(), groupSettingObject);
+                var responseValue = ClearOwners.CreateGroupSetting(RequestHelper, groupId.ToString(), groupSettingObject);
                 WriteObject(responseValue);
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = ClearOwners.CreateGroupSetting(this, Connection, AccessToken, groupSettingObject);
+                var responseValue = ClearOwners.CreateGroupSetting(RequestHelper, groupSettingObject);
                 WriteObject(responseValue);
             }
         }

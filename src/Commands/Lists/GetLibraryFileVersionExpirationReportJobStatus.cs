@@ -1,10 +1,7 @@
 using Microsoft.SharePoint.Client;
-
-using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
-
 using System.Management.Automation;
 using System.Text.Json;
 

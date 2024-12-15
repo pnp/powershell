@@ -1,6 +1,5 @@
 ﻿using PnP.Framework.ALM;
 using PnP.Framework.Enums;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;

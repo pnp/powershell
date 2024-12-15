@@ -1,6 +1,5 @@
 ﻿using PnP.Framework.Provisioning.Connectors.OpenXML;
 using PnP.Framework.Provisioning.Connectors.OpenXML.Model;
-
 using System;
 using System.Collections.Generic;
 using System.IO;

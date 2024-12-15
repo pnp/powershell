@@ -5,7 +5,6 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -21,12 +20,17 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ConvertToPSObject(Identity.GetApp(this, Connection, AccessToken)));
+                var app = Identity.GetApp(RequestHelper);
+                if(app == null)
+                {
+                    WriteError(new PSArgumentException("Azure AD App not found"), ErrorCategory.ObjectNotFound);
+                }
+                WriteObject(ConvertToPSObject(app));
             }
             else
             {
                 List<PSObject> apps = new List<PSObject>();
-                var result = GraphHelper.GetResultCollection<AzureADApp>(this, Connection, "/v1.0/applications", AccessToken);
+                var result = RequestHelper.GetResultCollection<AzureADApp>("/v1.0/applications");
                 if (result != null && result.Any())
                 {
                     apps.AddRange(result.Select(p => ConvertToPSObject(p)));

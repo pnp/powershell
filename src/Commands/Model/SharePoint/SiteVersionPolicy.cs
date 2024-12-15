@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PnP.PowerShell.Commands.Model.SharePoint
+﻿namespace PnP.PowerShell.Commands.Model.SharePoint
 {
     /// <summary>
     /// The VersionPolicy setting on site

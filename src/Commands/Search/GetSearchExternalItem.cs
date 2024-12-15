@@ -20,12 +20,12 @@ namespace PnP.PowerShell.Commands.Search
         public SearchExternalConnectionPipeBind ConnectionId;
 
         [Parameter(Mandatory = false)]
-        [ValidateLength(1,128)]
+        [ValidateLength(1, 128)]
         public string Identity;
 
         protected override void ExecuteCmdlet()
         {
-            var externalConnectionId = ConnectionId.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(RequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
 
             var searchQuery = new Model.Graph.MicrosoftSearch.SearchRequests
             {
@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Search
                         {
                             QueryString = ParameterSpecified(nameof(Identity)) ? $"fileID:{Identity}" : "*"
                         }
-                    } 
+                    }
                 ]
             };
 
@@ -53,11 +53,11 @@ namespace PnP.PowerShell.Commands.Search
             httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
             // Execute the search query to discover the external items
-            var searchResults = GraphHelper.Post<RestResultCollection<Model.Graph.MicrosoftSearch.SearchResult>>(this, Connection, "v1.0/search/query", httpContent, AccessToken);
+            var searchResults = RequestHelper.Post<RestResultCollection<Model.Graph.MicrosoftSearch.SearchResult>>("v1.0/search/query", httpContent);
 
             var hits = searchResults.Items.FirstOrDefault().HitsContainers.FirstOrDefault().Hits;
 
-            if(hits == null || hits.Count == 0)
+            if (hits == null || hits.Count == 0)
             {
                 WriteVerbose($"No external items found{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnectionId}'");
                 return;
@@ -65,7 +65,8 @@ namespace PnP.PowerShell.Commands.Search
 
             WriteVerbose($"Found {hits.Count} external item{(hits.Count != 1 ? "s" : "")}{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnectionId}'");
 
-            var externalItems = hits.Select(s => new Model.Graph.MicrosoftSearch.ExternalItem {  
+            var externalItems = hits.Select(s => new Model.Graph.MicrosoftSearch.ExternalItem
+            {
                 Id = s.Resource.Properties["fileID"].ToString()[(s.Resource.Properties["fileID"].ToString().LastIndexOf(',') + 1)..],
                 Acls = null,
                 Properties = new System.Collections.Hashtable(s.Resource.Properties),

@@ -43,6 +43,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Files` parameter for `Send-PnPMail` cmdlet to allow files to be downloaded from SharePoint and then sent as attachments.
 - Added `-Force` parameter to `Set-PnPPropertyBagValue` cmdlet to toggle NoScript status of the site.
 - Added `-Batch` parameter to `Invoke-PnPGraphMethod` cmdlet to allow adding request in a batch.
+- Added `-List` parameter to `Get-PnPFolderItem`, `Get-PnPFileInFolder` and `Get-PnPFolderInFolder` which allows them to work with a document library containing more than 5,000 items [#4611](https://github.com/pnp/powershell/pull/4611)
+- Added `Start-PnPTraceLog`, `Stop-PnPTraceLog` and `Get-PnPTraceLog` cmdlets to handle tracelogging. Removed `Set-PnPTraceLog` cmdlet.
+- Added `-ListPermissionScopes` parameter on `Get-PnPAccessToken` cmdlet to list the current permission scopes on the current access token.
+- Added `Get-PnPCopilotAgent` cmdlet that returns the Microsoft Copilot Agents in a site collection
 
 ### Changed
 
@@ -91,7 +95,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `-ConsistencyLevelEventual` flag on `Invoke-PnPGraphMethod` to work correctly. [#4523](https://github.com/pnp/powershell/pull/4523)
 - Fixed `Get-PnPServiceHealthIssue` returning an error when certain service states were active [#4530](https://github.com/pnp/powershell/pull/4530)
 - Fixed `Add-PnPFileSensitivityLabel` cmdlet to allow empty string value to reset file sensitivity label.
-
+- Fix `Connect-PnPOnline` cmdlet not working with On Prem related cmdlets. [#4622](https://github.com/pnp/powershell/pull/4622)
+- Fix `Get\Invoke-PnPSiteTemplate` cmdlet not working in vanity domains. [#4630](https://github.com/pnp/powershell/pull/4630)
+ 
 ### Removed
 
 - Removed `-LaunchBrowser`, `-NoPopup` and credential based auth on `Register-PnPEntraIDApp` and `Register-PnPEntraIDAppForInteractiveLogin` cmdlets. The default auth method is now Interactive.
@@ -110,9 +116,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `-WebLogin` parameter from `Connect-PnPOnline` cmdlet. It was marked obsolete and was a security risk.
 - Removed `Set-PnPMinimalDownloadStrategy` as it's not applicable anymore to SharePoint Online. If you need the functionality you can always turn on the feature with `Enable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a` or turn it off with `Disable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a`
 - Removed `-SPOManagementShell` parameter from `Connect-PnPOnline` cmdlet. It reduces the risk of changes coming from Microsoft. Use your own Entra ID app instead.
+- Removed `Set-PnPTraceLog` cmdlet and introduced `Start-PnPTraceLog` and `Stop-PnPTraceLog` with similar parameters.
  
 ### Contributors
 
+- Janne Holm [jhholm]
+- Paul Bullock [pkbullock]
 - Arjan Cornelissen [arjancornelissen]
 - Konrad K. [wilecoyotegenius]
 - Antti K. Koskela [koskila]

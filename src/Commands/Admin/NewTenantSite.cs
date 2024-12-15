@@ -1,12 +1,9 @@
 ﻿using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
-using PnP.Framework.Entities;
-
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;
-using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands
 {

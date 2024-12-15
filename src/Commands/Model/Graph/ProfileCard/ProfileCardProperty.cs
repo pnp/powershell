@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Text.Json.Serialization;
-using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Model.Graph.ProfileCard
 {

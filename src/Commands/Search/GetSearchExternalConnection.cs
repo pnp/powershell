@@ -20,20 +20,20 @@ namespace PnP.PowerShell.Commands.Search
         {
             var graphApiUrl = $"v1.0/external/connections";
 
-            if(ParameterSpecified(nameof(Identity)))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 graphApiUrl += $"/{Identity}";
 
                 WriteVerbose($"Retrieving external connection with Identity '{Identity}'");
 
-                var externalConnectionResult = Utilities.REST.GraphHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>(this, Connection, graphApiUrl, AccessToken);
+                var externalConnectionResult = RequestHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>(graphApiUrl);
                 WriteObject(externalConnectionResult, false);
             }
             else
             {
                 WriteVerbose("Retrieving all external connections");
 
-                var externalConnectionResults = Utilities.REST.GraphHelper.GetResultCollection<Model.Graph.MicrosoftSearch.ExternalConnection>(this, Connection, graphApiUrl, AccessToken);
+                var externalConnectionResults = RequestHelper.GetResultCollection<Model.Graph.MicrosoftSearch.ExternalConnection>(graphApiUrl);
                 WriteObject(externalConnectionResults, true);
             }
         }

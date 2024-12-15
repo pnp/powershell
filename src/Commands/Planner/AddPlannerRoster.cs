@@ -3,7 +3,7 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Add, "PnPPlannerRoster")]
     [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
@@ -11,7 +11,7 @@ namespace SharePointPnP.PowerShell.Commands.Graph
     {
         protected override void ExecuteCmdlet()
         {
-            PlannerUtility.CreateRoster(this, Connection, AccessToken);
+            PlannerUtility.CreateRoster(RequestHelper);
         }
     }
 }

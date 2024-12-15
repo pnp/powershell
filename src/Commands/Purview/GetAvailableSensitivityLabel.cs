@@ -1,7 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -52,12 +51,12 @@ namespace PnP.PowerShell.Commands.Purview
             {
                 url += $"/{Identity}";
 
-                var labels = GraphHelper.Get<Model.Graph.Purview.InformationProtectionLabel>(this, Connection, url, AccessToken);
+                var labels = RequestHelper.Get<Model.Graph.Purview.InformationProtectionLabel>(url);
                 WriteObject(labels, false);
             }
             else
             {
-                var labels = GraphHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>(this, Connection, url, AccessToken);
+                var labels = RequestHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>(url);
                 WriteObject(labels, true);
             }
         }
