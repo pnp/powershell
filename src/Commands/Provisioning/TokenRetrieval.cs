@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                         {
                             scope = $"https://{resource}/.default";
                         }
-                        return await authManager.GetAccessTokenAsync(new string[] { scope ?? $"https://{resource}" });
+                        return scope is null ? await authManager.GetAccessTokenAsync($"https://{resource}") : await authManager.GetAccessTokenAsync(new string[] { scope });
                     }
                 }
             }
