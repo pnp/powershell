@@ -1,16 +1,20 @@
-﻿using System;
+﻿using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Text.Json;
-using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.ManagementApi
 {
     [Cmdlet(VerbsCommon.Get, "PnPUnifiedAuditLog")]
-    [RequiredApiApplicationPermissions("https://manage.office.com/ActivityFeed.Read", "https://manage.office.com/ActivityFeed.ReadDlp", "https://manage.office.com/ServiceHealth.Read", "https://manage.office.com/ActivityReports.Read", "https://manage.office.com/ThreatIntelligence.Read")]
+    [RequiredApiDelegatedOrApplicationPermissions("https://manage.office.com/ActivityFeed.Read")]
+    [RequiredApiDelegatedOrApplicationPermissions("https://manage.office.com/ActivityFeed.ReadDlp")]
+    [RequiredApiDelegatedOrApplicationPermissions("https://manage.office.com/ServiceHealth.Read")]
+    [RequiredApiDelegatedOrApplicationPermissions("https://manage.office.com/ActivityReports.Read")]
+    [RequiredApiDelegatedOrApplicationPermissions("https://manage.office.com/ThreatIntelligence.Read")]
     [OutputType(typeof(ManagementApiUnifiedLogRecord))]
     public class GetUnifiedAuditLog : PnPOfficeManagementApiCmdlet
     {

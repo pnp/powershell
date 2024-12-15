@@ -10,8 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Revoke, "PnPTenantServicePrincipalPermission")]
-    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
-
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class RevokeTenantServicePrincipal : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

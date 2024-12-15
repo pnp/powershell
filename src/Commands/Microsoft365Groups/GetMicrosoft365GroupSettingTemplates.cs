@@ -6,13 +6,13 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupSettingTemplates")]
-    [RequiredApiApplicationPermissions("graph/Directory.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class GetMicrosoft365GroupSettingTemplates : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
         public string Identity;
-        
+
         protected override void ExecuteCmdlet()
         {
             if (Identity != null)

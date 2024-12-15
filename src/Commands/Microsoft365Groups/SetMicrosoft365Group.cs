@@ -13,7 +13,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Set, "PnPMicrosoft365Group")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class SetMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -104,7 +104,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
                 if (ParameterSpecified(nameof(AllowExternalSenders)) && AllowExternalSenders.HasValue)
                 {
-                    if(TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
+                    if (TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
                     {
                         WriteWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
                     }

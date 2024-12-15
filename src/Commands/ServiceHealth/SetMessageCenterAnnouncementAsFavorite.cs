@@ -1,13 +1,13 @@
-﻿using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System.Linq;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Set, "PnPMessageCenterAnnouncementAsFavorite")]
-    [RequiredApiApplicationPermissions("graph/ServiceMessageViewpoint.Write")]
+    [RequiredApiDelegatedPermissions("graph/ServiceMessageViewpoint.Write")]
     public class SetMessageCenterAnnouncementAsFavorite : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -30,6 +30,6 @@ namespace PnP.PowerShell.Commands.ServiceHealth
                 // Mark all message center announcements as favorite
                 WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsFavoriteById(RequestHelper, messageCenterAnnouncementIds), true);
             }
-        }        
+        }
     }
 }

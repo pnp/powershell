@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADApp")]
-    [RequiredApiApplicationPermissions("graph/Application.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
     [Alias("Remove-PnPEntraIDApp")]
     public class RemoveAzureADApp : PnPGraphCmdlet
     {

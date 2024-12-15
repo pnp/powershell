@@ -1,12 +1,12 @@
-﻿using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Get, "PnPServiceHealthIssue")]
-    [RequiredApiApplicationPermissions("graph/ServiceHealth.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/ServiceHealth.Read.All")]
     public class GetServiceHealthIssue : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

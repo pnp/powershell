@@ -1,15 +1,15 @@
-using System.Collections.Generic;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
+using System.Collections.Generic;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADServicePrincipalAssignedAppRole")]
-    [RequiredApiApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRole>))]
     [Alias("Remove-PnPEntraIDServicePrincipalAssignedAppRole")]
     public class RemoveAzureADServicePrincipalAssignedAppRole : PnPGraphCmdlet
@@ -31,11 +31,11 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            if(ParameterSetName == ParameterSet_BYASSIGNEDAPPROLE || ParameterSetName == ParameterSet_BYAPPROLENAME)
+            if (ParameterSetName == ParameterSet_BYASSIGNEDAPPROLE || ParameterSetName == ParameterSet_BYAPPROLENAME)
             {
                 var principal = Principal.GetServicePrincipal(RequestHelper);
 
-                if(principal == null)
+                if (principal == null)
                 {
                     throw new PSArgumentException("Service principal not found", nameof(Principal));
                 }

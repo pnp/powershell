@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsLifecycle.Submit, "PnPTeamsChannelMessage")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class SubmitTeamsChannelMessage : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
