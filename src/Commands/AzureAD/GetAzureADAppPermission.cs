@@ -1,15 +1,15 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
+using System.Collections.Generic;
+using System.Linq;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADAppPermission")]
-    [RequiredApiApplicationPermissions("graph/Application.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
     [Alias("Get-PnPEntraIDAppPermission")]
     public class GetAzureADAppPermission : PnPGraphCmdlet
     {
@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             if (ParameterSpecified(nameof(Identity)))
             {
                 var app = Identity.GetApp(RequestHelper);
-                if(app == null)
+                if (app == null)
                 {
                     WriteError(new PSArgumentException("Azure AD App not found"), ErrorCategory.ObjectNotFound);
                 }

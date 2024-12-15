@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADActivityReportDirectoryAudit")]
-    [RequiredApiApplicationPermissions("graph/AuditLog.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AuditLog.Read.All")]
     [Alias("Get-PnPEntraIDActivityReportDirectoryAudit")]
     public class GetAzureADActivityReportDirectoryAudit : PnPGraphCmdlet
     {

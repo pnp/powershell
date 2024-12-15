@@ -10,7 +10,7 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADGroupOwner")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
     [Alias("Get-PnPEntraIDGroupOwner")]
     public class GetAzureADGroupOwner : PnPGraphCmdlet
     {

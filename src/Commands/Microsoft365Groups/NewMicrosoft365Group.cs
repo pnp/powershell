@@ -1,16 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.New, "PnPMicrosoft365Group", DefaultParameterSetName = ParameterSet_AssignedMembers)]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class NewPnPMicrosoft365Group : PnPGraphCmdlet
     {
         private const string ParameterSet_AssignedMembers = "Assigned membership";
@@ -39,50 +39,50 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         public string[] Members;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]       
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<Framework.Enums.Office365Geography>))]
         public string PreferredDataLocation;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         public string PreferredLanguage;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         public SwitchParameter IsPrivate;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         [Alias("GroupLogoPath")]
         public string LogoPath;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         public SwitchParameter CreateTeam;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         public bool? HideFromAddressLists;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         public bool? HideFromOutlookClients;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         [ArgumentCompleter(typeof(EnumAsStringArgumentCompleter<Enums.TeamResourceBehaviorOptions>))]
         public Enums.TeamResourceBehaviorOptions?[] ResourceBehaviorOptions;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         public Guid[] SensitivityLabels;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AssignedMembers)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]   
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DynamicMembers)]
         public SwitchParameter SecurityEnabled;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_DynamicMembers)]
@@ -136,7 +136,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     MembershipRule = DynamicMembershipRule
                 };
 
-                if(!string.IsNullOrEmpty(DynamicMembershipRule))
+                if (!string.IsNullOrEmpty(DynamicMembershipRule))
                 {
                     newGroup.MembershipRule = DynamicMembershipRule;
                     newGroup.MembershipRuleProcessingState = DynamicMembershipRuleProcessingState.ToString();

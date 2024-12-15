@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsPrimaryChannel")]
-    [RequiredApiApplicationPermissions("graph/Channel.ReadBasic.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Channel.ReadBasic.All")]
 
     public class GetTeamsPrimaryChannel : PnPGraphCmdlet
     {
@@ -18,9 +18,10 @@ namespace PnP.PowerShell.Commands.Teams
         {
             var groupId = Team.GetGroupId(RequestHelper);
             if (groupId != null)
-            { 
-              WriteObject(TeamsUtility.GetPrimaryChannel(RequestHelper, groupId));
-            } else
+            {
+                WriteObject(TeamsUtility.GetPrimaryChannel(RequestHelper, groupId));
+            }
+            else
             {
                 throw new PSArgumentException("Team not found", nameof(Team));
             }

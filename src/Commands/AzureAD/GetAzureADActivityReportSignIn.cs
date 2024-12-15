@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADActivityReportSignIn")]
-    [RequiredApiApplicationPermissions("graph/AuditLog.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AuditLog.Read.All")]
     [Alias("Get-PnPEntraIDActivityReportSignIn")]
     public class GetAzureADActivityReportSignIn : PnPGraphCmdlet
     {

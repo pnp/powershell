@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.New, "PnPTeamsApp")]
-    [RequiredApiApplicationPermissions("graph/AppCatalog.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AppCatalog.ReadWrite.All")]
     public class NewTeamsApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

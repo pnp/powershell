@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTeamArchivedState")]
     [TokenType(TokenType = TokenType.Delegate)]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class SetTeamsTeamArchivedState : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

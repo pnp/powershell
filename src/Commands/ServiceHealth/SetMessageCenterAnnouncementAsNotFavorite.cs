@@ -1,13 +1,13 @@
-﻿using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System.Linq;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Set, "PnPMessageCenterAnnouncementAsNotFavorite")]
-    [RequiredApiApplicationPermissions("graph/ServiceMessageViewpoint.Write")]
+    [RequiredApiDelegatedPermissions("graph/ServiceMessageViewpoint.Write")]
     public class SetMessageCenterAnnouncementAsNotFavorite : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -29,6 +29,6 @@ namespace PnP.PowerShell.Commands.ServiceHealth
                 // Mark all message center announcements as not favorites
                 WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsNotfavoriteById(RequestHelper, messageCenterAnnouncementIds), true);
             }
-        }        
+        }
     }
 }

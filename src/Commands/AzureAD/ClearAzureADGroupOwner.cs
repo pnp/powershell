@@ -2,14 +2,14 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using System.Linq;
 using System.Management.Automation;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
-using System.Linq;
 
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Clear, "PnPAzureADGroupOwner")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Clear-PnPEntraIDGroupOwner")]
     public class ClearAzureADGroupOwner : PnPGraphCmdlet
     {

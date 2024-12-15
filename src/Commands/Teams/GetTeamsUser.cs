@@ -1,5 +1,4 @@
-﻿
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
@@ -11,8 +10,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsUser")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class GetTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -34,7 +33,7 @@ namespace PnP.PowerShell.Commands.Teams
                     if (ParameterSpecified(nameof(Channel)))
                     {
                         var teamChannels = TeamsUtility.GetChannels(RequestHelper, groupId);
-                        
+
                         var channelId = Channel.GetId(RequestHelper, groupId);
 
                         var requestedChannel = teamChannels.FirstOrDefault(c => c.Id == channelId);

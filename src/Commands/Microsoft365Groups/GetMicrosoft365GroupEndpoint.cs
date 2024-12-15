@@ -9,8 +9,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupEndpoint")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class GetMicrosoft365GroupEndpoint : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true, Position = 0)]
@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
                 groupId = ClientContext.Site.GroupId;
 
-                if(groupId == Guid.Empty)
+                if (groupId == Guid.Empty)
                 {
                     throw new PSArgumentException("Current site is not backed by a Microsoft 365 Group", nameof(Identity));
                 }
