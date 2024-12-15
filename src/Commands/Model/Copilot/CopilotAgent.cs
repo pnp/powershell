@@ -9,18 +9,39 @@ namespace PnP.PowerShell.Commands.Model.Copilot
         public string SchemaVersion { get; set; } = "0.2.0";
 
         [JsonPropertyName("customCopilotConfig")]
-        public CopilotAgentCustomCopilotConfig CustomCopilotConfig { get; set; }
+        public CopilotAgentCustomCopilotConfig CustomCopilotConfig { get; set; } = new CopilotAgentCustomCopilotConfig();
 
-        public string ServerRelativeUrl {get;set;}
+        public string ServerRelativeUrl { get; set; }
+
+        public CopilotAgentType AgentType
+        {
+            get
+            {
+                if (ServerRelativeUrl.Contains("siteassets/copilot", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    return CopilotAgentType.Site;
+                }
+                else
+                {
+                    return CopilotAgentType.DocumentLibrary;
+                }
+            }
+        }
+    }
+
+    public enum CopilotAgentType
+    {
+        Site,
+        DocumentLibrary
     }
 
     public class CopilotAgentCustomCopilotConfig
     {
         [JsonPropertyName("conversationStarters")]
-        public CopilotAgentConversationStarters ConversationStarters { get; set; }
+        public CopilotAgentConversationStarters ConversationStarters { get; set; } = new CopilotAgentConversationStarters();
 
         [JsonPropertyName("gptDefinition")]
-        public CopilotAgentGPTDefinition GPTDefinition { get; set; }
+        public CopilotAgentGPTDefinition GPTDefinition { get; set; } = new CopilotAgentGPTDefinition();
 
         [JsonPropertyName("icon")]
         public string Icon { get; set; }
@@ -29,10 +50,10 @@ namespace PnP.PowerShell.Commands.Model.Copilot
     public class CopilotAgentConversationStarters
     {
         [JsonPropertyName("conversationStarterList")]
-        public List<CopilotAgentTextValue> conversationStarterList { get; set; }
+        public List<CopilotAgentTextValue> conversationStarterList { get; set; } = new List<CopilotAgentTextValue>();
 
         [JsonPropertyName("welcomeMessage")]
-        public CopilotAgentTextValue WelcomeMessage { get; set; }
+        public CopilotAgentTextValue WelcomeMessage { get; set; } = new CopilotAgentTextValue();
     }
 
     public class CopilotAgentTextValue
@@ -53,7 +74,7 @@ namespace PnP.PowerShell.Commands.Model.Copilot
         public string Instructions { get; set; }
 
         [JsonPropertyName("capabilities")]
-        public List<CopilotAgentCapabilities> Capabilities { get; set; }
+        public List<CopilotAgentCapabilities> Capabilities { get; set; } = new List<CopilotAgentCapabilities>();
     }
 
     public class CopilotAgentCapabilities
@@ -62,10 +83,10 @@ namespace PnP.PowerShell.Commands.Model.Copilot
         public string Name { get; set; }
 
         [JsonPropertyName("items_by_sharepoint_ids")]
-        public List<CopilotAgentSourceItem> ItemsBySharePointIds { get; set; }
+        public List<CopilotAgentSourceItem> ItemsBySharePointIds { get; set; } = new List<CopilotAgentSourceItem>();
 
         [JsonPropertyName("items_by_url")]
-        public List<CopilotAgentSourceItem> ItemsByUrl { get; set; }
+        public List<CopilotAgentSourceItem> ItemsByUrl { get; set; } = new List<CopilotAgentSourceItem>();
     }
 
     public class CopilotAgentSourceItem
