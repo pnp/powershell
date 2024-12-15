@@ -25,13 +25,13 @@ namespace PnP.PowerShell.Commands.Principals
             if (ParameterSpecified(nameof(Identity)))
             {
                 WriteVerbose("Retrieving specific role");
-                var role = Identity.GetInstance(this, Connection, AccessToken);
+                var role = Identity.GetInstance(RequestHelper);
                 WriteObject(role, false);
             }
             else
             {
                 WriteVerbose("Retrieving all roles");
-                var roles = PriviledgedIdentityManagamentUtility.GetRoleDefinitions(this, Connection, AccessToken);
+                var roles = PriviledgedIdentityManagamentUtility.GetRoleDefinitions(RequestHelper);
                 WriteObject(roles, true);
             }
         }

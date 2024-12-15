@@ -1,5 +1,4 @@
 using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 using System.Net.Http;
@@ -29,7 +28,7 @@ namespace PnP.PowerShell.Commands.Purview
                 WriteVerbose($"Trying to remove the Microsoft Purview sensitivity label from the Microsoft 365 Group with Id {ClientContext.Site.GroupId} behind the current site {Connection.Url}");
                 var stringContent = new StringContent(JsonSerializer.Serialize(new { assignedLabels = new [] { new { labelId = "" }}}));
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                GraphHelper.Patch(this, Connection, GraphAccessToken, stringContent, $"beta/groups/{ClientContext.Site.GroupId}");
+                RequestHelper.Patch(stringContent, $"beta/groups/{ClientContext.Site.GroupId}");
             }
             else
             {

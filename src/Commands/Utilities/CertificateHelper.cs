@@ -6,6 +6,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using SecureString = System.Security.SecureString;
 using System.Management.Automation;
+using PnP.Framework.Diagnostics;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -133,7 +134,7 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             if (System.IO.File.Exists(certificatePath))
             {
-                cmdlet.WriteVerbose($"Reading certificate from file '{certificatePath}'");
+                Log.Debug("CertificateHelper",$"Reading certificate from file '{certificatePath}'");
 
                 var certFile = System.IO.File.OpenRead(certificatePath);
                 if (certFile.Length == 0)
@@ -144,7 +145,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var certificateBytes = new byte[certFile.Length];
                 certFile.Read(certificateBytes, 0, (int)certFile.Length);
 
-                cmdlet.WriteVerbose($"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
+                Log.Debug("CertificateHelper",$"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
                 try
                 {
                     var certificate = new X509Certificate2(

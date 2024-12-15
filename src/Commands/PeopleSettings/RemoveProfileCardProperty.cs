@@ -1,11 +1,7 @@
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Attributes;
-using System.Collections;
 using System.Management.Automation;
-using System.Collections.Generic;
-using System.Net.Http.Json;
-using System.Linq;
 
 namespace PnP.PowerShell.Commands.PeopleSettings
 {
@@ -21,7 +17,7 @@ namespace PnP.PowerShell.Commands.PeopleSettings
         {            
             var graphApiUrl = $"v1.0/admin/people/profileCardProperties/{PropertyName.ToString()}";
             
-            Utilities.REST.GraphHelper.Delete(this, Connection, graphApiUrl, AccessToken);
+            RequestHelper.Delete(graphApiUrl);
         }
     }
 }

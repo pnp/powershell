@@ -1,19 +1,12 @@
-﻿using System;
-using System.Management.Automation;
+﻿using System.Management.Automation;
 using System.Text.Json;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Utilities;
 
-
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "PnPTheme")]
-    
-    
-    
-    
-    
+    [Cmdlet(VerbsCommon.Set, "PnPTheme")]  
     public class SetTheme : PnPWebCmdlet
     {
         private const string PROPBAGKEY = "_PnP_ProvisioningTemplateComposedLookInfo";

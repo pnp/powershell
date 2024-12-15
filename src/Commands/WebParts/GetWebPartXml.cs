@@ -1,15 +1,8 @@
 ﻿using System;
-using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Net;
-using System.Text;
-
 using Microsoft.SharePoint.Client;
-
 using PnP.Framework.Utilities;
-
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.WebParts

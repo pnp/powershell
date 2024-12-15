@@ -15,8 +15,6 @@ using PnP.PowerShell.Commands.Utilities;
 using System.Collections.Generic;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Framework.Provisioning.Model.Configuration;
-using PnP.PowerShell.Commands.Base;
-using System.Threading.Tasks;
 using PnP.Framework.Provisioning.Providers.Markdown;
 
 

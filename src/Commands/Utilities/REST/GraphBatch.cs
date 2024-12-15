@@ -1,13 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Model.Graph;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
@@ -24,7 +20,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        internal static Dictionary<string, string> GetPropertyBatched(Cmdlet cmdlet, PnPConnection connection, string accessToken, string[] lookupData, string urlTemplate, string property)
+        internal static Dictionary<string, string> GetPropertyBatched(ApiRequestHelper requestHelper, string[] lookupData, string urlTemplate, string property)
         {
             Dictionary<string, string> returnValue = new Dictionary<string, string>();
 
@@ -40,7 +36,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             var stringContent = new StringContent(JsonSerializer.Serialize(batch));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = GraphHelper.Post<GraphBatchResponse>(cmdlet, connection, "v1.0/$batch", stringContent, accessToken);
+            var result = requestHelper.Post<GraphBatchResponse>("v1.0/$batch", stringContent);
             if (result.Responses != null && result.Responses.Any())
             {
                 var errors = new List<Exception>();
@@ -68,7 +64,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return returnValue;
         }
 
-        internal static Dictionary<string, IEnumerable<T>> GetObjectCollectionBatched<T>(Cmdlet cmdlet, PnPConnection connection, string accessToken, string[] lookupData, string urlTemplate)
+        internal static Dictionary<string, IEnumerable<T>> GetObjectCollectionBatched<T>(ApiRequestHelper requestHelper, string[] lookupData, string urlTemplate)
         {
             Dictionary<string, IEnumerable<T>> returnValue = new Dictionary<string, IEnumerable<T>>();
 
@@ -84,14 +80,14 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
             var stringContent = new StringContent(JsonSerializer.Serialize(batch));
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = GraphHelper.Post<GraphBatchResponse>(cmdlet, connection, "v1.0/$batch", stringContent, accessToken);
+            var result = requestHelper.Post<GraphBatchResponse>("v1.0/$batch", stringContent);
             if (result.Responses != null && result.Responses.Any())
             {
-                var options = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase};
+                var options = new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
                 foreach (var response in result.Responses)
                 {
                     var itemId = requests.First(r => r.Key == response.Id).Value;
-                    if(response.Body.TryGetValue("value",out object resultObject))
+                    if (response.Body.TryGetValue("value", out object resultObject))
                     {
                         var objectElement = (JsonElement)resultObject;
                         returnValue.Add(itemId, JsonSerializer.Deserialize<T[]>(objectElement.ToString(), options));

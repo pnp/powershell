@@ -1,12 +1,10 @@
 ﻿using Microsoft.SharePoint.Client;
 using System.Collections.Generic;
 using System.Management.Automation;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Linq;
 using System.Linq.Expressions;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Features

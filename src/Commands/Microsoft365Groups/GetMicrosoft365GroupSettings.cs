@@ -21,26 +21,26 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null && GroupSetting != null)
             {
-                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
-                var groupSettingId = GroupSetting.GetGroupSettingId(this, Connection, AccessToken);
-                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken, groupSettingId.ToString(), groupId.ToString());
+                var groupId = Identity.GetGroupId(RequestHelper);
+                var groupSettingId = GroupSetting.GetGroupSettingId(RequestHelper);
+                var groupSettings = ClearOwners.GetGroupSettings(RequestHelper, groupSettingId.ToString(), groupId.ToString());
                 WriteObject(groupSettings, true);
             }
             else if (Identity != null && GroupSetting == null)
             {
-                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
-                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken, groupId.ToString());
+                var groupId = Identity.GetGroupId(RequestHelper);
+                var groupSettings = ClearOwners.GetGroupSettings(RequestHelper, groupId.ToString());
                 WriteObject(groupSettings?.Value, true);
             }
             else if (Identity == null && GroupSetting != null) 
             {
-                var groupSettingId = GroupSetting.GetGroupSettingId(this, Connection, AccessToken);
-                var groupSettings = ClearOwners.GetGroupTenantSettings(this, Connection, AccessToken, groupSettingId.ToString());
+                var groupSettingId = GroupSetting.GetGroupSettingId(RequestHelper);
+                var groupSettings = ClearOwners.GetGroupTenantSettings(RequestHelper, groupSettingId.ToString());
                 WriteObject(groupSettings, true);
             }
             else if(Identity == null && GroupSetting == null)
             {
-                var groupSettings = ClearOwners.GetGroupSettings(this, Connection, AccessToken);
+                var groupSettings = ClearOwners.GetGroupSettings(RequestHelper);
                 WriteObject(groupSettings?.Value, true);
             }
         }

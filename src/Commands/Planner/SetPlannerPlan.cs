@@ -31,13 +31,13 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(this, Connection, AccessToken);
+                var groupId = Group.GetGroupId(RequestHelper);
                 if (groupId != null)
                 {
-                    var plan = Plan.GetPlan(this, Connection, AccessToken, groupId, false);
+                    var plan = Plan.GetPlan(RequestHelper, groupId, false);
                     if (plan != null)
                     {
-                        WriteObject(PlannerUtility.UpdatePlan(this, Connection, AccessToken, plan, Title));
+                        WriteObject(PlannerUtility.UpdatePlan(RequestHelper, plan, Title));
                     }
                     else
                     {
@@ -51,10 +51,10 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                var plan = PlannerUtility.GetPlan(this, Connection, AccessToken, PlanId, false);
+                var plan = PlannerUtility.GetPlan(RequestHelper, PlanId, false);
                 if (plan != null)
                 {
-                    WriteObject(PlannerUtility.UpdatePlan(this, Connection, AccessToken, plan, Title));
+                    WriteObject(PlannerUtility.UpdatePlan(RequestHelper, plan, Title));
                 }
                 else
                 {

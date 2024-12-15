@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (!Force)
             {
-                var candidate = ClearOwners.GetGroup(this, Connection, MailNickname, AccessToken, false, false, false, false);
+                var candidate = ClearOwners.GetGroup(RequestHelper, MailNickname, false, false, false, false);
                 forceCreation = candidate == null || ShouldContinue($"The Microsoft 365 Group '{MailNickname} already exists. Do you want to create a new one?", Properties.Resources.Confirm);
             }
             else
@@ -173,14 +173,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     }
                 }
 
-                var group = ClearOwners.Create(this, Connection, AccessToken, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels);
+                var group = ClearOwners.Create(RequestHelper, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels);
 
                 if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                 {
-                    ClearOwners.SetVisibility(this, Connection, AccessToken, group.Id.Value, HideFromAddressLists, HideFromOutlookClients);
+                    ClearOwners.SetVisibility(RequestHelper, group.Id.Value, HideFromAddressLists, HideFromOutlookClients);
                 }
 
-                var updatedGroup = ClearOwners.GetGroup(this, Connection, group.Id.Value, AccessToken, true, false, false, true);
+                var updatedGroup = ClearOwners.GetGroup(RequestHelper, group.Id.Value, true, false, false, true);
 
                 WriteObject(updatedGroup);
             }

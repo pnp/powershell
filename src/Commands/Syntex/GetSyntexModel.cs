@@ -1,5 +1,4 @@
-﻿using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Syntex;
 using System.Collections.Generic;
 using System.Management.Automation;

@@ -20,7 +20,7 @@ Add-PnPDocumentSet [-List] <ListPipeBind> [-Name] <String> [-ContentType <Conten
 ```
 
 ## DESCRIPTION
-Allows to add new document set to library.
+Allows to add new document set to the library.
 
 ## EXAMPLES
 
@@ -31,10 +31,10 @@ Add-PnPDocumentSet -List "Documents" -ContentType "Test Document Set" -Name "Tes
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPDocumentSet -List "Documents" -ContentType "Test Document Set" -Name "Test" -Folder "Projects/Europe"
+Add-PnPDocumentSet -List "Documents" -ContentType "Test Document Set" -Name "Test" -Folder "Documents/Projects/Europe"
 ```
 
-This will add a new document set based upon the 'Test Document Set' content type to a list called 'Documents'. The document set will be named 'Test' and will be added to the 'Europe' folder which is located in the 'Projects' folder. Folders will be created if needed.
+This will add a new document set based upon the 'Test Document Set' content type to a list called 'Documents'. The document set will be named 'Test' and will be added to the 'Europe' folder, which is located in the 'Projects' folder. Folders will be created if needed.
 
 ## PARAMETERS
 
@@ -53,7 +53,7 @@ Accept wildcard characters: False
 ```
 
 ### -ContentType
-The name of the content type, its ID or an actual content object referencing to the document set
+The name of the content type, its ID, or an actual content object referencing the document set
 
 ```yaml
 Type: ContentTypePipeBind
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -List
-The name of the list, its ID or an actual list object from where the document set needs to be added
+The name of the list, its ID, or an actual list object from where the document set needs to be added
 
 ```yaml
 Type: ListPipeBind

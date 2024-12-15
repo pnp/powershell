@@ -1,5 +1,4 @@
-﻿using PnP.Framework.Provisioning.Model.Teams;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
@@ -84,12 +83,12 @@ namespace PnP.PowerShell.Commands.Teams
         public bool? AllowCreatePrivateChannels;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+            var groupId = Identity.GetGroupId(RequestHelper);
             if (groupId != null)
             {
                 try
                 {
-                    var team = TeamsUtility.GetTeam(this, AccessToken, Connection, groupId);
+                    var team = TeamsUtility.GetTeam(RequestHelper, groupId);
                     var updateGroup = false;
                     var group = new Group();
                     if (team != null)
@@ -125,7 +124,7 @@ namespace PnP.PowerShell.Commands.Teams
 
                         if(updateGroup)
                         {
-                            TeamsUtility.UpdateGroup(this, Connection, AccessToken, groupId, group);
+                            TeamsUtility.UpdateGroup(RequestHelper, groupId, group);
                         }
 
                         var teamCI = new TeamCreationInformation();
@@ -147,7 +146,7 @@ namespace PnP.PowerShell.Commands.Teams
                         teamCI.Classification = ParameterSpecified(nameof(Classification)) ? Classification : null;
                         teamCI.AllowCreatePrivateChannels = ParameterSpecified(nameof(AllowCreatePrivateChannels)) ? AllowCreatePrivateChannels : null;                        
 
-                        var updated = TeamsUtility.UpdateTeam(this, Connection, AccessToken, groupId, teamCI.ToTeam(group.Visibility.Value));
+                        var updated = TeamsUtility.UpdateTeam(RequestHelper, groupId, teamCI.ToTeam(group.Visibility.Value));
                         WriteObject(updated);
                     }
                 }

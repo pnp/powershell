@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 foreach (DeletedSiteProperties item in list)
                 {
-                    WriteObject(new Model.SPODeletedSite(item, Detailed.ToBool(), AdminContext, this));
+                    WriteObject(new Model.SPODeletedSite(item, Detailed.ToBool(), AdminContext));
                 }
                 if (!flag2 && flag3)
                 {
@@ -74,7 +74,7 @@ namespace PnP.PowerShell.Commands.Admin
                 try
                 {
                     AdminContext.ExecuteQueryRetry();
-                    WriteObject(new Model.SPODeletedSite(deletedSitePropertiesByUrl, Detailed.ToBool(), AdminContext, this));
+                    WriteObject(new Model.SPODeletedSite(deletedSitePropertiesByUrl, Detailed.ToBool(), AdminContext));
                 }
                 catch (ServerException e) when (e.ServerErrorTypeName.Equals("Microsoft.SharePoint.Client.UnknownError", StringComparison.InvariantCultureIgnoreCase))
                 {

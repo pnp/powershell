@@ -1,5 +1,4 @@
 ﻿using PnP.Framework.Provisioning.Model;
-
 using System.Linq;
 using System.Management.Automation;
 

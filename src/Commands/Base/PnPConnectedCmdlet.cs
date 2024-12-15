@@ -5,6 +5,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Base
 {
+
     /// <summary>
     /// Base class for all the PnP Cmdlets which require a connection to have been made
     /// </summary>
@@ -22,10 +23,10 @@ namespace PnP.PowerShell.Commands.Base
 
         protected void BeginProcessing(bool skipConnectedValidation)
         {
-            base.BeginProcessing();            
+            base.BeginProcessing();
 
             // If a specific connection has been provided, use that, otherwise use the current connection
-            if(Connection == null)
+            if (Connection == null)
             {
                 Connection = PnPConnection.Current;
             }
@@ -37,13 +38,14 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Check if we should ensure that we are connected
-            if(skipConnectedValidation) return;
+            if (skipConnectedValidation) return;
 
             // Ensure there is an active connection
             if (Connection == null)
             {
                 throw new InvalidOperationException(Properties.Resources.NoConnection);
             }
+
         }
 
         protected override void ProcessRecord()
@@ -76,8 +78,8 @@ namespace PnP.PowerShell.Commands.Base
                         while (innermostException.InnerException != null) innermostException = innermostException.InnerException;
 
                         if (innermostException is System.Net.WebException wex)
-                        {                            
-                            using(var streamReader = new StreamReader (wex.Response.GetResponseStream()))
+                        {
+                            using (var streamReader = new StreamReader(wex.Response.GetResponseStream()))
                             {
                                 errorMessage = $"{wex.Status}: {wex.Message} Response received: {streamReader.ReadToEnd()}";
                             }
@@ -88,7 +90,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         break;
                     case Core.MicrosoftGraphServiceException pgex:
-                        errorMessage = (pgex.Error as Core.MicrosoftGraphError).Message; 
+                        errorMessage = (pgex.Error as Core.MicrosoftGraphError).Message;
                         break;
                     default:
                         errorMessage = ex.Message;
@@ -96,7 +98,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
-                if (!(new [] { "stop", "ignore", "silentlycontinue" }.Contains(ErrorActionSetting.ToLowerInvariant())))
+                if (!(new[] { "stop", "ignore", "silentlycontinue" }.Contains(ErrorActionSetting.ToLowerInvariant())))
                 {
                     throw new PSInvalidOperationException(errorMessage);
                 }

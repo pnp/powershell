@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Principals
             switch (ParameterSetName)
             {
                 case ParameterName_BYELIGIBLEROLEASSIGNMENT:
-                    roleEligibilitySchedule = EligibleAssignment.GetInstance(this, Connection, AccessToken);
+                    roleEligibilitySchedule = EligibleAssignment.GetInstance(RequestHelper);
                     break;
 
                 case ParameterName_BYROLENAMEANDUSER:
@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Principals
                     }
 
                     // Check for the role to which elevation needs to take place
-                    var role = Role.GetInstance(this, Connection, AccessToken);
+                    var role = Role.GetInstance(RequestHelper);
 
                     if (role == null)
                     {
@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Principals
                     }
 
                     // Look for an eligible role assignment for the user and role
-                    roleEligibilitySchedule = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleByPrincipalIdAndRoleName(this, user.Id.Value, role, Connection, AccessToken);
+                    roleEligibilitySchedule = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleByPrincipalIdAndRoleName(RequestHelper, user.Id.Value, role);
                     break;
 
                 case ParameterName_BYROLENAMEANDPRINCIPAL:
@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Principals
                     }
 
                     // Check for the role to which elevation needs to take place
-                    var role2 = Role.GetInstance(this, Connection, AccessToken);
+                    var role2 = Role.GetInstance(RequestHelper);
 
                     if (role2 == null)
                     {
@@ -97,7 +97,7 @@ namespace PnP.PowerShell.Commands.Principals
                     }
 
                     // Look for an eligible role assignment for the principal and role
-                    roleEligibilitySchedule = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleByPrincipalIdAndRoleName(this, PrincipalId.Value, role2, Connection, AccessToken);
+                    roleEligibilitySchedule = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleByPrincipalIdAndRoleName(RequestHelper, PrincipalId.Value, role2);
                     break;
             }
 
@@ -107,7 +107,7 @@ namespace PnP.PowerShell.Commands.Principals
             }
 
             WriteVerbose($"Creating role assignment schedule request");
-            var response = PriviledgedIdentityManagamentUtility.CreateRoleAssignmentScheduleRequest(this, roleEligibilitySchedule, Connection, AccessToken, Justification, StartAt, ExpireInHours);
+            var response = PriviledgedIdentityManagamentUtility.CreateRoleAssignmentScheduleRequest(RequestHelper, roleEligibilitySchedule, Justification, StartAt, ExpireInHours);
             WriteObject(response.IsSuccessStatusCode);
         }
     }

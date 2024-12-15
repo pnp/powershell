@@ -11,7 +11,9 @@ namespace PnP.PowerShell.Commands.Base
     {
         protected override void BeginProcessing()
         {
+            Framework.Diagnostics.Log.Debug("PnPPowerShell", $"Executing {MyInvocation.MyCommand.Name}");
             base.BeginProcessing();
+            PnP.Framework.Diagnostics.Log.Info("PnP.PowerShell", $"Executing {this.MyInvocation.InvocationName}");
             if (MyInvocation.MyCommand.Name.ToLower() != MyInvocation.InvocationName.ToLower())
             {
                 var attribute = Attribute.GetCustomAttribute(this.GetType(), typeof(WriteAliasWarningAttribute));
@@ -24,6 +26,19 @@ namespace PnP.PowerShell.Commands.Base
                     }
                 }
             }
+            // if (PnPConnection.Current == null)
+            // {
+            //     if (Settings.Current.LastUserTenant != null)
+            //     {
+            //         var clientid = PnPConnection.GetCacheClientId(Settings.Current.LastUserTenant);
+            //         if (clientid != null)
+            //         {
+            //             var  cancellationTokenSource = new CancellationTokenSource();
+            //             PnPConnection.Current = PnPConnection.CreateWithInteractiveLogin(new Uri(Settings.Current.LastUserTenant.ToLower()), clientid, null, Framework.AzureEnvironment.Production, cancellationTokenSource, false, null, false, false, Host);
+            //         }
+
+            //     }
+            // }
         }
 
         protected override void EndProcessing()
@@ -69,10 +84,10 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!string.IsNullOrEmpty(gex.AccessToken))
                     {
-                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, gex.AccessToken);
+                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(GetType(), gex.AccessToken);
                     }
                 }
-                if(string.IsNullOrWhiteSpace(errorMessage) && gex.HttpResponse != null && gex.HttpResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)
+                if (string.IsNullOrWhiteSpace(errorMessage) && gex.HttpResponse != null && gex.HttpResponse.StatusCode == System.Net.HttpStatusCode.Forbidden)
                 {
                     errorMessage = "Access denied. Check for the required permissions.";
                 }

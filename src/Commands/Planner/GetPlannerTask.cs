@@ -45,13 +45,13 @@ namespace PnP.PowerShell.Commands.Planner
         {
             if (ParameterSetName == ParameterSetName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(this, Connection, AccessToken);
+                var groupId = Group.GetGroupId(RequestHelper);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetId(this, Connection, AccessToken, groupId);
+                    var planId = Plan.GetId(RequestHelper, groupId);
                     if (planId != null)
                     {
-                        WriteObject(PlannerUtility.GetTasks(this, Connection, AccessToken, planId, ResolveUserDisplayNames), true);
+                        WriteObject(PlannerUtility.GetTasks(RequestHelper, planId, ResolveUserDisplayNames), true);
                     }
                     else
                     {
@@ -65,15 +65,15 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else if (ParameterSetName == ParameterSetName_BYPLANID)
             {
-                WriteObject(PlannerUtility.GetTasks(this, Connection, AccessToken, PlanId, ResolveUserDisplayNames), true);
+                WriteObject(PlannerUtility.GetTasks(RequestHelper, PlanId, ResolveUserDisplayNames), true);
             }
             else if (ParameterSetName == ParameterSetName_BYBUCKET)
             {
-                WriteObject(PlannerUtility.GetBucketTasks(this, Connection, AccessToken, Bucket.GetId(), ResolveUserDisplayNames), true);
+                WriteObject(PlannerUtility.GetBucketTasks(RequestHelper, Bucket.GetId(), ResolveUserDisplayNames), true);
             }
             else if (ParameterSetName == ParameterSetName_BYTASKID)
             {
-                WriteObject(PlannerUtility.GetTask(this, Connection, AccessToken, TaskId, ResolveUserDisplayNames, IncludeDetails));
+                WriteObject(PlannerUtility.GetTask(RequestHelper, TaskId, ResolveUserDisplayNames, IncludeDetails));
             }
         }
     }

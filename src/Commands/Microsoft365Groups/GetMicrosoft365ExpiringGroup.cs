@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         
         protected override void ExecuteCmdlet()
         {       
-            var expiringGroups = ClearOwners.GetExpiringGroup(this, Connection, AccessToken, Limit, IncludeSiteUrl, IncludeOwners);
+            var expiringGroups = ClearOwners.GetExpiringGroup(RequestHelper, Limit, IncludeSiteUrl, IncludeOwners);
 
             WriteObject(expiringGroups.OrderBy(p => p.DisplayName), true);
         }

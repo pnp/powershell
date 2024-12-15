@@ -21,10 +21,11 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
         protected override void ExecuteCmdlet()
         {
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+           
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             string dynamicsScopeUrl = null;
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            var environments = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.Environment>(this, Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken);
+            var environments = ArmRequestHelper.GetResultCollection<Model.PowerPlatform.Environment.Environment>( $"{baseUrl}/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01");
             if (ParameterSpecified(nameof(Environment)))
             {
                 WriteVerbose($"Using environment as provided '{environmentName}'");
@@ -41,7 +42,9 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
                 WriteVerbose($"Using default environment as retrieved '{environmentName}'");
             }
 
-            string accessTokenForGettingSolutions = TokenHandler.GetAccessToken(this, $"{dynamicsScopeUrl}/.default", Connection);
+           // string accessTokenForGettingSolutions = TokenHandler.GetAccessToken(this, $"{dynamicsScopeUrl}/.default", Connection);
+
+            var dynamicRequestHelper = new ApiRequestHelper(GetType(),this.Connection,$"{dynamicsScopeUrl}/.default");
 
             if (ParameterSpecified(nameof(Name)))
             {
@@ -50,14 +53,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
                 WriteVerbose($"Retrieving specific solution with the provided name '{solutionName}' within the environment '{environmentName}'");
 
                 var requestUrl = dynamicsScopeUrl + "/api/data/v9.0/solutions?$filter=isvisible eq true and friendlyname eq '" + solutionName + "'&$expand=publisherid&api-version=9.1";
-                var solution = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.Solution.PowerPlatformSolution>(this, Connection, requestUrl, accessTokenForGettingSolutions);
+                var solution = dynamicRequestHelper.GetResultCollection<Model.PowerPlatform.Environment.Solution.PowerPlatformSolution>(requestUrl);
                 WriteObject(solution, false);
             }
             else
             {
                 WriteVerbose($"Retrieving all Solutions within environment '{environmentName}'");
                 var requestUrl = dynamicsScopeUrl + "/api/data/v9.0/solutions?$filter=isvisible eq true&$expand=publisherid($select=friendlyname)&api-version=9.1";
-                var solutions = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.Solution.PowerPlatformSolution>(this, Connection, requestUrl, accessTokenForGettingSolutions);
+                var solutions = dynamicRequestHelper.GetResultCollection<Model.PowerPlatform.Environment.Solution.PowerPlatformSolution>(requestUrl);
                 WriteObject(solutions, true);
             }
         }

@@ -3,7 +3,6 @@ using System.Text.Json;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Provisioning.Model;
 
-
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "PnPTheme")]

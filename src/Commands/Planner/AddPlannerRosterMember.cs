@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Add, "PnPPlannerRosterMember")]
     [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
@@ -18,14 +18,14 @@ namespace SharePointPnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            var roster = Identity.GetPlannerRoster(this, Connection, AccessToken);
+            var roster = Identity.GetPlannerRoster(RequestHelper);
 
             if(roster == null)
             {
                 throw new PSArgumentException("Provided Planner Roster could not be found", nameof(Identity));
             }
 
-            PlannerUtility.AddRosterMember(this, Connection, AccessToken, roster.Id, User);
+            PlannerUtility.AddRosterMember(RequestHelper, roster.Id, User);
         }
     }
 }

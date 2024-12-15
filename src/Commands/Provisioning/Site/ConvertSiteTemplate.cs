@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using System.Management.Automation;
-
 using PnP.Framework.Provisioning.Providers.Xml;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.Framework.Provisioning.Providers;

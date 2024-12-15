@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+            var groupId = Identity.GetGroupId(RequestHelper);
             
             if (groupId == null)
             {
@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.Teams
             * but currently ignored and can't be set by user */
             teamClone.MailNickName = DisplayName;
             teamClone.Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString());
-            TeamsUtility.CloneTeam(this, AccessToken, Connection, groupId, teamClone);
+            TeamsUtility.CloneTeam(RequestHelper, groupId, teamClone);
         }
     }
 }

@@ -1,15 +1,17 @@
-﻿using PnP.Framework.Utilities;
+﻿using PnP.Core.Model;
+using PnP.Core.Services;
+using PnP.Framework.Utilities;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Utilities.REST;
+using PnP.PowerShell.Commands.Model;
 using System;
-using System.Management.Automation;
-using System.Text.Json;
 using System.Collections.Generic;
+using System.IO;
+using System.Management.Automation;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.IO;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -19,9 +21,11 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_TOSTREAM = "Out to stream";
         private const string ParameterSet_TOFILE = "Out to file";
         private const string ParameterSet_TOCONSOLE = "Out to console";
+        public const string PARAMETERSET_Batch = "Batch";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
         public HttpRequestMethod Method = HttpRequestMethod.Get;
 
         private string _url;
@@ -29,6 +33,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOCONSOLE)]
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_TOSTREAM)]
+        [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = PARAMETERSET_Batch)]
         public string Url
         {
             get { return _url; }
@@ -53,25 +58,29 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
         public object Content;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
         public string ContentType = "application/json";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
         public GraphAdditionalHeadersPipeBind AdditionalHeaders = new(new Dictionary<string, string>());
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOFILE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOSTREAM)]
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
         public SwitchParameter ConsistencyLevelEventual;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
-        public SwitchParameter Raw;      
+        public SwitchParameter Raw;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_TOCONSOLE)]
         public SwitchParameter All;
@@ -82,11 +91,21 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_TOSTREAM)]
         public SwitchParameter OutStream;
 
+        [Parameter(Mandatory = false, ParameterSetName = PARAMETERSET_Batch)]
+        public PnPBatch Batch;
+
         protected override void ExecuteCmdlet()
         {
             try
             {
-                SendRequest();
+                if (ParameterSpecified(nameof(Batch)))
+                {
+                    CallBatchRequest(new HttpMethod(Method.ToString().ToUpper()), Url);
+                }
+                else
+                {
+                    SendRequest();
+                }
             }
             catch (Exception ex)
             {
@@ -123,7 +142,7 @@ namespace PnP.PowerShell.Commands.Base
                 switch (Method)
                 {
                     case HttpRequestMethod.Get:
-                        if(ParameterSetName == ParameterSet_TOCONSOLE) 
+                        if (ParameterSetName == ParameterSet_TOCONSOLE)
                         {
                             GetRequestWithPaging();
                         }
@@ -153,7 +172,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!string.IsNullOrEmpty(gex.AccessToken))
                     {
-                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, gex.AccessToken);
+                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(GetType(), gex.AccessToken);
                     }
                 }
                 throw new PSInvalidOperationException(gex.Error.Message);
@@ -189,7 +208,8 @@ namespace PnP.PowerShell.Commands.Base
 
         private void GetRequestWithPaging()
         {
-            var result = GraphHelper.Get(this, Connection, Url, AccessToken, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var result = this.RequestHelper.Get(Url, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+
             if (Raw.IsPresent)
             {
                 WriteObject(result);
@@ -213,7 +233,8 @@ namespace PnP.PowerShell.Commands.Base
                                 break;
                             }
                             var nextLink = nextLinkProperty.ToString();
-                            result = GraphHelper.Get(this, Connection, nextLink, AccessToken, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+                            nextLink = nextLink.Replace("https://graph.microsoft.com/v1.0/", "");
+                            result = RequestHelper.Get(nextLink, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
                             element = JsonSerializer.Deserialize<JsonElement>(result);
                             dynamic nextObj = Deserialize(element);
                             if (nextObj != null && nextObj.value != null && (nextObj.value is List<object>))
@@ -235,39 +256,39 @@ namespace PnP.PowerShell.Commands.Base
                 WriteObject(rootObj);
             }
         }
-        
+
         private void GetRequestWithoutPaging()
         {
             WriteVerbose($"Sending HTTP GET to {Url}");
-            using var response = GraphHelper.GetResponse(this, Connection, Url, AccessToken);
+            using var response = this.RequestHelper.GetResponse(Url);
             HandleResponse(response);
         }
 
         private void PostRequest()
         {
             WriteVerbose($"Sending HTTP POST to {Url}");
-            var response = GraphHelper.Post(this, Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = RequestHelper.PostHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PutRequest()
         {
             WriteVerbose($"Sending HTTP PUT to {Url}");
-            var response = GraphHelper.Put(this, Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = RequestHelper.PutHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PatchRequest()
         {
             WriteVerbose($"Sending HTTP PATCH to {Url}");
-            var response = GraphHelper.Patch(this, Connection, AccessToken, GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = RequestHelper.Patch(GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void DeleteRequest()
         {
             WriteVerbose($"Sending HTTP DELETE to {Url}");
-            var response = GraphHelper.Delete(this, Connection, Url, AccessToken, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = RequestHelper.Delete(Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
@@ -298,7 +319,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 case ParameterSet_TOSTREAM:
                     var responseStream = response.Content.ReadAsStream();
-                    
+
                     WriteVerbose($"Writing {responseStream.Length} bytes response to outputstream");
 
                     var memoryStream = new MemoryStream();
@@ -314,6 +335,41 @@ namespace PnP.PowerShell.Commands.Base
                 default:
                     throw new Exception($"Parameter set {ParameterSetName} not supported");
             }
+        }
+
+        private void CallBatchRequest(HttpMethod method, string requestUrl)
+        {
+            var web = Connection.PnPContext.Web;
+            string contentString = null;
+            if (ParameterSpecified(nameof(Content)))
+            {
+                contentString = Content is string ? Content.ToString() :
+                        JsonSerializer.Serialize(Content, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, WriteIndented = true });
+
+            }
+
+            Dictionary<string, string> extraHeaders = AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent);
+            extraHeaders.Add("Content-Type", ContentType);
+
+            ApiRequestType apiRequestType = ApiRequestType.Graph;
+            if (requestUrl.IndexOf("/beta/", StringComparison.InvariantCultureIgnoreCase) > -1)
+            {
+                apiRequestType = ApiRequestType.GraphBeta;
+            }
+
+            if (requestUrl.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (requestUrl.IndexOf("/v1.0/", StringComparison.InvariantCultureIgnoreCase) > -1)
+                {
+                    requestUrl = requestUrl.Replace($"https://{Connection.GraphEndPoint}/v1.0/", "", StringComparison.InvariantCultureIgnoreCase);
+                }
+                else if (requestUrl.IndexOf("/beta/", StringComparison.InvariantCultureIgnoreCase) > -1)
+                {
+                    requestUrl = requestUrl.Replace($"https://{Connection.GraphEndPoint}/beta/", "", StringComparison.InvariantCultureIgnoreCase);
+                }
+            }
+
+            web.WithHeaders(extraHeaders).ExecuteRequestBatch(Batch.Batch, new ApiRequest(method, apiRequestType, requestUrl, contentString));
         }
     }
 }

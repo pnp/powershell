@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.IO;
-using System.Linq;
-using System.Management.Automation;
-using System.Management.Automation.Runspaces;
-using Microsoft.PowerShell.Commands;
-using Microsoft.SharePoint.Client;
-
-using File = System.IO.File;
+﻿using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provider.SPOProxy
 {

@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Management.Automation;
-using System.Security;
-using PnP.Framework.Utilities;
-
-using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -11,7 +7,7 @@ namespace PnP.PowerShell.Commands.Base
     [OutputType(typeof(void))]
     public class SetManagedAppId : PSCmdlet
     {
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, Position = 0)]
         public string Url;
 
         [Parameter(Mandatory = true)]

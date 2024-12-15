@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PnP.PowerShell.Commands.Model
+﻿namespace PnP.PowerShell.Commands.Model
 {
     public class ExportEntity
     {

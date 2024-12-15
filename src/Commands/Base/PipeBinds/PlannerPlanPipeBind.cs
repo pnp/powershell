@@ -3,6 +3,7 @@ using System.Management.Automation;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Planner;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -24,7 +25,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             _plan = plan;
         }
 
-        public PlannerPlan GetPlan(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId, bool resolveIdentities)
+        public PlannerPlan GetPlan(ApiRequestHelper requestHelper, string groupId, bool resolveIdentities)
         {
             if (_plan != null)
             {
@@ -33,11 +34,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             // first try to get the plan by id
             try
             {
-                return PlannerUtility.GetPlan(cmdlet, connection, accessToken, _id, resolveIdentities);
+                return PlannerUtility.GetPlan(requestHelper, _id, resolveIdentities);
             }
             catch (GraphException)
             {
-                var plans = PlannerUtility.GetPlans(cmdlet,connection, accessToken, groupId, resolveIdentities);
+                var plans = PlannerUtility.GetPlans(requestHelper, groupId, resolveIdentities);
                 if (plans != null && plans.Any())
                 {
                     var collection = plans.Where(p => p.Title.Equals(_id));
@@ -59,7 +60,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return null;
         }
 
-        public string GetId(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId)
+        public string GetId(ApiRequestHelper requestHelper, string groupId)
         {
             if (_plan != null)
             {
@@ -68,12 +69,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             // first try to get the plan by id
             try
             {
-                var plan = PlannerUtility.GetPlan(cmdlet, connection, accessToken, _id, false);
+                var plan = PlannerUtility.GetPlan(requestHelper, _id, false);
                 return plan.Id;
             }
             catch (GraphException)
             {
-                var plans = PlannerUtility.GetPlans(cmdlet, connection, accessToken, groupId, false);
+                var plans = PlannerUtility.GetPlans(requestHelper, groupId, false);
                 if (plans != null && plans.Any())
                 {
                     var collection = plans.Where(p => p.Title.Equals(_id));

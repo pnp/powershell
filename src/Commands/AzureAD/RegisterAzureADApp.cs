@@ -16,7 +16,6 @@ using System.Threading.Tasks;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Base;
-using System.Diagnostics;
 using System.Dynamic;
 using PnP.PowerShell.Commands.Enums;
 using TextCopy;
@@ -738,7 +737,8 @@ namespace PnP.PowerShell.Commands.AzureAD
                     {
                         var byteArrayContent = new ByteArrayContent(bytes);
                         byteArrayContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(mediaType);
-                        GraphHelper.Put(this, PnPConnection.Current, endpoint, token, byteArrayContent);
+                        var requestHelper = new ApiRequestHelper(GetType(),PnPConnection.Current);
+                        requestHelper.Put2(endpoint, byteArrayContent, token);
 
                         WriteVerbose("Successfully set the logo for the Entra ID app");
                     }

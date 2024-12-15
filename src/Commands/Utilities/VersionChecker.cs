@@ -3,10 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Reflection;
-using System.Text.Json.Serialization;
-using System.Xml;
 using System.Xml.Linq;
 
 namespace PnP.PowerShell.Commands.Utilities
@@ -78,13 +75,13 @@ namespace PnP.PowerShell.Commands.Utilities
                     {
                         if (cmdlet != null)
                         {
-                            var updateMessage = $"\nA newer version of PnP PowerShell is available: {onlineVersion}.\n\nUse 'Update-Module -Name PnP.PowerShell{(isNightly ? " -AllowPrerelease" : "")}' to update.\nUse 'Get-PnPChangeLog {(!isNightly ? $"-Release {onlineVersion}" : "-Nightly")}' to list changes.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'.\n";
+                            var updateMessage = $"\nA newer version of PnP PowerShell is available: {onlineVersion.Version}.\n\nUse 'Update-Module -Name PnP.PowerShell{(isNightly ? " -AllowPrerelease" : "")}' to update.\nUse 'Get-PnPChangeLog {(!isNightly ? $"-Release {onlineVersion}" : "-Nightly")}' to list changes.\n\nYou can turn this check off by setting the 'PNPPOWERSHELL_UPDATECHECK' environment variable to 'Off'.\n";
                             CmdletMessageWriter.WriteFormattedWarning(cmdlet, updateMessage);
                         }
                     }
                     else
                     {
-                        cmdlet?.WriteVerbose($"No newer version of PnP PowerShell is available, latest available version is {onlineVersion}");
+                        cmdlet?.WriteVerbose($"No newer version of PnP PowerShell is available, latest available version is {onlineVersion.Version}");
                     }
                     if (!string.IsNullOrEmpty(onlineVersion.Message))
                     {

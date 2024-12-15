@@ -2,7 +2,6 @@
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -23,7 +22,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             if (ParameterSpecified(nameof(Identity)))
             {
                 WriteVerbose($"Defining Microsoft 365 Group based on {nameof(Identity)} parameter");
-                groupId = Identity.GetGroupId(this, Connection, AccessToken);
+                groupId = Identity.GetGroupId(RequestHelper);
             }
             else
             {
@@ -44,7 +43,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
 
             WriteVerbose($"Requesting endpoints of Microsoft 365 Group with Id {groupId}");
-            var endpoints = GraphHelper.GetResultCollection<Model.AzureAD.AzureADGroupEndPoint>(this, Connection, $"/beta/groups/{groupId}/endpoints", AccessToken);
+            var endpoints = RequestHelper.GetResultCollection<Model.AzureAD.AzureADGroupEndPoint>($"/beta/groups/{groupId}/endpoints");
             WriteVerbose($"{endpoints.Count()} endpoint(s) found in total");
 
             var yammerEndpoint = endpoints.Where(e => e.ProviderName.Equals("Microsoft Teams", StringComparison.InvariantCultureIgnoreCase));

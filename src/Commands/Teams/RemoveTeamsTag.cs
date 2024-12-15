@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
@@ -23,18 +22,18 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId != null)
             {
-                var tag = Identity.GetTag(this, Connection, AccessToken, groupId);
+                var tag = Identity.GetTag(RequestHelper, groupId);
                 if (tag != null)
                 {
                     if (Force || ShouldContinue("Do you want to remove this tag ?", Properties.Resources.Confirm))
                     {
-                        var response = TeamsUtility.DeleteTag(this, Connection, AccessToken, groupId, tag.Id);
+                        var response = TeamsUtility.DeleteTag(RequestHelper, groupId, tag.Id);
                         if (!response.IsSuccessStatusCode)
                         {
-                            if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                            if (RequestHelper.TryGetGraphException(response, out GraphException ex))
                             {
                                 if (ex.Error != null)
                                 {

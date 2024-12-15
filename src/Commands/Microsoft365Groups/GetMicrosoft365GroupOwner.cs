@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var owners = ClearOwners.GetOwners(this, Connection, Identity.GetGroupId(this, Connection, AccessToken), AccessToken);
+            var owners = ClearOwners.GetOwners(RequestHelper, Identity.GetGroupId(RequestHelper));
             WriteObject(owners?.OrderBy(o => o.DisplayName), true);
         }
     }

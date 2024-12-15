@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Collections;
 using PnP.PowerShell.Commands.Base.Completers;

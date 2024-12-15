@@ -1,8 +1,5 @@
 ﻿using System.Management.Automation;
 using System.Security;
-using PnP.Framework.Utilities;
-
-using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Base
 {

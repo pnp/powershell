@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
-using System.Text.RegularExpressions;
 using System.Text;
 using SPSite = Microsoft.SharePoint.Client.Site;
 using PnP.PowerShell.Commands.Base.Completers;

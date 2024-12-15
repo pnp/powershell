@@ -1,13 +1,13 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
-using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Base;
-using System.Management.Automation;
-using System;
 using Microsoft.Online.SharePoint.TenantManagement;
-using System.Collections.Generic;
-using Microsoft.SharePoint.Client.Sharing;
+using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Administration;
+using Microsoft.SharePoint.Client.Sharing;
+using PnP.PowerShell.Commands.Base;
+using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using InformationBarriersMode = PnP.PowerShell.Commands.Enums.InformationBarriersMode;
 
 namespace PnP.PowerShell.Commands.Admin
@@ -473,10 +473,10 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public Role? CoreDefaultShareLinkRole { private set; get; }
-        
+
         [Parameter(Mandatory = false)]
         public SharingCapabilities? OneDriveSharingCapability { private set; get; }
-        
+
         [Parameter(Mandatory = false)]
         public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
 
@@ -488,7 +488,11 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public SwitchParameter SyncAadB2BManagementPolicy { private set; get; }
-        
+
+        [Parameter(Mandatory = false)]
+        public bool? ExtendPermissionsToUnprotectedFiles { private set; get; }
+
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1543,12 +1547,12 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.CoreDefaultShareLinkRole = CoreDefaultShareLinkRole.Value;
                 modified = true;
             }
-            if(OneDriveSharingCapability.HasValue)
+            if (OneDriveSharingCapability.HasValue)
             {
                 Tenant.ODBSharingCapability = OneDriveSharingCapability.Value;
                 modified = true;
             }
-            if(AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue)
+            if (AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue)
             {
                 Tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.Value;
                 modified = true;
@@ -1563,7 +1567,12 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.SyncAadB2BManagementPolicy();
                 modified = true;
             }
-            if (GuestSharingGroupAllowListInTenantByPrincipalIdentity !=null)
+            if (ExtendPermissionsToUnprotectedFiles.HasValue)
+            {
+                Tenant.ExtendPermissionsToUnprotectedFiles = ExtendPermissionsToUnprotectedFiles.Value;
+                modified = true;
+            }
+            if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)
             {
                 if (GuestSharingGroupAllowListInTenantByPrincipalIdentity.Length > 0)
                 {

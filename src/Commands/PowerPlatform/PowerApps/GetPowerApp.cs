@@ -2,7 +2,6 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
@@ -23,8 +22,9 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 
         protected override void ExecuteCmdlet()
         {
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             var powerAppsUrl = PowerPlatformUtility.GetPowerAppsEndpoint(Connection.AzureEnvironment);
+
 
             if (ParameterSpecified(nameof(Identity)))
             {
@@ -32,7 +32,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 
                 WriteVerbose($"Retrieving specific PowerApp with the provided name '{appName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.Get<Model.PowerPlatform.PowerApp.PowerApp>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}?api-version=2016-11-01", PowerAppsServiceAccessToken);
+                var result = PowerAppsServerRequestHelper.Get<Model.PowerPlatform.PowerApp.PowerApp>($"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}?api-version=2016-11-01");
                  
                 WriteObject(result, false);
             }
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             {
                 WriteVerbose($"Retrieving all PowerApps within environment '{environmentName}'");
 
-                var apps = GraphHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerApp>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'", PowerAppsServiceAccessToken);
+                var apps = PowerAppsServerRequestHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerApp>($"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'");
                 WriteObject(apps, true);
             }
         }

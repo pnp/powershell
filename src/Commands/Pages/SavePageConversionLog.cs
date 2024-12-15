@@ -3,7 +3,6 @@ using System;
 using System.IO;
 using System.Management.Automation;
 using System.Reflection;
-using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Pages
 {

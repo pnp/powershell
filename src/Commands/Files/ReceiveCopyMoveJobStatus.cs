@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Linq;
-using System.Linq.Expressions;
 using System.Management.Automation;
-using System.Text.RegularExpressions;
 using Microsoft.SharePoint.Client;
-
-using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.Framework.Utilities;
-using File = Microsoft.SharePoint.Client.File;
-using System.Net.Http;
-using System.Text.Json;
-using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Files
 {
