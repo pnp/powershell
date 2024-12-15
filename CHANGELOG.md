@@ -95,7 +95,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `-ConsistencyLevelEventual` flag on `Invoke-PnPGraphMethod` to work correctly. [#4523](https://github.com/pnp/powershell/pull/4523)
 - Fixed `Get-PnPServiceHealthIssue` returning an error when certain service states were active [#4530](https://github.com/pnp/powershell/pull/4530)
 - Fixed `Add-PnPFileSensitivityLabel` cmdlet to allow empty string value to reset file sensitivity label.
-
+- Fix `Connect-PnPOnline` cmdlet not working with On Prem related cmdlets. [#4622](https://github.com/pnp/powershell/pull/4622)
+- Fix `Get\Invoke-PnPSiteTemplate` cmdlet not working in vanity domains. [#4630](https://github.com/pnp/powershell/pull/4630)
+ 
 ### Removed
 
 - Removed `-LaunchBrowser`, `-NoPopup` and credential based auth on `Register-PnPEntraIDApp` and `Register-PnPEntraIDAppForInteractiveLogin` cmdlets. The default auth method is now Interactive.
@@ -118,6 +120,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
 ### Contributors
 
+- Janne Holm [jhholm]
+- Paul Bullock [pkbullock]
 - Arjan Cornelissen [arjancornelissen]
 - Konrad K. [wilecoyotegenius]
 - Antti K. Koskela [koskila]
