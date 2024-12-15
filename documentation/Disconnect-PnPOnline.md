@@ -20,7 +20,7 @@ Disconnect-PnPOnline [-ClearPersistedLogin]
 
 ## DESCRIPTION
 
-Disconnects the current connection and clears its token cache. It will require you to build up a new connection again using [Connect-PnPOnline](Connect-PnPOnline.md) in order to use any of the PnP PowerShell cmdlets. You will have to reauthenticate. If instead you simply want to connect to another site collection within the same tenant using the same credentials you used previously, do not use this cmdlet but instead use `Connect-PnPOnline -Url https://tenant.sharepoint.com/sites/othersite` instead without disconnecting. It will try to reuse the existing authentication method and cached credentials.
+Disconnects the current connection and optionally clears its token cache. It will require you to build up a new connection again using [Connect-PnPOnline](Connect-PnPOnline.md) in order to use any of the PnP PowerShell cmdlets. You might have to reauthenticate. If instead you simply want to connect to another site collection within the same tenant using the same credentials you used previously, do not use this cmdlet but instead use `Connect-PnPOnline -Url https://tenant.sharepoint.com/sites/othersite` instead without disconnecting. It will try to reuse the existing authentication method and cached credentials.
 
 Note that this cmdlet does not support passing in a specific connection to disconnect. If you wish to dispose a specific connection you have set up in a variable using `$variable = Connect-PnPOnline -ReturnConnection`, just dispose that variable using `$variable = $null` and it will be cleared from memory.
 
