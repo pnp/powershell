@@ -6,6 +6,7 @@ using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities.REST;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using TokenHandler = PnP.PowerShell.Commands.Base.TokenHandler;
 
@@ -31,6 +32,8 @@ namespace PnP.PowerShell.Commands
         /// </summary>
         public HttpClient HttpClient => Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
+
+        public ApiRequestHelper RequestHelper { get; set; }
         /// <summary>
         /// The current Bearer access token for SharePoint Online
         /// </summary>
@@ -44,7 +47,7 @@ namespace PnP.PowerShell.Commands
                     {
                         var resourceUri = new Uri(Connection.Url);
                         var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
-                        return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, defaultResource).GetAwaiter().GetResult();
+                        return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(defaultResource).GetAwaiter().GetResult();
                     }
                     else
                     {
@@ -76,13 +79,13 @@ namespace PnP.PowerShell.Commands
             {
                 if (Connection?.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
                 {
-                    return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(this, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
+                    return TokenHandler.GetAzureADWorkloadIdentityTokenAsync($"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
                 }
                 else
                 {
                     if (Connection?.Context != null)
                     {
-                        return TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
+                        return TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
                     }
                 }
                 WriteVerbose("Unable to acquire token for resource " + Connection.GraphEndPoint);
@@ -93,7 +96,7 @@ namespace PnP.PowerShell.Commands
         protected override void BeginProcessing()
         {
             // Call the base but instruct it not to check if there's an active connection as we will do that in this method already
-            base.BeginProcessing(true);            
+            base.BeginProcessing(true);
 
             // Ensure there is an active connection to work with
             if (Connection == null || ClientContext == null)
@@ -107,6 +110,7 @@ namespace PnP.PowerShell.Commands
                     throw new InvalidOperationException(Resources.NoDefaultSharePointConnection);
                 }
             }
+            RequestHelper = new ApiRequestHelper(GetType(), Connection, $"https://{Connection.GraphEndPoint}/.default");
         }
 
         protected override void ProcessRecord()
@@ -119,10 +123,10 @@ namespace PnP.PowerShell.Commands
             ClientContext.ClientTag = tag;
 
             // Client Credentials based connections do not have an access token, so we can't validate permissions
-            if(Connection.ConnectionMethod != ConnectionMethod.Credentials)
+            if (Connection.ConnectionMethod != ConnectionMethod.Credentials)
             {
                 // Validate the permissions in the access token for SharePoint Online
-                TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, AccessToken);
+                TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this.GetType(), AccessToken);
             }
 
             base.ProcessRecord();

@@ -1,7 +1,5 @@
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
-using System;
-using System.Linq.Expressions;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Site

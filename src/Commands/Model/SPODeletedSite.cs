@@ -1,27 +1,26 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
+using PnP.Framework.Diagnostics;
 using System;
-using System.Diagnostics;
-using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Model
 {
 	/// <summary>
 	/// Contains information about a sitecollection that is residing in the tenant recycle bin
 	/// </summary>
-    public class SPODeletedSite
-    {
-        #region Basic properties
+	public class SPODeletedSite
+	{
+		#region Basic properties
 
-        /// <summary>
-        /// Unique identifier of the sitecollection
-        /// </summary>
-        public Guid SiteId { private set; get; }
+		/// <summary>
+		/// Unique identifier of the sitecollection
+		/// </summary>
+		public Guid SiteId { private set; get; }
 
 		/// <summary>
 		/// Url of the sitecollection
 		/// </summary>
-        public string Url { get; set; }
+		public string Url { get; set; }
 
 		/// <summary>
 		/// Status of recycling
@@ -36,17 +35,17 @@ namespace PnP.PowerShell.Commands.Model
 		/// <summary>
 		/// Amount of days remaining in the recycle bin before it will be deleted permanently
 		/// </summary>
-        public int DaysRemaining { private set; get; }
+		public int DaysRemaining { private set; get; }
 
 		/// <summary>
 		/// The maximum amount of data that is allowed to be stored in this sitecollection
 		/// </summary>
-        public long StorageQuota { private set; get; }
+		public long StorageQuota { private set; get; }
 
 		/// <summary>
 		/// The sandboxed solution resource quota points assigned to this sitecollection. This is not being used anymore.
 		/// </summary>
-        public double ResourceQuota { private set; get; }
+		public double ResourceQuota { private set; get; }
 
 		#endregion
 
@@ -69,35 +68,35 @@ namespace PnP.PowerShell.Commands.Model
 		/// </summary>
 		public DateTime? LastListActivityOn { private set; get; }
 
-        /// <summary>
-        /// Date and time at which a list item has last been modified within this sitecollection
-        /// </summary>
-        public DateTime? LastItemModifiedDate { private set; get; }
+		/// <summary>
+		/// Date and time at which a list item has last been modified within this sitecollection
+		/// </summary>
+		public DateTime? LastItemModifiedDate { private set; get; }
 
 		/// <summary>
 		/// Date and time at which there last was activity taking place on this sitecollection
 		/// </summary>
-		public DateTime? LastWebActivityOn {  private set; get; }
+		public DateTime? LastWebActivityOn { private set; get; }
 
-        /// <summary>
-        /// Name of the user having created the sitecollection
-        /// </summary>
-        public string CreatedBy { private set; get; }
+		/// <summary>
+		/// Name of the user having created the sitecollection
+		/// </summary>
+		public string CreatedBy { private set; get; }
 
-        /// <summary>
-        /// Name of the user having deleted the sitecollection
-        /// </summary>
-        public string DeletedBy { private set; get; }
+		/// <summary>
+		/// Name of the user having deleted the sitecollection
+		/// </summary>
+		public string DeletedBy { private set; get; }
 
 		/// <summary>
 		/// Boolean indicating if this sitecollection can still be restored from the recycle bin
 		/// </summary>
-		public bool? IsRestorable {  private set; get; }
+		public bool? IsRestorable { private set; get; }
 
 		/// <summary>
 		/// The number of files stores within this sitecollection
 		/// </summary>
-		public long? NumberOfFiles {  private set; get; }
+		public long? NumberOfFiles { private set; get; }
 
 		/// <summary>
 		/// The e-mail address of the primary sitecollection owner
@@ -107,7 +106,7 @@ namespace PnP.PowerShell.Commands.Model
 		/// <summary>
 		/// The name of the primary sitecollection owner
 		/// </summary>
-		public string SiteOwnerName {  private set; get; }
+		public string SiteOwnerName { private set; get; }
 
 		/// <summary>
 		/// The amount of SharePoint Online storage used in this sitecollection
@@ -117,12 +116,12 @@ namespace PnP.PowerShell.Commands.Model
 		/// <summary>
 		/// The percentage of storage used towards the storage quota assigned to this sitecollection
 		/// </summary>
-        public double? StorageUsedPercentage { private set; get; }
+		public double? StorageUsedPercentage { private set; get; }
 
-        /// <summary>
-        /// The Id of the template used for creating the sitecollection
-        /// </summary>
-        public short? TemplateId { private set; get; }
+		/// <summary>
+		/// The Id of the template used for creating the sitecollection
+		/// </summary>
+		public short? TemplateId { private set; get; }
 
 		/// <summary>
 		/// The name of the template used for creating the sitecollection
@@ -139,19 +138,19 @@ namespace PnP.PowerShell.Commands.Model
 		/// </summary>
 		public string InformationBarrierMode { private set; get; }
 
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// Creates a new <see cref="SPODeletedSite"/> instance based out of a <see cref="DeletedSiteProperties"/> instance
-        /// </summary>
-        /// <param name="deletedSiteProperties">Instance containing details on a deleted site coming from CSOM</param>
-        /// <param name="fetchAdditionalDetails">Boolean indicating if additional details should be fetched on the deleted site</param>
-        /// <param name="clientContext">ClientContext that can be used to fetch the additional details. Required if <paramref name="fetchAdditionalDetails"/> is set to true, otherwise can be omitted.</param>
+		/// <summary>
+		/// Creates a new <see cref="SPODeletedSite"/> instance based out of a <see cref="DeletedSiteProperties"/> instance
+		/// </summary>
+		/// <param name="deletedSiteProperties">Instance containing details on a deleted site coming from CSOM</param>
+		/// <param name="fetchAdditionalDetails">Boolean indicating if additional details should be fetched on the deleted site</param>
+		/// <param name="clientContext">ClientContext that can be used to fetch the additional details. Required if <paramref name="fetchAdditionalDetails"/> is set to true, otherwise can be omitted.</param>
 		/// <param name="cmdlet">Cmdlet instance that can be used to provide logging. Optional.</param>
-        /// <exception cref="ArgumentNullException">Thrown when <paramref name="fetchAdditionalDetails"/> is set to true but no value is provided for <paramref name="clientContext"/></exception>
-        internal SPODeletedSite(DeletedSiteProperties deletedSiteProperties, bool fetchAdditionalDetails = false, ClientContext clientContext = null, Cmdlet cmdlet = null)
+		/// <exception cref="ArgumentNullException">Thrown when <paramref name="fetchAdditionalDetails"/> is set to true but no value is provided for <paramref name="clientContext"/></exception>
+		internal SPODeletedSite(DeletedSiteProperties deletedSiteProperties, bool fetchAdditionalDetails = false, ClientContext clientContext = null)
 		{
-			if(fetchAdditionalDetails && clientContext == null)
+			if (fetchAdditionalDetails && clientContext == null)
 			{
 				throw new ArgumentNullException(nameof(clientContext), "ClientContext is required to be passed in when fetching additional details");
 			}
@@ -164,47 +163,47 @@ namespace PnP.PowerShell.Commands.Model
 			StorageQuota = deletedSiteProperties.StorageMaximumLevel;
 			ResourceQuota = deletedSiteProperties.UserCodeMaximumLevel;
 
-			if(fetchAdditionalDetails)
+			if (fetchAdditionalDetails)
 			{
-				cmdlet?.WriteVerbose($"Fetching additional details for {Url}");
-                var list = clientContext.Web.Lists.GetByTitle("DO_NOT_DELETE_SPLIST_TENANTADMIN_ALL_SITES_AGGREGATED_SITECOLLECTIONS");
+				Log.Debug("SPODeletedSite", $"Fetching additional details for {Url}");
+				var list = clientContext.Web.Lists.GetByTitle("DO_NOT_DELETE_SPLIST_TENANTADMIN_ALL_SITES_AGGREGATED_SITECOLLECTIONS");
 				CamlQuery query = new CamlQuery
 				{
-					ViewXml = $"<View><Query><Where><Eq><FieldRef Name='SiteUrl' /><Value Type='Text'>{Url}</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"					
+					ViewXml = $"<View><Query><Where><Eq><FieldRef Name='SiteUrl' /><Value Type='Text'>{Url}</Value></Eq></Where></Query><RowLimit>1</RowLimit></View>"
 				};
 
-                var listItems = list.GetItems(query);
-                clientContext.Load(listItems);
+				var listItems = list.GetItems(query);
+				clientContext.Load(listItems);
 				clientContext.ExecuteQueryRetry();
 
-				if(listItems.Count > 0)
+				if (listItems.Count > 0)
 				{
-                    cmdlet?.WriteVerbose($"Assigning additional details for {Url} to result");
-                    var fieldValues = listItems[0].FieldValues;
+					Log.Debug("SPODeletedSite", $"Assigning additional details for {Url} to result");
+					var fieldValues = listItems[0].FieldValues;
 
 					CreatedBy = fieldValues["CreatedBy"]?.ToString();
-                    DeletedBy = fieldValues["DeletedBy"]?.ToString();
-                    SiteOwnerEmail = fieldValues["SiteOwnerEmail"]?.ToString();
-                    SiteOwnerName = fieldValues["SiteOwnerName"]?.ToString();
-                    TemplateName = fieldValues["TemplateName"]?.ToString();
-                    InformationBarrierMode = fieldValues["IBMode"]?.ToString();
+					DeletedBy = fieldValues["DeletedBy"]?.ToString();
+					SiteOwnerEmail = fieldValues["SiteOwnerEmail"]?.ToString();
+					SiteOwnerName = fieldValues["SiteOwnerName"]?.ToString();
+					TemplateName = fieldValues["TemplateName"]?.ToString();
+					InformationBarrierMode = fieldValues["IBMode"]?.ToString();
 
-                    if (fieldValues["TimeCreated"] != null) CreationTime = DateTime.Parse(fieldValues["TimeCreated"].ToString());
-                    if (fieldValues["IsRestorable"] != null) IsRestorable = bool.Parse(fieldValues["IsRestorable"].ToString());
-                    if (fieldValues["LastListActivityOn"] != null) LastListActivityOn = DateTime.Parse(fieldValues["LastListActivityOn"].ToString());
-                    if (fieldValues["LastItemModifiedDate"] != null) LastItemModifiedDate = DateTime.Parse(fieldValues["LastItemModifiedDate"].ToString());
-                    if (fieldValues["LastItemModifiedDate"] != null) LastWebActivityOn = DateTime.Parse(fieldValues["LastItemModifiedDate"].ToString());
-                    if (fieldValues["NumOfFiles"] != null) NumberOfFiles = long.Parse(fieldValues["NumOfFiles"].ToString());
-                    if (fieldValues["StorageUsed"] != null) StorageUsed = double.Parse(fieldValues["StorageUsed"].ToString());
-                    if (fieldValues["TemplateId"] != null) TemplateId = short.Parse(fieldValues["TemplateId"].ToString());
-                    if (fieldValues["LastItemModifiedDate"] != null) LastWebActivityOn = DateTime.Parse(fieldValues["LastItemModifiedDate"].ToString());
-                    if (fieldValues["StorageUsedPercentage"] != null) StorageUsedPercentage = double.Parse(fieldValues["StorageUsedPercentage"].ToString());
-                    if (fieldValues["SensitivityLabel"] != null) SensitivityLabelId = Guid.Parse(fieldValues["SensitivityLabel"].ToString());
-                }
+					if (fieldValues["TimeCreated"] != null) CreationTime = DateTime.Parse(fieldValues["TimeCreated"].ToString());
+					if (fieldValues["IsRestorable"] != null) IsRestorable = bool.Parse(fieldValues["IsRestorable"].ToString());
+					if (fieldValues["LastListActivityOn"] != null) LastListActivityOn = DateTime.Parse(fieldValues["LastListActivityOn"].ToString());
+					if (fieldValues["LastItemModifiedDate"] != null) LastItemModifiedDate = DateTime.Parse(fieldValues["LastItemModifiedDate"].ToString());
+					if (fieldValues["LastItemModifiedDate"] != null) LastWebActivityOn = DateTime.Parse(fieldValues["LastItemModifiedDate"].ToString());
+					if (fieldValues["NumOfFiles"] != null) NumberOfFiles = long.Parse(fieldValues["NumOfFiles"].ToString());
+					if (fieldValues["StorageUsed"] != null) StorageUsed = double.Parse(fieldValues["StorageUsed"].ToString());
+					if (fieldValues["TemplateId"] != null) TemplateId = short.Parse(fieldValues["TemplateId"].ToString());
+					if (fieldValues["LastItemModifiedDate"] != null) LastWebActivityOn = DateTime.Parse(fieldValues["LastItemModifiedDate"].ToString());
+					if (fieldValues["StorageUsedPercentage"] != null) StorageUsedPercentage = double.Parse(fieldValues["StorageUsedPercentage"].ToString());
+					if (fieldValues["SensitivityLabel"] != null) SensitivityLabelId = Guid.Parse(fieldValues["SensitivityLabel"].ToString());
+				}
 				else
 				{
-                    cmdlet?.WriteVerbose($"No additional details found for {Url}");
-                }
+					Log.Debug("SPODeletedSite", $"No additional details found for {Url}");
+				}
 			}
 		}
 	}

@@ -1,7 +1,4 @@
-﻿using System;
-using PnP.PowerShell.Commands.Base.PipeBinds;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
+﻿using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands
 {

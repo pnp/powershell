@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
-using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
@@ -21,7 +20,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (string.IsNullOrEmpty(groupId))
             {
                 throw new PSArgumentException("Team not found");
@@ -29,12 +28,12 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                var tags = Identity.GetTag(this, Connection, AccessToken, groupId);
+                var tags = Identity.GetTag(RequestHelper, groupId);
                 WriteObject(tags, false);
             }
             else
             {
-                var tags = TeamsUtility.GetTags(this, AccessToken, Connection, groupId);
+                var tags = TeamsUtility.GetTags(RequestHelper, groupId);
                 WriteObject(tags, true);
             }
         }

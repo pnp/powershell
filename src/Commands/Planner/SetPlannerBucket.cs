@@ -4,7 +4,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Set, "PnPPlannerBucket")]
     [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
@@ -35,17 +35,17 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(this, Connection, AccessToken);
+                var groupId = Group.GetGroupId(RequestHelper);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetId(this, Connection, AccessToken, groupId);
+                    var planId = Plan.GetId(RequestHelper, groupId);
                     if (planId != null)
                     {
 
-                        var bucket = Bucket.GetBucket(this, Connection, AccessToken, planId);
+                        var bucket = Bucket.GetBucket(RequestHelper, planId);
                         if (bucket != null)
                         {
-                            WriteObject(PlannerUtility.UpdateBucket(this, Connection, AccessToken, Name, bucket.Id));
+                            WriteObject(PlannerUtility.UpdateBucket(RequestHelper, Name, bucket.Id));
                         }
                         else
                         {
@@ -64,10 +64,10 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                var bucket = Bucket.GetBucket(this, Connection, AccessToken, PlanId);
+                var bucket = Bucket.GetBucket(RequestHelper, PlanId);
                 if (bucket != null)
                 {
-                    WriteObject(PlannerUtility.UpdateBucket(this, Connection, AccessToken, Name, bucket.Id));
+                    WriteObject(PlannerUtility.UpdateBucket(RequestHelper, Name, bucket.Id));
                 }
                 else
                 {

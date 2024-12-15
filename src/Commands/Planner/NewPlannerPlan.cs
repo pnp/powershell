@@ -19,10 +19,10 @@ namespace PnP.PowerShell.Commands.Planner
         public string Title;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Group.GetGroupId(this, Connection, AccessToken);
+            var groupId = Group.GetGroupId(RequestHelper);
             if (groupId != null)
             {
-                WriteObject(PlannerUtility.CreatePlan(this, Connection, AccessToken, groupId, Title));
+                WriteObject(PlannerUtility.CreatePlan(RequestHelper, groupId, Title));
             }
             else
             {

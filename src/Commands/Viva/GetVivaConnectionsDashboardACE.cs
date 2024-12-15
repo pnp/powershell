@@ -1,7 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Viva

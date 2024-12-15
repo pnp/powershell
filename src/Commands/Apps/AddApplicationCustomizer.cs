@@ -1,9 +1,7 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Entities;
-
 using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 
 namespace PnP.PowerShell.Commands.Branding

@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Apps
         {
             if(ParameterSetName == ParameterSet_BYASSIGNEDAPPROLE || ParameterSetName == ParameterSet_BYAPPROLENAME)
             {
-                var principal = Principal.GetServicePrincipal(this, Connection, AccessToken);
+                var principal = Principal.GetServicePrincipal(RequestHelper);
 
                 if(principal == null)
                 {
@@ -46,23 +46,23 @@ namespace PnP.PowerShell.Commands.Apps
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        var appRoleAssignment = Identity.GetAssignedAppRole(this, Connection, AccessToken, principal.Id);
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, appRoleAssignment);
+                        var appRoleAssignment = Identity.GetAssignedAppRole(RequestHelper, principal.Id);
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, appRoleAssignment);
                     }
                     else
                     {
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, principal);
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, principal);
                     }
                 }
                 else
                 {
-                    ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, principal, AppRoleName);
+                    ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, principal, AppRoleName);
                 }
             }
             else
             {
-                var appRoleAssignment = Identity.GetAssignedAppRole(this, Connection, AccessToken);
-                ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, appRoleAssignment);
+                var appRoleAssignment = Identity.GetAssignedAppRole(RequestHelper);
+                ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, appRoleAssignment);
             }
         }
     }

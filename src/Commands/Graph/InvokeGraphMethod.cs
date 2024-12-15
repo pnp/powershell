@@ -4,7 +4,6 @@ using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -173,7 +172,7 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!string.IsNullOrEmpty(gex.AccessToken))
                     {
-                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(this, gex.AccessToken);
+                        TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(GetType(), gex.AccessToken);
                     }
                 }
                 throw new PSInvalidOperationException(gex.Error.Message);
@@ -209,7 +208,8 @@ namespace PnP.PowerShell.Commands.Base
 
         private void GetRequestWithPaging()
         {
-            var result = GraphHelper.Get(this, Connection, Url, AccessToken, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var result = this.RequestHelper.Get(Url, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+
             if (Raw.IsPresent)
             {
                 WriteObject(result);
@@ -233,7 +233,8 @@ namespace PnP.PowerShell.Commands.Base
                                 break;
                             }
                             var nextLink = nextLinkProperty.ToString();
-                            result = GraphHelper.Get(this, Connection, nextLink, AccessToken, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+                            nextLink = nextLink.Replace("https://graph.microsoft.com/v1.0/", "");
+                            result = RequestHelper.Get(nextLink, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
                             element = JsonSerializer.Deserialize<JsonElement>(result);
                             dynamic nextObj = Deserialize(element);
                             if (nextObj != null && nextObj.value != null && (nextObj.value is List<object>))
@@ -259,35 +260,35 @@ namespace PnP.PowerShell.Commands.Base
         private void GetRequestWithoutPaging()
         {
             WriteVerbose($"Sending HTTP GET to {Url}");
-            using var response = GraphHelper.GetResponse(this, Connection, Url, AccessToken);
+            using var response = this.RequestHelper.GetResponse(Url);
             HandleResponse(response);
         }
 
         private void PostRequest()
         {
             WriteVerbose($"Sending HTTP POST to {Url}");
-            var response = GraphHelper.Post(this, Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = RequestHelper.PostHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PutRequest()
         {
             WriteVerbose($"Sending HTTP PUT to {Url}");
-            var response = GraphHelper.Put(this, Connection, Url, AccessToken, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = RequestHelper.PutHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PatchRequest()
         {
             WriteVerbose($"Sending HTTP PATCH to {Url}");
-            var response = GraphHelper.Patch(this, Connection, AccessToken, GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = RequestHelper.Patch(GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void DeleteRequest()
         {
             WriteVerbose($"Sending HTTP DELETE to {Url}");
-            var response = GraphHelper.Delete(this, Connection, Url, AccessToken, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = RequestHelper.Delete(Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 

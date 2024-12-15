@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
 
-
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Remove, "PnPStoredCredential")]

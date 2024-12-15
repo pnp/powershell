@@ -1,5 +1,4 @@
 ﻿using Microsoft.SharePoint.Client;
-
 using PnP.Framework.Sites;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
@@ -28,7 +27,7 @@ namespace PnP.PowerShell.Commands.Site
                 try
                 {
                     var groupId = ClientContext.Site.EnsureProperty(s => s.GroupId);
-                    ClearOwners.CreateTeam(this, Connection, AccessToken, groupId);
+                    ClearOwners.CreateTeam(RequestHelper, groupId);
                 }
                 catch
                 {

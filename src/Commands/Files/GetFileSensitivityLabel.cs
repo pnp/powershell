@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Files
 
             var requestUrl = $"v1.0/drives/{file.VroomDriveID}/items/{file.VroomItemID}/extractSensitivityLabels";
 
-            var results = GraphHelper.Post<SensitivityLabels>(this, Connection, requestUrl, AccessToken);
+            var results = RequestHelper.Post<SensitivityLabels>(requestUrl);
             WriteObject(results.Labels, true);
         }
     }

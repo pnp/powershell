@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Search
         public SearchExternalConnectionPipeBind ConnectionId;
 
         [Parameter(Mandatory = true)]
-        [ValidateLength(1,128)]
+        [ValidateLength(1, 128)]
         public string ItemId;
 
         [Parameter(Mandatory = true)]
@@ -67,7 +67,8 @@ namespace PnP.PowerShell.Commands.Search
                 Id = ItemId,
                 Acls = new(),
                 Properties = Properties,
-                Content = new() {
+                Content = new()
+                {
                     Type = ContentType,
                     Value = ContentValue
                 }
@@ -84,14 +85,14 @@ namespace PnP.PowerShell.Commands.Search
 
             WriteVerbose($"Adding {(ParameterSpecified(nameof(DenyGroups)) ? DenyGroups.Length : 0)} Deny Group ACLs");
             bodyContent.Acls.AddRange(GetGroupAcls(DenyGroups, Enums.SearchExternalItemAclAccessType.Deny));
-            
+
             WriteVerbose($"Adding {(ParameterSpecified(nameof(GrantExternalGroups)) ? GrantExternalGroups.Length : 0)} Grant External Group ACLs");
             bodyContent.Acls.AddRange(GetExternalGroupAcls(GrantExternalGroups, Enums.SearchExternalItemAclAccessType.Grant));
 
             WriteVerbose($"Adding {(ParameterSpecified(nameof(DenyExternalGroups)) ? DenyExternalGroups.Length : 0)} Deny External Group ACLs");
             bodyContent.Acls.AddRange(GetExternalGroupAcls(DenyExternalGroups, Enums.SearchExternalItemAclAccessType.Deny));
 
-            if(GrantEveryone.ToBool())
+            if (GrantEveryone.ToBool())
             {
                 WriteVerbose($"Adding Grant Everyone ACL");
                 bodyContent.Acls.Add(new Model.Graph.MicrosoftSearch.ExternalItemAcl
@@ -105,16 +106,16 @@ namespace PnP.PowerShell.Commands.Search
             var jsonContent = JsonContent.Create(bodyContent);
             WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
-            var externalConnectionId = ConnectionId.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(RequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
             var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}/items/{ItemId}";
-            var results = Utilities.REST.GraphHelper.Put<Model.Graph.MicrosoftSearch.ExternalItem>(this, Connection, graphApiUrl, AccessToken, jsonContent);
+            var results = RequestHelper.Put<Model.Graph.MicrosoftSearch.ExternalItem>(graphApiUrl, jsonContent);
             WriteObject(results, false);
         }
 
         private List<Model.Graph.MicrosoftSearch.ExternalItemAcl> GetUserAcls(AzureADUserPipeBind[] users, Enums.SearchExternalItemAclAccessType accessType)
         {
             var acls = new List<Model.Graph.MicrosoftSearch.ExternalItemAcl>();
-            if(users == null) return acls;
+            if (users == null) return acls;
 
             foreach (var user in users)
             {
@@ -134,11 +135,11 @@ namespace PnP.PowerShell.Commands.Search
         private IEnumerable<Model.Graph.MicrosoftSearch.ExternalItemAcl> GetGroupAcls(AzureADGroupPipeBind[] groups, Enums.SearchExternalItemAclAccessType accessType)
         {
             var acls = new List<Model.Graph.MicrosoftSearch.ExternalItemAcl>();
-            if(groups == null) return acls;
+            if (groups == null) return acls;
 
             foreach (var group in groups)
             {
-                var userAclId = group.GroupId ?? group.GetGroup(this, Connection, AccessToken)?.Id;
+                var userAclId = group.GroupId ?? group.GetGroup(RequestHelper)?.Id;
 
                 acls.Add(new Model.Graph.MicrosoftSearch.ExternalItemAcl
                 {
@@ -160,7 +161,7 @@ namespace PnP.PowerShell.Commands.Search
                 Type = Enums.SearchExternalItemAclType.ExternalGroup,
                 Value = group,
                 AccessType = accessType
-            }).ToArray(); 
+            }).ToArray();
         }
     }
 }

@@ -1,8 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 // Namespace modified for PnP PowerShell
-using System.Diagnostics;
-
 namespace PnP.PowerShell.Extensions.Mac
 {
     internal class MacOSKeychainCredential 

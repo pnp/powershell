@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Management.Automation;
-using System.Net;
 using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands

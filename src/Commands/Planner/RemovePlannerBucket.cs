@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Properties;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 
-namespace SharePointPnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPlannerBucket", SupportsShouldProcess = true)]
     [RequiredApiApplicationPermissions("graph/Tasks.ReadWrite")]
@@ -31,19 +31,19 @@ namespace SharePointPnP.PowerShell.Commands.Graph
         {
             if (ParameterSetName == ParameterName_BYNAME)
             {
-                var groupId = Group.GetGroupId(this, Connection, AccessToken);
+                var groupId = Group.GetGroupId(RequestHelper);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetId(this, Connection, AccessToken, groupId);
+                    var planId = Plan.GetId(RequestHelper, groupId);
 
                     if (planId != null)
                     {
-                        var bucket = Identity.GetBucket(this, Connection, AccessToken, planId);
+                        var bucket = Identity.GetBucket(RequestHelper, planId);
                         if (bucket != null)
                         {
                             if (ShouldContinue($"Remove bucket '{bucket.Name}'", Resources.Confirm))
                             {
-                                PlannerUtility.RemoveBucket(this, Connection, AccessToken, bucket.Id);
+                                PlannerUtility.RemoveBucket(RequestHelper, bucket.Id);
                             }
                         }
                         else
@@ -63,12 +63,12 @@ namespace SharePointPnP.PowerShell.Commands.Graph
             }
             else if (ParameterSetName == ParameterName_BYBUCKETID)
             {
-                var bucket = Identity.GetBucket(this, Connection, AccessToken, BucketId);
+                var bucket = Identity.GetBucket(RequestHelper, BucketId);
                 if (bucket != null)
                 {
                     if (ShouldContinue($"Remove bucket '{bucket.Name}'", Resources.Confirm))
                     {
-                        PlannerUtility.RemoveBucket(this, Connection, AccessToken, BucketId);
+                        PlannerUtility.RemoveBucket(RequestHelper, BucketId);
                     }
                 }
                 else

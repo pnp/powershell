@@ -1,12 +1,8 @@
-﻿using System.IO;
-using System.Management.Automation;
-
+﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.WebParts;
-
 using PnP.Framework.Entities;
 using PnP.Framework.Utilities;
-
 using File = System.IO.File;
 
 namespace PnP.PowerShell.Commands.WebParts

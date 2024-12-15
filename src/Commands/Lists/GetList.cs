@@ -1,17 +1,8 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System.Linq.Expressions;
-using System;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using PnP.PowerShell.Commands.Attributes;
-using System.Collections.Generic;
-using System.Management.Automation.Language;
-using System.Collections;
-using PnP.Core.Services;
-using PnP.PowerShell.Commands.Base;
-using System.Linq;
-using AngleSharp.Dom;
 using PnP.PowerShell.Commands.Base.Completers;
 
 namespace PnP.PowerShell.Commands.Lists

@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            ClearOwners.Renew(this, Connection, AccessToken, Identity.GetGroupId(this, Connection, AccessToken));
+            ClearOwners.Renew(RequestHelper, Identity.GetGroupId(RequestHelper));
         }
     }
 }

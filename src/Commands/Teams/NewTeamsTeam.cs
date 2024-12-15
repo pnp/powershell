@@ -7,7 +7,6 @@ using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
@@ -147,7 +146,7 @@ namespace PnP.PowerShell.Commands.Teams
                 }
             }
 
-            WriteObject(TeamsUtility.NewTeam(this, AccessToken, Connection, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, SensitivityLabels, Template, ResourceBehaviorOptions));
+            WriteObject(TeamsUtility.NewTeam(RequestHelper, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, SensitivityLabels, Template, ResourceBehaviorOptions));
         }
     }
 }

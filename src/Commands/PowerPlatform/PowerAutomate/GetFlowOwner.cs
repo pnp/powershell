@@ -2,7 +2,6 @@
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
@@ -21,7 +20,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             if (string.IsNullOrEmpty(environmentName))
             {
                 throw new PSArgumentException("Environment not found.", nameof(Environment));
@@ -34,7 +33,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             }
 
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            var flowOwners = GraphHelper.GetResultCollection<FlowPermission>(this, Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/permissions?api-version=2016-11-01", AccessToken);
+            var flowOwners = ArmRequestHelper.GetResultCollection<FlowPermission>($"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/permissions?api-version=2016-11-01");
             WriteObject(flowOwners, true);
         }
     }

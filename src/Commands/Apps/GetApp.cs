@@ -1,13 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Management.Automation;
-
+﻿using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.Framework.ALM;
 using System;
-using PnP.PowerShell.Commands.Enums;
 using PnP.Framework.Enums;
-using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Apps
 {

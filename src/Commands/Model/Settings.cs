@@ -56,6 +56,7 @@ namespace PnP.PowerShell.Commands.Model
             if (_settings != null)
             {
                 var settingsFile = Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell", "settings.json");
+
                 if (!System.IO.Directory.Exists(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell")))
                 {
                     System.IO.Directory.CreateDirectory(Path.Combine(MsalCacheHelper.UserRootDirectory, ".m365pnppowershell"));

@@ -1,8 +1,4 @@
-﻿using PnP.PowerShell.Commands.Model.Graph;
-using PnP.PowerShell.Commands.Utilities.JSON;
-using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
+﻿using System;
 
 namespace PnP.PowerShell.Commands.Model.Teams
 {

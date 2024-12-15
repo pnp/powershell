@@ -1,6 +1,4 @@
-﻿using Microsoft.SharePoint.Client;
-using PnP.Framework;
-using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Provider;
@@ -15,7 +13,9 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using File = System.IO.File;
+using PnP.Framework;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
+using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -184,7 +184,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
-        public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
+        public Framework.AzureEnvironment AzureEnvironment = Framework.AzureEnvironment.Production;
 
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
         public string AADDomain;
@@ -403,9 +403,7 @@ namespace PnP.PowerShell.Commands.Base
             if (ValidateConnection)
             {
                 // Try requesting the site Id to validate that the site to which is being connected exists
-                WriteVerbose($"Validating if the site at {Url} exists");
                 newConnection.Context.Load(newConnection.Context.Site, p => p.Id);
-
                 try
                 {
                     newConnection.Context.ExecuteQueryRetry();
@@ -737,7 +735,7 @@ namespace PnP.PowerShell.Commands.Base
             WriteVerbose("Connecting using an Azure Managed Identity");
 
             WriteVerbose($"ClientID: {UserAssignedManagedIdentityClientId}");
-            return PnPConnection.CreateWithManagedIdentity(this, Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId);
+            return PnPConnection.CreateWithManagedIdentity(Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId);
         }
 
         private PnPConnection ConnectInteractive()
@@ -879,7 +877,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             WriteVerbose("Connecting using Entra ID Workload Identity");
 
-            return PnPConnection.CreateWithAzureADWorkloadIdentity(this, Url, TenantAdminUrl);
+            return PnPConnection.CreateWithAzureADWorkloadIdentity(Url, TenantAdminUrl);
         }
 
         private PnPConnection ConnectWithOSLogin()

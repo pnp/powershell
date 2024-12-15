@@ -3,7 +3,6 @@ using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 
-
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPMasterPage")]

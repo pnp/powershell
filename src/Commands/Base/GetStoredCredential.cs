@@ -1,9 +1,4 @@
 ﻿using System.Management.Automation;
-using System.Net;
-using Microsoft.SharePoint.Client;
-using PnP.Framework.Utilities;
-
-using PnP.PowerShell.Commands.Enums;
 
 namespace PnP.PowerShell.Commands.Base
 {

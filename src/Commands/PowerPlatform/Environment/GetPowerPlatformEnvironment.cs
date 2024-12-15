@@ -1,5 +1,4 @@
 ﻿using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 using System.Linq;
 using PnP.PowerShell.Commands.Base.PipeBinds;
@@ -21,8 +20,9 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
         protected override void ExecuteCmdlet()
         {
+            
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            var environments = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.Environment>(this, Connection,  baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01", AccessToken);
+            var environments = ArmRequestHelper.GetResultCollection<Model.PowerPlatform.Environment.Environment>(baseUrl + "/providers/Microsoft.ProcessSimple/environments?api-version=2016-11-01");
 
             if(ParameterSpecified(nameof(IsDefault)) && IsDefault.ToBool())
             {

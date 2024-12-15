@@ -1,10 +1,5 @@
-
-using System;
-using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Management.Automation;
-using Microsoft.PowerShell.Cmdletization.Xml;
 using PnP.PowerShell.Model;
 
 namespace PnP.PowerShell.Commands.Base

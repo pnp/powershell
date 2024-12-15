@@ -2,7 +2,6 @@
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 
-
 namespace PnP.PowerShell.Commands.Publishing
 {
     [Cmdlet(VerbsCommon.Remove, "PnPWikiPage", ConfirmImpact = ConfirmImpact.High)]

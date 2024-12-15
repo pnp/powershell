@@ -5,7 +5,6 @@ using Microsoft.SharePoint.Client.Sharing;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
 using InformationBarriersMode = PnP.PowerShell.Commands.Enums.InformationBarriersMode;
 
 namespace PnP.PowerShell.Commands.Model

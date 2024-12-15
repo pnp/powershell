@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base;
 
-
 namespace PnP.PowerShell.Commands
 {
     public abstract class PnPSdkRetrievalsCmdlet<TType> : PnPSharePointCmdlet, IDynamicParameters

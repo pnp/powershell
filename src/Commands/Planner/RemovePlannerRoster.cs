@@ -15,14 +15,14 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            var roster = Identity.GetPlannerRoster(this, Connection, AccessToken);
+            var roster = Identity.GetPlannerRoster(RequestHelper);
 
             if(roster == null)
             {
                 throw new PSArgumentException("Provided Planner Roster could not be found", nameof(Identity));
             }
 
-            PlannerUtility.DeleteRoster(this, Connection, AccessToken, roster.Id);
+            PlannerUtility.DeleteRoster(RequestHelper, roster.Id);
         }
     }
 }
