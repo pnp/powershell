@@ -6,8 +6,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Set, "PnPPlannerUserPolicy")]
-    [RequiredApiApplicationPermissions("https://tasks.office.com/.default")]
-    public class SetPlannerUserPolicy : PnPGraphCmdlet
+    [RequiredApiDelegatedOrApplicationPermissions("https://tasks.office.com/.default")]
+    public class SetPlannerUserPolicy : PnPTasksCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Identity;

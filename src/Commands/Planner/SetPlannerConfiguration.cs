@@ -6,15 +6,15 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Planner
 {
     [Cmdlet(VerbsCommon.Set, "PnPPlannerConfiguration")]
-    [RequiredApiApplicationPermissions("https://tasks.office.com/.default")]
-    public class SetPlannerConfiguration : PnPGraphCmdlet
+    [RequiredApiDelegatedOrApplicationPermissions("https://tasks.office.com/.default")]
+    public class SetPlannerConfiguration : PnPTasksCmdlet
     {
         [Parameter(Mandatory = false)]
         public bool? IsPlannerAllowed;
 
         [Parameter(Mandatory = false)]
         public bool? AllowRosterCreation;
-        
+
         [Parameter(Mandatory = false)]
         public bool? AllowTenantMoveWithDataLoss;
 
