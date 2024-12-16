@@ -467,7 +467,7 @@ namespace PnP.PowerShell.Commands.Base
             var context = new PnPClientContext(url.AbsoluteUri)
             {
                 ApplicationName = Resources.ApplicationName,
-                DisableReturnValueCache = true
+                DisableReturnValueCache = true,
             };
             PnPConnection spoConnection = null;
             if (!onPrem)
@@ -475,70 +475,45 @@ namespace PnP.PowerShell.Commands.Base
                 var tenantId = string.Empty;
                 try
                 {
-                    spoConnection = new PnPConnection(context, ConnectionType.O365, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, initializationType);
-
-                    spoConnection.ConnectionMethod = ConnectionMethod.Credentials;
-                    spoConnection.AzureEnvironment = azureEnvironment;
-                    spoConnection.Tenant = tenantId;
-                    spoConnection.ClientId = clientId;
-
-                    if (!string.IsNullOrWhiteSpace(clientId))
+                    PnP.Framework.AuthenticationManager authManager = null;
+                    if (CachedAuthenticationManager != null)
                     {
-                        PnP.Framework.AuthenticationManager authManager = null;
-                        if (PnPConnection.CachedAuthenticationManager != null)
-                        {
-                            authManager = PnPConnection.CachedAuthenticationManager;
-                            PnPConnection.CachedAuthenticationManager = null;
-                        }
-                        else
-                        {
-                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
-                            {
-                                await MSALCacheHelper(tokenCache, url.ToString(), clientId);
-                            });
-                        }
-                        using (authManager)
-                        {
-                            context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
-                            context.ExecutingWebRequest += (sender, e) =>
-                            {
-                                e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
-                            };
-                            context.ExecuteQueryRetry();
-                            Log.Debug("PnPConnection","Acquiring token");
-                            var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
-                            Log.Debug("PnPConnection","Token acquired");
-                            var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accesstoken);
-                            tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
-                            spoConnection.AuthenticationManager = authManager;
-                        }
+                        authManager = CachedAuthenticationManager;
+                        CachedAuthenticationManager = null;
                     }
                     else
                     {
-                        PnP.Framework.AuthenticationManager authManager = null;
-                        if (PnPConnection.CachedAuthenticationManager != null)
+                        authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, redirectUrl, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
                         {
-                            authManager = PnPConnection.CachedAuthenticationManager;
-                        }
-                        else
-                        {
-                            authManager = PnP.Framework.AuthenticationManager.CreateWithCredentials(clientId, credentials.UserName, credentials.Password, azureEnvironment: azureEnvironment);
-                        }
-                        using (authManager)
-                        {
-                            context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
-                            context.ExecutingWebRequest += (sender, e) =>
-                            {
-                                e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
-                            };
-                            context.ExecuteQueryRetry();
-
-                            var accessToken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
-                            var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
-                            tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
-                            spoConnection.AuthenticationManager = authManager;
-                        }
+                            await MSALCacheHelper(tokenCache, url.ToString(), clientId);
+                        });
                     }
+                    using (authManager)
+                    {
+                        var clientContext = authManager.GetContext(url.ToString());
+                        context = PnPClientContext.ConvertFrom(clientContext);
+
+                        context.ExecutingWebRequest += (sender, e) =>
+                        {
+                            e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                        };
+                        context.ExecuteQueryRetry();
+                        Log.Debug("PnPConnection", "Acquiring token");
+                        var accesstoken = authManager.GetAccessTokenAsync(url.ToString()).GetAwaiter().GetResult();
+                        Log.Debug("PnPConnection", "Token acquired");
+                        var parsedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accesstoken);
+                        tenantId = parsedToken.Claims.FirstOrDefault(c => c.Type == "tid").Value;
+
+                        spoConnection = new PnPConnection(context, ConnectionType.O365, credentials, url.ToString(), tenantAdminUrl, PnPPSVersionTag, initializationType);
+
+                        spoConnection.ConnectionMethod = ConnectionMethod.Credentials;
+                        spoConnection.AzureEnvironment = azureEnvironment;
+                        spoConnection.Tenant = tenantId;
+                        spoConnection.ClientId = clientId;
+
+                        spoConnection.AuthenticationManager = authManager;
+                    }
+
                 }
                 catch (ClientRequestException)
                 {
@@ -1032,7 +1007,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 catch (MsalCachePersistenceException)
                 {
-                    PnP.Framework.Diagnostics.Log.Debug("PnPConnection","Cache persistence failed. Trying again.");
+                    PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Cache persistence failed. Trying again.");
                     var storage =
                      new StorageCreationPropertiesBuilder("pnp.msal.cache", cacheDir)
                      .WithMacKeyChain(
