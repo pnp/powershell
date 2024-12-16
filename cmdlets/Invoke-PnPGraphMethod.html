@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -148,33 +148,33 @@ Invoke-PnPGraphMethod -Url 'groups/{id}?`$select=hideFromOutlookClients'
 </code></pre>
 <p>Set the new displayName of the group with a Patch request.</p>
 <h3 id="example-4">Example 4</h3>
-<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;v1.0/users?$filter=accountEnabled ne true&amp;$count=true&quot; -Method Get -ConsistencyLevelEventual
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;users?`$filter=accountEnabled ne true&amp;`$count=true&quot; -Method Get -ConsistencyLevelEventual
 </code></pre>
 <p>Get users with advanced query capabilities. Use of -ConsistencyLevelEventual.</p>
 <h3 id="example-5">Example 5</h3>
-<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;https://graph.microsoft.com/v1.0/users&quot;
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;users&quot;
 </code></pre>
 <p>Performs a GET request to retrieve users from the Microsoft Graph API using the full URL.</p>
 <h3 id="example-6">Example 6</h3>
-<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;https://graph.microsoft.com/v1.0/users/user@contoso.com/photo/`$value&quot; -OutFile c:\temp\photo.jpg
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;users/user@contoso.com/photo/`$value&quot; -OutFile c:\temp\photo.jpg
 </code></pre>
 <p>Downloads the user profile photo of the specified user to the specified file.</p>
 <h3 id="example-7">Example 7</h3>
-<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;https://graph.microsoft.com/v1.0/users/user@contoso.com/photo/`$value&quot; -OutStream | Add-PnPFile -FileName user.jpg -Folder &quot;Shared Documents&quot;
+<pre><code class="lang-powershell">Invoke-PnPGraphMethod -Url &quot;users/user@contoso.com/photo/`$value&quot; -OutStream | Add-PnPFile -FileName user.jpg -Folder &quot;Shared Documents&quot;
 </code></pre>
 <p>Takes the user profile photo of the specified user and uploads it to the specified library in SharePoint Online.</p>
 <h3 id="example-8">Example 8</h3>
-<pre><code class="lang-powershell">$task = Invoke-PnPGraphMethod -Url &quot;https://graph.microsoft.com/v1.0/planner/tasks/23fasefxcvzvsdf32e&quot; # retrieve the task so we can figure out the etag which is needed to update the task
+<pre><code class="lang-powershell">$task = Invoke-PnPGraphMethod -Url &quot;planner/tasks/23fasefxcvzvsdf32e&quot; # retrieve the task so we can figure out the etag which is needed to update the task
 $etag = $task.'@odata.etag'
 $headers = @{&quot;If-Match&quot;=$etag} 
 $content = @{&quot;title&quot;=&quot;My new task title&quot;}
-Invoke-PnPGraphMethod -Url &quot;https://graph.microsoft.com/v1.0/planner/tasks/23fasefxcvzvsdf32e&quot; -Method PATCH -Content $content -AdditionalHeaders $headers
+Invoke-PnPGraphMethod -Url &quot;planner/tasks/23fasefxcvzvsdf32e&quot; -Method PATCH -Content $content -AdditionalHeaders $headers
 </code></pre>
 <p>This example retrieves a Planner task to find the etag value which is required to update the task. In order to update the task through call to the Microsoft Graph API we need to include an If-Match header with the value of the etag. It then creates the content to update, in this case the title of the task, and calls the PATCH method on the Graph end-point to update the specific task.</p>
 <h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">$batch = New-PnPBatch -RetainRequests
-Invoke-PnPSPRestMethod -Method Get -Url &quot;https://graph.microsoft.com/v1.0/users&quot; -Batch $batch
-Invoke-PnPSPRestMethod -Method Get -Url &quot;https://graph.microsoft.com/v1.0/groups&quot; -Batch $batch
+Invoke-PnPSPRestMethod -Method Get -Url &quot;users&quot; -Batch $batch
+Invoke-PnPSPRestMethod -Method Get -Url &quot;groups&quot; -Batch $batch
 $response = Invoke-PnPBatch $batch -Details
 $response
 </code></pre>

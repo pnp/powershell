@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Set-PnPStorageEntity | PnP PowerShell </title>
+    <title>Get-PnPFileRetentionLabel | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Set-PnPStorageEntity | PnP PowerShell ">
+    <meta name="title" content="Get-PnPFileRetentionLabel | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,91 +81,35 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="set-pnpstorageentity">Set-PnPStorageEntity</h1>
+  <h1 id="get-pnpfileretentionlabel">Get-PnPFileRetentionLabel</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Set Storage Entities / Farm Properties in either the tenant scoped app catalog or the site collection app catalog.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API : One of Files.Read.All, Sites.Read.All, Files.ReadWrite.All, Sites.ReadWrite.All</li>
+</ul>
+<p>Retrieves the retention label information for a file in SharePoint.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPStorageEntity -Key &lt;String&gt; -Value &lt;String&gt; [-Comment &lt;String&gt;] [-Description &lt;String&gt;]
- [-Scope &lt;StorageEntityScope&gt;] [-Connection &lt;PnPConnection&gt;]   
+<pre><code class="lang-powershell">Get-PnPFileRetentionLabel -Url &lt;String&gt;
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to set Storage Entities / Farm Properties in either the tenant scoped app catalog or the site collection app catalog.</p>
+<p>The Get-PnPFileRetentionLabel cmdlet retrieves the retention label information for a file in SharePoint using Microsoft Graph. It takes a URL as input, decodes it, and specifically encodes the '+' character if it is part of the filename.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPStorageEntity -Key MyKey -Value &quot;MyValue&quot; -Comment &quot;My Comment&quot; -Description &quot;My Description&quot;
+<h3 id="example-1">Example 1</h3>
+<p>This example retrieves the retention label information for the file at the specified URL.</p>
+<pre><code class="lang-powershell">Get-PnPFileRetentionLabel -Url &quot;/sites/Marketing/Shared Documents/Report.pptx&quot;
 </code></pre>
-<p>Sets an existing or adds a new storage entity / farm property at the tenant level.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Set-PnPStorageEntity -Scope Site -Key MyKey -Value &quot;MyValue&quot; -Comment &quot;My Comment&quot; -Description &quot;My Description&quot;
-</code></pre>
-<p>Sets an existing or adds a new storage entity at the site collection level.</p>
+<p>This example retrieves the retention label information for the file at the specified URL.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-comment">-Comment</h3>
-<p>Specifies additional comments related to the storage entity being set.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-description">-Description</h3>
-<p>The description to set.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-key">-Key</h3>
-<p>The key of the value to set.</p>
+<h3 id="-url">-Url</h3>
+<p>Specifies the URL of the file for which to retrieve the retention label information.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: True
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-scope">-Scope</h3>
-<p>Defines the scope of the storage entity. Defaults to Tenant.</p>
-<pre><code class="lang-yaml">Type: StorageEntityScope
-Parameter Sets: (All)
-Accepted values: Site, Tenant
-
-Required: False
-Position: Named
-Default value: Tenant
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-value">-Value</h3>
-<p>The value to set.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
