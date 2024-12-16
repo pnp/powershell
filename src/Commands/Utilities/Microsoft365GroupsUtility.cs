@@ -1,12 +1,12 @@
+using PnP.PowerShell.Commands.Model;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
 using System.Linq;
-using PnP.PowerShell.Commands.Utilities.REST;
-using System.Text.Json;
-using PnP.PowerShell.Commands.Model;
-using System.Threading;
 using System.Net;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -811,6 +811,56 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static HttpResponseMessage DeletePhoto(ApiRequestHelper requestHelper, Guid groupId)
         {
             return requestHelper.Delete($"v1.0/groups/{groupId}/photo/$value");
+        }
+
+        internal static void UploadProfilePhotoAsync(ApiRequestHelper requestHelper, Guid userId, string logoPath)
+        {
+            var fileBytes = System.IO.File.ReadAllBytes(logoPath);
+
+            var content = new ByteArrayContent(fileBytes);
+            var fileInfo = new System.IO.FileInfo(logoPath);
+            var contentType = string.Empty;
+            switch (fileInfo.Extension.ToLower())
+            {
+                case ".jpg":
+                case ".jpeg":
+                    {
+                        contentType = "image/jpeg";
+                        break;
+                    }
+                case ".png":
+                    {
+                        contentType = "image/png";
+                        break;
+                    }
+            }
+            if (!string.IsNullOrEmpty(contentType))
+            {
+                content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(contentType);
+                var updated = false;
+                var retryCount = 10;
+                while (retryCount > 0)
+                {
+                    var responseMessage = requestHelper.PutHttpContent($"/v1.0/users/{userId}/photo/$value", content);
+                    if (responseMessage.IsSuccessStatusCode)
+                    {
+                        updated = true;
+                    }
+                    if (!updated)
+                    {
+                        Thread.Sleep(500 * (10 - retryCount));
+                        retryCount--;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                throw new Exception("Unrecognized image format. Supported formats are .png, .jpg and .jpeg");
+            }
         }
     }
 }
