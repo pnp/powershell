@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private void LogDebug(string message)
         {
-            Log.Debug("ApiRequestHelper",message);
+            Log.Debug("ApiRequestHelper", message);
         }
 
         private void LogError(string message)
@@ -422,7 +422,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private string SendMessage(HttpRequestMessage message)
         {
-            LogDebug($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with body '{message.Content.ReadAsStringAsync().GetAwaiter().GetResult()}'" : "")}");
+            LogDebug($"Making {message.Method} call to {message.RequestUri}{(message.Content != null ? $" with payload" : "")}");
 
             // Ensure we have the required permissions in the access token to make the call
             TokenHandler.EnsureRequiredPermissionsAvailableInAccessTokenAudience(CmdletType, AccessToken);
@@ -450,7 +450,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                LogError($"Response failed with HTTP {(int)response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent.Replace("{","{{").Replace("}","}}")}");
+                LogError($"Response failed with HTTP {(int)response.StatusCode} containing {errorContent.Length} character{(errorContent.Length != 1 ? "s" : "")}: {errorContent.Replace("{", "{{").Replace("}", "}}")}");
 
                 var exception = JsonSerializer.Deserialize<GraphException>(errorContent, new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
                 exception.AccessToken = AccessToken;
