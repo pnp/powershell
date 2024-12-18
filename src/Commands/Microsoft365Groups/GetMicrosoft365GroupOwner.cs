@@ -9,8 +9,8 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365GroupOwner")]
     [Alias("Get-PnPMicrosoft365GroupOwners")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class GetMicrosoft365GroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var owners = ClearOwners.GetOwners(this, Connection, Identity.GetGroupId(this, Connection, AccessToken), AccessToken);
+            var owners = ClearOwners.GetOwners(RequestHelper, Identity.GetGroupId(RequestHelper));
             WriteObject(owners?.OrderBy(o => o.DisplayName), true);
         }
     }

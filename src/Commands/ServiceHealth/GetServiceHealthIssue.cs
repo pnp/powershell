@@ -1,12 +1,12 @@
-﻿using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.ServiceHealth
 {
     [Cmdlet(VerbsCommon.Get, "PnPServiceHealthIssue")]
-    [RequiredApiApplicationPermissions("graph/ServiceHealth.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/ServiceHealth.Read.All")]
     public class GetServiceHealthIssue : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -16,11 +16,11 @@ namespace PnP.PowerShell.Commands.ServiceHealth
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ServiceHealthUtility.GetServiceHealthIssueById(this, Identity, Connection, AccessToken), false);
+                WriteObject(ServiceHealthUtility.GetServiceHealthIssueById(RequestHelper, Identity), false);
             }
             else
             {
-                WriteObject(ServiceHealthUtility.GetServiceHealthIssues(this, Connection, AccessToken), true);
+                WriteObject(ServiceHealthUtility.GetServiceHealthIssues(RequestHelper), true);
             }
         }
     }

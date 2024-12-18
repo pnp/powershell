@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using System.Management.Automation;
-
 using Microsoft.SharePoint.Client;
-
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Model;

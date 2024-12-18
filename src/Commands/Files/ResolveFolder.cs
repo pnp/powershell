@@ -1,7 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 
-
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsDiagnostic.Resolve, "PnPFolder")]

@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365GroupSettings")]
-    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class RemoveMicrosoft365GroupSettings : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -20,12 +20,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Group != null)
             {
-                var groupId = Group.GetGroupId(this, Connection, AccessToken);
-                ClearOwners.RemoveGroupSetting(this, Connection, AccessToken, Identity, groupId.ToString());
+                var groupId = Group.GetGroupId(RequestHelper);
+                ClearOwners.RemoveGroupSetting(RequestHelper, Identity, groupId.ToString());
             }
             else
             {
-                ClearOwners.RemoveGroupSetting(this, Connection, AccessToken, Identity);
+                ClearOwners.RemoveGroupSetting(RequestHelper, Identity);
             }
         }
     }

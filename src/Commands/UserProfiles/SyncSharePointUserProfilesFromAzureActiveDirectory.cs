@@ -1,9 +1,6 @@
 ﻿using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
-
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model.SharePoint.SharePointUserProfileSync;
-
 using System.Collections;
 using System.Collections.Generic;
 using System.Management.Automation;

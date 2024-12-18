@@ -1,15 +1,15 @@
-using System.Collections.Generic;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
+using System.Collections.Generic;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADServicePrincipalAssignedAppRole")]
-    [RequiredApiApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRole>))]
     [Alias("Remove-PnPEntraIDServicePrincipalAssignedAppRole")]
     public class RemoveAzureADServicePrincipalAssignedAppRole : PnPGraphCmdlet
@@ -31,11 +31,11 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            if(ParameterSetName == ParameterSet_BYASSIGNEDAPPROLE || ParameterSetName == ParameterSet_BYAPPROLENAME)
+            if (ParameterSetName == ParameterSet_BYASSIGNEDAPPROLE || ParameterSetName == ParameterSet_BYAPPROLENAME)
             {
-                var principal = Principal.GetServicePrincipal(this, Connection, AccessToken);
+                var principal = Principal.GetServicePrincipal(RequestHelper);
 
-                if(principal == null)
+                if (principal == null)
                 {
                     throw new PSArgumentException("Service principal not found", nameof(Principal));
                 }
@@ -46,23 +46,23 @@ namespace PnP.PowerShell.Commands.Apps
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        var appRoleAssignment = Identity.GetAssignedAppRole(this, Connection, AccessToken, principal.Id);
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, appRoleAssignment);
+                        var appRoleAssignment = Identity.GetAssignedAppRole(RequestHelper, principal.Id);
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, appRoleAssignment);
                     }
                     else
                     {
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, principal);
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, principal);
                     }
                 }
                 else
                 {
-                    ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, principal, AppRoleName);
+                    ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, principal, AppRoleName);
                 }
             }
             else
             {
-                var appRoleAssignment = Identity.GetAssignedAppRole(this, Connection, AccessToken);
-                ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(this, Connection, AccessToken, appRoleAssignment);
+                var appRoleAssignment = Identity.GetAssignedAppRole(RequestHelper);
+                ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, appRoleAssignment);
             }
         }
     }

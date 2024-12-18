@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsData.Update, "PnPTeamsUser")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class UpdateTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -26,24 +26,24 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId != null)
             {
                 try
                 {
                     if (Force || ShouldContinue($"Update role for user with UPN {User} ?", Properties.Resources.Confirm))
                     {
-                        var teamsUser = TeamsUtility.GetUsers(this, Connection, AccessToken, groupId, string.Empty);
+                        var teamsUser = TeamsUtility.GetUsers(RequestHelper, groupId, string.Empty);
 
                         var specifiedUser = teamsUser.Find(u => u.UserPrincipalName.ToLower() == User.ToLower());
                         if (specifiedUser != null)
                         {
                             // No easy way to get member Id for teams endpoint, need to rely on display name filter to fetch memberId of the specified user and then update
-                            var teamUserWithDisplayName = TeamsUtility.GetTeamUsersWithDisplayName(this, Connection, AccessToken, groupId, specifiedUser.DisplayName);
+                            var teamUserWithDisplayName = TeamsUtility.GetTeamUsersWithDisplayName(RequestHelper, groupId, specifiedUser.DisplayName);
                             var userToUpdate = teamUserWithDisplayName.Find(u => u.UserId == specifiedUser.Id) ?? throw new PSArgumentException($"User found in the M365 group but not in the team ");
 
                             // Pass the member id of the user whose role we are changing
-                            WriteObject(TeamsUtility.UpdateTeamUserRole(this, Connection, AccessToken, groupId, userToUpdate.Id, Role));
+                            WriteObject(TeamsUtility.UpdateTeamUserRole(RequestHelper, groupId, userToUpdate.Id, Role));
                         }
                         else
                         {

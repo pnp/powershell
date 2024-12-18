@@ -1,5 +1,4 @@
-﻿
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
@@ -11,8 +10,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsUser")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class GetTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -26,22 +25,22 @@ namespace PnP.PowerShell.Commands.Teams
         public string Role;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId != null)
             {
                 try
                 {
                     if (ParameterSpecified(nameof(Channel)))
                     {
-                        var teamChannels = TeamsUtility.GetChannels(this, AccessToken, Connection, groupId);
-                        
-                        var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
+                        var teamChannels = TeamsUtility.GetChannels(RequestHelper, groupId);
+
+                        var channelId = Channel.GetId(RequestHelper, groupId);
 
                         var requestedChannel = teamChannels.FirstOrDefault(c => c.Id == channelId);
 
                         if (!string.IsNullOrEmpty(channelId) && requestedChannel != null && requestedChannel.MembershipType.ToLower() == TeamChannelType.Private.ToString().ToLower())
                         {
-                            WriteObject(TeamsUtility.GetUsers(this, Connection, AccessToken, groupId, channelId, Role), true);
+                            WriteObject(TeamsUtility.GetUsers(RequestHelper, groupId, channelId, Role), true);
                         }
                         else
                         {
@@ -50,7 +49,7 @@ namespace PnP.PowerShell.Commands.Teams
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetUsers(this, Connection, AccessToken, groupId, Role), true);
+                        WriteObject(TeamsUtility.GetUsers(RequestHelper, groupId, Role), true);
                     }
                 }
                 catch (GraphException ex)

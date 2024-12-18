@@ -1,10 +1,9 @@
-﻿using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Enums;
+﻿using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.AzureAD;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
 using System.Net.Http;
 
 namespace PnP.PowerShell.Commands.Utilities
@@ -17,9 +16,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Returns all service principals
         /// </summary>
-        public static List<AzureADServicePrincipal> GetServicePrincipals(Cmdlet cmdlet, PnPConnection connection, string accesstoken, string filter = null)
+        public static List<AzureADServicePrincipal> GetServicePrincipals(ApiRequestHelper requestHelper, string filter = null)
         {
-            string requestUrl = $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals";
+            string requestUrl = $"v1.0/servicePrincipals";
             Dictionary<string, string> additionalHeaders = null;
             if (!string.IsNullOrEmpty(filter))
             {
@@ -29,24 +28,24 @@ namespace PnP.PowerShell.Commands.Utilities
                     { "ConsistencyLevel", "eventual" }
                 };
             }
-            var result = REST.GraphHelper.GetResultCollection<AzureADServicePrincipal>(cmdlet, connection, requestUrl, accesstoken, additionalHeaders: additionalHeaders);
+            var result = requestHelper.GetResultCollection<AzureADServicePrincipal>(requestUrl, additionalHeaders: additionalHeaders);
             return result.ToList();
         }
 
         /// <summary>
         /// Returns the service principal of the provided built in type
         /// </summary>
-        public static AzureADServicePrincipal GetServicePrincipalByBuiltInType(Cmdlet cmdlet, PnPConnection connection, string accesstoken, ServicePrincipalBuiltInType builtInType)
+        public static AzureADServicePrincipal GetServicePrincipalByBuiltInType(ApiRequestHelper requestHelper, ServicePrincipalBuiltInType builtInType)
         {
             AzureADServicePrincipal result = null;
             switch (builtInType)
             {
                 case ServicePrincipalBuiltInType.MicrosoftGraph:
-                    result = ServicePrincipalUtility.GetServicePrincipalByAppId(cmdlet, connection, accesstoken, new Guid("00000003-0000-0000-c000-000000000000"));
+                    result = ServicePrincipalUtility.GetServicePrincipalByAppId(requestHelper, new Guid("00000003-0000-0000-c000-000000000000"));
                     break;
 
                 case ServicePrincipalBuiltInType.SharePointOnline:
-                    result = ServicePrincipalUtility.GetServicePrincipalByAppId(cmdlet, connection, accesstoken, new Guid("00000003-0000-0ff1-ce00-000000000000"));
+                    result = ServicePrincipalUtility.GetServicePrincipalByAppId(requestHelper, new Guid("00000003-0000-0ff1-ce00-000000000000"));
                     break;
 
                 default:
@@ -58,12 +57,12 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Returns the service principal of the provided object id
         /// </summary>
-        public static AzureADServicePrincipal GetServicePrincipalByObjectId(Cmdlet cmdlet, PnPConnection connection, string accesstoken, Guid objectId)
+        public static AzureADServicePrincipal GetServicePrincipalByObjectId(ApiRequestHelper requestHelper, Guid objectId)
         {
             IEnumerable<AzureADServicePrincipal> result;
             try
             {
-                result = Utilities.REST.GraphHelper.GetResultCollection<AzureADServicePrincipal>(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals?$filter=id eq '{objectId}'", accesstoken);
+                result = requestHelper.GetResultCollection<AzureADServicePrincipal>($"v1.0/servicePrincipals?$filter=id eq '{objectId}'");
 
                 var servicePrincipal = result.FirstOrDefault();
                 servicePrincipal.AppRoles.ForEach(ar => ar.ServicePrincipal = servicePrincipal);
@@ -76,12 +75,12 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Returns the service principal of the provided app id
         /// </summary>
-        public static AzureADServicePrincipal GetServicePrincipalByAppId(Cmdlet cmdlet, PnPConnection connection, string accesstoken, Guid appId)
+        public static AzureADServicePrincipal GetServicePrincipalByAppId(ApiRequestHelper requestHelper, Guid appId)
         {
             IEnumerable<AzureADServicePrincipal> result;
             try
             {
-                result = Utilities.REST.GraphHelper.GetResultCollection<AzureADServicePrincipal>(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals?$filter=appid eq '{appId}'", accesstoken);
+                result = requestHelper.GetResultCollection<AzureADServicePrincipal>($"v1.0/servicePrincipals?$filter=appid eq '{appId}'");
 
                 var servicePrincipal = result.FirstOrDefault();
                 servicePrincipal.AppRoles.ForEach(ar => ar.ServicePrincipal = servicePrincipal);
@@ -94,12 +93,12 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Returns the service principal with the provided name
         /// </summary>
-        public static AzureADServicePrincipal GetServicePrincipalByAppName(Cmdlet cmdlet, PnPConnection connection, string accesstoken, string appName)
+        public static AzureADServicePrincipal GetServicePrincipalByAppName(ApiRequestHelper requestHelper, string appName)
         {
             IEnumerable<AzureADServicePrincipal> result;
             try
             {
-                result = Utilities.REST.GraphHelper.GetResultCollection<AzureADServicePrincipal>(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals?$filter=displayName eq '{appName}'", accesstoken);
+                result = requestHelper.GetResultCollection<AzureADServicePrincipal>($"v1.0/servicePrincipals?$filter=displayName eq '{appName}'");
 
                 var servicePrincipal = result.FirstOrDefault();
                 servicePrincipal.AppRoles.ForEach(ar => ar.ServicePrincipal = servicePrincipal);
@@ -112,13 +111,13 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Returns the service principal app role assignments of the service principal with the provided object id
         /// </summary>
-        public static List<AzureADServicePrincipalAppRoleAssignment> GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(Cmdlet cmdlet, PnPConnection connection, string accesstoken, string servicePrincipalObjectId, string appRoleAssignmentId)
+        public static List<AzureADServicePrincipalAppRoleAssignment> GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(ApiRequestHelper requestHelper, string servicePrincipalObjectId, string appRoleAssignmentId)
         {
             try
             {
                 // Retrieve the specific app role assigned to the service principal
-                var results = Utilities.REST.GraphHelper.Get<AzureADServicePrincipalAppRoleAssignment>(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals/{servicePrincipalObjectId}/appRoleAssignments/{appRoleAssignmentId}", accesstoken);
-                var enrichedResults = ServicePrincipalUtility.EnrichAzureADServicePrincipalAppRoleAssignments(cmdlet, connection, accesstoken, new List<AzureADServicePrincipalAppRoleAssignment> { results });
+                var results = requestHelper.Get<AzureADServicePrincipalAppRoleAssignment>($"v1.0/servicePrincipals/{servicePrincipalObjectId}/appRoleAssignments/{appRoleAssignmentId}");
+                var enrichedResults = EnrichAzureADServicePrincipalAppRoleAssignments(requestHelper, new List<AzureADServicePrincipalAppRoleAssignment> { results });
                 return enrichedResults.ToList();
             }
             catch (Exception) { }
@@ -128,13 +127,13 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Returns the service principal app role assignments of the service principal with the provided object id
         /// </summary>
-        public static List<AzureADServicePrincipalAppRoleAssignment> GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(Cmdlet cmdlet, PnPConnection connection, string accesstoken, string servicePrincipalObjectId)
+        public static List<AzureADServicePrincipalAppRoleAssignment> GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(ApiRequestHelper requestHelper, string servicePrincipalObjectId)
         {
             try
             {
                 // Retrieve all the app role assigned to the service principal
-                var results = Utilities.REST.GraphHelper.GetResultCollection<AzureADServicePrincipalAppRoleAssignment>(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals/{servicePrincipalObjectId}/appRoleAssignments", accesstoken);
-                var enrichedResults = ServicePrincipalUtility.EnrichAzureADServicePrincipalAppRoleAssignments(cmdlet, connection, accesstoken, results);
+                var results = requestHelper.GetResultCollection<AzureADServicePrincipalAppRoleAssignment>($"v1.0/servicePrincipals/{servicePrincipalObjectId}/appRoleAssignments");
+                var enrichedResults = EnrichAzureADServicePrincipalAppRoleAssignments(requestHelper, results);
                 return enrichedResults.ToList();
             }
             catch (Exception) { }
@@ -148,7 +147,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
         /// <param name="azureADServicePrincipalAppRoleAssignments">Enumerable with app role assignments to enrich</param>
         /// <returns>Enriched app role assignements</returns>
-        private static IEnumerable<AzureADServicePrincipalAppRoleAssignment> EnrichAzureADServicePrincipalAppRoleAssignments(Cmdlet cmdlet, PnPConnection connection, string accesstoken, IEnumerable<AzureADServicePrincipalAppRoleAssignment> azureADServicePrincipalAppRoleAssignments)
+        private static IEnumerable<AzureADServicePrincipalAppRoleAssignment> EnrichAzureADServicePrincipalAppRoleAssignments(ApiRequestHelper requestHelper, IEnumerable<AzureADServicePrincipalAppRoleAssignment> azureADServicePrincipalAppRoleAssignments)
         {
             // Since the result does not contain the friendly claim value (i.e. Group.ReadWrite.All) but just identifiers for it, we will enrich the result with the friendly name oursevles
             var servicePrincipalCache = new Dictionary<Guid, AzureADServicePrincipal>();
@@ -169,7 +168,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 else
                 {
                     // Service principal is not in cache yet, retrieve it from the Graph API
-                    servicePrincipal = GetServicePrincipalByObjectId(cmdlet, connection, accesstoken, azureADServicePrincipalAppRoleAssignment.ResourceId.Value);
+                    servicePrincipal = GetServicePrincipalByObjectId(requestHelper, azureADServicePrincipalAppRoleAssignment.ResourceId.Value);
 
                     if (servicePrincipal != null)
                     {
@@ -195,11 +194,11 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="principalToAddRoleTo">The service principal to add the role to</param>
         /// <param name="appRoleToAdd">The app role to add to the service principal</param>
         /// <returns>The service principal app role assignment</returns>
-        public static AzureADServicePrincipalAppRoleAssignment AddServicePrincipalRoleAssignment(Cmdlet cmdlet, PnPConnection connection, string accesstoken, AzureADServicePrincipal principalToAddRoleTo, AzureADServicePrincipalAppRole appRoleToAdd)
+        public static AzureADServicePrincipalAppRoleAssignment AddServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipal principalToAddRoleTo, AzureADServicePrincipalAppRole appRoleToAdd)
         {
             var content = new StringContent($"{{'principalId':'{principalToAddRoleTo.Id}','resourceId':'{appRoleToAdd.ServicePrincipal.Id}','appRoleId':'{appRoleToAdd.Id}'}}");
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-            var result = Utilities.REST.GraphHelper.Post<AzureADServicePrincipalAppRoleAssignment>(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals/{principalToAddRoleTo.Id}/appRoleAssignments", content, accesstoken);
+            var result = requestHelper.Post<AzureADServicePrincipalAppRoleAssignment>($"v1.0/servicePrincipals/{principalToAddRoleTo.Id}/appRoleAssignments", content);
             return result;
         }
 
@@ -209,12 +208,12 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="connection">Connection to use to communicate with Microsoft Graph</param>
         /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
         /// <param name="principalToRemoveRoleFrom">The service principal to remove the role assignments from</param>
-        public static void RemoveServicePrincipalRoleAssignment(Cmdlet cmdlet, PnPConnection connection, string accesstoken, AzureADServicePrincipal principalToRemoveRoleFrom)
+        public static void RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipal principalToRemoveRoleFrom)
         {
-            var assignments = GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(cmdlet, connection, accesstoken, principalToRemoveRoleFrom.Id);
+            var assignments = GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(requestHelper, principalToRemoveRoleFrom.Id);
             foreach (var assignment in assignments)
             {
-                Utilities.REST.GraphHelper.Delete(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals/{principalToRemoveRoleFrom.Id}/appRoleAssignments/{assignment.Id}", accesstoken);
+                requestHelper.Delete($"v1.0/servicePrincipals/{principalToRemoveRoleFrom.Id}/appRoleAssignments/{assignment.Id}");
             }
         }
 
@@ -225,14 +224,14 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
         /// <param name="principalToRemoveRoleFrom">The service principal to remove the role assignment from</param>
         /// <param name="appRoleToRemove">The app role to remove from the role assignments</param>
-        public static void RemoveServicePrincipalRoleAssignment(Cmdlet cmdlet, PnPConnection connection, string accesstoken, AzureADServicePrincipal principalToRemoveRoleFrom, AzureADServicePrincipalAppRole appRoleToRemove)
+        public static void RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipal principalToRemoveRoleFrom, AzureADServicePrincipalAppRole appRoleToRemove)
         {
-            var assignments = GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(cmdlet, connection, accesstoken, principalToRemoveRoleFrom.Id);
+            var assignments = GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(requestHelper, principalToRemoveRoleFrom.Id);
             foreach (var assignment in assignments)
             {
                 if (assignment.AppRoleId == appRoleToRemove.Id)
                 {
-                    Utilities.REST.GraphHelper.Delete(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals/{principalToRemoveRoleFrom.Id}/appRoleAssignments/{assignment.Id}", accesstoken);
+                    requestHelper.Delete($"v1.0/servicePrincipals/{principalToRemoveRoleFrom.Id}/appRoleAssignments/{assignment.Id}");
                 }
             }
         }
@@ -244,14 +243,14 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
         /// <param name="principalToRemoveRoleFrom">The service principal to remove the role assignment from</param>
         /// <param name="roleName">The name of the app role to remove from the role assignments</param>
-        public static void RemoveServicePrincipalRoleAssignment(Cmdlet cmdlet, PnPConnection connection, string accesstoken, AzureADServicePrincipal principalToRemoveRoleFrom, string roleName)
+        public static void RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipal principalToRemoveRoleFrom, string roleName)
         {
-            var assignments = GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(cmdlet, connection, accesstoken, principalToRemoveRoleFrom.Id);
+            var assignments = GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(requestHelper, principalToRemoveRoleFrom.Id);
             foreach (var assignment in assignments)
             {
                 if (assignment.AppRoleName == roleName)
                 {
-                    Utilities.REST.GraphHelper.Delete(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals/{principalToRemoveRoleFrom.Id}/appRoleAssignments/{assignment.Id}", accesstoken);
+                    requestHelper.Delete($"v1.0/servicePrincipals/{principalToRemoveRoleFrom.Id}/appRoleAssignments/{assignment.Id}");
                 }
             }
         }
@@ -263,9 +262,9 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="accesstoken">Access Token to use to authenticate to Microsoft Graph</param>
         /// <param name="principalToRemoveRoleFrom">The service principal to remove the role assignment from</param>
         /// <param name="appRoleAssignmentoRemove">The app role assignment to remove from the service principal</param>
-        public static void RemoveServicePrincipalRoleAssignment(Cmdlet cmdlet, PnPConnection connection, string accesstoken, AzureADServicePrincipalAppRoleAssignment appRoleAssignmenToRemove)
+        public static void RemoveServicePrincipalRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipalAppRoleAssignment appRoleAssignmenToRemove)
         {
-            Utilities.REST.GraphHelper.Delete(cmdlet, connection, $"https://{connection.GraphEndPoint}/v1.0/servicePrincipals/{appRoleAssignmenToRemove.PrincipalId}/appRoleAssignments/{appRoleAssignmenToRemove.Id}", accesstoken);
+            requestHelper.Delete( $"v1.0/servicePrincipals/{appRoleAssignmenToRemove.PrincipalId}/appRoleAssignments/{appRoleAssignmenToRemove.Id}");
         }
     }
 }

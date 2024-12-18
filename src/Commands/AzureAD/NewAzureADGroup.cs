@@ -2,10 +2,8 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Properties;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.Json;
@@ -14,7 +12,7 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureADGroup")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("New-PnPEntraIDGroup")]
     public class NewAzureADGroup : PnPGraphCmdlet
     {
@@ -52,7 +50,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (!Force)
             {
-                var existingGroup = AzureADGroupsUtility.GetGroup(this, Connection, MailNickname, AccessToken);
+                var existingGroup = AzureADGroupsUtility.GetGroup(RequestHelper, MailNickname);
 
                 forceCreation = existingGroup == null || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
             }
@@ -72,25 +70,25 @@ namespace PnP.PowerShell.Commands.Graph
                     { "groupTypes", new List<string>(){} },
                     { "mailEnabled", IsMailEnabled.ToBool() },
                     { "mailNickname" , MailNickname },
-                    { "securityEnabled", IsSecurityEnabled.ToBool() }                    
+                    { "securityEnabled", IsSecurityEnabled.ToBool() }
                 };
 
                 if (Owners?.Length > 0)
                 {
-                    ownerData = ClearOwners.GetUsersDataBindValue(this, Connection, AccessToken, Owners);
+                    ownerData = ClearOwners.GetUsersDataBindValue(RequestHelper, Owners);
                     postData.Add("owners@odata.bind", ownerData);
                 }
                 if (Members?.Length > 0)
                 {
-                    memberData = ClearOwners.GetUsersDataBindValue(this, Connection, AccessToken, Members);
+                    memberData = ClearOwners.GetUsersDataBindValue(RequestHelper, Members);
                     postData.Add("members@odata.bind", memberData);
-                }               
+                }
 
                 var data = JsonSerializer.Serialize(postData);
                 var stringContent = new StringContent(data);
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-                var groupResult = GraphHelper.Post<Group>(this, Connection, $"v1.0/groups", stringContent, AccessToken);
+                var groupResult = RequestHelper.Post<Group>($"v1.0/groups", stringContent);
 
                 WriteObject(groupResult);
             }

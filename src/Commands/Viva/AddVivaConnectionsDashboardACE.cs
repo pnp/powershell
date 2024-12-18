@@ -1,9 +1,5 @@
 ﻿using PnP.Core.Model.SharePoint;
-using System;
-using System.Collections.Generic;
 using System.Management.Automation;
-using System.Text;
-using PnP.Core.Services;
 using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Viva

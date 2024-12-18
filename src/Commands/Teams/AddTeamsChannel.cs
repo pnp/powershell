@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsChannel", DefaultParameterSetName = ParameterSET_STANDARD)]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class AddTeamsChannel : PnPGraphCmdlet
     {
         private const string ParameterSET_PRIVATE = "Private channel type";
@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             try
             {
-                var channel = TeamsUtility.AddChannel(this, AccessToken, Connection, groupId, DisplayName, Description, ChannelType, OwnerUPN, false);
+                var channel = TeamsUtility.AddChannel(RequestHelper, groupId, DisplayName, Description, ChannelType, OwnerUPN, false);
                 WriteObject(channel);
             }
             catch (GraphException ex)

@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Search
             WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
             var graphApiUrl = $"v1.0/external/connections";
-            var results = Utilities.REST.GraphHelper.Post(this, Connection, graphApiUrl, AccessToken, jsonContent);
+            var results = RequestHelper.PostHttpContent(graphApiUrl, jsonContent);
             var resultsContent = results.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             var externalConnectionResult = System.Text.Json.JsonSerializer.Deserialize<Model.Graph.MicrosoftSearch.ExternalConnection>(resultsContent);
 

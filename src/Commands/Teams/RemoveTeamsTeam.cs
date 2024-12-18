@@ -3,14 +3,13 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsTeam")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class RemoveTeamsTeam : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -21,15 +20,15 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+            var groupId = Identity.GetGroupId(RequestHelper);
             if (groupId != null)
             {
                 if (Force || ShouldContinue("Removing the team will remove all messages in all channels in the team.", Properties.Resources.Confirm))
                 {
-                    var response = TeamsUtility.DeleteTeam(this, AccessToken, Connection, groupId);
+                    var response = TeamsUtility.DeleteTeam(RequestHelper, groupId);
                     if (!response.IsSuccessStatusCode)
                     {
-                        if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                        if (RequestHelper.TryGetGraphException(response, out GraphException ex))
                         {
                             if (ex.Error != null)
                             {

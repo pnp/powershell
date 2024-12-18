@@ -1,7 +1,6 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
@@ -27,8 +26,9 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
         protected override void ExecuteCmdlet()
         {
+
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             var flowName = Identity.GetName();
 
             if (Force || ShouldContinue($"Remove flow with name '{flowName}'?", Properties.Resources.Confirm))
@@ -40,10 +40,11 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                     {
                         // Had to add this because DELETE doesn't throw error if invalid Flow Id or Name is provided
                         WriteVerbose($"Retrieving Flow with name {flowName} in environment ${environmentName}");
-                        var result = GraphHelper.Get<Model.PowerPlatform.PowerAutomate.Flow>(this, Connection, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken);
+                        var result = ArmRequestHelper.Get<Model.PowerPlatform.PowerAutomate.Flow>($"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01");
                         if (result != null)
                         {
-                            RestHelper.Delete(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken);
+                            ArmRequestHelper.Delete($"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01");
+                            //RestHelper.Delete(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken);
                             WriteVerbose($"Flow with name {flowName} deleted");
                         }
                     }
@@ -54,7 +55,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
                 else
                 {
-                    RestHelper.Delete(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken);
+                    ArmRequestHelper.Delete($"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01");
                     WriteVerbose($"Flow with name {flowName} deleted");
                 }
             }

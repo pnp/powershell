@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 // Namespace modified for PnP PowerShell
 using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Text;
 using static PnP.PowerShell.Extensions.Mac.LibSystem;
 
 namespace PnP.PowerShell.Extensions.Mac

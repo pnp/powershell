@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Files
 
         protected override void ExecuteCmdlet()
         {
-            var file = Identity.GetFile(ClientContext, this);
+            var file = Identity.GetFile(ClientContext);
             file.EnsureProperties(f => f.ServerRelativeUrl);
             CurrentWeb.EnsureProperty(w => w.Url);
 

@@ -7,8 +7,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsTeam", DefaultParameterSetName = ParameterSet_Identity)]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class GetTeamsTeam : PnPGraphCmdlet
     {
         private const string ParameterSet_Identity = "Identity";
@@ -29,19 +29,19 @@ namespace PnP.PowerShell.Commands.Teams
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var groupId = Identity.GetGroupId(this, Connection, AccessToken);
-                if(groupId == null)
+                var groupId = Identity.GetGroupId(RequestHelper);
+                if (groupId == null)
                 {
                     throw new PSArgumentException("Team not found", nameof(Identity));
                 }
                 else
                 {
-                    WriteObject(TeamsUtility.GetTeam(this, AccessToken, Connection, groupId));
-                }                
+                    WriteObject(TeamsUtility.GetTeam(RequestHelper, groupId));
+                }
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeamUsingFilter(this, AccessToken, Connection, Filter));
+                WriteObject(TeamsUtility.GetTeamUsingFilter(RequestHelper, Filter));
             }
         }
     }

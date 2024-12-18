@@ -3,7 +3,6 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Model.SharePoint;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;

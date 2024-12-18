@@ -3,14 +3,12 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Remove, "PnPMicrosoft365GroupPhoto")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
-
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class RemoveMicrosoft365GroupPicture : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -18,13 +16,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(this, Connection, AccessToken, false, false, false, false);
+            var group = Identity.GetGroup(RequestHelper, false, false, false, false);
             if (group != null)
             {
-                var response = ClearOwners.DeletePhoto(this, Connection, AccessToken, group.Id.Value);
+                var response = ClearOwners.DeletePhoto(RequestHelper, group.Id.Value);
                 if (!response.IsSuccessStatusCode)
                 {
-                    if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                    if (RequestHelper.TryGetGraphException(response, out GraphException ex))
                     {
                         if (ex.Error != null)
                         {

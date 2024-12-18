@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTab")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class SetTeamsTab : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -24,20 +24,20 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
+                var channelId = Channel.GetId(RequestHelper, groupId);
                 if (channelId != null)
                 {
-                    var tab = Identity.GetTab(this,Connection, AccessToken, groupId, channelId);
+                    var tab = Identity.GetTab(RequestHelper, groupId, channelId);
                     if (tab != null)
                     {
                         if (ParameterSpecified(nameof(DisplayName)) && tab.DisplayName != DisplayName)
                         {
                             tab.DisplayName = DisplayName;
                         }
-                        TeamsUtility.UpdateTab(this, Connection, AccessToken, groupId, channelId, tab);
+                        TeamsUtility.UpdateTab(RequestHelper, groupId, channelId, tab);
                     }
                     else
                     {

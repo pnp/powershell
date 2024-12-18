@@ -10,7 +10,7 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Add, "PnPAzureADGroupMember")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Add-PnPEntraIDGroupMember")]
     public class AddAzureADGroupMember : PnPGraphCmdlet
     {
@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(this, Connection, AccessToken);
+                group = Identity.GetGroup(RequestHelper);
             }
             if (group != null)
             {
@@ -39,14 +39,14 @@ namespace PnP.PowerShell.Commands.AzureAD
 
                 if (userArray.Length > 0)
                 {
-                    ClearOwners.AddMembers(this, Connection, new Guid(group.Id), userArray, AccessToken, RemoveExisting.ToBool());
+                    ClearOwners.AddMembers(RequestHelper, new Guid(group.Id), userArray, RemoveExisting.ToBool());
                 }
 
                 var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
 
                 if (secGroups.Length > 0)
                 {
-                    ClearOwners.AddDirectoryMembers(this, Connection, new Guid(group.Id), secGroups, AccessToken, RemoveExisting.ToBool());
+                    ClearOwners.AddDirectoryMembers(RequestHelper, new Guid(group.Id), secGroups, RemoveExisting.ToBool());
                 }
             }
         }

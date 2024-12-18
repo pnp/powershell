@@ -1,5 +1,4 @@
-﻿using PnP.Framework.Provisioning.Model.Teams;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
@@ -11,7 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsTeam")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class SetTeamsTeam : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -84,12 +83,12 @@ namespace PnP.PowerShell.Commands.Teams
         public bool? AllowCreatePrivateChannels;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(this, Connection, AccessToken);
+            var groupId = Identity.GetGroupId(RequestHelper);
             if (groupId != null)
             {
                 try
                 {
-                    var team = TeamsUtility.GetTeam(this, AccessToken, Connection, groupId);
+                    var team = TeamsUtility.GetTeam(RequestHelper, groupId);
                     var updateGroup = false;
                     var group = new Group();
                     if (team != null)
@@ -123,9 +122,9 @@ namespace PnP.PowerShell.Commands.Teams
                         }
                         team.IsArchived = null; // cannot update this value;
 
-                        if(updateGroup)
+                        if (updateGroup)
                         {
-                            TeamsUtility.UpdateGroup(this, Connection, AccessToken, groupId, group);
+                            TeamsUtility.UpdateGroup(RequestHelper, groupId, group);
                         }
 
                         var teamCI = new TeamCreationInformation();
@@ -145,9 +144,9 @@ namespace PnP.PowerShell.Commands.Teams
                         teamCI.AllowUserDeleteMessages = ParameterSpecified(nameof(AllowUserDeleteMessages)) ? AllowUserDeleteMessages : null;
                         teamCI.AllowUserEditMessages = ParameterSpecified(nameof(AllowUserEditMessages)) ? AllowUserEditMessages : null;
                         teamCI.Classification = ParameterSpecified(nameof(Classification)) ? Classification : null;
-                        teamCI.AllowCreatePrivateChannels = ParameterSpecified(nameof(AllowCreatePrivateChannels)) ? AllowCreatePrivateChannels : null;                        
+                        teamCI.AllowCreatePrivateChannels = ParameterSpecified(nameof(AllowCreatePrivateChannels)) ? AllowCreatePrivateChannels : null;
 
-                        var updated = TeamsUtility.UpdateTeam(this, Connection, AccessToken, groupId, teamCI.ToTeam(group.Visibility.Value));
+                        var updated = TeamsUtility.UpdateTeam(RequestHelper, groupId, teamCI.ToTeam(group.Visibility.Value));
                         WriteObject(updated);
                     }
                 }

@@ -10,8 +10,8 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADGroupMember")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Get-PnPEntraIDGroupMember")]
     public class GetAzureADGroupMember : PnPGraphCmdlet
     {
@@ -24,13 +24,13 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(this, Connection, AccessToken);
+                group = Identity.GetGroup(RequestHelper);
             }
 
             if (group != null)
             {
                 // Get members of the group
-                var members = ClearOwners.GetMembers(this, Connection, new Guid(group.Id), AccessToken);
+                var members = ClearOwners.GetMembers(RequestHelper, new Guid(group.Id));
                 WriteObject(members?.OrderBy(m => m.DisplayName), true);
             }
         }

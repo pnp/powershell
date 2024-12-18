@@ -1,15 +1,14 @@
-using System.Collections.Generic;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model;
-using PnP.PowerShell.Commands.Utilities.REST;
+using System.Collections.Generic;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADApp", DefaultParameterSetName = ParameterSet_Identity)]
-    [RequiredApiApplicationPermissions("graph/Application.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
     [Alias("Get-PnPEntraIDApp")]
     public class GetAzureADApp : PnPGraphCmdlet
     {
@@ -26,7 +25,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetApp(this, Connection, AccessToken));
+                WriteObject(Identity.GetApp(RequestHelper));
             }
             else
             {
@@ -41,7 +40,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         { "ConsistencyLevel", "eventual" }
                     };
                 }
-                var result = GraphHelper.GetResultCollection<AzureADApp>(this, Connection, requestUrl, AccessToken, additionalHeaders: additionalHeaders);
+                var result = RequestHelper.GetResultCollection<AzureADApp>(requestUrl, additionalHeaders: additionalHeaders);
                 WriteObject(result, true);
             }
         }

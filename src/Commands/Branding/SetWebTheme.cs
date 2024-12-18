@@ -10,7 +10,6 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Set, "PnPWebTheme")]
-
     public class SetWebTheme : PnPWebCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]

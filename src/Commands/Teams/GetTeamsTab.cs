@@ -8,8 +8,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsTab")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class GetTeamsTab : PnPGraphCmdlet
     {
 
@@ -24,19 +24,27 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
+                var channelId = Channel.GetId(RequestHelper, groupId);
                 if (!string.IsNullOrEmpty(channelId))
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        WriteObject(Identity.GetTab(this,Connection, AccessToken, groupId, channelId));
+                        var tab = Identity.GetTab(RequestHelper, groupId, channelId);
+                        if (tab != null)
+                        {
+                            WriteObject(tab);
+                        }
+                        else
+                        {
+                            WriteError(new PSArgumentException("Cannot find tab"), ErrorCategory.ObjectNotFound);
+                        }
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetTabs(this, AccessToken, Connection, groupId, channelId), true);
+                        WriteObject(TeamsUtility.GetTabs(RequestHelper, groupId, channelId), true);
                     }
                 }
                 else

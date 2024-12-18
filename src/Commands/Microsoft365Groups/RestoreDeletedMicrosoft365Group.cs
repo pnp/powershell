@@ -1,13 +1,13 @@
-﻿using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
+﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsData.Restore, "PnPDeletedMicrosoft365Group")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class RestoreDeletedMicrosoft365Group : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            WriteObject(ClearOwners.RestoreDeletedGroup(this, Connection, Identity.GetDeletedGroupId(this, Connection, AccessToken), AccessToken));
+            WriteObject(ClearOwners.RestoreDeletedGroup(RequestHelper, Identity.GetDeletedGroupId(RequestHelper)));
         }
     }
 }

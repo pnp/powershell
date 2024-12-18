@@ -1,14 +1,14 @@
-using System.Collections.Generic;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.AzureAD;
+using System.Collections.Generic;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADServicePrincipalAvailableAppRole")]
-    [RequiredApiApplicationPermissions("graph/Application.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRole>))]
     [Alias("Get-PnPEntraIDServicePrincipalAvailableAppRole")]
     public class GetAzureADServicePrincipalAvailableAppRole : PnPGraphCmdlet
@@ -21,16 +21,16 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            var principal = Principal.GetServicePrincipal(this, Connection, AccessToken);
+            var principal = Principal.GetServicePrincipal(RequestHelper);
 
-            if(principal == null)
+            if (principal == null)
             {
                 throw new PSArgumentException("Service principal not found", nameof(Principal));
             }
 
             WriteVerbose($"Requesting available app roles for service principal {principal.DisplayName}");
 
-            if(ParameterSpecified(nameof(Identity)))
+            if (ParameterSpecified(nameof(Identity)))
             {
                 var appRole = Identity.GetAvailableAppRole(Connection, AccessToken, principal);
                 WriteObject(appRole, false);

@@ -4,6 +4,7 @@ using System.Management.Automation;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Planner;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -34,7 +35,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
         }
 
-        public PlannerBucket GetBucket(Cmdlet cmdlet, PnPConnection connection, string accessToken, string planId)
+        public PlannerBucket GetBucket(ApiRequestHelper requestHelper, string planId)
         {
             // first try to get the bucket by id
             if (_bucket != null)
@@ -45,7 +46,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             {
                 try
                 {
-                    var buckets = PlannerUtility.GetBuckets(cmdlet, connection, accessToken, planId);
+                    var buckets = PlannerUtility.GetBuckets(requestHelper, planId);
                     if (buckets != null)
                     {
                         PlannerBucket bucket = null;

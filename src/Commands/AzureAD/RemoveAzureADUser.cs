@@ -1,14 +1,13 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Model.AzureAD;
-using PnP.PowerShell.Commands.Utilities.REST;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADUser")]
-    [RequiredApiApplicationPermissions("graph/User.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/User.ReadWrite.All")]
     [Alias("Remove-PnPEntraIDUser")]
     public class RemoveAzureADUser : PnPGraphCmdlet
     {
@@ -29,7 +28,7 @@ namespace PnP.PowerShell.Commands.Graph
                 return;
             }
 
-            if(WhatIf.ToBool())
+            if (WhatIf.ToBool())
             {
                 WriteVerbose($"Would delete user with Id {user.Id} if {nameof(WhatIf)} was not present");
                 return;
@@ -37,9 +36,9 @@ namespace PnP.PowerShell.Commands.Graph
 
             WriteVerbose($"Deleting user with Id {user.Id}");
 
-            var graphResult = GraphHelper.Delete(this, Connection, $"v1.0/users/{user.Id}", AccessToken);
+            var graphResult = RequestHelper.Delete($"v1.0/users/{user.Id}");
 
-            if(graphResult.StatusCode == System.Net.HttpStatusCode.NoContent)
+            if (graphResult.StatusCode == System.Net.HttpStatusCode.NoContent)
             {
                 WriteVerbose("User deleted successfully");
             }

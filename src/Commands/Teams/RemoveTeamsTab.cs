@@ -3,13 +3,12 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsTab")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class RemoveTeamsTab : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -27,21 +26,21 @@ namespace PnP.PowerShell.Commands.Teams
         protected override void ExecuteCmdlet()
         {
 
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
+                var channelId = Channel.GetId(RequestHelper, groupId);
                 if (channelId != null)
                 {
-                    var tab = Identity.GetTab(this, Connection, AccessToken, groupId, channelId);
+                    var tab = Identity.GetTab(RequestHelper, groupId, channelId);
                     if (tab != null)
                     {
                         if (Force || ShouldContinue("Removing the tab will remove the settings of this tab too.", Properties.Resources.Confirm))
                         {
-                            var response = TeamsUtility.DeleteTab(this, AccessToken, Connection, groupId, channelId, tab.Id);
+                            var response = TeamsUtility.DeleteTab(RequestHelper, groupId, channelId, tab.Id);
                             if (!response.IsSuccessStatusCode)
                             {
-                                if (GraphHelper.TryGetGraphException(response, out GraphException ex))
+                                if (RequestHelper.TryGetGraphException(response, out GraphException ex))
                                 {
                                     if (ex.Error != null)
                                     {

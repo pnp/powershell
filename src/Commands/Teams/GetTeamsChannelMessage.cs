@@ -7,8 +7,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Get, "PnPTeamsChannelMessage")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
 
     public class GetTeamsChannelMessage : PnPGraphCmdlet
     {
@@ -26,13 +26,13 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId == null)
             {
                 throw new PSArgumentException("Team not found");
             }
 
-            var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
+            var channelId = Channel.GetId(RequestHelper, groupId);
             if (channelId == null)
             {
                 throw new PSArgumentException("Channel not found");
@@ -45,12 +45,12 @@ namespace PnP.PowerShell.Commands.Teams
                     throw new PSArgumentException($"Don't specify {nameof(IncludeDeleted)} when using the {nameof(Identity)} parameter.");
                 }
 
-                var message = TeamsUtility.GetMessage(this, Connection, AccessToken, groupId, channelId, Identity.GetId());
+                var message = TeamsUtility.GetMessage(RequestHelper, groupId, channelId, Identity.GetId());
                 WriteObject(message);
             }
             else
             {
-                var messages = TeamsUtility.GetMessages(this, Connection, AccessToken, groupId, channelId, IncludeDeleted);
+                var messages = TeamsUtility.GetMessages(RequestHelper, groupId, channelId, IncludeDeleted);
                 WriteObject(messages, true);
             }
         }

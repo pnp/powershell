@@ -1,8 +1,8 @@
 ﻿
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Attributes;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Teams
@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Teams
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var app = Identity.GetApp(this, Connection, AccessToken);
+                var app = Identity.GetApp(RequestHelper);
                 if (app != null)
                 {
                     WriteObject(app);
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Teams
             }
             else
             {
-                WriteObject(TeamsUtility.GetApps(this, AccessToken, Connection), true);
+                WriteObject(TeamsUtility.GetApps(RequestHelper), true);
             }
         }
     }

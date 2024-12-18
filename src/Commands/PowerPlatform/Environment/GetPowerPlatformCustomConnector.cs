@@ -1,5 +1,4 @@
 ﻿using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
@@ -20,7 +19,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
         protected override void ExecuteCmdlet()
         {
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             var powerAppsUrl = PowerPlatformUtility.GetPowerAppsEndpoint(Connection.AzureEnvironment);
 
             if (ParameterSpecified(nameof(Identity)))
@@ -29,14 +28,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
 
                 WriteVerbose($"Retrieving specific Custom Connector with the provided name '{appName}' within the environment '{environmentName}'");
 
-                var result = GraphHelper.Get<Model.PowerPlatform.Environment.PowerPlatformConnector>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apis/{appName}?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", PowerAppsServiceAccessToken);
+                var result = ArmRequestHelper.Get<Model.PowerPlatform.Environment.PowerPlatformConnector>( $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apis/{appName}?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'");
                 WriteObject(result, false);
             }
             else
             {
                 WriteVerbose($"Retrieving all Connectors within environment '{environmentName}'");
 
-                var connectors = GraphHelper.GetResultCollection<Model.PowerPlatform.Environment.PowerPlatformConnector>(this, Connection, $"{powerAppsUrl}/providers/Microsoft.PowerApps/apis?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'", PowerAppsServiceAccessToken);
+                var connectors = ArmRequestHelper.GetResultCollection<Model.PowerPlatform.Environment.PowerPlatformConnector>( $"{powerAppsUrl}/providers/Microsoft.PowerApps/apis?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'");
                 WriteObject(connectors, true);
             }
         }

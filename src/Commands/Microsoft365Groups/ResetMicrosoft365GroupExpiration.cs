@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Reset, "PnPMicrosoft365GroupExpiration")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class ResetMicrosoft365GroupExpiration : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            ClearOwners.Renew(this, Connection, AccessToken, Identity.GetGroupId(this, Connection, AccessToken));
+            ClearOwners.Renew(RequestHelper, Identity.GetGroupId(RequestHelper));
         }
     }
 }

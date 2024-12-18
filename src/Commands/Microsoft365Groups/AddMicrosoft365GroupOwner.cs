@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupOwner")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class AddMicrosoft365GroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            ClearOwners.AddOwners(this, Connection, Identity.GetGroupId(this, Connection, AccessToken), Users, AccessToken, RemoveExisting);
+            ClearOwners.AddOwners(RequestHelper, Identity.GetGroupId(RequestHelper), Users, RemoveExisting);
         }
     }
 }

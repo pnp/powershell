@@ -9,7 +9,7 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Set, "PnPAzureADGroup")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Set-PnPEntraIDGroup")]
     public class SetAzureADGroup : PnPGraphCmdlet
     {
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(this, Connection, AccessToken);
+                group = Identity.GetGroup(RequestHelper);
             }
 
             if (group != null)
@@ -77,22 +77,22 @@ namespace PnP.PowerShell.Commands.Graph
 
                     if (changed)
                     {
-                        AzureADGroupsUtility.Update(this, Connection, AccessToken, group);
+                        AzureADGroupsUtility.Update(RequestHelper, group);
                     }
 
                     if (ParameterSpecified(nameof(Owners)))
                     {
-                        ClearOwners.UpdateOwners(this, Connection, new Guid(group.Id), AccessToken, Owners);
+                        ClearOwners.UpdateOwners(RequestHelper, new Guid(group.Id), Owners);
                     }
                     if (ParameterSpecified(nameof(Members)))
                     {
-                        ClearOwners.UpdateMembersAsync(this, Connection, new Guid(group.Id), AccessToken, Members);
+                        ClearOwners.UpdateMembersAsync(RequestHelper, new Guid(group.Id), Members);
                     }
 
                     if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                     {
                         // For this scenario a separate call needs to be made
-                        Utilities.ClearOwners.SetVisibility(this, Connection, AccessToken, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients);
+                        Utilities.ClearOwners.SetVisibility(RequestHelper, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients);
                     }
                 }
                 catch (Exception e)

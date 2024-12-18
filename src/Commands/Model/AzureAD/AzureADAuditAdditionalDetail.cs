@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PnP.PowerShell.Commands.Model.AzureAD
+﻿namespace PnP.PowerShell.Commands.Model.AzureAD
 {
     public class AzureADAuditAdditionalDetail
     {

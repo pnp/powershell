@@ -1,5 +1,6 @@
 ﻿using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -36,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 
         public string Id => _id;
 
-        public string GetId(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId)
+        public string GetId(ApiRequestHelper requestHelper, string groupId)
         {
             if (!string.IsNullOrEmpty(_id))
             {
@@ -44,21 +45,21 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var channels = TeamsUtility.GetChannels(cmdlet, accessToken, connection, groupId);
+                var channels = TeamsUtility.GetChannels(requestHelper, groupId);
                 return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase))?.Id;
             }
         }
 
-        public TeamChannel GetChannel(Cmdlet cmdlet, PnPConnection connection, string accessToken, string groupId, bool useBeta = false)
+        public TeamChannel GetChannel(ApiRequestHelper requestHelper, string groupId, bool useBeta = false)
         {
             if (!string.IsNullOrEmpty(_id))
             {
-                var channel = TeamsUtility.GetChannel(cmdlet, accessToken, connection, groupId, _id, useBeta);
+                var channel = TeamsUtility.GetChannel(requestHelper, groupId, _id, useBeta);
                 return channel;
             }
             else
             {
-                var channels = TeamsUtility.GetChannels(cmdlet, accessToken, connection, groupId, useBeta);
+                var channels = TeamsUtility.GetChannels(requestHelper, groupId, useBeta);
                 if (channels != null && channels.Any())
                 {
                     return channels.FirstOrDefault(c => c.DisplayName.Equals(_displayName, StringComparison.OrdinalIgnoreCase));

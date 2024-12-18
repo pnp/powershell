@@ -1,6 +1,5 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
-
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -8,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Add, "PnPAvailableSiteClassification")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Add-PnPSiteClassification")]
     [WriteAliasWarning("Please use 'Add-PnPAvailableSiteClassification'. The alias 'Add-PnPSiteClassification' will be removed in a future release.")]
     [OutputType(typeof(void))]

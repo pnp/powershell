@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.CompliancePolicy;
 using PnP.PowerShell.Commands.Base.Completers;

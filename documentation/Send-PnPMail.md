@@ -20,7 +20,7 @@ Allows sending an e-mail
 Send-PnPMail -From <String> -To <String[]> -Subject <String> -Body <String> [-Cc <String[]>] [-Bcc <String[]>] [-ReplyTo <String[]>] [-Importance <MessageImportanceType>] [-BodyContentType <MessageBodyContentType>] [-SaveToSentItems <bool>] [-Connection <PnPConnection>] [-Verbose] [-Attachments <String[]>]
 ```
 
-### Send through Microsoft Graph with attachments from SPO
+### Send through Microsoft Graph with attachments from SharePoint Online
 
 ```powershell
 Send-PnPMail -From <String> -To <String[]> -Subject <String> -Body <String> [-Cc <String[]>] [-Bcc <String[]>] [-ReplyTo <String[]>] [-Importance <MessageImportanceType>] [-BodyContentType <MessageBodyContentType>] [-SaveToSentItems <bool>] [-Connection <PnPConnection>] [-Verbose] [-Files <String[]>]
@@ -35,6 +35,8 @@ Send-PnPMail -To <String[]> -Subject <String> -Body <String> [-Cc <String[]>] [-
 ## DESCRIPTION
 
 Allows sending an e-mail through SharePoint Online or Microsoft Graph. Sending e-mail through Microsoft Graph requires the **Mail.Send** permission.
+
+In October 2025, [Microsoft will remove the API](https://support.microsoft.com/office/retirement-of-the-sharepoint-sendemail-api-b35bbab1-7d09-455f-8737-c2de63fe0821) which is being used to send e-mail through SharePoint. It is therefore highly recommended to use the Microsoft Graph option listed above instead.
 
 ## EXAMPLES
 

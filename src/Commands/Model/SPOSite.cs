@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Online.SharePoint.TenantAdministration;
-using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client.Sharing;
 
 namespace PnP.PowerShell.Commands.Model

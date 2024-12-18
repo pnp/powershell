@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PnP.PowerShell.Commands.Model.SharePoint
+﻿namespace PnP.PowerShell.Commands.Model.SharePoint
 {
     public sealed class ListDefaultColumnValue
     {

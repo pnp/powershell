@@ -1,17 +1,17 @@
 ﻿
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
 using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
-using PnP.PowerShell.Commands.Attributes;
-using PnP.PowerShell.Commands.Model.Graph;
 using System.Text.RegularExpressions;
 
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Add, "PnPTeamsTab")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class AddTeamsTab : PnPGraphCmdlet, IDynamicParameters
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
@@ -66,10 +66,10 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
+                var channelId = Channel.GetId(RequestHelper, groupId);
                 if (channelId != null)
                 {
                     try
@@ -119,7 +119,7 @@ namespace PnP.PowerShell.Commands.Teams
                                     break;
                                 }
                         }
-                        WriteObject(TeamsUtility.AddTab(this, Connection, AccessToken, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl));
+                        WriteObject(TeamsUtility.AddTab(RequestHelper, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl));
                     }
                     catch (GraphException ex)
                     {

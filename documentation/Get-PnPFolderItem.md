@@ -19,14 +19,21 @@ List files and/or subfolders in a folder
 Get-PnPFolderItem [-FolderSiteRelativeUrl <String>] [-ItemType <String>] [-ItemName <String>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
-### Folder via pipebind
+### Folder via folder pipebind
 ```powershell
 Get-PnPFolderItem [-Identity <FolderPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Recursive] [-Verbose] [-Connection <PnPConnection>] 
+```
+
+### Folder via list pipebind
+```powershell
+Get-PnPFolderItem [-List <ListPipeBind>] [-ItemType <String>] [-ItemName <String>] [-Includes <string[]>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
 
 This cmdlet allows listing of all the content in a folder. It can be used to list all files and folders in a folder and optionally all its subfolders.
+
+When working with a document library containing over 5,000 items in it, you will need to use the -List parameter to specify the document library in order to be able to retrieve the Files and Folders in it. It will always recursively retrieve all files and folders in the document library. It is still possible to use -ItemType to restrict the results to only files or folders. You can also use -Includes to fetch additional properties of the files and folders. Start the property name with "File." or "Folder." followed by the property name of the file or folder. For example, to include the file version history report, pass in -Includes "File.VersionExpirationReport".
 
 Use [Get-PnPFileInFolder](Get-PnPFileInFolder.md) to retrieve only files and [Get-PnPFolderInFolder](Get-PnPFolderInFolder.md) to retrieve only folders allowing additional properties of the returned items to be requested.
 
@@ -151,6 +158,20 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -List
+The document library to retrieve the files and folders from. This parameter is required when working with document libraries containing over 5,000 items.
+
+```yaml
+Type: ListPipeBind
+Parameter Sets: Folder via list pipebind
+
+Required: False
+Position: 0
+Default value: None
+Accept pipeline input: True
 Accept wildcard characters: False
 ```
 

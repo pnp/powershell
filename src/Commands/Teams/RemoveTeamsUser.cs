@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTeamsUser")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     public class RemoveTeamsUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -25,14 +25,14 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId != null)
             {
                 try
                 {
                     if (Force || ShouldContinue($"Remove user with UPN {User}?", Properties.Resources.Confirm))
                     {
-                        TeamsUtility.DeleteUser(this, Connection, AccessToken, groupId, User, Role);
+                        TeamsUtility.DeleteUser(RequestHelper, groupId, User, Role);
                     }
                 }
                 catch (GraphException ex)

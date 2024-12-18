@@ -57,7 +57,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 }
             }
 
-            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(this, Connection, Connection.AzureEnvironment, AccessToken)?.Name;
+            var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             var appName = Identity.GetName();
 
             var wrapper = PowerAppsUtility.GetWrapper(Connection.HttpClient, environmentName, AccessToken, appName, Connection.AzureEnvironment);

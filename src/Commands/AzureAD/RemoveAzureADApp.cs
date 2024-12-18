@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADApp")]
-    [RequiredApiApplicationPermissions("graph/Application.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
     [Alias("Remove-PnPEntraIDApp")]
     public class RemoveAzureADApp : PnPGraphCmdlet
     {
@@ -18,11 +18,11 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ExecuteCmdlet()
         {
-            var app = Identity.GetApp(this, Connection, AccessToken);
+            var app = Identity.GetApp(RequestHelper);
 
             if (Force || ShouldContinue($"Remove app '{app.DisplayName}' with id '{app.Id}'", Properties.Resources.Confirm))
             {
-                Utilities.REST.GraphHelper.Delete(this, Connection, $"/v1.0/applications/{app.Id}", AccessToken);
+                RequestHelper.Delete($"/v1.0/applications/{app.Id}");
             }
         }
     }

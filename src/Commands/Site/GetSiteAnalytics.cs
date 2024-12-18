@@ -1,5 +1,4 @@
-﻿using Microsoft.SharePoint.Client;
-using PnP.Core.Model.SharePoint;
+﻿using PnP.Core.Model.SharePoint;
 using System;
 using System.Management.Automation;
 

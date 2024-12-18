@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Microsoft365Groups
 {
     [Cmdlet(VerbsCommon.Get, "PnPMicrosoft365ExpiringGroup")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
     public class GetMicrosoft365ExpiringGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
@@ -18,10 +18,10 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         [Parameter(Mandatory = false)]
         public int Limit = 31;
-        
+
         protected override void ExecuteCmdlet()
-        {       
-            var expiringGroups = ClearOwners.GetExpiringGroup(this, Connection, AccessToken, Limit, IncludeSiteUrl, IncludeOwners);
+        {
+            var expiringGroups = ClearOwners.GetExpiringGroup(RequestHelper, Limit, IncludeSiteUrl, IncludeOwners);
 
             WriteObject(expiringGroups.OrderBy(p => p.DisplayName), true);
         }

@@ -2,15 +2,15 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
-using System.Linq;
 using System;
+using System.Linq;
 using System.Management.Automation;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Add, "PnPAzureADGroupOwner")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Add-PnPEntraIDGroupOwner")]
     public class AddAzureAdGroupOwner : PnPGraphCmdlet
     {
@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(this, Connection, AccessToken);
+                group = Identity.GetGroup(RequestHelper);
             }
 
             if (group != null)
@@ -41,14 +41,14 @@ namespace PnP.PowerShell.Commands.Graph
 
                 if (userArray.Length > 0)
                 {
-                    ClearOwners.AddOwners(this, Connection, new System.Guid(group.Id), userArray, AccessToken, RemoveExisting.ToBool());
+                    ClearOwners.AddOwners(RequestHelper, new System.Guid(group.Id), userArray, RemoveExisting.ToBool());
                 }
 
                 var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
 
                 if (secGroups.Length > 0)
                 {
-                    ClearOwners.AddDirectoryOwners(this, Connection, new System.Guid(group.Id), secGroups, AccessToken, RemoveExisting.ToBool());
+                    ClearOwners.AddDirectoryOwners(RequestHelper, new System.Guid(group.Id), secGroups, RemoveExisting.ToBool());
                 }
             }
         }

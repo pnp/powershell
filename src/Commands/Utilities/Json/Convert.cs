@@ -1,8 +1,6 @@
 using System;
-using System.Buffers;
 using System.Collections.Generic;
 using System.Management.Automation;
-using System.Text;
 using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Utilities.JSON

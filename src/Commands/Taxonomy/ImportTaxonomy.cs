@@ -1,7 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
-
 using File = System.IO.File;
 using System.Linq;
 

@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var externalConnectionId = ConnectionId.GetExternalConnectionId(this, Connection, AccessToken) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(RequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
 
             switch(ParameterSetName)
             {
@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Search
             WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
             var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}/schema";
-            var results = Utilities.REST.GraphHelper.Patch(this, Connection, AccessToken, jsonContent, graphApiUrl);
+            var results = RequestHelper.Patch(jsonContent, graphApiUrl);
             
             WriteVerbose("Trying to retrieve location header from response which can be used to poll for the status of the schema operation");
             if(results.Headers.TryGetValues("Location", out var location) && location.Any())
@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.Search
                     do
                     {
                         WriteVerbose("Polling schema operation status");
-                        var schemaOperationResult = Utilities.REST.GraphHelper.Get<Model.Graph.OperationStatus>(this, Connection, schemaOperationStatusUrl, AccessToken);
+                        var schemaOperationResult = RequestHelper.Get<Model.Graph.OperationStatus>(schemaOperationStatusUrl);
 
                         if(!string.IsNullOrEmpty(schemaOperationResult.Status))
                         {

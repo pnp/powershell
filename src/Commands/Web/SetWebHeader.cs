@@ -1,6 +1,5 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Net.Http;
@@ -110,7 +109,7 @@ namespace PnP.PowerShell.Commands
                     var stringContent = new StringContent("{" + string.Join(",", setSiteBackgroundImageInstructions) + ",\"type\":2,\"aspect\":0}");
                     stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                     CurrentWeb.EnsureProperties(p => p.Url);
-                    var result = GraphHelper.Post(this, Connection, $"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", AccessToken, stringContent);
+                    var result = RequestHelper.PostHttpContent($"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", stringContent);
                     WriteVerbose($"Response from setsitelogo request: {result.StatusCode}");
                 }
             }
@@ -129,7 +128,7 @@ namespace PnP.PowerShell.Commands
             var stringContent = new StringContent($"{{\"relativeLogoUrl\":\"{imageUrl}\",\"type\":0,\"aspect\":{aspect}}}");
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             CurrentWeb.EnsureProperties(p => p.Url);
-            var result = GraphHelper.Post(this, Connection, $"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", AccessToken, stringContent);
+            var result = RequestHelper.PostHttpContent($"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", stringContent);
             WriteVerbose($"Response from {imageType} request: {result.StatusCode}");
         }
     }

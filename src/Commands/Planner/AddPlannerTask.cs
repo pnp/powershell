@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.Planner
                 var chunks = BatchUtility.Chunk(AssignedTo, 20);
                 foreach (var chunk in chunks)
                 {
-                    var userIds = BatchUtility.GetPropertyBatched(this, Connection, AccessToken, chunk.ToArray(), "/users/{0}", "id");
+                    var userIds = BatchUtility.GetPropertyBatched(RequestHelper, chunk.ToArray(), "/users/{0}", "id");
                     foreach (var userId in userIds)
                     {
                         newTask.Assignments.Add(userId.Value, new TaskAssignment());
@@ -110,32 +110,32 @@ namespace PnP.PowerShell.Commands.Planner
             // By Group
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(this, Connection, AccessToken);
+                var groupId = Group.GetGroupId(RequestHelper);
                 if (groupId == null)
                 {
                     throw new PSArgumentException("Group not found", nameof(Group));
                 }
 
-                var planId = Plan.GetId(this, Connection, AccessToken, groupId);
+                var planId = Plan.GetId(RequestHelper, groupId);
                 if (planId == null)
                 {
                     throw new PSArgumentException("Plan not found", nameof(Plan));
                 }
                 newTask.PlanId = planId;
 
-                var bucket = Bucket.GetBucket(this, Connection, AccessToken, planId);
+                var bucket = Bucket.GetBucket(RequestHelper, planId);
                 if (bucket == null)
                 {
                     throw new PSArgumentException("Bucket not found", nameof(Bucket));
                 }
                 newTask.BucketId = bucket.Id;
 
-                createdTask = PlannerUtility.AddTask(this, Connection, AccessToken, newTask);
+                createdTask = PlannerUtility.AddTask(RequestHelper, newTask);
             }
             // By PlanId
             else
             {
-                var bucket = Bucket.GetBucket(this, Connection, AccessToken, PlanId);
+                var bucket = Bucket.GetBucket(RequestHelper, PlanId);
                 if (bucket == null)
                 {
                     throw new PSArgumentException("Bucket not found", nameof(Bucket));
@@ -144,13 +144,13 @@ namespace PnP.PowerShell.Commands.Planner
                 newTask.PlanId = PlanId;
                 newTask.BucketId = bucket.Id;
 
-                createdTask = PlannerUtility.AddTask(this, Connection, AccessToken, newTask);
+                createdTask = PlannerUtility.AddTask(RequestHelper, newTask);
             }
 
             if (ParameterSpecified(nameof(Description)))
             {
-                var existingTaskDetails = PlannerUtility.GetTaskDetails(this, Connection, AccessToken, createdTask.Id, false);
-                PlannerUtility.UpdateTaskDetails(this, Connection, AccessToken, existingTaskDetails, Description);
+                var existingTaskDetails = PlannerUtility.GetTaskDetails(RequestHelper, createdTask.Id, false);
+                PlannerUtility.UpdateTaskDetails(RequestHelper, existingTaskDetails, Description);
                 createdTask.HasDescription = true;
             }
 

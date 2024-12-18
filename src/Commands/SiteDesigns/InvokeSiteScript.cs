@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands
                     else
                     {
                         WriteVerbose($"Executing provided script");
-                        result = PnP.PowerShell.Commands.Utilities.SiteTemplates.InvokeSiteScript(this, Connection, AccessToken, Script, hostUrl).Items;
+                        result = Utilities.SiteTemplates.InvokeSiteScript(RequestHelper, Script, hostUrl).Items;
                     }
                     break;
 
@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands
                         else
                         {
                             WriteVerbose($"Executing site script '{script.Title}' ({script.Id})");
-                            result = PnP.PowerShell.Commands.Utilities.SiteTemplates.InvokeSiteScript(this, Connection, AccessToken, script, hostUrl).Items;
+                            result =Utilities.SiteTemplates.InvokeSiteScript(RequestHelper, script, hostUrl).Items;
                         }
                     }
                     break;

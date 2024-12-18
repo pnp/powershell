@@ -3,7 +3,6 @@ using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint;
 using PnP.PowerShell.Commands.Properties;
-
 using System;
 using System.Management.Automation;
 

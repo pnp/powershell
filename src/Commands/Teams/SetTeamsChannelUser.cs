@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Set, "PnPTeamsChannelUser")]
-    [RequiredApiApplicationPermissions("graph/ChannelMember.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/ChannelMember.ReadWrite.All")]
     public class SetTeamsChannelUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -26,19 +26,19 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(this, Connection, AccessToken);
+            var groupId = Team.GetGroupId(RequestHelper);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
             }
 
-            var channelId = Channel.GetId(this, Connection, AccessToken, groupId);
+            var channelId = Channel.GetId(RequestHelper, groupId);
             if (channelId == null)
             {
                 throw new PSArgumentException("Channel not found");
             }
 
-            var membershipId = Identity.GetId(this, Connection, AccessToken, groupId, channelId);
+            var membershipId = Identity.GetId(RequestHelper, groupId, channelId);
             if (string.IsNullOrEmpty(membershipId))
             {
                 throw new PSArgumentException("User was not found in the specified Teams channel");
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             try
             {
-                var updatedMember = TeamsUtility.UpdateChannelMember(this, Connection, AccessToken, groupId, channelId, membershipId, Role);
+                var updatedMember = TeamsUtility.UpdateChannelMember(RequestHelper, groupId, channelId, membershipId, Role);
                 WriteObject(updatedMember);
             }
             catch (GraphException ex)

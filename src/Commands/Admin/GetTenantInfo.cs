@@ -1,7 +1,6 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
-using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
@@ -33,11 +32,11 @@ namespace PnP.PowerShell.Commands.Admin
             }
 
             WriteVerbose("Acquiring access token for Microsoft Graph to look up Tenant");
-            var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
+            //var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
             var requestUrl = BuildRequestUrl();
 
             WriteVerbose($"Making call to {requestUrl} to request tenant information");
-            var results = GraphHelper.Get<Model.TenantInfo>(this, Connection, requestUrl, graphAccessToken);
+            var results = this.RequestHelper.Get<Model.TenantInfo>(requestUrl);
             WriteObject(results, true);
         }
 

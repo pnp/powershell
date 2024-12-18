@@ -1,8 +1,6 @@
 ﻿using PnP.Framework.Provisioning.Model;
-
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant

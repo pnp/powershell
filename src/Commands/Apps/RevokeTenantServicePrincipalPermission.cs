@@ -10,8 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Revoke, "PnPTenantServicePrincipalPermission")]
-    [RequiredApiApplicationPermissions("graph/Directory.ReadWrite.All")]
-
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
     public class RevokeTenantServicePrincipal : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -30,7 +29,7 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 var spoWebAppServicePrincipal = new SPOWebAppServicePrincipal(tenantContext);
                 var appId = spoWebAppServicePrincipal.EnsureProperty(a => a.AppId);
-                var results = GraphHelper.Get<RestResultCollection<ServicePrincipal>>(this, Connection, $"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id", AccessToken);
+                var results = RequestHelper.Get<RestResultCollection<ServicePrincipal>>($"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id");
                 if (results.Items.Any())
                 {
                     if (Force || ShouldContinue($"Revoke permission {Scope}?", Properties.Resources.Confirm))

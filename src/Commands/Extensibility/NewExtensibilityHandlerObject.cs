@@ -1,7 +1,5 @@
 ﻿using System.Management.Automation;
-
 using PnP.Framework.Provisioning.Model;
-
 
 namespace PnP.PowerShell.Commands.Extensibility
 {

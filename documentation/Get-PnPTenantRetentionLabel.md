@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPRetentionLabel.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantRetentionLabel.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPRetentionLabel
+title: Get-PnPTenantRetentionLabel
 ---
   
-# Get-PnPRetentionLabel
+# Get-PnPTenantRetentionLabel
 
 ## SYNOPSIS
 Gets the Microsoft Purview retention labels that are available within the tenant
@@ -15,7 +15,7 @@ Gets the Microsoft Purview retention labels that are available within the tenant
 ## SYNTAX
 
 ```powershell
-Get-PnPRetentionLabel [-Identity <Guid>] [-Connection <PnPConnection>] 
+Get-PnPTenantRetentionLabel [-Identity <Guid>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -25,14 +25,14 @@ This cmdlet allows retrieval of the available Microsoft Purview retention labels
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPRetentionLabel
+Get-PnPTenantRetentionLabel
 ```
 
 Returns all the Microsoft Purview retention labels that exist on the tenant
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPRetentionLabel -Identity 58f77809-9738-5080-90f1-gh7afeba2995
+Get-PnPTenantRetentionLabel -Identity 58f77809-9738-5080-90f1-gh7afeba2995
 ```
 
 Returns a specific Microsoft Purview retention label by its id

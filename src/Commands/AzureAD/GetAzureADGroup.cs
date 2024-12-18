@@ -8,8 +8,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureADGroup")]
-    [RequiredApiApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Get-PnPEntraIDGroup")]
     public class GetAzureADGroup : PnPGraphCmdlet
     {
@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (Identity != null)
             {
-                var group = Identity.GetGroup(this, Connection, AccessToken);
+                var group = Identity.GetGroup(RequestHelper);
                 if (group != null)
                 {
                     WriteObject(group);
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Graph
             }
             else
             {
-                var groups = AzureADGroupsUtility.GetGroups(this, Connection, AccessToken);
+                var groups = AzureADGroupsUtility.GetGroups(RequestHelper);
                 if (groups != null)
                 {
                     WriteObject(groups?.OrderBy(m => m.DisplayName), true);

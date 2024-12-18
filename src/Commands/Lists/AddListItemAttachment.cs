@@ -1,11 +1,8 @@
 ﻿using PnP.Core.Model.SharePoint;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Management.Automation;
-using System.Text;
 
 namespace PnP.PowerShell.Commands.Lists
 {

@@ -8,7 +8,7 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.Graph
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAzureADGroup")]
-    [RequiredApiApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Remove-PnPEntraIDGroup")]
     public class RemoveAzureADGroup : PnPGraphCmdlet
     {
@@ -19,11 +19,11 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (Identity != null)
             {
-                Group group = Identity.GetGroup(this, Connection, AccessToken);
+                Group group = Identity.GetGroup(RequestHelper);
 
                 if (group != null)
                 {
-                    ClearOwners.RemoveGroup(this, Connection, new System.Guid(group.Id), AccessToken);
+                    ClearOwners.RemoveGroup(RequestHelper, new System.Guid(group.Id));
                 }
             }
         }

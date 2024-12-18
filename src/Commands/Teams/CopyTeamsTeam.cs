@@ -13,7 +13,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Teams
 {
     [Cmdlet(VerbsCommon.Copy, "PnPTeamsTeam")]
-    [RequiredApiApplicationPermissions("graph/Team.Create")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Team.Create")]
     public class CopyTeamsTeam : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -47,8 +47,8 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(this, Connection, AccessToken);
-            
+            var groupId = Identity.GetGroupId(RequestHelper);
+
             if (groupId == null)
             {
                 throw new PSArgumentException("Team not found", nameof(Identity));
@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.Teams
             * but currently ignored and can't be set by user */
             teamClone.MailNickName = DisplayName;
             teamClone.Visibility = (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString());
-            TeamsUtility.CloneTeam(this, AccessToken, Connection, groupId, teamClone);
+            TeamsUtility.CloneTeam(RequestHelper, groupId, teamClone);
         }
     }
 }

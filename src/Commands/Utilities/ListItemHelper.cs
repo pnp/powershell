@@ -423,21 +423,22 @@ namespace PnP.PowerShell.Commands.Utilities
                                         var label = string.Empty;
                                         var itemId = Guid.Empty;
 
-                                        if (!Guid.TryParse(arrayItem as string, out termGuid))
+                                        if (!Guid.TryParse(arrayItem?.ToString(), out termGuid))
                                         {
-                                            var batchedTerm = batch.GetCachedTerm(termGuid.ToString());
+                                            var batchedTerm = batch.GetCachedTerm(arrayItem?.ToString());
                                             if (batchedTerm.key == null)
                                             {
-                                                taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(arrayItem as string) as Term;
+                                                taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(arrayItem?.ToString()) as Term;
                                                 if (taxonomyItem == null)
                                                 {
-                                                    throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
+                                                    throw new PSInvalidOperationException($"Cannot find term '{arrayItem}'");
                                                 }
                                                 var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
                                                 clientContext.ExecuteQueryRetry();
                                                 label = labelResult.Value;
                                                 itemId = taxonomyItem.Id;
-                                                batch.CacheTerm(termGuid.ToString(), termGuid, label);
+                                                batch.CacheTerm(arrayItem?.ToString(), itemId, label);
+                                                batch.CacheTerm(itemId.ToString(), itemId, label);
                                             }
                                             else
                                             {
@@ -467,10 +468,12 @@ namespace PnP.PowerShell.Commands.Utilities
                                                 itemId = batchedTerm.id;
                                                 label = batchedTerm.label;
                                             }
-                                            fieldValueCollection.Values.Add(field.NewFieldTaxonomyValue(itemId, label));
                                         }
-                                        item[key as string] = fieldValueCollection;
+
+                                        fieldValueCollection.Values.Add(field.NewFieldTaxonomyValue(itemId, label));
                                     }
+
+                                    item[key as string] = fieldValueCollection;
                                 }
                                 else
                                 {

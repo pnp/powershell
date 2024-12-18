@@ -1,6 +1,5 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-
 using PnP.PowerShell.Commands.Base;
 using Microsoft.Online.SharePoint.TenantAdministration;
 using PnP.PowerShell.Commands.Base.PipeBinds;
