@@ -4294,6 +4294,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPVivaEngageCommunity.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPVivaEngageCommunity.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPWeb.md",
       "output": {
         ".html": {
@@ -5118,6 +5128,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/New-PnPUser.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPVivaEngageCommunity.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPVivaEngageCommunity.html"
         }
       },
       "version": ""
@@ -6368,6 +6388,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPVivaConnectionsDashboardACE.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPVivaEngageCommunity.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPVivaEngageCommunity.html"
         }
       },
       "version": ""
