@@ -415,13 +415,7 @@ namespace PnP.PowerShell.Commands.Admin
         public InformationBarriersMode? DefaultOneDriveInformationBarrierMode { get; set; }
 
         [Parameter(Mandatory = false)]
-        public bool? DelayDenyAddAndCustomizePagesEnforcement { get; set; }
-
-        [Parameter(Mandatory = false)]
         public SharingCapabilities? CoreSharingCapability { get; set; }
-
-        [Parameter(Mandatory = false)]
-        public bool? EnableVersionExpirationSetting { get; set; }
 
         [Parameter(Mandatory = false)]
         public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInOneDrive;
@@ -1447,21 +1441,12 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
-            if (DelayDenyAddAndCustomizePagesEnforcement.HasValue)
-            {
-                Tenant.DelayDenyAddAndCustomizePagesEnforcement = DelayDenyAddAndCustomizePagesEnforcement.Value;
-                modified = true;
-            }
             if (CoreSharingCapability.HasValue)
             {
                 Tenant.CoreSharingCapability = CoreSharingCapability.Value;
                 modified = true;
             }
-            if (EnableVersionExpirationSetting.HasValue)
-            {
-                Tenant.EnableVersionExpirationSetting = EnableVersionExpirationSetting.Value;
-                modified = true;
-            }
+
             if (BlockUserInfoVisibilityInOneDrive.HasValue)
             {
                 Tenant.BlockUserInfoVisibilityInOneDrive = BlockUserInfoVisibilityInOneDrive.Value;
