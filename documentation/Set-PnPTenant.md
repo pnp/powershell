@@ -138,7 +138,6 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableSensitivityLabelForPDF <Boolean>]
  [-IsDataAccessInCardDesignerEnabled <Boolean>]
  [-CoreSharingCapability <SharingCapabilities>]
- [-EnableVersionExpirationSetting <Boolean>]
  [-BlockUserInfoVisibilityInOneDrive <TenantBrowseUserInfoPolicyValue>]
  [-AllowOverrideForBlockUserInfoVisibility <Boolean>]
  [-AllowEveryoneExceptExternalUsersClaimInPrivateSite <Boolean>]
@@ -159,7 +158,6 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-CoreDefaultShareLinkRole <Role>] 
  [-GuestSharingGroupAllowListInTenantByPrincipalIdentity <string[]>]
  [-OneDriveSharingCapability <SharingCapabilities>]
- [-DelayDenyAddAndCustomizePagesEnforcement <Boolean>]
  [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>]
  [-SelfServiceSiteCreationDisabled <Boolean>]
  [-SyncAadB2BManagementPolicy]
@@ -447,25 +445,6 @@ Setting this value to "none" will default "get a link" to the most permissive li
 Type: SharingLinkType
 Parameter Sets: (All)
 Accepted values: None, Direct, Internal, AnonymousAccess
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -DelayDenyAddAndCustomizePagesEnforcement
-This parameter controls how SharePoint will deal with sites where custom scripts are allowed.
-
-The valid values are:
-
-False (default) - for site collections where administrators enabled the ability to add custom script, SharePoint will revoke that ability within 24 hours from the last time this setting was changed.
-True - All changes performed by administrators to custom script settings are preserved.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -2475,19 +2454,6 @@ Type: SharingCapabilities
 Parameter Sets: (All)
 Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -EnableVersionExpirationSetting
-Sets intelligent version deleting options and default organization limits.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None

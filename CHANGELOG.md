@@ -119,6 +119,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Removed `Set-PnPMinimalDownloadStrategy` as it's not applicable anymore to SharePoint Online. If you need the functionality you can always turn on the feature with `Enable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a` or turn it off with `Disable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a`
 - Removed `-SPOManagementShell` parameter from `Connect-PnPOnline` cmdlet. It reduces the risk of changes coming from Microsoft. Use your own Entra ID app instead.
 - Removed `Set-PnPTraceLog` cmdlet and introduced `Start-PnPTraceLog` and `Stop-PnPTraceLog` with similar parameters.
+- Removed `-DelayDenyAddAndCustomizePagesEnforcement` parameter from `Set-PnPTenant` cmdlet as it is no longer valid , removed from underlying SDK and its value can't be changed.
+- Removed `-EnableVersionExpirationSetting` parameter from `Set-PnPTenant` cmdlet as it is now enabled by default.
  
 ### Contributors
 
