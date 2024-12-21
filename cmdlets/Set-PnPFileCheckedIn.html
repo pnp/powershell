@@ -86,8 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Checks in a file.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPFileCheckedIn [-Url] &lt;String&gt; [-CheckInType &lt;CheckInType&gt;] [-Comment &lt;String&gt;] [-Approve]
- [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Set-PnPFileCheckedIn -Url &lt;String&gt; [-CheckInType &lt;CheckInType&gt;] [-Comment &lt;String&gt;] [-Approve] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet checks in a single file, optionally with a comment.</p>
@@ -95,8 +94,12 @@
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Set-PnPFileCheckedIn -Url &quot;/Documents/Contract.docx&quot;
 </code></pre>
-<p>Checks in the file &quot;Contract.docx&quot; in the &quot;Documents&quot; library</p>
+<p>Checks in the file &quot;Contract.docx&quot; in the &quot;Documents&quot; library located in the root site collection</p>
 <h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPFileCheckedIn -Url &quot;/sites/news/Documents/Article.docx&quot;
+</code></pre>
+<p>Checks in the file &quot;Article.docx&quot; in the &quot;Documents&quot; library located in the site collection called news</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Set-PnPFileCheckedIn -Url &quot;/Documents/Contract.docx&quot; -CheckInType MinorCheckIn -Comment &quot;Smaller changes&quot;
 </code></pre>
 <p>Checks in the file &quot;Contract.docx&quot; in the &quot;Documents&quot; library as a minor version and adds the check in comment &quot;Smaller changes&quot;</p>

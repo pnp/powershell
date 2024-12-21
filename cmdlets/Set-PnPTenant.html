@@ -208,7 +208,6 @@
  [-EnableSensitivityLabelForPDF &lt;Boolean&gt;]
  [-IsDataAccessInCardDesignerEnabled &lt;Boolean&gt;]
  [-CoreSharingCapability &lt;SharingCapabilities&gt;]
- [-EnableVersionExpirationSetting &lt;Boolean&gt;]
  [-BlockUserInfoVisibilityInOneDrive &lt;TenantBrowseUserInfoPolicyValue&gt;]
  [-AllowOverrideForBlockUserInfoVisibility &lt;Boolean&gt;]
  [-AllowEveryoneExceptExternalUsersClaimInPrivateSite &lt;Boolean&gt;]
@@ -229,7 +228,6 @@
  [-CoreDefaultShareLinkRole &lt;Role&gt;] 
  [-GuestSharingGroupAllowListInTenantByPrincipalIdentity &lt;string[]&gt;]
  [-OneDriveSharingCapability &lt;SharingCapabilities&gt;]
- [-DelayDenyAddAndCustomizePagesEnforcement &lt;Boolean&gt;]
  [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled &lt;Boolean&gt;]
  [-SelfServiceSiteCreationDisabled &lt;Boolean&gt;]
  [-SyncAadB2BManagementPolicy]
@@ -445,20 +443,6 @@ Setting this value to &quot;none&quot; will default &quot;get a link&quot; to th
 <pre><code class="lang-yaml">Type: SharingLinkType
 Parameter Sets: (All)
 Accepted values: None, Direct, Internal, AnonymousAccess
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-delaydenyaddandcustomizepagesenforcement">-DelayDenyAddAndCustomizePagesEnforcement</h3>
-<p>This parameter controls how SharePoint will deal with sites where custom scripts are allowed.</p>
-<p>The valid values are:</p>
-<p>False (default) - for site collections where administrators enabled the ability to add custom script, SharePoint will revoke that ability within 24 hours from the last time this setting was changed.
-True - All changes performed by administrators to custom script settings are preserved.</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -2000,16 +1984,6 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 Accepted values: Disabled, ExternalUserSharingOnly, ExternalUserAndGuestSharing, ExistingExternalUserSharingOnly
 
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-enableversionexpirationsetting">-EnableVersionExpirationSetting</h3>
-<p>Sets intelligent version deleting options and default organization limits.</p>
-<pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
