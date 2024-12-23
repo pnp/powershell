@@ -197,8 +197,6 @@ namespace PnP.PowerShell.Commands.Model
 
         public SharingCapabilities? CoreSharingCapability { private set; get; }
 
-        public bool? EnableVersionExpirationSetting { private set; get; }
-
         public TenantBrowseUserInfoPolicyValue? BlockUserInfoVisibilityInOneDrive { private set; get; }
 
         public bool? AllowOverrideForBlockUserInfoVisibility { private set; get; }
@@ -744,7 +742,6 @@ namespace PnP.PowerShell.Commands.Model
             try { AppBypassInformationBarriers = tenant.AppBypassInformationBarriers; } catch { }
             try { if (tenant.DefaultODBMode != null) DefaultOneDriveInformationBarrierMode = Enum.Parse<InformationBarriersMode>(tenant.DefaultODBMode); } catch { }
             try { CoreSharingCapability = tenant.CoreSharingCapability; } catch { }
-            try { EnableVersionExpirationSetting = tenant.EnableVersionExpirationSetting; } catch { }
             try { BlockUserInfoVisibilityInOneDrive = tenant.BlockUserInfoVisibilityInOneDrive; } catch { }
             try { AllowOverrideForBlockUserInfoVisibility = tenant.AllowOverrideForBlockUserInfoVisibility; } catch { }
             try { AllowEveryoneExceptExternalUsersClaimInPrivateSite = tenant.AllowEveryoneExceptExternalUsersClaimInPrivateSite; } catch { }
@@ -767,7 +764,7 @@ namespace PnP.PowerShell.Commands.Model
             try { OneDriveDefaultLinkToExistingAccess = tenant.OneDriveDefaultLinkToExistingAccess; } catch { }
             try { OneDriveBlockGuestsAsSiteAdmin = tenant.OneDriveBlockGuestsAsSiteAdmin; } catch { }
             try { RecycleBinRetentionPeriod = tenant.RecycleBinRetentionPeriod; } catch { }
-            try { EnableAIPIntegration =  tenant.EnableAIPIntegration; } catch { }
+            try { EnableAIPIntegration = tenant.EnableAIPIntegration; } catch { }
             try { CoreDefaultShareLinkScope = tenant.CoreDefaultShareLinkScope; } catch { }
             try { CoreDefaultShareLinkRole = tenant.CoreDefaultShareLinkRole; } catch { }
             try { SharePointAddInsDisabled = tenant.SharePointAddInsDisabled; } catch { }
@@ -778,4 +775,3 @@ namespace PnP.PowerShell.Commands.Model
         }
     }
 }
-    

@@ -15,8 +15,7 @@ Checks in a file.
 ## SYNTAX
 
 ```powershell
-Set-PnPFileCheckedIn [-Url] <String> [-CheckInType <CheckInType>] [-Comment <String>] [-Approve]
- [-Connection <PnPConnection>] 
+Set-PnPFileCheckedIn -Url <String> [-CheckInType <CheckInType>] [-Comment <String>] [-Approve] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -29,9 +28,16 @@ This cmdlet checks in a single file, optionally with a comment.
 Set-PnPFileCheckedIn -Url "/Documents/Contract.docx"
 ```
 
-Checks in the file "Contract.docx" in the "Documents" library
+Checks in the file "Contract.docx" in the "Documents" library located in the root site collection
 
 ### EXAMPLE 2
+```powershell
+Set-PnPFileCheckedIn -Url "/sites/news/Documents/Article.docx"
+```
+
+Checks in the file "Article.docx" in the "Documents" library located in the site collection called news
+
+### EXAMPLE 3
 ```powershell
 Set-PnPFileCheckedIn -Url "/Documents/Contract.docx" -CheckInType MinorCheckIn -Comment "Smaller changes"
 ```
