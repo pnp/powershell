@@ -13,7 +13,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPTeamsUser.htm
 
 **Required Permissions**
 
-  * Microsoft Graph API: Group.ReadWrite.All
+  * Microsoft Graph API: Group.ReadWrite.All, TeamMember.ReadWrite.All
 
 Removes a user from a team.
 
@@ -44,6 +44,13 @@ Remove-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 
 Removes the user john@doe.com from the owners of the team, but retains the user as a member.
 
+### EXAMPLE 3
+```powershell
+Remove-PnPTeamsUser -Team MyTeam -Users "john@doe.com","jane@doe.com","mark@doe.com"
+```
+
+Removes the users john@doe.com, jane@doe.com and mark@doe.com from the team.
+
 ## PARAMETERS
 
 ### -Force
@@ -67,7 +74,7 @@ Specify the role of the user you are removing from the team. Accepts "Owner" and
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: (User)
 
 Required: False
 Position: Named
@@ -95,7 +102,21 @@ Specify the UPN (e.g. john@doe.com)
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: (User)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Users
+Specify the list of UPN (e.g. john@doe.com)
+
+```yaml
+Type: String
+Parameter Sets: (Users)
 
 Required: True
 Position: Named
