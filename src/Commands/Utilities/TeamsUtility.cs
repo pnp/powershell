@@ -627,6 +627,26 @@ namespace PnP.PowerShell.Commands.Utilities
             return result;
         }
 
+        public static void DeleteUsers(ApiRequestHelper requestHelper, string groupId, string[] upn, string role)
+        {
+            var teamChannelMember = new List<TeamChannelMember>();
+            if (upn != null && upn.Length > 0)
+            {
+                foreach (var user in upn)
+                {
+                    teamChannelMember.Add(new TeamChannelMember() { Roles = null, UserIdentifier = $"https://{requestHelper.GraphEndPoint}/v1.0/users('{user}')" });
+                }
+                if (teamChannelMember.Count > 0)
+                {
+                    var chunks = BatchUtility.Chunk(teamChannelMember, 200);
+                    foreach (var chunk in chunks.ToList())
+                    {
+                        requestHelper.Post($"v1.0/teams/{groupId}/members/remove", new { values = chunk.ToList() });
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region Channel
