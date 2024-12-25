@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API: Group.ReadWrite.All</li>
+<li>Microsoft Graph API: Group.ReadWrite.All, TeamMember.ReadWrite.All</li>
 </ul>
 <p>Removes a user from a team.</p>
 <h2 id="syntax">SYNTAX</h2>
@@ -104,6 +104,10 @@
 <pre><code class="lang-powershell">Remove-PnPTeamsUser -Team MyTeam -User john@doe.com -Role Owner
 </code></pre>
 <p>Removes the user john@doe.com from the owners of the team, but retains the user as a member.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Remove-PnPTeamsUser -Team MyTeam -Users &quot;john@doe.com&quot;,&quot;jane@doe.com&quot;,&quot;mark@doe.com&quot;
+</code></pre>
+<p>Removes the users john@doe.com, jane@doe.com and mark@doe.com from the team.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-force">-Force</h3>
 <p>Specifying the Force parameter will skip the confirmation question.</p>
@@ -121,7 +125,7 @@ Accept wildcard characters: False
 If specified as &quot;Member&quot; then the specified user is removed from the Team completely even if they were the owner of the Team. If &quot;Owner&quot; is specified in the -Role parameter then the
 specified user is removed as an owner of the team but stays as a team member. Defaults to &quot;Member&quot;. Note: The last owner cannot be removed from the team.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: (User)
 
 Required: False
 Position: Named
@@ -143,7 +147,18 @@ Accept wildcard characters: False
 <h3 id="-user">-User</h3>
 <p>Specify the UPN (e.g. john@doe.com)</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+Parameter Sets: (User)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-users">-Users</h3>
+<p>Specify the list of UPN (e.g. john@doe.com)</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (Users)
 
 Required: True
 Position: Named
