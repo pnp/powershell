@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Purview
                     return;
                 }
 
-                url = $"/beta/users/{user.UserPrincipalName}/security/informationProtection/sensitivityLabels";
+                url = $"/beta/users/{user.Id.Value}/security/informationProtection/sensitivityLabels";
             }
             else
             {
