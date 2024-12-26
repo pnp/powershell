@@ -48,7 +48,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ListPermissionScopes` parameter on `Get-PnPAccessToken` cmdlet to list the current permission scopes on the current access token.
 - Added `Get-PnPCopilotAgent` cmdlet that returns the Microsoft Copilot Agents in a site collection.
 - Added `Get-PnPFileRetentionLabel` cmdlet to fetch the file retention labels. [#4603](https://github.com/pnp/powershell/pull/4603)
-- Added `Get/Set/Remove-PnPUserProfilePhoto` cmdlet to download, upload or remove the profile photo of the specified user.
+- Added `Get/Set/Remove-PnPUserProfilePhoto` cmdlets to download, upload or remove the profile photo of the specified user.
+- Added `New/Get/Remove/Update-PnPTodoList` cmdlets to manage Todo lists.
 
 ### Changed
 
