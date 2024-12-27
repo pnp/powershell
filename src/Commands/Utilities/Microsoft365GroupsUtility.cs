@@ -2,7 +2,6 @@ using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -301,10 +300,8 @@ namespace PnP.PowerShell.Commands.Utilities
                         "@odata.id", $"https://{requestHelper.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
                     }
                 };
-                    var stringContent = new StringContent(JsonSerializer.Serialize(postData));
-                    stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-                    requestHelper.Post($"v1.0/groups/{groupId}/{groupName}/$ref", stringContent);
+                    requestHelper.Post($"v1.0/groups/{groupId}/{groupName}/$ref", postData);
                 }
             }
         }
@@ -319,10 +316,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                 };
 
-                var stringContent = new StringContent(JsonSerializer.Serialize(postData));
-                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-
-                requestHelper.Post($"v1.0/groups/{groupId}/{groupName}/$ref", stringContent);
+                requestHelper.Post($"v1.0/groups/{groupId}/{groupName}/$ref", postData);
             }
         }
 

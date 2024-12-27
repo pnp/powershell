@@ -469,10 +469,8 @@ namespace PnP.PowerShell.Commands.Utilities
                         "@odata.id", $"https://{requestHelper.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
                     }
                 };
-                var stringContent = new StringContent(JsonSerializer.Serialize(postData));
-                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-                requestHelper.Post($"v1.0/groups/{groupId}/{role.ToLower()}s/$ref", stringContent);
+                requestHelper.Post($"v1.0/groups/{groupId}/{role.ToLower()}s/$ref", postData);
             }
         }
 
