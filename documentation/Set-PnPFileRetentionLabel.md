@@ -19,7 +19,7 @@ Retrieves the retention label information for a file in SharePoint.
 
 ## SYNTAX
 ```powershell
-Set-PnPFileRetentionLabel -Url <String> [-isRecordLocked <Boolean>] [-retentionLabel <String>] [-Connection <PnPConnection>]
+Set-PnPFileRetentionLabel -Url <String> [-RecordLocked <Boolean>] [-retentionLabel <String>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
