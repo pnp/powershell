@@ -27,6 +27,7 @@ namespace PnP.PowerShell.Commands.Model.VivaEngage
         /// Privacy setting of the Viva Engage community
         /// </summary>
         [JsonPropertyName("privacy")]
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public CommunityPrivacy Privacy { get; set; }
 
         /// <summary>

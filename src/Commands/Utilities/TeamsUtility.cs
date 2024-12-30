@@ -469,10 +469,8 @@ namespace PnP.PowerShell.Commands.Utilities
                         "@odata.id", $"https://{requestHelper.GraphEndPoint}/v1.0/users/{idProperty.GetString()}"
                     }
                 };
-                var stringContent = new StringContent(JsonSerializer.Serialize(postData));
-                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-                requestHelper.Post($"v1.0/groups/{groupId}/{role.ToLower()}s/$ref", stringContent);
+                requestHelper.Post($"v1.0/groups/{groupId}/{role.ToLower()}s/$ref", postData);
             }
         }
 
@@ -625,6 +623,26 @@ namespace PnP.PowerShell.Commands.Utilities
             var result = requestHelper.Patch(updateUserEndpoint, teamUser);
 
             return result;
+        }
+
+        public static void DeleteUsers(ApiRequestHelper requestHelper, string groupId, string[] upn, string role)
+        {
+            var teamChannelMember = new List<TeamChannelMember>();
+            if (upn != null && upn.Length > 0)
+            {
+                foreach (var user in upn)
+                {
+                    teamChannelMember.Add(new TeamChannelMember() { Roles = null, UserIdentifier = $"https://{requestHelper.GraphEndPoint}/v1.0/users('{user}')" });
+                }
+                if (teamChannelMember.Count > 0)
+                {
+                    var chunks = BatchUtility.Chunk(teamChannelMember, 200);
+                    foreach (var chunk in chunks.ToList())
+                    {
+                        requestHelper.Post($"v1.0/teams/{groupId}/members/remove", new { values = chunk.ToList() });
+                    }
+                }
+            }
         }
 
         #endregion
