@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Grant-PnPAzureADAppSitePermission | PnP PowerShell </title>
+    <title>Set-PnPVivaEngageCommunity | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Grant-PnPAzureADAppSitePermission | PnP PowerShell ">
+    <meta name="title" content="Set-PnPVivaEngageCommunity | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,44 +77,29 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="grant-pnpazureadappsitepermission">Grant-PnPAzureADAppSitePermission</h1>
+  <h1 id="set-pnpvivaengagecommunity">Set-PnPVivaEngageCommunity</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API: Sites.FullControl.All</li>
-</ul>
-<p>Adds permissions for a given Azure Active Directory application registration.</p>
+<p>Updates the Viva engage community in the tenant.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &lt;Guid&gt; -DisplayName &lt;String&gt; -Permissions &lt;Read|Write|Manage|FullControl&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Set-PnPVivaEngageCommunity [[-Identity] &lt;string&gt;] [[-DisplayName] &lt;string&gt;] [[-Description] &lt;string&gt;][[-Privacy] &lt;CommunityPrivacy&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet adds permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected.</p>
+<p>Updates the Viva engage community.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;aa37b89e-75a7-47e3-bdb6-b763851c61b6&quot; -DisplayName &quot;TestApp&quot; -Permissions Read
+<pre><code class="lang-powershell">Set-PnPVivaEngageCommunity -Identity &quot;eyJfdHlwZSI6Ikdyb3VwIiwiaWQiOiIyMTI0ODA3MTI3MDQifQ&quot; -DisplayName &quot;New Viva Community&quot;
 </code></pre>
-<p>Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'Read' access for the currently connected site collection.</p>
+<p>This will update the display name of the Viva Engage community in the tenant with the specified Id.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;aa37b89e-75a7-47e3-bdb6-b763851c61b6&quot; -DisplayName &quot;TestApp&quot; -Permissions FullControl -Site https://contoso.sharepoint.com/sites/projects
+<pre><code class="lang-powershell">Set-PnPVivaEngageCommunity -Identity &quot;eyJfdHlwZSI6Ikdyb3VwIiwiaWQiOiIyMTI0ODA3MTI3MDQifQ&quot; -DisplayName &quot;New Viva Community&quot; -Description &quot;Updated description&quot; -Privacy Private
 </code></pre>
-<p>Adds permissions for the Azure Active Directory application registration with the specific application id and sets the rights to 'FullControl' access for the site collection at the provided URL.</p>
+<p>This will update the display name, description and privacy setting of the Viva Engage community in the tenant with the specified Id.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-appid">-AppId</h3>
-<p>Specify the AppId of the Azure Active Directory application registration to grant permission for.</p>
-<pre><code class="lang-yaml">Type: Guid
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
@@ -126,38 +111,48 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The Id of the Viva engage community.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-displayname">-DisplayName</h3>
-<p>The display name to set for the application permission you're adding. Only for visual reference purposes, does not need to match the name of the application in Azure Active Directory.</p>
+<p>The updated display name of the Viva engage community.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-permissions">-Permissions</h3>
-<p>Specifies the permissions to set for the Azure Active Directory application registration which can either be Read, Write, Manage or FullControl.</p>
+<h3 id="-description">-Description</h3>
+<p>The updated description of the Viva engage community.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
-Required: True
-Accepted values: Read, Write, Manage, FullControl
+Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-site">-Site</h3>
-<p>Optional url of a site to set the permissions for. Defaults to the current site if not provided.</p>
-<pre><code class="lang-yaml">Type: SitePipeBind
+<h3 id="-privacy">-Privacy</h3>
+<p>The updated privacy setting of the Viva engage community. Available values are <code>Public</code> and <code>Private</code>.</p>
+<pre><code class="lang-yaml">Type: CommunityPrivacy
 Parameter Sets: (All)
 
-Required: True
+Required: False
 Position: Named
-Default value: Currently connected site
-Accept pipeline input: False
+Default value: None
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
