@@ -16,11 +16,19 @@ namespace PnP.PowerShell.Commands.PronounSettings
     {
         protected override void ExecuteCmdlet()
         {
-            WriteVerbose("Getting access token for Microsoft Graph");
-            var requestUrl = $"/v1.0/admin/people/pronouns";
+            try
+            {
+                WriteVerbose("Getting access token for Microsoft Graph");
+                var requestUrl = $"/v1.0/admin/people/pronouns";
 
-            var pronouns = RequestHelper.Get<Model.Graph.PronounsSettings>(requestUrl);
-            WriteObject(pronouns, false);
+                var pronouns = RequestHelper.Get<Model.Graph.PronounsSettings>(requestUrl);
+                WriteObject(pronouns, false);
+            }
+            catch (Exception e)
+            {
+                WriteError(new ErrorRecord(new Exception("Make sure you have neccesary access via Application permissions or Delegated permissions, To help understand the required permissions visit https://learn.microsoft.com/en-us/graph/api/peopleadminsettings-list-pronouns?view=graph-rest-1.0&tabs=http#permissions"), e.Message, ErrorCategory.AuthenticationError, null));
+            }
+
         }
     }
 }
