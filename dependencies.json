@@ -1,6 +1,6 @@
 {
-  "Updated": "20250103-024452",
+  "Updated": "20250104-024421",
   "PnPPowerShell": "b12b889561d980e934eb8b10be2e92075accdb9a",
-  "PnPFramework": "01dbeb77ccf0c461eaafd2d76915e0862fb8856e",
-  "PnPCore": "52afdb1d9a35a8bb7e0af35fba460062204f8449"
+  "PnPFramework": "d9830f1d29608bc76f8c31999a215bb766d5c66e",
+  "PnPCore": "f204aea368973dd1987cb13e8ff7224e52282d0c"
 }
