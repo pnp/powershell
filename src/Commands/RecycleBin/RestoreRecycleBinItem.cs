@@ -25,6 +25,11 @@ namespace PnP.PowerShell.Commands.RecycleBin
             {
                 var recycleBinItem = Identity.GetRecycleBinItem(Connection.PnPContext);
 
+                if (recycleBinItem == null)
+                {
+                    throw new PSArgumentException("Recycle bin item not found with the ID specified", nameof(Identity));
+                }
+
                 if (Force || ShouldContinue(string.Format(Resources.RestoreRecycleBinItem, recycleBinItem.LeafName), Resources.Confirm))
                 {
                     recycleBinItem.Restore();
