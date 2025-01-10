@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 {
 
 
-    internal static class BatchUtility
+    internal static class GraphBatchUtility
     {
         internal static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source, int chunksize)
         {

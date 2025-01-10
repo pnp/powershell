@@ -97,10 +97,10 @@ namespace PnP.PowerShell.Commands.Planner
             {
                 var errors = new List<Exception>();
                 newTask.Assignments = new Dictionary<string, TaskAssignment>();
-                var chunks = BatchUtility.Chunk(AssignedTo, 20);
+                var chunks = GraphBatchUtility.Chunk(AssignedTo, 20);
                 foreach (var chunk in chunks)
                 {
-                    var userIds = BatchUtility.GetPropertyBatched(RequestHelper, chunk.ToArray(), "/users/{0}", "id");
+                    var userIds = GraphBatchUtility.GetPropertyBatched(RequestHelper, chunk.ToArray(), "/users/{0}", "id");
                     foreach (var userId in userIds.Results)
                     {
                         newTask.Assignments.Add(userId.Value, new TaskAssignment());

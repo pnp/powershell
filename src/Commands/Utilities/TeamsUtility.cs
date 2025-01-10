@@ -249,7 +249,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
                 if (teamOwnersAndMembers.Count > 0)
                 {
-                    var ownersAndMembers = BatchUtility.Chunk(teamOwnersAndMembers, 200);
+                    var ownersAndMembers = GraphBatchUtility.Chunk(teamOwnersAndMembers, 200);
                     foreach (var chunk in ownersAndMembers)
                     {
                         requestHelper.Post($"v1.0/teams/{group.Id}/members/add", new { values = chunk.ToList() });
@@ -485,7 +485,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 if (teamChannelMember.Count > 0)
                 {
-                    var chunks = BatchUtility.Chunk(teamChannelMember, 200);
+                    var chunks = GraphBatchUtility.Chunk(teamChannelMember, 200);
                     foreach (var chunk in chunks.ToList())
                     {
                         requestHelper.Post($"v1.0/teams/{groupId}/members/add", new { values = chunk.ToList() });
@@ -636,7 +636,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 if (teamChannelMember.Count > 0)
                 {
-                    var chunks = BatchUtility.Chunk(teamChannelMember, 200);
+                    var chunks = GraphBatchUtility.Chunk(teamChannelMember, 200);
                     foreach (var chunk in chunks.ToList())
                     {
                         requestHelper.Post($"v1.0/teams/{groupId}/members/remove", new { values = chunk.ToList() });
