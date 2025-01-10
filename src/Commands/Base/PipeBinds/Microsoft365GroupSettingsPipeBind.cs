@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var groups = ClearOwners.GetGroupSettings(requestHelper);
+                var groups = Microsoft365GroupsUtility.GetGroupSettings(requestHelper);
                 if (groups != null)
                 {
                     var group = groups.Value.Find(p => p.DisplayName.Equals(DisplayName));

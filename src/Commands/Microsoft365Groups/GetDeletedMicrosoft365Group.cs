@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
             else
             {
-                var groups = ClearOwners.GetDeletedGroups(RequestHelper);
+                var groups = Microsoft365GroupsUtility.GetDeletedGroups(RequestHelper);
                 WriteObject(groups.OrderBy(g => g.DisplayName), true);
             }
         }

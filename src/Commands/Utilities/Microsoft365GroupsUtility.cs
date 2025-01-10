@@ -11,7 +11,7 @@ using System.Threading;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
-    internal static class ClearOwners
+    internal static class Microsoft365GroupsUtility
     {
         internal static IEnumerable<Microsoft365Group> GetGroups(ApiRequestHelper requestHelper, bool includeSiteUrl, bool includeOwners, string filter = null, bool includeSensitivityLabels = false)
         {

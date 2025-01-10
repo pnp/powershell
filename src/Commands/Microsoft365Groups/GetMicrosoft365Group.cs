@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
             else
             {
-                var groups = ClearOwners.GetGroups(RequestHelper, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels);
+                var groups = Microsoft365GroupsUtility.GetGroups(RequestHelper, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels);
 
                 WriteObject(groups.OrderBy(p => p.DisplayName), true);
             }
