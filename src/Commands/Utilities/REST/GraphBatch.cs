@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     {
                         var error = (JsonElement)errorObject;
                         var request = batch.Requests.First(r => r.Id == response.Id);
-
+                        returnValue.Add(value,"");
                         errors.Add(new Exception($"An error occured for request id {request.Id}:{request.Url} => {error.ToString()}"));
                     }
                 }
@@ -113,7 +113,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     {
                         var error = (JsonElement)errorObject;
                         var request = batch.Requests.First(r => r.Id == response.Id);
-
+                        returnValue.Add(itemId,default(T[]));
                         errors.Add(new Exception($"An error occured for request id {request.Id}:{request.Url} => {error.ToString()}"));
                     }
                 }

@@ -13,9 +13,15 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class Microsoft365GroupsUtility
     {
-        internal static IEnumerable<Microsoft365Group> GetGroups(ApiRequestHelper requestHelper, bool includeSiteUrl, bool includeOwners, string filter = null, bool includeSensitivityLabels = false)
+        internal class GroupsResult
         {
-            var errors =new List<Exception>();
+            public IEnumerable<Microsoft365Group> Groups;
+            public List<Exception> Errors;
+        }
+
+        internal static GroupsResult GetGroups(ApiRequestHelper requestHelper, bool includeSiteUrl, bool includeOwners, string filter = null, bool includeSensitivityLabels = false)
+        {
+            var errors = new List<Exception>();
             var items = new List<Microsoft365Group>();
             string requestUrl = "v1.0/groups";
             Dictionary<string, string> additionalHeaders = null;
@@ -50,7 +56,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             items.First(i => i.Id.ToString() == ownerResult.Key).Owners = ownerResult.Value;
                         }
-                        if(ownerResults.Errors.Any())
+                        if (ownerResults.Errors.Any())
                         {
                             errors.AddRange(ownerResults.Errors);
                         }
@@ -66,7 +72,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
                         }
-                        if(results.Errors.Any())
+                        if (results.Errors.Any())
                         {
                             errors.AddRange(results.Errors);
                         }
@@ -81,18 +87,18 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             items.First(i => i.Id.ToString() == sensitivityLabel.Key).AssignedLabels = sensitivityLabel.Value?.ToList();
                         }
-                        if(sensitivityLabelResults.Errors.Any())
+                        if (sensitivityLabelResults.Errors.Any())
                         {
                             errors.AddRange(sensitivityLabelResults.Errors);
                         }
                     }
                 }
             }
-            if(errors.Any())
-            {
-                throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
-            }
-            return items;
+            // if(errors.Any())
+            // {
+            //     throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
+            // }
+            return new GroupsResult { Groups = items, Errors = errors };
         }
 
         internal static Microsoft365Group GetGroup(ApiRequestHelper requestHelper, Guid groupId, bool includeSiteUrl, bool includeOwners, bool detailed, bool includeSensitivityLabels)
@@ -195,7 +201,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static IEnumerable<Microsoft365Group> GetExpiringGroup(ApiRequestHelper requestHelper, int limit, bool includeSiteUrl, bool includeOwners)
+        internal static GroupsResult GetExpiringGroup(ApiRequestHelper requestHelper, int limit, bool includeSiteUrl, bool includeOwners)
         {
             var items = new List<Microsoft365Group>();
             var errors = new List<Exception>();
@@ -225,7 +231,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             items.First(i => i.Id.ToString() == ownerResult.Key).Owners = ownerResult.Value;
                         }
-                        if(ownerResults.Errors.Any())
+                        if (ownerResults.Errors.Any())
                         {
                             errors.AddRange(ownerResults.Errors);
                         }
@@ -242,14 +248,14 @@ namespace PnP.PowerShell.Commands.Utilities
                         {
                             items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
                         }
-                        if(results.Errors.Any())
+                        if (results.Errors.Any())
                         {
                             errors.AddRange(results.Errors);
                         }
                     }
                 }
             }
-            return items;
+            return new GroupsResult { Groups = items, Errors = errors };
         }
 
         internal static Microsoft365Group GetDeletedGroup(ApiRequestHelper requestHelper, Guid groupId)
