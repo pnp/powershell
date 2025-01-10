@@ -52,7 +52,9 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     else if (response.Body.TryGetValue("error", out object errorObject))
                     {
                         var error = (JsonElement)errorObject;
-                        errors.Add(new Exception(error.ToString()));
+                        var request = batch.Requests.First(r => r.Id == response.Id);
+                        
+                        errors.Add(new Exception($"An error occured for request id {request.Id}:{request.Url} => {error.ToString()}"));
                     }
                 }
 
