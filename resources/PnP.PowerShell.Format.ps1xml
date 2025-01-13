@@ -3127,6 +3127,36 @@
           </TableRowEntry>
         </TableRowEntries>
       </TableControl>
-    </View>   
+    </View>
+    <View>
+      <Name>CheckedOutFile</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Model.SharePoint.CheckedOutFile</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>ServerRelativeUrl</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>CheckedOutByEmail</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>ServerRelativeUrl</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <ScriptBlock>$_.CheckedOutBy.Email</ScriptBlock>
+              </TableColumnItem>
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>     
   </ViewDefinitions>
 </Configuration>
