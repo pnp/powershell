@@ -15,12 +15,12 @@ title: Get-PnPTenantPronounsSettings
 
   * Microsoft Graph API : One of PeopleSettings.Read.All, PeopleSettings.ReadWrite.All
   
-Retrieve information about pronouns settings in the organization
+Retrieve the current setting for the availability of using pronouns in the organization
 
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantPronounsSettings [-Verbose] [-Connection <PnPConnection>] 
+Get-PnPTenantPronounsSettings [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -34,15 +34,7 @@ This cmdlet can be used to retrieve tenant wide pronounsSettings properties.
 Get-PnPTenantPronounsSettings
 ```
 
-This cmdlet can be used to retrieve tenant wide pronounsSettings properties. The response is the collection of [pronounsSettings](https://learn.microsoft.com/en-us/graph/api/resources/pronounssettings?view=graph-rest-1.0)
-
-Below is the JSON Representation of the resource type. 
-
-```json
-{
-  "isEnabledInOrganization": "Boolean"
-}
-```
+Retrieves the tenant-wide pronouns settings
 
 ## PARAMETERS
 
@@ -59,21 +51,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Verbose
-When provided, additional debug statements will be shown while executing the cmdlet.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://learn.microsoft.com/en-us/graph/api/peopleadminsettings-list-pronouns?view=graph-rest-1.0&tabs=http)
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/peopleadminsettings-list-pronouns)
