@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTenantPronounsSettings.html
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTenantPronounsSetting.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Set-PnPTenantPronounsSettings
+title: Set-PnPTenantPronounsSetting
 ---
   
-# Set-PnPTenantPronounsSettings
+# Set-PnPTenantPronounsSetting
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Allows allowing configuring the tenant-wide pronouns settings
 ## SYNTAX
 
 ```powershell
-Set-PnPTenantPronounsSettings [-Connection <PnPConnection>] 
+Set-PnPTenantPronounsSetting [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -31,14 +31,14 @@ Allows allowing or disallowing users configuring their own desired pronouns in t
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPTenantPronounsSettings -IsEnabledInOrganization:$true
+Set-PnPTenantPronounsSetting -IsEnabledInOrganization:$true
 ```
 
 Enables allowing users to configure their own desired pronouns in their user profile.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPTenantPronounsSettings -IsEnabledInOrganization:$false
+Set-PnPTenantPronounsSetting -IsEnabledInOrganization:$false
 ```
 
 Disables users from configuring their own desired pronouns in their user profile.

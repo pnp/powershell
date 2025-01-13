@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantPronounsSettings.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPTenantPronounsSetting.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPTenantPronounsSettings
+title: Get-PnPTenantPronounsSetting
 ---
   
-# Get-PnPTenantPronounsSettings
+# Get-PnPTenantPronounsSetting
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Retrieve the current setting for the availability of using pronouns in the organ
 ## SYNTAX
 
 ```powershell
-Get-PnPTenantPronounsSettings [-Connection <PnPConnection>] 
+Get-PnPTenantPronounsSetting [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -31,7 +31,7 @@ This cmdlet can be used to retrieve tenant wide pronounsSettings properties.
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPTenantPronounsSettings
+Get-PnPTenantPronounsSetting
 ```
 
 Retrieves the tenant-wide pronouns settings
