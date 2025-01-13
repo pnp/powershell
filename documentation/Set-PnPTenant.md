@@ -173,6 +173,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-StreamLaunchConfig <Int32>]
  [-EnableMediaReactions <Boolean>]
  [-ContentSecurityPolicyEnforcement <Boolean>]
+ [-DisableSpacesActivation <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
