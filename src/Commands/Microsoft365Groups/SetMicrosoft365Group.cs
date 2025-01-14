@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 if (changed)
                 {
                     WriteVerbose("Updating Microsoft 365 Group properties in Microsoft Graph");
-                    group = ClearOwners.Update(RequestHelper, group);
+                    group = Microsoft365GroupsUtility.Update(RequestHelper, group);
                 }
 
                 if (ParameterSpecified(nameof(AllowExternalSenders)) && AllowExternalSenders.HasValue)
@@ -127,17 +127,17 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 if (exchangeOnlinePropertiesChanged)
                 {
                     WriteVerbose("Updating Microsoft 365 Group Exchange Online properties through Microsoft Graph");
-                    group = ClearOwners.UpdateExchangeOnlineSetting(RequestHelper, group.Id.Value, group);
+                    group = Microsoft365GroupsUtility.UpdateExchangeOnlineSetting(RequestHelper, group.Id.Value, group);
                 }
 
                 if (ParameterSpecified(nameof(Owners)))
                 {
-                    ClearOwners.UpdateOwners(RequestHelper, group.Id.Value, Owners);
+                    Microsoft365GroupsUtility.UpdateOwners(RequestHelper, group.Id.Value, Owners);
                 }
 
                 if (ParameterSpecified(nameof(Members)))
                 {
-                    ClearOwners.UpdateMembersAsync(RequestHelper, group.Id.Value, Members);
+                    Microsoft365GroupsUtility.UpdateMembersAsync(RequestHelper, group.Id.Value, Members);
                 }
 
                 if (ParameterSpecified(nameof(LogoPath)))
@@ -146,14 +146,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     {
                         LogoPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, LogoPath);
                     }
-                    ClearOwners.UploadLogoAsync(RequestHelper, group.Id.Value, LogoPath);
+                    Microsoft365GroupsUtility.UploadLogoAsync(RequestHelper, group.Id.Value, LogoPath);
                 }
 
                 if (ParameterSpecified(nameof(CreateTeam)))
                 {
                     if (!group.ResourceProvisioningOptions.Contains("Team"))
                     {
-                        ClearOwners.CreateTeam(RequestHelper, group.Id.Value);
+                        Microsoft365GroupsUtility.CreateTeam(RequestHelper, group.Id.Value);
                     }
                     else
                     {
@@ -164,7 +164,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                 {
                     // For this scenario a separate call needs to be made
-                    ClearOwners.SetVisibility(RequestHelper, group.Id.Value, HideFromAddressLists, HideFromOutlookClients);
+                    Microsoft365GroupsUtility.SetVisibility(RequestHelper, group.Id.Value, HideFromAddressLists, HideFromOutlookClients);
                 }
 
                 var assignedLabels = new List<AssignedLabels>();
@@ -183,7 +183,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                                 });
                             }
                         }
-                        ClearOwners.SetSensitivityLabels(RequestHelper, group.Id.Value, assignedLabels);
+                        Microsoft365GroupsUtility.SetSensitivityLabels(RequestHelper, group.Id.Value, assignedLabels);
                     }
                     else
                     {

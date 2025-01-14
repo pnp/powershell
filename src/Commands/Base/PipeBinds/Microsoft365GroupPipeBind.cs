@@ -50,15 +50,15 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             Microsoft365Group group = null;
             if (Group != null)
             {
-                group = ClearOwners.GetGroup(requestHelper, _group.Id.Value, includeSite, includeOwners, detailed, includeSensitivityLabels);
+                group = Microsoft365GroupsUtility.GetGroup(requestHelper, _group.Id.Value, includeSite, includeOwners, detailed, includeSensitivityLabels);
             }
             else if (_groupId != Guid.Empty)
             {
-                group = ClearOwners.GetGroup(requestHelper, _groupId, includeSite, includeOwners, detailed, includeSensitivityLabels);
+                group = Microsoft365GroupsUtility.GetGroup(requestHelper, _groupId, includeSite, includeOwners, detailed, includeSensitivityLabels);
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                group = ClearOwners.GetGroup(requestHelper, DisplayName, includeSite, includeOwners, detailed, includeSensitivityLabels);
+                group = Microsoft365GroupsUtility.GetGroup(requestHelper, DisplayName, includeSite, includeOwners, detailed, includeSensitivityLabels);
             }
             return group;
         }
@@ -75,7 +75,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(DisplayName))
             {
-                var group = ClearOwners.GetGroup(requestHelper, DisplayName, false, false, false, false);
+                var group = Microsoft365GroupsUtility.GetGroup(requestHelper, DisplayName, false, false, false, false);
                 if (group != null)
                 {
                     return group.Id.Value;
@@ -88,15 +88,15 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         {
             if (_group != null)
             {
-                return ClearOwners.GetDeletedGroup(requestHelper, _group.Id.Value);
+                return Microsoft365GroupsUtility.GetDeletedGroup(requestHelper, _group.Id.Value);
             }
             else if (_groupId != Guid.Empty)
             {
-                return ClearOwners.GetDeletedGroup(requestHelper, _groupId);
+                return Microsoft365GroupsUtility.GetDeletedGroup(requestHelper, _groupId);
             }
             else if (!string.IsNullOrEmpty(_displayName))
             {
-                return ClearOwners.GetDeletedGroup(requestHelper, _displayName);
+                return Microsoft365GroupsUtility.GetDeletedGroup(requestHelper, _displayName);
             }
             return null;
         }
@@ -113,7 +113,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (!string.IsNullOrEmpty(_displayName))
             {
-                var group = ClearOwners.GetDeletedGroup(requestHelper, _displayName);
+                var group = Microsoft365GroupsUtility.GetDeletedGroup(requestHelper, _displayName);
                 if (group != null)
                 {
                     return group.Id.Value;

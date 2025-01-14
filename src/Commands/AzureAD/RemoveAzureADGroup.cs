@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Graph
 
                 if (group != null)
                 {
-                    ClearOwners.RemoveGroup(RequestHelper, new System.Guid(group.Id));
+                    Microsoft365GroupsUtility.RemoveGroup(RequestHelper, new System.Guid(group.Id));
                 }
             }
         }

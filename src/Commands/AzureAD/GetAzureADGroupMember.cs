@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Graph
             if (group != null)
             {
                 // Get members of the group
-                var members = ClearOwners.GetMembers(RequestHelper, new Guid(group.Id));
+                var members = Microsoft365GroupsUtility.GetMembers(RequestHelper, new Guid(group.Id));
                 WriteObject(members?.OrderBy(m => m.DisplayName), true);
             }
         }

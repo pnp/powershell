@@ -121,6 +121,7 @@ namespace PnP.PowerShell.Commands.Base
 
                     WriteError(errorRecord);
                 }
+                
             }
         }
     }

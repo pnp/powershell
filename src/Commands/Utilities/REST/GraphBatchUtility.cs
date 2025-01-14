@@ -1,15 +1,19 @@
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation.Language;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.VisualBasic;
+using PnP.Core.Services;
 
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
 
 
-    internal static class BatchUtility
+    internal static class GraphBatchUtility
     {
         internal static IEnumerable<IEnumerable<T>> Chunk<T>(this IEnumerable<T> source, int chunksize)
         {
@@ -20,10 +24,22 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        internal static Dictionary<string, string> GetPropertyBatched(ApiRequestHelper requestHelper, string[] lookupData, string urlTemplate, string property)
+        internal class BatchedPropertyResults
         {
-            Dictionary<string, string> returnValue = new Dictionary<string, string>();
+            public Dictionary<string, string> Results;
+            public List<Exception> Errors;
+        }
 
+        internal class BatchedObjectResults<T>
+        {
+            public Dictionary<string,T> Results;
+            public List<Exception> Errors;
+        }
+
+        internal static BatchedPropertyResults GetPropertyBatched(ApiRequestHelper requestHelper, string[] lookupData, string urlTemplate, string property)
+        {
+            var returnValue = new Dictionary<string, string>();
+            var errors = new List<Exception>();
             Dictionary<string, string> requests = new Dictionary<string, string>();
             var batch = new GraphBatch();
             int id = 0;
@@ -39,34 +55,35 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var result = requestHelper.Post<GraphBatchResponse>("v1.0/$batch", stringContent);
             if (result.Responses != null && result.Responses.Any())
             {
-                var errors = new List<Exception>();
-
                 foreach (var response in result.Responses)
                 {
-                    var userId = requests.First(r => r.Key == response.Id).Value;
+                    var value = requests.First(r => r.Key == response.Id).Value;
                     if (response.Body.TryGetValue(property, out object webUrlObject))
                     {
                         var element = (JsonElement)webUrlObject;
-                        returnValue.Add(userId, element.GetString());
+                        returnValue.Add(value, element.GetString());
                     }
                     else if (response.Body.TryGetValue("error", out object errorObject))
                     {
                         var error = (JsonElement)errorObject;
-                        errors.Add(new Exception(error.ToString()));
+                        var request = batch.Requests.First(r => r.Id == response.Id);
+                        returnValue.Add(value,"");
+                        errors.Add(new Exception($"An error occured for request id {request.Id}:{request.Url} => {error.ToString()}"));
                     }
                 }
 
-                if (errors.Any())
-                {
-                    throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
-                }
+                // if (errors.Any())
+                // {
+                //     throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
+                // }
             }
-            return returnValue;
+            return new BatchedPropertyResults { Results = returnValue, Errors = errors };
         }
 
-        internal static Dictionary<string, IEnumerable<T>> GetObjectCollectionBatched<T>(ApiRequestHelper requestHelper, string[] lookupData, string urlTemplate)
+        internal static BatchedObjectResults<IEnumerable<T>> GetObjectCollectionBatched<T>(ApiRequestHelper requestHelper, string[] lookupData, string urlTemplate)
         {
             Dictionary<string, IEnumerable<T>> returnValue = new Dictionary<string, IEnumerable<T>>();
+            var errors = new List<Exception>();
 
             Dictionary<string, string> requests = new Dictionary<string, string>();
             var batch = new GraphBatch();
@@ -92,9 +109,16 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                         var objectElement = (JsonElement)resultObject;
                         returnValue.Add(itemId, JsonSerializer.Deserialize<T[]>(objectElement.ToString(), options));
                     }
+                       else if (response.Body.TryGetValue("error", out object errorObject))
+                    {
+                        var error = (JsonElement)errorObject;
+                        var request = batch.Requests.First(r => r.Id == response.Id);
+                        returnValue.Add(itemId,default(T[]));
+                        errors.Add(new Exception($"An error occured for request id {request.Id}:{request.Url} => {error.ToString()}"));
+                    }
                 }
             }
-            return returnValue;
+            return new BatchedObjectResults<IEnumerable<T>>{ Results = returnValue, Errors = errors};
         }
     }
 

@@ -1,3 +1,4 @@
+using Microsoft.Graph;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
@@ -10,10 +11,17 @@ using System.Threading;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
-    internal static class ClearOwners
+    internal static class Microsoft365GroupsUtility
     {
-        internal static IEnumerable<Microsoft365Group> GetGroups(ApiRequestHelper requestHelper, bool includeSiteUrl, bool includeOwners, string filter = null, bool includeSensitivityLabels = false)
+        internal class GroupsResult
         {
+            public IEnumerable<Microsoft365Group> Groups;
+            public List<Exception> Errors;
+        }
+
+        internal static GroupsResult GetGroups(ApiRequestHelper requestHelper, bool includeSiteUrl, bool includeOwners, string filter = null, bool includeSensitivityLabels = false)
+        {
+            var errors = new List<Exception>();
             var items = new List<Microsoft365Group>();
             string requestUrl = "v1.0/groups";
             Dictionary<string, string> additionalHeaders = null;
@@ -38,15 +46,19 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             if (includeSiteUrl || includeOwners || includeSensitivityLabels)
             {
-                var chunks = BatchUtility.Chunk(items.Select(g => g.Id.ToString()), 20);
+                var chunks = GraphBatchUtility.Chunk(items.Select(g => g.Id.ToString()), 20);
                 if (includeOwners)
                 {
                     foreach (var chunk in chunks)
                     {
-                        var ownerResults = BatchUtility.GetObjectCollectionBatched<Microsoft365User>(requestHelper, chunk.ToArray(), "/groups/{0}/owners");
-                        foreach (var ownerResult in ownerResults)
+                        var ownerResults = GraphBatchUtility.GetObjectCollectionBatched<Microsoft365User>(requestHelper, chunk.ToArray(), "/groups/{0}/owners");
+                        foreach (var ownerResult in ownerResults.Results)
                         {
                             items.First(i => i.Id.ToString() == ownerResult.Key).Owners = ownerResult.Value;
+                        }
+                        if (ownerResults.Errors.Any())
+                        {
+                            errors.AddRange(ownerResults.Errors);
                         }
                     }
                 }
@@ -55,10 +67,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var chunk in chunks)
                     {
-                        var results = BatchUtility.GetPropertyBatched(requestHelper, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
-                        foreach (var batchResult in results)
+                        var results = GraphBatchUtility.GetPropertyBatched(requestHelper, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
+                        foreach (var batchResult in results.Results)
                         {
                             items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
+                        }
+                        if (results.Errors.Any())
+                        {
+                            errors.AddRange(results.Errors);
                         }
                     }
                 }
@@ -66,15 +82,23 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var chunk in chunks)
                     {
-                        var sensitivityLabelResults = BatchUtility.GetObjectCollectionBatched<AssignedLabels>(requestHelper, chunk.ToArray(), "/groups/{0}/assignedLabels");
-                        foreach (var sensitivityLabel in sensitivityLabelResults)
+                        var sensitivityLabelResults = GraphBatchUtility.GetObjectCollectionBatched<AssignedLabels>(requestHelper, chunk.ToArray(), "/groups/{0}/assignedLabels");
+                        foreach (var sensitivityLabel in sensitivityLabelResults.Results)
                         {
                             items.First(i => i.Id.ToString() == sensitivityLabel.Key).AssignedLabels = sensitivityLabel.Value?.ToList();
+                        }
+                        if (sensitivityLabelResults.Errors.Any())
+                        {
+                            errors.AddRange(sensitivityLabelResults.Errors);
                         }
                     }
                 }
             }
-            return items;
+            // if(errors.Any())
+            // {
+            //     throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
+            // }
+            return new GroupsResult { Groups = items, Errors = errors };
         }
 
         internal static Microsoft365Group GetGroup(ApiRequestHelper requestHelper, Guid groupId, bool includeSiteUrl, bool includeOwners, bool detailed, bool includeSensitivityLabels)
@@ -177,10 +201,10 @@ namespace PnP.PowerShell.Commands.Utilities
             return null;
         }
 
-        internal static IEnumerable<Microsoft365Group> GetExpiringGroup(ApiRequestHelper requestHelper, int limit, bool includeSiteUrl, bool includeOwners)
+        internal static GroupsResult GetExpiringGroup(ApiRequestHelper requestHelper, int limit, bool includeSiteUrl, bool includeOwners)
         {
             var items = new List<Microsoft365Group>();
-
+            var errors = new List<Exception>();
             var dateLimit = DateTime.UtcNow;
             var dateStr = dateLimit.AddDays(limit).ToString("yyyy-MM-ddTHH:mm:ssZ");
 
@@ -197,15 +221,19 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             if (includeSiteUrl || includeOwners)
             {
-                var chunks = BatchUtility.Chunk(items.Select(g => g.Id.ToString()), 20);
+                var chunks = GraphBatchUtility.Chunk(items.Select(g => g.Id.ToString()), 20);
                 if (includeOwners)
                 {
                     foreach (var chunk in chunks)
                     {
-                        var ownerResults = BatchUtility.GetObjectCollectionBatched<Microsoft365User>(requestHelper, chunk.ToArray(), "/groups/{0}/owners");
-                        foreach (var ownerResult in ownerResults)
+                        var ownerResults = GraphBatchUtility.GetObjectCollectionBatched<Microsoft365User>(requestHelper, chunk.ToArray(), "/groups/{0}/owners");
+                        foreach (var ownerResult in ownerResults.Results)
                         {
                             items.First(i => i.Id.ToString() == ownerResult.Key).Owners = ownerResult.Value;
+                        }
+                        if (ownerResults.Errors.Any())
+                        {
+                            errors.AddRange(ownerResults.Errors);
                         }
                     }
                 }
@@ -214,16 +242,20 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     foreach (var chunk in chunks)
                     {
-                        var results = BatchUtility.GetPropertyBatched(requestHelper, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
+                        var results = GraphBatchUtility.GetPropertyBatched(requestHelper, chunk.ToArray(), "/groups/{0}/sites/root", "webUrl");
                         //var results = await GetSiteUrlBatchedAsync(connection, accessToken, chunk.ToArray());
-                        foreach (var batchResult in results)
+                        foreach (var batchResult in results.Results)
                         {
                             items.First(i => i.Id.ToString() == batchResult.Key).SiteUrl = batchResult.Value;
+                        }
+                        if (results.Errors.Any())
+                        {
+                            errors.AddRange(results.Errors);
                         }
                     }
                 }
             }
-            return items;
+            return new GroupsResult { Groups = items, Errors = errors };
         }
 
         internal static Microsoft365Group GetDeletedGroup(ApiRequestHelper requestHelper, Guid groupId)
