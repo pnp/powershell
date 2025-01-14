@@ -4014,6 +4014,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTenantPronounsSetting.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTenantPronounsSetting.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPTenantRecycleBinItem.md",
       "output": {
         ".html": {
@@ -7808,6 +7818,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPTenantCdnPolicy.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPTenantPronounsSetting.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPTenantPronounsSetting.html"
         }
       },
       "version": ""
