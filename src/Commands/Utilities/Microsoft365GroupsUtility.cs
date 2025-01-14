@@ -1,4 +1,3 @@
-using Microsoft.Graph;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
