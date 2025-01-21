@@ -87,10 +87,11 @@
 <p>Sets site collection properties.</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="set-properties">Set Properties</h3>
-<pre><code class="lang-powershell">Set-PnPSite [-Identity &lt;String&gt;]
-[-Classification &lt;String&gt;]
-[-DisableFlows]
-[-LogoFilePath &lt;String&gt;]
+<pre><code class="lang-powershell">Set-PnPSite 
+ [-Identity &lt;String&gt;]
+ [-Classification &lt;String&gt;]
+ [-DisableFlows]
+ [-LogoFilePath &lt;String&gt;]
  [-Sharing &lt;SharingCapabilities&gt;]
  [-StorageMaximumLevel &lt;Int64&gt;]
  [-StorageWarningLevel &lt;Int64&gt;]
@@ -120,6 +121,9 @@
  [-ListsShowHeaderAndNavigation &lt;Boolean&gt;]
  [-RestrictContentOrgWideSearch &lt;Boolean&gt;]
  [-CanSyncHubSitePermissions &lt;SwitchParameter&gt;]
+ [-HidePeoplePreviewingFiles &lt;Boolean&gt;]
+ [-HidePeopleWhoHaveListsOpen &lt;Boolean&gt;]
+ [-RestrictedAccessControl &lt;Boolean&gt;]
  [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="set-lock-state">Set Lock State</h3>
@@ -315,6 +319,18 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-hidepeoplepreviewingfiles">-HidePeoplePreviewingFiles</h3>
 <p>Allows hiding of the presence indicators of users simultaneously editing files.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Aliases: Url
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-hidepeoplewhohavelistsopen">-HidePeopleWhoHaveListsOpen</h3>
+<p>Allows hiding of the presence indicators of users simultaneously working in lists.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases: Url
