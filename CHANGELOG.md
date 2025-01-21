@@ -51,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get/Set/Remove-PnPUserProfilePhoto` cmdlets to download, upload or remove the profile photo of the specified user.
 - Added `New/Get/Remove/Update-PnPTodoList` cmdlets to manage Todo lists.
 - Added `Get-PnPTenantPronounsSetting` and `Set-PnPTenantPronounsSetting` cmdlets to manage the availability of using pronouns in the organization [#4660](https://github.com/pnp/powershell/pull/4660)
+- Added `HidePeopleWhoHaveListsOpen` parameter to `Set-PnPSite` cmdlet to hide people who simultaneously have lists open
 
 ### Changed
 
