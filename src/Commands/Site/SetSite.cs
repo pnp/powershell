@@ -129,6 +129,9 @@ namespace PnP.PowerShell.Commands.Site
         public bool? HidePeoplePreviewingFiles;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? HidePeopleWhoHaveListsOpen;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? CanSyncHubSitePermissions;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
@@ -428,6 +431,12 @@ namespace PnP.PowerShell.Commands.Site
                 if (ParameterSpecified(nameof(HidePeoplePreviewingFiles)) && HidePeoplePreviewingFiles.HasValue)
                 {
                     siteProperties.HidePeoplePreviewingFiles = HidePeoplePreviewingFiles.Value;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(HidePeopleWhoHaveListsOpen)) && HidePeopleWhoHaveListsOpen.HasValue)
+                {
+                    siteProperties.HidePeopleWhoHaveListsOpen = HidePeopleWhoHaveListsOpen.Value;
                     executeQueryRequired = true;
                 }
 
