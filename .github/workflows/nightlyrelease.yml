@@ -80,7 +80,7 @@ jobs:
     - name: Tag the image
       run: |
         VERSION=$(cat ./version.txt)-nightly
-        docker image tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-alpine-3.17 ${{ secrets.DOCKER_ORG }}/powershell:nightly
+        docker image tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-alpine-3.20 ${{ secrets.DOCKER_ORG }}/powershell:nightly
     - name: Push the image
       run: |
         VERSION=$(cat ./version.txt)-nightly
