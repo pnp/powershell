@@ -131,14 +131,14 @@ Accept wildcard characters: False
 ```
 
 ### -OrgAssetType
-Indicates the type of content in this library. Currently supported values are "ImageDocumentLibrary" and "OfficeTemplateLibrary".
+Indicates the type of content in this library.
 
 ImageDocumentLibrary is the default OrgAssetType and is best used for images. You can access the contents of this library from any site or page in the SharePoint filepicker. OfficeTemplateLibrary is the suggested type for Office files and will show up in the UI of all Office desktop apps and Office online in the templates section.
 
 ```yaml
 Type: OrgAssetType
 Parameter Sets: (All)
-Accepted values: ImageDocumentLibrary, OfficeTemplateLibrary
+Accepted values: ImageDocumentLibrary, OfficeTemplateLibrary, BrandColorsList, BrandFontsLibrary, BrandKitLibrary, OfficeFontLibrary, Undefined
 
 Required: False
 Position: Named
