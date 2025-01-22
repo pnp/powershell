@@ -15,11 +15,18 @@ title: Set-PnPFileRetentionLabel
 
   * Microsoft Graph API : One of Files.Read.All, Sites.Read.All, Files.ReadWrite.All, Sites.ReadWrite.All
 
-Retrieves the retention label information for a file in SharePoint.
+Allows setting a retention label on a file in SharePoint or locking/unlocking it.
 
 ## SYNTAX
+
+### Lock or unlock a file
 ```powershell
-Set-PnPFileRetentionLabel -Url <String> [-RecordLocked <Boolean>] [-retentionLabel <String>] [-Connection <PnPConnection>]
+Set-PnPFileRetentionLabel -Identity <FilePipeBind> -RecordLocked <Boolean> [-Connection <PnPConnection>]
+```
+
+### Set a retention label on a file
+```powershell
+Set-PnPFileRetentionLabel -Identity <FilePipeBind> -RetentionLabel <String> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -29,26 +36,33 @@ The Set-PnPFileRetentionLabel cmdlet updates the retention label information or 
 ## EXAMPLES
 
 ### Example 1
-This example locks the file at the specified URL.
-
 ```powershell
 Set-PnPFileRetentionLabel -Url "/sites/Marketing/Shared Documents/Report.pptx" -RecordLocked $true
 ```
 
+This example locks the file at the specified URL.
+
 ### Example 2
+```powershell
+Set-PnPFileRetentionLabel -Identity "/sites/Marketing/Shared Documents/Report.pptx" -RetentionLabel "Finance"
+```
+
 This example updates the retention label information for the file at the specified URL.
 
+### Example 3
 ```powershell
-Set-PnPFileRetentionLabel -Url "/sites/Marketing/Shared Documents/Report.pptx" -retentionLabel "Finance"
+Set-PnPFileRetentionLabel -Identity "/sites/Marketing/Shared Documents/Report.pptx" -RetentionLabel ""
 ```
+
+This example removes the retention label information from the file at the specified URL.
 
 ## PARAMETERS
 
-### -Url
-Specifies the URL of the file for which to retrieve the retention label information.
+### -Identity
+Specifies the server relative URL, File instance, listitem instance or Id of the file for which to set the retention label information or change the locking state.
 
 ```yaml
-Type: String
+Type: FilePipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -59,23 +73,25 @@ Accept wildcard characters: False
 ```
 
 ### -RecordLocked
-Specifies whether to lock or unlock the file.
+Specifies whether to lock or unlock the file. If omitted, the file is not locked or unlocked.
+
 ```yaml
 Type: Boolean
-Parameter Sets: (All)
-Required: False
+Parameter Sets: Lock or unlock a file
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True
 Accept wildcard characters: False
 ```
 
-### -retentionLabel
-Specifies the retention label to apply to the file.
+### -RetentionLabel
+Specifies the retention label to apply to the file. Provide an empty string or $null to remove the existing label.
+
 ```yaml
 Type: String
-Parameter Sets: (All)
-Required: False
+Parameter Sets: Set a retention label on a file
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True

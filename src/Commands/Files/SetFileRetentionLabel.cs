@@ -1,6 +1,8 @@
-﻿using PnP.Framework.Utilities;
+﻿using Microsoft.SharePoint.Client;
+using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.Graph.Purview;
 using System;
 using System.Management.Automation;
@@ -10,7 +12,7 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Files
 {
-    [Cmdlet(VerbsCommon.Set, "PnPFileRetentionLabel")]
+    [Cmdlet(VerbsCommon.Set, "PnPFileRetentionLabel", DefaultParameterSetName = ParameterSet_LOCKUNLOCK)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Files.Read.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Sites.Read.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Files.ReadWrite.All")]
@@ -18,79 +20,62 @@ namespace PnP.PowerShell.Commands.Files
     [OutputType(typeof(FileRetentionLabel))]
     public class SetFileRetentionLabel : PnPGraphCmdlet
     {
+        private const string ParameterSet_LOCKUNLOCK = "Lock or unlock a file";
+        private const string ParameterSet_SETLABEL = "Set a retention label on a file";
+
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        public string Url = string.Empty;
+        public FilePipeBind Identity;
 
-        [Parameter(Mandatory = false)]
-        public string retentionLabel = string.Empty;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SETLABEL)]
+        public string RetentionLabel = string.Empty;
 
-        [Parameter(Mandatory = false)]
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_LOCKUNLOCK)]
         public bool? RecordLocked;
 
         protected override void ExecuteCmdlet()
         {
-            // Check if both parameters are provided
-            if (!string.IsNullOrEmpty(retentionLabel) && RecordLocked.HasValue)
-            {
-                throw new PSArgumentException("Only one of the parameters 'RecordLocked' or 'retentionLabel' can be provided.");
-            }
-
-            var serverRelativeUrl = string.Empty;
-
-            if (Uri.IsWellFormedUriString(Url, UriKind.Absolute))
-            {
-                // We can't deal with absolute URLs
-                Url = UrlUtility.MakeRelativeUrl(Url);
-            }
-
-            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
-            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
-
-            Connection.PnPContext.Web.EnsureProperties(w => w.ServerRelativeUrl);
-
-            var webUrl = Connection.PnPContext.Web.ServerRelativeUrl;
-
-            if (!Url.ToLower().StartsWith(webUrl.ToLower()))
-            {
-                serverRelativeUrl = UrlUtility.Combine(webUrl, Url);
-            }
-            else
-            {
-                serverRelativeUrl = Url;
-            }
-
-            var file = Connection.PnPContext.Web.GetFileByServerRelativeUrl(Url);
+            var file = Identity.GetFile(ClientContext);
             file.EnsureProperties(f => f.VroomDriveID, f => f.VroomItemID);
 
             var requestUrl = $"v1.0/drives/{file.VroomDriveID}/items/{file.VroomItemID}/retentionLabel";
 
-            object payload;
+            object payload = null;
 
-            if (!string.IsNullOrEmpty(retentionLabel))
+            switch(ParameterSetName)
             {
-                payload = new
-                {
-                    name = retentionLabel
-                };
-            }
-            else if (RecordLocked.HasValue)
-            {
-                payload = new
-                {
-                    retentionSettings = new
+                case ParameterSet_LOCKUNLOCK:
+                    payload = new
                     {
-                        isRecordLocked = RecordLocked
+                        retentionSettings = new
+                        {
+                            isRecordLocked = RecordLocked
+                        }
+                    };
+                    break;
+                case ParameterSet_SETLABEL:
+                    if (string.IsNullOrEmpty(RetentionLabel))
+                    {
+                        WriteVerbose("Removing retention label");
+                        RequestHelper.Delete(requestUrl);
                     }
-                };
+                    else
+                    {
+                        WriteVerbose($"Setting retention label to '{RetentionLabel}'");
+                        payload = new
+                        {
+                            name = RetentionLabel
+                        };
+                    }
+                    break;
             }
-            else
+
+            if (payload != null)
             {
-                throw new PSArgumentException("Either retentionLabel or isRecordLocked must be provided");
+                var jsonPayload = JsonSerializer.Serialize(payload);
+                var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+                var results = RequestHelper.Patch<FileRetentionLabel>(requestUrl, httpContent);
+                WriteObject(results, true);
             }
-            var jsonPayload = JsonSerializer.Serialize(payload);
-            var httpContent = new StringContent(jsonPayload,Encoding.UTF8, "application/json");
-            var results = RequestHelper.Patch<FileRetentionLabel>(requestUrl, httpContent);
-            WriteObject(results, true);
         }
     }
 }
