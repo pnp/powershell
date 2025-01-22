@@ -21,11 +21,11 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             if (Group != null)
             {
                 var groupId = Group.GetGroupId(RequestHelper);
-                ClearOwners.RemoveGroupSetting(RequestHelper, Identity, groupId.ToString());
+                Microsoft365GroupsUtility.RemoveGroupSetting(RequestHelper, Identity, groupId.ToString());
             }
             else
             {
-                ClearOwners.RemoveGroupSetting(RequestHelper, Identity);
+                Microsoft365GroupsUtility.RemoveGroupSetting(RequestHelper, Identity);
             }
         }
     }

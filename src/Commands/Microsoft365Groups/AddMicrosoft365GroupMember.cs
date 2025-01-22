@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            ClearOwners.AddMembers(RequestHelper, Identity.GetGroupId(RequestHelper), Users, RemoveExisting);
+            Microsoft365GroupsUtility.AddMembers(RequestHelper, Identity.GetGroupId(RequestHelper), Users, RemoveExisting);
         }
     }
 }

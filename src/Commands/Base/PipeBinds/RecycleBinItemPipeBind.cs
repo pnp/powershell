@@ -21,6 +21,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public RecycleBinItemPipeBind(RecycleBinItem item)
         {
             _item = item;
+            _id = item?.Id;
         }
 
         public RecycleBinItemPipeBind(RecycleResult result)
@@ -31,6 +32,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public RecycleBinItemPipeBind(IRecycleBinItem result)
         {
             _recycleBinItem = result;
+            _id = result?.Id;
+        }
+
+        public RecycleBinItemPipeBind(Guid guid)
+        {
+            _id = guid;
         }
 
         public RecycleBinItemPipeBind(string id)

@@ -40,7 +40,7 @@ This option requires the following:
 ```json
 {
 	"name": "PnP 2.4.0",
-	"image": "m365pnp/powershell:2.4.0-alpine-3.16.5",
+	"image": "m365pnp/powershell:2.12.0-lts-alpine-3.17",
 	"customizations": {
 		"vscode": {
 			"settings": {
@@ -56,7 +56,7 @@ This option requires the following:
 		"dbaeumer.vscode-eslint",
 		"ms-vscode.PowerShell"
 	],
-	"postCreateCommand": "apk add git; git config --global --add safe.directory /workspaces"
+	"postCreateCommand": "apk add git xdg-utils; git config --global --add safe.directory /workspaces"
 }
 ```
 

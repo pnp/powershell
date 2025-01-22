@@ -41,14 +41,14 @@ namespace PnP.PowerShell.Commands.Graph
 
                 if (userArray.Length > 0)
                 {
-                    ClearOwners.AddOwners(RequestHelper, new System.Guid(group.Id), userArray, RemoveExisting.ToBool());
+                    Microsoft365GroupsUtility.AddOwners(RequestHelper, new System.Guid(group.Id), userArray, RemoveExisting.ToBool());
                 }
 
                 var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
 
                 if (secGroups.Length > 0)
                 {
-                    ClearOwners.AddDirectoryOwners(RequestHelper, new System.Guid(group.Id), secGroups, RemoveExisting.ToBool());
+                    Microsoft365GroupsUtility.AddDirectoryOwners(RequestHelper, new System.Guid(group.Id), secGroups, RemoveExisting.ToBool());
                 }
             }
         }

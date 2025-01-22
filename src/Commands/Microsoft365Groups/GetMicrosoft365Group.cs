@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using System;
 using System.Linq;
 using System.Management.Automation;
 
@@ -44,9 +45,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
             else
             {
-                var groups = ClearOwners.GetGroups(RequestHelper, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels);
+                var groupsResult = Microsoft365GroupsUtility.GetGroups(RequestHelper, includeSiteUrl, IncludeOwners, Filter, IncludeSensitivityLabels);
 
-                WriteObject(groups.OrderBy(p => p.DisplayName), true);
+                WriteObject(groupsResult.Groups.OrderBy(p => p.DisplayName), true);
+                if(groupsResult.Errors.Any())
+                {
+                    throw new AggregateException($"{groupsResult.Errors.Count} error(s) occurred in a Graph batch request", groupsResult.Errors);
+                }
             }
         }
     }

@@ -82,17 +82,17 @@ namespace PnP.PowerShell.Commands.Graph
 
                     if (ParameterSpecified(nameof(Owners)))
                     {
-                        ClearOwners.UpdateOwners(RequestHelper, new Guid(group.Id), Owners);
+                        Microsoft365GroupsUtility.UpdateOwners(RequestHelper, new Guid(group.Id), Owners);
                     }
                     if (ParameterSpecified(nameof(Members)))
                     {
-                        ClearOwners.UpdateMembersAsync(RequestHelper, new Guid(group.Id), Members);
+                        Microsoft365GroupsUtility.UpdateMembersAsync(RequestHelper, new Guid(group.Id), Members);
                     }
 
                     if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                     {
                         // For this scenario a separate call needs to be made
-                        Utilities.ClearOwners.SetVisibility(RequestHelper, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients);
+                        Utilities.Microsoft365GroupsUtility.SetVisibility(RequestHelper, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients);
                     }
                 }
                 catch (Exception e)

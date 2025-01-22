@@ -1,6 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Administration;
 using Microsoft.SharePoint.Client.Sharing;
 using System;
 using System.Collections.Generic;
@@ -249,7 +250,23 @@ namespace PnP.PowerShell.Commands.Model
         public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
         public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { private set; get; }
         public bool? SelfServiceSiteCreationDisabled { private set; get; }
-
+        public string WhoCanShareAllowListInTenant { private set; get; }
+        public bool ExtendPermissionsToUnprotectedFiles { private set; get; }
+        public bool LegacyBrowserAuthProtocolsEnabled { private set; get; }
+        public bool EnableDiscoverableByOrganizationForVideos { private set; get; }
+        public string RestrictedAccessControlforSitesErrorHelpLink { private set; get; }
+        public bool Workflow2010Disabled { private set; get; }
+        public bool AllowSharingOutsideRestrictedAccessControlGroups { private set; get; }
+        public Workflows2013State Workflows2013State { private set; get; }
+        public bool DisableVivaConnectionsAnalytics { private set; get; }
+        public bool HideSyncButtonOnDocLib { private set; get; }
+        public bool HideSyncButtonOnODB { private set; get; }
+        public int StreamLaunchConfig { private set; get; }
+        public bool EnableRestrictedAccessControl { private set; get; }
+        public SPBlockDownloadFileTypeId[] BlockDownloadFileTypeIds { private set; get; }
+        public Guid[] ExcludedBlockDownloadGroupIds { private set; get; }
+        public bool EnableMediaReactions { private set; get; }
+        public bool ContentSecurityPolicyEnforcement { private set; get; }
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext)
@@ -772,6 +789,23 @@ namespace PnP.PowerShell.Commands.Model
             try { GuestSharingGroupAllowListInTenantByPrincipalIdentity = tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity?.ToArray(); } catch { }
             try { AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled; } catch { }
             try { SelfServiceSiteCreationDisabled = tenant.SelfServiceSiteCreationDisabled; } catch { }
+            try { WhoCanShareAllowListInTenant = tenant.WhoCanShareAllowListInTenant; } catch { }
+            try { ExtendPermissionsToUnprotectedFiles = tenant.ExtendPermissionsToUnprotectedFiles; } catch { }
+            try { LegacyBrowserAuthProtocolsEnabled = tenant.LegacyBrowserAuthProtocolsEnabled; } catch { }
+            try { EnableDiscoverableByOrganizationForVideos = tenant.EnableDiscoverableByOrganizationForVideos; } catch { }
+            try { RestrictedAccessControlforSitesErrorHelpLink = tenant.RestrictedAccessControlforSitesErrorHelpLink; } catch { }
+            try { Workflow2010Disabled = tenant.Workflow2010Disabled; } catch { }
+            try { Workflows2013State = tenant.Workflows2013State; } catch { }   
+            try { AllowSharingOutsideRestrictedAccessControlGroups = tenant.AllowSharingOutsideRestrictedAccessControlGroups; } catch { }
+            try { DisableVivaConnectionsAnalytics = tenant.DisableVivaConnectionsAnalytics; } catch { }
+            try { HideSyncButtonOnDocLib = tenant.HideSyncButtonOnDocLib; } catch { }
+            try { HideSyncButtonOnODB = tenant.HideSyncButtonOnODB; } catch { }
+            try { StreamLaunchConfig = tenant.StreamLaunchConfig; } catch { }
+            try { EnableRestrictedAccessControl = tenant.EnableRestrictedAccessControl; } catch { }
+            try { BlockDownloadFileTypeIds = tenant.BlockDownloadFileTypeIds; } catch { }
+            try { ExcludedBlockDownloadGroupIds = tenant.ExcludedBlockDownloadGroupIds; } catch { }
+            try { EnableMediaReactions = tenant.EnableMediaReactions; } catch { }
+            try { ContentSecurityPolicyEnforcement = tenant.ContentSecurityPolicyEnforcement; } catch { }
         }
     }
 }

@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Viva
 
             if (Owners?.Length > 0)
             {
-                string[] ownerData = ClearOwners.GetUsersDataBindValue(RequestHelper, Owners);
+                string[] ownerData = Microsoft365GroupsUtility.GetUsersDataBindValue(RequestHelper, Owners);
                 postData.Add("owners@odata.bind", ownerData);
             }
 

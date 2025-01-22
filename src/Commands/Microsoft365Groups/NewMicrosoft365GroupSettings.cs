@@ -32,14 +32,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 var groupId = Identity.GetGroupId(RequestHelper);
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = ClearOwners.CreateGroupSetting(RequestHelper, groupId.ToString(), groupSettingObject);
+                var responseValue = Microsoft365GroupsUtility.CreateGroupSetting(RequestHelper, groupId.ToString(), groupSettingObject);
                 WriteObject(responseValue);
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = ClearOwners.CreateGroupSetting(RequestHelper, groupSettingObject);
+                var responseValue = Microsoft365GroupsUtility.CreateGroupSetting(RequestHelper, groupSettingObject);
                 WriteObject(responseValue);
             }
         }

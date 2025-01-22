@@ -486,7 +486,42 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? ExtendPermissionsToUnprotectedFiles { private set; get; }
 
+        [Parameter(Mandatory = false)]
+        public string WhoCanShareAllowListInTenant { private set; get; }
 
+        [Parameter(Mandatory = false)] 
+        public bool? LegacyBrowserAuthProtocolsEnabled { private set; get; }
+
+        [Parameter(Mandatory = false)] 
+        public bool? EnableDiscoverableByOrganizationForVideos { private set; get; }
+
+        [Parameter(Mandatory = false)] 
+        public string RestrictedAccessControlforSitesErrorHelpLink { private set; get; }
+
+        [Parameter(Mandatory = false)] 
+        public bool? Workflow2010Disabled { private set; get; }
+
+        [Parameter(Mandatory = false)] 
+        public bool? AllowSharingOutsideRestrictedAccessControlGroups { private set; get; }
+
+        [Parameter(Mandatory = false)] 
+        public bool? HideSyncButtonOnDocLib { private set; get; }
+
+        [Parameter(Mandatory = false)] 
+        public bool? HideSyncButtonOnODB { private set; get; }
+
+        [Parameter(Mandatory = false)] 
+        public int? StreamLaunchConfig { private set; get; }
+
+        [Parameter(Mandatory = false)] 
+        public bool? EnableMediaReactions { private set; get; }
+
+        [Parameter(Mandatory = false)] 
+        public bool? ContentSecurityPolicyEnforcement { private set; get; }
+
+        [Parameter(Mandatory = false)]
+        public bool? DisableSpacesActivation { private set; get; }
+        
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1555,6 +1590,66 @@ namespace PnP.PowerShell.Commands.Admin
             if (ExtendPermissionsToUnprotectedFiles.HasValue)
             {
                 Tenant.ExtendPermissionsToUnprotectedFiles = ExtendPermissionsToUnprotectedFiles.Value;
+                modified = true;
+            }
+            if (WhoCanShareAllowListInTenant != null)
+            {
+                Tenant.WhoCanShareAllowListInTenant = WhoCanShareAllowListInTenant;
+                modified = true;
+            }
+            if (LegacyBrowserAuthProtocolsEnabled.HasValue)
+            {
+                Tenant.LegacyBrowserAuthProtocolsEnabled = LegacyBrowserAuthProtocolsEnabled.Value;
+                modified = true;
+            }
+            if (EnableDiscoverableByOrganizationForVideos.HasValue)
+            {
+                Tenant.EnableDiscoverableByOrganizationForVideos = EnableDiscoverableByOrganizationForVideos.Value;
+                modified = true;
+            }
+            if (RestrictedAccessControlforSitesErrorHelpLink != null)
+            {
+                Tenant.RestrictedAccessControlforSitesErrorHelpLink = RestrictedAccessControlforSitesErrorHelpLink;
+                modified = true;
+            }
+            if (Workflow2010Disabled.HasValue)
+            {
+                Tenant.Workflow2010Disabled = Workflow2010Disabled.Value;
+                modified = true;
+            }
+            if (AllowSharingOutsideRestrictedAccessControlGroups.HasValue)
+            {
+                Tenant.AllowSharingOutsideRestrictedAccessControlGroups = AllowSharingOutsideRestrictedAccessControlGroups.Value;
+                modified = true;
+            }
+            if (HideSyncButtonOnDocLib.HasValue)
+            {
+                Tenant.HideSyncButtonOnDocLib = HideSyncButtonOnDocLib.Value;
+                modified = true;
+            }
+            if (HideSyncButtonOnODB.HasValue)
+            {
+                Tenant.HideSyncButtonOnODB = HideSyncButtonOnODB.Value;
+                modified = true;
+            }
+            if (StreamLaunchConfig.HasValue)
+            {
+                Tenant.StreamLaunchConfig = StreamLaunchConfig.Value;
+                modified = true;
+            }
+            if (EnableMediaReactions.HasValue)
+            {
+                Tenant.EnableMediaReactions = EnableMediaReactions.Value;
+                modified = true;
+            }
+            if (ContentSecurityPolicyEnforcement.HasValue)
+            {
+                Tenant.ContentSecurityPolicyEnforcement = ContentSecurityPolicyEnforcement.Value;
+                modified = true;
+            }
+            if (DisableSpacesActivation.HasValue)
+            {
+                Tenant.DisableSpacesActivation = DisableSpacesActivation.Value;
                 modified = true;
             }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)
