@@ -29,12 +29,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 var groupId = Group.GetGroupId(RequestHelper);
                 var groupSettingObject = GroupSettingsObject();
 
-                ClearOwners.UpdateGroupSetting(RequestHelper, Identity, groupId.ToString(), groupSettingObject);
+                Microsoft365GroupsUtility.UpdateGroupSetting(RequestHelper, Identity, groupId.ToString(), groupSettingObject);
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
-                ClearOwners.UpdateGroupSetting(RequestHelper, Identity, groupSettingObject);
+                Microsoft365GroupsUtility.UpdateGroupSetting(RequestHelper, Identity, groupSettingObject);
             }
         }
 

@@ -95,15 +95,24 @@ namespace PnP.PowerShell.Commands.Planner
 
             if (ParameterSpecified(nameof(AssignedTo)))
             {
+                var errors = new List<Exception>();
                 newTask.Assignments = new Dictionary<string, TaskAssignment>();
-                var chunks = BatchUtility.Chunk(AssignedTo, 20);
+                var chunks = GraphBatchUtility.Chunk(AssignedTo, 20);
                 foreach (var chunk in chunks)
                 {
-                    var userIds = BatchUtility.GetPropertyBatched(RequestHelper, chunk.ToArray(), "/users/{0}", "id");
-                    foreach (var userId in userIds)
+                    var userIds = GraphBatchUtility.GetPropertyBatched(RequestHelper, chunk.ToArray(), "/users/{0}", "id");
+                    foreach (var userId in userIds.Results)
                     {
                         newTask.Assignments.Add(userId.Value, new TaskAssignment());
                     }
+                    if(userIds.Errors.Any())
+                    {
+                        errors.AddRange(userIds.Errors);
+                    }
+                }
+                if(errors.Any())
+                {
+                    throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
                 }
             }
 

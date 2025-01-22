@@ -36,25 +36,34 @@ namespace PnP.PowerShell.Commands
             bool isScriptSettingUpdated = false;
             try
             {
-                WriteVerbose("Checking if the site is a no-script site");
+                WriteVerbose("Checking if AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled is set to true at the tenant level");
+                var tenant = new Tenant(AdminContext);
+                AdminContext.Load(tenant);
+                AdminContext.Load(tenant, t => t.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled);
+                AdminContext.ExecuteQueryRetry();
+               
                 var web = ClientContext.Web;
-                web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
-                if (web.IsNoScriptSite())
+                if (!tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled)
                 {
-                    if (Force || ShouldContinue("The current site is a no-script site. Do you want to temporarily enable scripting on it to allow setting property bag value?", Properties.Resources.Confirm))
+                    WriteVerbose("Checking if the site is a no-script site");
+                    
+                    web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
+
+                    if (web.IsNoScriptSite())
                     {
-                        WriteVerbose("Temporarily enabling scripting on the site");
-                        var tenant = new Tenant(AdminContext);
-                        tenant.SetSiteProperties(web.Url, noScriptSite: false);
-                        isScriptSettingUpdated = true;
-                    }
-                    else
-                    {
-                        ThrowTerminatingError(new ErrorRecord(new Exception($"Site has NoScript enabled, this prevents setting some property bag values."), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
-                        return;
+                        if (Force || ShouldContinue("The current site is a no-script site. Do you want to temporarily enable scripting on it to allow setting property bag value?", Properties.Resources.Confirm))
+                        {
+                            WriteVerbose("Temporarily enabling scripting on the site");
+                            tenant.SetSiteProperties(web.Url, noScriptSite: false);
+                            isScriptSettingUpdated = true;
+                        }
+                        else
+                        {
+                            ThrowTerminatingError(new ErrorRecord(new Exception($"Site has NoScript enabled, this prevents setting some property bag values."), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
+                            return;
+                        }
                     }
                 }
-
                 if (!ParameterSpecified(nameof(Folder)))
                 {
                     if (!Indexed)

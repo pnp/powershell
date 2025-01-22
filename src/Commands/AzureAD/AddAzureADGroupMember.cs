@@ -39,14 +39,14 @@ namespace PnP.PowerShell.Commands.AzureAD
 
                 if (userArray.Length > 0)
                 {
-                    ClearOwners.AddMembers(RequestHelper, new Guid(group.Id), userArray, RemoveExisting.ToBool());
+                    Microsoft365GroupsUtility.AddMembers(RequestHelper, new Guid(group.Id), userArray, RemoveExisting.ToBool());
                 }
 
                 var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
 
                 if (secGroups.Length > 0)
                 {
-                    ClearOwners.AddDirectoryMembers(RequestHelper, new Guid(group.Id), secGroups, RemoveExisting.ToBool());
+                    Microsoft365GroupsUtility.AddDirectoryMembers(RequestHelper, new Guid(group.Id), secGroups, RemoveExisting.ToBool());
                 }
             }
         }

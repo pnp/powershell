@@ -1,6 +1,7 @@
 ﻿using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
+using System;
 using System.Linq;
 using System.Management.Automation;
 
@@ -21,9 +22,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var expiringGroups = ClearOwners.GetExpiringGroup(RequestHelper, Limit, IncludeSiteUrl, IncludeOwners);
+            var expiringGroupsResults = Microsoft365GroupsUtility.GetExpiringGroup(RequestHelper, Limit, IncludeSiteUrl, IncludeOwners);
 
-            WriteObject(expiringGroups.OrderBy(p => p.DisplayName), true);
+            WriteObject(expiringGroupsResults.Groups.OrderBy(p => p.DisplayName), true);
+            if (expiringGroupsResults.Errors.Any())
+            {
+                throw new AggregateException($"{expiringGroupsResults.Errors.Count} error(s) occurred in a Graph batch request", expiringGroupsResults.Errors);
+            }
         }
     }
 }

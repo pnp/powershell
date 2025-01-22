@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Graph
             if (group != null)
             {
                 // Get Owners of the group                
-                var owners = ClearOwners.GetOwners(RequestHelper, new Guid(group.Id));
+                var owners = Microsoft365GroupsUtility.GetOwners(RequestHelper, new Guid(group.Id));
                 WriteObject(owners?.OrderBy(m => m.DisplayName), true);
             }
         }

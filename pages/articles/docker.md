@@ -158,14 +158,14 @@ Please see [Docker documentation](https://docs.docker.com/engine/reference/run/)
 
 * latest: The latest stable image
 
-  * alpine-3.16.5
+  * alpine-3.17
   * `docker pull m365pnp/powershell` or `docker pull m365pnp/powershell:latest`
 
 ### Nightly
 
 * nightly: The latest night image
 
-  * alpine-3.16.5
+  * alpine-3.20
   * `docker pull m365pnp/powershell:nightly`
 
 ## Tag explanation
@@ -176,16 +176,19 @@ Tags names mean the following:
 
 Currently supported platforms:
 
-* nanoserver-ltsc2022
-* nanoserver-1809
-* alpine-3.16.5
+* nanoserver-ltsc2022 (Windows 2022)
+* nanoserver-1809 (Windows 2019)
+* alpine-3.20 (Linux)
 
 Tag name examples:
 
+* 2.99.112-nightly-alpine-3.20
+* 2.12.0-lts-alpine-3.17
+* 2.12.0-nanoserver-ltsc2022
 * 1.8.0-nanoserver-ltsc2022
 * 1.9.0-nanoserver-ltsc2022
 * 1.10.0-nanoserver-1809
 * 1.10.0-alpine-3.16.5
 * 1.10.26-nightly-nanoserver-ltsc2022
 
-To find the version numbers please visit https://www.powershellgallery.com/packages/PnP.PowerShell
+To find the version numbers please visit https://www.powershellgallery.com/packages/PnP.PowerShell or https://hub.docker.com/r/m365pnp/powershell/tags

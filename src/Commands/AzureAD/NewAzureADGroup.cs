@@ -75,12 +75,12 @@ namespace PnP.PowerShell.Commands.Graph
 
                 if (Owners?.Length > 0)
                 {
-                    ownerData = ClearOwners.GetUsersDataBindValue(RequestHelper, Owners);
+                    ownerData = Microsoft365GroupsUtility.GetUsersDataBindValue(RequestHelper, Owners);
                     postData.Add("owners@odata.bind", ownerData);
                 }
                 if (Members?.Length > 0)
                 {
-                    memberData = ClearOwners.GetUsersDataBindValue(RequestHelper, Members);
+                    memberData = Microsoft365GroupsUtility.GetUsersDataBindValue(RequestHelper, Members);
                     postData.Add("members@odata.bind", memberData);
                 }
 

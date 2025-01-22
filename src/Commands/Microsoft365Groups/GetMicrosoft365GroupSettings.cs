@@ -23,24 +23,24 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             {
                 var groupId = Identity.GetGroupId(RequestHelper);
                 var groupSettingId = GroupSetting.GetGroupSettingId(RequestHelper);
-                var groupSettings = ClearOwners.GetGroupSettings(RequestHelper, groupSettingId.ToString(), groupId.ToString());
+                var groupSettings = Microsoft365GroupsUtility.GetGroupSettings(RequestHelper, groupSettingId.ToString(), groupId.ToString());
                 WriteObject(groupSettings, true);
             }
             else if (Identity != null && GroupSetting == null)
             {
                 var groupId = Identity.GetGroupId(RequestHelper);
-                var groupSettings = ClearOwners.GetGroupSettings(RequestHelper, groupId.ToString());
+                var groupSettings = Microsoft365GroupsUtility.GetGroupSettings(RequestHelper, groupId.ToString());
                 WriteObject(groupSettings?.Value, true);
             }
             else if (Identity == null && GroupSetting != null)
             {
                 var groupSettingId = GroupSetting.GetGroupSettingId(RequestHelper);
-                var groupSettings = ClearOwners.GetGroupTenantSettings(RequestHelper, groupSettingId.ToString());
+                var groupSettings = Microsoft365GroupsUtility.GetGroupTenantSettings(RequestHelper, groupSettingId.ToString());
                 WriteObject(groupSettings, true);
             }
             else if (Identity == null && GroupSetting == null)
             {
-                var groupSettings = ClearOwners.GetGroupSettings(RequestHelper);
+                var groupSettings = Microsoft365GroupsUtility.GetGroupSettings(RequestHelper);
                 WriteObject(groupSettings?.Value, true);
             }
         }

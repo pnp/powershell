@@ -162,6 +162,18 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-SelfServiceSiteCreationDisabled <Boolean>]
  [-SyncAadB2BManagementPolicy]
  [-ExtendPermissionsToUnprotectedFiles <Boolean>]
+ [-WhoCanShareAllowListInTenant <String>]
+ [-LegacyBrowserAuthProtocolsEnabled <Boolean>]
+ [-EnableDiscoverableByOrganizationForVideos <Boolean>]
+ [-RestrictedAccessControlforSitesErrorHelpLink <String>]
+ [-Workflow2010Disabled <Boolean>]
+ [-AllowSharingOutsideRestrictedAccessControlGroups <Boolean>]
+ [-HideSyncButtonOnDocLib <Boolean>]
+ [-HideSyncButtonOnODB <Boolean>]
+ [-StreamLaunchConfig <Int32>]
+ [-EnableMediaReactions <Boolean>]
+ [-ContentSecurityPolicyEnforcement <Boolean>]
+ [-DisableSpacesActivation <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -2829,6 +2841,175 @@ Accept wildcard characters: False
 
 ### -ExtendPermissionsToUnprotectedFiles
 This property can be used to turn on/off the capability called "Extended SharePoint permissions to unprotected files". To learn more about this feature check [here](https://learn.microsoft.com/en-us/purview/sensitivity-labels-sharepoint-extend-permissions)
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhoCanShareAllowListInTenant
+Sets a value to handle the tenant who can share settings
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+
+### -LegacyBrowserAuthProtocolsEnabled
+Enables or disables legacy browser authentication protocols.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableDiscoverableByOrganizationForVideos
+Enables or disables the sharing dialog to include a checkbox offering the user the ability to share to a security group containing every user in the organization.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedAccessControlforSitesErrorHelpLink
+Sets a custom learn more link to inform users who were denied access to a SharePoint site due to the restricted site access control policy.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Workflow2010Disabled
+Sets a value to specify whether Workflow 2010 is disabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowSharingOutsideRestrictedAccessControlGroups
+Controls whether sharing SharePoint sites and their content is allowed with users and groups who are not allowed as per the Restricted access control policy.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HideSyncButtonOnDocLib
+Sets a value to specify whether the sync button on document libraries is hidden.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HideSyncButtonOnODB
+Set whether to hide the sync button on OneDrive for Business sites.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -StreamLaunchConfig
+Sets the default destination for the Stream app launcher tile.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableMediaReactions
+Controls whether media reactions are enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ContentSecurityPolicyEnforcement
+Controls whether content security policy is enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableSpacesActivation
+Enables or disables activation of spaces.
 
 ```yaml
 Type: Boolean
