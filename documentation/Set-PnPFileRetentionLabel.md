@@ -101,3 +101,6 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Setting a retention label through Microsoft Graph](https://learn.microsoft.com/graph/api/driveitem-setretentionlabel)
+[Removing a retention label through Microsoft Graph](https://learn.microsoft.com/graph/api/driveitem-removeretentionlabel)
+[Locking or unlocking a file through Microsoft Graph](https://learn.microsoft.com/graph/api/driveitem-lockorunlockrecord)
