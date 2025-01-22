@@ -16,10 +16,11 @@ Sets site collection properties.
 
 ### Set Properties
 ```powershell
-Set-PnPSite [-Identity <String>]
-[-Classification <String>]
-[-DisableFlows]
-[-LogoFilePath <String>]
+Set-PnPSite 
+ [-Identity <String>]
+ [-Classification <String>]
+ [-DisableFlows]
+ [-LogoFilePath <String>]
  [-Sharing <SharingCapabilities>]
  [-StorageMaximumLevel <Int64>]
  [-StorageWarningLevel <Int64>]
@@ -49,6 +50,9 @@ Set-PnPSite [-Identity <String>]
  [-ListsShowHeaderAndNavigation <Boolean>]
  [-RestrictContentOrgWideSearch <Boolean>]
  [-CanSyncHubSitePermissions <SwitchParameter>]
+ [-HidePeoplePreviewingFiles <Boolean>]
+ [-HidePeopleWhoHaveListsOpen <Boolean>]
+ [-RestrictedAccessControl <Boolean>]
  [-Connection <PnPConnection>]
 ```
 
@@ -313,6 +317,21 @@ Accept wildcard characters: False
 
 ### -HidePeoplePreviewingFiles
 Allows hiding of the presence indicators of users simultaneously editing files.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Url
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HidePeopleWhoHaveListsOpen
+Allows hiding of the presence indicators of users simultaneously working in lists.
 
 ```yaml
 Type: String
