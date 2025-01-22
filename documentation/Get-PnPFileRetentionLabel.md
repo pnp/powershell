@@ -35,8 +35,6 @@ This example retrieves the retention label information for the file at the speci
 Get-PnPFileRetentionLabel -Url "/sites/Marketing/Shared Documents/Report.pptx"
 ```
 
-This example retrieves the retention label information for the file at the specified URL.
-
 ## PARAMETERS
 
 ### -Url
