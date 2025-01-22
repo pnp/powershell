@@ -22,6 +22,8 @@ Get-PnPFileCheckedOut -List <ListPipeBind> [-Connection <PnPConnection>]
 
 This cmdlet allows to retrieve all files that are currently checked out in a library.
 
+Notice: if this cmdlet would return more then 5,000 results, so 5,000 or more checked out files, it will not work and will throw an error. This is unfortunately a limitation of SharePoint Online and not something that can be fixed in the cmdlet. As long as the number of checked out files is below 5,000, this cmdlet will work as expected, even on document libraries that contain more than 5,000 files.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
