@@ -127,6 +127,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
 ### Contributors
 
+- Stephen Cox [stephen-cox-nzx]
 - Marijn Somers [Marijnsomers]
 - Janne Holm [jhholm]
 - Paul Bullock [pkbullock]
