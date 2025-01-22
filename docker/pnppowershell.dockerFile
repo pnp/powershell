@@ -1,4 +1,4 @@
-ARG BASE_IMAGE_SUFFIX=lts-alpine-3.17
+ARG BASE_IMAGE_SUFFIX=lts-alpine-3.20
 ARG BASE_IMAGE=mcr.microsoft.com/powershell:$BASE_IMAGE_SUFFIX
 FROM $BASE_IMAGE
 
