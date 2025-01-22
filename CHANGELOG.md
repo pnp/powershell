@@ -80,7 +80,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Add-PnPApp` , `Publish-PnPApp` , `Remove-PnPApp` and `Unpublish-PnPApp` now support disabling script settings if tenant app catalog is a no-script site.
 - `Send-PnPMail` now throws a warning about the retirement of the SharePoint SendEmail API.
 - `Get-PnPCustomAction` now supports a completer for `-Identity` and uses the PnP Core SDK to return custom actions.
-- `Set-PnPPropertyBagValue` and `Remove-PnPPropertyBagValue` now toggle the NoScript status of the site to allow setting/removing property bag values.
+- `Set-PnPPropertyBagValue` and `Remove-PnPPropertyBagValue` now toggle the NoScript status of the site to allow setting/removing property bag values, but only if the tenant wide `AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled` is not enabled [#4680](https://github.com/pnp/powershell/pull/4680)
 
 
 ### Fixed
