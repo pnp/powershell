@@ -2504,6 +2504,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPFileCheckedOut.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPFileCheckedOut.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPFileInFolder.md",
       "output": {
         ".html": {
@@ -7048,6 +7058,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPFileCheckedOut.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPFileRetentionLabel.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPFileRetentionLabel.html"
         }
       },
       "version": ""

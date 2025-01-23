@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPFileRetentionLabel | PnP PowerShell </title>
+    <title>Get-PnPFileCheckedOut | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPFileRetentionLabel | PnP PowerShell ">
+    <meta name="title" content="Get-PnPFileCheckedOut | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,34 +81,42 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="get-pnpfileretentionlabel">Get-PnPFileRetentionLabel</h1>
+  <h1 id="get-pnpfilecheckedout">Get-PnPFileCheckedOut</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API : One of Files.Read.All, Sites.Read.All, Files.ReadWrite.All, Sites.ReadWrite.All</li>
-</ul>
-<p>Retrieves the retention label information for a file in SharePoint.</p>
+<p>Returns all files that are currently checked out in a library</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPFileRetentionLabel -Url &lt;String&gt;
+<pre><code class="lang-powershell">Get-PnPFileCheckedOut -List &lt;ListPipeBind&gt; [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>The Get-PnPFileRetentionLabel cmdlet retrieves the retention label information for a file in SharePoint using Microsoft Graph. It takes a URL as input, decodes it, and specifically encodes the '+' character if it is part of the filename.</p>
+<p>This cmdlet allows to retrieve all files that are currently checked out in a library.</p>
+<p>Notice: if this cmdlet would return more then 5,000 results, so 5,000 or more checked out files, it will not work and will throw an error. This is unfortunately a limitation of SharePoint Online and not something that can be fixed in the cmdlet. As long as the number of checked out files is below 5,000, this cmdlet will work as expected, even on document libraries that contain more than 5,000 files.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
-<p>This example retrieves the retention label information for the file at the specified URL.</p>
-<pre><code class="lang-powershell">Get-PnPFileRetentionLabel -Url &quot;/sites/Marketing/Shared Documents/Report.pptx&quot;
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPFileCheckedOut -List &quot;Documents&quot;
 </code></pre>
+<p>Returns all files that are currently checked out in the &quot;Documents&quot; library.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-url">-Url</h3>
-<p>Specifies the URL of the file for which to retrieve the retention label information.</p>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-list">-List</h3>
+<p>The list instance, list display name, list url or list id to query for checked out files</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: True
-Position: Named
+Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
