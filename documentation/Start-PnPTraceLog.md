@@ -1,10 +1,10 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPTraceLog
+title: Start-PnPTraceLog
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPTraceLog.html
+online version: https://pnp.github.io/powershell/cmdlets/Start-PnPTraceLog.html
 ---
  
 # Start-PnPTraceLog
@@ -26,14 +26,14 @@ Starts .NET tracelogging. Many cmdlets output detailed trace information when ex
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPTraceLog -Path ./TraceOutput.txt
+Start-PnPTraceLog -Path ./TraceOutput.txt
 ```
 
 This turns on trace logging to the file 'TraceOutput.txt' and will capture events of at least 'Information' level.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPTraceLog -Path ./TraceOutput.txt -Level Debug
+Start-PnPTraceLog -Path ./TraceOutput.txt -Level Debug
 ```
 
 This turns on trace logging to the file 'TraceOutput.txt' and will capture debug events.
