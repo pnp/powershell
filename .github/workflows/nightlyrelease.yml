@@ -79,7 +79,7 @@ jobs:
         docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=ubuntu-focal-arm32" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=True" ./docker -f ./docker/pnppowershell.dockerFile --tag "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-focal-arm32";
     - name: Push the image
       run: |
-        $VERSION="$(cat ./version.txt)-nightly"
+        VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-focal-arm32"
   publish-docker-arm64:
@@ -89,7 +89,7 @@ jobs:
     - uses: actions/checkout@v4
     - name: Build an image
       run: |
-        $VERSION="$(cat ./version.txt)-nightly"
+        VERSION="$(cat ./version.txt)-nightly"
         docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=azurelinux-3.0-arm64" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=True" ./docker -f ./docker/pnppowershell.dockerFile --tag "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-azurelinux-3.0-arm64";
     - name: Push the image
       run: |
