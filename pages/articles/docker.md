@@ -90,16 +90,16 @@ After that you can start running commands like `Connect-PnPOnline`.
 
 Sometimes you want to run inline PnP.PowerShell commands.
 
-- Linux/WSL/Mac OS:
+- Latest stable version:
 
     ```bash
-    docker run --rm -it m365pnp/powershell
+    docker run --rm -it m365pnp/powershell:latest
     ```
 
-- Windows (run in PowerShell console):
+- Latest nightly version:
 
     ```powershell
-    docker run --rm -it m365pnp/powershell:1.10.0-nanoserver-1809
+    docker run --rm -it m365pnp/powershell:nightly
     ```
 
 After that you can start running commands like `Connect-PnPOnline`.
@@ -115,7 +115,7 @@ Mind you that in the case above, the container will have an isolated disk system
 - Windows (run in PowerShell console):
 
     ```powershell
-    docker run --rm -it -v "${pwd}:C:\workplace" -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809
+    docker run --rm -it -v "${pwd}:C:\workplace" -w C:\workplace m365pnp/powershell
     ```
 
 In such container you can run `Get-ChildItem` and see the contents of the current directory.
@@ -163,7 +163,7 @@ Please see [Docker documentation](https://docs.docker.com/engine/reference/run/)
 
 ### Nightly
 
-* nightly: The latest night image
+* nightly: The latest nightly image
 
   * alpine-3.20
   * `docker pull m365pnp/powershell:nightly`
@@ -178,10 +178,13 @@ Currently supported platforms:
 
 * nanoserver-ltsc2022 (Windows 2022)
 * nanoserver-1809 (Windows 2019)
-* alpine-3.20 (Linux)
+* alpine-3.20 (Linux 64 bits)
+* ubuntu-focal-arm32 (ARM 32 bits, i.e. Raspberry Pi < 4)
+* azurelinux-3.0-arm64 (ARM 64 bits, i.e. Raspberry Pi >= 4)
 
 Tag name examples:
 
+* 2.99.114-nightly-azurelinux-3.0-arm64
 * 2.99.112-nightly-alpine-3.20
 * 2.12.0-lts-alpine-3.17
 * 2.12.0-nanoserver-ltsc2022
