@@ -76,7 +76,7 @@ jobs:
     - name: Build an image
       run: |
         VERSION="$(cat ./version.txt)-nightly"
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=ubuntu-focal-arm32" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-focal-arm32";
+        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=ubuntu-focal-arm32" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-focal-arm32;
     - name: Push the image
       run: |
         VERSION="$(cat ./version.txt)-nightly"
@@ -90,7 +90,7 @@ jobs:
     - name: Build an image
       run: |
         VERSION="$(cat ./version.txt)-nightly"
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=azurelinux-3.0-arm64" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-azurelinux-3.0-arm64";
+        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=azurelinux-3.0-arm64" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-azurelinux-3.0-arm64;
     - name: Push the image
       run: |
         VERSION="$(cat ./version.txt)-nightly"
