@@ -160,12 +160,12 @@ choco install -y docker-engine
 <h2 id="using-pnppowershell">Using PnP.PowerShell</h2>
 <p>Sometimes you want to run inline PnP.PowerShell commands.</p>
 <ul>
-<li><p>Linux/WSL/Mac OS:</p>
-<pre><code class="lang-bash">docker run --rm -it m365pnp/powershell
+<li><p>Latest stable version:</p>
+<pre><code class="lang-bash">docker run --rm -it m365pnp/powershell:latest
 </code></pre>
 </li>
-<li><p>Windows (run in PowerShell console):</p>
-<pre><code class="lang-powershell">docker run --rm -it m365pnp/powershell:1.10.0-nanoserver-1809
+<li><p>Latest nightly version:</p>
+<pre><code class="lang-powershell">docker run --rm -it m365pnp/powershell:nightly
 </code></pre>
 </li>
 </ul>
@@ -177,7 +177,7 @@ choco install -y docker-engine
 </code></pre>
 </li>
 <li><p>Windows (run in PowerShell console):</p>
-<pre><code class="lang-powershell">docker run --rm -it -v &quot;${pwd}:C:\workplace&quot; -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809
+<pre><code class="lang-powershell">docker run --rm -it -v &quot;${pwd}:C:\workplace&quot; -w C:\workplace m365pnp/powershell
 </code></pre>
 </li>
 </ul>
@@ -219,7 +219,7 @@ docker run --rm -v &quot;${pwd}:C:\workplace&quot; -w C:\workplace m365pnp/power
 </ul>
 <h3 id="nightly">Nightly</h3>
 <ul>
-<li><p>nightly: The latest night image</p>
+<li><p>nightly: The latest nightly image</p>
 <ul>
 <li>alpine-3.20</li>
 <li><code>docker pull m365pnp/powershell:nightly</code></li>
@@ -233,10 +233,13 @@ docker run --rm -v &quot;${pwd}:C:\workplace&quot; -w C:\workplace m365pnp/power
 <ul>
 <li>nanoserver-ltsc2022 (Windows 2022)</li>
 <li>nanoserver-1809 (Windows 2019)</li>
-<li>alpine-3.20 (Linux)</li>
+<li>alpine-3.20 (Linux 64 bits)</li>
+<li>ubuntu-focal-arm32 (ARM 32 bits, i.e. Raspberry Pi &lt; 4)</li>
+<li>azurelinux-3.0-arm64 (ARM 64 bits, i.e. Raspberry Pi &gt;= 4)</li>
 </ul>
 <p>Tag name examples:</p>
 <ul>
+<li>2.99.114-nightly-azurelinux-3.0-arm64</li>
 <li>2.99.112-nightly-alpine-3.20</li>
 <li>2.12.0-lts-alpine-3.17</li>
 <li>2.12.0-nanoserver-ltsc2022</li>
