@@ -112,51 +112,33 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static void RestoreRecycleBinItemInBulk(HttpClient httpClient, ClientContext ctx, string[] idsList)
         {
 
-            var results = REST.RestHelper.Post<REST.RestResultCollection<Model.CopyMigrationInfo>>(httpClient, $"{currentContextUri}/_api/site/CreateCopyJobs", clientContext, body, false);
+            Uri currentContextUri = new Uri(ctx.Url);
+            string apiCall = $"{currentContextUri}/_api/site/RecycleBin/RestoreByIds";
 
-
-
-            string apiCall = "/_api/site/RecycleBin/RestoreByIds";
-            string idsString = string.Join(",", idsList); // Convert array to a comma-separated string  
+            string idsString = string.Join("','", idsList); // Convert array to a comma-separated string  
 
             try
             {
-                string requestBody = $"{{'ids':['{idsString}']";
-                REST.RestHelper.Post(httpClient, apiCall, requestBody, false);
-
-
+                string requestBody = $"{{'ids':['{idsString}']}}";
+                REST.RestHelper.Post(httpClient, apiCall,ctx, requestBody,"application/json", "application/json");
             }
-            catch (Exception ex)
+            catch
             {
                 //Warning: Unable to process as batch, processing individually
                 foreach (string id in idsList)
                 {
                     try
                     {
-                        string requestBody = $"{{'ids':['{id}']";
-                        REST.RestHelper.Post(httpClient, apiCall, requestBody, false);
-                        
+                        string requestBody = $"{{'ids':['{id}']}}";
+                        REST.RestHelper.Post(httpClient, apiCall, ctx, requestBody, "application/json", "application/json");
+
                     }
-                    catch (Exception innerEx)
+                    catch
                     {
-                        string odataError = innerEx.Message;
+                        //Digest errors because they can be due to to the following two reasons and we cannot do anything
+                        //1. Item with the same name already exists
+                        //2. Item is no longer in recycle bin / Previously restored";
 
-                        // Attempt to parse the error message as JSON
-                        dynamic errorDetails = null;
-                        try
-                        {
-                            errorDetails = JsonConvert.DeserializeObject(odataError);
-                            odataError = errorDetails["odata.error"]?.message?.value;
-                        }
-                        catch
-                        {
-                            // Failed to parse error details
-                        }
-
-                        if (!string.IsNullOrEmpty(odataError) && odataError.Contains("Value does not fall within the expected range."))
-                        {
-                            odataError = "No longer in recycle bin / Previously restored";
-                        }
                     }
                 }
             }
