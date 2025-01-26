@@ -1,7 +1,13 @@
 using Microsoft.SharePoint.Client;
+using Newtonsoft.Json;
+using PnP.PowerShell.Commands.Model.Mail;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Net;
+using System.Net.Http;
+using System.Xml.Linq;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -99,8 +105,61 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
             while (items?.Count == 5000);
-            
+
             return recycleBinItems;
+        }
+
+        internal static void RestoreRecycleBinItemInBulk(HttpClient httpClient, ClientContext ctx, string[] idsList)
+        {
+
+            var results = REST.RestHelper.Post<REST.RestResultCollection<Model.CopyMigrationInfo>>(httpClient, $"{currentContextUri}/_api/site/CreateCopyJobs", clientContext, body, false);
+
+
+
+            string apiCall = "/_api/site/RecycleBin/RestoreByIds";
+            string idsString = string.Join(",", idsList); // Convert array to a comma-separated string  
+
+            try
+            {
+                string requestBody = $"{{'ids':['{idsString}']";
+                REST.RestHelper.Post(httpClient, apiCall, requestBody, false);
+
+
+            }
+            catch (Exception ex)
+            {
+                //Warning: Unable to process as batch, processing individually
+                foreach (string id in idsList)
+                {
+                    try
+                    {
+                        string requestBody = $"{{'ids':['{id}']";
+                        REST.RestHelper.Post(httpClient, apiCall, requestBody, false);
+                        
+                    }
+                    catch (Exception innerEx)
+                    {
+                        string odataError = innerEx.Message;
+
+                        // Attempt to parse the error message as JSON
+                        dynamic errorDetails = null;
+                        try
+                        {
+                            errorDetails = JsonConvert.DeserializeObject(odataError);
+                            odataError = errorDetails["odata.error"]?.message?.value;
+                        }
+                        catch
+                        {
+                            // Failed to parse error details
+                        }
+
+                        if (!string.IsNullOrEmpty(odataError) && odataError.Contains("Value does not fall within the expected range."))
+                        {
+                            odataError = "No longer in recycle bin / Previously restored";
+                        }
+                    }
+                }
+            }
         }
     }
 }
