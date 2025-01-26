@@ -3,7 +3,7 @@
     "PnP.PowerShell-Module": {
       "commandName": "Executable",
       "executablePath": "pwsh",
-      "commandLineArgs": "-NoExit -NoProfile -Command Import-Module  'C:\\Users\\Namwar Rizvi\\OneDrive - TechSmart Solutions Limited\\NAS\\Programming\\VS\\src\\Commands\\_debug\\debug.ps1'",
+      "commandLineArgs": "-NoExit -NoProfile -Command Import-Module  $(ProjectDir)/_debug/debug.ps1",
       "workingDirectory": "$(ProjectDir)\\..\\..\\"
     }
   }
