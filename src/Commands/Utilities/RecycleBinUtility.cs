@@ -124,7 +124,8 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             catch
             {
-                //Warning: Unable to process as batch, processing individually
+                //fall back logic
+                //Unable to process as batch because of an error in restoring one of the ids in batch, processing individually
                 foreach (string id in idsList)
                 {
                     try

@@ -73,7 +73,6 @@ namespace PnP.PowerShell.Commands.RecycleBin
                     break;
 
                 case ParameterSetName_RESTORE_MULTIPLE_ITEMS_BY_ID:
-                    string[] strings = new string[1];
                     RecycleBinUtility.RestoreRecycleBinItemInBulk(HttpClient, ClientContext, IdList);
                     break;
 
