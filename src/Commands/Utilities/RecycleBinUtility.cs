@@ -109,9 +109,9 @@ namespace PnP.PowerShell.Commands.Utilities
             return recycleBinItems;
         }
 
-        internal static void RestoreRecycleBinItemInBulk(HttpClient httpClient, ClientContext ctx, string[] idsList)
+        internal static void RestoreRecycleBinItemInBulk(HttpClient httpClient, ClientContext ctx, string[] idsList, RecycleBin.RestoreRecycleBinItem restoreRecycleBinItem)
         {
-
+            //restoreRecycleBinItem provides us the reference to the instance of RestoreRecycleBinItem object. We use this object to log key information as verbose
             Uri currentContextUri = new Uri(ctx.Url);
             string apiCall = $"{currentContextUri}/_api/site/RecycleBin/RestoreByIds";
 
@@ -120,26 +120,43 @@ namespace PnP.PowerShell.Commands.Utilities
             try
             {
                 string requestBody = $"{{'ids':['{idsString}']}}";
-                REST.RestHelper.Post(httpClient, apiCall,ctx, requestBody,"application/json", "application/json");
+                REST.RestHelper.Post(httpClient, apiCall, ctx, requestBody, "application/json", "application/json");
+                restoreRecycleBinItem.WriteVerbose("Whole batch restored successfuly.");
             }
-            catch
+            catch (Exception ex)
             {
-                //fall back logic
-                //Unable to process as batch because of an error in restoring one of the ids in batch, processing individually
-                foreach (string id in idsList)
                 {
-                    try
-                    {
-                        string requestBody = $"{{'ids':['{id}']}}";
-                        REST.RestHelper.Post(httpClient, apiCall, ctx, requestBody, "application/json", "application/json");
+                    //fall back logic
+                    //Unable to process as batch because of an error in restoring one of the ids in batch, processing individually
+                    restoreRecycleBinItem.WriteVerbose($"Unable to process as batch because of an error in restoring one of the ids in batch. Error:{ex.Message}");
+                    restoreRecycleBinItem.WriteVerbose($"Switching to individul restore of items ...");
 
-                    }
-                    catch
+                    foreach (string id in idsList)
                     {
-                        //Digest errors because they can be due to to the following two reasons and we cannot do anything
-                        //1. Item with the same name already exists
-                        //2. Item is no longer in recycle bin / Previously restored";
+                        try
+                        {
+                            string requestBody = $"{{'ids':['{id}']}}";
+                            REST.RestHelper.Post(httpClient, apiCall, ctx, requestBody, "application/json", "application/json");
+                            restoreRecycleBinItem.WriteVerbose($"Item - {id} restored successfuly.");
 
+                        }
+                        catch (Exception e)
+                        {
+                            var odataError = e.Message;
+                            if (odataError != null)
+                            {
+                                if (odataError.Contains("Value does not fall within the expected range."))
+                                {
+                                    restoreRecycleBinItem.WriteVerbose($"Item - {id} already restored.");
+                                }
+                                else
+                                {
+                                    //Most common reason is that an item with the same name already exists. To restore the item, rename the existing item and try again
+                                    restoreRecycleBinItem.WriteVerbose($"Item - {id} restore failed. Error:{odataError}");
+                                }
+                            }
+                            //Digest errors because we cannot do anything
+                        }
                     }
                 }
             }
