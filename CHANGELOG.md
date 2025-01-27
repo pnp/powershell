@@ -106,6 +106,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Connect-PnPOnline` cmdlet not working with On Prem related cmdlets. [#4622](https://github.com/pnp/powershell/pull/4622)
 - Fix `Get\Invoke-PnPSiteTemplate` cmdlet not working in vanity domains. [#4630](https://github.com/pnp/powershell/pull/4630)
 - Fixed passing a `Get-PnPRecycleBinItem` result or a GUID to `Restore-PnPRecycleBinItem` not working correctly. [#4667](https://github.com/pnp/powershell/pull/4667)
+- Fixed `Get-PnPChangeLog` not returning the changelog
 
 ### Removed
 
