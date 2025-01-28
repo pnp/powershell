@@ -1,77 +1,117 @@
 using System.Management.Automation;
-using System.Reflection;
-using System.Text.Json;
+using System.Net.Http;
+using System.Text.RegularExpressions;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPChangeLog")]
+    [Cmdlet(VerbsCommon.Get, "PnPChangeLog", DefaultParameterSetName = ParameterSet_SpecificVersion)]
     [OutputType(typeof(string))]
-    public class GetChangeLog : PSCmdlet
+    public partial class GetChangeLog : PSCmdlet
     {
-        [Parameter(Mandatory = false)]
+        private const string ParameterSet_Nightly = "Current nightly";
+        private const string ParameterSet_SpecificVersion = "Specific version";
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_Nightly)]
         public SwitchParameter Nightly;
 
-        [Parameter(Mandatory = false)]
-        public System.Version Release;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SpecificVersion)]
+        [Alias("Release")]
+        public System.Version Version;
 
         protected override void ProcessRecord()
         {
-            var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            var client = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+            string releaseNotes;
 
-            if (MyInvocation.BoundParameters.ContainsKey(nameof(Release)))
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(Version)))
             {
-                var url = $"https://api.github.com/repos/pnp/powershell/releases/tags/v{Release.Major}.{Release.Minor}.{Release.Build}";
-                var response = client.GetAsync(url).GetAwaiter().GetResult();
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    var jsonElement = JsonSerializer.Deserialize<JsonElement>(content);
-                    if (jsonElement.TryGetProperty("body", out JsonElement bodyElement))
-                    {
-                        WriteObject(bodyElement.GetString());
-                    }
-                }
+                releaseNotes = RetrieveSpecificRelease(client, Version.ToString());
+            }
+            else if (Nightly)
+            {
+                releaseNotes = RetrieveSpecificRelease(client, "Current nightly");
             }
             else
             {
-                var url = "https://raw.githubusercontent.com/pnp/powershell/master/CHANGELOG.md";
-                if (Nightly)
-                {
-                    url = "https://raw.githubusercontent.com/pnp/powershell/dev/CHANGELOG.md";
-                }
-                var assembly = Assembly.GetExecutingAssembly();
-                var currentVersion = new SemanticVersion(assembly.GetCustomAttribute<AssemblyInformationalVersionAttribute>().InformationalVersion);
-                var response = client.GetAsync(url).GetAwaiter().GetResult();
-                if (response.IsSuccessStatusCode)
-                {
-                    var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-
-                    if (Nightly)
-                    {
-                        var match = System.Text.RegularExpressions.Regex.Match(content, @"## \[Current Nightly\][\r\n]{1,}(.*?)[\r\n]{1,}## \[[\d\.]{5,}][\r\n]{1,}", System.Text.RegularExpressions.RegexOptions.Singleline);
-
-                        if (match.Success)
-                        {
-                            WriteObject(match.Groups[1].Value);
-                        }
-                    }
-                    else
-                    {
-                        var currentVersionString = $"{currentVersion.Major}.{currentVersion.Minor}.0";
-                        var previousVersionString = $"{currentVersion.Major}.{currentVersion.Minor - 1}.0";
-                        var match = System.Text.RegularExpressions.Regex.Match(content, $"(## \\[{currentVersionString}\\]\\n(.*)\\n)(## \\[{previousVersionString}]\\n)", System.Text.RegularExpressions.RegexOptions.Singleline);
-
-                        if (match.Success)
-                        {
-                            WriteObject(match.Groups[1].Value);
-                        }
-                    }
-                }
-                else
-                {
-                    throw new PSInvalidOperationException("Cannot retrieve changelog");
-                }
+                releaseNotes = RetrieveLatestStableRelease(client);
             }
+
+            WriteObject(releaseNotes);
+        }
+
+        /// <summary>
+        /// Retrieves the changelog regarding the latest stable release from GitHub
+        /// </summary>
+        /// <param name="httpClient">HttpClient to use to request the data from GitHub</param>
+        /// <exception cref="PSInvalidOperationException">Thrown if it is unable to parse the changelog data properly</exception>
+        /// <returns>The changelog regarding the latest stable release</returns>
+        private string RetrieveLatestStableRelease(HttpClient httpClient)
+        {
+            var url = "https://raw.githubusercontent.com/pnp/powershell/dev/CHANGELOG.md";
+
+            WriteVerbose($"Retrieving changelog from {url}");
+
+            var response = httpClient.GetAsync(url).GetAwaiter().GetResult();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new PSInvalidOperationException("Failed to retrieve changelog from GitHub");
+            }
+
+            WriteVerbose("Successfully retrieved changelog from GitHub");
+
+            var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+            var releasedVersions = Regex.Matches(content, @"## \[(?<version>\d+?\.\d+?\.\d+?)]");
+            if (releasedVersions.Count == 0)
+            {
+                throw new PSInvalidOperationException("Failed to identify versions in changelog on GitHub");
+            }
+
+            WriteVerbose($"Found {releasedVersions.Count} released versions in changelog");
+            WriteVerbose($"Looking for release information on previous stable version {releasedVersions[0].Groups["version"].Value}");
+
+            var match = Regex.Match(content, @$"(?<changelog>## \[{releasedVersions[0].Groups["version"].Value.Replace(".", @"\.")}]\n.*?)\n## \[\d+?\.\d+?\.\d+?\]", RegexOptions.Singleline);
+
+            if (!match.Success)
+            {
+                throw new PSInvalidOperationException($"Failed to identify changelog for version {releasedVersions[0].Groups["version"].Value} on GitHub");                    
+            }
+
+            return match.Groups["changelog"].Value;
+        }            
+
+        /// <summary>
+        /// Retrieves the changelog regarding a specific release from GitHub
+        /// </summary>
+        /// <param name="httpClient">HttpClient to use to request the data from GitHub</param>
+        /// <exception cref="PSInvalidOperationException">Thrown if it is unable to parse the changelog data properly</exception>
+        /// <returns>The changelog regarding the specific release</returns>
+        private string RetrieveSpecificRelease(HttpClient httpClient, string version)
+        {
+            var url = "https://raw.githubusercontent.com/pnp/powershell/dev/CHANGELOG.md";
+
+            WriteVerbose($"Retrieving changelog from {url}");
+
+            var response = httpClient.GetAsync(url).GetAwaiter().GetResult();
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new PSInvalidOperationException("Failed to retrieve changelog from GitHub");
+            }
+
+            WriteVerbose("Successfully retrieved changelog from GitHub");
+
+            var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+
+            WriteVerbose($"Looking for release information on the {version} release");
+
+            var match = Regex.Match(content, @$"(?<changelog>## \[{version}]\n.*?)\n## \[\d+?\.\d+?\.\d+?\]", RegexOptions.Singleline);
+
+            if (!match.Success)
+            {
+                throw new PSInvalidOperationException($"Failed to identify changelog for the {version} release on GitHub");                    
+            }
+
+            return match.Groups["changelog"].Value;
         }
     }
 }
