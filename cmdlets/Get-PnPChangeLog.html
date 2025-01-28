@@ -86,28 +86,58 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Returns the changelog for PnP PowerShell</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPChangeLog [-Nightly]
+<h3 id="current-nightly">Current nightly</h3>
+<pre><code class="lang-powershell">Get-PnPChangeLog -Nightly [-Verbose]
+</code></pre>
+<h3 id="specific-version">Specific version</h3>
+<pre><code class="lang-powershell">Get-PnPChangeLog [-Version &lt;String&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlets returns the changelog in markdown format. It is retrieved dynamically from GitHub.</p>
+<p>This cmdlets returns what has changed in PnP PowerShell in a specific version in markdown format. It is retrieved dynamically from GitHub.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPChangeLog
 </code></pre>
-<p>Returns the changelog for the currently released version.</p>
+<p>Returns the changelog for the latest released stable version.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPChangeLog -Nightly
 </code></pre>
 <p>Returns the changelog for the current nightly build.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPChangeLog -Version 2.12.0
+</code></pre>
+<p>Returns the changelog for the 2.12.0 release.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-nightly">-Nightly</h3>
 <p>Return the changelog for the nightly build</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Current nightly
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-version">-Version</h3>
+<p>Return the changelog for a specific version. Be sure to use the correct version number in the format &lt;#&gt;.&lt;#&gt;.&lt;#&gt;, i.e. 2.12.0, otherwise the cmdlet will fail. If omitted, the latest stable version will be returned.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Specific version
+
+Required: False
+Position: Named
+Default value: Latest stable version
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
