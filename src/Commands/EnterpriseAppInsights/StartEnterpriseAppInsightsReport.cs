@@ -8,9 +8,9 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
     [OutputType(typeof(void))]
     public class StartEnterpriseAppInsightsReport : PnPSharePointOnlineAdminCmdlet
     {
-        [Parameter(Mandatory = true, Position = 0)]
+        [Parameter(Mandatory = false, Position = 0)]
         [ValidateSet("1", "7", "14", "28")]
-        public short ReportPeriodInDays;
+        public short ReportPeriodInDays = 1;
 
         protected override void ExecuteCmdlet()
         {
