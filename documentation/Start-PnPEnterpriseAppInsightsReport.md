@@ -25,7 +25,7 @@ Start-PnPEnterpriseAppInsightsReport [-ReportPeriodInDays <1, 7, 14, 28>]
 
 ## DESCRIPTION
 
-This cmdlet will start the generation of a new App Insights report. It can generate a report over the past day (default), 7 days, 14 days, or 28 days. It will overwrite any existing report for the same period. The report will be generated in the background. Use [Get-SPOEnterpriseAppInsightsReport](Get-SPOEnterpriseAppInsightsReport.md) to check the status of the report.
+This cmdlet will start the generation of a new App Insights report. It can generate a report over the past day (default), 7 days, 14 days, or 28 days. It will overwrite any existing report for the same period. The report will be generated in the background. Use [Get-PnPEnterpriseAppInsightsReport](Get-PnPEnterpriseAppInsightsReport.md) to check the status of the report.
 
 ## EXAMPLES
 
