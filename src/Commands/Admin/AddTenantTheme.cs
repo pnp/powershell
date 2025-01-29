@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantTheme")]
-    public class AddTenantTheme : PnPAdminCmdlet
+    public class AddTenantTheme : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public ThemePipeBind Identity;

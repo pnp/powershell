@@ -9,7 +9,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantRestrictedSearchAllowedList", DefaultParameterSetName = ParameterSet_SiteList)]
-    public class AddTenantRestrictedSearchAllowedList : PnPAdminCmdlet
+    public class AddTenantRestrictedSearchAllowedList : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_SiteList = "SiteList";
         private const string ParameterSet_File = "File";

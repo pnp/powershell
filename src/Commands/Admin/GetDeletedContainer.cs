@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPDeletedContainer")]
-    public class PnPDeletedContainer : PnPAdminCmdlet
+    public class PnPDeletedContainer : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

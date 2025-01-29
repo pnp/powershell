@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPExternalUser", SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
-    public class RemoveExternalUser : PnPAdminCmdlet
+    public class RemoveExternalUser : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string[] UniqueIDs;

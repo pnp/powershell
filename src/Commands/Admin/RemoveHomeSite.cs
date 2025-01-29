@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPHomeSite")]
-    public class RemoveHomeSite : PnPAdminCmdlet
+    public class RemoveHomeSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;

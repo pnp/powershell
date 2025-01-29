@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPHideDefaultThemes")]
-    public class GetHideDefaultThemes : PnPAdminCmdlet
+    public class GetHideDefaultThemes : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

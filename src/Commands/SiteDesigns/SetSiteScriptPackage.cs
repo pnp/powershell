@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteScriptPackage")]
     [OutputType(typeof(TenantSiteScript))]
-    public class SetSiteScriptPackage : PnPAdminCmdlet
+    public class SetSiteScriptPackage : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public TenantSiteScriptPipeBind Identity;

@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             if (Filename == null)
             {
                 // retrieve the metadata first to figure out the file type
-                var photoData = RequestHelper.Get<PhotoMetadata>($"users/{user.Id}/photo");
+                var photoData = GraphRequestHelper.Get<PhotoMetadata>($"users/{user.Id}/photo");
                 if (photoData != null)
                 {
                     switch (photoData.ContentType)
@@ -87,7 +87,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
             if (getphoto)
             {
-                var response = RequestHelper.GetResponse($"users/{user.Id}/photo/$value");
+                var response = GraphRequestHelper.GetResponse($"users/{user.Id}/photo/$value");
                 if (response.IsSuccessStatusCode)
                 {
                     var content = response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();

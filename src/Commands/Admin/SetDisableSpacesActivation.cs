@@ -8,7 +8,7 @@ using System;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPDisableSpacesActivation")]
-    public class SetDisableSpacesActivation : PnPAdminCmdlet
+    public class SetDisableSpacesActivation : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public SPOSitePipeBind Identity;

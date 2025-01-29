@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Unlock, "PnPSensitivityLabelEncryptedFile")]
-    public class UnlockSensitivityLabelEncryptedFile : PnPAdminCmdlet
+    public class UnlockSensitivityLabelEncryptedFile : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Url = string.Empty;

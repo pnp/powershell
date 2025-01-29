@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Copilot
     {
         protected override void ExecuteCmdlet()
         {
-            var result = RequestHelper.Get<Model.Graph.Copilot.CopilotAdminLimitedMode>("beta/copilot/admin/settings/limitedMode");
+            var result = GraphRequestHelper.Get<Model.Graph.Copilot.CopilotAdminLimitedMode>("beta/copilot/admin/settings/limitedMode");
             WriteObject(result, false);
         }
     }

@@ -7,7 +7,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Set, "PnPUserOneDriveQuota")]
     [OutputType(typeof(ClientResult<string>))]
-    public class SetUserOneDriveQuota : PnPAdminCmdlet
+    public class SetUserOneDriveQuota : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Account;

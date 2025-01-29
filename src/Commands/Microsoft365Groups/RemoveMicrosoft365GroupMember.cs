@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            Microsoft365GroupsUtility.RemoveMembers(RequestHelper, Identity.GetGroupId(RequestHelper), Users);
+            Microsoft365GroupsUtility.RemoveMembers(GraphRequestHelper, Identity.GetGroupId(GraphRequestHelper), Users);
         }
     }
 }

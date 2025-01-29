@@ -8,7 +8,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPMicrosoft365GroupToSite")]
-    public class AddMicrosoft365GroupToSite: PnPAdminCmdlet
+    public class AddMicrosoft365GroupToSite: PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public string Url;

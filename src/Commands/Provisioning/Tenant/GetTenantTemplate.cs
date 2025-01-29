@@ -15,7 +15,7 @@ using PnP.PowerShell.Commands.Base;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantTemplate")]
-    public class GetTenantTemplate : PnPAdminCmdlet
+    public class GetTenantTemplate : PnPSharePointOnlineAdminCmdlet
     {
         const string PARAMETERSET_ASFILE = "Extract a template to a file";
         const string PARAMETERSET_ASOBJECT = "Extract a template as an object";

@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Viva
         protected override void ExecuteCmdlet()
         {
             string endpointUrl = $"/v1.0/employeeExperience/communities/{Identity}";
-            RequestHelper.Delete(endpointUrl);
+            GraphRequestHelper.Delete(endpointUrl);
         }
     }
 }

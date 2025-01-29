@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPUserProfileProperty")]
     [OutputType(typeof(SortedDictionary<string, object>))]
-    public class GetUserProfileProperty : PnPAdminCmdlet
+    public class GetUserProfileProperty : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string[] Account;

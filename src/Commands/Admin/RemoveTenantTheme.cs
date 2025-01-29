@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantTheme")]
-    public class RemoveTenantTheme : PnPAdminCmdlet
+    public class RemoveTenantTheme : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public ThemePipeBind Identity;

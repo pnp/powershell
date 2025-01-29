@@ -11,13 +11,30 @@ namespace PnP.PowerShell.Commands.Base
     public abstract class PnPGraphCmdlet : PnPConnectedCmdlet
     {
         /// <summary>
+        /// The default audience to target Microsoft Graph APIs
+        /// </summary>
+        public string MicrosoftGraphDefaultAudience => $"https://{Connection.GraphEndPoint}/.default";
+
+        /// <summary>
         /// Reference the the SharePoint context on the current connection. If NULL it means there is no SharePoint context available on the current connection.
         /// </summary>
         public ClientContext ClientContext => Connection?.Context;
 
+        /// <summary>
+        /// Reference the the SharePoint context on the current connection encapsulated as a PnPContext. If NULL it means there is no SharePoint context available on the current connection.
+        /// </summary>
         public PnPContext PnPContext => Connection?.PnPContext;
 
-        public ApiRequestHelper RequestHelper {get; private set;}
+        /// <summary>
+        /// An instance of the <see cref="ApiRequestHelper"/> class to help with making requests to the Microsoft Graph services
+        /// </summary>
+        public ApiRequestHelper GraphRequestHelper { get; private set; }
+
+        /// <summary>
+        /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
+        /// </summary>
+        public string AccessToken => TokenHandler.GetAccessToken(MicrosoftGraphDefaultAudience, Connection);        
+
         protected override void BeginProcessing()
         {
             base.BeginProcessing();
@@ -31,12 +48,7 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException($"This cmdlet does not work with a {typeString} based connection towards SharePoint.");
                 }
             }
-            RequestHelper = new ApiRequestHelper(this.GetType(),Connection,$"https://{Connection.GraphEndPoint}/.default");
+            GraphRequestHelper = new ApiRequestHelper(GetType(), Connection, MicrosoftGraphDefaultAudience);
         }
-
-        /// <summary>
-        /// Returns an Access Token for the Microsoft Graph API, if available, otherwise NULL
-        /// </summary>
-        public string AccessToken => TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
     }
 }

@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Planner
     {
         protected override void ExecuteCmdlet()
         {
-            PlannerUtility.CreateRoster(RequestHelper);
+            PlannerUtility.CreateRoster(GraphRequestHelper);
         }
     }
 }

@@ -9,7 +9,7 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantTheme")]
-    public class GetTenantTheme : PnPAdminCmdlet
+    public class GetTenantTheme : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public string Name;

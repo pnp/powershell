@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Teams
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var app = Identity.GetApp(RequestHelper);
+                var app = Identity.GetApp(GraphRequestHelper);
                 if (app != null)
                 {
                     WriteObject(app);
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Teams
             }
             else
             {
-                WriteObject(TeamsUtility.GetApps(RequestHelper), true);
+                WriteObject(TeamsUtility.GetApps(GraphRequestHelper), true);
             }
         }
     }

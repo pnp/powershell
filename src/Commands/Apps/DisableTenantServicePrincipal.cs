@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsLifecycle.Disable, "PnPTenantServicePrincipal", ConfirmImpact = ConfirmImpact.High)]
-    public class DisableTenantServicePrincipal : PnPAdminCmdlet
+    public class DisableTenantServicePrincipal : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;

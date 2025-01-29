@@ -6,7 +6,7 @@ namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPAdaptiveScopeProperty")]
     [Alias("Add-PnPAdaptiveScopeProperty")]
-    public class SetAdaptiveScopeProperty : PnPAdminCmdlet
+    public class SetAdaptiveScopeProperty : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Key;

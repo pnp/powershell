@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Get, "PnPUPABulkImportStatus")]
     [OutputType(typeof(ImportProfilePropertiesJobInfo))]
-    public class GetUPABulkImportStatus : PnPAdminCmdlet
+    public class GetUPABulkImportStatus : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public Guid JobId;

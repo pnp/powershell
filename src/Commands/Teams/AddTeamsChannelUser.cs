@@ -26,13 +26,13 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
             }
 
-            var channelId = Channel.GetId(RequestHelper, groupId);
+            var channelId = Channel.GetId(GraphRequestHelper, groupId);
             if (channelId == null)
             {
                 throw new PSArgumentException("Channel not found");
@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             try
             {
-                TeamsUtility.AddChannelMember(RequestHelper, groupId, channelId, User, Role);
+                TeamsUtility.AddChannelMember(GraphRequestHelper, groupId, channelId, User, Role);
             }
             catch (GraphException ex)
             {

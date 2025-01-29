@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsData.Restore, "PnPDeletedContainer")]
-    public class RestoreDeletedContainer : PnPAdminCmdlet
+    public class RestoreDeletedContainer : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Identity { get; set; }

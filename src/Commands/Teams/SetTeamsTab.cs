@@ -24,20 +24,20 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(RequestHelper, groupId);
+                var channelId = Channel.GetId(GraphRequestHelper, groupId);
                 if (channelId != null)
                 {
-                    var tab = Identity.GetTab(RequestHelper, groupId, channelId);
+                    var tab = Identity.GetTab(GraphRequestHelper, groupId, channelId);
                     if (tab != null)
                     {
                         if (ParameterSpecified(nameof(DisplayName)) && tab.DisplayName != DisplayName)
                         {
                             tab.DisplayName = DisplayName;
                         }
-                        TeamsUtility.UpdateTab(RequestHelper, groupId, channelId, tab);
+                        TeamsUtility.UpdateTab(GraphRequestHelper, groupId, channelId, tab);
                     }
                     else
                     {

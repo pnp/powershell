@@ -7,7 +7,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPHubToHubAssociation")]
-    public class AddHubToHubAssociation : PnPAdminCmdlet
+    public class AddHubToHubAssociation : PnPSharePointOnlineAdminCmdlet
     {
         const string ParamSet_ById = "By Id";
         const string ParamSet_ByUrl = "By Url";

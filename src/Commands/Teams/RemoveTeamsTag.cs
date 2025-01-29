@@ -22,18 +22,18 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
-                var tag = Identity.GetTag(RequestHelper, groupId);
+                var tag = Identity.GetTag(GraphRequestHelper, groupId);
                 if (tag != null)
                 {
                     if (Force || ShouldContinue("Do you want to remove this tag ?", Properties.Resources.Confirm))
                     {
-                        var response = TeamsUtility.DeleteTag(RequestHelper, groupId, tag.Id);
+                        var response = TeamsUtility.DeleteTag(GraphRequestHelper, groupId, tag.Id);
                         if (!response.IsSuccessStatusCode)
                         {
-                            if (RequestHelper.TryGetGraphException(response, out GraphException ex))
+                            if (GraphRequestHelper.TryGetGraphException(response, out GraphException ex))
                             {
                                 if (ex.Error != null)
                                 {

@@ -20,12 +20,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Group != null)
             {
-                var groupId = Group.GetGroupId(RequestHelper);
-                Microsoft365GroupsUtility.RemoveGroupSetting(RequestHelper, Identity, groupId.ToString());
+                var groupId = Group.GetGroupId(GraphRequestHelper);
+                Microsoft365GroupsUtility.RemoveGroupSetting(GraphRequestHelper, Identity, groupId.ToString());
             }
             else
             {
-                Microsoft365GroupsUtility.RemoveGroupSetting(RequestHelper, Identity);
+                Microsoft365GroupsUtility.RemoveGroupSetting(GraphRequestHelper, Identity);
             }
         }
     }

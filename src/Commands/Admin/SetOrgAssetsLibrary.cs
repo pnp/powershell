@@ -8,7 +8,7 @@ using Microsoft.SharePoint.BrandCenter;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPOrgAssetsLibrary")]
-    public class SetOrgAssetsLibrary : PnPAdminCmdlet
+    public class SetOrgAssetsLibrary : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string LibraryUrl;

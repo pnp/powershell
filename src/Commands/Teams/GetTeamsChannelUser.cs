@@ -26,13 +26,13 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
             }
 
-            var channelId = Channel.GetId(RequestHelper, groupId);
+            var channelId = Channel.GetId(GraphRequestHelper, groupId);
             if (channelId == null)
             {
                 throw new PSArgumentException("Channel not found");
@@ -40,11 +40,11 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(Identity.GetMembership(RequestHelper, groupId, channelId));
+                WriteObject(Identity.GetMembership(GraphRequestHelper, groupId, channelId));
             }
             else
             {
-                WriteObject(TeamsUtility.GetChannelMembers(RequestHelper, groupId, channelId, Role), true);
+                WriteObject(TeamsUtility.GetChannelMembers(GraphRequestHelper, groupId, channelId, Role), true);
             }
         }
     }

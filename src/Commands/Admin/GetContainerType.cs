@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPContainerType")]
 
-    public class PnPContainerType : PnPAdminCmdlet
+    public class PnPContainerType : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

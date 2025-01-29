@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteSwap")]
-    public class InvokeSiteSwap : PnPAdminCmdlet
+    public class InvokeSiteSwap : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory =true)]
         public string SourceUrl;

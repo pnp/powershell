@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsData.Export, "PnPUserInfo")]
     [OutputType(typeof(PSObject))]
-    public class ExportUserInfo : PnPAdminCmdlet
+    public class ExportUserInfo : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string LoginName;

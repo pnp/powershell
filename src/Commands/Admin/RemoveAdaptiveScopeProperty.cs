@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPAdaptiveScopeProperty")]
-    public class RemoveAdaptiveScopeProperty : PnPAdminCmdlet
+    public class RemoveAdaptiveScopeProperty : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Key;

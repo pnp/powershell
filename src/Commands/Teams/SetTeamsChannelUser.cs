@@ -26,19 +26,19 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
             }
 
-            var channelId = Channel.GetId(RequestHelper, groupId);
+            var channelId = Channel.GetId(GraphRequestHelper, groupId);
             if (channelId == null)
             {
                 throw new PSArgumentException("Channel not found");
             }
 
-            var membershipId = Identity.GetId(RequestHelper, groupId, channelId);
+            var membershipId = Identity.GetId(GraphRequestHelper, groupId, channelId);
             if (string.IsNullOrEmpty(membershipId))
             {
                 throw new PSArgumentException("User was not found in the specified Teams channel");
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             try
             {
-                var updatedMember = TeamsUtility.UpdateChannelMember(RequestHelper, groupId, channelId, membershipId, Role);
+                var updatedMember = TeamsUtility.UpdateChannelMember(GraphRequestHelper, groupId, channelId, membershipId, Role);
                 WriteObject(updatedMember);
             }
             catch (GraphException ex)

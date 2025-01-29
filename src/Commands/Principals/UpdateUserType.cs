@@ -6,7 +6,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsData.Update, "PnPUserType")]
     [OutputType(typeof(string))]
-    public class UpdateUserType : PnPAdminCmdlet
+    public class UpdateUserType : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string LoginName;

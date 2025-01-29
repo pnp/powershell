@@ -7,7 +7,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPBuiltInDesignPackageVisibility")]
-    public class GetBuiltInDesignPackageVisibility : PnPAdminCmdlet
+    public class GetBuiltInDesignPackageVisibility : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public DesignPackageType DesignPackage;

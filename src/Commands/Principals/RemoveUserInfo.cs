@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUserInfo")]
     [OutputType(typeof(PSObject))]
-    public class RemoveUserInfo : PnPAdminCmdlet
+    public class RemoveUserInfo : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string LoginName;

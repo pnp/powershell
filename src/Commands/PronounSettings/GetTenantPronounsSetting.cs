@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.PronounSettings
     {
         protected override void ExecuteCmdlet()
         {
-            var pronouns = RequestHelper.Get<Model.Graph.PronounsSettings>("/v1.0/admin/people/pronouns");
+            var pronouns = GraphRequestHelper.Get<Model.Graph.PronounsSettings>("/v1.0/admin/people/pronouns");
             WriteObject(pronouns, false);
         }
     }

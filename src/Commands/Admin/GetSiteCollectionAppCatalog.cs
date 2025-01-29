@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteCollectionAppCatalog")]
     [OutputType(typeof(IEnumerable<SiteCollectionAppCatalog>))]
-    public class GetSiteCollectionAppCatalog : PnPAdminCmdlet
+    public class GetSiteCollectionAppCatalog : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public SwitchParameter ExcludeDeletedSites;

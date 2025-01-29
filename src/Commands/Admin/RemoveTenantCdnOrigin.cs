@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantCdnOrigin")]
-    public class RemoveTenantCdnOrigin : PnPAdminCmdlet
+    public class RemoveTenantCdnOrigin : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string OriginUrl;

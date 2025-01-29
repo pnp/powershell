@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsCommon.Clear, "PnPTenantRecycleBinItem")]
     [OutputType(typeof(void))]
-    public class ClearTenantRecycleBinItem : PnPAdminCmdlet
+    public class ClearTenantRecycleBinItem : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = false)]
         public string Url;

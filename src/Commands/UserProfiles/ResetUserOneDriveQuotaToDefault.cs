@@ -7,7 +7,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Reset, "PnPUserOneDriveQuotaToDefault")]
     [OutputType(typeof(ClientResult<string>))]
-    public class ResetUserOneDriveQuotaMax : PnPAdminCmdlet
+    public class ResetUserOneDriveQuotaMax : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Account;

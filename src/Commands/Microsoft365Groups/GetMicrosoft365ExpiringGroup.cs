@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var expiringGroupsResults = Microsoft365GroupsUtility.GetExpiringGroup(RequestHelper, Limit, IncludeSiteUrl, IncludeOwners);
+            var expiringGroupsResults = Microsoft365GroupsUtility.GetExpiringGroup(GraphRequestHelper, Limit, IncludeSiteUrl, IncludeOwners);
 
             WriteObject(expiringGroupsResults.Groups.OrderBy(p => p.DisplayName), true);
             if (expiringGroupsResults.Errors.Any())

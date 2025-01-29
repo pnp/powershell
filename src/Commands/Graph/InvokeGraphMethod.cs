@@ -208,7 +208,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private void GetRequestWithPaging()
         {
-            var result = this.RequestHelper.Get(Url, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var result = this.GraphRequestHelper.Get(Url, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
 
             if (Raw.IsPresent)
             {
@@ -234,7 +234,7 @@ namespace PnP.PowerShell.Commands.Base
                             }
                             var nextLink = nextLinkProperty.ToString();
                             nextLink = nextLink.Replace("https://graph.microsoft.com/v1.0/", "");
-                            result = RequestHelper.Get(nextLink, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+                            result = GraphRequestHelper.Get(nextLink, additionalHeaders: AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
                             element = JsonSerializer.Deserialize<JsonElement>(result);
                             dynamic nextObj = Deserialize(element);
                             if (nextObj != null && nextObj.value != null && (nextObj.value is List<object>))
@@ -260,35 +260,35 @@ namespace PnP.PowerShell.Commands.Base
         private void GetRequestWithoutPaging()
         {
             WriteVerbose($"Sending HTTP GET to {Url}");
-            using var response = this.RequestHelper.GetResponse(Url);
+            using var response = this.GraphRequestHelper.GetResponse(Url);
             HandleResponse(response);
         }
 
         private void PostRequest()
         {
             WriteVerbose($"Sending HTTP POST to {Url}");
-            var response = RequestHelper.PostHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = GraphRequestHelper.PostHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PutRequest()
         {
             WriteVerbose($"Sending HTTP PUT to {Url}");
-            var response = RequestHelper.PutHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = GraphRequestHelper.PutHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PatchRequest()
         {
             WriteVerbose($"Sending HTTP PATCH to {Url}");
-            var response = RequestHelper.Patch(GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = GraphRequestHelper.Patch(GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void DeleteRequest()
         {
             WriteVerbose($"Sending HTTP DELETE to {Url}");
-            var response = RequestHelper.Delete(Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            var response = GraphRequestHelper.Delete(Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 

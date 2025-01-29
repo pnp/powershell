@@ -25,22 +25,22 @@ namespace PnP.PowerShell.Commands.Teams
         public string Role;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
                 try
                 {
                     if (ParameterSpecified(nameof(Channel)))
                     {
-                        var teamChannels = TeamsUtility.GetChannels(RequestHelper, groupId);
+                        var teamChannels = TeamsUtility.GetChannels(GraphRequestHelper, groupId);
 
-                        var channelId = Channel.GetId(RequestHelper, groupId);
+                        var channelId = Channel.GetId(GraphRequestHelper, groupId);
 
                         var requestedChannel = teamChannels.FirstOrDefault(c => c.Id == channelId);
 
                         if (!string.IsNullOrEmpty(channelId) && requestedChannel != null && requestedChannel.MembershipType.ToLower() == TeamChannelType.Private.ToString().ToLower())
                         {
-                            WriteObject(TeamsUtility.GetUsers(RequestHelper, groupId, channelId, Role), true);
+                            WriteObject(TeamsUtility.GetUsers(GraphRequestHelper, groupId, channelId, Role), true);
                         }
                         else
                         {
@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Teams
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetUsers(RequestHelper, groupId, Role), true);
+                        WriteObject(TeamsUtility.GetUsers(GraphRequestHelper, groupId, Role), true);
                     }
                 }
                 catch (GraphException ex)

@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPHideDefaultThemes")]
-    public class SetHideDefaultThemes : PnPAdminCmdlet
+    public class SetHideDefaultThemes : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public bool HideDefaultThemes = false;

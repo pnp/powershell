@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsSecurity.Revoke, "PnPUserSession")]
-    public class RevokeUserSession : PnPAdminCmdlet
+    public class RevokeUserSession : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         [ValidateNotNull]

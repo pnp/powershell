@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.New, "PnPSdnProvider")]
-    public class NewSdnProvider : PnPAdminCmdlet
+    public class NewSdnProvider : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Identity;

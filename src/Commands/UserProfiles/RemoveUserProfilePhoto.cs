@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
             WriteVerbose($"Removing profile photo for user {user.UserPrincipalName}");
 
-            RequestHelper.Delete($"users/{user.Id}/photo/$value");
+            GraphRequestHelper.Delete($"users/{user.Id}/photo/$value");
         }
     }
 }

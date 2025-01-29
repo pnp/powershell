@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsSecurity.Revoke, "PnPSiteDesignRights")]
     [OutputType(typeof(void))]
-    public class RevokeSiteDesignRights : PnPAdminCmdlet
+    public class RevokeSiteDesignRights : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline =true)]
         public TenantSiteDesignPipeBind Identity;

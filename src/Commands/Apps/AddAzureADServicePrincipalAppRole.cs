@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            var principal = Principal.GetServicePrincipal(RequestHelper);
+            var principal = Principal.GetServicePrincipal(GraphRequestHelper);
 
             if (principal == null)
             {
@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Apps
 
             if (AppRole.AppRole == null)
             {
-                var resource = ParameterSetName == ParameterSet_BYBUILTINTYPE ? ServicePrincipalUtility.GetServicePrincipalByBuiltInType(RequestHelper, BuiltInType) : Resource.GetServicePrincipal(RequestHelper);
+                var resource = ParameterSetName == ParameterSet_BYBUILTINTYPE ? ServicePrincipalUtility.GetServicePrincipalByBuiltInType(GraphRequestHelper, BuiltInType) : Resource.GetServicePrincipal(GraphRequestHelper);
 
                 if (resource == null)
                 {
@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.Apps
 
             WriteVerbose($"Adding app role {appRole.Value}: {appRole.DisplayName}");
 
-            var response = ServicePrincipalUtility.AddServicePrincipalRoleAssignment(RequestHelper, principal, appRole);
+            var response = ServicePrincipalUtility.AddServicePrincipalRoleAssignment(GraphRequestHelper, principal, appRole);
             WriteObject(response, false);
         }
     }

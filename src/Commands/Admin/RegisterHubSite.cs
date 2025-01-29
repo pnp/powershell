@@ -8,7 +8,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPHubSite")]
-    public class RegisterHubSite : PnPAdminCmdlet
+    public class RegisterHubSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public SitePipeBind Site;

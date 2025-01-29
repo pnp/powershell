@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Files
                     if (string.IsNullOrEmpty(RetentionLabel))
                     {
                         WriteVerbose("Removing retention label");
-                        RequestHelper.Delete(requestUrl);
+                        GraphRequestHelper.Delete(requestUrl);
                     }
                     else
                     {
@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 var jsonPayload = JsonSerializer.Serialize(payload);
                 var httpContent = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
-                var results = RequestHelper.Patch<FileRetentionLabel>(requestUrl, httpContent);
+                var results = GraphRequestHelper.Patch<FileRetentionLabel>(requestUrl, httpContent);
                 WriteObject(results, true);
             }
         }

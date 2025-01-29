@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteScriptFromWeb", DefaultParameterSetName = ParameterSet_BASICCOMPONENTS)]
     [OutputType(typeof(string))]
-    public class GetSiteScriptFromWeb : PnPAdminCmdlet
+    public class GetSiteScriptFromWeb : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_BASICCOMPONENTS = "Basic components";
         private const string ParameterSet_ALLCOMPONENTS = "All components";

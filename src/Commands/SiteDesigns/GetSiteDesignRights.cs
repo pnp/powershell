@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteDesignRights")]
     [OutputType(typeof(ClientObjectList<TenantSiteDesignPrincipal>))]
-    public class GetSiteDesignRights : PnPAdminCmdlet
+    public class GetSiteDesignRights : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline =true)]
         public TenantSiteDesignPipeBind Identity;

@@ -42,12 +42,12 @@ namespace PnP.PowerShell.Commands.ToDo
             {
                 url += $"/{Identity}";
 
-                var todoList = RequestHelper.Get<Model.ToDo.ToDoList>(url);
+                var todoList = GraphRequestHelper.Get<Model.ToDo.ToDoList>(url);
                 WriteObject(todoList, false);
             }
             else
             {
-                var todoLists = RequestHelper.GetResultCollection<Model.ToDo.ToDoList>(url);
+                var todoLists = GraphRequestHelper.GetResultCollection<Model.ToDo.ToDoList>(url);
                 WriteObject(todoLists, true);
             }
         }

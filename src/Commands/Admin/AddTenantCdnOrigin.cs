@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantCdnOrigin")]
-    public class AddTenantCdnOrigin : PnPAdminCmdlet
+    public class AddTenantCdnOrigin : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string OriginUrl;

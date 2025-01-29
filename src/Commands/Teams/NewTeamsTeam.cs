@@ -146,7 +146,7 @@ namespace PnP.PowerShell.Commands.Teams
                 }
             }
 
-            WriteObject(TeamsUtility.NewTeam(RequestHelper, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, SensitivityLabels, Template, ResourceBehaviorOptions));
+            WriteObject(TeamsUtility.NewTeam(GraphRequestHelper, GroupId, DisplayName, Description, Classification, MailNickName, (GroupVisibility)Enum.Parse(typeof(GroupVisibility), Visibility.ToString()), teamCI, Owners, Members, SensitivityLabels, Template, ResourceBehaviorOptions));
         }
     }
 }

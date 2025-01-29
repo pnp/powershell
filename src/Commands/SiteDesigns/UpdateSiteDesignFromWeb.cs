@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsData.Update, "PnPSiteDesignFromWeb", DefaultParameterSetName = ParameterSet_ALLCOMPONENTS)]
     [OutputType(typeof(TenantSiteDesign))]
-    public class UpdateSiteDesignFromWeb : PnPAdminCmdlet
+    public class UpdateSiteDesignFromWeb : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_BASICCOMPONENTS = "Basic components";
         private const string ParameterSet_ALLCOMPONENTS = "All components";

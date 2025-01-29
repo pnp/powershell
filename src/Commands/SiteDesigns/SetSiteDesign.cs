@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteDesign")]
     [OutputType(typeof(TenantSiteDesign))]
-    public class SetSiteDesign : PnPAdminCmdlet
+    public class SetSiteDesign : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public TenantSiteDesignPipeBind Identity;

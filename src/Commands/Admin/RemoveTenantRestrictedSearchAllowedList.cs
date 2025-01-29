@@ -9,7 +9,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantRestrictedSearchAllowedList", DefaultParameterSetName = ParameterSet_SiteList)]
-    public class RemoveTenantRestrictedSearchAllowedList : PnPAdminCmdlet
+    public class RemoveTenantRestrictedSearchAllowedList : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_SiteList = "SiteList";
         private const string ParameterSet_File = "File";

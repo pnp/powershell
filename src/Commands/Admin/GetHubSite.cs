@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPHubSite")]
-    public class GetHubSite : PnPAdminCmdlet
+    public class GetHubSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true)]
         public HubSitePipeBind Identity { get; set; }

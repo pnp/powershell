@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsData.Publish, "PnPApp")]
-    public class PublishApp : PnPAdminCmdlet
+    public class PublishApp : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public AppMetadataPipeBind Identity;
