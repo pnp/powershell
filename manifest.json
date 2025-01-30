@@ -2314,6 +2314,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPEnterpriseAppInsightsReport.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPEnterpriseAppInsightsReport.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPEntraIDActivityReportDirectoryAudit.md",
       "output": {
         ".html": {
@@ -8058,6 +8068,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnpTeamsChannelUser.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Start-PnPEnterpriseAppInsightsReport.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Start-PnPEnterpriseAppInsightsReport.html"
         }
       },
       "version": ""
