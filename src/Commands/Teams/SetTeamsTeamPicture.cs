@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
                 if (!System.IO.Path.IsPathRooted(Path))
@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands.Teams
                         throw new PSArgumentException("File is not of a supported content type (jpg/png)");
                     }
                     var byteArray = File.ReadAllBytes(Path);
-                    TeamsUtility.SetTeamPictureAsync(RequestHelper, groupId, byteArray, contentType);
+                    TeamsUtility.SetTeamPictureAsync(GraphRequestHelper, groupId, byteArray, contentType);
                 }
                 else
                 {

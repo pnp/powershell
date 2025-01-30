@@ -24,13 +24,13 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(RequestHelper);
+                group = Identity.GetGroup(GraphRequestHelper);
             }
 
             if (group != null)
             {
                 // Get members of the group
-                var members = Microsoft365GroupsUtility.GetMembers(RequestHelper, new Guid(group.Id));
+                var members = Microsoft365GroupsUtility.GetMembers(GraphRequestHelper, new Guid(group.Id));
                 WriteObject(members?.OrderBy(m => m.DisplayName), true);
             }
         }

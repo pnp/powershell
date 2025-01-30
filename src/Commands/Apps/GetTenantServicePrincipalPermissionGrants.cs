@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantServicePrincipalPermissionGrants")]
-    public class GetTenantServicePrincipalPermissionGrants : PnPAdminCmdlet
+    public class GetTenantServicePrincipalPermissionGrants : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

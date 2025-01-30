@@ -5,7 +5,7 @@ using PnP.PowerShell.Commands.Base;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantRestrictedSearchAllowedList")]
-    public class GetTenantRestrictedSearchAllowedList : PnPAdminCmdlet
+    public class GetTenantRestrictedSearchAllowedList : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

@@ -6,7 +6,7 @@ namespace PnP.PowerShell.Commands.Files
 {
 
     [Cmdlet(VerbsCommon.Get, "PnPFileSensitivityLabelInfo")]
-    public class GetFileSensitivityLabelInfo: PnPAdminCmdlet
+    public class GetFileSensitivityLabelInfo: PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Url = string.Empty;

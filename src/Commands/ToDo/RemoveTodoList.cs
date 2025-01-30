@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.ToDo
                 url = $"/v1.0/users/{user.Id}/todo/lists/{Identity}";
             }
 
-            var graphResult = RequestHelper.Delete(url);
+            var graphResult = GraphRequestHelper.Delete(url);
 
             if (graphResult.StatusCode == System.Net.HttpStatusCode.NoContent)
             {

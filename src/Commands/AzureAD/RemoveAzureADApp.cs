@@ -18,11 +18,11 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ExecuteCmdlet()
         {
-            var app = Identity.GetApp(RequestHelper);
+            var app = Identity.GetApp(GraphRequestHelper);
 
             if (Force || ShouldContinue($"Remove app '{app.DisplayName}' with id '{app.Id}'", Properties.Resources.Confirm))
             {
-                RequestHelper.Delete($"/v1.0/applications/{app.Id}");
+                GraphRequestHelper.Delete($"/v1.0/applications/{app.Id}");
             }
         }
     }

@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPKnowledgeHubSite")]
-    public class GetKnowledgeHubSite : PnPAdminCmdlet
+    public class GetKnowledgeHubSite : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

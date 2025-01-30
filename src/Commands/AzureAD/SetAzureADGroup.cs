@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(RequestHelper);
+                group = Identity.GetGroup(GraphRequestHelper);
             }
 
             if (group != null)
@@ -77,22 +77,22 @@ namespace PnP.PowerShell.Commands.Graph
 
                     if (changed)
                     {
-                        AzureADGroupsUtility.Update(RequestHelper, group);
+                        AzureADGroupsUtility.Update(GraphRequestHelper, group);
                     }
 
                     if (ParameterSpecified(nameof(Owners)))
                     {
-                        Microsoft365GroupsUtility.UpdateOwners(RequestHelper, new Guid(group.Id), Owners);
+                        Microsoft365GroupsUtility.UpdateOwners(GraphRequestHelper, new Guid(group.Id), Owners);
                     }
                     if (ParameterSpecified(nameof(Members)))
                     {
-                        Microsoft365GroupsUtility.UpdateMembersAsync(RequestHelper, new Guid(group.Id), Members);
+                        Microsoft365GroupsUtility.UpdateMembersAsync(GraphRequestHelper, new Guid(group.Id), Members);
                     }
 
                     if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                     {
                         // For this scenario a separate call needs to be made
-                        Utilities.Microsoft365GroupsUtility.SetVisibility(RequestHelper, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients);
+                        Utilities.Microsoft365GroupsUtility.SetVisibility(GraphRequestHelper, new Guid(group.Id), HideFromAddressLists, HideFromOutlookClients);
                     }
                 }
                 catch (Exception e)

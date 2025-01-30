@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.Apps
         {
             if (ParameterSetName == ParameterSet_BYASSIGNEDAPPROLE || ParameterSetName == ParameterSet_BYAPPROLENAME)
             {
-                var principal = Principal.GetServicePrincipal(RequestHelper);
+                var principal = Principal.GetServicePrincipal(GraphRequestHelper);
 
                 if (principal == null)
                 {
@@ -46,23 +46,23 @@ namespace PnP.PowerShell.Commands.Apps
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        var appRoleAssignment = Identity.GetAssignedAppRole(RequestHelper, principal.Id);
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, appRoleAssignment);
+                        var appRoleAssignment = Identity.GetAssignedAppRole(GraphRequestHelper, principal.Id);
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, appRoleAssignment);
                     }
                     else
                     {
-                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, principal);
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, principal);
                     }
                 }
                 else
                 {
-                    ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, principal, AppRoleName);
+                    ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, principal, AppRoleName);
                 }
             }
             else
             {
-                var appRoleAssignment = Identity.GetAssignedAppRole(RequestHelper);
-                ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(RequestHelper, appRoleAssignment);
+                var appRoleAssignment = Identity.GetAssignedAppRole(GraphRequestHelper);
+                ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, appRoleAssignment);
             }
         }
     }

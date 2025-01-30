@@ -29,14 +29,14 @@ namespace PnP.PowerShell.Commands.PeopleSettings
                 }
                 WriteVerbose($"Retrieving profile card property '{PropertyName}'");
 
-                var propertyResult = RequestHelper.Get<Model.Graph.ProfileCard.ProfileCardProperty>(requestUrl);
+                var propertyResult = GraphRequestHelper.Get<Model.Graph.ProfileCard.ProfileCardProperty>(requestUrl);
                 WriteObject(propertyResult, false);
             }
             else
             {
                 WriteVerbose("Retrieving all profile card properties");
 
-                var propertyResults = RequestHelper.GetResultCollection<Model.Graph.ProfileCard.ProfileCardProperty>(requestUrl);
+                var propertyResults = GraphRequestHelper.GetResultCollection<Model.Graph.ProfileCard.ProfileCardProperty>(requestUrl);
                 WriteObject(propertyResults, true);
             }
         }

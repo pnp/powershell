@@ -7,7 +7,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteCollectionAppCatalog")]
-    public class RemoveSiteCollectionAppCatalog : PnPAdminCmdlet
+    public class RemoveSiteCollectionAppCatalog : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public SitePipeBind Site;

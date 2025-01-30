@@ -25,19 +25,19 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (string.IsNullOrEmpty(groupId))
             {
                 throw new PSArgumentException("Group not found");
             }
 
-            var channelId = Channel.GetId(RequestHelper, groupId);
+            var channelId = Channel.GetId(GraphRequestHelper, groupId);
             if (string.IsNullOrEmpty(channelId))
             {
                 throw new PSArgumentException("Channel not found in the specified team");
             }
 
-            var memberId = Identity.GetId(RequestHelper, groupId, channelId);
+            var memberId = Identity.GetId(GraphRequestHelper, groupId, channelId);
             if (string.IsNullOrEmpty(memberId))
             {
                 throw new PSArgumentException("User was not found in the specified Teams channel");
@@ -45,10 +45,10 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (Force || ShouldContinue("Remove specified member from the Microsoft Teams channel?", Resources.Confirm))
             {
-                var response = TeamsUtility.DeleteChannelMember(RequestHelper, groupId, channelId, memberId);
+                var response = TeamsUtility.DeleteChannelMember(GraphRequestHelper, groupId, channelId, memberId);
                 if (!response.IsSuccessStatusCode)
                 {
-                    if (RequestHelper.TryGetGraphException(response, out var ex) && !string.IsNullOrEmpty(ex.Error.Message))
+                    if (GraphRequestHelper.TryGetGraphException(response, out var ex) && !string.IsNullOrEmpty(ex.Error.Message))
                     {
                         throw new PSInvalidOperationException(ex.Error.Message);
                     }

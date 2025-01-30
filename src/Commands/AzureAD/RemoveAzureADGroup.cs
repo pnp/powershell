@@ -19,11 +19,11 @@ namespace PnP.PowerShell.Commands.Graph
         {
             if (Identity != null)
             {
-                Group group = Identity.GetGroup(RequestHelper);
+                Group group = Identity.GetGroup(GraphRequestHelper);
 
                 if (group != null)
                 {
-                    Microsoft365GroupsUtility.RemoveGroup(RequestHelper, new System.Guid(group.Id));
+                    Microsoft365GroupsUtility.RemoveGroup(GraphRequestHelper, new System.Guid(group.Id));
                 }
             }
         }

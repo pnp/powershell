@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureACSPrincipal")]
     [OutputType(typeof(List<IACSPrincipal>))]
-    public class GetAzureACSPrincipal : PnPAdminCmdlet
+    public class GetAzureACSPrincipal : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public AzureACSPrincipalScope Scope;

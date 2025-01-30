@@ -7,7 +7,7 @@ namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantRecycleBinItem", DefaultParameterSetName = "All")]
     [OutputType(typeof(DeletedSiteProperties))]
-    public class GetTenantRecycleBinItems : PnPAdminCmdlet
+    public class GetTenantRecycleBinItems : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

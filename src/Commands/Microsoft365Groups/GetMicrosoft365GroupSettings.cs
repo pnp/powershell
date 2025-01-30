@@ -21,26 +21,26 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null && GroupSetting != null)
             {
-                var groupId = Identity.GetGroupId(RequestHelper);
-                var groupSettingId = GroupSetting.GetGroupSettingId(RequestHelper);
-                var groupSettings = Microsoft365GroupsUtility.GetGroupSettings(RequestHelper, groupSettingId.ToString(), groupId.ToString());
+                var groupId = Identity.GetGroupId(GraphRequestHelper);
+                var groupSettingId = GroupSetting.GetGroupSettingId(GraphRequestHelper);
+                var groupSettings = Microsoft365GroupsUtility.GetGroupSettings(GraphRequestHelper, groupSettingId.ToString(), groupId.ToString());
                 WriteObject(groupSettings, true);
             }
             else if (Identity != null && GroupSetting == null)
             {
-                var groupId = Identity.GetGroupId(RequestHelper);
-                var groupSettings = Microsoft365GroupsUtility.GetGroupSettings(RequestHelper, groupId.ToString());
+                var groupId = Identity.GetGroupId(GraphRequestHelper);
+                var groupSettings = Microsoft365GroupsUtility.GetGroupSettings(GraphRequestHelper, groupId.ToString());
                 WriteObject(groupSettings?.Value, true);
             }
             else if (Identity == null && GroupSetting != null)
             {
-                var groupSettingId = GroupSetting.GetGroupSettingId(RequestHelper);
-                var groupSettings = Microsoft365GroupsUtility.GetGroupTenantSettings(RequestHelper, groupSettingId.ToString());
+                var groupSettingId = GroupSetting.GetGroupSettingId(GraphRequestHelper);
+                var groupSettings = Microsoft365GroupsUtility.GetGroupTenantSettings(GraphRequestHelper, groupSettingId.ToString());
                 WriteObject(groupSettings, true);
             }
             else if (Identity == null && GroupSetting == null)
             {
-                var groupSettings = Microsoft365GroupsUtility.GetGroupSettings(RequestHelper);
+                var groupSettings = Microsoft365GroupsUtility.GetGroupSettings(GraphRequestHelper);
                 WriteObject(groupSettings?.Value, true);
             }
         }

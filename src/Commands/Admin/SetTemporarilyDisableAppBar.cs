@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTemporarilyDisableAppBar")]
-    public class SetTemporarilyDisableAppBar : PnPAdminCmdlet
+    public class SetTemporarilyDisableAppBar : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public bool Enabled;

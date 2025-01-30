@@ -66,10 +66,10 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(RequestHelper, groupId);
+                var channelId = Channel.GetId(GraphRequestHelper, groupId);
                 if (channelId != null)
                 {
                     try
@@ -119,7 +119,7 @@ namespace PnP.PowerShell.Commands.Teams
                                     break;
                                 }
                         }
-                        WriteObject(TeamsUtility.AddTab(RequestHelper, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl));
+                        WriteObject(TeamsUtility.AddTab(GraphRequestHelper, groupId, channelId, DisplayName, Type, teamsAppId, entityId, contentUrl, removeUrl, webSiteUrl));
                     }
                     catch (GraphException ex)
                     {

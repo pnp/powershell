@@ -10,7 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantDeletedSite")]
-    public class GetTenantDeletedSite : PnPAdminCmdlet
+    public class GetTenantDeletedSite : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_ALLSITES = "ParameterSetAllSites";
         private const string ParameterSet_PERSONALSITESONLY = "ParameterSetPersonalSitesOnly";

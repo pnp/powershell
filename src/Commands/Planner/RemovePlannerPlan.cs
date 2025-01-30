@@ -20,15 +20,15 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Group.GetGroupId(RequestHelper);
+            var groupId = Group.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
-                var planId = Identity.GetId(RequestHelper, groupId);
+                var planId = Identity.GetId(GraphRequestHelper, groupId);
                 if (!string.IsNullOrEmpty(planId))
                 {
                     if (ShouldContinue($"Delete plan with id {planId}", Properties.Resources.Confirm))
                     {
-                        PlannerUtility.DeletePlan(RequestHelper, planId);
+                        PlannerUtility.DeletePlan(GraphRequestHelper, planId);
                     }
                 }
                 else

@@ -26,15 +26,15 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Group != null)
             {
-                var groupId = Group.GetGroupId(RequestHelper);
+                var groupId = Group.GetGroupId(GraphRequestHelper);
                 var groupSettingObject = GroupSettingsObject();
 
-                Microsoft365GroupsUtility.UpdateGroupSetting(RequestHelper, Identity, groupId.ToString(), groupSettingObject);
+                Microsoft365GroupsUtility.UpdateGroupSetting(GraphRequestHelper, Identity, groupId.ToString(), groupSettingObject);
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
-                Microsoft365GroupsUtility.UpdateGroupSetting(RequestHelper, Identity, groupSettingObject);
+                Microsoft365GroupsUtility.UpdateGroupSetting(GraphRequestHelper, Identity, groupSettingObject);
             }
         }
 

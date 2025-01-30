@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            var existingTask = PlannerUtility.GetTask(RequestHelper, TaskId, false, false);
+            var existingTask = PlannerUtility.GetTask(GraphRequestHelper, TaskId, false, false);
             if (existingTask != null)
             {
                 var plannerTask = new PlannerTask();
@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Planner
                 }
                 if (ParameterSpecified(nameof(Bucket)))
                 {
-                    var bucket = Bucket.GetBucket(RequestHelper, existingTask.PlanId);
+                    var bucket = Bucket.GetBucket(GraphRequestHelper, existingTask.PlanId);
                     if (bucket != null)
                     {
                         plannerTask.BucketId = bucket.Id;
@@ -95,7 +95,7 @@ namespace PnP.PowerShell.Commands.Planner
                     var chunks = GraphBatchUtility.Chunk(AssignedTo, 20);
                     foreach (var chunk in chunks)
                     {
-                        var userIds = GraphBatchUtility.GetPropertyBatched(RequestHelper, chunk.ToArray(), "/users/{0}", "id");
+                        var userIds = GraphBatchUtility.GetPropertyBatched(GraphRequestHelper, chunk.ToArray(), "/users/{0}", "id");
                         foreach (var userId in userIds.Results)
                         {
                             plannerTask.Assignments.Add(userId.Value, new TaskAssignment());
@@ -119,12 +119,12 @@ namespace PnP.PowerShell.Commands.Planner
                 }
 
 
-                PlannerUtility.UpdateTask(RequestHelper, existingTask, plannerTask);
+                PlannerUtility.UpdateTask(GraphRequestHelper, existingTask, plannerTask);
 
                 if (ParameterSpecified(nameof(Description)))
                 {
-                    var existingTaskDetails = PlannerUtility.GetTaskDetails(RequestHelper, TaskId, false);
-                    PlannerUtility.UpdateTaskDetails(RequestHelper, existingTaskDetails, Description);
+                    var existingTaskDetails = PlannerUtility.GetTaskDetails(GraphRequestHelper, TaskId, false);
+                    PlannerUtility.UpdateTaskDetails(GraphRequestHelper, existingTaskDetails, Description);
                 }
             }
             else

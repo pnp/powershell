@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantCdnPolicies")]
-    public class GetTenantCdnPolicies : PnPAdminCmdlet
+    public class GetTenantCdnPolicies : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public SPOTenantCdnType CdnType;

@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPHubSiteAssociation")]
-    public class RemoveHubSiteAssociation : PnPAdminCmdlet
+    public class RemoveHubSiteAssociation : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public SitePipeBind Site;

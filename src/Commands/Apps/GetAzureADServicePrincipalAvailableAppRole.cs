@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            var principal = Principal.GetServicePrincipal(RequestHelper);
+            var principal = Principal.GetServicePrincipal(GraphRequestHelper);
 
             if (principal == null)
             {

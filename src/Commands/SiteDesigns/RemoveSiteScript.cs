@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteScript")]
     [OutputType(typeof(void))]
-    public class RemoveSiteScript : PnPAdminCmdlet
+    public class RemoveSiteScript : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public TenantSiteScriptPipeBind Identity;

@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Set, "PnPUserProfileProperty")]
     [OutputType(typeof(void))]
-    public class SetUserProfileProperty : PnPAdminCmdlet
+    public class SetUserProfileProperty : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Account;

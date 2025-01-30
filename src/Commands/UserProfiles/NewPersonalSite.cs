@@ -7,7 +7,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.New, "PnPPersonalSite")]
     [OutputType(typeof(void))]
-    public class NewPersonalSite : PnPAdminCmdlet
+    public class NewPersonalSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string[] Email;

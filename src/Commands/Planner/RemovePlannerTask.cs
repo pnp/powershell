@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Planner
 
         protected override void ExecuteCmdlet()
         {
-            PlannerUtility.DeleteTask(RequestHelper, Task.Id);
+            PlannerUtility.DeleteTask(GraphRequestHelper, Task.Id);
         }
     }
 }

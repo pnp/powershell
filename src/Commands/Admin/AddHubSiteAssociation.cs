@@ -9,7 +9,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPHubSiteAssociation")]
-    public class AddHubSiteAssociation : PnPAdminCmdlet
+    public class AddHubSiteAssociation : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public SitePipeBind Site;

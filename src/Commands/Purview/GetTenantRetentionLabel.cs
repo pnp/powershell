@@ -24,12 +24,12 @@ namespace PnP.PowerShell.Commands.Purview
             {
                 url += $"/{Identity}";
 
-                var labels = RequestHelper.Get<Model.Graph.Purview.RetentionLabel>(url);
+                var labels = GraphRequestHelper.Get<Model.Graph.Purview.RetentionLabel>(url);
                 WriteObject(labels, false);
             }
             else
             {
-                var labels = RequestHelper.GetResultCollection<Model.Graph.Purview.RetentionLabel>(url);
+                var labels = GraphRequestHelper.GetResultCollection<Model.Graph.Purview.RetentionLabel>(url);
                 WriteObject(labels, true);
             }
         }

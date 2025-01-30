@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Viva
 
             if (Owners?.Length > 0)
             {
-                string[] ownerData = Microsoft365GroupsUtility.GetUsersDataBindValue(RequestHelper, Owners);
+                string[] ownerData = Microsoft365GroupsUtility.GetUsersDataBindValue(GraphRequestHelper, Owners);
                 postData.Add("owners@odata.bind", ownerData);
             }
 
@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Viva
             var stringContent = new StringContent(data);
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            var httpResponseMessage = RequestHelper.PostHttpContent("/v1.0/employeeExperience/communities", stringContent);
+            var httpResponseMessage = GraphRequestHelper.PostHttpContent("/v1.0/employeeExperience/communities", stringContent);
 
             var opLocationResponseHeader = httpResponseMessage.Headers.Location;
 
@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Viva
             int retryCount = 0;
             do
             {
-                provisioningResult = RequestHelper.Get<VivaEngageProvisioningResult>(opLocationResponseHeader.AbsoluteUri);
+                provisioningResult = GraphRequestHelper.Get<VivaEngageProvisioningResult>(opLocationResponseHeader.AbsoluteUri);
                 if (provisioningResult.Status != "succeeded")
                 {
                     // Wait for 5 seconds before retrying

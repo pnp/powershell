@@ -30,12 +30,12 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                var auditResults = RequestHelper.Get<Model.AzureAD.AzureADDirectoryAudit>(auditLogUrl);
+                var auditResults = GraphRequestHelper.Get<Model.AzureAD.AzureADDirectoryAudit>(auditLogUrl);
                 WriteObject(auditResults, false);
             }
             else
             {
-                var auditResults = RequestHelper.GetResultCollection<Model.AzureAD.AzureADDirectoryAudit>(auditLogUrl);
+                var auditResults = GraphRequestHelper.GetResultCollection<Model.AzureAD.AzureADDirectoryAudit>(auditLogUrl);
                 WriteObject(auditResults, true);
             }
         }

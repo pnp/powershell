@@ -19,17 +19,17 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
 
-                var channelId = Channel.GetId(RequestHelper, groupId);
+                var channelId = Channel.GetId(GraphRequestHelper, groupId);
                 if (channelId == null)
                 {
                     throw new PSArgumentException("Channel not found");
                 }
 
-                WriteObject(Utilities.TeamsUtility.GetChannelsFilesFolder(RequestHelper, groupId, channelId));
+                WriteObject(Utilities.TeamsUtility.GetChannelsFilesFolder(GraphRequestHelper, groupId, channelId));
             }
             else
             {

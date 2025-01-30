@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId == null)
             {
                 throw new PSArgumentException("Group not found");
@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Teams
 
             try
             {
-                var channel = TeamsUtility.AddChannel(RequestHelper, groupId, DisplayName, Description, ChannelType, OwnerUPN, false);
+                var channel = TeamsUtility.AddChannel(GraphRequestHelper, groupId, DisplayName, Description, ChannelType, OwnerUPN, false);
                 WriteObject(channel);
             }
             catch (GraphException ex)

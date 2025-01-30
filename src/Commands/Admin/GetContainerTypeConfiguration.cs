@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPContainerTypeConfiguration")]
-    public class GetContainerTypeConfiguration : PnPAdminCmdlet
+    public class GetContainerTypeConfiguration : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public Guid Identity;

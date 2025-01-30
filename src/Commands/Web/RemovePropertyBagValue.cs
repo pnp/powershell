@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPropertyBagValue")]
     [OutputType(typeof(void))]
-    public class RemovePropertyBagValue : PnPAdminCmdlet
+    public class RemovePropertyBagValue : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Key;

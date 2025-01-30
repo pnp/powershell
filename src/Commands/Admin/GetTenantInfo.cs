@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Admin
     [Cmdlet(VerbsCommon.Get, "PnPTenantInfo")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/CrossTenantInformation.ReadBasic.All")]
     [OutputType(typeof(Model.TenantInfo))]
-    public class GetTenantInfo : PnPAdminCmdlet
+    public class GetTenantInfo : PnPSharePointOnlineAdminCmdlet
     {
         private const string GETINFOBYTDOMAINNAME = "By Domain Name";
         private const string GETINFOBYTENANTID = "By TenantId";

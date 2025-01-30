@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPListDesign")]
     [OutputType(typeof(TenantListDesign))]
-    public class GetListDesign : PnPAdminCmdlet
+    public class GetListDesign : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public TenantListDesignPipeBind Identity;

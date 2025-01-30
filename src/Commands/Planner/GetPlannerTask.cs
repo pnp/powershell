@@ -45,13 +45,13 @@ namespace PnP.PowerShell.Commands.Planner
         {
             if (ParameterSetName == ParameterSetName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(RequestHelper);
+                var groupId = Group.GetGroupId(GraphRequestHelper);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetId(RequestHelper, groupId);
+                    var planId = Plan.GetId(GraphRequestHelper, groupId);
                     if (planId != null)
                     {
-                        WriteObject(PlannerUtility.GetTasks(RequestHelper, planId, ResolveUserDisplayNames), true);
+                        WriteObject(PlannerUtility.GetTasks(GraphRequestHelper, planId, ResolveUserDisplayNames), true);
                     }
                     else
                     {
@@ -65,15 +65,15 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else if (ParameterSetName == ParameterSetName_BYPLANID)
             {
-                WriteObject(PlannerUtility.GetTasks(RequestHelper, PlanId, ResolveUserDisplayNames), true);
+                WriteObject(PlannerUtility.GetTasks(GraphRequestHelper, PlanId, ResolveUserDisplayNames), true);
             }
             else if (ParameterSetName == ParameterSetName_BYBUCKET)
             {
-                WriteObject(PlannerUtility.GetBucketTasks(RequestHelper, Bucket.GetId(), ResolveUserDisplayNames), true);
+                WriteObject(PlannerUtility.GetBucketTasks(GraphRequestHelper, Bucket.GetId(), ResolveUserDisplayNames), true);
             }
             else if (ParameterSetName == ParameterSetName_BYTASKID)
             {
-                WriteObject(PlannerUtility.GetTask(RequestHelper, TaskId, ResolveUserDisplayNames, IncludeDetails));
+                WriteObject(PlannerUtility.GetTask(GraphRequestHelper, TaskId, ResolveUserDisplayNames, IncludeDetails));
             }
         }
     }

@@ -6,7 +6,7 @@ namespace PnP.PowerShell.Commands.Site
 {
     [Cmdlet(VerbsCommon.Get, "PnPStructuralNavigationCacheWebState")]
     [OutputType(typeof(bool))]
-    public class GetStructuralNavigationCacheWebState : PnPAdminCmdlet
+    public class GetStructuralNavigationCacheWebState : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public string WebUrl;

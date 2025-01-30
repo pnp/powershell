@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.ToDo
             var stringContent = new StringContent($"{{'displayName':'{DisplayName}'}}");
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-            var todoList = RequestHelper.Patch<Model.ToDo.ToDoList>(url, stringContent);
+            var todoList = GraphRequestHelper.Patch<Model.ToDo.ToDoList>(url, stringContent);
             WriteObject(todoList, false);
         }
     }

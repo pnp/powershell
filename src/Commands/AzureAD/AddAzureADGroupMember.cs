@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             if (Identity != null)
             {
-                group = Identity.GetGroup(RequestHelper);
+                group = Identity.GetGroup(GraphRequestHelper);
             }
             if (group != null)
             {
@@ -39,14 +39,14 @@ namespace PnP.PowerShell.Commands.AzureAD
 
                 if (userArray.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddMembers(RequestHelper, new Guid(group.Id), userArray, RemoveExisting.ToBool());
+                    Microsoft365GroupsUtility.AddMembers(GraphRequestHelper, new Guid(group.Id), userArray, RemoveExisting.ToBool());
                 }
 
                 var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
 
                 if (secGroups.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddDirectoryMembers(RequestHelper, new Guid(group.Id), secGroups, RemoveExisting.ToBool());
+                    Microsoft365GroupsUtility.AddDirectoryMembers(GraphRequestHelper, new Guid(group.Id), secGroups, RemoveExisting.ToBool());
                 }
             }
         }

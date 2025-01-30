@@ -83,12 +83,12 @@ namespace PnP.PowerShell.Commands.Teams
         public bool? AllowCreatePrivateChannels;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Identity.GetGroupId(RequestHelper);
+            var groupId = Identity.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
                 try
                 {
-                    var team = TeamsUtility.GetTeam(RequestHelper, groupId);
+                    var team = TeamsUtility.GetTeam(GraphRequestHelper, groupId);
                     var updateGroup = false;
                     var group = new Group();
                     if (team != null)
@@ -124,7 +124,7 @@ namespace PnP.PowerShell.Commands.Teams
 
                         if (updateGroup)
                         {
-                            TeamsUtility.UpdateGroup(RequestHelper, groupId, group);
+                            TeamsUtility.UpdateGroup(GraphRequestHelper, groupId, group);
                         }
 
                         var teamCI = new TeamCreationInformation();
@@ -146,7 +146,7 @@ namespace PnP.PowerShell.Commands.Teams
                         teamCI.Classification = ParameterSpecified(nameof(Classification)) ? Classification : null;
                         teamCI.AllowCreatePrivateChannels = ParameterSpecified(nameof(AllowCreatePrivateChannels)) ? AllowCreatePrivateChannels : null;
 
-                        var updated = TeamsUtility.UpdateTeam(RequestHelper, groupId, teamCI.ToTeam(group.Visibility.Value));
+                        var updated = TeamsUtility.UpdateTeam(GraphRequestHelper, groupId, teamCI.ToTeam(group.Visibility.Value));
                         WriteObject(updated);
                     }
                 }

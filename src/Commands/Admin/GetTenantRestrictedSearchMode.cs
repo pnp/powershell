@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantRestrictedSearchMode")]
-    public class GetTenantRestrictedSearchMode : PnPAdminCmdlet
+    public class GetTenantRestrictedSearchMode : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

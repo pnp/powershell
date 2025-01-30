@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPOrgNewsSite")]    
-    public class RemoveOrgNewsSite : PnPAdminCmdlet
+    public class RemoveOrgNewsSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public SitePipeBind OrgNewsSiteUrl;

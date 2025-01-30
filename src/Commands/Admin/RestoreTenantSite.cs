@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsData.Restore, "PnPTenantSite")]
-    public class RestoreTenantSite : PnPAdminCmdlet
+    public class RestoreTenantSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
         [Alias("Url")]

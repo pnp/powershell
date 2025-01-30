@@ -6,7 +6,7 @@ using Microsoft.SharePoint.Client;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPAppErrors")]
-    public class GetAppErrors : PnPAdminCmdlet
+    public class GetAppErrors : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public Guid ProductId;

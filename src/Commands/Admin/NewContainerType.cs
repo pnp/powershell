@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.New, "PnPContainerType", DefaultParameterSetName = ParameterSet_Trial)]
-    public class NewContainerType : PnPAdminCmdlet
+    public class NewContainerType : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_Trial = "Trial";
         private const string ParameterSet_Standard = "Standard";

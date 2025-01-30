@@ -34,16 +34,16 @@ namespace PnP.PowerShell.Commands.Planner
         {
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(RequestHelper);
+                var groupId = Group.GetGroupId(GraphRequestHelper);
                 if (groupId != null)
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        WriteObject(Identity.GetPlan(RequestHelper, groupId, ResolveIdentities));
+                        WriteObject(Identity.GetPlan(GraphRequestHelper, groupId, ResolveIdentities));
                     }
                     else
                     {
-                        WriteObject(PlannerUtility.GetPlans(RequestHelper, groupId, ResolveIdentities), true);
+                        WriteObject(PlannerUtility.GetPlans(GraphRequestHelper, groupId, ResolveIdentities), true);
                     }
                 }
                 else
@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else
             {
-                WriteObject(PlannerUtility.GetPlan(RequestHelper, Id, ResolveIdentities));
+                WriteObject(PlannerUtility.GetPlan(GraphRequestHelper, Id, ResolveIdentities));
             }
         }
     }

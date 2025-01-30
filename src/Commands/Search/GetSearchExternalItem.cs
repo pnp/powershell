@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var externalConnectionId = ConnectionId.GetExternalConnectionId(RequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(GraphRequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
 
             var searchQuery = new Model.Graph.MicrosoftSearch.SearchRequests
             {
@@ -53,7 +53,7 @@ namespace PnP.PowerShell.Commands.Search
             httpContent.Headers.ContentType = MediaTypeHeaderValue.Parse("application/json");
 
             // Execute the search query to discover the external items
-            var searchResults = RequestHelper.Post<RestResultCollection<Model.Graph.MicrosoftSearch.SearchResult>>("v1.0/search/query", httpContent);
+            var searchResults = GraphRequestHelper.Post<RestResultCollection<Model.Graph.MicrosoftSearch.SearchResult>>("v1.0/search/query", httpContent);
 
             var hits = searchResults.Items.FirstOrDefault().HitsContainers.FirstOrDefault().Hits;
 

@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteUserInvitations")]
-    public class GetSiteUserInvitations : PnPAdminCmdlet
+    public class GetSiteUserInvitations : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public SitePipeBind Site;

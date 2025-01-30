@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Copilot
             var jsonContent = JsonContent.Create(bodyContent);
             WriteVerbose($"Payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
-            var result = RequestHelper.Patch<Model.Graph.Copilot.CopilotAdminLimitedMode>("beta/copilot/admin/settings/limitedMode", jsonContent);
+            var result = GraphRequestHelper.Patch<Model.Graph.Copilot.CopilotAdminLimitedMode>("beta/copilot/admin/settings/limitedMode", jsonContent);
             WriteObject(result, false);
         }
     }

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -14,30 +15,54 @@ using System.Threading;
 namespace PnP.PowerShell.Commands.Utilities.REST
 {
     /// <summary>
-    /// Helper class that aids in making calls towards the Microsoft Graph API
+    /// Helper class that aids in making calls towards the RESTful APIs
     /// </summary>
     public class ApiRequestHelper
     {
-
+        /// <summary>
+        /// Connection to use to make the calls
+        /// </summary>
         public PnPConnection Connection { get; private set; }
-        public Type CmdletType { get; set; }
+
+        /// <summary>
+        /// Type of cmdlet to make the calls for
+        /// </summary>
+        private Type CmdletType { get; set; }
+
+        /// <summary>
+        /// Access token to use for the calls
+        /// </summary>
         private string AccessToken => TokenHandler.GetAccessToken(Audience, Connection);
+
+        /// <summary>
+        /// Audience to use for the oAuth JWT
+        /// </summary>
         public string Audience { get; private set; }
+
+        /// <summary>
+        /// The default Graph endpoint
+        /// </summary>
         public string GraphEndPoint => Connection.GraphEndPoint;
 
+        /// <summary>
+        /// Instantiates a new instance of the <see cref="ApiRequestHelper"/> class which can be used to make calls to the RESTful APIs
+        /// </summary>
+        /// <param name="cmdletType">Type of cmdlet to make the calls for</param>
+        /// <param name="connection">Connection to use to make the calls</param>
+        /// <param name="audience">Audience to use for the oAuth JWT. Defaults to Microsoft Graph if not specified.</param>
         public ApiRequestHelper(Type cmdletType, PnPConnection connection, string audience = null)
         {
-            this.Connection = connection;
-            this.CmdletType = cmdletType;
-            this.Audience = audience ?? $"https://{Connection.GraphEndPoint}/.default";
+            Connection = connection;
+            CmdletType = cmdletType;
+            Audience = audience ?? $"https://{Connection.GraphEndPoint}/.default";
         }
 
-        private void LogDebug(string message)
+        private static void LogDebug(string message)
         {
             Log.Debug("ApiRequestHelper", message);
         }
 
-        private void LogError(string message)
+        private static void LogError(string message)
         {
             Log.Error("ApiRequestHelper", message);
         }
@@ -91,6 +116,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 return false;
             }
         }
+
+        #region GET
 
         private HttpRequestMessage GetMessage(string url, HttpMethod method, HttpContent content = null, IDictionary<string, string> additionalHeaders = null)
         {
@@ -239,30 +266,13 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 {
                     LogError($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
                     //Cmdlet.WriteWarning($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
-                    return default(T);
+                    return default;
                 }
             }
-            return default(T);
+            return default;
         }
 
-        public HttpResponseMessage PostHttpContent(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
-        {
-            var message = GetMessage(url, HttpMethod.Post, content, additionalHeaders);
-            return GetResponseMessage(message);
-        }
-
-        public HttpResponseMessage PutHttpContent(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
-        {
-            var message = GetMessage(url, HttpMethod.Put, content, additionalHeaders);
-            return GetResponseMessage(message);
-        }
-
-        public HttpResponseMessage Put2(string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null)
-        {
-            var message = GetMessage2(url, accessToken, HttpMethod.Put, content, additionalHeaders);
-            return GetResponseMessage2(message);
-        }
-
+        #endregion
 
         #region DELETE
         public HttpResponseMessage Delete(string url, IDictionary<string, string> additionalHeaders = null)
@@ -301,7 +311,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         #region PATCH
         public T Patch<T>(string url, T content, IDictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
-        {
+        { 
             var serializerSettings = new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
             if (camlCasePolicy)
             {
@@ -343,33 +353,27 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         #endregion
 
+        #region POST
+
+        public HttpResponseMessage PostHttpContent(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
+        {
+            var message = GetMessage(url, HttpMethod.Post, content, additionalHeaders);
+            return GetResponseMessage(message);
+        }
+
         public T Post<T>(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
             return PostInternal<T>(url, content, additionalHeaders, propertyNameCaseInsensitive);
         }
 
-        public T Put<T>(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
-        {
-            var message = GetMessage(url, HttpMethod.Put, content, additionalHeaders);
-            var stringContent = SendMessage(message);
-            if (stringContent != null)
-            {
-                try
-                {
-                    return JsonSerializer.Deserialize<T>(stringContent);
-                }
-                catch
-                {
-                    return default;
-                }
-            }
-            return default;
-        }
-
         public T Post<T>(string url, T content)
         {
-            var requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-            requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            // If we're passing in content which derives from HttpContent, we'll leave it as is. If not, we'll try to serialize it to JSON.
+            if (content is not HttpContent requestContent)
+            {
+                requestContent = new StringContent(JsonSerializer.Serialize(content, new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
+                requestContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+            }
 
             return PostInternal<T>(url, requestContent);
         }
@@ -378,6 +382,12 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         {
             return PostInternal<T>(url, null);
         }
+
+        private void PostInternal(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
+        {
+            var message = GetMessage(url, HttpMethod.Post, content, additionalHeaders);
+            GetResponseMessage(message);
+        }        
 
         private T PostInternal<T>(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
@@ -388,6 +398,28 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 try
                 {
                     return JsonSerializer.Deserialize<T>(stringContent, new JsonSerializerOptions() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase, PropertyNameCaseInsensitive = propertyNameCaseInsensitive });
+                }
+                catch
+                {
+                    return default;
+                }
+            }
+            return default;
+        }
+
+        #endregion
+
+        #region PUT
+
+        public T Put<T>(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
+        {
+            var message = GetMessage(url, HttpMethod.Put, content, additionalHeaders);
+            var stringContent = SendMessage(message);
+            if (stringContent != null)
+            {
+                try
+                {
+                    return JsonSerializer.Deserialize<T>(stringContent);
                 }
                 catch
                 {
@@ -413,12 +445,30 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
+        public HttpResponseMessage PutHttpContent(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null)
+        {
+            var message = GetMessage(url, HttpMethod.Put, content, additionalHeaders);
+            return GetResponseMessage(message);
+        }
+
+        public HttpResponseMessage Put2(string url, HttpContent content, string accessToken, IDictionary<string, string> additionalHeaders = null)
+        {
+            var message = GetMessage2(url, accessToken, HttpMethod.Put, content, additionalHeaders);
+            return GetResponseMessage2(message);
+        }        
+
+        #endregion
+
+        #region DELETE
+
         public HttpResponseMessage Delete(string url)
         {
             var message = GetMessage(url, HttpMethod.Delete);
             var response = GetResponseMessage(message);
             return response;
         }
+
+        #endregion
 
         private string SendMessage(HttpRequestMessage message)
         {

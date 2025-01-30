@@ -14,8 +14,8 @@ namespace PnP.PowerShell.Commands.Search
 
         protected override void ExecuteCmdlet()
         {
-            var externalConnectionId = Identity.GetExternalConnectionId(RequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(Identity));
-            RequestHelper.Delete( $"v1.0/external/connections/{externalConnectionId}");
+            var externalConnectionId = Identity.GetExternalConnectionId(GraphRequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(Identity));
+            GraphRequestHelper.Delete( $"v1.0/external/connections/{externalConnectionId}");
         }
     }
 }

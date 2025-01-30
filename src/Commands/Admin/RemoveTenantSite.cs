@@ -8,7 +8,7 @@ using PnP.Framework;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantSite")]
-    public class RemoveSite : PnPAdminCmdlet
+    public class RemoveSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Url;

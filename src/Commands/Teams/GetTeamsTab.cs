@@ -24,15 +24,15 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
-                var channelId = Channel.GetId(RequestHelper, groupId);
+                var channelId = Channel.GetId(GraphRequestHelper, groupId);
                 if (!string.IsNullOrEmpty(channelId))
                 {
                     if (ParameterSpecified(nameof(Identity)))
                     {
-                        var tab = Identity.GetTab(RequestHelper, groupId, channelId);
+                        var tab = Identity.GetTab(GraphRequestHelper, groupId, channelId);
                         if (tab != null)
                         {
                             WriteObject(tab);
@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Teams
                     }
                     else
                     {
-                        WriteObject(TeamsUtility.GetTabs(RequestHelper, groupId, channelId), true);
+                        WriteObject(TeamsUtility.GetTabs(GraphRequestHelper, groupId, channelId), true);
                     }
                 }
                 else

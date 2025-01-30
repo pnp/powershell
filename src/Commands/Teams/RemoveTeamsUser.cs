@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
                 try
@@ -44,14 +44,14 @@ namespace PnP.PowerShell.Commands.Teams
                     {
                         if (Force || ShouldContinue($"Remove user with UPN {User}?", Properties.Resources.Confirm))
                         {
-                            TeamsUtility.DeleteUser(RequestHelper, groupId, User, Role);
+                            TeamsUtility.DeleteUser(GraphRequestHelper, groupId, User, Role);
                         }
                     }
                     else
                     {
                         if (Force || ShouldContinue($"Remove specifed users from the team ?", Properties.Resources.Confirm))
                         {
-                            TeamsUtility.DeleteUsers(RequestHelper, groupId, Users, Role);
+                            TeamsUtility.DeleteUsers(GraphRequestHelper, groupId, Users, Role);
                         }
                     }
                 }

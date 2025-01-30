@@ -17,18 +17,18 @@ namespace PnP.PowerShell.Commands.ServiceHealth
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsUnreadById(RequestHelper, Identity), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsUnreadById(GraphRequestHelper, Identity), true);
             }
             else
             {
                 // Retrieve all message center announcements
-                var messageCenterAnnouncements = ServiceHealthUtility.GetServiceUpdateMessages(RequestHelper);
+                var messageCenterAnnouncements = ServiceHealthUtility.GetServiceUpdateMessages(GraphRequestHelper);
 
                 // Create an array of the Ids of all message center announcements
                 var messageCenterAnnouncementIds = messageCenterAnnouncements.Select(item => item.Id).ToArray();
 
                 // Mark all message center announcements as unread
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsUnreadById(RequestHelper, messageCenterAnnouncementIds), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsUnreadById(GraphRequestHelper, messageCenterAnnouncementIds), true);
             }
         }
     }

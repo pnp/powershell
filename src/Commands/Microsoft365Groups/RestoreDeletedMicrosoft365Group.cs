@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            WriteObject(Microsoft365GroupsUtility.RestoreDeletedGroup(RequestHelper, Identity.GetDeletedGroupId(RequestHelper)));
+            WriteObject(Microsoft365GroupsUtility.RestoreDeletedGroup(GraphRequestHelper, Identity.GetDeletedGroupId(GraphRequestHelper)));
         }
     }
 }

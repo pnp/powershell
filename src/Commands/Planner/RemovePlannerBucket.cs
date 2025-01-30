@@ -31,19 +31,19 @@ namespace PnP.PowerShell.Commands.Planner
         {
             if (ParameterSetName == ParameterName_BYNAME)
             {
-                var groupId = Group.GetGroupId(RequestHelper);
+                var groupId = Group.GetGroupId(GraphRequestHelper);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetId(RequestHelper, groupId);
+                    var planId = Plan.GetId(GraphRequestHelper, groupId);
 
                     if (planId != null)
                     {
-                        var bucket = Identity.GetBucket(RequestHelper, planId);
+                        var bucket = Identity.GetBucket(GraphRequestHelper, planId);
                         if (bucket != null)
                         {
                             if (ShouldContinue($"Remove bucket '{bucket.Name}'", Resources.Confirm))
                             {
-                                PlannerUtility.RemoveBucket(RequestHelper, bucket.Id);
+                                PlannerUtility.RemoveBucket(GraphRequestHelper, bucket.Id);
                             }
                         }
                         else
@@ -63,12 +63,12 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else if (ParameterSetName == ParameterName_BYBUCKETID)
             {
-                var bucket = Identity.GetBucket(RequestHelper, BucketId);
+                var bucket = Identity.GetBucket(GraphRequestHelper, BucketId);
                 if (bucket != null)
                 {
                     if (ShouldContinue($"Remove bucket '{bucket.Name}'", Resources.Confirm))
                     {
-                        PlannerUtility.RemoveBucket(RequestHelper, BucketId);
+                        PlannerUtility.RemoveBucket(GraphRequestHelper, BucketId);
                     }
                 }
                 else
