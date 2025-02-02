@@ -6,7 +6,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPOrgNewsSite")]
-    public class AddOrgNewsSite : PnPAdminCmdlet
+    public class AddOrgNewsSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public SitePipeBind OrgNewsSiteUrl;

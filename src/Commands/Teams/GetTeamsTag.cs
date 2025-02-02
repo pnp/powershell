@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (string.IsNullOrEmpty(groupId))
             {
                 throw new PSArgumentException("Team not found");
@@ -28,12 +28,12 @@ namespace PnP.PowerShell.Commands.Teams
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                var tags = Identity.GetTag(RequestHelper, groupId);
+                var tags = Identity.GetTag(GraphRequestHelper, groupId);
                 WriteObject(tags, false);
             }
             else
             {
-                var tags = TeamsUtility.GetTags(RequestHelper, groupId);
+                var tags = TeamsUtility.GetTags(GraphRequestHelper, groupId);
                 WriteObject(tags, true);
             }
         }

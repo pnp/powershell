@@ -31,12 +31,12 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                var auditResults = RequestHelper.Get<Model.AzureAD.AzureADSignIn>(signInUrl);
+                var auditResults = GraphRequestHelper.Get<Model.AzureAD.AzureADSignIn>(signInUrl);
                 WriteObject(auditResults, false);
             }
             else
             {
-                var auditResults = RequestHelper.GetResultCollection<Model.AzureAD.AzureADSignIn>(signInUrl);
+                var auditResults = GraphRequestHelper.GetResultCollection<Model.AzureAD.AzureADSignIn>(signInUrl);
                 WriteObject(auditResults, true);
             }
         }

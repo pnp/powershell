@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "PnPListDesign", DefaultParameterSetName = ParameterSet_BYSITESCRIPTINSTANCE)]
     [OutputType(typeof(TenantListDesign))]
-    public class AddListDesign : PnPAdminCmdlet
+    public class AddListDesign : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_BYSITESCRIPTIDS = "By SiteScript Ids";
         private const string ParameterSet_BYSITESCRIPTINSTANCE = "By SiteScript Instance";

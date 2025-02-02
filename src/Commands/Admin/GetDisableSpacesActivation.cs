@@ -6,7 +6,7 @@ using Microsoft.Online.SharePoint.TenantAdministration;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPDisableSpacesActivation")]
-    public class GetDisableSpacesActivation : PnPAdminCmdlet
+    public class GetDisableSpacesActivation : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

@@ -16,13 +16,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
         protected override void ExecuteCmdlet()
         {
-            var group = Identity.GetGroup(RequestHelper, false, false, false, false);
+            var group = Identity.GetGroup(GraphRequestHelper, false, false, false, false);
             if (group != null)
             {
-                var response = Microsoft365GroupsUtility.DeletePhoto(RequestHelper, group.Id.Value);
+                var response = Microsoft365GroupsUtility.DeletePhoto(GraphRequestHelper, group.Id.Value);
                 if (!response.IsSuccessStatusCode)
                 {
-                    if (RequestHelper.TryGetGraphException(response, out GraphException ex))
+                    if (GraphRequestHelper.TryGetGraphException(response, out GraphException ex))
                     {
                         if (ex.Error != null)
                         {

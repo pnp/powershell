@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var app = Identity.GetApp(RequestHelper);
+                var app = Identity.GetApp(GraphRequestHelper);
                 if (app == null)
                 {
                     WriteError(new PSArgumentException("Azure AD App not found"), ErrorCategory.ObjectNotFound);
@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             else
             {
                 List<PSObject> apps = new List<PSObject>();
-                var result = RequestHelper.GetResultCollection<AzureADApp>("/v1.0/applications");
+                var result = GraphRequestHelper.GetResultCollection<AzureADApp>("/v1.0/applications");
                 if (result != null && result.Any())
                 {
                     apps.AddRange(result.Select(p => ConvertToPSObject(p)));

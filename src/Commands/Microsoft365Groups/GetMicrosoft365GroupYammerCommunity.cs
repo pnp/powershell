@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             if (ParameterSpecified(nameof(Identity)))
             {
                 WriteVerbose($"Defining Microsoft 365 Group based on {nameof(Identity)} parameter");
-                groupId = Identity.GetGroupId(RequestHelper);
+                groupId = Identity.GetGroupId(GraphRequestHelper);
             }
             else
             {
@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
             }
 
             WriteVerbose($"Requesting endpoints of Microsoft 365 Group with Id {groupId}");
-            var endpoints = RequestHelper.GetResultCollection<Model.AzureAD.AzureADGroupEndPoint>($"/beta/groups/{groupId}/endpoints");
+            var endpoints = GraphRequestHelper.GetResultCollection<Model.AzureAD.AzureADGroupEndPoint>($"/beta/groups/{groupId}/endpoints");
             WriteVerbose($"{endpoints.Count()} endpoint(s) found in total");
 
             var yammerEndpoint = endpoints.Where(e => e.ProviderName.Equals("Yammer", StringComparison.InvariantCultureIgnoreCase));

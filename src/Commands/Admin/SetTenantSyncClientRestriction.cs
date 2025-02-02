@@ -9,7 +9,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenantSyncClientRestriction", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
-    public class SetTenantSyncClientRestriction : PnPAdminCmdlet
+    public class SetTenantSyncClientRestriction : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public SwitchParameter BlockMacSync;

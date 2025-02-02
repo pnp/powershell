@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteGroup")]
     [OutputType(typeof(SiteGroup))]
-    public class SetSiteGroup : PnPAdminCmdlet
+    public class SetSiteGroup : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public SitePipeBind Site;

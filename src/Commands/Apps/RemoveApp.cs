@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Remove, "PnPApp")]
-    public class RemoveApp : PnPAdminCmdlet
+    public class RemoveApp : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public AppMetadataPipeBind Identity;

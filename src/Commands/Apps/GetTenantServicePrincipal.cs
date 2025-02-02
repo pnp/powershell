@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantServicePrincipal")]
-    public class GetTenantServicePrincipal : PnPAdminCmdlet
+    public class GetTenantServicePrincipal : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

@@ -17,18 +17,18 @@ namespace PnP.PowerShell.Commands.ServiceHealth
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsFavoriteById(RequestHelper, Identity), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsFavoriteById(GraphRequestHelper, Identity), true);
             }
             else
             {
                 // Retrieve all message center announcements
-                var messageCenterAnnouncements = ServiceHealthUtility.GetServiceUpdateMessages(RequestHelper);
+                var messageCenterAnnouncements = ServiceHealthUtility.GetServiceUpdateMessages(GraphRequestHelper);
 
                 // Create an array of the Ids of all message center announcements
                 var messageCenterAnnouncementIds = messageCenterAnnouncements.Select(item => item.Id).ToArray();
 
                 // Mark all message center announcements as favorite
-                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsFavoriteById(RequestHelper, messageCenterAnnouncementIds), true);
+                WriteObject(ServiceHealthUtility.SetServiceUpdateMessageAsFavoriteById(GraphRequestHelper, messageCenterAnnouncementIds), true);
             }
         }
     }

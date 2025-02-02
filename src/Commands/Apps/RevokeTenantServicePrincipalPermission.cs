@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 var spoWebAppServicePrincipal = new SPOWebAppServicePrincipal(tenantContext);
                 var appId = spoWebAppServicePrincipal.EnsureProperty(a => a.AppId);
-                var results = RequestHelper.Get<RestResultCollection<ServicePrincipal>>($"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id");
+                var results = GraphRequestHelper.Get<RestResultCollection<ServicePrincipal>>($"/v1.0/servicePrincipals?$filter=appId eq '{appId}'&$select=id");
                 if (results.Items.Any())
                 {
                     if (Force || ShouldContinue($"Revoke permission {Scope}?", Properties.Resources.Confirm))

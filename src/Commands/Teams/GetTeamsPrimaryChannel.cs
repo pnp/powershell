@@ -16,10 +16,10 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
-                WriteObject(TeamsUtility.GetPrimaryChannel(RequestHelper, groupId));
+                WriteObject(TeamsUtility.GetPrimaryChannel(GraphRequestHelper, groupId));
             }
             else
             {

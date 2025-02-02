@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 {
                     throw new PSArgumentException("File is not of a supported content type (jpg/png/jpeg)");
                 }
-                Microsoft365GroupsUtility.UploadProfilePhotoAsync(RequestHelper, user.Id.Value, Path);
+                Microsoft365GroupsUtility.UploadProfilePhotoAsync(GraphRequestHelper, user.Id.Value, Path);
             }
             else
             {

@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPContainer")]
     [OutputType(typeof(SPContainerProperties))]
-    public class GetContainer : PnPAdminCmdlet
+    public class GetContainer : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public ContainerPipeBind Identity { get; set; }

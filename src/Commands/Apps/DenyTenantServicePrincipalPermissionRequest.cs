@@ -7,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsLifecycle.Deny, "PnPTenantServicePrincipalPermissionRequest")]
-    public class DenyTenantServicePrincipalPermissionRequests : PnPAdminCmdlet
+    public class DenyTenantServicePrincipalPermissionRequests : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public Guid RequestId;

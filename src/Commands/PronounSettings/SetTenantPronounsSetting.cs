@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.PronounSettings
         public bool IsEnabledInOrganization { get; set; }
         protected override void ExecuteCmdlet()
         {
-            var pronouns = RequestHelper.Patch("/v1.0/admin/people/pronouns", new Model.Graph.PronounsSettings { IsPronounsEnabledInOrganization = IsEnabledInOrganization });
+            var pronouns = GraphRequestHelper.Patch("/v1.0/admin/people/pronouns", new Model.Graph.PronounsSettings { IsPronounsEnabledInOrganization = IsEnabledInOrganization });
             WriteObject(pronouns, false);
         }
     }

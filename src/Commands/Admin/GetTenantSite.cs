@@ -11,7 +11,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantSite")]
-    public class GetTenantSite : PnPAdminCmdlet
+    public class GetTenantSite : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_BYURL = "By URL";
         private const string ParameterSet_ALL = "All Sites";

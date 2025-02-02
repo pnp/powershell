@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPBuiltInSiteTemplateSettings")]
     [OutputType(typeof(BuiltInSiteTemplateSettings))]
-    public class SetBuiltInSiteTemplateSettings : PnPAdminCmdlet
+    public class SetBuiltInSiteTemplateSettings : PnPSharePointOnlineAdminCmdlet
     {
         private const string ByIdentityParamSet = "ByIdentity";
         private const string ByTemplateParamSet = "ByTemplate";

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Rename, "PnPTenantSite")]
-    public class RenameTenantSite : PnPAdminCmdlet
+    public class RenameTenantSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         [ValidateNotNullOrEmpty]

@@ -7,7 +7,7 @@ namespace PnP.PowerShell.Commands.SiteDesigns
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteDesignRunStatus")]
     [OutputType(typeof(ClientObjectList<TenantSiteScriptActionStatus>))]
-    public class GetSiteDesignRunStatus : PnPAdminCmdlet
+    public class GetSiteDesignRunStatus : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public TenantSiteDesignRun Run;

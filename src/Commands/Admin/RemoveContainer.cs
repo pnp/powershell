@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPContainer")]    
-    public class RemoveContainer : PnPAdminCmdlet
+    public class RemoveContainer : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public ContainerPipeBind Identity { get; set; }

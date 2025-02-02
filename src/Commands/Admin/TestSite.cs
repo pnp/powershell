@@ -9,7 +9,7 @@ using System.Text;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsDiagnostic.Test, "PnPSite", SupportsShouldProcess = true)]
-    public class TestSite : PnPAdminCmdlet
+    public class TestSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public SitePipeBind Identity;

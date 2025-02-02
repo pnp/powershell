@@ -26,14 +26,14 @@ namespace PnP.PowerShell.Commands.Search
 
                 WriteVerbose($"Retrieving external connection with Identity '{Identity}'");
 
-                var externalConnectionResult = RequestHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>(graphApiUrl);
+                var externalConnectionResult = GraphRequestHelper.Get<Model.Graph.MicrosoftSearch.ExternalConnection>(graphApiUrl);
                 WriteObject(externalConnectionResult, false);
             }
             else
             {
                 WriteVerbose("Retrieving all external connections");
 
-                var externalConnectionResults = RequestHelper.GetResultCollection<Model.Graph.MicrosoftSearch.ExternalConnection>(graphApiUrl);
+                var externalConnectionResults = GraphRequestHelper.GetResultCollection<Model.Graph.MicrosoftSearch.ExternalConnection>(graphApiUrl);
                 WriteObject(externalConnectionResults, true);
             }
         }

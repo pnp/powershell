@@ -33,29 +33,29 @@ namespace PnP.PowerShell.Commands.Teams
         public string Role;
         protected override void ExecuteCmdlet()
         {
-            var groupId = Team.GetGroupId(RequestHelper);
+            var groupId = Team.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
                 try
                 {
                     if (ParameterSpecified(nameof(Channel)))
                     {
-                        var channelId = Channel.GetId(RequestHelper, groupId);
+                        var channelId = Channel.GetId(GraphRequestHelper, groupId);
                         if (channelId == null)
                         {
                             throw new PSArgumentException("Channel not found");
                         }
-                        TeamsUtility.AddChannelMember(RequestHelper, groupId, channelId, User, Role);
+                        TeamsUtility.AddChannelMember(GraphRequestHelper, groupId, channelId, User, Role);
                     }
                     else
                     {
                         if (ParameterSetName == ParamSet_ByUser)
                         {
-                            TeamsUtility.AddUser(RequestHelper, groupId, User, Role);
+                            TeamsUtility.AddUser(GraphRequestHelper, groupId, User, Role);
                         }
                         else
                         {
-                            TeamsUtility.AddUsers(RequestHelper, groupId, Users, Role);
+                            TeamsUtility.AddUsers(GraphRequestHelper, groupId, Users, Role);
                         }
                     }
                 }

@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteCollectionAppCatalog")]
-    public class AddSiteCollectionAppCatalog : PnPAdminCmdlet
+    public class AddSiteCollectionAppCatalog : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = false, Position = 0)]
         public SitePipeBind Site;

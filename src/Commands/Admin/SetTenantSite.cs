@@ -16,7 +16,7 @@ using Microsoft.SharePoint.Client.Sharing;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenantSite")]
-    public class SetTenantSite : PnPAdminCmdlet
+    public class SetTenantSite : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_LOCKSTATE = "Set Lock State";
         private const string ParameterSet_PROPERTIES = "Set Properties";

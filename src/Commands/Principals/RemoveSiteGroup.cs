@@ -7,7 +7,7 @@ namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Remove, "PnPSiteGroup", SupportsShouldProcess = true)]
     [OutputType(typeof(void))]
-    public class RemoveSiteGroup : PnPAdminCmdlet
+    public class RemoveSiteGroup : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public SitePipeBind Site;

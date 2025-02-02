@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPSiteDesignRights")]
     [OutputType(typeof(void))]
-    public class GrantSiteDesignRights : PnPAdminCmdlet
+    public class GrantSiteDesignRights : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline =true)]
         public TenantSiteDesignPipeBind Identity;

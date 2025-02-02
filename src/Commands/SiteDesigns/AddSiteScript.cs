@@ -7,7 +7,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteScript")]
     [OutputType(typeof(TenantSiteScript))]
-    public class AddSiteScript : PnPAdminCmdlet
+    public class AddSiteScript : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Title;

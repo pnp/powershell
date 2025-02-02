@@ -106,9 +106,9 @@ namespace PnP.PowerShell.Commands.Search
             var jsonContent = JsonContent.Create(bodyContent);
             WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
-            var externalConnectionId = ConnectionId.GetExternalConnectionId(RequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
+            var externalConnectionId = ConnectionId.GetExternalConnectionId(GraphRequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
             var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}/items/{ItemId}";
-            var results = RequestHelper.Put<Model.Graph.MicrosoftSearch.ExternalItem>(graphApiUrl, jsonContent);
+            var results = GraphRequestHelper.Put<Model.Graph.MicrosoftSearch.ExternalItem>(graphApiUrl, jsonContent);
             WriteObject(results, false);
         }
 
@@ -139,7 +139,7 @@ namespace PnP.PowerShell.Commands.Search
 
             foreach (var group in groups)
             {
-                var userAclId = group.GroupId ?? group.GetGroup(RequestHelper)?.Id;
+                var userAclId = group.GroupId ?? group.GetGroup(GraphRequestHelper)?.Id;
 
                 acls.Add(new Model.Graph.MicrosoftSearch.ExternalItemAcl
                 {

@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsLifecycle.Request, "PnPPersonalSite")]
-    public class RequestPersonalSite : PnPAdminCmdlet
+    public class RequestPersonalSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [ValidateNotNull]

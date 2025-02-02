@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Viva
             {
                 postData.Add("privacy", Privacy.ToString().ToLower());
             }
-            RequestHelper.Patch(endpointUrl, postData);
+            GraphRequestHelper.Patch(endpointUrl, postData);
         }
     }
 }

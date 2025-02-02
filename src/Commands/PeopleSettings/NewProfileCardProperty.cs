@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.PeopleSettings
             WriteVerbose($"Payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
             var graphApiUrl = $"v1.0/admin/people/profileCardProperties";
-            var results = RequestHelper.PostHttpContent(graphApiUrl, jsonContent);
+            var results = GraphRequestHelper.PostHttpContent(graphApiUrl, jsonContent);
             var resultsContent = results.Content.ReadAsStringAsync().GetAwaiter().GetResult();
             var propertyResult = System.Text.Json.JsonSerializer.Deserialize<Model.Graph.ProfileCard.ProfileCardProperty>(resultsContent);
 

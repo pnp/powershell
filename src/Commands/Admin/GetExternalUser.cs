@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPExternalUser")]
-    public class GetExternalUser : PnPAdminCmdlet
+    public class GetExternalUser : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public int Position;

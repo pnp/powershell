@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPHomeSite", DefaultParameterSetName = ParameterSet_Basic)]
-    public class GetHomeSite : PnPAdminCmdlet
+    public class GetHomeSite : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_Detailed = "Detailed";
         private const string ParameterSet_Basic = "Basic";

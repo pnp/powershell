@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPTenantDeletedSite")]
-    public class RemoveTenantDeletedSite : PnPAdminCmdlet
+    public class RemoveTenantDeletedSite : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Position = 0, ValueFromPipeline = true, Mandatory = true)]
         [Alias("Url")]

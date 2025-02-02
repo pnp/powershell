@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.New, "PnPUPABulkImportJob", DefaultParameterSetName = ParameterSet_UPLOADFILE)]
     [OutputType(typeof(ImportProfilePropertiesJobInfo))]
-    public class NewUPABulkImportJob : PnPAdminCmdlet
+    public class NewUPABulkImportJob : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_UPLOADFILE = "Submit up a new user profile bulk import job from local file";
         private const string ParameterSet_URL = "Submit up a new user profile bulk import job from url";

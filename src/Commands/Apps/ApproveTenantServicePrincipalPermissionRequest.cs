@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsLifecycle.Approve, "PnPTenantServicePrincipalPermissionRequest")]
-    public class ApproveTenantServicePrincipalPermissionRequests : PnPAdminCmdlet
+    public class ApproveTenantServicePrincipalPermissionRequests : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public Guid RequestId;

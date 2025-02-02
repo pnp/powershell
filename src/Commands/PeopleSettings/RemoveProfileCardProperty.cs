@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.PeopleSettings
         {            
             var graphApiUrl = $"v1.0/admin/people/profileCardProperties/{PropertyName.ToString()}";
             
-            RequestHelper.Delete(graphApiUrl);
+            GraphRequestHelper.Delete(graphApiUrl);
         }
     }
 }

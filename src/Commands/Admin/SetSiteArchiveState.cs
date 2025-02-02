@@ -9,7 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPSiteArchiveState")]
-    public class SetSiteArchiveState : PnPAdminCmdlet
+    public class SetSiteArchiveState : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public SPOSitePipeBind Identity;

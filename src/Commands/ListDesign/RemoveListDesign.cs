@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPListDesign")]
     [OutputType(typeof(void))]
-    public class RemoveListDesign : PnPAdminCmdlet
+    public class RemoveListDesign : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public TenantListDesignPipeBind Identity;

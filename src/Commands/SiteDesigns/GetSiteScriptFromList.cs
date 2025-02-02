@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteScriptFromList", DefaultParameterSetName = ParameterSet_ByLIST)]
     [OutputType(typeof(string))]
-    public class GetSiteScriptFromList : PnPAdminCmdlet
+    public class GetSiteScriptFromList : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_BYURL = "By Url";
         private const string ParameterSet_ByLIST = "By List";

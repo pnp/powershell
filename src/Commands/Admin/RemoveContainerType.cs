@@ -7,7 +7,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPContainerType")]    
-    public class RemoveContainerType : PnPAdminCmdlet
+    public class RemoveContainerType : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
         public Guid Identity { get; set; }

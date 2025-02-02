@@ -7,7 +7,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 {
     [Cmdlet(VerbsCommon.Remove, "PnPUserProfile")]
     [OutputType(typeof(void))]
-    public class RemoveUserProfile : PnPAdminCmdlet
+    public class RemoveUserProfile : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string LoginName;

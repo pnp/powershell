@@ -35,17 +35,17 @@ namespace PnP.PowerShell.Commands.Planner
         {
             if (ParameterSetName == ParameterName_BYGROUP)
             {
-                var groupId = Group.GetGroupId(RequestHelper);
+                var groupId = Group.GetGroupId(GraphRequestHelper);
                 if (groupId != null)
                 {
-                    var planId = Plan.GetId(RequestHelper, groupId);
+                    var planId = Plan.GetId(GraphRequestHelper, groupId);
                     if (planId != null)
                     {
 
-                        var bucket = Bucket.GetBucket(RequestHelper, planId);
+                        var bucket = Bucket.GetBucket(GraphRequestHelper, planId);
                         if (bucket != null)
                         {
-                            WriteObject(PlannerUtility.UpdateBucket(RequestHelper, Name, bucket.Id));
+                            WriteObject(PlannerUtility.UpdateBucket(GraphRequestHelper, Name, bucket.Id));
                         }
                         else
                         {
@@ -64,10 +64,10 @@ namespace PnP.PowerShell.Commands.Planner
             }
             else
             {
-                var bucket = Bucket.GetBucket(RequestHelper, PlanId);
+                var bucket = Bucket.GetBucket(GraphRequestHelper, PlanId);
                 if (bucket != null)
                 {
-                    WriteObject(PlannerUtility.UpdateBucket(RequestHelper, Name, bucket.Id));
+                    WriteObject(PlannerUtility.UpdateBucket(GraphRequestHelper, Name, bucket.Id));
                 }
                 else
                 {

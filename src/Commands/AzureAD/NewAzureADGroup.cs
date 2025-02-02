@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (!Force)
             {
-                var existingGroup = AzureADGroupsUtility.GetGroup(RequestHelper, MailNickname);
+                var existingGroup = AzureADGroupsUtility.GetGroup(GraphRequestHelper, MailNickname);
 
                 forceCreation = existingGroup == null || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
             }
@@ -75,12 +75,12 @@ namespace PnP.PowerShell.Commands.Graph
 
                 if (Owners?.Length > 0)
                 {
-                    ownerData = Microsoft365GroupsUtility.GetUsersDataBindValue(RequestHelper, Owners);
+                    ownerData = Microsoft365GroupsUtility.GetUsersDataBindValue(GraphRequestHelper, Owners);
                     postData.Add("owners@odata.bind", ownerData);
                 }
                 if (Members?.Length > 0)
                 {
-                    memberData = Microsoft365GroupsUtility.GetUsersDataBindValue(RequestHelper, Members);
+                    memberData = Microsoft365GroupsUtility.GetUsersDataBindValue(GraphRequestHelper, Members);
                     postData.Add("members@odata.bind", memberData);
                 }
 
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Graph
                 var stringContent = new StringContent(data);
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
 
-                var groupResult = RequestHelper.Post<Group>($"v1.0/groups", stringContent);
+                var groupResult = GraphRequestHelper.Post<Group>($"v1.0/groups", stringContent);
 
                 WriteObject(groupResult);
             }

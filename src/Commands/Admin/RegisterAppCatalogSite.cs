@@ -5,7 +5,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPAppCatalogSite")]
-    public class RegisterAppCatalogSite : PnPAdminCmdlet
+    public class RegisterAppCatalogSite : PnPSharePointOnlineAdminCmdlet
     {
 
         [Parameter(Mandatory = true)]

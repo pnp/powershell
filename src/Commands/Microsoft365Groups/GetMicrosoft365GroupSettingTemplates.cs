@@ -17,12 +17,12 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                var groupSettingTemplate = Microsoft365GroupsUtility.GetGroupTemplateSettings(RequestHelper, Identity);
+                var groupSettingTemplate = Microsoft365GroupsUtility.GetGroupTemplateSettings(GraphRequestHelper, Identity);
                 WriteObject(groupSettingTemplate);
             }
             else
             {
-                var groupSettingTemplates = Microsoft365GroupsUtility.GetGroupTemplateSettings(RequestHelper);
+                var groupSettingTemplates = Microsoft365GroupsUtility.GetGroupTemplateSettings(GraphRequestHelper);
                 WriteObject(groupSettingTemplates?.Value, true);
             }
         }

@@ -6,7 +6,7 @@ using Microsoft.SharePoint.Administration;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPBuiltInDesignPackageVisibility")]
-    public class SetBuiltInDesignPackageVisibility : PnPAdminCmdlet
+    public class SetBuiltInDesignPackageVisibility : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public bool IsVisible;

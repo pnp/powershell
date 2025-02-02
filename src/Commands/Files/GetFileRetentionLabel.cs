@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Files
 
             var requestUrl = $"v1.0/drives/{file.VroomDriveID}/items/{file.VroomItemID}/retentionLabel";
             
-            var results = RequestHelper.Get<FileRetentionLabel>(requestUrl);
+            var results = GraphRequestHelper.Get<FileRetentionLabel>(requestUrl);
             WriteObject(results, true);
         }
     }

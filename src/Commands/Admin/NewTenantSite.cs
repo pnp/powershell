@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSite")]
-    public class NewTenantSite : PnPAdminCmdlet
+    public class NewTenantSite : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSetName_Wait = "By Wait";
 

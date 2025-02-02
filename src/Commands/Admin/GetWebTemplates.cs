@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPWebTemplates")]
-    public class GetWebTemplates : PnPAdminCmdlet
+    public class GetWebTemplates : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false)]
         public uint Lcid;

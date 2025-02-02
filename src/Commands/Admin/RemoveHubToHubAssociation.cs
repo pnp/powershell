@@ -7,7 +7,7 @@ using System;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Remove, "PnPHubToHubAssociation")]
-    public class RemoveHubToHubAssociation : PnPAdminCmdlet
+    public class RemoveHubToHubAssociation : PnPSharePointOnlineAdminCmdlet
     {
         const string ParamSet_ById = "By Id";
         const string ParamSet_ByUrl = "By Url";

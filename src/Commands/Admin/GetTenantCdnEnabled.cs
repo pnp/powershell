@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPTenantCdnEnabled")]
-    public class GetTenantCdnEnabled : PnPAdminCmdlet
+    public class GetTenantCdnEnabled : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public SPOTenantCdnType CdnType;

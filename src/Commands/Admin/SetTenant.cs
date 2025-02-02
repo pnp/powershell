@@ -13,7 +13,7 @@ using InformationBarriersMode = PnP.PowerShell.Commands.Enums.InformationBarrier
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenant", DefaultParameterSetName = ParameterAttribute.AllParameterSets)]
-    public class SetTenant : PnPAdminCmdlet
+    public class SetTenant : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public int MinCompatibilityLevel;

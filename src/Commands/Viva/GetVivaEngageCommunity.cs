@@ -18,12 +18,12 @@ namespace PnP.PowerShell.Commands.Viva
             if (!string.IsNullOrEmpty(Identity))
             {
                 endpointUrl += $"/{Identity}";
-                var community = RequestHelper.Get<VivaEngageCommunity>(endpointUrl);
+                var community = GraphRequestHelper.Get<VivaEngageCommunity>(endpointUrl);
                 WriteObject(community);
             }
             else
             {
-                var communities = RequestHelper.GetResultCollection<VivaEngageCommunity>(endpointUrl);
+                var communities = GraphRequestHelper.GetResultCollection<VivaEngageCommunity>(endpointUrl);
                 WriteObject(communities, true);
             }
         }

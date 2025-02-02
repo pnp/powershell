@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPSiteScript")]
-    public class GetSiteScript : PnPAdminCmdlet
+    public class GetSiteScript : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public TenantSiteScriptPipeBind Identity;

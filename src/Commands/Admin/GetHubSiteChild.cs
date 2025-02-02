@@ -9,7 +9,7 @@ using Resources = PnP.PowerShell.Commands.Properties.Resources;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPHubSiteChild")]
-    public class GetHubSiteChild : PnPAdminCmdlet
+    public class GetHubSiteChild : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(ValueFromPipeline = true, Mandatory = false)]
         public HubSitePipeBind Identity;

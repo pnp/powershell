@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPTenantTemplate")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
-    public class InvokeTenantTemplate : PnPAdminCmdlet
+    public class InvokeTenantTemplate : PnPSharePointOnlineAdminCmdlet
     {
         private const string ParameterSet_PATH = "By Path";
         private const string ParameterSet_OBJECT = "By Object";

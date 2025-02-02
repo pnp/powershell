@@ -8,7 +8,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Get, "PnPOrgAssetsLibrary")]
-    public class GetOrgAssetsLibrary : PnPAdminCmdlet
+    public class GetOrgAssetsLibrary : PnPSharePointOnlineAdminCmdlet
     {
         protected override void ExecuteCmdlet()
         {

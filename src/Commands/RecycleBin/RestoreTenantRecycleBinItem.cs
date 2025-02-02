@@ -8,7 +8,7 @@ namespace PnP.PowerShell.Commands.RecycleBin
 {
     [Cmdlet(VerbsData.Restore, "PnPTenantRecycleBinItem")]
     [OutputType(typeof(void))]
-    public class RestoreTenantRecycleBinItem : PnPAdminCmdlet
+    public class RestoreTenantRecycleBinItem : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = false)]
         public string Url;

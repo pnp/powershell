@@ -7,7 +7,7 @@ using PnP.PowerShell.Commands.Enums;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Set, "PnPTenantCdnEnabled")]
-    public class SetTenantCdnEnabled : PnPAdminCmdlet
+    public class SetTenantCdnEnabled : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true)]
         public bool Enable;

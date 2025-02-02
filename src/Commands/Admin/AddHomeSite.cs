@@ -6,7 +6,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
     [Cmdlet(VerbsCommon.Add, "PnPHomeSite")]
-    public class AddHomeSite : PnPAdminCmdlet
+    public class AddHomeSite : PnPSharePointOnlineAdminCmdlet
     {
         [Alias("Url")]
         [Parameter(Mandatory = true)]

@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
             if (!Force)
             {
-                var candidate = Microsoft365GroupsUtility.GetGroup(RequestHelper, MailNickname, false, false, false, false);
+                var candidate = Microsoft365GroupsUtility.GetGroup(GraphRequestHelper, MailNickname, false, false, false, false);
                 forceCreation = candidate == null || ShouldContinue($"The Microsoft 365 Group '{MailNickname} already exists. Do you want to create a new one?", Properties.Resources.Confirm);
             }
             else
@@ -173,14 +173,14 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     }
                 }
 
-                var group = Microsoft365GroupsUtility.Create(RequestHelper, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels);
+                var group = Microsoft365GroupsUtility.Create(GraphRequestHelper, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels);
 
                 if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
                 {
-                    Microsoft365GroupsUtility.SetVisibility(RequestHelper, group.Id.Value, HideFromAddressLists, HideFromOutlookClients);
+                    Microsoft365GroupsUtility.SetVisibility(GraphRequestHelper, group.Id.Value, HideFromAddressLists, HideFromOutlookClients);
                 }
 
-                var updatedGroup = Microsoft365GroupsUtility.GetGroup(RequestHelper, group.Id.Value, true, false, false, true);
+                var updatedGroup = Microsoft365GroupsUtility.GetGroup(GraphRequestHelper, group.Id.Value, true, false, false, true);
 
                 WriteObject(updatedGroup);
             }

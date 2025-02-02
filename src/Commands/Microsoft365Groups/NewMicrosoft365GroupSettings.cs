@@ -29,17 +29,17 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         {
             if (Identity != null)
             {
-                var groupId = Identity.GetGroupId(RequestHelper);
+                var groupId = Identity.GetGroupId(GraphRequestHelper);
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = Microsoft365GroupsUtility.CreateGroupSetting(RequestHelper, groupId.ToString(), groupSettingObject);
+                var responseValue = Microsoft365GroupsUtility.CreateGroupSetting(GraphRequestHelper, groupId.ToString(), groupSettingObject);
                 WriteObject(responseValue);
             }
             else
             {
                 var groupSettingObject = GroupSettingsObject();
 
-                var responseValue = Microsoft365GroupsUtility.CreateGroupSetting(RequestHelper, groupSettingObject);
+                var responseValue = Microsoft365GroupsUtility.CreateGroupSetting(GraphRequestHelper, groupSettingObject);
                 WriteObject(responseValue);
             }
         }

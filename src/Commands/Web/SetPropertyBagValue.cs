@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Set, "PnPPropertyBagValue")]
     [Alias("Add-PnPPropertyBagValue")]
     [OutputType(typeof(void))]
-    public class SetPropertyBagValue : PnPAdminCmdlet
+    public class SetPropertyBagValue : PnPSharePointOnlineAdminCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "Web")]
         [Parameter(Mandatory = true, ParameterSetName = "Folder")]

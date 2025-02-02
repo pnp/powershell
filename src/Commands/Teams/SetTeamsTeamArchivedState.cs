@@ -27,18 +27,18 @@ namespace PnP.PowerShell.Commands.Teams
             {
                 throw new PSArgumentException("You can only modify the read only state of a site when archiving a team");
             }
-            var groupId = Identity.GetGroupId(RequestHelper);
+            var groupId = Identity.GetGroupId(GraphRequestHelper);
             if (groupId != null)
             {
-                var team = Identity.GetTeam(RequestHelper);
+                var team = Identity.GetTeam(GraphRequestHelper);
                 if (Archived == team.IsArchived)
                 {
                     throw new PSInvalidOperationException($"Team {team.DisplayName} {(Archived ? "has already been" : "is not")} archived");
                 }
-                var response = TeamsUtility.SetTeamArchivedState(RequestHelper, groupId, Archived, SetSiteReadOnlyForMembers);
+                var response = TeamsUtility.SetTeamArchivedState(GraphRequestHelper, groupId, Archived, SetSiteReadOnlyForMembers);
                 if (!response.IsSuccessStatusCode)
                 {
-                    if (RequestHelper.TryGetGraphException(response, out GraphException ex))
+                    if (GraphRequestHelper.TryGetGraphException(response, out GraphException ex))
                     {
                         if (ex.Error != null)
                         {

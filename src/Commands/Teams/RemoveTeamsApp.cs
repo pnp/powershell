@@ -19,17 +19,17 @@ namespace PnP.PowerShell.Commands.Teams
 
         protected override void ExecuteCmdlet()
         {
-            var app = Identity.GetApp(RequestHelper);
+            var app = Identity.GetApp(GraphRequestHelper);
             if (app == null)
             {
                 throw new PSArgumentException("App not found");
             }
             if (Force || ShouldContinue($"Do you want to remove {app.DisplayName}?", Properties.Resources.Confirm))
             {
-                var response = TeamsUtility.DeleteApp(RequestHelper, app.Id);
+                var response = TeamsUtility.DeleteApp(GraphRequestHelper, app.Id);
                 if (!response.IsSuccessStatusCode)
                 {
-                    if (RequestHelper.TryGetGraphException(response, out GraphException ex))
+                    if (GraphRequestHelper.TryGetGraphException(response, out GraphException ex))
                     {
                         if (ex.Error != null)
                         {

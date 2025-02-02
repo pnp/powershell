@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            var principal = Principal.GetServicePrincipal(RequestHelper);
+            var principal = Principal.GetServicePrincipal(GraphRequestHelper);
 
             if (principal == null)
             {
@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Apps
 
             WriteVerbose($"Requesting currently assigned app roles to service principal {principal.DisplayName}");
 
-            var appRoleAssignments = ServicePrincipalUtility.GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(RequestHelper, principal.Id);
+            var appRoleAssignments = ServicePrincipalUtility.GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(GraphRequestHelper, principal.Id);
             if (ParameterSpecified(nameof(Identity)))
             {
                 var appRole = Identity.GetAvailableAppRole(Connection, AccessToken, principal);
