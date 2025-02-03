@@ -20,16 +20,14 @@ Returns organization-level site collection properties
 ## SYNTAX
 
 ```powershell
-Get-PnPTenant [-Connection <PnPConnection>] 
+Get-PnPTenant [-Verbose] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 Returns organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
 ResourceQuotaAllocated, and SiteCreationMode.
 
-Currently, there are no parameters for this cmdlet.
-
-You must have the SharePoint Online admin or Global admin role to run the cmdlet.
+If one or more properties cannot be retrieved, such as when a property is not available yet on the tenant due to a new feature rollout, a warning will be shown. Use -Verbose to see detailed information on properties that could not be retrieved.
 
 ## EXAMPLES
 
@@ -47,6 +45,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Verbose
+When provided, additional debug statements will be shown while executing the cmdlet.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
