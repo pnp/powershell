@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Admin
             AdminContext.Load(Tenant);
             AdminContext.Load(Tenant, t => t.HideDefaultThemes);
             AdminContext.ExecuteQueryRetry();
-            WriteObject(new SPOTenant(Tenant, AdminContext));
+            WriteObject(new SPOTenant(Tenant, AdminContext, this));
         }
     }
 }
