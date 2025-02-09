@@ -16,8 +16,7 @@ Returns a taxonomy term set
 
 ```powershell
 Get-PnPTermSet [-Identity <TaxonomyTermSetPipeBind>] [-TermGroup] <TaxonomyTermGroupPipeBind>
- [-TermStore <TaxonomyTermStorePipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>]
- 
+ [-TermStore <TaxonomyTermStorePipeBind>] [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ## DESCRIPTION
@@ -45,6 +44,13 @@ Get-PnPTermSet -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermGroup "Corpor
 ```
 
 Returns the termset with the given id from the termgroup called "Corporate" from the site collection termstore
+
+### EXAMPLE 4
+```powershell
+Get-PnPTermSet -Identity "Departments" -TermGroup "Corporate -Include "Terms"
+```
+
+Returns the termset with the given name from the termgroup called "Corporate" including the terms below it from the site collection termstore
 
 ## PARAMETERS
 
