@@ -87,8 +87,7 @@
 <p>Returns a taxonomy term set</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPTermSet [-Identity &lt;TaxonomyTermSetPipeBind&gt;] [-TermGroup] &lt;TaxonomyTermGroupPipeBind&gt;
- [-TermStore &lt;TaxonomyTermStorePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
- 
+ [-TermStore &lt;TaxonomyTermStorePipeBind&gt;] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet returns a termset from the taxonomy store.</p>
@@ -105,6 +104,10 @@
 <pre><code class="lang-powershell">Get-PnPTermSet -Identity ab2af486-e097-4b4a-9444-527b251f1f8d -TermGroup &quot;Corporate
 </code></pre>
 <p>Returns the termset with the given id from the termgroup called &quot;Corporate&quot; from the site collection termstore</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPTermSet -Identity &quot;Departments&quot; -TermGroup &quot;Corporate -Include &quot;Terms&quot;
+</code></pre>
+<p>Returns the termset with the given name from the termgroup called &quot;Corporate&quot; including the terms below it from the site collection termstore</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
