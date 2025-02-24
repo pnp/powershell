@@ -2,7 +2,7 @@ ARG BASE_IMAGE_SUFFIX=alpine-3.20
 ARG BASE_IMAGE=mcr.microsoft.com/powershell:$BASE_IMAGE_SUFFIX
 FROM $BASE_IMAGE
 
-RUN if [ $BASE_IMAGE_SUFFIX -eq "ubuntu-20.04-arm32" ] ; then echo Installing libc6; apt-get update && apt-get -y install libc6; else echo Skipping libc6 installation; fi
+RUN if [ $BASE_IMAGE_SUFFIX = "ubuntu-20.04-arm32" ] ; then echo Installing libc6; apt-get update && apt-get -y install libc6; else echo Skipping libc6 installation; fi
 
 SHELL ["pwsh", "-command"]
 ARG INSTALL_USER=ContainerAdministrator
