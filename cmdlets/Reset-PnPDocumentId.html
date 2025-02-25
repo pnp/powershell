@@ -84,27 +84,59 @@
   <h1 id="reset-pnpdocumentid">Reset-PnPDocumentId</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Requests the unique document ID of a file to be recalculated and reassigned.</p>
+<p>Requests the unique document ID of a specific file or all files with a specific content type in a document library to be recalculated and reassigned.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Reset-PnPDocumentId -Identity &lt;FilePipeBind&gt; [-Verbose] [-Connection &lt;PnPConnection&gt;]
+<h3 id="reset-file">Reset file</h3>
+<pre><code class="lang-powershell">Reset-PnPDocumentId -File &lt;FilePipeBind&gt; [-Verbose] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="reset-library">Reset library</h3>
+<pre><code class="lang-powershell">Reset-PnPDocumentId -Library &lt;ListPipeBind&gt; -ContentType &lt;ContentTypePipeBind&gt; [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet allows requesting SharePoint Online to recalculate and reassign the unique document ID of a file. This can be useful if the document ID of a file has been lost, has gotten corrupted or duplicated. The unique document ID will be calculated based on an internal predictable algorithm and will contain parts of the site collection, web, list and listitem. It should only take seconds for it to recalculate and reassign the document ID. If it remains the same after running this cmdlet, it means the assigned document ID is correct. There's no use of running it multiple times on the same file.</p>
+<p>This cmdlet allows requesting SharePoint Online to recalculate and reassign the unique document ID of a specific file or of all files using a specific content type in a document library. This can be useful if the document ID of a file has been lost, has gotten corrupted or duplicated. The unique document ID will be calculated based on an internal predictable algorithm and will contain parts of the site collection, web, list and listitem.</p>
+<p>When applying this to a specific file, it should only take seconds for it to recalculate and reassign the document ID. When applying it to the entire library, it may take up to 24 hours to process the request.</p>
+<p>If the document ID remains the same after running this cmdlet, it means the assigned document ID is correct. There's no use of running it multiple times on the same file.</p>
 <p>You need to be connected to the same site collection in which the file on which you wish to perform the operation resides.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Reset-PnPDocumentId -Identity &quot;/sites/demo/Shared Documents/MyDocument.docx&quot;
+<pre><code class="lang-powershell">Reset-PnPDocumentId -File &quot;/sites/demo/Shared Documents/MyDocument.docx&quot;
 </code></pre>
 <p>This will request SharePoint Online to recalculate and reassign the unique document ID of the file MyDocument.docx in the Shared Documents library of the demo site collection.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPFileInFolder -Recurse -FolderSiteRelativeUrl &quot;Shared Documents&quot; -ItemName &quot;MyDocument.docx&quot; | Reset-PnPDocumentId
 </code></pre>
 <p>This will request SharePoint Online to recalculate and reassign the unique document ID of the file MyDocument.docx in the Shared Documents library of the current site collection.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell"> Reset-PnPDocumentId -Library &quot;Documents&quot; -ContentType (Get-PnPContentType -List &quot;Documents&quot; | Where-Object Name -eq &quot;Document&quot;
+</code></pre>
+<p>This will request SharePoint Online to recalculate and reassign the unique document ID of all files using the Document content type in the default Documents library of the current site collection.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-identity">-Identity</h3>
+<h3 id="-file">-File</h3>
 <p>The ID, listitem instance, File instance or server relative path of the file for which you want to request a document id reset.</p>
 <pre><code class="lang-yaml">Type: FilePipeBind
-Parameter Sets: (All)
+Parameter Sets: Reset file
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-library">-Library</h3>
+<p>The ID, library instance or server relative URL of the library for which you want to request a document id reset.</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: Reset library
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-contenttype">-ContentType</h3>
+<p>The ID, or name of the content type on the library to reset the document ids for.</p>
+<pre><code class="lang-yaml">Type: ContentTypePipeBind
+Parameter Sets: Reset library
 
 Required: True
 Position: Named
