@@ -103,7 +103,7 @@ Another option is to manually create the application registration in Entra ID. W
    
    ![image](../images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent_remove_other.png)
 
-1. The _Configured permissions_ section should now look similar to the screenshot below. You can now use this application to [connect to PnP PowerShell](connecting.md) or [add additional permissions](determinepermissions.md) to this application registration as necessary.
+1. The _Configured permissions_ section should now look similar to the screenshot below. You can now use this application to [connect to PnP PowerShell]([connecting.md](authentication.md) or [add additional permissions](determinepermissions.md) to this application registration as necessary.
    
    ![image](../images/registerapplication/entraid_new_app_apipermissions_minimal.png )
                                                     
