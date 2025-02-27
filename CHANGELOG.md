@@ -57,6 +57,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `HidePeopleWhoHaveListsOpen` parameter to `Set-PnPSite` cmdlet to hide people who simultaneously have lists open [#4699](https://github.com/pnp/powershell/pull/4699)
 - Added `-WhoCanShareAllowListInTenant`, `-LegacyBrowserAuthProtocolsEnabled`, `-EnableDiscoverableByOrganizationForVideos`, `-RestrictedAccessControlforSitesErrorHelpLink`, `-Workflow2010Disabled`, `-AllowSharingOutsideRestrictedAccessControlGroups`, `-HideSyncButtonOnDocLib`, `-HideSyncButtonOnODB`, `-StreamLaunchConfig`, `-EnableMediaReactions`, `-ContentSecurityPolicyEnforcement` and `-DisableSpacesActivation` to `Set-PnPTenant` [#4681](https://github.com/pnp/powershell/pull/4681)
 - Added `Start-PnPEnterpriseAppInsightsReport` and `Get-PnPEnterpriseAppInsightsReport` which allow working with App Insights repors [#4713](https://github.com/pnp/powershell/pull/4713)
+- Added `Get-PnPMicrosoft365Roadmap` which allows retrieval of the Microsoft 365 Roadmap items
 
 ### Changed
 
