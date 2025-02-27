@@ -60,6 +60,7 @@ Accept wildcard characters: False
 ### -OverwriteExistingIds
 Boolean indicating whether the document Ids on existing documents within the site collection should be reassigned a new document Id using the new prefix. If set to true, all existing documents will be assigned a new document Id using the new prefix. If set to false, only new documents will be assigned a document Id using the new prefix.
 
+```yaml
 Type: boolean
 Parameter Sets: (All)
 
@@ -73,6 +74,7 @@ Accept wildcard characters: False
 ### -ScheduleAssignment
 Boolean indicating whether the change should be scheduled in a timerjob or not. If set to true, the change will be scheduled and will take effect within 48 hours. This might make the rename process more reliable, especially on sites with a lot of files. If set to false, the change might be applied sooner, though still could take some time to be processed.
 
+```yaml
 Type: boolean
 Parameter Sets: (All)
 
