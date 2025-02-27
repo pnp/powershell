@@ -46,6 +46,8 @@ This will change the document Id prefix to TEST for all existing and new documen
 ### -DocumentIdPrefix
 The new prefix you would like to start using for the Document ID feature in the current site collection.
 
+The Document ID prefix must be 4 to 12 characters long, and contain only digits (0-9) and letters.
+
 ```yaml
 Type: string
 Parameter Sets: (All)
