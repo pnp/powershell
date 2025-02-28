@@ -237,9 +237,6 @@
       "version": ""
     },
     {
-      "log_codes": [
-        "InvalidFileLink"
-      ],
       "type": "Conceptual",
       "source_relative_path": "articles/registerapplication.md",
       "output": {
@@ -3078,6 +3075,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPMicrosoft365GroupYammerCommunity.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPMicrosoft365Roadmap.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPMicrosoft365Roadmap.html"
         }
       },
       "version": ""
@@ -7618,6 +7625,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSiteDesign.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSiteDocumentIdPrefix.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSiteDocumentIdPrefix.html"
         }
       },
       "version": ""

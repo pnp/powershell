@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Add-PnPApplicationCustomizer | PnP PowerShell </title>
+    <title>Get-PnPMicrosoft365Roadmap | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Add-PnPApplicationCustomizer | PnP PowerShell ">
+    <meta name="title" content="Get-PnPMicrosoft365Roadmap | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,112 +77,53 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="add-pnpapplicationcustomizer">Add-PnPApplicationCustomizer</h1>
+  <h1 id="get-pnpmicrosoft365roadmap">Get-PnPMicrosoft365Roadmap</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Adds a SharePoint Framework client side extension application customizer to a specific site collection or web</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>None</li>
+</ul>
+<p>Returns all items currently on the Microsoft 365 Roadmap</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPApplicationCustomizer [-Name &lt;String&gt;] [-Title &lt;String&gt;] [-Description &lt;String&gt;] [-Sequence &lt;Int32&gt;]
- [-Scope &lt;CustomActionScope&gt;] -ClientSideComponentId &lt;Guid&gt; [-ClientSideComponentProperties &lt;String&gt;]
- [-ClientSideHostProperties &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Roadmap [-RoadmapUrl &lt;string&gt;] [-Verbose] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Adds a SharePoint Framework client side extension application customizer by registering a user custom action to a web or sitecollection. This can be useful in the scenario where you have a SPFx Application Customizer whcih you decide to deploy to the global app catalog, checking the box to deploy it to the entire tenant. If you then go to the Tenant Wide Extensions list inside the tenant app catalog and set the SPFx Application Customizer its Disabled property to be Yes, you can use this cmdlet to add the functionality of that SPFx component to specific site collections manually. This voids having to add it as an app to every site collection and it being visible in the site contents, yet you having full control over where it should be ran and where not.</p>
+<p>Allows retrieval of the Microsoft 365 Roadmap. Pipe the output to i.e. a Where-Object to filter it down to the desired items. You do not need to be connected to any tenant to utilize this cmdlet.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPApplicationCustomizer -Title &quot;CollabFooter&quot; -ClientSideComponentId c0ab3b94-8609-40cf-861e-2a1759170b43 -ClientSideComponentProperties &quot;{`&quot;sourceTermSet`&quot;:`&quot;PnP-CollabFooter-SharedLinks`&quot;,`&quot;personalItemsStorageProperty`&quot;:`&quot;PnP-CollabFooter-MyLinks`&quot;}
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Roadmap
 </code></pre>
-<p>Adds a new application customizer to the current web. This requires that a SharePoint Framework solution has been deployed containing the application customizer specified in its manifest. Be sure to run Install-PnPApp before trying this cmdlet on a site.</p>
+<p>Retrieves all the available items currently on the Microsoft 365 Roadmap</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Roadmap | Where-Object { $_.Status -eq &quot;Rolling out&quot; }
+</code></pre>
+<p>Retrieves the items on the Microsoft 365 Roadmap which are currently rolling out</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPMicrosoft365Roadmap | Where-Object { $_.Created -ge (Get-Date).AddDays(-7) -or $_.Modified -ge (Get-Date).AddDays(-7) }
+</code></pre>
+<p>Retrieves the items on the Microsoft 365 Roadmap which have been added or modified in the last 7 days</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-clientsidecomponentid">-ClientSideComponentId</h3>
-<p>The Client Side Component Id of the SharePoint Framework client side extension application customizer found in the manifest</p>
-<pre><code class="lang-yaml">Type: Guid
-Parameter Sets: (All)
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-clientsidecomponentproperties">-ClientSideComponentProperties</h3>
-<p>The Client Side Component Properties of the application customizer. Specify values as a json string : &quot;{Property1 : 'Value1', Property2: 'Value2'}&quot;</p>
+<h3 id="-roadmapurl">-RoadmapUrl</h3>
+<p>Allows passing in a custom URL to retrieve the roadmap from. It will use the default value listed below if it is not provided. In most cases you don't want to provide this parameter yourself.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
+
 Required: False
 Position: Named
-Default value: None
+Default value: https://www.microsoft.com/releasecommunications/api/v1/m365
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-clientsidehostproperties">-ClientSideHostProperties</h3>
-<p>The Client Side Host Properties of the application customizer. Specify values as a json string : &quot;{'preAllocatedApplicationCustomizerTopHeight': '50', 'preAllocatedApplicationCustomizerBottomHeight': '50'}&quot;</p>
-<pre><code class="lang-yaml">Type: String
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-description">-Description</h3>
-<p>The description of the application customizer</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-name">-Name</h3>
-<p>The name of the application customizer</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-scope">-Scope</h3>
-<p>The scope of the CustomAction to add to. Either Web or Site; defaults to Web. 'All' is not valid for this command.</p>
-<pre><code class="lang-yaml">Type: CustomActionScope
-Parameter Sets: (All)
-Accepted values: Web, Site, All
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-sequence">-Sequence</h3>
-<p>Sequence of this application customizer being injected. Use when you have a specific sequence with which to have multiple application customizers being added to the page.</p>
-<pre><code class="lang-yaml">Type: Int32
-Parameter Sets: (All)
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-title">-Title</h3>
-<p>The title of the application customizer</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
+
 Required: False
 Position: Named
 Default value: None
@@ -190,7 +131,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://www.microsoft.com/microsoft-365/roadmap">Microsoft 365 Roadmap</a></p>
 
 </article>
           </div>
