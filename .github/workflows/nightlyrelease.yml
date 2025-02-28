@@ -70,6 +70,7 @@ jobs:
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-nanoserver-1809"
   publish-docker-arm32:
     runs-on: ubuntu-22.04
+    if: false
     needs: [ build ]
     steps:
     - uses: actions/checkout@v4
