@@ -15,7 +15,7 @@ Adds a SharePoint Framework client side extension application customizer to a sp
 ## SYNTAX
 
 ```powershell
-Add-PnPApplicationCustomizer [-Title <String>] [-Description <String>] [-Sequence <Int32>]
+Add-PnPApplicationCustomizer [-Name <String>] [-Title <String>] [-Description <String>] [-Sequence <Int32>]
  [-Scope <CustomActionScope>] -ClientSideComponentId <Guid> [-ClientSideComponentProperties <String>]
  [-ClientSideHostProperties <String>] [-Connection <PnPConnection>] 
 ```
@@ -88,6 +88,19 @@ Accept wildcard characters: False
 
 ### -Description
 The description of the application customizer
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Name
+The name of the application customizer
 
 ```yaml
 Type: String

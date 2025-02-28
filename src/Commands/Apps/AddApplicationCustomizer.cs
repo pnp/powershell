@@ -13,6 +13,9 @@ namespace PnP.PowerShell.Commands.Branding
         public string Title = string.Empty;
 
         [Parameter(Mandatory = false)]
+        public string Name = string.Empty;
+
+        [Parameter(Mandatory = false)]
         public string Description = string.Empty;
 
         [Parameter(Mandatory = false)]
@@ -35,6 +38,9 @@ namespace PnP.PowerShell.Commands.Branding
             CustomActionEntity ca = new CustomActionEntity
             {
                 Title = Title,
+                Name = Name,
+                Description = Description,
+                Sequence = Sequence,
                 Location = "ClientSideExtension.ApplicationCustomizer",
                 ClientSideComponentId = ClientSideComponentId,
                 ClientSideComponentProperties = ClientSideComponentProperties,
