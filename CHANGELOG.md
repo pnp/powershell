@@ -59,6 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Start-PnPEnterpriseAppInsightsReport` and `Get-PnPEnterpriseAppInsightsReport` which allow working with App Insights repors [#4713](https://github.com/pnp/powershell/pull/4713)
 - Added `Set-PnPSiteDocumentIdPrefix` which allows changing of the document id prefix on a site collection [#4765](https://github.com/pnp/powershell/pull/4765)
 - Added `Get-PnPMicrosoft365Roadmap` which allows retrieval of the Microsoft 365 Roadmap items [#4764](https://github.com/pnp/powershell/pull/4764)
+- Added `-Name` parameter to `Add-PnPApplicationCustomizer` cmdlet to allow for specifying the name of the application customizer
 
 ### Changed
 
@@ -111,6 +112,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get\Invoke-PnPSiteTemplate` cmdlet not working in vanity domains. [#4630](https://github.com/pnp/powershell/pull/4630)
 - Fixed passing a `Get-PnPRecycleBinItem` result or a GUID to `Restore-PnPRecycleBinItem` not working correctly. [#4667](https://github.com/pnp/powershell/pull/4667)
 - Fixed `Get-PnPChangeLog` not returning the changelog [#4707](https://github.com/pnp/powershell/pull/4707)
+- Fixed `-Description` and `-Sequence` not being applied when providing these through `Add-PnPApplicationCustomizer`
 
 ### Removed
 
