@@ -69,19 +69,19 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-nanoserver-1809"
   publish-docker-arm32:
-    runs-on: ubuntu-24.04-arm
+    runs-on: ubuntu-22.04
     needs: [ build ]
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
       run: |
         VERSION="$(cat ./version.txt)-nightly"
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=ubuntu-20.04-arm32" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-20.04-arm32;
+        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=ubuntu-22.04-arm32" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-22.04-arm32;
     - name: Push the image
       run: |
         VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-focal-arm32"
+        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-22.04-arm32"
   publish-docker-arm64:
     runs-on: ubuntu-24.04-arm
     needs: [ build ]
