@@ -27,7 +27,7 @@ Set-PnPTeamsTeam -Identity <TeamsTeamPipeBind> [-DisplayName <String>] [-Descrip
  [-AllowGiphy <Boolean>] [-AllowGuestCreateUpdateChannels <Boolean>] [-AllowGuestDeleteChannels <Boolean>]
  [-AllowOwnerDeleteMessages <Boolean>] [-AllowStickersAndMemes <Boolean>] [-AllowTeamMentions <Boolean>]
  [-AllowUserDeleteMessages <Boolean>] [-AllowUserEditMessages <Boolean>]
- [-GiphyContentRating <TeamGiphyContentRating>] [-ShowInTeamsSearchAndSuggestions <Boolean>]
+ [-GiphyContentRating <TeamGiphyContentRating>] [-ShowInTeamsSearchAndSuggestions <Boolean>] [-AllowCreatePrivateChannels <Boolean>]
  [-Classification <String>]  
 ```
 
@@ -265,6 +265,20 @@ Accept wildcard characters: False
 
 ### -AllowUserEditMessages
 Setting that determines whether or not users can edit messages that they have posted.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowCreatePrivateChannels
+Determines whether private channel creation is allowed for the team.
 
 ```yaml
 Type: Boolean
