@@ -1,24 +1,25 @@
 ﻿using PnP.Framework;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
+using System.Reflection;
 using System.Security;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using TextCopy;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.PowerShell.Commands.Base;
-using System.Dynamic;
-using PnP.PowerShell.Commands.Enums;
-using TextCopy;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -486,7 +487,10 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 DateTime validFrom = DateTime.Today;
                 DateTime validTo = validFrom.AddYears(ValidYears);
-                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo, Array.Empty<string>());
+
+                var psVersion = GetPSVersion();
+
+                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo, Array.Empty<string>(), psVersion);
 
                 if (Directory.Exists(OutPath))
                 {
@@ -756,6 +760,32 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 WriteWarning("Logo File does not exist, ignoring setting the logo");
             }
+        }
+
+        private string GetPSVersion()
+        {
+            var caller = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == "System.Management.Automation");
+            //var caller = Assembly.GetCallingAssembly();
+            var psVersionType = caller.GetType("System.Management.Automation.PSVersionInfo");
+            if (null != psVersionType)
+            {
+                PropertyInfo propInfo = psVersionType.GetProperty("PSVersion");
+                if (null == propInfo)
+                {
+                    propInfo = psVersionType.GetProperty("PSVersion", BindingFlags.NonPublic | BindingFlags.Static);
+                }
+                var getter = propInfo.GetGetMethod(true);
+                var version = getter.Invoke(null, new object[] { });
+
+                if (null != version)
+                {
+                    var versionType = version.GetType();
+                    var versionProperty = versionType.GetProperty("Major");
+                    var minorVersionProperty = versionType.GetProperty("Minor");
+                    return ((int)versionProperty.GetValue(version)).ToString() + "." + ((int)minorVersionProperty.GetValue(version)).ToString();
+                }
+            }
+            return "";
         }
     }
 }

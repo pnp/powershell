@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Microsoft.Identity.Client.Extensions.Msal;
+using Microsoft.Win32.SafeHandles;
+using PnP.Framework.Modernization.Cache;
+using System;
 using System.Linq;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
@@ -7,9 +10,6 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
-using Microsoft.Identity.Client.Extensions.Msal;
-using Microsoft.Win32.SafeHandles;
-using PnP.Framework.Modernization.Cache;
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 [assembly: InternalsVisibleTo("PnP.PowerShell.Tests")]
@@ -498,7 +498,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return null;
         }
-        private static void WriteMacOSKeyChainEntry(string applicationName,string password)
+        private static void WriteMacOSKeyChainEntry(string applicationName, string password)
         {
             var keychain = new MacOSKeychain();
             keychain.AddOrUpdate(applicationName, applicationName, password.ToByteArray());
@@ -507,14 +507,14 @@ namespace PnP.PowerShell.Commands.Utilities
         private static bool DeleteMacOSKeyChainEntry(string name)
         {
             var keychain = new MacOSKeychain();
-            return keychain.Remove(name,name);
+            return keychain.Remove(name, name);
             // var cmd = $"/usr/bin/security delete-generic-password -s '{name}'";
             // var output = Shell.Bash(cmd);
             // var success = output.Count > 1 && !output[0].StartsWith("security:");
             // return success;
         }
 
-        private static string SecureStringToString(SecureString value)
+        public static string SecureStringToString(SecureString value)
         {
             IntPtr valuePtr = IntPtr.Zero;
             try
