@@ -4,6 +4,7 @@ using System.IO;
 using System.Management.Automation;
 using System.Security;
 using System.Security.Cryptography.X509Certificates;
+using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -54,6 +55,20 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
             }
 
+#pragma warning disable CA1416 // Validate platform compatibility
+            if (OperatingSystem.IsWindows())
+            {
+                using var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                var principal = new System.Security.Principal.WindowsPrincipal(identity);
+                var isAdmin = principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+
+                if (PSVersionUtility.PSVersion == "7.5" && !isAdmin)
+                {
+                    WriteWarning("Running this cmdlet in requires you to run PowerShell as an administrator due to a regression in .NET 9.");
+                }
+            }
+#pragma warning restore CA1416 // Validate platform compatibility
+
             if (ValidYears < 1 || ValidYears > 30)
             {
                 ValidYears = 10;
@@ -61,7 +76,7 @@ namespace PnP.PowerShell.Commands.Base
             DateTime validFrom = DateTime.Today;
             DateTime validTo = validFrom.AddYears(ValidYears);
 
-            if(MyInvocation.BoundParameters.ContainsKey(nameof(SanNames)) && SanNames == null)
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(SanNames)) && SanNames == null)
             {
                 SanNames = Array.Empty<string>();
             }

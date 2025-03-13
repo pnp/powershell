@@ -847,39 +847,10 @@ namespace PnP.PowerShell.Commands.Base
                 var coreAssembly = Assembly.GetExecutingAssembly();
                 var operatingSystem = Utilities.OperatingSystem.GetOSString();
 
-                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem, PSVersion);
+                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem, PSVersionUtility.PSVersion);
                 ApplicationInsights.TrackEvent("Connect-PnPOnline");
             }
         }
-
-        private static string PSVersion => (PSVersionLazy.Value);
-
-        private static readonly Lazy<string> PSVersionLazy = new Lazy<string>(
-            () =>
-
-        {
-            var caller = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == "System.Management.Automation");
-            //var caller = Assembly.GetCallingAssembly();
-            var psVersionType = caller.GetType("System.Management.Automation.PSVersionInfo");
-            if (null != psVersionType)
-            {
-                PropertyInfo propInfo = psVersionType.GetProperty("PSVersion");
-                if (null == propInfo)
-                {
-                    propInfo = psVersionType.GetProperty("PSVersion", BindingFlags.NonPublic | BindingFlags.Static);
-                }
-                var getter = propInfo.GetGetMethod(true);
-                var version = getter.Invoke(null, new object[] { });
-
-                if (null != version)
-                {
-                    var versionType = version.GetType();
-                    var versionProperty = versionType.GetProperty("Major");
-                    return ((int)versionProperty.GetValue(version)).ToString();
-                }
-            }
-            return "";
-        });
 
         private static string PnPPSVersionTag => (PnPPSVersionTagLazy.Value);
 
