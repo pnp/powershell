@@ -113,6 +113,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed passing a `Get-PnPRecycleBinItem` result or a GUID to `Restore-PnPRecycleBinItem` not working correctly. [#4667](https://github.com/pnp/powershell/pull/4667)
 - Fixed `Get-PnPChangeLog` not returning the changelog [#4707](https://github.com/pnp/powershell/pull/4707)
 - Fixed `-Description` and `-Sequence` not being applied when providing these through `Add-PnPApplicationCustomizer` [#4767](https://github.com/pnp/powershell/pull/4767)
+- Fixed `-RetryCount` parameter being ignored with `Submit-PnPSearchQuery` [#4784](https://github.com/pnp/powershell/pull/4784)
+- Fixed `Get-PnPSiteScriptFromWeb` throwing a file not found error when providing a web URL through `-Url` that differed from the connected to URL [#4785](https://github.com/pnp/powershell/pull/4785)
 
 ### Removed
 
@@ -138,6 +140,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
 ### Contributors
 
+- [abwlodar]
 - [jgfgoncalves]
 - Stephen Cox [stephen-cox-nzx]
 - Marijn Somers [Marijnsomers]
