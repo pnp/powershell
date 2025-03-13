@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             if (!PSUtility.IsUserLocalAdmin())
             {
-                throw new PSArgumentException("Running this cmdlet in requires you to run PowerShell as an administrator due to a bug in .NET 9.");
+                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin).");
             }
 
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
