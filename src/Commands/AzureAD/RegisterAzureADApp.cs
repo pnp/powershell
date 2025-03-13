@@ -94,19 +94,10 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ProcessRecord()
         {
-#pragma warning disable CA1416 // Validate platform compatibility
-            if (OperatingSystem.IsWindows())
+            if (PSUtility.IsUserLocalAdmin())
             {
-                using var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
-                var principal = new System.Security.Principal.WindowsPrincipal(identity);
-                var isAdmin = principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
-
-                if (PSVersionUtility.PSVersion == "7.5" && !isAdmin)
-                {
-                    WriteWarning("Running this cmdlet in requires you to run PowerShell as an administrator due to a regression in .NET 9.");
-                }
+                WriteWarning("Running this cmdlet in requires you to run PowerShell as an administrator due to a regression in .NET 9.");
             }
-#pragma warning restore CA1416 // Validate platform compatibility
 
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
             {

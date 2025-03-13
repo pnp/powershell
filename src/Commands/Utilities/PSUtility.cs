@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
-    internal class PSVersionUtility
+    internal class PSUtility
     {
         public static string PSVersion => (PSVersionLazy.Value);
 
@@ -35,5 +35,16 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 return "";
             });
+
+#pragma warning disable CA1416 // Validate platform compatibility
+        public static bool IsUserLocalAdmin()
+        {
+            if (OperatingSystem.IsWindows())
+            {
+                return new System.Security.Principal.WindowsPrincipal(System.Security.Principal.WindowsIdentity.GetCurrent()).IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+            }
+            return false;
+        }
+#pragma warning restore CA1416 // Validate platform compatibility
     }
 }
