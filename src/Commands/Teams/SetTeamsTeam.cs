@@ -71,7 +71,7 @@ namespace PnP.PowerShell.Commands.Teams
         public bool? AllowUserEditMessages;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
-        public Model.Teams.TeamGiphyContentRating GiphyContentRating;
+        public TeamGiphyContentRating GiphyContentRating;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? ShowInTeamsSearchAndSuggestions;
@@ -81,6 +81,7 @@ namespace PnP.PowerShell.Commands.Teams
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public bool? AllowCreatePrivateChannels;
+
         protected override void ExecuteCmdlet()
         {
             var groupId = Identity.GetGroupId(GraphRequestHelper);
