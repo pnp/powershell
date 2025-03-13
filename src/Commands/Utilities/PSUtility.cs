@@ -45,9 +45,9 @@ namespace PnP.PowerShell.Commands.Utilities
                 var principal = new System.Security.Principal.WindowsPrincipal(identity);
                 var isAdmin = principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
 
-                return PSVersion == "7.5" && isAdmin;
+                return isAdmin && PSVersion == "7.5";
             }
-            return false;
+            return true;
         }
 #pragma warning restore CA1416 // Validate platform compatibility
     }
