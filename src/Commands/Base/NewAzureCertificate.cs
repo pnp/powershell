@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Base
 
             if (!PSUtility.IsUserLocalAdmin())
             {
-                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin).");
+                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin) to generate a certificate.");
             }
 
             if (ValidYears < 1 || ValidYears > 30)

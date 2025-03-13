@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.AzureAD
         {
             if (!PSUtility.IsUserLocalAdmin())
             {
-                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin).");
+                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin) to generate a certificate.");
             }
 
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
