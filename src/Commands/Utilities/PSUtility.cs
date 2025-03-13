@@ -41,7 +41,11 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             if (OperatingSystem.IsWindows())
             {
-                return new System.Security.Principal.WindowsPrincipal(System.Security.Principal.WindowsIdentity.GetCurrent()).IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+                using var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
+                var principal = new System.Security.Principal.WindowsPrincipal(identity);
+                var isAdmin = principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
+
+                return PSVersion == "7.5" && isAdmin;
             }
             return false;
         }

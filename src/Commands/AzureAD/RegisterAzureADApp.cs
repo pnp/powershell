@@ -94,9 +94,9 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ProcessRecord()
         {
-            if (PSUtility.IsUserLocalAdmin())
+            if (!PSUtility.IsUserLocalAdmin())
             {
-                WriteWarning("Running this cmdlet in requires you to run PowerShell as an administrator due to a regression in .NET 9.");
+                throw new PSArgumentException("Running this cmdlet in requires you to run PowerShell as an administrator due to a regression in .NET 9.");
             }
 
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())

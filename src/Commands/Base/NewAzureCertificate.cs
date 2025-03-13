@@ -54,9 +54,9 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
             }
 
-            if (PSUtility.IsUserLocalAdmin())
+            if (!PSUtility.IsUserLocalAdmin())
             {
-                WriteWarning("Running this cmdlet in requires you to run PowerShell as an administrator due to a regression in .NET 9.");
+                throw new PSArgumentException("Running this cmdlet in requires you to run PowerShell as an administrator due to a regression in .NET 9.");
             }
 
             if (ValidYears < 1 || ValidYears > 30)
