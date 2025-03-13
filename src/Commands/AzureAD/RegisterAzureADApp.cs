@@ -1,9 +1,12 @@
 ﻿using PnP.Framework;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -13,12 +16,9 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using TextCopy;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.PowerShell.Commands.Base;
-using System.Dynamic;
-using PnP.PowerShell.Commands.Enums;
-using TextCopy;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -94,6 +94,11 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ProcessRecord()
         {
+            if (!PSUtility.IsUserLocalAdmin())
+            {
+                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin) to generate a certificate.");
+            }
+
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
             {
                 throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");

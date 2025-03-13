@@ -54,6 +54,11 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
             }
 
+            if (!PSUtility.IsUserLocalAdmin())
+            {
+                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin) to generate a certificate.");
+            }
+
             if (ValidYears < 1 || ValidYears > 30)
             {
                 ValidYears = 10;
@@ -61,7 +66,7 @@ namespace PnP.PowerShell.Commands.Base
             DateTime validFrom = DateTime.Today;
             DateTime validTo = validFrom.AddYears(ValidYears);
 
-            if(MyInvocation.BoundParameters.ContainsKey(nameof(SanNames)) && SanNames == null)
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(SanNames)) && SanNames == null)
             {
                 SanNames = Array.Empty<string>();
             }
