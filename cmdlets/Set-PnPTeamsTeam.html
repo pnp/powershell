@@ -97,7 +97,7 @@
  [-AllowGiphy &lt;Boolean&gt;] [-AllowGuestCreateUpdateChannels &lt;Boolean&gt;] [-AllowGuestDeleteChannels &lt;Boolean&gt;]
  [-AllowOwnerDeleteMessages &lt;Boolean&gt;] [-AllowStickersAndMemes &lt;Boolean&gt;] [-AllowTeamMentions &lt;Boolean&gt;]
  [-AllowUserDeleteMessages &lt;Boolean&gt;] [-AllowUserEditMessages &lt;Boolean&gt;]
- [-GiphyContentRating &lt;TeamGiphyContentRating&gt;] [-ShowInTeamsSearchAndSuggestions &lt;Boolean&gt;]
+ [-GiphyContentRating &lt;TeamGiphyContentRating&gt;] [-ShowInTeamsSearchAndSuggestions &lt;Boolean&gt;] [-AllowCreatePrivateChannels &lt;Boolean&gt;]
  [-Classification &lt;String&gt;]  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -276,6 +276,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowusereditmessages">-AllowUserEditMessages</h3>
 <p>Setting that determines whether or not users can edit messages that they have posted.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowcreateprivatechannels">-AllowCreatePrivateChannels</h3>
+<p>Determines whether private channel creation is allowed for the team.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
