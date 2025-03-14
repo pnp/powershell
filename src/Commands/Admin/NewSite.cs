@@ -190,12 +190,12 @@ namespace PnP.PowerShell.Commands
                     }
                     catch (Exception ex)
                     {
-                        WriteError(ex);
+                        LogError(ex);
                     }
                 }
                 else
                 {
-                    WriteError(new PSInvalidOperationException("Creating a new teamsite requires an underlying Microsoft 365 group. In order to create this we need to acquire an access token for the Microsoft Graph. This is not possible using ACS App Only connections."));
+                    LogError(new PSInvalidOperationException("Creating a new teamsite requires an underlying Microsoft 365 group. In order to create this we need to acquire an access token for the Microsoft Graph. This is not possible using ACS App Only connections."));
                 }
             }
             else

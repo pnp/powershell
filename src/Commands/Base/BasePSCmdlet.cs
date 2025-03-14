@@ -130,16 +130,16 @@ namespace PnP.PowerShell.Commands.Base
         /// Allows logging an error
         /// </summary>
         /// <param name="exception">The exception to log as an error</param>
-        internal void WriteError(Exception exception)
+        internal void LogError(Exception exception)
         {
-            WriteError(exception.Message);
+            LogError(exception.Message);
         }
 
         /// <summary>
         /// Allows logging an error
         /// </summary>
         /// <param name="message">The message to log</param>
-        internal void WriteError(string message)
+        internal void LogError(string message)
         {
             Utilities.Logging.LoggingUtility.Error(this, message, correlationId: CorrelationId);
         }

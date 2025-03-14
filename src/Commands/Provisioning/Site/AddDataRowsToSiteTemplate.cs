@@ -64,7 +64,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
             var template = ProvisioningHelper.LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
                     {
-                        WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                        LogError(e);
                     });
 
             if (template == null)

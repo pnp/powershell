@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             }
             else
             {
-                WriteError(new ErrorRecord(new Exception($"Sequence with ID {Sequence.ID} already exists in template"), "DUPLICATESEQUENCEID", ErrorCategory.InvalidData, Sequence));
+                LogError($"Sequence with ID {Sequence.ID} already exists in template");
             }
         }
     }

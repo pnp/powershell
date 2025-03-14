@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                WriteError(new ErrorRecord(new Exception("AppId not found"), "APPIDNOTFOUND", ErrorCategory.AuthenticationError, this));
+                LogError("AppId not found");
             }
         }
     }

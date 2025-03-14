@@ -76,7 +76,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             }
             catch (Exception e)
             {
-                WriteError(new ErrorRecord(new Exception("Make sure you have granted access to Azure AD App to Interact with Power Platform, To help understand the required permissions visit https://pnp.github.io/powershell/articles/determinepermissions.html#help-i-cant-figure-out-which-permissions-i-need"), e.Message, ErrorCategory.AuthenticationError, null));
+                LogError($"Error: {e.Message}. Make sure you have granted access to your Entra AD App to Interact with Power Platform, To help understand the required permissions visit https://pnp.github.io/powershell/articles/determinepermissions.html#help-i-cant-figure-out-which-permissions-i-need");
             }
         }
     }

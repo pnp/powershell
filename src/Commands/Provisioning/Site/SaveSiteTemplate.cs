@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Provisioning
         {
             var templateObject = Template.GetTemplate(SessionState.Path.CurrentFileSystemLocation.Path, (e) =>
             {
-                WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                LogError(e);
             });
 
             // Determine the output file name and path
@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Provisioning
         {
             var templateFile = ProvisioningHelper.LoadSiteTemplateFromFile(templateFileName, null, (e) =>
             {
-                WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                LogError(e);
             });
             if (template.Tenant?.AppCatalog != null)
             {

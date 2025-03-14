@@ -338,7 +338,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 return ProvisioningHelper.LoadTenantTemplateFromFile(Path, (e) =>
                  {
-                     WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                     LogError(e);
                  });
             }
             else

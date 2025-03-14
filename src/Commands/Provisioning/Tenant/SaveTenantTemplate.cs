@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
         {
             var templateObject = Template.GetTemplate(SessionState.Path.CurrentFileSystemLocation.Path, (e) =>
              {
-                 WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                 LogError(e);
              });
 
             // Determine the output file name and path

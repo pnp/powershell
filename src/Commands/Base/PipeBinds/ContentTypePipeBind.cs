@@ -240,20 +240,20 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             => GetContentType(context, searchInSiteHierarchy)
             ?? throw new PSArgumentException(NotFoundMessage(searchInSiteHierarchy), paramName);
 
-        internal ContentType GetContentTypeOrError(Cmdlet cmdlet, string paramName, Web web, bool searchInSiteHierarchy = true)
+        internal ContentType GetContentTypeOrError(BasePSCmdlet cmdlet, string paramName, Web web, bool searchInSiteHierarchy = true)
         {
             var ct = GetContentType(web, searchInSiteHierarchy);
             if (ct is null)
-                cmdlet.WriteError(new ErrorRecord(new PSArgumentException(NotFoundMessage(searchInSiteHierarchy), paramName), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                cmdlet.LogError(new PSArgumentException(NotFoundMessage(searchInSiteHierarchy), paramName));
             return ct;
         }
 
-        internal PnPCore.IContentType GetContentTypeOrError(Cmdlet cmdlet, string paramName, PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+        internal PnPCore.IContentType GetContentTypeOrError(BasePSCmdlet cmdlet, string paramName, PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
         {
             var ct = GetContentType(context, searchInSiteHierarchy);
             if (ct is null)
             {
-                cmdlet.WriteError(new ErrorRecord(new PSArgumentException(NotFoundMessage(searchInSiteHierarchy), paramName), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                cmdlet.LogError(new PSArgumentException(NotFoundMessage(searchInSiteHierarchy), paramName));
             }
             return ct;
         }
@@ -262,19 +262,19 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             => GetContentType(list)
             ?? throw new PSArgumentException(NotFoundMessage(list), paramName);
 
-        internal ContentType GetContentTypeOrError(Cmdlet cmdlet, string paramName, List list)
+        internal ContentType GetContentTypeOrError(BasePSCmdlet cmdlet, string paramName, List list)
         {
             var ct = GetContentType(list);
             if (ct is null)
-                cmdlet.WriteError(new ErrorRecord(new PSArgumentException(NotFoundMessage(list), paramName), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                cmdlet.LogError(new PSArgumentException(NotFoundMessage(list), paramName));
             return ct;
         }
 
-        internal PnPCore.IContentType GetContentTypeOrError(Cmdlet cmdlet, string paramName, PnPCore.IList list)
+        internal PnPCore.IContentType GetContentTypeOrError(BasePSCmdlet cmdlet, string paramName, PnPCore.IList list)
         {
             var ct = GetContentType(list);
             if (ct is null)
-                cmdlet.WriteError(new ErrorRecord(new PSArgumentException(NotFoundMessage(list), paramName), "CONTENTTYPEDOESNOTEXIST", ErrorCategory.InvalidArgument, this));
+                cmdlet.LogError(new PSArgumentException(NotFoundMessage(list), paramName));
             return ct;
         }
 

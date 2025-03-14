@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             }
             else
             {
-                WriteError(new ErrorRecord(new Exception($"Site with URL {SubSite.Url} already exists in sequence"), "DUPLICATEURL", ErrorCategory.InvalidData, SubSite));
+                LogError($"Site with URL {SubSite.Url} already exists in sequence");
             }
         }
     }

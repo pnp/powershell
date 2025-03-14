@@ -48,14 +48,14 @@ namespace PnP.PowerShell.Commands.Graph
                 }
                 else
                 {
-                    WriteError(new ErrorRecord(new InvalidOperationException("At least one classification is required. If you want to disable classifications, use Disable-PnPSiteClassification."), "SITECLASSIFICATIONS_ARE_REQUIRED", ErrorCategory.InvalidOperation, null));
+                    LogError("At least one classification is required. If you want to disable classifications, use Disable-PnPSiteClassification.");
                 }
             }
             catch (ApplicationException ex)
             {
                 if (ex.Message == @"Missing DirectorySettingTemplate for ""Group.Unified""")
                 {
-                    WriteError(new ErrorRecord(new InvalidOperationException("Site Classification is not enabled for this tenant"), "SITECLASSIFICATION_NOT_ENABLED", ErrorCategory.ResourceUnavailable, null));
+                    LogError("Site Classification is not enabled for this tenant");
                 }
             }
         }

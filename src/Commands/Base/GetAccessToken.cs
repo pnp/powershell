@@ -84,7 +84,7 @@ namespace PnP.PowerShell.Commands.Base
 
             if (accessTokenValue == null)
             {
-                WriteError(new PSArgumentException("Unable to retrieve access token"));
+                LogError(new PSArgumentException("Unable to retrieve access token"));
             }
             if (ListPermissionScopes.IsPresent)
             {

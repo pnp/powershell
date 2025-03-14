@@ -21,13 +21,13 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!Utilities.CredentialManager.RemoveCredential(Name))
                     {
-                        WriteError(new ErrorRecord(new System.Exception($"Credential {Name} not removed"), "CREDENTIALNOTREMOVED", ErrorCategory.WriteError, Name));
+                        LogError($"Credential {Name} not removed");
                     }
                 }
             }
             else
             {
-                WriteError(new ErrorRecord(new System.Exception($"Credential {Name} not found"), "CREDENTIALNOTFOUND", ErrorCategory.ObjectNotFound, Name));
+                LogError($"Credential {Name} not found");
             }
         }
     }

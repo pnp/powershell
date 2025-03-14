@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else
             {
-                WriteError(new ErrorRecord(new System.Exception("Credentials not found"), "CREDSNOTFOUND", ErrorCategory.AuthenticationError, this));
+                LogError(new System.Exception("Credentials not found"));
             }
         }
     }

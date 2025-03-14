@@ -150,7 +150,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 if (provisioningTemplate == null)
                 {
                     // If we don't have the template, raise an error and exit
-                    WriteError(new ErrorRecord(new Exception("The -Path parameter targets an invalid repository or template object."), "WRONG_PATH", ErrorCategory.SyntaxError, null));
+                    LogError("The -Path parameter targets an invalid repository or template object.");
                     return;
                 }
 

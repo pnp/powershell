@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                         }
                         WriteObject(ProvisioningHelper.LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }));
                         break;
                     }
@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                     {
                         WriteObject(ProvisioningHelper.LoadSiteTemplateFromString(Xml, TemplateProviderExtensions, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }));
                         break;
                     }
@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                     {
                         WriteObject(ProvisioningHelper.LoadSiteTemplatesFromStream(Stream, TemplateProviderExtensions, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }), true);
                         break;
                     }                    

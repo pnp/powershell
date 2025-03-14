@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                         }
                         WriteObject(ProvisioningHelper.LoadTenantTemplateFromFile(Path, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }));
                         break;
                     }
@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                     {
                         WriteObject(ProvisioningHelper.LoadTenantTemplateFromString(Xml, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }));
                         break;
                     }
@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                     {
                         WriteObject(ProvisioningHelper.LoadTenantTemplatesFromStream(Stream, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }), true);
                         break;
                     }                    
