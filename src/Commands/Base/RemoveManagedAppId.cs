@@ -5,7 +5,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Remove, "PnPManagedAppId")]
     [OutputType(typeof(void))]
-    public class RemoveManagedAppId : PSCmdlet
+    public class RemoveManagedAppId : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Url;

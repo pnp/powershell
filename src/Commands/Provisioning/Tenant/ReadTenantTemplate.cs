@@ -1,11 +1,12 @@
-﻿using PnP.PowerShell.Commands.Utilities;
+﻿using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Utilities;
 using System.IO;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommunications.Read, "PnPTenantTemplate", DefaultParameterSetName = ParameterSet_PATH)]
-    public class ReadTenantTemplate : PSCmdlet
+    public class ReadTenantTemplate : BasePSCmdlet
     {
         const string ParameterSet_STREAM = "By Stream";
         const string ParameterSet_PATH = "By Path";

@@ -9,67 +9,33 @@ namespace PnP.PowerShell.Commands.Base
     /// </summary>
     public class BasePSCmdlet : PSCmdlet
     {
+        /// <summary>
+        /// Generate a new correlation id for each cmdlet execution. This is used to correlate log entries in the PnP PowerShell log stream.
+        /// </summary>
+        internal Guid? CorrelationId { get; } = Guid.NewGuid();
+
+        #region Cmdlet execution
+
+        /// <summary>
+        /// Triggered when the cmdlet is started. This is the place to do any initialization work.
+        /// </summary>
         protected override void BeginProcessing()
         {
-            Framework.Diagnostics.Log.Debug("PnPPowerShell", $"Executing {MyInvocation.MyCommand.Name}");
+            LogDebug("Cmdlet execution started");
             base.BeginProcessing();
-            PnP.Framework.Diagnostics.Log.Info("PnP.PowerShell", $"Executing {this.MyInvocation.InvocationName}");
-            if (MyInvocation.MyCommand.Name.ToLower() != MyInvocation.InvocationName.ToLower())
-            {
-                var attribute = Attribute.GetCustomAttribute(this.GetType(), typeof(WriteAliasWarningAttribute));
-                if (attribute != null)
-                {
-                    var warningAttribute = attribute as WriteAliasWarningAttribute;
-                    if (!string.IsNullOrEmpty(warningAttribute?.DeprecationMessage))
-                    {
-                        WriteWarning(warningAttribute.DeprecationMessage);
-                    }
-                }
-            }
-            // if (PnPConnection.Current == null)
-            // {
-            //     if (Settings.Current.LastUserTenant != null)
-            //     {
-            //         var clientid = PnPConnection.GetCacheClientId(Settings.Current.LastUserTenant);
-            //         if (clientid != null)
-            //         {
-            //             var  cancellationTokenSource = new CancellationTokenSource();
-            //             PnPConnection.Current = PnPConnection.CreateWithInteractiveLogin(new Uri(Settings.Current.LastUserTenant.ToLower()), clientid, null, Framework.AzureEnvironment.Production, cancellationTokenSource, false, null, false, false, Host);
-            //         }
 
-            //     }
-            // }
-        }
-
-        protected override void EndProcessing()
-        {
-            base.EndProcessing();
+            CheckForDeprecationAttributes();
         }
 
         /// <summary>
-        /// Checks if a parameter with the provided name has been provided in the execution command
+        /// Executes the cmdlet. This is the place to do the actual work of the cmdlet.
         /// </summary>
-        /// <param name="parameterName">Name of the parameter to validate if it has been provided in the execution command</param>
-        /// <returns>True if a parameter with the provided name is present, false if it is not</returns>
-        public bool ParameterSpecified(string parameterName)
-        {
-            return MyInvocation.BoundParameters.ContainsKey(parameterName);
-        }
-
-        protected string ErrorActionSetting
-        {
-            get
-            {
-                if (MyInvocation.BoundParameters.TryGetValue("ErrorAction", out object result))
-                    return result.ToString() ?? "";
-                else
-                    return SessionState.PSVariable.GetValue("ErrorActionPreference")?.ToString() ?? "";
-            }
-        }
-
         protected virtual void ExecuteCmdlet()
         { }
 
+        /// <summary>
+        /// Triggered for the execution of the cmdlet. Use ExecuteCmdlet() to do the actual work of the cmdlet.
+        /// </summary>
         protected override void ProcessRecord()
         {
             try
@@ -95,14 +61,116 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
+        /// <summary>
+        /// Triggered when the cmdlet is done executing. This is the place to do any cleanup or finalization work.
+        /// </summary>
+        protected override void EndProcessing()
+        {
+            base.EndProcessing();
+            LogDebug("Cmdlet execution done");
+        }
+
+        /// <summary>
+        /// Triggered when the cmdlet is stopped
+        /// </summary>
         protected override void StopProcessing()
         {
             base.StopProcessing();
         }
 
-        internal void WriteError(Exception exception, ErrorCategory errorCategory, object target = null)
+        #endregion
+
+        #region Helper methods
+
+        protected string ErrorActionSetting
         {
-            WriteError(new ErrorRecord(exception, string.Empty, errorCategory, target));
+            get
+            {
+                if (MyInvocation.BoundParameters.TryGetValue("ErrorAction", out object result))
+                    return result.ToString() ?? "";
+                else
+                    return SessionState.PSVariable.GetValue("ErrorActionPreference")?.ToString() ?? "";
+            }
         }
+
+        /// <summary>
+        /// Checks if deprecation attribute is present on the cmdlet and if so, writes a warning message to the console to notify the user to change their script to use the new cmdlet name.
+        /// </summary>
+        private void CheckForDeprecationAttributes()
+        {
+            if (MyInvocation.MyCommand.Name.ToLower() != MyInvocation.InvocationName.ToLower())
+            {
+                var attribute = Attribute.GetCustomAttribute(GetType(), typeof(WriteAliasWarningAttribute));
+                if (attribute != null)
+                {
+                    var warningAttribute = attribute as WriteAliasWarningAttribute;
+                    if (!string.IsNullOrEmpty(warningAttribute?.DeprecationMessage))
+                    {
+                        WriteWarning(warningAttribute.DeprecationMessage);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Checks if a parameter with the provided name has been provided in the execution command
+        /// </summary>
+        /// <param name="parameterName">Name of the parameter to validate if it has been provided in the execution command</param>
+        /// <returns>True if a parameter with the provided name is present, false if it is not</returns>
+        public bool ParameterSpecified(string parameterName)
+        {
+            return MyInvocation.BoundParameters.ContainsKey(parameterName);
+        }
+
+        #endregion
+
+        #region Logging
+
+        /// <summary>
+        /// Allows logging an error
+        /// </summary>
+        /// <param name="exception">The exception to log as an error</param>
+        internal void WriteError(Exception exception)
+        {
+            WriteError(exception.Message);
+        }
+
+        /// <summary>
+        /// Allows logging an error
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        internal void WriteError(string message)
+        {
+            Utilities.Logging.LoggingUtility.Error(this, message, correlationId: CorrelationId);
+        }
+
+        /// <summary>
+        /// Allows logging a debug message
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        internal void LogDebug(string message)
+        {
+            Utilities.Logging.LoggingUtility.Debug(this, message, correlationId: CorrelationId);
+        }
+
+        /// <summary>
+        /// Allows logging a warning
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        internal void LogWarning(string message)
+        {
+            Utilities.Logging.LoggingUtility.Warning(this, message, correlationId: CorrelationId);
+        }
+
+        /// <summary>
+        /// Allows logging an informational message
+        /// </summary>
+        /// <param name="message">The message to log</param>
+        internal void LogInformational(string message)
+        {
+            Utilities.Logging.LoggingUtility.Info(this, message, correlationId: CorrelationId);
+        }
+        
+        #endregion
     }
 }

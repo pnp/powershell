@@ -1,4 +1,5 @@
 ﻿using PnP.Framework.Provisioning.Providers;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System.IO;
 using System.Management.Automation;
@@ -6,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommunications.Read, "PnPSiteTemplate", DefaultParameterSetName = ParameterSet_PATH)]
-    public class ReadSiteTemplate : PSCmdlet
+    public class ReadSiteTemplate : BasePSCmdlet
     {
         const string ParameterSet_STREAM = "By Stream";
         const string ParameterSet_PATH = "By Path";

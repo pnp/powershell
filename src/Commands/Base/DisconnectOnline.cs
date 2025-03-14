@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommunications.Disconnect, "PnPOnline")]
     [OutputType(typeof(void))]
-    public class DisconnectOnline : PSCmdlet
+    public class DisconnectOnline : BasePSCmdlet
     {
 
         [Parameter(Mandatory = false)]

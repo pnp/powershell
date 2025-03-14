@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureCertificate", DefaultParameterSetName = "SELF")]
     [OutputType(typeof(Model.AzureCertificate))]
-    public class GetPnPAdalCertificate : PSCmdlet
+    public class GetPnPAzureCertificate : BasePSCmdlet
     {
         [Parameter(Mandatory = true)]
         [Alias("CertificatePath")]

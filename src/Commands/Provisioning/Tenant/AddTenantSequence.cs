@@ -1,4 +1,5 @@
 ﻿using PnP.Framework.Provisioning.Model;
+using PnP.PowerShell.Commands.Base;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -6,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.Add, "PnPTenantSequence")]
-    public class AddTenantSequence : PSCmdlet
+    public class AddTenantSequence : BasePSCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public ProvisioningHierarchy Template;

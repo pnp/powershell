@@ -4,7 +4,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPStoredCredential")]
     [OutputType(typeof(PSCredential))]
-    public class GetStoredCredential : PSCmdlet
+    public class GetStoredCredential : BasePSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Name;

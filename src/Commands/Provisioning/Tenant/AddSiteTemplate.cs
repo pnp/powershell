@@ -1,4 +1,5 @@
 ﻿using PnP.Framework.Provisioning.Model;
+using PnP.PowerShell.Commands.Base;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -6,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.Add, "PnPSiteTemplate")]
-    public class AddSiteTemplate : PSCmdlet
+    public class AddSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true)]
         public ProvisioningTemplate SiteTemplate;

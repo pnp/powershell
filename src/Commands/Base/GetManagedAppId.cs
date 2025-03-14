@@ -5,7 +5,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPManagedAppId")]
     [OutputType(typeof(PSCredential))]
-    public class GetManagedAppId : PSCmdlet
+    public class GetManagedAppId : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Url;

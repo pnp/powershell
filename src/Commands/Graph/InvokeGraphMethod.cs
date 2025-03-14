@@ -109,7 +109,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch (Exception ex)
             {
-                WriteError(ex, ErrorCategory.WriteError);
+                WriteError(ex);
             }
         }
 

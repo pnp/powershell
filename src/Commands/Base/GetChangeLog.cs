@@ -1,12 +1,13 @@
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPChangeLog", DefaultParameterSetName = ParameterSet_SpecificVersion)]
     [OutputType(typeof(string))]
-    public partial class GetChangeLog : PSCmdlet
+    public partial class GetChangeLog : BasePSCmdlet
     {
         private const string ParameterSet_Nightly = "Current nightly";
         private const string ParameterSet_SpecificVersion = "Specific version";

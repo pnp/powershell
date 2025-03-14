@@ -3,11 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPTimeZoneId")]
-    public class GetTimeZoneId : PSCmdlet
+    public class GetTimeZoneId : BasePSCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]
         public string Match;
