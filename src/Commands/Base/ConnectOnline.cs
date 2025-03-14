@@ -407,12 +407,12 @@ namespace PnP.PowerShell.Commands.Base
                 try
                 {
                     newConnection.Context.ExecuteQueryRetry();
-                    LogDebug($"Site at {Url} exists");
+                    LogInformational($"Site at {Url} exists");
                 }
                 catch (System.Net.WebException e) when (e.Message.Contains("404"))
                 {
-                    LogDebug($"Site at {Url} does not exist");
-                    throw new PSInvalidOperationException($"The specified site {Url} does not exist", e);
+                    LogError($"Site at {Url} does not exist");
+                    //throw new PSInvalidOperationException($"The specified site {Url} does not exist", e);
                 }
                 catch (TargetInvocationException tex)
                 {

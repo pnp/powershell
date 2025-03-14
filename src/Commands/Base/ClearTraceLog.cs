@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (Trace.Listeners[LogStreamListener.DefaultListenerName] is not LogStreamListener logStreamListener)
             {
-                LogWarning("Log stream listener named {LogStreamListener.DefaultLogStreamListenerName} not found. No entries cleared.");
+                LogWarning($"Log stream listener named {LogStreamListener.DefaultListenerName} not found. No entries cleared.");
             }
             else
             {

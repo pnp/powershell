@@ -20,7 +20,7 @@ Stop-PnPTraceLog
 
 
 ## DESCRIPTION
-Stops .NET tracelogging. Many cmdlets output detailed trace information when executed. Turn on the trace log with Start-PnPTraceLog, optionally specify the level. By default the level is set to 'Information', but you will receive more detail by setting the level to 'Debug'.
+Stops PnP PowerShell tracelogging. Turn on the trace log with [Start-PnPTraceLog](Start-PnPTraceLog.md). Look at the logged data using [Get-PnPTraceLog](Get-PnPTraceLog.md).
 
 ## EXAMPLES
 
@@ -34,4 +34,3 @@ This turns off trace logging
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
