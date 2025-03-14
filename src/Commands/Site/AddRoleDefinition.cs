@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands.Site
             }
             else
             {
-                WriteWarning($"Unable to add Role Definition as there is an existing role definition with the same name. Will be skipped.");
+                LogWarning($"Unable to add Role Definition as there is an existing role definition with the same name. Will be skipped.");
             }
         }
     }

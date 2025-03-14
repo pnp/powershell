@@ -125,7 +125,7 @@ namespace PnP.PowerShell.Commands.Files
                 {
                     if(ParameterSpecified(nameof(ExcludeSystemFolders)))
                     {
-                        WriteWarning($"The {nameof(ExcludeSystemFolders)} parameter is only supported when retrieving a specific folder. It will be ignored.");
+                        LogWarning($"The {nameof(ExcludeSystemFolders)} parameter is only supported when retrieving a specific folder. It will be ignored.");
                         ExcludeSystemFolders = false;
                     }
                     targetFolder = CurrentWeb.EnsureProperty(w => w.RootFolder);
@@ -162,7 +162,7 @@ namespace PnP.PowerShell.Commands.Files
                 {
                     var relativeUrl = folder.ServerRelativeUrl.Remove(0, CurrentWeb.ServerRelativeUrl.Length);
 
-                    WriteVerbose($"Processing folder {relativeUrl}");
+                    LogDebug($"Processing folder {relativeUrl}");
 
                     var subFolderContents = GetContentsByUrl(relativeUrl);
                     folderContent = folderContent.Concat(subFolderContents);

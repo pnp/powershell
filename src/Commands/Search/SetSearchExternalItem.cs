@@ -74,27 +74,27 @@ namespace PnP.PowerShell.Commands.Search
                 }
             };
 
-            WriteVerbose($"Adding {(ParameterSpecified(nameof(GrantUsers)) ? GrantUsers.Length : 0)} Grant User ACLs");
+            LogDebug($"Adding {(ParameterSpecified(nameof(GrantUsers)) ? GrantUsers.Length : 0)} Grant User ACLs");
             bodyContent.Acls.AddRange(GetUserAcls(GrantUsers, Enums.SearchExternalItemAclAccessType.Grant));
 
-            WriteVerbose($"Adding {(ParameterSpecified(nameof(DenyUsers)) ? DenyUsers.Length : 0)} Deny User ACLs");
+            LogDebug($"Adding {(ParameterSpecified(nameof(DenyUsers)) ? DenyUsers.Length : 0)} Deny User ACLs");
             bodyContent.Acls.AddRange(GetUserAcls(DenyUsers, Enums.SearchExternalItemAclAccessType.Deny));
 
-            WriteVerbose($"Adding {(ParameterSpecified(nameof(GrantGroups)) ? GrantGroups.Length : 0)} Grant Group ACLs");
+            LogDebug($"Adding {(ParameterSpecified(nameof(GrantGroups)) ? GrantGroups.Length : 0)} Grant Group ACLs");
             bodyContent.Acls.AddRange(GetGroupAcls(GrantGroups, Enums.SearchExternalItemAclAccessType.Grant));
 
-            WriteVerbose($"Adding {(ParameterSpecified(nameof(DenyGroups)) ? DenyGroups.Length : 0)} Deny Group ACLs");
+            LogDebug($"Adding {(ParameterSpecified(nameof(DenyGroups)) ? DenyGroups.Length : 0)} Deny Group ACLs");
             bodyContent.Acls.AddRange(GetGroupAcls(DenyGroups, Enums.SearchExternalItemAclAccessType.Deny));
 
-            WriteVerbose($"Adding {(ParameterSpecified(nameof(GrantExternalGroups)) ? GrantExternalGroups.Length : 0)} Grant External Group ACLs");
+            LogDebug($"Adding {(ParameterSpecified(nameof(GrantExternalGroups)) ? GrantExternalGroups.Length : 0)} Grant External Group ACLs");
             bodyContent.Acls.AddRange(GetExternalGroupAcls(GrantExternalGroups, Enums.SearchExternalItemAclAccessType.Grant));
 
-            WriteVerbose($"Adding {(ParameterSpecified(nameof(DenyExternalGroups)) ? DenyExternalGroups.Length : 0)} Deny External Group ACLs");
+            LogDebug($"Adding {(ParameterSpecified(nameof(DenyExternalGroups)) ? DenyExternalGroups.Length : 0)} Deny External Group ACLs");
             bodyContent.Acls.AddRange(GetExternalGroupAcls(DenyExternalGroups, Enums.SearchExternalItemAclAccessType.Deny));
 
             if (GrantEveryone.ToBool())
             {
-                WriteVerbose($"Adding Grant Everyone ACL");
+                LogDebug($"Adding Grant Everyone ACL");
                 bodyContent.Acls.Add(new Model.Graph.MicrosoftSearch.ExternalItemAcl
                 {
                     Type = Enums.SearchExternalItemAclType.Everyone,
@@ -104,7 +104,7 @@ namespace PnP.PowerShell.Commands.Search
             }
 
             var jsonContent = JsonContent.Create(bodyContent);
-            WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
+            LogDebug($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
             var externalConnectionId = ConnectionId.GetExternalConnectionId(GraphRequestHelper) ?? throw new PSArgumentException("No valid external connection specified", nameof(ConnectionId));
             var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}/items/{ItemId}";

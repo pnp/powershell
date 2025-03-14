@@ -105,7 +105,7 @@ namespace PnP.PowerShell.Commands.Syntex
             }
             else
             {
-                WriteWarning("The connected site is not a Syntex Content Center site");
+                LogWarning("The connected site is not a Syntex Content Center site");
             }
         }
     }

@@ -13,11 +13,11 @@ namespace PnP.PowerShell.Commands.Branding
         {
             if(RootFolderRelativeUrl.StartsWith("/"))
             {
-                WriteVerbose($"Removing leading / from {nameof(RootFolderRelativeUrl)}");
+                LogDebug($"Removing leading / from {nameof(RootFolderRelativeUrl)}");
                 RootFolderRelativeUrl = RootFolderRelativeUrl.TrimStart('/');
             }
 
-            WriteVerbose($"Setting homepage to {RootFolderRelativeUrl}");
+            LogDebug($"Setting homepage to {RootFolderRelativeUrl}");
             CurrentWeb.SetHomePage(RootFolderRelativeUrl);
         }
     }

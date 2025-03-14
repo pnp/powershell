@@ -33,19 +33,19 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             if (Force || ShouldContinue($"Remove flow with name '{flowName}'?", Properties.Resources.Confirm))
             {
-                WriteVerbose($"Attempting to delete Flow with name {flowName}");
+                LogDebug($"Attempting to delete Flow with name {flowName}");
                 if (ThrowExceptionIfPowerAutomateNotFound)
                 {
                     try
                     {
                         // Had to add this because DELETE doesn't throw error if invalid Flow Id or Name is provided
-                        WriteVerbose($"Retrieving Flow with name {flowName} in environment ${environmentName}");
+                        LogDebug($"Retrieving Flow with name {flowName} in environment ${environmentName}");
                         var result = ArmRequestHelper.Get<Model.PowerPlatform.PowerAutomate.Flow>($"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01");
                         if (result != null)
                         {
                             ArmRequestHelper.Delete($"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01");
                             //RestHelper.Delete(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01", AccessToken);
-                            WriteVerbose($"Flow with name {flowName} deleted");
+                            LogDebug($"Flow with name {flowName} deleted");
                         }
                     }
                     catch
@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 else
                 {
                     ArmRequestHelper.Delete($"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01");
-                    WriteVerbose($"Flow with name {flowName} deleted");
+                    LogDebug($"Flow with name {flowName} deleted");
                 }
             }
         }

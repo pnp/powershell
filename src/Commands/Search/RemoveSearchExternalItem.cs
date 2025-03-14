@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Search
             try
             {
                 var response = GraphRequestHelper.Delete($"beta/external/connections/{externalConnectionId}/items/{ItemId}");
-                WriteVerbose($"External item with ID '{ItemId}' successfully removed from external connection '{externalConnectionId}'");
+                LogDebug($"External item with ID '{ItemId}' successfully removed from external connection '{externalConnectionId}'");
             }
             catch (PSInvalidOperationException ex)
             {

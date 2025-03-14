@@ -25,17 +25,17 @@ namespace PnP.PowerShell.Commands.Site
                     {
                         roleDefinition.DeleteObject();
                         ClientContext.ExecuteQueryRetry();
-                        WriteVerbose($@"Removed Role Definition ""{roleDefinition.Name}""");
+                        LogDebug($@"Removed Role Definition ""{roleDefinition.Name}""");
                     }
                 }
                 catch (ServerException e)
                 {
-                    WriteWarning($@"Exception occurred while trying to remove the Role Definition: ""{e.Message}"". Will be skipped.");
+                    LogWarning($@"Exception occurred while trying to remove the Role Definition: ""{e.Message}"". Will be skipped.");
                 }
             }
             else
             {
-                WriteWarning($"Unable to remove Role Definition as it wasn't found. Will be skipped.");
+                LogWarning($"Unable to remove Role Definition as it wasn't found. Will be skipped.");
             }
         }
     }

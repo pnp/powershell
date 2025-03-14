@@ -105,7 +105,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     case ProvisioningMessageType.Warning:
                         {
-                            WriteWarning(message);
+                            LogWarning(message);
                             break;
                         }
                     case ProvisioningMessageType.Progress:

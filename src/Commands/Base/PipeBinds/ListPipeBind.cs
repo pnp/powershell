@@ -194,17 +194,17 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return GetList(selectedWeb, retrievals) ?? throw new PSArgumentException(NoListMessage, paramName);
         }
 
-        internal PnPCore.IList GetListOrThrow(string paramName, PnP.Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] retrievals)
+        internal PnPCore.IList GetListOrThrow(string paramName, Core.Services.PnPContext context, params System.Linq.Expressions.Expression<Func<PnPCore.IList, object>>[] retrievals)
         {
             return GetList(context, retrievals) ?? throw new PSArgumentException(NoListMessage, paramName);
         }
 
-        internal List GetListOrWarn(Cmdlet cmdlet, Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
+        internal List GetListOrWarn(BasePSCmdlet cmdlet, Web web, params System.Linq.Expressions.Expression<Func<List, object>>[] retrievals)
         {
             var list = GetList(web, retrievals);
             if (list is null)
             {
-                cmdlet.WriteWarning(NoListMessage);
+                cmdlet.LogWarning(NoListMessage);
             }
 
             return list;

@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
                 catch (WebException exc)
                 {
-                    WriteWarning($"Can't add file from url {serverRelativeUrl} : {exc}");
+                    LogWarning($"Can't add file from url {serverRelativeUrl} : {exc}");
                 }
             }
             else

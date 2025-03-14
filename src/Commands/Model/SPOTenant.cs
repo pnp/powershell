@@ -4,6 +4,7 @@ using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Administration;
 using Microsoft.SharePoint.Client.Sharing;
 using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -317,7 +318,7 @@ namespace PnP.PowerShell.Commands.Model
 
         #endregion
 
-        public SPOTenant(Tenant tenant, ClientContext clientContext, Cmdlet cmdlet)
+        public SPOTenant(Tenant tenant, ClientContext clientContext, BasePSCmdlet cmdlet)
         {
             // Loop through all properties defined in this class and load the corresponding property from the Tenant object
             var properties = GetType().GetProperties();
@@ -345,7 +346,7 @@ namespace PnP.PowerShell.Commands.Model
                 catch(Exception e)
                 {
                     failedProperties++;
-                    cmdlet.WriteVerbose($"Property {propertyName} not loaded due to error '{e.Message}'");
+                    cmdlet.LogDebug($"Property {propertyName} not loaded due to error '{e.Message}'");
                 }
             }
 
@@ -362,7 +363,7 @@ namespace PnP.PowerShell.Commands.Model
             catch(Exception e)
             {
                 failedProperties++;
-                cmdlet.WriteVerbose($"Property AllowFilesWithKeepLabelToBeDeletedSPO and/or AllowFilesWithKeepLabelToBeDeletedODB not loaded due to error '{e.Message}'");
+                cmdlet.LogDebug($"Property AllowFilesWithKeepLabelToBeDeletedSPO and/or AllowFilesWithKeepLabelToBeDeletedODB not loaded due to error '{e.Message}'");
             }
 
             // DefaultOneDriveInformationBarrierMode requires manual handling as it cannot be parsed directly from the Tenant object value
@@ -373,13 +374,13 @@ namespace PnP.PowerShell.Commands.Model
             catch(Exception e)
             {
                 failedProperties++;
-                cmdlet.WriteVerbose($"Property DefaultOneDriveInformationBarrierMode not loaded due to error '{e.Message}'");
+                cmdlet.LogDebug($"Property DefaultOneDriveInformationBarrierMode not loaded due to error '{e.Message}'");
             }
 
             // If one or more properties failed to load, show a warning
             if(failedProperties > 0)
             {
-                cmdlet.WriteWarning($"Failed to load {(failedProperties != 1 ? $"{failedProperties} properties" : "one property")}. Use -Verbose to see the details.");
+                cmdlet.LogWarning($"Failed to load {(failedProperties != 1 ? $"{failedProperties} properties" : "one property")}. Use -Verbose to see the details.");
             }
         }
     }

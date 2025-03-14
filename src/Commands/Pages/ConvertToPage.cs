@@ -219,7 +219,7 @@ namespace PnP.PowerShell.Commands.Pages
             if (string.IsNullOrEmpty(this.WebPartMappingFile))
             {
                 webPartMappingModel = PageTransformator.LoadDefaultWebPartMapping();
-                this.WriteVerbose("Using embedded webpartmapping file. Use Export-PnPClientSidePageMapping to get that file in case you want to base your version of the embedded version.");
+                this.LogDebug("Using embedded webpartmapping file. Use Export-PnPClientSidePageMapping to get that file in case you want to base your version of the embedded version.");
             }
 
             // Validate webpartmappingfile

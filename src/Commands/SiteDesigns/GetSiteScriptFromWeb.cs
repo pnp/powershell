@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands
                 Url = Connection.Url;
             }
             
-            WriteVerbose($"Creating site script from web {Url}");
+            LogDebug($"Creating site script from web {Url}");
 
             if (IncludeAllLists || IncludeAll)
             {
@@ -71,10 +71,10 @@ namespace PnP.PowerShell.Commands
 
                 Lists = targetWebContext.Web.Lists.Select(l => System.Text.RegularExpressions.Regex.Replace(l.RootFolder.ServerRelativeUrl, @"\/(?:sites|teams)\/.*?\/", string.Empty)).ToArray();
 
-                WriteVerbose($"Including all custom lists and libraries in the site script... {Lists.Length} found");
+                LogDebug($"Including all custom lists and libraries in the site script... {Lists.Length} found");
                 foreach (var list in Lists)
                 {
-                    WriteVerbose($"- {list}");
+                    LogDebug($"- {list}");
                 }
             }
             

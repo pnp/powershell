@@ -194,14 +194,14 @@ namespace PnP.PowerShell.Commands.Search
                         {
                             var waitTime = 5 * (iterator + 1);
 
-                            WriteVerbose($"Search operation failed with exception {ex.Message.TrimEnd('.')}. Attempt {iterator + 1} out of {RetryCount}. Retrying in {waitTime} seconds.");
+                            LogDebug($"Search operation failed with exception {ex.Message.TrimEnd('.')}. Attempt {iterator + 1} out of {RetryCount}. Retrying in {waitTime} seconds.");
 
                             Thread.Sleep(TimeSpan.FromSeconds(waitTime));
                             continue;
                         }
                         else if (iterator == RetryCount - 1)
                         {
-                            WriteVerbose($"Search operation failed with exception {ex.Message.TrimEnd('.')}. Attempt {iterator + 1} out of {RetryCount}. Done retrying.");
+                            LogDebug($"Search operation failed with exception {ex.Message.TrimEnd('.')}. Attempt {iterator + 1} out of {RetryCount}. Done retrying.");
                             continue;
                         }
                         else

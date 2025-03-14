@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands
 
                 foreach (var design in designs)
                 {
-                    WriteVerbose($"Invoking list design '{design.Title}' ({design.Id})");
+                    LogDebug($"Invoking list design '{design.Title}' ({design.Id})");
 
                     var results = tenant.ApplyListDesign(webUrl, design.Id);
                     tenantContext.Load(results);

@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             var powerAppsUrl = PowerPlatformUtility.GetPowerAppsEndpoint(Connection.AzureEnvironment);
             var appName = Identity.GetName();
 
-            WriteVerbose($"Setting specific PowerApp with the provided name '{appName}' consent within the environment '{environmentName}'");
+            LogDebug($"Setting specific PowerApp with the provided name '{appName}' consent within the environment '{environmentName}'");
 
             var postData = new
             {

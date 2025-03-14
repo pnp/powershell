@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Model
         internal static AccessTokenPermissionValidationResponse[] EvaluatePermissions(Type cmdletType, string accessToken, Enums.ResourceTypeName audience, Enums.IdType tokenType)
         {
             Log.Debug("AccessTokenPermissionValidationResponse",$"Evaluating {tokenType.GetDescription()} permissions in access token for audience {audience.GetDescription()}");
-            //cmdlet.WriteVerbose($"Evaluating {tokenType.GetDescription()} permissions in access token for audience {audience.GetDescription()}");
+            //cmdlet.LogDebug($"Evaluating {tokenType.GetDescription()} permissions in access token for audience {audience.GetDescription()}");
 
             // Retrieve the scopes we have in our AccessToken
             var scopes = TokenHandler.ReturnScopes(accessToken);

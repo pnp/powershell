@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Apps
                 throw new PSArgumentException("Service principal not found", nameof(Principal));
             }
 
-            WriteVerbose($"Requesting currently assigned app roles to service principal {principal.DisplayName}");
+            LogDebug($"Requesting currently assigned app roles to service principal {principal.DisplayName}");
 
             var appRoleAssignments = ServicePrincipalUtility.GetServicePrincipalAppRoleAssignmentsByServicePrincipalObjectId(GraphRequestHelper, principal.Id);
             if (ParameterSpecified(nameof(Identity)))

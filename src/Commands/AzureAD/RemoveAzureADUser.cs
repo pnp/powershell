@@ -19,28 +19,28 @@ namespace PnP.PowerShell.Commands.Graph
 
         protected override void ExecuteCmdlet()
         {
-            WriteVerbose($"Looking up user provided through the {nameof(Identity)} parameter");
+            LogDebug($"Looking up user provided through the {nameof(Identity)} parameter");
             User user = Identity.GetUser(AccessToken, Connection.AzureEnvironment);
 
             if (user == null)
             {
-                WriteWarning($"User provided through the {nameof(Identity)} parameter could not be found");
+                LogWarning($"User provided through the {nameof(Identity)} parameter could not be found");
                 return;
             }
 
             if (WhatIf.ToBool())
             {
-                WriteVerbose($"Would delete user with Id {user.Id} if {nameof(WhatIf)} was not present");
+                LogDebug($"Would delete user with Id {user.Id} if {nameof(WhatIf)} was not present");
                 return;
             }
 
-            WriteVerbose($"Deleting user with Id {user.Id}");
+            LogDebug($"Deleting user with Id {user.Id}");
 
             var graphResult = GraphRequestHelper.Delete($"v1.0/users/{user.Id}");
 
             if (graphResult.StatusCode == System.Net.HttpStatusCode.NoContent)
             {
-                WriteVerbose("User deleted successfully");
+                LogDebug("User deleted successfully");
             }
             else
             {

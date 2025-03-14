@@ -84,30 +84,30 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             => GetId(list)
             ?? throw new PSArgumentException(NotFoundMessage(list), paramName);
 
-        public string GetIdOrWarn(Cmdlet cmdlet, Web web, bool searchInSiteHierarchy = true)
+        public string GetIdOrWarn(BasePSCmdlet cmdlet, Web web, bool searchInSiteHierarchy = true)
         {
             var id = GetId(web, searchInSiteHierarchy);
             if (id is null)
-                cmdlet.WriteWarning(NotFoundMessage(searchInSiteHierarchy));
+                cmdlet.LogWarning(NotFoundMessage(searchInSiteHierarchy));
 
             return id;
         }
 
-        public string GetIdOrWarn(Cmdlet cmdlet, PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+        public string GetIdOrWarn(BasePSCmdlet cmdlet, Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
         {
             var id = GetId(context, searchInSiteHierarchy);
             if (id is null)
-                cmdlet.WriteWarning(NotFoundMessage(searchInSiteHierarchy));
+                cmdlet.LogWarning(NotFoundMessage(searchInSiteHierarchy));
 
             return id;
         }
 
-        public string GetIdOrWarn(Cmdlet cmdlet, List list)
+        public string GetIdOrWarn(BasePSCmdlet cmdlet, List list)
         {
             var id = GetId(list);
             if (id is null)
             {
-                cmdlet.WriteWarning(NotFoundMessage(list));
+                cmdlet.LogWarning(NotFoundMessage(list));
             }
 
             return id;
@@ -129,7 +129,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return web.GetContentTypeByName(_idOrName, searchInSiteHierarchy);
         }
 
-        internal PnPCore.IContentType GetContentType(PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+        internal PnPCore.IContentType GetContentType(Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
         {
             if (_coreContentType is object)
             {
@@ -278,47 +278,47 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             return ct;
         }
 
-        internal ContentType GetContentTypeOrWarn(Cmdlet cmdlet, Web web, bool searchInSiteHierarchy = true)
+        internal ContentType GetContentTypeOrWarn(BasePSCmdlet cmdlet, Web web, bool searchInSiteHierarchy = true)
         {
             var ct = GetContentType(web, searchInSiteHierarchy);
             if (ct is null)
-                cmdlet.WriteWarning(NotFoundMessage(searchInSiteHierarchy));
+                cmdlet.LogWarning(NotFoundMessage(searchInSiteHierarchy));
 
             return ct;
         }
 
-        internal PnPCore.IContentType GetContentTypeOrWarn(Cmdlet cmdlet, PnP.Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
+        internal PnPCore.IContentType GetContentTypeOrWarn(BasePSCmdlet cmdlet, Core.Services.PnPContext context, bool searchInSiteHierarchy = true)
         {
             var ct = GetContentType(context, searchInSiteHierarchy);
             if (ct is null)
-                cmdlet.WriteWarning(NotFoundMessage(searchInSiteHierarchy));
+                cmdlet.LogWarning(NotFoundMessage(searchInSiteHierarchy));
 
             return ct;
         }
 
-        internal ContentType GetContentTypeOrWarn(Cmdlet cmdlet, List list)
+        internal ContentType GetContentTypeOrWarn(BasePSCmdlet cmdlet, List list)
         {
             var ct = GetContentType(list);
             if (ct is null)
-                cmdlet.WriteWarning(NotFoundMessage(list));
+                cmdlet.LogWarning(NotFoundMessage(list));
 
             return ct;
         }
 
-        internal PnPCore.IContentType GetContentTypeOrWarn(Cmdlet cmdlet, PnPCore.IList list)
+        internal PnPCore.IContentType GetContentTypeOrWarn(BasePSCmdlet cmdlet, PnPCore.IList list)
         {
             var ct = GetContentType(list);
             if (ct is null)
-                cmdlet.WriteWarning(NotFoundMessage(list));
+                cmdlet.LogWarning(NotFoundMessage(list));
 
             return ct;
         }
 
-        internal PnP.Core.Model.SharePoint.IContentType GetContentTypeOrWarn(Cmdlet cmdlet, PnPBatch batch, PnP.Core.Model.SharePoint.IList list)
+        internal PnP.Core.Model.SharePoint.IContentType GetContentTypeOrWarn(BasePSCmdlet cmdlet, PnPBatch batch, PnP.Core.Model.SharePoint.IList list)
         {
             var ct = GetContentType(batch, list);
             if (ct is null)
-                cmdlet.WriteWarning(NotFoundMessage(list));
+                cmdlet.LogWarning(NotFoundMessage(list));
 
             return ct;
         }

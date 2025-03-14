@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private void ProcessLogFromLogStream()
         {
-            WriteVerbose("Retrieving log entries from log stream");
+            LogDebug("Retrieving log entries from log stream");
             var logStreamListener = Trace.Listeners[LogStreamListener.DefaultListenerName] as LogStreamListener ?? throw new PSArgumentException($"Log stream listener {LogStreamListener.DefaultListenerName} not found");
 
             foreach (var entry in logStreamListener.Entries)
@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (File.Exists(Path))
             {
-                WriteVerbose($"Retrieving log entries from file {Path}");
+                LogDebug($"Retrieving log entries from file {Path}");
                 var lines = File.ReadAllLines(Path);
                 foreach (var line in lines)
                 {

@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             {
                 var appName = Identity.GetName();
 
-                WriteVerbose($"Retrieving specific PowerApp with the provided name '{appName}' within the environment '{environmentName}'");
+                LogDebug($"Retrieving specific PowerApp with the provided name '{appName}' within the environment '{environmentName}'");
 
                 var result = PowerAppsRequestHelper.Get<Model.PowerPlatform.PowerApp.PowerApp>($"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}?api-version=2016-11-01");
                  
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
             }
             else
             {
-                WriteVerbose($"Retrieving all PowerApps within environment '{environmentName}'");
+                LogDebug($"Retrieving all PowerApps within environment '{environmentName}'");
 
                 var apps = PowerAppsRequestHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerApp>($"{powerAppsUrl}/providers/Microsoft.PowerApps/apps?api-version=2016-11-01&$filter=environment eq '{environmentName}'");
                 WriteObject(apps, true);

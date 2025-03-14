@@ -167,7 +167,7 @@ namespace PnP.PowerShell.Commands.Branding
             }
             else
             {
-                WriteWarning("Something went wrong while trying to set AudienceIDs or Open in new tab property");
+                LogWarning("Something went wrong while trying to set AudienceIDs or Open in new tab property");
             }
             
 

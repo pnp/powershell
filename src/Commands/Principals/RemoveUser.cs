@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Principals
             {
                 if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveUser, user.Id, user.LoginName, user.Email), Properties.Resources.Confirm))
                 {
-                    WriteVerbose($"Removing user {user.Id} {user.LoginName} {user.Email}");
+                    LogDebug($"Removing user {user.Id} {user.LoginName} {user.Email}");
                     ClientContext.Web.SiteUsers.Remove(user);
                     ClientContext.ExecuteQueryRetry();
                 }

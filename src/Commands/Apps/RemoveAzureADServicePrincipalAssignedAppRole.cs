@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Apps
                     throw new PSArgumentException("Service principal not found", nameof(Principal));
                 }
 
-                WriteVerbose($"Removing currently assigned app roles from service principal {principal.DisplayName} ({principal.Id})");
+                LogDebug($"Removing currently assigned app roles from service principal {principal.DisplayName} ({principal.Id})");
 
                 if (ParameterSetName == ParameterSet_BYASSIGNEDAPPROLE)
                 {

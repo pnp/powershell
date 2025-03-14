@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                WriteWarning("List is not a document library");
+                LogWarning("List is not a document library");
             }
         }
     }

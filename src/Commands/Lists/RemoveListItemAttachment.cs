@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if(files.Length == 0)
             {
-                WriteWarning($"No attachments found on the list item that can be {removeText.ToLower()}d");
+                LogWarning($"No attachments found on the list item that can be {removeText.ToLower()}d");
                 return;
             }
             
@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                 if(fileToDelete == null)
                 {
-                    WriteWarning($"No attachment found with the name '{FileName}'");
+                    LogWarning($"No attachment found with the name '{FileName}'");
                 }
                 else
                 {

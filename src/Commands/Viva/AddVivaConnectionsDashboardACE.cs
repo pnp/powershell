@@ -70,7 +70,7 @@ namespace PnP.PowerShell.Commands.Viva
             }
             else
             {
-                WriteWarning("Connected site is not a home site");
+                LogWarning("Connected site is not a home site");
             }
         }
     }

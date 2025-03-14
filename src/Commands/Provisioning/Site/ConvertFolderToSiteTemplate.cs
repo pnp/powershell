@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                     Folder = folder,
                     Content = File.ReadAllBytes(currentFile.FullName)
                 };
-                WriteVerbose("Adding file:" + currentFile.Name + " - " + folder);
+                LogDebug("Adding file:" + currentFile.Name + " - " + folder);
                 info.Files.Add(fileInfo);
             }
             byte[] pack = info.PackTemplate().ToArray();

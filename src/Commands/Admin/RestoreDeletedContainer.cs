@@ -18,10 +18,10 @@ namespace PnP.PowerShell.Commands.Admin
         {
             if (Force || ShouldContinue($"Restore container {Identity}?", Properties.Resources.Confirm))
                 {
-                    WriteVerbose($"Restoring container {Identity}");
+                    LogDebug($"Restoring container {Identity}");
                     Tenant.RestoreSPODeletedContainerByContainerId(Identity);
                     AdminContext.ExecuteQueryRetry();
-                    WriteVerbose($"Restored container {Identity}");
+                    LogDebug($"Restored container {Identity}");
             }
         }
     }

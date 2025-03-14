@@ -106,7 +106,7 @@ namespace PnP.PowerShell.Commands.Base
                     var warningAttribute = attribute as WriteAliasWarningAttribute;
                     if (!string.IsNullOrEmpty(warningAttribute?.DeprecationMessage))
                     {
-                        WriteWarning(warningAttribute.DeprecationMessage);
+                        LogWarning(warningAttribute.DeprecationMessage);
                     }
                 }
             }

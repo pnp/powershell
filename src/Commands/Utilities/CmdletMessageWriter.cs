@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Threading;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
     public class CmdletMessageWriter
     {
-        private PSCmdlet Cmdlet { get; set; }
+        private BasePSCmdlet Cmdlet { get; set; }
         private Queue<Message> Queue { get; set; }
         private object LockToken { get; set; }
         public bool Finished { get; set; }
-        public CmdletMessageWriter(PSCmdlet cmdlet)
+        public CmdletMessageWriter(BasePSCmdlet cmdlet)
         {
             this.Cmdlet = cmdlet;
             this.LockToken = new object();
@@ -65,7 +66,7 @@ namespace PnP.PowerShell.Commands.Utilities
             Thread.Sleep(100);
         }
 
-        public void WriteWarning(string message, bool formatted = true)
+        public void LogWarning(string message, bool formatted = true)
         {
             lock (LockToken)
             {
@@ -82,7 +83,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public void WriteVerbose(string message)
+        public void LogDebug(string message)
         {
             if (Cmdlet.MyInvocation.BoundParameters.ContainsKey("Verbose"))
             {
@@ -126,12 +127,12 @@ namespace PnP.PowerShell.Commands.Utilities
             return list;
         }
 
-        internal static void WriteFormattedWarning(PSCmdlet cmdlet, string message)
+        internal static void WriteFormattedWarning(BasePSCmdlet cmdlet, string message)
         {
             WriteFormattedMessage(cmdlet, new Message { Text = message, Type = MessageType.Warning, Formatted = true });
         }
 
-        internal static void WriteFormattedMessage(PSCmdlet cmdlet, Message message)
+        internal static void WriteFormattedMessage(BasePSCmdlet cmdlet, Message message)
         {
             if (cmdlet.Host.Name == "ConsoleHost" && cmdlet.Host.UI.RawUI.MaxWindowSize.Width > 8)
             {
@@ -170,12 +171,12 @@ namespace PnP.PowerShell.Commands.Utilities
                         }
                     case MessageType.Warning:
                         {
-                            cmdlet.WriteWarning($"{notificationColor}\n{outMessage}{resetColor}\n");
+                            cmdlet.LogWarning($"{notificationColor}\n{outMessage}{resetColor}\n");
                             break;
                         }
                     case MessageType.Verbose:
                         {
-                            cmdlet.WriteVerbose(outMessage);
+                            cmdlet.LogDebug(outMessage);
                             break;
                         }
                 }
@@ -191,12 +192,12 @@ namespace PnP.PowerShell.Commands.Utilities
                         }
                     case MessageType.Warning:
                         {
-                            cmdlet.WriteWarning(message.Text);
+                            cmdlet.LogWarning(message.Text);
                             break;
                         }
                     case MessageType.Verbose:
                         {
-                            cmdlet.WriteVerbose(message.Text);
+                            cmdlet.LogDebug(message.Text);
                             break;
                         }
                 }

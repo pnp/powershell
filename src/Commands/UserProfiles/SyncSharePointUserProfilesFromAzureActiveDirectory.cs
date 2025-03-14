@@ -47,13 +47,13 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 }
                 if(Users.Count == 0)
                 {
-                    WriteVerbose("No users have been provided");
+                    LogDebug("No users have been provided");
                     return;
                 }
 
 
                 // Users to sync have been provided
-                WriteVerbose($"Using provided user collection containing {Users.Count} user{(Users.Count != 1 ? "s": "")}");
+                LogDebug($"Using provided user collection containing {Users.Count} user{(Users.Count != 1 ? "s": "")}");
 
                 aadUsers = Users;
             }
@@ -70,12 +70,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     }
                 }
 
-                WriteVerbose("Retrieving users from Azure Active Directory");
+                LogDebug("Retrieving users from Azure Active Directory");
 
                 // Retrieve all the users from Azure Active Directory
                 aadUsers = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(GraphAccessToken, null, null, allAadPropertiesList.ToArray(), endIndex: null, azureEnvironment: Connection.AzureEnvironment);
 
-                WriteVerbose($"{aadUsers.Count} user{(aadUsers.Count != 1 ? "s have" : " has")} been retrieved from Azure Active Directory");
+                LogDebug($"{aadUsers.Count} user{(aadUsers.Count != 1 ? "s have" : " has")} been retrieved from Azure Active Directory");
 
                 if (aadUsers.Count == 0)
                 {
@@ -87,7 +87,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             var nonAdminClientContext = ClientContext.Clone(Connection.Url);
 
             // Perform the mapping and execute the sync operation
-            WriteVerbose($"Creating mapping file{(WhatIf.ToBool() ? " and" : ",")} uploading it to SharePoint Online to folder '{Folder}'{(WhatIf.ToBool() ? "" : " and executing sync job")}");
+            LogDebug($"Creating mapping file{(WhatIf.ToBool() ? " and" : ",")} uploading it to SharePoint Online to folder '{Folder}'{(WhatIf.ToBool() ? "" : " and executing sync job")}");
             var job = Utilities.SharePointUserProfileSync.SyncFromAzureActiveDirectory(nonAdminClientContext, aadUsers, IdType, UserProfilePropertyMapping, Folder, ParameterSpecified(nameof(WhatIf))).GetAwaiter().GetResult();
 
             // Ensure a sync job has been created
@@ -96,7 +96,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 throw new PSInvalidOperationException($"Failed to create sync job. Ensure you're providing users to sync and that the mapping is correct.");
             }
 
-            WriteVerbose($"Job initiated with {(job.JobId.HasValue ? $"Id {job.JobId} and ": "")}status {job.State} for file {job.SourceUri}");
+            LogDebug($"Job initiated with {(job.JobId.HasValue ? $"Id {job.JobId} and ": "")}status {job.State} for file {job.SourceUri}");
 
             // Check if we should wait with finalzing this cmdlet execution until the user profile import operation has completed
             if (Wait.ToBool() && !WhatIf.ToBool())
@@ -115,7 +115,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     ClientContext.Load(jobStatus);
                     ClientContext.ExecuteQueryRetry();
 
-                    WriteVerbose($"Current status of job {job.JobId.Value}: {jobStatus.State}");
+                    LogDebug($"Current status of job {job.JobId.Value}: {jobStatus.State}");
                 }
                 while (jobStatus.State != ImportProfilePropertiesJobState.Succeeded && jobStatus.State != ImportProfilePropertiesJobState.Error);
 

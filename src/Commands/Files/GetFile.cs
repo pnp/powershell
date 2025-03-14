@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands.Files
 
                     if (System.IO.File.Exists(fileOut) && !Force)
                     {
-                        WriteWarning($"File '{fileToDownloadName}' exists already. Use the -Force parameter to overwrite the file.");
+                        LogWarning($"File '{fileToDownloadName}' exists already. Use the -Force parameter to overwrite the file.");
                     }
                     else
                     {

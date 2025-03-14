@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands
                         }
                     }
                 }
-                WriteVerbose("Unable to acquire token for resource " + Connection.Url);
+                LogDebug("Unable to acquire token for resource " + Connection.Url);
                 return null;
             }
         }
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands
                         return TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
                     }
                 }
-                WriteVerbose("Unable to acquire token for resource " + Connection.GraphEndPoint);
+                LogDebug("Unable to acquire token for resource " + Connection.GraphEndPoint);
                 return null;
             }
         }
@@ -148,12 +148,12 @@ namespace PnP.PowerShell.Commands
             {
                 if (spoOperation.IsComplete)
                 {
-                    WriteVerbose("Operation completed");
+                    LogDebug("Operation completed");
                     return;
                 }
                 if (spoOperation.HasTimedout)
                 {
-                    WriteVerbose("Operation timed out");
+                    LogDebug("Operation timed out");
                     throw new TimeoutException("SharePoint Operation Timeout");
                 }
 
@@ -164,11 +164,11 @@ namespace PnP.PowerShell.Commands
                     break;
                 }
 
-                WriteVerbose("Checking for operation status");
+                LogDebug("Checking for operation status");
                 ClientContext.Load(spoOperation);
                 ClientContext.ExecuteQueryRetry();
             }
-            WriteWarning("SharePoint Operation Wait Interrupted");
+            LogWarning("SharePoint Operation Wait Interrupted");
         }
     }
 }

@@ -147,7 +147,7 @@ namespace PnP.PowerShell.Commands.Base
 
             // Log a warning that the permission check failed. Deliberately not throwing an exception here, as the permission attributes might be wrong, thus will try to execute anyway.
             PnP.Framework.Diagnostics.Log.Error("TokenHandler",exceptionTextBuilder.ToString().Replace(Environment.NewLine," "));
-            //cmdlet.WriteWarning(exceptionTextBuilder.ToString());
+            //cmdlet.LogWarning(exceptionTextBuilder.ToString());
         }        
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace PnP.PowerShell.Commands.Base
             if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
             {
                 PnP.Framework.Diagnostics.Log.Debug("TokenHandler",$"Acquiring token for resource {connection.GraphEndPoint} using Azure AD Workload Identity");
-                //cmdlet.WriteVerbose("Acquiring token for resource " + connection.GraphEndPoint + " using Azure AD Workload Identity");
+                //cmdlet.LogDebug("Acquiring token for resource " + connection.GraphEndPoint + " using Azure AD Workload Identity");
                 accessToken = GetAzureADWorkloadIdentityTokenAsync($"{audience.TrimEnd('/')}/.default").GetAwaiter().GetResult();
             }
             else
@@ -190,7 +190,7 @@ namespace PnP.PowerShell.Commands.Base
             if (string.IsNullOrEmpty(accessToken))
             {
                 PnP.Framework.Diagnostics.Log.Debug("TokenHandler",$"Unable to acquire token for resource {connection.GraphEndPoint}");
-                //cmdlet.WriteVerbose($"Unable to acquire token for resource {connection.GraphEndPoint}");
+                //cmdlet.LogDebug($"Unable to acquire token for resource {connection.GraphEndPoint}");
                 return null;
             }
 

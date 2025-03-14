@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
                     var tag = list.GetComplianceTag();
                     if (null == tag)
                     {
-                        WriteWarning("No label found for the specified list/library.");
+                        LogWarning("No label found for the specified list/library.");
                     }
                     else
                     {

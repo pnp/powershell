@@ -188,7 +188,7 @@ namespace PnP.PowerShell.Commands.Site
                 }
                 else
                 {
-                    WriteWarning($"Unable to add Domain Name as there is an existing domain name with the same name. Will be skipped.");
+                    LogWarning($"Unable to add Domain Name as there is an existing domain name with the same name. Will be skipped.");
                 }
             }
 
@@ -276,7 +276,7 @@ namespace PnP.PowerShell.Commands.Site
                 if (LockState.HasValue)
                 {
                     tenant.SetSiteLockState(siteUrl, LockState.Value, Wait, Wait ? timeoutFunction : null);
-                    WriteWarning("You changed the lockstate of this site. This change is not guaranteed to be effective immediately. Please wait a few minutes for this to take effect.");
+                    LogWarning("You changed the lockstate of this site. This change is not guaranteed to be effective immediately. Please wait a few minutes for this to take effect.");
                 }
                 if (Owners != null && Owners.Count > 0)
                 {

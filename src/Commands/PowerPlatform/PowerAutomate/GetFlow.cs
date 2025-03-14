@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 {
                     var flowName = Identity.GetName();
 
-                    WriteVerbose($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
+                    LogDebug($"Retrieving specific Power Automate Flow with the provided name '{flowName}' within the environment '{environmentName}'");
 
                     var result = ArmRequestHelper.Get<Model.PowerPlatform.PowerAutomate.Flow>(baseUrl + $"/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}?api-version=2016-11-01");
                     WriteObject(result, false);
@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                             break;
                     }
 
-                    WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'{(filter != null ? $" with filter '{filter}'" : "")}");
+                    LogDebug($"Retrieving all Power Automate Flows within environment '{environmentName}'{(filter != null ? $" with filter '{filter}'" : "")}");
 
                     var flowUrl = $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/{(AsAdmin ? "v2" : "")}/flows?api-version=2016-11-01{(filter != null ? $"&$filter={filter}" : "")}";
                     var flows = ArmRequestHelper.GetResultCollection<Model.PowerPlatform.PowerAutomate.Flow>(flowUrl);

@@ -260,7 +260,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                         {
                             if (!warningsShown.Contains(message))
                             {
-                                WriteWarning(message);
+                                LogWarning(message);
                                 warningsShown.Add(message);
                             }
                             break;

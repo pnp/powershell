@@ -33,28 +33,28 @@ namespace PnP.PowerShell.Commands.Site
         /// </summary>
         private void SetPrimarySiteCollectionAdmin()
         {
-            WriteVerbose("Retrieving details of user so it can set as the primary site collection admin");
+            LogDebug("Retrieving details of user so it can set as the primary site collection admin");
             User user = PrimarySiteCollectionAdmin.GetUser(ClientContext, true);
 
             if (user != null)
             {
-                WriteVerbose("User has been found, setting it as the primary site collection admin");
+                LogDebug("User has been found, setting it as the primary site collection admin");
 
                 try
                 {
                     ClientContext.Site.Owner = user;
                     ClientContext.ExecuteQueryRetry();
 
-                    WriteVerbose("User has been set as the primary site collection admin");
+                    LogDebug("User has been set as the primary site collection admin");
                 }
                 catch (ServerException e)
                 {
-                    WriteWarning($"Exception occurred while trying to set the user as the primary site collection admin: \"{e.Message}\"");
+                    LogWarning($"Exception occurred while trying to set the user as the primary site collection admin: \"{e.Message}\"");
                 }
             }
             else
             {
-                WriteWarning("Unable to set user as the primary site collection admin as it wasn't found");
+                LogWarning("Unable to set user as the primary site collection admin as it wasn't found");
             }
         }
 
@@ -63,16 +63,16 @@ namespace PnP.PowerShell.Commands.Site
         /// </summary>
         private void AddSecondarySiteCollectionAdmins()
         {
-            WriteVerbose($"Adding {Owners.Count} users as secondary site collection admins");
+            LogDebug($"Adding {Owners.Count} users as secondary site collection admins");
 
             foreach (var owner in Owners)
             {
-                WriteVerbose("Retrieving details of user so it can be added as a secondary site collection admin");
+                LogDebug("Retrieving details of user so it can be added as a secondary site collection admin");
                 User user = owner.GetUser(ClientContext, true);
 
                 if (user != null)
                 {
-                    WriteVerbose("User has been found, adding it as a secondary site collection admin");
+                    LogDebug("User has been found, adding it as a secondary site collection admin");
 
                     user.IsSiteAdmin = true;
                     user.Update();
@@ -81,16 +81,16 @@ namespace PnP.PowerShell.Commands.Site
                     {
                         ClientContext.ExecuteQueryRetry();
 
-                        WriteVerbose("User has been added as a secondary site collection admin");
+                        LogDebug("User has been added as a secondary site collection admin");
                     }
                     catch (ServerException e)
                     {
-                        WriteWarning($"Exception occurred while trying to add the user as a secondary site collection admin: \"{e.Message}\". User will be skipped.");
+                        LogWarning($"Exception occurred while trying to add the user as a secondary site collection admin: \"{e.Message}\". User will be skipped.");
                     }
                 }
                 else
                 {
-                    WriteWarning("Unable to add as a secondary site collectin admin as it wasn't found. User will be skipped.");
+                    LogWarning("Unable to add as a secondary site collectin admin as it wasn't found. User will be skipped.");
                 }
             }
         }

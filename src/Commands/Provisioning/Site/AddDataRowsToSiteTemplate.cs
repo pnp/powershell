@@ -323,7 +323,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             catch
             {
                 // If user is removed/disabled from AAD, return null
-                WriteWarning("User cannot be found, skipped adding field value");
+                LogWarning("User cannot be found, skipped adding field value");
                 return null;
             }
         }

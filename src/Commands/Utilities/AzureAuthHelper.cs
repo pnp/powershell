@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
 
                     ClipboardService.SetText(result.UserCode);
-                    messageWriter.WriteWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the browser tab after you authenticated successfully to continue the process.");
+                    messageWriter.LogWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the browser tab after you authenticated successfully to continue the process.");
                     BrowserHelper.OpenBrowserForInteractiveLogin(result.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
 
                     return Task.FromResult(0);

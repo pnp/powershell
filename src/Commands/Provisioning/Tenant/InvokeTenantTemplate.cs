@@ -167,7 +167,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                         {
                             if (!warningsShown.Contains(message))
                             {
-                                WriteWarning(message);
+                                LogWarning(message);
                                 warningsShown.Add(message);
                             }
                             break;
