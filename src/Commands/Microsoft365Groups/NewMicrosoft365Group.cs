@@ -175,11 +175,6 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
                 var group = Microsoft365GroupsUtility.Create(GraphRequestHelper, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels);
 
-                if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
-                {
-                    Microsoft365GroupsUtility.SetVisibility(GraphRequestHelper, group.Id.Value, HideFromAddressLists, HideFromOutlookClients);
-                }
-
                 var updatedGroup = Microsoft365GroupsUtility.GetGroup(GraphRequestHelper, group.Id.Value, true, false, false, true);
 
                 WriteObject(updatedGroup);
