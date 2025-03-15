@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         protected override void BeginProcessing()
         {
-            LogDebug($"Cmdlet execution started for {MyInvocation.MyCommand.Name}");
+            LogDebug($"Cmdlet execution started for {MyInvocation.Line}");
             base.BeginProcessing();
 
             CheckForDeprecationAttributes();
@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Base
         protected override void EndProcessing()
         {
             base.EndProcessing();
-            LogDebug($"Cmdlet execution done for {MyInvocation.MyCommand.Name}");
+            LogDebug($"Cmdlet execution done for {MyInvocation.Line}");
         }
 
         /// <summary>
