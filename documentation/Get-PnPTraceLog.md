@@ -26,7 +26,9 @@ Get-PnPTraceLog [-Verbose]
 ```
 
 ## DESCRIPTION
-This cmdlet returns the logged messages during the execution of PnP PowerShell cmdlets. It can return the messages from an in memory log stream or from a file. You can use [Start-PnPTraceLog](Start-PnPTraceLog.md) to start logging to a file and/or to an in memory stream.
+This cmdlet returns the logged messages during the execution of PnP PowerShell cmdlets. It can return the messages from an in memory log stream or from a file. Note that you cannot read from a log file if it is currently in use to write to. In this case, you would first have to stop logging to it using [Stop-PnPTraceLog](Stop-PnPTraceLog.md) and then read the log file. The in memory log stream is always available.
+
+You can use [Start-PnPTraceLog](Start-PnPTraceLog.md) to start logging to a file and/or to an in memory stream.
 
 ## EXAMPLES
 
@@ -42,7 +44,7 @@ This returns all items in the in memory stored log stream
 Get-PnPTraceLog -Path "C:\temp\log.txt"
 ```
 
-This returns all items from the log file stored at the provided location
+This returns all items from the log file stored at the provided location. Note that you cannot read from a log file if it is currently in use to write to. In this case, you would first have to stop logging to it using [Stop-PnPTraceLog](Stop-PnPTraceLog.md) and then read the log file.
 
 ### EXAMPLE 3
 ```powershell
@@ -58,10 +60,26 @@ Get-PnPTraceLog | Where-Object { $_.CorrelationId -eq "5a6206a0-6c83-4446-9d1b-3
 
 This returns only logged items from the in memory stored log stream that happened during the execution of a PnP PowerShell cmdlet with the provided correlation id. This is useful to find out what happened during the execution of a specific cmdlet. Mind that the correlation id is an unique identifier for the cmdlet execution assigned by PnP PowerShell and is not the same as the correlation id of a SharePoint operation.
 
+### EXAMPLE 5
+```powershell
+Get-PnPTraceLog | Sort-Object -Property EllapsedMilliseconds -Descending -Top 10 | Select EllapsedMilliseconds, Source, Message
+```
+
+Returns the 10 longest running operations from the in memory stored log stream. The output is sorted by the EllapsedMilliseconds property in descending order. The output is limited to the properties EllapsedMilliseconds, Source and Message.
+
+### EXAMPLE 6
+```powershell
+ Get-PnPTraceLog | Group-Object -Property CorrelationId | ForEach-Object { [pscustomobject]@{ Started = $_.Group[0].TimeStamp; Ended = ($_.Group | Select -Last 1).TimeStamp; Cmdlet = $_.Group[0].Source; TimeTaken = ($_.Group | Measure-Object -Property EllapsedMilliseconds -Sum).Sum; Logs = $_.Group }} | Sort-Object -Property TimeTaken -Descending -Top 5
+```
+
+Returns the top 5 longest running cmdlets from the in memory stored log stream. The output is sorted by the TimeTaken property in descending order. The output is limited to the properties Started, Ended, Cmdlet, TimeTaken and Logs. The Logs property contains all logged items for the specific cmdlet
+
 ## PARAMETERS
 
 ### -Path
 The path to the log file. If not provided, the cmdlet will return the in memory log stream.
+
+Note that you cannot read from a log file if it is currently in use to write to. In this case, you would first have to stop logging to it using [Stop-PnPTraceLog](Stop-PnPTraceLog.md) and then read the log file.
 
 ```yaml
 Type: String
