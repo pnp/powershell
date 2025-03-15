@@ -69,10 +69,10 @@ Returns the 10 longest running operations from the in memory stored log stream. 
 
 ### EXAMPLE 6
 ```powershell
-Get-PnPTraceLog | Group-Object -Property CorrelationId | ForEach-Object { [pscustomobject]@{ Started = ($_.Group | Select -First 1).TimeStamp; Ended = ($_.Group | Select -Last 1).TimeStamp; Cmdlet = $_.Group[0].Source; TimeTaken = ($_.Group | Measure-Object -Property EllapsedMilliseconds -Sum).Sum; Logs = $_.Group }} | Sort-Object -Property TimeTaken -Descending -Top 5
+Get-PnPTraceLog | Group-Object -Property CorrelationId | ForEach-Object { [pscustomobject]@{ Started = ($_.Group | Select -First 1).TimeStamp; Ended = ($_.Group | Select -Last 1).TimeStamp; Cmdlet = $_.Group[0].Source; TimeTaken = ($_.Group | Measure-Object -Property EllapsedMilliseconds -Sum).Sum; Logs = $_.Group }} | Sort-Object -Property TimeTaken -Descending -Top 5 | Select Started, Cmdlet, TimeTaken
 ```
 
-Returns the top 5 longest running cmdlets from the in memory stored log stream. The output is sorted by the TimeTaken property in descending order which shows the total execution time of a single cmdlet. The output shows the time the cmdlet started executing, ended executing, the cmdlet that was executed, the total time it took to execute the cmdlet and all the individual logs collected during the execution of that single cmdlet.
+Returns the top 5 longest running cmdlets from the in memory stored log stream. The output is sorted by the TimeTaken property in descending order which shows the total execution time of a single cmdlet. The output contains the time the cmdlet started executing, the cmdlet that was executed and the total time it took to execute the cmdlet. From there it is easy to examine all the individual logs collected during the execution of that single cmdlet.
 
 ## PARAMETERS
 
