@@ -8,6 +8,15 @@ namespace PnP.PowerShell.Commands.Base
     [Cmdlet(VerbsLifecycle.Stop, "PnPTraceLog")]
     public class StopTraceLog : BasePSCmdlet
     {
+        [Parameter(Mandatory = false)]
+        public SwitchParameter StopFileLogging = true;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter StopConsoleLogging = true;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter StopLogStreamLogging = true;
+
         private const string FileListenername = "PNPPOWERSHELLFILETRACELISTENER";
         private const string ConsoleListenername = "PNPPOWERSHELLCONSOLETRACELISTENER";
 
@@ -16,10 +25,21 @@ namespace PnP.PowerShell.Commands.Base
             LogDebug("Flushing log entries");
             Trace.Flush();
 
-            LogDebug("Removing log listeners");
-            LoggingUtility.RemoveListener(ConsoleListenername);
-            LoggingUtility.RemoveListener(FileListenername);
-            LoggingUtility.RemoveListener(LogStreamListener.DefaultListenerName);
+            if (StopConsoleLogging.ToBool())
+            {
+                LogDebug("Stopping logging to console");
+                LoggingUtility.RemoveListener(ConsoleListenername);
+            }
+            if (StopFileLogging.ToBool())
+            {
+                LogDebug("Stopping logging to file");
+                LoggingUtility.RemoveListener(FileListenername);
+            }
+            if(StopLogStreamLogging.ToBool())
+            {
+                LogDebug("Stopping logging to in memory log stream");
+                LoggingUtility.RemoveListener(LogStreamListener.DefaultListenerName);
+            }
         }
     }
 }
