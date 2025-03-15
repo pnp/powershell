@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Base
                 var lines = File.ReadAllLines(Path);
                 foreach (var line in lines)
                 {
-                    var items = line.Split('\t');
+                    var items = line.Split(" : ")[1].Split('\t');
                     WriteObject(new TraceLogEntry(items), true);
                 }
             }
