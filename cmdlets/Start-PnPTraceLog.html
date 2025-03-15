@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Starts log tracing</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Start-PnPTraceLog [-Path &lt;String&gt;] [-Level &lt;LogLevel&gt;] [-AutoFlush &lt;Boolean&gt;] 
+<pre><code class="lang-powershell">Start-PnPTraceLog [-Path &lt;String&gt;] [-Level &lt;LogLevel&gt;] [-AutoFlush &lt;Boolean&gt;] [-WriteToConsole &lt;SwitchParameter&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Starts .NET tracelogging. Many cmdlets output detailed trace information when executed. Turn on the trace log with this cmdlet, optionally specify the level. By default the level is set to 'Information', but you will receive more detail by setting the level to 'Debug'.</p>
@@ -98,24 +98,39 @@
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Start-PnPTraceLog -Path ./TraceOutput.txt -Level Debug
 </code></pre>
-<p>This turns on trace logging to the file 'TraceOutput.txt' and will capture debug events.</p>
+<p>This turns on trace logging to the file 'TraceOutput.txt' and will capture all events.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Start-PnPTraceLog -WriteToConsole -Level Debug
+</code></pre>
+<p>This turns on trace logging to console in which you are running your PowerShell script and will capture all events.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-autoflush">-AutoFlush</h3>
 <p>Auto flush the trace log. Defaults to true.</p>
 <pre><code class="lang-yaml">Type: Boolean
-Parameter Sets: On
+Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: True
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-level">-Level</h3>
 <p>The level of events to capture. Possible values are 'Debug', 'Error', 'Warning', 'Information'. Defaults to 'Information'.</p>
 <pre><code class="lang-yaml">Type: LogLevel
-Parameter Sets: On
+Parameter Sets: (All)
 Accepted values: Debug, Error, Warning, Information
+
+Required: False
+Position: Named
+Default value: Information
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-path">-Path</h3>
+<p>The path and filename of the file to write the trace log to.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
 
 Required: False
 Position: Named
@@ -123,14 +138,14 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-path">-Path</h3>
-<p>The path and filename of the file to write the trace log to.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: On
+<h3 id="-writetoconsole">-WriteToConsole</h3>
+<p>Write the trace log to the console.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: None
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
