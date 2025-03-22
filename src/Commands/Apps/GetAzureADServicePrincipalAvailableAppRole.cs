@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Apps
                 throw new PSArgumentException("Service principal not found", nameof(Principal));
             }
 
-            WriteVerbose($"Requesting available app roles for service principal {principal.DisplayName}");
+            LogDebug($"Requesting available app roles for service principal {principal.DisplayName}");
 
             if (ParameterSpecified(nameof(Identity)))
             {

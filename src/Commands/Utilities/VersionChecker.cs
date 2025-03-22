@@ -5,6 +5,7 @@ using System.Management.Automation;
 using System.Net.Http;
 using System.Reflection;
 using System.Xml.Linq;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -40,7 +41,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// Performs the check for a newer PnP PowerShell version
         /// </summary>
         /// <param name="cmdlet">Cmdlet instance from which this check is done</param>
-        public static void CheckVersion(PSCmdlet cmdlet)
+        public static void CheckVersion(BasePSCmdlet cmdlet)
         {
             // Do we need to check versions: is the environment variable set?
             var pnppowershellUpdatecheck = Environment.GetEnvironmentVariable("PNPPOWERSHELL_UPDATECHECK");
@@ -64,7 +65,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var productVersion = versionInfo.ProductVersion;
                 var isNightly = productVersion.Contains("-");
 
-                cmdlet?.WriteVerbose($"Checking for updates, current version is {productVersion}. See https://pnp.github.io/powershell/articles/configuration.html#disable-or-enable-version-checks for more information.");
+                cmdlet?.LogDebug($"Checking for updates, current version is {productVersion}. See https://pnp.github.io/powershell/articles/configuration.html#disable-or-enable-version-checks for more information.");
 
                 // Check for the latest available version
                 var onlineVersion = GetAvailableVersion3(isNightly);
@@ -81,7 +82,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                     else
                     {
-                        cmdlet?.WriteVerbose($"No newer version of PnP PowerShell is available, latest available version is {onlineVersion.Version}");
+                        cmdlet?.LogDebug($"No newer version of PnP PowerShell is available, latest available version is {onlineVersion.Version}");
                     }
                     if (!string.IsNullOrEmpty(onlineVersion.Message))
                     {
@@ -95,7 +96,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             catch (Exception e)
             {
-                cmdlet?.WriteVerbose($"Error checking for updates: {e.Message}");
+                cmdlet?.LogDebug($"Error checking for updates: {e.Message}");
             }
         }
 

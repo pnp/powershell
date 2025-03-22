@@ -188,12 +188,12 @@ namespace PnP.PowerShell.Commands.ContentTypes
                 {
                     if (list != null)
                     {
-                        WriteVerbose("Updating content type on list");
+                        LogDebug("Updating content type on list");
                         ct.Update(false);
                     }
                     else
                     {
-                        WriteVerbose("Updating site content type");
+                        LogDebug("Updating site content type");
                         ct.Update(UpdateChildren);
                     }
                     ClientContext.ExecuteQueryRetry();
@@ -201,7 +201,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
                 }
                 else
                 {
-                    WriteVerbose("No changes to make");
+                    LogDebug("No changes to make");
                 }
             }
         }

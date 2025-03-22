@@ -42,49 +42,49 @@ namespace PnP.PowerShell.Commands.Search
             switch(ParameterSetName)
             {
                 case ParamSet_TextualSchema:
-                    WriteVerbose("Parsing schema from textual representation");
+                    LogDebug("Parsing schema from textual representation");
                     break;
                 case ParamSet_SchemaInstance:
-                    WriteVerbose("Using provided schema instance");
+                    LogDebug("Using provided schema instance");
                     SchemaAsText = System.Text.Json.JsonSerializer.Serialize(Schema);
                     break;
             }
 
             var jsonContent = new StringContent(SchemaAsText);
-            WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
+            LogDebug($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
             var graphApiUrl = $"v1.0/external/connections/{externalConnectionId}/schema";
             var results = GraphRequestHelper.Patch(jsonContent, graphApiUrl);
             
-            WriteVerbose("Trying to retrieve location header from response which can be used to poll for the status of the schema operation");
+            LogDebug("Trying to retrieve location header from response which can be used to poll for the status of the schema operation");
             if(results.Headers.TryGetValues("Location", out var location) && location.Any())
             {
                 var schemaOperationStatusUrl = location.FirstOrDefault();
-                WriteVerbose("Schema update has been scheduled");                
+                LogDebug("Schema update has been scheduled");                
 
                 if(Wait.ToBool())
                 {
-                    WriteVerbose($"Waiting for schema operation to complete by polling {schemaOperationStatusUrl}");
+                    LogDebug($"Waiting for schema operation to complete by polling {schemaOperationStatusUrl}");
 
                     do
                     {
-                        WriteVerbose("Polling schema operation status");
+                        LogDebug("Polling schema operation status");
                         var schemaOperationResult = GraphRequestHelper.Get<Model.Graph.OperationStatus>(schemaOperationStatusUrl);
 
                         if(!string.IsNullOrEmpty(schemaOperationResult.Status))
                         {
                             if (schemaOperationResult.Status.ToLowerInvariant() == "completed")
                             {
-                                WriteVerbose("Schema operation has completed");
+                                LogDebug("Schema operation has completed");
                                 break;
                             }
                             else
                             {
-                                WriteVerbose($"Schema operation still in progress with status {schemaOperationResult.Status}");
+                                LogDebug($"Schema operation still in progress with status {schemaOperationResult.Status}");
                             }
                         }
 
-                        WriteVerbose($"Waiting for {OperationStatusPollingInterval.GetValueOrDefault(30)} seconds before polling again");
+                        LogDebug($"Waiting for {OperationStatusPollingInterval.GetValueOrDefault(30)} seconds before polling again");
                         Thread.Sleep(TimeSpan.FromSeconds(OperationStatusPollingInterval.GetValueOrDefault(30)));
                     }
                     while (true);
@@ -94,7 +94,7 @@ namespace PnP.PowerShell.Commands.Search
             }
             else
             {
-                WriteVerbose("No valid Location header found in response");
+                LogDebug("No valid Location header found in response");
             }
         }
     }

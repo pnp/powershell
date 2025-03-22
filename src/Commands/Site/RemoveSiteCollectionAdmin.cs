@@ -29,12 +29,12 @@ namespace PnP.PowerShell.Commands.Site
                     }
                     catch (ServerException e)
                     {
-                        WriteWarning($"Exception occurred while trying to remove the user: \"{e.Message}\". User will be skipped.");
+                        LogWarning($"Exception occurred while trying to remove the user: \"{e.Message}\". User will be skipped.");
                     }
                 }
                 else
                 {
-                    WriteWarning($"Unable to remove user as it wasn't found. User will be skipped.");
+                    LogWarning($"Unable to remove user as it wasn't found. User will be skipped.");
                 }
             }
         }

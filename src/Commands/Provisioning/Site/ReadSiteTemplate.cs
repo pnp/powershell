@@ -1,4 +1,5 @@
 ﻿using PnP.Framework.Provisioning.Providers;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System.IO;
 using System.Management.Automation;
@@ -6,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsCommunications.Read, "PnPSiteTemplate", DefaultParameterSetName = ParameterSet_PATH)]
-    public class ReadSiteTemplate : PSCmdlet
+    public class ReadSiteTemplate : BasePSCmdlet
     {
         const string ParameterSet_STREAM = "By Stream";
         const string ParameterSet_PATH = "By Path";
@@ -37,7 +38,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                         }
                         WriteObject(ProvisioningHelper.LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }));
                         break;
                     }
@@ -45,7 +46,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                     {
                         WriteObject(ProvisioningHelper.LoadSiteTemplateFromString(Xml, TemplateProviderExtensions, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }));
                         break;
                     }
@@ -53,7 +54,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                     {
                         WriteObject(ProvisioningHelper.LoadSiteTemplatesFromStream(Stream, TemplateProviderExtensions, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }), true);
                         break;
                     }                    

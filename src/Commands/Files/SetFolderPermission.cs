@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Files
                 // Ensure the folder has been found
                 if (folder == null)
                 {
-                    WriteError(new ErrorRecord(new Exception("Folder not found"), "1", ErrorCategory.ObjectNotFound, null));
+                    LogError("Folder not found");
                     return;
                 }
 
@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Files
                 // Validate that the ListItemAllFields contains the Id which represents the ListItem ID equivallent for this folder
                 if (folder.ListItemAllFields.ServerObjectIsNull.GetValueOrDefault(true) || folder.ListItemAllFields.Id <= 0)
                 {
-                    WriteError(new ErrorRecord(new Exception("ListItemId on folder not found"), "1", ErrorCategory.InvalidData, null));
+                    LogError("ListItemId on folder not found");
                     return;
                 }
 
@@ -156,7 +156,7 @@ namespace PnP.PowerShell.Commands.Files
                 }
                 else
                 {
-                    WriteError(new ErrorRecord(new Exception("Principal not found"), "1", ErrorCategory.ObjectNotFound, null));
+                    LogError("Principal not found");
                 }
             }
         }

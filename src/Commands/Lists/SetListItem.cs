@@ -95,7 +95,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (!values.Any() && !Force)
             {
-                WriteWarning("No values provided. Pass -Force to update anyway.");
+                LogWarning("No values provided. Pass -Force to update anyway.");
             }
             else
             {
@@ -181,7 +181,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                 if (tag is null)
                 {
-                    WriteWarning("Can not find compliance tag with value: " + Label);
+                    LogWarning("Can not find compliance tag with value: " + Label);
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                     catch (System.Exception error)
                     {
-                        WriteWarning(error.Message.ToString());
+                        LogWarning(error.Message.ToString());
                     }
                 }
                 itemUpdated = true;
@@ -232,7 +232,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (!itemUpdated && !Force)
             {
-                WriteWarning("No values provided. Pass -Force to update anyway.");
+                LogWarning("No values provided. Pass -Force to update anyway.");
             }
             else
             {

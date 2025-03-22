@@ -26,14 +26,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.Environment
             {
                 var appName = Identity.GetName();
 
-                WriteVerbose($"Retrieving specific Custom Connector with the provided name '{appName}' within the environment '{environmentName}'");
+                LogDebug($"Retrieving specific Custom Connector with the provided name '{appName}' within the environment '{environmentName}'");
 
                 var result = ArmRequestHelper.Get<Model.PowerPlatform.Environment.PowerPlatformConnector>( $"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apis/{appName}?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'");
                 WriteObject(result, false);
             }
             else
             {
-                WriteVerbose($"Retrieving all Connectors within environment '{environmentName}'");
+                LogDebug($"Retrieving all Connectors within environment '{environmentName}'");
 
                 var connectors = ArmRequestHelper.GetResultCollection<Model.PowerPlatform.Environment.PowerPlatformConnector>( $"{powerAppsUrl}/providers/Microsoft.PowerApps/apis?api-version=2016-11-01&$filter=environment eq '{environmentName}' and isCustomApi eq 'True'");
                 WriteObject(connectors, true);

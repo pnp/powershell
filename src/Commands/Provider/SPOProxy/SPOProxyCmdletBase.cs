@@ -1,8 +1,9 @@
 ﻿using System.Management.Automation;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Provider.SPOProxy
 {
-    public abstract class SPOProxyCmdletBase : PSCmdlet
+    public abstract class SPOProxyCmdletBase : BasePSCmdlet
     {
         internal string[] PsPaths { get; private set; }
 

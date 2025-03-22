@@ -22,11 +22,11 @@ namespace PnP.PowerShell.Commands.Files
 
             if(!System.Text.RegularExpressions.Regex.IsMatch(DocumentIdPrefix, @"^[a-zA-Z0-9]{4,12}$"))
             {
-                WriteWarning($"{nameof(DocumentIdPrefix)} can only contain digits (0-9) and letters and must be between 4 and 12 characters in length.");
+                LogWarning($"{nameof(DocumentIdPrefix)} can only contain digits (0-9) and letters and must be between 4 and 12 characters in length.");
             }
 
             var docIdPrefixUrl = $"{CurrentWeb.Url}/_api/SP.DocumentManagement.DocumentId/SetDocIdSitePrefix(prefix='{DocumentIdPrefix}',scheduleAssignment={(ScheduleAssignment ? "true" : "false")},overwriteExistingIds={(OverwriteExistingIds ? "true" : "false")})";
-            WriteVerbose($"Making a POST request to {docIdPrefixUrl} to set the document ID prefix to {DocumentIdPrefix}");
+            LogDebug($"Making a POST request to {docIdPrefixUrl} to set the document ID prefix to {DocumentIdPrefix}");
 
             RestHelper.Post(Connection.HttpClient, docIdPrefixUrl, ClientContext);
         }

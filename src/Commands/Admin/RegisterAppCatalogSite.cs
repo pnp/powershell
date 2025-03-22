@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            WriteWarning("Notice that this cmdlet can take considerate time to finish executing.");
+            LogWarning("Notice that this cmdlet can take considerate time to finish executing.");
             Tenant.EnsureAppCatalogAsync(Url, Owner, TimeZoneId, Force).GetAwaiter().GetResult();
         }
     }

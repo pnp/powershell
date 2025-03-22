@@ -123,7 +123,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
             if (PersistMultiLanguageResources == false && ResourceFilePrefix != null)
             {
-                WriteWarning("In order to export resource files, also specify the PersistMultiLanguageResources switch");
+                LogWarning("In order to export resource files, also specify the PersistMultiLanguageResources switch");
             }
             if (!string.IsNullOrEmpty(Out))
             {
@@ -298,7 +298,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     case ProvisioningMessageType.Warning:
                         {
-                            WriteWarning(message);
+                            LogWarning(message);
                             break;
                         }
                     case ProvisioningMessageType.Progress:
@@ -390,7 +390,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
                 else if (extension == ".md")
                 {
-                    WriteWarning("The generation of a markdown report is work in progress, it will improve/grow with later releases.");
+                    LogWarning("The generation of a markdown report is work in progress, it will improve/grow with later releases.");
                     ITemplateFormatter mdFormatter = new MarkdownPnPFormatter();
                     using (var outputStream = mdFormatter.ToFormattedTemplate(template))
                     {

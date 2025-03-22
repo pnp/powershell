@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 if (!flag2 && flag3)
                 {
-                    WriteWarning("More sites are available");
+                    LogWarning("More sites are available");
                 }
             }
             else
@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 catch (ServerException e) when (e.ServerErrorTypeName.Equals("Microsoft.SharePoint.Client.UnknownError", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    WriteVerbose($"No sitecollection found in the tenant recycle bin with the Url {Identity.Url}");
+                    LogDebug($"No sitecollection found in the tenant recycle bin with the Url {Identity.Url}");
                 }
             }
         }

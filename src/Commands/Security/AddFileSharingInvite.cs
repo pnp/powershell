@@ -71,7 +71,7 @@ namespace PnP.PowerShell.Commands.Security
             {
                 if (Message.Length > 2000)
                 {
-                    WriteVerbose("Invitation message length cannot exceed 2000 characters, trimming the message");
+                    LogDebug("Invitation message length cannot exceed 2000 characters, trimming the message");
                     Message = Message.Substring(0, 2000);
                 }
             }

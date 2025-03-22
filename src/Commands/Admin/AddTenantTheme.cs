@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 else
                 {
-                    WriteError(new ErrorRecord(new Exception($"Theme exists"), "THEMEEXISTS", ErrorCategory.ResourceExists, Identity.Name));
+                    LogError("Theme exists");
                 }
             }
             else

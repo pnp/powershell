@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Teams
                             }
                             else
                             {
-                                WriteError(new ErrorRecord(new Exception($"Channel remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
+                                LogError($"Channel remove failed");
                             }
                         }
                     }

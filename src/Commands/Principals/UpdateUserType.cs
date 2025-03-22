@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Principals
             AdminContext.ExecuteQueryRetry();
             if(sitePropertiesEnumerable.Count == 0)
             {
-                WriteWarning("User Type is already up to date.");
+                LogWarning("User Type is already up to date.");
             } else {
                 foreach(var item in sitePropertiesEnumerable)
                 {

@@ -26,27 +26,27 @@ namespace PnP.PowerShell.Commands.Admin
         {
             if(ParameterSpecified(nameof(IsCopilotSearchable)) && ParameterSpecified(nameof(OrgAssetType)) && ParameterSpecified(nameof(ThumbnailUrl)))
             {
-                WriteVerbose("Setting org assets library with thumbnail url, organizational asset type and copilot searchable");
+                LogDebug("Setting org assets library with thumbnail url, organizational asset type and copilot searchable");
                 Tenant.SetOrgAssetsWithConfig(LibraryUrl, ThumbnailUrl, OrgAssetType.Value, new OrgAssetsLibraryConfigParam { IsCopilotSearchable = IsCopilotSearchable.Value});
             }
             else if(ParameterSpecified(nameof(IsCopilotSearchable)) && ParameterSpecified(nameof(OrgAssetType)))
             {
-                WriteVerbose("Setting org assets library with organizational asset type and copilot searchable");
+                LogDebug("Setting org assets library with organizational asset type and copilot searchable");
                 Tenant.SetOrgAssetsWithConfig(LibraryUrl, null, OrgAssetType.Value, new OrgAssetsLibraryConfigParam { IsCopilotSearchable = IsCopilotSearchable.Value});
             }
             else if(ParameterSpecified(nameof(OrgAssetType)) && ParameterSpecified(nameof(ThumbnailUrl)))
             {
-                WriteVerbose("Setting org assets library with thumbnail url and organizational asset type");
+                LogDebug("Setting org assets library with thumbnail url and organizational asset type");
                 Tenant.SetOrgAssetsWithType(LibraryUrl, ThumbnailUrl, OrgAssetType.Value);
             }
             else if(ParameterSpecified(nameof(OrgAssetType)))
             {
-                WriteVerbose("Setting org assets library with organizational asset type");
+                LogDebug("Setting org assets library with organizational asset type");
                 Tenant.SetOrgAssetsWithType(LibraryUrl, null, OrgAssetType.Value);
             }
             else if(ParameterSpecified(nameof(ThumbnailUrl)))
             {
-                WriteVerbose("Setting org assets library with thumbnail url");
+                LogDebug("Setting org assets library with thumbnail url");
                 Tenant.SetOrgAssets(LibraryUrl, ThumbnailUrl);
             }
             AdminContext.ExecuteQueryRetry();

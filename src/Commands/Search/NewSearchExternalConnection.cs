@@ -40,7 +40,7 @@ namespace PnP.PowerShell.Commands.Search
             }
 
             var jsonContent = JsonContent.Create(bodyContent);
-            WriteVerbose($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
+            LogDebug($"Constructed payload: {jsonContent.ReadAsStringAsync().GetAwaiter().GetResult()}");
 
             var graphApiUrl = $"v1.0/external/connections";
             var results = GraphRequestHelper.PostHttpContent(graphApiUrl, jsonContent);

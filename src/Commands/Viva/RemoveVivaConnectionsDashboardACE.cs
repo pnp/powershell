@@ -25,12 +25,12 @@ namespace PnP.PowerShell.Commands.Viva
                 }
                 else
                 {
-                    WriteWarning("ACE with specified identifier not found");
+                    LogWarning("ACE with specified identifier not found");
                 }
             }
             else
             {
-                WriteWarning("Connected site is not a home site");
+                LogWarning("Connected site is not a home site");
             }
         }
     }

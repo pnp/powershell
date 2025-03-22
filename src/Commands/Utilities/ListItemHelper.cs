@@ -1,6 +1,7 @@
 ﻿using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Taxonomy;
 using PnP.Core.QueryModel;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using System;
@@ -33,7 +34,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        public static void SetFieldValues(this ListItem item, Hashtable valuesToSet, Cmdlet cmdlet)
+        public static void SetFieldValues(this ListItem item, Hashtable valuesToSet, BasePSCmdlet cmdlet)
         {
             var itemValues = new List<FieldUpdateValue>();
 
@@ -68,7 +69,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                 if (value is string && string.IsNullOrWhiteSpace(value + "")) goto default;
                                 if (value.GetType().IsArray)
                                 {
-                                    foreach (var arrayItem in (value as IEnumerable))
+                                    foreach (var arrayItem in value as IEnumerable)
                                     {
                                         int userId;
                                         if (!int.TryParse(arrayItem.ToString(), out userId))
@@ -131,7 +132,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         }
                                         else
                                         {
-                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field '" + field.InternalName + "'.");
+                                            cmdlet.LogWarning("Unable to find the specified term. Skipping values for field '" + field.InternalName + "'.");
                                         }
                                     }
 
@@ -155,7 +156,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                     }
                                     else
                                     {
-                                        cmdlet.WriteWarning("You are trying to set multiple values in a single value field. Skipping values for field '" + field.InternalName + "'.");
+                                        cmdlet.LogWarning("You are trying to set multiple values in a single value field. Skipping values for field '" + field.InternalName + "'.");
                                     }
                                 }
                                 else
@@ -172,7 +173,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                         if (taxonomyItem == null)
                                         {
                                             updateTaxItemValue = false;
-                                            cmdlet.WriteWarning("Unable to find the specified term. Skipping values for field '" + field.InternalName + "'.");
+                                            cmdlet.LogWarning("Unable to find the specified term. Skipping values for field '" + field.InternalName + "'.");
                                         }
                                     }
                                     else

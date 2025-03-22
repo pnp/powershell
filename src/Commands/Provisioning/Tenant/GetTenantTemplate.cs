@@ -74,7 +74,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
                 if (Out.ToLower().EndsWith(".pnp"))
                 {
-                    WriteWarning("This cmdlet does not save a tenant template as a PnP file.");
+                    LogWarning("This cmdlet does not save a tenant template as a PnP file.");
                 }
                 var fileInfo = new FileInfo(Out);
                 var fileSystemConnector = new FileSystemConnector(fileInfo.DirectoryName, "");
@@ -123,7 +123,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     case ProvisioningMessageType.Warning:
                         {
-                            WriteWarning(message);
+                            LogWarning(message);
                             break;
                         }
                     case ProvisioningMessageType.Progress:

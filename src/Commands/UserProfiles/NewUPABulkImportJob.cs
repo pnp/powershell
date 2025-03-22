@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                         throw new InvalidEnumArgumentException(@"Path cannot be empty");
                     }
 
-                    WriteVerbose($"Going to use mapping file to upload from {Path}");
+                    LogDebug($"Going to use mapping file to upload from {Path}");
 
                     var webCtx = AdminContext.Clone(Connection.Url);
                     var web = webCtx.Web;
@@ -82,12 +82,12 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     File file = null;
                     if(!ParameterSpecified(nameof(WhatIf)))
                     {
-                        WriteVerbose($"Uploading file from {Path} to {fileName}");
+                        LogDebug($"Uploading file from {Path} to {fileName}");
                         file = folder.UploadFile(fileName, Path, true);
                     }
                     else
                     {
-                        WriteVerbose($"Skipping uploading file from {Path} to {fileName} due to {nameof(WhatIf)} parameter being specified");
+                        LogDebug($"Skipping uploading file from {Path} to {fileName} due to {nameof(WhatIf)} parameter being specified");
                     }
                     
                     Url = new Uri(webCtx.Url).GetLeftPart(UriPartial.Authority) + file?.ServerRelativeUrl;
@@ -97,7 +97,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     {
                         throw new InvalidEnumArgumentException(@"Url cannot be empty");
                     }
-                    WriteVerbose($"Will instruct SharePoint Online to use mapping file located at {Url}");
+                    LogDebug($"Will instruct SharePoint Online to use mapping file located at {Url}");
                     break;
             }
 
@@ -107,7 +107,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             Guid? jobId = null;
             if (!ParameterSpecified(nameof(WhatIf)))
             {
-                WriteVerbose($"Instructing SharePoint Online to queue user profile file located at {Url}");
+                LogDebug($"Instructing SharePoint Online to queue user profile file located at {Url}");
                 var id = o365.QueueImportProfileProperties(IdType, IdProperty, propDictionary, Url);
                 AdminContext.ExecuteQueryRetry();
 
@@ -118,14 +118,14 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
             else
             {
-                WriteVerbose($"Skipping instructing SharePoint Online to queue user profile file located at {Url} due to {nameof(WhatIf)} parameter being specified");
+                LogDebug($"Skipping instructing SharePoint Online to queue user profile file located at {Url} due to {nameof(WhatIf)} parameter being specified");
                 return;
             }
 
             // For some reason it sometimes does not always properly return the JobId while the job did start. Show this in the output.
             if(!jobId.HasValue || jobId.Value == Guid.Empty)
             {
-                WriteWarning("The execution of the synchronization job did not return a job Id but seems to have started successfully. Use Get-PnPUPABulkImportStatus to check for the current status.");
+                LogWarning("The execution of the synchronization job did not return a job Id but seems to have started successfully. Use Get-PnPUPABulkImportStatus to check for the current status.");
                 return;
             }
 
@@ -133,7 +133,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             AdminContext.Load(job);
             AdminContext.ExecuteQueryRetry();
 
-            WriteVerbose($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
+            LogDebug($"Job initiated with Id {job.JobId} and status {job.State} for file {job.SourceUri}");
 
             // Check if we should wait with finalzing this cmdlet execution until the user profile import operation has completed
             if(Wait.ToBool())
@@ -144,7 +144,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 do
                 {
                     // Wait before requesting its current state again to avoid running into throttling
-                    WriteVerbose($"Waiting for {waitBetweenChecks} seconds before querying for the status of job Id {job.JobId}");
+                    LogDebug($"Waiting for {waitBetweenChecks} seconds before querying for the status of job Id {job.JobId}");
                     Thread.Sleep((int)System.TimeSpan.FromSeconds(waitBetweenChecks).TotalMilliseconds);                    
 
                     // Request the current status of the import job
@@ -152,7 +152,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                     AdminContext.Load(jobStatus);
                     AdminContext.ExecuteQueryRetry();
 
-                    WriteVerbose($"Current status of job {job.JobId}: {jobStatus.State}");
+                    LogDebug($"Current status of job {job.JobId}: {jobStatus.State}");
                 }
                 while (jobStatus.State != ImportProfilePropertiesJobState.Succeeded && jobStatus.State != ImportProfilePropertiesJobState.Error);
 

@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                WriteWarning("There is currently not site collection set as a home site in your tenant.");
+                LogWarning("There is currently not site collection set as a home site in your tenant.");
             }
         }
     }

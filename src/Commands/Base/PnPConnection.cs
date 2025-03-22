@@ -281,7 +281,7 @@ namespace PnP.PowerShell.Commands.Base
                 authManager = Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
                  {
                      ClipboardService.SetText(deviceCodeResult.UserCode);
-                     messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                     messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
                      BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
 
                      return Task.FromResult(0);
@@ -380,11 +380,11 @@ namespace PnP.PowerShell.Commands.Base
         {
             var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
             PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity endpoint: {endPoint}");
-            //cmdlet.WriteVerbose($"Using identity endpoint: {endPoint}");
+            //cmdlet.LogDebug($"Using identity endpoint: {endPoint}");
 
             var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
             PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity header: {identityHeader}");
-            //cmdlet.WriteVerbose($"Using identity header: {identityHeader}");
+            //cmdlet.LogDebug($"Using identity header: {identityHeader}");
 
             if (string.IsNullOrEmpty(endPoint))
             {

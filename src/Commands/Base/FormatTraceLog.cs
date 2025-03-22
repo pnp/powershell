@@ -1,12 +1,12 @@
 ﻿using System.Management.Automation;
-using PnP.PowerShell.Model;
+using PnP.PowerShell.Commands.Utilities.Logging;
 
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Format, "PnPTraceLog")]
-    public class FormatTraceLog : PSCmdlet
+    public class FormatTraceLog : BasePSCmdlet
     {
-        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true, ParameterSetName = "On")]
+        [Parameter(Mandatory = false, Position = 0, ValueFromPipeline = true)]
         public string LogLine;
 
         protected override void ProcessRecord()

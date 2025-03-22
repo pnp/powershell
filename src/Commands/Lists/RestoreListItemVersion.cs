@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (Force || ShouldContinue(string.Format(Resources.Restore, version.VersionLabel), Resources.Confirm))
             {
-                WriteVerbose($"Trying to restore to version with label '{version.VersionLabel}'");
+                LogDebug($"Trying to restore to version with label '{version.VersionLabel}'");
                 
                 var fields = ClientContext.LoadQuery(list.Fields.Include(f => f.InternalName, 
                     f => f.Title, f => f.Hidden, f => f.ReadOnlyField, f => f.FieldTypeKind));
@@ -116,7 +116,7 @@ namespace PnP.PowerShell.Commands.Lists
                 item.Update();
                 ClientContext.ExecuteQueryRetry();
 
-                WriteVerbose($"Restored version {version.VersionLabel} of list item {item.Id} in list {list.Title}");
+                LogDebug($"Restored version {version.VersionLabel} of list item {item.Id} in list {list.Title}");
             }
         }
     }

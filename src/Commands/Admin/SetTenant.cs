@@ -664,7 +664,7 @@ namespace PnP.PowerShell.Commands.Admin
                     Tenant.EnsureProperty(t => t.SharingCapability);
                     if (Tenant.SharingCapability != SharingCapabilities.ExternalUserAndGuestSharing)
                     {
-                        WriteWarning("Warning: anonymous links are not enabled on your tenant. Enable them with SharingCapability.");
+                        LogWarning("Warning: anonymous links are not enabled on your tenant. Enable them with SharingCapability.");
                     }
                     if (RequireAnonymousLinksExpireInDays.Value != 0 && (RequireAnonymousLinksExpireInDays.Value < 1 || RequireAnonymousLinksExpireInDays.Value > 730))
                     {
@@ -686,18 +686,18 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (!Tenant.RequireAcceptingAccountMatchInvitedAccount)
                 {
-                    WriteWarning("We automatically enabled RequireAcceptingAccountMatchInvitedAccount because you selected to limit external sharing using domains.");
+                    LogWarning("We automatically enabled RequireAcceptingAccountMatchInvitedAccount because you selected to limit external sharing using domains.");
                     Tenant.RequireAcceptingAccountMatchInvitedAccount = true;
                 }
                 Tenant.SharingAllowedDomainList = SharingAllowedDomainList;
                 modified = true;
                 if ((SharingDomainRestrictionMode == null && Tenant.SharingDomainRestrictionMode != SharingDomainRestrictionModes.AllowList) || SharingDomainRestrictionMode == SharingDomainRestrictionModes.None)
                 {
-                    WriteWarning("You must set SharingDomainRestrictionMode to AllowList in order to have the list of domains you configured for SharingAllowedDomainList to take effect.");
+                    LogWarning("You must set SharingDomainRestrictionMode to AllowList in order to have the list of domains you configured for SharingAllowedDomainList to take effect.");
                 }
                 else if (SharingDomainRestrictionMode == SharingDomainRestrictionModes.BlockList)
                 {
-                    WriteWarning("The list of domains in SharingAllowedDomainsList is ignored when you set the SharingDomainRestrictionMode to BlockList. Set the list of blocked domains using the SharingBlockedDomainsList parameter.");
+                    LogWarning("The list of domains in SharingAllowedDomainsList is ignored when you set the SharingDomainRestrictionMode to BlockList. Set the list of blocked domains using the SharingBlockedDomainsList parameter.");
                 }
             }
             if (PreventExternalUsersFromResharing.HasValue)
@@ -764,18 +764,18 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (!Tenant.RequireAcceptingAccountMatchInvitedAccount)
                 {
-                    WriteWarning("We automatically enabled RequireAcceptingAccountMatchInvitedAccount because you selected to limit external sharing using domains.");
+                    LogWarning("We automatically enabled RequireAcceptingAccountMatchInvitedAccount because you selected to limit external sharing using domains.");
                     Tenant.RequireAcceptingAccountMatchInvitedAccount = true;
                 }
                 Tenant.SharingBlockedDomainList = SharingBlockedDomainList;
                 modified = true;
                 if ((SharingDomainRestrictionMode == null && Tenant.SharingDomainRestrictionMode != SharingDomainRestrictionModes.BlockList) || SharingDomainRestrictionMode == SharingDomainRestrictionModes.None)
                 {
-                    WriteWarning("You must set SharingDomainRestrictionMode to BlockList in order to have the list of domains you configured for SharingBlockedDomainList to take effect");
+                    LogWarning("You must set SharingDomainRestrictionMode to BlockList in order to have the list of domains you configured for SharingBlockedDomainList to take effect");
                 }
                 else if (SharingDomainRestrictionMode == SharingDomainRestrictionModes.AllowList)
                 {
-                    WriteWarning("The list of domains in SharingBlockedDomainsList is ignored when you set the SharingDomainRestrictionMode to AllowList.Set the list of allowed domains using the SharingAllowedDomainsList parameter.");
+                    LogWarning("The list of domains in SharingBlockedDomainsList is ignored when you set the SharingDomainRestrictionMode to AllowList.Set the list of allowed domains using the SharingAllowedDomainsList parameter.");
                 }
             }
             if (SharingDomainRestrictionMode.HasValue)
@@ -790,7 +790,7 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 if (!Tenant.RequireAcceptingAccountMatchInvitedAccount)
                 {
-                    WriteWarning("We automatically enabled RequireAcceptingAccountMatchInvitedAccount because you selected to limit external sharing using domains.");
+                    LogWarning("We automatically enabled RequireAcceptingAccountMatchInvitedAccount because you selected to limit external sharing using domains.");
                     Tenant.RequireAcceptingAccountMatchInvitedAccount = true;
                 }
                 Tenant.SharingDomainRestrictionMode = SharingDomainRestrictionMode.Value;
@@ -825,7 +825,7 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
                 if ((IPAddressEnforcement == null && !Tenant.IPAddressEnforcement) || IPAddressEnforcement == false)
                 {
-                    WriteWarning("The list of IP Addresses you provided will not be enforced until you set IPAddressEnforcement to true");
+                    LogWarning("The list of IP Addresses you provided will not be enforced until you set IPAddressEnforcement to true");
                 }
             }
             if (IPAddressWACTokenLifetime.HasValue)
@@ -856,7 +856,7 @@ namespace PnP.PowerShell.Commands.Admin
                     {
                         if (DefaultSharingLinkType.Value == SharingLinkType.AnonymousAccess && Tenant.SharingCapability != SharingCapabilities.ExternalUserAndGuestSharing)
                         {
-                            WriteWarning(@"Anonymous access links aren’t enabled for your organization. You must first enable them by running the command ""Set-PnPTenant -SharingCapability ExternalUserAndGuestSharing"" before you can set the DefaultSharingLinkType parameter to AnonymousAccess. We will not set the value in this case.");
+                            LogWarning(@"Anonymous access links aren’t enabled for your organization. You must first enable them by running the command ""Set-PnPTenant -SharingCapability ExternalUserAndGuestSharing"" before you can set the DefaultSharingLinkType parameter to AnonymousAccess. We will not set the value in this case.");
                         }
                         else
                         {
@@ -889,7 +889,7 @@ namespace PnP.PowerShell.Commands.Admin
                     {
                         if (Tenant.SharingCapability != SharingCapabilities.ExternalUserAndGuestSharing)
                         {
-                            WriteWarning(@"Anonymous access links aren’t enabled for your organization. You must first enable them by running the command ""Set-PnPTenant -SharingCapability ExternalUserAndGuestSharing"" before you can set the FileAnonymousLinkType property. We will not set the value in this case.");
+                            LogWarning(@"Anonymous access links aren’t enabled for your organization. You must first enable them by running the command ""Set-PnPTenant -SharingCapability ExternalUserAndGuestSharing"" before you can set the FileAnonymousLinkType property. We will not set the value in this case.");
                         }
                         else
                         {
@@ -912,7 +912,7 @@ namespace PnP.PowerShell.Commands.Admin
                     {
                         if (Tenant.SharingCapability != SharingCapabilities.ExternalUserAndGuestSharing)
                         {
-                            WriteWarning(@"Anonymous access links aren’t enabled for your organization. You must first enable them by running the command ""Set-PnPTenant -SharingCapability ExternalUserAndGuestSharing"" before you can set the FolderAnonymousLinkType property. We will not set the value in this case.");
+                            LogWarning(@"Anonymous access links aren’t enabled for your organization. You must first enable them by running the command ""Set-PnPTenant -SharingCapability ExternalUserAndGuestSharing"" before you can set the FolderAnonymousLinkType property. We will not set the value in this case.");
                         }
                         else
                         {
@@ -989,7 +989,7 @@ namespace PnP.PowerShell.Commands.Admin
                         modified = true;
                         if (!AllowDownloadingNonWebViewableFiles.Value)
                         {
-                            WriteWarning("Users will not be able to download files that can't be viewed on the web. To allow download of files that can't be viewed on the web, run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
+                            LogWarning("Users will not be able to download files that can't be viewed on the web. To allow download of files that can't be viewed on the web, run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
                         }
                     }
                     else if (Force || ShouldContinue("To set this parameter, you need to set the Set-PnPTenant -ConditionalAccessPolicy to AllowLimitedAccess. Would you like to set it now?", Properties.Resources.Confirm))
@@ -999,7 +999,7 @@ namespace PnP.PowerShell.Commands.Admin
                         modified = true;
                         if (!AllowDownloadingNonWebViewableFiles.Value)
                         {
-                            WriteWarning("Users will not be able to download files that can't be viewed on the web. To allow download of files that can't be viewed on the web, run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
+                            LogWarning("Users will not be able to download files that can't be viewed on the web. To allow download of files that can't be viewed on the web, run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
                         }
                     }
                 }
@@ -1682,7 +1682,7 @@ namespace PnP.PowerShell.Commands.Admin
                     }
                     if (BlockDownloadFileTypeIds.Contains(SPBlockDownloadFileTypeId.TeamsMeetingRecording))
                     {
-                        WriteWarning("Please note that this policy only prevents download of Teams Meeting Recording files saved in SharePoint Online by the Teams service. Only new meeting recordings saved after this policy is set will be impacted.");
+                        LogWarning("Please note that this policy only prevents download of Teams Meeting Recording files saved in SharePoint Online by the Teams service. Only new meeting recordings saved after this policy is set will be impacted.");
                     }
                     BlockDownloadFileTypeIds = BlockDownloadFileTypeIds.Distinct().ToArray();
                     if (ExcludedBlockDownloadGroupIds != null && ExcludedBlockDownloadGroupIds.Length != 0)

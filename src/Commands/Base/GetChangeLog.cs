@@ -1,12 +1,13 @@
 using System.Management.Automation;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Get, "PnPChangeLog", DefaultParameterSetName = ParameterSet_SpecificVersion)]
     [OutputType(typeof(string))]
-    public partial class GetChangeLog : PSCmdlet
+    public partial class GetChangeLog : BasePSCmdlet
     {
         private const string ParameterSet_Nightly = "Current nightly";
         private const string ParameterSet_SpecificVersion = "Specific version";
@@ -49,7 +50,7 @@ namespace PnP.PowerShell.Commands
         {
             var url = "https://raw.githubusercontent.com/pnp/powershell/dev/CHANGELOG.md";
 
-            WriteVerbose($"Retrieving changelog from {url}");
+            LogDebug($"Retrieving changelog from {url}");
 
             var response = httpClient.GetAsync(url).GetAwaiter().GetResult();
             if (!response.IsSuccessStatusCode)
@@ -57,7 +58,7 @@ namespace PnP.PowerShell.Commands
                 throw new PSInvalidOperationException("Failed to retrieve changelog from GitHub");
             }
 
-            WriteVerbose("Successfully retrieved changelog from GitHub");
+            LogDebug("Successfully retrieved changelog from GitHub");
 
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
@@ -67,8 +68,8 @@ namespace PnP.PowerShell.Commands
                 throw new PSInvalidOperationException("Failed to identify versions in changelog on GitHub");
             }
 
-            WriteVerbose($"Found {releasedVersions.Count} released versions in changelog");
-            WriteVerbose($"Looking for release information on previous stable version {releasedVersions[0].Groups["version"].Value}");
+            LogDebug($"Found {releasedVersions.Count} released versions in changelog");
+            LogDebug($"Looking for release information on previous stable version {releasedVersions[0].Groups["version"].Value}");
 
             var match = Regex.Match(content, @$"(?<changelog>## \[{releasedVersions[0].Groups["version"].Value.Replace(".", @"\.")}]\n.*?)\n## \[\d+?\.\d+?\.\d+?\]", RegexOptions.Singleline);
 
@@ -90,7 +91,7 @@ namespace PnP.PowerShell.Commands
         {
             var url = "https://raw.githubusercontent.com/pnp/powershell/dev/CHANGELOG.md";
 
-            WriteVerbose($"Retrieving changelog from {url}");
+            LogDebug($"Retrieving changelog from {url}");
 
             var response = httpClient.GetAsync(url).GetAwaiter().GetResult();
             if (!response.IsSuccessStatusCode)
@@ -98,11 +99,11 @@ namespace PnP.PowerShell.Commands
                 throw new PSInvalidOperationException("Failed to retrieve changelog from GitHub");
             }
 
-            WriteVerbose("Successfully retrieved changelog from GitHub");
+            LogDebug("Successfully retrieved changelog from GitHub");
 
             var content = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-            WriteVerbose($"Looking for release information on the {version} release");
+            LogDebug($"Looking for release information on the {version} release");
 
             var match = Regex.Match(content, @$"(?<changelog>## \[{version}]\n.*?)\n## \[\d+?\.\d+?\.\d+?\]", RegexOptions.Singleline);
 

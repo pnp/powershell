@@ -142,7 +142,7 @@ namespace PnP.PowerShell.Commands.Teams
                 if (SensitivityLabels != null && SensitivityLabels.Length > 0)
                 {
                     SensitivityLabels = null;
-                    WriteWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Team creation");
+                    LogWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Team creation");
                 }
             }
 

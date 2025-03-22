@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.PeopleSettings
 
         protected override void ExecuteCmdlet()
         {
-            WriteVerbose("Getting access token for Microsoft Graph");
+            LogDebug("Getting access token for Microsoft Graph");
             var requestUrl = $"/v1.0/admin/people/profileCardProperties";
 
             if (ParameterSpecified(nameof(PropertyName)))
@@ -27,14 +27,14 @@ namespace PnP.PowerShell.Commands.PeopleSettings
                 {
                     requestUrl += $"/{PropertyName.ToString()}";
                 }
-                WriteVerbose($"Retrieving profile card property '{PropertyName}'");
+                LogDebug($"Retrieving profile card property '{PropertyName}'");
 
                 var propertyResult = GraphRequestHelper.Get<Model.Graph.ProfileCard.ProfileCardProperty>(requestUrl);
                 WriteObject(propertyResult, false);
             }
             else
             {
-                WriteVerbose("Retrieving all profile card properties");
+                LogDebug("Retrieving all profile card properties");
 
                 var propertyResults = GraphRequestHelper.GetResultCollection<Model.Graph.ProfileCard.ProfileCardProperty>(requestUrl);
                 WriteObject(propertyResults, true);

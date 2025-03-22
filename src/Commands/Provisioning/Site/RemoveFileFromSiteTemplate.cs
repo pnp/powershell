@@ -2,6 +2,7 @@
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Providers;
 using PnP.Framework.Provisioning.Providers.Xml;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.IO;
@@ -11,7 +12,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsCommon.Remove, "PnPFileFromSiteTemplate")]
-    public class RemoveFileFromSiteTemplate : PSCmdlet
+    public class RemoveFileFromSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Path;
@@ -31,7 +32,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             // Load the template
             ProvisioningTemplate template = ProvisioningHelper.LoadSiteTemplateFromFile(Path, TemplateProviderExtensions, (e) =>
                 {
-                    WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                    LogError(e);
                 });
 
             if (template == null)

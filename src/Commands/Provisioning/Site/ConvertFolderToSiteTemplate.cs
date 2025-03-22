@@ -1,5 +1,6 @@
 ﻿using PnP.Framework.Provisioning.Connectors.OpenXML;
 using PnP.Framework.Provisioning.Connectors.OpenXML.Model;
+using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,7 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Convert, "PnPFolderToSiteTemplate")]
-    public class ConvertFolderToSiteTemplate : PSCmdlet
+    public class ConvertFolderToSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Out;
@@ -97,7 +98,7 @@ namespace PnP.PowerShell.Commands.Provisioning
                     Folder = folder,
                     Content = File.ReadAllBytes(currentFile.FullName)
                 };
-                WriteVerbose("Adding file:" + currentFile.Name + " - " + folder);
+                LogDebug("Adding file:" + currentFile.Name + " - " + folder);
                 info.Files.Add(fileInfo);
             }
             byte[] pack = info.PackTemplate().ToArray();

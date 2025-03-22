@@ -28,19 +28,19 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 var appcatalogUri = ClientContext.Web.GetAppCatalog();
                 var ctx = ClientContext.Clone(appcatalogUri);
-                WriteVerbose("Checking if the tenant app catalog is a no-script site");
+                LogDebug("Checking if the tenant app catalog is a no-script site");
                 if (ctx.Site.IsNoScriptSite())
                 {
                     if (Force || ShouldContinue("The tenant appcatalog is a no-script site. Do you want to temporarily enable scripting on it?", Properties.Resources.Confirm))
                     {
-                        WriteVerbose("Temporarily enabling scripting on the tenant app catalog site");
+                        LogDebug("Temporarily enabling scripting on the tenant app catalog site");
                         var tenant = new Tenant(AdminContext);
                         tenant.SetSiteProperties(appcatalogUri.AbsoluteUri, noScriptSite: false);
                         isScriptSettingUpdated = true;
                     }
                     else
                     {
-                        WriteWarning("Scripting is disabled on the tenant app catalog site. This command cannot proceed without allowing scripts.");
+                        LogWarning("Scripting is disabled on the tenant app catalog site. This command cannot proceed without allowing scripts.");
                         return;
                     }
                 }
@@ -69,7 +69,7 @@ namespace PnP.PowerShell.Commands.Apps
             {
                 if (isScriptSettingUpdated)
                 {
-                    WriteVerbose("Disabling scripting on the tenant app catalog site");
+                    LogDebug("Disabling scripting on the tenant app catalog site");
                     var appcatalogUri = ClientContext.Web.GetAppCatalog();
                     var ctx = ClientContext.Clone(appcatalogUri);
 

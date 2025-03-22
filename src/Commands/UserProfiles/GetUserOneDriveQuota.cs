@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
             else
             {
-                WriteWarning($"Couldn't find onedrive quota for the account: {Account} ");
+                LogWarning($"Couldn't find onedrive quota for the account: {Account} ");
             }
         }
     }

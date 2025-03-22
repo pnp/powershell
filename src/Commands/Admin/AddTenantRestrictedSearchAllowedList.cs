@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Admin
 
             if(_sitelist.Count > 100)
             {
-                WriteWarning($"The maximum number of sites that can be added to the allowed list is 100. You have specified {_sitelist.Count} sites. Will try to add them anyway.");
+                LogWarning($"The maximum number of sites that can be added to the allowed list is 100. You have specified {_sitelist.Count} sites. Will try to add them anyway.");
             }
 
             Tenant.AddSPORestrictedSearchAllowedList(_sitelist);

@@ -71,7 +71,7 @@ namespace PnP.PowerShell.Commands.Diagnostic
             }
             catch (Exception e)
             {
-                WriteWarning($"Cannot inspect folder: {e.Message}");
+                LogWarning($"Cannot inspect folder: {e.Message}");
             }
 
             return stat;
@@ -105,7 +105,7 @@ namespace PnP.PowerShell.Commands.Diagnostic
 
             foreach (var list in uniqueLists)
             {
-                WriteVerbose($"List {list.Title} has unique permissions");
+                LogDebug($"List {list.Title} has unique permissions");
             }
 
             if (Recursive)

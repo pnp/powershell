@@ -41,7 +41,7 @@ namespace PnP.PowerShell.Commands
 
                 if(templateSetting == null || templateSetting.Value == null)
                 {
-                    WriteVerbose("No out of the box SharePoint site template setting with the identity provided through Identity has been found");
+                    LogDebug("No out of the box SharePoint site template setting with the identity provided through Identity has been found");
                     return;
                 }
 
@@ -55,12 +55,12 @@ namespace PnP.PowerShell.Commands
             }
             else
             {
-                WriteVerbose("Retrieving all out of the box SharePoint site template settings");
+                LogDebug("Retrieving all out of the box SharePoint site template settings");
 
                 var templateSettings = Tenant.GetAllOutOfBoxSiteTemplateSettings();
                 AdminContext.ExecuteQueryRetry();
 
-                WriteVerbose($"{templateSettings.Count} returned");
+                LogDebug($"{templateSettings.Count} returned");
 
                 var responses = templateSettings.Select(ts => new BuiltInSiteTemplateSettings
                 {

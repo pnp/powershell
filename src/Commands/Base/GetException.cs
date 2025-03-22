@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPException")]
     [OutputType(typeof(PnPException))]
-    public class GetException : PSCmdlet
+    public class GetException : BasePSCmdlet
     {
         [Parameter(Mandatory = false)]
         public SwitchParameter All;

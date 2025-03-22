@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 RestHelper.Post(Connection.HttpClient, $"{hostUrl}/_api/sp.userprofiles.peoplemanager/HardDeleteUserProfile(accountName=@a,userId='{UserId}')?@a='{normalizedUserName}'", AdminContext);
             }
 
-            WriteVerbose($"Completed deletion of user profile {LoginName}");
+            LogDebug($"Completed deletion of user profile {LoginName}");
         }
     }
 }

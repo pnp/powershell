@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands
             {
                 foreach(var script in Identity.GetTenantSiteScript(Tenant))
                 {
-                    WriteVerbose($"Removing site script {script.Title} with id {script.Id}");
+                    LogDebug($"Removing site script {script.Title} with id {script.Id}");
 
                     Tenant.DeleteSiteScript(script.Id);
                 }

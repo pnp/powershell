@@ -53,28 +53,28 @@ namespace PnP.PowerShell.Commands
             
             if(ParameterSpecified(nameof(LogoAlignment)))
             {
-                WriteVerbose($"Setting site logo alignment to '{LogoAlignment}'");
+                LogDebug($"Setting site logo alignment to '{LogoAlignment}'");
                 CurrentWeb.LogoAlignment = LogoAlignment;                
                 requiresWebUpdate = true;
             }            
 
             if(ParameterSpecified(nameof(HeaderLayout)))
             {
-                WriteVerbose($"Setting header layout to '{HeaderLayout}'");
+                LogDebug($"Setting header layout to '{HeaderLayout}'");
                 CurrentWeb.HeaderLayout = HeaderLayout;
                 requiresWebUpdate = true;
             }
 
             if(ParameterSpecified(nameof(HeaderEmphasis)))
             {
-                WriteVerbose($"Setting header emphasis to '{HeaderEmphasis}'");
+                LogDebug($"Setting header emphasis to '{HeaderEmphasis}'");
                 CurrentWeb.HeaderEmphasis = HeaderEmphasis;
                 requiresWebUpdate = true;
             }
 
             if(ParameterSpecified(nameof(HideTitleInHeader)))
             {
-                WriteVerbose($"Setting hide title in header to '{HideTitleInHeader}'");
+                LogDebug($"Setting hide title in header to '{HideTitleInHeader}'");
                 CurrentWeb.HideTitleInHeader = HideTitleInHeader;
                 requiresWebUpdate = true;
             }
@@ -85,22 +85,22 @@ namespace PnP.PowerShell.Commands
                 
                 if(ParameterSpecified(nameof(HeaderBackgroundImageUrl)))
                 {
-                    WriteVerbose($"Setting header background image to '{HeaderBackgroundImageUrl}'");
+                    LogDebug($"Setting header background image to '{HeaderBackgroundImageUrl}'");
                     setSiteBackgroundImageInstructions.Add("\"relativeLogoUrl\":\"" + UrlUtilities.UrlEncode(HeaderBackgroundImageUrl) + "\"");
                 }
                 else
                 {
-                    WriteVerbose($"Setting header background image isFocalPatch to 'true'");
+                    LogDebug($"Setting header background image isFocalPatch to 'true'");
                     setSiteBackgroundImageInstructions.Add("\"isFocalPatch\":true");
                 }
                 if(ParameterSpecified(nameof(HeaderBackgroundImageFocalX)))
                 {
-                    WriteVerbose($"Setting header background image focal point X to '{HeaderBackgroundImageFocalX.ToString().Replace(',', '.')}'");
+                    LogDebug($"Setting header background image focal point X to '{HeaderBackgroundImageFocalX.ToString().Replace(',', '.')}'");
                     setSiteBackgroundImageInstructions.Add("\"focalx\":" + HeaderBackgroundImageFocalX.ToString().Replace(',', '.'));
                 }
                 if(ParameterSpecified(nameof(HeaderBackgroundImageFocalY)))
                 {
-                    WriteVerbose($"Setting header background image focal point Y to '{HeaderBackgroundImageFocalY.ToString().Replace(',', '.')}'");
+                    LogDebug($"Setting header background image focal point Y to '{HeaderBackgroundImageFocalY.ToString().Replace(',', '.')}'");
                     setSiteBackgroundImageInstructions.Add("\"focaly\":" + HeaderBackgroundImageFocalY.ToString().Replace(',', '.'));
                 }
 
@@ -110,26 +110,26 @@ namespace PnP.PowerShell.Commands
                     stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                     CurrentWeb.EnsureProperties(p => p.Url);
                     var result = RequestHelper.PostHttpContent($"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", stringContent);
-                    WriteVerbose($"Response from setsitelogo request: {result.StatusCode}");
+                    LogDebug($"Response from setsitelogo request: {result.StatusCode}");
                 }
             }
 
             if (requiresWebUpdate)
             {
-                WriteVerbose("Updating web");
+                LogDebug("Updating web");
                 CurrentWeb.Update();
                 ClientContext.ExecuteQueryRetry();
             }
         }
         private void SetSiteImage(string imageUrl, string imageType, int aspect)
         {
-            WriteVerbose($"Setting site {imageType} image to '{imageUrl}'");
+            LogDebug($"Setting site {imageType} image to '{imageUrl}'");
 
             var stringContent = new StringContent($"{{\"relativeLogoUrl\":\"{imageUrl}\",\"type\":0,\"aspect\":{aspect}}}");
             stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             CurrentWeb.EnsureProperties(p => p.Url);
             var result = RequestHelper.PostHttpContent($"{CurrentWeb.Url.TrimEnd('/')}/_api/siteiconmanager/setsitelogo", stringContent);
-            WriteVerbose($"Response from {imageType} request: {result.StatusCode}");
+            LogDebug($"Response from {imageType} request: {result.StatusCode}");
         }
     }
 }

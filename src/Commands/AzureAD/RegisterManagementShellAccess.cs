@@ -1,4 +1,5 @@
 ﻿using PnP.Framework;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Management.Automation;
@@ -6,7 +7,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.AzureAD
 {
     [Cmdlet(VerbsLifecycle.Register, "PnPManagementShellAccess")]
-    public class RegisterManagementShellAccess : PSCmdlet
+    public class RegisterManagementShellAccess : BasePSCmdlet
     {
         private const string ParameterSet_REGISTER = "Register access";
         private const string ParameterSet_SHOWURL = "Show Consent Url";        
