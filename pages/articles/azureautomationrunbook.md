@@ -151,7 +151,7 @@ We're now ready to create a Runbook in which your PnP PowerShell script will run
 1. On the Edit PowerShell Runbook page, enter your PnP PowerShell code in the large white area, i.e.:
 
    ```powershell
-   Connect-PnPOnline -ManagedIdentity
+   Connect-PnPOnline tenant.sharepoint.com -ManagedIdentity
 
    Get-PnPMicrosoft365Group
    ```
