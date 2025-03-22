@@ -15,17 +15,17 @@ title: Get-PnPAzureADGroupMember
 
   * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, Group.Read.All, Group.ReadWrite.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All, User.ReadWrite.All
 
-Gets members of a particular Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Gets members of a particular Entra ID group. This can be a security, distribution or Microsoft 365 group.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> [-Connection <PnPConnection>]
+Get-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> [-Connection <PnPConnection>] [-Transitive]
 ```
 
 ## DESCRIPTION
 
-Allows to list members from given Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Allows to list members from given Entra ID group. This can be a security, distribution or Microsoft 365 group.
 
 ## EXAMPLES
 
@@ -34,19 +34,26 @@ Allows to list members from given Azure Active Directory group. This can be a se
 Get-PnPAzureADGroupMember -Identity $groupId
 ```
 
-Retrieves all the members of a specific Azure Active Directory group based on its ID.
+Retrieves all the direct members of a specific Entra ID group based on its ID.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPAzureADGroupMember -Identity $group
 ```
 
-Retrieves all the members of a specific Azure Active Directory group based on the group's object instance.
+Retrieves all the direct members of a specific Entra ID group based on the group's object instance.
+
+### EXAMPLE 3
+```powershell
+Get-PnPAzureADGroupMember -Identity $group -Transitive
+```
+
+Retrieves all the direct and transitive members (members of groups inside groups) of a specific Entra ID group based on the group's object instance.
 
 ## PARAMETERS
 
 ### -Identity
-The Identity of the Azure Active Directory group.
+The Identity of the Entra ID group.
 
 ```yaml
 Type: AzureADGroupPipeBind
@@ -69,6 +76,20 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Transitive
+If provided, the direct and transitive members (members of groups in the group) of a group will be returned. If not provided, only the members directly assigned to the group will be returned.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

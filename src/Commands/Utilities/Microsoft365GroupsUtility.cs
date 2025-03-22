@@ -389,6 +389,11 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             return GetGroupMembers(requestHelper, "members", groupId);
         }
+        
+        internal static IEnumerable<Microsoft365User> GetTransitiveMembers(ApiRequestHelper requestHelper, Guid groupId)
+        {
+            return GetGroupMembers(requestHelper, "transitiveMembers", groupId);
+        }
 
         private static IEnumerable<Microsoft365User> GetGroupMembers(ApiRequestHelper requestHelper, string userType, Guid groupId)
         {

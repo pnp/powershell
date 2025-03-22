@@ -18,6 +18,9 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public AzureADGroupPipeBind Identity;
 
+        [Parameter(Mandatory = false, ValueFromPipeline = false)]
+        public SwitchParameter Transitive;
+
         protected override void ExecuteCmdlet()
         {
             Group group = null;
@@ -30,8 +33,11 @@ namespace PnP.PowerShell.Commands.Graph
             if (group != null)
             {
                 // Get members of the group
-                var members = Microsoft365GroupsUtility.GetMembers(GraphRequestHelper, new Guid(group.Id));
-                WriteObject(members?.OrderBy(m => m.DisplayName), true);
+                var members = Transitive
+                    ? Microsoft365GroupsUtility.GetTransitiveMembers(GraphRequestHelper, new Guid(group.Id))
+                    : Microsoft365GroupsUtility.GetMembers(GraphRequestHelper, new Guid(group.Id));
+                    WriteObject(members?.OrderBy(m => m.DisplayName), true);
+
             }
         }
     }
