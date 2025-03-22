@@ -63,7 +63,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPTraceLog` cmdlet which allows reading from the detailed in memory logs of the PnP PowerShell cmdlet execution [#4794](https://github.com/pnp/powershell/pull/4794)
 - Added `-Transitive` parameter to `Get-PnPAzureADGroupMember` cmdlet to allow members of groups inside groups to be retrieved [#4799](https://github.com/pnp/powershell/pull/4799)
 - Added the ability to `Get-PnPPage` to return all site pages in the site by omitting the `-Identity` parameter [#4805](https://github.com/pnp/powershell/pull/4805)
-- Added `Copy-PnPPage`, `Move-PnPPage` and `Get-PnPPageCopyProgress` cmdlets to allow for copying and moving site pages between sites
+- Added `Copy-PnPPage`, `Move-PnPPage` and `Get-PnPPageCopyProgress` cmdlets to allow for copying and moving site pages between sites [#4806](https://github.com/pnp/powershell/pull/4806)
 
 ### Changed
 
