@@ -61,6 +61,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPMicrosoft365Roadmap` which allows retrieval of the Microsoft 365 Roadmap items [#4764](https://github.com/pnp/powershell/pull/4764)
 - Added `-Name` parameter to `Add-PnPApplicationCustomizer` cmdlet to allow for specifying the name of the application customizer [#4767](https://github.com/pnp/powershell/pull/4767)
 - Added `Get-PnPTraceLog` cmdlet which allows reading from the detailed in memory logs of the PnP PowerShell cmdlet execution [#4794](https://github.com/pnp/powershell/pull/4794)
+- Added `-Transitive` parameter to `Get-PnPAzureADGroupMember` cmdlet to allow members of groups inside groups to be retrieved [#4799](https://github.com/pnp/powershell/pull/4799)
 
 ### Changed
 
@@ -143,6 +144,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
 ### Contributors
 
+- [PitSysAdmin]
 - Abhijeet Jadhav [TekExpo]
 - [abwlodar]
 - [jgfgoncalves]
