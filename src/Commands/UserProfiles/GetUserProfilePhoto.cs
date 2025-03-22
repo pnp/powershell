@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
 
         protected override void ExecuteCmdlet()
         {
-            WriteVerbose($"Looking up user provided through the {nameof(Identity)} parameter");
+            LogDebug($"Looking up user provided through the {nameof(Identity)} parameter");
             Model.AzureAD.User user = Identity.GetUser(AccessToken, Connection.AzureEnvironment);
 
             if (user == null)
@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 throw new PSArgumentException($"User provided through the {nameof(Identity)} parameter could not be found");
             }
 
-            WriteVerbose($"Setting profile photo for user {user.UserPrincipalName}");
+            LogDebug($"Setting profile photo for user {user.UserPrincipalName}");
 
             if (Filename == null)
             {

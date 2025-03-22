@@ -98,12 +98,12 @@ namespace PnP.PowerShell.Commands.Graph
                 catch (Exception e)
                 {
                     while (e.InnerException != null) e = e.InnerException;
-                    WriteError(new ErrorRecord(e, "GROUPUPDATEFAILED", ErrorCategory.InvalidOperation, this));
+                    LogError(e);
                 }
             }
             else
             {
-                WriteError(new ErrorRecord(new Exception("Group not found"), "GROUPNOTFOUND", ErrorCategory.ObjectNotFound, this));
+                LogError("Group not found");
             }
         }
     }

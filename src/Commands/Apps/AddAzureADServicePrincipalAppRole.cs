@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.Apps
                 throw new PSArgumentException("Service principal not found", nameof(Principal));
             }
 
-            WriteVerbose($"Adding app role to service principal {principal.DisplayName}");
+            LogDebug($"Adding app role to service principal {principal.DisplayName}");
 
             AzureADServicePrincipalAppRole appRole;
 
@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Apps
                 throw new PSArgumentException("AppRole not found", nameof(AppRole));
             }
 
-            WriteVerbose($"Adding app role {appRole.Value}: {appRole.DisplayName}");
+            LogDebug($"Adding app role {appRole.Value}: {appRole.DisplayName}");
 
             var response = ServicePrincipalUtility.AddServicePrincipalRoleAssignment(GraphRequestHelper, principal, appRole);
             WriteObject(response, false);

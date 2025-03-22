@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Principals
                         if (TokenHandler.RetrieveTokenType(AccessToken) == IdType.Delegate)
                         {
                             // Access token is a delegate, we're going to use the currently connected user to elevate
-                            WriteVerbose("Currently connected user will be used to elevate the role assignment");
+                            LogDebug("Currently connected user will be used to elevate the role assignment");
                             PrincipalId = TokenHandler.RetrieveTokenUser(AccessToken);
                         }
                         else
@@ -106,7 +106,7 @@ namespace PnP.PowerShell.Commands.Principals
                 throw new PSInvalidOperationException("No eligible role assignment found");
             }
 
-            WriteVerbose($"Creating role assignment schedule request");
+            LogDebug($"Creating role assignment schedule request");
             var response = PriviledgedIdentityManagamentUtility.CreateRoleAssignmentScheduleRequest(GraphRequestHelper, roleEligibilitySchedule, Justification, StartAt, ExpireInHours);
             WriteObject(response.IsSuccessStatusCode);
         }

@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Files
 
             IFile sourceFile = Connection.PnPContext.Web.GetFileByServerRelativeUrl(serverRelativeUrl, p => p.VroomDriveID, p => p.VroomItemID);
 
-            WriteVerbose("Converting file to the specified format");
+            LogDebug("Converting file to the specified format");
             var convertedFile = sourceFile.ConvertTo(new ConvertToOptions { Format = ConvertToFormat });
 
             var fileName = System.IO.Path.GetFileNameWithoutExtension(sourceFile.Name);
@@ -79,11 +79,11 @@ namespace PnP.PowerShell.Commands.Files
                     var fileOut = System.IO.Path.Combine(Path, newFileName);
                     if (System.IO.File.Exists(fileOut) && !Force)
                     {
-                        WriteWarning($"File '{sourceFile.Name}' exists already. Use the -Force parameter to overwrite the file.");
+                        LogWarning($"File '{sourceFile.Name}' exists already. Use the -Force parameter to overwrite the file.");
                     }
                     else
                     {
-                        WriteVerbose("Saving file to the disc.");
+                        LogDebug("Saving file to the disc.");
                         using FileStream fs = new(fileOut, FileMode.Create);
                         convertedFile.CopyTo(fs);
                     }
@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.Files
 
                 case UPLOADTOSHAREPOINT:
 
-                    WriteVerbose("Uploading file to the specified folder");
+                    LogDebug("Uploading file to the specified folder");
                     var folder = EnsureFolder();
                     var uploadedFile = folder.UploadFile(newFileName, convertedFile, Force);
 
@@ -117,7 +117,7 @@ namespace PnP.PowerShell.Commands.Files
                     }
 
                     WriteObject(uploadedFile);
-                    WriteVerbose("File uploaded.");
+                    LogDebug("File uploaded.");
                     break;
 
             }

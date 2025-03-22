@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             var baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
 
-            WriteVerbose($"Retrieving all Power Automate Flows within environment '{environmentName}'");
+            LogDebug($"Retrieving all Power Automate Flows within environment '{environmentName}'");
 
             var flowUrl = $"{baseUrl}/providers/Microsoft.ProcessSimple/scopes/admin/environments/{environmentName}/v2/flows?api-version=2016-11-01&include=softDeletedFlows";
             var results = ArmRequestHelper.GetResultCollection<Model.PowerPlatform.PowerAutomate.Flow>(flowUrl);

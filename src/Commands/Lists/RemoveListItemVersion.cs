@@ -61,11 +61,11 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (Force || ShouldContinue(string.Format(Resources.Delete0, version.VersionLabel), Resources.Confirm))
             {
-                WriteVerbose($"Trying to remove version {Version.VersionLabel}");
+                LogDebug($"Trying to remove version {Version.VersionLabel}");
 
                 version.Delete();
 
-                WriteVerbose($"Removed version {Version.VersionLabel} of list item {item.Id} in list {list.Title}");
+                LogDebug($"Removed version {Version.VersionLabel} of list item {item.Id} in list {list.Title}");
             }
         }
     }

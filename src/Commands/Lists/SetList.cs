@@ -123,7 +123,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (list is null)
             {
-                WriteWarning($"List {Identity} not found");
+                LogWarning($"List {Identity} not found");
                 return;
             }
 
@@ -389,7 +389,7 @@ namespace PnP.PowerShell.Commands.Lists
             {
                 if (DefaultSensitivityLabelForLibrary == null)
                 {
-                    WriteVerbose("Removing sensitivity label from library");
+                    LogDebug("Removing sensitivity label from library");
                     list.DefaultSensitivityLabelForLibrary = null;
                     updateRequired = true;
                 }
@@ -397,7 +397,7 @@ namespace PnP.PowerShell.Commands.Lists
                 {
                     if (DefaultSensitivityLabelForLibrary.LabelId.HasValue)
                     {
-                        WriteVerbose($"Setting provided sensitivity label id '{DefaultSensitivityLabelForLibrary.LabelId}' as the default sensitivity label for the library");
+                        LogDebug($"Setting provided sensitivity label id '{DefaultSensitivityLabelForLibrary.LabelId}' as the default sensitivity label for the library");
                         list.DefaultSensitivityLabelForLibrary = DefaultSensitivityLabelForLibrary.LabelId.ToString();
                         updateRequired = true;
                     }
@@ -405,7 +405,7 @@ namespace PnP.PowerShell.Commands.Lists
                     {
                         if (!string.IsNullOrEmpty(DefaultSensitivityLabelForLibrary.LabelName))
                         {
-                            WriteVerbose($"Looking up sensitivity label id by label name '{DefaultSensitivityLabelForLibrary.LabelName}'");
+                            LogDebug($"Looking up sensitivity label id by label name '{DefaultSensitivityLabelForLibrary.LabelName}'");
                             var label = DefaultSensitivityLabelForLibrary.GetLabelByNameThroughGraph(Connection,RequestHelper);
 
                             if (label == null || !label.Id.HasValue)
@@ -414,7 +414,7 @@ namespace PnP.PowerShell.Commands.Lists
                             }
                             else
                             {
-                                WriteVerbose($"Provided sensitivity label name '{DefaultSensitivityLabelForLibrary.LabelName}' resolved to sensitivity label id '{label.Id.Value}' and will be set as the default sensitivity label for the library");
+                                LogDebug($"Provided sensitivity label name '{DefaultSensitivityLabelForLibrary.LabelName}' resolved to sensitivity label id '{label.Id.Value}' and will be set as the default sensitivity label for the library");
                                 list.DefaultSensitivityLabelForLibrary = label.Id.Value.ToString();
                                 updateRequired = true;
                             }
@@ -432,7 +432,7 @@ namespace PnP.PowerShell.Commands.Lists
                 // Is this for a list or a document library
                 if (list.BaseType == BaseType.DocumentLibrary)
                 {
-                    WriteVerbose($"Configuring document library to use default open mode to be '{OpenDocumentsMode}'");
+                    LogDebug($"Configuring document library to use default open mode to be '{OpenDocumentsMode}'");
 
                     switch (OpenDocumentsMode)
                     {
@@ -448,7 +448,7 @@ namespace PnP.PowerShell.Commands.Lists
                 }
                 else
                 {
-                    WriteWarning($"{nameof(OpenDocumentsMode)} is only supported for document libraries");
+                    LogWarning($"{nameof(OpenDocumentsMode)} is only supported for document libraries");
                 }
 
                 switch (OpenDocumentsMode)

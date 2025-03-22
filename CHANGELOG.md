@@ -60,6 +60,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPSiteDocumentIdPrefix` which allows changing of the document id prefix on a site collection [#4765](https://github.com/pnp/powershell/pull/4765)
 - Added `Get-PnPMicrosoft365Roadmap` which allows retrieval of the Microsoft 365 Roadmap items [#4764](https://github.com/pnp/powershell/pull/4764)
 - Added `-Name` parameter to `Add-PnPApplicationCustomizer` cmdlet to allow for specifying the name of the application customizer [#4767](https://github.com/pnp/powershell/pull/4767)
+- Added `Get-PnPTraceLog` cmdlet which allows reading from the detailed in memory logs of the PnP PowerShell cmdlet execution [#4794](https://github.com/pnp/powershell/pull/4794)
 
 ### Changed
 
@@ -91,6 +92,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - `Set-PnPPropertyBagValue` and `Remove-PnPPropertyBagValue` now toggle the NoScript status of the site to allow setting/removing property bag values, but only if the tenant wide `AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled` is not enabled [#4680](https://github.com/pnp/powershell/pull/4680)
 - `Get-PnPTenant` now uses nullable types for the properties that can return null if the property is not set or could not be retrieved. Beware that the property `PublicCdnOrigins` has been renamed to `PublicCdnOriginParsed `. All other property names will remain the same. [#4722](https://github.com/pnp/powershell/pull/4722)
 - Removed `New-PnPMicrosoft365Group` setting the group visibility options twice when providing `-HideFromAddressLists` and/or `-HideFromOutlookClients` and adding logging around trying to set the group visibility [#4791](https://github.com/pnp/powershell/pull/4791)
+- Visual Studio Code launch profiles have been cleaned up and restructured [#4808](https://github.com/pnp/powershell/pull/4804)
 
 ### Fixed
 
@@ -141,6 +143,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
  
 ### Contributors
 
+- Abhijeet Jadhav [TekExpo]
 - [abwlodar]
 - [jgfgoncalves]
 - Stephen Cox [stephen-cox-nzx]

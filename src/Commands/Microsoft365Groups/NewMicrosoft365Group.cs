@@ -169,7 +169,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     }
                     else
                     {
-                        WriteWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Group creation");
+                        LogWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Group creation");
                     }
                 }
 

@@ -69,13 +69,13 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             if (string.IsNullOrWhiteSpace(From))
             {
-                WriteVerbose("Sending e-mail through SharePoint Online");
-                WriteWarning("\n The SharePoint SendEmail API will be retired on October 31, 2025, and this method of sending emails will stop working. \n Please update your script to use Microsoft Graph as described here: https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph \n Learn more: https://devblogs.microsoft.com/microsoft365dev/retirement-of-the-sharepoint-sendemail-api");
+                LogDebug("Sending e-mail through SharePoint Online");
+                LogWarning("\n The SharePoint SendEmail API will be retired on October 31, 2025, and this method of sending emails will stop working. \n Please update your script to use Microsoft Graph as described here: https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph \n Learn more: https://devblogs.microsoft.com/microsoft365dev/retirement-of-the-sharepoint-sendemail-api");
                 MailUtility.SendSharePointEmail(ClientContext, Subject, Body, To, Cc, Bcc);
             }
             else
             {
-                WriteVerbose($"Sending e-mail using Microsoft Graph");
+                LogDebug($"Sending e-mail using Microsoft Graph");
                 List<MessageAttachmentOptions> messageAttachmentOptions = null;
                 if (ParameterSpecified(nameof(Attachments)))
                 {
@@ -104,7 +104,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 }, SaveToSentItems ?? true);
             }
 
-            WriteVerbose($"E-mail sent successfully");
+            LogDebug($"E-mail sent successfully");
         }
     }
 }

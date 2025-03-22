@@ -10,7 +10,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Get, "PnPAzureCertificate", DefaultParameterSetName = "SELF")]
     [OutputType(typeof(Model.AzureCertificate))]
-    public class GetPnPAdalCertificate : PSCmdlet
+    public class GetPnPAzureCertificate : BasePSCmdlet
     {
         [Parameter(Mandatory = true)]
         [Alias("CertificatePath")]
@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.Base
             return manifestEntry;
         }
 
-        static string/*?*/ GetPfxBase64OrWarn(Cmdlet cmdlet, X509Certificate2 certificate, SecureString password)
+        static string/*?*/ GetPfxBase64OrWarn(BasePSCmdlet cmdlet, X509Certificate2 certificate, SecureString password)
         {
             try
             {
@@ -68,12 +68,12 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch (Exception ex)
             {
-                cmdlet.WriteWarning(ex.Message);
+                cmdlet.LogWarning(ex.Message);
                 return null;
             }
         }
 
-        internal static void WriteAzureCertificateOutput(PSCmdlet cmdlet, X509Certificate2 certificate, SecureString password)
+        internal static void WriteAzureCertificateOutput(BasePSCmdlet cmdlet, X509Certificate2 certificate, SecureString password)
         {
             string manifestEntry = GetManifestEntry(certificate);
             var pfxBase64 = GetPfxBase64OrWarn(cmdlet, certificate, password);

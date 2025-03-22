@@ -44,14 +44,14 @@ namespace PnP.PowerShell.Commands.Admin
             SPContainerTypeProperties sPContainerTypeProperties;
             if (!ParameterSpecified(nameof(TrialContainerType)) || !TrialContainerType.ToBool())
             {
-                WriteWarning($"Creation of standard container types is not yet supported. This will be enabled in the future. For now, only trial container types can be created by adding the -{nameof(TrialContainerType)} parameter.");
+                LogWarning($"Creation of standard container types is not yet supported. This will be enabled in the future. For now, only trial container types can be created by adding the -{nameof(TrialContainerType)} parameter.");
                 return;
 
                 // NOTICE:
                 // Currently disabled by request of the product group as it doesn't work reliably yet
                 // Once the official endpoint to create standard container types is available, this code can be enabled again and will point to the proper API to use
 
-                // WriteVerbose("Creating a standard container type");
+                // LogDebug("Creating a standard container type");
 
                 // sPContainerTypeProperties = new SPContainerTypeProperties
                 // {
@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                WriteVerbose("Creating a trial container type");
+                LogDebug("Creating a trial container type");
 
                 sPContainerTypeProperties = new SPContainerTypeProperties
                 {
@@ -93,7 +93,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                WriteVerbose("Failed to create container type");
+                LogDebug("Failed to create container type");
             }
         }
     }

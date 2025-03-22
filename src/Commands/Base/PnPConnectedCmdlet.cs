@@ -113,13 +113,8 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     ex.Data["CorrelationId"] = Connection.Context.TraceCorrelationId;
                     ex.Data["TimeStampUtc"] = DateTime.UtcNow;
-                    var errorDetails = new ErrorDetails(errorMessage);
 
-                    errorDetails.RecommendedAction = "Use Get-PnPException for more details.";
-                    var errorRecord = new ErrorRecord(ex, "EXCEPTION", ErrorCategory.WriteError, null);
-                    errorRecord.ErrorDetails = errorDetails;
-
-                    WriteError(errorRecord);
+                    LogError(errorMessage);
                 }
                 
             }

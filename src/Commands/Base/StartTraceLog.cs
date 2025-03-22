@@ -1,18 +1,20 @@
-﻿
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Utilities.Logging;
 
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Start, "PnPTraceLog")]
-    public class StartTraceLog : PSCmdlet
+    public class StartTraceLog : BasePSCmdlet
     {
         [Parameter(Mandatory = false)]
         public string Path;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter WriteToConsole;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter WriteToLogStream;
 
         [Parameter(Mandatory = false)]
         public Framework.Diagnostics.LogLevel Level = Framework.Diagnostics.LogLevel.Information;
@@ -25,59 +27,52 @@ namespace PnP.PowerShell.Commands.Base
 
         protected override void ProcessRecord()
         {
+            Framework.Diagnostics.Log.LogLevel = Level;
+
             if (WriteToConsole.ToBool())
             {
-                RemoveListener(ConsoleListenername);
+                LogDebug($"Adding console listener named {ConsoleListenername}");
+
+                LoggingUtility.RemoveListener(ConsoleListenername);
                 ConsoleTraceListener consoleListener = new(false)
                 {
                     Name = ConsoleListenername
                 };
                 Trace.Listeners.Add(consoleListener);
-                Framework.Diagnostics.Log.LogLevel = Level;
+            }
+
+            if (WriteToLogStream.ToBool())
+            {
+                LogDebug($"Adding log stream listener named {LogStreamListener.DefaultListenerName}");
+
+                LoggingUtility.RemoveListener(LogStreamListener.DefaultListenerName);
+                LogStreamListener logStreamListener = new()
+                {
+                    Name = LogStreamListener.DefaultListenerName
+                };
+                Trace.Listeners.Add(logStreamListener);
             }
 
             if (!string.IsNullOrEmpty(Path))
             {
-                RemoveListener(FileListenername);
+                LoggingUtility.RemoveListener(FileListenername);
 
                 if (!System.IO.Path.IsPathRooted(Path))
                 {
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                 }
-                // Create DelimitedListTraceListener in case Delimiter parameter has been specified, if not create TextWritterTraceListener
+
+                LogDebug($"Adding file listener named {FileListenername} to {Path}");
+
                 TraceListener listener = new TextWriterTraceListener(Path)
                 {
                     Name = FileListenername
                 };
                 Trace.Listeners.Add(listener);
-                Framework.Diagnostics.Log.LogLevel = Level;
             }
 
             Trace.AutoFlush = AutoFlush;
             Trace.IndentSize = 4;
-        }
-
-        /// <summary>
-        /// Tries to remove the listener with the given name from the Trace.Listeners collection.
-        /// If the listener is not found, it will be ignored.
-        /// </summary>
-        /// <param name="listenerName">Name of the trace listener</param>
-        private static void RemoveListener(string listenerName)
-        {
-            try
-            {
-                var existingListener = Trace.Listeners[listenerName];
-                if (existingListener != null)
-                {
-                    existingListener.Flush();
-                    existingListener.Close();
-                    Trace.Listeners.Remove(existingListener);
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
         }
     }
 }

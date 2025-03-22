@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Site
             }
             else
             {
-                WriteWarning("Teamify prompt was already hidden");
+                LogWarning("Teamify prompt was already hidden");
             }
         }
     }

@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Files
                     var siteRelativeUrl = file.ServerRelativeUrl.Remove(0, new Uri(CurrentWeb.Url).AbsolutePath.Length);
                     url = $"{CurrentWeb.Url}/_api/SP.DocumentManagement.DocumentId/ResetDocIdByServerRelativePath(decodedUrl='{siteRelativeUrl}')";
 
-                    WriteVerbose($"Making a POST request to {url} to request a new document ID for the file {file.ServerRelativeUrl}");
+                    LogDebug($"Making a POST request to {url} to request a new document ID for the file {file.ServerRelativeUrl}");
                     break;
                 case ParameterSet_RESETLIBRARY:
                     var library = Library.GetList(CurrentWeb, l => l.ParentWebUrl);
@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Files
                     var contentType = ContentType.GetContentType(library);
 
                     url = $"{CurrentWeb.Url}/_api/SP.DocumentManagement.DocumentId/ResetDocIdsInLibrary(decodedUrl='{library.RootFolder.ServerRelativeUrl.Remove(0, library.ParentWebUrl.Length)}',contentTypeId='{contentType.Id}')";
-                    WriteVerbose($"Making a POST request to {url} to request new document IDs for the files in library {library.Title} with content type ID {contentType.Id}");
+                    LogDebug($"Making a POST request to {url} to request new document IDs for the files in library {library.Title} with content type ID {contentType.Id}");
                     break;
             }
 

@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Admin
         {
             var includeSmartGestures = !DisableRedirection;
 
-            WriteVerbose($"Invoking site swap with source {SourceUrl}, target {TargetUrl} and archive {ArchiveUrl}");
+            LogDebug($"Invoking site swap with source {SourceUrl}, target {TargetUrl} and archive {ArchiveUrl}");
 
             var operation = this.Tenant.SwapSiteWithSmartGestureOption(SourceUrl, TargetUrl, ArchiveUrl, includeSmartGestures);
             AdminContext.Load(operation);

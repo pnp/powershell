@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         public SwitchParameter Force;
         protected override void ExecuteCmdlet()
         {
-            WriteWarning("This cmdlet is work in progress, the markdown report will improve/grow with later releases.");
+            LogWarning("This cmdlet is work in progress, the markdown report will improve/grow with later releases.");
             if (!Path.IsPathRooted(TemplatePath))
             {
                 TemplatePath = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, TemplatePath);

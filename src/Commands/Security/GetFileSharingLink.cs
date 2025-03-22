@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Security
         {
             IFile file = Identity.GetCoreFile(Connection.PnPContext, this);
 
-            WriteVerbose("Retrieving file sharing details from Microsoft Graph");
+            LogDebug("Retrieving file sharing details from Microsoft Graph");
             var sharingLinks = file?.GetShareLinks();
 
             WriteObject(sharingLinks?.RequestedItems, true);

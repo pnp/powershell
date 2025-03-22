@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Site
             {
                 if (ex.Message == @"Missing DirectorySettingTemplate for ""Group.Unified""")
                 {
-                    WriteError(new ErrorRecord(new InvalidOperationException("Site Classification is not enabled for this tenant. Use Enable-PnPSiteClassification to enable classifications."), "SITECLASSIFICATION_NOT_ENABLED", ErrorCategory.ResourceUnavailable, null));
+                    LogError("Site Classification is not enabled for this tenant. Use Enable-PnPSiteClassification to enable classifications.");
                 }
                 else
                 {

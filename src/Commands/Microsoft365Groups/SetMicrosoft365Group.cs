@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 }
                 if (changed)
                 {
-                    WriteVerbose("Updating Microsoft 365 Group properties in Microsoft Graph");
+                    LogDebug("Updating Microsoft 365 Group properties in Microsoft Graph");
                     group = Microsoft365GroupsUtility.Update(GraphRequestHelper, group);
                 }
 
@@ -106,7 +106,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 {
                     if (TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
                     {
-                        WriteWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
+                        LogWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
                     }
 
                     group.AllowExternalSenders = AllowExternalSenders.Value;
@@ -117,7 +117,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                 {
                     if (TokenHandler.RetrieveTokenType(AccessToken) != Enums.IdType.Delegate)
                     {
-                        WriteWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
+                        LogWarning($"{nameof(AllowExternalSenders)} can only be used with a delegate token. You're currently connected through an application token.");
                     }
 
                     group.AutoSubscribeNewMembers = AutoSubscribeNewMembers.Value;
@@ -126,7 +126,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
 
                 if (exchangeOnlinePropertiesChanged)
                 {
-                    WriteVerbose("Updating Microsoft 365 Group Exchange Online properties through Microsoft Graph");
+                    LogDebug("Updating Microsoft 365 Group Exchange Online properties through Microsoft Graph");
                     group = Microsoft365GroupsUtility.UpdateExchangeOnlineSetting(GraphRequestHelper, group.Id.Value, group);
                 }
 
@@ -157,7 +157,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     }
                     else
                     {
-                        WriteWarning("There is already a provisioned Team for this group. Skipping Team creation.");
+                        LogWarning("There is already a provisioned Team for this group. Skipping Team creation.");
                     }
                 }
 
@@ -187,7 +187,7 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     }
                     else
                     {
-                        WriteWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Group creation");
+                        LogWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Group creation");
                     }
                 }
             }

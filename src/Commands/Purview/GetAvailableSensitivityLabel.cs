@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.Purview
 
                 if (user == null)
                 {
-                    WriteWarning("Provided user not found");
+                    LogWarning("Provided user not found");
                     return;
                 }
 

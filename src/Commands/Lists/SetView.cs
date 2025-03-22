@@ -41,18 +41,18 @@ namespace PnP.PowerShell.Commands.Fields
 
                 if (Identity.Id != Guid.Empty)
                 {
-                    WriteVerbose($"Retrieving view by Id '{Identity.Id}'");
+                    LogDebug($"Retrieving view by Id '{Identity.Id}'");
                     view = list.GetViewById(Identity.Id);
                 }
                 else if (!string.IsNullOrEmpty(Identity.Title))
                 {
-                    WriteVerbose($"Retrieving view by Title '{Identity.Title}'");
+                    LogDebug($"Retrieving view by Title '{Identity.Title}'");
                     view = list.GetViewByName(Identity.Title);
                 }
             }
             else if (Identity.View != null)
             {
-                WriteVerbose("Using view passed through the pipeline");
+                LogDebug("Using view passed through the pipeline");
                 view = Identity.View;
             }
             else
@@ -75,7 +75,7 @@ namespace PnP.PowerShell.Commands.Fields
                     var property = view.GetType().GetProperty(key);
                     if (property == null)
                     {
-                        WriteWarning($"No property '{key}' found on this view. Value will be ignored.");
+                        LogWarning($"No property '{key}' found on this view. Value will be ignored.");
                     }
                     else
                     {
@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Fields
                         }
                         catch (Exception e)
                         {
-                            WriteWarning($"Setting property '{key}' to '{value}' failed with exception '{e.Message}'. Value will be ignored.");
+                            LogWarning($"Setting property '{key}' to '{value}' failed with exception '{e.Message}'. Value will be ignored.");
                         }
                     }
                 }

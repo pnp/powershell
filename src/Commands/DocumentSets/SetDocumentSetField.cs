@@ -34,12 +34,12 @@ namespace PnP.PowerShell.Commands.DocumentSets
         {
             if (ParameterSpecified(nameof(SetSharedField)) && ParameterSpecified(nameof(RemoveSharedField)))
             {
-                WriteWarning("Cannot set and remove a shared field at the same time");
+                LogWarning("Cannot set and remove a shared field at the same time");
                 return;
             }
             if (ParameterSpecified(nameof(SetWelcomePageField)) && ParameterSpecified(nameof(RemoveWelcomePageField)))
             {
-                WriteWarning("Cannot set and remove a welcome page field at the same time");
+                LogWarning("Cannot set and remove a welcome page field at the same time");
                 return;
             }
 
@@ -111,7 +111,7 @@ namespace PnP.PowerShell.Commands.DocumentSets
                 }
                 else
                 {
-                    WriteWarning("Field not present in document set allowed content types");
+                    LogWarning("Field not present in document set allowed content types");
                 }
             }
         }

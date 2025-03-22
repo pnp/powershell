@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands
 
                 foreach (var design in designs)
                 {
-                    WriteVerbose($"Invoking site design '{design.Title}' ({design.Id})");
+                    LogDebug($"Invoking site design '{design.Title}' ({design.Id})");
 
                     var results = tenant.ApplySiteDesign(webUrl, design.Id);
                     tenantContext.Load(results);

@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands
                 }
                 else
                 {
-                    WriteWarning("Site Collection App Catalog is not available on this site.");
+                    LogWarning("Site Collection App Catalog is not available on this site.");
                 }
             }
             else
@@ -82,7 +82,7 @@ namespace PnP.PowerShell.Commands
                 }
                 else
                 {
-                    WriteWarning("Tenant app catalog is not available on this tenant.");
+                    LogWarning("Tenant app catalog is not available on this tenant.");
                 }
             }
 

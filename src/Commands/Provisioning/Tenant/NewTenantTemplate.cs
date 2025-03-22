@@ -1,10 +1,11 @@
 ﻿using PnP.Framework.Provisioning.Model;
+using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantTemplate")]
-    public class NewTenantTemplate : PSCmdlet
+    public class NewTenantTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = false)]
         public string Author;
@@ -20,11 +21,13 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
 
         protected override void ProcessRecord()
         {
-            var result = new ProvisioningHierarchy();
-            result.Author = Author;
-            result.Description = Description;
-            result.DisplayName = DisplayName;
-            result.Generator = Generator;
+            var result = new ProvisioningHierarchy
+            {
+                Author = Author,
+                Description = Description,
+                DisplayName = DisplayName,
+                Generator = Generator
+            };
             WriteObject(result);
         }
     }

@@ -25,14 +25,14 @@ namespace PnP.PowerShell.Commands
             bool isScriptSettingUpdated = false;
             try
             {
-                WriteVerbose("Checking if the site is a no-script site");
+                LogDebug("Checking if the site is a no-script site");
                 var web = ClientContext.Web;
                 web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
                 if (web.IsNoScriptSite())
                 {
                     if (Force || ShouldContinue("The current site is a no-script site. Do you want to temporarily enable scripting on it to allow setting property bag value?", Properties.Resources.Confirm))
                     {
-                        WriteVerbose("Temporarily enabling scripting on the site");
+                        LogDebug("Temporarily enabling scripting on the site");
                         var tenant = new Tenant(AdminContext);
                         tenant.SetSiteProperties(web.Url, noScriptSite: false);
                         isScriptSettingUpdated = true;
@@ -84,7 +84,7 @@ namespace PnP.PowerShell.Commands
             {
                 if (isScriptSettingUpdated)
                 {
-                    WriteVerbose("Disabling scripting on the site");
+                    LogDebug("Disabling scripting on the site");
                     var tenant = new Tenant(AdminContext);
                     tenant.SetSiteProperties(ClientContext.Web.Url, noScriptSite: true);
                 }

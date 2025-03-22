@@ -39,21 +39,21 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 throw new PSArgumentException("Flow not found.", nameof(Identity));
             }
 
-            WriteVerbose("Acquiring access token for Microsoft Graph to look up user");
+            LogDebug("Acquiring access token for Microsoft Graph to look up user");
             
             var graphAccessToken = TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
 
-            WriteVerbose("Microsoft Graph access token acquired");
+            LogDebug("Microsoft Graph access token acquired");
 
             Model.AzureAD.User user;
             if (Guid.TryParse(User, out Guid identityGuid))
             {
-                WriteVerbose("Looking up user through Microsoft Graph by user id {identityGuid}");
+                LogDebug("Looking up user through Microsoft Graph by user id {identityGuid}");
                 user = Utilities.AzureAdUtility.GetUser(graphAccessToken, identityGuid, azureEnvironment: Connection.AzureEnvironment);
             }
             else
             {
-                WriteVerbose($"Looking up user through Microsoft Graph by user principal name {User}");
+                LogDebug($"Looking up user through Microsoft Graph by user principal name {User}");
                 user = Utilities.AzureAdUtility.GetUser(graphAccessToken, User, azureEnvironment: Connection.AzureEnvironment);
             }
 
@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 }
             };
 
-            WriteVerbose($"Assigning user {Role} permissions to flow {flowName} in environment {environmentName}");
+            LogDebug($"Assigning user {Role} permissions to flow {flowName} in environment {environmentName}");
             string baseUrl = PowerPlatformUtility.GetPowerAutomateEndpoint(Connection.AzureEnvironment);
             RestHelper.Post(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple{(AsAdmin ? "/scopes/admin" : "")}/environments/{environmentName}/flows/{flowName}/modifyPermissions?api-version=2016-11-01", AccessToken, payload);
         }

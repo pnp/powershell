@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.ToDo
                 var user = User.GetUser(AccessToken, Connection.AzureEnvironment);
                 if (user == null)
                 {
-                    WriteWarning("Provided user not found");
+                    LogWarning("Provided user not found");
                     return;
                 }
                 url = $"/v1.0/users/{user.Id}/todo/lists/{Identity}";
@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.ToDo
 
             if (graphResult.StatusCode == System.Net.HttpStatusCode.NoContent)
             {
-                WriteVerbose("Todo list deleted successfully");
+                LogDebug("Todo list deleted successfully");
             }
             else
             {

@@ -99,12 +99,12 @@ namespace PnP.PowerShell.Commands.Files
                 throw new PSArgumentException($"{nameof(LocalPath)} does not exist", nameof(LocalPath));
             }
 
-            WriteVerbose($"Copying folder from local path {LocalPath} to Microsoft 365 location {UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, TargetUrl)}");
-            WriteVerbose($"Retrieving local files {(Recurse.ToBool() ? "recursively " : "")}to upload from {LocalPath}");
+            LogDebug($"Copying folder from local path {LocalPath} to Microsoft 365 location {UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, TargetUrl)}");
+            LogDebug($"Retrieving local files {(Recurse.ToBool() ? "recursively " : "")}to upload from {LocalPath}");
 
             var filesToCopy = System.IO.Directory.GetFiles(LocalPath, string.Empty, Recurse.ToBool() ? System.IO.SearchOption.AllDirectories : System.IO.SearchOption.TopDirectoryOnly);
 
-            WriteVerbose($"Uploading {filesToCopy.Length} file{(filesToCopy.Length != 1 ? "s" : "")}");
+            LogDebug($"Uploading {filesToCopy.Length} file{(filesToCopy.Length != 1 ? "s" : "")}");
 
             // Start with the root
             string currentRemotePath = null;
@@ -133,33 +133,33 @@ namespace PnP.PowerShell.Commands.Files
                     
                     var newRemotePath = UrlUtility.Combine(TargetUrl, relativePath);
                     
-                    WriteVerbose($"* Ensuring remote folder {newRemotePath}");
+                    LogDebug($"* Ensuring remote folder {newRemotePath}");
                     
                     folder = CurrentWeb.EnsureFolderPath(newRemotePath);
                 }
 
                 // Upload the file from local to remote
-                WriteVerbose($"  * Uploading {fileToCopy} => {relativeLocalPathWithFileName}");
+                LogDebug($"  * Uploading {fileToCopy} => {relativeLocalPathWithFileName}");
                 try
                 {
                     folder.UploadFile(fileName, fileToCopy, Overwrite.ToBool());
 
                     if(RemoveAfterCopy.ToBool())
                     {
-                        WriteVerbose($"  * Removing {fileToCopy}");
+                        LogDebug($"  * Removing {fileToCopy}");
                         System.IO.File.Delete(fileToCopy);
                     }
                 }
                 catch(Exception ex)
                 {
-                    WriteWarning($"* Upload failed: {ex.Message}");
+                    LogWarning($"* Upload failed: {ex.Message}");
                 }
             }
 
             // Check if we should and can clean up folders no longer containing files
             if (RemoveAfterCopy.ToBool() && folderPathsToRemove.Count > 0)
             {
-                WriteVerbose($"Checking if {folderPathsToRemove.Count} folder{(folderPathsToRemove.Count != 1 ? "s" : "")} are empty and can be removed");
+                LogDebug($"Checking if {folderPathsToRemove.Count} folder{(folderPathsToRemove.Count != 1 ? "s" : "")} are empty and can be removed");
 
                 // Reverse the list so we start with the deepest nested folder first
                 folderPathsToRemove.Reverse();
@@ -168,19 +168,19 @@ namespace PnP.PowerShell.Commands.Files
                 {
                     if (System.IO.Directory.GetFiles(folderPathToRemove).Length == 0)
                     { 
-                        WriteVerbose($"* Removing empty folder {folderPathToRemove}");
+                        LogDebug($"* Removing empty folder {folderPathToRemove}");
                         try
                         {
                             System.IO.Directory.Delete(folderPathToRemove);
                         }
                         catch(Exception ex)
                         {
-                            WriteWarning($"* Failed to remove empty folder {folderPathToRemove}: {ex.Message}");
+                            LogWarning($"* Failed to remove empty folder {folderPathToRemove}: {ex.Message}");
                         }
                     }
                     else
                     {
-                        WriteVerbose($"* Folder {folderPathToRemove} is not empty and thus will not be removed");
+                        LogDebug($"* Folder {folderPathToRemove} is not empty and thus will not be removed");
                     }
                 }
             }
@@ -202,7 +202,7 @@ namespace PnP.PowerShell.Commands.Files
                 SourceUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, SourceUrl);
             } 
 
-            WriteVerbose($"Copying folder within Microsoft 365 from {SourceUrl} to {TargetUrl}");
+            LogDebug($"Copying folder within Microsoft 365 from {SourceUrl} to {TargetUrl}");
 
             string sourceFolder = SourceUrl.Substring(0, SourceUrl.LastIndexOf('/'));
             string targetFolder = TargetUrl;

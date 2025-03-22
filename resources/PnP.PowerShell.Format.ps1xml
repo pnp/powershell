@@ -3157,6 +3157,50 @@
           </TableRowEntry>
         </TableRowEntries>
       </TableControl>
-    </View>     
+    </View>
+    <View>
+      <Name>CheckedOutFile</Name>
+      <ViewSelectedBy>
+        <TypeName>PnP.PowerShell.Commands.Utilities.Logging.TraceLogEntry</TypeName>
+      </ViewSelectedBy>
+      <TableControl>
+        <TableHeaders>
+          <TableColumnHeader>
+            <Label>TimeStamp</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Source</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>          
+          <TableColumnHeader>
+            <Label>Level</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>
+          <TableColumnHeader>
+            <Label>Message</Label>
+            <Alignment>left</Alignment>
+          </TableColumnHeader>          
+        </TableHeaders>
+        <TableRowEntries>
+          <TableRowEntry>
+            <TableColumnItems>
+              <TableColumnItem>
+                <PropertyName>TimeStamp</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Source</PropertyName>
+              </TableColumnItem>              
+              <TableColumnItem>
+                <PropertyName>Level</PropertyName>
+              </TableColumnItem>
+              <TableColumnItem>
+                <PropertyName>Message</PropertyName>
+              </TableColumnItem>              
+            </TableColumnItems>
+          </TableRowEntry>
+        </TableRowEntries>
+      </TableControl>
+    </View>         
   </ViewDefinitions>
 </Configuration>

@@ -1,11 +1,12 @@
 ﻿using PnP.Framework.Provisioning.Model;
+using PnP.PowerShell.Commands.Base;
 using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamNoGroupSite")]
-    public class NewTenantSequenceTeamNoGroupSite : PSCmdlet
+    public class NewTenantSequenceTeamNoGroupSite : BasePSCmdlet
     {
         [Parameter(Mandatory = true)]
         public string Url;

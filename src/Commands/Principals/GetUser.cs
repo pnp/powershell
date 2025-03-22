@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands.Principals
                         CurrentWeb.Context.Load(CurrentWeb, s => s.ServerRelativeUrl);
                         CurrentWeb.Context.ExecuteQueryRetry();
 
-                        WriteWarning("Using the -WithRightsAssignedDetailed parameter will cause the script to take longer than normal because of the all enumerations that take place");
+                        LogWarning("Using the -WithRightsAssignedDetailed parameter will cause the script to take longer than normal because of the all enumerations that take place");
                         users.AddRange(GetPermissions(CurrentWeb.RoleAssignments, CurrentWeb.ServerRelativeUrl));
                         foreach (var user in allUsersWithPermissions)
                         {
@@ -143,7 +143,7 @@ namespace PnP.PowerShell.Commands.Principals
                         // if a list or a library has unique permissions then proceed
                         if (list.HasUniqueRoleAssignments)
                         {
-                            WriteVerbose(string.Format("List found with HasUniqueRoleAssignments {0}", list.RootFolder.ServerRelativeUrl));
+                            LogDebug(string.Format("List found with HasUniqueRoleAssignments {0}", list.RootFolder.ServerRelativeUrl));
                             string url = list.RootFolder.ServerRelativeUrl;
 
                             CurrentWeb.Context.Load(list.RoleAssignments, r => r.Include(
@@ -158,7 +158,7 @@ namespace PnP.PowerShell.Commands.Principals
                             // if the list with unique permissions also has items, check every item which is uniquely permissioned
                             if (list.ItemCount > 0)
                             {
-                                WriteVerbose(string.Format("Enumerating through all listitems of {0}", list.RootFolder.ServerRelativeUrl));
+                                LogDebug(string.Format("Enumerating through all listitems of {0}", list.RootFolder.ServerRelativeUrl));
 
                                 CamlQuery query = CamlQuery.CreateAllItemsQuery();
                                 var queryElement = XElement.Parse(query.ViewXml);
@@ -200,16 +200,16 @@ namespace PnP.PowerShell.Commands.Principals
                                 {
                                     WriteProgress(itemProgress, $"Retrieving items", itemProgressCounter++, items.Count);
 
-                                    WriteVerbose(string.Format("Enumerating though listitemcollections"));
+                                    LogDebug(string.Format("Enumerating though listitemcollections"));
                                     foreach (var listItem in item)
                                     {
-                                        WriteVerbose(string.Format("Enumerating though listitems"));
+                                        LogDebug(string.Format("Enumerating though listitems"));
                                         listItem.EnsureProperty(i => i.HasUniqueRoleAssignments);
 
                                         if (listItem.HasUniqueRoleAssignments)
                                         {
                                             string listItemUrl = listItem["FileRef"].ToString();
-                                            WriteVerbose(string.Format("List item {0} HasUniqueRoleAssignments", listItemUrl));
+                                            LogDebug(string.Format("List item {0} HasUniqueRoleAssignments", listItemUrl));
 
                                             CurrentWeb.Context.Load(listItem.RoleAssignments, r => r.Include(
                                                 ra => ra.RoleDefinitionBindings,

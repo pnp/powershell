@@ -58,7 +58,7 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (!actions.Any())
             {
-                WriteVerbose($"No application customizers representing the client side extension registration found within the scope '{Scope}'");
+                LogDebug($"No application customizers representing the client side extension registration found within the scope '{Scope}'");
                 return;
             }
 

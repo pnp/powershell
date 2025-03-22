@@ -31,11 +31,11 @@ namespace PnP.PowerShell.Commands.Admin
                 throw new PSArgumentException("Specify either DomainName or TenantId, but not both.");
             }
 
-            WriteVerbose("Acquiring access token for Microsoft Graph to look up Tenant");
+            LogDebug("Acquiring access token for Microsoft Graph to look up Tenant");
             //var graphAccessToken = TokenHandler.GetAccessToken(this, $"https://{Connection.GraphEndPoint}/.default", Connection);
             var requestUrl = BuildRequestUrl();
 
-            WriteVerbose($"Making call to {requestUrl} to request tenant information");
+            LogDebug($"Making call to {requestUrl} to request tenant information");
             var results = this.RequestHelper.Get<Model.TenantInfo>(requestUrl);
             WriteObject(results, true);
         }

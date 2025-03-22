@@ -46,7 +46,7 @@ namespace PnP.PowerShell.Commands.Files
 
             HttpResponseHeaders responseHeader = RestHelper.PostGetResponseHeader<string>(Connection.HttpClient, requestUrl, AccessToken, payload: payload);
 
-            WriteVerbose($"File sensitivity label assigned to {file.Name}");
+            LogDebug($"File sensitivity label assigned to {file.Name}");
             WriteObject(responseHeader.Location);
         }
     }

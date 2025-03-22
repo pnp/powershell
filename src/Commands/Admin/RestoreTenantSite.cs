@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (Force || ShouldContinue($"Restore site collection {Identity.Url}?", Properties.Resources.Confirm))
                 {
-                    WriteVerbose($"Restoring site collection {Identity.Url}");
+                    LogDebug($"Restoring site collection {Identity.Url}");
 
                     SpoOperation spoOperation = Tenant.RestoreDeletedSite(Identity.Url);
                     AdminContext.Load(spoOperation);

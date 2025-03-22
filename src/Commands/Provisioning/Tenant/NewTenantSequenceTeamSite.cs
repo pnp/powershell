@@ -1,11 +1,12 @@
 ﻿using PnP.Framework.Provisioning.Model;
+using PnP.PowerShell.Commands.Base;
 using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommon.New, "PnPTenantSequenceTeamSite")]
-    public class NewTenantSequenceTeamSite : PSCmdlet
+    public class NewTenantSequenceTeamSite : BasePSCmdlet
     {
 
         [Parameter(Mandatory = true)]

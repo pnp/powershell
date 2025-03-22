@@ -113,7 +113,7 @@ namespace PnP.PowerShell.Commands
             }
             else
             {
-                WriteError(new ErrorRecord(new ItemNotFoundException(), "SITEDESIGNNOTFOUND", ErrorCategory.ObjectNotFound, Identity));
+                LogError(new ItemNotFoundException());
             }
         }
     }

@@ -297,7 +297,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         protected void Connect(ref CancellationToken cancellationToken)
         {
-            WriteVerbose($"PnP PowerShell Cmdlets ({new SemanticVersion(Assembly.GetExecutingAssembly().GetName().Version)})");
+            LogDebug($"PnP PowerShell Cmdlets ({new SemanticVersion(Assembly.GetExecutingAssembly().GetName().Version)})");
 
             if (!string.IsNullOrEmpty(Url))
             {
@@ -328,7 +328,7 @@ namespace PnP.PowerShell.Commands.Base
             if (ParameterSpecified(nameof(Connection)))
             {
                 // Reuse some parameters of the passed in connection
-                WriteVerbose("Reusing some of the connection parameters from passed in connection");
+                LogDebug("Reusing some of the connection parameters from passed in connection");
                 ClientId = Connection.ClientId;
             }
 
@@ -386,7 +386,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Connection has been established
-            WriteVerbose($"Connected");
+            LogDebug($"Connected");
 
             if (newConnection.Url != null)
             {
@@ -407,12 +407,12 @@ namespace PnP.PowerShell.Commands.Base
                 try
                 {
                     newConnection.Context.ExecuteQueryRetry();
-                    WriteVerbose($"Site at {Url} exists");
+                    LogInformational($"Site at {Url} exists");
                 }
                 catch (System.Net.WebException e) when (e.Message.Contains("404"))
                 {
-                    WriteVerbose($"Site at {Url} does not exist");
-                    throw new PSInvalidOperationException($"The specified site {Url} does not exist", e);
+                    LogError($"Site at {Url} does not exist");
+                    //throw new PSInvalidOperationException($"The specified site {Url} does not exist", e);
                 }
                 catch (TargetInvocationException tex)
                 {
@@ -470,7 +470,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectACSAppOnly()
         {
-            WriteVerbose("Connecting using the SharePoint Online Access Control Services(ACS) App-Only");
+            LogDebug("Connecting using the SharePoint Online Access Control Services(ACS) App-Only");
 
             CmdletMessageWriter.WriteFormattedMessage(this, new CmdletMessageWriter.Message { Text = "Connecting with Client Secret uses legacy authentication and provides limited functionality. We can for instance not execute requests towards the Microsoft Graph, which limits cmdlets related to Microsoft Teams, Microsoft Planner, Microsoft Flow and Microsoft 365 Groups. You can hide this warning by using Connect-PnPOnline [your parameters] -WarningAction Ignore", Formatted = true, Type = CmdletMessageWriter.MessageType.Warning });
             if (Connection?.ClientId == ClientId &&
@@ -485,10 +485,10 @@ namespace PnP.PowerShell.Commands.Base
                 ClientId = GetAppId();
                 if (ClientId != null)
                 {
-                    WriteVerbose("Using Managed AppId from secure store");
+                    LogDebug("Using Managed AppId from secure store");
                 }
             }
-            WriteVerbose($"Using ClientID {ClientId}");
+            LogDebug($"Using ClientID {ClientId}");
 
             return PnPConnection.CreateWithACSAppOnly(new Uri(Url), Realm, ClientId, ClientSecret, TenantAdminUrl, AzureEnvironment);
         }
@@ -500,7 +500,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectDeviceLogin()
         {
-            WriteVerbose("Connecting using Device Login");
+            LogDebug("Connecting using Device Login");
 
             var messageWriter = new CmdletMessageWriter(this);
             PnPConnection connection = null;
@@ -549,7 +549,7 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         else
                         {
-                            messageWriter.WriteVerbose("Using Managed AppId from secure store");
+                            messageWriter.LogDebug("Using Managed AppId from secure store");
                         }
                     }
 
@@ -559,7 +559,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 catch (Exception ex)
                 {
-                    messageWriter.WriteWarning(ex.Message, false);
+                    messageWriter.LogWarning(ex.Message, false);
                     messageWriter.Finished = true;
                 }
             }, cancellationTokenSource.Token);
@@ -573,8 +573,8 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAppOnlyWithCertificate()
         {
-            WriteVerbose("Connecting using Entra ID App-Only using a certificate");
-            WriteVerbose($"Using ClientID {ClientId}");
+            LogDebug("Connecting using Entra ID App-Only using a certificate");
+            LogDebug($"Using ClientID {ClientId}");
 
             if (ParameterSpecified(nameof(CertificatePath)))
             {
@@ -659,7 +659,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on the parameters provided in the parameter set</returns>
         private PnPConnection ConnectAccessToken()
         {
-            WriteVerbose("Connecting using a provided Access Token");
+            LogDebug("Connecting using a provided Access Token");
 
             return PnPConnection.CreateWithAccessToken(!string.IsNullOrEmpty(Url) ? new Uri(Url) : null, AccessToken, TenantAdminUrl);
         }
@@ -670,7 +670,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>PnPConnection based on credentials authentication</returns>
         private PnPConnection ConnectCredentials(PSCredential credentials, InitializationType initializationType = InitializationType.Credentials)
         {
-            WriteVerbose("Connecting using username and password");
+            LogDebug("Connecting using username and password");
 
             if (!CurrentCredentials && credentials == null)
             {
@@ -705,7 +705,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    WriteVerbose("Using Managed AppId from secure store");
+                    LogDebug("Using Managed AppId from secure store");
                 }
             }
 
@@ -717,7 +717,7 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
             }
-            WriteVerbose($"Using ClientID {ClientId}");
+            LogDebug($"Using ClientID {ClientId}");
             return PnPConnection.CreateWithCredentials(this, new Uri(Url),
                                                                credentials,
                                                                CurrentCredentials,
@@ -732,15 +732,15 @@ namespace PnP.PowerShell.Commands.Base
 
         private PnPConnection ConnectManagedIdentity()
         {
-            WriteVerbose("Connecting using an Azure Managed Identity");
+            LogDebug("Connecting using an Azure Managed Identity");
 
-            WriteVerbose($"ClientID: {UserAssignedManagedIdentityClientId}");
+            LogDebug($"ClientID: {UserAssignedManagedIdentityClientId}");
             return PnPConnection.CreateWithManagedIdentity(Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId);
         }
 
         private PnPConnection ConnectInteractive()
         {
-            WriteVerbose("Connecting using Interactive login");
+            LogDebug("Connecting using Interactive login");
 
             if (ClientId == null)
             {
@@ -760,7 +760,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    WriteVerbose("Using Managed AppId from secure store");
+                    LogDebug("Using Managed AppId from secure store");
                 }
             }
             if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
@@ -770,13 +770,13 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
             }
-            WriteVerbose($"Using ClientID {ClientId}");
+            LogDebug($"Using ClientID {ClientId}");
             return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host);
         }
 
         private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
         {
-            WriteVerbose("Connecting using information from environment variables");
+            LogDebug("Connecting using information from environment variables");
 
             string username = Environment.GetEnvironmentVariable("AZURE_USERNAME") ?? Environment.GetEnvironmentVariable("ENTRAID_USERNAME");
             string password = Environment.GetEnvironmentVariable("AZURE_PASSWORD") ?? Environment.GetEnvironmentVariable("ENTRAID_PASSWORD");
@@ -789,7 +789,7 @@ namespace PnP.PowerShell.Commands.Base
                 azureClientId = GetAppId();
                 if (azureClientId != null)
                 {
-                    WriteVerbose("Using Managed AppId from secure store");
+                    LogDebug("Using Managed AppId from secure store");
                 }
             }
 
@@ -833,7 +833,7 @@ namespace PnP.PowerShell.Commands.Base
                     ReuseAuthenticationManager();
                 }
 
-                WriteVerbose($"ClientID: {azureClientId}");
+                LogDebug($"ClientID: {azureClientId}");
 
                 return PnPConnection.CreateWithCert(new Uri(Url), azureClientId, Tenant, TenantAdminUrl, AzureEnvironment, certificate, true);
             }
@@ -857,7 +857,7 @@ namespace PnP.PowerShell.Commands.Base
                         ReuseAuthenticationManager();
                     }
                 }
-                WriteVerbose($"ClientID: {azureClientId}");
+                LogDebug($"ClientID: {azureClientId}");
 
                 return PnPConnection.CreateWithCredentials(this, new Uri(Url),
                                                                    credentials,
@@ -875,14 +875,14 @@ namespace PnP.PowerShell.Commands.Base
 
         private PnPConnection ConnectAzureADWorkloadIdentity()
         {
-            WriteVerbose("Connecting using Entra ID Workload Identity");
+            LogDebug("Connecting using Entra ID Workload Identity");
 
             return PnPConnection.CreateWithAzureADWorkloadIdentity(Url, TenantAdminUrl);
         }
 
         private PnPConnection ConnectWithOSLogin()
         {
-            WriteVerbose("Connecting using Web Account Manager (WAM)");
+            LogDebug("Connecting using Web Account Manager (WAM)");
 
             if (ClientId == null)
             {
@@ -897,7 +897,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 else
                 {
-                    WriteVerbose("Using Managed AppId from secure store");
+                    LogDebug("Using Managed AppId from secure store");
                 }
             }
             if (Connection?.ClientId == ClientId && Connection?.ConnectionMethod == ConnectionMethod.Credentials)
@@ -908,7 +908,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
-            WriteVerbose($"Using ClientID {ClientId}");
+            LogDebug($"Using ClientID {ClientId}");
             if (PnPConnection.CacheEnabled(Url, ClientId))
             {
                 WriteObject("Cache used. Clear the cache entry with Disconnect-PnPOnline");

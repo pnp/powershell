@@ -1,11 +1,12 @@
-﻿using PnP.PowerShell.Commands.Utilities;
+﻿using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Utilities;
 using System.IO;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Provisioning.Tenant
 {
     [Cmdlet(VerbsCommunications.Read, "PnPTenantTemplate", DefaultParameterSetName = ParameterSet_PATH)]
-    public class ReadTenantTemplate : PSCmdlet
+    public class ReadTenantTemplate : BasePSCmdlet
     {
         const string ParameterSet_STREAM = "By Stream";
         const string ParameterSet_PATH = "By Path";
@@ -33,7 +34,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                         }
                         WriteObject(ProvisioningHelper.LoadTenantTemplateFromFile(Path, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }));
                         break;
                     }
@@ -41,7 +42,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                     {
                         WriteObject(ProvisioningHelper.LoadTenantTemplateFromString(Xml, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }));
                         break;
                     }
@@ -49,7 +50,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                     {
                         WriteObject(ProvisioningHelper.LoadTenantTemplatesFromStream(Stream, (e) =>
                         {
-                            WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                            LogError(e);
                         }), true);
                         break;
                     }                    
