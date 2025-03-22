@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Generate a new correlation id for each cmdlet execution. This is used to correlate log entries in the PnP PowerShell log stream.
         /// </summary>
-        internal Guid? CorrelationId { get; } = Guid.NewGuid();
+        public virtual Guid? CorrelationId { get; protected set; } = Guid.NewGuid();
 
         #region Cmdlet execution
 
@@ -98,7 +98,7 @@ namespace PnP.PowerShell.Commands.Base
         /// </summary>
         private void CheckForDeprecationAttributes()
         {
-            if (MyInvocation.MyCommand.Name.ToLower() != MyInvocation.InvocationName.ToLower())
+            if (!MyInvocation.MyCommand.Name.Equals(MyInvocation.InvocationName, StringComparison.CurrentCultureIgnoreCase))
             {
                 var attribute = Attribute.GetCustomAttribute(GetType(), typeof(WriteAliasWarningAttribute));
                 if (attribute != null)

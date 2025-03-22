@@ -38,6 +38,23 @@
             }
         },
         {
+            "name": "Debug with local copy of PnP Framework",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "Build with local copy of PnP Framework",
+            "args": [],
+            "cwd": "${workspaceFolder}",
+            "stopAtEntry": false,
+            "console": "externalTerminal",
+            "program": "pwsh",
+            "osx": {
+                "program": "pwsh",
+            },
+            "windows": {
+                "program": "pwsh.exe"
+            }
+        },
+        {
             "preLaunchTask": "Build with nugets",
             "name": ".NET Core Attach",
             "type": "coreclr",

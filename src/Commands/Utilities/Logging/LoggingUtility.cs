@@ -28,9 +28,10 @@ namespace PnP.PowerShell.Commands.Utilities.Logging
         /// <param name="message">The message to log</param>
         /// <param name="source">The source from where is being logged. Leave NULL to have it use the cmdlet name automatically.</param>
         /// <param name="correlationId">The correlation of the cmdlet execution</param>
-        public static void Debug(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null)
+        /// <param name="ellapsedMilliseconds">The elapsed milliseconds since the last log entry. Leave NULL to try to calculate it automatically.</param>
+        public static void Debug(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null, long? ellapsedMilliseconds = null)
         {
-            Log.Debug(ComposeLogEntry(cmdlet, message, source, correlationId));
+            Log.Debug(ComposeLogEntry(cmdlet, message, source, correlationId, ellapsedMilliseconds));
             cmdlet?.WriteVerbose(message);
         }
 
@@ -41,9 +42,10 @@ namespace PnP.PowerShell.Commands.Utilities.Logging
         /// <param name="message">The message to log</param>
         /// <param name="source">The source from where is being logged. Leave NULL to have it use the cmdlet name automatically.</param>
         /// <param name="correlationId">The correlation of the cmdlet execution</param>
-        public static void Warning(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null)
+        /// <param name="ellapsedMilliseconds">The elapsed milliseconds since the last log entry. Leave NULL to try to calculate it automatically.</param>
+        public static void Warning(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null, long? ellapsedMilliseconds = null)
         {
-            Log.Warning(ComposeLogEntry(cmdlet, message, source, correlationId));
+            Log.Warning(ComposeLogEntry(cmdlet, message, source, correlationId, ellapsedMilliseconds));
             cmdlet?.WriteWarning(message);
         }
 
@@ -54,9 +56,10 @@ namespace PnP.PowerShell.Commands.Utilities.Logging
         /// <param name="message">The message to log</param>
         /// <param name="source">The source from where is being logged. Leave NULL to have it use the cmdlet name automatically.</param>
         /// <param name="correlationId">The correlation of the cmdlet execution</param>
-        public static void Info(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null)
+        /// <param name="ellapsedMilliseconds">The elapsed milliseconds since the last log entry. Leave NULL to try to calculate it automatically.</param>
+        public static void Info(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null, long? ellapsedMilliseconds = null)
         {
-            Log.Info(ComposeLogEntry(cmdlet, message, source, correlationId));
+            Log.Info(ComposeLogEntry(cmdlet, message, source, correlationId, ellapsedMilliseconds));
             cmdlet?.WriteInformation(new InformationRecord(message, DefineCmdletName(cmdlet)));
         }
 
@@ -67,9 +70,10 @@ namespace PnP.PowerShell.Commands.Utilities.Logging
         /// <param name="message">The message to log</param>
         /// <param name="source">The source from where is being logged. Leave NULL to have it use the cmdlet name automatically.</param>
         /// <param name="correlationId">The correlation of the cmdlet execution</param>
-        public static void Error(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null)
+        /// <param name="ellapsedMilliseconds">The elapsed milliseconds since the last log entry. Leave NULL to try to calculate it automatically.</param>
+        public static void Error(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null, long? ellapsedMilliseconds = null)
         {
-            Log.Error(ComposeLogEntry(cmdlet, message, source, correlationId));
+            Log.Error(ComposeLogEntry(cmdlet, message, source, correlationId, ellapsedMilliseconds));
             cmdlet?.WriteError(new ErrorRecord(new Exception(message), source, ErrorCategory.NotSpecified, null));
         }
 
@@ -102,10 +106,11 @@ namespace PnP.PowerShell.Commands.Utilities.Logging
         /// <param name="message">The message to log</param>
         /// <param name="source">The source from where is being logged. Leave NULL to have it use the cmdlet name automatically.</param>
         /// <param name="correlationId">The correlation of the cmdlet execution</param>
+        /// <param name="ellapsedMilliseconds">The elapsed milliseconds since the last log entry. Leave NULL to try to calculate it automatically.</param>
         /// <returns></returns>
-        private static LogEntry ComposeLogEntry(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null)
+        private static LogEntry ComposeLogEntry(Cmdlet cmdlet, string message, string source = null, Guid? correlationId = null, long? ellapsedMilliseconds = null)
         {
-            if (_lastCorrelationId != correlationId)
+            if (_lastCorrelationId != correlationId && correlationId.HasValue)
             {
                 // New cmdlet execution, reset the last log time
                 _lastLogTime = null;
@@ -116,7 +121,7 @@ namespace PnP.PowerShell.Commands.Utilities.Logging
             {
                 Message = message,
                 CorrelationId = correlationId ?? Guid.Empty,
-                EllapsedMilliseconds = _lastLogTime.HasValue ? (long)DateTime.UtcNow.Subtract(_lastLogTime.Value).TotalMilliseconds : 0,
+                EllapsedMilliseconds = ellapsedMilliseconds ?? (_lastLogTime.HasValue ? (long)DateTime.UtcNow.Subtract(_lastLogTime.Value).TotalMilliseconds : 0),
                 Source = source ?? DefineCmdletName(cmdlet),
                 ThreadId = Environment.CurrentManagedThreadId
             };
