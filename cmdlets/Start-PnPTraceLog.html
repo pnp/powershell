@@ -86,10 +86,22 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Starts log tracing</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Start-PnPTraceLog [-Path &lt;String&gt;] [-Level &lt;LogLevel&gt;] [-AutoFlush &lt;Boolean&gt;] [-WriteToConsole &lt;SwitchParameter&gt;]
+<pre><code class="lang-powershell">Start-PnPTraceLog [-Path &lt;String&gt;] [-Level &lt;LogLevel&gt;] [-AutoFlush &lt;Boolean&gt;] [-WriteToConsole &lt;SwitchParameter&gt;] [-WriteToLogStream &lt;SwitchParameter&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Starts .NET tracelogging. Many cmdlets output detailed trace information when executed. Turn on the trace log with this cmdlet, optionally specify the level. By default the level is set to 'Information', but you will receive more detail by setting the level to 'Debug'.</p>
+<p>You can look at the logged data using <a href="Get-PnPTraceLog.html">Get-PnPTraceLog</a>.</p>
+<p>The logged data contains the following information in the following order:</p>
+<ul>
+<li>Timestamp</li>
+<li>Source</li>
+<li>Thread ID</li>
+<li>Log level</li>
+<li>Message</li>
+<li>Elapsed time in milliseconds since the last log entry for the same cmdlet execution</li>
+<li>Correlation ID which is an unique identifier per executed cmdlet so you can filter the log for everything logged during a specific cmdlet execution</li>
+</ul>
+<p>Beware that the logged data can be quite verbose, especially when the level is set to 'Debug'. When logging in memory, it can take up a lot of memory. When logging to a file, it can take up a lot of disk space. So be careful when using this in production environments and only use it when you need to troubleshoot something or are aware of the consequences.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Start-PnPTraceLog -Path ./TraceOutput.txt
@@ -100,9 +112,13 @@
 </code></pre>
 <p>This turns on trace logging to the file 'TraceOutput.txt' and will capture all events.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Start-PnPTraceLog -WriteToConsole -WriteToLogStream -Level Debug
+</code></pre>
+<p>This turns on trace logging to the console and in memory stream in which you are running your PowerShell script and will capture all events.</p>
+<h3 id="example-3-1">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Start-PnPTraceLog -WriteToConsole -Level Debug
 </code></pre>
-<p>This turns on trace logging to console in which you are running your PowerShell script and will capture all events.</p>
+<p>This turns on trace logging to the console in which you are running your PowerShell script and will capture all events.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-autoflush">-AutoFlush</h3>
 <p>Auto flush the trace log. Defaults to true.</p>
@@ -140,6 +156,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-writetoconsole">-WriteToConsole</h3>
 <p>Write the trace log to the console.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-writetologstream">-WriteToLogStream</h3>
+<p>Write the trace log to the in memory stream. Use <a href="Get-PnPTraceLog.html">Get-PnPTraceLog</a> to read the log stream.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 

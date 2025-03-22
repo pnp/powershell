@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPPage | PnP PowerShell </title>
+    <title>Write-PnPTraceLog | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPPage | PnP PowerShell ">
+    <meta name="title" content="Write-PnPTraceLog | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,49 +77,46 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="get-pnppage">Get-PnPPage</h1>
+  <h1 id="write-pnptracelog">Write-PnPTraceLog</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns a specific or all modern pages (Site Pages) in a SharePoint site.</p>
+<p>Allows logging your own messages during the execution of PnP PowerShell cmdlets</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="specific-page">Specific page</h3>
-<pre><code class="lang-powershell">Get-PnPPage -Identity &lt;PagePipeBind&gt; [-Connection &lt;PnPConnection&gt;]
+<h3 id="log-from-file">Log from file</h3>
+<pre><code class="lang-powershell">Write-PnPTraceLog -Path &lt;string&gt; [-Verbose]
 </code></pre>
-<h3 id="all-pages">All pages</h3>
-<pre><code class="lang-powershell">Get-PnPPage [-Connection &lt;PnPConnection&gt;]
+<h3 id="log-from-log-stream">Log from log stream</h3>
+<pre><code class="lang-powershell">Write-PnPTraceLog [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows the retrieval of a modern sitepage along with its properties and contents on it. Note that for a newly created modern site, the Columns and Sections of the Home.aspx page will not be filled according to the actual site page contents. This is because the underlying CanvasContent1 will not be populated until the homepage has been edited and published. The reason for this behavior is to allow for the default homepage to be able to be updated by Microsoft as long as it hasn't been modified. For any other site page or after editing and publishing the homepage, this command will return the correct columns and sections as they are positioned on the site page.</p>
-<p>Also note that if you want to retrieve all site pages in a site by omitting the -Identity parameter, the command will return all pages in the Site Pages library, but with less details and will require SharePoint Online Administrator permissions to do so. This is how it has been designed on the server side. If you want the full details on all pages, you can do it as follows <code>Get-PnPPage | % { Get-PnPPage -Identity $_.Name }</code>. Be aware that this causes a lot of server calls and is much slower than the first command.</p>
+<p>This cmdlet allows logging of your own messages in line with the PnPTraceLog cmdlets that allow logging what happens behind the scenes of the execution of PnP PowerShell cmdlets. This allows you to inject your own custom logging along with the built in logging to get a complete and chronoligal log of the execution of the cmdlets in your scripts.</p>
+<p>Look at <a href="Start-PnPTraceLog.html">Start-PnPTraceLog</a> to see how to start logging to a file and/or to an in memory stream.
+You can use <a href="Get-PnPTraceLog.html">Get-PnPTraceLog</a> to read from the log file or the in memory stream.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPPage -Identity &quot;MyPage.aspx&quot;
+<pre><code class="lang-powershell">Write-PnPTraceLog &quot;Hello World&quot;
 </code></pre>
-<p>Gets the page named 'MyPage.aspx' in the current SharePoint site</p>
+<p>This logs the message &quot;Hello World&quot; as an informational message to the built in logging.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPPage &quot;MyPage&quot;
+<pre><code class="lang-powershell">Write-PnPTraceLog &quot;Hello World&quot; -Level Warning
 </code></pre>
-<p>Gets the page named 'MyPage.aspx' in the current SharePoint site</p>
+<p>This logs the message &quot;Hello World&quot; as an warning message to the built in logging.</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPPage &quot;Templates/MyPageTemplate&quot;
+<pre><code class="lang-powershell">Write-PnPTraceLog &quot;Hello World&quot; -Level Error -Source &quot;MyScript&quot;
 </code></pre>
-<p>Gets the page named 'MyPageTemplate.aspx' from the templates folder of the Page Library in the current SharePoint site</p>
+<p>This logs the message &quot;Hello World&quot; as an error message to the built in logging with a source of &quot;MyScript&quot;. The source is used to identify the cmdlet that was executed when the log was created. This is useful to identify which part of your script was executing when the log was created.</p>
 <h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPPage -Identity &quot;MyPage.aspx&quot; -Web (Get-PnPWeb -Identity &quot;Subsite1&quot;)
+<pre><code class="lang-powershell">Write-PnPTraceLog &quot;Hello World&quot; -Level Debug -Source &quot;MyScript&quot; -CorrelationId &quot;5a6206a0-6c83-4446-9d1b-38c14f93cb60&quot; -EllapsedMilliseconds 1000
 </code></pre>
-<p>Gets the page named 'MyPage.aspx' from the subsite named 'Subsite1'</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-PnPPage
-</code></pre>
-<p>Returns all site pages in the current SharePoint site. Note that this will return less details than when using the -Identity parameter and requires SharePoint Online Administrator permissions to do so.</p>
+<p>This is the most complete example. It logs the message &quot;Hello World&quot; as a debug message to the built in logging with a source of &quot;MyScript&quot;, a correlation id of &quot;5a6206a0-6c83-4446-9d1b-38c14f93cb60&quot; and an ellapsed time of 1000 milliseconds. The correlation id is used to identify the set of operations that were executed when the log was created. The ellapsed time is used to identify how long the operation took to complete. You can provide your own measurements to define this value. If you omit the ellapsed time, the cmdlet will try to define the execution time based on the last logged entry.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-correlationid">-CorrelationId</h3>
+<p>An optional GUID as an unique identifier for the cmdlet execution. This is useful to identify which part of your script was executing when the log was created. If not provided, it will leave the value empty.</p>
+<pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
 
 Required: False
@@ -128,15 +125,59 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The name of the page to retrieve</p>
-<pre><code class="lang-yaml">Type: PagePipeBind
-Parameter Sets: Specific page
+<h3 id="-ellapsedmilliseconds">-EllapsedMilliseconds</h3>
+<p>You can optionaly provide the ellapsed time in milliseconds. This is the time that was taken to execute the operation. If you omit this parameter, the cmdlet will try to define the execution time based on the last logged entry.</p>
+<pre><code class="lang-yaml">Type: Long
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-level">-Level</h3>
+<p>The level to log your message under. Options are: Verbose, Information, Warning, Error and Debug. It will log it both to the default PowerShell its logging equivallent such as Write-Warning, Write-Error, Write-Verbose, and to the PnPTraceLog logging. If not provided, it will default to Information.</p>
+<pre><code class="lang-yaml">Type: Framework.Diagnostics.LogLevel
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Information
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-message">-Message</h3>
+<p>The message to log. This is the message that will be logged to the log file or the in memory stream.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
 
 Required: True
-Position: 0
+Position: Named
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-source">-Source</h3>
+<p>The source of the log. This is the source that will be logged to the log file or the in memory stream. This is useful to identify which part of your script was executing when the log was created.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>

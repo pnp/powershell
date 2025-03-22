@@ -1421,6 +1421,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Clear-PnPTraceLog.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Clear-PnPTraceLog.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Clear-PnpRecycleBinItem.md",
       "output": {
         ".html": {
@@ -1525,6 +1535,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Copy-PnPList.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Copy-PnPPage.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Copy-PnPPage.html"
         }
       },
       "version": ""
@@ -3141,6 +3161,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPageCopyProgress.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPageCopyProgress.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPPageLikedByInformation.md",
       "output": {
         ".html": {
@@ -4251,6 +4281,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPTraceLog.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPTraceLog.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPUPABulkImportStatus.md",
       "output": {
         ".html": {
@@ -4725,6 +4765,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Move-PnPListItemToRecycleBin.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Move-PnPPage.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Move-PnPPage.html"
         }
       },
       "version": ""
@@ -8365,6 +8415,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Update-SiteClassification.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Write-PnPTraceLog.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Write-PnPTraceLog.html"
         }
       },
       "version": ""

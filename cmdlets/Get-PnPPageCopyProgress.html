@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPPage | PnP PowerShell </title>
+    <title>Get-PnPPageCopyProgress | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPPage | PnP PowerShell ">
+    <meta name="title" content="Get-PnPPageCopyProgress | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,45 +77,24 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="get-pnppage">Get-PnPPage</h1>
+  <h1 id="get-pnppagecopyprogress">Get-PnPPageCopyProgress</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns a specific or all modern pages (Site Pages) in a SharePoint site.</p>
+<p>Allows checking the progress of a site page move or copy operation from one site to another site.</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="specific-page">Specific page</h3>
-<pre><code class="lang-powershell">Get-PnPPage -Identity &lt;PagePipeBind&gt; [-Connection &lt;PnPConnection&gt;]
-</code></pre>
-<h3 id="all-pages">All pages</h3>
-<pre><code class="lang-powershell">Get-PnPPage [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPPageCopyProgress -DestinationSite &lt;SPOSitePipeBind&gt; -WorkItemId &lt;Guid&gt;
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This command allows the retrieval of a modern sitepage along with its properties and contents on it. Note that for a newly created modern site, the Columns and Sections of the Home.aspx page will not be filled according to the actual site page contents. This is because the underlying CanvasContent1 will not be populated until the homepage has been edited and published. The reason for this behavior is to allow for the default homepage to be able to be updated by Microsoft as long as it hasn't been modified. For any other site page or after editing and publishing the homepage, this command will return the correct columns and sections as they are positioned on the site page.</p>
-<p>Also note that if you want to retrieve all site pages in a site by omitting the -Identity parameter, the command will return all pages in the Site Pages library, but with less details and will require SharePoint Online Administrator permissions to do so. This is how it has been designed on the server side. If you want the full details on all pages, you can do it as follows <code>Get-PnPPage | % { Get-PnPPage -Identity $_.Name }</code>. Be aware that this causes a lot of server calls and is much slower than the first command.</p>
+<p>This command allows checking the progress of a site page move or copy operation from one site to another site. The destination site can be specified using the -DestinationSite parameter, and the work item ID can be specified using the -WorkItemId parameter.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPPage -Identity &quot;MyPage.aspx&quot;
+<pre><code class="lang-powershell">Get-PnPPageCopyProgress -DestinationSite https://tenant.sharepoint.com -WorkItemId 12345678-1234-1234-1234-123456789012
 </code></pre>
-<p>Gets the page named 'MyPage.aspx' in the current SharePoint site</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPPage &quot;MyPage&quot;
-</code></pre>
-<p>Gets the page named 'MyPage.aspx' in the current SharePoint site</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPPage &quot;Templates/MyPageTemplate&quot;
-</code></pre>
-<p>Gets the page named 'MyPageTemplate.aspx' from the templates folder of the Page Library in the current SharePoint site</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Get-PnPPage -Identity &quot;MyPage.aspx&quot; -Web (Get-PnPWeb -Identity &quot;Subsite1&quot;)
-</code></pre>
-<p>Gets the page named 'MyPage.aspx' from the subsite named 'Subsite1'</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-PnPPage
-</code></pre>
-<p>Returns all site pages in the current SharePoint site. Note that this will return less details than when using the -Identity parameter and requires SharePoint Online Administrator permissions to do so.</p>
+<p>Retrieves the progress of the page copy operation with the specified work item ID to the destination site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -128,19 +107,30 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The name of the page to retrieve</p>
-<pre><code class="lang-yaml">Type: PagePipeBind
-Parameter Sets: Specific page
+<h3 id="-destinationsite">-DestinationSite</h3>
+<p>The destination site to which the page is being moved or copied. This can be specified as a URL or a site object.</p>
+<pre><code class="lang-yaml">Type: SPOSitePipeBind
+Parameter Sets: (All)
 
 Required: True
 Position: 0
 Default value: None
-Accept pipeline input: True (ByValue)
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-workitemid">-WorkItemId</h3>
+<p>The work item ID of the page copy operation. This is a GUID that uniquely identifies the copy operation and is returned when the copy or move operation is initiated using <a href="Copy-PnPPage.html">Copy-PnPPage</a> and <a href="Move-PnPPage.html">Move-PnPPage</a>.</p>
+<pre><code class="lang-yaml">Type: Guid
+Parameter Sets: (All)
+
+Required: True
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://learn.microsoft.com/powershell/module/sharepoint-online/get-spopersonalsitepagecopyprogress">SharePoint Online Management Shell equivallent</a>
+<a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>
           </div>

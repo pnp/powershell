@@ -84,17 +84,58 @@
   <h1 id="stops-pnptracelog">Stops-PnPTraceLog</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Stops log tracing and flushes the log buffer if any items in there.</p>
+<p>Stops all log tracing and flushes the log buffer if any items in there.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Stop-PnPTraceLog
+<pre><code class="lang-powershell">Stop-PnPTraceLog [-StopFileLogging &lt;SwitchParameter&gt;] [-StopConsoleLogging &lt;SwitchParameter&gt;] [-StopLogStreamLogging &lt;SwitchParameter&gt;] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Stops .NET tracelogging. Many cmdlets output detailed trace information when executed. Turn on the trace log with Start-PnPTraceLog, optionally specify the level. By default the level is set to 'Information', but you will receive more detail by setting the level to 'Debug'.</p>
+<p>Stops PnP PowerShell tracelogging to specific targets. By default, all logging is stopped. You can use the parameters to stop specific logging targets only.</p>
+<p>You can turn on the trace log with <a href="Start-PnPTraceLog.html">Start-PnPTraceLog</a>.
+You can look at the logged data using <a href="Get-PnPTraceLog.html">Get-PnPTraceLog</a>.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Stop-PnPTraceLog
 </code></pre>
-<p>This turns off trace logging</p>
+<p>This turns off all trace logging</p>
+<h2 id="examples-1">EXAMPLES</h2>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Stop-PnPTraceLog -StopFileLogging -StopConsoleLogging
+</code></pre>
+<p>This turns off trace logging to file and console, but keeps the other logging options active.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-stopconsolelogging">-StopConsoleLogging</h3>
+<p>Allows you to specifically stop logging to the console while keeping the other logging options active.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stopfilelogging">-StopFileLogging</h3>
+<p>Allows you to specifically stop logging to a file while keeping the other logging options active.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stoplogstreamlogging">-StopLogStreamLogging</h3>
+<p>Allows you to specifically stop logging to the in memory log stream while keeping the other logging options active.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

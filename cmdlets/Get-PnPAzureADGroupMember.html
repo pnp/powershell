@@ -88,24 +88,28 @@
 <ul>
 <li>Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, Group.Read.All, Group.ReadWrite.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All, User.ReadWrite.All</li>
 </ul>
-<p>Gets members of a particular Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
+<p>Gets members of a particular Entra ID group. This can be a security, distribution or Microsoft 365 group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPAzureADGroupMember -Identity &lt;AzureADGroupPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPAzureADGroupMember -Identity &lt;AzureADGroupPipeBind&gt; [-Connection &lt;PnPConnection&gt;] [-Transitive]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to list members from given Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
+<p>Allows to list members from given Entra ID group. This can be a security, distribution or Microsoft 365 group.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADGroupMember -Identity $groupId
 </code></pre>
-<p>Retrieves all the members of a specific Azure Active Directory group based on its ID.</p>
+<p>Retrieves all the direct members of a specific Entra ID group based on its ID.</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPAzureADGroupMember -Identity $group
 </code></pre>
-<p>Retrieves all the members of a specific Azure Active Directory group based on the group's object instance.</p>
+<p>Retrieves all the direct members of a specific Entra ID group based on the group's object instance.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPAzureADGroupMember -Identity $group -Transitive
+</code></pre>
+<p>Retrieves all the direct and transitive members (members of groups inside groups) of a specific Entra ID group based on the group's object instance.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
-<p>The Identity of the Azure Active Directory group.</p>
+<p>The Identity of the Entra ID group.</p>
 <pre><code class="lang-yaml">Type: AzureADGroupPipeBind
 Parameter Sets: (All)
 
@@ -123,6 +127,17 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-transitive">-Transitive</h3>
+<p>If provided, the direct and transitive members (members of groups in the group) of a group will be returned. If not provided, only the members directly assigned to the group will be returned.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
