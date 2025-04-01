@@ -28,11 +28,14 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public SortOrder? SortByStorage { get; set; }
 
+        [Parameter(Mandatory = false)]
+        public SPContainerArchiveStatusFilterProperties ArchiveStatus { get; set; } = SPContainerArchiveStatusFilterProperties.NotArchived;
+
         protected override void ExecuteCmdlet()
         {
             if (Identity != null)
             {
-                var containerProperties = Identity.GetContainer(Tenant);            
+                var containerProperties = Identity.GetContainer(Tenant);
                 WriteObject(containerProperties);
             }
             else if (OwningApplicationId != Guid.Empty)
@@ -41,11 +44,11 @@ namespace PnP.PowerShell.Commands.Admin
                 if (SortByStorage.HasValue)
                 {
                     bool ascending = SortByStorage == SortOrder.Ascending;
-                    clientResult = Tenant.GetSortedSPOContainersByApplicationId(OwningApplicationId, ascending, Paged, PagingToken);
+                    clientResult = Tenant.GetSortedSPOContainersByApplicationId(OwningApplicationId, ascending, Paged, PagingToken, ArchiveStatus);
                 }
                 else
                 {
-                    clientResult = Tenant.GetSPOContainersByApplicationId(OwningApplicationId, Paged, PagingToken);
+                    clientResult = Tenant.GetSPOContainersByApplicationId(OwningApplicationId, Paged, PagingToken, ArchiveStatus);
                 }
                 AdminContext.ExecuteQueryRetry();
                 IList<SPContainerProperties> containerCollection = clientResult.Value.ContainerCollection;
@@ -65,8 +68,8 @@ namespace PnP.PowerShell.Commands.Admin
                         {
                             WriteObject("End of containers view.");
                         }
-                    }                    
-                }                
+                    }
+                }
             }
             else
             {
