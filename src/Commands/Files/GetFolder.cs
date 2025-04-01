@@ -81,7 +81,20 @@ namespace PnP.PowerShell.Commands.Files
 #pragma warning restore CS0618 // Type or member is obsolete                    
 
                         // Query for all folders in the list
-                        CamlQuery query = CamlQuery.CreateAllFoldersQuery();
+                        CamlQuery query = new CamlQuery();
+query.ViewXml = @"
+  <View>
+    <Query>
+      <Where>
+        <Eq>
+          <FieldRef Name='FSObjType' />
+          <Value Type='Integer'>1</Value>
+        </Eq>
+      </Where>
+    </Query>
+    <RowLimit Paged='TRUE'>100</RowLimit>
+  </View>";
+
                         do
                         {
                             // Execute the query. It will retrieve all properties of the folders. Refraining to using the RetrievalExpressions would cause a tremendous increased load on SharePoint as it would have to execute a query per list item which would be less efficient, especially on lists with many folders, than just getting all properties directly
