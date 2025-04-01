@@ -124,6 +124,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPSiteScriptFromWeb` throwing a file not found error when providing a web URL through `-Url` that differed from the connected to URL [#4785](https://github.com/pnp/powershell/pull/4785)
 - Fixed `Set-PnPListItem -Values @{}` passing in a taxonomy field with a guid typed value throwing an error [#4811](https://github.com/pnp/powershell/pull/4811)
 - Fixed `Get-PnPFolder` throwing an exception when a lot of files and folders are present [#4819](https://github.com/pnp/powershell/pull/4819)
+- Fixed `Get-PnPPropertyBag` not returning updated values after running it for the first time [#4823](https://github.com/pnp/powershell/pull/4823)
 
 ### Removed
 
