@@ -122,6 +122,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `-Description` and `-Sequence` not being applied when providing these through `Add-PnPApplicationCustomizer` [#4767](https://github.com/pnp/powershell/pull/4767)
 - Fixed `-RetryCount` parameter being ignored with `Submit-PnPSearchQuery` [#4784](https://github.com/pnp/powershell/pull/4784)
 - Fixed `Get-PnPSiteScriptFromWeb` throwing a file not found error when providing a web URL through `-Url` that differed from the connected to URL [#4785](https://github.com/pnp/powershell/pull/4785)
+- Fixed `Set-PnPListItem -Values @{}` passing in a taxonomy field with a guid typed value throwing an error [#4811](https://github.com/pnp/powershell/pull/4811)
 
 ### Removed
 
