@@ -103,3 +103,4 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/driveitem-assignsensitivitylabel)

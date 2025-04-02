@@ -32,7 +32,8 @@ namespace PnP.PowerShell.Commands
                 }
                 else
                 {
-                    CurrentWeb.EnsureProperty(w => w.AllProperties);
+                    ClientContext.Load(CurrentWeb.AllProperties);
+                    ClientContext.ExecuteQueryRetry();
 
                     var values = CurrentWeb.AllProperties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
                     WriteObject(values, true);
@@ -46,7 +47,8 @@ namespace PnP.PowerShell.Commands
 
                 var folderUrl = UrlUtility.Combine(CurrentWeb.ServerRelativeUrl, Folder);
                 var folder = CurrentWeb.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
-                folder.EnsureProperty(f => f.Properties);
+                ClientContext.Load(folder, f => f.Properties);
+                ClientContext.ExecuteQueryRetry();
 
                 if (!string.IsNullOrEmpty(Key))
                 {
@@ -58,7 +60,6 @@ namespace PnP.PowerShell.Commands
                     var values = folder.Properties.FieldValues.Select(x => new PropertyBagValue() { Key = x.Key, Value = x.Value });
                     WriteObject(values, true);
                 }
-
             }
         }
     }
