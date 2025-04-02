@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -90,7 +90,7 @@
 </ul>
 <p>Returns one or more Containers in a SharePoint Embedded application.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPContainer [-Identity &lt;ContainerPipeBind&gt;] [-OwningApplicationId &lt;Guid&gt;] [-Paged &lt;switchparameter&gt;] [-PagingToken &lt;string&gt;][-SortOrder &lt;SortOrder&gt;] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPContainer [-Identity &lt;ContainerPipeBind&gt;] [-OwningApplicationId &lt;Guid&gt;] [-Paged &lt;switchparameter&gt;] [-PagingToken &lt;string&gt;][-SortOrder &lt;SortOrder&gt;] [-ArchiveStatus &lt;SPContainerArchiveStatusFilterProperties&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <h2 id="examples">EXAMPLES</h2>
@@ -107,6 +107,24 @@
 </code></pre>
 <p>Returns the properties of the specified container by using the container url</p>
 <h2 id="parameters">PARAMETERS</h2>
+<h3 id="-archivestatus">-ArchiveStatus</h3>
+<p>The ArchiveStatus parameter is used to display containers in various stages of archiving. The following states are supported:</p>
+<ul>
+<li>Archived: Displays containers in all archived states.</li>
+<li>RecentlyArchived: Displays containers in the &quot;Recently archived&quot; state.</li>
+<li>FullyArchived: Displays containers in the &quot;Fully archived&quot; state.</li>
+<li>Reactivating: Displays containers in the &quot;Reactivating&quot; state.</li>
+<li>NotArchived: Displays active containers</li>
+</ul>
+<pre><code class="lang-yaml">Type: SPContainerArchiveStatusFilterProperties
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: NotArchived
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
