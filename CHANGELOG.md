@@ -64,6 +64,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Transitive` parameter to `Get-PnPAzureADGroupMember` cmdlet to allow members of groups inside groups to be retrieved [#4799](https://github.com/pnp/powershell/pull/4799)
 - Added the ability to `Get-PnPPage` to return all site pages in the site by omitting the `-Identity` parameter [#4805](https://github.com/pnp/powershell/pull/4805)
 - Added `Copy-PnPPage`, `Move-PnPPage` and `Get-PnPPageCopyProgress` cmdlets to allow for copying and moving site pages between sites [#4806](https://github.com/pnp/powershell/pull/4806)
+- Added `Get-PnPBrandCenterConfig` to retrieve the configuration of the Brand Center on the tenant [#4830](https://github.com/pnp/powershell/pull/4830)
+- Added `Get-PnPBrandCenterFont` to retrieve the available fonts from the various Brand Centers [#4830](https://github.com/pnp/powershell/pull/4830)
+- Added `Set-PnPBrandCenterFont` to apply the specified font from the Brand Center to the current site [#4830](https://github.com/pnp/powershell/pull/4830)
+- Added `Add-PnPBrandCenterFont` to upload a font to the tenant Brand Center [#4830](https://github.com/pnp/powershell/pull/4830)
 
 ### Changed
 
