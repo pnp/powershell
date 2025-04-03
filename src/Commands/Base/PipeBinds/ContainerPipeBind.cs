@@ -11,26 +11,30 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         /// Id of the container
         /// </summary>
         private readonly string _id;
+
         /// <summary>
         /// Url of the container
         /// </summary>
         private readonly string _url;
+
         /// <summary>
         /// ContainerProperties of the container
         /// </summary>
         private SPContainerProperties _ContainerProperties;
+
         /// <summary>
         /// Creates a new ContainerPipeBind based on the Url of a container or the Id of a container
         /// </summary>
         /// <param name="identity">Url or Id of a container</param>
         public string Id => _id;
+        
         public ContainerPipeBind(string idOrUrl)
         {
             if (string.IsNullOrEmpty(idOrUrl))
                 throw new ArgumentException("Url or ID null or empty.", nameof(idOrUrl));
 
             Uri uriResult;
-            if( Uri.TryCreate(idOrUrl, UriKind.Absolute,out uriResult))
+            if (Uri.TryCreate(idOrUrl, UriKind.Absolute, out uriResult))
             {
                 _url = idOrUrl;
             }
