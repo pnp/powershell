@@ -531,7 +531,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
                 // Write results
 
-                WriteObject($"App created. You can now connect to your tenant using Connect-PnPOnline -Url <yourtenanturl> -Interactive -ClientId {azureApp.AppId}");
+                WriteObject($"App created. You can now connect to your tenant using Connect-PnPOnline -Url <yourtenanturl> -ClientId {azureApp.AppId}");
                 WriteObject(record);
 
             }
@@ -549,7 +549,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             //     {
             //         Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
             //     }
-            //     WriteObject($"App created. You can now connect to your tenant using Connect-PnPOnline -Url <yourtenanturl> -Interactive -ClientId {azureApp.AppId}");
+            //     WriteObject($"App created. You can now connect to your tenant using Connect-PnPOnline -Url <yourtenanturl> -ClientId {azureApp.AppId}");
             //     WriteObject(record);
             // }
         }
