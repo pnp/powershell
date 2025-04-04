@@ -8,9 +8,9 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Set, "PnPBrandCenterFont")]
+    [Cmdlet(VerbsOther.Use, "PnPBrandCenterFont")]
     [OutputType(typeof(void))]
-    public class SetBrandCenterFont : PnPWebCmdlet
+    public class UseBrandCenterFont : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         [ArgumentCompleter(typeof(BrandCenterFontCompleter))]
