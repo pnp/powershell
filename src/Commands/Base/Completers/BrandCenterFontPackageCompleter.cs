@@ -8,12 +8,12 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Base.Completers
 {
-    public sealed class BrandCenterFontCompleter : PnPArgumentCompleter
+    public sealed class BrandCenterFontPackageCompleter : PnPArgumentCompleter
     {
         protected override IEnumerable<CompletionResult> GetArguments(string commandName, string parameterName, string wordToComplete, CommandAst commandAst, IDictionary fakeBoundParameters)
         {
             ClientContext.Web.EnsureProperty(w => w.Url);
-            var fonts = BrandCenterUtility.GetFonts(null, ClientContext, ClientContext.Web.Url);
+            var fonts = BrandCenterUtility.GetFontPackages(null, ClientContext, ClientContext.Web.Url);
             return fonts.Select(font => new CompletionResult(font.Title)).OrderBy(ct => ct.CompletionText);
         }
     }

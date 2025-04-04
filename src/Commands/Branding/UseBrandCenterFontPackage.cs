@@ -8,12 +8,12 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsOther.Use, "PnPBrandCenterFont")]
+    [Cmdlet(VerbsOther.Use, "PnPBrandCenterFontPackage")]
     [OutputType(typeof(void))]
-    public class UseBrandCenterFont : PnPWebCmdlet
+    public class UseBrandCenterFontPackage : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        [ArgumentCompleter(typeof(BrandCenterFontCompleter))]
+        [ArgumentCompleter(typeof(BrandCenterFontPackageCompleter))]
         public BrandCenterFontPipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -31,7 +31,7 @@ namespace PnP.PowerShell.Commands.Branding
                 LogWarning($"The font with identity {font.Id} titled '{font.Title}' is not valid. Will try to apply it anyway.");
             }
 
-            var url = $"{BrandCenterUtility.GetStoreUrlByStoreType(font.Store, CurrentWeb.Url)}/GetById('{font.Id}')/Apply";
+            var url = $"{BrandCenterUtility.GetStoreFontPackageUrlByStoreType(font.Store, CurrentWeb.Url)}/GetById('{font.Id}')/Apply";
             LogDebug($"Applying font by making a POST call to {url}");
             RestHelper.Post(Connection.HttpClient, url, ClientContext);
         }
