@@ -54,12 +54,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (_id.HasValue)
             {
-                _font = BrandCenterUtility.GetFontById(cmdlet, clientContext, _id.Value, webUrl, store);
+                _font = BrandCenterUtility.GetFontPackageById(cmdlet, clientContext, _id.Value, webUrl, store);
                 return _font;
             }
             else if (!string.IsNullOrEmpty(_title))
             {
-                _font = BrandCenterUtility.GetFontByTitle(cmdlet, clientContext, _title, webUrl, store);
+                _font = BrandCenterUtility.GetFontPackageByTitle(cmdlet, clientContext, _title, webUrl, store);
                 return _font;
             }            
             return null;

@@ -2,40 +2,60 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Use-PnPBrandCenterFont.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPBrandCenterFontPackage.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Use-PnPBrandCenterFont
+title: Get-PnPBrandCenterFontPackage
 ---
   
-# Use-PnPBrandCenterFont
+# Get-PnPBrandCenterFontPackage
 
 ## SYNOPSIS
-Applies the specified font from the Brand Center to the current site.
+Returns the available fonts configured throught heBrand Center
 
 ## SYNTAX
 
+### All
 ```powershell
-Use-PnPBrandCenterFont -Identity <BrandCenterFontPipeBind> [-Store <Tenant|OutOfBox|Site|All>] [-Connection <PnPConnection>]
+Get-PnPBrandCenterFontPackage [-Store <Tenant|OutOfBox|Site|All>] [-Connection <PnPConnection>]
+```
+
+### Single
+```powershell
+Get-PnPBrandCenterFontPackage -Identity <BrandCenterFontPipeBind> [-Store <Tenant|OutOfBox|Site|All>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Applies the specified font from the Brand Center to the current site.
+Allows retrieval of the available fonts from the various Brand Centers.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Use-PnPBrandCenterFont -Identity "2812cbd8-7176-4e45-8911-6a063f89a1f1"
+Get-PnPBrandCenterFontPackage
 ```
 
-Looks up and applies the font with the identity "2812cbd8-7176-4e45-8911-6a063f89a1f1" from any of the Brand Centers to the current site
+Returns all the available fonts
 
 ### EXAMPLE 2
 ```powershell
-Use-PnPBrandCenterFont -Identity "My awesome font" -Store Tenant
+Get-PnPBrandCenterFontPackage -Store Site
 ```
 
-Looks up and applies the font with the title "My awesome font" from the tenant Brand Center
+Returns the available fonts from the site collection Brand Center
+
+### EXAMPLE 3
+```powershell
+Get-PnPBrandCenterFontPackage -Identity "My awesome font"
+```
+
+Looks up and returns the font with the name "My awesome font" from any of the Brand Centers
+
+### EXAMPLE 4
+```powershell
+Get-PnPBrandCenterFontPackage -Identity "2812cbd8-7176-4e45-8911-6a063f89a1f1"
+```
+
+Looks up and returns the font with the Identity "2812cbd8-7176-4e45-8911-6a063f89a1f1" from any of the Brand Centers
 
 ## PARAMETERS
 
@@ -54,11 +74,11 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Unique identifier of the font to be applied. This can be its guid, name or a BrandCenterFont object.
+Unique identifier of the font to be retrieved. This can be its guid, name or a BrandCenterFont object. If not specified, all the available fonts will be returned.
 
 ```yaml
 Type: BrandCenterFontPipeBind
-Parameter Sets: (All)
+Parameter Sets: Single
 
 Required: True
 Position: Named
@@ -68,7 +88,7 @@ Accept wildcard characters: False
 ```
 
 ### -Store
-Indicates the source of the fonts to be looked in to try to locate the font to apply. The following values are available:
+Indicates the source of the fonts to be retrieved. The following values are available:
 - Tenant: The fonts configured in the tenant Brand Center
 - Site: The fonts configured in the site collection Brand Center
 - OutOfBox: The out of box fonts available in the tenant

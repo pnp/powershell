@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.Utilities
     internal static class BrandCenterUtility
     {
         /// <summary>
-        /// Retrieves a font from the Brand Center based on its name and optionally store type.
+        /// Retrieves a font package from the Brand Center based on its name and optionally store type.
         /// </summary>
         /// <param name="cmdlet">Cmdlet for which this runs, used for logging</param>
         /// <param name="title">Title of the font to retrieve</param>
@@ -23,16 +23,16 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="store">The store to check for the font. When NULL, it will check all stores.</param>
         /// <param name="clientContext">ClientContext to use to communicate with SharePoint Online</param>
         /// <returns>The font with the provided identity or NULL if no font found with the provided identity</returns>
-        public static Font GetFontByTitle(BasePSCmdlet cmdlet, ClientContext clientContext, string title, string webUrl, Store store = Store.All)
+        public static Font GetFontPackageByTitle(BasePSCmdlet cmdlet, ClientContext clientContext, string title, string webUrl, Store store = Store.All)
         {
             if (store == Store.All)
             {
-                return GetFontByTitle(cmdlet, clientContext, title, webUrl, Store.Site) ??
-                       GetFontByTitle(cmdlet, clientContext, title, webUrl, Store.Tenant) ??
-                       GetFontByTitle(cmdlet, clientContext, title, webUrl, Store.OutOfBox);
+                return GetFontPackageByTitle(cmdlet, clientContext, title, webUrl, Store.Site) ??
+                       GetFontPackageByTitle(cmdlet, clientContext, title, webUrl, Store.Tenant) ??
+                       GetFontPackageByTitle(cmdlet, clientContext, title, webUrl, Store.OutOfBox);
             }
 
-            var url = $"{GetStoreUrlByStoreType(store, webUrl)}/GetByTitle('{title}')";
+            var url = $"{GetStoreFontPackageUrlByStoreType(store, webUrl)}/GetByTitle('{title}')";
             cmdlet?.LogDebug($"Making a GET request to {url} to retrieve {store} font with title {title}.");
             try
             {
@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Retrieves a font from the Brand Center based on its identity and optionally store type.
+        /// Retrieves a font package from the Brand Center based on its identity and optionally store type.
         /// </summary>
         /// <param name="cmdlet">Cmdlet for which this runs, used for logging</param>
         /// <param name="identity">Id of the font to retrieve</param>
@@ -60,16 +60,16 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="store">The store to check for the font. When NULL, it will check all stores.</param>
         /// <param name="clientContext">ClientContext to use to communicate with SharePoint Online</param>
         /// <returns>The font with the provided identity or NULL if no font found with the provided identity</returns>
-        public static Font GetFontById(BasePSCmdlet cmdlet, ClientContext clientContext, Guid identity, string webUrl, Store store = Store.All)
+        public static Font GetFontPackageById(BasePSCmdlet cmdlet, ClientContext clientContext, Guid identity, string webUrl, Store store = Store.All)
         {
             if (store == Store.All)
             {
-                return GetFontById(cmdlet, clientContext, identity, webUrl, Store.Site) ??
-                       GetFontById(cmdlet, clientContext, identity, webUrl, Store.Tenant) ??
-                       GetFontById(cmdlet, clientContext, identity, webUrl, Store.OutOfBox);
+                return GetFontPackageById(cmdlet, clientContext, identity, webUrl, Store.Site) ??
+                       GetFontPackageById(cmdlet, clientContext, identity, webUrl, Store.Tenant) ??
+                       GetFontPackageById(cmdlet, clientContext, identity, webUrl, Store.OutOfBox);
             }
 
-            var url = $"{GetStoreUrlByStoreType(store, webUrl)}/GetById('{identity}')";
+            var url = $"{GetStoreFontPackageUrlByStoreType(store, webUrl)}/GetById('{identity}')";
             cmdlet?.LogDebug($"Making a GET request to {url} to retrieve {store} font with identity {identity}.");
             try
             {
@@ -89,38 +89,38 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Retrieves fonts from the Brand Center optionally based on the store type.
+        /// Retrieves font packages from the Brand Center optionally based on the store type.
         /// </summary>
         /// <param name="cmdlet">Cmdlet for which this runs, used for logging</param>
         /// <param name="webUrl">Url to use to check the site collection Brand Center</param>
         /// <param name="store">The store to check for the font. When NULL, it will check all stores.</param>
         /// <param name="clientContext">ClientContext to use to communicate with SharePoint Online</param>
         /// <returns>The available fonts</returns>
-        public static List<Font> GetFonts(BasePSCmdlet cmdlet, ClientContext clientContext, string webUrl, Store store = Store.All)
+        public static List<Font> GetFontPackages(BasePSCmdlet cmdlet, ClientContext clientContext, string webUrl, Store store = Store.All)
         {
             if (store == Store.All)
             {
                 var allStoresFonts = new List<Font>();
-                allStoresFonts.AddRange(GetFonts(cmdlet, clientContext, webUrl, Store.Site));
-                allStoresFonts.AddRange(GetFonts(cmdlet, clientContext, webUrl, Store.Tenant));
-                allStoresFonts.AddRange(GetFonts(cmdlet, clientContext, webUrl, Store.OutOfBox));
+                allStoresFonts.AddRange(GetFontPackages(cmdlet, clientContext, webUrl, Store.Site));
+                allStoresFonts.AddRange(GetFontPackages(cmdlet, clientContext, webUrl, Store.Tenant));
+                allStoresFonts.AddRange(GetFontPackages(cmdlet, clientContext, webUrl, Store.OutOfBox));
                 return allStoresFonts;
             }
 
-            var url = GetStoreUrlByStoreType(store, webUrl);
+            var url = GetStoreFontPackageUrlByStoreType(store, webUrl);
             cmdlet?.LogDebug($"Making a GET request to {url} to retrieve {store} fonts.");
             var fonts = RestHelper.Get<RestResultCollection<Font>>(Framework.Http.PnPHttpClient.Instance.GetHttpClient(), url, clientContext);
             return fonts.Items.ToList();
         }
 
         /// <summary>
-        /// Returns the URL to the Brand Center based on the store type
+        /// Returns the font package URL to the Brand Center based on the store type
         /// </summary>
         /// <param name="store">Brand Center store to connect to</param>
         /// <param name="webUrl">Base URL to connect to</param>
         /// <returns></returns>
         /// <exception cref="ArgumentOutOfRangeException">Thrown if an invalid store type has been provided</exception>
-        public static string GetStoreUrlByStoreType(Store store, string webUrl)
+        public static string GetStoreFontPackageUrlByStoreType(Store store, string webUrl)
         {
             return store switch
             {

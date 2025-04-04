@@ -8,16 +8,16 @@ using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Branding
 {
-    [Cmdlet(VerbsCommon.Get, "PnPBrandCenterFont", DefaultParameterSetName = ParameterSet_ALL)]
+    [Cmdlet(VerbsCommon.Get, "PnPBrandCenterFontPackage", DefaultParameterSetName = ParameterSet_ALL)]
     [OutputType(typeof(Font), ParameterSetName = new[] { ParameterSet_SINGLE })]
     [OutputType(typeof(IEnumerable<Font>), ParameterSetName = new[] { ParameterSet_ALL })]
-    public class GetBrandCenterFont : PnPWebCmdlet
+    public class GetBrandCenterFontPackage : PnPWebCmdlet
     {
         private const string ParameterSet_SINGLE = "Single";
         private const string ParameterSet_ALL = "All";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SINGLE)]
-        [ArgumentCompleter(typeof(BrandCenterFontCompleter))]
+        [ArgumentCompleter(typeof(BrandCenterFontPackageCompleter))]
         public BrandCenterFontPipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
@@ -35,7 +35,7 @@ namespace PnP.PowerShell.Commands.Branding
             }
             else
             {
-                WriteObject(BrandCenterUtility.GetFonts(this, ClientContext, CurrentWeb.Url, Store), true);
+                WriteObject(BrandCenterUtility.GetFontPackages(this, ClientContext, CurrentWeb.Url, Store), true);
             }
         }
     }

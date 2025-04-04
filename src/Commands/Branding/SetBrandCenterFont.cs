@@ -12,7 +12,7 @@ namespace PnP.PowerShell.Commands.Files
     public class SetBrandCenterFont : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
-        [ArgumentCompleter(typeof(BrandCenterFontCompleter))]
+        [ArgumentCompleter(typeof(BrandCenterFontPackageCompleter))]
         public BrandCenterFontPipeBind Identity { get; set; }
 
         [Parameter(Mandatory = true)]
