@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPBrandCenterFont.html
+online version: https://pnp.github.io/powershell/cmdlets/Use-PnPBrandCenterFont.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Set-PnPBrandCenterFont
+title: Use-PnPBrandCenterFont
 ---
   
-# Set-PnPBrandCenterFont
+# Use-PnPBrandCenterFont
 
 ## SYNOPSIS
 Applies the specified font from the Brand Center to the current site.
@@ -15,7 +15,7 @@ Applies the specified font from the Brand Center to the current site.
 ## SYNTAX
 
 ```powershell
-Set-PnPBrandCenterFont -Identity <BrandCenterFontPipeBind> [-Store <Tenant|OutOfBox|Site|All>] [-Connection <PnPConnection>]
+Use-PnPBrandCenterFont -Identity <BrandCenterFontPipeBind> [-Store <Tenant|OutOfBox|Site|All>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -25,14 +25,14 @@ Applies the specified font from the Brand Center to the current site.
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPBrandCenterFont -Identity "2812cbd8-7176-4e45-8911-6a063f89a1f1"
+Use-PnPBrandCenterFont -Identity "2812cbd8-7176-4e45-8911-6a063f89a1f1"
 ```
 
 Looks up and applies the font with the identity "2812cbd8-7176-4e45-8911-6a063f89a1f1" from any of the Brand Centers to the current site
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPBrandCenterFont -Identity "My awesome font" -Store Tenant
+Use-PnPBrandCenterFont -Identity "My awesome font" -Store Tenant
 ```
 
 Looks up and applies the font with the title "My awesome font" from the tenant Brand Center

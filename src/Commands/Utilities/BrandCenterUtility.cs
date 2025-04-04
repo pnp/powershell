@@ -22,22 +22,21 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="webUrl">Url to use to check the site collection Brand Center</param>
         /// <param name="store">The store to check for the font. When NULL, it will check all stores.</param>
         /// <param name="clientContext">ClientContext to use to communicate with SharePoint Online</param>
-        /// <param name="connection">Connection to use to communicate with SharePoint Online</param>
         /// <returns>The font with the provided identity or NULL if no font found with the provided identity</returns>
-        public static Font GetFontByTitle(BasePSCmdlet cmdlet, ClientContext clientContext, PnPConnection connection, string title, string webUrl, Store store = Store.All)
+        public static Font GetFontByTitle(BasePSCmdlet cmdlet, ClientContext clientContext, string title, string webUrl, Store store = Store.All)
         {
             if (store == Store.All)
             {
-                return GetFontByTitle(cmdlet, clientContext, connection, title, webUrl, Store.Site) ??
-                       GetFontByTitle(cmdlet, clientContext, connection, title, webUrl, Store.Tenant) ??
-                       GetFontByTitle(cmdlet, clientContext, connection, title, webUrl, Store.OutOfBox);
+                return GetFontByTitle(cmdlet, clientContext, title, webUrl, Store.Site) ??
+                       GetFontByTitle(cmdlet, clientContext, title, webUrl, Store.Tenant) ??
+                       GetFontByTitle(cmdlet, clientContext, title, webUrl, Store.OutOfBox);
             }
 
             var url = $"{GetStoreUrlByStoreType(store, webUrl)}/GetByTitle('{title}')";
             cmdlet?.LogDebug($"Making a GET request to {url} to retrieve {store} font with title {title}.");
             try
             {
-                var font = RestHelper.Get<Font>(connection.HttpClient, url, clientContext);
+                var font = RestHelper.Get<Font>(Framework.Http.PnPHttpClient.Instance.GetHttpClient(), url, clientContext);
 
                 if (font != null)
                 {
@@ -60,22 +59,21 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="webUrl">Url to use to check the site collection Brand Center</param>
         /// <param name="store">The store to check for the font. When NULL, it will check all stores.</param>
         /// <param name="clientContext">ClientContext to use to communicate with SharePoint Online</param>
-        /// <param name="connection">Connection to use to communicate with SharePoint Online</param>
         /// <returns>The font with the provided identity or NULL if no font found with the provided identity</returns>
-        public static Font GetFontById(BasePSCmdlet cmdlet, ClientContext clientContext, PnPConnection connection, Guid identity, string webUrl, Store store = Store.All)
+        public static Font GetFontById(BasePSCmdlet cmdlet, ClientContext clientContext, Guid identity, string webUrl, Store store = Store.All)
         {
             if (store == Store.All)
             {
-                return GetFontById(cmdlet, clientContext, connection, identity, webUrl, Store.Site) ??
-                       GetFontById(cmdlet, clientContext, connection, identity, webUrl, Store.Tenant) ??
-                       GetFontById(cmdlet, clientContext, connection, identity, webUrl, Store.OutOfBox);
+                return GetFontById(cmdlet, clientContext, identity, webUrl, Store.Site) ??
+                       GetFontById(cmdlet, clientContext, identity, webUrl, Store.Tenant) ??
+                       GetFontById(cmdlet, clientContext, identity, webUrl, Store.OutOfBox);
             }
 
             var url = $"{GetStoreUrlByStoreType(store, webUrl)}/GetById('{identity}')";
             cmdlet?.LogDebug($"Making a GET request to {url} to retrieve {store} font with identity {identity}.");
             try
             {
-                var font = RestHelper.Get<Font>(connection.HttpClient, url, clientContext);
+                var font = RestHelper.Get<Font>(Framework.Http.PnPHttpClient.Instance.GetHttpClient(), url, clientContext);
 
                 if (font != null)
                 {
@@ -97,23 +95,21 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <param name="webUrl">Url to use to check the site collection Brand Center</param>
         /// <param name="store">The store to check for the font. When NULL, it will check all stores.</param>
         /// <param name="clientContext">ClientContext to use to communicate with SharePoint Online</param>
-        /// <param name="connection">Connection to use to communicate with SharePoint Online</param>
         /// <returns>The available fonts</returns>
-        public static List<Font> GetFonts(BasePSCmdlet cmdlet, ClientContext clientContext, PnPConnection connection, string webUrl, Store store = Store.All)
+        public static List<Font> GetFonts(BasePSCmdlet cmdlet, ClientContext clientContext, string webUrl, Store store = Store.All)
         {
-
             if (store == Store.All)
             {
                 var allStoresFonts = new List<Font>();
-                allStoresFonts.AddRange(GetFonts(cmdlet, clientContext, connection, webUrl, Store.Site));
-                allStoresFonts.AddRange(GetFonts(cmdlet, clientContext, connection, webUrl, Store.Tenant));
-                allStoresFonts.AddRange(GetFonts(cmdlet, clientContext, connection, webUrl, Store.OutOfBox));
+                allStoresFonts.AddRange(GetFonts(cmdlet, clientContext, webUrl, Store.Site));
+                allStoresFonts.AddRange(GetFonts(cmdlet, clientContext, webUrl, Store.Tenant));
+                allStoresFonts.AddRange(GetFonts(cmdlet, clientContext, webUrl, Store.OutOfBox));
                 return allStoresFonts;
             }
 
             var url = GetStoreUrlByStoreType(store, webUrl);
             cmdlet?.LogDebug($"Making a GET request to {url} to retrieve {store} fonts.");
-            var fonts = RestHelper.Get<RestResultCollection<Font>>(connection.HttpClient, url, clientContext);
+            var fonts = RestHelper.Get<RestResultCollection<Font>>(Framework.Http.PnPHttpClient.Instance.GetHttpClient(), url, clientContext);
             return fonts.Items.ToList();
         }
 

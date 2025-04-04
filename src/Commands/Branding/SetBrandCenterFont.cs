@@ -1,37 +1,57 @@
-﻿using System.Management.Automation;
+﻿using System.Collections;
+using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using PnP.PowerShell.Commands.Model.SharePoint.BrandCenter;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.PowerShell.Commands.Utilities.REST;
 
-namespace PnP.PowerShell.Commands.Branding
+namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Set, "PnPBrandCenterFont")]
     [OutputType(typeof(void))]
     public class SetBrandCenterFont : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(BrandCenterFontCompleter))]
         public BrandCenterFontPipeBind Identity { get; set; }
 
-        [Parameter(Mandatory = false)]
-        public Store Store { get; set; } = Store.All;
+        [Parameter(Mandatory = true)]
+        public bool Visible;
 
         protected override void ExecuteCmdlet()
         {
-            CurrentWeb.EnsureProperty(w => w.Url);
+            var webUrl = CurrentWeb.EnsureProperty(w => w.Url);
 
-            LogDebug("Trying to retrieve the font with the provided identity from the Brand Center");
-            var font = Identity.GetFont(this, ClientContext, Connection, CurrentWeb.Url, Store) ?? throw new PSArgumentException($"The font with the provided identity was not found in the Brand Center. Please check the identity and try again.", nameof(Identity));
-
-            if (font.IsValid.HasValue && font.IsValid.Value == false)
+            var brandCenterConfig = BrandCenterUtility.GetBrandCenterConfiguration(this, ClientContext);
+            if (brandCenterConfig == null || !brandCenterConfig.IsBrandCenterSiteFeatureEnabled || string.IsNullOrEmpty(brandCenterConfig.SiteUrl))
             {
-                LogWarning($"The font with identity {font.Id} titled '{font.Title}' is not valid. Will try to apply it anyway.");
+                throw new PSArgumentException("Brand Center is not enabled for this tenant");
             }
 
-            var url = $"{BrandCenterUtility.GetStoreUrlByStoreType(font.Store, CurrentWeb.Url)}/GetById('{font.Id}')/Apply";
-            LogDebug($"Applying font by making a POST call to {url}");
-            RestHelper.Post(Connection.HttpClient, url, ClientContext);
+            LogDebug($"Connecting to the Brand Center site at {brandCenterConfig.SiteUrl}");
+            using var brandCenterContext = Connection.CloneContext(brandCenterConfig.SiteUrl);
+            var font = Identity.GetFont(this, ClientContext, webUrl);
+            
+            LogDebug($"Retrieving the Brand Center font library with ID {brandCenterConfig.BrandFontLibraryId}");
+            var brandCenterFontLibrary = brandCenterContext.Web.GetListById(brandCenterConfig.BrandFontLibraryId);
+            brandCenterContext.Load(brandCenterFontLibrary, l => l.RootFolder);
+            brandCenterContext.ExecuteQueryRetry();
+
+            LogDebug($"Uploading the font to the Brand Center font library root folder at {brandCenterFontLibrary.RootFolder.ServerRelativeUrl}");
+            var file = brandCenterFontLibrary.RootFolder.UploadFile(System.IO.Path.GetFileName(Path), Path, true);
+
+            if (ParameterSpecified(nameof(Visible)) && Visible.HasValue)
+            {
+                LogDebug($"Setting the font visibility to {Visible.Value}");
+                ListItemHelper.SetFieldValues(file.ListItemAllFields, new Hashtable { { "_SPFontVisible", Visible.Value ? "True" : "False" } }, this);
+                file.ListItemAllFields.UpdateOverwriteVersion();
+            }
+
+            brandCenterContext.Load(file);
+            brandCenterContext.ExecuteQueryRetry();
+
+            LogDebug("Font uploaded successfully");
+            WriteObject(file);
         }
     }
 }
