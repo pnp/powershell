@@ -1,5 +1,6 @@
 ﻿using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint.BrandCenter;
 using PnP.PowerShell.Commands.Utilities;
@@ -12,6 +13,7 @@ namespace PnP.PowerShell.Commands.Branding
     public class SetBrandCenterFont : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
+        [ArgumentCompleter(typeof(BrandCenterFontCompleter))]
         public BrandCenterFontPipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -22,7 +24,7 @@ namespace PnP.PowerShell.Commands.Branding
             CurrentWeb.EnsureProperty(w => w.Url);
 
             LogDebug("Trying to retrieve the font with the provided identity from the Brand Center");
-            var font = Identity.GetFont(this, ClientContext, Connection, CurrentWeb.Url, Store) ?? throw new PSArgumentException($"The font with the provided identity was not found in the Brand Center. Please check the identity and try again.", nameof(Identity));
+            var font = Identity.GetFont(this, ClientContext, CurrentWeb.Url, Store) ?? throw new PSArgumentException($"The font with the provided identity was not found in the Brand Center. Please check the identity and try again.", nameof(Identity));
 
             if (font.IsValid.HasValue && font.IsValid.Value == false)
             {

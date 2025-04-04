@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.SharePoint.BrandCenter;
 using PnP.PowerShell.Commands.Utilities;
@@ -16,6 +17,7 @@ namespace PnP.PowerShell.Commands.Branding
         private const string ParameterSet_ALL = "All";
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SINGLE)]
+        [ArgumentCompleter(typeof(BrandCenterFontCompleter))]
         public BrandCenterFontPipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
@@ -28,12 +30,12 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                var font = Identity.GetFont(this, ClientContext, Connection, CurrentWeb.Url, Store);
+                var font = Identity.GetFont(this, ClientContext, CurrentWeb.Url, Store);
                 WriteObject(font, false);
             }
             else
             {
-                WriteObject(BrandCenterUtility.GetFonts(this, ClientContext, Connection, CurrentWeb.Url, Store), true);
+                WriteObject(BrandCenterUtility.GetFonts(this, ClientContext, CurrentWeb.Url, Store), true);
             }
         }
     }
