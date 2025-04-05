@@ -400,6 +400,9 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPBrandCenterFont.md",
       "output": {
@@ -2101,10 +2104,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPBrandCenterFont.md",
+      "source_relative_path": "cmdlets/Get-PnPBrandCenterFontPackage.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPBrandCenterFont.html"
+          "relative_path": "cmdlets/Get-PnPBrandCenterFontPackage.html"
         }
       },
       "version": ""
@@ -6991,16 +6994,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Set-PnPBrandCenterFont.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Set-PnPBrandCenterFont.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPBrowserIdleSignout.md",
       "output": {
         ".html": {
@@ -8455,6 +8448,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Update-SiteClassification.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Use-PnPBrandCenterFontPackage.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Use-PnPBrandCenterFontPackage.html"
         }
       },
       "version": ""
