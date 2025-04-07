@@ -15,7 +15,7 @@ Returns the permissions for a specific SharePoint group
 ## SYNTAX
 
 ```powershell
-Get-PnPGroupPermissions [-Identity] <GroupPipeBind> [-Connection <PnPConnection>]
+Get-PnPGroupPermissions -Identity <GroupPipeBind> [-Connection <PnPConnection>]
  
 ```
 
@@ -62,10 +62,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-
-
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
-
