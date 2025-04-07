@@ -21,8 +21,8 @@ Add-PnPBrandCenterFont -Path <String> [-Visible <Boolean>] [-Connection <PnPConn
 ## DESCRIPTION
 This cmdlet allows a font to be uploaded to the tenant Brand Center. The font will be available for use in the tenant and site collection Brand Center.
 
-Use [Use-PnPBrandCenterFont](Use-PnPBrandCenterFont.md) to apply the font to the current site.
-Use [Get-PnPBrandCenterFont](Get-PnPBrandCenterFont.md) to retrieve the available fonts.
+Use [Use-PnPBrandCenterFontPackage](Use-PnPBrandCenterFontPackage.md) to apply the font to the current site.  
+Use [Get-PnPBrandCenterFontPackage](Get-PnPBrandCenterFontPackage.md) to retrieve the available fonts.
 
 ## EXAMPLES
 
