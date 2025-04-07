@@ -10,7 +10,7 @@ title: Get-PnPBrandCenterFontPackage
 # Get-PnPBrandCenterFontPackage
 
 ## SYNOPSIS
-Returns the available fonts configured throught heBrand Center
+Returns the available fonts configured through the Brand Center
 
 ## SYNTAX
 
