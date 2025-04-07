@@ -130,6 +130,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed `Get-PnPFolder` throwing an exception when a lot of files and folders are present [#4819](https://github.com/pnp/powershell/pull/4819)
 - Fixed `Set-PnPTerm -Name "New Name" -Lcid 1043` changing the default name of the taxonomy item, ignoring the provided language id and changing the name for the default language instead. [#4824](https://github.com/pnp/powershell/pull/4824)
 - Fixed `Get-PnPPropertyBag` not returning updated values after running it for the first time [#4823](https://github.com/pnp/powershell/pull/4823)
+- Fixed local build of PnP PowerShell using a local Core SDK build not being debuggable and optimized PnP PowerShell debug profiles for Visual Studio Code
 
 ### Removed
 
