@@ -21,25 +21,24 @@ Get-PnPGroup [-Connection <PnPConnection>] [-Includes <String[]>]
 
 ### ByName
 ```powershell
-Get-PnPGroup [[-Identity] <GroupPipeBind>] [-Connection <PnPConnection>]
- [-Includes <String[]>] 
+Get-PnPGroup -Identity <GroupPipeBind> [-Connection <PnPConnection>] [-Includes <String[]>] 
 ```
 
 ### Members
 ```powershell
-Get-PnPGroup [-AssociatedMemberGroup] [-Connection <PnPConnection>] [-Includes <String[]>]
+Get-PnPGroup -AssociatedMemberGroup [-Connection <PnPConnection>] [-Includes <String[]>]
  
 ```
 
 ### Visitors
 ```powershell
-Get-PnPGroup [-AssociatedVisitorGroup] [-Connection <PnPConnection>]
+Get-PnPGroup -AssociatedVisitorGroup [-Connection <PnPConnection>]
  [-Includes <String[]>] 
 ```
 
 ### Owners
 ```powershell
-Get-PnPGroup [-AssociatedOwnerGroup] [-Connection <PnPConnection>] [-Includes <String[]>]
+Get-PnPGroup -AssociatedOwnerGroup [-Connection <PnPConnection>] [-Includes <String[]>]
  
 ```
 
