@@ -90,19 +90,18 @@
 <pre><code class="lang-powershell">Get-PnPGroup [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] 
 </code></pre>
 <h3 id="byname">ByName</h3>
-<pre><code class="lang-powershell">Get-PnPGroup [[-Identity] &lt;GroupPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
- [-Includes &lt;String[]&gt;] 
+<pre><code class="lang-powershell">Get-PnPGroup -Identity &lt;GroupPipeBind&gt; [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;] 
 </code></pre>
 <h3 id="members">Members</h3>
-<pre><code class="lang-powershell">Get-PnPGroup [-AssociatedMemberGroup] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
+<pre><code class="lang-powershell">Get-PnPGroup -AssociatedMemberGroup [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
  
 </code></pre>
 <h3 id="visitors">Visitors</h3>
-<pre><code class="lang-powershell">Get-PnPGroup [-AssociatedVisitorGroup] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPGroup -AssociatedVisitorGroup [-Connection &lt;PnPConnection&gt;]
  [-Includes &lt;String[]&gt;] 
 </code></pre>
 <h3 id="owners">Owners</h3>
-<pre><code class="lang-powershell">Get-PnPGroup [-AssociatedOwnerGroup] [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
+<pre><code class="lang-powershell">Get-PnPGroup -AssociatedOwnerGroup [-Connection &lt;PnPConnection&gt;] [-Includes &lt;String[]&gt;]
  
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
