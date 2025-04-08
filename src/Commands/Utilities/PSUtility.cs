@@ -39,13 +39,13 @@ namespace PnP.PowerShell.Commands.Utilities
 #pragma warning disable CA1416 // Validate platform compatibility
         public static bool IsUserLocalAdmin()
         {
-            if (OperatingSystem.IsWindows())
+            if (OperatingSystem.IsWindows() && PSVersion == "7.5")
             {
                 using var identity = System.Security.Principal.WindowsIdentity.GetCurrent();
                 var principal = new System.Security.Principal.WindowsPrincipal(identity);
                 var isAdmin = principal.IsInRole(System.Security.Principal.WindowsBuiltInRole.Administrator);
 
-                return isAdmin && PSVersion == "7.5";
+                return isAdmin;
             }
             return true;
         }
