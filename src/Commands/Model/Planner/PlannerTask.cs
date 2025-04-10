@@ -49,7 +49,7 @@ namespace PnP.PowerShell.Commands.Model.Planner
     {
         [JsonPropertyName("@odata.type")]
         public string Type { get; set; } = "#microsoft.graph.plannerAssignment";
-    
+
         public DateTime? AssignedDateTime { get; set; }
         public string OrderHint { get; set; } = " !";
         public IdentitySet AssignedBy { get; set; }
@@ -63,6 +63,25 @@ namespace PnP.PowerShell.Commands.Model.Planner
         public bool? Category4 { get; set; }
         public bool? Category5 { get; set; }
         public bool? Category6 { get; set; }
+        public bool? Category7 { get; set; }
+        public bool? Category8 { get; set; }
+        public bool? Category9 { get; set; }
+        public bool? Category10 { get; set; }
+        public bool? Category11 { get; set; }
+        public bool? Category12 { get; set; }
+        public bool? Category13 { get; set; }
+        public bool? Category14 { get; set; }
+        public bool? Category15 { get; set; }
+        public bool? Category16 { get; set; }
+        public bool? Category17 { get; set; }
+        public bool? Category18 { get; set; }
+        public bool? Category19 { get; set; }
+        public bool? Category20 { get; set; }
+        public bool? Category21 { get; set; }
+        public bool? Category22 { get; set; }
+        public bool? Category23 { get; set; }
+        public bool? Category24 { get; set; }
+        public bool? Category25 { get; set; }
 
         [JsonExtensionData]
         public IDictionary<string, object> AdditionalData { get; set; }

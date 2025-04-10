@@ -44,6 +44,9 @@ namespace PnP.PowerShell.Commands.Planner
         [Parameter(Mandatory = false)]
         public string[] AssignedTo;
 
+        [Parameter(Mandatory = false)]
+        public AppliedCategories AppliedCategories;
+
         protected override void ExecuteCmdlet()
         {
             var existingTask = PlannerUtility.GetTask(GraphRequestHelper, TaskId, false, false);
@@ -87,6 +90,11 @@ namespace PnP.PowerShell.Commands.Planner
                     plannerTask.StartDateTime = StartDateTime.ToUniversalTime();
                 }
 
+                if(ParameterSpecified(nameof(AppliedCategories)))
+                {
+                    plannerTask.AppliedCategories = AppliedCategories;
+                }
+                
                 if (ParameterSpecified(nameof(AssignedTo)))
                 {
                     var errors = new List<Exception>();

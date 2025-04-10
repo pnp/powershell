@@ -22,7 +22,7 @@ Adds a new task to a planner bucket
 ### By Group
 ```powershell
 Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bucket <PlannerBucketPipeBind> -Title <String> 
-[-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
+[-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>] [-AppliedCategories <AppliedCategories>]
  [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>] [-OutputTask]
  
 ```
@@ -30,7 +30,7 @@ Add-PnPPlannerTask -Group <PlannerGroupPipeBind> -Plan <PlannerPlanPipeBind> -Bu
 ### By Plan Id
 ```powershell
 Add-PnPPlannerTask -Bucket <PlannerBucketPipeBind> -PlanId <String> -Title <String> 
-[-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
+[-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>] [-AppliedCategories <AppliedCategories>]
  [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>] [-OutputTask]
  
 ```
@@ -42,21 +42,21 @@ This cmdlet adds a new task to Planner bucket
 
 ### Example 1
 ```powershell
-Add-PnPPlannerTask -Group "Marketing" -Plan "Conference Plan" -Bucket "Todos" -Title "Design booth layout"
+Add-PnPPlannerTask -Group "Marketing" -Plan "Conference Plan" -Bucket "Todos" -Title "Design booth layout" -AppliedCategories @{"Category1"=$true,"Category3"=$true}
 ```
 
 This cmdlet adds a new task.
 
 ### Example 2
 ```powershell
-Add-PnPPlannerTask -PlanId "QvfkTd1mc02gwxHjHC_43JYABhAy" -Bucket "Todos" -Title "Design booth layout"
+Add-PnPPlannerTask -PlanId "QvfkTd1mc02gwxHjHC_43JYABhAy" -Bucket "Todos" -Title "Design booth layout" -AppliedCategories @{"Category1"=$true,"Category3"=$true}
 ```
 
 This cmdlet adds a new task.
 
 ### Example 3
 ```powershell
-Add-PnPPlannerTask -Group "Marketing" -Plan "Conference Plan" -Bucket "Todos" -Title "Design booth layout" -AssignedTo "user@contoso.com","manager@contoso.com"
+Add-PnPPlannerTask -Group "Marketing" -Plan "Conference Plan" -Bucket "Todos" -Title "Design booth layout" -AssignedTo "user@contoso.com","manager@contoso.com" -AppliedCategories @{"Category1"=$true,"Category3"=$true}
 ```
 
 This cmdlet adds a new task and assigns to user@contoso.com and manager@contoso.com
@@ -139,6 +139,21 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AppliedCategories
+The applied categories represent the labels as shown in the UI of the planner task. Categories are 'hardcoded' as such in Planner, e.g. you can set Category1 to Category25, each having its own color. Labels, if customized in planner will be set accordingly to the ones defined. You can either copy the value from an existing task (e.g. $task = Get-PnPPlannerTask, Add-PnPPlannerTask -PlanId <yourid> -AppliedCategories $task.AppliedCategory) or you can define it as a new object: @{"Category1"=$true,"Category5"=$true}
+
+```yaml
+Type: AppliedCategories
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
