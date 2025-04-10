@@ -146,7 +146,7 @@ Accept wildcard characters: False
 ```
 
 ### -AppliedCategories
-The applied categories represent the labels as shown in the UI of the planner task. Categories are 'hardcoded' as such in Planner, e.g. you can set Category1 to Category25, each having its own color. Labels, if customized in planner will be set accordingly to the ones defined. You can either copy the value from an existing task (e.g. $task = Get-PnPPlannerTask, Add-PnPPlannerTask -PlanId <yourid> -AppliedCategories $task.AppliedCategory) or you can define it as a new object: @{"Category1"=$true,"Category5"=$true}
+The applied categories represent the labels as shown in the UI of the planner task. Categories are 'hardcoded' as such in Planner, e.g. you can set Category1 to Category25, each having its own color. Labels, if customized in planner will be set accordingly to the ones defined. You can either copy the value from an existing task (e.g. $task = Get-PnPPlannerTask, Add-PnPPlannerTask -PlanId <yourid> -AppliedCategories $task.AppliedCategory) or you can define it as a new object: @{"Category1"=$true,"Category5"=$true}. Notice that omitting a category from the data you send in will -not- reset that category. E.g. if you want to remove a category/label from a task you will have to explicitly set it to $false.
 
 ```yaml
 Type: AppliedCategories

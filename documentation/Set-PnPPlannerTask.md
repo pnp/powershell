@@ -21,7 +21,7 @@ Updates an existing task.
 
 ```powershell
 Set-PnPPlannerTask -TaskId <String> [-Title <String>] [-Bucket <PlannerBucketPipeBind>]
- [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>]
+ [-PercentComplete <Int32>] [-DueDateTime <DateTime>] [-StartDateTime <DateTime>] [-AppliedCategories <AppliedCategories>]
  [-AssignedTo <String[]] [-Priority <Int32>] [-Description <String>] [-Connection <PnPConnection>] 
  
 ```
@@ -51,6 +51,13 @@ Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -AssignedTo "user@contos
 ```
 
 This updates the task with the specified id and replaces the assigned users with the ones specified.
+
+### EXAMPLE 4
+```powershell
+Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -AppliedCategories ${"Category1"=$true,"Category5"=$false}
+```
+
+This updates the task and sets the first label to true and unsets the 5th label on the task.
 
 ## PARAMETERS
 
@@ -201,6 +208,21 @@ Sets the new title of the task.
 Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AppliedCategories
+The applied categories represent the labels as shown in the UI of the planner task. Categories are 'hardcoded' as such in Planner, e.g. you can set Category1 to Category25, each having its own color. Labels, if customized in planner will be set accordingly to the ones defined. You can either copy the value from an existing task (e.g. $task = Get-PnPPlannerTask, Set-PnPPlannerTask -PlanId <yourid> -AppliedCategories $task.AppliedCategory) or you can define it as a new object: @{"Category1"=$true,"Category5"=$true}. Notice that omitting a category from the data you send in will -not- reset that category. E.g. if you want to remove a category/label from a task you will have to explicitly set it to $false.
+
+```yaml
+Type: AppliedCategories
+Parameter Sets: (All)
+Aliases: ß
 
 Required: False
 Position: Named
