@@ -68,6 +68,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPBrandCenterFontPackage` to retrieve the available font packages from the various Brand Centers [#4830](https://github.com/pnp/powershell/pull/4830)
 - Added `Use-PnPBrandCenterFontPackage` to apply the specified font package from the Brand Center to the current site [#4830](https://github.com/pnp/powershell/pull/4830)
 - Added `Add-PnPBrandCenterFont` to upload a font to the tenant Brand Center [#4830](https://github.com/pnp/powershell/pull/4830)
+- Added `-Stream` parameter to `Invoke-PnPSiteTemplate` which allows an in memory .pnp site template to be applied to a site [#4845](https://github.com/pnp/powershell/pull/4845)
 
 ### Changed
 
