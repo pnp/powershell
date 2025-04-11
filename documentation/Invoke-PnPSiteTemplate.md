@@ -216,6 +216,8 @@ Accept wildcard characters: False
 ### -InputInstance
 Allows you to provide an in-memory instance of the SiteTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.
 
+Note that using a .pnp package containing additional files will not work through this method. You should either extract the files to the folder you specify through -Path yourself first or use -Stream to stream the package to be invoked directly.
+
 ```yaml
 Type: SiteTemplate
 Parameter Sets: Instance
