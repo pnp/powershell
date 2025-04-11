@@ -16,7 +16,7 @@ Applies a site template to a web
 
 ### Path
 ```powershell
-Invoke-PnPSiteTemplate [-Path] <String> [-TemplateId <String>] [-ResourceFolder <String>]
+Invoke-PnPSiteTemplate -Path <String> [-TemplateId <String>] [-ResourceFolder <String>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
@@ -26,11 +26,21 @@ Invoke-PnPSiteTemplate [-Path] <String> [-TemplateId <String>] [-ResourceFolder 
 
 ### Instance
 ```powershell
-Invoke-PnPSiteTemplate [-TemplateId <String>] [-ResourceFolder <String>]
+Invoke-PnPSiteTemplate -InputInstance <SiteTemplate> [-TemplateId <String>] [-ResourceFolder <String>]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
- [-TemplateProviderExtensions <ITemplateProviderExtension[]>] [-InputInstance <SiteTemplate>]
+ [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+ [-Connection <PnPConnection>] 
+```
+
+### Stream
+```powershell
+Invoke-PnPSiteTemplate -Stream <Stream> [-TemplateId <String>] [-ResourceFolder <String>]
+ [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
+ [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
+ [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
+ [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
  [-Connection <PnPConnection>] 
 ```
 
@@ -106,6 +116,14 @@ Invoke-PnPSiteTemplate -Path .\template.xml -TemplateId "MyTemplate"
 ```
 
 Applies the SiteTemplate with the ID "MyTemplate" located in the template definition file template.xml.
+
+### EXAMPLE 10
+```powershell
+$stream = Get-PnPFile -Url https://tenant.sharepoint.com/sites/TemplateGallery/Shared%20Documents/ProjectSite.pnp -AsMemoryStream
+Invoke-PnPSiteTemplate -Stream $stream
+```
+
+Downloads the ProjectSite.pnp template from the TemplateGallery document library and applies it to the currently connected to site.
 
 ## PARAMETERS
 
@@ -287,6 +305,20 @@ Type: String
 Parameter Sets: (All)
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Stream
+Allows a stream to be passed in. This is useful when you want to apply a template that is stored in a stream, for example when you download it from SharePoint Online so you can keep it in memory and don't (temporarily) need to store it anywhere. It only supports .pnp files, not .xml files. It also supports having additional files stored in the .pnp file.
+
+```yaml
+Type: Stream
+Parameter Sets: Stream
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
