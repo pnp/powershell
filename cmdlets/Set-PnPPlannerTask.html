@@ -91,7 +91,7 @@
 <p>Updates an existing task.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Set-PnPPlannerTask -TaskId &lt;String&gt; [-Title &lt;String&gt;] [-Bucket &lt;PlannerBucketPipeBind&gt;]
- [-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
+ [-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;] [-AppliedCategories &lt;AppliedCategories&gt;]
  [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;] [-Connection &lt;PnPConnection&gt;] 
  
 </code></pre>
@@ -110,6 +110,10 @@
 <pre><code class="lang-powershell">Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -AssignedTo &quot;user@contoso.com&quot;,&quot;manager@contoso.com&quot;
 </code></pre>
 <p>This updates the task with the specified id and replaces the assigned users with the ones specified.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Set-PnPPlannerTask -TaskId RSNNbc4HM0e7jt-btAKtTZYAFAf0 -AppliedCategories ${&quot;Category1&quot;=$true,&quot;Category5&quot;=$false}
+</code></pre>
+<p>This updates the task and sets the first label to true and unsets the 5th label on the task.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-assignedto">-AssignedTo</h3>
 <p>Specify the email(s) of the user to assign the task to. Notice that this will replace existing assignments with the ones specified here.</p>
@@ -231,6 +235,18 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-appliedcategories">-AppliedCategories</h3>
+<p>The applied categories represent the labels as shown in the UI of the planner task. Categories are 'hardcoded' as such in Planner, e.g. you can set Category1 to Category25, each having its own color. Labels, if customized in planner will be set accordingly to the ones defined. You can either copy the value from an existing task (e.g. $task = Get-PnPPlannerTask, Set-PnPPlannerTask -PlanId <yourid> -AppliedCategories $task.AppliedCategory) or you can define it as a new object: @{&quot;Category1&quot;=$true,&quot;Category5&quot;=$true}. Notice that omitting a category from the data you send in will -not- reset that category. E.g. if you want to remove a category/label from a task you will have to explicitly set it to $false.</yourid></p>
+<pre><code class="lang-yaml">Type: AppliedCategories
+Parameter Sets: (All)
+Aliases: ß
 
 Required: False
 Position: Named

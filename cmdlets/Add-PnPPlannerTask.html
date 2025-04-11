@@ -92,13 +92,13 @@
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="by-group">By Group</h3>
 <pre><code class="lang-powershell">Add-PnPPlannerTask -Group &lt;PlannerGroupPipeBind&gt; -Plan &lt;PlannerPlanPipeBind&gt; -Bucket &lt;PlannerBucketPipeBind&gt; -Title &lt;String&gt; 
-[-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
+[-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;] [-AppliedCategories &lt;AppliedCategories&gt;]
  [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;] [-OutputTask]
  
 </code></pre>
 <h3 id="by-plan-id">By Plan Id</h3>
 <pre><code class="lang-powershell">Add-PnPPlannerTask -Bucket &lt;PlannerBucketPipeBind&gt; -PlanId &lt;String&gt; -Title &lt;String&gt; 
-[-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;]
+[-PercentComplete &lt;Int32&gt;] [-DueDateTime &lt;DateTime&gt;] [-StartDateTime &lt;DateTime&gt;] [-AppliedCategories &lt;AppliedCategories&gt;]
  [-AssignedTo &lt;String[]] [-Priority &lt;Int32&gt;] [-Description &lt;String&gt;] [-OutputTask]
  
 </code></pre>
@@ -106,15 +106,15 @@
 <p>This cmdlet adds a new task to Planner bucket</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Add-PnPPlannerTask -Group &quot;Marketing&quot; -Plan &quot;Conference Plan&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot;
+<pre><code class="lang-powershell">Add-PnPPlannerTask -Group &quot;Marketing&quot; -Plan &quot;Conference Plan&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot; -AppliedCategories @{&quot;Category1&quot;=$true,&quot;Category3&quot;=$true}
 </code></pre>
 <p>This cmdlet adds a new task.</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Add-PnPPlannerTask -PlanId &quot;QvfkTd1mc02gwxHjHC_43JYABhAy&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot;
+<pre><code class="lang-powershell">Add-PnPPlannerTask -PlanId &quot;QvfkTd1mc02gwxHjHC_43JYABhAy&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot; -AppliedCategories @{&quot;Category1&quot;=$true,&quot;Category3&quot;=$true}
 </code></pre>
 <p>This cmdlet adds a new task.</p>
 <h3 id="example-3">Example 3</h3>
-<pre><code class="lang-powershell">Add-PnPPlannerTask -Group &quot;Marketing&quot; -Plan &quot;Conference Plan&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot; -AssignedTo &quot;user@contoso.com&quot;,&quot;manager@contoso.com&quot;
+<pre><code class="lang-powershell">Add-PnPPlannerTask -Group &quot;Marketing&quot; -Plan &quot;Conference Plan&quot; -Bucket &quot;Todos&quot; -Title &quot;Design booth layout&quot; -AssignedTo &quot;user@contoso.com&quot;,&quot;manager@contoso.com&quot; -AppliedCategories @{&quot;Category1&quot;=$true,&quot;Category3&quot;=$true}
 </code></pre>
 <p>This cmdlet adds a new task and assigns to user@contoso.com and manager@contoso.com</p>
 <h3 id="example-4">Example 4</h3>
@@ -177,6 +177,18 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-appliedcategories">-AppliedCategories</h3>
+<p>The applied categories represent the labels as shown in the UI of the planner task. Categories are 'hardcoded' as such in Planner, e.g. you can set Category1 to Category25, each having its own color. Labels, if customized in planner will be set accordingly to the ones defined. You can either copy the value from an existing task (e.g. $task = Get-PnPPlannerTask, Add-PnPPlannerTask -PlanId <yourid> -AppliedCategories $task.AppliedCategory) or you can define it as a new object: @{&quot;Category1&quot;=$true,&quot;Category5&quot;=$true}. Notice that omitting a category from the data you send in will -not- reset that category. E.g. if you want to remove a category/label from a task you will have to explicitly set it to $false.</yourid></p>
+<pre><code class="lang-yaml">Type: AppliedCategories
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
