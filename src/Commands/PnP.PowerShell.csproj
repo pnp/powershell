@@ -13,7 +13,7 @@
 		<CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
 		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
 		<Authors>PnP.PowerShell</Authors>
-		<Copyright>PnP 2024</Copyright>
+		<Copyright>PnP 2025</Copyright>
 		<Configurations>Debug;Release</Configurations>
 		<PnPFrameworkPath Condition="'$(PnPFrameworkPath)' == ''"></PnPFrameworkPath>
 		<PnPCoreSdkPath Condition="'$(PnPCoreSdkPath)' == ''"></PnPCoreSdkPath>
@@ -65,7 +65,7 @@
 		<PackageReference Include="PnP.Core.Admin" Version="1.14.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Admin" Version="1.14.*-*" Condition="'$(IsRelease)' == '1'" />
 
-		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.70.1" />
+		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.70.2" />
 
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
 		
