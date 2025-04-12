@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -87,7 +87,7 @@
 <p>Applies a site template to a web</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="path">Path</h3>
-<pre><code class="lang-powershell">Invoke-PnPSiteTemplate [-Path] &lt;String&gt; [-TemplateId &lt;String&gt;] [-ResourceFolder &lt;String&gt;]
+<pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path &lt;String&gt; [-TemplateId &lt;String&gt;] [-ResourceFolder &lt;String&gt;]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters &lt;Hashtable&gt;] [-Handlers &lt;Handlers&gt;]
  [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
@@ -95,11 +95,19 @@
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="instance">Instance</h3>
-<pre><code class="lang-powershell">Invoke-PnPSiteTemplate [-TemplateId &lt;String&gt;] [-ResourceFolder &lt;String&gt;]
+<pre><code class="lang-powershell">Invoke-PnPSiteTemplate -InputInstance &lt;SiteTemplate&gt; [-TemplateId &lt;String&gt;] [-ResourceFolder &lt;String&gt;]
  [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters &lt;Hashtable&gt;] [-Handlers &lt;Handlers&gt;]
  [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
- [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] [-InputInstance &lt;SiteTemplate&gt;]
+ [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] 
+ [-Connection &lt;PnPConnection&gt;] 
+</code></pre>
+<h3 id="stream">Stream</h3>
+<pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Stream &lt;Stream&gt; [-TemplateId &lt;String&gt;] [-ResourceFolder &lt;String&gt;]
+ [-OverwriteSystemPropertyBagValues] [-IgnoreDuplicateDataRowErrors] [-ProvisionContentTypesToSubWebs]
+ [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters &lt;Hashtable&gt;] [-Handlers &lt;Handlers&gt;]
+ [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
+ [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] 
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -144,6 +152,11 @@ Invoke-PnPSiteTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$h
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path .\template.xml -TemplateId &quot;MyTemplate&quot;
 </code></pre>
 <p>Applies the SiteTemplate with the ID &quot;MyTemplate&quot; located in the template definition file template.xml.</p>
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">$stream = Get-PnPFile -Url https://tenant.sharepoint.com/sites/TemplateGallery/Shared%20Documents/ProjectSite.pnp -AsMemoryStream
+Invoke-PnPSiteTemplate -Stream $stream
+</code></pre>
+<p>Downloads the ProjectSite.pnp template from the TemplateGallery document library and applies it to the currently connected to site.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-clearnavigation">-ClearNavigation</h3>
 <p>Override the RemoveExistingNodes attribute in the Navigation elements of the template. If you specify this value the navigation nodes will always be removed before adding the nodes in the template</p>
@@ -215,6 +228,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-inputinstance">-InputInstance</h3>
 <p>Allows you to provide an in-memory instance of the SiteTemplate type of the PnP Core Component. When using this parameter, the -Path parameter refers to the path of any supporting file for the template.</p>
+<p>Note that using a .pnp package containing additional files will not work through this method. You should either extract the files to the folder you specify through -Path yourself first or use -Stream to stream the package to be invoked directly.</p>
 <pre><code class="lang-yaml">Type: SiteTemplate
 Parameter Sets: Instance
 
@@ -285,6 +299,17 @@ Accept wildcard characters: False
 Parameter Sets: (All)
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-stream">-Stream</h3>
+<p>Allows a stream to be passed in. This is useful when you want to apply a template that is stored in a stream, for example when you download it from SharePoint Online so you can keep it in memory and don't (temporarily) need to store it anywhere. It only supports .pnp files, not .xml files. It also supports having additional files stored in the .pnp file.</p>
+<pre><code class="lang-yaml">Type: Stream
+Parameter Sets: Stream
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
