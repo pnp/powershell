@@ -1,4 +1,6 @@
-﻿using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using Microsoft.SharePoint.Client;
+using PnP.Framework;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Provider;
@@ -13,9 +15,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using File = System.IO.File;
-using PnP.Framework;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using Microsoft.SharePoint.Client;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -591,7 +591,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
                 {
                     X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
-                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.UserKeySet |
                         X509KeyStorageFlags.PersistKeySet;
                 }
 
@@ -612,7 +612,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
                 {
                     X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
-                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.UserKeySet |
                         X509KeyStorageFlags.PersistKeySet;
                 }
                 var certificate = new X509Certificate2(certificateBytes, CertificatePassword, X509KeyStorageFlags);
@@ -821,7 +821,7 @@ namespace PnP.PowerShell.Commands.Base
                 if (!ParameterSpecified(nameof(X509KeyStorageFlags)))
                 {
                     X509KeyStorageFlags = X509KeyStorageFlags.Exportable |
-                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.UserKeySet |
                         X509KeyStorageFlags.PersistKeySet;
                 }
 
@@ -984,8 +984,6 @@ namespace PnP.PowerShell.Commands.Base
         private string GetAppId()
         {
             var connectionUri = new Uri(Url);
-
-            
             // Try to get the credentials by full url
             string appId = PnPConnection.GetCacheClientId(connectionUri.ToString()) ?? Utilities.CredentialManager.GetAppId(connectionUri.ToString());
             if (appId == null)

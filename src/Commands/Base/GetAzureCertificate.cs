@@ -1,10 +1,10 @@
-﻿using System.Management.Automation;
+﻿using PnP.PowerShell.Commands.Utilities;
 using System;
-using System.Security;
-using System.Security.Cryptography.X509Certificates;
-using PnP.PowerShell.Commands.Utilities;
-using System.Security.Cryptography;
 using System.Linq;
+using System.Management.Automation;
+using System.Security;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (System.IO.File.Exists(Path))
             {
-                var certificate = new X509Certificate2(Path, Password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet);
+                var certificate = new X509Certificate2(Path, Password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet);
                 WriteAzureCertificateOutput(this, certificate, Password);
             }
             else
@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Base
                 certificate: CertificateHelper.CertificateToBase64(certificate),
                 privateKey: CertificateHelper.PrivateKeyToBase64(certificate),
                 sanNames: certificate.Extensions.Cast<X509Extension>()
-                                                .Where(n => n.Oid.FriendlyName=="Subject Alternative Name")
+                                                .Where(n => n.Oid.FriendlyName == "Subject Alternative Name")
                                                 .Select(n => new AsnEncodedData(n.Oid, n.RawData))
                                                 .Select(n => n.Format(false))
                                                 .FirstOrDefault().Split(',', StringSplitOptions.TrimEntries)
