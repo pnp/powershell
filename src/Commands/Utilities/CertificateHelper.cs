@@ -129,7 +129,7 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static X509Certificate2 GetCertificateFromPath(Cmdlet cmdlet, string certificatePath, SecureString certificatePassword,
             X509KeyStorageFlags x509KeyStorageFlags =
                         X509KeyStorageFlags.Exportable |
-                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.UserKeySet |
                         X509KeyStorageFlags.PersistKeySet)
         {
             if (System.IO.File.Exists(certificatePath))
@@ -268,7 +268,7 @@ namespace PnP.PowerShell.Commands.Utilities
             X500DistinguishedName distinguishedName = new X500DistinguishedName(distinguishedNameString);
 
 #pragma warning disable CA1416 // Validate platform compatibility
-            using (RSA rsa = Platform.IsWindows ? MakeExportable(new RSACng(2048)) : RSA.Create(2048))
+            using (RSA rsa = RSA.Create(2048))
             {
                 var request = new CertificateRequest(distinguishedName, rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
 
@@ -287,8 +287,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     certificate.FriendlyName = friendlyName;
                 }
+                string passString = password != null ? CredentialManager.SecureStringToString(password) : null;
 
-                return new X509Certificate2(certificate.Export(X509ContentType.Pfx, password), password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+                if (PSUtility.PSVersion == "7.5")
+                {
+                    return X509CertificateLoader.LoadPkcs12(certificate.Export(X509ContentType.Pfx, password), passString, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
+                }
+
+                return new X509Certificate2(certificate.Export(X509ContentType.Pfx, password), password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
             }
 #pragma warning restore CA1416 // Validate platform compatibility
         }

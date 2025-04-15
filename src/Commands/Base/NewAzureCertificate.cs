@@ -54,11 +54,6 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
             }
 
-            if (!PSUtility.IsUserLocalAdmin())
-            {
-                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin) to generate a certificate.");
-            }
-
             if (ValidYears < 1 || ValidYears > 30)
             {
                 ValidYears = 10;

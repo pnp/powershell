@@ -49,11 +49,6 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ProcessRecord()
         {
-            if (!PSUtility.IsUserLocalAdmin())
-            {
-                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin) to generate a certificate.");
-            }
-
             var redirectUri = "http://localhost";
             // if (ParameterSpecified(nameof(DeviceLogin)) || OperatingSystem.IsMacOS())
             if (ParameterSpecified(nameof(DeviceLogin)) || OperatingSystem.IsMacOS())

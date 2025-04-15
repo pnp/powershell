@@ -94,11 +94,6 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ProcessRecord()
         {
-            if (!PSUtility.IsUserLocalAdmin())
-            {
-                throw new PSArgumentException("Running this cmdlet requires elevated permissions (Run as Admin) to generate a certificate.");
-            }
-
             if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
             {
                 throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
@@ -470,7 +465,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
                 try
                 {
-                    cert = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+                    cert = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
                 }
                 catch (CryptographicException e) when (e.Message.Contains("The specified password is not correct"))
                 {
@@ -658,7 +653,6 @@ namespace PnP.PowerShell.Commands.AzureAD
             progressRecord.RecordType = ProgressRecordType.Completed;
             WriteProgress(progressRecord);
 
-
             if (!Stopping)
             {
                 if (ParameterSpecified(nameof(DeviceLogin)))
@@ -685,9 +679,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         authManager.ClearTokenCache();
                         authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
                     }
-
                 }
-                WriteObject(record);
             }
 
             WriteObject(record);
