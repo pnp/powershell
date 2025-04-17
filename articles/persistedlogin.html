@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Get-PnPCopilotAgent | PnP PowerShell </title>
+    <title>Persisted Login | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Get-PnPCopilotAgent | PnP PowerShell ">
+    <meta name="title" content="Persisted Login | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,59 +77,31 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                
                   <div class="contribution-panel mobile-hide pull-right">
-                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/persistedlogin.md/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="get-pnpcopilotagent">Get-PnPCopilotAgent</h1>
+  <h1 id="persisted-login">Persisted Login</h1>
 
-<h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns the Microsoft Copilot Agents (*.agent) in a site collection.</p>
-<h2 id="syntax">SYNTAX</h2>
-<h3 id="__allparametersets">__AllParameterSets</h3>
-<pre><code class="lang-powershell">Get-PnPCopilotAgent [-ServerRelativeUrl &lt;string&gt;] [-Connection &lt;PnPConnection&gt;] [&lt;CommonParameters&gt;]
-</code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet iterates through the document libraries in a site and finds the copilot agents in that site.</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Get-PnPCopilotAgent
-</code></pre>
-<p>This will return all the Microsoft Copilot agents in a site.</p>
-<h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Get-PnPCopilotAgent -ServerRelativeUrl /sites/demo/siteassets/copilots/approved/main.agent
-</code></pre>
-<p>This will return the specific Microsoft Copilot agent if it exists.</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-serverrelativeurl">-ServerRelativeUrl</h3>
-<p>The server relative URL to the .agent file.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="commonparameters">CommonParameters</h3>
-<p>This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
--InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
--ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
-<a href="https://go.microsoft.com/fwlink/?LinkID=113216">about_CommonParameters</a>.</p>
-<h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p>Starting with PnP PowerShell 3.0, the <code>Connect-PnPOnline</code> cmdlet has been updated to allow <code>-PersistLogin</code> to be provided. Documentation for it can be <a href="../cmdlets/Connect-PnPOnline.html#-persistlogin">found here</a>. This parameter allows you to persist the delegated authentication token retrieved through an interactive login in a local file on your machine, which can be used for subsequent connections without requiring re-authentication.</p>
+<p>This feature is particularly useful for scenarios where you need to run scripts or tasks that require authentication but do not want to enter your credentials every time. The risk obviously will be that anyone with access to your machine can use the token to authenticate against your tenant.</p>
+<h2 id="where-is-the-token-stored">Where is the token stored</h2>
+<p>The token is stored in a file in the <code>%LOCALAPPDATA%\.m365pnppowershell</code> folder on Windows or <code>$HOME/.m365pnppowershell</code> on Linux and MacOS. The file is encrypted using the Data Protection API (DPAPI) on Windows or the Keychain on MacOS and Linux.</p>
+<p>This means that the token is securely stored and cannot be easily accessed by unauthorized users nor can it be copied to another machine as the encryption is tied to the machine on which it has been generated. However, it is important to note that if you share your machine with others, they may be able to access the token if they have access to your user profile.</p>
+<h2 id="how-does-it-work">How does it work</h2>
+<p>When you use the <code>-PersistLogin</code> parameter with the <code>Connect-PnPOnline</code> cmdlet, PnP PowerShell will authenticate you as normal but will also store the refresh token in a local file. The next time you run <code>Connect-PnPOnline</code>, PnP PowerShell will check if a valid token already exists in the local file for the tenant or site you are trying to connect to. If a valid token is found, it will be used to authenticate without prompting for credentials. If no valid token is found, PnP PowerShell will prompt for credentials as normal.</p>
+<p>You do not need to specify the <code>-PersistLogin</code> parameter again for subsequent connections unless you want to change the behavior.</p>
+<h2 id="clearing-the-persisted-login">Clearing the persisted login</h2>
+<p>If you want to clear the persisted login and remove the stored token, you can connect to the tenant for which you would like to remove the stored token first and then use the <code>Disconnect-PnPOnline</code> cmdlet with the <code>-ClearPersistedLogin</code> option. Documentation for it can be <a href="../cmdlets/Disconnect-PnPOnline.html#-clearpersistedlogin">found here</a>. This will delete the token from the local file and require you to authenticate again the next time you run <code>Connect-PnPOnline</code>.</p>
+<h2 id="faq">FAQ</h2>
+<h3 id="can-i-use--persistlogin-in-azure">Can I use <code>-PersistLogin</code> in Azure?</h3>
+<p>No you cannot, as there are no profiles folders in Azure.</p>
+<h3 id="can-i-use--persistlogin-with-an-app-only-context">Can I use <code>-PersistLogin</code> with an app only context?</h3>
+<p>No, it is meant to be used for an interactive delegated authentication context only. If you want to use an app only context, you can just use the parameters with the <code>Connect-PnPOnline</code> cmdlet that support app only authentication as normal. Documentation for it can be <a href="../cmdlets/Connect-PnPOnline.html#app-only-with-azure-active-directory">found here</a>.</p>
+<h3 id="do-i-still-need-my-own-application-registration-in-entra-id-when-using--persistlogin">Do I still need my own application registration in Entra ID when using <code>-PersistLogin</code>?</h3>
+<p>Yes, this is still required.</p>
+<h3 id="can-i-use-a-different-application-registration-for--persistlogin-for-different-tenants-or-even-site-collections-on-the-same-tenant">Can I use a different application registration for <code>-PersistLogin</code> for different tenants or even site collections on the same tenant?</h3>
+<p>Yes, that is supported. Just use it as described above and it will store the token for the tenant or site collection you are connecting to.</p>
 
 </article>
           </div>
