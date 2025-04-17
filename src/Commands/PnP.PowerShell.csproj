@@ -127,6 +127,7 @@
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 			<CustomToolNamespace></CustomToolNamespace>
+			<LogicalName>$(RootNamespace).Properties.Resources.resources</LogicalName>
 		</EmbeddedResource>
 	</ItemGroup>
 
