@@ -1,6 +1,6 @@
 # Installing PnP PowerShell
 
-You need PowerShell 7.4.4 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be [installed through here](https://learn.microsoft.com/powershell/scripting/install/installing-powershell).
+You need PowerShell 7.4.6 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be [installed through here](https://learn.microsoft.com/powershell/scripting/install/installing-powershell).
 
 ## Stable build
 
