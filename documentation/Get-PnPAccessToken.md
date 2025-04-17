@@ -165,7 +165,8 @@ If specified the current permission scopes on the access token will be listed
 
 ```yaml
 Type: SwitchParameter
-Parameters Set: List Permission Scopes
+Parameter Sets: List Permission Scopes
+
 Required: True
 Position: Named
 Default value: None
