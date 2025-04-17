@@ -10,6 +10,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 
+### Fixed
+
+### Removed
+
+### Contributors
+
+
+## [3.0.0]
+
+### Added
+
 - Added `-PersistLogin` on `Connect-PnPOnline` which will utilize a persist cache containing your access token. The cache is encrypted and stored in a subfolder in your $HOME folder on Windows. On MacOS the cache is stored in the encrypted KeyChain. You only have to specify `-PersistLogin` once when doing a Connect-PnPOnline, after that the cache entry will be used. The cache is persisted between PowerShell sesions and system reboots. To clear an entry from the cache use `Disconnect-PnPOnline -ClearPersistedLogin`. 
 - Added tab completers for all cmdlets using a ListPipeBind parameter (e.g. `Get-PnPList -Identity`), all cmdlets using a FieldPipeBind parameter (e.g. `Get-PnPField -Identity`), `Get-PnPPropertyBag`, ContentType related cmdlets (`Get-PnPContentType` etc.) and Page related (`Get-PnPPage` etc.) cmdlets. The argument lookup will timeout after 2 seconds. This value can controlled by setting an environment variables called "PNPPSCOMPLETERTIMEOUT" and set the value to a number specifying milliseconds (e.g. 2000 is 2 seconds). If you want to disable the completer functionality on tabs, set the timeout value to 0 (zero).
 - Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document [#4238](https://github.com/pnp/powershell/pull/4238)
@@ -72,7 +83,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.4 or newer**
+- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.6 or newer**
 - **`-Interactive` login is now the default.**
 - The Popup based authentication for Interactive Login has been removed and replaced by a browser flow
 - `-LaunchBrowser` has been removed for interactive login
