@@ -72,7 +72,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.4 or newer**
+- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.6 or newer**
 - **`-Interactive` login is now the default.**
 - The Popup based authentication for Interactive Login has been removed and replaced by a browser flow
 - `-LaunchBrowser` has been removed for interactive login
