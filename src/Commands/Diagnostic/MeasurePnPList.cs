@@ -118,7 +118,7 @@ namespace PnP.PowerShell.Commands.Diagnostic
                 if (folder.ListItemAllFields.HasUniqueRoleAssignments)
                 {
                     stat.BrokenPermissionCount++;
-                    WriteVerbose($"Folder ${folder.ServerRelativeUrl} has unique permissions");
+                    LogDebug($"Folder ${folder.ServerRelativeUrl} has unique permissions");
                 }
             }
 

@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            WriteVerbose("Retrieving all site collection App Catalogs from SharePoint Online");
+            LogDebug("Retrieving all site collection App Catalogs from SharePoint Online");
 
             var appCatalogsCsom = AdminContext.Web.TenantAppCatalog.SiteCollectionAppCatalogsSites;
             AdminContext.Load(appCatalogsCsom);
@@ -38,20 +38,20 @@ namespace PnP.PowerShell.Commands
                 }
             ).ToList();
 
-            WriteVerbose($"{appCatalogsLocalModel.Count} site collection App Catalog{(appCatalogsLocalModel.Count != 1 ? "s have" : " has")} been retrieved");
+            LogDebug($"{appCatalogsLocalModel.Count} site collection App Catalog{(appCatalogsLocalModel.Count != 1 ? "s have" : " has")} been retrieved");
 
             if (CurrentSite.ToBool())
             {
                 ClientContext.Site.EnsureProperties(s => s.Id);
 
-                WriteVerbose($"Filtering down to only the current site at {Connection.Url} with ID {ClientContext.Site.Id}");
+                LogDebug($"Filtering down to only the current site at {Connection.Url} with ID {ClientContext.Site.Id}");
                 var currentSite = appCatalogsLocalModel.FirstOrDefault(a => a.SiteID.HasValue && a.SiteID.Value == ClientContext.Site.Id);
 
                 appCatalogsLocalModel.Clear();
 
                 if (currentSite == null)
                 {
-                    WriteVerbose($"Current site at {Connection.Url} with ID {ClientContext.Site.Id} does not have a site collection App Catalog on it");
+                    LogDebug($"Current site at {Connection.Url} with ID {ClientContext.Site.Id} does not have a site collection App Catalog on it");
                     return;
                 }
 
@@ -60,7 +60,7 @@ namespace PnP.PowerShell.Commands
 
             if(SkipUrlValidation.ToBool())
             {
-                WriteVerbose($"Skipping URL validation since the {nameof(SkipUrlValidation)} flag has been provided");
+                LogDebug($"Skipping URL validation since the {nameof(SkipUrlValidation)} flag has been provided");
                 WriteObject(appCatalogsLocalModel, true);
                 return;
             }
@@ -72,7 +72,7 @@ namespace PnP.PowerShell.Commands
                 {
                     try
                     {
-                        WriteVerbose($"Validating site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl}");
+                        LogDebug($"Validating site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl}");
 
                         // Deleted sites throw either an exception or return null
                         appCatalogLocalModel.AbsoluteUrl = Tenant.GetSitePropertiesById(appCatalogLocalModel.SiteID.Value, false, Connection.TenantAdminUrl).Url;
@@ -84,12 +84,12 @@ namespace PnP.PowerShell.Commands
                         {
                             if (!ExcludeDeletedSites.ToBool())
                             {
-                                WriteVerbose($"Site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl} regards a site that has been deleted");
+                                LogDebug($"Site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl} regards a site that has been deleted");
                                 results.Add(appCatalogLocalModel);
                             }
                             else
                             {
-                                WriteVerbose($"Site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl} regards a site that has been deleted. Since the {nameof(ExcludeDeletedSites)} flag has been provided, it will not be included in the results.");
+                                LogDebug($"Site collection App Catalog at {appCatalogLocalModel.AbsoluteUrl} regards a site that has been deleted. Since the {nameof(ExcludeDeletedSites)} flag has been provided, it will not be included in the results.");
                             }
 
                             continue;

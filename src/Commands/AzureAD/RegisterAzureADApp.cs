@@ -1,9 +1,12 @@
 ﻿using PnP.Framework;
+using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Management.Automation;
@@ -13,12 +16,9 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
+using TextCopy;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
-using PnP.PowerShell.Commands.Base;
-using System.Dynamic;
-using PnP.PowerShell.Commands.Enums;
-using TextCopy;
 
 namespace PnP.PowerShell.Commands.AzureAD
 {
@@ -184,7 +184,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             }
             if (!scopes.Any())
             {
-                messageWriter.WriteWarning("No permissions specified, using default permissions");
+                messageWriter.LogWarning("No permissions specified, using default permissions");
                 scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "Sites.FullControl.All", "Role")); // AppOnly
                 scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "AllSites.FullControl", "Scope")); // AppOnly
                 scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "Group.ReadWrite.All", "Role")); // AppOnly
@@ -424,7 +424,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     token = AzureAuthHelper.AuthenticateDeviceLogin(cancellationTokenSource, messageWriter, AzureEnvironment, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
-                        messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
+                        messageWriter.LogWarning("Operation cancelled or no token retrieved.");
                     }
                     messageWriter.Stop();
                 });
@@ -437,7 +437,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     token = AzureAuthHelper.AuthenticateInteractive(cancellationTokenSource, messageWriter, AzureEnvironment, Tenant, MicrosoftGraphEndPoint);
                     if (token == null)
                     {
-                        messageWriter.WriteWarning("Operation cancelled or no token retrieved.");
+                        messageWriter.LogWarning("Operation cancelled or no token retrieved.");
                     }
                     messageWriter.Stop();
                 });
@@ -465,7 +465,7 @@ namespace PnP.PowerShell.Commands.AzureAD
 
                 try
                 {
-                    cert = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+                    cert = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
                 }
                 catch (CryptographicException e) when (e.Message.Contains("The specified password is not correct"))
                 {
@@ -653,7 +653,6 @@ namespace PnP.PowerShell.Commands.AzureAD
             progressRecord.RecordType = ProgressRecordType.Completed;
             WriteProgress(progressRecord);
 
-
             if (!Stopping)
             {
                 if (ParameterSpecified(nameof(DeviceLogin)))
@@ -661,7 +660,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                     using (var authManager = AuthenticationManager.CreateWithDeviceLogin(azureApp.AppId, Tenant, (deviceCodeResult) =>
                     {
                         ClipboardService.SetText(deviceCodeResult.UserCode);
-                        messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                        messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
                         BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
                         return Task.FromResult(0);
                     }, AzureEnvironment))
@@ -680,9 +679,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         authManager.ClearTokenCache();
                         authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
                     }
-
                 }
-                WriteObject(record);
             }
 
             WriteObject(record);
@@ -698,7 +695,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             {
                 try
                 {
-                    WriteVerbose("Setting the logo for the EntraID app");
+                    LogDebug("Setting the logo for the EntraID app");
 
                     var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
                     if (AzureEnvironment == AzureEnvironment.Custom)
@@ -740,7 +737,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                         var requestHelper = new ApiRequestHelper(GetType(), PnPConnection.Current);
                         requestHelper.Put2(endpoint, byteArrayContent, token);
 
-                        WriteVerbose("Successfully set the logo for the Entra ID app");
+                        LogDebug("Successfully set the logo for the Entra ID app");
                     }
                     else
                     {
@@ -749,12 +746,12 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 catch (Exception ex)
                 {
-                    WriteWarning("Something went wrong setting the logo " + ex.Message);
+                    LogWarning("Something went wrong setting the logo " + ex.Message);
                 }
             }
             else
             {
-                WriteWarning("Logo File does not exist, ignoring setting the logo");
+                LogWarning("Logo File does not exist, ignoring setting the logo");
             }
         }
     }

@@ -167,7 +167,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
                         {
                             if (!warningsShown.Contains(message))
                             {
-                                WriteWarning(message);
+                                LogWarning(message);
                                 warningsShown.Add(message);
                             }
                             break;
@@ -338,7 +338,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Tenant
             {
                 return ProvisioningHelper.LoadTenantTemplateFromFile(Path, (e) =>
                  {
-                     WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                     LogError(e);
                  });
             }
             else

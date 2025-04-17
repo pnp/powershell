@@ -42,12 +42,12 @@ namespace PnP.PowerShell.Commands.InformationManagement
                 if (BatchSize > MAXBATCHSIZE) 
                 {
                     BatchSize = MAXBATCHSIZE;
-                    WriteVerbose($"Overriding batch size");
+                    LogDebug($"Overriding batch size");
                 }
 
                 if (ItemIds == null)
                 {
-                    WriteWarning("No items provided");
+                    LogWarning("No items provided");
                     return;
                 }
             }
@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
 
                             var range = ItemIds.GetRange(0, itemsToProcess);
 
-                            WriteVerbose($"Setting retention label to batch {rangeIndex} of items");
+                            LogDebug($"Setting retention label to batch {rangeIndex} of items");
                             Microsoft.SharePoint.Client.CompliancePolicy.SPPolicyStoreProxy.SetComplianceTagOnBulkItems(ClientContext, range, rootUrl + list.RootFolder.ServerRelativeUrl, Label);
                             ClientContext.ExecuteQueryRetry();
                             ItemIds.RemoveRange(0, itemsToProcess);
@@ -90,12 +90,12 @@ namespace PnP.PowerShell.Commands.InformationManagement
                 }
                 else
                 {
-                    WriteWarning("The provided label is not available in the site.");
+                    LogWarning("The provided label is not available in the site.");
                 }
             }
             else
             {
-                WriteWarning("List or library not found.");
+                LogWarning("List or library not found.");
             }
         }
     }

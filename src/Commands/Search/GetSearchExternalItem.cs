@@ -59,11 +59,11 @@ namespace PnP.PowerShell.Commands.Search
 
             if (hits == null || hits.Count == 0)
             {
-                WriteVerbose($"No external items found{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnectionId}'");
+                LogDebug($"No external items found{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnectionId}'");
                 return;
             }
 
-            WriteVerbose($"Found {hits.Count} external item{(hits.Count != 1 ? "s" : "")}{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnectionId}'");
+            LogDebug($"Found {hits.Count} external item{(hits.Count != 1 ? "s" : "")}{(ParameterSpecified(nameof(Identity)) ? $" with the identity '{Identity}'" : "")} on external connection '{externalConnectionId}'");
 
             var externalItems = hits.Select(s => new Model.Graph.MicrosoftSearch.ExternalItem
             {

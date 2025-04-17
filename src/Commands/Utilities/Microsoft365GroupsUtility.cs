@@ -1,3 +1,4 @@
+using PnP.Framework.Diagnostics;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
@@ -388,6 +389,11 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             return GetGroupMembers(requestHelper, "members", groupId);
         }
+        
+        internal static IEnumerable<Microsoft365User> GetTransitiveMembers(ApiRequestHelper requestHelper, Guid groupId)
+        {
+            return GetGroupMembers(requestHelper, "transitiveMembers", groupId);
+        }
 
         private static IEnumerable<Microsoft365User> GetGroupMembers(ApiRequestHelper requestHelper, string userType, Guid groupId)
         {
@@ -699,33 +705,42 @@ namespace PnP.PowerShell.Commands.Utilities
             return requestHelper.Patch($"v1.0/groups/{group.Id}", group);
         }
 
+        /// <summary>
+        /// Allows to set the visibility of a group to hideFromAddressLists and hideFromOutlookClients.
+        /// </summary>
         internal static void SetVisibility(ApiRequestHelper requestHelper, Guid groupId, bool? hideFromAddressLists, bool? hideFromOutlookClients)
         {
-            var patchData = new
-            {
-                hideFromAddressLists = hideFromAddressLists,
-                hideFromOutlookClients = hideFromOutlookClients
-            };
+            var attempt = 1;
+            var maxRetries = 10;
+            var retryAfterSeconds = 5;
 
-            var retry = true;
-            var iteration = 0;
-            while (retry)
+            while (true)
             {
                 try
                 {
-                    requestHelper.Patch<dynamic>($"v1.0/groups/{groupId}", patchData);
-                    retry = false;
-                }
+                    requestHelper.Patch<dynamic>($"v1.0/groups/{groupId}", new
+                    {
+                        hideFromAddressLists,
+                        hideFromOutlookClients
+                    });
 
-                catch (Exception)
-                {
-                    Thread.Sleep(5000);
-                    iteration++;
+                    // Request successful, exit the loop
+                    break;
                 }
-
-                if (iteration > 10) // don't try more than 10 times
+                catch (Exception e)
                 {
-                    retry = false;
+                    if (attempt == maxRetries)
+                    {
+                        Log.Warning("Microsoft365GroupsUtility.SetVisibility", $"Failed to set the visibility of the group {groupId} to hideFromAddressLists: {hideFromAddressLists} and hideFromOutlookClients: {hideFromOutlookClients}. Exception: {e.Message}. Giving up after {maxRetries} attempts.");
+                        break;
+                    }
+                    else
+                    {
+                        Log.Debug("Microsoft365GroupsUtility.SetVisibility", $"Failed to set the visibility of the group {groupId} to hideFromAddressLists: {hideFromAddressLists} and hideFromOutlookClients: {hideFromOutlookClients}. Exception: {e.Message}. Retrying in {retryAfterSeconds} seconds. Attempt {attempt} out of {maxRetries}.");
+                    }
+
+                    Thread.Sleep(TimeSpan.FromSeconds(retryAfterSeconds));
+                    attempt++;
                 }
             }
         }

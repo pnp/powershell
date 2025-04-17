@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands.ToDo
                 var user = User.GetUser(AccessToken, Connection.AzureEnvironment);
                 if (user == null)
                 {
-                    WriteWarning("Provided user not found");
+                    LogWarning("Provided user not found");
                     return;
                 }
                 url = $"/v1.0/users/{user.Id}/todo/lists";

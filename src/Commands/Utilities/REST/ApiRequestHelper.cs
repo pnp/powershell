@@ -265,7 +265,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 catch (Exception e)
                 {
                     LogError($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
-                    //Cmdlet.WriteWarning($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
+                    //Cmdlet.LogWarning($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
                     return default;
                 }
             }

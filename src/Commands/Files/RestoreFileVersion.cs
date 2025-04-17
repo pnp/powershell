@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Files
                 serverRelativeUrl = Url;
             }
 
-            WriteVerbose($"Looking up file at {serverRelativeUrl}");
+            LogDebug($"Looking up file at {serverRelativeUrl}");
             File file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
 
             ClientContext.Load(file, f => f.Exists, f => f.Versions.IncludeWithDefaultProperties(i => i.CreatedBy));
@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.Files
 
             if (file.Exists)
             {
-                WriteVerbose($"File has been found and has {file.Versions.Count} versions");
+                LogDebug($"File has been found and has {file.Versions.Count} versions");
 
                 var versions = file.Versions;
 
@@ -50,7 +50,7 @@ namespace PnP.PowerShell.Commands.Files
                 {
                     if (!string.IsNullOrEmpty(Identity.Label))
                     {
-                        WriteVerbose($"Trying to restore to version with label '{Identity.Label}'");
+                        LogDebug($"Trying to restore to version with label '{Identity.Label}'");
 
                         try
                         {
@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Files
                     }
                     else if (Identity.Id != -1)
                     {
-                        WriteVerbose($"Looking up version with id '{Identity.Id}'");
+                        LogDebug($"Looking up version with id '{Identity.Id}'");
 
                         FileVersion version = versions.GetById(Identity.Id);
                         ClientContext.Load(version);
@@ -77,7 +77,7 @@ namespace PnP.PowerShell.Commands.Files
                             throw new PSArgumentException($"Version with id '{Identity.Id}' does not exist", nameof(Identity));
                         }
 
-                        WriteVerbose($"Trying to restore to version with label '{version.VersionLabel}'");
+                        LogDebug($"Trying to restore to version with label '{version.VersionLabel}'");
 
                         versions.RestoreByLabel(version.VersionLabel);
                         ClientContext.ExecuteQueryRetry();

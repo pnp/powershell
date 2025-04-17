@@ -25,7 +25,7 @@ namespace PnP.PowerShell.Commands.InformationManagement
                 }
                 else
                 {
-                    WriteWarning("No site policy applied. Set the Site Policy with Set-PnPSitePolicy and retrieve all available policies with Get-PnPSitePolicy -AllAvailable");
+                    LogWarning("No site policy applied. Set the Site Policy with Set-PnPSitePolicy and retrieve all available policies with Get-PnPSitePolicy -AllAvailable");
                 }
             }
         }

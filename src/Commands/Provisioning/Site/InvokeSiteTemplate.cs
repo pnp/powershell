@@ -62,6 +62,9 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
 
         [Parameter(Mandatory = false, ParameterSetName = "Instance")]
         public ProvisioningTemplate InputInstance;
+        
+        [Parameter(Mandatory = false, ParameterSetName = "Stream")]
+        public MemoryStream Stream { get; set; }
 
         protected override void ExecuteCmdlet()
         {
@@ -150,7 +153,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 if (provisioningTemplate == null)
                 {
                     // If we don't have the template, raise an error and exit
-                    WriteError(new ErrorRecord(new Exception("The -Path parameter targets an invalid repository or template object."), "WRONG_PATH", ErrorCategory.SyntaxError, null));
+                    LogError("The -Path parameter targets an invalid repository or template object.");
                     return;
                 }
 
@@ -173,29 +176,75 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
             else
             {
-                provisioningTemplate = InputInstance;
+                if (InputInstance == null && Stream != null)
+                {
+                    LogDebug("Determining if template from provided stream is a .pnp package file");
+                    Stream.Position = 0;
 
-                if (ResourceFolder != null)
-                {
-                    var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
-                    provisioningTemplate.Connector = fileSystemConnector;
-                }
-                else
-                {
-                    if (Path != null)
+                    var isOpenOfficeFile = FileUtilities.IsOpenOfficeFile(Stream);
+                    if (isOpenOfficeFile)
                     {
-                        if (!System.IO.Path.IsPathRooted(Path))
+                        LogDebug("Package is a .pnp package file, loading template from provided stream");
+                        var openXmlConnector = new OpenXMLConnector(Stream);
+                        var provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
+
+                        var templates = ProvisioningHelper.LoadSiteTemplatesFromStream(Stream, TemplateProviderExtensions, LogError);
+
+                        LogDebug($"Package stream contains {templates.Count} template{(templates.Count != 1 ? "s" : "")}");
+
+                        if (ParameterSpecified(nameof(TemplateId)))
                         {
-                            Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+                            // If we have the -TemplateId parameter, we look for the template with that ID in the package stream
+                            LogDebug($"Looking for template with ID {TemplateId} in package stream");
+                            provisioningTemplate = templates.FirstOrDefault(t => t.Id == TemplateId);
                         }
+                        else
+                        {
+                            // If we don't have the -TemplateId parameter, we use the last template in the package stream
+                            LogDebug($"No template ID specified, using the last template in package stream");
+                            provisioningTemplate = templates.LastOrDefault();
+                        }
+                        if (provisioningTemplate == null)
+                        {
+                            // If we don't have a template, raise an error and exit
+                            LogError("Unable to find template in provided stream. Please check the template ID or the content of the stream.");
+                            return;
+                        }
+                        provisioningTemplate.Connector = provider.Connector;
                     }
                     else
                     {
-                        Path = SessionState.Path.CurrentFileSystemLocation.Path;
+                        // XML template files have not been implemented to be used from a stream, only .pnp files
+                        throw new NotSupportedException("Only .pnp package files are supported in a stream");
                     }
-                    var fileInfo = new FileInfo(Path);
-                    fileConnector = new FileSystemConnector(System.IO.Path.IsPathRooted(fileInfo.FullName) ? fileInfo.FullName : fileInfo.DirectoryName, "");
-                    provisioningTemplate.Connector = fileConnector;
+                }
+                else
+                {
+                    provisioningTemplate = InputInstance;
+
+                    if (ResourceFolder != null)
+                    {
+                        var fileSystemConnector = new FileSystemConnector(ResourceFolder, "");
+                        provisioningTemplate.Connector = fileSystemConnector;
+                    }
+                    else
+                    {
+                        if (Path != null)
+                        {
+                            if (!System.IO.Path.IsPathRooted(Path))
+                            {
+                                Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
+                            }
+
+                            var fileInfo = new FileInfo(Path);
+                            fileConnector = new FileSystemConnector(System.IO.Path.IsPathRooted(fileInfo.FullName) ? fileInfo.FullName : fileInfo.DirectoryName, "");
+                            provisioningTemplate.Connector = fileConnector;
+                        }
+                        else
+                        {
+                            Path = SessionState.Path.CurrentFileSystemLocation.Path;
+                        }
+                    }
                 }
             }
 
@@ -260,7 +309,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                         {
                             if (!warningsShown.Contains(message))
                             {
-                                WriteWarning(message);
+                                LogWarning(message);
                                 warningsShown.Add(message);
                             }
                             break;
@@ -327,6 +376,12 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             }
 
             WriteProgress(new ProgressRecord(0, $"Applying template to {CurrentWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
+            
+            if(Stream != null)
+            {
+                // Reset the stream position to 0 so it can be used again if needed
+                Stream.Position = 0;
+            }
         }
     }
 }

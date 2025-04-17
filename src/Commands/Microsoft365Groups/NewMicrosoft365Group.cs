@@ -169,16 +169,11 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
                     }
                     else
                     {
-                        WriteWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Group creation");
+                        LogWarning("Adding sensitivity labels in App-only context is not supported by Graph API, so it will be skipped in Group creation");
                     }
                 }
 
                 var group = Microsoft365GroupsUtility.Create(GraphRequestHelper, newGroup, CreateTeam, LogoPath, Owners, Members, HideFromAddressLists, HideFromOutlookClients, Labels);
-
-                if (ParameterSpecified(nameof(HideFromAddressLists)) || ParameterSpecified(nameof(HideFromOutlookClients)))
-                {
-                    Microsoft365GroupsUtility.SetVisibility(GraphRequestHelper, group.Id.Value, HideFromAddressLists, HideFromOutlookClients);
-                }
 
                 var updatedGroup = Microsoft365GroupsUtility.GetGroup(GraphRequestHelper, group.Id.Value, true, false, false, true);
 

@@ -46,6 +46,13 @@ namespace PnP.PowerShell.Commands.Utilities
             return plan;
         }
 
+        public static PlannerPlanDetails GetPlanDetails(ApiRequestHelper requestHelper, string planId)
+        {
+            var plan = requestHelper.Get<PlannerPlanDetails>($"v1.0/planner/plans/{planId}/details");
+
+            return plan;
+        }
+
         public static PlannerPlan CreatePlan(ApiRequestHelper requestHelper, string groupId, string title)
         {
             var stringContent = new StringContent(JsonSerializer.Serialize(new { owner = groupId, title = title }));

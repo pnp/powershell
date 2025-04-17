@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Teams
                         }
                         else
                         {
-                            WriteError(new ErrorRecord(new Exception($"Team remove failed"), "REMOVEFAILED", ErrorCategory.InvalidResult, this));
+                            LogError($"Team remove failed");
                         }
                     }
                 }

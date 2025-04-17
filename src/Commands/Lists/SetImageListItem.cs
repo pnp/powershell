@@ -114,9 +114,9 @@ namespace PnP.PowerShell.Commands.Lists
                 var folderPath = $"/{createdList.RootFolder.Name}/Lists/{list.Id}";
 
                 // Try to create the folder
-                WriteVerbose("Ensuring necessary folder path for the image to be uploaded.");
+                LogDebug("Ensuring necessary folder path for the image to be uploaded.");
                 folder = web.EnsureFolderPath(folderPath);
-                WriteVerbose("Uploading the file to be set as a thumbnail image.");
+                LogDebug("Uploading the file to be set as a thumbnail image.");
                 file = folder.UploadFile(fileName, Path, true);
 
                 file.EnsureProperties(fi => fi.UniqueId, fi => fi.ServerRelativePath, fi => fi.Name);

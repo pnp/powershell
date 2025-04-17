@@ -44,7 +44,7 @@ namespace PnP.PowerShell.Commands.Teams
                         }
                         else
                         {
-                            WriteWarning("Specified channel is not a private channel. Please specify a private channel name to fetch its users.");
+                            LogWarning("Specified channel is not a private channel. Please specify a private channel name to fetch its users.");
                         }
                     }
                     else

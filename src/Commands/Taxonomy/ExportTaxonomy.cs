@@ -92,7 +92,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 System.Text.Encoding textEncoding = System.Text.Encoding.Unicode;
                 if (Encoding == Encoding.UTF7)
                 {
-                    WriteWarning("UTF-7 Encoding is no longer supported. Defaulting to UTF-8");
+                    LogWarning("UTF-7 Encoding is no longer supported. Defaulting to UTF-8");
                     Encoding = Encoding.UTF8;
                 }
                 switch (Encoding)

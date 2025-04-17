@@ -1,11 +1,12 @@
 ﻿using System.Management.Automation;
 using PnP.Framework.Provisioning.Model;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Extensibility
 {
     [Cmdlet(VerbsCommon.New, "PnPExtensibilityHandlerObject")]
     [OutputType(typeof(ExtensibilityHandler))]
-    public class NewExtensibilityHandlerObject : PSCmdlet
+    public class NewExtensibilityHandlerObject : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Assembly;

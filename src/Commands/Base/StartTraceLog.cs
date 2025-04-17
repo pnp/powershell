@@ -1,76 +1,78 @@
-﻿
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Utilities.Logging;
 
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Start, "PnPTraceLog")]
-    public class StartTraceLog : PSCmdlet
+    public class StartTraceLog : BasePSCmdlet
     {
         [Parameter(Mandatory = false)]
         public string Path;
 
         [Parameter(Mandatory = false)]
-        public PnP.Framework.Diagnostics.LogLevel Level = PnP.Framework.Diagnostics.LogLevel.Information;
+        public SwitchParameter WriteToConsole;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter WriteToLogStream;
+
+        [Parameter(Mandatory = false)]
+        public Framework.Diagnostics.LogLevel Level = Framework.Diagnostics.LogLevel.Information;
 
         [Parameter(Mandatory = false)]
         public bool AutoFlush = true;
 
         private const string FileListenername = "PNPPOWERSHELLFILETRACELISTENER";
         private const string ConsoleListenername = "PNPPOWERSHELLCONSOLETRACELISTENER";
+
         protected override void ProcessRecord()
         {
+            Framework.Diagnostics.Log.LogLevel = Level;
 
-            // Setup Console Listener if Console switch has been specified or No file LogFile parameter has been set
-            if (string.IsNullOrEmpty(Path))
+            if (WriteToConsole.ToBool())
             {
-                RemoveListener(ConsoleListenername);
-                ConsoleTraceListener consoleListener = new ConsoleTraceListener(false);
-                consoleListener.Name = ConsoleListenername;
+                LogDebug($"Adding console listener named {ConsoleListenername}");
+
+                LoggingUtility.RemoveListener(ConsoleListenername);
+                ConsoleTraceListener consoleListener = new(false)
+                {
+                    Name = ConsoleListenername
+                };
                 Trace.Listeners.Add(consoleListener);
-                PnP.Framework.Diagnostics.Log.LogLevel = Level;
             }
 
-            // Setup File Listener
+            if (WriteToLogStream.ToBool())
+            {
+                LogDebug($"Adding log stream listener named {LogStreamListener.DefaultListenerName}");
+
+                LoggingUtility.RemoveListener(LogStreamListener.DefaultListenerName);
+                LogStreamListener logStreamListener = new()
+                {
+                    Name = LogStreamListener.DefaultListenerName
+                };
+                Trace.Listeners.Add(logStreamListener);
+            }
+
             if (!string.IsNullOrEmpty(Path))
             {
-                RemoveListener(FileListenername);
+                LoggingUtility.RemoveListener(FileListenername);
 
                 if (!System.IO.Path.IsPathRooted(Path))
                 {
                     Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
                 }
-                // Create DelimitedListTraceListener in case Delimiter parameter has been specified, if not create TextWritterTraceListener
-                TraceListener listener = new TextWriterTraceListener(Path);
 
-                listener.Name = FileListenername;
+                LogDebug($"Adding file listener named {FileListenername} to {Path}");
+
+                TraceListener listener = new TextWriterTraceListener(Path)
+                {
+                    Name = FileListenername
+                };
                 Trace.Listeners.Add(listener);
-                PnP.Framework.Diagnostics.Log.LogLevel = Level;
             }
 
             Trace.AutoFlush = AutoFlush;
             Trace.IndentSize = 4;
-
-        }
-
-        private void RemoveListener(string listenerName)
-        {
-            try
-            {
-                var existingListener = Trace.Listeners[listenerName];
-                if (existingListener != null)
-                {
-                    existingListener.Flush();
-                    existingListener.Close();
-                    Trace.Listeners.Remove(existingListener);
-                }
-            }
-            catch (Exception)
-            {
-                // ignored
-            }
-
         }
     }
 }

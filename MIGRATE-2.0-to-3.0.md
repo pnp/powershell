@@ -41,31 +41,31 @@ Recommend referring to these 2 links:
 
 | **Cmdlet** | **Comment** |
 | ----------- | ---------------------- |
-| Get-PnPRetentionLabel | The `Get-PnPRetentionLabel` cmdlet has been renamed to `Get-PnPTenantRetentionLabel` |
-| Get-PnPLabel | The `Get-PnPLabel` cmdlet has been renamed to `Get-PnPRetentionLabel` |
-| Get-PnPPowerPlatformConnector | The `Get-PnPPowerPlatformConnector` cmdlet has been renamed to `Get-PnPPowerPlatformCustomConnector` |
-| Connect-PnPOnline | Using `Connect-PnPOnline` without specifying an authentication option will now default to using an interactive login. If you still want to use logon using client credentials, provide them using -Credentials instead |
-| Publish-PnPCompanyApp | The `Publish-PnPCompanyApp` cmdlet has been removed |
-| Set-PnPLabel | Use `Set-PnPRetentionLabel` |
-| Reset-PnPLabel | Use `Reset-PnPRetentionLabel` |
 | Add-PnPTeamsChannel | The parameter `IsFavoriteByDefault` has been removed as it was not supported by Graph API |
-| Get-PnPAppAuthAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken -ResourceTypeName SharePoint` instead to get SharePoint access token. |
-| Request-PnPAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken` instead. |
-| Get-PnPGraphAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken` instead. |
-| Remove-PnPUser | The parameter `-Confirm` has been removed. Use `-Force` instead. |
-| Remove-PnPAvailableSiteClassification | The parameter `-Confirm` has been removed. Use `-Force` instead. |
-| Send-PnPMail | It now throws a warning about the [retirement of SharePoint SendEmail API](https://devblogs.microsoft.com/microsoft365dev/retirement-of-the-sharepoint-sendemail-api/), if you are sending mails via SharePoint. To ignore the warning, use `-ErrorAction SilentlyContinue` along side the cmdlet. Recommendation is to use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
-| Send-PnPMail | The support for sending mails via SMTP servers is now removed. It is the recommendation of .NET as SMTP doesn't support modern protocols. So, the parameters `-EnableSSL` , `-UserName`, `-Password`, `-Server ` and `-ServerPort` are now removed. Use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
-| Invoke-PnPTransformation | It has been removed. It was never supported nor fully implemented. |
-| Get-PnPSharingLink | The parameter `-FileUrl` has been removed. It was marked obsolete. Use `-Identity` instead. |
-| Remove-PnPNavigationNode | The parameters `-Title` and `-Header` have been removed. They were marked obsolete. Use `-Identity` instead. |
+| Connect-PnPOnline | Using `Connect-PnPOnline` without specifying an authentication option will now default to using an interactive login. If you still want to use logon using client credentials, provide them using -Credentials instead |
 | Connect-PnPOnline | Removed `-UseWebLogin` on `Connect-PnPOnline`. It used a very outdated and questionable (reusing an auth cookie) authentication method which implementation broke easily. If you require an ACS connection for certain functionality, consider using `-ClientId` in combination with `-ClientSecret` instead. |
 | Connect-PnPOnline | Removed `-LaunchBrowser` option for Interactive login flows. It is the default now and removed the popup based authentication option |
 | Connect-PnPOnline | Removed `-LaunchBrowser` option for Device Login flows. It is the default now. | 
+| Connect-PnPOnline | Removed `-SPOManagementShell` option for authentication. It reduces the risk of changes from Microsoft which can potentially break the scripts . Use your own Entra ID app instead via `-ClientId` parameter. | 
+| Get-PnPRetentionLabel | The `Get-PnPRetentionLabel` cmdlet has been renamed to `Get-PnPTenantRetentionLabel` |
+| Get-PnPLabel | The `Get-PnPLabel` cmdlet has been renamed to `Get-PnPRetentionLabel` |
+| Get-PnPPowerPlatformConnector | The `Get-PnPPowerPlatformConnector` cmdlet has been renamed to `Get-PnPPowerPlatformCustomConnector` |
+| Get-PnPAppAuthAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken -ResourceTypeName SharePoint` instead to get SharePoint access token. |
+| Get-PnPGraphAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken` instead. |
+| Get-PnPSharingLink | The parameter `-FileUrl` has been removed. It was marked obsolete. Use `-Identity` instead. |
+| Invoke-PnPTransformation | Removed. It was never supported nor fully implemented. |
+| Publish-PnPCompanyApp | The `Publish-PnPCompanyApp` cmdlet has been removed |
+| Reset-PnPLabel | Use `Reset-PnPRetentionLabel` |
+| Request-PnPAccessToken | This cmdlet has been removed. Use `Get-PnPAccessToken` instead. |
+| Remove-PnPUser | The parameter `-Confirm` has been removed. Use `-Force` instead. |
+| Remove-PnPAvailableSiteClassification | The parameter `-Confirm` has been removed. Use `-Force` instead. |
+| Remove-PnPNavigationNode | The parameters `-Title` and `-Header` have been removed. They were marked obsolete. Use `-Identity` instead. |
 | Register-PnPEntraIDApp | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
 | Register-PnPEntraIDAppForInteractiveLogin | Removed `-LaunchBrowser`, `-NoPopup` and credential based auth. The default auth method is now Interactive.|
+| Set-PnPLabel | Use `Set-PnPRetentionLabel` |
+| Send-PnPMail | It now throws a warning about the [retirement of SharePoint SendEmail API](https://devblogs.microsoft.com/microsoft365dev/retirement-of-the-sharepoint-sendemail-api/), if you are sending mails via SharePoint. To ignore the warning, use `-ErrorAction SilentlyContinue` along side the cmdlet. Recommendation is to use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
+| Send-PnPMail | The support for sending mails via SMTP servers is now removed. It is the recommendation of .NET as SMTP doesn't support modern protocols. So, the parameters `-EnableSSL` , `-UserName`, `-Password`, `-Server ` and `-ServerPort` are now removed. Use `Send-PnPMail` with [Microsoft Graph](https://pnp.github.io/powershell/cmdlets/Send-PnPMail.html#send-through-microsoft-graph) |
 | Set-PnPMinimalDownloadStrategy | Removed cmdlet. If you need the functionality you can always turn on the feature with `Enable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a` or turn it off with `Disable-PnPFeature -Id 87294c72-f260-42f3-a41b-981a2ffce37a` |
-| Connect-PnPOnline | Removed `-SPOManagementShell` option for authentication. It reduces the risk of changes from Microsoft which can potentially break the scripts . Use your own Entra ID app instead via `-ClientId` parameter. | 
 | Set-PnPTraceLog | Removed cmdlet and introduced `Start-PnPTraceLog` and `Stop-PnPTracelog` with similar parameters and functionality |
 
 ## Other notable changes

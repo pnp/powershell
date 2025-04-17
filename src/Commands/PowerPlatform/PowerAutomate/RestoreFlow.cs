@@ -23,12 +23,12 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
             var flowName = Identity.GetName();
             
-            WriteVerbose($"Restoring soft-deleted flow {flowName} from environment {environmentName}");
+            LogDebug($"Restoring soft-deleted flow {flowName} from environment {environmentName}");
 
             try
             {
                 RestHelper.Post(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.ProcessSimple/scopes/admin/environments/{environmentName}/flows/{flowName}/restore?api-version=2016-11-01", AccessToken);
-                WriteVerbose($"Flow with name {flowName} restored");
+                LogDebug($"Flow with name {flowName} restored");
             }
             catch(Exception ex)
             {

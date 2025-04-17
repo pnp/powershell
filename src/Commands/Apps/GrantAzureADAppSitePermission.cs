@@ -36,20 +36,20 @@ namespace PnP.PowerShell.Commands.Apps
             Guid siteId = Guid.Empty;
             if (ParameterSpecified(nameof(Site)))
             {
-                WriteVerbose($"Using Microsoft Graph to lookup the site Id of the passed in site using -{nameof(Site)}");
+                LogDebug($"Using Microsoft Graph to lookup the site Id of the passed in site using -{nameof(Site)}");
                 siteId = Site.GetSiteIdThroughGraph(Connection, AccessToken);
-                WriteVerbose($"Site passed in using -{nameof(Site)} resolved to Id {siteId}");
+                LogDebug($"Site passed in using -{nameof(Site)} resolved to Id {siteId}");
             }
             else
             {
-                WriteVerbose($"No specific site passed in through -{nameof(Site)}, taking the currently connected to site");
+                LogDebug($"No specific site passed in through -{nameof(Site)}, taking the currently connected to site");
                 siteId = new SitePipeBind(Connection.Url).GetSiteIdThroughGraph(Connection, AccessToken);
-                WriteVerbose($"Currently connected to site has Id {siteId}");
+                LogDebug($"Currently connected to site has Id {siteId}");
             }
 
             if (siteId == Guid.Empty)
             {
-                WriteVerbose("Id of the site to provide permissions on could not be defined. Please ensure you're passing in a valid site using -{nameof(Site)}");
+                LogDebug("Id of the site to provide permissions on could not be defined. Please ensure you're passing in a valid site using -{nameof(Site)}");
                 return;
             }
 
@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands.Apps
                     }
             };
 
-            WriteVerbose($"Granting App with Id {AppId} the permission{(payload.roles.Length != 1 ? "s" : "")} {string.Join(',', payload.roles)}");
+            LogDebug($"Granting App with Id {AppId} the permission{(payload.roles.Length != 1 ? "s" : "")} {string.Join(',', payload.roles)}");
 
             // Make the Graph Grant request
             var result = Utilities.REST.RestHelper.Post<AzureADAppPermissionInternal>(Connection.HttpClient, $"https://{Connection.GraphEndPoint}/v1.0/sites/{siteId}/permissions", AccessToken, payload);

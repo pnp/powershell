@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.New, "PnPAzureCertificate")]
     [OutputType(typeof(Model.AzureCertificate))]
-    public class NewPnPAdalCertificate : PSCmdlet
+    public class NewPnPAdalCertificate : BasePSCmdlet
     {
         [Parameter(Mandatory = false, Position = 0)]
         public string CommonName = "pnp.contoso.com";
@@ -61,7 +61,7 @@ namespace PnP.PowerShell.Commands.Base
             DateTime validFrom = DateTime.Today;
             DateTime validTo = validFrom.AddYears(ValidYears);
 
-            if(MyInvocation.BoundParameters.ContainsKey(nameof(SanNames)) && SanNames == null)
+            if (MyInvocation.BoundParameters.ContainsKey(nameof(SanNames)) && SanNames == null)
             {
                 SanNames = Array.Empty<string>();
             }
@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.Base
                 Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
             }
 
-            GetPnPAdalCertificate.WriteAzureCertificateOutput(this, certificate, CertificatePassword);
+            GetPnPAzureCertificate.WriteAzureCertificateOutput(this, certificate, CertificatePassword);
         }
     }
 }

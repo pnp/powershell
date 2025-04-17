@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 }
                 else
                 {
-                    cmdlet.WriteWarning("Multiple ACEs found with the same title, please use instance id");
+                    cmdlet.LogWarning("Multiple ACEs found with the same title, please use instance id");
                 }
             }
             if (_id != Guid.Empty)
@@ -63,7 +63,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     }
                     else
                     {
-                        cmdlet.WriteWarning("Multiple ACEs found of the same type, please use instance id");
+                        cmdlet.LogWarning("Multiple ACEs found of the same type, please use instance id");
                     }
                 }
             }

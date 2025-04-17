@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.ContentTypes
 
             if (ct == null)
             {
-                WriteError(new ErrorRecord(new Exception($"Invalid content type id."), "INVALIDCTID", ErrorCategory.InvalidArgument, ContentType));
+                LogError("Invalid content type id.");
                 return;
             }
 

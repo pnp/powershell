@@ -197,7 +197,7 @@ namespace PnP.PowerShell.Commands.Files
                 {
                     var relativeUrl = folder.ServerRelativeUrl.Replace(CurrentWeb.ServerRelativeUrl, "");
 
-                    WriteVerbose($"Processing folder {relativeUrl}");
+                    LogDebug($"Processing folder {relativeUrl}");
 
                     var subFolderContents = GetContentsByUrl(relativeUrl);
                     folderContent = folderContent.Concat<object>(subFolderContents);

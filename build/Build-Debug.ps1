@@ -53,7 +53,7 @@ $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
 Write-Host "Building PnP.PowerShell version $version-debug" -ForegroundColor Yellow
 
-$buildCmd = "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`"" + "--nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug";
+$buildCmd = "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`" --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug";
 if ($NoIncremental) {
 	$buildCmd += " --no-incremental";
 }
@@ -62,25 +62,28 @@ if ($Force) {
 }
 if ($LocalPnPFramework) {
 	# Check if available
-	$pnpFrameworkAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\netstandard2.0\PnP.Framework.dll"
+	$pnpFrameworkAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\$configuration\PnP.Framework.dll"
 	$pnpFrameworkAssembly = [System.IO.Path]::GetFullPath($pnpFrameworkAssembly)
 	if (Test-Path $pnpFrameworkAssembly -PathType Leaf) {
+		$pnpFrameworkAssemblyItem = Get-ChildItem -Path $pnpFrameworkAssembly
+		Write-Host "  Using local PnP Framework build located at $($pnpFrameworkAssemblyItem.FullName) compiled at $($pnpFrameworkAssemblyItem.LastWritetime)" -ForegroundColor Yellow
 		$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\`""
 	}
- else {
+ 	else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework"
 		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
 		Write-Error -Message "Please make sure you have a local copy of the PnP.Framework repository installed at $localFolder"
 	}
 }
 if ($LocalPnPCore) {
-	# Check if available
-	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\netstandard2.0\PnP.Core.dll"
+	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\$configuration\PnP.Core.dll"
 	$pnpCoreAssembly = [System.IO.Path]::GetFullPath($pnpCoreAssembly)
 	if (Test-Path $pnpCoreAssembly -PathType Leaf) {
+		$pnpCoreAssemblyItem = Get-ChildItem -Path $pnpCoreAssembly
+		Write-Host "  Using local PnP.Core SDK build located at $($pnpCoreAssemblyItem.FullName) compiled at $($pnpCoreAssemblyItem.LastWritetime)" -ForegroundColor Yellow
 		$buildCmd += " -p:PnPCoreSdkPath=`"..\..\..\pnpcore\src\sdk\`""
 	}
- else {
+ 	else {
 		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore"
 		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
 		Write-Error -Message "Please make sure you have a local copy of the PnP.Core repository installed at $localFolder"
@@ -127,6 +130,12 @@ if ($LASTEXITCODE -eq 0) {
 		Copy-Item -Path "$PSScriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
 		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
 		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/$configuration" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+
+		if ($LocalPnPCore) {
+			# Ensure the local PnP.Core SDK is copied to the module folder or else debugging will not work. This assembly otherwises comes in through PnP Framework and will still use the NuGet version instead of the local build.
+			Write-Host "  Copying local PnP.Core SDK assembly" -ForegroundColor Yellow
+			Copy-Item -Path $pnpCoreAssembly -Destination "$destinationFolder\Core" -Force
+		}
 	}
 	Catch {
 		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module or PS modules are hosted in a OneDrive synced location. In the latter case, manually delete $destinationFolder and try again."
@@ -150,7 +159,7 @@ if ($LASTEXITCODE -eq 0) {
 			}
 			Write-Host "Importing dotnet core version of assembly"
 			Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
-			$cmdlets = get-command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
+			$cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
 		}
 		$cmdletsString = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
@@ -163,7 +172,7 @@ if ($LASTEXITCODE -eq 0) {
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @('Core')
-	PowerShellVersion = '7.4.4'
+	PowerShellVersion = '7.4.6'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)

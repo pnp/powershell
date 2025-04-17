@@ -20,7 +20,7 @@ Returns one or more Containers in a SharePoint Embedded application.
 ## SYNTAX
 
 ```powershell
-Get-PnPContainer [-Identity <ContainerPipeBind>] [-OwningApplicationId <Guid>] [-Paged <switchparameter>] [-PagingToken <string>][-SortOrder <SortOrder>] [-Connection <PnPConnection>] 
+Get-PnPContainer [-Identity <ContainerPipeBind>] [-OwningApplicationId <Guid>] [-Paged <switchparameter>] [-PagingToken <string>][-SortOrder <SortOrder>] [-ArchiveStatus <SPContainerArchiveStatusFilterProperties>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -49,6 +49,26 @@ Get-PnPContainer -Identity "bc07d4b8-1c2f-4184-8cc2-a52dfd6fe0c4" -Identity  "ht
 Returns the properties of the specified container by using the container url
 
 ## PARAMETERS
+
+### -ArchiveStatus
+
+The ArchiveStatus parameter is used to display containers in various stages of archiving. The following states are supported:
+- Archived: Displays containers in all archived states.
+- RecentlyArchived: Displays containers in the "Recently archived" state.
+- FullyArchived: Displays containers in the "Fully archived" state.
+- Reactivating: Displays containers in the "Reactivating" state.
+- NotArchived: Displays active containers
+
+```yaml
+Type: SPContainerArchiveStatusFilterProperties
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: NotArchived
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Connection
 

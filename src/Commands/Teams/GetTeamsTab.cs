@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Teams
                         }
                         else
                         {
-                            WriteError(new PSArgumentException("Cannot find tab"), ErrorCategory.ObjectNotFound);
+                            LogError(new PSArgumentException("Cannot find tab"));
                         }
                     }
                     else
@@ -49,12 +49,12 @@ namespace PnP.PowerShell.Commands.Teams
                 }
                 else
                 {
-                    this.WriteError(new PSArgumentException("Channel not found"), ErrorCategory.ObjectNotFound);
+                    this.LogError(new PSArgumentException("Channel not found"));
                 }
             }
             else
             {
-                this.WriteError(new PSArgumentException("Team not found"), ErrorCategory.ObjectNotFound);
+                this.LogError(new PSArgumentException("Team not found"));
             }
         }
     }

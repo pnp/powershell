@@ -128,7 +128,7 @@ namespace PnP.PowerShell.Commands.Branding
                         break;
                     }
                 case CustomActionScope.All:
-                    WriteWarning("CustomActionScope 'All' is not supported for adding CustomActions");
+                    LogWarning("CustomActionScope 'All' is not supported for adding CustomActions");
                     break;
             }
         }

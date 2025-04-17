@@ -95,7 +95,14 @@ namespace PnP.PowerShell.Commands.Taxonomy
 
             if (ParameterSpecified(nameof(Name)))
             {
-                term.Name = TaxonomyExtensions.NormalizeName(Name);
+                if (ParameterSpecified(nameof(Lcid)))
+                {
+                    term.CreateLabel(TaxonomyExtensions.NormalizeName(Name), Lcid, true);
+                }
+                else
+                {
+                    term.Name = TaxonomyExtensions.NormalizeName(Name);
+                }
             }
             if (ParameterSpecified(nameof(Description)))
             {

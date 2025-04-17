@@ -55,12 +55,12 @@ namespace PnP.PowerShell.Commands.Files
                 case ParameterSet_SETLABEL:
                     if (string.IsNullOrEmpty(RetentionLabel))
                     {
-                        WriteVerbose("Removing retention label");
+                        LogDebug("Removing retention label");
                         GraphRequestHelper.Delete(requestUrl);
                     }
                     else
                     {
-                        WriteVerbose($"Setting retention label to '{RetentionLabel}'");
+                        LogDebug($"Setting retention label to '{RetentionLabel}'");
                         payload = new
                         {
                             name = RetentionLabel

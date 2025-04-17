@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Files
         {
             if (MyInvocation.InvocationName.ToLower() == "ensure-pnpfolder")
             {
-                WriteWarning("Ensure-PnPFolder has been deprecated. Use Resolve-PnPFolder with the same parameters instead.");
+                LogWarning("Ensure-PnPFolder has been deprecated. Use Resolve-PnPFolder with the same parameters instead.");
             }
             WriteObject(CurrentWeb.EnsureFolderPath(SiteRelativePath, RetrievalExpressions));
         }

@@ -51,7 +51,7 @@ namespace PnP.PowerShell.Commands.Admin
                         {
                             case "FullyArchived":
                                 {
-                                    WriteWarning("Reactivating a site from \"Archived\" state is a paid operation. It can take upto 24hrs for the site to be reactivated. Performing the operation \"Reactivate Archived site\" on target.");
+                                    LogWarning("Reactivating a site from \"Archived\" state is a paid operation. It can take upto 24hrs for the site to be reactivated. Performing the operation \"Reactivate Archived site\" on target.");
                                     if (Force || ShouldContinue(Identity.Url, Properties.Resources.Confirm))
                                     {
                                         spoOperation = Tenant.UnarchiveSiteByUrl(Identity.Url);

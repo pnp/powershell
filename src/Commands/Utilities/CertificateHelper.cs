@@ -1,12 +1,12 @@
-﻿using System;
+﻿using PnP.Framework.Diagnostics;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Management.Automation;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using SecureString = System.Security.SecureString;
-using System.Management.Automation;
-using PnP.Framework.Diagnostics;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -18,12 +18,12 @@ namespace PnP.PowerShell.Commands.Utilities
             RSAParameters param = new RSAParameters();
 
             var a = certificate.GetRSAPrivateKey();
-            
-            using(var rsa = MakeExportable(a))
+
+            using (var rsa = MakeExportable(a))
             {
                 param = rsa.ExportParameters(true);
             }
-          
+
             string base64String;
             using (var stream = new MemoryStream())
             {
@@ -126,15 +126,15 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <returns>X509Certificate2 instance</returns>
         /// <exception cref="PSArgumentException">Thrown if the certificate cannot be read</exception>
         /// <exception cref="FileNotFoundException">Thrown if the certificate cannot be found at the provided path</exception>
-        internal static X509Certificate2 GetCertificateFromPath(Cmdlet cmdlet, string certificatePath, SecureString certificatePassword, 
-            X509KeyStorageFlags x509KeyStorageFlags = 
+        internal static X509Certificate2 GetCertificateFromPath(Cmdlet cmdlet, string certificatePath, SecureString certificatePassword,
+            X509KeyStorageFlags x509KeyStorageFlags =
                         X509KeyStorageFlags.Exportable |
-                        X509KeyStorageFlags.MachineKeySet |
+                        X509KeyStorageFlags.UserKeySet |
                         X509KeyStorageFlags.PersistKeySet)
         {
             if (System.IO.File.Exists(certificatePath))
             {
-                Log.Debug("CertificateHelper",$"Reading certificate from file '{certificatePath}'");
+                Log.Debug("CertificateHelper", $"Reading certificate from file '{certificatePath}'");
 
                 var certFile = System.IO.File.OpenRead(certificatePath);
                 if (certFile.Length == 0)
@@ -145,7 +145,7 @@ namespace PnP.PowerShell.Commands.Utilities
                 var certificateBytes = new byte[certFile.Length];
                 certFile.Read(certificateBytes, 0, (int)certFile.Length);
 
-                Log.Debug("CertificateHelper",$"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
+                Log.Debug("CertificateHelper", $"Opening certificate in file '{certificatePath}' {(certificatePassword == null ? "without" : "using")} a certificate password");
                 try
                 {
                     var certificate = new X509Certificate2(
@@ -242,7 +242,7 @@ namespace PnP.PowerShell.Commands.Utilities
         internal static X509Certificate2 CreateSelfSignedCertificate(string commonName, string country, string state, string locality, string organization, string organizationUnit, SecureString password, string friendlyName, DateTimeOffset from, DateTimeOffset to, string[] sanNames = null)
         {
             SubjectAlternativeNameBuilder sanBuilder = new SubjectAlternativeNameBuilder();
-            if (sanNames != null)
+            if (sanNames != null && sanNames.Length > 0)
             {
                 foreach (var sanName in sanNames)
                 {
@@ -268,8 +268,8 @@ namespace PnP.PowerShell.Commands.Utilities
             X500DistinguishedName distinguishedName = new X500DistinguishedName(distinguishedNameString);
 
 #pragma warning disable CA1416 // Validate platform compatibility
-            using (RSA rsa = Platform.IsWindows ? MakeExportable(new RSACng(2048)) : RSA.Create(2048))
-            {                
+            using (RSA rsa = RSA.Create(2048))
+            {
                 var request = new CertificateRequest(distinguishedName, rsa, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
 
                 request.CertificateExtensions.Add(
@@ -287,8 +287,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 {
                     certificate.FriendlyName = friendlyName;
                 }
+                string passString = password != null ? CredentialManager.SecureStringToString(password) : null;
 
-                return new X509Certificate2(certificate.Export(X509ContentType.Pfx, password), password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.MachineKeySet | X509KeyStorageFlags.PersistKeySet);
+                if (PSUtility.PSVersion == "7.5")
+                {
+                    return X509CertificateLoader.LoadPkcs12(certificate.Export(X509ContentType.Pfx, password), passString, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
+                }
+
+                return new X509Certificate2(certificate.Export(X509ContentType.Pfx, password), password, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
             }
 #pragma warning restore CA1416 // Validate platform compatibility
         }

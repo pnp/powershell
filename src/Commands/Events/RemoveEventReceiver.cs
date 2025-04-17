@@ -117,7 +117,7 @@ namespace PnP.PowerShell.Commands.Events
 
             if (eventReceiversToDelete.Count == 0)
             {
-                WriteVerbose("No Event Receivers to remove");
+                LogDebug("No Event Receivers to remove");
                 return;
             }
 
@@ -127,7 +127,7 @@ namespace PnP.PowerShell.Commands.Events
 
                 if (Force || ShouldContinue(string.Format(Properties.Resources.RemoveEventReceiver, eventReceiver.ReceiverName, eventReceiver.ReceiverId), Properties.Resources.Confirm))
                 {
-                    WriteVerbose($"Removing Event Receiver with Id {eventReceiver.ReceiverId} named {eventReceiver.ReceiverName}");
+                    LogDebug($"Removing Event Receiver with Id {eventReceiver.ReceiverId} named {eventReceiver.ReceiverName}");
                     eventReceiver.DeleteObject();
                 }
             }

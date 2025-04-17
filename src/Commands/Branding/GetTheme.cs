@@ -17,7 +17,7 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 try
                 {
-                    WriteWarning("The information presented here is based upon the fact that the theme has been set using either the PnP Provisioning Engine or using the Set-PnPTheme cmdlet. This information is retrieved from a propertybag value and may differ from the actual site.");
+                    LogWarning("The information presented here is based upon the fact that the theme has been set using either the PnP Provisioning Engine or using the Set-PnPTheme cmdlet. This information is retrieved from a propertybag value and may differ from the actual site.");
                     var composedLook = JsonSerializer.Deserialize<ComposedLook>(CurrentWeb.GetPropertyBagValueString("_PnP_ProvisioningTemplateComposedLookInfo", ""));
                     WriteObject(composedLook);
                 }

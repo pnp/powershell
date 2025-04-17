@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 // Errors have been reported in the export request result
                 foreach (var error in wrapper.Errors)
                 {
-                    WriteVerbose($"Export failed for {appName} with error {error.Code}: {error.Message}");
+                    LogDebug($"Export failed for {appName} with error {error.Code}: {error.Message}");
                 }
             }
         }

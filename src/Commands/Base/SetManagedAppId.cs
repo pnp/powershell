@@ -5,7 +5,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Set, "PnPManagedAppId")]
     [OutputType(typeof(void))]
-    public class SetManagedAppId : PSCmdlet
+    public class SetManagedAppId : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Url;
@@ -15,6 +15,11 @@ namespace PnP.PowerShell.Commands.Base
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Overwrite;
+
+        public SetManagedAppId()
+        {
+        }
+
         protected override void ProcessRecord()
         {
             Uri uri = new Uri(Url);

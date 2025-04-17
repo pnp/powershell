@@ -281,7 +281,7 @@ namespace PnP.PowerShell.Commands.Base
                 authManager = Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
                  {
                      ClipboardService.SetText(deviceCodeResult.UserCode);
-                     messageWriter.WriteWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                     messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
                      BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
 
                      return Task.FromResult(0);
@@ -380,11 +380,11 @@ namespace PnP.PowerShell.Commands.Base
         {
             var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
             PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity endpoint: {endPoint}");
-            //cmdlet.WriteVerbose($"Using identity endpoint: {endPoint}");
+            //cmdlet.LogDebug($"Using identity endpoint: {endPoint}");
 
             var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
             PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity header: {identityHeader}");
-            //cmdlet.WriteVerbose($"Using identity header: {identityHeader}");
+            //cmdlet.LogDebug($"Using identity header: {identityHeader}");
 
             if (string.IsNullOrEmpty(endPoint))
             {
@@ -847,39 +847,10 @@ namespace PnP.PowerShell.Commands.Base
                 var coreAssembly = Assembly.GetExecutingAssembly();
                 var operatingSystem = Utilities.OperatingSystem.GetOSString();
 
-                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem, PSVersion);
+                ApplicationInsights.Initialize(serverLibraryVersion, serverVersion, initializationType.ToString(), ((AssemblyFileVersionAttribute)coreAssembly.GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version.ToString(), operatingSystem, PSUtility.PSVersion);
                 ApplicationInsights.TrackEvent("Connect-PnPOnline");
             }
         }
-
-        private static string PSVersion => (PSVersionLazy.Value);
-
-        private static readonly Lazy<string> PSVersionLazy = new Lazy<string>(
-            () =>
-
-        {
-            var caller = AppDomain.CurrentDomain.GetAssemblies().SingleOrDefault(a => a.GetName().Name == "System.Management.Automation");
-            //var caller = Assembly.GetCallingAssembly();
-            var psVersionType = caller.GetType("System.Management.Automation.PSVersionInfo");
-            if (null != psVersionType)
-            {
-                PropertyInfo propInfo = psVersionType.GetProperty("PSVersion");
-                if (null == propInfo)
-                {
-                    propInfo = psVersionType.GetProperty("PSVersion", BindingFlags.NonPublic | BindingFlags.Static);
-                }
-                var getter = propInfo.GetGetMethod(true);
-                var version = getter.Invoke(null, new object[] { });
-
-                if (null != version)
-                {
-                    var versionType = version.GetType();
-                    var versionProperty = versionType.GetProperty("Major");
-                    return ((int)versionProperty.GetValue(version)).ToString();
-                }
-            }
-            return "";
-        });
 
         private static string PnPPSVersionTag => (PnPPSVersionTagLazy.Value);
 
@@ -1082,7 +1053,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private static void WriteCacheEnabledMessage(PSHost host)
         {
-            host.UI.WriteWarningLine("Secure token cache enabled. Access tokens may be retrieved from the cache if present. Clear the cache entry for this tenant with Disconnect-PnPOnline -ClearPersistedLogin.");
+            host.UI.WriteWarningLine("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
         }
 
         internal static void ClearCache(PnPConnection connection)

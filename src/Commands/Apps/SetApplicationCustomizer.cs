@@ -70,7 +70,7 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (!actions.Any())
             {
-                WriteVerbose($"No Application Customizers representing the client side extension registration found within the scope '{Scope}'");
+                LogDebug($"No Application Customizers representing the client side extension registration found within the scope '{Scope}'");
                 return;
             }
 

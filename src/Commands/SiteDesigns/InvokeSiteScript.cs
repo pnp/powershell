@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands
                 hostUrl = CurrentWeb.Url;
             }
 
-            WriteVerbose($"Site scripts will be applied to site {hostUrl}");
+            LogDebug($"Site scripts will be applied to site {hostUrl}");
 
             IEnumerable<InvokeSiteScriptActionResponse> result = null;
             switch(ParameterSetName)
@@ -50,11 +50,11 @@ namespace PnP.PowerShell.Commands
                 case ParameterSet_SCRIPTCONTENTS:
                     if(ParameterSpecified(nameof(WhatIf)))
                     {
-                        WriteVerbose($"Provided Site Script through {nameof(Script)} will not be executed due to {nameof(WhatIf)} option being provided");
+                        LogDebug($"Provided Site Script through {nameof(Script)} will not be executed due to {nameof(WhatIf)} option being provided");
                     }
                     else
                     {
-                        WriteVerbose($"Executing provided script");
+                        LogDebug($"Executing provided script");
                         result = Utilities.SiteTemplates.InvokeSiteScript(RequestHelper, Script, hostUrl).Items;
                     }
                     break;
@@ -76,11 +76,11 @@ namespace PnP.PowerShell.Commands
 
                         if(ParameterSpecified(nameof(WhatIf)))
                         {
-                            WriteVerbose($"Site script '{script.Title}' ({script.Id}) will not be executed due to {nameof(WhatIf)} option being provided");
+                            LogDebug($"Site script '{script.Title}' ({script.Id}) will not be executed due to {nameof(WhatIf)} option being provided");
                         }
                         else
                         {
-                            WriteVerbose($"Executing site script '{script.Title}' ({script.Id})");
+                            LogDebug($"Executing site script '{script.Title}' ({script.Id})");
                             result =Utilities.SiteTemplates.InvokeSiteScript(RequestHelper, script, hostUrl).Items;
                         }
                     }
@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands
             // Only if there are results, show them
             if (result != null)
             {
-                WriteVerbose($"Site script result: {result.Count(r => r.ErrorCode == 0)} actions successful, {result.Count(r => r.ErrorCode != 0)} failed");
+                LogDebug($"Site script result: {result.Count(r => r.ErrorCode == 0)} actions successful, {result.Count(r => r.ErrorCode != 0)} failed");
                 WriteObject(result, true);
             }
         }

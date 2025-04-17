@@ -2,6 +2,7 @@
 using PnP.Framework.Provisioning.Model;
 using PnP.Framework.Provisioning.Providers;
 using PnP.Framework.Provisioning.Providers.Xml;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using System;
@@ -12,7 +13,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Provisioning
 {
     [Cmdlet(VerbsData.Save, "PnPSiteTemplate")]
-    public class SaveSiteTemplate : PSCmdlet
+    public class SaveSiteTemplate : BasePSCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
         [Alias("InputInstance")]
@@ -34,7 +35,7 @@ namespace PnP.PowerShell.Commands.Provisioning
         {
             var templateObject = Template.GetTemplate(SessionState.Path.CurrentFileSystemLocation.Path, (e) =>
             {
-                WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                LogError(e);
             });
 
             // Determine the output file name and path
@@ -100,7 +101,7 @@ namespace PnP.PowerShell.Commands.Provisioning
         {
             var templateFile = ProvisioningHelper.LoadSiteTemplateFromFile(templateFileName, null, (e) =>
             {
-                WriteError(new ErrorRecord(e, "TEMPLATENOTVALID", ErrorCategory.SyntaxError, null));
+                LogError(e);
             });
             if (template.Tenant?.AppCatalog != null)
             {

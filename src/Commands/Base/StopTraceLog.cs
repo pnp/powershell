@@ -1,39 +1,45 @@
 ﻿
-using System;
 using System.Diagnostics;
 using System.Management.Automation;
+using PnP.PowerShell.Commands.Utilities.Logging;
 
 namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsLifecycle.Stop, "PnPTraceLog")]
-    public class StopTraceLog : PSCmdlet
+    public class StopTraceLog : BasePSCmdlet
     {
+        [Parameter(Mandatory = false)]
+        public SwitchParameter StopFileLogging = true;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter StopConsoleLogging = true;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter StopLogStreamLogging = true;
+
         private const string FileListenername = "PNPPOWERSHELLFILETRACELISTENER";
         private const string ConsoleListenername = "PNPPOWERSHELLCONSOLETRACELISTENER";
+
         protected override void ProcessRecord()
         {
+            LogDebug("Flushing log entries");
             Trace.Flush();
-            RemoveListener(ConsoleListenername);
-            RemoveListener(FileListenername);
-        }
 
-        private void RemoveListener(string listenerName)
-        {
-            try
+            if (StopConsoleLogging.ToBool())
             {
-                var existingListener = Trace.Listeners[listenerName];
-                if (existingListener != null)
-                {
-                    existingListener.Flush();
-                    existingListener.Close();
-                    Trace.Listeners.Remove(existingListener);
-                }
+                LogDebug("Stopping logging to console");
+                LoggingUtility.RemoveListener(ConsoleListenername);
             }
-            catch (Exception)
+            if (StopFileLogging.ToBool())
             {
-                // ignored
+                LogDebug("Stopping logging to file");
+                LoggingUtility.RemoveListener(FileListenername);
             }
-
+            if(StopLogStreamLogging.ToBool())
+            {
+                LogDebug("Stopping logging to in memory log stream");
+                LoggingUtility.RemoveListener(LogStreamListener.DefaultListenerName);
+            }
         }
     }
 }

@@ -109,7 +109,7 @@ namespace PnP.PowerShell.Commands.Lists
                     }
                     else
                     {
-                        WriteWarning("Can not find compliance tag with value: " + Label);
+                        LogWarning("Can not find compliance tag with value: " + Label);
                     }
                 }
 

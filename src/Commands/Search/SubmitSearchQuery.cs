@@ -117,26 +117,26 @@ namespace PnP.PowerShell.Commands.Search
             PnPResultTableCollection finalResults = null;
             do
             {
-                KeywordQuery keywordQuery = CreateKeywordQuery(clientFunction);
-                keywordQuery.StartRow = startRow;
-                keywordQuery.RowLimit = rowLimit;
-
-                if (All.IsPresent)
-                {
-                    if (currentCount != 0)
-                    {
-                        keywordQuery.Refiners = null; // Only need to set on first page for auto paging
-                    }
-                    keywordQuery.StartRow = 0;
-                    keywordQuery.QueryText += " IndexDocId>" + lastDocId;
-                }
+                var searchExec = new SearchExecutor(ClientContext);
 
                 // We'll always try at least once, even if RetryCount is 0 (default)
                 for (var iterator = 0; iterator <= RetryCount; iterator++)
                 {
                     try
                     {
-                        var searchExec = new SearchExecutor(ClientContext);
+                        KeywordQuery keywordQuery = CreateKeywordQuery(clientFunction);
+                        keywordQuery.StartRow = startRow;
+                        keywordQuery.RowLimit = rowLimit;
+
+                        if (All.IsPresent)
+                        {
+                            if (currentCount != 0)
+                            {
+                                keywordQuery.Refiners = null; // Only need to set on first page for auto paging
+                            }
+                            keywordQuery.StartRow = 0;
+                            keywordQuery.QueryText += " IndexDocId>" + lastDocId;
+                        }
                         var results = searchExec.ExecuteQuery(keywordQuery);
                         ClientContext.ExecuteQueryRetry();
 
@@ -190,13 +190,18 @@ namespace PnP.PowerShell.Commands.Search
                     // If we're not retrying, or if we're on the last retry, don't catch the exception
                     catch (Exception ex)
                     {
-                        if (RetryCount > 0 && iterator < RetryCount)
+                        if (RetryCount > 0 && iterator < (RetryCount - 1))
                         {
                             var waitTime = 5 * (iterator + 1);
 
-                            WriteVerbose($"Search operation failed with exception {ex.Message}. Attempt {iterator + 1} out of {RetryCount}. Retrying in {waitTime} seconds.");
+                            LogDebug($"Search operation failed with exception {ex.Message.TrimEnd('.')}. Attempt {iterator + 1} out of {RetryCount}. Retrying in {waitTime} seconds.");
 
                             Thread.Sleep(TimeSpan.FromSeconds(waitTime));
+                            continue;
+                        }
+                        else if (iterator == RetryCount - 1)
+                        {
+                            LogDebug($"Search operation failed with exception {ex.Message.TrimEnd('.')}. Attempt {iterator + 1} out of {RetryCount}. Done retrying.");
                             continue;
                         }
                         else

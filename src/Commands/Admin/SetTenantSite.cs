@@ -235,7 +235,7 @@ namespace PnP.PowerShell.Commands
             if (LockState.HasValue)
             {
                 Tenant.SetSiteLockState(Identity.Url, LockState.Value, Wait, Wait ? timeoutFunction : null);
-                WriteWarning("You changed the lockstate of a site. This change is not guaranteed to be effective immediately. Please wait a few minutes for this to take effect.");
+                LogWarning("You changed the lockstate of a site. This change is not guaranteed to be effective immediately. Please wait a few minutes for this to take effect.");
             }
             if (!LockState.HasValue)
             {
@@ -330,7 +330,7 @@ namespace PnP.PowerShell.Commands
                 Tenant.EnsureProperty(t => t.ShowPeoplePickerSuggestionsForGuestUsers);
                 if (!Tenant.ShowPeoplePickerSuggestionsForGuestUsers)
                 {
-                    WriteWarning("ShowPeoplePickerSuggestionsForGuests users has been disabled for this tenant. See Set-PnPTenant");
+                    LogWarning("ShowPeoplePickerSuggestionsForGuests users has been disabled for this tenant. See Set-PnPTenant");
                 }
                 props.ShowPeoplePickerSuggestionsForGuestUsers = ShowPeoplePickerSuggestionsForGuestUsers;
                 updateRequired = true;
@@ -379,7 +379,7 @@ namespace PnP.PowerShell.Commands
                     updateRequired = true;
                     if (!value)
                     {
-                        WriteWarning("Users will not be able to download files that cannot be viewed on the web. To allow download of files that cannot be viewed on the web run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
+                        LogWarning("Users will not be able to download files that cannot be viewed on the web. To allow download of files that cannot be viewed on the web run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
                     }
                 }
                 else
@@ -391,7 +391,7 @@ namespace PnP.PowerShell.Commands
                         props.AllowDownloadingNonWebViewableFiles = value;
                         if (!value)
                         {
-                            WriteWarning("Users will not be able to download files that cannot be viewed on the web. To allow download of files that cannot be viewed on the web run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
+                            LogWarning("Users will not be able to download files that cannot be viewed on the web. To allow download of files that cannot be viewed on the web run the cmdlet again and set AllowDownloadingNonWebViewableFiles to true.");
                         }
                     }
                 }
@@ -491,7 +491,7 @@ namespace PnP.PowerShell.Commands
             }
             else
             {
-                WriteWarning("Server does not support setting sensitity label");
+                LogWarning("Server does not support setting sensitity label");
             }
 
             if (ParameterSpecified(nameof(LimitedAccessFileType)))

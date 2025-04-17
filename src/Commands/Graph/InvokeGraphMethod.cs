@@ -109,7 +109,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch (Exception ex)
             {
-                WriteError(ex, ErrorCategory.WriteError);
+                LogError(ex);
             }
         }
 
@@ -259,35 +259,35 @@ namespace PnP.PowerShell.Commands.Base
 
         private void GetRequestWithoutPaging()
         {
-            WriteVerbose($"Sending HTTP GET to {Url}");
+            LogDebug($"Sending HTTP GET to {Url}");
             using var response = this.GraphRequestHelper.GetResponse(Url);
             HandleResponse(response);
         }
 
         private void PostRequest()
         {
-            WriteVerbose($"Sending HTTP POST to {Url}");
+            LogDebug($"Sending HTTP POST to {Url}");
             var response = GraphRequestHelper.PostHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PutRequest()
         {
-            WriteVerbose($"Sending HTTP PUT to {Url}");
+            LogDebug($"Sending HTTP PUT to {Url}");
             var response = GraphRequestHelper.PutHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PatchRequest()
         {
-            WriteVerbose($"Sending HTTP PATCH to {Url}");
+            LogDebug($"Sending HTTP PATCH to {Url}");
             var response = GraphRequestHelper.Patch(GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void DeleteRequest()
         {
-            WriteVerbose($"Sending HTTP DELETE to {Url}");
+            LogDebug($"Sending HTTP DELETE to {Url}");
             var response = GraphRequestHelper.Delete(Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
@@ -299,7 +299,7 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_TOCONSOLE:
                     var result = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
-                    WriteVerbose($"Returning {result.Length} characters response");
+                    LogDebug($"Returning {result.Length} characters response");
 
                     WriteGraphResult(result);
                     break;
@@ -307,7 +307,7 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_TOFILE:
                     using (var responseStreamForFile = response.Content.ReadAsStream())
                     {
-                        WriteVerbose($"Writing {responseStreamForFile.Length} bytes response to {OutFile}");
+                        LogDebug($"Writing {responseStreamForFile.Length} bytes response to {OutFile}");
 
                         using (var fileStream = new FileStream(OutFile, FileMode.Create, FileAccess.Write))
                         {
@@ -320,7 +320,7 @@ namespace PnP.PowerShell.Commands.Base
                 case ParameterSet_TOSTREAM:
                     var responseStream = response.Content.ReadAsStream();
 
-                    WriteVerbose($"Writing {responseStream.Length} bytes response to outputstream");
+                    LogDebug($"Writing {responseStream.Length} bytes response to outputstream");
 
                     var memoryStream = new MemoryStream();
                     responseStream.CopyTo(memoryStream);

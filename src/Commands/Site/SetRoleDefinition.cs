@@ -42,7 +42,7 @@ namespace PnP.PowerShell.Commands.Site
 
                 if (ParameterSpecified(nameof(SelectAll)) && ParameterSpecified(nameof(ClearAll)))
                 {
-                    WriteWarning("Cannot SelectAll and ClearAll permissions at the same time");
+                    LogWarning("Cannot SelectAll and ClearAll permissions at the same time");
                     return;
                 }
 
@@ -100,7 +100,7 @@ namespace PnP.PowerShell.Commands.Site
             }
             catch (ServerException e)
             {
-                WriteWarning($@"Exception occurred while trying to set the Role Definition: ""{e.Message}"". Will be skipped.");
+                LogWarning($@"Exception occurred while trying to set the Role Definition: ""{e.Message}"". Will be skipped.");
             }
         }
     }

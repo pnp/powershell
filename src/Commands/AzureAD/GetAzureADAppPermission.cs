@@ -23,7 +23,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 var app = Identity.GetApp(GraphRequestHelper);
                 if (app == null)
                 {
-                    WriteError(new PSArgumentException("Azure AD App not found"), ErrorCategory.ObjectNotFound);
+                    LogError(new PSArgumentException("Azure AD App not found"));
                 }
                 WriteObject(ConvertToPSObject(app));
             }

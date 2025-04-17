@@ -87,7 +87,7 @@ namespace PnP.PowerShell.Commands.Lists
             }
             else
             {
-                WriteError(new ErrorRecord(new Exception("Principal not found"), "1", ErrorCategory.ObjectNotFound, null));
+                LogError(new Exception("Principal not found"));
             }
         }
     }

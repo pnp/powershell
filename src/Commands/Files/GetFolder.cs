@@ -47,7 +47,7 @@ namespace PnP.PowerShell.Commands.Files
             {
                 case ParameterSet_FOLDERSINCURRENTWEB:
                     {
-                        WriteVerbose("Getting all folders in the root of the current web");
+                        LogDebug("Getting all folders in the root of the current web");
                         ClientContext.Load(CurrentWeb, w => w.Folders.IncludeWithDefaultProperties(RetrievalExpressions));
                         ClientContext.ExecuteQueryRetry();
                         WriteObject(CurrentWeb.Folders, true);
@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Files
 
                 case ParameterSet_CURRENTWEBROOTFOLDER:
                     {
-                        WriteVerbose("Getting root folder of the current web");
+                        LogDebug("Getting root folder of the current web");
                         folder = CurrentWeb.RootFolder;
 
                         ReturnFolderProperties(folder);
@@ -65,7 +65,7 @@ namespace PnP.PowerShell.Commands.Files
 
                 case ParameterSet_LISTROOTFOLDER:
                     {
-                        WriteVerbose("Getting root folder of the provided list");
+                        LogDebug("Getting root folder of the provided list");
                         var list = ListRootFolder.GetList(CurrentWeb);
                         folder = list.RootFolder;
 
@@ -81,7 +81,20 @@ namespace PnP.PowerShell.Commands.Files
 #pragma warning restore CS0618 // Type or member is obsolete                    
 
                         // Query for all folders in the list
-                        CamlQuery query = CamlQuery.CreateAllFoldersQuery();
+                        CamlQuery query = new CamlQuery();
+query.ViewXml = @"
+  <View>
+    <Query>
+      <Where>
+        <Eq>
+          <FieldRef Name='FSObjType' />
+          <Value Type='Integer'>1</Value>
+        </Eq>
+      </Where>
+    </Query>
+    <RowLimit Paged='TRUE'>100</RowLimit>
+  </View>";
+
                         do
                         {
                             // Execute the query. It will retrieve all properties of the folders. Refraining to using the RetrievalExpressions would cause a tremendous increased load on SharePoint as it would have to execute a query per list item which would be less efficient, especially on lists with many folders, than just getting all properties directly
@@ -107,7 +120,7 @@ namespace PnP.PowerShell.Commands.Files
 
                 case ParameterSet_FOLDERBYURL:
                     {
-                        WriteVerbose("Getting folder at the provided url");
+                        LogDebug("Getting folder at the provided url");
                         var webServerRelativeUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
                         if (!Url.StartsWith(webServerRelativeUrl, StringComparison.OrdinalIgnoreCase))
                         {
@@ -123,7 +136,7 @@ namespace PnP.PowerShell.Commands.Files
 
         private void ReturnFolderProperties(Folder folder)
         {
-            WriteVerbose("Retrieving folder properties");
+            LogDebug("Retrieving folder properties");
 
             if (AsListItem.IsPresent)
             {

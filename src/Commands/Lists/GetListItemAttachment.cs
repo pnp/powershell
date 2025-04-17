@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Lists
 
             if (attachmentFilesCollection.Length == 0)
             {
-                WriteWarning($"No attachments found for the list item provided through -{nameof(Identity)}");
+                LogWarning($"No attachments found for the list item provided through -{nameof(Identity)}");
             }
             else
             {
@@ -70,7 +70,7 @@ namespace PnP.PowerShell.Commands.Lists
 
                     if (System.IO.File.Exists(fileOut) && !Force)
                     {
-                        WriteWarning($"File '{attachment.FileName}' exists already in the specified path. This file will be skipped. Use the -Force parameter to overwrite the file in the specified path.");
+                        LogWarning($"File '{attachment.FileName}' exists already in the specified path. This file will be skipped. Use the -Force parameter to overwrite the file in the specified path.");
                     }
                     else
                     {

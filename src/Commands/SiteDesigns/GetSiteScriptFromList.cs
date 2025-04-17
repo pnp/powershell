@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands
                 Url = siteUrl + List.GetList(ClientContext.Web, null).RootFolder.ServerRelativeUrl;
             }
 
-            WriteVerbose($"Getting Site Script from list {Url}");
+            LogDebug($"Getting Site Script from list {Url}");
 
             var script = Tenant.GetSiteScriptFromList(AdminContext, Url);
             AdminContext.ExecuteQueryRetry();

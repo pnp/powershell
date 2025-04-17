@@ -39,7 +39,7 @@
 - name: Advanced topics
   items:
     - name: How to handle authenticating to multiple tenants
-      href: handlingmultitenantauth
+      href: handlingmultitenantauth.md
     - name: Using Microsoft Search with PnP PowerShell
       href: microsoftsearch.md  
     - name: Batching in PnP PowerShell
@@ -48,6 +48,8 @@
       href: upgrading.md
     - name: Credential Management
       href: credentialmanagement.md
+    - name: Working with persisted logins
+      href: persistedlogin.md
 - name: How to contribute
   items:
     - name: Getting started

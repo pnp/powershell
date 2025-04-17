@@ -56,6 +56,9 @@ namespace PnP.PowerShell.Commands.Planner
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter OutputTask;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public AppliedCategories AppliedCategories;
+
         protected override void ExecuteCmdlet()
         {
             PlannerTask createdTask;
@@ -114,6 +117,11 @@ namespace PnP.PowerShell.Commands.Planner
                 {
                     throw new AggregateException($"{errors.Count} error(s) occurred in a Graph batch request", errors);
                 }
+            }
+
+            if(ParameterSpecified(nameof(AppliedCategories)))
+            {
+                newTask.AppliedCategories = AppliedCategories;
             }
 
             // By Group

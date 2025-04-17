@@ -5,7 +5,7 @@ namespace PnP.PowerShell.Commands.Base
 {
     [Cmdlet(VerbsCommon.Remove, "PnPManagedAppId")]
     [OutputType(typeof(void))]
-    public class RemoveManagedAppId : PSCmdlet
+    public class RemoveManagedAppId : BasePSCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
         public string Url;
@@ -23,13 +23,13 @@ namespace PnP.PowerShell.Commands.Base
                 {
                     if (!Utilities.CredentialManager.RemoveAppid(uri.ToString()))
                     {
-                        WriteError(new ErrorRecord(new Exception($"AppId for {Url} not removed"), "APPIDNOTREMOVED", ErrorCategory.WriteError, Url));
+                        LogError($"AppId for {Url} not removed");
                     }
                 }
             }
             else
             {
-                WriteError(new ErrorRecord(new Exception($"AppId not found for {Url}"), "APPIDNOTFOUND", ErrorCategory.ObjectNotFound, Url));
+                LogError($"AppId not found for {Url}");
             }
         }
     }

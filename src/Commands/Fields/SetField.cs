@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Fields
             Field field = null;
             if (List != null)
             {
-                WriteVerbose("Retrieving provided list");
+                LogDebug("Retrieving provided list");
                 var list = List.GetList(CurrentWeb);
 
                 if (list == null)
@@ -44,12 +44,12 @@ namespace PnP.PowerShell.Commands.Fields
 
                 if (Identity.Id != Guid.Empty)
                 {
-                    WriteVerbose($"Retrieving field by its ID {Identity.Id} from the list");
+                    LogDebug($"Retrieving field by its ID {Identity.Id} from the list");
                     field = list.Fields.GetById(Identity.Id);
                 }
                 else if (!string.IsNullOrEmpty(Identity.Name))
                 {
-                    WriteVerbose($"Retrieving field by its name {Identity.Name} from the list");
+                    LogDebug($"Retrieving field by its name {Identity.Name} from the list");
                     field = list.Fields.GetByInternalNameOrTitle(Identity.Name);
                 }
                 if (field == null)
@@ -61,17 +61,17 @@ namespace PnP.PowerShell.Commands.Fields
             {
                 if (Identity.Id != Guid.Empty)
                 {
-                    WriteVerbose($"Retrieving field by its ID {Identity.Id} from the web");
+                    LogDebug($"Retrieving field by its ID {Identity.Id} from the web");
                     field = ClientContext.Web.Fields.GetById(Identity.Id);
                 }
                 else if (!string.IsNullOrEmpty(Identity.Name))
                 {
-                    WriteVerbose($"Retrieving field by its name {Identity.Name} from the web");
+                    LogDebug($"Retrieving field by its name {Identity.Name} from the web");
                     field = ClientContext.Web.Fields.GetByInternalNameOrTitle(Identity.Name);
                 }
                 else if (Identity.Field != null)
                 {
-                    WriteVerbose($"Using passed in field");
+                    LogDebug($"Using passed in field");
                     field = Identity.Field;
                 }
 
@@ -91,7 +91,7 @@ namespace PnP.PowerShell.Commands.Fields
             }
             if(ShowInFiltersPane.HasValue)
             {
-                WriteVerbose($"Updating field to show in filters pane setting {ShowInFiltersPane.Value}");
+                LogDebug($"Updating field to show in filters pane setting {ShowInFiltersPane.Value}");
                 field.ShowInFiltersPane = ShowInFiltersPane.Value;
                 field.Update();
             }
@@ -99,7 +99,7 @@ namespace PnP.PowerShell.Commands.Fields
 
             if (Values != null  && Values.Count > 0)
             {
-                WriteVerbose($"Updating {Values.Count} field value{(Values.Count != 1 ? "s" : "")}");
+                LogDebug($"Updating {Values.Count} field value{(Values.Count != 1 ? "s" : "")}");
 
                 // Get a reference to the type-specific object to allow setting type-specific properties, i.e. LookupList and LookupField for Microsoft.SharePoint.Client.FieldLookup
                 var typeSpecificField = field.TypedObject;
@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.Fields
                 {
                     var value = Values[key];
 
-                    WriteVerbose($"Updating field {key} to {value}");
+                    LogDebug($"Updating field {key} to {value}");
 
                     var property = typeSpecificField.GetType().GetProperty(key);
 
@@ -116,7 +116,7 @@ namespace PnP.PowerShell.Commands.Fields
 
                     if (property == null && !isAllowDeletionProperty)
                     {
-                        WriteWarning($"No property '{key}' found on this field. Value will be ignored.");
+                        LogWarning($"No property '{key}' found on this field. Value will be ignored.");
                     }
                     else
                     {
@@ -133,7 +133,7 @@ namespace PnP.PowerShell.Commands.Fields
                         }
                         catch (Exception e)
                         {
-                            WriteWarning($"Setting property '{key}' to '{value}' failed with exception '{e.Message}'. Value will be ignored.");
+                            LogWarning($"Setting property '{key}' to '{value}' failed with exception '{e.Message}'. Value will be ignored.");
                         }
                     }
                 }

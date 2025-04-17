@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands
 
                 if(listDesigns.Length == 0)
                 {
-                    WriteVerbose($"No list designs with the identity provided through {nameof(Identity)} have been found");
+                    LogDebug($"No list designs with the identity provided through {nameof(Identity)} have been found");
                 }
 
                 WriteObject(listDesigns, true);
