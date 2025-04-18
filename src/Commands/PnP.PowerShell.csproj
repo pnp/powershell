@@ -73,10 +73,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="Resources\GraphPermissions.json" WithCulture="false" />
-		<EmbeddedResource Include="Resources\parker.ico" WithCulture="false" />
-		<EmbeddedResource Include="Resources\SharePointPermissions.json" WithCulture="false" />
-		<EmbeddedResource Include="Resources\O365ManagementPermissions.json" WithCulture="false" />
+		<EmbeddedResource Include="Resources\GraphPermissions.json" Type="Non-Resx" WithCulture="false" />
+		<EmbeddedResource Include="Resources\parker.ico" Type="Non-Resx" WithCulture="false" />
+		<EmbeddedResource Include="Resources\SharePointPermissions.json" Type="Non-Resx" WithCulture="false" />
+		<EmbeddedResource Include="Resources\O365ManagementPermissions.json" Type="Non-Resx" WithCulture="false" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(IsRelease)' != '1'">
@@ -123,7 +123,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Update="Properties\Resources.resx" WithCulture="false">
+		<EmbeddedResource Update="Properties\Resources.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 			<CustomToolNamespace></CustomToolNamespace>
