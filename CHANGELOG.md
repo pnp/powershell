@@ -6,7 +6,8 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Current nightly]
+
+## [Current Nightly]
 
 ### Added
 
@@ -16,6 +17,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+
+## [3.1.0]
+
+### Added
+
+### Fixed
+- Fixed issues with cmdlets not being able to read embedded resources
+
+### Removed
+
+### Contributors
+- Erwin van Hunen [erwinvanhunen]
+- Bert Jansen [jansenbe]
 
 ## [3.0.0]
 
