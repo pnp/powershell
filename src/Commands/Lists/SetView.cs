@@ -110,6 +110,14 @@ namespace PnP.PowerShell.Commands.Fields
             if(ParameterSpecified(nameof(Aggregations)))
             {
                 view.Aggregations = Aggregations;
+                if (!string.IsNullOrEmpty(Aggregations))
+                {
+                    view.AggregationsStatus = "On";
+                }
+                else
+                {
+                    view.AggregationsStatus = "Off";
+                }
                 view.Update();
                 ClientContext.Load(view);
                 ClientContext.ExecuteQueryRetry();
