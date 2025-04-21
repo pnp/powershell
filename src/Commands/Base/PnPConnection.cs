@@ -378,27 +378,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>Instantiated PnPConnection</returns>
         internal static PnPConnection CreateWithManagedIdentity(string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
         {
-            var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
-            PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity endpoint: {endPoint}");
-            //cmdlet.LogDebug($"Using identity endpoint: {endPoint}");
-
-            var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
-            PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity header: {identityHeader}");
-            //cmdlet.LogDebug($"Using identity header: {identityHeader}");
-
-            if (string.IsNullOrEmpty(endPoint))
-            {
-                endPoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
-                identityHeader = Environment.GetEnvironmentVariable("MSI_SECRET");
-            }
-            if (string.IsNullOrEmpty(endPoint))
-            {
-                // additional fallback
-                // using well-known endpoint for Instance Metadata Service, useful in Azure VM scenario.
-                // https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
-                endPoint = "http://169.254.169.254/metadata/identity/oauth2/token";
-            }
-
             // Define the type of Managed Identity that will be used
             ManagedIdentityType managedIdentityType = ManagedIdentityType.SystemAssigned;
             string managedIdentityUserAssignedIdentifier = null;
@@ -426,32 +405,35 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Set up the AuthenticationManager in PnP Framework to use a Managed Identity context
-            using var authManager = new Framework.AuthenticationManager(endPoint, identityHeader, managedIdentityType, managedIdentityUserAssignedIdentifier);
-            PnPClientContext context = null;
-            ConnectionType connectionType = ConnectionType.O365;
-            if (url != null)
+            using (var authManager = Framework.AuthenticationManager.CreateWithManagedIdentity(null, null, managedIdentityType, managedIdentityUserAssignedIdentifier))
             {
-                context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
-                context.ApplicationName = Resources.ApplicationName;
-                context.DisableReturnValueCache = true;
-                context.ExecutingWebRequest += (sender, e) =>
+                PnPClientContext context = null;
+                ConnectionType connectionType = ConnectionType.O365;
+                if (url != null)
                 {
-                    e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
-                };
-                if (IsTenantAdminSite(context))
-                {
-                    connectionType = ConnectionType.TenantAdmin;
+                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                    context.ApplicationName = Resources.ApplicationName;
+                    context.DisableReturnValueCache = true;
+                    context.ExecutingWebRequest += (sender, e) =>
+                    {
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                    };
+                    if (IsTenantAdminSite(context))
+                    {
+                        connectionType = ConnectionType.TenantAdmin;
+                    }
                 }
-            }
 
-            // Set up PnP PowerShell to use a Managed Identity
-            var connection = new PnPConnection(context, connectionType, null, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ManagedIdentity)
-            {
-                UserAssignedManagedIdentityObjectId = userAssignedManagedIdentityObjectId,
-                UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId,
-                UserAssignedManagedIdentityAzureResourceId = userAssignedManagedIdentityAzureResourceId
-            };
-            return connection;
+                // Set up PnP PowerShell to use a Managed Identity
+                var connection = new PnPConnection(context, connectionType, null, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ManagedIdentity)
+                {
+                    UserAssignedManagedIdentityObjectId = userAssignedManagedIdentityObjectId,
+                    UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId,
+                    UserAssignedManagedIdentityAzureResourceId = userAssignedManagedIdentityAzureResourceId,
+                    ConnectionMethod = ConnectionMethod.ManagedIdentity,
+                };
+                return connection;
+            }
         }
 
         internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, bool persistLogin, System.Management.Automation.Host.PSHost host, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
@@ -675,6 +657,66 @@ namespace PnP.PowerShell.Commands.Base
                 return connection;
             }
         }
+
+        internal static PnPConnection CreateWithFederatedIdentityCredentials(string url, string tenantAdminUrl, string appClientId, string tenantId, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
+        {
+            // Define the type of Managed Identity that will be used
+            ManagedIdentityType managedIdentityType = ManagedIdentityType.SystemAssigned;
+            string managedIdentityUserAssignedIdentifier = null;
+
+            if (!string.IsNullOrEmpty(userAssignedManagedIdentityObjectId))
+            {
+                managedIdentityType = ManagedIdentityType.UserAssignedByObjectId;
+                managedIdentityUserAssignedIdentifier = userAssignedManagedIdentityObjectId;
+            }
+            if (!string.IsNullOrEmpty(userAssignedManagedIdentityClientId))
+            {
+                managedIdentityType = ManagedIdentityType.UserAssignedByClientId;
+                managedIdentityUserAssignedIdentifier = userAssignedManagedIdentityClientId;
+            }
+            if (!string.IsNullOrEmpty(userAssignedManagedIdentityAzureResourceId))
+            {
+                managedIdentityType = ManagedIdentityType.UserAssignedByResourceId;
+                managedIdentityUserAssignedIdentifier = userAssignedManagedIdentityAzureResourceId;
+            }
+
+            // Ensure if its not a System Assigned Managed Identity, that we an identifier pointing to the user assigned Managed Identity
+            if (managedIdentityType != ManagedIdentityType.SystemAssigned && string.IsNullOrEmpty(managedIdentityUserAssignedIdentifier))
+            {
+                throw new InvalidOperationException("Unable to use a User Assigned Managed Identity without passing in an identifier for the User Assigned Managed Identity.");
+            }
+
+            // Set up the AuthenticationManager in PnP Framework to use a Managed Identity context
+            using (var authManager = Framework.AuthenticationManager.CreateWithManagedIdentityFederatedIdentityCredential(null, null, appClientId, tenantId, managedIdentityType, managedIdentityUserAssignedIdentifier))
+            {
+                PnPClientContext context = null;
+                ConnectionType connectionType = ConnectionType.O365;
+                if (url != null)
+                {
+                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                    context.ApplicationName = Resources.ApplicationName;
+                    context.DisableReturnValueCache = true;
+                    context.ExecutingWebRequest += (sender, e) =>
+                    {
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                    };
+                    if (IsTenantAdminSite(context))
+                    {
+                        connectionType = ConnectionType.TenantAdmin;
+                    }
+                }
+
+                // Set up PnP PowerShell to use a Managed Identity
+                var connection = new PnPConnection(context, connectionType, null, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.FederatedIdentityCredentials)
+                {
+                    UserAssignedManagedIdentityObjectId = userAssignedManagedIdentityObjectId,
+                    UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId,
+                    UserAssignedManagedIdentityAzureResourceId = userAssignedManagedIdentityAzureResourceId,
+                    ConnectionMethod = ConnectionMethod.FederatedIdentityCredentials,
+                };
+                return connection;
+            }
+        }
         #endregion
 
         #region Constructors
@@ -700,10 +742,6 @@ namespace PnP.PowerShell.Commands.Base
             if (initializationType == InitializationType.AzureADWorkloadIdentity)
             {
                 connectionMethod = ConnectionMethod.AzureADWorkloadIdentity;
-            }
-            else if (initializationType == InitializationType.ManagedIdentity)
-            {
-                connectionMethod = ConnectionMethod.ManagedIdentity;
             }
 
             if (context != null)

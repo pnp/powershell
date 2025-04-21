@@ -112,6 +112,21 @@ Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-PersistLogin] [
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
+### Federated Identity Credentials with User Assigned Managed Identity by Client Id
+```powershell
+Connect-PnPOnline [-Url <String>] [-Tenant <String>] -FederatedIdentityCredentials -UserAssignedManagedIdentityClientId <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
+```
+
+### Federated Identity Credentials with User Assigned Managed Identity by Principal Id
+```powershell
+Connect-PnPOnline [-Url <String>] -FederatedIdentityCredentials -UserAssignedManagedIdentityObjectId <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
+```
+
+### Federated Identity Credentials with User Assigned Managed Identity by Azure Resource Id
+```powershell
+Connect-PnPOnline [-Url <String>] -FederatedIdentityCredentials -UserAssignedManagedIdentityAzureResourceId <String> [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
+```
+
 ## DESCRIPTION
 Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets.
 See https://pnp.github.io/powershell/articles/connecting.html for more information on the options to connect.
@@ -288,6 +303,13 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Credentials "https://co
 Connect to SharePoint using Credentials (username and password) from Credential Manager (Windows) or Keychain (Mac) with the specified name to use to authenticate.
 
 On Windows, this entry needs to be under "Generic Credentials".
+
+### EXAMPLE 20
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentityCredentials -UserAssignedManagedIdentityObjectId 363c1b31-6872-47fd-a616-574d3aec2a51
+```
+
+Connect to SharePoint/Microsoft Graph using federated identity credentials.
 
 ## PARAMETERS
 
@@ -715,7 +737,7 @@ Can be used in combination with `-ManagedIdentity` to specify the object/princip
 
 ```yaml
 Type: String
-Parameter Sets: User Assigned Managed Identity by Principal Id
+Parameter Sets: User Assigned Managed Identity by Principal Id, Federated Identity Credentials, Federated Identity Credentials by Principal Id
 Aliases: UserAssignedManagedIdentityPrincipalId
 
 Required: False
@@ -730,7 +752,7 @@ Can be used in combination with `-ManagedIdentity` to specify the client id of t
 
 ```yaml
 Type: String
-Parameter Sets: User Assigned Managed Identity by Client Id
+Parameter Sets: User Assigned Managed Identity by Client Id, Federated Identity Credentials, Federated Identity Credentials by Client Id
 Aliases:
 
 Required: False
@@ -745,7 +767,7 @@ Can be used in combination with `-ManagedIdentity` to specify the Azure Resource
 
 ```yaml
 Type: String
-Parameter Sets: User Assigned Managed Identity by Azure Resource Id
+Parameter Sets: User Assigned Managed Identity by Azure Resource Id, Federated Identity Credentials, Federated Identity Credentials by Azure Resource Id
 Aliases:
 
 Required: False
@@ -867,6 +889,22 @@ This enumeration supports a bitwise combination of its member values.
 ```yaml
 Type: System.Security.Cryptography.X509Certificates.X509KeyStorageFlags
 Parameter Sets: App-Only with Azure Active Directory
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FederatedIdentityCredentials
+
+Connects using Federated Identity credentials. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Federated Identity Credentials, Federated Identity Credentials by Client Id, Federated Identity Credentials by Principal Id, Federated Identity Credentials by Azure Resource Id
 Aliases:
 
 Required: False
