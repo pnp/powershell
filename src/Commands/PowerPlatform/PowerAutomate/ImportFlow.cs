@@ -1,4 +1,6 @@
-﻿using PnP.PowerShell.Commands.Attributes;
+﻿using Microsoft.Graph;
+using Newtonsoft.Json.Serialization;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
@@ -17,9 +19,6 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
     [RequiredApiDelegatedPermissions("azure/user_impersonation")]
     public class ImportFlow : PnPAzureManagementApiCmdlet
     {
-        [Parameter(Mandatory = true)]
-        public PowerAutomateFlowPipeBind Identity;
-
         [Parameter(Mandatory = false)]
         public PowerPlatformEnvironmentPipeBind Environment;
 
@@ -35,17 +34,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         protected override void ExecuteCmdlet()
         {
             var environmentName = ParameterSpecified(nameof(Environment)) ? Environment.GetName() : PowerPlatformUtility.GetDefaultEnvironment(ArmRequestHelper, Connection.AzureEnvironment)?.Name;
-            var flowName = Identity.GetName();
-
-            var postData = new
-            {
-                baseResourceIds = new[] {
-                    $"/providers/Microsoft.Flow/flows/{flowName}"
-                }
-            };
 
             string baseUrl = PowerPlatformUtility.GetBapEndpoint(Connection.AzureEnvironment);
-
             // Step 1: Generate a storage URL for the package
             var generateResourceUrlResponse = RestHelper.Post(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/generateResourceStorage?api-version=2016-11-01", AccessToken);
             WriteVerbose($"Storage resource URL generated: {generateResourceUrlResponse}");
@@ -80,7 +70,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
             );
             WriteVerbose("Import parameters retrieved");
 
-
+            System.Threading.Thread.Sleep(2500); //Wait 2.5 seconds to get the import parameters
 
             var importOperationsUrl = importParametersResponse.Location.ToString();
 
@@ -122,23 +112,20 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
 
             // Update the "resources" in the propertiesElement
             var validatePackagePayload = CreateImportObject(propertiesElement, resourcesObject);
-            /*var validatePackagePayload = new JsonObject
-            {
-                ["details"] = JsonNode.Parse(propertiesElement.GetProperty("details").GetRawText()),
-                ["packageLink"] = JsonNode.Parse(propertiesElement.GetProperty("packageLink").GetRawText()),
-                ["status"] = JsonNode.Parse(propertiesElement.GetProperty("status").GetRawText()),
-                ["resources"] = resource
-            };*/
 
             var validateResponse = RestHelper.Post(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/validateImportPackage?api-version=2016-11-01", AccessToken, payload: validatePackagePayload);
             var validateResponseData = JsonSerializer.Deserialize<JsonElement>(validateResponse);
 
             var importPackagePayload = CreateImportObject(validateResponseData);
-            var importResult = RestHelper.Post(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/importPackage?api-version=2016-11-01", AccessToken, payload: importPackagePayload);
+
+            var importResult = RestHelper.PostGetResponseHeader<JsonElement>(Connection.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/importPackage?api-version=2016-11-01", AccessToken, payload: importPackagePayload, accept: "application/json");
             WriteVerbose("Import package initiated");
 
-            WriteObject(importResult);
+            var importPackageResponseUrl = importResult.Location.ToString();
 
+            var importStatus = WaitForImportCompletion(importPackageResponseUrl);
+
+            WriteObject($"Import {importStatus}");
         }
 
         private void UploadPackageToBlob(UriBuilder blobUri)
@@ -228,6 +215,43 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
                 ["resources"] = resourceObject ?? JsonNode.Parse(importData.GetProperty("resources").GetRawText())
             };
             return resourcesObject;
+        }
+
+        private string WaitForImportCompletion(string importPackageResponseUrl)
+        {
+            string status;
+            int retryCount = 0;
+
+            do
+            {
+                var importResultData = RestHelper.Get(Connection.HttpClient, importPackageResponseUrl, AccessToken, accept: "application/json");
+                var importResultDataElement = JsonSerializer.Deserialize<JsonElement>(importResultData);
+
+                if (importResultDataElement.TryGetProperty("properties", out JsonElement importResultPropertiesElement) &&
+                    importResultPropertiesElement.TryGetProperty("status", out JsonElement statusElement))
+                {
+                    status = statusElement.GetString();
+                }
+                else
+                {
+                    WriteWarning("Failed to retrieve the status from the response.");
+                    throw new Exception("Import status could not be determined.");
+                }
+
+                if (status == "Running")
+                {
+                    WriteVerbose("Import is still running. Waiting for completion...");
+                    System.Threading.Thread.Sleep(2500); // Wait for 2.5 seconds before retrying
+                    retryCount++;
+                }
+            } while (status == "Running" && retryCount < 5);
+
+            if (status == "Running")
+            {
+                throw new Exception("Import failed to complete after 5 attempts.");
+            }
+
+            return status;
         }
     }
 }
