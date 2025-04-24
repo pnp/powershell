@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Files
         public FolderPipeBind Folder;
 
         [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
-        [Parameter(Mandatory = true, ParameterSetName = UPLOADTOSHAREPOINT)]
+        [Parameter(Mandatory = false, ParameterSetName = UPLOADTOSHAREPOINT)]
         public string NewFileName = string.Empty;
 
         [Parameter(Mandatory = false, ParameterSetName = URLASMEMORYSTREAM)]
@@ -72,19 +72,20 @@ namespace PnP.PowerShell.Commands.Files
 
             LogDebug("Converting file to the specified format");
             var convertedFile = sourceFile.ConvertTo(new ConvertToOptions { Format = ConvertToFormat });
-        
+            var newFileExtension = "." + ConvertToFormat.ToString();
+
             if (string.IsNullOrEmpty(NewFileName))
             {
                 // Use original filename with new extension
                 var fileName = System.IO.Path.GetFileNameWithoutExtension(sourceFile.Name);
-                NewFileName = fileName + "." + ConvertToFormat.ToString();
+                NewFileName = fileName + newFileExtension;
             }
             else 
             {
-                var extensionMatch = NewFileName.ToLower().EndsWith("." + ConvertToFormat.ToString().ToLower());
+                var extensionMatch = System.IO.Path.GetExtension(NewFileName).Equals(newFileExtension, System.StringComparison.OrdinalIgnoreCase);
                 if (!extensionMatch)
                 {
-                    LogWarning($"File extension of NewFileName '{NewFileName}' doesn't match ConvertToFormat '{ConvertToFormat.ToString()}'.");
+                    LogWarning($"File extension of NewFileName '{NewFileName}' doesn't match ConvertToFormat '{newFileExtension}'.");
                 }
             }
             switch (ParameterSetName)
