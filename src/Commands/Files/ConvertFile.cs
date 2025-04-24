@@ -36,6 +36,10 @@ namespace PnP.PowerShell.Commands.Files
         [ValidateNotNullOrEmpty]
         public FolderPipeBind Folder;
 
+        [Parameter(Mandatory = false, ParameterSetName = URLTOPATH)]
+        [Parameter(Mandatory = true, ParameterSetName = UPLOADTOSHAREPOINT)]
+        public string NewFileName = string.Empty;
+
         [Parameter(Mandatory = false, ParameterSetName = URLASMEMORYSTREAM)]
         public SwitchParameter AsMemoryStream;
 
@@ -50,7 +54,7 @@ namespace PnP.PowerShell.Commands.Files
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
+            // Remove URL decoding from the Url as that will not work. We will encode the + character spdecifically, because if that is part of the filename, it needs to stay and not be decoded.
             Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
 
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
@@ -68,15 +72,26 @@ namespace PnP.PowerShell.Commands.Files
 
             LogDebug("Converting file to the specified format");
             var convertedFile = sourceFile.ConvertTo(new ConvertToOptions { Format = ConvertToFormat });
-
-            var fileName = System.IO.Path.GetFileNameWithoutExtension(sourceFile.Name);
-            var newFileName = fileName + "." + ConvertToFormat.ToString();
-
+        
+            if (string.IsNullOrEmpty(NewFileName))
+            {
+                // Use original filename with new extension
+                var fileName = System.IO.Path.GetFileNameWithoutExtension(sourceFile.Name);
+                NewFileName = fileName + "." + ConvertToFormat.ToString();
+            }
+            else 
+            {
+                var extensionMatch = NewFileName.ToLower().EndsWith("." + ConvertToFormat.ToString().ToLower());
+                if (!extensionMatch)
+                {
+                    LogWarning($"File extension of NewFileName '{NewFileName}' doesn't match ConvertToFormat '{ConvertToFormat.ToString()}'.");
+                }
+            }
             switch (ParameterSetName)
             {
                 case URLTOPATH:
 
-                    var fileOut = System.IO.Path.Combine(Path, newFileName);
+                    var fileOut = System.IO.Path.Combine(Path, NewFileName);
                     if (System.IO.File.Exists(fileOut) && !Force)
                     {
                         LogWarning($"File '{sourceFile.Name}' exists already. Use the -Force parameter to overwrite the file.");
@@ -101,7 +116,7 @@ namespace PnP.PowerShell.Commands.Files
 
                     LogDebug("Uploading file to the specified folder");
                     var folder = EnsureFolder();
-                    var uploadedFile = folder.UploadFile(newFileName, convertedFile, Force);
+                    var uploadedFile = folder.UploadFile(NewFileName, convertedFile, Force);
 
                     try
                     {
