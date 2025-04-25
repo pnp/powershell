@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Files
                 Path = System.IO.Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, Path);
             }
 
-            // Remove URL decoding from the Url as that will not work. We will encode the + character spdecifically, because if that is part of the filename, it needs to stay and not be decoded.
+            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
             Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
 
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
