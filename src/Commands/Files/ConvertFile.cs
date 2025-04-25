@@ -85,7 +85,7 @@ namespace PnP.PowerShell.Commands.Files
                 var extensionMatch = System.IO.Path.GetExtension(NewFileName).Equals(newFileExtension, System.StringComparison.OrdinalIgnoreCase);
                 if (!extensionMatch)
                 {
-                    LogWarning($"File extension of NewFileName '{NewFileName}' doesn't match ConvertToFormat '{newFileExtension}'.");
+                    LogWarning($"File extension of NewFileName '{NewFileName}' doesn't match ConvertToFormat '{newFileExtension}'. The new file might become unusable.");
                 }
             }
             switch (ParameterSetName)
