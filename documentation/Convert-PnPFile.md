@@ -185,7 +185,7 @@ Accept wildcard characters: False
 ```
 
 ### -NewFileName
-Filename to give the file on SharePoint
+Filename to give the file local or on SharePoint
 
 ```yaml
 Type: String
