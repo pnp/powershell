@@ -138,7 +138,7 @@ In order to set up your application registration on a GCC or a national cloud en
 I.e. for an application registration meand for interactive login, use:
 
 ```PowerShell
-Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP Rocks" -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+Register-PnPEntraIDAppForInteractiveLogin -ApplicationName "PnP Rocks" -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
 ```
 
 And for an App Only application registration, use:
