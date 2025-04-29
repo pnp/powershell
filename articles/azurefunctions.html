@@ -212,7 +212,7 @@ Push-OutputBinding -Name Response -Value ([HttpResponseContext]@{
 <h4 id="create-your-certificate">Create your certificate</h4>
 <p>In this following example we create a new Azure AD Application registration which creates your certificates. You can also use a private/public certificate key pair you already have.</p>
 <pre><code class="lang-powershell">$password = Read-Host -Prompt &quot;Enter certificate password&quot; -AsSecureString
-Register-PnPAzureADApp -ApplicationName &quot;MyDemoApp&quot; -Tenant [yourtenant.onmicrosoft.com] -CertificatePassword $password -Interactive
+Register-PnPEntraIDApp -ApplicationName &quot;MyDemoApp&quot; -Tenant [yourtenant.onmicrosoft.com] -CertificatePassword $password
 </code></pre>
 <p>You will be asked to authenticate. Log in using an account that has the permissions to create an app registration in your Azure Active Directory. After logging in, the following actions will automatically be taken:</p>
 <ul>

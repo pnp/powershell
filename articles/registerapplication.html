@@ -94,7 +94,7 @@
 <p>Proceed in the section below which matches with your desired option for creating the application registration, <a href="#automatically-create-an-app-registration-for-interactive-login">automatically</a> or <a href="#manually-create-an-app-registration-for-interactive-login">manually</a>.</p>
 <h3 id="automatically-create-an-app-registration-for-interactive-login">Automatically create an app registration for interactive login</h3>
 <p>PnP PowerShell has a cmdlet that allows you to register a new Entra ID Application specifically for interactive login. Notice that you need to be able to create App registrations in your Entra ID.</p>
-<pre><code class="lang-PowerShell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -Interactive
+<pre><code class="lang-PowerShell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com
 </code></pre>
 <p>When you run the cmdlet above you will be asked to authenticate with your username, password and an optional second factor. After that a new app will be registered in the Entra ID (make sure you have the rights to do this). By default a limited set of permissions scopes is added, but you can provide the one of the permission parameters (<code>GraphApplicationPermissions</code>, <code>GraphDelegatePermissions</code>, <code>SharePointApplicationPermissions</code>, <code>SharePointDelegatePermissions</code>) to provide your own permission scopes.</p>
 <p>After the app has been registered you will be asked to provide consent for the application. Alternatively you can ask someone with the appropriate access rights to navigate to the app registration in the Entra ID portal to add them for you. See <a href="determinepermissions.html">determining which permissions you need</a> for more information.</p>
@@ -175,7 +175,7 @@ $result
 <h2 id="special-instructions-for-gcc-or-national-cloud-environments">Special instructions for GCC or National Cloud environments</h2>
 <p>In order to set up your application registration on a GCC or a national cloud environment, you will have to take a few extra steps. In the two methods described above for <a href="#automatically-create-an-app-registration-for-interactive-login">interactive login</a> and <a href="#setting-up-access-to-your-own-entra-id-app-for-app-only-access">App Only access</a>, you will have to add <code>-AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]</code> to the cmdlet picking the one that applies to your environment to register your application in Entra ID.</p>
 <p>I.e. for an application registration meand for interactive login, use:</p>
-<pre><code class="lang-PowerShell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -Interactive -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
+<pre><code class="lang-PowerShell">Register-PnPEntraIDAppForInteractiveLogin -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
 </code></pre>
 <p>And for an App Only application registration, use:</p>
 <pre><code class="lang-PowerShell">$result = Register-PnPEntraIDApp -ApplicationName &quot;PnP Rocks&quot; -Tenant [yourtenant].onmicrosoft.com -OutPath c:\mycertificates -DeviceLogin -AzureEnvironment [USGovernment|USGovernmentHigh|USGovernmentDoD|Germany|China]
