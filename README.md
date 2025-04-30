@@ -12,15 +12,13 @@ This module is a successor of the [PnP-PowerShell](https://github.com/pnp/pnp-po
 
 For more information about installing or upgrading to this module, please refer to [the documentation](https://pnp.github.io/powershell/articles/index.html).
 
-## IMPORTANT - New PnP PowerShell 2.x
+## IMPORTANT - New PnP PowerShell 3.x
 
-As the technologies behind PowerShell evolve, so will the PnP PowerShell module. Microsoft is no longer supporting .NET 3.1 since December 2022, and .NET Framework is not actively being developed anymore. It is also not cross platform. PnP PowerShell 2.x will therefore no longer support PowerShell 5.1 nor the ISE. 
+We released a new major version of PnP PowerShell, version 3 and upwards. This version of PnP PowerShell requires as of today PowerShell 7.4.6 or newer, and is based upon .NET 8.0. 
 
-We have created a [guide](https://github.com/pnp/powershell/blob/dev/MIGRATE-1.0-to-2.0.md) for upgrading from previous versions to PnP PowerShell 2.x. If you are still using PowerShell 5.1 or the ISE, and want to use the latest major or nightly release, you will need to specify the required version like below: 
+We have created a [guide](https://github.com/pnp/powershell/blob/dev/MIGRATE-2.0-to-3.0.md) for upgrading from previous versions to PnP PowerShell 3.x. If you are still using PowerShell 5.1 or the ISE, and want to use the latest major or nightly release, you will need to specify the required version like below: 
 
 `Install-Module PnP.PowerShell -RequiredVersion 1.12.0 -Force`
-
-Both (1.x and 2.x) can be installed in the same machine with no conflict.
 
 ## Supportability and SLA
 

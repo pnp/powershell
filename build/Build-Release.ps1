@@ -1,28 +1,4 @@
 #Requires -PSEdition Core
-Param(
-	[Parameter(Mandatory = $false,
-		ValueFromPipeline = $false)]
-	[switch]
-	$NoIncremental,
-	[Parameter(Mandatory = $false,
-		ValueFromPipeline = $false)]
-	[switch]
-	$Force,
-	[Parameter(Mandatory = $false,
-		ValueFromPipeline = $false)]
-	[switch]
-	$LocalPnPFramework,
-	[Parameter(Mandatory = $false,
-		ValueFromPipeline = $false)]
-	[switch]
-	$LocalPnPCore
-)
-
-$localPnPCoreSdkPathValue = $env:PnPCoreSdkPath
-$localPnPFrameworkPathValue = $env:PnPFrameworkPath
-
-$env:PnPCoreSdkPath = ""
-$env:PnPFrameworkPath = ""
 
 $versionFileContents = Get-Content "$PSScriptRoot/../version.json" -Raw | ConvertFrom-Json
 
@@ -36,59 +12,13 @@ else {
 	$buildVersion = $versionObject.Patch + 1;
 }
 
-# $versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
-# if ($versionFileContents.Contains("%")) {
-# 	$versionString = $versionFileContents.Replace("%", "0");
-# 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
-# 	$buildVersion = $versionObject.Patch;
-# }
-# else {	
-# 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents)
-# 	$buildVersion = $versionObject.Patch + 1;
-# }
-
 $configuration = "net8.0"
 
 $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
-Write-Host "Building PnP.PowerShell version $version-debug" -ForegroundColor Yellow
+Write-Host "Building PnP.PowerShell version $version" -ForegroundColor Yellow
 
-$buildCmd = "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`" --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug";
-if ($NoIncremental) {
-	$buildCmd += " --no-incremental";
-}
-if ($Force) {
-	$buildCmd += " --force"
-}
-if ($LocalPnPFramework) {
-	# Check if available
-	$pnpFrameworkAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework\src\lib\PnP.Framework\bin\Debug\$configuration\PnP.Framework.dll"
-	$pnpFrameworkAssembly = [System.IO.Path]::GetFullPath($pnpFrameworkAssembly)
-	if (Test-Path $pnpFrameworkAssembly -PathType Leaf) {
-		$pnpFrameworkAssemblyItem = Get-ChildItem -Path $pnpFrameworkAssembly
-		Write-Host "  Using local PnP Framework build located at $($pnpFrameworkAssemblyItem.FullName) compiled at $($pnpFrameworkAssemblyItem.LastWritetime)" -ForegroundColor Yellow
-		$buildCmd += " -p:PnPFrameworkPath=`"..\..\..\pnpframework\src\lib\`""
-	}
- 	else {
-		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpframework"
-		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
-		Write-Error -Message "Please make sure you have a local copy of the PnP.Framework repository installed at $localFolder"
-	}
-}
-if ($LocalPnPCore) {
-	$pnpCoreAssembly = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore\src\sdk\PnP.Core\bin\Debug\$configuration\PnP.Core.dll"
-	$pnpCoreAssembly = [System.IO.Path]::GetFullPath($pnpCoreAssembly)
-	if (Test-Path $pnpCoreAssembly -PathType Leaf) {
-		$pnpCoreAssemblyItem = Get-ChildItem -Path $pnpCoreAssembly
-		Write-Host "  Using local PnP.Core SDK build located at $($pnpCoreAssemblyItem.FullName) compiled at $($pnpCoreAssemblyItem.LastWritetime)" -ForegroundColor Yellow
-		$buildCmd += " -p:PnPCoreSdkPath=`"..\..\..\pnpcore\src\sdk\`""
-	}
- 	else {
-		$localFolder = Join-Path $PSScriptRoot -ChildPath "..\..\pnpcore"
-		$localFolder = [System.IO.Path]::GetFullPath($localFolder)
-		Write-Error -Message "Please make sure you have a local copy of the PnP.Core repository installed at $localFolder"
-	}
-}
+$buildCmd = "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.Release.csproj`" --nologo --no-incremental --force --configuration Release -p:VersionPrefix=$version";
 
 Write-Host "Executing $buildCmd" -ForegroundColor Yellow
 
@@ -128,14 +58,8 @@ if ($LASTEXITCODE -eq 0) {
 
 		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
 		Copy-Item -Path "$PSScriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Debug/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Debug/$configuration" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
-
-		if ($LocalPnPCore) {
-			# Ensure the local PnP.Core SDK is copied to the module folder or else debugging will not work. This assembly otherwises comes in through PnP Framework and will still use the NuGet version instead of the local build.
-			Write-Host "  Copying local PnP.Core SDK assembly" -ForegroundColor Yellow
-			Copy-Item -Path $pnpCoreAssembly -Destination "$destinationFolder\Core" -Force
-		}
+		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/$configuration" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
 	}
 	Catch {
 		Write-Error "Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module or PS modules are hosted in a OneDrive synced location. In the latter case, manually delete $destinationFolder and try again."
@@ -181,7 +105,6 @@ if ($LASTEXITCODE -eq 0) {
 	FormatsToProcess = 'PnP.PowerShell.Format.ps1xml' 
 	PrivateData = @{
 		PSData = @{
-			Prerelease = 'debug'
 			ProjectUri = 'https://aka.ms/sppnp'
 			IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
 		}
@@ -195,6 +118,3 @@ if ($LASTEXITCODE -eq 0) {
 	}
 	Write-Host "`n`n Build and provisioning succeeded`n Version: $version" -ForegroundColor Green
 }
-
-$env:PnPCoreSdkPath = $localPnPCoreSdkPathValue
-$env:PnPFrameworkPath = $localPnPFrameworkPathValue

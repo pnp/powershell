@@ -15,9 +15,6 @@
 		<Authors>PnP.PowerShell</Authors>
 		<Copyright>PnP 2025</Copyright>
 		<Configurations>Debug;Release</Configurations>
-		<PnPFrameworkPath Condition="'$(PnPFrameworkPath)' == ''"></PnPFrameworkPath>
-		<PnPCoreSdkPath Condition="'$(PnPCoreSdkPath)' == ''"></PnPCoreSdkPath>
-		<IsRelease></IsRelease>
 		<IsWindows Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Windows)))' == 'true'">true</IsWindows>
 		<IsOSX Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::OSX)))' == 'true'">true</IsOSX>
 		<IsLinux Condition="'$([System.Runtime.InteropServices.RuntimeInformation]::IsOSPlatform($([System.Runtime.InteropServices.OSPlatform]::Linux)))' == 'true'">true</IsLinux>
@@ -40,36 +37,20 @@
 	<PropertyGroup Condition="'$(IsLinux)'=='true'">
 		<DefineConstants>Linux</DefineConstants>
 	</PropertyGroup>
-
-		<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-		<DefineConstants>TRACE;$(DefineConstants);DEBUG</DefineConstants>
-	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
-		<DefineConstants>TRACE;$(DefineConstants);Release</DefineConstants>
-	</PropertyGroup>
+	
 	<ItemGroup>
 	  <None Remove="Resources\parker.ico" />
 	</ItemGroup>
 
 	<ItemGroup>		
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
-		<PackageReference Include="PnP.Framework" Version="1.18.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Framework" Version="1.18.*-*" Condition="'$(IsRelease)' == '1'" />
-		
-		<PackageReference Include="PnP.Core" Version="1.15.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core" Version="1.15.*-*" Condition="'$(IsRelease)' == '1'" />
-		
-		<PackageReference Include="PnP.Core.Auth" Version="1.15.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Auth" Version="1.15.*-*" Condition="'$(IsRelease)' == '1'" />
-		
-		<PackageReference Include="PnP.Core.Admin" Version="1.15.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Admin" Version="1.15.*-*" Condition="'$(IsRelease)' == '1'" />
-
+		<PackageReference Include="PnP.Framework" Version="1.18.0" />
+		<PackageReference Include="PnP.Core" Version="1.15.0" />
+		<PackageReference Include="PnP.Core.Auth" Version="1.15.0" />
+		<PackageReference Include="PnP.Core.Admin" Version="1.15.0" />
 		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.70.2" />
 		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.2" />
-
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
-		
 	</ItemGroup>
 
 	<ItemGroup>
@@ -79,34 +60,8 @@
 		<EmbeddedResource Include="Resources\O365ManagementPermissions.json" Type="Non-Resx" WithCulture="false" />
 	</ItemGroup>
 
-	<ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(IsRelease)' != '1'">
-		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
-		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net8.0'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core\bin\Debug\net8.0\PnP.Core.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-		<Reference Include="PnP.Core.Auth" Condition="'$(TargetFramework)' == 'net8.0'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Auth\bin\Debug\net8.0\PnP.Core.Auth.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-		<Reference Include="PnP.Core.Admin" Condition="'$(TargetFramework)' == 'net8.0'">
-			<HintPath>$(PnPCoreSdkPath)PnP.Core.Admin\bin\Debug\net8.0\PnP.Core.Admin.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>		
-	</ItemGroup>
 
-	<ItemGroup Condition="'$(PnPFrameworkPath)' != '' and '$(IsRelease)' != '1'">
-		<Reference Include="PnP.Framework" Condition="'$(TargetFramework)' == 'net8.0'">
-			<HintPath>$(PnPFrameworkPath)PnP.Framework\bin\Debug\net8.0\PnP.Framework.dll</HintPath>
-			<Private>true</Private>
-			<SpecificVersion>false</SpecificVersion>
-		</Reference>
-	</ItemGroup>
-
-	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
+	<ItemGroup>
 	  <PackageReference Include="System.Management.Automation" Version="7.4.6" />
  	  <PackageReference Include="TextCopy" Version="6.2.1" />		
 	</ItemGroup>

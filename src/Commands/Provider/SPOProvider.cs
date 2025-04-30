@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Provider
 
         protected override PSDriveInfo NewDrive(PSDriveInfo drive)
         {
-            Log.Debug("SPOProvider","NewDrive (Drive.Name = ’{drive.Name}’, Drive.Root = ’{drive.Root}’)");
+            Log.Debug("SPOProvider", $"NewDrive (Drive.Name = ’{drive.Name}’, Drive.Root = ’{drive.Root}’)");
 
             var spoParameters = DynamicParameters as SPODriveParameters;
             Web web = null;
@@ -108,7 +108,7 @@ namespace PnP.PowerShell.Commands.Provider
 
         protected override PSDriveInfo RemoveDrive(PSDriveInfo drive)
         {
-            Log.Debug("SPOProvider","RemoveDrive (Drive.Name = ’{drive.Name}’)");
+            Log.Debug("SPOProvider", $"RemoveDrive (Drive.Name = ’{drive.Name}’)");
 
             var spoDrive = drive as SPODriveInfo;
             if (spoDrive == null) return null;

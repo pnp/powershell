@@ -54,21 +54,14 @@ This will return the specific Microsoft Copilot agent if it exists.
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
 ```yaml
-Type: PnP.PowerShell.Commands.Base.PnPConnection
-DefaultValue: ''
-SupportsWildcards: false
-ParameterValue: []
-Aliases: []
-ParameterSets:
-- Name: (All)
-  Position: Named
-  IsRequired: false
-  ValueFromPipeline: false
-  ValueFromPipelineByPropertyName: false
-  ValueFromRemainingArguments: false
-DontShow: false
-AcceptedValues: []
-HelpMessage: ''
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
 ```
 
 ### -ServerRelativeUrl
@@ -76,21 +69,14 @@ HelpMessage: ''
 The server relative URL to the .agent file.
 
 ```yaml
-Type: System.String
-DefaultValue: ''
-SupportsWildcards: false
-ParameterValue: []
-Aliases: []
-ParameterSets:
-- Name: (All)
-  Position: Named
-  IsRequired: false
-  ValueFromPipeline: false
-  ValueFromPipelineByPropertyName: false
-  ValueFromRemainingArguments: false
-DontShow: false
-AcceptedValues: []
-HelpMessage: ''
+Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
 ```
 
 ### CommonParameters

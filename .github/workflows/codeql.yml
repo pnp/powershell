@@ -53,7 +53,7 @@ jobs:
           6.x
           7.x          
     - name: Install dependencies
-      run: dotnet restore
+      run: dotnet restore PnP.PowerShell.csproj
       working-directory: src/Commands
     - name: Build ⚙
       run:  dotnet build PnP.PowerShell.csproj --nologo --configuration debug --no-incremental --verbosity diagnostic --disable-build-servers --force

@@ -6,7 +6,36 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
-## [Current nightly]
+
+## [Current Nightly]
+
+### Added
+
+### Fixed
+- Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
+- Fix `-CreateDrive` parameter not working correctly in `Connect-PnPOnline`. [#4869](https://github.com/pnp/powershell/pull/4869)
+
+### Removed
+
+### Contributors
+
+- Giacomo Pozzoni [jackpoz]
+
+
+## [3.1.0]
+
+### Added
+
+### Fixed
+- Fixed issues with cmdlets not being able to read embedded resources
+
+### Removed
+
+### Contributors
+- Erwin van Hunen [erwinvanhunen]
+- Bert Jansen [jansenbe]
+
+## [3.0.0]
 
 ### Added
 
@@ -72,7 +101,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.4 or newer**
+- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.6 or newer**
 - **`-Interactive` login is now the default.**
 - The Popup based authentication for Interactive Login has been removed and replaced by a browser flow
 - `-LaunchBrowser` has been removed for interactive login
