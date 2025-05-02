@@ -95,7 +95,7 @@ namespace PnP.PowerShell.Commands.Files
                     var fileOut = System.IO.Path.Combine(Path, NewFileName);
                     if (System.IO.File.Exists(fileOut) && !Force)
                     {
-                        LogWarning($"File '{sourceFile.Name}' exists already. Use the -Force parameter to overwrite the file.");
+                        LogWarning($"File '{NewFileName}' exists already. Use the -Force parameter to overwrite the file.");
                     }
                     else
                     {
