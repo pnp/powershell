@@ -1,12 +1,13 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
+using System;
 using System.Management.Automation;
 using File = Microsoft.SharePoint.Client.File;
 
 namespace PnP.PowerShell.Commands.Files
 {
     [Cmdlet(VerbsCommon.Get, "PnPFileVersion", DefaultParameterSetName = "Return as file object")]
- 
+
     public class GetFileVersion : PnPWebCmdlet
     {
         [Parameter(Mandatory = true)]
@@ -18,6 +19,15 @@ namespace PnP.PowerShell.Commands.Files
         protected override void ExecuteCmdlet()
         {
             var serverRelativeUrl = string.Empty;
+
+            if (Uri.IsWellFormedUriString(Url, UriKind.Absolute))
+            {
+                // We can't deal with absolute URLs
+                Url = UrlUtility.MakeRelativeUrl(Url);
+            }
+
+            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
+            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
 
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
@@ -33,7 +43,7 @@ namespace PnP.PowerShell.Commands.Files
             File file;
 
             file = CurrentWeb.GetFileByServerRelativePath(ResourcePath.FromDecodedUrl(serverRelativeUrl));
-                        
+
             if (UseVersionExpirationReport)
             {
                 ClientContext.Load(file, f => f.Exists, f => f.VersionExpirationReport.IncludeWithDefaultProperties(i => i.CreatedBy, i => i.SnapshotDate, i => i.ExpirationDate));
