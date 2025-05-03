@@ -974,7 +974,7 @@ namespace PnP.PowerShell.Commands.Base
                 !ParameterSpecified(nameof(UserAssignedManagedIdentityObjectId)) &&
                 !ParameterSpecified(nameof(UserAssignedManagedIdentityAzureResourceId)))
             {
-                throw new PSArgumentException("When using FederatedIdentityCredentials, you must specify at least one of the following parameters: UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityObjectId, or UserAssignedManagedIdentityAzureResourceId.");
+                throw new PSArgumentException("When using FederatedIdentityCredentials, you must specify exactly one of the following mutually exclusive parameters: UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityObjectId, or UserAssignedManagedIdentityAzureResourceId.");
             }
             LogDebug("Connecting using Federated Identity Credentials");
 
