@@ -122,6 +122,10 @@
 <pre><code class="lang-powershell">Convert-PnPFile -Url &quot;/sites/demo/Shared Documents/Test/Book.png&quot; -ConvertToFormat Jpg  -Folder &quot;/sites/demo/Shared Documents/Archive&quot;
 </code></pre>
 <p>Retrieves the file and converts to JPG, and save it to the given Document library (Folder) in SharePoint Online (same site collection)</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Convert-PnPFile -Url &quot;/sites/demo/Shared Documents/Test/Book.xlsx&quot; -Folder &quot;/sites/demo/Shared Documents/Archive&quot; -NewFileName &quot;differentname.pdf&quot;
+</code></pre>
+<p>Retrieves the file and converts to PDF, and save it to the given Document library (Folder) in SharePoint Online (same site collection) giving it the filename differentname.pdf</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-url">-Url</h3>
 <p>The URL (server or site relative) to the file</p>
@@ -217,6 +221,17 @@ Accept wildcard characters: False
 Parameter Sets: (UPLOADTOSHAREPOINT)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-newfilename">-NewFileName</h3>
+<p>Filename to give the file local or on SharePoint</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Save to local path, Upload to SharePoint
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
