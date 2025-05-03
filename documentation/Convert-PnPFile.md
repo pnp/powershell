@@ -77,6 +77,13 @@ Convert-PnPFile -Url "/sites/demo/Shared Documents/Test/Book.png" -ConvertToForm
 
 Retrieves the file and converts to JPG, and save it to the given Document library (Folder) in SharePoint Online (same site collection)
 
+### EXAMPLE 7
+```powershell
+Convert-PnPFile -Url "/sites/demo/Shared Documents/Test/Book.xlsx" -Folder "/sites/demo/Shared Documents/Archive" -NewFileName "differentname.pdf"
+```
+
+Retrieves the file and converts to PDF, and save it to the given Document library (Folder) in SharePoint Online (same site collection) giving it the filename differentname.pdf
+
 ## PARAMETERS
 
 ### -Url
@@ -171,6 +178,20 @@ Type: FolderPipeBind
 Parameter Sets: (UPLOADTOSHAREPOINT)
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NewFileName
+Filename to give the file local or on SharePoint
+
+```yaml
+Type: String
+Parameter Sets: Save to local path, Upload to SharePoint
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -567,13 +567,46 @@ namespace PnP.PowerShell.Commands.Utilities
                             {
                                 string itemValue = string.Empty;
                                 var choices = values[key];
-                                foreach (var choice in (dynamic)choices)
+
+                                if (choices is string)
                                 {
-                                    itemValue += choice + ";#";
+                                    // Handle comma or semicolon separated string
+                                    itemValue = string.Join(";#", ((string)choices).Split([',', ';'], StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()));
                                 }
-                                item[key as string] = itemValue.Substring(0, itemValue.Length - 2);
+                                else if (choices is Array)
+                                {
+                                    // Handle array of values (string[], object[], etc.)
+                                    foreach (var choice in (Array)choices)
+                                    {
+                                        itemValue += choice?.ToString() + ";#";
+                                    }
+                                    if (!string.IsNullOrEmpty(itemValue))
+                                    {
+                                        itemValue = itemValue.Substring(0, itemValue.Length - 2);
+                                    }
+                                }
+                                else if (choices is IEnumerable)
+                                {
+                                    // Handle other enumerable types
+                                    foreach (var choice in (IEnumerable)choices)
+                                    {
+                                        itemValue += choice?.ToString() + ";#";
+                                    }
+                                    if (!string.IsNullOrEmpty(itemValue))
+                                    {
+                                        itemValue = itemValue.Substring(0, itemValue.Length - 2);
+                                    }
+                                }
+                                else
+                                {
+                                    // Handle a single value
+                                    itemValue = choices?.ToString();
+                                }
+
+                                item[key as string] = itemValue;
                                 break;
                             }
+
                         default:
                             {
                                 object itemValue = values[key] is PSObject ? ((PSObject)values[key]).BaseObject : values[key];
