@@ -7,7 +7,6 @@ using System.Linq;
 using System.Management.Automation;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading;
@@ -215,7 +214,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             var results = new List<T>();
             var request = Get<RestResultCollection<T>>(url, camlCasePolicy, propertyNameCaseInsensitive, additionalHeaders);
 
-            if (request.Items.Any())
+            if (request != null && request.Items.Any())
             {
                 results.AddRange(request.Items);
                 while (!string.IsNullOrEmpty(request.NextLink))
@@ -264,7 +263,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 }
                 catch (Exception e)
                 {
-                    LogError($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
+                    LogError($"Failed to parse response from server. Error message: '{e.Message}'. Model type to parse it to: '{typeof(T)}'.");
                     //Cmdlet.LogWarning($"Failed to parse response from server. Error message: '{e.Message}'. Received content: '{stringContent}'. Model type to parse it to: '{typeof(T)}'.");
                     return default;
                 }
@@ -311,7 +310,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         #region PATCH
         public T Patch<T>(string url, T content, IDictionary<string, string> additionalHeaders = null, bool camlCasePolicy = true)
-        { 
+        {
             var serializerSettings = new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull };
             if (camlCasePolicy)
             {
@@ -387,7 +386,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         {
             var message = GetMessage(url, HttpMethod.Post, content, additionalHeaders);
             GetResponseMessage(message);
-        }        
+        }
 
         private T PostInternal<T>(string url, HttpContent content, IDictionary<string, string> additionalHeaders = null, bool propertyNameCaseInsensitive = false)
         {
@@ -455,7 +454,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         {
             var message = GetMessage2(url, accessToken, HttpMethod.Put, content, additionalHeaders);
             return GetResponseMessage2(message);
-        }        
+        }
 
         #endregion
 

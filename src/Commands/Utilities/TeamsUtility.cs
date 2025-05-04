@@ -455,6 +455,14 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             return null;
         }
+
+        public static List<JoinedTeam> GetJoinedTeams(ApiRequestHelper requestHelper, Guid userId)
+        {
+            string requestUrl = $"v1.0/users/{userId}/joinedTeams";
+            var collection = requestHelper.GetResultCollection<JoinedTeam>(requestUrl);
+            return collection.ToList();
+
+        }
         #endregion
 
         #region Users
