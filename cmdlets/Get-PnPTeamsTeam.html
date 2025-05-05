@@ -90,7 +90,7 @@
 </ul>
 <p>Gets one Microsoft Teams Team or a list of Teams.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPTeamsTeam [-Identity &lt;TeamsTeamPipeBind&gt;] [-Filter &lt;String&gt;]  
+<pre><code class="lang-powershell">Get-PnPTeamsTeam [-Identity &lt;TeamsTeamPipeBind&gt;] [-Filter &lt;String&gt;]  [-User &lt;AzureADUserPipeBind&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to retrieve list of Microsoft Teams teams. By using <code>Identity</code> it is possible to retrieve a specific team, and by using <code>Filter</code> you can supply any filter queries supported by the Graph API.</p>
@@ -115,6 +115,10 @@
 <pre><code class="lang-powershell">Get-PnPTeamsTeam -Filter &quot;startswith(description, 'contoso')&quot;
 </code></pre>
 <p>Retrieves all Microsoft Teams instances with Description starting with &quot;contoso&quot;. This example demonstrates using Advanced Query capabilities (see: <a href="https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties">https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties</a>).</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPTeamsTeam -User &quot;user@company.com&quot;
+</code></pre>
+<p>Retrieves all Microsoft Teams instances which the specified user has access to.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
 <p>Specify the group id, mailNickname or display name of the team to use.</p>
@@ -131,6 +135,17 @@ Accept wildcard characters: False
 <p>Specify the query to pass to Graph API in $filter.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: Filter
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-user">-User</h3>
+<p>Specify the name of the user to fetch the list of teams user as access to.</p>
+<pre><code class="lang-yaml">Type: AzureADUserPipeBind
+Parameter Sets: User
 
 Required: False
 Position: Named
