@@ -149,15 +149,16 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             Group group = null;
             Team returnTeam = null;
-
+            Random random = new();
+            // Maximum number of retries
+            const int maxRetries = 12;
             // Create the Group
             if (string.IsNullOrEmpty(groupId))
             {
                 group = CreateGroup(requestHelper, displayName, description, classification, mailNickname, visibility, owners, sensitivityLabels, templateType, resourceBehaviorOptions);
                 bool wait = true;
                 int iterations = 0;
-                // Maximum number of retries
-                const int maxRetries = 12;
+
                 // Initial backoff time in seconds
                 const int initialBackoffSeconds = 5;
 
@@ -181,7 +182,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         backoffSeconds = Math.Min(backoffSeconds, 30);
 
                         // Add random jitter between 0-1 second to avoid thundering herd
-                        int jitterMs = new Random().Next(0, 1000);
+                        int jitterMs = random.Next(0, 1000);
 
                         // Sleep for the calculated time
                         Thread.Sleep(TimeSpan.FromSeconds(backoffSeconds) + TimeSpan.FromMilliseconds(jitterMs));
@@ -202,7 +203,6 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 Team team = teamCI.ToTeam(group.Visibility.Value);
 
-                const int maxRetries = 10;
                 const int initialBackoffMs = 1000;
                 var retryCount = 0;
                 bool success = false;
@@ -237,7 +237,7 @@ namespace PnP.PowerShell.Commands.Utilities
                         // Exponential backoff with jitter to avoid thundering herd problem
                         int backoffMs = initialBackoffMs * (int)Math.Pow(2, retryCount - 1);
                         // Add up to 1 second of random jitter
-                        int jitterMs = new Random().Next(0, 1000);
+                        int jitterMs = random.Next(0, 1000);
                         // Cap at 30 seconds max
                         int delayMs = Math.Min(backoffMs + jitterMs, 30000);
                         Thread.Sleep(delayMs);
