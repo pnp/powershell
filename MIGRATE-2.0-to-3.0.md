@@ -1,7 +1,5 @@
 # Updating from PnP PowerShell 2.x to 3.x
 
-_This is a draft document, version 3 is not yet available. You can try this out with the nightly builds starting from 2.99.1 or later_
-
 The 3.x version of PnP PowerShell is based exclusively on .NET 8.0, which means that it will not work on older PowerShell editions like PowerShell 5.1, ISE or PowerShell 7.3 or older. It will work only on **PowerShell 7.4.6 or later editions.**
 
 ## Steps to update from 2.x to 3.x
