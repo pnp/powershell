@@ -10,17 +10,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current Nightly]
 
 ### Added
+- Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
+- Added `-User` parameter to `Get-PnPTeamsTeam` cmdlet to allow fetching list of teams a user has access to.
 
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
 - Fix `-CreateDrive` parameter not working correctly in `Connect-PnPOnline`. [#4869](https://github.com/pnp/powershell/pull/4869)
+- Fixed `Get/Remove/Restore-PnPFileVersion` cmdlets to properly handle file names which have encoded values.
+- Fixed Teams related cmdlets to properly handle quotes in the display name of Teams team.
+- Fixed `Set-PnPListItem` cmdlet to properly handle multi-choice fields when used with batch parameter.
+- Fix `Get-PnPCopilotAgent` cmdlet to properly handle pagination in large lists.
 
 ### Removed
 
 ### Contributors
 
 - Giacomo Pozzoni [jackpoz]
-
+- [davidschenkUPG]
 
 ## [3.1.0]
 

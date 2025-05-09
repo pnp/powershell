@@ -101,6 +101,21 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// </summary>
         public DateTimeOffset? CreatedDateTime { get; set; }
 
+        /// <summary>
+        /// The summary for the Team
+        /// </summary>
+        public TeamSummary Summary { get; set; }
+
+        /// <summary>
+        /// Tenant ID of the team
+        /// </summary>
+        public string TenantId { get; set; }
+
+        /// <summary>
+        /// Whether the Team membership is limited to owners
+        /// </summary>
+        public bool? IsMembershipLimitedToOwners { get; set; }
+
         #endregion
     }
 
@@ -129,5 +144,32 @@ namespace PnP.PowerShell.Commands.Model.Teams
         /// Team type for an optimized experience for staff in an organization, where a staff leader, like a principal, is the admin and teachers are members in a team that comes with a specialized notebook.
         /// </summary>
         EducationStaff
+    }
+
+
+    public class JoinedTeam
+    {
+        #region Public Members
+
+        public Guid Id { get; set; }
+
+        public string DisplayName { get; set; }
+
+        /// <summary>
+        /// Declares whether the Team is archived or not
+        /// </summary>
+        public bool? IsArchived { get; set; }
+
+        /// <summary>
+        /// Declares the description for the team
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Tenant ID of the team
+        /// </summary>
+        public Guid TenantId { get; set; }
+
+        #endregion
     }
 }

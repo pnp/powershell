@@ -149,14 +149,20 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             Group group = null;
             Team returnTeam = null;
-
+            Random random = new();
+            // Maximum number of retries
+            const int maxRetries = 12;
             // Create the Group
             if (string.IsNullOrEmpty(groupId))
             {
                 group = CreateGroup(requestHelper, displayName, description, classification, mailNickname, visibility, owners, sensitivityLabels, templateType, resourceBehaviorOptions);
                 bool wait = true;
                 int iterations = 0;
-                while (wait)
+
+                // Initial backoff time in seconds
+                const int initialBackoffSeconds = 5;
+
+                while (wait && iterations < maxRetries)
                 {
                     iterations++;
 
@@ -170,14 +176,16 @@ namespace PnP.PowerShell.Commands.Utilities
                     }
                     catch (Exception)
                     {
-                        // In case of exception wait for 5 secs
-                        Thread.Sleep(TimeSpan.FromSeconds(5));
-                    }
+                        // Calculate exponential backoff with a minimum of initialBackoffSeconds
+                        int backoffSeconds = initialBackoffSeconds * (int)Math.Pow(2, iterations - 1);
+                        // Cap at a maximum backoff (e.g., 30 seconds)
+                        backoffSeconds = Math.Min(backoffSeconds, 30);
 
-                    // Don't wait more than 1 minute
-                    if (iterations > 12)
-                    {
-                        wait = false;
+                        // Add random jitter between 0-1 second to avoid thundering herd
+                        int jitterMs = random.Next(0, 1000);
+
+                        // Sleep for the calculated time
+                        Thread.Sleep(TimeSpan.FromSeconds(backoffSeconds) + TimeSpan.FromMilliseconds(jitterMs));
                     }
                 }
             }
@@ -194,9 +202,12 @@ namespace PnP.PowerShell.Commands.Utilities
             if (group != null)
             {
                 Team team = teamCI.ToTeam(group.Visibility.Value);
-                var retry = true;
-                var iteration = 0;
-                while (retry)
+
+                const int initialBackoffMs = 1000;
+                var retryCount = 0;
+                bool success = false;
+
+                while (!success && retryCount < maxRetries)
                 {
                     try
                     {
@@ -204,28 +215,32 @@ namespace PnP.PowerShell.Commands.Utilities
                         if (teamSettings != null)
                         {
                             returnTeam = GetTeam(requestHelper, group.Id);
+                            success = true;
                         }
-                        retry = false;
                     }
                     catch (GraphException ge) when (ge.HttpResponse.StatusCode == System.Net.HttpStatusCode.Conflict)
                     {
                         // Handle conflict exceptions as if it succeeded, as it means a previous request succeeded enabling teams
                         returnTeam = GetTeam(requestHelper, group.Id);
-                        retry = false;
+                        success = true;
                     }
-                    catch (Exception)
+                    catch
                     {
-                        Thread.Sleep(5000);
-                        iteration++;
-                        if (iteration > 10)
+                        retryCount++;
+
+                        if (retryCount >= maxRetries)
                         {
+                            // If we've reached max retries, rethrow the exception
                             throw;
                         }
-                    }
 
-                    if (iteration > 10) // don't try more than 10 times
-                    {
-                        retry = false;
+                        // Exponential backoff with jitter to avoid thundering herd problem
+                        int backoffMs = initialBackoffMs * (int)Math.Pow(2, retryCount - 1);
+                        // Add up to 1 second of random jitter
+                        int jitterMs = random.Next(0, 1000);
+                        // Cap at 30 seconds max
+                        int delayMs = Math.Min(backoffMs + jitterMs, 30000);
+                        Thread.Sleep(delayMs);
                     }
                 }
 
@@ -454,6 +469,14 @@ namespace PnP.PowerShell.Commands.Utilities
                 return deletedTeams;
             }
             return null;
+        }
+
+        public static List<JoinedTeam> GetJoinedTeams(ApiRequestHelper requestHelper, Guid userId)
+        {
+            string requestUrl = $"v1.0/users/{userId}/joinedTeams";
+            var collection = requestHelper.GetResultCollection<JoinedTeam>(requestUrl);
+            return collection.ToList();
+
         }
         #endregion
 

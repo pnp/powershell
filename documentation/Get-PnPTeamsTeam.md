@@ -20,7 +20,7 @@ Gets one Microsoft Teams Team or a list of Teams.
 ## SYNTAX
 
 ```powershell
-Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>] [-Filter <String>]  
+Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>] [-Filter <String>]  [-User <AzureADUserPipeBind>]
 ```
 
 ## DESCRIPTION
@@ -64,6 +64,13 @@ Get-PnPTeamsTeam -Filter "startswith(description, 'contoso')"
 
 Retrieves all Microsoft Teams instances with Description starting with "contoso". This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/en-us/graph/aad-advanced-queries?tabs=http#group-properties).
 
+### EXAMPLE 6
+```powershell
+Get-PnPTeamsTeam -User "user@company.com"
+```
+
+Retrieves all Microsoft Teams instances which the specified user has access to.
+
 ## PARAMETERS
 
 ### -Identity
@@ -94,8 +101,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -User
+Specify the name of the user to fetch the list of teams user as access to.
+
+```yaml
+Type: AzureADUserPipeBind
+Parameter Sets: User
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
