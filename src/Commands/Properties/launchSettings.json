@@ -1,5 +1,5 @@
 {
-  "profiles": {    
+  "profiles": {
     "PnP.PowerShell-Module": {
       "commandName": "Executable",
       "executablePath": "pwsh",
