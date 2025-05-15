@@ -16,15 +16,17 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
 - Fix `-CreateDrive` parameter not working correctly in `Connect-PnPOnline`. [#4869](https://github.com/pnp/powershell/pull/4869)
-- Fixed `Get/Remove/Restore-PnPFileVersion` cmdlets to properly handle file names which have encoded values.
+- Fix `Get/Remove/Restore-PnPFileVersion` cmdlets to properly handle file names which have encoded values.
 - Fixed Teams related cmdlets to properly handle quotes in the display name of Teams team.
-- Fixed `Set-PnPListItem` cmdlet to properly handle multi-choice fields when used with batch parameter.
+- Fix `Set-PnPListItem` cmdlet to properly handle multi-choice fields when used with batch parameter.
 - Fix `Get-PnPCopilotAgent` cmdlet to properly handle pagination in large lists.
+- Fix `Send-PnPMail` cmdlet to send mail via Graph API and SPO. It was facing parameter set issue. [#4922](https://github.com/pnp/powershell/pull/4922)
 
 ### Removed
 
 ### Contributors
 
+- [pajeffery]
 - Giacomo Pozzoni [jackpoz]
 - [davidschenkUPG]
 
