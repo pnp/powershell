@@ -15,7 +15,7 @@ Creates a Viva engage community
 ## SYNTAX
 
 ```powershell
-New-PnPVivaEngageCommunity [[-DisplayName] <string> [-Description] <string> [-Privacy] <CommunityPrivacy>] [-Connection <PnPConnection>] 
+New-PnPVivaEngageCommunity [[-DisplayName] <string> [-Description] <string> [-Privacy] <CommunityPrivacy>] [-Owners <string[]>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -85,6 +85,20 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: Private
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -Owners
+The owners of the Viva engage community. This is mandatory if application permissions are used else the request will fail.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
