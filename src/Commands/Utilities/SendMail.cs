@@ -10,63 +10,63 @@ namespace PnP.PowerShell.Commands.Utilities
     [Cmdlet(VerbsCommunications.Send, "PnPMail", DefaultParameterSetName = ParameterSet_SENDTHROUGHSPO)]
     public class SendMail : PnPWebCmdlet
     {
-        private const string ParameterSet_SENDTHROUGHGRAPH = "Send through Microsoft Graph with attachments from local file system";
         private const string ParameterSet_SENDTHROUGHSPO = "Send through SharePoint Online";
-        private const string ParameterSet_SENDTHROUGHGRAPHWITHFILES = "Send through Microsoft Graph with attachments from SPO";
+        private const string ParameterSet_SENDTHROUGHGRAPH = "Send through Microsoft Graph";
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public string From;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHSPO)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public string[] To;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHSPO)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public string[] Cc;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHSPO)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public string[] Bcc;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHSPO)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public string Subject;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHSPO)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public string Body;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public MessageImportanceType Importance;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public string[] ReplyTo;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public bool? SaveToSentItems;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
         public MessageBodyContentType? BodyContentType;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         public string[] Attachments;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPHWITHFILES)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SENDTHROUGHGRAPH)]
         public FilePipeBind[] Files;
 
         protected override void ExecuteCmdlet()
         {
+            // Runtime validation to prevent both attachment types being used together
+            if (ParameterSpecified(nameof(Attachments)) && ParameterSpecified(nameof(Files)))
+            {
+                ThrowTerminatingError(new ErrorRecord(
+                    new PSArgumentException("You cannot use both -Attachments and -Files parameters together."),
+                    "SendMailAttachmentConflict",
+                    ErrorCategory.InvalidArgument,
+                    this));
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(From))
             {
                 LogDebug("Sending e-mail through SharePoint Online");
