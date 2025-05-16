@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p>Creates a Viva engage community</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">New-PnPVivaEngageCommunity [[-DisplayName] &lt;string&gt; [-Description] &lt;string&gt; [-Privacy] &lt;CommunityPrivacy&gt;] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">New-PnPVivaEngageCommunity [[-DisplayName] &lt;string&gt; [-Description] &lt;string&gt; [-Privacy] &lt;CommunityPrivacy&gt;] [-Owners &lt;string[]&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Creates a Viva engage community</p>
@@ -137,6 +137,17 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: Private
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-owners">-Owners</h3>
+<p>The owners of the Viva engage community. This is mandatory if application permissions are used else the request will fail.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 </code></pre>
