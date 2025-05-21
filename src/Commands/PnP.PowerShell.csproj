@@ -67,6 +67,7 @@
 
 		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.70.2" />
 		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.2" />
+		<PackageReference Include="System.Text.Json" Version="9.0.0" />
 
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
 		
