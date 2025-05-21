@@ -5418,16 +5418,6 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Register-PnPManagementShellAccess.md",
-      "output": {
-        ".html": {
-          "relative_path": "cmdlets/Register-PnPManagementShellAccess.html"
-        }
-      },
-      "version": ""
-    },
-    {
-      "type": "Conceptual",
       "source_relative_path": "cmdlets/Remove-PnPAdaptiveScopeProperty.md",
       "output": {
         ".html": {
