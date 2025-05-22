@@ -169,6 +169,16 @@
       "consentDescription": "Allows the app to read and update user profiles and to read basic site info on your behalf.",
       "consentDisplayName": "Read and write user profiles",
       "value": "User.ReadWrite.All"
+    },
+    {
+      "adminConsentDescription":"Allows the app to access a subset of site collections with a signed-in user. The specific site collections and the permissions granted will be configured in SharePoint Online.",
+      "adminConsentDisplayName":"Access selected site collections",
+      "id":"9ac4404a-0323-446d-b334-b4ae4d18b38a",
+      "isEnabled": true,
+      "isAdmin": false,
+      "consentDescription": "Allows the app to access a subset of site collections on your behalf. The specific site collections and the permissions granted will be configured in SharePoint Online.",
+      "consentDisplayName": "Access selected site collections",
+      "value": "Sites.Selected"
     }
   ],
   "applicationScopesList": [

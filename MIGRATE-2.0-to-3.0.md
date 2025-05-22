@@ -1,7 +1,5 @@
 # Updating from PnP PowerShell 2.x to 3.x
 
-_This is a draft document, version 3 is not yet available. You can try this out with the nightly builds starting from 2.99.1 or later_
-
 The 3.x version of PnP PowerShell is based exclusively on .NET 8.0, which means that it will not work on older PowerShell editions like PowerShell 5.1, ISE or PowerShell 7.3 or older. It will work only on **PowerShell 7.4.6 or later editions.**
 
 ## Steps to update from 2.x to 3.x
@@ -16,7 +14,7 @@ Or
 
 - For Mac OS environments, please use [this link](https://learn.microsoft.com/en-us/powershell/scripting/install/installing-powershell-on-macos)
 
-Once the PowerShell 7.4.6 or later is downloaded and installed in the environment, you can install the PnP PowerShell module like you normally do.
+Once PowerShell 7.4.6 or later is downloaded and installed in your environment, you can install the PnP PowerShell module like you normally do.
 
 ```powershell
 Install-Module -Name "PnP.PowerShell"
@@ -32,7 +30,7 @@ Install-Module -Name "PnP.PowerShell" -AllowPrerelease
 
 If you are using PnP PowerShell in Azure Devops, GitHub Actions or other pipeline infrastructure, you will have to update your PowerShell version from v5 or v7.2.x to v7.4.6 or later.
 
-Recommend referring to these 2 links:
+Recommend reading these 2 links:
 
 - [DevOps Snack: Change PowerShell version in YAML](https://microsoft-bitools.blogspot.com/2021/02/devops-snack-change-powershell-version.html)
 - [How to enable PowerShell core in Azure Pipeline?](https://theautomationcode.com/how-to-enable-powershell-core-in-azure-pipeline/)

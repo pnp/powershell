@@ -1,11 +1,11 @@
+using Microsoft.SharePoint.Client;
+using PnP.Framework.Enums;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using System.Text.Json;
-using Microsoft.SharePoint.Client;
-using PnP.Framework.Enums;
-using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Branding
 {
@@ -119,18 +119,18 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 nodeCollection = CurrentWeb.LoadFooterNavigation();
             }
-            else if(Location == NavigationType.QuickLaunch)
+            else if (Location == NavigationType.QuickLaunch)
             {
                 nodeCollection = CurrentWeb.Navigation.QuickLaunch;
                 ClientContext.Load(nodeCollection);
-            } 
+            }
             else
             {
                 nodeCollection = CurrentWeb.Navigation.TopNavigationBar;
                 ClientContext.Load(nodeCollection);
             }
 
-            
+
             if (nodeCollection == null)
             {
                 throw new Exception("Unable to define Navigation Node collection to add the node to");
@@ -156,7 +156,7 @@ namespace PnP.PowerShell.Commands.Branding
             if (currentItem != null)
             {
                 currentItem.OpenInNewWindow = OpenInNewTab.ToBool();
-
+                currentItem.SimpleUrl = Url;
                 if (ParameterSpecified(nameof(AudienceIds)))
                 {
                     currentItem.AudienceIds = AudienceIds;
@@ -169,7 +169,7 @@ namespace PnP.PowerShell.Commands.Branding
             {
                 LogWarning("Something went wrong while trying to set AudienceIDs or Open in new tab property");
             }
-            
+
 
             WriteObject(addedNode);
         }
