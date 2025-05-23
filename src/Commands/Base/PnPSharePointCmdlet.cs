@@ -1,12 +1,12 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading;
-using Microsoft.Online.SharePoint.TenantAdministration;
+﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities.REST;
+using System;
+using System.Net.Http;
+using System.Threading;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using TokenHandler = PnP.PowerShell.Commands.Base.TokenHandler;
 
@@ -110,7 +110,9 @@ namespace PnP.PowerShell.Commands
                     throw new InvalidOperationException(Resources.NoDefaultSharePointConnection);
                 }
             }
-            RequestHelper = new ApiRequestHelper(GetType(), Connection, $"https://{Connection.GraphEndPoint}/.default");
+            var resourceUri = new Uri(Connection.Url);
+            var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
+            RequestHelper = new ApiRequestHelper(GetType(), Connection, defaultResource);
         }
 
         protected override void ProcessRecord()
