@@ -13,7 +13,7 @@ title: Grant-PnPAzureADAppSitePermission
 
 **Required Permissions**
 
-  * Microsoft Graph API: Sites.FullControl.All
+  * Microsoft Graph API: Sites.FullControl.All (Delegated)
 
 Adds permissions for a given Azure Active Directory application registration.
 
