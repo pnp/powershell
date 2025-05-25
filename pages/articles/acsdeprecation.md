@@ -38,7 +38,7 @@ It produces an output similar to:
 
 ![Sample Get-PnPAzureACSPrincipal output](./../images/acsdeprecation/sample-get-pnpazureacsprincipal.png)
 
-The SiteId, WebId and ListId columns in this output, give away what kind of permissions have been set on the ACS Application registration. If a column contains just zeroes (00000000-0000-0000-0000-000000000000), it means the permissions have not been set down to that level. If it contains something else (i.e. 5c7836e9-a6fb-450f-a117-43ccea341193), it means that permissions have been set on that level. So to make it concrete, for the above sample, the following permissions have been set on this ACS Application Registration:
+The SiteId, WebId and ListId columns in this output, give away what kind of permissions have been set on the ACS Application registration. If a column contains just zeroes (00000000-0000-0000-0000-000000000000), it means the permissions have not been set down to that level. If it contains something else (i.e. 5c7836e9-a6fb-450f-a117-43ccea341193), it means that permissions have been set on that level. So to make it concrete, for the above sample, the following permissions have been set on this ACS Application Registration:  
 
 - FullControl on the Web scope
 - Read on the list with id e94218ca-30d1-4118-a9b0-33e00f00d139
@@ -52,3 +52,71 @@ The above example again would map to:
 - Sites.Selected
 
 Use [Grant-PnPAzureADAppSitePermission](Grant-PnPAzureADAppSitePermission.md) to set FullControl permissions on it.
+
+## What do I need to change in my code?
+
+### PnP PowerShell
+If you were connecting using PnP PowerShell, you will have to switch to using a certificate instead of a clientsecret and update your Connect-PnPOnline to something such as:
+
+```powershell
+Connect-PnPOnline https://contoso.sharepoint.com -CertificatePath c:\temp\pnp.pfx -Clientid xxx-xxx-xxx-xxx-xxx -Tenant xxx-xxx-xxx-xxx-xxx
+```
+
+For all the possible connection options, check the documentation of [Connect-PnPOnline](../cmdlets/Connect-PnPOnline.md).
+
+### PnP Core
+
+There are many ways to connect through PnP Core. Also in this scenario, you will have to authenticate using a Client ID and Certificate. There's no one off sample that works for every scenario. Have a look at the [PnP Core Authentication documentation](https://pnp.github.io/pnpcore/using-the-sdk/configuring%20authentication.html) for inspiration towards the possible options.
+
+### CSOM
+
+Here as well you need to use a certificate to connect. A sample piece of code demonstrating how to do this using the native Client Side Object Model (CSOM) is:
+
+```c#
+using Microsoft.Identity.Client;
+using Microsoft.SharePoint.Client;
+using System;
+using System.Security.Cryptography.X509Certificates;
+
+class Program
+{
+    static void Main()
+    {
+        string siteUrl = "https://yourtenant.sharepoint.com/sites/yoursite";
+        string tenantId = "your-tenant-id";
+        string clientId = "your-client-id";
+        string certThumbprint = "your-cert-thumbprint";
+        string authority = $"https://login.microsoftonline.com/{tenantId}";
+
+        // Load certificate from store
+        var store = new X509Store(StoreLocation.CurrentUser);
+        store.Open(OpenFlags.ReadOnly);
+        var cert = store.Certificates.Find(X509FindType.FindByThumbprint, certThumbprint, false)[0];
+        store.Close();
+
+        // Acquire token
+        var app = ConfidentialClientApplicationBuilder.Create(clientId)
+            .WithCertificate(cert)
+            .WithAuthority(new Uri(authority))
+            .Build();
+
+        string[] scopes = { "https://yourtenant.sharepoint.com/.default" };
+        var result = app.AcquireTokenForClient(scopes).ExecuteAsync().Result;
+
+        // Connect to SharePoint
+        using (var context = new ClientContext(siteUrl))
+        {
+            context.ExecutingWebRequest += (sender, e) =>
+            {
+                e.WebRequestExecutor.RequestHeaders["Authorization"] = "Bearer " + result.AccessToken;
+            };
+
+            Web web = context.Web;
+            context.Load(web);
+            context.ExecuteQuery();
+
+            Console.WriteLine("Connected to site: " + web.Title);
+        }
+    }
+}
+```
