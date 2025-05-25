@@ -117,6 +117,63 @@
 <li>Sites.Selected</li>
 </ul>
 <p>Use <a href="Grant-PnPAzureADAppSitePermission.md">Grant-PnPAzureADAppSitePermission</a> to set FullControl permissions on it.</p>
+<h2 id="what-do-i-need-to-change-in-my-code">What do I need to change in my code?</h2>
+<h3 id="pnp-powershell">PnP PowerShell</h3>
+<p>If you were connecting using PnP PowerShell, you will have to switch to using a certificate instead of a clientsecret and update your Connect-PnPOnline to something such as:</p>
+<pre><code class="lang-powershell">Connect-PnPOnline https://contoso.sharepoint.com -CertificatePath c:\temp\pnp.pfx -Clientid xxx-xxx-xxx-xxx-xxx -Tenant xxx-xxx-xxx-xxx-xxx
+</code></pre>
+<p>For all the possible connection options, check the documentation of <a href="../cmdlets/Connect-PnPOnline.html">Connect-PnPOnline</a>.</p>
+<h3 id="pnp-core">PnP Core</h3>
+<p>There are many ways to connect through PnP Core. Also in this scenario, you will have to authenticate using a Client ID and Certificate. There's no one off sample that works for every scenario. Have a look at the <a href="https://pnp.github.io/pnpcore/using-the-sdk/configuring%20authentication.html">PnP Core Authentication documentation</a> for inspiration towards the possible options.</p>
+<h3 id="csom">CSOM</h3>
+<p>Here as well you need to use a certificate to connect. A sample piece of code demonstrating how to do this using the native Client Side Object Model (CSOM) is:</p>
+<pre><code class="lang-c#">using Microsoft.Identity.Client;
+using Microsoft.SharePoint.Client;
+using System;
+using System.Security.Cryptography.X509Certificates;
+
+class Program
+{
+    static void Main()
+    {
+        string siteUrl = &quot;https://yourtenant.sharepoint.com/sites/yoursite&quot;;
+        string tenantId = &quot;your-tenant-id&quot;;
+        string clientId = &quot;your-client-id&quot;;
+        string certThumbprint = &quot;your-cert-thumbprint&quot;;
+        string authority = $&quot;https://login.microsoftonline.com/{tenantId}&quot;;
+
+        // Load certificate from store
+        var store = new X509Store(StoreLocation.CurrentUser);
+        store.Open(OpenFlags.ReadOnly);
+        var cert = store.Certificates.Find(X509FindType.FindByThumbprint, certThumbprint, false)[0];
+        store.Close();
+
+        // Acquire token
+        var app = ConfidentialClientApplicationBuilder.Create(clientId)
+            .WithCertificate(cert)
+            .WithAuthority(new Uri(authority))
+            .Build();
+
+        string[] scopes = { &quot;https://yourtenant.sharepoint.com/.default&quot; };
+        var result = app.AcquireTokenForClient(scopes).ExecuteAsync().Result;
+
+        // Connect to SharePoint
+        using (var context = new ClientContext(siteUrl))
+        {
+            context.ExecutingWebRequest += (sender, e) =&gt;
+            {
+                e.WebRequestExecutor.RequestHeaders[&quot;Authorization&quot;] = &quot;Bearer &quot; + result.AccessToken;
+            };
+
+            Web web = context.Web;
+            context.Load(web);
+            context.ExecuteQuery();
+
+            Console.WriteLine(&quot;Connected to site: &quot; + web.Title);
+        }
+    }
+}
+</code></pre>
 
 </article>
           </div>
