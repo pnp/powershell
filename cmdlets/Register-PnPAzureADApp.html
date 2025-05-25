@@ -153,6 +153,10 @@
 <pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String &quot;password&quot; -AsPlainText -Force) -LogoFilePath c:\logo.png
 </code></pre>
 <p>Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. It will also set the <code>logo.png</code> file as the logo for the Azure AD app.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Register-PnPAzureADApp -ApplicationName &quot;ACS App&quot; -Tenant yourtenant.onmicrosoft.com -OutPath c:\temp -GraphApplicationPermissions &quot;User.Read.All&quot; -GraphDelegatePermissions &quot;Sites.Read.All&quot; -SharePointApplicationPermissions &quot;Sites.Read.All&quot; -SharePointDelegatePermissions &quot;AllSites.Read&quot;
+</code></pre>
+<p>Creates a new Azure AD Application registration, creates a new self signed certificate, writes it to the c:\temp folder. It will upload the certificate to the azure app registration and it will request the shown permissions. A browser window will be shown allowing you to authenticate.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-devicelogin">-DeviceLogin</h3>
 <p>If specified, a device login flow, supporting Multi-Factor Authentication will be used to authenticate towards the Microsoft Graph.</p>

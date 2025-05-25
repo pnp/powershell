@@ -121,11 +121,47 @@ Connect-PnPOnline contoso.sharepoint.com -Interactive -ClientId 34567890-3456-34
 </code></pre>
 <p>This could lead to mistakes, such as using the wrong application ID / Client ID when connecting to a tenant. This could lead to authentication errors, which might lead to confusion and frustration.</p>
 <h2 id="idea-1-create-your-own-function-to-encapsulate-the-connection-logic">Idea 1: Create your own function to encapsulate the connection logic</h2>
-<p>Content to follow</p>
+<p>One option is to create your on functions which allow you to connect a specific environment and have the function pass in the required parameters for connecting to it, such as the ClientId and the Certificate to use.</p>
+<p>You could easily establish this by opening PowerShell 7 and executing:</p>
+<h3 id="windows">Windows</h3>
+<pre><code class="lang-powershell">notepad $profile
+</code></pre>
+<h3 id="linuxmac">Linux/Mac</h3>
+<pre><code class="lang-powershell">vi $profile
+</code></pre>
+<p>Add to your profile functions, such as:</p>
+<pre><code class="lang-powershell">Function Connect-PnPDevTenant
+{
+	Connect-PnPOnline https://contosodev.sharepoint.com -ClientId 12345678-1234-1234-1234-123456789012
+}
+
+Function Connect-PnPProdTenant
+{
+	Connect-PnPOnline https://contoso.sharepoint.com -ClientId 34567890-3456-3456-3456-345678901234
+}
+</code></pre>
+<p>Save the file and start a new PowerShell 7 session to have the updated profile being loaded into the session.</p>
+<p>Now you can simply connect to your tenant by executing:</p>
+<pre><code class="lang-powershell">Connect-PnPDevTenant
+</code></pre>
+<p>And it will execute the cmdlet as configured in your profile instead.</p>
 <h2 id="idea-2-create-your-own-multi-tenant-application-registration">Idea 2: Create your own multi tenant application registration</h2>
-<p>Content to follow</p>
+<p>When you <a href="registerapplication.html">create an Entra ID Application registration</a>, either manually or using PnP PowerShell, you can configure or switch it to be used on multiple tenants.</p>
+<p>If the Entra ID Application registration has already been created:</p>
+<ol>
+<li>Go to <a href="https://entra.microsoft.com">https://entra.microsoft.com</a></li>
+<li>In the menu on the left, expand Identity &gt; Applications and click on App registrations</li>
+<li>Locate the Entra ID Application registration you wish to switch to become a multi tenant application registration</li>
+<li>Go to Authentication</li>
+<li>Under &quot;Supported account types&quot;, select &quot;Accounts in any organizational directory (Any Microsoft Entra ID tenant - Multitenant)&quot; and click on Save at the bottom</li>
+</ol>
+<p>You can now use the Client ID of this application with any tenant. Restrictions may apply, based on the specific configuration of the tenants you wish to use it against.</p>
 <h2 id="idea-3-utilize-the-credential-manager-to-store-your-client-ids">Idea 3: Utilize the credential manager to store your client IDs</h2>
-<p>Content to follow</p>
+<p>See <a href="credentialmanagement.html">this article</a> on how to use the Credential Manager with PnP PowerShell.</p>
+<h2 id="idea-4-use-persisted-logins">Idea 4: Use persisted logins</h2>
+<p>See <a href="persistedlogin.html">this article</a> on how to use the persisted login feature that has been added in PnP PowerShell version 3.</p>
+<h2 id="other-ideas">Other ideas?</h2>
+<p>If you have any other idea to easily work with multiple tenants, feel free to edit this article, add your ideas, and submit it through a Pull Request.</p>
 
 </article>
           </div>

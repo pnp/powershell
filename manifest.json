@@ -11,6 +11,19 @@
       }
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "articles/acsdeprecation.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/acsdeprecation.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "articles/authentication.md",
       "output": {
@@ -8502,6 +8515,26 @@
       "output": {
         "resource": {
           "relative_path": "images/PnP_PowerShell_Roadmap.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/acsdeprecation/README.md",
+      "output": {
+        "resource": {
+          "relative_path": "images/acsdeprecation/README.md"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/acsdeprecation/sample-get-pnpazureacsprincipal.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/acsdeprecation/sample-get-pnpazureacsprincipal.png"
         }
       },
       "version": ""

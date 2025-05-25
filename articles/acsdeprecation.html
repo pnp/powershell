@@ -1,0 +1,156 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>ACS Deprecation | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="ACS Deprecation | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/acsdeprecation.md/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="acs-deprecation">ACS Deprecation</h1>
+
+<p>As <a href="https://techcommunity.microsoft.com/blog/spblog/azure-acs-retirement-in-microsoft-365/3982039">announced back in November 2023</a> already, Microsoft will deprecate ACS (Access Control Services) for new tenants as of November 1st, 2024 and it will stop working for existing tenants and will be fully retired as of April 2nd, 2026. This applies to all environments including Government Clouds and Department of Defense. In essence, we're talking about the <code>_layouts/appregnew.aspx</code>, <code>_layouts/appinv.aspx</code> and <code>_layouts/appprincipals.aspx</code> pages that will be going away.</p>
+<h2 id="what-does-this-mean-for-me">What does this mean for me?</h2>
+<p>If you're using any application registrations that have formerly been set up through <code>_layouts/appregnew.aspx</code>, it will stop working on above mentioned dates. It does not matter if you're using it with PnP PowerShell, through an SharePoint Add-In, direclty using CSOM (Client Side Object Model), direct <code>_api</code> calls to SharePoint, or any other means.</p>
+<h2 id="what-can-i-do-to-ensure-my-applications-remain-working">What can I do to ensure my applications remain working</h2>
+<p>Simple: replace them with a proper Entra ID Application Registration.</p>
+<p>If the <code>_layouts/apprenew.aspx</code> was done in December 2024 or later, it will already <a href="https://learn.microsoft.com/sharepoint/dev/sp-add-ins/add-ins-and-azure-acs-retirements-faq#when-i-use-appregnewaspx-the-created-acs-principals-show-up-in-entra">have created an Entra ID Application registration</a> for you. To validate this, simply take the Client ID/App Id of your application, go to <a href="https://entra.microsoft.com">Entra ID</a>, navigate to Identity &gt; Applications &gt; App registrations, click on the &quot;All applications&quot; tab and search for your Client ID/App ID. If it yields a result, it means your application also exists in Entra ID. If you go into the Entra ID Application registration and click on API permissions you will likely see no permissions being added to it. This is a clear indicator that this application registration has been done through <code>_layouts/appregnew.aspx</code> in or after December 2024, that it created an Entra ID Application registration counterpart, but that it still leverages ACS for its authentication. Add the required permissions here to ensure you can use this Entra ID Application registraton going forward.</p>
+<p>If you cannot find an entry in Entra ID with the same Client ID/App ID, it means the <code>_layouts/appregnew.aspx</code> operation has been done before December 2024 and no entry exists for it yet in Entra ID. You can <a href="registerapplication.html#manually-create-an-app-registration-for-interactive-login">manually create your own new Entra ID Application registration</a> or use <a href="Register-PnPAzureADApp.html#example-7">Register-PnPAzureADApp</a> to create one for you.</p>
+<h2 id="how-to-i-find-out-about-which-acs-application-registrations-my-tenant-has">How to I find out about which ACS Application Registrations my tenant has</h2>
+<h3 id="using-the-microsoft-365-assessment-tool">Using the Microsoft 365 Assessment Tool</h3>
+<p>One way would be to <a href="https://pnp.github.io/pnpassessment/addinsacs/readme.html">use the Microsoft 365 Assessment Tool to have it generate an overview for you</a> which will list out where ACS application registrations are being used.</p>
+<h3 id="using-pnp-powershell">Using PnP PowerShell</h3>
+<p>Another option would be to create something yourself using PnP PowerShell. The advantage of this option could be that you can easily automate the entire process, from detecting ACS Application registrations, to creating their Entra ID Application registration counterparts, to setting permissions on them.</p>
+<p>To find out which ACS Application registrations exist on your tenant, you can leverage <a href="Get-PnPAzureACSPrincipal.md">Get-PnPAzureACSPrincipal</a> to connect to each site collection and execute:</p>
+<pre><code class="lang-powershell">Get-PnPAzureACSPrincipal -IncludeSubsites
+</code></pre>
+<p>Ensure the Entra ID Application registration you connect with to SharePoint Online to perform this cmdlet has at least delegated Sites.FullControl.All permissions on SharePoint and delegated Application.Read.All permissions on Microsoft Graph.</p>
+<p>The output of this cmdlet will be a list of ACS Application registrations that exist on that site. Under its SiteCollectionScopedPermissions and TenantScopedPermissions you will find the permissions that have been set on each of these. For example, to pull down these details for the first ACS Application registration on the site collection scoped permissions, run:</p>
+<pre><code class="lang-powershell">Get-PnPAzureACSPrincipal -IncludeSubsites | Select -First 1 -ExpandProperty SiteCollectionScopedPermissions
+</code></pre>
+<p>It produces an output similar to:</p>
+<p><img src="../images/acsdeprecation/sample-get-pnpazureacsprincipal.png" alt="Sample Get-PnPAzureACSPrincipal output"></p>
+<p>The SiteId, WebId and ListId columns in this output, give away what kind of permissions have been set on the ACS Application registration. If a column contains just zeroes (00000000-0000-0000-0000-000000000000), it means the permissions have not been set down to that level. If it contains something else (i.e. 5c7836e9-a6fb-450f-a117-43ccea341193), it means that permissions have been set on that level. So to make it concrete, for the above sample, the following permissions have been set on this ACS Application Registration:</p>
+<ul>
+<li>FullControl on the Web scope</li>
+<li>Read on the list with id e94218ca-30d1-4118-a9b0-33e00f00d139</li>
+<li>Read on the list with id f037e2d7-78e7-4ccd-bce9-ac81843b6bcc</li>
+<li>Write on the site collection scope</li>
+</ul>
+<p>With this information, you can now start mapping these permissions to the equivallents in Entra ID. For direct access to SharePoint, the most fine grained permission you can select for now would be Sites.Selected, which provides read, write, manage or full control access to an entire site collection. Nothing more fine grained. Alternatively you could rewrite your code to make its calls through Microsoft Graph instead of directly towards SharePoint Online, in which case <a href="https://learn.microsoft.com/en-us/graph/permissions-selected-overview?tabs=http">you do have more fine grained permissions</a>.</p>
+<p>The above example again would map to:</p>
+<ul>
+<li>Sites.Selected</li>
+</ul>
+<p>Use <a href="Grant-PnPAzureADAppSitePermission.md">Grant-PnPAzureADAppSitePermission</a> to set FullControl permissions on it.</p>
+
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>
