@@ -46,12 +46,12 @@ Add to your profile functions, such as:
 ```powershell
 Function Connect-PnPDevTenant
 {
-	Connect-PnPOnline https://xxxxxdev.sharepoint.com -ClientId xxxx-xxxx-xxxx-xxx-xxxx
+	Connect-PnPOnline https://contosodev.sharepoint.com -ClientId 12345678-1234-1234-1234-123456789012
 }
 
 Function Connect-PnPProdTenant
 {
-	Connect-PnPOnline https://xxxxx.sharepoint.com -ClientId xxx-xxx-xxxx-xxxx
+	Connect-PnPOnline https://contoso.sharepoint.com -ClientId 34567890-3456-3456-3456-345678901234
 }
 ```
 
