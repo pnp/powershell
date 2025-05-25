@@ -82,10 +82,10 @@ You can now use the Client ID of this application with any tenant. Restrictions 
 
 See [this article](credentialmanagement.md) on how to use the Credential Manager with PnP PowerShell.
 
-### Idea 4: Use persisted logins
+## Idea 4: Use persisted logins
 
 See [this article](persistedlogin.md) on how to use the persisted login feature that has been added in PnP PowerShell version 3.
 
-### Other ideas?
+## Other ideas?
 
 If you have any other idea to easily work with multiple tenants, feel free to edit this article, add your ideas, and submit it through a Pull Request.
