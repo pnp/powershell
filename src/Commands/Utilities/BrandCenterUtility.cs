@@ -114,6 +114,52 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
+        /// Adds a font package to the Brand Center
+        /// </summary>
+        /// <param name="cmdlet">Cmdlet for which this runs, used for logging</param>
+        /// <param name="webUrl">Url to use to add the font package to the Brand Center</param>
+        /// <param name="store">The store add the font package to. Only Tenant and Site are allowed.</param>
+        /// <param name="title">Title of the font package to add</param>
+        /// <param name="visble">Indicates if the font package should be visible in the Brand Center. Defaults to true.</param>
+        /// <param name="clientContext">ClientContext to use to communicate with SharePoint Online</param>
+        public static void AddFontPackage(BasePSCmdlet cmdlet, ClientContext clientContext, Store store, string webUrl, string title, bool visble = true)
+        {
+            if (store != Store.Tenant && store != Store.Site)
+            {
+                throw new ArgumentOutOfRangeException(nameof(store), store, "Only Tenant and Site stores are supported for adding font packages.");
+            }
+            if (string.IsNullOrEmpty(webUrl))
+            {
+                throw new ArgumentNullException(nameof(webUrl), "Web URL cannot be null or empty.");
+            }
+ 
+            var url = GetStoreFontPackageUrlByStoreType(store, webUrl);
+            cmdlet?.LogDebug($"Making a POST request to {url} to create a {store} Brand Center font package.");
+            var response = RestHelper.Post<Font>(Framework.Http.PnPHttpClient.Instance.GetHttpClient(), url, clientContext, new Font
+            {
+                Title = title,
+                Store = store,
+                PackageJson = System.Text.Json.JsonSerializer.Serialize(new
+                {
+                    fontFaces = new[]
+                    {
+                        new { fontFamily = "Minecrafter-1721628880", fontType = "displayFont", path = "Minecrafter.Reg.ttf" },
+                        new { fontFamily = "Aaargh-1228051400", fontType = "contentFont", path = "Aaargh.ttf" }
+                    },
+                    fontSlots = new
+                    {
+                        body = new { fontFace = "Regular", fontFamily = "Minecrafter-1721628880" },
+                        heading = new { fontFace = "Normal", fontFamily = "Aaargh-1228051400" },
+                        label = new { fontFace = "Normal", fontFamily = "Aaargh-1228051400" },
+                        title = new { fontFace = "Regular", fontFamily = "Minecrafter-1721628880" }
+                    }
+                }),
+                IsValid = true,
+                IsHidden = !visble
+            });
+        }
+
+        /// <summary>
         /// Returns the font package URL to the Brand Center based on the store type
         /// </summary>
         /// <param name="store">Brand Center store to connect to</param>
