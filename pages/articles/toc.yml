@@ -50,6 +50,8 @@
       href: credentialmanagement.md
     - name: Working with persisted logins
       href: persistedlogin.md
+    - name: Dealing with the ACS deprecation
+      href: acsdeprecation.md
 - name: How to contribute
   items:
     - name: Getting started

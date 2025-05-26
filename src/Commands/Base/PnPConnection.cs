@@ -818,7 +818,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private static bool IsTenantAdminSite(ClientRuntimeContext clientContext)
+        public static bool IsTenantAdminSite(ClientRuntimeContext clientContext)
         {
             if (clientContext.Url.ToLower().Contains(".sharepoint."))
             {
@@ -843,7 +843,7 @@ namespace PnP.PowerShell.Commands.Base
         internal void InitializeTelemetry(ClientContext context, InitializationType initializationType)
         {
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var telemetryFile = System.IO.Path.Combine(userProfile, ".pnppowershelltelemetry");
+            var telemetryFile = Path.Combine(userProfile, ".pnppowershelltelemetry");
 
             var enableTelemetry = true;
             if (Environment.GetEnvironmentVariable("PNP_DISABLETELEMETRY") != null)

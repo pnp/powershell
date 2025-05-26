@@ -80,7 +80,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(IsRelease)' != '1'">
-		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.5" />
 		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core\bin\Debug\net8.0\PnP.Core.dll</HintPath>
 			<Private>true</Private>
