@@ -92,6 +92,7 @@
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters &lt;Hashtable&gt;] [-Handlers &lt;Handlers&gt;]
  [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
  [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] 
+ [-Force &lt;boolean&gt;] [-Url &lt;String&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="instance">Instance</h3>
@@ -100,6 +101,7 @@
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters &lt;Hashtable&gt;] [-Handlers &lt;Handlers&gt;]
  [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
  [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] 
+ [-Force &lt;boolean&gt;] [-Url &lt;String&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="stream">Stream</h3>
@@ -108,51 +110,56 @@
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters &lt;Hashtable&gt;] [-Handlers &lt;Handlers&gt;]
  [-ExcludeHandlers &lt;Handlers&gt;] [-ExtensibilityHandlers &lt;ExtensibilityHandler[]&gt;]
  [-TemplateProviderExtensions &lt;ITemplateProviderExtension[]&gt;] 
+ [-Force &lt;boolean&gt;] [-Url &lt;String&gt;]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to apply a site template on a web.</p>
+<p>Allows to apply a site template on a web. The template can be in XML format or a .pnp package. The cmdlet will apply the template to the web you are currently connected to, unless you provide the -Url parameter. You can specify which parts of the template to apply by using the Handlers parameter or just omit it to apply the entire template.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path template.xml -Url https://tenant.sharepoint.com/sites/sitename
+</code></pre>
+<p>Applies a site template in XML format to the the provided site collection</p>
+<h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path template.xml
 </code></pre>
-<p>Applies a site template in XML format to the current web.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
+<p>Applies a site template in XML format to the currently connected to site</p>
+<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path template.xml -ResourceFolder c:\provisioning\resources
 </code></pre>
 <p>Applies a site template in XML format to the current web. Any resources like files that are referenced in the template will be retrieved from the folder as specified with the ResourceFolder parameter.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
+<h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path template.xml -Parameters @{&quot;ListTitle&quot;=&quot;Projects&quot;;&quot;parameter2&quot;=&quot;a second value&quot;}
 </code></pre>
 <p>Applies a site template in XML format to the current web. It will populate the parameter in the template the values as specified and in the template you can refer to those values with the {parameter:<key>} token.</key></p>
 <p>For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
+<h3 id="example-5">EXAMPLE 5</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path template.xml -Handlers Lists, SiteSecurity
 </code></pre>
 <p>Applies a site template in XML format to the current web. It will only apply the lists and site security part of the template.</p>
-<h3 id="example-5">EXAMPLE 5</h3>
+<h3 id="example-6">EXAMPLE 6</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path template.pnp
 </code></pre>
 <p>Applies a site template from a pnp package to the current web.</p>
-<h3 id="example-6">EXAMPLE 6</h3>
+<h3 id="example-7">EXAMPLE 7</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path &quot;https://tenant.sharepoint.com/sites/templatestorage/Documents/template.pnp&quot;
 </code></pre>
 <p>Applies a site template from a pnp package stored in a library to the current web.</p>
-<h3 id="example-7">EXAMPLE 7</h3>
+<h3 id="example-8">EXAMPLE 8</h3>
 <pre><code class="lang-powershell">$handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler2
 Invoke-PnPSiteTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$handler2
 </code></pre>
 <p>This will create two new ExtensibilityHandler objects that are run while provisioning the template</p>
-<h3 id="example-8">EXAMPLE 8</h3>
+<h3 id="example-9">EXAMPLE 9</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path .\ -InputInstance $template
 </code></pre>
 <p>Applies a site template from an in-memory instance of a SiteTemplate type of the PnP Core Component, reading the supporting files, if any, from the current (.) path. The syntax can be used together with any other supported parameters.</p>
-<h3 id="example-9">EXAMPLE 9</h3>
+<h3 id="example-10">EXAMPLE 10</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path .\template.xml -TemplateId &quot;MyTemplate&quot;
 </code></pre>
 <p>Applies the SiteTemplate with the ID &quot;MyTemplate&quot; located in the template definition file template.xml.</p>
-<h3 id="example-10">EXAMPLE 10</h3>
+<h3 id="example-11">EXAMPLE 11</h3>
 <pre><code class="lang-powershell">$stream = Get-PnPFile -Url https://tenant.sharepoint.com/sites/TemplateGallery/Shared%20Documents/ProjectSite.pnp -AsMemoryStream
 Invoke-PnPSiteTemplate -Stream $stream
 </code></pre>
@@ -200,6 +207,17 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>When set to true, the cmdlet will not block you from applying the template to the SharePoint Online Admin Center site collection, which is not recommended. Use with care!</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -329,6 +347,17 @@ Accept wildcard characters: False
 <h3 id="-templateproviderextensions">-TemplateProviderExtensions</h3>
 <p>Allows you to specify ITemplateProviderExtension to execute while applying a template.</p>
 <pre><code class="lang-yaml">Type: ITemplateProviderExtension[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-url">-Url</h3>
+<p>Optionally allows you to specify the URL of the web to apply the template to. If not specified, the template will be applied to the currently connected web. It takes precedence over the current context and requires a full URL to a web, i.e. <a href="https://tenant.sharepoint.com/sites/somesite">https://tenant.sharepoint.com/sites/somesite</a>, not just a site collection relative URL.</p>
+<pre><code class="lang-yaml">Type: string
 Parameter Sets: (All)
 
 Required: False
