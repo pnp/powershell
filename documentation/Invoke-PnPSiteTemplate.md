@@ -21,7 +21,7 @@ Invoke-PnPSiteTemplate -Path <String> [-TemplateId <String>] [-ResourceFolder <S
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
- [-Force <boolean>] [-Url <String>]
+ [-Url <String>]
  [-Connection <PnPConnection>] 
 ```
 
@@ -32,7 +32,7 @@ Invoke-PnPSiteTemplate -InputInstance <SiteTemplate> [-TemplateId <String>] [-Re
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
- [-Force <boolean>] [-Url <String>]
+ [-Url <String>]
  [-Connection <PnPConnection>] 
 ```
 
@@ -43,7 +43,7 @@ Invoke-PnPSiteTemplate -Stream <Stream> [-TemplateId <String>] [-ResourceFolder 
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
- [-Force <boolean>] [-Url <String>]
+ [-Url <String>]
  [-Connection <PnPConnection>] 
 ```
 
@@ -190,20 +190,6 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Force
-When set to true, the cmdlet will not block you from applying the template to the SharePoint Online Admin Center site collection, which is not recommended. Use with care!
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
