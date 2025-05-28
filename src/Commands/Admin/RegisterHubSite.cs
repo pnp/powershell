@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using Microsoft.Identity.Client;
 
 namespace PnP.PowerShell.Commands.Admin
 {
@@ -20,7 +21,24 @@ namespace PnP.PowerShell.Commands.Admin
 
         protected override void ExecuteCmdlet()
         {
-            HubSiteProperties hubSiteProperties = Tenant.RegisterHubSite(Site.Url);
+            SiteProperties siteProperties = null;
+            if (Site.Id != Guid.Empty)
+            {
+                siteProperties = Tenant.GetSitePropertiesById(Site.Id,false, Connection.TenantAdminUrl);
+                if (siteProperties == null) return;
+            }
+
+            HubSiteProperties hubSiteProperties = null;
+
+            if (Site.Id != Guid.Empty)
+            {
+                hubSiteProperties = Tenant.RegisterHubSite(siteProperties.Url);
+            }
+            else
+            {
+                hubSiteProperties = Tenant.RegisterHubSite(Site.Url);
+            }
+            
             AdminContext.Load(hubSiteProperties);
             AdminContext.ExecuteQueryRetry();
 
@@ -34,8 +52,15 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 catch (Exception)
                 {
-                    Tenant.UnregisterHubSite(Site.Url);
-                    AdminContext.ExecuteQueryRetry();
+                    if (Site.Id != Guid.Empty)
+                    {
+                        Tenant.UnregisterHubSite(siteProperties.Url);
+                    }
+                    else 
+                    {
+                        Tenant.UnregisterHubSite(Site.Url);
+                    }
+                        AdminContext.ExecuteQueryRetry();
                     throw;
                 }                
             }
