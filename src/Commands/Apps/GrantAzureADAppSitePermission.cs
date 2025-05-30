@@ -1,17 +1,17 @@
-using System;
-using System.Linq;
-using System.Management.Automation;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
+using System;
+using System.Linq;
+using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsSecurity.Grant, "PnPAzureADAppSitePermission")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Sites.FullControl.All")]
+    [RequiredApiDelegatedPermissions("graph/Sites.FullControl.All")]
     [Alias("Grant-PnPEntraIDAppSitePermission")]
     [OutputType(typeof(AzureADAppPermissionInternal))]
     public class GrantPnPAzureADAppSitePermission : PnPGraphCmdlet

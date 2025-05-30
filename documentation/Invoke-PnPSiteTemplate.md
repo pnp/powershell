@@ -21,6 +21,7 @@ Invoke-PnPSiteTemplate -Path <String> [-TemplateId <String>] [-ResourceFolder <S
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+ [-Url <String>]
  [-Connection <PnPConnection>] 
 ```
 
@@ -31,6 +32,7 @@ Invoke-PnPSiteTemplate -InputInstance <SiteTemplate> [-TemplateId <String>] [-Re
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+ [-Url <String>]
  [-Connection <PnPConnection>] 
 ```
 
@@ -41,30 +43,38 @@ Invoke-PnPSiteTemplate -Stream <Stream> [-TemplateId <String>] [-ResourceFolder 
  [-ProvisionFieldsToSubWebs] [-ClearNavigation] [-Parameters <Hashtable>] [-Handlers <Handlers>]
  [-ExcludeHandlers <Handlers>] [-ExtensibilityHandlers <ExtensibilityHandler[]>]
  [-TemplateProviderExtensions <ITemplateProviderExtension[]>] 
+ [-Url <String>]
  [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
 
-Allows to apply a site template on a web.
+Allows to apply a site template on a web. The template can be in XML format or a .pnp package. The cmdlet will apply the template to the web you are currently connected to, unless you provide the -Url parameter. You can specify which parts of the template to apply by using the Handlers parameter or just omit it to apply the entire template.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
+Invoke-PnPSiteTemplate -Path template.xml -Url https://tenant.sharepoint.com/sites/sitename
+```
+
+Applies a site template in XML format to the the provided site collection
+
+### EXAMPLE 2
+```powershell
 Invoke-PnPSiteTemplate -Path template.xml
 ```
 
-Applies a site template in XML format to the current web.
+Applies a site template in XML format to the currently connected to site
 
-### EXAMPLE 2
+### EXAMPLE 3
 ```powershell
 Invoke-PnPSiteTemplate -Path template.xml -ResourceFolder c:\provisioning\resources
 ```
 
 Applies a site template in XML format to the current web. Any resources like files that are referenced in the template will be retrieved from the folder as specified with the ResourceFolder parameter.
 
-### EXAMPLE 3
+### EXAMPLE 4
 ```powershell
 Invoke-PnPSiteTemplate -Path template.xml -Parameters @{"ListTitle"="Projects";"parameter2"="a second value"}
 ```
@@ -73,28 +83,28 @@ Applies a site template in XML format to the current web. It will populate the p
 
 For instance with the example above, specifying {parameter:ListTitle} in your template will translate to 'Projects' when applying the template. These tokens can be used in most string values in a template.
 
-### EXAMPLE 4
+### EXAMPLE 5
 ```powershell
 Invoke-PnPSiteTemplate -Path template.xml -Handlers Lists, SiteSecurity
 ```
 
 Applies a site template in XML format to the current web. It will only apply the lists and site security part of the template.
 
-### EXAMPLE 5
+### EXAMPLE 6
 ```powershell
 Invoke-PnPSiteTemplate -Path template.pnp
 ```
 
 Applies a site template from a pnp package to the current web.
 
-### EXAMPLE 6
+### EXAMPLE 7
 ```powershell
 Invoke-PnPSiteTemplate -Path "https://tenant.sharepoint.com/sites/templatestorage/Documents/template.pnp"
 ```
 
 Applies a site template from a pnp package stored in a library to the current web.
 
-### EXAMPLE 7
+### EXAMPLE 8
 ```powershell
 $handler1 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler1
 $handler2 = New-PnPExtensibilityHandlerObject -Assembly Contoso.Core.Handlers -Type Contoso.Core.Handlers.MyExtensibilityHandler2
@@ -103,21 +113,21 @@ Invoke-PnPSiteTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$h
 
 This will create two new ExtensibilityHandler objects that are run while provisioning the template
 
-### EXAMPLE 8
+### EXAMPLE 9
 ```powershell
 Invoke-PnPSiteTemplate -Path .\ -InputInstance $template
 ```
 
 Applies a site template from an in-memory instance of a SiteTemplate type of the PnP Core Component, reading the supporting files, if any, from the current (.\) path. The syntax can be used together with any other supported parameters.
 
-### EXAMPLE 9
+### EXAMPLE 10
 ```powershell
 Invoke-PnPSiteTemplate -Path .\template.xml -TemplateId "MyTemplate"
 ```
 
 Applies the SiteTemplate with the ID "MyTemplate" located in the template definition file template.xml.
 
-### EXAMPLE 10
+### EXAMPLE 11
 ```powershell
 $stream = Get-PnPFile -Url https://tenant.sharepoint.com/sites/TemplateGallery/Shared%20Documents/ProjectSite.pnp -AsMemoryStream
 Invoke-PnPSiteTemplate -Stream $stream
@@ -355,7 +365,19 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Url
+Optionally allows you to specify the URL of the web to apply the template to. If not specified, the template will be applied to the currently connected web. It takes precedence over the current context and requires a full URL to a web, i.e. https://tenant.sharepoint.com/sites/somesite, not just a site collection relative URL.
 
+```yaml
+Type: string
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ## RELATED LINKS
 
