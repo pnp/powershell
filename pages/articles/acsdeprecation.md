@@ -10,7 +10,7 @@ Simple: replace them with a proper Entra ID Application Registration.
 
 If the `_layouts/apprenew.aspx` was done in December 2024 or later, it will already [have created an Entra ID Application registration](https://learn.microsoft.com/sharepoint/dev/sp-add-ins/add-ins-and-azure-acs-retirements-faq#when-i-use-appregnewaspx-the-created-acs-principals-show-up-in-entra) for you. To validate this, simply take the Client ID/App Id of your application, go to [Entra ID](https://entra.microsoft.com), navigate to Identity > Applications > App registrations, click on the "All applications" tab and search for your Client ID/App ID. If it yields a result, it means your application also exists in Entra ID. If you go into the Entra ID Application registration and click on API permissions you will likely see no permissions being added to it. This is a clear indicator that this application registration has been done through `_layouts/appregnew.aspx` in or after December 2024, that it created an Entra ID Application registration counterpart, but that it still leverages ACS for its authentication. Add the required permissions here to ensure you can use this Entra ID Application registraton going forward.
 
-If you cannot find an entry in Entra ID with the same Client ID/App ID, it means the `_layouts/appregnew.aspx` operation has been done before December 2024 and no entry exists for it yet in Entra ID. You can [manually create your own new Entra ID Application registration](registerapplication.md#manually-create-an-app-registration-for-interactive-login) or use [Register-PnPAzureADApp](Register-PnPAzureADApp.html#example-7) to create one for you.
+If you cannot find an entry in Entra ID with the same Client ID/App ID, it means the `_layouts/appregnew.aspx` operation has been done before December 2024 and no entry exists for it yet in Entra ID. You can [manually create your own new Entra ID Application registration](registerapplication.md#manually-create-an-app-registration-for-interactive-login) or use [Register-PnPAzureADApp](../cmdlets/Register-PnPAzureADApp.md#example-7) to create one for you.
 
 ## How to I find out about which ACS Application Registrations my tenant has
 
@@ -51,7 +51,7 @@ The above example again would map to:
 
 - Sites.Selected
 
-Use [Grant-PnPAzureADAppSitePermission](Grant-PnPAzureADAppSitePermission.md) to set FullControl permissions on it.
+Use [Grant-PnPAzureADAppSitePermission](../cmdlets/Grant-PnPAzureADAppSitePermission.md) to set FullControl permissions on it.
 
 ## What do I need to change in my code?
 
