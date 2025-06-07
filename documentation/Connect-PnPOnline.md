@@ -897,7 +897,7 @@ Type: SwitchParameter
 Parameter Sets: Federated Identity
 Aliases:
 
-Required: False
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

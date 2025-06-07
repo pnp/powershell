@@ -733,6 +733,10 @@ namespace PnP.PowerShell.Commands.Base
             {
                 connectionMethod = ConnectionMethod.AzureADWorkloadIdentity;
             }
+            else if (initializationType == InitializationType.ManagedIdentity)
+            {
+                connectionMethod = ConnectionMethod.ManagedIdentity;
+            }
             else if (initializationType == InitializationType.FederatedIdentity)
             {
                 connectionMethod = ConnectionMethod.FederatedIdentity;
