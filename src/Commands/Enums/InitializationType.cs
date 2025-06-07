@@ -16,6 +16,6 @@
         ManagedIdentity,
         EnvironmentVariable,
         AzureADWorkloadIdentity,
-        FederatedIdentityCredentials
+        FederatedIdentity
     }
 }

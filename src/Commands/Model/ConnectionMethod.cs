@@ -34,6 +34,6 @@
         ManagedIdentity,
 
         AzureADWorkloadIdentity,
-        FederatedIdentityCredentials
+        FederatedIdentity
     }
 }
