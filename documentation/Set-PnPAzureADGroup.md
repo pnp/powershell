@@ -40,7 +40,7 @@ Sets the display name of the group where $group is a Group entity.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPAzureADGroup -Identity $groupId -Descriptions "My Description" -DisplayName "My DisplayName"
+Set-PnPAzureADGroup -Identity $groupId -Description "My Description" -DisplayName "My DisplayName"
 ```
 
 Sets the display name and description of a group based upon its ID.
