@@ -112,9 +112,9 @@ Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-PersistLogin] [
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
-### Federated Identity Credentials
+### Federated Identity
 ```powershell
-Connect-PnPOnline [-Url <String>] [-Tenant <String>] -FederatedIdentityCredentials [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
+Connect-PnPOnline [-Url <String>] [-Tenant <String>] -FederatedIdentity [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -296,7 +296,7 @@ On Windows, this entry needs to be under "Generic Credentials".
 
 ### EXAMPLE 20
 ```powershell
-Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentityCredentials
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
 ```
 
 Connect to SharePoint/Microsoft Graph using federated identity credentials.
@@ -888,13 +888,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FederatedIdentityCredentials
+### -FederatedIdentity
 
-Connects using Federated Identity credentials. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
+Connects using Federated Identity. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Federated Identity Credentials
+Parameter Sets: Federated Identity
 Aliases:
 
 Required: False

@@ -658,7 +658,18 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithFederatedIdentityCredentials(string url, string tenantAdminUrl, string appClientId, string tenantId)
+        /// <summary>
+        /// Creates a PnPConnection using a Federated Identity
+        /// </summary>
+        /// <param name="url">Url to the SharePoint Online site to connect to</param>
+        /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
+        /// <param name="appClientId">The Client ID of the Federated Identity application</param>
+        /// <param name="tenantId">The Tenant ID of the Federated Identity application</param>
+        /// <returns>Instantiated PnPConnection</returns>
+        /// <remarks>
+        /// This method is used to create a PnPConnection using a Federated Identity, which allows for authentication without the need for a client secret.
+        /// </remarks>
+        internal static PnPConnection CreateWithFederatedIdentity(string url, string tenantAdminUrl, string appClientId, string tenantId)
         {
             string defaultResource = "https://graph.microsoft.com/.default";
             if (url != null)
@@ -670,7 +681,7 @@ namespace PnP.PowerShell.Commands.Base
             PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
             var accessToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, defaultResource).GetAwaiter().GetResult();
 
-            // Set up the AuthenticationManager in PnP Framework to use a Managed Identity context
+            // Set up the AuthenticationManager in PnP Framework to use a Federated Identity context
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
                 PnPClientContext context = null;
