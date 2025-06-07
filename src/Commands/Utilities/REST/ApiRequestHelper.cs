@@ -116,6 +116,36 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
+        public static bool IsUnauthorizedAccessException(string message)
+        {
+            if (string.IsNullOrWhiteSpace(message))
+                return false;
+
+            try
+            {
+                using var doc = JsonDocument.Parse(message);
+                var root = doc.RootElement;
+
+                if (root.TryGetProperty("odata.error", out var odataError))
+                {
+                    if (odataError.TryGetProperty("code", out var codeProp))
+                    {
+                        var code = codeProp.GetString();
+                        if (!string.IsNullOrEmpty(code) && code.Contains("System.UnauthorizedAccessException", StringComparison.OrdinalIgnoreCase))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            catch (JsonException)
+            {
+                // Not a valid JSON, ignore
+            }
+
+            return false;
+        }
+
         #region GET
 
         private HttpRequestMessage GetMessage(string url, HttpMethod method, HttpContent content = null, IDictionary<string, string> additionalHeaders = null)
