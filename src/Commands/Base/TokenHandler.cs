@@ -289,7 +289,7 @@ namespace PnP.PowerShell.Commands.Base
                 var systemAccessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
                 if (string.IsNullOrEmpty(systemAccessToken))
                 {
-                    throw new Exception("The SYSTEM_ACCESSTOKEN environment variable is not available. Please check the Azure DevOps pipeline task configuration. It should contain 'SYSTEM_ACCESSTOKEN: $(System.AccessToken)' in the env section.");
+                    throw new PSInvalidOperationException("The SYSTEM_ACCESSTOKEN environment variable is not available. Please check the Azure DevOps pipeline task configuration. It should contain 'SYSTEM_ACCESSTOKEN: $(System.AccessToken)' in the env section.");
                 }
 
                 var serviceConnectionId = Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_SERVICE_CONNECTION_ID");
@@ -349,7 +349,7 @@ namespace PnP.PowerShell.Commands.Base
                 var urlSuffix = !string.IsNullOrEmpty(serviceConnectionId) ? $"&serviceConnectionId={serviceConnectionId}" : "";
                 var requestUrl = $"{Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI")}?api-version=7.1{urlSuffix}";
 
-                using var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
+                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
                 httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN")}");
                 httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
                 httpClient.DefaultRequestHeaders.Add("x-anonymous", "true");
@@ -386,7 +386,7 @@ namespace PnP.PowerShell.Commands.Base
                 var requestData = string.Join("&", queryParams);
                 var requestUrl = $"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token";
 
-                using var httpClient = new HttpClient();
+                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
                 var content = new StringContent(requestData, Encoding.UTF8, "application/x-www-form-urlencoded");
 
                 httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -396,11 +396,7 @@ namespace PnP.PowerShell.Commands.Base
                 response.EnsureSuccessStatusCode();
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
-
-                var expiresIn = int.Parse(tokenResponse["expires_in"].ToString()) * 1000;
-                var now = DateTime.UtcNow;
-                var expiresOn = now.AddMilliseconds(expiresIn);
+                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);                
 
                 return tokenResponse["access_token"].ToString();
             }
