@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Apps
                                 var tenantUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
                                 using var tenantContext = ClientContext.Clone(tenantUrl);
 
-                                WriteVerbose("Temporarily enabling scripting on the app catalog site");
+                                LogDebug("Temporarily enabling scripting on the app catalog site");
 
                                 var tenant = new Tenant(tenantContext);
                                 tenant.SetSiteProperties(ClientContext.Url, noScriptSite: false);
@@ -64,13 +64,13 @@ namespace PnP.PowerShell.Commands.Apps
                             }
                             else
                             {
-                                WriteWarning("Scripting is disabled on the site. This command cannot proceed without allowing scripts. Please contact your SharePoint admin to allow scripting.");
+                                LogWarning("Scripting is disabled on the site. This command cannot proceed without allowing scripts. Please contact your SharePoint admin to allow scripting.");
                                 return;
                             }
                         }
                         catch (Exception innerEx)
                         {
-                            WriteError(new ErrorRecord(innerEx, "NoScriptSiteError", ErrorCategory.InvalidOperation, site));
+                            LogError(innerEx);
                             return;
                         }
                         finally
@@ -79,7 +79,7 @@ namespace PnP.PowerShell.Commands.Apps
                             {
                                 var tenantUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
                                 using var tenantContext = ClientContext.Clone(tenantUrl);
-                                WriteVerbose("Reverting the no-script setting on the app catalog site");
+                                LogDebug("Reverting the no-script setting on the app catalog site");
                                 var tenant = new Tenant(tenantContext);
                                 tenant.SetSiteProperties(ClientContext.Url, noScriptSite: true);
                             }
