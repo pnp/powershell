@@ -262,7 +262,7 @@ namespace PnP.PowerShell.Commands.Base
         }
 
         /// <summary>
-        /// Returns an access token based on a Azure AD Workload Identity. Only works within Azure components supporting workload identities.
+        /// Returns an access token based on a Federated Identity. Only works within Azure components supporting federated identities like GitHub/AzureDevOps.
         /// </summary>
         /// <param name="cmdlet">The cmdlet scope in which this code runs. Used to write logging to.</param>
         /// <param name="httpClient">The HttpClient that will be reused to fetch the token to avoid port exhaustion</param>
