@@ -322,11 +322,13 @@ namespace PnP.PowerShell.Commands.Base
                 var requestUrl = $"{Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL")}&audience={Uri.EscapeDataString("api://AzureADTokenExchange")}";
 
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN")}");
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-                httpClient.DefaultRequestHeaders.Add("x-anonymous", "true");
 
-                var response = await httpClient.GetAsync(requestUrl);
+                using var requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+                requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN"));
+                requestMessage.Headers.Add("Accept", "application/json");
+                requestMessage.Headers.Add("x-anonymous", "true");
+                var response = await httpClient.SendAsync(requestMessage);
+
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
@@ -350,11 +352,14 @@ namespace PnP.PowerShell.Commands.Base
                 var requestUrl = $"{Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI")}?api-version=7.1{urlSuffix}";
 
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-                httpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN")}");
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-                httpClient.DefaultRequestHeaders.Add("x-anonymous", "true");
 
-                var response = await httpClient.PostAsync(requestUrl, new StringContent("", Encoding.UTF8, "application/json"));
+                using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUrl);
+                requestMessage.Content = new StringContent("", Encoding.UTF8, "application/json");
+                requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN"));
+                requestMessage.Headers.Add("Accept", "application/json");
+                requestMessage.Headers.Add("x-anonymous", "true");
+
+                var response = await httpClient.SendAsync(requestMessage);
                 response.EnsureSuccessStatusCode();
 
                 var content = await response.Content.ReadAsStringAsync();
@@ -373,6 +378,7 @@ namespace PnP.PowerShell.Commands.Base
             try
             {
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Entra ID access Token with federated token...");
+                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
                 var queryParams = new List<string>
     {
@@ -386,17 +392,16 @@ namespace PnP.PowerShell.Commands.Base
                 var requestData = string.Join("&", queryParams);
                 var requestUrl = $"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token";
 
-                var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-                var content = new StringContent(requestData, Encoding.UTF8, "application/x-www-form-urlencoded");
+                using var request = new HttpRequestMessage(HttpMethod.Post, requestUrl);
+                request.Content = new StringContent(requestData, Encoding.UTF8, "application/x-www-form-urlencoded");
+                request.Headers.Add("Accept", "application/json");
+                request.Headers.Add("x-anonymous", "true");
 
-                httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-                httpClient.DefaultRequestHeaders.Add("x-anonymous", "true");
-
-                var response = await httpClient.PostAsync(requestUrl, content);
+                var response = await httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
 
                 var responseContent = await response.Content.ReadAsStringAsync();
-                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);                
+                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
 
                 return tokenResponse["access_token"].ToString();
             }
