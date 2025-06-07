@@ -27,11 +27,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get-PnPCopilotAgent` cmdlet to properly handle pagination in large lists.
 - Fix `Send-PnPMail` cmdlet to send mail via Graph API and SPO. It was facing parameter set issue. [#4922](https://github.com/pnp/powershell/pull/4922)
 - Fix `Unregister-PnPHubSite` cmdlet to properly handle null reference error. [#4944](https://github.com/pnp/powershell/pull/4944)
+- Fix `Add/Publish/Unpublish/Remove-PnPApp` cmdlets to properly handle the issue in no-script sites.
 
 ### Removed
 
 ### Contributors
 
+- [abwlodar]
 - Reshmee Auckloo [reshmee011]
 - [wuxiaojun514]
 - [pajeffery]
