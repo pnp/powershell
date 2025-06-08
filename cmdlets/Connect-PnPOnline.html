@@ -154,6 +154,9 @@
 <pre><code class="lang-powershell">Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] &lt;String&gt; [-PersistLogin] [-CreateDrive] [-DriveName &lt;String&gt;] 
  [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
+<h3 id="federated-identity">Federated Identity</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline [-Url &lt;String&gt;] [-Tenant &lt;String&gt;] -FederatedIdentity [-AzureEnvironment &lt;AzureEnvironment&gt;] [-TenantAdminUrl &lt;String&gt;] [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;] [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets.
 See <a href="https://pnp.github.io/powershell/articles/connecting.html">https://pnp.github.io/powershell/articles/connecting.html</a> for more information on the options to connect.</p>
@@ -260,6 +263,10 @@ See <a href="https://learn.microsoft.com/sharepoint/dev/solution-guidance/securi
 </code></pre>
 <p>Connect to SharePoint using Credentials (username and password) from Credential Manager (Windows) or Keychain (Mac) with the specified name to use to authenticate.</p>
 <p>On Windows, this entry needs to be under &quot;Generic Credentials&quot;.</p>
+<h3 id="example-20">EXAMPLE 20</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
+</code></pre>
+<p>Connect to SharePoint/Microsoft Graph using federated identity credentials.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-accesstoken">-AccessToken</h3>
 <p>Using this parameter you can provide your own access token.
@@ -726,6 +733,18 @@ Parameter Sets: App-Only with Azure Active Directory
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-federatedidentity">-FederatedIdentity</h3>
+<p>Connects using Federated Identity. For more information on this, you can visit <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest">this link</a>.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Federated Identity
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
