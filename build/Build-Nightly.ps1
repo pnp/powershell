@@ -247,3 +247,6 @@ if ($runPublish -eq $true) {
 	$json = @{Version = "$version"; Message = "" } | ConvertTo-Json
 	Set-Content ./version.json -Value $json -Force -NoNewline
 }
+else {
+	Write-Host "No changes in PnP PowerShell, PnP Framework or PnP Core SDK. Exiting." -ForegroundColor Green
+}
