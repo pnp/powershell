@@ -13,6 +13,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
 - Added `-User` parameter to `Get-PnPTeamsTeam` cmdlet to allow fetching list of teams a user has access to.
 - Added support for `-FederatedIdentity` in `Connect-PnPOnline` to support Federated Identity.
+- Added support for SSO in WSL (Windows Subsystem for Linux) and Linux distributions. You can now use `Connect-PnPOnline` with `-OSLogin` which helps with more secure auth such as FIDO, Conditional Access policies etc.
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
@@ -33,6 +34,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Marc D Anderson [sympmarc]
 - [abwlodar]
 - Reshmee Auckloo [reshmee011]
 - [wuxiaojun514]
