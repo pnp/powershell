@@ -29,11 +29,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Send-PnPMail` cmdlet to send mail via Graph API and SPO. It was facing parameter set issue. [#4922](https://github.com/pnp/powershell/pull/4922)
 - Fix `Unregister-PnPHubSite` cmdlet to properly handle null reference error. [#4944](https://github.com/pnp/powershell/pull/4944)
 - Fix `Add/Publish/Unpublish/Remove-PnPApp` cmdlets to properly handle the issue in no-script sites.
+- Fix `Get-PnPHubSiteChild` cmdlet to handle vanity domains. [#4965](https://github.com/pnp/powershell/pull/4965)
 
 ### Removed
 
 ### Contributors
 
+- Janne Holm [jhholm]
 - Marc D Anderson [sympmarc]
 - [abwlodar]
 - Reshmee Auckloo [reshmee011]
