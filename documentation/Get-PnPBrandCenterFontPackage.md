@@ -10,7 +10,7 @@ title: Get-PnPBrandCenterFontPackage
 # Get-PnPBrandCenterFontPackage
 
 ## SYNOPSIS
-Returns the available fonts configured through the Brand Center
+Returns the available font packages configured through the Brand Center
 
 ## SYNTAX
 
@@ -21,11 +21,11 @@ Get-PnPBrandCenterFontPackage [-Store <Tenant|OutOfBox|Site|All>] [-Connection <
 
 ### Single
 ```powershell
-Get-PnPBrandCenterFontPackage -Identity <BrandCenterFontPipeBind> [-Store <Tenant|OutOfBox|Site|All>] [-Connection <PnPConnection>]
+Get-PnPBrandCenterFontPackage -Identity <BrandCenterFontPackagePipeBind> [-Store <Tenant|OutOfBox|Site|All>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Allows retrieval of the available fonts from the various Brand Centers.
+Allows retrieval of the available font packages from the various Brand Centers.
 
 ## EXAMPLES
 
@@ -34,28 +34,28 @@ Allows retrieval of the available fonts from the various Brand Centers.
 Get-PnPBrandCenterFontPackage
 ```
 
-Returns all the available fonts
+Returns all the available font packages
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPBrandCenterFontPackage -Store Site
 ```
 
-Returns the available fonts from the site collection Brand Center
+Returns the available font packages from the site collection Brand Center
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPBrandCenterFontPackage -Identity "My awesome font"
 ```
 
-Looks up and returns the font with the name "My awesome font" from any of the Brand Centers
+Looks up and returns the font packages with the name "My awesome font" from any of the Brand Centers
 
 ### EXAMPLE 4
 ```powershell
 Get-PnPBrandCenterFontPackage -Identity "2812cbd8-7176-4e45-8911-6a063f89a1f1"
 ```
 
-Looks up and returns the font with the Identity "2812cbd8-7176-4e45-8911-6a063f89a1f1" from any of the Brand Centers
+Looks up and returns the font package with the Identity "2812cbd8-7176-4e45-8911-6a063f89a1f1" from any of the Brand Centers
 
 ## PARAMETERS
 
@@ -74,10 +74,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-Unique identifier of the font to be retrieved. This can be its guid, name or a BrandCenterFont object. If not specified, all the available fonts will be returned.
+Unique identifier of the font package to be retrieved. This can be its guid, name or a BrandCenterFontPackage object. If not specified, all the available font packages will be returned.
 
 ```yaml
-Type: BrandCenterFontPipeBind
+Type: BrandCenterFontPackagePipeBind
 Parameter Sets: Single
 
 Required: True
@@ -88,11 +88,11 @@ Accept wildcard characters: False
 ```
 
 ### -Store
-Indicates the source of the fonts to be retrieved. The following values are available:
-- Tenant: The fonts configured in the tenant Brand Center
-- Site: The fonts configured in the site collection Brand Center
-- OutOfBox: The out of box fonts available in the tenant
-- All: All the fonts available in the tenant, including the ones configured in the tenant and site collection Brand Center and the out of box fonts.
+Indicates the source of the font packages to be retrieved. The following values are available:
+- Tenant: The font packages configured in the tenant Brand Center
+- Site: The font packages configured in the site collection Brand Center
+- OutOfBox: The out of box font packages available in the tenant
+- All: All the font packages available in the tenant, including the ones configured in the tenant and site collection Brand Center and the out of box font packages.
 
 ```yaml
 Type: Store

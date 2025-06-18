@@ -3203,9 +3203,9 @@
       </TableControl>
     </View>
     <View>
-      <Name>Font</Name>
+      <Name>FontPackage</Name>
       <ViewSelectedBy>
-        <TypeName>PnP.PowerShell.Commands.Model.SharePoint.BrandCenter.Font</TypeName>
+        <TypeName>PnP.PowerShell.Commands.Model.SharePoint.BrandCenter.FontPackage</TypeName>
       </ViewSelectedBy>
       <TableControl>
         <TableHeaders>
