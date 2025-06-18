@@ -12,6 +12,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 - Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
 - Added `-User` parameter to `Get-PnPTeamsTeam` cmdlet to allow fetching list of teams a user has access to.
+- Added `Get-PnPBrandCenterFont` cmdlet to retrieve the available fonts in the Brand Center
+- Added `Add-PnPBrandCenterFontPackage` cmdlet to allow creating a font package in the Brand Center
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
@@ -29,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Koen Zomers [koenzomers]
 - [wuxiaojun514]
 - [pajeffery]
 - Giacomo Pozzoni [jackpoz]
