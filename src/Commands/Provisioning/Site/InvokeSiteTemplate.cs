@@ -11,15 +11,16 @@ using System.Linq;
 using PnP.Framework.Provisioning.Providers;
 using System.Collections.Generic;
 using PnP.PowerShell.Commands.Utilities;
+using System.Net;
+using PnP.PowerShell.Commands.Base;
 
 namespace PnP.PowerShell.Commands.Provisioning.Site
 {
     [Cmdlet(VerbsLifecycle.Invoke, "PnPSiteTemplate")]
-    public class InvokeSiteTemplate : PnPWebCmdlet
+    public class InvokeSiteTemplate : PnPSharePointCmdlet
     {
         private ProgressRecord progressRecord = new ProgressRecord(0, "Activity", "Status");
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
-
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ParameterSetName = "Path")]
         public string Path;
@@ -65,10 +66,56 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         
         [Parameter(Mandatory = false, ParameterSetName = "Stream")]
         public MemoryStream Stream { get; set; }
+        
+        [Parameter(Mandatory = false)]
+        [Alias("Url")]
+        public string Identity { get; set; }
 
         protected override void ExecuteCmdlet()
         {
-            CurrentWeb.EnsureProperty(w => w.Url);
+            ClientContext applyTemplateContext = null;
+
+            // If the Identity or Url parameter has been specified, we will build a context to apply the template to that specific site collection
+            if (ParameterSpecified(nameof(Identity)))
+            {
+                // Validate if the Identity/Url parameter is a valid full URL
+                if (Uri.TryCreate(Identity, UriKind.Absolute, out Uri uri))
+                {
+                    LogDebug($"Connecting to the SharePoint Online site at '{uri}' to apply the template to");
+                    try
+                    {
+                        applyTemplateContext = Connection.CloneContext(Identity);
+                    }
+                    catch (WebException e) when (e.Status == WebExceptionStatus.NameResolutionFailure)
+                    {
+                        throw new PSInvalidOperationException($"The hostname '{uri}' which you have provided to apply the template to is invalid and does not exist.", e);
+                    }
+                    catch (Exception e)
+                    {
+                        throw new PSInvalidOperationException($"Unable to connect to the SharePoint Online Admin site at '{uri}' to run apply the template to. Error message: {e.Message}", e);
+                    }
+                    LogDebug($"Connected to the SharePoint Online site at '{uri}' to apply the template");
+                }
+                else
+                {
+                    throw new ArgumentException("The Identity parameter, when provided, must be a valid full URL to the site collection to apply the template to.", nameof(Identity));
+                }
+            }
+            else
+            {
+                // If the Identity/Url parameter has not been specified, we will use the current context to apply the template to
+                applyTemplateContext = ClientContext;
+            }
+
+           
+            // Avoid the template being applied to a tenant admin site
+            if (PnPConnection.IsTenantAdminSite(applyTemplateContext))
+            {
+                // If the current context is a tenant admin site, we cannot apply a site template to it
+                throw new PSInvalidOperationException($"You cannot apply a site template to a tenant admin site. Please connect to a site collection or use the {nameof(Identity)} parameter to specify which sitecollection it should be applied to.");
+            }
+
+            applyTemplateContext.Web.EnsureProperty(w => w.Url);
             ProvisioningTemplate provisioningTemplate;
 
             FileConnectorBase fileConnector;
@@ -99,8 +146,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 }
                 else
                 {
-                    Uri fileUri = new Uri(Path);
-                    var webUrl = Microsoft.SharePoint.Client.Web.WebUrlFromFolderUrlDirect(ClientContext, fileUri);
+                    Uri fileUri = new(Path);
+                    var webUrl = Web.WebUrlFromFolderUrlDirect(ClientContext, fileUri);
                     var templateContext = ClientContext.Clone(webUrl.ToString());
 
                     var library = Path.ToLower().Replace(templateContext.Url.ToLower(), "").TrimStart('/');
@@ -120,7 +167,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     var openXmlConnector = new OpenXMLConnector(templateFileName, fileConnector);
                     provider = new XMLOpenXMLTemplateProvider(openXmlConnector);
-                    if (!String.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
+                    if (!string.IsNullOrEmpty(openXmlConnector.Info?.Properties?.TemplateFileName))
                     {
                         templateFileName = openXmlConnector.Info.Properties.TemplateFileName;
                     }
@@ -275,7 +322,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 {
                     if (!ExcludeHandlers.Has(handler) && handler != Handlers.All)
                     {
-                        Handlers = Handlers | handler;
+                        Handlers |= handler;
                     }
                 }
                 applyingInformation.HandlersToProcess = Handlers;
@@ -290,8 +337,8 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
             {
                 if (message != null)
                 {
-                    var percentage = Convert.ToInt32((100 / Convert.ToDouble(total)) * Convert.ToDouble(step));
-                    progressRecord.Activity = $"Applying template to {CurrentWeb.Url}";
+                    var percentage = Convert.ToInt32(100 / Convert.ToDouble(total) * Convert.ToDouble(step));
+                    progressRecord.Activity = $"Applying template to {applyTemplateContext.Url}";
                     progressRecord.StatusDescription = message;
                     progressRecord.PercentComplete = percentage;
                     progressRecord.RecordType = ProgressRecordType.Processing;
@@ -329,7 +376,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                                         subProgressRecord.RecordType = ProgressRecordType.Processing;
                                         subProgressRecord.Activity = string.IsNullOrEmpty(messageSplitted[0]) ? "-" : messageSplitted[0];
                                         subProgressRecord.StatusDescription = string.IsNullOrEmpty(messageSplitted[1]) ? "-" : messageSplitted[1];
-                                        subProgressRecord.PercentComplete = Convert.ToInt32((100 / total) * current);
+                                        subProgressRecord.PercentComplete = Convert.ToInt32(100 / total * current);
                                         WriteProgress(subProgressRecord);
                                     }
                                     else
@@ -372,12 +419,12 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 return await TokenRetrieval.GetAccessTokenAsync(resource, scope, Connection);
             }, azureEnvironment: Connection.AzureEnvironment))
             {
-                CurrentWeb.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
+                applyTemplateContext.Web.ApplyProvisioningTemplate(provisioningTemplate, applyingInformation);
             }
 
-            WriteProgress(new ProgressRecord(0, $"Applying template to {CurrentWeb.Url}", " ") { RecordType = ProgressRecordType.Completed });
-            
-            if(Stream != null)
+            WriteProgress(new ProgressRecord(0, $"Applying template to {applyTemplateContext.Url}", " ") { RecordType = ProgressRecordType.Completed });
+
+            if (Stream != null)
             {
                 // Reset the stream position to 0 so it can be used again if needed
                 Stream.Position = 0;

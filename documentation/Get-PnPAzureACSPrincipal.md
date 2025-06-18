@@ -14,6 +14,7 @@ title: Get-PnPAzureACSPrincipal
 **Required Permissions**
 
 * SharePoint: Access to the SharePoint Tenant Administration site
+* Graph: Application.Read.All
 
 Returns the list of Azure ACS Principals
 

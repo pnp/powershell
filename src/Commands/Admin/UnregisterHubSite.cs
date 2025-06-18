@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                props = hubSitesProperties.Single(h => h.SiteUrl.Equals(Site.Url, StringComparison.OrdinalIgnoreCase));
+                props = hubSitesProperties.Single(h => !string.IsNullOrEmpty(h.SiteUrl) && h.SiteUrl.Equals(Site.Url, StringComparison.OrdinalIgnoreCase));
             }
             Tenant.UnregisterHubSiteById(props.ID);
             AdminContext.ExecuteQueryRetry();

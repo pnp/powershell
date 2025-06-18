@@ -112,6 +112,11 @@ Connect-PnPOnline -OSLogin [-ReturnConnection] [-Url] <String> [-PersistLogin] [
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ForceAuthentication] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
 ```
 
+### Federated Identity
+```powershell
+Connect-PnPOnline [-Url <String>] [-Tenant <String>] -FederatedIdentity [-AzureEnvironment <AzureEnvironment>] [-TenantAdminUrl <String>] [-ValidateConnection] [-MicrosoftGraphEndPoint <string>] [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
+```
+
 ## DESCRIPTION
 Connects to a SharePoint site or another API and creates a context that is required for the other PnP Cmdlets.
 See https://pnp.github.io/powershell/articles/connecting.html for more information on the options to connect.
@@ -288,6 +293,13 @@ Connect-PnPOnline -Url "https://contoso.sharepoint.com" -Credentials "https://co
 Connect to SharePoint using Credentials (username and password) from Credential Manager (Windows) or Keychain (Mac) with the specified name to use to authenticate.
 
 On Windows, this entry needs to be under "Generic Credentials".
+
+### EXAMPLE 20
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
+```
+
+Connect to SharePoint/Microsoft Graph using federated identity credentials.
 
 ## PARAMETERS
 
@@ -870,6 +882,22 @@ Parameter Sets: App-Only with Azure Active Directory
 Aliases:
 
 Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FederatedIdentity
+
+Connects using Federated Identity. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Federated Identity
+Aliases:
+
+Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False

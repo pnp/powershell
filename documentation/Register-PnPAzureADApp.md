@@ -109,6 +109,13 @@ Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.c
 
 Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. It will also set the `logo.png` file as the logo for the Azure AD app.
 
+### EXAMPLE 8
+```powershell
+Register-PnPAzureADApp -ApplicationName "ACS App" -Tenant yourtenant.onmicrosoft.com -OutPath c:\temp -GraphApplicationPermissions "User.Read.All" -GraphDelegatePermissions "Sites.Read.All" -SharePointApplicationPermissions "Sites.Read.All" -SharePointDelegatePermissions "AllSites.Read"
+```
+
+Creates a new Azure AD Application registration, creates a new self signed certificate, writes it to the c:\temp folder. It will upload the certificate to the azure app registration and it will request the shown permissions. A browser window will be shown allowing you to authenticate.
+
 ## PARAMETERS
 
 ### -DeviceLogin

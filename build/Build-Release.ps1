@@ -96,7 +96,7 @@ if ($LASTEXITCODE -eq 0) {
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
 	CompatiblePSEditions = @('Core')
-	PowerShellVersion = '7.4.6'
+	PowerShellVersion = '7.4.0'
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)

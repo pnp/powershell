@@ -378,27 +378,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>Instantiated PnPConnection</returns>
         internal static PnPConnection CreateWithManagedIdentity(string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
         {
-            var endPoint = Environment.GetEnvironmentVariable("IDENTITY_ENDPOINT");
-            PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity endpoint: {endPoint}");
-            //cmdlet.LogDebug($"Using identity endpoint: {endPoint}");
-
-            var identityHeader = Environment.GetEnvironmentVariable("IDENTITY_HEADER");
-            PnP.Framework.Diagnostics.Log.Debug("PnPConnection", $"Using identity header: {identityHeader}");
-            //cmdlet.LogDebug($"Using identity header: {identityHeader}");
-
-            if (string.IsNullOrEmpty(endPoint))
-            {
-                endPoint = Environment.GetEnvironmentVariable("MSI_ENDPOINT");
-                identityHeader = Environment.GetEnvironmentVariable("MSI_SECRET");
-            }
-            if (string.IsNullOrEmpty(endPoint))
-            {
-                // additional fallback
-                // using well-known endpoint for Instance Metadata Service, useful in Azure VM scenario.
-                // https://learn.microsoft.com/en-us/azure/active-directory/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
-                endPoint = "http://169.254.169.254/metadata/identity/oauth2/token";
-            }
-
             // Define the type of Managed Identity that will be used
             ManagedIdentityType managedIdentityType = ManagedIdentityType.SystemAssigned;
             string managedIdentityUserAssignedIdentifier = null;
@@ -426,32 +405,35 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Set up the AuthenticationManager in PnP Framework to use a Managed Identity context
-            using var authManager = new Framework.AuthenticationManager(endPoint, identityHeader, managedIdentityType, managedIdentityUserAssignedIdentifier);
-            PnPClientContext context = null;
-            ConnectionType connectionType = ConnectionType.O365;
-            if (url != null)
+            using (var authManager = Framework.AuthenticationManager.CreateWithManagedIdentity(null, null, managedIdentityType, managedIdentityUserAssignedIdentifier))
             {
-                context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
-                context.ApplicationName = Resources.ApplicationName;
-                context.DisableReturnValueCache = true;
-                context.ExecutingWebRequest += (sender, e) =>
+                PnPClientContext context = null;
+                ConnectionType connectionType = ConnectionType.O365;
+                if (url != null)
                 {
-                    e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
-                };
-                if (IsTenantAdminSite(context))
-                {
-                    connectionType = ConnectionType.TenantAdmin;
+                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                    context.ApplicationName = Resources.ApplicationName;
+                    context.DisableReturnValueCache = true;
+                    context.ExecutingWebRequest += (sender, e) =>
+                    {
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                    };
+                    if (IsTenantAdminSite(context))
+                    {
+                        connectionType = ConnectionType.TenantAdmin;
+                    }
                 }
-            }
 
-            // Set up PnP PowerShell to use a Managed Identity
-            var connection = new PnPConnection(context, connectionType, null, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ManagedIdentity)
-            {
-                UserAssignedManagedIdentityObjectId = userAssignedManagedIdentityObjectId,
-                UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId,
-                UserAssignedManagedIdentityAzureResourceId = userAssignedManagedIdentityAzureResourceId
-            };
-            return connection;
+                // Set up PnP PowerShell to use a Managed Identity
+                var connection = new PnPConnection(context, connectionType, null, url?.ToString(), tenantAdminUrl, PnPPSVersionTag, InitializationType.ManagedIdentity)
+                {
+                    UserAssignedManagedIdentityObjectId = userAssignedManagedIdentityObjectId,
+                    UserAssignedManagedIdentityClientId = userAssignedManagedIdentityClientId,
+                    UserAssignedManagedIdentityAzureResourceId = userAssignedManagedIdentityAzureResourceId,
+                    ConnectionMethod = ConnectionMethod.ManagedIdentity,
+                };
+                return connection;
+            }
         }
 
         internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, bool persistLogin, System.Management.Automation.Host.PSHost host, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials)
@@ -585,7 +567,7 @@ namespace PnP.PowerShell.Commands.Base
                 WriteCacheEnabledMessage(host);
             }
 
-            var htmlMessageSuccess ="<html lang=en><meta charset=utf-8><title>PnP PowerShell - Sign In</title><meta content=\"width=device-width,initial-scale=1\"name=viewport><style>html{height:100%}.message-container{flex-grow:1;display:flex;align-items:center;justify-content:center;margin:0 30px}body{box-sizing:border-box;min-height:100%;display:flex;flex-direction:column;color:#fff;font-family:\"Segoe UI\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;background-color:#2c2c32;margin:0;padding:15px 30px}.message{font-weight:300;font-size:1.4rem}.branding{background-image:url(data:image/png;base64,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);background-repeat:no-repeat;padding-left:26px;font-size:20px;letter-spacing:-.04rem;font-weight:400;height:26px;color:#fff;background-position:left center;text-decoration:none}</style><a class=branding href=https://pnp.github.io/powershell>PnP PowerShell</a><div class=message-container><div class=message>You are signed in now and can close this page.</div></div>";
+            var htmlMessageSuccess = "<html lang=en><meta charset=utf-8><title>PnP PowerShell - Sign In</title><meta content=\"width=device-width,initial-scale=1\"name=viewport><style>html{height:100%}.message-container{flex-grow:1;display:flex;align-items:center;justify-content:center;margin:0 30px}body{box-sizing:border-box;min-height:100%;display:flex;flex-direction:column;color:#fff;font-family:\"Segoe UI\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;background-color:#2c2c32;margin:0;padding:15px 30px}.message{font-weight:300;font-size:1.4rem}.branding{background-image:url(data:image/png;base64,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);background-repeat:no-repeat;padding-left:26px;font-size:20px;letter-spacing:-.04rem;font-weight:400;height:26px;color:#fff;background-position:left center;text-decoration:none}</style><a class=branding href=https://pnp.github.io/powershell>PnP PowerShell</a><div class=message-container><div class=message>You are signed in now and can close this page.</div></div>";
             var htmlMessageFailure = "<html lang=en><meta charset=utf-8><title>PnP PowerShell - Sign In</title><meta content=\"width=device-width,initial-scale=1\"name=viewport><style>html{{height:100%}}.error-text{{color:red;font-size:1rem}}.message-container{{flex-grow:1;display:flex;align-items:center;justify-content:center;margin:0 30px}}body{{box-sizing:border-box;min-height:100%;display:flex;flex-direction:column;color:#fff;font-family:\"Segoe UI\",\"Helvetica Neue\",Helvetica,Arial,sans-serif;background-color:#2c2c32;margin:0;padding:15px 30px}}.message{{font-weight:300;font-size:1.4rem}}.branding{{background-image:url(data:image/png;base64,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);background-repeat:no-repeat;height:26px;padding-left:26px;font-size:20px;letter-spacing:-.04rem;font-weight:400;color:#fff;background-position:left center;text-decoration:none}}</style><a class=branding href=https://pnp.github.io/powershell>PnP PowerShell</a><div class=message-container><div class=message>An error occured while signing in: {0}</div></div>";
 
             PnP.Framework.AuthenticationManager authManager = null;
@@ -597,7 +579,7 @@ namespace PnP.PowerShell.Commands.Base
             else
             {
                 authManager = PnP.Framework.AuthenticationManager.CreateWithInteractiveWebBrowserLogin(clientId, (url, port) =>
-                { 
+                {
                     BrowserHelper.OpenBrowserForInteractiveLogin(url, port, cancellationTokenSource);
                 },
                 tenant,
@@ -675,6 +657,56 @@ namespace PnP.PowerShell.Commands.Base
                 return connection;
             }
         }
+
+        /// <summary>
+        /// Creates a PnPConnection using a Federated Identity
+        /// </summary>
+        /// <param name="url">Url to the SharePoint Online site to connect to</param>
+        /// <param name="tenantAdminUrl">Url to the SharePoint Online Admin Center site to connect to</param>
+        /// <param name="appClientId">The Client ID of the Federated Identity application</param>
+        /// <param name="tenantId">The Tenant ID of the Federated Identity application</param>
+        /// <returns>Instantiated PnPConnection</returns>
+        /// <remarks>
+        /// This method is used to create a PnPConnection using a Federated Identity, which allows for authentication without the need for a client secret.
+        /// </remarks>
+        internal static PnPConnection CreateWithFederatedIdentity(string url, string tenantAdminUrl, string appClientId, string tenantId)
+        {
+            string defaultResource = "https://graph.microsoft.com/.default";
+            if (url != null)
+            {
+                var resourceUri = new Uri(url);
+                defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
+            }
+
+            PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
+            var accessToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, defaultResource).GetAwaiter().GetResult();
+
+            // Set up the AuthenticationManager in PnP Framework to use a Federated Identity context
+            using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
+            {
+                PnPClientContext context = null;
+                ConnectionType connectionType = ConnectionType.O365;
+                if (url != null)
+                {
+                    context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
+                    context.ApplicationName = Resources.ApplicationName;
+                    context.DisableReturnValueCache = true;
+                    context.ExecutingWebRequest += (sender, e) =>
+                    {
+                        e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                    };
+                    if (IsTenantAdminSite(context))
+                    {
+                        connectionType = ConnectionType.TenantAdmin;
+                    }
+                }
+
+                var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.FederatedIdentity);
+                connection.ClientId = appClientId;
+                connection.Tenant = tenantId;
+                return connection;
+            }
+        }
         #endregion
 
         #region Constructors
@@ -704,6 +736,10 @@ namespace PnP.PowerShell.Commands.Base
             else if (initializationType == InitializationType.ManagedIdentity)
             {
                 connectionMethod = ConnectionMethod.ManagedIdentity;
+            }
+            else if (initializationType == InitializationType.FederatedIdentity)
+            {
+                connectionMethod = ConnectionMethod.FederatedIdentity;
             }
 
             if (context != null)
@@ -780,7 +816,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private static bool IsTenantAdminSite(ClientRuntimeContext clientContext)
+        public static bool IsTenantAdminSite(ClientRuntimeContext clientContext)
         {
             if (clientContext.Url.ToLower().Contains(".sharepoint."))
             {
@@ -805,7 +841,7 @@ namespace PnP.PowerShell.Commands.Base
         internal void InitializeTelemetry(ClientContext context, InitializationType initializationType)
         {
             var userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
-            var telemetryFile = System.IO.Path.Combine(userProfile, ".pnppowershelltelemetry");
+            var telemetryFile = Path.Combine(userProfile, ".pnppowershelltelemetry");
 
             var enableTelemetry = true;
             if (Environment.GetEnvironmentVariable("PNP_DISABLETELEMETRY") != null)
