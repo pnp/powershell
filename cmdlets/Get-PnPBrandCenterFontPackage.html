@@ -84,33 +84,33 @@
   <h1 id="get-pnpbrandcenterfontpackage">Get-PnPBrandCenterFontPackage</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Returns the available fonts configured through the Brand Center</p>
+<p>Returns the available font packages configured through the Brand Center</p>
 <h2 id="syntax">SYNTAX</h2>
 <h3 id="all">All</h3>
 <pre><code class="lang-powershell">Get-PnPBrandCenterFontPackage [-Store &lt;Tenant|OutOfBox|Site|All&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="single">Single</h3>
-<pre><code class="lang-powershell">Get-PnPBrandCenterFontPackage -Identity &lt;BrandCenterFontPipeBind&gt; [-Store &lt;Tenant|OutOfBox|Site|All&gt;] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Get-PnPBrandCenterFontPackage -Identity &lt;BrandCenterFontPackagePipeBind&gt; [-Store &lt;Tenant|OutOfBox|Site|All&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows retrieval of the available fonts from the various Brand Centers.</p>
+<p>Allows retrieval of the available font packages from the various Brand Centers.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPBrandCenterFontPackage
 </code></pre>
-<p>Returns all the available fonts</p>
+<p>Returns all the available font packages</p>
 <h3 id="example-2">EXAMPLE 2</h3>
 <pre><code class="lang-powershell">Get-PnPBrandCenterFontPackage -Store Site
 </code></pre>
-<p>Returns the available fonts from the site collection Brand Center</p>
+<p>Returns the available font packages from the site collection Brand Center</p>
 <h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Get-PnPBrandCenterFontPackage -Identity &quot;My awesome font&quot;
 </code></pre>
-<p>Looks up and returns the font with the name &quot;My awesome font&quot; from any of the Brand Centers</p>
+<p>Looks up and returns the font packages with the name &quot;My awesome font&quot; from any of the Brand Centers</p>
 <h3 id="example-4">EXAMPLE 4</h3>
 <pre><code class="lang-powershell">Get-PnPBrandCenterFontPackage -Identity &quot;2812cbd8-7176-4e45-8911-6a063f89a1f1&quot;
 </code></pre>
-<p>Looks up and returns the font with the Identity &quot;2812cbd8-7176-4e45-8911-6a063f89a1f1&quot; from any of the Brand Centers</p>
+<p>Looks up and returns the font package with the Identity &quot;2812cbd8-7176-4e45-8911-6a063f89a1f1&quot; from any of the Brand Centers</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing <a href="Get-PnPConnection.html">Get-PnPConnection</a>.</p>
@@ -124,8 +124,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Unique identifier of the font to be retrieved. This can be its guid, name or a BrandCenterFont object. If not specified, all the available fonts will be returned.</p>
-<pre><code class="lang-yaml">Type: BrandCenterFontPipeBind
+<p>Unique identifier of the font package to be retrieved. This can be its guid, name or a BrandCenterFontPackage object. If not specified, all the available font packages will be returned.</p>
+<pre><code class="lang-yaml">Type: BrandCenterFontPackagePipeBind
 Parameter Sets: Single
 
 Required: True
@@ -135,12 +135,12 @@ Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-store">-Store</h3>
-<p>Indicates the source of the fonts to be retrieved. The following values are available:</p>
+<p>Indicates the source of the font packages to be retrieved. The following values are available:</p>
 <ul>
-<li>Tenant: The fonts configured in the tenant Brand Center</li>
-<li>Site: The fonts configured in the site collection Brand Center</li>
-<li>OutOfBox: The out of box fonts available in the tenant</li>
-<li>All: All the fonts available in the tenant, including the ones configured in the tenant and site collection Brand Center and the out of box fonts.</li>
+<li>Tenant: The font packages configured in the tenant Brand Center</li>
+<li>Site: The font packages configured in the site collection Brand Center</li>
+<li>OutOfBox: The out of box font packages available in the tenant</li>
+<li>All: All the font packages available in the tenant, including the ones configured in the tenant and site collection Brand Center and the out of box font packages.</li>
 </ul>
 <pre><code class="lang-yaml">Type: Store
 Parameter Sets: (All)

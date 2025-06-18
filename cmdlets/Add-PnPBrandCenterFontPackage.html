@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Add-PnPBrandCenterFontPackage | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Add-PnPBrandCenterFontPackage | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="add-pnpbrandcenterfontpackage">Add-PnPBrandCenterFontPackage</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Allows a font package to be created in the Brand Center</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Add-PnPBrandCenterFontPackage -Name &lt;String&gt; -Store &lt;Site|Tenant&gt; -DisplayFont &lt;BrandCenterFontPipeBind&gt; -ContentFont &lt;String&gt; -TitleFont &lt;BrandCenterFontPipeBind&gt; -TitleFontStyle &lt;String&gt; -HeadlineFont &lt;BrandCenterFontPipeBind&gt; -HeadlineFontStyle &lt;String&gt;&gt; -BodyFont &lt;BrandCenterFontPipeBind&gt; -BodyFontStyle &lt;String&gt;&gt; -InteractiveFont &lt;BrandCenterFontPipeBind&gt; -InteractiveFontStyle &lt;String&gt; [-Visible &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;] [-Verbose]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet allows a font package to be created in the Brand Center. Fonts can be uploaded to the Brand Center using <a href="Add-PnPBrandCenterFond.md">Add-PnPBrandCenterFond</a>. To see the available fonts, as well as the font styles available in each font, use <a href="Get-PnPBrandCenterFont.html">Get-PnPBrandCenterFont</a>.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Add-PnPBrandCenterFontPackage -Name &quot;My Font Package&quot; -Store Tenant -DisplayFont &quot;My font&quot; -ContentFont &quot;My other font&quot; -TitleFont &quot;My font&quot; -TitleFontStyle &quot;Normal&quot; -HeadlineFont &quot;My font&quot; -HeadlineFontStyle &quot;Normal&quot; -BodyFont &quot;My other font&quot; -BodyFontStyle &quot;Regular&quot; -InteractiveFont &quot;My other font&quot; -InteractiveFontStyle &quot;Regular&quot;
+</code></pre>
+<p>This will create a font package in the Tenant Brand Center with the specified fonts and styles. The package will be available for use in the Brand Center.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-bodyfont">-BodyFont</h3>
+<p>The name, id or font instance of the font to be used for body text in the Brand Center.</p>
+<pre><code class="lang-yaml">Type: BrandCenterFontPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-bodyfontstyle">-BodyFontStyle</h3>
+<p>The name of the font style to be used for body text in the Brand Center. Use the <a href="Get-PnPBrandCenterFont.html">Get-PnPBrandCenterFont</a> cmdlet to see the available styles for each font.</p>
+<pre><code class="lang-yaml">Type: string
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing <a href="Get-PnPConnection.html">Get-PnPConnection</a>.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-contentfont">-ContentFont</h3>
+<p>The name, id or font instance of the font to be used for content text in the Brand Center.</p>
+<pre><code class="lang-yaml">Type: BrandCenterFontPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-displayfont">-DisplayFont</h3>
+<p>The name, id or font instance of the font to be used for display text in the Brand Center.</p>
+<pre><code class="lang-yaml">Type: BrandCenterFontPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-headlinefont">-HeadlineFont</h3>
+<p>The name, id or font instance of the font to be used for headline text in the Brand Center.</p>
+<pre><code class="lang-yaml">Type: BrandCenterFontPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-headlinefontstyle">-HeadlineFontStyle</h3>
+<p>The name of the font style to be used for headline text in the Brand Center. Use the <a href="Get-PnPBrandCenterFont.html">Get-PnPBrandCenterFont</a> cmdlet to see the available styles for each font.</p>
+<pre><code class="lang-yaml">Type: string
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-interactivefont">-InteractiveFont</h3>
+<p>The name, id or font instance of the font to be used for interactive text in the Brand Center.</p>
+<pre><code class="lang-yaml">Type: BrandCenterFontPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-interactivefontstyle">-InteractiveFontStyle</h3>
+<p>The name of the font style to be used for interactive text in the Brand Center. Use the <a href="Get-PnPBrandCenterFont.html">Get-PnPBrandCenterFont</a> cmdlet to see the available styles for each font.</p>
+<pre><code class="lang-yaml">Type: string
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-name">-Name</h3>
+<p>The name you want to give to the font package. This name will be used to identify the package in the Brand Center.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-store">-Store</h3>
+<p>Indicates the store in which the font package should be created. The following values are available:</p>
+<ul>
+<li>Tenant: The font packages configured in the tenant Brand Center</li>
+<li>Site: The font packages configured in the site collection Brand Center</li>
+</ul>
+<pre><code class="lang-yaml">Type: Store
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: Tenant
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-titlefont">-TitleFont</h3>
+<p>The name, id or font instance of the font to be used for title text in the Brand Center.</p>
+<pre><code class="lang-yaml">Type: BrandCenterFontPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-titlefontstyle">-TitleFontStyle</h3>
+<p>The name of the font style to be used for title text in the Brand Center. Use the <a href="Get-PnPBrandCenterFont.html">Get-PnPBrandCenterFont</a> cmdlet to see the available styles for each font.</p>
+<pre><code class="lang-yaml">Type: string
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-visible">-Visible</h3>
+<p>Indicates if the font package should be visible in the Brand Center. The default is true.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>

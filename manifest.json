@@ -430,6 +430,19 @@
       "version": ""
     },
     {
+      "log_codes": [
+        "InvalidFileLink"
+      ],
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Add-PnPBrandCenterFontPackage.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Add-PnPBrandCenterFontPackage.html"
+        }
+      },
+      "version": ""
+    },
+    {
       "type": "Conceptual",
       "source_relative_path": "cmdlets/Add-PnPContentType.md",
       "output": {
@@ -2115,6 +2128,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPBrandCenterConfig.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPBrandCenterFont.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPBrandCenterFont.html"
         }
       },
       "version": ""
