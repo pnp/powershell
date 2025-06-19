@@ -5964,10 +5964,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Remove-PnPListItemComments.md",
+      "source_relative_path": "cmdlets/Remove-PnPListItemComment.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Remove-PnPListItemComments.html"
+          "relative_path": "cmdlets/Remove-PnPListItemComment.html"
         }
       },
       "version": ""
