@@ -100,17 +100,6 @@ namespace PnP.PowerShell.Tests.Admin
             Assert.IsNotNull(hasHoldsProperty, "HasHolds property should exist on SPOSite model");
             Assert.AreEqual(typeof(bool), hasHoldsProperty.PropertyType, "HasHolds property should be of type bool");
         }
-
-        [TestMethod]
-        public void SPOSiteModelHasHoldsPropertyTest()
-        {
-            // Test that the SPOSite model has the HasHolds property
-            var spoSiteType = typeof(PnP.PowerShell.Commands.Model.SPOSite);
-            var hasHoldsProperty = spoSiteType.GetProperty("HasHolds");
-            
-            Assert.IsNotNull(hasHoldsProperty, "HasHolds property should exist on SPOSite model");
-            Assert.AreEqual(typeof(bool), hasHoldsProperty.PropertyType, "HasHolds property should be of type bool");
-        }
         #endregion
     }
 }
