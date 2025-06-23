@@ -90,6 +90,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool IsGroupOwnerSiteAdmin { get; set; }
         public bool ListsShowHeaderAndNavigation { get; set; }
         public int LockReason { get; set; }
+        public bool HasHolds { get; set; }
         public int MajorVersionLimit { get; set; }
         public int MajorWithMinorVersionsLimit { get; set; }
         public bool RestrictedAccessControl { get; set; }
@@ -186,6 +187,7 @@ namespace PnP.PowerShell.Commands.Model
             IsGroupOwnerSiteAdmin = props.IsGroupOwnerSiteAdmin;
             ListsShowHeaderAndNavigation = props.ListsShowHeaderAndNavigation;
             LockReason = props.LockReason;
+            HasHolds = props.HasHolds;
             MajorVersionLimit = props.MajorVersionLimit;
             MajorWithMinorVersionsLimit = props.MajorWithMinorVersionsLimit;
             RestrictedAccessControl = props.RestrictedAccessControl;
