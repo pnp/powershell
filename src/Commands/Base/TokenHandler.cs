@@ -383,7 +383,7 @@ namespace PnP.PowerShell.Commands.Base
                 var queryParams = new List<string>
     {
         "grant_type=client_credentials",
-        $"scope={Uri.EscapeDataString($"{resource}/.default")}",
+        $"scope={Uri.EscapeDataString(resource)}",
         $"client_id={clientId}",
         $"client_assertion_type={Uri.EscapeDataString("urn:ietf:params:oauth:client-assertion-type:jwt-bearer")}",
         $"client_assertion={federatedToken}"
