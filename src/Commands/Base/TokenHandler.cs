@@ -377,7 +377,7 @@ namespace PnP.PowerShell.Commands.Base
         {
             try
             {
-                Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Entra ID access Token with federated token...");
+                Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Entra ID access token with federated token...");
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
                 var queryParams = new List<string>
@@ -398,16 +398,20 @@ namespace PnP.PowerShell.Commands.Base
                 request.Headers.Add("x-anonymous", "true");
 
                 var response = await httpClient.SendAsync(request);
-                response.EnsureSuccessStatusCode();
 
                 var responseContent = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new HttpRequestException($"Failed to retrieve federated access token: HTTP Error {response.StatusCode}: {responseContent}");
+                }
                 var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
 
                 return tokenResponse["access_token"].ToString();
             }
             catch (Exception ex)
             {
-                throw new PSInvalidOperationException($"Failed to retrieve access token with federated token: {ex.Message}", ex);
+                Framework.Diagnostics.Log.Error("TokenHandler", ex.Message);
+                throw new PSInvalidOperationException(ex.Message);
             }
         }
     }
