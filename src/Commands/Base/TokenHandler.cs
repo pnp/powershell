@@ -411,7 +411,7 @@ namespace PnP.PowerShell.Commands.Base
             catch (Exception ex)
             {
                 Framework.Diagnostics.Log.Error("TokenHandler", ex.Message);
-                throw new PSInvalidOperationException(ex.Message);
+                throw new PSInvalidOperationException(ex.Message, ex);
             }
         }
     }
