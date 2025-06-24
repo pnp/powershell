@@ -65,7 +65,7 @@
 		<PackageReference Include="PnP.Core.Admin" Version="1.15.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
 		<PackageReference Include="PnP.Core.Admin" Version="1.15.*-*" Condition="'$(IsRelease)' == '1'" />
 
-		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.70.2" />
+		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.73.0" />
 		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.5" />
 
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
