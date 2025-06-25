@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -319,7 +320,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving GitHub federation token...");
 
-                var requestUrl = $"{Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL")}&audience={Uri.EscapeDataString("api://AzureADTokenExchange")}";
+                var requestUrl = $"{Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL")}&audience={UrlUtilities.UrlEncode("api://AzureADTokenExchange")}";
 
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
@@ -327,17 +328,24 @@ namespace PnP.PowerShell.Commands.Base
                 requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN"));
                 requestMessage.Headers.Add("Accept", "application/json");
                 requestMessage.Headers.Add("x-anonymous", "true");
+
                 var response = await httpClient.SendAsync(requestMessage);
+                var responseContent = await response.Content.ReadAsStringAsync();
 
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    responseContent = responseContent.Replace("{", "{{").Replace("}", "}}");
+                    throw new HttpRequestException($"Failed to retrieve GitHub federation token. HTTP Error {response.StatusCode}: {responseContent}");
+                }
 
-                var content = await response.Content.ReadAsStringAsync();
-                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(content);
+                Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved GitHub federation token...");
+                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
 
                 return tokenResponse["value"].ToString();
             }
             catch (Exception ex)
             {
+                Framework.Diagnostics.Log.Error("TokenHandler GitHub", ex.Message);
                 throw new PSInvalidOperationException($"Failed to retrieve GitHub federation token: {ex.Message}", ex);
             }
         }
@@ -360,15 +368,22 @@ namespace PnP.PowerShell.Commands.Base
                 requestMessage.Headers.Add("x-anonymous", "true");
 
                 var response = await httpClient.SendAsync(requestMessage);
-                response.EnsureSuccessStatusCode();
 
-                var content = await response.Content.ReadAsStringAsync();
-                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    responseContent = responseContent.Replace("{", "{{").Replace("}", "}}");
+                    throw new HttpRequestException($"Failed to retrieve Azure DevOps federation token. HTTP Error {response.StatusCode}: {responseContent}");
+                }
+
+                Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved Azure DevOps federation token...");
+                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
 
                 return tokenResponse["oidcToken"].ToString();
             }
             catch (Exception ex)
             {
+                Framework.Diagnostics.Log.Error("TokenHandler AzureDevOps", ex.Message);
                 throw new PSInvalidOperationException($"Failed to retrieve Azure DevOps federation token: {ex.Message}", ex);
             }
         }
@@ -383,9 +398,9 @@ namespace PnP.PowerShell.Commands.Base
                 var queryParams = new List<string>
     {
         "grant_type=client_credentials",
-        $"scope={resource}",
+        $"scope={HttpUtility.UrlEncode(resource)}",
         $"client_id={clientId}",
-        $"client_assertion_type=urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+        $"client_assertion_type={HttpUtility.UrlEncode("urn:ietf:params:oauth:client-assertion-type:jwt-bearer")}",
         $"client_assertion={federatedToken}"
     };
 
@@ -402,8 +417,11 @@ namespace PnP.PowerShell.Commands.Base
                 var responseContent = await response.Content.ReadAsStringAsync();
                 if (!response.IsSuccessStatusCode)
                 {
-                    throw new HttpRequestException($"Failed to retrieve federated access token: HTTP Error {response.StatusCode}: {responseContent}");
+                    responseContent = responseContent.Replace("{", "{{").Replace("}", "}}");
+                    throw new HttpRequestException($"Failed to retrieve federated access token. HTTP Error {response.StatusCode}: {responseContent}");
                 }
+
+                Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved federated access token...");
                 var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
 
                 return tokenResponse["access_token"].ToString();
