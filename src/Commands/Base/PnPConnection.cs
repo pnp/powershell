@@ -280,7 +280,13 @@ namespace PnP.PowerShell.Commands.Base
             {
                 authManager = Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
                  {
-                     ClipboardService.SetText(deviceCodeResult.UserCode);
+                     try
+                     {
+                         ClipboardService.SetText(deviceCodeResult.UserCode);
+                     }
+                     catch
+                     {
+                     }
                      messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
                      BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
 

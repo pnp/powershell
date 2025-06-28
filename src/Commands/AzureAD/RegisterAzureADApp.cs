@@ -659,7 +659,13 @@ namespace PnP.PowerShell.Commands.AzureAD
                 {
                     using (var authManager = AuthenticationManager.CreateWithDeviceLogin(azureApp.AppId, Tenant, (deviceCodeResult) =>
                     {
-                        ClipboardService.SetText(deviceCodeResult.UserCode);
+                        try
+                        {
+                            ClipboardService.SetText(deviceCodeResult.UserCode);
+                        }
+                        catch
+                        {
+                        }
                         Host.UI.WriteWarningLine($"\n\nPlease login.\n\nWe opened a browser and navigated to {deviceCodeResult.VerificationUrl}\n\nEnter code: {deviceCodeResult.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the browser tab after you authenticated successfully to continue the process.");
                         BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
                         return Task.FromResult(0);
