@@ -215,12 +215,12 @@ namespace PnP.PowerShell.Commands.Utilities
 
                     if (!opened)
                     {
-                        throw new MsalClientException(MsalError.LinuxXdgOpen, "Unable to open a web page using xdg-open, gnome-open, kfmclient or wslview tools. See inner exception for details. Possible causes for this error are: tools are not installed or they cannot open a URL. Make sure you can open a web page by invoking from a terminal: xdg-open https://www.bing.com");
+                        throw new MsalClientException(MsalError.LinuxXdgOpen, "Unable to open a web page using xdg-open, gnome-open, kfmclient or wslview tools. See inner exception for details. Possible causes for this error are: tools are not installed or they cannot open a URL. Make sure you can open a web page by invoking from a terminal: xdg-open https://aka.ms/pnp/powershell");
                     }
                 }
                 catch (Exception ex)
                 {
-                    throw new MsalClientException(MsalError.LinuxXdgOpen, "Unable to open a web page using xdg-open, gnome-open, kfmclient or wslview tools. See inner exception for details. Possible causes for this error are: tools are not installed or they cannot open a URL. Make sure you can open a web page by invoking from a terminal: xdg-open https://www.bing.com", ex);
+                    throw new MsalClientException(MsalError.LinuxXdgOpen, "Unable to open a web page using xdg-open, gnome-open, kfmclient or wslview tools. See inner exception for details. Possible causes for this error are: tools are not installed or they cannot open a URL. Make sure you can open a web page by invoking from a terminal: xdg-open https://aka.ms/pnp/powershell", ex);
                 }
             }
             else if (OperatingSystem.IsMacOS())
