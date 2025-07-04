@@ -2423,6 +2423,38 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-allowclassicpublishingsitecreation">-AllowClassicPublishingSiteCreation</h3>
+<p>This parameter allows creation of classic publishing site collections (templates <code>BLANKINTERNETCONTAINER#0, CMSPUBLISHING#0 and BLANKINTERNET#0</code>) and activation of classic publishing features in sites.</p>
+<p>The valid values are:</p>
+<ul>
+<li>False (default) - Classic publishing site collections cannot be created and the publishing features cannot be activated in sites.</li>
+<li>True - Classic publishing site collections can be created and the publishing features can be activated in sites.</li>
+</ul>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-delaydenyaddandcustomizepagesenforcementonclassicpublishingsites">-DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites</h3>
+<p>This parameter controls how SharePoint will deal with classic publishing sites (templates <code>BLANKINTERNETCONTAINER#0, CMSPUBLISHING#0 and BLANKINTERNET#0</code>) where custom scripts are allowed.</p>
+<p>The valid values are:</p>
+<ul>
+<li>False (default) - for classic publishing site collections where administrators enabled the ability to add custom script, SharePoint will revoke that ability within 24 hours from the last time this setting was changed.</li>
+<li>True - All changes performed by administrators to custom script settings are preserved.</li>
+</ul>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-force">-Force</h3>
 <p>If provided, no confirmation will be requested and the action will be performed</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
