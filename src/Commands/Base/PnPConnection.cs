@@ -280,15 +280,22 @@ namespace PnP.PowerShell.Commands.Base
             {
                 authManager = Framework.AuthenticationManager.CreateWithDeviceLogin(clientId, tenantId, (deviceCodeResult) =>
                  {
-                     try
+                     if (PSUtility.IsAzureCloudShell())
                      {
-                         ClipboardService.SetText(deviceCodeResult.UserCode);
+                         messageWriter.LogWarning($"\n\nTo sign in, use a web browser to open the page {deviceCodeResult.VerificationUrl} and enter the code {deviceCodeResult.UserCode} to authenticate.\n\n");
                      }
-                     catch
+                     else
                      {
+                         try
+                         {
+                             ClipboardService.SetText(deviceCodeResult.UserCode);
+                         }
+                         catch
+                         {
+                         }
+                         messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                         BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
                      }
-                     messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
-                     BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
 
                      return Task.FromResult(0);
                  }, azureEnvironment, tokenCacheCallback: async (tokenCache) =>
