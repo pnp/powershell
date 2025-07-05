@@ -567,6 +567,10 @@ namespace PnP.PowerShell.Commands.Base
                             messageWriter.LogDebug("Using Managed AppId from secure store");
                         }
                     }
+                    if (string.IsNullOrWhiteSpace(Tenant))
+                    {
+                        Tenant = TenantExtensions.GetTenantIdByUrl(Url, AzureEnvironment);
+                    }
 
                     var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource, PersistLogin, Host);
                     connection = returnedConnection;
