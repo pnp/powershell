@@ -278,6 +278,11 @@ namespace PnP.PowerShell.Commands.Base
 
             if (!string.IsNullOrEmpty(actionsIdTokenRequestUrl) && !string.IsNullOrEmpty(actionsIdTokenRequestToken))
             {
+                if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(tenant))
+                {
+                    throw new PSInvalidOperationException("ClientId and Tenant must be provided when using Federated Identity in GitHub Actions.");
+                }
+
                 Framework.Diagnostics.Log.Debug("TokenHandler", "ACTIONS_ID_TOKEN_REQUEST_URL and ACTIONS_ID_TOKEN_REQUEST_TOKEN env variables found. The context is GitHub Actions...");
 
                 var federationToken = await GetFederationTokenFromGithubAsync();
@@ -305,8 +310,10 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException("The Azure DevOps pipeline task is not configured to use a service connection. Please check the pipeline configuration and ensure that the service connection is set up correctly.");
                 }
 
+                Framework.Diagnostics.Log.Debug("TokenHandler", $"Using service connection '{serviceConnectionId}' with app Id '{serviceConnectionAppId}' and tenant Id '{serviceConnectionTenantId}'...");
+
                 var federationToken = await GetFederationTokenFromAzureDevOpsAsync(serviceConnectionId);
-                return await GetAccessTokenWithFederatedTokenAsync(clientId, tenant, requiredScope, federationToken);
+                return await GetAccessTokenWithFederatedTokenAsync(serviceConnectionAppId, serviceConnectionTenantId, requiredScope, federationToken);
             }
             else
             {
@@ -350,14 +357,13 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private static async Task<string> GetFederationTokenFromAzureDevOpsAsync(string serviceConnectionId = null)
+        private static async Task<string> GetFederationTokenFromAzureDevOpsAsync(string serviceConnectionId)
         {
             try
             {
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Azure DevOps federation token...");
 
-                var urlSuffix = !string.IsNullOrEmpty(serviceConnectionId) ? $"&serviceConnectionId={serviceConnectionId}" : "";
-                var requestUrl = $"{Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI")}?api-version=7.1{urlSuffix}";
+                var requestUrl = $"{Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI")}?api-version=7.1&serviceConnectionId={serviceConnectionId}";
 
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
@@ -366,6 +372,8 @@ namespace PnP.PowerShell.Commands.Base
                 requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN"));
                 requestMessage.Headers.Add("Accept", "application/json");
                 requestMessage.Headers.Add("x-anonymous", "true");
+                // Prevents the service from responding with a redirect HTTP status code (useful for automation).
+                requestMessage.Headers.Add("X-TFS-FedAuthRedirect", "Suppress");
 
                 var response = await httpClient.SendAsync(requestMessage);
 

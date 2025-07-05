@@ -691,11 +691,11 @@ namespace PnP.PowerShell.Commands.Base
                 defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
             }
 
-            PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
+            Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
             var accessToken = TokenHandler.GetFederatedIdentityTokenAsync(appClientId, tenantId, defaultResource).GetAwaiter().GetResult();
 
             // Set up the AuthenticationManager in PnP Framework to use a Federated Identity context
-            using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
+            using (var authManager = new Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
             {
                 PnPClientContext context = null;
                 ConnectionType connectionType = ConnectionType.O365;
@@ -715,8 +715,8 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 var connection = new PnPConnection(context, connectionType, null, url != null ? url.ToString() : null, tenantAdminUrl, PnPPSVersionTag, InitializationType.FederatedIdentity);
-                connection.ClientId = appClientId;
-                connection.Tenant = tenantId;
+                connection.ClientId = appClientId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_CLIENT_ID");
+                connection.Tenant = tenantId ?? Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_TENANT_ID");
                 return connection;
             }
         }
