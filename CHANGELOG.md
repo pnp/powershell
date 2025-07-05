@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
 - **PnP PowerShell now requires PowerShell 7.4.0 or newer**
+- Improved `Connect-PnPOnline` with `-DeviceLogin` flow, now we don't require users to specify `-Tenant` parameter, it will be automatically added if not specified.
 
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
@@ -32,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Unregister-PnPHubSite` cmdlet to properly handle null reference error. [#4944](https://github.com/pnp/powershell/pull/4944)
 - Fix `Add/Publish/Unpublish/Remove-PnPApp` cmdlets to properly handle the issue in no-script sites.
 - Fix `Get-PnPHubSiteChild` cmdlet to handle vanity domains. [#4965](https://github.com/pnp/powershell/pull/4965)
+- Fix `Connect-PnPOnline` not working correctly with `-DeviceLogin` in Azure Cloud Shell.
 
 ### Removed
 
