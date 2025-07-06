@@ -23,6 +23,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         private ProgressRecord subProgressRecord = new ProgressRecord(1, "Activity", "Status");
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipelineByPropertyName = true, ValueFromPipeline = true, ParameterSetName = "Path")]
+        [Parameter(Mandatory = false, ParameterSetName = "Instance")]
         public string Path;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
