@@ -117,7 +117,7 @@
  [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h3 id="devicelogin">DeviceLogin</h3>
-<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-PersistLogin] [-CreateDrive] [-DriveName &lt;String&gt;] [-DeviceLogin]
+<pre><code class="lang-powershell">Connect-PnPOnline [-ReturnConnection] [-Url] &lt;String&gt; [-PersistLogin] [-CreateDrive] [-DriveName &lt;String&gt;] [-DeviceLogin] -Tenant &lt;String&gt;
  [-ClientId &lt;String&gt;] [-AzureEnvironment &lt;AzureEnvironment&gt;] 
  [-ValidateConnection] [-MicrosoftGraphEndPoint &lt;string&gt;]
  [-AzureADLoginEndPoint &lt;string&gt;] [-Connection &lt;PnPConnection&gt;]
@@ -266,7 +266,11 @@ See <a href="https://learn.microsoft.com/sharepoint/dev/solution-guidance/securi
 <h3 id="example-20">EXAMPLE 20</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
 </code></pre>
-<p>Connect to SharePoint/Microsoft Graph using federated identity credentials.</p>
+<p>Connect to SharePoint/Microsoft Graph using federated identity credentials in Github.</p>
+<h3 id="example-21">EXAMPLE 21</h3>
+<pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -FederatedIdentity
+</code></pre>
+<p>Connect to SharePoint/Microsoft Graph using federated identity credentials in Azure DevOps.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-accesstoken">-AccessToken</h3>
 <p>Using this parameter you can provide your own access token.
@@ -286,7 +290,7 @@ Accept wildcard characters: False
 <h3 id="-azureenvironment">-AzureEnvironment</h3>
 <p>The Azure environment to use for authentication, the defaults to 'Production' which is the main Azure environment.</p>
 <pre><code class="lang-yaml">Type: AzureEnvironment
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity, Federated Identity
 Aliases:
 Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, Custom
 
@@ -358,7 +362,7 @@ Accept wildcard characters: False
 <p>Optional connection to be reused by the new connection. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <p>When passed in, the ClientId/AppId used for the passed in connection will be used for the new connection. It will override any -ClientId or -AppId parameter passed in.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable, Federated Identity
 
 Required: False
 Position: Named
@@ -490,7 +494,7 @@ Accept wildcard characters: False
 <h3 id="-tenant">-Tenant</h3>
 <p>The Azure Active Directory tenant name, e.g. mycompany.onmicrosoft.com or mycompany.com if you have added custom domains to your tenant</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Environment Variable
+Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Environment Variable, Federated Identity
 Aliases:
 
 Required: True
@@ -503,7 +507,7 @@ Accept wildcard characters: False
 <p>The url to the Tenant Admin site.
 If not specified, the cmdlets will assume to connect automatically to https://[tenantname]-admin.sharepoint.com where appropriate.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable, Federated Identity
 Aliases:
 
 Required: False
@@ -527,7 +531,7 @@ Accept wildcard characters: False
 <h3 id="-url">-Url</h3>
 <p>The Url of the site collection or subsite to connect to, i.e. tenant.sharepoint.com, <a href="https://tenant.sharepoint.com">https://tenant.sharepoint.com</a>, tenant.sharepoint.com/sites/hr, etc.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity, Federated Identity
 Aliases:
 
 Required: True (Except when using -ManagedIdentity and -AzureADWorkloadIdentity)
@@ -539,7 +543,7 @@ Accept wildcard characters: False
 <h3 id="-validateconnection">-ValidateConnection</h3>
 <p>When provided, the cmdlet will check to ensure the SharePoint Online site specified through <code>-Url</code> exists and if not, will throw an exception. If you omit this flag or set it to $false, it will blindly set up a connection without validating that the site actually exists. Making use of this option does make one extra call on the connection attempt, so it is recommended to only use it in scenarios where you know the site you're trying to connect o may not exist and would like to have feedback on this during the connect.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity, Federated Identity
 Aliases:
 
 Required: False
@@ -557,16 +561,6 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: Web Login for Multi Factor Authentication
-Aliases:
-
-Required: False
-Position: Named
-Default value: /_layouts/15/settings.aspx
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
@@ -656,17 +650,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-verbose">-Verbose</h3>
-<p>When provided, additional debug statements will be shown while going through setting up a connection.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
 <h3 id="-environmentvariable">-EnvironmentVariable</h3>
 <p>Connects using the necessary environment variables. For more information the required environment variables, please refer to this article, <a href="https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables">Azure.Identity Environment Variables</a> here. We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used. By default, it will use the <code>-ClientId</code> specified in <code>AZURE_CLIENT_ID</code> environment variable.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
@@ -681,7 +664,7 @@ Accept wildcard characters: False
 <h3 id="-microsoftgraphendpoint">-MicrosoftGraphEndPoint</h3>
 <p>Custom Microsoft Graph endpoint to be used if we are using Azure Custom environment. This will only work if <code>AzureEnvironment</code> parameter value is set to <code>Custom</code>.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity, OS Login
 Aliases:
 
 Required: False
@@ -693,7 +676,7 @@ Accept wildcard characters: False
 <h3 id="-azureadloginendpoint">-AzureADLoginEndPoint</h3>
 <p>Custom Azure AD login endpoint to be used if we are using Azure Custom environment to retrieve access token. This will only work if <code>AzureEnvironment</code> parameter value is set to <code>Custom</code>.</p>
 <pre><code class="lang-yaml">Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity
 Aliases:
 
 Required: False
@@ -714,7 +697,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-oslogin">-OSLogin</h3>
-<p>Connects using Web Account Manager (WAM). This works only on Windows machines, on other OS will open browser. Use this to open the native Windows authentication prompt. It supports Windows Hello, conditional access policies, FIDO keys and other OS integration auth options. Requires that the Entra ID app registration have <code>ms-appx-web://microsoft.aad.brokerplugin/{client_id}</code> as a redirect URI. For more information, visit this <a href="https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam">link</a>.</p>
+<p>Connects using Web Account Manager (WAM). This works on systems with Windows and Linux OS, on other OS will open browser.</p>
+<p>Use this to open the native Windows or Linux authentication prompt. It supports Windows Hello, conditional access policies, FIDO keys and other OS integration auth options. Requires that the Entra ID app registration have <code>ms-appx-web://microsoft.aad.brokerplugin/{client_id}</code> as a redirect URI.</p>
+<p>For more information on usage in Windows, visit this <a href="https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam">link</a>.</p>
+<p>For more information on usage in Linux, visit this <a href="https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/linux-dotnet-sdk?tabs=ubuntudep">link</a></p>
+<p>For more information on usage in WSL, visit this <a href="https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/linux-dotnet-sdk-wsl?tabs=ubuntudep">link</a></p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: OS login
 Aliases:

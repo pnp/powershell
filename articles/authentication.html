@@ -95,7 +95,7 @@
 <h2 id="authenticating-from-another-device-or-specific-browser">Authenticating from another device or specific browser</h2>
 <p>In some scenarios it can happen that you need to authenticate to PnP PowerShell from a different device or through a specific browser. In these cases you can use the <code>-DeviceLogin</code> method to connect. A sample scenario could for example be when running PnP PowerShell scripts on a Raspberry Pi without a desktop environment installed on it. In this case there is no browser to authenticate through on the device itself.</p>
 <p>Connecting can be done using:</p>
-<pre><code class="lang-powershell">Connect-PnPOnline [yourtenant].sharepoint.com -DeviceLogin -Tenant &lt;tenant&gt;.onmicrosoft.com -ClientId &lt;client id of your Entra ID Application Registration&gt;
+<pre><code class="lang-powershell">Connect-PnPOnline [yourtenant].sharepoint.com -DeviceLogin -ClientId &lt;client id of your Entra ID Application Registration&gt;
 </code></pre>
 <p>When running this line, it will prompt in text to go to <a href="https://microsoft.com/devicelogin">https://microsoft.com/devicelogin</a> on any device and log in using a specific code which will be shown in the text. You can perform this step on any device. This does not have to be the same device as you're using PnP PowerShell on. After going to that website and entering the code shown in the text, you can complete the interactive login process as normal, including any multi factor authentication requirements that might have been set up for your account. Once the authentication completes, PnP PowerShell will automatically detect this and will be ready to be used.</p>
 <h2 id="authenticating-using-web-account-manager">Authenticating using Web Account Manager</h2>
