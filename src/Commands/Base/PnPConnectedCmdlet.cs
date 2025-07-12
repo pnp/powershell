@@ -90,7 +90,8 @@ namespace PnP.PowerShell.Commands.Base
                         }
                         break;
                     case Core.MicrosoftGraphServiceException pgex:
-                        errorMessage = (pgex.Error as Core.MicrosoftGraphError).Message;
+                        var pgexError = pgex.Error as Core.MicrosoftGraphError;
+                        errorMessage = $"{pgex.Message} - {pgexError.Code} {pgexError.HttpResponseCode} {pgexError.Message}";
                         break;
                     default:
                         errorMessage = ex.Message;
@@ -116,7 +117,7 @@ namespace PnP.PowerShell.Commands.Base
 
                     LogError(errorMessage);
                 }
-                
+
             }
         }
     }
