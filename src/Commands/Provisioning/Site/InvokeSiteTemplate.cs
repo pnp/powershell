@@ -71,9 +71,6 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
         [Alias("Url")]
         public string Identity { get; set; }
 
-        [Parameter(Mandatory = false)]
-        public bool? Force { get; set; }
-
         protected override void ExecuteCmdlet()
         {
             ClientContext applyTemplateContext = null;
@@ -110,11 +107,12 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                 applyTemplateContext = ClientContext;
             }
 
+           
             // Avoid the template being applied to a tenant admin site
-            if (Force.GetValueOrDefault(false) && PnPConnection.IsTenantAdminSite(applyTemplateContext))
+            if (PnPConnection.IsTenantAdminSite(applyTemplateContext))
             {
                 // If the current context is a tenant admin site, we cannot apply a site template to it
-                throw new PSInvalidOperationException($"You cannot apply a site template to a tenant admin site. Please connect to a site collection or subsite to apply the template or use the {nameof(Identity)} parameter to specify which sitecollection it should be applied to. If you are sure you want to apply the template to a tenant admin site, please use the -{nameof(Force)} parameter to override this check.");
+                throw new PSInvalidOperationException($"You cannot apply a site template to a tenant admin site. Please connect to a site collection or use the {nameof(Identity)} parameter to specify which sitecollection it should be applied to.");
             }
 
             applyTemplateContext.Web.EnsureProperty(w => w.Url);

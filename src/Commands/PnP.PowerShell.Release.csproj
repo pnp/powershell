@@ -49,7 +49,7 @@
 		<PackageReference Include="PnP.Core.Auth" Version="1.15.0" />
 		<PackageReference Include="PnP.Core.Admin" Version="1.15.0" />
 		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.70.2" />
-		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.5" />
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
 	</ItemGroup>
 
@@ -62,7 +62,7 @@
 
 
 	<ItemGroup>
-	  <PackageReference Include="System.Management.Automation" Version="7.4.6" />
+	  <PackageReference Include="System.Management.Automation" Version="7.4.0" />
  	  <PackageReference Include="TextCopy" Version="6.2.1" />		
 	</ItemGroup>
 

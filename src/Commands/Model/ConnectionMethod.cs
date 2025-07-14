@@ -32,7 +32,8 @@
         /// Using a System Assigned or User Assigned Managed Identity
         /// </summary>
         ManagedIdentity,
-        
-        AzureADWorkloadIdentity
+
+        AzureADWorkloadIdentity,
+        FederatedIdentity
     }
 }

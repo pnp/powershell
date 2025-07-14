@@ -50,5 +50,16 @@ namespace PnP.PowerShell.Commands.Utilities
             return true;
         }
 #pragma warning restore CA1416 // Validate platform compatibility
+
+        public static bool IsAzureCloudShell()
+        {
+            string psDistChannel = Environment.GetEnvironmentVariable("POWERSHELL_DISTRIBUTION_CHANNEL");
+            if (string.IsNullOrWhiteSpace(psDistChannel))
+            {
+                return false;
+            }
+
+            return psDistChannel == "CloudShell";
+        }
     }
 }

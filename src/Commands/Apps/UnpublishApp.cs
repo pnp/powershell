@@ -1,15 +1,16 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Enums;
-using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Utilities;
+using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsData.Unpublish, "PnPApp")]
-    public class UnpublishApp : PnPSharePointOnlineAdminCmdlet
+    public class UnpublishApp : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public AppMetadataPipeBind Identity;
@@ -22,59 +23,76 @@ namespace PnP.PowerShell.Commands.Apps
 
         protected override void ExecuteCmdlet()
         {
-            bool isScriptSettingUpdated = false;
-
-            if (Scope == AppCatalogScope.Tenant)
-            {
-                var appcatalogUri = ClientContext.Web.GetAppCatalog();
-                var ctx = ClientContext.Clone(appcatalogUri);
-                LogDebug("Checking if the tenant app catalog is a no-script site");
-                if (ctx.Site.IsNoScriptSite())
-                {
-                    if (Force || ShouldContinue("The tenant appcatalog is a no-script site. Do you want to temporarily enable scripting on it?", Properties.Resources.Confirm))
-                    {
-                        LogDebug("Temporarily enabling scripting on the tenant app catalog site");
-                        var tenant = new Tenant(AdminContext);
-                        tenant.SetSiteProperties(appcatalogUri.AbsoluteUri, noScriptSite: false);
-                        isScriptSettingUpdated = true;
-                    }
-                    else
-                    {
-                        LogWarning("Scripting is disabled on the tenant app catalog site. This command cannot proceed without allowing scripts.");
-                        return;
-                    }
-                }
-            }
-
             try
             {
-                var manager = new PnP.Framework.ALM.AppManager(ClientContext);
-
-                var app = Identity.GetAppMetadata(ClientContext, Scope);
-                if (app != null)
+                UnpublishPnPApp();
+            }
+            catch (Exception ex)
+            {
+                if (ApiRequestHelper.IsUnauthorizedAccessException(ex.Message))
                 {
-                    manager.Retract(app, Scope);
+                    bool isScriptSettingUpdated = false;
+                    var site = ClientContext.Site;
+                    if (site.IsNoScriptSite())
+                    {
+                        try
+                        {
+                            if (Force || ShouldContinue("This is a no-script site. You need SharePoint admin permissions to allow scripts. Do you want to temporarily enable scripting on it temporarily?", Properties.Resources.Confirm))
+                            {
+                                var tenantUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
+                                using var tenantContext = ClientContext.Clone(tenantUrl);
+
+                                LogDebug("Temporarily enabling scripting on the app catalog site");
+
+                                var tenant = new Tenant(tenantContext);
+                                tenant.SetSiteProperties(ClientContext.Url, noScriptSite: false);
+                                isScriptSettingUpdated = true;
+
+                                UnpublishPnPApp();
+                            }
+                            else
+                            {
+                                LogWarning("Scripting is disabled on the site. This command cannot proceed without allowing scripts. Please contact your SharePoint admin to allow scripting.");
+                                return;
+                            }
+                        }
+                        catch (Exception innerEx)
+                        {
+                            LogError(innerEx);
+                            return;
+                        }
+                        finally
+                        {
+                            if (isScriptSettingUpdated)
+                            {
+                                var tenantUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
+                                using var tenantContext = ClientContext.Clone(tenantUrl);
+                                LogDebug("Reverting the no-script setting on the app catalog site");
+                                var tenant = new Tenant(tenantContext);
+                                tenant.SetSiteProperties(ClientContext.Url, noScriptSite: true);
+                            }
+                        }
+                    }
                 }
                 else
                 {
-                    throw new Exception("Cannot find app");
+                    throw;
                 }
             }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                if (isScriptSettingUpdated)
-                {
-                    LogDebug("Disabling scripting on the tenant app catalog site");
-                    var appcatalogUri = ClientContext.Web.GetAppCatalog();
-                    var ctx = ClientContext.Clone(appcatalogUri);
+        }
 
-                    var tenant = new Tenant(AdminContext);
-                    tenant.SetSiteProperties(appcatalogUri.AbsoluteUri, noScriptSite: true);
-                }
+        protected void UnpublishPnPApp()
+        {
+            var manager = new PnP.Framework.ALM.AppManager(ClientContext);
+
+            var app = Identity.GetAppMetadata(ClientContext, Scope);
+            if (app != null)
+            {
+                manager.Retract(app, Scope);
+            }
+            else
+            {
+                throw new Exception("Cannot find app");
             }
         }
     }

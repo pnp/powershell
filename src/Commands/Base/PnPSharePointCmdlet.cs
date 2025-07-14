@@ -49,6 +49,12 @@ namespace PnP.PowerShell.Commands
                         var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
                         return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(defaultResource).GetAwaiter().GetResult();
                     }
+                    else if (Connection.ConnectionMethod == ConnectionMethod.FederatedIdentity)
+                    {
+                        var resourceUri = new Uri(Connection.Url);
+                        var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
+                        return TokenHandler.GetFederatedIdentityTokenAsync(Connection.ClientId, Connection.Tenant, defaultResource).GetAwaiter().GetResult();
+                    }
                     else
                     {
                         if (Connection.Context != null)
@@ -80,6 +86,10 @@ namespace PnP.PowerShell.Commands
                 if (Connection?.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
                 {
                     return TokenHandler.GetAzureADWorkloadIdentityTokenAsync($"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
+                }
+                else if (Connection?.ConnectionMethod == ConnectionMethod.FederatedIdentity)
+                {
+                    return TokenHandler.GetFederatedIdentityTokenAsync(Connection.ClientId, Connection.Tenant, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
                 }
                 else
                 {

@@ -25,7 +25,7 @@ In some scenarios it can happen that you need to authenticate to PnP PowerShell 
 Connecting can be done using:
 
 ```powershell
-Connect-PnPOnline [yourtenant].sharepoint.com -DeviceLogin -Tenant <tenant>.onmicrosoft.com -ClientId <client id of your Entra ID Application Registration>
+Connect-PnPOnline [yourtenant].sharepoint.com -DeviceLogin -ClientId <client id of your Entra ID Application Registration>
 ```
 
 When running this line, it will prompt in text to go to https://microsoft.com/devicelogin on any device and log in using a specific code which will be shown in the text. You can perform this step on any device. This does not have to be the same device as you're using PnP PowerShell on. After going to that website and entering the code shown in the text, you can complete the interactive login process as normal, including any multi factor authentication requirements that might have been set up for your account. Once the authentication completes, PnP PowerShell will automatically detect this and will be ready to be used.
