@@ -160,43 +160,42 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                                 }
                             }
                         }
+
+                        List<Microsoft.SharePoint.Client.Field> fieldsToExport;
+                        // Get the fieds to export
                         if (Fields != null)
                         {
+                            fieldsToExport = [];
                             foreach (var fieldName in Fields)
                             {
-                                Microsoft.SharePoint.Client.Field dataField = fieldCollection.FirstOrDefault(f => f.InternalName == fieldName);
-
+                                // Discard all fields readonly and unsupported field type
+                                Microsoft.SharePoint.Client.Field dataField = fieldCollection.FirstOrDefault(f => f.InternalName == fieldName && !f.ReadOnlyField && !_unsupportedFieldTypes.Contains(f.FieldTypeKind));
                                 if (dataField != null)
                                 {
-                                    var defaultFieldValue = GetFieldValueAsText(ClientContext.Web, listItem, dataField);
-                                    if (TokenizeUrls.IsPresent)
-                                    {
-                                        defaultFieldValue = Tokenize(defaultFieldValue, ClientContext.Web, ClientContext.Site);
-                                    }
-
-                                    row.Values.Add(fieldName, defaultFieldValue);
+                                    fieldsToExport.Add(dataField);
                                 }
                             }
                         }
                         else
                         {
-                            // All fields are added except readonly fields and unsupported field type
-                            var fieldsToExport = fieldCollection.AsEnumerable()
-                                .Where(f => !f.ReadOnlyField && !_unsupportedFieldTypes.Contains(f.FieldTypeKind));
-                            foreach (var field in fieldsToExport)
+                            // Discard all fields readonly and unsupported field type
+                            fieldsToExport = [.. fieldCollection.AsEnumerable().Where(f => !f.ReadOnlyField && !_unsupportedFieldTypes.Contains(f.FieldTypeKind))];
+                        }
+
+                        // Get validate field and get data
+                        foreach (Microsoft.SharePoint.Client.Field field in fieldsToExport)
+                        {
+                            if (listItem.FieldExistsAndUsed(field.InternalName))
                             {
-                                var fldKey = (from f in listItem.FieldValues.Keys where f == field.InternalName select f).FirstOrDefault();
-                                if (!string.IsNullOrEmpty(fldKey))
+                                var fieldValue = GetFieldValueAsText(ClientContext.Web, listItem, field);
+                                if (TokenizeUrls.IsPresent)
                                 {
-                                    var fieldValue = GetFieldValueAsText(ClientContext.Web, listItem, field);
-                                    if (TokenizeUrls.IsPresent)
-                                    {
-                                        fieldValue = Tokenize(fieldValue, ClientContext.Web, ClientContext.Site);
-                                    }
-                                    row.Values.Add(field.InternalName, fieldValue);
+                                    fieldValue = Tokenize(fieldValue, ClientContext.Web, ClientContext.Site);
                                 }
+                                row.Values.Add(field.InternalName, fieldValue);
                             }
                         }
+
                         rows.Add(row);
                     }
                 }
