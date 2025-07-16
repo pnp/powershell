@@ -6115,7 +6115,7 @@
   },
   {
     "CommandName": "Invoke-PnPSiteTemplate",
-    "Command": "Invoke-PnPSiteTemplate -Path .\\ -InputInstance $template",
+    "Command": "Invoke-PnPSiteTemplate -InputInstance $template",
     "Rank": 8,
     "Id": 1020
   },
