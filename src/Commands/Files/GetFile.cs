@@ -52,6 +52,9 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, ParameterSetName = URLASMEMORYSTREAM)]
         public SwitchParameter AsMemoryStream;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter NoUrlDecode;
+
         protected override void ExecuteCmdlet()
         {
             var serverRelativeUrl = string.Empty;
@@ -72,9 +75,12 @@ namespace PnP.PowerShell.Commands.Files
                 // We can't deal with absolute URLs
                 Url = UrlUtility.MakeRelativeUrl(Url);
             }
-            
+
             // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
-            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
+            if (!NoUrlDecode)
+            {
+                Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
+            }
 
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
