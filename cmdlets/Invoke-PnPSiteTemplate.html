@@ -152,9 +152,9 @@ Invoke-PnPSiteTemplate -Path NewTemplate.xml -ExtensibilityHandlers $handler1,$h
 </code></pre>
 <p>This will create two new ExtensibilityHandler objects that are run while provisioning the template</p>
 <h3 id="example-9">EXAMPLE 9</h3>
-<pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path .\ -InputInstance $template
+<pre><code class="lang-powershell">Invoke-PnPSiteTemplate -InputInstance $template
 </code></pre>
-<p>Applies a site template from an in-memory instance of a SiteTemplate type of the PnP Core Component, reading the supporting files, if any, from the current (.) path. The syntax can be used together with any other supported parameters.</p>
+<p>Applies a site template from an in-memory instance of a SiteTemplate type of the PnP Core Component.</p>
 <h3 id="example-10">EXAMPLE 10</h3>
 <pre><code class="lang-powershell">Invoke-PnPSiteTemplate -Path .\template.xml -TemplateId &quot;MyTemplate&quot;
 </code></pre>
