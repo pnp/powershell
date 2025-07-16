@@ -27,6 +27,49 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             Tenant.EnsureProperties(t => t.IsMultipleVivaConnectionsFlightEnabled, t => t.IsVivaHomeFlightEnabled);
+            HomeSiteConfigurationParam configurationParam;
+
+            bool hasVivaConnectionsDefaultStart = ParameterSpecified(nameof(VivaConnectionsDefaultStart));
+            bool hasDraftMode = ParameterSpecified(nameof(DraftMode));
+
+            if (hasVivaConnectionsDefaultStart && hasDraftMode)
+            {
+                configurationParam = new()
+                {
+                    vivaConnectionsDefaultStart = VivaConnectionsDefaultStart,
+                    IsVivaConnectionsDefaultStartPresent = true,
+                    isInDraftMode = DraftMode,
+                    IsInDraftModePresent = true
+                };
+            }
+            else if (hasVivaConnectionsDefaultStart)
+            {
+                configurationParam = new()
+                {
+                    vivaConnectionsDefaultStart = VivaConnectionsDefaultStart,
+                    IsVivaConnectionsDefaultStartPresent = true
+                };
+            }
+            else if (hasDraftMode)
+            {
+                configurationParam = new()
+                {
+                    isInDraftMode = DraftMode,
+                    IsInDraftModePresent = true
+                };
+            }
+            else if (ParameterSpecified(nameof(DraftMode)))
+            {
+                configurationParam = new()
+                {
+                    isInDraftMode = DraftMode,
+                    IsInDraftModePresent = true
+                };
+            }
+            else
+            {
+                configurationParam = null;
+            }
 
             if (Tenant.IsMultipleVivaConnectionsFlightEnabled)
             {
@@ -34,12 +77,10 @@ namespace PnP.PowerShell.Commands.Admin
                 {
                     IEnumerable<TargetedSiteDetails> enumerable = Tenant.GetTargetedSitesDetails()?.Where((TargetedSiteDetails hs) => !hs.IsVivaBackendSite);
                     AdminContext.ExecuteQueryRetry();
-                    bool flag = false;
                     if (enumerable == null || enumerable.Count() == 0)
                     {
                         Tenant.AddHomeSite(HomeSiteUrl, 1, null);
                         AdminContext.ExecuteQueryRetry();
-                        flag = true;
                     }
                     else if (enumerable.Count() == 1 && !IsSameSiteUrl(enumerable.First().Url, HomeSiteUrl))
                     {
@@ -47,16 +88,10 @@ namespace PnP.PowerShell.Commands.Admin
                         AdminContext.ExecuteQueryRetry();
                         Tenant.AddHomeSite(HomeSiteUrl, 1, null);
                         AdminContext.ExecuteQueryRetry();
-                        flag = true;
                     }
-                    HomeSiteConfigurationParam configurationParam = new()
-                    {
-                        vivaConnectionsDefaultStart = VivaConnectionsDefaultStart,
-                        IsVivaConnectionsDefaultStartPresent = VivaConnectionsDefaultStart,
-                        isInDraftMode = DraftMode,
-                        IsInDraftModePresent = DraftMode || flag
-                    };
+                    
                     ClientResult<TargetedSiteDetails> clientResult = Tenant.UpdateTargetedSite(HomeSiteUrl, configurationParam);
+
                     AdminContext.ExecuteQueryRetry();
                     WriteObject(clientResult.Value);
                 }
@@ -64,18 +99,7 @@ namespace PnP.PowerShell.Commands.Admin
             else if (Force || ShouldContinue("Before you set a Home site, make sure you review the documentation at https://aka.ms/homesites.", Properties.Resources.Confirm))
             {
                 Tenant.ValidateVivaHomeParameterExists(VivaConnectionsDefaultStart);
-                HomeSiteConfigurationParam configuration = null;
-                if (VivaConnectionsDefaultStart || DraftMode)
-                {
-                    configuration = new HomeSiteConfigurationParam
-                    {
-                        vivaConnectionsDefaultStart = VivaConnectionsDefaultStart,
-                        IsVivaConnectionsDefaultStartPresent = VivaConnectionsDefaultStart,
-                        isInDraftMode = DraftMode,
-                        IsInDraftModePresent = DraftMode
-                    };
-                }
-                ClientResult<string> clientResult = Tenant.SetSPHSiteWithConfiguration(HomeSiteUrl, configuration);
+                ClientResult<string> clientResult = Tenant.SetSPHSiteWithConfiguration(HomeSiteUrl, configurationParam);
                 AdminContext.ExecuteQueryRetry();
                 WriteObject(clientResult.Value);
             }
