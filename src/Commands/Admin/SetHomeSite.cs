@@ -32,43 +32,22 @@ namespace PnP.PowerShell.Commands.Admin
             bool hasVivaConnectionsDefaultStart = ParameterSpecified(nameof(VivaConnectionsDefaultStart));
             bool hasDraftMode = ParameterSpecified(nameof(DraftMode));
 
-            if (hasVivaConnectionsDefaultStart && hasDraftMode)
+            // Replace the current configurationParam assignment block with the following:
+
+            configurationParam = null;
+            if (hasVivaConnectionsDefaultStart || hasDraftMode)
             {
-                configurationParam = new()
+                configurationParam = new();
+                if (hasVivaConnectionsDefaultStart)
                 {
-                    vivaConnectionsDefaultStart = VivaConnectionsDefaultStart,
-                    IsVivaConnectionsDefaultStartPresent = true,
-                    isInDraftMode = DraftMode,
-                    IsInDraftModePresent = true
-                };
-            }
-            else if (hasVivaConnectionsDefaultStart)
-            {
-                configurationParam = new()
+                    configurationParam.vivaConnectionsDefaultStart = VivaConnectionsDefaultStart;
+                    configurationParam.IsVivaConnectionsDefaultStartPresent = true;
+                }
+                if (hasDraftMode)
                 {
-                    vivaConnectionsDefaultStart = VivaConnectionsDefaultStart,
-                    IsVivaConnectionsDefaultStartPresent = true
-                };
-            }
-            else if (hasDraftMode)
-            {
-                configurationParam = new()
-                {
-                    isInDraftMode = DraftMode,
-                    IsInDraftModePresent = true
-                };
-            }
-            else if (ParameterSpecified(nameof(DraftMode)))
-            {
-                configurationParam = new()
-                {
-                    isInDraftMode = DraftMode,
-                    IsInDraftModePresent = true
-                };
-            }
-            else
-            {
-                configurationParam = null;
+                    configurationParam.isInDraftMode = DraftMode;
+                    configurationParam.IsInDraftModePresent = true;
+                }
             }
 
             if (Tenant.IsMultipleVivaConnectionsFlightEnabled)
