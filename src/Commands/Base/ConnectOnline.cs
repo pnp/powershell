@@ -144,7 +144,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
         [Alias("ApplicationId")]
         public string ClientId;
 
@@ -158,7 +158,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
-        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
         public string Tenant;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
@@ -566,6 +566,10 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             messageWriter.LogDebug("Using Managed AppId from secure store");
                         }
+                    }
+                    if (string.IsNullOrWhiteSpace(Tenant))
+                    {
+                        Tenant = TenantExtensions.GetTenantIdByUrl(Url, AzureEnvironment);
                     }
 
                     var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource, PersistLogin, Host);

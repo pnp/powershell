@@ -12,12 +12,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ### Added
 - Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
 - Added `-User` parameter to `Get-PnPTeamsTeam` cmdlet to allow fetching list of teams a user has access to.
+- Added `Get-PnPBrandCenterFont` cmdlet to retrieve the available fonts in the Brand Center [#4970](https://github.com/pnp/powershell/pull/4970)
+- Added `Add-PnPBrandCenterFontPackage` cmdlet to allow creating a font package in the Brand Center [#4970](https://github.com/pnp/powershell/pull/4970)
 - Added support for `-FederatedIdentity` in `Connect-PnPOnline` to support Federated Identity.
 - Added support for SSO in WSL (Windows Subsystem for Linux) and Linux distributions. You can now use `Connect-PnPOnline` with `-OSLogin` which helps with more secure auth such as FIDO, Conditional Access policies etc.
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
-- **PnP PowerShell is now requires PowerShell 7.4.0 or newer**
+- **PnP PowerShell now requires PowerShell 7.4.0 or newer**
+- Improved `Connect-PnPOnline` with `-DeviceLogin` flow, now we don't require users to specify `-Tenant` parameter, it will be automatically added if not specified.
 
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
@@ -30,11 +33,13 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Unregister-PnPHubSite` cmdlet to properly handle null reference error. [#4944](https://github.com/pnp/powershell/pull/4944)
 - Fix `Add/Publish/Unpublish/Remove-PnPApp` cmdlets to properly handle the issue in no-script sites.
 - Fix `Get-PnPHubSiteChild` cmdlet to handle vanity domains. [#4965](https://github.com/pnp/powershell/pull/4965)
+- Fix `Connect-PnPOnline` not working correctly with `-DeviceLogin` in Azure Cloud Shell.
 
 ### Removed
 
 ### Contributors
 
+- Koen Zomers [koenzomers]
 - Janne Holm [jhholm]
 - Marc D Anderson [sympmarc]
 - [abwlodar]

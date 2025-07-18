@@ -56,7 +56,7 @@ Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-CreateDrive] [-DriveName
 
 ### DeviceLogin
 ```powershell
-Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] [-DeviceLogin]
+Connect-PnPOnline [-ReturnConnection] [-Url] <String> [-PersistLogin] [-CreateDrive] [-DriveName <String>] [-DeviceLogin] -Tenant <String>
  [-ClientId <String>] [-AzureEnvironment <AzureEnvironment>] 
  [-ValidateConnection] [-MicrosoftGraphEndPoint <string>]
  [-AzureADLoginEndPoint <string>] [-Connection <PnPConnection>]
@@ -299,7 +299,14 @@ On Windows, this entry needs to be under "Generic Credentials".
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
 ```
 
-Connect to SharePoint/Microsoft Graph using federated identity credentials.
+Connect to SharePoint/Microsoft Graph using federated identity credentials in Github.
+
+### EXAMPLE 21
+```powershell
+Connect-PnPOnline -Url "https://contoso.sharepoint.com" -FederatedIdentity
+```
+
+Connect to SharePoint/Microsoft Graph using federated identity credentials in Azure DevOps.
 
 ## PARAMETERS
 
@@ -326,7 +333,7 @@ The Azure environment to use for authentication, the defaults to 'Production' wh
 
 ```yaml
 Type: AzureEnvironment
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Managed Identity, Federated Identity
 Aliases:
 Accepted values: Production, PPE, China, Germany, USGovernment, USGovernmentHigh, USGovernmentDoD, Custom
 
@@ -416,7 +423,7 @@ When passed in, the ClientId/AppId used for the passed in connection will be use
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive login for Multi Factor Authentication, Environment Variable, Federated Identity
 
 Required: False
 Position: Named
@@ -577,7 +584,7 @@ The Azure Active Directory tenant name, e.g. mycompany.onmicrosoft.com or mycomp
 
 ```yaml
 Type: String
-Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Environment Variable
+Parameter Sets: App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Environment Variable, Federated Identity
 Aliases:
 
 Required: True
@@ -593,7 +600,7 @@ If not specified, the cmdlets will assume to connect automatically to https://\[
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Environment Variable, Federated Identity
 Aliases:
 
 Required: False
@@ -623,7 +630,7 @@ The Url of the site collection or subsite to connect to, i.e. tenant.sharepoint.
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity, Federated Identity
 Aliases:
 
 Required: True (Except when using -ManagedIdentity and -AzureADWorkloadIdentity)
@@ -638,7 +645,7 @@ When provided, the cmdlet will check to ensure the SharePoint Online site specif
 
 ```yaml
 Type: SwitchParameter
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Web Login for Multi Factor Authentication, Interactive for Multi Factor Authentication, Access Token, Environment Variable, Azure AD Workload Identity, Federated Identity
 Aliases:
 
 Required: False
@@ -659,18 +666,6 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-```yaml
-Type: String
-Parameter Sets: Web Login for Multi Factor Authentication
-Aliases:
-
-Required: False
-Position: Named
-Default value: /_layouts/15/settings.aspx
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -782,20 +777,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Verbose
-When provided, additional debug statements will be shown while going through setting up a connection.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -EnvironmentVariable
 Connects using the necessary environment variables. For more information the required environment variables, please refer to this article, [Azure.Identity Environment Variables](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity#environment-variables) here. We support only Service principal with certificate and Username with password mode for authentication. Configuration will be attempted in that order. For example, if values for a certificate and username+password are both present, the client certificate method will be used. By default, it will use the `-ClientId` specified in `AZURE_CLIENT_ID` environment variable.
 
@@ -815,7 +796,7 @@ Custom Microsoft Graph endpoint to be used if we are using Azure Custom environm
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity, OS Login
 Aliases:
 
 Required: False
@@ -830,7 +811,7 @@ Custom Azure AD login endpoint to be used if we are using Azure Custom environme
 
 ```yaml
 Type: String
-Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable
+Parameter Sets: Credentials, SharePoint ACS (Legacy) App Only, App-Only with Azure Active Directory, App-Only with Azure Active Directory using a certificate from the Windows Certificate Management Store by thumbprint, DeviceLogin, Interactive, Access Token, Environment Variable, Federated Identity
 Aliases:
 
 Required: False
@@ -856,7 +837,15 @@ Accept wildcard characters: False
 
 ### -OSLogin
 
-Connects using Web Account Manager (WAM). This works only on Windows machines, on other OS will open browser. Use this to open the native Windows authentication prompt. It supports Windows Hello, conditional access policies, FIDO keys and other OS integration auth options. Requires that the Entra ID app registration have `ms-appx-web://microsoft.aad.brokerplugin/{client_id}` as a redirect URI. For more information, visit this [link](https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam).
+Connects using Web Account Manager (WAM). This works on systems with Windows and Linux OS, on other OS will open browser. 
+
+Use this to open the native Windows or Linux authentication prompt. It supports Windows Hello, conditional access policies, FIDO keys and other OS integration auth options. Requires that the Entra ID app registration have `ms-appx-web://microsoft.aad.brokerplugin/{client_id}` as a redirect URI. 
+
+For more information on usage in Windows, visit this [link](https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/wam).
+
+For more information on usage in Linux, visit this [link](https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/linux-dotnet-sdk?tabs=ubuntudep)
+
+For more information on usage in WSL, visit this [link](https://learn.microsoft.com/en-us/entra/msal/dotnet/acquiring-tokens/desktop-mobile/linux-dotnet-sdk-wsl?tabs=ubuntudep)
 
 ```yaml
 Type: SwitchParameter

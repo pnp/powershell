@@ -10,6 +10,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -277,6 +278,11 @@ namespace PnP.PowerShell.Commands.Base
 
             if (!string.IsNullOrEmpty(actionsIdTokenRequestUrl) && !string.IsNullOrEmpty(actionsIdTokenRequestToken))
             {
+                if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(tenant))
+                {
+                    throw new PSInvalidOperationException("ClientId and Tenant must be provided when using Federated Identity in GitHub Actions.");
+                }
+
                 Framework.Diagnostics.Log.Debug("TokenHandler", "ACTIONS_ID_TOKEN_REQUEST_URL and ACTIONS_ID_TOKEN_REQUEST_TOKEN env variables found. The context is GitHub Actions...");
 
                 var federationToken = await GetFederationTokenFromGithubAsync();
@@ -304,8 +310,10 @@ namespace PnP.PowerShell.Commands.Base
                     throw new PSInvalidOperationException("The Azure DevOps pipeline task is not configured to use a service connection. Please check the pipeline configuration and ensure that the service connection is set up correctly.");
                 }
 
+                Framework.Diagnostics.Log.Debug("TokenHandler", $"Using service connection '{serviceConnectionId}' with app Id '{serviceConnectionAppId}' and tenant Id '{serviceConnectionTenantId}'...");
+
                 var federationToken = await GetFederationTokenFromAzureDevOpsAsync(serviceConnectionId);
-                return await GetAccessTokenWithFederatedTokenAsync(clientId, tenant, requiredScope, federationToken);
+                return await GetAccessTokenWithFederatedTokenAsync(serviceConnectionAppId, serviceConnectionTenantId, requiredScope, federationToken);
             }
             else
             {
@@ -319,7 +327,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving GitHub federation token...");
 
-                var requestUrl = $"{Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL")}&audience={Uri.EscapeDataString("api://AzureADTokenExchange")}";
+                var requestUrl = $"{Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL")}&audience={UrlUtilities.UrlEncode("api://AzureADTokenExchange")}";
 
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
@@ -327,29 +335,35 @@ namespace PnP.PowerShell.Commands.Base
                 requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN"));
                 requestMessage.Headers.Add("Accept", "application/json");
                 requestMessage.Headers.Add("x-anonymous", "true");
+
                 var response = await httpClient.SendAsync(requestMessage);
+                var responseContent = await response.Content.ReadAsStringAsync();
 
-                response.EnsureSuccessStatusCode();
+                if (!response.IsSuccessStatusCode)
+                {
+                    responseContent = responseContent.Replace("{", "{{").Replace("}", "}}");
+                    throw new HttpRequestException($"Failed to retrieve GitHub federation token. HTTP Error {response.StatusCode}: {responseContent}");
+                }
 
-                var content = await response.Content.ReadAsStringAsync();
-                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(content);
+                Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved GitHub federation token...");
+                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
 
                 return tokenResponse["value"].ToString();
             }
             catch (Exception ex)
             {
+                Framework.Diagnostics.Log.Error("TokenHandler GitHub", ex.Message);
                 throw new PSInvalidOperationException($"Failed to retrieve GitHub federation token: {ex.Message}", ex);
             }
         }
 
-        private static async Task<string> GetFederationTokenFromAzureDevOpsAsync(string serviceConnectionId = null)
+        private static async Task<string> GetFederationTokenFromAzureDevOpsAsync(string serviceConnectionId)
         {
             try
             {
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Azure DevOps federation token...");
 
-                var urlSuffix = !string.IsNullOrEmpty(serviceConnectionId) ? $"&serviceConnectionId={serviceConnectionId}" : "";
-                var requestUrl = $"{Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI")}?api-version=7.1{urlSuffix}";
+                var requestUrl = $"{Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI")}?api-version=7.1&serviceConnectionId={serviceConnectionId}";
 
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
@@ -358,17 +372,26 @@ namespace PnP.PowerShell.Commands.Base
                 requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN"));
                 requestMessage.Headers.Add("Accept", "application/json");
                 requestMessage.Headers.Add("x-anonymous", "true");
+                // Prevents the service from responding with a redirect HTTP status code (useful for automation).
+                requestMessage.Headers.Add("X-TFS-FedAuthRedirect", "Suppress");
 
                 var response = await httpClient.SendAsync(requestMessage);
-                response.EnsureSuccessStatusCode();
 
-                var content = await response.Content.ReadAsStringAsync();
-                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(content);
+                var responseContent = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    responseContent = responseContent.Replace("{", "{{").Replace("}", "}}");
+                    throw new HttpRequestException($"Failed to retrieve Azure DevOps federation token. HTTP Error {response.StatusCode}: {responseContent}");
+                }
+
+                Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved Azure DevOps federation token...");
+                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
 
                 return tokenResponse["oidcToken"].ToString();
             }
             catch (Exception ex)
             {
+                Framework.Diagnostics.Log.Error("TokenHandler AzureDevOps", ex.Message);
                 throw new PSInvalidOperationException($"Failed to retrieve Azure DevOps federation token: {ex.Message}", ex);
             }
         }
@@ -377,15 +400,15 @@ namespace PnP.PowerShell.Commands.Base
         {
             try
             {
-                Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Entra ID access Token with federated token...");
+                Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Entra ID access token with federated token...");
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
                 var queryParams = new List<string>
     {
         "grant_type=client_credentials",
-        $"scope={Uri.EscapeDataString($"{resource}/.default")}",
+        $"scope={HttpUtility.UrlEncode(resource)}",
         $"client_id={clientId}",
-        $"client_assertion_type={Uri.EscapeDataString("urn:ietf:params:oauth:client-assertion-type:jwt-bearer")}",
+        $"client_assertion_type={HttpUtility.UrlEncode("urn:ietf:params:oauth:client-assertion-type:jwt-bearer")}",
         $"client_assertion={federatedToken}"
     };
 
@@ -398,16 +421,23 @@ namespace PnP.PowerShell.Commands.Base
                 request.Headers.Add("x-anonymous", "true");
 
                 var response = await httpClient.SendAsync(request);
-                response.EnsureSuccessStatusCode();
 
                 var responseContent = await response.Content.ReadAsStringAsync();
+                if (!response.IsSuccessStatusCode)
+                {
+                    responseContent = responseContent.Replace("{", "{{").Replace("}", "}}");
+                    throw new HttpRequestException($"Failed to retrieve federated access token. HTTP Error {response.StatusCode}: {responseContent}");
+                }
+
+                Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved federated access token...");
                 var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
 
                 return tokenResponse["access_token"].ToString();
             }
             catch (Exception ex)
             {
-                throw new PSInvalidOperationException($"Failed to retrieve access token with federated token: {ex.Message}", ex);
+                Framework.Diagnostics.Log.Error("TokenHandler", ex.Message);
+                throw new PSInvalidOperationException(ex.Message, ex);
             }
         }
     }
