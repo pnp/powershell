@@ -8,9 +8,9 @@ using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
-    [Cmdlet(VerbsCommon.Get, "PnPPowerAppPermissionList")]
+    [Cmdlet(VerbsCommon.Get, "PnPPowerAppPermissions")]
     [OutputType(typeof(Model.PowerPlatform.PowerApp.PowerApp))]
-    public class GetPowerAppPermissionList : PnPAzureManagementApiCmdlet
+    public class GetPowerAppPermissions : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public PowerPlatformEnvironmentPipeBind Environment;
