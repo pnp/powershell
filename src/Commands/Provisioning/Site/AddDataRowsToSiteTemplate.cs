@@ -169,7 +169,7 @@ namespace PnP.PowerShell.Commands.Provisioning.Site
                             foreach (var fieldName in Fields)
                             {
                                 // Discard all fields readonly and unsupported field type
-                                Microsoft.SharePoint.Client.Field dataField = fieldCollection.FirstOrDefault(f => f.InternalName == fieldName && !f.ReadOnlyField && !_unsupportedFieldTypes.Contains(f.FieldTypeKind));
+                                Microsoft.SharePoint.Client.Field dataField = fieldCollection.FirstOrDefault(f => f.InternalName == fieldName && !_unsupportedFieldTypes.Contains(f.FieldTypeKind));
                                 if (dataField != null)
                                 {
                                     fieldsToExport.Add(dataField);
