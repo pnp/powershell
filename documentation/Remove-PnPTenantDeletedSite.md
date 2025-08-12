@@ -20,7 +20,7 @@ Removes a site collection from the Tenant recycle bin.
 ## SYNTAX
 
 ```powershell
-Remove-PnPTenantDeletedSite [-Url] <String> [-Force] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
+Remove-PnPTenantDeletedSite [-Identity] <String> [-Force] [-NoWait] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
@@ -50,6 +50,7 @@ Specifies the full URL of the site collection that needs to be deleted.
 ```yaml
 Type: String
 Parameter Sets: (All)
+Aliases: Url
 
 Required: True
 Position: 0
