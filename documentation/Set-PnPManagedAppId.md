@@ -28,7 +28,7 @@ If you add a Credential with a name of "https://yourtenant.sharepoint.com" it wi
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPManagedAppId -Name "https://tenant.sharepoint.com" -AppId d96c0a07-770d-46f4-bb38-a54084254bf7
+Set-PnPManagedAppId -Url "https://tenant.sharepoint.com" -AppId d96c0a07-770d-46f4-bb38-a54084254bf7
 ```
 This will add an entry for the specified App Id to be use when connecting with Connect-PnPOnline to the URL specified.
 
