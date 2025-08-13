@@ -93,7 +93,7 @@
     -Lcid &lt;Int32&gt; 
     [-TermStore &lt;Guid&gt;]
     [-Connection &lt;PnPConnection&gt;]    
-    [-Confirm] 
+    [-Force] 
     
 </code></pre>
 <h3 id="by-name">By Name</h3>
@@ -105,7 +105,7 @@
     -TermGroup &lt;Name|Guid&gt; 
     [-TermStore &lt;Guid&gt;]
     [-Connection &lt;PnPConnection&gt;]    
-    [-Confirm] 
+    [-Force]  
     
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -120,11 +120,10 @@
 </code></pre>
 <p>Removes the Swedish label from the specified term.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-confirm">-Confirm</h3>
-<p>Prompts you for confirmation before running the cmdlet.</p>
+<h3 id="-force">-Force</h3>
+<p>Specifying the Force parameter will skip the confirmation question.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: cf
 
 Required: False
 Position: Named

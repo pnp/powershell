@@ -94,7 +94,7 @@
 <p>If you add a Credential with a name of &quot;https://yourtenant.sharepoint.com&quot; it will find a match when you connect to &quot;https://yourtenant.sharepoint.com&quot; but also when you connect to &quot;https://yourtenant.sharepoint.com/sites/demo1&quot;. Of course you can specify more granular entries, allow you to automatically provide App Ids for different URLs.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Set-PnPManagedAppId -Name &quot;https://tenant.sharepoint.com&quot; -AppId d96c0a07-770d-46f4-bb38-a54084254bf7
+<pre><code class="lang-powershell">Set-PnPManagedAppId -Url &quot;https://tenant.sharepoint.com&quot; -AppId d96c0a07-770d-46f4-bb38-a54084254bf7
 </code></pre>
 <p>This will add an entry for the specified App Id to be use when connecting with Connect-PnPOnline to the URL specified.</p>
 <h2 id="parameters">PARAMETERS</h2>
