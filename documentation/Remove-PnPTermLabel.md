@@ -22,7 +22,7 @@ Remove-PnPTermLabel
     -Lcid <Int32> 
     [-TermStore <Guid>]
     [-Connection <PnPConnection>]    
-    [-Confirm] 
+    [-Force] 
     
 ```
 
@@ -36,7 +36,7 @@ Remove-PnPTermLabel
     -TermGroup <Name|Guid> 
     [-TermStore <Guid>]
     [-Connection <PnPConnection>]    
-    [-Confirm] 
+    [-Force]  
     
 ```
 
@@ -60,13 +60,12 @@ Removes the Swedish label from the specified term.
 
 ## PARAMETERS
 
-### -Confirm
-Prompts you for confirmation before running the cmdlet.
+### -Force
+Specifying the Force parameter will skip the confirmation question.
 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: cf
 
 Required: False
 Position: Named
