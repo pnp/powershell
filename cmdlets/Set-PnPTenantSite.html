@@ -113,6 +113,7 @@
  [-RequestFilesLinkExpirationInDays &lt;Int32&gt;] [-RequestFilesLinkEnabled &lt;Boolean&gt;] [-OverrideSharingCapability &lt;Boolean&gt;]
  [-RestrictedAccessControl &lt;Boolean&gt;] [-ClearRestrictedAccessControl &lt;SwitchParameter&gt;] [-RestrictedAccessControlGroups &lt;Guid[]&gt;]
  [-AddRestrictedAccessControlGroups &lt;Guid[]&gt;] [-RemoveRestrictedAccessControlGroups &lt;Guid[]&gt;][-InheritVersionPolicyFromTenant &lt;SwitchParameter&gt;]
+ [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled &lt;Boolean&gt;]
  [-Wait] 
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -833,6 +834,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-requestfileslinkenabled">-RequestFilesLinkEnabled</h3>
 <p>Enables or disables the Request Files link on the site.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowwebpropertybagupdatewhendenyaddandcustomizepagesisenabled">-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled</h3>
+<p>Enables or disables adding and updating web property bag values when the DenyAddAndCustomizePages is enabled.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: Set Properties
 
