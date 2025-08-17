@@ -1,0 +1,79 @@
+name: Nightly Release to Docker Hub
+
+on:
+  workflow_dispatch:
+  schedule:
+  - cron: '0 3 * * *'
+
+permissions: read-all
+
+jobs:
+  publish-docker-windows-2022:
+    runs-on: windows-2022
+    if: false
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build an image
+      run: |
+        $VERSION="$(cat ./version.txt)-nightly"
+        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=lts-nanoserver-ltsc2022" --build-arg "INSTALL_USER=ContainerAdministrator" --build-arg "SKIP_PUBLISHER_CHECK=True" ./docker -f ./docker/pnppowershell.dockerFile --tag "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-nanoserver-ltsc2022";
+    - name: Push the image
+      run: |
+        $VERSION="$(cat ./version.txt)-nightly"
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
+        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-nanoserver-ltsc2022"
+  publish-docker-arm32:
+    runs-on: ubuntu-22.04
+    if: false
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build an image
+      run: |
+        VERSION="$(cat ./version.txt)-nightly"
+        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=ubuntu-22.04-arm32" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-22.04-arm32;
+    - name: Push the image
+      run: |
+        VERSION="$(cat ./version.txt)-nightly"
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
+        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-22.04-arm32"
+  publish-docker-linux-arm64:
+    runs-on: ubuntu-24.04-arm
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build an image
+      run: |
+        VERSION="$(cat ./version.txt)-nightly"
+        docker build --platform linux/arm64/v8 ./docker -f ./docker/linux-arm64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64
+    - name: Push the image
+      run: |
+        VERSION="$(cat ./version.txt)-nightly"
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
+        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64"
+  publish-docker-linux-amd64:
+    runs-on: ubuntu-latest
+    needs: [ build ]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build an image
+      run: |
+    - name: Build an image
+      run: |
+        VERSION="$(cat ./version.txt)-nightly"
+        docker build --platform linux/amd64 ./docker -f ./docker/linux-amd64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64
+    - name: Push the image
+      run: |
+        VERSION="$(cat ./version.txt)-nightly"
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
+        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64"
+  publish-docker-manifest:
+    runs-on: ubuntu-latest
+    needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64 ]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Publish manifest
+      run: |
+        VERSION="$(cat ./version.txt)-nightly"
+        docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:nightly \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64
+        docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:nightly
