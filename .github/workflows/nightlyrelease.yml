@@ -103,11 +103,12 @@ jobs:
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64"
   publish-docker-manifest:
     runs-on: ubuntu-latest
-    needs: [ build ]
+    needs: [ build, publish-docker-linux-arm64, publish-docker-linux-amd64 ]
     steps:
     - uses: actions/checkout@v4
     - name: Publish manifest
       run: |
+        VERSION="$(cat ./version.txt)-nightly"
         docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:nightly \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64
