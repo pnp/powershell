@@ -13,7 +13,7 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Setup .NET Core
+    - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: |           
@@ -43,6 +43,7 @@ jobs:
   publish-docker-windows-2022:
     runs-on: windows-2022
     needs: [ build ]
+    if: false
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
@@ -54,20 +55,6 @@ jobs:
         $VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-nanoserver-ltsc2022"
-  publish-docker-windows-2019:
-    runs-on: windows-2019
-    needs: [ build ]
-    steps:
-    - uses: actions/checkout@v4
-    - name: Build an image
-      run: |
-        $VERSION="$(cat ./version.txt)-nightly"
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=lts-nanoserver-1809" --build-arg "INSTALL_USER=ContainerAdministrator" --build-arg "SKIP_PUBLISHER_CHECK=True" ./docker -f ./docker/pnppowershell.dockerFile --tag "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-nanoserver-1809";
-    - name: Push the image
-      run: |
-        $VERSION="$(cat ./version.txt)-nightly"
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-nanoserver-1809"
   publish-docker-arm32:
     runs-on: ubuntu-22.04
     if: false
@@ -83,7 +70,7 @@ jobs:
         VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-22.04-arm32"
-  publish-docker-arm64:
+  publish-docker-linux-arm64:
     runs-on: ubuntu-24.04-arm
     needs: [ build ]
     steps:
@@ -91,28 +78,29 @@ jobs:
     - name: Build an image
       run: |
         VERSION="$(cat ./version.txt)-nightly"
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=azurelinux-3.0-arm64" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-azurelinux-3.0-arm64;
+        docker build --platform linux/arm64/v8 ./docker -f ./docker/linux-arm64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION
+        docker tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION ${{ secrets.DOCKER_ORG }}/powershell:nightly
     - name: Push the image
       run: |
         VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-azurelinux-3.0-arm64"
-  publish-docker-linux:
+        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION"
+        docker push "${{ secrets.DOCKER_ORG }}/powershell:nightly"
+  publish-docker-linux-amd64:
     runs-on: ubuntu-latest
     needs: [ build ]
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
       run: |
-        VERSION=$(cat ./version.txt)-nightly
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=alpine-3.20" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.20;
-    - name: Tag the image
+    - name: Build an image
       run: |
-        VERSION=$(cat ./version.txt)-nightly
-        docker image tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.20 ${{ secrets.DOCKER_ORG }}/powershell:nightly
+        VERSION="$(cat ./version.txt)-nightly"
+        docker build --platform linux/amd64 ./docker -f ./docker/linux-amd64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION
+        docker tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION ${{ secrets.DOCKER_ORG }}/powershell:nightly
     - name: Push the image
       run: |
-        VERSION=$(cat ./version.txt)-nightly
+        VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-alpine-3.20
-        docker push ${{ secrets.DOCKER_ORG }}/powershell:nightly
+        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION"
+        docker push "${{ secrets.DOCKER_ORG }}/powershell:nightly"
