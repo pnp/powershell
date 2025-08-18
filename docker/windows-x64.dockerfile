@@ -3,10 +3,10 @@ FROM mcr.microsoft.com/windows/nanoserver:ltsc2025
 ENV POWERSHELL_VERSION=7.5.2
 
 # Download and install PowerShell 7
-RUN curl.exe -L -o pwsh.zip https://github.com/PowerShell/PowerShell/releases/download/v${POWERSHELL_VERSION}/PowerShell-${POWERSHELL_VERSION}-win-x64.zip `
-    && mkdir C:\pwsh `
-    && tar -xf pwsh.zip -C C:\pwsh `
-    && del pwsh.zip
+RUN powershell -Command `
+    Invoke-WebRequest -Uri "https://github.com/PowerShell/PowerShell/releases/download/v$env:POWERSHELL_VERSION/PowerShell-$env:POWERSHELL_VERSION-win-x64.zip" -OutFile "pwsh.zip"; `
+    Expand-Archive -Path "pwsh.zip" -DestinationPath "C:\pwsh"; `
+    Remove-Item -Path "pwsh.zip"
 
 # Add PowerShell to PATH
 ENV PATH="C:\\pwsh;${PATH}"
@@ -16,3 +16,4 @@ RUN pwsh -Command "Install-Module -Name PnP.PowerShell -AlowPrerelease -SkipPubl
 
 # Start PowerShell
 CMD ["pwsh"]
+
