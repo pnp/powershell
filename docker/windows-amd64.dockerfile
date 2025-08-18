@@ -12,10 +12,11 @@ RUN del pwsh.zip
 ENV PATH="C:\\pwsh;${PATH}"
 
 # Install PnP PowerShell module
-RUN pwsh -Command "Install-Module -Name PnP.PowerShell -AlowPrerelease -SkipPublisherCheck -Force -Scope AllUsers"
+RUN pwsh -Command "Install-Module -Name PnP.PowerShell -AllowPrerelease -SkipPublisherCheck -Force -Scope AllUsers"
 
 # Start PowerShell
 CMD ["pwsh"]
+
 
 
 
