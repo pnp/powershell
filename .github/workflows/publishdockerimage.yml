@@ -8,14 +8,14 @@ on:
 permissions: read-all
 
 jobs:
-  publish-docker-windows-2022:
-    runs-on: windows-2022
+  publish-docker-windows-x64:
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
       run: |
         $VERSION="$(cat ./version.txt)-nightly"
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=lts-nanoserver-ltsc2022" --build-arg "INSTALL_USER=ContainerAdministrator" --build-arg "SKIP_PUBLISHER_CHECK=True" ./docker -f ./docker/pnppowershell.dockerFile --tag "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-lts-nanoserver-ltsc2022";
+        docker build --platform windows/x64 ./docker -f ./docker/windows-x64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-x64
     - name: Push the image
       run: |
         $VERSION="$(cat ./version.txt)-nightly"
@@ -65,7 +65,7 @@ jobs:
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64"
   publish-docker-manifest:
     runs-on: ubuntu-latest
-    needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-2022 ]
+    needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-x64 ]
     steps:
     - uses: actions/checkout@v4
     - name: Publish manifest
