@@ -21,7 +21,7 @@ jobs:
         $VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64"
-  publish-docker-arm32:
+  publish-docker-linux-arm32:
     runs-on: ubuntu-22.04
     if: false
     steps:
