@@ -1,7 +1,7 @@
 FROM mcr.microsoft.com/windows/nanoserver:ltsc2025
 
-RUN mkdir C:\pwsh
-WORKDIR C:\pwsh
+RUN mkdir C:\\pwsh
+WORKDIR C:\\pwsh
 
 # Download and install PowerShell 7
 RUN curl.exe -L -o pwsh.zip https://github.com/PowerShell/PowerShell/releases/download/v7.5.2/PowerShell-7.5.2-win-x64.zip
@@ -16,5 +16,6 @@ RUN pwsh -Command "Install-Module -Name PnP.PowerShell -AlowPrerelease -SkipPubl
 
 # Start PowerShell
 CMD ["pwsh"]
+
 
 
