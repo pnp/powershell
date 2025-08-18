@@ -15,7 +15,7 @@ jobs:
     - name: Build an image
       run: |
         $VERSION="$(cat ./version.txt)-nightly"
-        docker build --platform windows/amd64 ./docker -f ./docker/windows-x64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
+        docker build --platform windows/amd64 ./docker -f ./docker/windows-amd64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
     - name: Push the image
       run: |
         $VERSION="$(cat ./version.txt)-nightly"
