@@ -3,12 +3,11 @@ namespace PnP.PowerShell.Commands.Model.PowerPlatform.PowerApp
 {
     public class PowerAppPermissionsPrincipal
     {
-        public string id { get; set; }
-        public string displayName { get; set; }
-        public string email { get; set; }
-        public string type { get; set; }
-        public string tenantId { get; set; }
-        public string preferredLanguage { get; set; }
+        public string Id { get; set; }
+        public string DisplayName { get; set; }
+        public string Email { get; set; }
+        public string Type { get; set; }
+        public string TenantId { get; set; }
+        public string PreferredLanguage { get; set; }
     }
-
 }

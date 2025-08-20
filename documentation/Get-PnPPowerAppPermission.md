@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerAppPermissions.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPowerAppPermission.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPPowerAppPermissions
+title: Get-PnPPowerAppPermission
 ---
 
-# Get-PnPPowerAppPermissions
+# Get-PnPPowerAppPermission
 
 ## SYNOPSIS
 
@@ -21,7 +21,7 @@ Returns the list of permissions assigned to a specified Power App.
 ## SYNTAX
 
 ```powershell
-Get-PnPPowerAppPermissions [-Environment <PowerPlatformEnvironmentPipeBind>] [-AsAdmin] -Identity <PowerAppPipeBind> 
+Get-PnPPowerAppPermission [-Environment <PowerPlatformEnvironmentPipeBind>] [-AsAdmin] -Identity <PowerAppPipeBind> 
 [-Connection <PnPConnection>] [-Verbose]
 ```
 
@@ -34,7 +34,7 @@ This cmdlet returns the list of user or group permissions granted to a specific 
 ### Example 1
 
 ```powershell
-Get-PnPPowerAppPermissions -Identity "bde2239e-fabc-42ad-9c9e-72323413b1b0"
+Get-PnPPowerAppPermission -Identity "bde2239e-fabc-42ad-9c9e-72323413b1b0"
 ```
 
 Returns the list of permissions for the specified Power App in the default environment.
@@ -42,7 +42,7 @@ Returns the list of permissions for the specified Power App in the default envir
 ### Example 2
 
 ```powershell
-Get-PnPPowerAppPermissions -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity "bde2239e-fabc-42ad-9c9e-72323413b1b0" -AsAdmin
+Get-PnPPowerAppPermission -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity "bde2239e-fabc-42ad-9c9e-72323413b1b0" -AsAdmin
 ```
 
 Returns the list of permissions for the specified Power App in the given environment using admin context.
@@ -83,7 +83,7 @@ Accept wildcard characters: False
 
 ### -Identity
 
-The ID of the Power App to retrieve permissions for.
+The ID or instance of the Power App to retrieve permissions for.
 
 ```yaml
 Type: PowerAppPipeBind

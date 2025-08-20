@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.ApplicationInsights" Version="2.21.0" />
-    <PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.73.0" />
   </ItemGroup>
 
 </Project>

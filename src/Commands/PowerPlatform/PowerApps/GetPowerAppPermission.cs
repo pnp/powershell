@@ -4,13 +4,12 @@ using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
 using System.Management.Automation;
-using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 {
-    [Cmdlet(VerbsCommon.Get, "PnPPowerAppPermissions")]
+    [Cmdlet(VerbsCommon.Get, "PnPPowerAppPermission")]
     [OutputType(typeof(Model.PowerPlatform.PowerApp.PowerApp))]
-    public class GetPowerAppPermissions : PnPAzureManagementApiCmdlet
+    public class GetPowerAppPermission : PnPAzureManagementApiCmdlet
     {
         [Parameter(Mandatory = false, ValueFromPipeline = true)]
         public PowerPlatformEnvironmentPipeBind Environment;
@@ -18,12 +17,12 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
         [Parameter(Mandatory = false)]
         public SwitchParameter AsAdmin;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true)]
         public PowerAppPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
-            string environmentName = null;
+            string environmentName;
             string powerAppsUrl = PowerPlatformUtility.GetPowerAppsEndpoint(Connection.AzureEnvironment);
             if (ParameterSpecified(nameof(Environment)))
             {
@@ -51,9 +50,8 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 
                 var result = PowerAppsRequestHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerAppPermissionsValue>($"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}/permissions?api-version=2022-11-01");
 
-                WriteObject(result, true);
+                WriteObject(result.Select(p => p.Properties), true);
             }
-
         }
     }
 }
