@@ -16,6 +16,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Add-PnPBrandCenterFontPackage` cmdlet to allow creating a font package in the Brand Center [#4970](https://github.com/pnp/powershell/pull/4970)
 - Added support for `-FederatedIdentity` in `Connect-PnPOnline` to support Federated Identity.
 - Added support for SSO in WSL (Windows Subsystem for Linux) and Linux distributions. You can now use `Connect-PnPOnline` with `-OSLogin` which helps with more secure auth such as FIDO, Conditional Access policies etc.
+- Added `Get-PnPPowerAppPermission` cmdlet to retrieve the permissions for a specific Power App [#5030](https://github.com/pnp/powershell/pull/5030)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
