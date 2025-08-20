@@ -178,7 +178,7 @@ Please see [Docker documentation](https://docs.docker.com/engine/reference/run/)
 
 Tags names mean the following:
 
-`<version>(-nightly)-<architecture>`
+`<version>[-nightly/-stable]-<architecture>`
 
 Currently supported architectures:
 
@@ -188,9 +188,11 @@ Currently supported architectures:
 
 Tag name examples:
 
-* 3.1.127-nightly - auto picks the correct architecture with the 3.1.127 nightly build
-* 3.1.127-nightly-windows-amd64 - forces the Windows 64 bit architecture with the 3.1.127 nightly build
 * nightly - auto picks the correct architecture with the latest available nightly build
 * latest - auto picks the correct architecture with the latest available stable build
+* 3.1.127-nightly - auto picks the correct architecture with the 3.1.127 nightly build
+* 3.1.127-nightly-windows-amd64 - forces the Windows 64 bit architecture with the 3.1.127 nightly build
+* 3.1.0-stable - auto picks the correct architecture with the 3.1.0 stable build
+* 3.1.0-stable-linux-amd64 - forces the Linux 64 bit architecture with the 3.1.0 stable build
 
 To find an overview of all the available tags please visit ttps://hub.docker.com/r/m365pnp/powershell/tags
