@@ -15,7 +15,7 @@ RUN del pwsh.zip
 ENV PATH="C:\\pwsh;${PATH}"
 
 # Install PnP PowerShell module
-RUN pwsh -Command "Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope CurrentUser"
+RUN pwsh -Command "Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -AllowPrerelease -Scope CurrentUser"
 
 # Start PowerShell
 CMD ["pwsh"]
