@@ -1,8 +1,5 @@
 FROM mcr.microsoft.com/windows/nanoserver:ltsc2025
 
-# Define build argument for the module version
-ARG PNP_VERSION=""
-
 RUN mkdir C:\\pwsh
 WORKDIR C:\\pwsh
 
@@ -14,8 +11,10 @@ RUN del pwsh.zip
 # Add PowerShell to PATH
 ENV PATH="C:\\pwsh;${PATH}"
 
-# Install PnP PowerShell module
-RUN pwsh -Command "Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -AllowPrerelease -Scope CurrentUser"
+# Install PnP.PowerShell module
+SHELL ["pwsh", "-command"]
+ARG PNP_VERSION
+RUN Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck
 
 # Start PowerShell
 CMD ["pwsh"]
