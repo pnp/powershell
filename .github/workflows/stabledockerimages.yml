@@ -90,3 +90,8 @@ jobs:
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
         docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:stable
+        docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:latest \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
+        docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:latest        
