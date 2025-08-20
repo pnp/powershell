@@ -72,7 +72,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout main branch
+      uses: actions/checkout@v4
+      with:
+        ref: main
     - name: Publish manifest
       run: |
         VERSION="$(cat ./version.txt)-stable"
