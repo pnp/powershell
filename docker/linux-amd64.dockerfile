@@ -14,7 +14,6 @@ RUN curl -L -o powershell.tar.gz https://github.com/PowerShell/PowerShell/releas
 
 # Install PnP.PowerShell module
 SHELL ["pwsh", "-command"]
-USER ContainerAdministrator
 ARG PNP_VERSION
 RUN Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck
 
