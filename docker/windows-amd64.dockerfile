@@ -14,7 +14,7 @@ ENV PATH="C:\\pwsh;${PATH}"
 # Install PnP.PowerShell module
 SHELL ["pwsh", "-command"]
 ARG PNP_VERSION
-RUN Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck
+RUN Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope CurrentUser -AllowPrerelease -SkipPublisherCheck
 
 # Start PowerShell
 CMD ["pwsh"]
