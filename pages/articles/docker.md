@@ -4,7 +4,7 @@ Using Docker allows you to use any software inside virtual environments, without
 
 ![Using software in virtual environments, called containers](./../images/docker/dockercontainers.png)
 
-The good news is that you will not even need to install PnP.PowerShell in containers by your own: PnP team is already publishing Docker container images for each supported and nightly release, [here](https://hub.docker.com/r/m365pnp/powershell). You will however need to install docker runtime.
+The good news is that you will not even need to install PnP.PowerShell in containers by your own: the PnP team is already publishing Docker container images for each stable and nightly release, [here](https://hub.docker.com/r/m365pnp/powershell). You will however need to install docker runtime.
 
 If you use Windows, we would recommend you using Linux containers with help of WSL. Alternatively, even though it is not the most common way, you might want to run PnP.PowerShell in Windows containers. Mind you that some use cases might be limited when using Windows containers. If you use Mac OS or Linux, the easiest way is to use Linux containers.
 
@@ -29,6 +29,15 @@ You can try using m365pnp/powershell Docker containers online, without installin
 After that you can start running commands like `Connect-PnPOnline`.
 
 ## Installing Docker locally
+
+- Windows:
+
+    ```powershell
+    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+    choco install -y docker-engine
+    ```
+
+    Or just download and install Docker manually from [here](https://www.docker.com/get-started/).
 
 - Mac OS:
 
@@ -78,13 +87,6 @@ After that you can start running commands like `Connect-PnPOnline`.
         sudo usermod -aG docker $USER
         newgrp docker
         ```
-
-- Windows:
-
-    ```powershell
-    iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-    choco install -y docker-engine
-    ```
 
 ## Using PnP.PowerShell
 
@@ -158,40 +160,31 @@ Please see [Docker documentation](https://docs.docker.com/engine/reference/run/)
 
 * latest: The latest stable image
 
-  * alpine-3.17
   * `docker pull m365pnp/powershell` or `docker pull m365pnp/powershell:latest`
 
 ### Nightly
 
 * nightly: The latest nightly image
 
-  * alpine-3.20
   * `docker pull m365pnp/powershell:nightly`
 
 ## Tag explanation
 
 Tags names mean the following:
 
-`<version>(-nightly)-<platform>`
+`<version>(-nightly)-<architecture>`
 
-Currently supported platforms:
+Currently supported architectures:
 
-* nanoserver-ltsc2022 (Windows 2022)
-* nanoserver-1809 (Windows 2019)
-* alpine-3.20 (Linux 64 bits)
-* ubuntu-focal-arm32 (ARM 32 bits, i.e. Raspberry Pi < 4)
-* azurelinux-3.0-arm64 (ARM 64 bits, i.e. Raspberry Pi >= 4)
+* [windows-amd64](/pnp/powershell/blob/dev/docker/windows-amd64.dockerfile): Windows NanoServer LTSC 2025 64 bits
+* [linux-arm64](/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile): Linux Debian Bullseye Slim 64 bits for ARM devices (i.e. Raspberry Pi 4 or later)
+* [linux-amd64](/pnp/powershell/blob/dev/docker/linux-amd64.dockerfile): Linux Debian Bullseye Slim 64 bits
 
 Tag name examples:
 
-* 2.99.114-nightly-azurelinux-3.0-arm64
-* 2.99.112-nightly-alpine-3.20
-* 2.12.0-lts-alpine-3.17
-* 2.12.0-nanoserver-ltsc2022
-* 1.8.0-nanoserver-ltsc2022
-* 1.9.0-nanoserver-ltsc2022
-* 1.10.0-nanoserver-1809
-* 1.10.0-alpine-3.16.5
-* 1.10.26-nightly-nanoserver-ltsc2022
+* 3.1.127-nightly - auto picks the correct architecture with the 3.1.127 nightly build
+* 3.1.127-nightly-windows-amd64 - forces the Windows 64 bit architecture with the 3.1.127 nightly build
+* nightly - auto picks the correct architecture with the latest available nightly build
+* latest - auto picks the correct architecture with the latest available stable build
 
-To find the version numbers please visit https://www.powershellgallery.com/packages/PnP.PowerShell or https://hub.docker.com/r/m365pnp/powershell/tags
+To find an overview of all the available tags please visit ttps://hub.docker.com/r/m365pnp/powershell/tags
