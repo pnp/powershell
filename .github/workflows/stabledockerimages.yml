@@ -16,10 +16,10 @@ jobs:
     - name: Build an image
       run: |
         $VERSION="$(cat ./version.txt)-stable"
-        docker build --platform windows/amd64 ./docker -f ./docker/windows-amd64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
+        docker build --build-arg PNP_VERSION=$VERSION --platform windows/amd64 ./docker -f ./docker/windows-amd64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
     - name: Push the image
       run: |
-        VERSION="$(cat ./version.txt)-stable"
+        $VERSION="$(cat ./version.txt)-stable"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64"
   publish-docker-linux-arm32:
@@ -30,7 +30,7 @@ jobs:
     - name: Build an image
       run: |
         VERSION="$(cat ./version.txt)-stable"
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=ubuntu-22.04-arm32" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-22.04-arm32;
+        docker build --build-arg PNP_VERSION=$VERSION ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-22.04-arm32;
     - name: Push the image
       run: |
         VERSION="$(cat ./version.txt)-stable"
@@ -46,7 +46,7 @@ jobs:
     - name: Build an image
       run: |
         VERSION="$(cat ./version.txt)-stable"
-        docker build --platform linux/arm64/v8 ./docker -f ./docker/linux-arm64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64
+        docker build --build-arg PNP_VERSION=$VERSION --platform linux/arm64/v8 ./docker -f ./docker/linux-arm64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64
     - name: Push the image
       run: |
         VERSION="$(cat ./version.txt)-stable"
@@ -62,7 +62,7 @@ jobs:
     - name: Build an image
       run: |
         VERSION="$(cat ./version.txt)-stable"
-        docker build --platform linux/amd64 ./docker -f ./docker/linux-amd64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64
+        docker build --build-arg PNP_VERSION=$VERSION --platform linux/amd64 ./docker -f ./docker/linux-amd64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64
     - name: Push the image
       run: |
         VERSION="$(cat ./version.txt)-stable"
