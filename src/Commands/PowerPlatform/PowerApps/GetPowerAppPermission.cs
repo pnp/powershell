@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
 
                 WriteVerbose($"Retrieving specific PowerApp permissions with the provided name '{appName}' within the environment '{environmentName}'");
 
-                var result = PowerAppsRequestHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerAppPermissionsValue>($"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}/permissions?api-version=2022-11-01");
+                var result = PowerAppsRequestHelper.GetResultCollection<Model.PowerPlatform.PowerApp.PowerAppPermission>($"{powerAppsUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}/permissions?api-version=2022-11-01");
 
                 WriteObject(result.Select(p => p.Properties), true);
             }
