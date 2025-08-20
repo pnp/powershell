@@ -164,13 +164,13 @@ Please see [Docker documentation](https://docs.docker.com/engine/reference/run/)
 
 ### Latest
 
-* latest: The latest stable image
+* latest: The latest stable image (i.e. 3.1.0)
 
-  * `docker pull m365pnp/powershell` or `docker pull m365pnp/powershell:latest`
+  * `docker pull m365pnp/powershell:stable` or `docker pull m365pnp/powershell:latest` or even more simple just `docker pull m365pnp/powershell`
 
 ### Nightly
 
-* nightly: The latest nightly image
+* nightly: The latest nightly image (i.e. 3.1.127-nightly)
 
   * `docker pull m365pnp/powershell:nightly`
 
@@ -189,7 +189,8 @@ Currently supported architectures:
 Tag name examples:
 
 * nightly - auto picks the correct architecture with the latest available nightly build
-* latest - auto picks the correct architecture with the latest available stable build
+* stable - auto picks the correct architecture with the latest available stable build (same as latest)
+* latest - auto picks the correct architecture with the latest available stable build (same as stable)
 * 3.1.127-nightly - auto picks the correct architecture with the 3.1.127 nightly build
 * 3.1.127-nightly-windows-amd64 - forces the Windows 64 bit architecture with the 3.1.127 nightly build
 * 3.1.0-stable - auto picks the correct architecture with the 3.1.0 stable build
