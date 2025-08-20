@@ -1,6 +1,9 @@
 # --platform linux/amd64
 FROM debian:bullseye-slim
 
+# Define build argument for the module version
+ARG PNP_VERSION=""
+
 # Install dependencies
 RUN apt-get update && apt-get install -y curl libicu67 libssl1.1 libunwind8
 
@@ -13,6 +16,6 @@ RUN curl -L -o powershell.tar.gz https://github.com/PowerShell/PowerShell/releas
     && ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 
 # Install PnP.PowerShell module
-RUN pwsh -Command "Install-Module -Name PnP.PowerShell -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck"
+RUN pwsh -Command "Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck"
 
 ENTRYPOINT ["pwsh"]
