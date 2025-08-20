@@ -35,6 +35,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get-PnPHubSiteChild` cmdlet to handle vanity domains. [#4965](https://github.com/pnp/powershell/pull/4965)
 - Fix `Connect-PnPOnline` not working correctly with `-DeviceLogin` in Azure Cloud Shell.
 - Fix `Connect-PnPOnline` not working correctly with `-DeviceLogin` in desktop-less environments, such as on a Raspberry Pi [#5058](https://github.com/pnp/powershell/pull/5058)
+- Fix `Get-PnPTenantRestrictedSearchMode` throwing an error in some cases [#5042](https://github.com/pnp/powershell/pull/5042)
 
 ### Removed
 
