@@ -16,6 +16,6 @@ RUN curl -L -o powershell.tar.gz https://github.com/PowerShell/PowerShell/releas
     && ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 
 # Install PnP.PowerShell module
-RUN pwsh -Command "Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck
+RUN pwsh -Command "Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck"
 
 ENTRYPOINT ["pwsh"]
