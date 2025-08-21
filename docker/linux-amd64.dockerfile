@@ -1,11 +1,28 @@
 # --platform linux/amd64
-FROM debian:bullseye-slim
+FROM amd64/alpine
 
 # Install dependencies
-RUN apt-get update && apt-get install -y curl libicu67 libssl1.1 libunwind8
+RUN apk add --no-cache \
+    ca-certificates \
+    less \
+    ncurses-terminfo-base \
+    krb5-libs \
+    libgcc \
+    libintl \
+    libssl3 \
+    libstdc++ \
+    tzdata \
+    userspace-rcu \
+    zlib \
+    icu-libs \
+    curl
+
+RUN apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
+    lttng-ust \
+    openssh-client 
 
 # Download and install PowerShell
-RUN curl -L -o powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v7.5.2/powershell-7.5.2-linux-x64.tar.gz \
+RUN curl -L -o powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v7.5.2/powershell-7.5.2-linux-musl-x64.tar.gz \
     && mkdir -p /opt/microsoft/powershell/7 \
     && tar -xvf powershell.tar.gz -C /opt/microsoft/powershell/7 \
     && rm powershell.tar.gz \
@@ -18,3 +35,6 @@ ARG PNP_VERSION
 RUN Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck
 
 ENTRYPOINT ["pwsh"]
+
+
+
