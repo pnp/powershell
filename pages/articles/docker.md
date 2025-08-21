@@ -8,6 +8,8 @@ The main advantage of running PnP PowerShell in Docker containers is that you wi
 
 Another advantage is that it becomes easier to work with different versions of PnP PowerShell on one environment. Say you build and test a script with PnP PowerShell 2.12.0 and then schedule it to run unattended every night. Few month later you start on another project which you're going to base on PnP PowerShell 3.1.0 because you want to leverage some new features in that release. You ideally don't want to just upgrade to 3.1.0 and assume your 2.12.0 script will still work in it. Even more so because a new major version, going from 2.x to 3.x in this case, means there are likely breaking changes. In particular with this sample, the underlying .NET Framework has changed and the PowerShell 7 version it requires has changed. So you either have to thoroughly test and potentially rewrite all your older scripts, or, use Docker so you can keep running your 2.12.0 script in 2.12.0 with the appropriate .NET Framework version and PowerShell version you built it against, while writing, testing and eventually running your new script in 3.1.0 with the new .NET Framework, the new PowerShell 7 version, both on the same machine, with no conflicts and no risks.
 
+And a last arguement, if you're still not convinced, is that your script will run in an isolated container. Meaning it only has access to what you want it to have access to. If you run it locally, it has the same permissions and access as you would have, which is likely way more than it needs, thus opposes a risk.
+
 ## How can I use it
 
 The good news is that you will not even need to install PnP.PowerShell in containers by your own: the PnP team is already publishing Docker container images for each stable and nightly release, [here](https://hub.docker.com/r/m365pnp/powershell). You will however need to install docker runtime.
@@ -184,7 +186,7 @@ Currently supported architectures:
 
 * [windows-amd64](/pnp/powershell/blob/dev/docker/windows-amd64.dockerfile): Windows NanoServer LTSC 2025 64 bits
 * [linux-arm64](/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile): Linux Debian Bullseye Slim 64 bits for ARM devices (i.e. Raspberry Pi 4 or later)
-* [linux-amd64](/pnp/powershell/blob/dev/docker/linux-amd64.dockerfile): Linux Debian Bullseye Slim 64 bits
+* [linux-amd64](/pnp/powershell/blob/dev/docker/linux-amd64.dockerfile): Alpine 64 bits
 
 Tag name examples:
 
