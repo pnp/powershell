@@ -10,6 +10,7 @@ permissions: read-all
 jobs:
   publish-docker-windows-amd64:
     runs-on: windows-2025
+    if: false
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
@@ -21,22 +22,40 @@ jobs:
         $VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64"
+        
   publish-docker-linux-arm32:
-    runs-on: ubuntu-22.04
-    if: false
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Build an image
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Define version
       run: |
-        VERSION="$(cat ./version.txt)-nightly"
-        docker build --build-arg "PNP_MODULE_VERSION=$VERSION" --build-arg "BASE_IMAGE_SUFFIX=ubuntu-22.04-arm32" --build-arg "INSTALL_USER=root" --build-arg "SKIP_PUBLISHER_CHECK=False" ./docker -f ./docker/pnppowershell.dockerFile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-22.04-arm32;
-    - name: Push the image
-      run: |
-        VERSION="$(cat ./version.txt)-nightly"
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-ubuntu-22.04-arm32"
+        VERSION="$(cat ./version.txt)"
+        
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push ARM32v7 image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./docker
+        file: ./docker/linux-arm32.dockerfile
+        push: true
+        platforms: linux/arm/v7
+        tags: ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32
+        build-args: |
+          PNP_VERSION=$VERSION
+          
   publish-docker-linux-arm64:
     runs-on: ubuntu-24.04-arm
+    if: false
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
@@ -48,8 +67,10 @@ jobs:
         VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64"
+        
   publish-docker-linux-amd64:
     runs-on: ubuntu-latest
+    if: false
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
@@ -63,8 +84,10 @@ jobs:
         VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64"
+        
   publish-docker-manifest:
     runs-on: ubuntu-latest
+    if: false
     needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
     steps:
     - uses: actions/checkout@v4
