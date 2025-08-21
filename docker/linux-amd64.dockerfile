@@ -22,7 +22,7 @@ RUN apk -X https://dl-cdn.alpinelinux.org/alpine/edge/main add --no-cache \
     openssh-client 
 
 # Download and install PowerShell
-RUN curl -L -o powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v7.5.2/powershell-7.5.2-linux-musl-x64.tar.gz \
+RUN curl -L -o powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v7.5.2/powershell-7.5.2-linux-arm64.tar.gz \
     && mkdir -p /opt/microsoft/powershell/7 \
     && tar -xvf powershell.tar.gz -C /opt/microsoft/powershell/7 \
     && rm powershell.tar.gz \
@@ -35,3 +35,4 @@ ARG PNP_VERSION
 RUN Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force -Scope AllUsers -AllowPrerelease -SkipPublisherCheck
 
 ENTRYPOINT ["pwsh"]
+
