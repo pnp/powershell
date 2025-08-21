@@ -22,7 +22,7 @@ namespace PnP.PowerShell.Commands.Purview
                 // Look up the sensitivity label Guid with the provided name
                 LogDebug($"Passed in label '{Identity}' is a name, going to try to lookup its Id");
 
-                var label = RequestHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>($"/beta/{(Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly ? "" : "me/")}informationProtection/policy/labels?$filter=name eq '{Identity}'");
+                var label = GraphRequestHelper.GetResultCollection<Model.Graph.Purview.InformationProtectionLabel>($"/beta/{(Connection.ConnectionMethod == Model.ConnectionMethod.AzureADAppOnly ? "" : "me/")}informationProtection/policy/labels?$filter=name eq '{Identity}'");
                 if (label == null || label.Count() == 0)
                 {
                     throw new PSArgumentException($"No Microsoft Purview sensitivity label with the provided name '{Identity}' could be found", nameof(Identity));
@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Purview
                 LogDebug($"Trying to set the Microsoft 365 Group with Id {ClientContext.Site.GroupId} behind the current site {Connection.Url} to Microsoft Purview sensitivity label with Id {sensitivityLabelId}");
                 var stringContent = new StringContent(JsonSerializer.Serialize(new { assignedLabels = new[] { new { labelId = sensitivityLabelId } } }));
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                RequestHelper.Patch(stringContent, $"beta/groups/{ClientContext.Site.GroupId}");
+                GraphRequestHelper.Patch(stringContent, $"beta/groups/{ClientContext.Site.GroupId}");
             }
             else
             {
