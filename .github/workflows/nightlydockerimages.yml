@@ -31,8 +31,10 @@ jobs:
 
     - name: Define version
       run: |
-        echo "VERSION=$(cat ./version.txt)" >> $GITHUB_ENV
-        
+        VERSION=$(cat ./version.txt)
+        echo "Using version: $VERSION"
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
