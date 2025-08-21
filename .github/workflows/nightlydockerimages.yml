@@ -10,7 +10,7 @@ permissions: read-all
 jobs:
   publish-docker-windows-amd64:
     runs-on: windows-2025
-    if: false
+    if: true
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
@@ -73,7 +73,7 @@ jobs:
         
   publish-docker-linux-amd64:
     runs-on: ubuntu-latest
-    if: false
+    if: true
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
@@ -90,7 +90,7 @@ jobs:
         
   publish-docker-manifest:
     runs-on: ubuntu-latest
-    if: false
+    if: true
     needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
     steps:
     - uses: actions/checkout@v4
