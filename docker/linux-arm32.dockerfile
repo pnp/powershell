@@ -2,7 +2,11 @@
 FROM arm32v7/ubuntu:22.04
 
 # Install dependencies
-RUN apt-get update && apt-get install -y curl libicu67 libssl1.1 libunwind8
+RUN apt-get update && apt-get install -y \
+    curl \
+    libicu70 \
+    libssl3 \
+    libunwind8
 
 # Download and install PowerShell
 RUN curl -L -o powershell.tar.gz https://github.com/PowerShell/PowerShell/releases/download/v7.5.2/powershell-7.5.2-linux-arm32.tar.gz \
