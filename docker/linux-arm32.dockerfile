@@ -1,5 +1,5 @@
 # --platform linux/arm/v7
-FROM debian:bullseye-slim
+FROM arm32v7/ubuntu:22.04
 
 # Install dependencies
 RUN apt-get update && apt-get install -y curl libicu67 libssl1.1 libunwind8
