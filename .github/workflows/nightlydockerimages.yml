@@ -25,6 +25,7 @@ jobs:
         
   publish-docker-linux-arm32:
     runs-on: ubuntu-latest
+    if: false
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -72,7 +73,7 @@ jobs:
         
   publish-docker-linux-amd64:
     runs-on: ubuntu-latest
-    if: false
+    if: true
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
