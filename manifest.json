@@ -3344,6 +3344,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPowerAppPermission.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPowerAppPermission.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPPowerPlatformCustomConnector.md",
       "output": {
         ".html": {
