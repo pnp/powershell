@@ -298,7 +298,7 @@ On Windows, this entry needs to be under "Generic Credentials".
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
 ```
-
+> This functionality is only available in the nightly release.
 Connect to SharePoint/Microsoft Graph using federated identity credentials in Github.
 
 ### EXAMPLE 21
