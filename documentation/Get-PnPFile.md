@@ -39,6 +39,12 @@ Get-PnPFile -Url <String> -AsString [-Connection <PnPConnection>]
 Get-PnPFile -Url <String> -AsMemoryStream [-Connection <PnPConnection>] 
 ```
 
+### Skip decoding of file name, for instance %20 used in file name
+```powershell
+Get-PnPFile -Url <String> -NoUrlDecode [-Connection <PnPConnection>] 
+```
+
+
 ## DESCRIPTION
 Allows downloading of a file from SharePoint Online. The file contents can either be read directly into memory as text, directly saved to local disk or stored in memory for further processing.
 
@@ -99,6 +105,13 @@ Get-PnPFile -Url "/sites/templates/Shared Documents/HR Site.pnp" -AsMemoryStream
 ```
 
 Retrieves the file in memory for further processing
+
+### EXAMPLE 9
+```powershell
+Get-PnPFile -Url "Shared Documents/test%20file.docx" -NoUrlDecode
+```
+
+Retrieves the file without Url decoding for further processing
 
 ## PARAMETERS
 
@@ -252,6 +265,19 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+```
+
+### -NoUrlDecode
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
