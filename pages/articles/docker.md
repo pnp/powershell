@@ -198,4 +198,4 @@ Tag name examples:
 * 3.1.0-stable - auto picks the correct architecture with the 3.1.0 stable build
 * 3.1.0-stable-linux-amd64 - forces the Linux 64 bit architecture with the 3.1.0 stable build
 
-To find an overview of all the available tags please visit ttps://hub.docker.com/r/m365pnp/powershell/tags
+To find an overview of all the available tags please visit https://hub.docker.com/r/m365pnp/powershell/tags
