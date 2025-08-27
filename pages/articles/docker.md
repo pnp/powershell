@@ -40,12 +40,12 @@ After that you can start running commands like `Connect-PnPOnline`.
 
 - Windows:
 
+    Just download and install Docker manually from [here](https://www.docker.com/get-started/) *OR* use scripted installations such as Chocolatey:
+  
     ```powershell
     iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
     choco install -y docker-engine
     ```
-
-    Or just download and install Docker manually from [here](https://www.docker.com/get-started/).
 
 - Mac OS:
 
@@ -98,17 +98,17 @@ After that you can start running commands like `Connect-PnPOnline`.
 
 ## Using PnP.PowerShell
 
-Sometimes you want to run inline PnP.PowerShell commands.
+If you want to run PnP.PowerShell commands interactively:
 
-- Latest stable version:
+- Latest stable version (i.e. 3.1.0)
 
     ```bash
     docker run --rm -it m365pnp/powershell:latest
     ```
 
-- Latest nightly version:
+- Latest nightly version (i.e. 3.1.127-nightly)
 
-    ```powershell
+    ```bash
     docker run --rm -it m365pnp/powershell:nightly
     ```
 
@@ -116,49 +116,23 @@ After that you can start running commands like `Connect-PnPOnline`.
 
 Mind you that in the case above, the container will have an isolated disk system so the commands that you run inside the container will not be able to access files from your host machine. However, sometimes you might want to run a script or use some files from your host OS (for example, when you have a ps1 file in a git repository that you cloned to your laptop). In this case you will need to mount a directory on your host as a volume inside the container. See the following examples.
 
-- Linux/WSL/Mac OS:
-
-    ```bash
-    docker run --rm -it -v "$(pwd):/home" -w /home m365pnp/powershell
-    ```
-
-- Windows (run in PowerShell console):
-
-    ```powershell
-    docker run --rm -it -v "${pwd}:C:\workplace" -w C:\workplace m365pnp/powershell
-    ```
+```bash
+docker run --rm -it -v $(pwd):/scripts -w /scripts m365pnp/powershell
+```
 
 In such container you can run `Get-ChildItem` and see the contents of the current directory.
 
 The examples above start new container and allow you to interactively use container, running inline commands. In other cases however, you might want to just start a container for a short time (a few seconds maybe) and run a ps1 script unattended and then automatically terminate the container. Here is how you can do it.
 
-- Linux/WSL/Mac OS:
-
-    ```bash
-    docker run --rm -v "$(pwd):/home" -w /home m365pnp/powershell pwsh test.ps1
-    ```
-
-- Windows (run in PowerShell console):
-
-    ```powershell
-    docker run --rm -v "${pwd}:C:\workplace" -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809 pwsh test.ps1
-    ```
+```bash
+docker run --rm -v $(pwd):/scripts -w /scripts m365pnp/powershell script.ps1
+```
 
 Finally, your scripts might have parametrization so that you can run the same code in different cases/environments. This is the way to provide variable values.
 
-- Linux/WSL/Mac OS:
-
-    ```bash
-    ParameterValue="test"
-    docker run --rm -v "$(pwd):/home" -w /home m365pnp/powershell pwsh -c "./test.ps1 -Parameter1 $ParameterValue"
-    ```
-
-- Windows (run in PowerShell console):
-
-    ```powershell
-    $ParameterValue="test"
-    docker run --rm -v "${pwd}:C:\workplace" -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809 pwsh -c "./test.ps1 -Parameter1 $ParameterValue"
-    ```
+```powershell
+docker run --rm -v ${pwd}:/scripts -w /scripts m365pnp/powershell script.ps1 -Parameter1 "Some value"
+```
 
 Please see [Docker documentation](https://docs.docker.com/engine/reference/run/) to see arguments for `docker run` command.
 
@@ -185,7 +159,8 @@ Tags names mean the following:
 Currently supported architectures:
 
 * [windows-amd64](/pnp/powershell/blob/dev/docker/windows-amd64.dockerfile): Windows NanoServer LTSC 2025 64 bits
-* [linux-arm64](/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile): Linux Debian Bullseye Slim 64 bits for ARM devices (i.e. Raspberry Pi 4 or later)
+* [linux-arm32](/pnp/powershell/blob/dev/docker/linux-arm32.dockerfile): .NET 9 SDK 32 bit (i.e. Raspberry Pi 2 v1.1 or older running 32 bits Linux)
+* [linux-arm64](/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile): Linux Debian Bullseye Slim 64 bits for ARM devices (i.e. Raspberry Pi 2 v1.2 or later running 64 bits Linux)
 * [linux-amd64](/pnp/powershell/blob/dev/docker/linux-amd64.dockerfile): Alpine 64 bits
 
 Tag name examples:
