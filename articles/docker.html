@@ -111,10 +111,10 @@
 <h3 id="installing-docker-locally">Installing Docker locally</h3>
 <ul>
 <li><p>Windows:</p>
+<p>Just download and install Docker manually from <a href="https://www.docker.com/get-started/">here</a> <em>OR</em> use scripted installations such as Chocolatey:</p>
 <pre><code class="lang-powershell">iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 choco install -y docker-engine
 </code></pre>
-<p>Or just download and install Docker manually from <a href="https://www.docker.com/get-started/">here</a>.</p>
 </li>
 <li><p>Mac OS:</p>
 <ol>
@@ -163,54 +163,28 @@ newgrp docker
 </li>
 </ul>
 <h2 id="using-pnppowershell">Using PnP.PowerShell</h2>
-<p>Sometimes you want to run inline PnP.PowerShell commands.</p>
+<p>If you want to run PnP.PowerShell commands interactively:</p>
 <ul>
-<li><p>Latest stable version:</p>
+<li><p>Latest stable version (i.e. 3.1.0)</p>
 <pre><code class="lang-bash">docker run --rm -it m365pnp/powershell:latest
 </code></pre>
 </li>
-<li><p>Latest nightly version:</p>
-<pre><code class="lang-powershell">docker run --rm -it m365pnp/powershell:nightly
+<li><p>Latest nightly version (i.e. 3.1.127-nightly)</p>
+<pre><code class="lang-bash">docker run --rm -it m365pnp/powershell:nightly
 </code></pre>
 </li>
 </ul>
 <p>After that you can start running commands like <code>Connect-PnPOnline</code>.</p>
 <p>Mind you that in the case above, the container will have an isolated disk system so the commands that you run inside the container will not be able to access files from your host machine. However, sometimes you might want to run a script or use some files from your host OS (for example, when you have a ps1 file in a git repository that you cloned to your laptop). In this case you will need to mount a directory on your host as a volume inside the container. See the following examples.</p>
-<ul>
-<li><p>Linux/WSL/Mac OS:</p>
-<pre><code class="lang-bash">docker run --rm -it -v &quot;$(pwd):/home&quot; -w /home m365pnp/powershell
+<pre><code class="lang-bash">docker run --rm -it -v $(pwd):/scripts -w /scripts m365pnp/powershell
 </code></pre>
-</li>
-<li><p>Windows (run in PowerShell console):</p>
-<pre><code class="lang-powershell">docker run --rm -it -v &quot;${pwd}:C:\workplace&quot; -w C:\workplace m365pnp/powershell
-</code></pre>
-</li>
-</ul>
 <p>In such container you can run <code>Get-ChildItem</code> and see the contents of the current directory.</p>
 <p>The examples above start new container and allow you to interactively use container, running inline commands. In other cases however, you might want to just start a container for a short time (a few seconds maybe) and run a ps1 script unattended and then automatically terminate the container. Here is how you can do it.</p>
-<ul>
-<li><p>Linux/WSL/Mac OS:</p>
-<pre><code class="lang-bash">docker run --rm -v &quot;$(pwd):/home&quot; -w /home m365pnp/powershell pwsh test.ps1
+<pre><code class="lang-bash">docker run --rm -v $(pwd):/scripts -w /scripts m365pnp/powershell script.ps1
 </code></pre>
-</li>
-<li><p>Windows (run in PowerShell console):</p>
-<pre><code class="lang-powershell">docker run --rm -v &quot;${pwd}:C:\workplace&quot; -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809 pwsh test.ps1
-</code></pre>
-</li>
-</ul>
 <p>Finally, your scripts might have parametrization so that you can run the same code in different cases/environments. This is the way to provide variable values.</p>
-<ul>
-<li><p>Linux/WSL/Mac OS:</p>
-<pre><code class="lang-bash">ParameterValue=&quot;test&quot;
-docker run --rm -v &quot;$(pwd):/home&quot; -w /home m365pnp/powershell pwsh -c &quot;./test.ps1 -Parameter1 $ParameterValue&quot;
+<pre><code class="lang-powershell">docker run --rm -v ${pwd}:/scripts -w /scripts m365pnp/powershell script.ps1 -Parameter1 &quot;Some value&quot;
 </code></pre>
-</li>
-<li><p>Windows (run in PowerShell console):</p>
-<pre><code class="lang-powershell">$ParameterValue=&quot;test&quot;
-docker run --rm -v &quot;${pwd}:C:\workplace&quot; -w C:\workplace m365pnp/powershell:1.10.0-nanoserver-1809 pwsh -c &quot;./test.ps1 -Parameter1 $ParameterValue&quot;
-</code></pre>
-</li>
-</ul>
 <p>Please see <a href="https://docs.docker.com/engine/reference/run/">Docker documentation</a> to see arguments for <code>docker run</code> command.</p>
 <h2 id="featured-tags">Featured tags</h2>
 <h3 id="latest">Latest</h3>
@@ -235,7 +209,8 @@ docker run --rm -v &quot;${pwd}:C:\workplace&quot; -w C:\workplace m365pnp/power
 <p>Currently supported architectures:</p>
 <ul>
 <li><a href="/pnp/powershell/blob/dev/docker/windows-amd64.dockerfile">windows-amd64</a>: Windows NanoServer LTSC 2025 64 bits</li>
-<li><a href="/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile">linux-arm64</a>: Linux Debian Bullseye Slim 64 bits for ARM devices (i.e. Raspberry Pi 4 or later)</li>
+<li><a href="/pnp/powershell/blob/dev/docker/linux-arm32.dockerfile">linux-arm32</a>: .NET 9 SDK 32 bit (i.e. Raspberry Pi 2 v1.1 or older running 32 bits Linux)</li>
+<li><a href="/pnp/powershell/blob/dev/docker/linux-arm64.dockerfile">linux-arm64</a>: Linux Debian Bullseye Slim 64 bits for ARM devices (i.e. Raspberry Pi 2 v1.2 or later running 64 bits Linux)</li>
 <li><a href="/pnp/powershell/blob/dev/docker/linux-amd64.dockerfile">linux-amd64</a>: Alpine 64 bits</li>
 </ul>
 <p>Tag name examples:</p>
