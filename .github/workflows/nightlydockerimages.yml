@@ -100,13 +100,11 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:$VERSION \          
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
-          #--amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32 \          
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
         docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION
         docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:nightly \          
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
-          #--amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
         docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:nightly
