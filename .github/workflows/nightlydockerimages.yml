@@ -10,7 +10,7 @@ permissions: read-all
 jobs:
   publish-docker-windows-amd64:
     runs-on: windows-2025
-    if: false
+    if: true
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
@@ -25,7 +25,7 @@ jobs:
         
   publish-docker-linux-arm32:
     runs-on: ubuntu-latest
-    if: true
+    if: false
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -58,7 +58,7 @@ jobs:
           
   publish-docker-linux-arm64:
     runs-on: ubuntu-24.04-arm
-    if: false
+    if: true
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
@@ -73,7 +73,7 @@ jobs:
         
   publish-docker-linux-amd64:
     runs-on: ubuntu-latest
-    if: false
+    if: true
     steps:
     - uses: actions/checkout@v4
     - name: Build an image
@@ -90,7 +90,7 @@ jobs:
         
   publish-docker-manifest:
     runs-on: ubuntu-latest
-    if: false
+    if: true
     needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
     steps:
     - uses: actions/checkout@v4
@@ -99,11 +99,13 @@ jobs:
         VERSION="$(cat ./version.txt)-nightly"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:$VERSION \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd32 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
         docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION
         docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:nightly \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd32 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
