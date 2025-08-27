@@ -22,6 +22,7 @@ jobs:
         $VERSION="$(cat ./version.txt)"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-stable-windows-amd64"
+
   publish-docker-linux-arm32:
     runs-on: ubuntu-22.04
     if: false
@@ -36,6 +37,7 @@ jobs:
         VERSION="$(cat ./version.txt)"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-stable-ubuntu-22.04-arm32"
+
   publish-docker-linux-arm64:
     runs-on: ubuntu-24.04-arm
     steps:
@@ -52,6 +54,7 @@ jobs:
         VERSION="$(cat ./version.txt)"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-stable-linux-arm64"
+
   publish-docker-linux-amd64:
     runs-on: ubuntu-latest
     steps:
@@ -68,6 +71,7 @@ jobs:
         VERSION="$(cat ./version.txt)"
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-stable-linux-amd64"
+
   publish-docker-manifest:
     runs-on: ubuntu-latest
     needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
@@ -82,16 +86,19 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
         docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:$VERSION \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
         docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION
         docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:stable \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
         docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:stable
         docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:latest \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
+          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
         docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:latest        
