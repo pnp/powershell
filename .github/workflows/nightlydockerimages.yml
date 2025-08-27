@@ -91,7 +91,7 @@ jobs:
   publish-docker-manifest:
     runs-on: ubuntu-latest
     if: true
-    needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
+    #needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
     steps:
     - uses: actions/checkout@v4
     - name: Publish manifest
