@@ -25,7 +25,7 @@ jobs:
         
   publish-docker-linux-arm32:
     runs-on: ubuntu-latest
-    if: true
+    if: false
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -90,7 +90,7 @@ jobs:
         
   publish-docker-manifest:
     runs-on: ubuntu-latest
-    if: false
+    if: true
     needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
     steps:
     - uses: actions/checkout@v4
