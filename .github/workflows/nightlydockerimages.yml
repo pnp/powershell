@@ -3,7 +3,7 @@ name: Nightly Release to Docker Hub
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 3 * * *'
+  - cron: '15 3 * * *'
 
 permissions: read-all
 
