@@ -91,13 +91,13 @@ jobs:
   publish-docker-manifest:
     runs-on: ubuntu-latest
     if: true
-    #needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
+    needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
     steps:
     - uses: actions/checkout@v4
     - name: Publish manifest
       run: |
         VERSION="$(cat ./version.txt)-nightly"
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
+        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
         docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:$VERSION \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
           --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm32 \
