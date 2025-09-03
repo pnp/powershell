@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 
-## [Current Nightly]
+## [Current nightly]
 
 ### Added
 - Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
