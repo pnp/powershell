@@ -21,47 +21,49 @@ Copy-PnPFileMetadata [-SourceUrl] <String> [-TargetUrl] <String> [-Fields <Strin
 
 ## DESCRIPTION
 
-Synchronizes metadata (Created, Modified, Author, Editor) from source files and folders to their corresponding targets without copying the actual content. This cmdlet is particularly useful for restoring lost metadata after migration operations where system fields may have been reset.
+Synchronizes metadata (Created, Modified, Author, Editor) from source files and folders to their corresponding targets without copying the actual content. This cmdlet is useful for restoring lost metadata after migrations where system fields may have been reset.
 
 When updating items, the cmdlet uses `UpdateOverwriteVersion()` to allow setting system fields while avoiding new user-facing versions.
 
-For folder contents, files are processed one-by-one.
+For folders, the cmdlet batches updates per folder to reduce round-trips and improve performance on large libraries. With `-Verbose`, it logs progress for each folder and file processed, including periodic batch flush messages.
+
+Both `-SourceUrl` and `-TargetUrl` can be provided as absolute URLs, server-relative (starting with `/`), or web-relative paths. URLs are normalized against their respective connections: the source URL is normalized using `-SourceConnection` (or the current connection), and the target URL is normalized using `-TargetConnection` (or the current connection). Targets must already exist; if a corresponding target file or folder is not found, it is skipped.
 
 ## EXAMPLES
 
-### EXAMPLE 1
+### EXAMPLE 1 (same site, folder, recursive)
 
 ```powershell
-Copy-PnPFileMetadata -SourceUrl "Shared Documents/MyProject" -TargetUrl "/sites/target/Shared Documents/MyProject"
+Copy-PnPFileMetadata -SourceUrl "Shared Documents/MyProject" -TargetUrl "Shared Documents/MyProject"
 ```
 
 Synchronizes metadata for the MyProject folder and all its contents recursively from the source to the target location, preserving original creation dates, modification dates, and author information.
 
-### EXAMPLE 2
+### EXAMPLE 2 (same site, single file)
 
 ```powershell
-Copy-PnPFileMetadata -SourceUrl "Shared Documents/report.docx" -TargetUrl "/sites/archive/Documents/report.docx"
+Copy-PnPFileMetadata -SourceUrl "Shared Documents/report.docx" -TargetUrl "Shared Documents/report.docx"
 ```
 
 Synchronizes metadata for a single file from the source to the target, restoring the original system fields.
 
-### EXAMPLE 3
+### EXAMPLE 3 (same site, limited fields)
 
 ```powershell
-Copy-PnPFileMetadata -SourceUrl "Shared Documents/Projects" -TargetUrl "/sites/backup/Documents/Projects" -Fields @("Created", "Modified") -Force
+Copy-PnPFileMetadata -SourceUrl "Shared Documents/Projects" -TargetUrl "Shared Documents/Projects" -Fields @("Created", "Modified") -Force
 ```
 
 Synchronizes only the Created and Modified dates for the Projects folder and its contents, without prompting for confirmation.
 
-### EXAMPLE 4
+### EXAMPLE 4 (same site, non-recursive)
 
 ```powershell
-Copy-PnPFileMetadata -SourceUrl "Shared Documents/Archives" -TargetUrl "/sites/newsite/Documents/Archives" -Recursive:$false
+Copy-PnPFileMetadata -SourceUrl "Shared Documents/Archives" -TargetUrl "Shared Documents/Archives" -Recursive:$false
 ```
 
 Synchronizes metadata only for the Archives folder itself, without processing its subfolders and files.
 
-### EXAMPLE 5
+### EXAMPLE 5 (cross site, two connections)
 
 ```powershell
 $src = Connect-PnPOnline -Url https://contoso.sharepoint.com/sites/archives -ReturnConnection
@@ -98,7 +100,7 @@ Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: @("Created", "Modified", "Author", "Editor")
+Default value: @("Author", "Editor", "Created", "Modified")
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
