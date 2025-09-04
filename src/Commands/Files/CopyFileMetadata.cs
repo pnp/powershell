@@ -168,23 +168,24 @@ namespace PnP.PowerShell.Commands.Files
                     else errored++;
                 }
 
-                // Process files 
-                if (sourceFolder.Files != null && sourceFolder.Files.Count > 0)
-                {
-                    foreach (var sourceFile in sourceFolder.Files)
-                    {
-                        var src = UrlUtility.Combine(sourceFolderUrl, sourceFile.Name);
-                        var dst = UrlUtility.Combine(targetFolderUrl, sourceFile.Name);
-                        var r = SyncFileMetadata(src, dst, sourceContext, targetContext);
-                        if (r == SyncResult.Success) processed++;
-                        else if (r == SyncResult.Skipped) skipped++;
-                        else errored++;
-                    }
-                }
-
-                // Process subfolders recursively if Recursive is enabled
+                // When Recursive is enabled, process files and subfolders; otherwise only the folder item itself
                 if (Recursive)
                 {
+                    // Process files in the current folder
+                    if (sourceFolder.Files != null && sourceFolder.Files.Count > 0)
+                    {
+                        foreach (var sourceFile in sourceFolder.Files)
+                        {
+                            var src = UrlUtility.Combine(sourceFolderUrl, sourceFile.Name);
+                            var dst = UrlUtility.Combine(targetFolderUrl, sourceFile.Name);
+                            var r = SyncFileMetadata(src, dst, sourceContext, targetContext);
+                            if (r == SyncResult.Success) processed++;
+                            else if (r == SyncResult.Skipped) skipped++;
+                            else errored++;
+                        }
+                    }
+
+                    // Process subfolders recursively
                     foreach (var sourceSubfolder in sourceFolder.Folders)
                     {
                         if (sourceSubfolder.Name.StartsWith("_")) continue; // Skip system folders
@@ -192,7 +193,7 @@ namespace PnP.PowerShell.Commands.Files
                         var sourceSubfolderUrlCombined = UrlUtility.Combine(sourceFolderUrl, sourceSubfolder.Name);
                         var targetSubfolderUrl = UrlUtility.Combine(targetFolderUrl, sourceSubfolder.Name);
                         var subResults = SyncFolderMetadataRecursive(sourceSubfolderUrlCombined, targetSubfolderUrl, sourceContext, targetContext);
-                        
+
                         processed += subResults.Processed;
                         skipped += subResults.Skipped;
                         errored += subResults.Errored;
