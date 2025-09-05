@@ -25,6 +25,8 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public TaxonomyTermStorePipeBind TermStore;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
+        public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
@@ -51,7 +53,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
                 var termSet = TermSet.GetTermSet(termGroup);
                 term = Identity.GetTerm(ClientContext, termStore, termSet, false, null);
             }
-            if (ShouldContinue($"Delete term {term.Name} with id {term.Id}", Properties.Resources.Confirm))
+            if (Force || ShouldContinue($"Delete term {term.Name} with id {term.Id}", Properties.Resources.Confirm))
             {
                 term.DeleteObject();
                 termStore.CommitAll();
