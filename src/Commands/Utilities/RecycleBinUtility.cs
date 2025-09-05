@@ -1,7 +1,13 @@
 using Microsoft.SharePoint.Client;
+using Newtonsoft.Json;
+using PnP.PowerShell.Commands.Model.Mail;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Net;
+using System.Net.Http;
+using System.Xml.Linq;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -99,8 +105,61 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
             }
             while (items?.Count == 5000);
-            
+
             return recycleBinItems;
+        }
+
+        internal static void RestoreRecycleBinItemInBulk(HttpClient httpClient, ClientContext ctx, string[] idsList, RecycleBin.RestoreRecycleBinItem restoreRecycleBinItem)
+        {
+            //restoreRecycleBinItem provides us the reference to the instance of RestoreRecycleBinItem object. We use this object to log key information as verbose
+            Uri currentContextUri = new Uri(ctx.Url);
+            string apiCall = $"{currentContextUri}/_api/site/RecycleBin/RestoreByIds";
+
+            string idsString = string.Join("','", idsList); // Convert array to a comma-separated string  
+
+            try
+            {
+                string requestBody = $"{{'ids':['{idsString}']}}";
+                REST.RestHelper.Post(httpClient, apiCall, ctx, requestBody, "application/json", "application/json");
+                restoreRecycleBinItem.WriteVerbose("Whole batch restored successfuly.");
+            }
+            catch (Exception ex)
+            {
+                {
+                    //fall back logic
+                    //Unable to process as batch because of an error in restoring one of the ids in batch, processing individually
+                    restoreRecycleBinItem.WriteVerbose($"Unable to process as batch because of an error in restoring one of the ids in batch. Error:{ex.Message}");
+                    restoreRecycleBinItem.WriteVerbose($"Switching to individul restore of items ...");
+
+                    foreach (string id in idsList)
+                    {
+                        try
+                        {
+                            string requestBody = $"{{'ids':['{id}']}}";
+                            REST.RestHelper.Post(httpClient, apiCall, ctx, requestBody, "application/json", "application/json");
+                            restoreRecycleBinItem.WriteVerbose($"Item - {id} restored successfuly.");
+
+                        }
+                        catch (Exception e)
+                        {
+                            var odataError = e.Message;
+                            if (odataError != null)
+                            {
+                                if (odataError.Contains("Value does not fall within the expected range."))
+                                {
+                                    restoreRecycleBinItem.WriteVerbose($"Item - {id} already restored.");
+                                }
+                                else
+                                {
+                                    //Most common reason is that an item with the same name already exists. To restore the item, rename the existing item and try again
+                                    restoreRecycleBinItem.WriteVerbose($"Item - {id} restore failed. Error:{odataError}");
+                                }
+                            }
+                            //Digest errors because we cannot do anything
+                        }
+                    }
+                }
+            }
         }
     }
 }
