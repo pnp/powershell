@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -174,6 +174,15 @@ namespace PnP.PowerShell.Commands.Properties {
         internal static string Confirm {
             get {
                 return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The provided container could not be found.
+        /// </summary>
+        internal static string ContainerNotFound {
+            get {
+                return ResourceManager.GetString("ContainerNotFound", resourceCulture);
             }
         }
         
@@ -357,9 +366,9 @@ namespace PnP.PowerShell.Commands.Properties {
                 return ResourceManager.GetString("NoApiAccessToken", resourceCulture);
             }
         }
-
+        
         /// <summary>
-        ///   Looks up a localized string similar to There is currently no connection yet. Use Connect-PnPOnline to connect..
+        ///   Looks up a localized string similar to There is currently no connection yet. Use Connect-PnPOnline to connect or provide a valid connection using -Connection..
         /// </summary>
         internal static string NoConnection {
             get {
@@ -386,7 +395,7 @@ namespace PnP.PowerShell.Commands.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The current connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument to connect..
+        ///   Looks up a localized string similar to You are not signed in. Please use Connect-PnPOnline to connect..
         /// </summary>
         internal static string NoDefaultSharePointConnection {
             get {
@@ -394,6 +403,9 @@ namespace PnP.PowerShell.Commands.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to The provided connection through -Connection holds no SharePoint context. Please use one of the Connect-PnPOnline commands which uses the -Url argument to connect..
+        /// </summary>
         internal static string NoSharePointConnectionInProvidedConnection {
             get {
                 return ResourceManager.GetString("NoSharePointConnectionInProvidedConnection", resourceCulture);
@@ -811,15 +823,6 @@ namespace PnP.PowerShell.Commands.Properties {
         internal static string WebhooksOnlySupportsLists {
             get {
                 return ResourceManager.GetString("WebhooksOnlySupportsLists", resourceCulture);
-            }
-        }
-
-        /// <summary>
-        ///   Looks up a localized string similar to The provided container could not be found.
-        /// </summary>
-        internal static string ContainerNotFound {
-            get {
-                return ResourceManager.GetString("ContainerNotFound", resourceCulture);
             }
         }
     }

@@ -15,6 +15,7 @@
         GraphDeviceLogin,
         ManagedIdentity,
         EnvironmentVariable,
-        AzureADWorkloadIdentity
+        AzureADWorkloadIdentity,
+        FederatedIdentity
     }
 }

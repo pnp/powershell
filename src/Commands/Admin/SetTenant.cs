@@ -489,39 +489,45 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string WhoCanShareAllowListInTenant { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? LegacyBrowserAuthProtocolsEnabled { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? EnableDiscoverableByOrganizationForVideos { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public string RestrictedAccessControlforSitesErrorHelpLink { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? Workflow2010Disabled { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? AllowSharingOutsideRestrictedAccessControlGroups { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? HideSyncButtonOnDocLib { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? HideSyncButtonOnODB { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public int? StreamLaunchConfig { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? EnableMediaReactions { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? ContentSecurityPolicyEnforcement { private set; get; }
 
         [Parameter(Mandatory = false)]
         public bool? DisableSpacesActivation { private set; get; }
-        
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowClassicPublishingSiteCreation { private set; get; }
+
+        [Parameter(Mandatory = false)]
+        public bool? DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites { private set; get; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1650,6 +1656,16 @@ namespace PnP.PowerShell.Commands.Admin
             if (DisableSpacesActivation.HasValue)
             {
                 Tenant.DisableSpacesActivation = DisableSpacesActivation.Value;
+                modified = true;
+            }
+            if (AllowClassicPublishingSiteCreation.HasValue)
+            {
+                Tenant.AllowClassicPublishingSiteCreation = AllowClassicPublishingSiteCreation.Value;
+                modified = true;
+            }
+            if (DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites.HasValue)
+            {
+                Tenant.DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites = DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites.Value;
                 modified = true;
             }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)

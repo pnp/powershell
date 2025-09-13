@@ -124,7 +124,7 @@ Allows defining what type of content is in the Body parameter. Defaults to HTML.
 
 ```yaml
 Type: MessageBodyContentType
-Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
+Parameter Sets: Send through Microsoft Graph
 Accepted values: Html, Text
 
 Required: False
@@ -153,7 +153,7 @@ The sender of the e-mail. When Microsoft Graph is used, this can be a user or a 
 
 ```yaml
 Type: String
-Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
+Parameter Sets: Send through Microsoft Graph
 
 Required: True
 Position: Named
@@ -167,7 +167,7 @@ Allows defining what the importance of the e-mail is. Defaults to Normal.
 
 ```yaml
 Type: MessageImportanceType
-Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
+Parameter Sets: Send through Microsoft Graph
 Accepted values: Low, Normal, High
 
 Required: False
@@ -182,7 +182,7 @@ List of return addresses to use for the e-mail
 
 ```yaml
 Type: String[]
-Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
+Parameter Sets: Send through Microsoft Graph
 
 Required: False
 Position: Named
@@ -196,7 +196,7 @@ Allows indicating if the sent e-mail should be stored in the Sent Items of the m
 
 ```yaml
 Type: String[]
-Parameter Sets: Send through Microsoft Graph with attachments from SPO, Send through Microsoft Graph with attachments from local file system
+Parameter Sets: Send through Microsoft Graph
 
 Required: False
 Position: Named
@@ -238,7 +238,7 @@ List of attachments from local file system to be uploaded and sent as attachment
 
 ```yaml
 Type: String[]
-Parameter Sets: Send through Microsoft Graph with attachments from local file system
+Parameter Sets: Send through Microsoft Graph
 
 Required: False
 Position: Named
@@ -252,7 +252,7 @@ List of files from the SharePoint site collection to be sent as attachments.
 
 ```yaml
 Type: String[]
-Parameter Sets: Send through Microsoft Graph with attachments from SPO
+Parameter Sets: Send through Microsoft Graph
 
 Required: False
 Position: Named

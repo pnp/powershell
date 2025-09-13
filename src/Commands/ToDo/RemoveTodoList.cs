@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.ToDo
                     LogWarning("Provided user not found");
                     return;
                 }
-                url = $"/v1.0/users/{user.Id}/todo/lists/{Identity}";
+                url = $"/v1.0/users/{user.Id.Value}/todo/lists/{Identity}";
             }
 
             var graphResult = GraphRequestHelper.Delete(url);

@@ -13,6 +13,7 @@ namespace PnP.PowerShell.Commands.Teams
     {
         private const string ParameterSet_Identity = "Identity";
         private const string ParameterSet_Filter = "Filter";
+        private const string ParameterSet_User = "User";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Identity)]
         public TeamsTeamPipeBind Identity;
@@ -24,6 +25,9 @@ namespace PnP.PowerShell.Commands.Teams
         /// </summary>
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Filter)]
         public string Filter = null;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_User)]
+        public AzureADUserPipeBind User;
 
         protected override void ExecuteCmdlet()
         {
@@ -41,7 +45,20 @@ namespace PnP.PowerShell.Commands.Teams
             }
             else
             {
-                WriteObject(TeamsUtility.GetTeamUsingFilter(GraphRequestHelper, Filter));
+                if (ParameterSpecified(nameof(User)))
+                {
+                    var user = User.GetUser(AccessToken, Connection.AzureEnvironment);
+                    if (user == null)
+                    {
+                        LogWarning("Provided user not found");
+                        return;
+                    }
+                    WriteObject(TeamsUtility.GetJoinedTeams(GraphRequestHelper, user.Id.Value));
+                }
+                else
+                {
+                    WriteObject(TeamsUtility.GetTeamUsingFilter(GraphRequestHelper, Filter));
+                }
             }
         }
     }

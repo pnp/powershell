@@ -1,8 +1,8 @@
-using System.Management.Automation;
-using System.Text.Json;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Model.Copilot;
 using System.Linq;
+using System.Management.Automation;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Copilot
 {
@@ -37,38 +37,50 @@ namespace PnP.PowerShell.Commands.Copilot
             else
             {
                 // find all doclibraries
-                var doclibs = ClientContext.LoadQuery(CurrentWeb.Lists.Where(l => l.BaseTemplate == 101));
-                ClientContext.ExecuteQuery();
-                var camlQuery = CamlQuery.CreateAllItemsQuery();
+                var doclibs = ClientContext.LoadQuery(CurrentWeb.Lists.Where(l => l.BaseTemplate == (int)ListTemplateType.DocumentLibrary));
+                ClientContext.ExecuteQueryRetry();
 
-                camlQuery.ViewXml = "<View Scope=\"RecursiveAll\"><Query><Where><Eq><FieldRef Name=\"File_x0020_Type\" /><Value Type=\"Text\">agent</Value></Eq></Where></Query></View>";
                 foreach (var doclib in doclibs)
                 {
-                    camlQuery.ListItemCollectionPosition = null;
-                    do
-                    {
-                        camlQuery.ListItemCollectionPosition = GetAgents(doclib, camlQuery);
-
-                    } while (camlQuery.ListItemCollectionPosition != null);
+                    GetAgents(doclib);
                 }
             }
         }
 
-        private ListItemCollectionPosition GetAgents(List list, CamlQuery camlQuery)
+        private void GetAgents(List list)
         {
-            var items = list.GetItems(camlQuery);
-            list.Context.Load(items, i => i.IncludeWithDefaultProperties(li => li.FieldValuesAsText), i => i.ListItemCollectionPosition);
-            ClientContext.ExecuteQueryRetry();
-            foreach (var item in items)
-            {
-                var agentContents = CurrentWeb.GetFileAsString(item.FieldValuesAsText["FileRef"]);
-                var agentObject = JsonSerializer.Deserialize<CopilotAgent>(agentContents);
-                agentObject.ServerRelativeUrl = item.FieldValuesAsText["FileRef"];
-               
-                WriteObject(agentObject);
-            }
+            var camlQuery = CamlQuery.CreateAllItemsQuery(100);
+            camlQuery.ViewXml = "<View Scope=\"RecursiveAll\"><Query><Where><Eq><FieldRef Name=\"File_x0020_Type\" /><Value Type=\"Text\">agent</Value></Eq></Where></Query></View>";
 
-            return items.ListItemCollectionPosition;
+            // Initialize position to null for first page
+            ListItemCollectionPosition position = null;
+
+            // Continue fetching until no more pages
+            do
+            {
+                // Set the position for the current request
+                camlQuery.ListItemCollectionPosition = position;
+
+                // Get current batch of items
+                var items = list.GetItems(camlQuery);
+                list.Context.Load(items, i => i.IncludeWithDefaultProperties(li => li.FieldValuesAsText), i => i.ListItemCollectionPosition);
+                ClientContext.ExecuteQueryRetry();
+
+                // Process current batch
+                foreach (var item in items)
+                {
+                    var agentContents = CurrentWeb.GetFileAsString(item.FieldValuesAsText["FileRef"]);
+                    var agentObject = JsonSerializer.Deserialize<CopilotAgent>(agentContents);
+                    agentObject.ServerRelativeUrl = item.FieldValuesAsText["FileRef"];
+
+                    WriteObject(agentObject);
+                }
+
+                // Get position for next batch
+                position = items.ListItemCollectionPosition;
+
+            } while (position != null);
+
         }
     }
 }

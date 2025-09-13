@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
+using PnP.Core.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Model.SharePoint.BrandCenter
 {
@@ -12,35 +14,35 @@ namespace PnP.PowerShell.Commands.Model.SharePoint.BrandCenter
         /// Unique identifier of the font
         /// </summary>
         [JsonPropertyName("ID")]
-        public Guid? Id { get; set; }
+        public string Id { get; set; }
         /// <summary>
         /// Name of the font
         /// </summary>
-        [JsonPropertyName("Title")]
-        public string Title { get; set; }
+        [JsonPropertyName("_SPFontFamilyName")]
+        public string Name { get; set; }
 
         /// <summary>
-        /// Defines where the font is stored
+        /// The type of font styles in the font
         /// </summary>
-        [JsonPropertyName("Store")]
-        public Store Store { get; set; }
+        [JsonPropertyName("_SPFontFaces")]
+        public List<string> FontStyles { get; set; }
 
         /// <summary>
-        /// The JSON definition of the font choices
+        /// The filename of the font
         /// </summary>
-        [JsonPropertyName("PackageJson")]
-        public string PackageJson { get; set; }
+        [JsonPropertyName("FileLeafRef")]
+        public string FileName { get; set; }
 
         /// <summary>
-        /// Indication if the font package is valid
+        /// Indication if the font is visible
         /// </summary>
-        [JsonPropertyName("IsValid")]
-        public bool? IsValid { get; set; }
+        [JsonPropertyName("_SPFontVisible")]
+        public string IsVisible { get; set; }
 
         /// <summary>
-        /// Indication if the font package is hidden
+        /// Indication if the font is hidden
         /// </summary>
-        [JsonPropertyName("IsHidden")]
-        public bool? IsHidden { get; set; }
+        [JsonIgnore]
+        public bool IsHidden => string.Equals(IsVisible, "No", StringComparison.OrdinalIgnoreCase);
     }
 }

@@ -90,6 +90,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool IsGroupOwnerSiteAdmin { get; set; }
         public bool ListsShowHeaderAndNavigation { get; set; }
         public int LockReason { get; set; }
+        public bool HasHolds { get; set; }
         public int MajorVersionLimit { get; set; }
         public int MajorWithMinorVersionsLimit { get; set; }
         public bool RestrictedAccessControl { get; set; }
@@ -102,6 +103,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool ReadOnlyForUnmanagedDevices { get; set; }
         public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
         public bool OverrideSharingCapability { get; set; }
+        public bool AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { get; set; }
 
         #endregion
 
@@ -186,6 +188,7 @@ namespace PnP.PowerShell.Commands.Model
             IsGroupOwnerSiteAdmin = props.IsGroupOwnerSiteAdmin;
             ListsShowHeaderAndNavigation = props.ListsShowHeaderAndNavigation;
             LockReason = props.LockReason;
+            HasHolds = props.HasHolds;
             MajorVersionLimit = props.MajorVersionLimit;
             MajorWithMinorVersionsLimit = props.MajorWithMinorVersionsLimit;
             RestrictedAccessControl = props.RestrictedAccessControl;
@@ -198,6 +201,7 @@ namespace PnP.PowerShell.Commands.Model
             ReadOnlyForUnmanagedDevices = props.ReadOnlyForUnmanagedDevices;
             OverrideSharingCapability = props.OverrideSharingCapability;
             OverrideBlockUserInfoVisibility = props.OverrideBlockUserInfoVisibility;
+            AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = props.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
         }
     }
 }

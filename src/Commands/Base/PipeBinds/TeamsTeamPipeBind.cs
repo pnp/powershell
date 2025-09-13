@@ -1,10 +1,10 @@
 ﻿using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Teams;
+using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Linq;
 using System.Management.Automation;
-using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else
             {
-                var collection = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{UrlUtilities.UrlEncode(_stringValue)}')&$select=Id");
+                var collection = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{UrlUtilities.UrlEncode(_stringValue.Replace("'", "''"))}')&$select=Id");
                 if (collection != null && collection.Items.Any())
                 {
                     return collection.Items.First().Id;
@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 else
                 {
                     // find the team by displayName
-                    var byDisplayNamecollection = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and displayName eq '{UrlUtilities.UrlEncode(_stringValue)}')&$select=Id");
+                    var byDisplayNamecollection = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and displayName eq '{UrlUtilities.UrlEncode(_stringValue.Replace("'", "''"))}')&$select=Id");
                     if (byDisplayNamecollection != null && byDisplayNamecollection.Items.Any())
                     {
                         if (byDisplayNamecollection.Items.Count() == 1)
@@ -89,7 +89,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 }
                 else
                 {
-                    var collection = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and displayName eq '{_stringValue}')&$select=Id");
+                    var collection = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and displayName eq '{UrlUtilities.UrlEncode(_stringValue.Replace("'", "''"))}')&$select=Id");
                     if (collection != null && collection.Items.Any())
                     {
                         if (collection.Items.Count() == 1)
@@ -103,7 +103,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                     }
                     else
                     {
-                        collection = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{_stringValue}')&$select=Id");
+                        collection = requestHelper.Get<RestResultCollection<Group>>($"v1.0/groups?$filter=(resourceProvisioningOptions/Any(x:x eq 'Team') and mailNickname eq '{UrlUtilities.UrlEncode(_stringValue.Replace("'", "''"))}')&$select=Id");
                         if (collection != null && collection.Items.Count() == 1)
                         {
                             return requestHelper.Get<Team>($"v1.0/teams/{collection.Items.First().Id}", false);

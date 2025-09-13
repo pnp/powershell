@@ -170,7 +170,7 @@ In this following example we create a new Azure AD Application registration whic
 
 ```powershell
 $password = Read-Host -Prompt "Enter certificate password" -AsSecureString
-Register-PnPAzureADApp -ApplicationName "MyDemoApp" -Tenant [yourtenant.onmicrosoft.com] -CertificatePassword $password -Interactive
+Register-PnPEntraIDApp -ApplicationName "MyDemoApp" -Tenant [yourtenant.onmicrosoft.com] -CertificatePassword $password
 ```
 
 You will be asked to authenticate. Log in using an account that has the permissions to create an app registration in your Azure Active Directory. After logging in, the following actions will automatically be taken:

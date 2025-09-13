@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.ToDo
                     LogWarning("Provided user not found");
                     return;
                 }
-                url = $"/v1.0/users/{user.Id}/todo/lists";
+                url = $"/v1.0/users/{user.Id.Value}/todo/lists";
             }
             if (ParameterSpecified(nameof(Identity)))
             {

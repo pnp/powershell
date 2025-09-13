@@ -105,7 +105,7 @@ namespace PnP.PowerShell.Commands
 
             LogDebug($"Looking for release information on the {version} release");
 
-            var match = Regex.Match(content, @$"(?<changelog>## \[{version}]\n.*?)\n## \[\d+?\.\d+?\.\d+?\]", RegexOptions.Singleline);
+            var match = Regex.Match(content, @$"(?<changelog>## \[{version}]\n.*?)\n## \[\d+?\.\d+?\.\d+?\]", RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
             if (!match.Success)
             {

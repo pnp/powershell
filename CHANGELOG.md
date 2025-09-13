@@ -6,7 +6,68 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
+
 ## [Current nightly]
+
+### Added
+- Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
+- Added `-User` parameter to `Get-PnPTeamsTeam` cmdlet to allow fetching list of teams a user has access to.
+- Added `Get-PnPBrandCenterFont` cmdlet to retrieve the available fonts in the Brand Center [#4970](https://github.com/pnp/powershell/pull/4970)
+- Added `Add-PnPBrandCenterFontPackage` cmdlet to allow creating a font package in the Brand Center [#4970](https://github.com/pnp/powershell/pull/4970)
+- Added support for `-FederatedIdentity` in `Connect-PnPOnline` to support Federated Identity.
+- Added support for SSO in WSL (Windows Subsystem for Linux) and Linux distributions. You can now use `Connect-PnPOnline` with `-OSLogin` which helps with more secure auth such as FIDO, Conditional Access policies etc.
+- Added `Get-PnPPowerAppPermission` cmdlet to retrieve the permissions for a specific Power App [#5030](https://github.com/pnp/powershell/pull/5030)
+
+### Changed
+- Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
+- **PnP PowerShell now requires PowerShell 7.4.0 or newer**
+- Improved `Connect-PnPOnline` with `-DeviceLogin` flow, now we don't require users to specify `-Tenant` parameter, it will be automatically added if not specified.
+
+### Fixed
+- Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
+- Fix `-CreateDrive` parameter not working correctly in `Connect-PnPOnline`. [#4869](https://github.com/pnp/powershell/pull/4869)
+- Fix `Get/Remove/Restore-PnPFileVersion` cmdlets to properly handle file names which have encoded values.
+- Fixed Teams related cmdlets to properly handle quotes in the display name of Teams team.
+- Fix `Set-PnPListItem` cmdlet to properly handle multi-choice fields when used with batch parameter.
+- Fix `Get-PnPCopilotAgent` cmdlet to properly handle pagination in large lists.
+- Fix `Send-PnPMail` cmdlet to send mail via Graph API and SPO. It was facing parameter set issue. [#4922](https://github.com/pnp/powershell/pull/4922)
+- Fix `Unregister-PnPHubSite` cmdlet to properly handle null reference error. [#4944](https://github.com/pnp/powershell/pull/4944)
+- Fix `Add/Publish/Unpublish/Remove-PnPApp` cmdlets to properly handle the issue in no-script sites.
+- Fix `Get-PnPHubSiteChild` cmdlet to handle vanity domains. [#4965](https://github.com/pnp/powershell/pull/4965)
+- Fix `Connect-PnPOnline` not working correctly with `-DeviceLogin` in Azure Cloud Shell.
+- Fix `Connect-PnPOnline` not working correctly with `-DeviceLogin` in desktop-less environments, such as on a Raspberry Pi [#5058](https://github.com/pnp/powershell/pull/5058)
+- Fix `Get-PnPTenantRestrictedSearchMode` throwing an error in some cases [#5042](https://github.com/pnp/powershell/pull/5042)
+- Fixed issues with `Get-PnPTenantInfo`, `Set-PnPList`, `Remove-PnPSiteSensitivityLabel`, `Set-PnPSiteSensitivityLabel`, `Send-PnPMail` and `Set-PnPWebHeader` cmdlets returning an error [#5059](https://github.com/pnp/powershell/pull/5059)
+- Fixed issue with `Get-PnPChangelog -Nightly` throwing an error [#5070](https://github.com/pnp/powershell/pull/5070)
+
+### Removed
+
+### Contributors
+
+- Koen Zomers [koenzomers]
+- Janne Holm [jhholm]
+- Marc D Anderson [sympmarc]
+- [abwlodar]
+- Reshmee Auckloo [reshmee011]
+- [wuxiaojun514]
+- [pajeffery]
+- Giacomo Pozzoni [jackpoz]
+- [davidschenkUPG]
+
+## [3.1.0]
+
+### Added
+
+### Fixed
+- Fixed issues with cmdlets not being able to read embedded resources
+
+### Removed
+
+### Contributors
+- Erwin van Hunen [erwinvanhunen]
+- Bert Jansen [jansenbe]
+
+## [3.0.0]
 
 ### Added
 
@@ -72,7 +133,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Changed
 
-- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.4 or newer**
+- **PnP PowerShell is now .NET 8.0 based, and requires PowerShell 7.4.6 or newer**
 - **`-Interactive` login is now the default.**
 - The Popup based authentication for Interactive Login has been removed and replaced by a browser flow
 - `-LaunchBrowser` has been removed for interactive login

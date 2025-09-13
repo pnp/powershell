@@ -1,12 +1,12 @@
-﻿using System;
-using System.Net.Http;
-using System.Threading;
-using Microsoft.Online.SharePoint.TenantAdministration;
+﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.Core.Services;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities.REST;
+using System;
+using System.Net.Http;
+using System.Threading;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
 using TokenHandler = PnP.PowerShell.Commands.Base.TokenHandler;
 
@@ -32,8 +32,16 @@ namespace PnP.PowerShell.Commands
         /// </summary>
         public HttpClient HttpClient => Framework.Http.PnPHttpClient.Instance.GetHttpClient(ClientContext);
 
+        /// <summary>
+        /// An instance of the <see cref="ApiRequestHelper"/> class to help with making requests to the SharePoint Online services
+        /// </summary>
+        public ApiRequestHelper SharePointRequestHelper { get; set; }
 
-        public ApiRequestHelper RequestHelper { get; set; }
+        /// <summary>
+        /// An instance of the <see cref="ApiRequestHelper"/> class to help with making requests to the Microsoft Graph services
+        /// </summary>
+        public ApiRequestHelper GraphRequestHelper { get; private set; }        
+
         /// <summary>
         /// The current Bearer access token for SharePoint Online
         /// </summary>
@@ -48,6 +56,12 @@ namespace PnP.PowerShell.Commands
                         var resourceUri = new Uri(Connection.Url);
                         var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
                         return TokenHandler.GetAzureADWorkloadIdentityTokenAsync(defaultResource).GetAwaiter().GetResult();
+                    }
+                    else if (Connection.ConnectionMethod == ConnectionMethod.FederatedIdentity)
+                    {
+                        var resourceUri = new Uri(Connection.Url);
+                        var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
+                        return TokenHandler.GetFederatedIdentityTokenAsync(Connection.ClientId, Connection.Tenant, defaultResource).GetAwaiter().GetResult();
                     }
                     else
                     {
@@ -81,6 +95,10 @@ namespace PnP.PowerShell.Commands
                 {
                     return TokenHandler.GetAzureADWorkloadIdentityTokenAsync($"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
                 }
+                else if (Connection?.ConnectionMethod == ConnectionMethod.FederatedIdentity)
+                {
+                    return TokenHandler.GetFederatedIdentityTokenAsync(Connection.ClientId, Connection.Tenant, $"https://{Connection.GraphEndPoint}/.default").GetAwaiter().GetResult();
+                }
                 else
                 {
                     if (Connection?.Context != null)
@@ -110,7 +128,10 @@ namespace PnP.PowerShell.Commands
                     throw new InvalidOperationException(Resources.NoDefaultSharePointConnection);
                 }
             }
-            RequestHelper = new ApiRequestHelper(GetType(), Connection, $"https://{Connection.GraphEndPoint}/.default");
+            var resourceUri = new Uri(Connection.Url);
+            var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
+            SharePointRequestHelper = new ApiRequestHelper(GetType(), Connection, defaultResource);
+            GraphRequestHelper = new ApiRequestHelper(GetType(), Connection, $"https://{Connection.GraphEndPoint}/.default");
         }
 
         protected override void ProcessRecord()

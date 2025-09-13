@@ -2011,6 +2011,26 @@
         "value": "Reports.Read.All"
       },
       {
+        "adminConsentDescription": "Allows the app to read and update admin report settings, such as whether to display concealed information in reports, on behalf of the signed-in user.",
+        "adminConsentDisplayName": "Read and write admin report settings",
+        "id": "b955410e-7715-4a88-a940-dfd551018df3",
+        "isEnabled": true,
+        "isAdmin": true,      
+        "consentDescription": "Allows the app to read and update admin report settings, such as whether to display concealed information in reports, on your behalf.",
+        "consentDisplayName": "Read and write admin report settings",
+        "value": "ReportSettings.ReadWrite.All"
+     },
+     {
+        "adminConsentDescription": "Allows the app to read admin report settings, such as whether to display concealed information in reports, on behalf of the signed-in user",
+        "adminConsentDisplayName": "Read admin report settings",
+        "isAdmin": true,
+        "isEnabled": true,
+        "consentDescription": "Allows the app to read admin report settings, such as whether to display concealed information in reports, on your behalf.",
+        "consentDisplayName": "Read admin report settings",
+        "id": "84fac5f4-33a9-4100-aa38-a20c6d29e5e7",
+        "value": "ReportSettings.Read.All"
+      },
+      {
         "adminConsentDescription": "(Preview) Allows the app to read, create, update and delete files in the application's folder.",
         "adminConsentDisplayName": "Have full access to the application's folder (preview)",
         "id": "8019c312-3263-48e6-825e-2b833497195b",
@@ -4617,6 +4637,28 @@
         "isAdmin": false,
         "value": "Reports.Read.All"
       },
+    {
+      "allowedMemberTypes": [
+        "Application"
+      ],
+      "consentDescription": "Allows the app to read and update all admin report settings, such as whether to display concealed information in reports, without a signed-in user.",
+      "consentDisplayName": "Read and write all admin report settings",
+      "id": "2a60023f-3219-47ad-baa4-40e17cd02a1d",
+      "isEnabled": true,
+      "isAdmin": true,
+      "value": "ReportSettings.ReadWrite.All"
+    },
+    {
+      "allowedMemberTypes": [
+        "Application"
+      ],
+      "consentDescription": "Allows the app to read all admin report settings, such as whether to display concealed information in reports, without a signed-in user.",
+      "consentDisplayName": "Read all admin report settings",
+      "id": "ee353f83-55ef-4b78-82da-555bfa2b4b95",
+      "isEnabled": true,
+      "isAdmin": true,
+      "value": "ReportSettings.Read.All"
+    },      
       {
         "allowedMemberTypes": [
           "Application"

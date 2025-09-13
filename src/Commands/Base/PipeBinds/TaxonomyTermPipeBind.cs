@@ -92,6 +92,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
                 {
                     throw new PSArgumentException("Not enough parameters specified to succesfully find the term");
                 }
+                if(null == term)
+                {
+                    throw new PSArgumentException("The specified term does not exist");
+                }
                 if (expressions != null)
                 {
                     clientContext.Load(term, expressions);

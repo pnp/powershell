@@ -1,6 +1,7 @@
 ﻿using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using System;
 using System.Management.Automation;
 using File = Microsoft.SharePoint.Client.File;
 using Resources = PnP.PowerShell.Commands.Properties.Resources;
@@ -28,11 +29,18 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public SwitchParameter Force;
 
-
-
         protected override void ExecuteCmdlet()
         {
             var serverRelativeUrl = string.Empty;
+
+            if (Uri.IsWellFormedUriString(Url, UriKind.Absolute))
+            {
+                // We can't deal with absolute URLs
+                Url = UrlUtility.MakeRelativeUrl(Url);
+            }
+
+            // Remove URL decoding from the Url as that will not work. We will encode the + character specifically, because if that is part of the filename, it needs to stay and not be decoded.
+            Url = Utilities.UrlUtilities.UrlDecode(Url.Replace("+", "%2B"));
 
             var webUrl = CurrentWeb.EnsureProperty(w => w.ServerRelativeUrl);
 
@@ -80,7 +88,7 @@ namespace PnP.PowerShell.Commands.Files
                                     else
                                     {
                                         versions.DeleteByLabel(Identity.Label);
-                                    }                                    
+                                    }
                                     ClientContext.ExecuteQueryRetry();
                                 }
                                 else if (Identity.Id != -1)
@@ -92,7 +100,7 @@ namespace PnP.PowerShell.Commands.Files
                                     else
                                     {
                                         versions.DeleteByID(Identity.Id);
-                                    }                                    
+                                    }
                                     ClientContext.ExecuteQueryRetry();
                                 }
                             }

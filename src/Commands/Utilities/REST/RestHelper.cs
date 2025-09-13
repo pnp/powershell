@@ -333,7 +333,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
-
         #endregion
 
         #region PATCH

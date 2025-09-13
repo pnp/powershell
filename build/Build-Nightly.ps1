@@ -92,35 +92,70 @@ if ($runPublish -eq $true) {
 	$coreRuntimePathWin64 = "$destinationFolder/Core/runtimes/win-x64/native"
 	$coreRuntimePathArm64 = "$destinationFolder/Core/runtimes/win-arm64/native"
 	$coreRuntimePathx86 = "$destinationFolder/Core/runtimes/win-x86/native"
+	$coreRuntimePathLinx64 = "$destinationFolder/Core/runtimes/linux-x64/native"
 
 	$assemblyExceptions = @("System.Memory.dll");
 
 	Try {
-		# Module folder there?
-		if (Test-Path $destinationFolder) {
-			# Yes, empty it
-			Remove-Item $destinationFolder\* -Recurse -Force -ErrorAction Stop
-		}
-		# No, create it
-		Write-Host "Creating target folders: $destinationFolder" -ForegroundColor Yellow
-		New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
-		New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
-		New-Item -Path "$destinationFolder\Core\runtimes" -ItemType Directory -Force | Out-Null
-		New-Item -Path "$destinationFolder\Core\runtimes\win-x64\native" -ItemType Directory -Force | Out-Null
-		New-Item -Path "$destinationFolder\Core\runtimes\win-arm64\native" -ItemType Directory -Force | Out-Null
-		New-Item -Path "$destinationFolder\Core\runtimes\win-x86\native" -ItemType Directory -Force | Out-Null
-		New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
+        # Module folder there?
+        if (Test-Path $destinationFolder) {
+            # Yes, empty it
+            Remove-Item $destinationFolder\* -Recurse -Force -ErrorAction Stop
+        }
+        # No, create it
+        Write-Host "Creating target folders: $destinationFolder" -ForegroundColor Yellow
+        New-Item -Path $destinationFolder -ItemType Directory -Force | Out-Null
+        New-Item -Path "$destinationFolder\Core" -ItemType Directory -Force | Out-Null
+        New-Item -Path "$destinationFolder\Common" -ItemType Directory -Force | Out-Null
 
-		Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
+        Write-Host "Copying files to $destinationFolder" -ForegroundColor Yellow
 
-		$commonFiles = [System.Collections.Generic.Hashset[string]]::new()
-		Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
-		Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0/runtimes/win-x64/native" -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathWin64 }
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0/runtimes/win-arm64/native" -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathArm64 }
-		Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0/runtimes/win-x86/native" -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathx86 }
-	}
+        $commonFiles = [System.Collections.Generic.Hashset[string]]::new()
+        Copy-Item -Path "$PSscriptRoot/../resources/*.ps1xml" -Destination "$destinationFolder"
+        Get-ChildItem -Path "$PSScriptRoot/../src/ALC/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | Foreach-Object { if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }; Copy-Item -LiteralPath $_.FullName -Destination $commonPath }
+        Get-ChildItem -Path "$PSScriptRoot/../src/Commands/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $corePath }
+        
+        # Check if runtime folders exist in source before copying
+        $sourceRuntimeBase = "$PSScriptRoot/../src/Commands/bin/Release/net8.0/runtimes"
+        if (Test-Path $sourceRuntimeBase) {
+            Write-Host "Runtime folders found in source, creating destination runtime structure" -ForegroundColor Yellow
+            New-Item -Path "$destinationFolder\Core\runtimes" -ItemType Directory -Force | Out-Null
+            
+            # Copy win-x64 runtime if exists
+            $sourceRuntimePathWin64 = "$sourceRuntimeBase/win-x64/native"
+            if (Test-Path $sourceRuntimePathWin64) {
+                New-Item -Path "$destinationFolder\Core\runtimes\win-x64\native" -ItemType Directory -Force | Out-Null
+                Get-ChildItem -Path $sourceRuntimePathWin64 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathWin64 }
+                Write-Host "Copied win-x64 runtime files" -ForegroundColor Green
+            }
+            
+            # Copy win-arm64 runtime if exists
+            $sourceRuntimePathArm64 = "$sourceRuntimeBase/win-arm64/native"
+            if (Test-Path $sourceRuntimePathArm64) {
+                New-Item -Path "$destinationFolder\Core\runtimes\win-arm64\native" -ItemType Directory -Force | Out-Null
+                Get-ChildItem -Path $sourceRuntimePathArm64 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathArm64 }
+                Write-Host "Copied win-arm64 runtime files" -ForegroundColor Green
+            }
+            
+            # Copy win-x86 runtime if exists
+            $sourceRuntimePathx86 = "$sourceRuntimeBase/win-x86/native"
+            if (Test-Path $sourceRuntimePathx86) {
+                New-Item -Path "$destinationFolder\Core\runtimes\win-x86\native" -ItemType Directory -Force | Out-Null
+                Get-ChildItem -Path $sourceRuntimePathx86 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathx86 }
+                Write-Host "Copied win-x86 runtime files" -ForegroundColor Green
+            }
+
+			# Copy linux-x64 runtime if exists
+			$sourceRuntimePathLinx64 = "$sourceRuntimeBase/linux-x64/native"
+			if (Test-Path $sourceRuntimePathLinx64) {
+				New-Item -Path "$destinationFolder\Core\runtimes\linux-x64\native" -ItemType Directory -Force | Out-Null
+				Get-ChildItem -Path $sourceRuntimePathLinx64 -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb', '.so' -and -not $commonFiles.Contains($_.Name) } | Foreach-Object { Copy-Item -LiteralPath $_.FullName -Destination $coreRuntimePathLinx64 }
+				Write-Host "Copied linux-x64 runtime files" -ForegroundColor Green
+			}
+        } else {
+            Write-Host "No runtime folders found in build output - this is normal for projects without native dependencies" -ForegroundColor Yellow
+        }
+    }
 	Catch {
 		Write-Host "Error: Cannot copy files to $destinationFolder. Maybe a PowerShell session is still using the module?"
 		exit 1
@@ -163,7 +198,7 @@ if ($runPublish -eq $true) {
 	GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
 	Author = 'Microsoft 365 Patterns and Practices'
 	CompanyName = 'Microsoft 365 Patterns and Practices'
-	PowerShellVersion = '7.4.6'	
+	PowerShellVersion = '7.4.0'	
 	ProcessorArchitecture = 'None'
 	FunctionsToExport = '*'  
 	CmdletsToExport = @($cmdletsString)
@@ -211,4 +246,7 @@ if ($runPublish -eq $true) {
 	# Write version back to version.json
 	$json = @{Version = "$version"; Message = "" } | ConvertTo-Json
 	Set-Content ./version.json -Value $json -Force -NoNewline
+}
+else {
+	Write-Host "No changes in PnP PowerShell, PnP Framework or PnP Core SDK. Exiting." -ForegroundColor Green
 }

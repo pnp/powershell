@@ -53,34 +53,34 @@
 
 	<ItemGroup>		
 		<PackageReference Include="Microsoft.SharePointOnline.CSOM" Version="16.1.*" />
-		<PackageReference Include="PnP.Framework" Version="1.17.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Framework" Version="1.17.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Framework" Version="1.18.*-*" Condition="'$(PnPFrameworkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Framework" Version="1.18.*-*" Condition="'$(IsRelease)' == '1'" />
 		
-		<PackageReference Include="PnP.Core" Version="1.14.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core" Version="1.14.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Core" Version="1.15.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core" Version="1.15.*-*" Condition="'$(IsRelease)' == '1'" />
 		
-		<PackageReference Include="PnP.Core.Auth" Version="1.14.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Auth" Version="1.14.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Core.Auth" Version="1.15.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Auth" Version="1.15.*-*" Condition="'$(IsRelease)' == '1'" />
 		
-		<PackageReference Include="PnP.Core.Admin" Version="1.14.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
-		<PackageReference Include="PnP.Core.Admin" Version="1.14.*-*" Condition="'$(IsRelease)' == '1'" />
+		<PackageReference Include="PnP.Core.Admin" Version="1.15.*-*" Condition="'$(PnPCoreSdkPath)' == '' and '$(IsRelease)' != '1'" />
+		<PackageReference Include="PnP.Core.Admin" Version="1.15.*-*" Condition="'$(IsRelease)' == '1'" />
 
-		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.70.2" />
-		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.2" />
+		<PackageReference Include="Microsoft.Identity.Client.Extensions.Msal" Version="4.73.0" />
+		<PackageReference Include="Microsoft.Bcl.Cryptography" Version="9.0.5" />
 
 		<ProjectReference Include="..\ALC\PnP.PowerShell.ALC.csproj" />
 		
 	</ItemGroup>
 
 	<ItemGroup>
-		<EmbeddedResource Include="Resources\GraphPermissions.json" />
-		<EmbeddedResource Include="Resources\parker.ico" />
-		<EmbeddedResource Include="Resources\SharePointPermissions.json" />
-		<EmbeddedResource Include="Resources\O365ManagementPermissions.json" />
+		<EmbeddedResource Include="Resources\GraphPermissions.json" Type="Non-Resx" WithCulture="false" />
+		<EmbeddedResource Include="Resources\parker.ico" Type="Non-Resx" WithCulture="false" />
+		<EmbeddedResource Include="Resources\SharePointPermissions.json" Type="Non-Resx" WithCulture="false" />
+		<EmbeddedResource Include="Resources\O365ManagementPermissions.json" Type="Non-Resx" WithCulture="false" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(PnPCoreSdkPath)' != '' and '$(IsRelease)' != '1'">
-		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="1.1.1" />
+		<PackageReference Include="Microsoft.Bcl.AsyncInterfaces" Version="9.0.5" />
 		<Reference Include="PnP.Core" Condition="'$(TargetFramework)' == 'net8.0'">
 			<HintPath>$(PnPCoreSdkPath)PnP.Core\bin\Debug\net8.0\PnP.Core.dll</HintPath>
 			<Private>true</Private>
@@ -107,7 +107,7 @@
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net8.0'">
-	  <PackageReference Include="System.Management.Automation" Version="7.4.6" />
+	  <PackageReference Include="System.Management.Automation" Version="7.4.0" />
  	  <PackageReference Include="TextCopy" Version="6.2.1" />		
 	</ItemGroup>
 
