@@ -430,6 +430,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? AIBuilderEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
+        public bool? KnowledgeAgentEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? AllowSensitivityLabelOnRecords { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -1666,6 +1669,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites.HasValue)
             {
                 Tenant.DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites = DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites.Value;
+                modified = true;
+            }
+            if (KnowledgeAgentEnabled.HasValue)
+            {
+                Tenant.KnowledgeAgentEnabled = KnowledgeAgentEnabled.Value;
                 modified = true;
             }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)

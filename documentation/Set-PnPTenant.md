@@ -2569,6 +2569,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -KnowledgeAgentEnabled
+
+Enables or disables the Knowledge Agent feature tenant-wide. When set to $true, the Knowledge Agent functionality is enabled for the tenant; when set to $false it is disabled. Use this parameter to control tenant-level Knowledge Agent behavior.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AllowSensitivityLabelOnRecords
 Allows sensitivity label on records.
 
