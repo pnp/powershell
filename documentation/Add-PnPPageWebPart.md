@@ -56,14 +56,18 @@ Adds a built-in component 'BingMap' to the page called 'MyPage'
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPPageWebPart -Page "MyPage" -Component "HelloWorld"
+$component = Get-PnPPageComponent -Page "MyPage" -ListAvailable | Where-Object { $_.Name -eq "HelloWorld" }
+
+Add-PnPPageWebPart -Page "MyPage" -Component $component
 ```
 
 Adds a component 'HelloWorld' to the page called 'MyPage'
 
 ### EXAMPLE 3
 ```powershell
-Add-PnPPageWebPart -Page "MyPage" -Component "HelloWorld" -Section 1 -Column 2
+$component = Get-PnPPageComponent -Page "MyPage" -ListAvailable | Where-Object { $_.Name -eq "HelloWorld" }
+
+Add-PnPPageWebPart -Page "MyPage" -Component $component -Section 1 -Column 2
 ```
 
 Adds a component 'HelloWorld' to the page called 'MyPage' in section 1 and column 2
