@@ -2584,6 +2584,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -KnowledgeAgentSelectedSitesList
+
+Specifies a list of site collection URLs that should be selected for the tenant Knowledge Agent. Each entry must be a full site URL (for example: "https://contoso.sharepoint.com/sites/team1"). The cmdlet will resolve each URL to the corresponding site id and configure the tenant Knowledge Agent to target those sites.
+
+Note: Running `Set-PnPTenant` with `-KnowledgeAgentSelectedSitesList` will overwrite any existing configured Knowledge Agent sites in the tenant with the supplied list. To clear the configured list, pass an empty array: `-KnowledgeAgentSelectedSitesList @()`.
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AllowSensitivityLabelOnRecords
 Allows sensitivity label on records.
 

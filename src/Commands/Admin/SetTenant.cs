@@ -531,6 +531,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites { private set; get; }
 
+        [Parameter(Mandatory = false)]
+        public string[] KnowledgeAgentSelectedSitesList { private set; get; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1675,6 +1678,53 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 Tenant.KnowledgeAgentEnabled = KnowledgeAgentEnabled.Value;
                 modified = true;
+            }
+            if (KnowledgeAgentSelectedSitesList != null)
+            {
+                if (KnowledgeAgentSelectedSitesList.Length == 0)
+                {
+                    // Explicit empty array passed - clear configured Knowledge Agent sites
+                    Tenant.KnowledgeAgentSiteList = [];
+                    modified = true;
+                }
+                else
+                {
+                    // Build a GUID array by resolving each provided site URL to its SiteProperties and extracting the Id
+                    var siteIdList = new List<Guid>();
+                    var tenantForLookup = new Tenant(AdminContext);
+
+                    foreach (var siteUrl in KnowledgeAgentSelectedSitesList)
+                    {
+                        if (string.IsNullOrWhiteSpace(siteUrl))
+                        {
+                            continue;
+                        }
+
+                        try
+                        {
+                            // The GetSitePropertiesByUrl call requires the tenant admin context
+                            var siteProps = tenantForLookup.GetSitePropertiesByUrl(siteUrl, includeDetail: false);
+                            tenantForLookup.Context.Load(siteProps, sp => sp.SiteId);
+                            tenantForLookup.Context.ExecuteQueryRetry();
+                            if (siteProps != null && siteProps.SiteId != Guid.Empty)
+                            {
+                                siteIdList.Add(siteProps.SiteId);
+                            }
+                            else
+                            {
+                                LogWarning($"Unable to resolve site URL '{siteUrl}' to a site id. It will be skipped.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Don't fail the whole cmdlet for one bad URL; log warning and continue
+                            LogWarning($"Error resolving site URL '{siteUrl}': {ex.Message}. It will be skipped.");
+                        }
+                    }
+
+                    Tenant.KnowledgeAgentSiteList = siteIdList.ToArray();
+                    modified = true;
+                }
             }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)
             {
