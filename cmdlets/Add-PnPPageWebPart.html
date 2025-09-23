@@ -114,11 +114,15 @@
 </code></pre>
 <p>Adds a built-in component 'BingMap' to the page called 'MyPage'</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPPageWebPart -Page &quot;MyPage&quot; -Component &quot;HelloWorld&quot;
+<pre><code class="lang-powershell">$component = Get-PnPPageComponent -Page &quot;MyPage&quot; -ListAvailable | Where-Object { $_.Name -eq &quot;HelloWorld&quot; }
+
+Add-PnPPageWebPart -Page &quot;MyPage&quot; -Component $component
 </code></pre>
 <p>Adds a component 'HelloWorld' to the page called 'MyPage'</p>
 <h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Add-PnPPageWebPart -Page &quot;MyPage&quot; -Component &quot;HelloWorld&quot; -Section 1 -Column 2
+<pre><code class="lang-powershell">$component = Get-PnPPageComponent -Page &quot;MyPage&quot; -ListAvailable | Where-Object { $_.Name -eq &quot;HelloWorld&quot; }
+
+Add-PnPPageWebPart -Page &quot;MyPage&quot; -Component $component -Section 1 -Column 2
 </code></pre>
 <p>Adds a component 'HelloWorld' to the page called 'MyPage' in section 1 and column 2</p>
 <h2 id="parameters">PARAMETERS</h2>

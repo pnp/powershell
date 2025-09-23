@@ -2070,6 +2070,29 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-knowledgeagentenabled">-KnowledgeAgentEnabled</h3>
+<p>Enables or disables the Knowledge Agent feature tenant-wide. When set to $true, the Knowledge Agent functionality is enabled for the tenant; when set to $false it is disabled. Use this parameter to control tenant-level Knowledge Agent behavior.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-knowledgeagentselectedsiteslist">-KnowledgeAgentSelectedSitesList</h3>
+<p>Specifies a list of site collection URLs that should be selected for the tenant Knowledge Agent. Each entry must be a full site URL (for example: &quot;https://contoso.sharepoint.com/sites/team1&quot;). The cmdlet will resolve each URL to the corresponding site id and configure the tenant Knowledge Agent to target those sites.</p>
+<p>Note: Running <code>Set-PnPTenant</code> with <code>-KnowledgeAgentSelectedSitesList</code> will overwrite any existing configured Knowledge Agent sites in the tenant with the supplied list. To clear the configured list, pass an empty array: <code>-KnowledgeAgentSelectedSitesList @()</code>.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-allowsensitivitylabelonrecords">-AllowSensitivityLabelOnRecords</h3>
 <p>Allows sensitivity label on records.</p>
 <pre><code class="lang-yaml">Type: Boolean
