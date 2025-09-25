@@ -67,7 +67,7 @@ namespace PnP.PowerShell.Commands.Files
         private void AssignLabelImmediately(string requestUrl, string payloadJson, IFile file)
         {
             using var content = new StringContent(payloadJson, Encoding.UTF8, "application/json");
-            using var response = GraphRequestHelper.PostHttpContent(requestUrl, content);            
+            using var response = GraphRequestHelper.PostHttpContent(requestUrl, content);
 
             LogDebug($"File sensitivity label assigned to {file.Name}");
             WriteObject(response?.Headers?.Location);
@@ -75,12 +75,7 @@ namespace PnP.PowerShell.Commands.Files
 
         private void QueueBatchRequest(string requestUrl, string payloadJson, IFile file)
         {
-            Dictionary<string, string> headers = new()
-            {
-                { "Content-Type", "application/json" }
-            };
-
-            Batch.Context.Web.WithHeaders(headers).ExecuteRequestBatch(
+            Batch.Context.Web.ExecuteRequestBatch(
                 Batch.Batch,
                 new ApiRequest(HttpMethod.Post, ApiRequestType.Graph, requestUrl, payloadJson));
 
