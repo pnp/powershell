@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -90,10 +90,10 @@
 </ul>
 <p>Add the sensitivity label information for a file in SharePoint.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPFileSensitivityLabel -Identity &lt;String&gt; -SensitivityLabelId &lt;Guid&gt; -AssignmentMethod &lt;Enum&gt; -JustificationText &lt;string&gt;
+<pre><code class="lang-powershell">Add-PnPFileSensitivityLabel -Identity &lt;String&gt; -SensitivityLabelId &lt;Guid&gt; [-AssignmentMethod &lt;Enum&gt;] [-JustificationText &lt;string&gt;] [-Batch &lt;PnPBatch&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>The Add-PnPFileSensitivityLabel cmdlet adds the sensitivity label information for a file in SharePoint using Microsoft Graph. It takes a URL as input, decodes it, and specifically encodes the '+' character if it is part of the filename. It also takes the sensitivity label Id , assignment method and justification text values as input.</p>
+<p>The Add-PnPFileSensitivityLabel cmdlet adds the sensitivity label information for a file in SharePoint using Microsoft Graph. It takes a URL as input, decodes it, and specifically encodes the '+' character if it is part of the filename. It also takes the sensitivity label Id , assignment method and justification text values as input. You can optionally provide a PnP batch so the label assignment is queued and executed together with other batched Graph calls.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <p>This example adds the sensitivity label information for the file at the specified URL.</p>
@@ -102,6 +102,16 @@
 <h3 id="example-2">Example 2</h3>
 <p>This example removes the sensitivity label information for the file at the specified URL.</p>
 <pre><code class="lang-powershell">Add-PnPFileSensitivityLabel -Identity &quot;/sites/Marketing/Shared Documents/Report.pptx&quot; -SensitivityLabelId &quot;&quot; -JustificationText &quot;Previous label no longer applies&quot; -AssignmentMethod Privileged
+</code></pre>
+<h3 id="example-3">Example 3</h3>
+<p>This example queues two label assignments in a single Microsoft Graph batch for improved throughput.</p>
+<pre><code class="lang-powershell">$batch = New-PnPBatch
+
+Get-PnPFile -Folder &quot;/sites/Marketing/Shared Documents&quot; -Recursive -Filter &quot;*.pptx&quot; | ForEach-Object {
+  Add-PnPFileSensitivityLabel -Identity $_ -SensitivityLabelId &quot;b5b11b04-05b3-4fe4-baa9-b7f5f65b8b64&quot; -AssignmentMethod Privileged -Batch $batch
+}
+
+Invoke-PnPBatch -Batch $batch
 </code></pre>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
@@ -146,6 +156,17 @@ Required: False
 Position: Named
 Default value: None
 Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-batch">-Batch</h3>
+<p>Allows queueing the label assignment in an existing PnP batch. Use <code>Invoke-PnPBatch</code> to execute all queued operations.</p>
+<pre><code class="lang-yaml">Type: PnPBatch
+Parameter Sets: Batch
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
