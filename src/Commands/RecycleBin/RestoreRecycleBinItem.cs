@@ -23,16 +23,28 @@ namespace PnP.PowerShell.Commands.RecycleBin
         {
             if (ParameterSpecified(nameof(Identity)))
             {
-                var recycleBinItem = Identity.GetRecycleBinItem(Connection.PnPContext);
-
-                if (recycleBinItem == null)
+                // if Identity has item, use it
+                if (Identity.Item != null)
                 {
-                    throw new PSArgumentException("Recycle bin item not found with the ID specified", nameof(Identity));
+                    if (Force || ShouldContinue(string.Format(Resources.RestoreRecycleBinItem, Identity.Item.LeafName), Resources.Confirm))
+                    {
+                        Identity.Item.Restore();
+                        ClientContext.ExecuteQueryRetry();
+                    }
                 }
-
-                if (Force || ShouldContinue(string.Format(Resources.RestoreRecycleBinItem, recycleBinItem.LeafName), Resources.Confirm))
+                else
                 {
-                    recycleBinItem.Restore();
+                    var recycleBinItem = Identity.GetRecycleBinItem(Connection.PnPContext);
+
+                    if (recycleBinItem == null)
+                    {
+                        throw new PSArgumentException("Recycle bin item not found with the ID specified", nameof(Identity));
+                    }
+
+                    if (Force || ShouldContinue(string.Format(Resources.RestoreRecycleBinItem, recycleBinItem.LeafName), Resources.Confirm))
+                    {
+                        recycleBinItem.Restore();
+                    }
                 }
             }
             else
