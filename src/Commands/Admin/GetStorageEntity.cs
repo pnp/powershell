@@ -90,7 +90,7 @@ namespace PnP.PowerShell.Commands
             {
                 var storageEntitiesDict = JsonSerializer.Deserialize<Dictionary<string, Dictionary<string, string>>>(storageEntitiesIndex);
 
-                var storageEntities = new List<StorageEntity>();
+                var storageEntities = new List<StorageEntity>(storageEntitiesDict.Count);
                 foreach (var key in storageEntitiesDict.Keys)
                 {
                     var storageEntity = new StorageEntity

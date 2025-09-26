@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Apps
                     var permissions = this.GraphRequestHelper.GetResultCollection<AzureADAppPermissionInternal>($"v1.0/sites/{siteId}/permissions?$select=Id");
                     if (permissions.Any())
                     {
-                        var results = new List<AzureADAppPermission>();
+                        var results = new List<AzureADAppPermission>(permissions.Count());
                         foreach (var permission in permissions)
                         {
                             // Request the permission individually so it will include the roles
