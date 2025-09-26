@@ -16,7 +16,7 @@ namespace PnP.PowerShell.Commands.Admin
         {
             if (Identity == Guid.Empty)
             {
-                throw new ArgumentException($"Identity {Identity} value is invalid");
+                throw new PSArgumentException($"Identity value '{Identity}' is invalid. Please provide a valid GUID.");
             }
             ClientResult<SPContainerTypeConfigurationProperties> sPOContainerTypeConfigurationByContainerTypeId = Tenant.GetSPOContainerTypeConfigurationByContainerTypeId(Identity);
             AdminContext.ExecuteQueryRetry();

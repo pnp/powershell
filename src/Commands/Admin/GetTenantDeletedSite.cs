@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Admin
             bool flag = Identity != null && !string.IsNullOrEmpty(Identity.Url) && UrlUtilities.IsPersonalSiteUrl(Identity.Url);
             if (Identity == null || string.IsNullOrEmpty(Identity.Url) || flag)
             {
-                List<DeletedSiteProperties> list = new List<DeletedSiteProperties>();
+                List<DeletedSiteProperties> list = [];
                 uint siteRowLimit = Limit;
                 bool flag2 = siteRowLimit == 0;
                 bool flag3 = false;
@@ -95,7 +95,7 @@ namespace PnP.PowerShell.Commands.Admin
                     SPODeletedSitePropertiesEnumerable spoDeletedSitePropertiesEnumerable = getDeletedSitePropertiesFunc(text);
                     if (spoDeletedSitePropertiesEnumerable == null)
                     {
-                        throw new ArgumentNullException("Something went wrong fetching deleted sites");
+                        throw new InvalidOperationException("Failed to retrieve deleted sites from SharePoint Online");
                     }
                     AdminContext.Load(spoDeletedSitePropertiesEnumerable);
                     AdminContext.Load(spoDeletedSitePropertiesEnumerable, (SPODeletedSitePropertiesEnumerable sp) => sp.NextStartIndexFromSharePoint);
@@ -146,7 +146,7 @@ namespace PnP.PowerShell.Commands.Admin
                 AdminContext.ExecuteQueryRetry();
                 if (spoDeletedSitePropertiesEnumerable == null)
                 {
-                    throw new ArgumentNullException("Something went wrong fetching deleted sites");
+                    throw new InvalidOperationException("Failed to retrieve deleted sites from SharePoint Online");
                 }
                 checked
                 {
