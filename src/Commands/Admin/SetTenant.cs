@@ -1690,7 +1690,7 @@ namespace PnP.PowerShell.Commands.Admin
                 else
                 {
                     // Build a GUID array by resolving each provided site URL to its SiteProperties and extracting the Id
-                    var siteIdList = new List<Guid>();
+                    var siteIdList = new List<Guid>(KnowledgeAgentSelectedSitesList.Length);
                     var tenantForLookup = new Tenant(AdminContext);
 
                     foreach (var siteUrl in KnowledgeAgentSelectedSitesList)

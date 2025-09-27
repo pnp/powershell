@@ -64,6 +64,14 @@ Add-PnPPageSection -Page $page -SectionTemplate OneColumnVerticalSection -Order 
 
 Adds a new one column with one vertical section to the page 'MyPage' and sets the zone emphasis to 2 for one column and vertical zone emphasis to 3 for the vertical column.
 
+### EXAMPLE 6
+```powershell
+$page = Add-PnPPage -Name "MyPage"
+Add-PnPPageSection -Page $page -SectionTemplate FlexibleLayoutSection -Order 1 -ZoneReflowStrategy LeftToRight
+```
+
+Adds a flexible layout section to the page 'MyPage' and sets the zone reflow strategy to LeftToRight. Note: `-ZoneReflowStrategy` only applies to flexible layout section templates (for example `FlexibleLayoutSection` and `FlexibleLayoutVerticalSection`).
+
 
 ## PARAMETERS
 
@@ -141,6 +149,21 @@ Accept wildcard characters: False
 ### -VerticalZoneEmphasis
 Sets the background of the vertical section (default = 0).
 Works only for vertical column layouts, will be ignored for other layouts.
+
+### -ZoneReflowStrategy
+Controls how zones are reflowed when rendering flexible layout sections. This parameter only applies to flexible layout section templates (for example `FlexibleLayoutSection` and `FlexibleLayoutVerticalSection`). If not provided, the default is `TopToDown`.
+
+```yaml
+Type: ZoneReflowStrategy
+Parameter Sets: (All)
+Accepted values: TopToDown, LeftToRight
+
+Required: False
+Position: Named
+Default value: TopToDown
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ```yaml
 Type: Int32
