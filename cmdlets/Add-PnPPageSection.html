@@ -116,6 +116,11 @@ Add-PnPPageSection -Page $page -SectionTemplate OneColumn -ZoneEmphasis 2
 Add-PnPPageSection -Page $page -SectionTemplate OneColumnVerticalSection -Order 1 -ZoneEmphasis 2 -VerticalZoneEmphasis 3
 </code></pre>
 <p>Adds a new one column with one vertical section to the page 'MyPage' and sets the zone emphasis to 2 for one column and vertical zone emphasis to 3 for the vertical column.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">$page = Add-PnPPage -Name &quot;MyPage&quot;
+Add-PnPPageSection -Page $page -SectionTemplate FlexibleLayoutSection -Order 1 -ZoneReflowStrategy LeftToRight
+</code></pre>
+<p>Adds a flexible layout section to the page 'MyPage' and sets the zone reflow strategy to LeftToRight. Note: <code>-ZoneReflowStrategy</code> only applies to flexible layout section templates (for example <code>FlexibleLayoutSection</code> and <code>FlexibleLayoutVerticalSection</code>).</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -176,6 +181,18 @@ Accept wildcard characters: False
 <h3 id="-verticalzoneemphasis">-VerticalZoneEmphasis</h3>
 <p>Sets the background of the vertical section (default = 0).
 Works only for vertical column layouts, will be ignored for other layouts.</p>
+<h3 id="-zonereflowstrategy">-ZoneReflowStrategy</h3>
+<p>Controls how zones are reflowed when rendering flexible layout sections. This parameter only applies to flexible layout section templates (for example <code>FlexibleLayoutSection</code> and <code>FlexibleLayoutVerticalSection</code>). If not provided, the default is <code>TopToDown</code>.</p>
+<pre><code class="lang-yaml">Type: ZoneReflowStrategy
+Parameter Sets: (All)
+Accepted values: TopToDown, LeftToRight
+
+Required: False
+Position: Named
+Default value: TopToDown
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <pre><code class="lang-yaml">Type: Int32
 Parameter Sets: (All)
 
