@@ -70,7 +70,7 @@ Returns the last 100 crawl log entries up until 100 days ago.
 
 ### EXAMPLE 7
 ```powershell
-Get-PnPSearchCrawlLog -RowFilter 3 -RawFormat
+Get-PnPSearchCrawlLog -RowLimit 3 -RawFormat
 ```
 
 Returns the last 3 crawl log entries showing the raw crawl log data.
