@@ -9,8 +9,8 @@ using PnP.PowerShell.Commands.Utilities;
 namespace PnP.PowerShell.Commands.Branding
 {
     [Cmdlet(VerbsCommon.Get, "PnPBrandCenterFontPackage", DefaultParameterSetName = ParameterSet_ALL)]
-    [OutputType(typeof(Font), ParameterSetName = new[] { ParameterSet_SINGLE })]
-    [OutputType(typeof(IEnumerable<Font>), ParameterSetName = new[] { ParameterSet_ALL })]
+    [OutputType(typeof(FontPackage), ParameterSetName = new[] { ParameterSet_SINGLE })]
+    [OutputType(typeof(IEnumerable<FontPackage>), ParameterSetName = new[] { ParameterSet_ALL })]
     public class GetBrandCenterFontPackage : PnPWebCmdlet
     {
         private const string ParameterSet_SINGLE = "Single";
@@ -18,7 +18,7 @@ namespace PnP.PowerShell.Commands.Branding
 
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true, ParameterSetName = ParameterSet_SINGLE)]
         [ArgumentCompleter(typeof(BrandCenterFontPackageCompleter))]
-        public BrandCenterFontPipeBind Identity { get; set; }
+        public BrandCenterFontPackagePipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_SINGLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ALL)]
@@ -30,7 +30,7 @@ namespace PnP.PowerShell.Commands.Branding
 
             if (ParameterSpecified(nameof(Identity)))
             {
-                var font = Identity.GetFont(this, ClientContext, CurrentWeb.Url, Store);
+                var font = Identity.GetFontPackage(this, ClientContext, CurrentWeb.Url, Store);
                 WriteObject(font, false);
             }
             else

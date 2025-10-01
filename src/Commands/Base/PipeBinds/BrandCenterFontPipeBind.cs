@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Model.SharePoint.BrandCenter;
 using PnP.PowerShell.Commands.Utilities;
@@ -7,28 +8,28 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     public sealed class BrandCenterFontPipeBind
     {
-        public readonly Guid? _id;
-        public readonly string _title;
+        public readonly int? _id;
+        public readonly string _name;
         private Font _font;
 
         public BrandCenterFontPipeBind()
         {
         }
 
-        public BrandCenterFontPipeBind(Guid id)
+        public BrandCenterFontPipeBind(int id)
         {
             _id = id;
         }
 
-        public BrandCenterFontPipeBind(string idOrTitle)
+        public BrandCenterFontPipeBind(string idOrName)
         {
-            if(Guid.TryParse(idOrTitle, out Guid guidId))
+            if(int.TryParse(idOrName, out int intId))
             {
-                _id = guidId;
+                _id = intId;
             }
             else
             {
-                _title = idOrTitle;
+                _name = idOrName;
             }
         }
 
@@ -42,11 +43,8 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         /// </summary>
         /// <param name="cmdlet">The cmdlet instance to use to retrieve the Font in this pipe bind</param>
         /// <param name="clientContext">ClientContext to use to communicate with SharePoint Online</param>
-        /// <param name="webUrl">Url to use to check the site collection Brand Center</param>
-        /// <param name="store">The store to check for the font. When NULL, it will check all stores.</param>
-        /// <exception cref="Exception">Thrown when the ContainerProperties cannot be retrieved</exception>
         /// <returns>Font</returns>
-        public Font GetFont(BasePSCmdlet cmdlet, ClientContext clientContext, string webUrl, Store store = Store.All)
+        public Font GetFont(BasePSCmdlet cmdlet, ClientContext clientContext)
         {
             if (_font != null)
             {
@@ -54,12 +52,12 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
             }
             else if (_id.HasValue)
             {
-                _font = BrandCenterUtility.GetFontPackageById(cmdlet, clientContext, _id.Value, webUrl, store);
+                _font = BrandCenterUtility.GetFonts(cmdlet, clientContext).FirstOrDefault(f => f.Id == _id.Value.ToString());
                 return _font;
             }
-            else if (!string.IsNullOrEmpty(_title))
+            else if (!string.IsNullOrEmpty(_name))
             {
-                _font = BrandCenterUtility.GetFontPackageByTitle(cmdlet, clientContext, _title, webUrl, store);
+                _font = BrandCenterUtility.GetFonts(cmdlet, clientContext).FirstOrDefault(f => f.Name == _name);
                 return _font;
             }            
             return null;

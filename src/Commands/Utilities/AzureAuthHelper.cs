@@ -32,12 +32,24 @@ namespace PnP.PowerShell.Commands.Utilities
         {
             try
             {
-                using (var authManager = PnP.Framework.AuthenticationManager.CreateWithDeviceLogin(CLIENTID, (result) =>
+                using (var authManager = AuthenticationManager.CreateWithDeviceLogin(CLIENTID, (deviceCodeResult) =>
                 {
-
-                    ClipboardService.SetText(result.UserCode);
-                    messageWriter.LogWarning($"Please login.\n\nWe opened a browser and navigated to {result.VerificationUrl}\n\nEnter code: {result.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the browser tab after you authenticated successfully to continue the process.");
-                    BrowserHelper.OpenBrowserForInteractiveLogin(result.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
+                    if (PSUtility.IsAzureCloudShell())
+                    {
+                        messageWriter.LogWarning($"\n\nTo sign in, use a web browser to open the page {deviceCodeResult.VerificationUrl} and enter the code {deviceCodeResult.UserCode} to authenticate.");
+                    }
+                    else
+                    {
+                        try
+                        {
+                            ClipboardService.SetText(deviceCodeResult.UserCode);
+                        }
+                        catch
+                        {
+                        }
+                        messageWriter.LogWarning($"Please login.\n\nWe opened a browser and navigated to {deviceCodeResult.VerificationUrl}\n\nEnter code: {deviceCodeResult.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the browser tab after you authenticated successfully to continue the process.");
+                        BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
+                    }
 
                     return Task.FromResult(0);
                 }, azureEnvironment))

@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Admin
             var requestUrl = BuildRequestUrl();
 
             LogDebug($"Making call to {requestUrl} to request tenant information");
-            var results = this.RequestHelper.Get<Model.TenantInfo>(requestUrl);
+            var results = GraphRequestHelper.Get<Model.TenantInfo>(requestUrl);
             WriteObject(results, true);
         }
 

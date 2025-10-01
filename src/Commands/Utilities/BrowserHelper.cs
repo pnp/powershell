@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Microsoft.Identity.Client;
+using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -165,41 +167,69 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        // Using code from MSAL
+        // https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/blob/main/src/client/Microsoft.Identity.Client/Platforms/netstandard/NetCorePlatformProxy.cs
+
         internal static void OpenBrowserForInteractiveLogin(string url, int port, CancellationTokenSource cancellationTokenSource)
         {
             // Fixes encoding of scopes and redirect_uri issue on MacOS. It has no negative effects on Windows.
             url = WebUtility.UrlDecode(url);
 
-            try
+            if (OperatingSystem.IsWindows())
             {
-
-                ProcessStartInfo psi = new ProcessStartInfo
+                try
                 {
-                    FileName = url,
-                    UseShellExecute = true
-                };
-                Process.Start(psi);
-
-            }
-            catch
-            {
-                // hack because of this: https://github.com/dotnet/corefx/issues/10361
-                if (OperatingSystem.IsWindows())
+                    var psi = new ProcessStartInfo
+                    {
+                        FileName = url,
+                        UseShellExecute = true
+                    };
+                    Process.Start(psi);
+                }
+                catch
                 {
+                    // hack because of this: https://github.com/dotnet/corefx/issues/10361
+                    url = url.Replace("&", "^&");
                     Process.Start(new ProcessStartInfo("cmd", $"/c start {url}") { CreateNoWindow = true });
                 }
-                else if (OperatingSystem.IsLinux())
+            }
+            else if (OperatingSystem.IsLinux())
+            {
+                string sudoUser = Environment.GetEnvironmentVariable("SUDO_USER");
+                if (!string.IsNullOrWhiteSpace(sudoUser))
                 {
-                    Process.Start("xdg-open", url);
+                    throw new MsalClientException(MsalError.LinuxXdgOpen, "Unable to open a web page using xdg-open, gnome-open, kfmclient or wslview tools in sudo mode. Please run the process as non-sudo user.");
                 }
-                else if (OperatingSystem.IsMacOS())
+                try
                 {
-                    Process.Start("open", url);
+                    bool opened = false;
+                    foreach (string openTool in GetOpenToolsLinux())
+                    {
+                        if (TryGetExecutablePath(openTool, out string openToolPath))
+                        {
+                            OpenLinuxBrowser(openToolPath, url);
+                            opened = true;
+                            break;
+                        }
+                    }
+
+                    if (!opened)
+                    {
+                        throw new MsalClientException(MsalError.LinuxXdgOpen, "Unable to open a web page using xdg-open, gnome-open, kfmclient or wslview tools. See inner exception for details. Possible causes for this error are: tools are not installed or they cannot open a URL. Make sure you can open a web page by invoking from a terminal: xdg-open https://aka.ms/pnp/powershell");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    throw new PlatformNotSupportedException(RuntimeInformation.OSDescription);
+                    throw new MsalClientException(MsalError.LinuxXdgOpen, "Unable to open a web page using xdg-open, gnome-open, kfmclient or wslview tools. See inner exception for details. Possible causes for this error are: tools are not installed or they cannot open a URL. Make sure you can open a web page by invoking from a terminal: xdg-open https://aka.ms/pnp/powershell", ex);
                 }
+            }
+            else if (OperatingSystem.IsMacOS())
+            {
+                Process.Start("/usr/bin/open", url);
+            }
+            else
+            {
+                throw new PlatformNotSupportedException(RuntimeInformation.OSDescription);
             }
         }
 
@@ -215,6 +245,50 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 listener?.Stop();
             }
+        }
+
+        internal static void OpenLinuxBrowser(string openToolPath, string url)
+        {
+            ProcessStartInfo psi = new ProcessStartInfo(openToolPath, url)
+            {
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false
+            };
+
+            Process.Start(psi);
+
+        }
+
+        internal static string[] GetOpenToolsLinux()
+        {
+            return ["xdg-open", "gnome-open", "kfmclient", "microsoft-edge", "wslview"];
+        }
+
+        /// <summary>
+        /// Searches through PATH variable to find the path to the specified executable.
+        /// </summary>
+        /// <param name="executable">Executable to find the path for.</param>
+        /// <param name="path">Location of the specified executable.</param>
+        /// <returns></returns>
+        internal static bool TryGetExecutablePath(string executable, out string path)
+        {
+            string pathEnvVar = Environment.GetEnvironmentVariable("PATH");
+            if (pathEnvVar != null)
+            {
+                var paths = pathEnvVar.Split(':');
+                foreach (var basePath in paths)
+                {
+                    path = Path.Combine(basePath, executable);
+                    if (File.Exists(path))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            path = null;
+            return false;
         }
     }
 }

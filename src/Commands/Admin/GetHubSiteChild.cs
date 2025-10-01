@@ -48,7 +48,7 @@ namespace PnP.PowerShell.Commands.Admin
             // Get the ID of the hubsite for which we need to find child sites
             var hubSiteId = hubSiteProperties.ID;
 
-            WriteObject(Tenant.GetHubSiteChildUrls(hubSiteId), true);
+            WriteObject(Tenant.GetHubSiteChildUrls(hubSiteId, Connection.TenantAdminUrl), true);
         }
     }
 }

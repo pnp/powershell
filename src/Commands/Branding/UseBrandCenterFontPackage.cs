@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Branding
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         [ArgumentCompleter(typeof(BrandCenterFontPackageCompleter))]
-        public BrandCenterFontPipeBind Identity { get; set; }
+        public BrandCenterFontPackagePipeBind Identity { get; set; }
 
         [Parameter(Mandatory = false)]
         public Store Store { get; set; } = Store.All;
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Branding
             CurrentWeb.EnsureProperty(w => w.Url);
 
             LogDebug("Trying to retrieve the font with the provided identity from the Brand Center");
-            var font = Identity.GetFont(this, ClientContext, CurrentWeb.Url, Store) ?? throw new PSArgumentException($"The font with the provided identity was not found in the Brand Center. Please check the identity and try again.", nameof(Identity));
+            var font = Identity.GetFontPackage(this, ClientContext, CurrentWeb.Url, Store) ?? throw new PSArgumentException($"The font with the provided identity was not found in the Brand Center. Please check the identity and try again.", nameof(Identity));
 
             if (font.IsValid.HasValue && font.IsValid.Value == false)
             {

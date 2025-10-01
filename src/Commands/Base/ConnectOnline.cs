@@ -37,6 +37,7 @@ namespace PnP.PowerShell.Commands.Base
         private const string ParameterSet_ENVIRONMENTVARIABLE = "Environment Variable";
         private const string ParameterSet_AZUREAD_WORKLOAD_IDENTITY = "Azure AD Workload Identity";
         private const string ParameterSet_OSLOGIN = "OS login";
+        private const string ParameterSet_FEDERATEDIDENTITY = "Federated Identity";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ACSAPPONLY, ValueFromPipeline = true)]
@@ -52,6 +53,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
         public SwitchParameter ReturnConnection;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -68,6 +70,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY, ValueFromPipeline = true)]
         public SwitchParameter ValidateConnection;
 
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_CREDENTIALS, ValueFromPipeline = true)]
@@ -84,6 +87,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE, ValueFromPipeline = true)]
         [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY, ValueFromPipeline = true)]
         [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_OSLOGIN, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, Position = 0, ParameterSetName = ParameterSet_FEDERATEDIDENTITY, ValueFromPipeline = true)]
         public string Url;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -140,6 +144,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INTERACTIVE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
         [Alias("ApplicationId")]
         public string ClientId;
 
@@ -153,6 +158,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DEVICELOGIN)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_ENVIRONMENTVARIABLE)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
         public string Tenant;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_APPONLYAADCERTIFICATE)]
@@ -184,6 +190,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYCLIENTID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
         public Framework.AzureEnvironment AzureEnvironment = Framework.AzureEnvironment.Production;
 
         // [Parameter(Mandatory = true, ParameterSetName = ParameterSet_APPONLYCLIENTIDCLIENTSECRETAADDOMAIN)]
@@ -203,6 +210,9 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
         public SwitchParameter ManagedIdentity;
+
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
+        public SwitchParameter FederatedIdentity;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Alias("UserAssignedManagedIdentityPrincipalId")]
@@ -244,6 +254,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
         public string MicrosoftGraphEndPoint;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_CREDENTIALS)]
@@ -259,6 +270,7 @@ namespace PnP.PowerShell.Commands.Base
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYPRINCIPALID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USERASSIGNEDMANAGEDIDENTITYBYAZURERESOURCEID)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_OSLOGIN)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_FEDERATEDIDENTITY)]
         public string AzureADLoginEndPoint;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_AZUREAD_WORKLOAD_IDENTITY)]
@@ -375,6 +387,9 @@ namespace PnP.PowerShell.Commands.Base
                     break;
                 case ParameterSet_OSLOGIN:
                     newConnection = ConnectWithOSLogin();
+                    break;
+                case ParameterSet_FEDERATEDIDENTITY:
+                    newConnection = ConnectFederatedIdentity();
                     break;
             }
 
@@ -551,6 +566,10 @@ namespace PnP.PowerShell.Commands.Base
                         {
                             messageWriter.LogDebug("Using Managed AppId from secure store");
                         }
+                    }
+                    if (string.IsNullOrWhiteSpace(Tenant))
+                    {
+                        Tenant = TenantExtensions.GetTenantIdByUrl(Url, AzureEnvironment);
                     }
 
                     var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource, PersistLogin, Host);
@@ -916,6 +935,12 @@ namespace PnP.PowerShell.Commands.Base
             return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true, PersistLogin, Host);
         }
 
+        private PnPConnection ConnectFederatedIdentity()
+        {
+            LogDebug("Connecting using Federated Identity Credentials");
+
+            return PnPConnection.CreateWithFederatedIdentity(Url, TenantAdminUrl, ClientId, Tenant);
+        }
         #endregion
 
         #region Helper methods

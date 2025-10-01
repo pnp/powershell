@@ -1,13 +1,13 @@
-﻿using System;
-using System.Linq;
-using System.Management.Automation;
-using Microsoft.SharePoint.Client;
-using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Attributes;
+﻿using Microsoft.SharePoint.Client;
+using PnP.Core.Admin.Model.Microsoft365;
 using PnP.Core.Admin.Model.SharePoint;
 using PnP.Core.Services;
+using PnP.PowerShell.Commands.Attributes;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Utilities;
-using PnP.Core.Admin.Model.Microsoft365;
+using System;
+using System.Linq;
+using System.Management.Automation;
 using System.Text.Json;
 
 namespace PnP.PowerShell.Commands
@@ -33,7 +33,7 @@ namespace PnP.PowerShell.Commands
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
-        
+
         [Parameter(Mandatory = false)]
         public Framework.Enums.TimeZone TimeZone;
 
@@ -167,30 +167,23 @@ namespace PnP.PowerShell.Commands
 
                 if (ClientContext.GetContextSettings()?.Type != Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
                 {
-                    try
-                    {
-                        var rc = Connection.PnPContext.GetSiteCollectionManager().CreateSiteCollection(teamSiteOptions, siteCreationOptions, vanityUrlOptions);
+                    var rc = Connection.PnPContext.GetSiteCollectionManager().CreateSiteCollection(teamSiteOptions, siteCreationOptions, vanityUrlOptions);
 
-                        if (ParameterSpecified(nameof(TimeZone)))
+                    if (ParameterSpecified(nameof(TimeZone)))
+                    {
+                        using (var newSiteContext = ClientContext.Clone(rc.Uri.AbsoluteUri))
                         {
-                            using (var newSiteContext = ClientContext.Clone(rc.Uri.AbsoluteUri))
-                            {
-                                newSiteContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
-                                newSiteContext.Web.RegionalSettings.TimeZone = newSiteContext.Web.RegionalSettings.TimeZones.Where(t => t.Id == ((int)TimeZone)).First();
-                                newSiteContext.Web.RegionalSettings.Update();
-                                newSiteContext.ExecuteQueryRetry();
-                                newSiteContext.Site.EnsureProperty(s => s.Url);
-                                WriteObject(rc.Uri.AbsoluteUri);
-                            }
-                        }
-                        else
-                        {
+                            newSiteContext.Web.EnsureProperties(w => w.RegionalSettings, w => w.RegionalSettings.TimeZones);
+                            newSiteContext.Web.RegionalSettings.TimeZone = newSiteContext.Web.RegionalSettings.TimeZones.Where(t => t.Id == ((int)TimeZone)).First();
+                            newSiteContext.Web.RegionalSettings.Update();
+                            newSiteContext.ExecuteQueryRetry();
+                            newSiteContext.Site.EnsureProperty(s => s.Url);
                             WriteObject(rc.Uri.AbsoluteUri);
                         }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        LogError(ex);
+                        WriteObject(rc.Uri.AbsoluteUri);
                     }
                 }
                 else

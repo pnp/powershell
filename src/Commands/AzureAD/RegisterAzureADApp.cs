@@ -460,7 +460,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 // Ensure a file exists at the provided CertificatePath
                 if (!File.Exists(CertificatePath))
                 {
-                    throw new PSArgumentException(string.Format(Resources.CertificateNotFoundAtPath, CertificatePath), nameof(CertificatePath));
+                    throw new PSArgumentException($"Certificate not found at path: {CertificatePath}", nameof(CertificatePath));
                 }
 
                 try
@@ -469,7 +469,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 catch (CryptographicException e) when (e.Message.Contains("The specified password is not correct"))
                 {
-                    throw new PSArgumentNullException(nameof(CertificatePassword), string.Format(Resources.PrivateKeyCertificateImportFailedPasswordIncorrect, nameof(CertificatePassword)));
+                    throw new PSArgumentNullException(nameof(CertificatePassword), $"Failed to import private key certificate. Ensure the correct password is provided for parameter: {nameof(CertificatePassword)}");
                 }
 
                 // Ensure the certificate at the provided CertificatePath holds a private key
@@ -659,9 +659,22 @@ namespace PnP.PowerShell.Commands.AzureAD
                 {
                     using (var authManager = AuthenticationManager.CreateWithDeviceLogin(azureApp.AppId, Tenant, (deviceCodeResult) =>
                     {
-                        ClipboardService.SetText(deviceCodeResult.UserCode);
-                        messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
-                        BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
+                        if (PSUtility.IsAzureCloudShell())
+                        {
+                            Host.UI.WriteWarningLine($"\n\nTo sign in, use a web browser to open the page {deviceCodeResult.VerificationUrl} and enter the code {deviceCodeResult.UserCode} to authenticate.");
+                        }
+                        else
+                        {
+                            try
+                            {
+                                ClipboardService.SetText(deviceCodeResult.UserCode);
+                            }
+                            catch
+                            {
+                            }
+                            Host.UI.WriteWarningLine($"\n\nPlease login.\n\nWe opened a browser and navigated to {deviceCodeResult.VerificationUrl}\n\nEnter code: {deviceCodeResult.UserCode} (we copied this code to your clipboard)\n\nNOTICE: close the browser tab after you authenticated successfully to continue the process.");
+                            BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
+                        }
                         return Task.FromResult(0);
                     }, AzureEnvironment))
                     {

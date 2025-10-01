@@ -68,7 +68,7 @@ namespace PnP.PowerShell.Commands.Admin
                         break;
 
                     default:
-                        throw new PSArgumentException(string.Format(Resources.GrooveBlockOptionNotSupported, nameof(GrooveBlockOption), GrooveBlockOption), nameof(GrooveBlockOption));
+                        throw new PSArgumentException($"Parameter '{nameof(GrooveBlockOption)}' does not support value '{GrooveBlockOption}'. Supported values are: OptOut, HardOptin, SoftOptin", nameof(GrooveBlockOption));
                 }
             }
             AdminContext.ExecuteQueryRetry();

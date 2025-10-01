@@ -571,7 +571,7 @@ namespace PnP.PowerShell.Commands.Utilities
                                 if (choices is string)
                                 {
                                     // Handle comma or semicolon separated string
-                                    itemValue = string.Join(";#", ((string)choices).Split([',', ';'], StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()));
+                                    itemValue = string.Join(";#", ((string)choices).Split(new char[] { ',', ';' }, StringSplitOptions.RemoveEmptyEntries).Select(c => c.Trim()));
                                 }
                                 else if (choices is Array)
                                 {

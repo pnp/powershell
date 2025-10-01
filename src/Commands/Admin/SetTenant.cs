@@ -430,6 +430,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? AIBuilderEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
+        public bool? KnowledgeAgentEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? AllowSensitivityLabelOnRecords { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -489,39 +492,48 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string WhoCanShareAllowListInTenant { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? LegacyBrowserAuthProtocolsEnabled { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? EnableDiscoverableByOrganizationForVideos { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public string RestrictedAccessControlforSitesErrorHelpLink { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? Workflow2010Disabled { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? AllowSharingOutsideRestrictedAccessControlGroups { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? HideSyncButtonOnDocLib { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? HideSyncButtonOnODB { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public int? StreamLaunchConfig { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? EnableMediaReactions { private set; get; }
 
-        [Parameter(Mandatory = false)] 
+        [Parameter(Mandatory = false)]
         public bool? ContentSecurityPolicyEnforcement { private set; get; }
 
         [Parameter(Mandatory = false)]
         public bool? DisableSpacesActivation { private set; get; }
-        
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowClassicPublishingSiteCreation { private set; get; }
+
+        [Parameter(Mandatory = false)]
+        public bool? DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites { private set; get; }
+
+        [Parameter(Mandatory = false)]
+        public string[] KnowledgeAgentSelectedSitesList { private set; get; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1651,6 +1663,68 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 Tenant.DisableSpacesActivation = DisableSpacesActivation.Value;
                 modified = true;
+            }
+            if (AllowClassicPublishingSiteCreation.HasValue)
+            {
+                Tenant.AllowClassicPublishingSiteCreation = AllowClassicPublishingSiteCreation.Value;
+                modified = true;
+            }
+            if (DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites.HasValue)
+            {
+                Tenant.DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites = DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites.Value;
+                modified = true;
+            }
+            if (KnowledgeAgentEnabled.HasValue)
+            {
+                Tenant.KnowledgeAgentEnabled = KnowledgeAgentEnabled.Value;
+                modified = true;
+            }
+            if (KnowledgeAgentSelectedSitesList != null)
+            {
+                if (KnowledgeAgentSelectedSitesList.Length == 0)
+                {
+                    // Explicit empty array passed - clear configured Knowledge Agent sites
+                    Tenant.KnowledgeAgentSiteList = [];
+                    modified = true;
+                }
+                else
+                {
+                    // Build a GUID array by resolving each provided site URL to its SiteProperties and extracting the Id
+                    var siteIdList = new List<Guid>(KnowledgeAgentSelectedSitesList.Length);
+                    var tenantForLookup = new Tenant(AdminContext);
+
+                    foreach (var siteUrl in KnowledgeAgentSelectedSitesList)
+                    {
+                        if (string.IsNullOrWhiteSpace(siteUrl))
+                        {
+                            continue;
+                        }
+
+                        try
+                        {
+                            // The GetSitePropertiesByUrl call requires the tenant admin context
+                            var siteProps = tenantForLookup.GetSitePropertiesByUrl(siteUrl, includeDetail: false);
+                            tenantForLookup.Context.Load(siteProps, sp => sp.SiteId);
+                            tenantForLookup.Context.ExecuteQueryRetry();
+                            if (siteProps != null && siteProps.SiteId != Guid.Empty)
+                            {
+                                siteIdList.Add(siteProps.SiteId);
+                            }
+                            else
+                            {
+                                LogWarning($"Unable to resolve site URL '{siteUrl}' to a site id. It will be skipped.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Don't fail the whole cmdlet for one bad URL; log warning and continue
+                            LogWarning($"Error resolving site URL '{siteUrl}': {ex.Message}. It will be skipped.");
+                        }
+                    }
+
+                    Tenant.KnowledgeAgentSiteList = siteIdList.ToArray();
+                    modified = true;
+                }
             }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)
             {
