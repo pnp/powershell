@@ -52,7 +52,7 @@ namespace PnP.PowerShell.Commands.Graph
             {
                 var existingGroup = AzureADGroupsUtility.GetGroup(GraphRequestHelper, MailNickname);
 
-                forceCreation = existingGroup == null || ShouldContinue(string.Format(Resources.ForceCreationOfExistingGroup0, MailNickname), Resources.Confirm);
+                forceCreation = existingGroup == null || ShouldContinue($"The Unified Group with MailNickname of {MailNickname} already exists. Do you want to create another one?", Resources.Confirm);
             }
             else
             {

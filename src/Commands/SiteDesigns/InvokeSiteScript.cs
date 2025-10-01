@@ -55,7 +55,7 @@ namespace PnP.PowerShell.Commands
                     else
                     {
                         LogDebug($"Executing provided script");
-                        result = Utilities.SiteTemplates.InvokeSiteScript(RequestHelper, Script, hostUrl).Items;
+                        result = Utilities.SiteTemplates.InvokeSiteScript(SharePointRequestHelper, Script, hostUrl).Items;
                     }
                     break;
 
@@ -81,7 +81,7 @@ namespace PnP.PowerShell.Commands
                         else
                         {
                             LogDebug($"Executing site script '{script.Title}' ({script.Id})");
-                            result =Utilities.SiteTemplates.InvokeSiteScript(RequestHelper, script, hostUrl).Items;
+                            result =Utilities.SiteTemplates.InvokeSiteScript(SharePointRequestHelper, script, hostUrl).Items;
                         }
                     }
                     break;

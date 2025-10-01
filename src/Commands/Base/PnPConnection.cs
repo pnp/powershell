@@ -286,15 +286,34 @@ namespace PnP.PowerShell.Commands.Base
                      }
                      else
                      {
+                         var copiedToClipboard = true;
                          try
                          {
                              ClipboardService.SetText(deviceCodeResult.UserCode);
                          }
                          catch
                          {
+                             copiedToClipboard = false;
                          }
-                         messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
-                         BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
+
+                         var browserOpened = true;
+                         try
+                         {
+                             BrowserHelper.OpenBrowserForInteractiveLogin(deviceCodeResult.VerificationUrl, BrowserHelper.FindFreeLocalhostRedirectUri(), cancellationTokenSource);
+                         }
+                         catch
+                         {
+                             browserOpened = false;
+                         }
+
+                         if (copiedToClipboard && browserOpened)
+                         {
+                             messageWriter.LogWarning($"\n\nCode {deviceCodeResult.UserCode} has been copied to your clipboard and a new tab in the browser has been opened. Please paste this code in there and proceed.\n\n");
+                         }
+                         else
+                         {
+                            messageWriter.LogWarning($"\n\nOpen a browser, navigate to {deviceCodeResult.VerificationUrl} and authenticate using code {deviceCodeResult.UserCode} to proceed.\n\n");
+                         }
                      }
 
                      return Task.FromResult(0);

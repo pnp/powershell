@@ -28,7 +28,7 @@ namespace PnP.PowerShell.Commands.Purview
                 LogDebug($"Trying to remove the Microsoft Purview sensitivity label from the Microsoft 365 Group with Id {ClientContext.Site.GroupId} behind the current site {Connection.Url}");
                 var stringContent = new StringContent(JsonSerializer.Serialize(new { assignedLabels = new [] { new { labelId = "" }}}));
                 stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
-                RequestHelper.Patch(stringContent, $"beta/groups/{ClientContext.Site.GroupId}");
+                GraphRequestHelper.Patch(stringContent, $"beta/groups/{ClientContext.Site.GroupId}");
             }
             else
             {
