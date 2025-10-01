@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <AssemblyName>PnP.PowerShell.Tests</AssemblyName>
     <RootNamespace>PnP.PowerShell.Tests</RootNamespace>
@@ -10,7 +10,7 @@
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <Authors>PnP.PowerShell</Authors>
     <Configurations>Debug;Release;DebugLocal</Configurations>
-    <LocalPnPFramework Condition="'$(LocalPnPFramework)' == ''">false</LocalPnPFramework>
+    <LocalPnPFramework Condition="'$(LocalPnPFramework)' == ''">false</LocalPnPFramework>    
   </PropertyGroup>
   
   <ItemGroup>

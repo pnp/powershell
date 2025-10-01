@@ -13,7 +13,7 @@ namespace PnP.PowerShell.Commands.Admin
         {
             Tenant.IsUnmanagedSyncClientForTenantRestricted = false;
             Tenant.BlockMacSync = false;
-            Tenant.ExcludedFileExtensionsForSyncClient = new List<string>();
+            Tenant.ExcludedFileExtensionsForSyncClient = [];
             Tenant.OptOutOfGrooveBlock = false;
             Tenant.OptOutOfGrooveSoftBlock = false;
             Tenant.DisableReportProblemDialog = false;

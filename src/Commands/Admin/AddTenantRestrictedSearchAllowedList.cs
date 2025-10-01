@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.Admin
             }
             else
             {
-                throw new ArgumentException("Parameter set cannot be resolved using the specified named parameters.");
+                throw new InvalidOperationException("Parameter set cannot be resolved using the specified named parameters.");
             }
 
             if (_sitelist == null)

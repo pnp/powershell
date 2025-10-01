@@ -4,6 +4,7 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.SharePoint;
+using System;
 using System.Linq;
 using System.Management.Automation;
 
@@ -36,7 +37,8 @@ namespace PnP.PowerShell.Commands
             ClientResult<TenantOutOfBoxSiteTemplateSettings> templateSetting = null;
             if (ParameterSpecified(nameof(Identity)))
             {
-                if (Identity == null || !Identity.Id.HasValue) throw new PSArgumentException($"Identity contains an invalid {nameof(BuiltInSiteTemplateSettingsPipeBind)} value", nameof(Identity));                
+                ArgumentNullException.ThrowIfNull(Identity, nameof(Identity));
+                if (!Identity.Id.HasValue) throw new PSArgumentException($"Identity contains an invalid {nameof(BuiltInSiteTemplateSettingsPipeBind)} value", nameof(Identity));                
 
                 if (!ParameterSpecified(nameof(WhatIf)))
                 {
