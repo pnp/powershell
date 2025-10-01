@@ -17,7 +17,6 @@ namespace PnP.PowerShell.Commands.Files
     [Cmdlet(VerbsCommon.Add, "PnPFileSensitivityLabel", DefaultParameterSetName = ParameterSet_SINGLE)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Files.ReadWrite.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Sites.ReadWrite.All")]
-
     public class AddFileSensitivityLabel : PnPGraphCmdlet
     {
         private const string ParameterSet_SINGLE = "Single";
@@ -51,11 +50,12 @@ namespace PnP.PowerShell.Commands.Files
             IFile file = Identity.GetCoreFile(context, this);
             file.EnsureProperties(f => f.VroomDriveID, f => f.VroomItemID, f => f.Name);
 
-            var requestUrl = GetRequestUrl(file);
+            var requestUrl = $"v1.0/drives/{file.VroomDriveID}/items/{file.VroomItemID}/assignSensitivityLabel";
             var payloadJson = SerializePayload();
 
             if (ParameterSpecified(nameof(Batch)))
             {
+                requestUrl = $"drives/{file.VroomDriveID}/items/{file.VroomItemID}/assignSensitivityLabel";
                 QueueBatchRequest(requestUrl, payloadJson, file);
             }
             else
@@ -80,12 +80,7 @@ namespace PnP.PowerShell.Commands.Files
                 new ApiRequest(HttpMethod.Post, ApiRequestType.Graph, requestUrl, payloadJson));
 
             LogDebug($"Queued file sensitivity label assignment for {file.Name}");
-        }
-
-        private static string GetRequestUrl(IFile file)
-        {
-            return $"v1.0/drives/{file.VroomDriveID}/items/{file.VroomItemID}/assignSensitivityLabel";
-        }
+        }        
 
         private string SerializePayload()
         {
@@ -96,12 +91,7 @@ namespace PnP.PowerShell.Commands.Files
                 justificationText = JustificationText
             };
 
-            var serializerOptions = new JsonSerializerOptions
-            {
-                DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
-            };
-
-            return JsonSerializer.Serialize(payload, serializerOptions);
+            return JsonSerializer.Serialize(payload);
         }
     }
 }
