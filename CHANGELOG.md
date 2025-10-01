@@ -17,11 +17,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for `-FederatedIdentity` in `Connect-PnPOnline` to support Federated Identity.
 - Added support for SSO in WSL (Windows Subsystem for Linux) and Linux distributions. You can now use `Connect-PnPOnline` with `-OSLogin` which helps with more secure auth such as FIDO, Conditional Access policies etc.
 - Added `Get-PnPPowerAppPermission` cmdlet to retrieve the permissions for a specific Power App [#5030](https://github.com/pnp/powershell/pull/5030)
+- Added `-Batch` parameter to `Add-PnPFileSensitivityLabel` cmdlet to allow bulk updates for file sensitivity labels.
+- Added `-ZoneReflowStrategy` parameter in `Add-PnPPageSection` cmdlet to support flexible layout behavior in mobile views.
+- Added `-KnowledgeAgentEnabled` and `-KnowledgeAgentSelectedSitesList` parameter to `Set-PnPTenant` cmdlets to support knowledge agents.
+- Added `-Force` parameter to `Remove-PnPTerm` cmdlet to remove terms without confirmation.
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
 - **PnP PowerShell now requires PowerShell 7.4.0 or newer**
 - Improved `Connect-PnPOnline` with `-DeviceLogin` flow, now we don't require users to specify `-Tenant` parameter, it will be automatically added if not specified.
+- Improved `Restore-PnPRecycleBinItem` cmdlet to better handle throttling.
 
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
@@ -44,6 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Irving [irvcov]
 - Koen Zomers [koenzomers]
 - Janne Holm [jhholm]
 - Marc D Anderson [sympmarc]
