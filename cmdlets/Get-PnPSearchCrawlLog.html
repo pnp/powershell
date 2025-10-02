@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -118,7 +118,7 @@
 </code></pre>
 <p>Returns the last 100 crawl log entries up until 100 days ago.</p>
 <h3 id="example-7">EXAMPLE 7</h3>
-<pre><code class="lang-powershell">Get-PnPSearchCrawlLog -RowFilter 3 -RawFormat
+<pre><code class="lang-powershell">Get-PnPSearchCrawlLog -RowLimit 3 -RawFormat
 </code></pre>
 <p>Returns the last 3 crawl log entries showing the raw crawl log data.</p>
 <h2 id="parameters">PARAMETERS</h2>
