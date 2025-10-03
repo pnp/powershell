@@ -26,7 +26,7 @@ Import-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] [-PackagePath <
 ```
 
 ## DESCRIPTION
-This cmdlet Imports a Microsoft Power Automate Flow from a zip package.
+This cmdlet imports a Microsoft Power Automate Flow from a ZIP package. At present, only flows originating from the same tenant are supported.
 
 Many times Importing a Microsoft Power Automate Flow will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the Flow. To display these errors when trying to Import a Flow, provide the -Verbose flag with your Import request. If not provided, these errors will silently be ignored.
 

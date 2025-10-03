@@ -6,14 +6,33 @@ using System.Text.Json;
 using PnP.Framework.Diagnostics;
 using System.Net.Http;
 using System.Text.Json.Nodes;
+using PnP.PowerShell.Commands.Model.PowerPlatform.PowerAutomate;
+using System.Threading;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class ImportFlowUtility
     {
+        public static ImportFlowResult ExecuteImportFlow(HttpClient httpClient, string accessToken, string baseUrl, string environmentName, string packagePath, string name)
+        {
+            var sasUrl = GenerateSasUrl(httpClient, accessToken, baseUrl, environmentName);
+            var blobUri = BuildBlobUri(sasUrl, packagePath);
+            UploadPackageToBlob(blobUri, packagePath);
+            var importParametersResponse = GetImportParameters(httpClient, accessToken, baseUrl, environmentName, blobUri);
+            var importOperationsData = GetImportOperations(httpClient, accessToken, importParametersResponse.Location.ToString());
+            var propertiesElement = GetPropertiesElement(importOperationsData);
+            ValidateProperties(propertiesElement);
+            var resourcesObject = ParseResources(propertiesElement);
+            var resource = TransformResources(resourcesObject, name);
+            var validatePackagePayload = CreateImportObject(propertiesElement, resourcesObject);
+            var validateResponseData = ValidateImportPackage(httpClient, accessToken, baseUrl, environmentName, validatePackagePayload);
+            var importPackagePayload = CreateImportObject(validateResponseData);
+            var importResult = ImportPackage(httpClient, accessToken, baseUrl, environmentName, importPackagePayload);
+            return WaitForImportCompletion(httpClient, accessToken, importResult.Location.ToString());
+        }
         public static string GenerateSasUrl(HttpClient httpClient, string accessToken, string baseUrl, string environmentName)
         {
-            var response = RestHelper.Post(PnPConnection.Current.HttpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/generateResourceStorage?api-version=2016-11-01", accessToken);
+            var response = RestHelper.Post(httpClient, $"{baseUrl}/providers/Microsoft.BusinessAppPlatform/environments/{environmentName}/generateResourceStorage?api-version=2016-11-01", accessToken);
             var data = JsonSerializer.Deserialize<JsonElement>(response);
             return data.GetProperty("sharedAccessSignature").GetString();
         }
@@ -187,19 +206,20 @@ namespace PnP.PowerShell.Commands.Utilities
             return importResult;
         }
 
-        public static string WaitForImportCompletion(HttpClient httpClient, string accessToken, string importPackageResponseUrl)
+        public static ImportFlowResult WaitForImportCompletion(HttpClient httpClient,string accessToken,string importPackageResponseUrl)
         {
-            string status;
+            string status = null;
             int retryCount = 0;
+            JsonElement importResultDataElement = default;
 
             do
             {
-                System.Threading.Thread.Sleep(2500);
+                Thread.Sleep(2500);
                 var importResultData = RestHelper.Get(httpClient, importPackageResponseUrl, accessToken, accept: "application/json");
-                var importResultDataElement = JsonSerializer.Deserialize<JsonElement>(importResultData);
+                importResultDataElement = JsonSerializer.Deserialize<JsonElement>(importResultData);
 
-                if (importResultDataElement.TryGetProperty("properties", out JsonElement importResultPropertiesElement) &&
-                    importResultPropertiesElement.TryGetProperty("status", out JsonElement statusElement))
+                if (importResultDataElement.TryGetProperty("properties", out JsonElement propertiesElement) &&
+                    propertiesElement.TryGetProperty("status", out JsonElement statusElement))
                 {
                     status = statusElement.GetString();
                 }
@@ -209,7 +229,6 @@ namespace PnP.PowerShell.Commands.Utilities
                     throw new Exception("Import status could not be determined.");
                 }
 
-
                 if (status == "Running")
                 {
                     Log.Debug("ImportFlowUtility", "Import is still running. Waiting for completion...");
@@ -217,23 +236,23 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
                 else if (status == "Failed")
                 {
-                    ThrowImportError(importResultData);
+                    ThrowImportError(importResultDataElement);
                 }
+
             } while (status == "Running" && retryCount < 5);
 
             if (status == "Running")
             {
                 throw new Exception("Import failed to complete after 5 attempts.");
             }
-
-            return status;
+            return MapToImportFlowResult(importResultDataElement);
         }
 
-        public static void ThrowImportError(string importResultData)
+
+        public static void ThrowImportError(JsonElement importErrorResultData)
         {
-            var importErrorResultData = JsonSerializer.Deserialize<JsonElement>(importResultData);
-            if (importErrorResultData.TryGetProperty("properties", out JsonElement importErrorResultPropertiesElement) &&
-                importErrorResultPropertiesElement.TryGetProperty("resources", out JsonElement resourcesElement))
+            if (importErrorResultData.TryGetProperty("properties", out JsonElement propertiesElement) &&
+                propertiesElement.TryGetProperty("resources", out JsonElement resourcesElement))
             {
                 foreach (var resource in resourcesElement.EnumerateObject())
                 {
@@ -244,15 +263,45 @@ namespace PnP.PowerShell.Commands.Utilities
                             : errorElement.TryGetProperty("code", out JsonElement codeElement)
                                 ? codeElement.GetString()
                                 : "Unknown error";
+
                         throw new Exception($"Import failed: {errorMessage}");
                     }
                 }
                 throw new Exception("Import failed: No error details found in resources.");
             }
-            else
-            {
-                throw new Exception("Import failed: Unknown error.");
-            }
+
+            throw new Exception("Import failed: Unknown error.");
         }
+
+
+        private static ImportFlowResult MapToImportFlowResult(JsonElement importResultDataElement)
+        {
+            var result = new ImportFlowResult();
+
+            if (importResultDataElement.TryGetProperty("name", out var nameElement))
+            {
+                result.Name = nameElement.GetString();
+            }
+
+            if (importResultDataElement.TryGetProperty("properties", out var propertiesElement))
+            {
+                if (propertiesElement.TryGetProperty("status", out var statusElement))
+                {
+                    result.Status = statusElement.GetString();
+                }
+
+                var details = new ImportFlowDetails();
+                if (propertiesElement.TryGetProperty("details", out var detailsElement))
+                {
+                    details.DisplayName = detailsElement.GetProperty("displayName").GetString();
+                    details.Description = detailsElement.GetProperty("description").GetString();
+                    details.CreatedTime = detailsElement.GetProperty("createdTime").GetDateTime();
+                }
+                result.Details = details;
+            }
+
+            return result;
+        }
+
     }
 }
