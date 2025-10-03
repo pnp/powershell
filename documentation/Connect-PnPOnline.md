@@ -298,7 +298,7 @@ On Windows, this entry needs to be under "Generic Credentials".
 ```powershell
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
 ```
-
+> This functionality is only available in the nightly release.
 Connect to SharePoint/Microsoft Graph using federated identity credentials in Github.
 
 ### EXAMPLE 21
@@ -306,7 +306,7 @@ Connect to SharePoint/Microsoft Graph using federated identity credentials in Gi
 Connect-PnPOnline -Url "https://contoso.sharepoint.com" -FederatedIdentity
 ```
 
-Connect to SharePoint/Microsoft Graph using federated identity credentials in Azure DevOps.
+Connect to SharePoint/Microsoft Graph using federated identity credentials in Azure DevOps. This option is available from version 3.1.51-nightly onwards.
 
 ## PARAMETERS
 
@@ -880,6 +880,8 @@ Accept wildcard characters: False
 ### -FederatedIdentity
 
 Connects using Federated Identity. For more information on this, you can visit [this link](https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest).
+
+This option is available from version 3.1.51-nightly onwards.
 
 ```yaml
 Type: SwitchParameter
