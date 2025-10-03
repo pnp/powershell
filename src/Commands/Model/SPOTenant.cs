@@ -8,7 +8,6 @@ using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Management.Automation;
 using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Model
@@ -316,6 +315,20 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? ContentSecurityPolicyEnforcement { private set; get; }
 
+        public List<string> AllowSelectSecurityGroupsInSPSitesList { private set; get; }
+
+        public List<string> DenySelectSecurityGroupsInSPSitesList { private set; get; }
+
+        public List<string> AllowSelectSGsInODBListInTenant { private set; get; }
+
+        public List<string> DenySelectSGsInODBListInTenant { private set; get; }
+
+        public List<string> WhoCanShareAnonymousAllowList { private set; get; }
+
+        public List<string> WhoCanShareAuthenticatedGuestAllowList { private set; get; }
+        public bool? EnableSensitivityLabelForOneNote { private set; get; }
+        public bool? EnableSensitivityLabelForVideoFiles { private set; get; }
+
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext, BasePSCmdlet cmdlet)
@@ -323,18 +336,18 @@ namespace PnP.PowerShell.Commands.Model
             // Loop through all properties defined in this class and load the corresponding property from the Tenant object
             var properties = GetType().GetProperties();
             var failedProperties = 0;
-            foreach(var property in properties)
+            foreach (var property in properties)
             {
                 var propertyName = property.Name;
 
                 try
                 {
                     // Check if the property has a CsomToModelConverter attribute, if so use the PropertyName defined in the attribute instead of looking for a property with the same name on the Tenant object
-                    if(property.IsDefined(typeof(CsomToModelConverter)))
+                    if (property.IsDefined(typeof(CsomToModelConverter)))
                     {
                         var converter = property.GetCustomAttribute<CsomToModelConverter>();
 
-                        if(converter.Skip) continue;
+                        if (converter.Skip) continue;
                         propertyName = converter.PropertyName;
                     }
                     var tenantProperty = tenant.GetType().GetProperty(propertyName);
@@ -343,7 +356,7 @@ namespace PnP.PowerShell.Commands.Model
                         property.SetValue(this, tenantProperty.GetValue(tenant));
                     }
                 }
-                catch(Exception e)
+                catch (Exception e)
                 {
                     failedProperties++;
                     cmdlet.LogDebug($"Property {propertyName} not loaded due to error '{e.Message}'");
@@ -360,7 +373,7 @@ namespace PnP.PowerShell.Commands.Model
                 AllowFilesWithKeepLabelToBeDeletedSPO = getAllowFilesWithKeepLabelToBeDeletedSPO.Value;
                 AllowFilesWithKeepLabelToBeDeletedODB = getAllowFilesWithKeepLabelToBeDeletedODB.Value;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 failedProperties++;
                 cmdlet.LogDebug($"Property AllowFilesWithKeepLabelToBeDeletedSPO and/or AllowFilesWithKeepLabelToBeDeletedODB not loaded due to error '{e.Message}'");
@@ -371,14 +384,14 @@ namespace PnP.PowerShell.Commands.Model
             {
                 DefaultOneDriveInformationBarrierMode = Enum.Parse<Enums.InformationBarriersMode>(tenant.DefaultODBMode);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 failedProperties++;
                 cmdlet.LogDebug($"Property DefaultOneDriveInformationBarrierMode not loaded due to error '{e.Message}'");
             }
 
             // If one or more properties failed to load, show a warning
-            if(failedProperties > 0)
+            if (failedProperties > 0)
             {
                 cmdlet.LogWarning($"Failed to load {(failedProperties != 1 ? $"{failedProperties} properties" : "one property")}. Use -Verbose to see the details.");
             }
