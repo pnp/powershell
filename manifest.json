@@ -1554,6 +1554,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Copy-PnPFileMetadata.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Copy-PnPFileMetadata.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Copy-PnPFolder.md",
       "output": {
         ".html": {

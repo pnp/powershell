@@ -266,11 +266,14 @@ See <a href="https://learn.microsoft.com/sharepoint/dev/solution-guidance/securi
 <h3 id="example-20">EXAMPLE 20</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -ClientId 6c5c98c7-e05a-4a0f-bcfa-0cfc65aa1f28 -Tenant 'contoso.onmicrosoft.com' -FederatedIdentity
 </code></pre>
-<p>Connect to SharePoint/Microsoft Graph using federated identity credentials in Github.</p>
+<blockquote>
+<p>This functionality is only available in the nightly release.
+Connect to SharePoint/Microsoft Graph using federated identity credentials in Github.</p>
+</blockquote>
 <h3 id="example-21">EXAMPLE 21</h3>
 <pre><code class="lang-powershell">Connect-PnPOnline -Url &quot;https://contoso.sharepoint.com&quot; -FederatedIdentity
 </code></pre>
-<p>Connect to SharePoint/Microsoft Graph using federated identity credentials in Azure DevOps.</p>
+<p>Connect to SharePoint/Microsoft Graph using federated identity credentials in Azure DevOps. This option is available from version 3.1.51-nightly onwards.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-accesstoken">-AccessToken</h3>
 <p>Using this parameter you can provide your own access token.
@@ -727,6 +730,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-federatedidentity">-FederatedIdentity</h3>
 <p>Connects using Federated Identity. For more information on this, you can visit <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest">this link</a>.</p>
+<p>This option is available from version 3.1.51-nightly onwards.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Federated Identity
 Aliases:
