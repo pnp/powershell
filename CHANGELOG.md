@@ -22,6 +22,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ZoneReflowStrategy` parameter in `Add-PnPPageSection` cmdlet to support flexible layout behavior in mobile views.
 - Added `-KnowledgeAgentEnabled` and `-KnowledgeAgentSelectedSitesList` parameter to `Set-PnPTenant` cmdlets to support knowledge agents.
 - Added `-Force` parameter to `Remove-PnPTerm` cmdlet to remove terms without confirmation.
+- Added `Import-PnPFlow` cmdlet to import Power Automate in the tenant. [#4854](https://github.com/pnp/powershell/pull/4854)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
@@ -50,6 +51,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Nishkalank Bezawada [NishkalankBezawada]
 - Irving [irvcov]
 - Koen Zomers [koenzomers]
 - Janne Holm [jhholm]
