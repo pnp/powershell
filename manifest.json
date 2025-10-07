@@ -4634,6 +4634,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Import-PnPFlow.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Import-PnPFlow.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Import-PnPTaxonomy.md",
       "output": {
         ".html": {
