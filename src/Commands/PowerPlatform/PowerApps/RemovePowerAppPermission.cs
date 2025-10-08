@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base;
+﻿using Microsoft.SharePoint.Client;
+using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
@@ -16,8 +17,14 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
         [Parameter(Mandatory = true)]
         public PowerAppPipeBind Identity;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = false)]
         public string User;
+
+        [Parameter(Mandatory = false)]
+        public string Group;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Tenant;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter AsAdmin;
@@ -39,25 +46,68 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 throw new PSArgumentException("PowerApp not found.", nameof(Identity));
             }
 
-            LogDebug("Acquiring access token for Microsoft Graph to look up user");
-            var graphAccessToken = TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
+            if (string.IsNullOrEmpty(User) && string.IsNullOrEmpty(Group) && !Tenant.IsPresent)
+            {
+                throw new PSArgumentException("Either User, Group, or Tenant must be specified.");
+            }
+
+            if ((Tenant.IsPresent && (!string.IsNullOrEmpty(User) || !string.IsNullOrEmpty(Group))) ||
+                (!string.IsNullOrEmpty(User) && !string.IsNullOrEmpty(Group)))
+            {
+                throw new PSArgumentException("Specify only one of User, Group, or Tenant.");
+            }
+
+            string graphAccessToken = TokenHandler.GetAccessToken($"https://{Connection.GraphEndPoint}/.default", Connection);
             LogDebug("Microsoft Graph access token acquired");
 
-            Model.AzureAD.User graphUser;
-            if (Guid.TryParse(User, out Guid identityGuid))
-            {
-                LogDebug($"Looking up user through Microsoft Graph by user id {identityGuid}");
-                graphUser = Utilities.AzureAdUtility.GetUser(graphAccessToken, identityGuid, azureEnvironment: Connection.AzureEnvironment);
-            }
-            else
-            {
-                LogDebug($"Looking up user through Microsoft Graph by user principal name {User}");
-                graphUser = Utilities.AzureAdUtility.GetUser(graphAccessToken, User, azureEnvironment: Connection.AzureEnvironment);
-            }
+            var graphRequestHelper = new ApiRequestHelper(GetType(), Connection, $"https://{Connection.GraphEndPoint}/.default");
 
-            if (graphUser == null)
+            string entityId = null ;
+
+            if (!string.IsNullOrEmpty(User))
             {
-                throw new PSArgumentException("User not found.", nameof(User));
+                LogDebug("Processing User parameter");
+                Model.AzureAD.User graphUser;
+                if (Guid.TryParse(User, out Guid userGuid))
+                {
+                    LogDebug($"Looking up user through Microsoft Graph by user id {userGuid}");
+                    graphUser = Utilities.AzureAdUtility.GetUser(graphAccessToken, userGuid, azureEnvironment: Connection.AzureEnvironment);
+                }
+                else
+                {
+                    LogDebug($"Looking up user through Microsoft Graph by user principal name {User}");
+                    graphUser = Utilities.AzureAdUtility.GetUser(graphAccessToken, User, azureEnvironment: Connection.AzureEnvironment);
+                }
+
+                if (graphUser == null)
+                {
+                    throw new PSArgumentException("User not found.", nameof(User));
+                }
+
+                entityId = graphUser.Id.ToString();
+            }
+            else if (!string.IsNullOrEmpty(Group))
+            {
+                LogDebug("Processing Group parameter");
+
+                var graphGroup = Guid.TryParse(Group, out Guid groupGuid)
+                    ? Utilities.AzureADGroupsUtility.GetGroup(graphRequestHelper, groupGuid)
+                    : Utilities.AzureADGroupsUtility.GetGroup(graphRequestHelper, Group);
+
+                if (graphGroup == null)
+                {
+                    throw new PSArgumentException("Group not found.", nameof(Group));
+                }
+
+                entityId = graphGroup.Id.ToString();
+            }
+            else if (Tenant.IsPresent)
+            {
+                LogDebug("Processing Tenant parameter");
+
+                string TenantGUID = TenantExtensions.GetTenantIdByUrl(Connection.Url, Connection.AzureEnvironment);
+                entityId = $"tenant-{TenantGUID}";
+                LogDebug($"Tenant ID resolved: {entityId}");
             }
 
             var payload = new
@@ -66,14 +116,15 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 {
                     new
                     {
-                        id = graphUser.Id.Value,
+                        id = entityId,
                     }
                 }
             };
-            if (Force || ShouldContinue($"Remove PowerApp permission for user with id '{graphUser.Id.Value}' from app '{appName}'?", Properties.Resources.Confirm))
+
+            if (Force || ShouldContinue($"Remove PowerApp permission for entity with id '{entityId}' from app '{appName}'?", Properties.Resources.Confirm))
             {
                 string baseUrl = PowerPlatformUtility.GetPowerAppsEndpoint(Connection.AzureEnvironment);
-                LogDebug($"Removing user {graphUser.Id.Value} permissions from PowerApp {appName} in environment {environmentName}");
+                LogDebug($"Removing entity {entityId} permissions from PowerApp {appName} in environment {environmentName}");
                 PowerAppsRequestHelper.Post($"{baseUrl}/providers/Microsoft.PowerApps{(AsAdmin ? "/scopes/admin/environments/" + environmentName : "")}/apps/{appName}/modifyPermissions?api-version=2022-11-01", payload);
             }
         }
