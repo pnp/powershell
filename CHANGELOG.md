@@ -46,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get-PnPTenantRestrictedSearchMode` throwing an error in some cases [#5042](https://github.com/pnp/powershell/pull/5042)
 - Fixed issues with `Get-PnPTenantInfo`, `Set-PnPList`, `Remove-PnPSiteSensitivityLabel`, `Set-PnPSiteSensitivityLabel`, `Send-PnPMail` and `Set-PnPWebHeader` cmdlets returning an error [#5059](https://github.com/pnp/powershell/pull/5059)
 - Fixed issue with `Get-PnPChangelog -Nightly` throwing an error [#5070](https://github.com/pnp/powershell/pull/5070)
+- Improved error handling in `Add-PnPApp` and `Publish-PnPApp` cmdlets to provide clearer messages when encountering CSPConfig limit errors during site collection app catalog deployments [#5120](https://github.com/pnp/powershell/pull/5120)
 
 ### Removed
 
