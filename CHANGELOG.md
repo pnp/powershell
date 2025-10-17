@@ -46,7 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get-PnPTenantRestrictedSearchMode` throwing an error in some cases [#5042](https://github.com/pnp/powershell/pull/5042)
 - Fixed issues with `Get-PnPTenantInfo`, `Set-PnPList`, `Remove-PnPSiteSensitivityLabel`, `Set-PnPSiteSensitivityLabel`, `Send-PnPMail` and `Set-PnPWebHeader` cmdlets returning an error [#5059](https://github.com/pnp/powershell/pull/5059)
 - Fixed issue with `Get-PnPChangelog -Nightly` throwing an error [#5070](https://github.com/pnp/powershell/pull/5070)
-- Fixed spelling errors in Privileged Identity Management cmdlets: renamed `Get-PnPPriviledgedIdentityManagementRole`, `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, and `Enable-PnPPriviledgedIdentityManagement` to use correct spelling "Privileged". Old cmdlet names remain functional as aliases for backward compatibility.
+- Fixed spelling errors in Privileged Identity Management cmdlets: renamed `Get-PnPPriviledgedIdentityManagementRole`, `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, and `Enable-PnPPriviledgedIdentityManagement` to use correct spelling "Privileged". Old cmdlet names remain functional as aliases for backward compatibility. [#5119](https://github.com/pnp/powershell/pull/5119)
 
 ### Removed
 
