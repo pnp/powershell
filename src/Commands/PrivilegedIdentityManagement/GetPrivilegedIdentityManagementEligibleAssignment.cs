@@ -9,6 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPPrivilegedIdentityManagementEligibleAssignment")]
+    [Alias("Get-PnPPriviledgedIdentityManagementEligibleAssignment")]
     [OutputType(typeof(List<RoleEligibilitySchedule>))]
     [OutputType(typeof(RoleEligibilitySchedule))]
     [RequiredApiDelegatedOrApplicationPermissions("graph/RoleAssignmentSchedule.Read.Directory")]

@@ -10,6 +10,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsLifecycle.Enable, "PnPPrivilegedIdentityManagement")]
+    [Alias("Enable-PnPPriviledgedIdentityManagement")]
     [OutputType(typeof(bool))]
     [RequiredApiDelegatedOrApplicationPermissions("graph/RoleAssignmentSchedule.ReadWrite.Directory")]
     public class EnablePrivilegedIdentityManagement : PnPGraphCmdlet

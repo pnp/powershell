@@ -9,6 +9,7 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Principals
 {
     [Cmdlet(VerbsCommon.Get, "PnPPrivilegedIdentityManagementRole")]
+    [Alias("Get-PnPPriviledgedIdentityManagementRole")]
     [OutputType(typeof(List<RoleDefinition>))]
     [OutputType(typeof(RoleDefinition))]
     [RequiredApiDelegatedOrApplicationPermissions("graph/RoleManagement.Read.Directory")]
