@@ -19,7 +19,6 @@ This is a cross-platform module (Windows, macOS, Linux) that requires PowerShell
 - **Framework**: .NET 8.0
 - **Target Platform**: PowerShell 7.4+
 - **Build System**: .NET SDK 8
-- **Testing**: MSTest / xUnit
 - **Dependencies**:
   - PnP Framework
   - PnP Core SDK
@@ -32,10 +31,6 @@ This is a cross-platform module (Windows, macOS, Linux) that requires PowerShell
 /
 ├── .github/              # GitHub workflows and configurations
 ├── build/                # Build scripts (PowerShell)
-│   ├── Build-Debug.ps1   # Local development builds
-│   ├── Build-Nightly.ps1 # CI/CD builds
-│   ├── Build-Release.ps1 # Release builds
-│   └── Run-Tests.ps1     # Test execution
 ├── src/
 │   ├── Commands/         # Cmdlet implementations (organized by feature)
 │   │   ├── Admin/        # Tenant administration cmdlets
@@ -45,7 +40,6 @@ This is a cross-platform module (Windows, macOS, Linux) that requires PowerShell
 │   │   ├── Graph/        # Microsoft Graph cmdlets
 │   │   └── ...           # Many other feature areas
 │   ├── ALC/              # Assembly Load Context for dependency isolation
-│   ├── Tests/            # Unit and integration tests
 │   └── Resources/        # Embedded resources
 ├── documentation/        # Markdown documentation for each cmdlet
 ├── pages/                # Documentation website content
@@ -109,47 +103,12 @@ namespace PnP.PowerShell.Commands.FeatureArea
 
 8. **Resource Strings**: Store error messages in `Resources.resx` and reference via `Resources.MessageName`
 
-## Building and Testing
-
-### Local Development Build
-
-```powershell
-# Build for debugging
-.\build\Build-Debug.ps1
-
-# Run tests
-.\build\Run-Tests.ps1
-```
-
-### Build Requirements
-- .NET 8 SDK installed
-- PowerShell 7.4+ installed
-- For Windows: Visual Studio 2022 or later (optional, for IDE)
-
-### Testing Guidelines
-
-1. **Test Location**: Tests go in `src/Tests/` matching the feature area structure
-2. **Test Naming**: Follow pattern `{Verb}Pnp{Noun}Tests.cs`
-3. **Test Class Structure**:
-
-```csharp
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-namespace PnP.PowerShell.Tests.FeatureArea
-{
-    [TestClass]
-    public class VerbPnpNounTests
-    {
-        [TestMethod]
-        public void TestMethodName()
-        {
-            // Arrange
-            // Act
-            // Assert
-        }
-    }
-}
-```
+9. **Backward Compatibility**: When renaming a cmdlet or fixing a typo in a cmdlet name, always add an `[Alias()]` attribute with the old cmdlet name to maintain backward compatibility. Example:
+   ```csharp
+   [Cmdlet(VerbsCommon.Get, "PnPEntraIDAppSitePermission")]
+   [Alias("Get-PnPAzureADAppSitePermission")]
+   public class GetEntraIDAppSitePermission : PnPGraphCmdlet
+   ```
 
 ## Coding Standards
 
@@ -266,11 +225,10 @@ Description of output type.
 ✅ Add examples to documentation
 ✅ Use PipeBind classes for flexible parameter input
 ✅ Handle errors gracefully with meaningful messages
-✅ Write unit tests for new cmdlets
 ✅ Use existing helper methods and utilities from base classes
 ✅ Follow the existing code structure and patterns
-✅ Test on multiple platforms when possible (Windows, Linux, macOS)
 ✅ Use `ClientContext.ExecuteQueryRetry()` instead of `ExecuteQuery()` for resilience
+✅ Add `[Alias()]` attribute when renaming cmdlets to maintain backward compatibility
 
 ### Don'ts
 ❌ Don't add cmdlets without proper documentation
@@ -290,18 +248,10 @@ Description of output type.
 2. **Clone** your fork locally
 3. **Create a branch** for your feature/fix from `dev` branch
 4. **Make changes** following the patterns above
-5. **Build and test** locally using build scripts
-6. **Update documentation** in `/documentation/` folder
-7. **Commit** with clear, descriptive messages
-8. **Push** to your fork
-9. **Create Pull Request** to the `dev` branch
-
-## Build Artifacts
-
-- Debug builds output to: `src/Commands/bin/Debug/net8.0/`
-- Release builds create NuGet packages
-- Help files: Generated from XML comments and documentation
-- Module manifest: `PnP.PowerShell.psd1`
+5. **Update documentation** in `/documentation/` folder
+6. **Commit** with clear, descriptive messages
+7. **Push** to your fork
+8. **Create Pull Request** to the `dev` branch
 
 ## Additional Resources
 
