@@ -270,3 +270,4 @@ When generating or modifying code:
 - Use modern C# 12 features where appropriate
 - Prioritize readability and maintainability
 - Follow the principle of least surprise for PowerShell users
+- When starting from a GitHub issue, be sure to reference and link that issue in the proposed PR that would fix it
