@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Creates a scheduled assignment for a role to be activated at a certain time
         /// </summary>
-        public static HttpResponseMessage CreateRoleAssignmentScheduleRequest(ApiRequestHelper requestHelper, RoleEligibilitySchedule roleEligibilitySchedule,string justification = null, DateTime? startDateTime = null, short? expirationHours = null)
+        public static HttpResponseMessage CreateRoleAssignmentScheduleRequest(ApiRequestHelper requestHelper, RoleEligibilitySchedule roleEligibilitySchedule, string justification = null, DateTime? startDateTime = null, short? expirationHours = null)
         {
             string requestUrl = $"v1.0/roleManagement/directory/roleAssignmentScheduleRequests";
             var postData = new RoleAssignmentScheduleRequest
