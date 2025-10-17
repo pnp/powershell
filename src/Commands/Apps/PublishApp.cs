@@ -91,7 +91,29 @@ namespace PnP.PowerShell.Commands.Apps
             var app = Identity.GetAppMetadata(ClientContext, Scope);
             if (app != null)
             {
-                manager.Deploy(app, SkipFeatureDeployment, Scope);
+                try
+                {
+                    manager.Deploy(app, SkipFeatureDeployment, Scope);
+                }
+                catch (ServerException ex) when (ex.Message.Contains("CSPConfig") && ex.Message.Contains("100000"))
+                {
+                    // Handle the specific CSPConfig error when deploying to site collection app catalog
+                    // This is a known SharePoint service-side limitation where tenant-level script sources
+                    // are incorrectly included in site-level CSP validation
+                    var errorMessage = "Failed to publish the app due to a SharePoint limitation. " +
+                        "The error 'Value of: [CSPConfig] cannot exceed: [100000]' occurs when there are too many " +
+                        "Trusted Script Sources configured at the tenant level, and SharePoint incorrectly includes " +
+                        "them when validating site collection app catalog deployments.\n\n" +
+                        "Workarounds:\n" +
+                        "1. Manually publish the app through the SharePoint UI (navigate to Site Contents > App Catalog).\n" +
+                        "2. Reduce the number of Trusted Script Sources at the tenant level.\n" +
+                        "3. Contact Microsoft Support to request a fix for this service-side issue.\n\n" +
+                        "For more information, see:\n" +
+                        "- https://github.com/SharePoint/sp-dev-docs/issues/10412\n" +
+                        "- https://github.com/SharePoint/sp-dev-docs/issues/10369";
+                    
+                    throw new Exception(errorMessage, ex);
+                }
             }
             else
             {
