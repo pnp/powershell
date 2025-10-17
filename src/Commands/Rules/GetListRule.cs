@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Rules
 {
 	[Cmdlet(VerbsCommon.Get, "PnPListRule")]
-	[OutputType(typeof(Rule))]
+	[OutputType(typeof(ListRule))]
 	public class GetListRule : PnPWebCmdlet
 	{
 		[Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -21,7 +21,7 @@ namespace PnP.PowerShell.Commands.Rules
 		public ListPipeBind List { get; set; }
 
 		[Parameter(Mandatory = false)]
-		public RulePipeBind Identity { get; set; }
+		public ListRulePipeBind Identity { get; set; }
 
 		protected override void ExecuteCmdlet()
 		{
@@ -42,13 +42,13 @@ namespace PnP.PowerShell.Commands.Rules
 
 				// Parse the response
 				var jsonDoc = JsonDocument.Parse(responseContent);
-				var rules = new List<Rule>();
+				var rules = new List<ListRule>();
 
 				if (jsonDoc.RootElement.TryGetProperty("value", out var valueElement))
 				{
 					foreach (var ruleElement in valueElement.EnumerateArray())
 					{
-						var rule = JsonSerializer.Deserialize<Rule>(ruleElement.GetRawText(), new JsonSerializerOptions
+						var rule = JsonSerializer.Deserialize<ListRule>(ruleElement.GetRawText(), new JsonSerializerOptions
 						{
 							PropertyNameCaseInsensitive = true
 						});
@@ -59,7 +59,7 @@ namespace PnP.PowerShell.Commands.Rules
 				{
 					foreach (var ruleElement in rulesElement.EnumerateArray())
 					{
-						var rule = JsonSerializer.Deserialize<Rule>(ruleElement.GetRawText(), new JsonSerializerOptions
+						var rule = JsonSerializer.Deserialize<ListRule>(ruleElement.GetRawText(), new JsonSerializerOptions
 						{
 							PropertyNameCaseInsensitive = true
 						});

@@ -3,17 +3,25 @@ using PnP.PowerShell.Commands.Model.SharePoint;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
-	public sealed class RulePipeBind
+	public sealed class ListRulePipeBind
 	{
+		public ListRule ListRuleInstance { get; private set; }
 		private readonly Guid _id;
 		private readonly string _title;
 
-		public RulePipeBind(Guid guid)
+		public ListRulePipeBind(Guid guid)
 		{
 			_id = guid;
 		}
 
-		public RulePipeBind(string input)
+		public ListRulePipeBind(ListRule listRule)
+		{
+			ListRuleInstance = listRule ?? throw new ArgumentNullException(nameof(listRule));
+			_id = listRule.RuleId;
+			_title = listRule.Title;
+		}
+
+		public ListRulePipeBind(string input)
 		{
 			if (Guid.TryParse(input, out Guid guid))
 			{
@@ -25,16 +33,10 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
 			}
 		}
 
-		public RulePipeBind(Rule rule)
-		{
-			_id = rule.RuleId;
-			_title = rule.Title;
-		}
-
 		public Guid Id => _id;
 		public string Title => _title;
 
-		public RulePipeBind()
+		public ListRulePipeBind()
 		{
 			_id = Guid.Empty;
 		}

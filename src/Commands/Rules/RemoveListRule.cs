@@ -13,12 +13,12 @@ namespace PnP.PowerShell.Commands.Rules
 	[OutputType(typeof(void))]
 	public class RemoveListRule : PnPWebCmdlet
 	{
-		[Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+		[Parameter(Mandatory = false, ValueFromPipeline = false, Position = 1)]
 		[ArgumentCompleter(typeof(ListNameCompleter))]
 		public ListPipeBind List { get; set; }
 
-		[Parameter(Mandatory = true)]
-		public RulePipeBind Identity { get; set; }
+		[Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
+		public ListRulePipeBind Identity { get; set; }
 
 		[Parameter(Mandatory = false)]
 		public SwitchParameter Force { get; set; }

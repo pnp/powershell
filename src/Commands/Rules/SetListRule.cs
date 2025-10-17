@@ -11,7 +11,7 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Rules
 {
 	[Cmdlet(VerbsCommon.Set, "PnPListRule")]
-	[OutputType(typeof(Rule))]
+	[OutputType(typeof(ListRule))]
 	public class SetListRule : PnPWebCmdlet
 	{
 		[Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -19,7 +19,7 @@ namespace PnP.PowerShell.Commands.Rules
 		public ListPipeBind List { get; set; }
 
 		[Parameter(Mandatory = true)]
-		public RulePipeBind Identity { get; set; }
+		public ListRulePipeBind Identity { get; set; }
 
 		[Parameter(Mandatory = false)]
 		public string Title { get; set; }
@@ -117,7 +117,7 @@ namespace PnP.PowerShell.Commands.Rules
 				var responseContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
 
 				// Parse and return the updated rule
-				var updatedRule = JsonSerializer.Deserialize<Rule>(responseContent, new JsonSerializerOptions
+				var updatedRule = JsonSerializer.Deserialize<ListRule>(responseContent, new JsonSerializerOptions
 				{
 					PropertyNameCaseInsensitive = true
 				});

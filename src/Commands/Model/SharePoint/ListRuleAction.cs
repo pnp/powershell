@@ -6,7 +6,7 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
 	/// <summary>
 	/// Represents the actions to execute when a SharePoint rule is triggered
 	/// </summary>
-	public class RuleAction
+	public class ListRuleAction
 	{
 		/// <summary>
 		/// The type of action to perform (e.g., "sendEmail", "createAlert")

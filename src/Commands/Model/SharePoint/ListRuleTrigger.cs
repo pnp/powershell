@@ -5,7 +5,7 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
 	/// <summary>
 	/// Represents the trigger conditions for a SharePoint rule
 	/// </summary>
-	public class RuleTrigger
+	public class ListRuleTrigger
 	{
 		/// <summary>
 		/// The type of event that triggers the rule (e.g., "create", "update", "delete")

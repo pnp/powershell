@@ -6,12 +6,12 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
 	/// <summary>
 	/// Represents a SharePoint list or library rule
 	/// </summary>
-	public class Rule
+	public class ListRule
 	{
 		/// <summary>
 		/// The unique identifier of the rule
 		/// </summary>
-		[JsonPropertyName("ruleId")]
+		[JsonPropertyName("ID")]
 		public Guid RuleId { get; set; }
 
 		/// <summary>
@@ -36,13 +36,13 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
 		/// The trigger conditions for the rule
 		/// </summary>
 		[JsonPropertyName("triggerCondition")]
-		public RuleTrigger TriggerCondition { get; set; }
+		public ListRuleTrigger TriggerCondition { get; set; }
 
 		/// <summary>
 		/// The actions to execute when the rule is triggered
 		/// </summary>
 		[JsonPropertyName("actionParameters")]
-		public RuleAction ActionParameters { get; set; }
+		public ListRuleAction ActionParameters { get; set; }
 
 		/// <summary>
 		/// The creation date of the rule
