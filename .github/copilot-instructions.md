@@ -271,3 +271,4 @@ When generating or modifying code:
 - Prioritize readability and maintainability
 - Follow the principle of least surprise for PowerShell users
 - When starting from a GitHub issue, be sure to reference and link that issue in the proposed PR that would fix it
+- When creating a PR to propose a code change, please include adding an entry to the Changelog.md file under the [Current nightly] section picking either subcategory as feels appropriate for the change at hand: Added, Changed, Fixed, Removed. Ensure it contains a link to the PR.
