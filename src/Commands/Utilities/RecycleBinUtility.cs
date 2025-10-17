@@ -129,7 +129,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     //fall back logic
                     //Unable to process as batch because of an error in restoring one of the ids in batch, processing individually
                     restoreRecycleBinItem.WriteVerbose($"Unable to process as batch because of an error in restoring one of the ids in batch. Error:{ex.Message}");
-                    restoreRecycleBinItem.WriteVerbose($"Switching to individul restore of items ...");
+                    restoreRecycleBinItem.WriteVerbose($"Switching to individual restore of items ...");
 
                     foreach (string id in idsList)
                     {
