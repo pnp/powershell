@@ -130,7 +130,11 @@ namespace PnP.PowerShell.Commands.Apps
                 {
                     manager.Remove(result, Scope);
                 }
-                catch
+                catch (ServerException)
+                {
+                    // If cleanup fails, continue to throw the original error message
+                }
+                catch (ClientRequestException)
                 {
                     // If cleanup fails, continue to throw the original error message
                 }
