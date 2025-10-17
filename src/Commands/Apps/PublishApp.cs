@@ -112,7 +112,7 @@ namespace PnP.PowerShell.Commands.Apps
                         "- https://github.com/SharePoint/sp-dev-docs/issues/10412\n" +
                         "- https://github.com/SharePoint/sp-dev-docs/issues/10369";
                     
-                    throw new Exception(errorMessage, ex);
+                    throw new InvalidOperationException(errorMessage, ex);
                 }
             }
             else

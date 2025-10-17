@@ -126,7 +126,14 @@ namespace PnP.PowerShell.Commands.Apps
                 // Handle the specific CSPConfig error when deploying to site collection app catalog
                 // This is a known SharePoint service-side limitation where tenant-level script sources
                 // are incorrectly included in site-level CSP validation
-                manager.Remove(result, Scope);
+                try
+                {
+                    manager.Remove(result, Scope);
+                }
+                catch
+                {
+                    // If cleanup fails, continue to throw the original error message
+                }
                 
                 var errorMessage = "Failed to deploy the app due to a SharePoint limitation. " +
                     "The error 'Value of: [CSPConfig] cannot exceed: [100000]' occurs when there are too many " +
@@ -140,7 +147,7 @@ namespace PnP.PowerShell.Commands.Apps
                     "- https://github.com/SharePoint/sp-dev-docs/issues/10412\n" +
                     "- https://github.com/SharePoint/sp-dev-docs/issues/10369";
                 
-                throw new Exception(errorMessage, ex);
+                throw new InvalidOperationException(errorMessage, ex);
             }
             catch
             {
