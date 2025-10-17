@@ -46,6 +46,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Get-PnPTenantRestrictedSearchMode` throwing an error in some cases [#5042](https://github.com/pnp/powershell/pull/5042)
 - Fixed issues with `Get-PnPTenantInfo`, `Set-PnPList`, `Remove-PnPSiteSensitivityLabel`, `Set-PnPSiteSensitivityLabel`, `Send-PnPMail` and `Set-PnPWebHeader` cmdlets returning an error [#5059](https://github.com/pnp/powershell/pull/5059)
 - Fixed issue with `Get-PnPChangelog -Nightly` throwing an error [#5070](https://github.com/pnp/powershell/pull/5070)
+- Fixed spelling errors in Privileged Identity Management cmdlets: renamed `Get-PnPPriviledgedIdentityManagementRole`, `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, and `Enable-PnPPriviledgedIdentityManagement` to use correct spelling "Privileged". Old cmdlet names remain functional as aliases for backward compatibility. [#5119](https://github.com/pnp/powershell/pull/5119)
 
 ### Removed
 
@@ -86,7 +87,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added tab completers for all cmdlets using a ListPipeBind parameter (e.g. `Get-PnPList -Identity`), all cmdlets using a FieldPipeBind parameter (e.g. `Get-PnPField -Identity`), `Get-PnPPropertyBag`, ContentType related cmdlets (`Get-PnPContentType` etc.) and Page related (`Get-PnPPage` etc.) cmdlets. The argument lookup will timeout after 2 seconds. This value can controlled by setting an environment variables called "PNPPSCOMPLETERTIMEOUT" and set the value to a number specifying milliseconds (e.g. 2000 is 2 seconds). If you want to disable the completer functionality on tabs, set the timeout value to 0 (zero).
 - Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document [#4238](https://github.com/pnp/powershell/pull/4238)
 - Added `Reset-PnPDocumentID` cmdlet to request resetting the document IDs for all documents in a library using a specific content type [#4755](https://github.com/pnp/powershell/pull/4755)
-- Added `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, `Get-PnPPriviledgedIdentityManagementRole` and `Enable-PnPPriviledgedIdentityManagement` cmdlets to allow scripting of enabling Privileged Identity Management roles for a user [#4039](https://github.com/pnp/powershell/pull/4039)
+- Added `Get-PnPPrivilegedIdentityManagementEligibleAssignment`, `Get-PnPPrivilegedIdentityManagementRole` and `Enable-PnPPrivilegedIdentityManagement` cmdlets to allow scripting of enabling Privileged Identity Management roles for a user [#4039](https://github.com/pnp/powershell/pull/4039)
 - Added `Add-PnPTenantRestrictedSearchAllowedList` which allows setting up a list of allowed URLs for Restricted SharePoint Search [#3993](https://github.com/pnp/powershell/pull/3993)
 - Added optional `-IsCopilotSearchable` to `Add-PnPOrgAssetsLibrary` which allows for an organizational assets library to be accessible to Microsoft 365 CoPilot for searching corporate images [#4254](https://github.com/pnp/powershell/pull/4254)
 - Added `Set-PnPOrgAssetsLibrary` cmdlet which allows for updating the settings of an existing organizational assets library [#4254](https://github.com/pnp/powershell/pull/4254)

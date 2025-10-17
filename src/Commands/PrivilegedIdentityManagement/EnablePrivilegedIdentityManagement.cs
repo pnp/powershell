@@ -2,28 +2,29 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
-using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
+using PnP.PowerShell.Commands.Model.PrivilegedIdentityManagement;
 using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Principals
 {
-    [Cmdlet(VerbsLifecycle.Enable, "PnPPriviledgedIdentityManagement")]
+    [Cmdlet(VerbsLifecycle.Enable, "PnPPrivilegedIdentityManagement")]
+    [Alias("Enable-PnPPriviledgedIdentityManagement")]
     [OutputType(typeof(bool))]
     [RequiredApiDelegatedOrApplicationPermissions("graph/RoleAssignmentSchedule.ReadWrite.Directory")]
-    public class EnablePriviledgedIdentityManagement : PnPGraphCmdlet
+    public class EnablePrivilegedIdentityManagement : PnPGraphCmdlet
     {
         private const string ParameterName_BYELIGIBLEROLEASSIGNMENT = "By Eligible Role Assignment";
         private const string ParameterName_BYROLENAMEANDPRINCIPAL = "By Role Name And Principal";
         private const string ParameterName_BYROLENAMEANDUSER = "By Role Name And User";
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterName_BYELIGIBLEROLEASSIGNMENT)]
-        public PriviledgedIdentityManagementRoleEligibilitySchedulePipeBind EligibleAssignment;
+        public PrivilegedIdentityManagementRoleEligibilitySchedulePipeBind EligibleAssignment;
 
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterName_BYROLENAMEANDPRINCIPAL)]
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0, ParameterSetName = ParameterName_BYROLENAMEANDUSER)]
-        public PriviledgedIdentityManagementRolePipeBind Role;
+        public PrivilegedIdentityManagementRolePipeBind Role;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterName_BYROLENAMEANDUSER)]
         public AzureADUserPipeBind User;
@@ -67,7 +68,7 @@ namespace PnP.PowerShell.Commands.Principals
                     }
 
                     // Look for an eligible role assignment for the user and role
-                    roleEligibilitySchedule = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleByPrincipalIdAndRoleName(GraphRequestHelper, user.Id.Value, role);
+                    roleEligibilitySchedule = PrivilegedIdentityManagementUtility.GetRoleEligibilityScheduleByPrincipalIdAndRoleName(GraphRequestHelper, user.Id.Value, role);
                     break;
 
                 case ParameterName_BYROLENAMEANDPRINCIPAL:
@@ -97,7 +98,7 @@ namespace PnP.PowerShell.Commands.Principals
                     }
 
                     // Look for an eligible role assignment for the principal and role
-                    roleEligibilitySchedule = PriviledgedIdentityManagamentUtility.GetRoleEligibilityScheduleByPrincipalIdAndRoleName(GraphRequestHelper, PrincipalId.Value, role2);
+                    roleEligibilitySchedule = PrivilegedIdentityManagementUtility.GetRoleEligibilityScheduleByPrincipalIdAndRoleName(GraphRequestHelper, PrincipalId.Value, role2);
                     break;
             }
 
@@ -107,7 +108,7 @@ namespace PnP.PowerShell.Commands.Principals
             }
 
             LogDebug($"Creating role assignment schedule request");
-            var response = PriviledgedIdentityManagamentUtility.CreateRoleAssignmentScheduleRequest(GraphRequestHelper, roleEligibilitySchedule, Justification, StartAt, ExpireInHours);
+            var response = PrivilegedIdentityManagementUtility.CreateRoleAssignmentScheduleRequest(GraphRequestHelper, roleEligibilitySchedule, Justification, StartAt, ExpireInHours);
             WriteObject(response.IsSuccessStatusCode);
         }
     }

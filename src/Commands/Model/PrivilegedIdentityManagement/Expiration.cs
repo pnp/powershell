@@ -1,4 +1,4 @@
-﻿namespace PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement
+﻿namespace PnP.PowerShell.Commands.Model.PrivilegedIdentityManagement
 {
     /// <summary>
     /// Defines an expiration of a scheduled role assignment within Privileged Identity Management

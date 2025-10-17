@@ -33,7 +33,7 @@ When using the `Sites.Selected` permission, you still must assign permissions to
 Grant-PnPAzureADAppSitePermission -AppId "<Client ID of your Entra ID applicarion registration>" -DisplayName "PnP PowerShell" -Permissions Read -Site <url of the SharePoint Online site to which you will connect>
 ```
 
-In order to be able to run this cmdlet, you will need to connect to PnP PowerShell using preferably another Entra ID application registration which will have the `AllSites.FullControl` permission on the delegate scope on SharePoint set to it and being logged on with a Global Administrator or SharePoint Administrator priviledged account.
+In order to be able to run this cmdlet, you will need to connect to PnP PowerShell using preferably another Entra ID application registration which will have the `AllSites.FullControl` permission on the delegate scope on SharePoint set to it and being logged on with a Global Administrator or SharePoint Administrator privileged account.
 
 ## Adding additional permissions as needed
 
@@ -65,7 +65,7 @@ In this scenario, you now know you need to add `Application.Read.All` on the app
 
 As mentioned above, unfortunately, not for all cmdlets it will be clear which exact (minimum) permissions will be needed. Not even when using `-Verbose`. To give some guidance which permissions you could try for a minimum permissions approach, follow the table below.
 
-What are you trying to do | Permission type | Permission(s) likely needed from least to most priviledged 
+What are you trying to do | Permission type | Permission(s) likely needed from least to most privileged 
 | ------------------------| --------------- | -------------------------- |
 | Interact with SharePoint | Delegate | AllSites.Read / AllSites.Write / AllSites.Manage / AllSites.FullControl |
 | Interact with SharePoint | App Only | Sites.Selected / Sites.Read.All / Sites.ReadWrite.All / Sites.Manage.All / Sites.FullControl .All |

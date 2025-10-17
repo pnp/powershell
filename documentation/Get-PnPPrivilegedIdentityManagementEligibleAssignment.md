@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPriviledgedIdentityManagementEligibleAssignment.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPrivilegedIdentityManagementEligibleAssignment.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPPriviledgedIdentityManagementEligibleAssignment
+title: Get-PnPPrivilegedIdentityManagementEligibleAssignment
 ---
   
-# Get-PnPPriviledgedIdentityManagementEligibleAssignment
+# Get-PnPPrivilegedIdentityManagementEligibleAssignment
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Retrieve the available Privileged Identity Management eligibility assignment rol
 ## SYNTAX
 
 ```powershell
-Get-PnPPriviledgedIdentityManagementEligibleAssignment [-Identity <PriviledgedIdentityManagementRoleEligibilitySchedulePipeBind>] [-Connection <PnPConnection>] 
+Get-PnPPrivilegedIdentityManagementEligibleAssignment [-Identity <PrivilegedIdentityManagementRoleEligibilitySchedulePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -30,14 +30,14 @@ Retrieve the available Privileged Identity Management eligibility assignment rol
 
 ### Example 1
 ```powershell
-Get-PnPPriviledgedIdentityManagementEligibleAssignment
+Get-PnPPrivilegedIdentityManagementEligibleAssignment
 ```
 
 Retrieves the available Privileged Identity Management eligibility assignment roles 
 
 ### Example 2
 ```powershell
-Get-PnPPriviledgedIdentityManagementEligibleAssignment -Identity 62e90394-69f5-4237-9190-012177145e10
+Get-PnPPrivilegedIdentityManagementEligibleAssignment -Identity 62e90394-69f5-4237-9190-012177145e10
 ```
 
 Retrieves the Privileged Identity Management eligibility assignment role with the provided id
@@ -61,10 +61,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name, id or instance of a Priviledged Identity Management eligibility assignment role to retrieve the details of
+The name, id or instance of a Privileged Identity Management eligibility assignment role to retrieve the details of
 
 ```yaml
-Type: PriviledgedIdentityManagementRoleEligibilitySchedulePipeBind
+Type: PrivilegedIdentityManagementRoleEligibilitySchedulePipeBind
 Parameter Sets: (All)
 Aliases:
 

@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPPriviledgedIdentityManagement.html
+online version: https://pnp.github.io/powershell/cmdlets/Enable-PnPPrivilegedIdentityManagement.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Enable-PnPPriviledgedIdentityManagement
+title: Enable-PnPPrivilegedIdentityManagement
 ---
   
-# Enable-PnPPriviledgedIdentityManagement
+# Enable-PnPPrivilegedIdentityManagement
 
 ## SYNOPSIS
 
@@ -22,19 +22,19 @@ Temporarily enables a Privileged Identity Management role for a user
 ### By Role Name And Principal 
 
 ```powershell
-Enable-PnPPriviledgedIdentityManagement -Role <PriviledgedIdentityManagementRolePipeBind> [-PrincipalId <Guid>] [-Justification <string>] [-StartAt <DateTime>] [-ExpireInHours <short>] [-Connection <PnPConnection>] 
+Enable-PnPPrivilegedIdentityManagement -Role <PrivilegedIdentityManagementRolePipeBind> [-PrincipalId <Guid>] [-Justification <string>] [-StartAt <DateTime>] [-ExpireInHours <short>] [-Connection <PnPConnection>] 
 ```
 
 ### By Role Name And User
 
 ```powershell
-Enable-PnPPriviledgedIdentityManagement -Role <PriviledgedIdentityManagementRolePipeBind> -User <AzureADUserPipeBind> [-Justification <string>] [-StartAt <DateTime>] [-ExpireInHours <short>] [-Connection <PnPConnection>] 
+Enable-PnPPrivilegedIdentityManagement -Role <PrivilegedIdentityManagementRolePipeBind> -User <AzureADUserPipeBind> [-Justification <string>] [-StartAt <DateTime>] [-ExpireInHours <short>] [-Connection <PnPConnection>] 
 ```
 
 ### By Eligible Role Assignment
 
 ```powershell
-Enable-PnPPriviledgedIdentityManagement -EligibleAssignment <PriviledgedIdentityManagementRolePipeBind> [-Justification <string>] [-StartAt <DateTime>] [-ExpireInHours <short>] [-Connection <PnPConnection>] 
+Enable-PnPPrivilegedIdentityManagement -EligibleAssignment <PrivilegedIdentityManagementRolePipeBind> [-Justification <string>] [-StartAt <DateTime>] [-ExpireInHours <short>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -44,28 +44,28 @@ Temporarily enables a Privileged Identity Management role for the provided allow
 
 ### Example 1
 ```powershell
-Enable-PnPPriviledgedIdentityManagement -Role "Global Administrator"
+Enable-PnPPrivilegedIdentityManagement -Role "Global Administrator"
 ```
 
 Enables the global administrator role for the current user through Privileged Identity Management starting immediately and expiring in 1 hour
 
 ### Example 2
 ```powershell
-Enable-PnPPriviledgedIdentityManagement -Role "Global Administrator" -Justification "Just because"
+Enable-PnPPrivilegedIdentityManagement -Role "Global Administrator" -Justification "Just because"
 ```
 
 Enables the global administrator role for the current user through Privileged Identity Management starting immediately and expiring in 1 hour, adding the justification provided to be logged as the reason for the elevation of rights
 
 ### Example 3
 ```powershell
-Enable-PnPPriviledgedIdentityManagement -Role "Global Administrator" -Justification "Just because" -StartAt (Get-Date).AddHours(2) -ExpireInHours 2
+Enable-PnPPrivilegedIdentityManagement -Role "Global Administrator" -Justification "Just because" -StartAt (Get-Date).AddHours(2) -ExpireInHours 2
 ```
 
 Enables the global administrator role for the current user through Privileged Identity Management starting in 2 hours from now and expiring 2 hours thereafter, adding the justification provided to be logged as the reason for the elevation of rights
 
 ### Example 4
 ```powershell
-Enable-PnPPriviledgedIdentityManagement -Role "Global Administrator" -User "someone@contoso.onmicrosoft.com"
+Enable-PnPPrivilegedIdentityManagement -Role "Global Administrator" -User "someone@contoso.onmicrosoft.com"
 ```
 
 Enables the global administrator role for the provided user through Privileged Identity Management starting immediately and expiring in 1 hour
@@ -134,10 +134,10 @@ Accept wildcard characters: False
 ```
 
 ### -Role
-The Id, name or instance of a role to elevate the current user to. Use `Get-PnPPriviledgedIdentityManagementRole` to retrieve the available roles.
+The Id, name or instance of a role to elevate the current user to. Use `Get-PnPPrivilegedIdentityManagementRole` to retrieve the available roles.
 
 ```yaml
-Type: PriviledgedIdentityManagementRolePipeBind
+Type: PrivilegedIdentityManagementRolePipeBind
 Parameter Sets: By Role Name And Principal, By Role Name And User
 Aliases:
 
