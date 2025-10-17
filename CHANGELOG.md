@@ -23,6 +23,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-KnowledgeAgentEnabled` and `-KnowledgeAgentSelectedSitesList` parameter to `Set-PnPTenant` cmdlets to support knowledge agents.
 - Added `-Force` parameter to `Remove-PnPTerm` cmdlet to remove terms without confirmation.
 - Added `Import-PnPFlow` cmdlet to import Power Automate in the tenant. [#4854](https://github.com/pnp/powershell/pull/4854)
+- Added `Get-PnPListRule`, `Add-PnPListRule`, `Set-PnPListRule` and `Remove-PnPListRule` cmdlets to manage SharePoint Rules as a replacement for the retiring SharePoint Alerts feature [#5123](https://github.com/pnp/powershell/pull/5123)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
