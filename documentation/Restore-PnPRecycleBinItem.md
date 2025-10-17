@@ -113,10 +113,10 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 ### -IdList
-String array of Recycle Bin Item Ids
+Array of recycle bin item GUIDs
 
 ```yaml
-Type: String array
+Type: String[]
 Parameter Sets: (Restore Multiple Items By Id)
 
 Required: True
