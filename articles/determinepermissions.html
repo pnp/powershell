@@ -102,7 +102,7 @@
 <p>When using the <code>Sites.Selected</code> permission, you still must assign permissions to one or more sites where the script will have access to. Ensure you will assign at least <code>Read</code> permissions on the site of which you will use the URL in your <code>Connect-PnPOnline &lt;url&gt;</code> statement in your script. You can easily do so by utilizing the PnP PowerShell cmdlet <a href="../cmdlets/Grant-PnPAzureADAppSitePermission.html">Grant-PnPAzureADAppSitePermission</a> as shown here:</p>
 <pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;&lt;Client ID of your Entra ID applicarion registration&gt;&quot; -DisplayName &quot;PnP PowerShell&quot; -Permissions Read -Site &lt;url of the SharePoint Online site to which you will connect&gt;
 </code></pre>
-<p>In order to be able to run this cmdlet, you will need to connect to PnP PowerShell using preferably another Entra ID application registration which will have the <code>AllSites.FullControl</code> permission on the delegate scope on SharePoint set to it and being logged on with a Global Administrator or SharePoint Administrator priviledged account.</p>
+<p>In order to be able to run this cmdlet, you will need to connect to PnP PowerShell using preferably another Entra ID application registration which will have the <code>AllSites.FullControl</code> permission on the delegate scope on SharePoint set to it and being logged on with a Global Administrator or SharePoint Administrator privileged account.</p>
 <h2 id="adding-additional-permissions-as-needed">Adding additional permissions as needed</h2>
 <p>Once you've se the minimum permissions as described above, you can go ahead and test using your Entra ID application registration to connect to SharePoint Online using <a href="authentication.html">one of the available connect options</a>. You can add <code>-ValidateConnection -Verbose</code> to your <code>Connect-PnPOnline</code> cmdlet to instruct it to test the connection once established.</p>
 <p>Now you likely want to perform more than just a simple read using PnP PowerShell. Read on below to find out what you can do to find out about the additional permissions your application registration might need to operate correctly.</p>
@@ -123,7 +123,7 @@
 <tr>
 <th>What are you trying to do</th>
 <th>Permission type</th>
-<th>Permission(s) likely needed from least to most priviledged</th>
+<th>Permission(s) likely needed from least to most privileged</th>
 </tr>
 </thead>
 <tbody>

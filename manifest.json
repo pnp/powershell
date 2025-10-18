@@ -1754,10 +1754,10 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Enable-PnPPriviledgedIdentityManagement.md",
+      "source_relative_path": "cmdlets/Enable-PnPPrivilegedIdentityManagement.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Enable-PnPPriviledgedIdentityManagement.html"
+          "relative_path": "cmdlets/Enable-PnPPrivilegedIdentityManagement.html"
         }
       },
       "version": ""
@@ -3404,20 +3404,20 @@
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementEligibleAssignment.md",
+      "source_relative_path": "cmdlets/Get-PnPPrivilegedIdentityManagementEligibleAssignment.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementEligibleAssignment.html"
+          "relative_path": "cmdlets/Get-PnPPrivilegedIdentityManagementEligibleAssignment.html"
         }
       },
       "version": ""
     },
     {
       "type": "Conceptual",
-      "source_relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementRole.md",
+      "source_relative_path": "cmdlets/Get-PnPPrivilegedIdentityManagementRole.md",
       "output": {
         ".html": {
-          "relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementRole.html"
+          "relative_path": "cmdlets/Get-PnPPrivilegedIdentityManagementRole.html"
         }
       },
       "version": ""
