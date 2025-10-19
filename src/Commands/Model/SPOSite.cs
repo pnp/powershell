@@ -104,6 +104,8 @@ namespace PnP.PowerShell.Commands.Model
         public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
         public bool OverrideSharingCapability { get; set; }
         public bool AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { get; set; }
+        public bool HidePeoplePreviewingFiles { get; set; }
+        public bool HidePeopleWhoHaveListsOpen { get; set; }
 
         #endregion
 
@@ -202,6 +204,8 @@ namespace PnP.PowerShell.Commands.Model
             OverrideSharingCapability = props.OverrideSharingCapability;
             OverrideBlockUserInfoVisibility = props.OverrideBlockUserInfoVisibility;
             AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = props.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
+            HidePeoplePreviewingFiles = props.HidePeoplePreviewingFiles;
+            HidePeopleWhoHaveListsOpen = props.HidePeopleWhoHaveListsOpen;
         }
     }
 }

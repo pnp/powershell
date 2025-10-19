@@ -495,6 +495,8 @@ namespace PnP.PowerShell.Commands.Site
                 BlockDownloadPolicy.HasValue ||
                 ExcludeBlockDownloadPolicySiteOwners.HasValue ||
                 ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) ||
-                ListsShowHeaderAndNavigation.HasValue;
+                ListsShowHeaderAndNavigation.HasValue ||
+                HidePeoplePreviewingFiles.HasValue ||
+                HidePeopleWhoHaveListsOpen.HasValue;
     }
 }
