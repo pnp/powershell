@@ -1754,6 +1754,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Enable-PnPPriviledgedIdentityManagement.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Enable-PnPPriviledgedIdentityManagement.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Enable-PnPPrivilegedIdentityManagement.md",
       "output": {
         ".html": {
@@ -3398,6 +3408,26 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPPowerShellTelemetryEnabled.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementEligibleAssignment.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementEligibleAssignment.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementRole.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPPriviledgedIdentityManagementRole.html"
         }
       },
       "version": ""
