@@ -15,6 +15,10 @@ title: Add-PnPFileSensitivityLabel
 
   * Microsoft Graph API : One of Files.ReadWrite.All, Sites.ReadWrite.All
 
+**Required Billing**
+
+  * Microsoft Graph API: The `assignSensitivityLabel` API used by this cmdlet won't function without billing setup. Consult the [RELATED LINKS](#related-links) section.
+
 Add the sensitivity label information for a file in SharePoint.
 
 ## SYNTAX
@@ -129,5 +133,10 @@ Accept wildcard characters: False
 
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/driveitem-assignsensitivitylabel)
+* [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+* [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/)
+
+* [Overview of metered APIs and services in Microsoft Graph](https://learn.microsoft.com/en-us/graph/metered-api-overview)
+
+* [Metered APIs and services in Microsoft Graph](https://learn.microsoft.com/en-us/graph/metered-api-list)
