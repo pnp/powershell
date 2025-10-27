@@ -135,7 +135,7 @@ Accept wildcard characters: False
 
 * [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
 
-* [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/)
+* [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/driveitem-assignsensitivitylabel)
 
 * [Overview of metered APIs and services in Microsoft Graph](https://learn.microsoft.com/en-us/graph/metered-api-overview)
 
