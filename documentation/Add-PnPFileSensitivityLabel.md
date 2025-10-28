@@ -17,7 +17,7 @@ title: Add-PnPFileSensitivityLabel
 
 **Required Billing**
 
-  * Microsoft Graph API: The `assignSensitivityLabel` API used by this cmdlet won't function without billing setup. Consult the [RELATED LINKS](#related-links) section.
+  * Microsoft Graph API: The `assignSensitivityLabel` API used by this cmdlet will not function without billing setup. Consult the [RELATED LINKS](#related-links) section.
 
 Add the sensitivity label information for a file in SharePoint.
 
