@@ -49,6 +49,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed spelling errors in Privileged Identity Management cmdlets: renamed `Get-PnPPriviledgedIdentityManagementRole`, `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, and `Enable-PnPPriviledgedIdentityManagement` to use correct spelling "Privileged". Old cmdlet names remain functional as aliases for backward compatibility. [#5119](https://github.com/pnp/powershell/pull/5119)
 - Fixed Typos on `Move-PnPFolder, Get-PnPPowerPlatformSolution, Get-PnPPowerPlatformCustomConnector, Get-PnPPowerApp, Get-PnPPlannerPlan, Get-PnPContainer` cmdlets [#5124](https://github.com/pnp/powershell/pull/5124)
 - Fixed issue with `Set-PnPSite -HidePeoplePreviewingFiles $true` and `Set-PnPSite -HidePeopleWhoHaveListsOpen $true` added missing properties [#5003](https://github.com/pnp/powershell/issues/5003)
+- Fixed issue with `New-PnpAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer` made it language agnostic [#5137](https://github.com/pnp/powershell/issues/5137)
 
 ### Removed
 
