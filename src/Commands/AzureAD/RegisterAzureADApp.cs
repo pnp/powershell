@@ -471,12 +471,6 @@ namespace PnP.PowerShell.Commands.AzureAD
                 {
                     throw new PSArgumentNullException(nameof(CertificatePassword), $"Failed to import private key certificate. Ensure the correct password is provided for parameter: {nameof(CertificatePassword)}");
                 }
-
-                // Ensure the certificate at the provided CertificatePath holds a private key
-                if (!cert.HasPrivateKey)
-                {
-                    throw new PSArgumentException(string.Format(Resources.CertificateAtPathHasNoPrivateKey, CertificatePath), nameof(CertificatePath));
-                }
             }
             else
             {
