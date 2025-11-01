@@ -88,6 +88,10 @@
 <ul>
 <li>Microsoft Graph API : One of Files.ReadWrite.All, Sites.ReadWrite.All</li>
 </ul>
+<p><strong>Required Billing</strong></p>
+<ul>
+<li>Microsoft Graph API: The <code>assignSensitivityLabel</code> API used by this cmdlet will not function without billing setup. Consult the <a href="#related-links">RELATED LINKS</a> section.</li>
+</ul>
 <p>Add the sensitivity label information for a file in SharePoint.</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Add-PnPFileSensitivityLabel -Identity &lt;String&gt; -SensitivityLabelId &lt;Guid&gt; [-AssignmentMethod &lt;Enum&gt;] [-JustificationText &lt;string&gt;] [-Batch &lt;PnPBatch&gt;]
@@ -170,8 +174,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
-<a href="https://learn.microsoft.com/graph/api/driveitem-assignsensitivitylabel">Microsoft Graph documentation</a></p>
+<ul>
+<li><p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+</li>
+<li><p><a href="https://learn.microsoft.com/graph/api/driveitem-assignsensitivitylabel">Microsoft Graph documentation</a></p>
+</li>
+<li><p><a href="https://learn.microsoft.com/en-us/graph/metered-api-overview">Overview of metered APIs and services in Microsoft Graph</a></p>
+</li>
+<li><p><a href="https://learn.microsoft.com/en-us/graph/metered-api-list">Metered APIs and services in Microsoft Graph</a></p>
+</li>
+</ul>
 
 </article>
           </div>

@@ -84,6 +84,10 @@
   <h1 id="get-pnpavailablesensitivitylabel">Get-PnPAvailableSensitivityLabel</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API : One of InformationProtectionPolicy.Read (Delegated), InformationProtectionPolicy.Read.All (Application)</li>
+</ul>
 <p>Gets the Microsoft Purview sensitivity labels that are available within the tenant</p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPAvailableSensitivityLabel [-Identity &lt;Guid&gt;] [-User &lt;AzureADUserPipeBind&gt;] [-Connection &lt;PnPConnection&gt;] 
