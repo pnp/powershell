@@ -20,15 +20,27 @@ namespace PnP.PowerShell.Commands.Features
         protected override void ExecuteCmdlet()
         {
             var pnpContext = Connection.PnPContext;
-            if (Scope == FeatureScope.Web)
+
+            try
             {
-                pnpContext.Web.LoadAsync(w => w.Features).GetAwaiter().GetResult();
-                pnpContext.Web.Features.EnableAsync(Identity).GetAwaiter().GetResult();
+                if (Scope == FeatureScope.Web)
+                {
+                    pnpContext.Web.LoadAsync(w => w.Features).GetAwaiter().GetResult();
+                    pnpContext.Web.Features.EnableAsync(Identity).GetAwaiter().GetResult();
+                }
+                else
+                {
+                    pnpContext.Site.LoadAsync(s => s.Features).GetAwaiter().GetResult();
+                    pnpContext.Site.Features.EnableAsync(Identity).GetAwaiter().GetResult();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                pnpContext.Site.LoadAsync(s => s.Features).GetAwaiter().GetResult();
-                pnpContext.Site.Features.EnableAsync(Identity).GetAwaiter().GetResult();
+                if (!Force.IsPresent)
+                {
+                    throw new Exception(ex.Message);
+                }
+                // If Force is specified, suppress the exception
             }
         }
     }
