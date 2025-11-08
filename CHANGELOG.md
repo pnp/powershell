@@ -54,6 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Register-PnPEntraIdApp` Allow to use CER file instead of PFX [#5129](https://github.com/pnp/powershell/issues/5129)
 
 ### Removed
+- Removed `-RemoveExisting` parameter from `Add-PnPAzureADGroupMember`, `Add-PnPAzureADGroupOwner`, `Add-PnPMicrosoft365GroupMember` and `Add-PnPMicrosoft365GroupOwner` cmdlets. It was never really implemented and without function. [#5153](https://github.com/pnp/powershell/pull/5153)
 
 ### Contributors
 
@@ -72,6 +73,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Ali Robertson [alirobe]
 - Christian Veenhuis [ChVeen]
 - James Epp [jamesaepp]
+- Sven Boll [svenboll]
 
 ## [3.1.0]
 
