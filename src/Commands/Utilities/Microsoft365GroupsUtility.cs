@@ -289,24 +289,24 @@ namespace PnP.PowerShell.Commands.Utilities
             requestHelper.Delete($"v1.0/directory/deleteditems/microsoft.graph.group/{groupId}");
         }
 
-        internal static void AddOwners(ApiRequestHelper requestHelper, Guid groupId, string[] users, bool removeExisting)
+        internal static void AddOwners(ApiRequestHelper requestHelper, Guid groupId, string[] users)
         {
-            AddUsersToGroup(requestHelper, "owners", groupId, users, removeExisting);
+            AddUsersToGroup(requestHelper, "owners", groupId, users);
         }
 
-        internal static void AddDirectoryOwners(ApiRequestHelper requestHelper, Guid groupId, Guid[] users, bool removeExisting)
+        internal static void AddDirectoryOwners(ApiRequestHelper requestHelper, Guid groupId, Guid[] users)
         {
-            AddDirectoryObjectsToGroup(requestHelper, "owners", groupId, users, removeExisting);
+            AddDirectoryObjectsToGroup(requestHelper, "owners", groupId, users);
         }
 
-        internal static void AddMembers(ApiRequestHelper requestHelper, Guid groupId, string[] users, bool removeExisting)
+        internal static void AddMembers(ApiRequestHelper requestHelper, Guid groupId, string[] users)
         {
-            AddUsersToGroup(requestHelper, "members", groupId, users, removeExisting);
+            AddUsersToGroup(requestHelper, "members", groupId, users);
         }
 
-        internal static void AddDirectoryMembers(ApiRequestHelper requestHelper, Guid groupId, Guid[] users, bool removeExisting)
+        internal static void AddDirectoryMembers(ApiRequestHelper requestHelper, Guid groupId, Guid[] users)
         {
-            AddDirectoryObjectsToGroup(requestHelper, "members", groupId, users, removeExisting);
+            AddDirectoryObjectsToGroup(requestHelper, "members", groupId, users);
         }
 
         internal static string GetUserGraphUrlForUPN(string upn)
@@ -318,7 +318,7 @@ namespace PnP.PowerShell.Commands.Utilities
             return $"users/{escapedUpn}";
         }
 
-        private static void AddUsersToGroup(ApiRequestHelper requestHelper, string groupName, Guid groupId, string[] users, bool removeExisting)
+        private static void AddUsersToGroup(ApiRequestHelper requestHelper, string groupName, Guid groupId, string[] users)
         {
             foreach (var user in users)
             {
@@ -338,7 +338,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
-        private static void AddDirectoryObjectsToGroup(ApiRequestHelper requestHelper, string groupName, Guid groupId, Guid[] directoryObjects, bool removeExisting)
+        private static void AddDirectoryObjectsToGroup(ApiRequestHelper requestHelper, string groupName, Guid groupId, Guid[] directoryObjects)
         {
             foreach (var dirObject in directoryObjects)
             {
@@ -456,7 +456,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (existingOwners.FirstOrDefault(o => o.UserPrincipalName == owner) == null)
                 {
-                    AddOwners(requestHelper, groupId, new string[] { owner }, false);
+                    AddOwners(requestHelper, groupId, new string[] { owner });
                 }
             }
             foreach (var existingOwner in existingOwners)
@@ -475,7 +475,7 @@ namespace PnP.PowerShell.Commands.Utilities
             {
                 if (existingMembers.FirstOrDefault(o => o.UserPrincipalName == member) == null)
                 {
-                    AddMembers(requestHelper, groupId, new string[] { member }, false);
+                    AddMembers(requestHelper, groupId, new string[] { member });
                 }
             }
             foreach (var existingMember in existingMembers)

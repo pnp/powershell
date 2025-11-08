@@ -20,6 +20,7 @@ namespace PnP.PowerShell.Commands.Graph
         [Parameter(Mandatory = true)]
         public string[] Users;
 
+        [Obsolete("The parameter is obsolete and will be removed in future versions. You can use Clear-PnPAzureADGroupOwner instead.")]
         [Parameter(Mandatory = false)]
         public SwitchParameter RemoveExisting;
 
@@ -41,14 +42,14 @@ namespace PnP.PowerShell.Commands.Graph
 
                 if (userArray.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddOwners(GraphRequestHelper, new System.Guid(group.Id), userArray, RemoveExisting.ToBool());
+                    Microsoft365GroupsUtility.AddOwners(GraphRequestHelper, new System.Guid(group.Id), userArray);
                 }
 
                 var secGroups = Users.Where(x => Guid.TryParse(x, out emptyGuid)).Select(x => emptyGuid).ToArray();
 
                 if (secGroups.Length > 0)
                 {
-                    Microsoft365GroupsUtility.AddDirectoryOwners(GraphRequestHelper, new System.Guid(group.Id), secGroups, RemoveExisting.ToBool());
+                    Microsoft365GroupsUtility.AddDirectoryOwners(GraphRequestHelper, new System.Guid(group.Id), secGroups);
                 }
             }
         }
