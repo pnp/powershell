@@ -11,6 +11,7 @@ namespace PnP.PowerShell.Commands.Features
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public Guid Identity;
 
+        [Obsolete("The Force parameter is obsolete and will be removed in future versions. Please update your scripts accordingly.")]
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
@@ -20,27 +21,15 @@ namespace PnP.PowerShell.Commands.Features
         protected override void ExecuteCmdlet()
         {
             var pnpContext = Connection.PnPContext;
-
-            try
+            if (Scope == FeatureScope.Web)
             {
-                if (Scope == FeatureScope.Web)
-                {
-                    pnpContext.Web.LoadAsync(w => w.Features).GetAwaiter().GetResult();
-                    pnpContext.Web.Features.EnableAsync(Identity).GetAwaiter().GetResult();
-                }
-                else
-                {
-                    pnpContext.Site.LoadAsync(s => s.Features).GetAwaiter().GetResult();
-                    pnpContext.Site.Features.EnableAsync(Identity).GetAwaiter().GetResult();
-                }
+                pnpContext.Web.LoadAsync(w => w.Features).GetAwaiter().GetResult();
+                pnpContext.Web.Features.EnableAsync(Identity).GetAwaiter().GetResult();
             }
-            catch (Exception ex)
+            else
             {
-                if (!Force.IsPresent)
-                {
-                    throw new Exception(ex.Message);
-                }
-                // If Force is specified, suppress the exception
+                pnpContext.Site.LoadAsync(s => s.Features).GetAwaiter().GetResult();
+                pnpContext.Site.Features.EnableAsync(Identity).GetAwaiter().GetResult();
             }
         }
     }
