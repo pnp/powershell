@@ -20,12 +20,12 @@ Adds users to the owners of an Azure Active Directory group. This can be a secur
 ## SYNTAX
 
 ```powershell
-Add-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-RemoveExisting] [-Connection <PnPConnection>]
+Add-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to add users to owners of an Azure Active Directory Group. This can be a security, distribution or Microsoft 365 group. By specifying `-RemoveExisting` option it is possible to first clear the group of all existing members.
+Allows to add users to owners of an Azure Active Directory Group. This can be a security, distribution or Microsoft 365 group.
 
 ## EXAMPLES
 
@@ -37,13 +37,6 @@ Add-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicroso
 Adds the provided two users as additional owners to the Azure Active Directory group named "Project Team".
 
 ### EXAMPLE 2
-```powershell
-Add-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
-```
-
-Sets the provided two users as the only owners of the Azure Active Directory group named "Project Team" by removing any current existing members first.
-
-### EXAMPLE 3
 ```powershell
 Add-PnPAzureADGroupOwner -Identity "Project Team" -Users "125eaa87-7b54-41fd-b30f-2adfa68c4afe"
 ```
@@ -76,20 +69,6 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -RemoveExisting
-If provided, all existing members will be removed and only those provided through Users will become members.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
