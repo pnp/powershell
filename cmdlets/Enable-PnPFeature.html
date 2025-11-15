@@ -97,10 +97,6 @@
 </code></pre>
 <p>This will enable the feature with the id &quot;99a00f6e-fb81-4dc7-8eac-e09c6f9132fe&quot;</p>
 <h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
-</code></pre>
-<p>This will enable the feature with the id &quot;99a00f6e-fb81-4dc7-8eac-e09c6f9132fe&quot; with force.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
 <pre><code class="lang-powershell">Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
 </code></pre>
 <p>This will enable the feature with the id &quot;99a00f6e-fb81-4dc7-8eac-e09c6f9132fe&quot; with the web scope.</p>
@@ -108,17 +104,6 @@
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-force">-Force</h3>
-<p>Specifies whether to overwrite an existing feature with the same feature identifier. This parameter is ignored if there are no errors.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -136,17 +121,6 @@ Required: True
 Position: 0
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-sandboxed">-Sandboxed</h3>
-<p>Specify this parameter if the feature you're trying to activate is part of a sandboxed solution.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-scope">-Scope</h3>
