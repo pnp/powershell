@@ -202,7 +202,7 @@ namespace PnP.PowerShell.Commands.Site
             {
                 site.CanSyncHubSitePermissions = CanSyncHubSitePermissions.Value;
                 context.ExecuteQueryRetry();
-            }            
+            }
 
             if (ParameterSpecified(nameof(LogoFilePath)))
             {
