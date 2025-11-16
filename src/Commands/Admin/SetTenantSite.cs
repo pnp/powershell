@@ -225,7 +225,13 @@ namespace PnP.PowerShell.Commands
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
-        
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public string[] ExcludeBlockDownloadSharePointGroups;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter ReadOnlyForBlockDownloadPolicy;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
@@ -674,6 +680,18 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled)))
             {
                 props.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ExcludeBlockDownloadSharePointGroups)) && ExcludeBlockDownloadSharePointGroups.Length > 0)
+            {
+                props.ExcludeBlockDownloadSharePointGroups = ExcludeBlockDownloadSharePointGroups;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ReadOnlyForBlockDownloadPolicy)) && ReadOnlyForBlockDownloadPolicy.IsPresent)
+            {
+                props.ReadOnlyForBlockDownloadPolicy = ReadOnlyForBlockDownloadPolicy.ToBool();
                 updateRequired = true;
             }
 
