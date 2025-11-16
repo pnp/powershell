@@ -23,6 +23,10 @@ Removes owners from a particular Azure Active Directory group. This can be a sec
 Remove-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -Users <String[]> [-Verbose]
 ```
 
+```powershell
+Remove-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> -MemberObjectId <Guid[]> [-Verbose]
+```
+
 ## DESCRIPTION
 
 Allows to remove owners from Azure Active Directory group.
@@ -35,6 +39,22 @@ Remove-PnPAzureADGroupOwner -Identity "Project Team" -Users "john@contoso.onmicr
 ```
 
 Removes the provided two users as owners from the Azure Active Directory group named "Project Team".
+
+### EXAMPLE 2
+```powershell
+# Remove an owner by ObjectId
+Remove-PnPAzureADGroupOwner -Identity $groupId -MemberObjectId $ownerObjectId
+```
+
+Removes the owner (user or group) with ObjectId `$ownerObjectId` from the group identified by `$groupId`.
+
+### EXAMPLE 3
+```powershell
+# Pipeline by property name (Id)
+Get-PnPAzureADGroupOwner -Identity $groupId | Where-Object { $_.Id -eq $ownerObjectId } | Remove-PnPAzureADGroupOwner -Identity $groupId
+```
+
+Pipes an owner whose `Id` matches `$ownerObjectId` into the cmdlet and removes it.
 
 ## PARAMETERS
 
@@ -63,6 +83,20 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MemberObjectId
+The ObjectId(s) of directory object(s) (Users or Groups) to remove from the Azure Active Directory group as owners. Use this to remove owners that do not have a UPN.
+
+```yaml
+Type: Guid[]
+Parameter Sets: MemberObjectId
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 

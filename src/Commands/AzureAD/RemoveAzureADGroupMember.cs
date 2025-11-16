@@ -7,16 +7,21 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
 namespace PnP.PowerShell.Commands.Graph
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPAzureADGroupMember")]
+    [Cmdlet(VerbsCommon.Remove, "PnPAzureADGroupMember", DefaultParameterSetName = "ByUPN")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [Alias("Remove-PnPEntraIDGroupMember")]
     public class RemoveAzureADGroupMember : PnPGraphCmdlet
     {
-        [Parameter(Mandatory = true, ValueFromPipeline = true)]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "ByUPN")]
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = "ByObjectId")]
         public AzureADGroupPipeBind Identity;
 
-        [Parameter(Mandatory = true)]
+        [Parameter(Mandatory = true, ParameterSetName = "ByUPN")]
         public string[] Users;
+
+        [Parameter(Mandatory = true, ParameterSetName = "ByObjectId", ValueFromPipelineByPropertyName = true)]
+        [Alias("ObjectId", "Id")]
+        public System.Guid[] MemberObjectId;
 
         protected override void ExecuteCmdlet()
         {
@@ -29,7 +34,14 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (group != null)
             {
-                Microsoft365GroupsUtility.RemoveMembers(GraphRequestHelper, new System.Guid(group.Id), Users);
+                if (ParameterSetName == "ByUPN" && Users != null && Users.Length > 0)
+                {
+                    Microsoft365GroupsUtility.RemoveMembers(GraphRequestHelper, new System.Guid(group.Id), Users);
+                }
+                else if (ParameterSetName == "ByObjectId" && MemberObjectId != null && MemberObjectId.Length > 0)
+                {
+                    Microsoft365GroupsUtility.RemoveDirectoryMembers(GraphRequestHelper, new System.Guid(group.Id), MemberObjectId);
+                }
             }
         }
     }

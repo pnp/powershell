@@ -20,7 +20,11 @@ Removes members from a particular Azure Active Directory group. This can be a se
 ## SYNTAX
 
 ```powershell
-Remove-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> 
+Remove-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]>
+```
+
+```powershell
+Remove-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -MemberObjectId <Guid[]>
 ```
 
 ## DESCRIPTION
@@ -35,6 +39,22 @@ Remove-PnPAzureADGroupMember -Identity "Project Team" -Users "john@contoso.onmic
 ```
 
 Removes the provided two users as members from the Azure Active Directory group named "Project Team"
+
+### EXAMPLE 2
+```powershell
+# Remove a nested group by its ObjectId
+Remove-PnPAzureADGroupMember -Identity $parentGroupId -MemberObjectId $childGroupId
+```
+
+Removes the group with ObjectId `$childGroupId` from the group identified by `$parentGroupId`.
+
+### EXAMPLE 3
+```powershell
+# Pipeline by property name (Id)
+Get-PnPAzureADGroupMember -Identity $parentGroupId | Where-Object { $_.Id -eq $childGroupId } | Remove-PnPAzureADGroupMember -Identity $parentGroupId
+```
+
+Pipes a member (group or user) whose `Id` matches `$childGroupId` into the cmdlet and removes it.
 
 ## PARAMETERS
 
@@ -63,6 +83,20 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MemberObjectId
+The ObjectId(s) of directory object(s) (Users or Groups) to remove from the Azure Active Directory group. Use this to remove nested groups that do not have a UPN.
+
+```yaml
+Type: Guid[]
+Parameter Sets: MemberObjectId
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 ```
 
