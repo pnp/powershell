@@ -75,7 +75,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsDefault
-Allows retrieval of the default Power Platform environment by passing in `-IsDefault:$true`. When passing in `-IsDefault :$false` you will get all non default environments. If not provided at all, all available environments, both default and non-default, will be returned.
+Allows retrieval of the default Power Platform environment by passing in `-IsDefault:$true`. When passing in `-IsDefault:$false` you will get all non default environments. If not provided at all, all available environments, both default and non-default, will be returned.
 
 ```yaml
 Type: SwitchParameter
