@@ -45,7 +45,7 @@ This cmdlets returns all of the Power Platform environments for the current tena
 
 ### Example 2
 ```powershell
-Get-PnPPowerPlatformEnvironment -IsDefault $true
+Get-PnPPowerPlatformEnvironment -IsDefault:$true
 ```
 
 This cmdlets returns the default Power Platform environment for the current tenant.
@@ -75,10 +75,10 @@ Accept wildcard characters: False
 ```
 
 ### -IsDefault
-Allows retrieval of the default Power Platform environment by passing in `-IsDefault $true`. When passing in `-IsDefault $false` you will get all non default environments. If not provided at all, all available environments, both default and non-default, will be returned.
+Allows retrieval of the default Power Platform environment by passing in `-IsDefault:$true`. When passing in `-IsDefault :$false` you will get all non default environments. If not provided at all, all available environments, both default and non-default, will be returned.
 
 ```yaml
-Type: bool
+Type: SwitchParameter
 Parameter Sets: Default
 Aliases:
 
