@@ -362,6 +362,22 @@ namespace PnP.PowerShell.Commands.Utilities
             RemoveUserFromGroup(requestHelper, "members", groupId, users);
         }
 
+        internal static void RemoveDirectoryMembers(ApiRequestHelper requestHelper, Guid groupId, Guid[] directoryObjects)
+        {
+            foreach (var dirObject in directoryObjects)
+            {
+                requestHelper.Delete($"v1.0/groups/{groupId}/members/{dirObject}/$ref");
+            }
+        }
+
+        internal static void RemoveDirectoryOwners(ApiRequestHelper requestHelper, Guid groupId, Guid[] directoryObjects)
+        {
+            foreach (var dirObject in directoryObjects)
+            {
+                requestHelper.Delete($"v1.0/groups/{groupId}/owners/{dirObject}/$ref");
+            }
+        }
+
         private static void RemoveUserFromGroup(ApiRequestHelper requestHelper, string groupName, Guid groupId, string[] users)
         {
             foreach (var user in users)
