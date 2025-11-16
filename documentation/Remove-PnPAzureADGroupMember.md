@@ -91,7 +91,7 @@ The ObjectId(s) of directory object(s) (Users or Groups) to remove from the Azur
 
 ```yaml
 Type: Guid[]
-Parameter Sets: MemberObjectId
+Parameter Sets: ByObjectId
 
 Required: True
 Position: Named
