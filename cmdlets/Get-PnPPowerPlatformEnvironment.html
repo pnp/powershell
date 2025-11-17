@@ -104,7 +104,7 @@
 </code></pre>
 <p>This cmdlets returns all of the Power Platform environments for the current tenant.</p>
 <h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Get-PnPPowerPlatformEnvironment -IsDefault $true
+<pre><code class="lang-powershell">Get-PnPPowerPlatformEnvironment -IsDefault:$true
 </code></pre>
 <p>This cmdlets returns the default Power Platform environment for the current tenant.</p>
 <h3 id="example-3">Example 3</h3>
@@ -125,8 +125,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-isdefault">-IsDefault</h3>
-<p>Allows retrieval of the default Power Platform environment by passing in <code>-IsDefault $true</code>. When passing in <code>-IsDefault $false</code> you will get all non default environments. If not provided at all, all available environments, both default and non-default, will be returned.</p>
-<pre><code class="lang-yaml">Type: bool
+<p>Allows retrieval of the default Power Platform environment by passing in <code>-IsDefault:$true</code>. When passing in <code>-IsDefault:$false</code> you will get all non default environments. If not provided at all, all available environments, both default and non-default, will be returned.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Default
 Aliases:
 

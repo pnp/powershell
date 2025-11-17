@@ -118,6 +118,8 @@
  [-ScriptSafeDomainName &lt;string&gt;]
  [-BlockDownloadPolicy &lt;Boolean&gt;] [-ExcludeBlockDownloadPolicySiteOwners &lt;Boolean&gt;]
  [-ExcludedBlockDownloadGroupIds &lt;Guid[]&gt;]
+ [-ExcludeBlockDownloadSharePointGroups &lt;String[]&gt;]
+ [-ReadOnlyForBlockDownloadPolicy]
  [-ListsShowHeaderAndNavigation &lt;Boolean&gt;]
  [-RestrictContentOrgWideSearch &lt;Boolean&gt;]
  [-CanSyncHubSitePermissions &lt;SwitchParameter&gt;]
@@ -561,6 +563,28 @@ Accept wildcard characters: False
 <h3 id="-excludedblockdownloadgroupids">-ExcludedBlockDownloadGroupIds</h3>
 <p>Exempts users from the mentioned groups from this policy and they can fully download any content for the site.</p>
 <pre><code class="lang-yaml">Type: GUID[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-excludeblockdownloadsharepointgroups">-ExcludeBlockDownloadSharePointGroups</h3>
+<p>Exempts users from the specified SharePoint groups from the block download policy. Users in these groups can fully download any content for the site.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-readonlyforblockdownloadpolicy">-ReadOnlyForBlockDownloadPolicy</h3>
+<p>When enabled in combination with BlockDownloadPolicy, users will only be able to view the content in read-only mode but will not be able to download or sync files.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Set Properties
 
 Required: False

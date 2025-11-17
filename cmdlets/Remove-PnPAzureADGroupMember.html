@@ -90,7 +90,9 @@
 </ul>
 <p>Removes members from a particular Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPAzureADGroupMember -Identity &lt;AzureADGroupPipeBind&gt; -Users &lt;String[]&gt; 
+<pre><code class="lang-powershell">Remove-PnPAzureADGroupMember -Identity &lt;AzureADGroupPipeBind&gt; -Users &lt;String[]&gt;
+</code></pre>
+<pre><code class="lang-powershell">Remove-PnPAzureADGroupMember -Identity &lt;AzureADGroupPipeBind&gt; -MemberObjectId &lt;Guid[]&gt;
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to remove members from Azure Active Directory group.</p>
@@ -99,6 +101,16 @@
 <pre><code class="lang-powershell">Remove-PnPAzureADGroupMember -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
 </code></pre>
 <p>Removes the provided two users as members from the Azure Active Directory group named &quot;Project Team&quot;</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell"># Remove a nested group by its ObjectId
+Remove-PnPAzureADGroupMember -Identity $parentGroupId -MemberObjectId $childGroupId
+</code></pre>
+<p>Removes the group with ObjectId <code>$childGroupId</code> from the group identified by <code>$parentGroupId</code>.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell"># Pipeline by property name (Id)
+Get-PnPAzureADGroupMember -Identity $parentGroupId | Where-Object { $_.Id -eq $childGroupId } | Remove-PnPAzureADGroupMember -Identity $parentGroupId
+</code></pre>
+<p>Pipes a member (group or user) whose <code>Id</code> matches <code>$childGroupId</code> into the cmdlet and removes it.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-identity">-Identity</h3>
 <p>The Identity of the Azure Active Directory group to remove members from</p>
@@ -120,6 +132,17 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-memberobjectid">-MemberObjectId</h3>
+<p>The ObjectId(s) of directory object(s) (Users or Groups) to remove from the Azure Active Directory group. Use this to remove nested groups that do not have a UPN.</p>
+<pre><code class="lang-yaml">Type: Guid[]
+Parameter Sets: ByObjectId
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByPropertyName)
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
