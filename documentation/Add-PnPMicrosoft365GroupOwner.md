@@ -20,7 +20,7 @@ Adds users to a Microsoft 365 Group as Owners.
 ## SYNTAX
 
 ```powershell
-Add-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-RemoveExisting] [-Connection <PnPConnection>] 
+Add-PnPMicrosoft365GroupOwner -Identity <Microsoft365GroupPipeBind> -Users <String[]> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -35,13 +35,6 @@ Add-PnPMicrosoft365GroupOwner -Identity "Project Team" -Users "john@contoso.onmi
 ```
 
 Adds the provided two users as additional owners to the Microsoft 365 Group named "Project Team".
-
-### EXAMPLE 2
-```powershell
-Add-PnPMicrosoft365GroupOwner -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com" -RemoveExisting
-```
-
-Sets the provided two users as the only owners of the Microsoft 365 Group named "Project Team" by removing any current existing members first.
 
 ## PARAMETERS
 
@@ -70,20 +63,6 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-```
-
-### -RemoveExisting
-If provided, all existing owners will be removed and only those provided through Users parameter will become owners.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
