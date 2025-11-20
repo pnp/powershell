@@ -90,7 +90,7 @@
 </ul>
 <p>Adds members to a particular Microsoft 365 Group.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPMicrosoft365GroupMember -Identity &lt;Microsoft365GroupPipeBind&gt; -Users &lt;String[]&gt; [-RemoveExisting] [-Connection &lt;PnPConnection&gt;]
+<pre><code class="lang-powershell">Add-PnPMicrosoft365GroupMember -Identity &lt;Microsoft365GroupPipeBind&gt; -Users &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to add multiple users to Microsoft 365 Group.</p>
@@ -99,10 +99,6 @@
 <pre><code class="lang-powershell">Add-PnPMicrosoft365GroupMember -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
 </code></pre>
 <p>Adds the provided two users as additional members to the Microsoft 365 Group named &quot;Project Team&quot;.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPMicrosoft365GroupMember -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot; -RemoveExisting
-</code></pre>
-<p>Sets the provided two users as the only members of the Microsoft 365 Group named &quot;Project Team&quot; by removing any current existing members first.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -124,17 +120,6 @@ Required: True
 Position: Named
 Default value: None
 Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-removeexisting">-RemoveExisting</h3>
-<p>If provided, all existing members will be removed and only those provided through Users will become members.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-users">-Users</h3>
