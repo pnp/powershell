@@ -165,7 +165,7 @@ namespace PnP.PowerShell.Commands.Base
 
         private string _graphEndPoint;
         /// <summary>
-        private static readonly string[] sourceArray = ["stop", "ignore", "silentlycontinue"];
+        private static readonly string[] errorActionSourceArray = ["stop", "ignore", "silentlycontinue"];
         #endregion
 
         #region Creators
@@ -267,7 +267,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (CacheEnabled(url, clientId))
             {
-                if (!sourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
+                if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
                     WriteCacheEnabledMessage(host);
                 }
@@ -480,7 +480,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (CacheEnabled(url.ToString(), clientId))
             {
-                if (!sourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
+                if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
                     WriteCacheEnabledMessage(host);
                 }
@@ -603,7 +603,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (CacheEnabled(uri.ToString(), clientId))
             {
-                if (!sourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
+                if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
                     WriteCacheEnabledMessage(host);
                 }
