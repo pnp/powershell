@@ -74,6 +74,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Christian Veenhuis [ChVeen]
 - James Epp [jamesaepp]
 - Sven Boll [svenboll]
+- Joshua Hendersson [JoshuaSHenderson]
 
 ## [3.1.0]
 
