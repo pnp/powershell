@@ -199,8 +199,16 @@ Accept wildcard characters: False
 <p>Specifies the update type to use when updating the listitem. Possible values are &quot;Update&quot;, &quot;SystemUpdate&quot;, &quot;UpdateOverwriteVersion&quot;.</p>
 <ul>
 <li><strong>Update</strong>: Sets field values and creates a new version if versioning is enabled for the list. The &quot;Modified By&quot; and &quot;Modified&quot; fields will be updated to reflect the time of the update and the user who made the change.</li>
-<li><strong>SystemUpdate</strong>: Sets field values and does not create a new version. Any events on the list will trigger. The &quot;Modified By&quot; and &quot;Modified&quot; fields are not updated and can not be set.</li>
-<li><strong>UpdateOverwriteVersion</strong>: Sets field values and does not create a new version. No events on the list will trigger. The &quot;Modified By&quot; and &quot;Modified&quot; fields are not updated but can be set by passing the field values in the update. HINT: use 'Editor' to set the &quot;Modified By&quot; field.</li>
+<li><strong>SystemUpdate</strong>: Sets field values and does not create a new version. Changes are appended to the last version. Any events on the list will trigger. The &quot;Modified By&quot; and &quot;Modified&quot; fields are not updated and can not be set.
+<blockquote>
+<p><em>Note: Power Automate Flows are not triggered</em></p>
+</blockquote>
+</li>
+<li><strong>UpdateOverwriteVersion</strong>: Sets field values and does not create a new version. The last version's modified date is updated and the changes are appended. The &quot;Modified By&quot; and &quot;Modified&quot; fields are not updated but can be set by passing the field values in the update. HINT: use 'Editor' to set the &quot;Modified By&quot; field.
+<blockquote>
+<p><em>Note: Power Automate Flows ARE triggered</em></p>
+</blockquote>
+</li>
 </ul>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
