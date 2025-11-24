@@ -24,7 +24,7 @@ Get-PnPPowerPlatformCustomConnector [-Environment <PowerPlatformEnvironmentPipeB
 ```
 
 ## DESCRIPTION
-This cmdlet returns the custom connectors on a given enviroment.
+This cmdlet returns the custom connectors on a given environment.
 
 ## EXAMPLES
 

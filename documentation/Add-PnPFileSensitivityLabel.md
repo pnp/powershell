@@ -15,16 +15,20 @@ title: Add-PnPFileSensitivityLabel
 
   * Microsoft Graph API : One of Files.ReadWrite.All, Sites.ReadWrite.All
 
+**Required Billing**
+
+  * Microsoft Graph API: The `assignSensitivityLabel` API used by this cmdlet will not function without billing setup. Consult the [RELATED LINKS](#related-links) section.
+
 Add the sensitivity label information for a file in SharePoint.
 
 ## SYNTAX
 ```powershell
-Add-PnPFileSensitivityLabel -Identity <String> -SensitivityLabelId <Guid> -AssignmentMethod <Enum> -JustificationText <string>
+Add-PnPFileSensitivityLabel -Identity <String> -SensitivityLabelId <Guid> [-AssignmentMethod <Enum>] [-JustificationText <string>] [-Batch <PnPBatch>]
 ```
 
 ## DESCRIPTION
 
-The Add-PnPFileSensitivityLabel cmdlet adds the sensitivity label information for a file in SharePoint using Microsoft Graph. It takes a URL as input, decodes it, and specifically encodes the '+' character if it is part of the filename. It also takes the sensitivity label Id , assignment method and justification text values as input.
+The Add-PnPFileSensitivityLabel cmdlet adds the sensitivity label information for a file in SharePoint using Microsoft Graph. It takes a URL as input, decodes it, and specifically encodes the '+' character if it is part of the filename. It also takes the sensitivity label Id , assignment method and justification text values as input. You can optionally provide a PnP batch so the label assignment is queued and executed together with other batched Graph calls.
 
 ## EXAMPLES
 
@@ -40,6 +44,19 @@ This example removes the sensitivity label information for the file at the speci
 
 ```powershell
 Add-PnPFileSensitivityLabel -Identity "/sites/Marketing/Shared Documents/Report.pptx" -SensitivityLabelId "" -JustificationText "Previous label no longer applies" -AssignmentMethod Privileged
+```
+
+### Example 3
+This example queues two label assignments in a single Microsoft Graph batch for improved throughput.
+
+```powershell
+$batch = New-PnPBatch
+
+Get-PnPFile -Folder "/sites/Marketing/Shared Documents" -Recursive -Filter "*.pptx" | ForEach-Object {
+  Add-PnPFileSensitivityLabel -Identity $_ -SensitivityLabelId "b5b11b04-05b3-4fe4-baa9-b7f5f65b8b64" -AssignmentMethod Privileged -Batch $batch
+}
+
+Invoke-PnPBatch -Batch $batch
 ```
 
 ## PARAMETERS
@@ -100,7 +117,26 @@ Accept pipeline input: True
 Accept wildcard characters: False
 ```
 
+### -Batch
+Allows queueing the label assignment in an existing PnP batch. Use `Invoke-PnPBatch` to execute all queued operations.
+
+```yaml
+Type: PnPBatch
+Parameter Sets: Batch
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## RELATED LINKS
 
-[Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-[Microsoft Graph documentation](https://learn.microsoft.com/graph/api/driveitem-assignsensitivitylabel)
+* [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
+
+* [Microsoft Graph documentation](https://learn.microsoft.com/graph/api/driveitem-assignsensitivitylabel)
+
+* [Overview of metered APIs and services in Microsoft Graph](https://learn.microsoft.com/en-us/graph/metered-api-overview)
+
+* [Metered APIs and services in Microsoft Graph](https://learn.microsoft.com/en-us/graph/metered-api-list)

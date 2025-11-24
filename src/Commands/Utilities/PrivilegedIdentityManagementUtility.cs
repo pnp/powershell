@@ -1,4 +1,4 @@
-﻿using PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement;
+﻿using PnP.PowerShell.Commands.Model.PrivilegedIdentityManagement;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
 using System.Collections.Generic;
@@ -9,12 +9,12 @@ using System.Text.Json;
 namespace PnP.PowerShell.Commands.Utilities
 {
     /// <summary>
-    /// Utility class to work with Entra ID Priviledged Identity Management
+    /// Utility class to work with Entra ID Privileged Identity Management
     /// </summary>
-    internal static class PriviledgedIdentityManagamentUtility
+    internal static class PrivilegedIdentityManagementUtility
     {
         /// <summary>
-        /// Returns all available priviledged identity management role schedules
+        /// Returns all available privileged identity management role schedules
         /// </summary>
         public static List<RoleEligibilitySchedule> GetRoleEligibilitySchedules(ApiRequestHelper requestHelper)
         {
@@ -24,7 +24,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Returns all available priviledged identity management roles
+        /// Returns all available privileged identity management roles
         /// </summary>
         public static List<RoleDefinition> GetRoleDefinitions(ApiRequestHelper requestHelper)
         {
@@ -34,7 +34,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Returns a priviledged identity management role by its displayname
+        /// Returns a privileged identity management role by its displayname
         /// </summary>
         /// <param name="roleName">Displayname of the role to return. Case sensitive.</param>
         public static RoleDefinition GetRoleDefinitionByName(ApiRequestHelper requestHelper, string roleName)
@@ -45,7 +45,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Returns a priviledged identity management role by its Id
+        /// Returns a privileged identity management role by its Id
         /// </summary>
         /// <param name="roleId">Id of the role to return</param>
         public static RoleDefinition GetRoleDefinitionById(ApiRequestHelper requestHelper, Guid roleId)
@@ -56,7 +56,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Returns the priviledged identity management role schedule with the provided Id
+        /// Returns the privileged identity management role schedule with the provided Id
         /// </summary>
         public static RoleEligibilitySchedule GetRoleEligibilityScheduleById(ApiRequestHelper requestHelper, Guid id)
         {
@@ -66,7 +66,7 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Returns the priviledged identity management role schedule for the provided principal and role
+        /// Returns the privileged identity management role schedule for the provided principal and role
         /// </summary>
         public static RoleEligibilitySchedule GetRoleEligibilityScheduleByPrincipalIdAndRoleName(ApiRequestHelper requestHelper, Guid principalId, RoleDefinition role)
         {
@@ -78,7 +78,7 @@ namespace PnP.PowerShell.Commands.Utilities
         /// <summary>
         /// Creates a scheduled assignment for a role to be activated at a certain time
         /// </summary>
-        public static HttpResponseMessage CreateRoleAssignmentScheduleRequest(ApiRequestHelper requestHelper, RoleEligibilitySchedule roleEligibilitySchedule,string justification = null, DateTime? startDateTime = null, short? expiratonHours = null)
+        public static HttpResponseMessage CreateRoleAssignmentScheduleRequest(ApiRequestHelper requestHelper, RoleEligibilitySchedule roleEligibilitySchedule, string justification = null, DateTime? startDateTime = null, short? expirationHours = null)
         {
             string requestUrl = $"v1.0/roleManagement/directory/roleAssignmentScheduleRequests";
             var postData = new RoleAssignmentScheduleRequest
@@ -92,7 +92,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     StartDateTime = startDateTime ?? DateTime.UtcNow,
                     Expiration = new Expiration
                     {
-                        Duration = $"PT{expiratonHours.GetValueOrDefault(1)}H"
+                        Duration = $"PT{expirationHours.GetValueOrDefault(1)}H"
                     }
                 }
             };

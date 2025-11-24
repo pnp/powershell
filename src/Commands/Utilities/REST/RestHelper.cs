@@ -62,7 +62,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 StringBuilder sb = new StringBuilder();
                 foreach (var cookie in authManager.CookieContainer.GetCookies(new Uri(url)))
                 {
-                    sb.AppendFormat("{0}; ", cookie.ToString());
+                    sb.Append($"{cookie}; ");
                 }
                 client.DefaultRequestHeaders.Add("Cookie", sb.ToString());
             }

@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     iterationRowLimit = 5000;
                 }
 
-                items = ctx.Site.GetRecycleBinItems(pagingInfo, iterationRowLimit, false, RecycleBinOrderBy.DefaultOrderBy, recycleBinStage);
+                items = ctx.Site.GetRecycleBinItems(pagingInfo, iterationRowLimit, false, RecycleBinOrderBy.DeletedDate, recycleBinStage);
                 ctx.Load(items);
                 ctx.ExecuteQueryRetry();
                 recycleBinItems.AddRange(items.ToList());
@@ -86,7 +86,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     iterationRowLimit = 5000;
                 }
 
-                items = ctx.Site.GetRecycleBinItems(pagingInfo, iterationRowLimit, false, RecycleBinOrderBy.DefaultOrderBy, recycleBinItemState);
+                items = ctx.Site.GetRecycleBinItems(pagingInfo, iterationRowLimit, false, RecycleBinOrderBy.DeletedDate, recycleBinItemState);
                 ctx.Load(items);
                 ctx.ExecuteQueryRetry();
                 recycleBinItems.Add(items);

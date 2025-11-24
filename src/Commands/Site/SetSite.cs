@@ -134,6 +134,12 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter? CanSyncHubSitePermissions;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public string[] ExcludeBlockDownloadSharePointGroups;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter ReadOnlyForBlockDownloadPolicy;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 
@@ -440,6 +446,18 @@ namespace PnP.PowerShell.Commands.Site
                     executeQueryRequired = true;
                 }
 
+                if (ParameterSpecified(nameof(ExcludeBlockDownloadSharePointGroups)) && ExcludeBlockDownloadSharePointGroups.Length > 0)
+                {
+                    siteProperties.ExcludeBlockDownloadSharePointGroups = ExcludeBlockDownloadSharePointGroups;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(ReadOnlyForBlockDownloadPolicy)) && ReadOnlyForBlockDownloadPolicy.IsPresent)
+                {
+                    siteProperties.ReadOnlyForBlockDownloadPolicy = ReadOnlyForBlockDownloadPolicy.ToBool();
+                    executeQueryRequired = true;
+                }
+
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();
@@ -495,6 +513,10 @@ namespace PnP.PowerShell.Commands.Site
                 BlockDownloadPolicy.HasValue ||
                 ExcludeBlockDownloadPolicySiteOwners.HasValue ||
                 ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) ||
-                ListsShowHeaderAndNavigation.HasValue;
+                ListsShowHeaderAndNavigation.HasValue ||
+                HidePeoplePreviewingFiles.HasValue ||
+                HidePeopleWhoHaveListsOpen.HasValue || 
+                ParameterSpecified(nameof(ExcludeBlockDownloadSharePointGroups)) || 
+                ReadOnlyForBlockDownloadPolicy.IsPresent;
     }
 }

@@ -7,20 +7,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 
-## [Current Nightly]
+## [Current nightly]
 
 ### Added
+- Added `Copy-PnPFileMetadata` to copy Metadata fields (Created, Modified, Author, Editor) between items [#5072](https://github.com/pnp/powershell/pull5072)
 - Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
 - Added `-User` parameter to `Get-PnPTeamsTeam` cmdlet to allow fetching list of teams a user has access to.
 - Added `Get-PnPBrandCenterFont` cmdlet to retrieve the available fonts in the Brand Center [#4970](https://github.com/pnp/powershell/pull/4970)
 - Added `Add-PnPBrandCenterFontPackage` cmdlet to allow creating a font package in the Brand Center [#4970](https://github.com/pnp/powershell/pull/4970)
 - Added support for `-FederatedIdentity` in `Connect-PnPOnline` to support Federated Identity.
 - Added support for SSO in WSL (Windows Subsystem for Linux) and Linux distributions. You can now use `Connect-PnPOnline` with `-OSLogin` which helps with more secure auth such as FIDO, Conditional Access policies etc.
+- Added `Get-PnPPowerAppPermission` cmdlet to retrieve the permissions for a specific Power App [#5030](https://github.com/pnp/powershell/pull/5030)
+- Added `-Batch` parameter to `Add-PnPFileSensitivityLabel` cmdlet to allow bulk updates for file sensitivity labels.
+- Added `-ZoneReflowStrategy` parameter in `Add-PnPPageSection` cmdlet to support flexible layout behavior in mobile views.
+- Added `-KnowledgeAgentEnabled` and `-KnowledgeAgentSelectedSitesList` parameter to `Set-PnPTenant` cmdlets to support knowledge agents.
+- Added `-Force` parameter to `Remove-PnPTerm` cmdlet to remove terms without confirmation.
+- Added `Import-PnPFlow` cmdlet to import Power Automate in the tenant. [#4854](https://github.com/pnp/powershell/pull/4854)
+- Marked `-Force` as obsolete within Enable-PnPFeature cmdlet . [#5146](https://github.com/pnp/powershell/pull/5146)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
 - **PnP PowerShell now requires PowerShell 7.4.0 or newer**
 - Improved `Connect-PnPOnline` with `-DeviceLogin` flow, now we don't require users to specify `-Tenant` parameter, it will be automatically added if not specified.
+- Improved `Restore-PnPRecycleBinItem` cmdlet to better handle throttling.
 
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
@@ -34,11 +43,23 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Add/Publish/Unpublish/Remove-PnPApp` cmdlets to properly handle the issue in no-script sites.
 - Fix `Get-PnPHubSiteChild` cmdlet to handle vanity domains. [#4965](https://github.com/pnp/powershell/pull/4965)
 - Fix `Connect-PnPOnline` not working correctly with `-DeviceLogin` in Azure Cloud Shell.
+- Fix `Connect-PnPOnline` not working correctly with `-DeviceLogin` in desktop-less environments, such as on a Raspberry Pi [#5058](https://github.com/pnp/powershell/pull/5058)
+- Fix `Get-PnPTenantRestrictedSearchMode` throwing an error in some cases [#5042](https://github.com/pnp/powershell/pull/5042)
+- Fixed issues with `Get-PnPTenantInfo`, `Set-PnPList`, `Remove-PnPSiteSensitivityLabel`, `Set-PnPSiteSensitivityLabel`, `Send-PnPMail` and `Set-PnPWebHeader` cmdlets returning an error [#5059](https://github.com/pnp/powershell/pull/5059)
+- Fixed issue with `Get-PnPChangelog -Nightly` throwing an error [#5070](https://github.com/pnp/powershell/pull/5070)
+- Fixed spelling errors in Privileged Identity Management cmdlets: renamed `Get-PnPPriviledgedIdentityManagementRole`, `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, and `Enable-PnPPriviledgedIdentityManagement` to use correct spelling "Privileged". Old cmdlet names remain functional as aliases for backward compatibility. [#5119](https://github.com/pnp/powershell/pull/5119)
+- Fixed Typos on `Move-PnPFolder, Get-PnPPowerPlatformSolution, Get-PnPPowerPlatformCustomConnector, Get-PnPPowerApp, Get-PnPPlannerPlan, Get-PnPContainer` cmdlets [#5124](https://github.com/pnp/powershell/pull/5124)
+- Fixed issue with `Set-PnPSite -HidePeoplePreviewingFiles $true` and `Set-PnPSite -HidePeopleWhoHaveListsOpen $true` added missing properties [#5003](https://github.com/pnp/powershell/issues/5003)
+- Fixed issue with `New-PnpAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer` made it language agnostic [#5137](https://github.com/pnp/powershell/issues/5137)
+- Fix `Register-PnPEntraIdApp` Allow to use CER file instead of PFX [#5129](https://github.com/pnp/powershell/issues/5129)
 
 ### Removed
+- Removed `-RemoveExisting` parameter from `Add-PnPAzureADGroupMember`, `Add-PnPAzureADGroupOwner`, `Add-PnPMicrosoft365GroupMember` and `Add-PnPMicrosoft365GroupOwner` cmdlets. It was never really implemented and without function. [#5153](https://github.com/pnp/powershell/pull/5153)
 
 ### Contributors
 
+- Nishkalank Bezawada [NishkalankBezawada]
+- Irving [irvcov]
 - Koen Zomers [koenzomers]
 - Janne Holm [jhholm]
 - Marc D Anderson [sympmarc]
@@ -48,6 +69,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - [pajeffery]
 - Giacomo Pozzoni [jackpoz]
 - [davidschenkUPG]
+- [sofbkeller]
+- Ali Robertson [alirobe]
+- Christian Veenhuis [ChVeen]
+- James Epp [jamesaepp]
+- Sven Boll [svenboll]
+- Joshua Hendersson [JoshuaSHenderson]
 
 ## [3.1.0]
 
@@ -70,7 +97,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added tab completers for all cmdlets using a ListPipeBind parameter (e.g. `Get-PnPList -Identity`), all cmdlets using a FieldPipeBind parameter (e.g. `Get-PnPField -Identity`), `Get-PnPPropertyBag`, ContentType related cmdlets (`Get-PnPContentType` etc.) and Page related (`Get-PnPPage` etc.) cmdlets. The argument lookup will timeout after 2 seconds. This value can controlled by setting an environment variables called "PNPPSCOMPLETERTIMEOUT" and set the value to a number specifying milliseconds (e.g. 2000 is 2 seconds). If you want to disable the completer functionality on tabs, set the timeout value to 0 (zero).
 - Added `Reset-PnPDocumentID` cmdlet to request resetting the document ID for a document [#4238](https://github.com/pnp/powershell/pull/4238)
 - Added `Reset-PnPDocumentID` cmdlet to request resetting the document IDs for all documents in a library using a specific content type [#4755](https://github.com/pnp/powershell/pull/4755)
-- Added `Get-PnPPriviledgedIdentityManagementEligibleAssignment`, `Get-PnPPriviledgedIdentityManagementRole` and `Enable-PnPPriviledgedIdentityManagement` cmdlets to allow scripting of enabling Privileged Identity Management roles for a user [#4039](https://github.com/pnp/powershell/pull/4039)
+- Added `Get-PnPPrivilegedIdentityManagementEligibleAssignment`, `Get-PnPPrivilegedIdentityManagementRole` and `Enable-PnPPrivilegedIdentityManagement` cmdlets to allow scripting of enabling Privileged Identity Management roles for a user [#4039](https://github.com/pnp/powershell/pull/4039)
 - Added `Add-PnPTenantRestrictedSearchAllowedList` which allows setting up a list of allowed URLs for Restricted SharePoint Search [#3993](https://github.com/pnp/powershell/pull/3993)
 - Added optional `-IsCopilotSearchable` to `Add-PnPOrgAssetsLibrary` which allows for an organizational assets library to be accessible to Microsoft 365 CoPilot for searching corporate images [#4254](https://github.com/pnp/powershell/pull/4254)
 - Added `Set-PnPOrgAssetsLibrary` cmdlet which allows for updating the settings of an existing organizational assets library [#4254](https://github.com/pnp/powershell/pull/4254)

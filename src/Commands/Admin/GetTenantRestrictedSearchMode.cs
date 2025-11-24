@@ -10,9 +10,16 @@ namespace PnP.PowerShell.Commands.Files
     {
         protected override void ExecuteCmdlet()
         {
-            var results = Tenant.GetSPORestrictedSearchMode();
-            AdminContext.ExecuteQueryRetry();
-            WriteObject(results, true);
+            try
+            {
+                var results = Tenant.GetSPORestrictedSearchMode();
+                AdminContext.ExecuteQueryRetry();
+                WriteObject(results, true);
+            }
+            catch
+            {
+                WriteObject("Restricted search mode is currently not set.");
+            }
         }
     }
 }

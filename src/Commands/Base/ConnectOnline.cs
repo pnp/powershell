@@ -572,7 +572,7 @@ namespace PnP.PowerShell.Commands.Base
                         Tenant = TenantExtensions.GetTenantIdByUrl(Url, AzureEnvironment);
                     }
 
-                    var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource, PersistLogin, Host);
+                    var returnedConnection = PnPConnection.CreateWithDeviceLogin(clientId, Url, Tenant, messageWriter, AzureEnvironment, cancellationTokenSource, PersistLogin, Host, ErrorActionSetting);
                     connection = returnedConnection;
                     messageWriter.Finished = true;
                 }
@@ -790,7 +790,7 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
             LogDebug($"Using ClientID {ClientId}");
-            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host);
+            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, false, PersistLogin, Host, ErrorActionSetting);
         }
 
         private PnPConnection ConnectEnvironmentVariable(InitializationType initializationType = InitializationType.EnvironmentVariable)
@@ -932,7 +932,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 WriteObject("Cache used. Clear the cache entry with Disconnect-PnPOnline");
             }
-            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true, PersistLogin, Host);
+            return PnPConnection.CreateWithInteractiveLogin(new Uri(Url.ToLower()), ClientId, TenantAdminUrl, AzureEnvironment, cancellationTokenSource, ForceAuthentication, Tenant, true, PersistLogin, Host, ErrorActionSetting);
         }
 
         private PnPConnection ConnectFederatedIdentity()

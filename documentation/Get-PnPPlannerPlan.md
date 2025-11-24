@@ -56,7 +56,7 @@ Returns the specified plan for the Marketing group.
 Get-PnPPlannerPlan -Id "gndWOTSK60GfPQfiDDj43JgACDCb" -ResolveIdentities
 ```
 
-Rerturns the plan with specified ID with resolved identities.
+Returns the plan with specified ID with resolved identities.
 
 ## PARAMETERS
 

@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPriviledgedIdentityManagementRole.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPPrivilegedIdentityManagementRole.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPPriviledgedIdentityManagementRole
+title: Get-PnPPrivilegedIdentityManagementRole
 ---
   
-# Get-PnPPriviledgedIdentityManagementRole
+# Get-PnPPrivilegedIdentityManagementRole
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Retrieve the available Privileged Identity Management roles that exist within th
 ## SYNTAX
 
 ```powershell
-Get-PnPPriviledgedIdentityManagementRole [-Identity <PriviledgedIdentityManagementRolePipeBind>] [-Connection <PnPConnection>] 
+Get-PnPPrivilegedIdentityManagementRole [-Identity <PrivilegedIdentityManagementRolePipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -30,21 +30,21 @@ Retrieve the available Privileged Identity Management roles that exist within th
 
 ### Example 1
 ```powershell
-Get-PnPPriviledgedIdentityManagementRole
+Get-PnPPrivilegedIdentityManagementRole
 ```
 
 Retrieves the available Privileged Identity Management roles
 
 ### Example 2
 ```powershell
-Get-PnPPriviledgedIdentityManagementRole -Identity "Global Administrator"
+Get-PnPPrivilegedIdentityManagementRole -Identity "Global Administrator"
 ```
 
 Retrieves the Privileged Identity Management with the provided name
 
 ### Example 3
 ```powershell
-Get-PnPPriviledgedIdentityManagementRole -Identity 62e90394-69f5-4237-9190-012177145e10
+Get-PnPPrivilegedIdentityManagementRole -Identity 62e90394-69f5-4237-9190-012177145e10
 ```
 
 Retrieves the Privileged Identity Management role with the provided id
@@ -68,10 +68,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The name, id or instance of a Priviledged Identity Management role to retrieve the details of
+The name, id or instance of a Privileged Identity Management role to retrieve the details of
 
 ```yaml
-Type: PriviledgedIdentityManagementRolePipeBind
+Type: PrivilegedIdentityManagementRolePipeBind
 Parameter Sets: (All)
 Aliases:
 

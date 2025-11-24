@@ -10,6 +10,11 @@ title: Get-PnPAvailableSensitivityLabel
 # Get-PnPAvailableSensitivityLabel
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API : One of InformationProtectionPolicy.Read (Delegated), InformationProtectionPolicy.Read.All (Application)
+
 Gets the Microsoft Purview sensitivity labels that are available within the tenant
 
 ## SYNTAX

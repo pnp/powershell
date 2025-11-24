@@ -25,7 +25,7 @@ Get-PnPPowerApp [-Environment <PowerPlatformEnvironmentPipeBind>] [-AsAdmin] [-I
 ```
 
 ## DESCRIPTION
-This cmdlet returns the Power Apps for a given enviroment.
+This cmdlet returns the Power Apps for a given environment.
 
 ## EXAMPLES
 

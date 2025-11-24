@@ -21,10 +21,15 @@ namespace PnP.PowerShell.Commands.Pages
         public int Order = 1;
 
         [Parameter(Mandatory = false)]
+        [ValidateRange(0, 3)]
         public int ZoneEmphasis = 0;
 
         [Parameter(Mandatory = false)]
+        [ValidateRange(0, 3)]
         public int VerticalZoneEmphasis = 0;
+
+        [Parameter(Mandatory = false)]
+        public ZoneReflowStrategy ZoneReflowStrategy = ZoneReflowStrategy.TopToDown;
 
         protected override void ExecuteCmdlet()
         {
@@ -32,7 +37,15 @@ namespace PnP.PowerShell.Commands.Pages
 
             if (page != null)
             {
-                page.AddSection(SectionTemplate, Order, ZoneEmphasis, VerticalZoneEmphasis);
+                if (SectionTemplate == CanvasSectionTemplate.FlexibleLayoutSection || SectionTemplate == CanvasSectionTemplate.FlexibleLayoutVerticalSection)
+                {
+                    // Use the user-supplied ZoneReflowStrategy when adding flexible layout sections
+                    page.AddSection(SectionTemplate, Order, ZoneEmphasis, VerticalZoneEmphasis, ZoneReflowStrategy);
+                }
+                else
+                {
+                    page.AddSection(SectionTemplate, Order, ZoneEmphasis, VerticalZoneEmphasis);
+                }
                 page.Save();
             }
             else

@@ -24,7 +24,7 @@ Get-PnPPowerPlatformSolution [-Environment <PowerPlatformEnvironmentPipeBind>] [
 ```
 
 ## DESCRIPTION
-This cmdlet returns the PowerPlatform solution on a given enviroment.
+This cmdlet returns the PowerPlatform solution on a given environment.
 
 ## EXAMPLES
 

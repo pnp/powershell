@@ -27,7 +27,7 @@ namespace PnP.PowerShell.Commands.Branding
 
         protected override void ExecuteCmdlet()
         {
-            List<UserCustomAction> actions = new List<UserCustomAction>();
+            List<UserCustomAction> actions = [];
 
             if (Scope == CustomActionScope.All || Scope == CustomActionScope.Web)
             {

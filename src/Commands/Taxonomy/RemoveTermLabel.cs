@@ -32,6 +32,9 @@ namespace PnP.PowerShell.Commands.Taxonomy
         [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public TaxonomyTermStorePipeBind TermStore;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Force;
+
         protected override void ExecuteCmdlet()
         {
             var taxonomySession = TaxonomySession.GetTaxonomySession(ClientContext);
@@ -67,7 +70,7 @@ namespace PnP.PowerShell.Commands.Taxonomy
             if (term != null)
             {
                 term.EnsureProperties(t => t.Name, t => t.Id);
-                if (ShouldContinue($"Delete label {Label} for language {Lcid} from Term {term.Name} with id {term.Id}", Properties.Resources.Confirm))
+                if (Force || ShouldContinue($"Delete label {Label} for language {Lcid} from Term {term.Name} with id {term.Id}", Properties.Resources.Confirm))
                 {
                     var labels = term.GetAllLabels(Lcid);
                     ClientContext.Load(labels);

@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands
                 dodelete = ShouldContinue("You are trying to delete the root site collection. Be aware that you need to contact Office 365 Support in order to create a new root site collection. Also notice that some CSOM and REST operations require the root site collection to be present. Removing this site can affect all your remote processing code, even when accessing non-root site collections.", Resources.Confirm);
             }
 
-            if (dodelete && (Force || ShouldContinue(string.Format(Resources.RemoveSiteCollection0, Url), Resources.Confirm)))
+            if (dodelete && (Force || ShouldContinue($"Remove site collection '{Url}'?", Resources.Confirm)))
             {
 
                 Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;

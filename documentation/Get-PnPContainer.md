@@ -135,7 +135,7 @@ Accept wildcard characters: False
 
 ### -PagingToken
 
-Use this parameter to provide the <Paging Token> provided to view the remaining Containers as shown in Example 5. If there are no more Containers to display, the commandlet output will return the message End of Containers view. Otherwise, use the given <Paging Token> to retrieve the next batch of up to 5,000 ontainers.
+Use this parameter to provide the <Paging Token> provided to view the remaining Containers as shown in Example 5. If there are no more Containers to display, the commandlet output will return the message End of Containers view. Otherwise, use the given <Paging Token> to retrieve the next batch of up to 5,000 containers.
 
 ```yaml
 Type: String

@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Base.PipeBinds;
+﻿using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.Mail;
 using System.Collections.Generic;
@@ -86,7 +87,7 @@ namespace PnP.PowerShell.Commands.Utilities
                     messageAttachmentOptions = MailUtility.GetListOfFiles(Files, Connection.PnPContext);
                 }
 
-                MailUtility.SendGraphMail(RequestHelper, new Message
+                MailUtility.SendGraphMail(GraphRequestHelper, new Message
                 {
                     Subject = Subject,
                     MessageBody = new Body
