@@ -33,43 +33,43 @@ This cmdlet removes user, group, or (Everyone in organization) permissions from 
 
 ### Example 1
 ```powershell
-Remove-PnPPowerAppPermission -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com
+Remove-PnPPowerAppPermission -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com
 ```
 Removes the specified user permission from the specified PowerApp located in the default environment
 
 ### Example 2
 ```powershell
-Remove-PnPPowerAppPermission -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User 6844c04a-8ee7-40ad-af66-28f6e948cd04
+Remove-PnPPowerAppPermission -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User 6844c04a-8ee7-40ad-af66-28f6e948cd04
 ```
 Removes the specified user permission from the specified PowerApp located in the default environment
 
 ### Example 3
 ```powershell
-Remove-PnPPowerAppPermission (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin
+Remove-PnPPowerAppPermission (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com -AsAdmin
 ```
 Removes the specified user permission from the specified PowerApp as an admin in the specified environment
 
 ### Example 4
 ```powershell
-Remove-PnPPowerAppPermission (Get-PnPPowerPlatformEnvironment -Identity "myenvironment) -Identity f07c34a9-a586-4e58-91fb-e7ea19741b61 -User username@tenant.onmicrosoft.com -AsAdmin -Force
+Remove-PnPPowerAppPermission (Get-PnPPowerPlatformEnvironment -Identity "myenvironment) -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com -AsAdmin -Force
 ```
 Removes the specified user permission from the specified PowerApp as admin, without asking for confirmation, in the specified environment
 
 ### Example 5
 ```powershell
-Remove-PnPPowerAppPermission -Identity "bde2309e-fabc-42ad-9c9e-723db313b1b0" -Group "c6c4b4e0-cd72-4d64-8ec2-cfbd0388ec16" -Force
+Remove-PnPPowerAppPermission -Identity "3f4a2c1d-0e9d-4c1e-8b55-9e3c7f0ba7e2" -Group "c6c4b4e0-cd72-4d64-8ec2-cfbd0388ec16" -Force
 ```
 Removes the specified group's permission for the PowerApp without prompting using group id
 
 ### Example 6
 ```powershell
-Remove-PnPPowerAppPermission -Identity "bde2309e-fabc-42ad-9c9e-723db313b1b0" -Group "Finance Team"
+Remove-PnPPowerAppPermission -Identity "3f4a2c1d-0e9d-4c1e-8b55-9e3c7f0ba7e2" -Group "Finance Team"
 ```
 Removes the specified group's permission for the PowerApp using group's display name
 
 ### Example 7
 ```powershell
-Remove-PnPPowerAppPermission -Identity "bde2309e-fabc-42ad-9c9e-723db313b1b0" -Tenant
+Remove-PnPPowerAppPermission -Identity "3f4a2c1d-0e9d-4c1e-8b55-9e3c7f0ba7e2" -Tenant
 ```
 Removes the (Everyone in organization) permission for the PowerApp using -Tenant parameter
 
