@@ -303,6 +303,64 @@ namespace PnP.PowerShell.Commands.Utilities
             }
         }
 
+        private static Core.Model.SharePoint.IFieldValue GetTaxonomyFieldValue(object value, Core.Model.SharePoint.IField field , TaxonomySession taxSession, ClientContext context, int defaultLanguage, PnPBatch batch)
+        {
+            Term taxonomyItem;
+            Guid termGuid;
+            var label = string.Empty;
+            var itemId = Guid.Empty;
+
+            if (!Guid.TryParse(value.ToString(), out termGuid))
+            {
+                var batchedTerm = batch.GetCachedTerm(value.ToString());
+                if (batchedTerm.key == null)
+                {
+                    // Assume it's a TermPath
+                    taxonomyItem = context.Site.GetTaxonomyItemByPath(value.ToString()) as Term;
+                    if (taxonomyItem == null)
+                    {
+                        throw new PSInvalidOperationException($"Cannot find term '{value}'");
+                    }
+                    var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
+                    context.ExecuteQueryRetry();
+                    itemId = taxonomyItem.Id;
+                    label = labelResult.Value;
+                    batch.CacheTerm(value.ToString(), itemId, label);
+                    batch.CacheTerm(itemId.ToString(), itemId, label);
+                }
+                else
+                {
+                    itemId = batchedTerm.id;
+                    label = batchedTerm.label;
+                }
+            }
+            else
+            {
+                var batchedTerm = batch.GetCachedTerm(termGuid.ToString());
+                if (batchedTerm.key == null)
+                {
+                    taxonomyItem = taxSession.GetTerm(termGuid);
+                    if (taxonomyItem == null)
+                    {
+                        throw new PSInvalidOperationException($"Cannot find term {value}");
+                    }
+                    var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
+                    context.Load(taxonomyItem);
+                    context.ExecuteQueryRetry();
+                    itemId = taxonomyItem.Id;
+                    label = labelResult.Value;
+                    batch.CacheTerm(termGuid.ToString(), termGuid, label);
+                }
+                else
+                {
+                    itemId = batchedTerm.id;
+                    label = batchedTerm.label;
+                }
+            }
+
+            return field.NewFieldTaxonomyValue(itemId, label);
+        }
+
         public static Dictionary<string, object> GetFieldValues(PnP.Core.Model.SharePoint.IList list, PnP.Core.Model.SharePoint.IListItem existingItem, Hashtable valuesToSet, ClientContext clientContext, PnPBatch batch)
         {
 
@@ -419,110 +477,21 @@ namespace PnP.PowerShell.Commands.Utilities
                                     var fieldValueCollection = field.NewFieldValueCollection();
                                     foreach (var arrayItem in value as object[])
                                     {
-                                        Term taxonomyItem;
-                                        Guid termGuid;
-                                        var label = string.Empty;
-                                        var itemId = Guid.Empty;
-
-                                        if (!Guid.TryParse(arrayItem?.ToString(), out termGuid))
-                                        {
-                                            var batchedTerm = batch.GetCachedTerm(arrayItem?.ToString());
-                                            if (batchedTerm.key == null)
-                                            {
-                                                taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(arrayItem?.ToString()) as Term;
-                                                if (taxonomyItem == null)
-                                                {
-                                                    throw new PSInvalidOperationException($"Cannot find term '{arrayItem}'");
-                                                }
-                                                var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
-                                                clientContext.ExecuteQueryRetry();
-                                                label = labelResult.Value;
-                                                itemId = taxonomyItem.Id;
-                                                batch.CacheTerm(arrayItem?.ToString(), itemId, label);
-                                                batch.CacheTerm(itemId.ToString(), itemId, label);
-                                            }
-                                            else
-                                            {
-                                                itemId = batchedTerm.id;
-                                                label = batchedTerm.label;
-                                            }
-                                        }
-                                        else
-                                        {
-                                            var batchedTerm = batch.GetCachedTerm(termGuid.ToString());
-                                            if (batchedTerm.key == null)
-                                            {
-                                                taxonomyItem = taxSession.GetTerm(termGuid);
-                                                if (taxonomyItem == null)
-                                                {
-                                                    throw new PSInvalidOperationException($"Cannot find term {arrayItem}");
-                                                }
-                                                var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
-                                                clientContext.Load(taxonomyItem);
-                                                clientContext.ExecuteQueryRetry();
-                                                itemId = taxonomyItem.Id;
-                                                label = labelResult.Value;
-                                                batch.CacheTerm(termGuid.ToString(), termGuid, label);
-                                            }
-                                            else
-                                            {
-                                                itemId = batchedTerm.id;
-                                                label = batchedTerm.label;
-                                            }
-                                        }
-
-                                        fieldValueCollection.Values.Add(field.NewFieldTaxonomyValue(itemId, label));
+                                        fieldValueCollection.Values.Add(GetTaxonomyFieldValue(arrayItem, field, taxSession, clientContext, defaultLanguage, batch));
                                     }
 
                                     item[key as string] = fieldValueCollection;
                                 }
                                 else
                                 {
-                                    Guid termGuid = Guid.Empty;
-
-                                    Term taxonomyItem = null;
-                                    var label = string.Empty;
-                                    var itemId = Guid.Empty;
-                                    if (value != null && !Guid.TryParse(value as string, out termGuid))
+                                    if (value == null)
                                     {
-                                        var batchedTerm = batch.GetCachedTerm(termGuid.ToString());
-                                        if (batchedTerm.key == null)
-                                        {
-                                            // Assume it's a TermPath
-                                            taxonomyItem = clientContext.Site.GetTaxonomyItemByPath(value as string) as Term;
-                                            var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
-                                            clientContext.ExecuteQueryRetry();
-                                            itemId = taxonomyItem.Id;
-                                            label = labelResult.Value;
-                                        }
-                                        else
-                                        {
-                                            itemId = batchedTerm.id;
-                                            label = batchedTerm.label;
-                                        }
+                                        item[key as string] = null;
                                     }
                                     else
                                     {
-                                        if (value != null)
-                                        {
-                                            var batchedTerm = batch.GetCachedTerm(termGuid.ToString());
-                                            if (batchedTerm.key == null)
-                                            {
-                                                taxonomyItem = taxSession.GetTerm(termGuid);
-                                                var labelResult = taxonomyItem.GetDefaultLabel(defaultLanguage);
-                                                clientContext.Load(taxonomyItem);
-                                                clientContext.ExecuteQueryRetry();
-                                                label = labelResult.Value;
-                                            }
-                                            else
-                                            {
-                                                itemId = batchedTerm.id;
-                                                label = batchedTerm.label;
-                                            }
-                                        }
+                                        item[key as string] = GetTaxonomyFieldValue(value, field, taxSession, clientContext, defaultLanguage, batch);
                                     }
-
-                                    item[key as string] = field.NewFieldTaxonomyValue(taxonomyItem.Id, label);
                                 }
                                 break;
                             }
