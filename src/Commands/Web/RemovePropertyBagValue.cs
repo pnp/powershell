@@ -1,7 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Management.Automation;
 
@@ -9,7 +9,7 @@ namespace PnP.PowerShell.Commands
 {
     [Cmdlet(VerbsCommon.Remove, "PnPPropertyBagValue")]
     [OutputType(typeof(void))]
-    public class RemovePropertyBagValue : PnPSharePointOnlineAdminCmdlet
+    public class RemovePropertyBagValue : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, Position = 0, ValueFromPipeline = true)]
         public string Key;
@@ -22,71 +22,98 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            bool isScriptSettingUpdated = false;
             try
             {
-                LogDebug("Checking if the site is a no-script site");
-                var web = ClientContext.Web;
-                web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
-                if (web.IsNoScriptSite())
+                if (Force || ShouldContinue(string.Format(Properties.Resources.Delete0, Key), Properties.Resources.Confirm))
                 {
-                    if (Force || ShouldContinue("The current site is a no-script site. Do you want to temporarily enable scripting on it to allow setting property bag value?", Properties.Resources.Confirm))
+                    RemovePropertyBagValueInternal();
+                }
+            }
+            catch (Exception ex)
+            {
+                if (ex is ServerUnauthorizedAccessException)
+                {
+                    if (Force || ShouldContinue("This is a no-script site. You need SharePoint admin permissions to allow scripts to set property bag values. Do you want to enable scripting on it temporarily?", Properties.Resources.Confirm))
                     {
-                        LogDebug("Temporarily enabling scripting on the site");
-                        var tenant = new Tenant(AdminContext);
-                        tenant.SetSiteProperties(web.Url, noScriptSite: false);
-                        isScriptSettingUpdated = true;
+                        var tenantUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
+                        using var tenantContext = ClientContext.Clone(tenantUrl);
+
+                        LogDebug("Checking if AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled is set to true at the tenant level");
+                        var tenant = new Tenant(tenantContext);
+                        tenantContext.Load(tenant);
+                        tenantContext.Load(tenant, t => t.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled);
+                        tenantContext.ExecuteQueryRetry();
+
+                        if (!tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled)
+                        {
+                            LogDebug("Temporarily enabling scripting on the site");
+                            bool isScriptSettingUpdated = false;
+                            var site = ClientContext.Site;
+                            if (site.IsNoScriptSite())
+                            {
+                                try
+                                {
+                                    tenant.SetSiteProperties(ClientContext.Url, noScriptSite: false);
+                                    isScriptSettingUpdated = true;
+
+                                    RemovePropertyBagValueInternal();
+                                }
+                                catch (Exception innerEx)
+                                {
+                                    LogError(innerEx);
+                                    return;
+                                }
+                                finally
+                                {
+                                    if (isScriptSettingUpdated)
+                                    {
+                                        LogDebug("Reverting scripting setting on the site back to no-script");
+                                        tenant.SetSiteProperties(ClientContext.Url, noScriptSite: true);
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            RemovePropertyBagValueInternal();
+                        }
                     }
                     else
                     {
-                        ThrowTerminatingError(new ErrorRecord(new Exception($"Site has NoScript enabled, this prevents removing property bag values."), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
-                        return;
-                    }
-                }
-
-                if (string.IsNullOrEmpty(Folder))
-                {
-                    if (web.PropertyBagContainsKey(Key))
-                    {
-                        if (Force || ShouldContinue(string.Format(Properties.Resources.Delete0, Key), Properties.Resources.Confirm))
-                        {
-                            web.RemovePropertyBagValue(Key);
-                        }
+                        throw;
                     }
                 }
                 else
                 {
-                    web.EnsureProperty(w => w.ServerRelativeUrl);
-
-                    var folderUrl = UrlUtility.Combine(web.ServerRelativeUrl, Folder);
-                    var folder = web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
-
-                    folder.EnsureProperty(f => f.Properties);
-
-                    if (folder.Properties.FieldValues.ContainsKey(Key))
-                    {
-                        if (Force || ShouldContinue(string.Format(Properties.Resources.Delete0, Key), Properties.Resources.Confirm))
-                        {
-
-                            folder.Properties[Key] = null;
-                            folder.Properties.FieldValues.Remove(Key);
-                            folder.Update();
-                            ClientContext.ExecuteQueryRetry();
-                        }
-                    }
+                    throw;
                 }
             }
-            catch
+        }
+
+        private void RemovePropertyBagValueInternal()
+        {
+            var web = ClientContext.Web;
+            web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
+            if (string.IsNullOrEmpty(Folder))
             {
-                throw;
-            }
-            finally
-            {
-                if (isScriptSettingUpdated)
+                if (web.PropertyBagContainsKey(Key))
                 {
-                    LogDebug("Disabling scripting on the site");
-                    var tenant = new Tenant(AdminContext);
-                    tenant.SetSiteProperties(ClientContext.Web.Url, noScriptSite: true);
+                    web.RemovePropertyBagValue(Key);
+                }
+            }
+            else
+            {
+                var folderUrl = UrlUtility.Combine(web.ServerRelativeUrl, Folder);
+                var folder = web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
+
+                folder.EnsureProperty(f => f.Properties);
+
+                if (folder.Properties.FieldValues.ContainsKey(Key))
+                {
+                    folder.Properties[Key] = null;
+                    folder.Properties.FieldValues.Remove(Key);
+                    folder.Update();
+                    ClientContext.ExecuteQueryRetry();
                 }
             }
         }
