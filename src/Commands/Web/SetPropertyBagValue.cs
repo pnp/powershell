@@ -80,6 +80,10 @@ namespace PnP.PowerShell.Commands
                                     }
                                 }
                             }
+                            else
+                            {
+                                SetPropertyBagValueInternal();
+                            }
                         }
                         else
                         {

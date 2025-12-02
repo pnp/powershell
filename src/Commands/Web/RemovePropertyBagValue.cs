@@ -72,6 +72,10 @@ namespace PnP.PowerShell.Commands
                                     }
                                 }
                             }
+                            else
+                            {
+                                RemovePropertyBagValueInternal();
+                            }
                         }
                         else
                         {
