@@ -40,7 +40,7 @@ This library is open-source and community provided library with active community
 This project is supported by the [.NET Foundation](https://dotnetfoundation.org) and has adopted the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
 
 
-![.NET Foundation](dotnetfoundation_v4_small.png ".NET Foundation")
+![.NET Foundation](images/dotnetfoundation_v4_small.png ".NET Foundation")
 
 
 <img src="https://m365-visitor-stats.azurewebsites.net/pnp-powershell/readme" /> 
