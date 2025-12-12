@@ -9864,6 +9864,16 @@
     },
     {
       "type": "Resource",
+      "source_relative_path": "images/dotnetfoundation_v4_small.png",
+      "output": {
+        "resource": {
+          "relative_path": "images/dotnetfoundation_v4_small.png"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
       "source_relative_path": "images/logo.svg",
       "output": {
         "resource": {
