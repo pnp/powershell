@@ -31,6 +31,4 @@ This project is supported by the [.NET Foundation](https://dotnetfoundation.org)
 
 ![.NET Foundation](dotnetfoundation_v4_small.png ".NET Foundation")
 
-Supported by the 
-
 <img src="https://m365-visitor-stats.azurewebsites.net/pnp-powershell/readme" />
