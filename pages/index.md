@@ -36,7 +36,11 @@ Follow the [getting started contributing](/powershell/articles/gettingstartedcon
 
 This library is open-source and community provided library with active community providing support for it. This is not Microsoft provided module so there's no SLA or direct support for this open-source component from Microsoft. Please report any issues using the [issues list](https://github.com/pnp/powershell/issues).
 
--------
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## .NET Foundation
+This project is supported by the [.NET Foundation](https://dotnetfoundation.org) and has adopted the [.NET Foundation Code of Conduct](https://dotnetfoundation.org/code-of-conduct).
+
+
+![.NET Foundation](dotnetfoundation_v4_small.png ".NET Foundation")
+
 
 <img src="https://m365-visitor-stats.azurewebsites.net/pnp-powershell/readme" /> 
