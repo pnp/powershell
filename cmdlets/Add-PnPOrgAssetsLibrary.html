@@ -147,13 +147,14 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-iscopilotsearchable">-IsCopilotSearchable</h3>
-<p>Indicates that the organizational assets library should be searchable in the CoPilot search experience in Office applications to locate corporate images. Only works when the OrgAssetType is set to ImageDocumentLibrary.</p>
+<p>Indicates that the organizational assets library should be searchable in the Copilot search experience in Office applications to locate corporate images.</p>
+<p>This setting is only supported when <code>-OrgAssetType</code> is set to <code>ImageDocumentLibrary</code>. When using other <code>OrgAssetType</code> values (for example <code>OfficeTemplateLibrary</code>), this setting will always be <code>False</code> and specifying <code>-IsCopilotSearchable:$true</code> will result in an error.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 
 Required: False
 Position: Named
-Default value: True
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
