@@ -53,6 +53,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `Set-PnPSite -HidePeoplePreviewingFiles $true` and `Set-PnPSite -HidePeopleWhoHaveListsOpen $true` added missing properties [#5003](https://github.com/pnp/powershell/issues/5003)
 - Fixed issue with `New-PnpAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer` made it language agnostic [#5137](https://github.com/pnp/powershell/issues/5137)
 - Fix `Register-PnPEntraIdApp` Allow to use CER file instead of PFX [#5129](https://github.com/pnp/powershell/issues/5129)
+- Fix `New-PnPTenantSite` cmdlet to properly handle timeout issues for classic sites. [#5185](https://github.com/pnp/powershell/pull/5185)
 
 ### Removed
 - Removed `-RemoveExisting` parameter from `Add-PnPAzureADGroupMember`, `Add-PnPAzureADGroupOwner`, `Add-PnPMicrosoft365GroupMember` and `Add-PnPMicrosoft365GroupOwner` cmdlets. It was never really implemented and without function. [#5153](https://github.com/pnp/powershell/pull/5153)
