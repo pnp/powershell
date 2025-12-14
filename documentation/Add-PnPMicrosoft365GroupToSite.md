@@ -13,7 +13,9 @@ title: Add-PnPMicrosoft365GroupToSite
 
 **Required Permissions**
 
-* SharePoint: Access to the SharePoint Tenant Administration site
+* SharePoint: Access to the SharePoint Tenant Administration site + SharePoint site collection admin
+* SharePoint permissions: `Sites.FullControl.All` (application) or `AllSites.FullControl` (delegated)
+* Ensure the user/account is allowed to create Microsoft 365 Groups (tenant policy), has access to SharePoint admin site and is site collection admin of the site to be groupified.
 
 Groupifies a classic team site by creating a Microsoft 365 group for it and connecting the site with the newly created group.
 
