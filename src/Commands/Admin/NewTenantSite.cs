@@ -5,7 +5,6 @@ using PnP.Framework;
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Management.Automation;
-using System.Threading.Tasks;
 
 namespace PnP.PowerShell.Commands
 {
@@ -97,23 +96,7 @@ namespace PnP.PowerShell.Commands
 
                 if (Wait)
                 {
-                    while (!spoOperation.IsComplete)
-                    {
-                        if (spoOperation.HasTimedout)
-                        {
-                            throw new TimeoutException("Wait for site creation operation to complete has timed out.");
-                        }
-                        Task.Delay(TimeSpan.FromMilliseconds(spoOperation.PollingInterval)).GetAwaiter().GetResult();
-                        spoOperation.RefreshLoad();
-                        
-                        if (((Cmdlet)this).Stopping)
-                        {
-                            ((Cmdlet)this).WriteWarning("Cmdlet execution interrupted by user, stopping wait for site creation operation to complete.");
-                            break;
-                        }
-                        AdminContext.Load(spoOperation, s => s.IsComplete, s => s.PollingInterval, s => s.HasTimedout);
-                        AdminContext.ExecuteQueryRetry();
-                    }
+                    PollOperation(spoOperation);
                 }
 
                 if (Wait && SharingCapability.HasValue)
@@ -128,7 +111,7 @@ namespace PnP.PowerShell.Commands
             var props = Tenant.GetSitePropertiesByUrl(url, true);
             Tenant.Context.Load(props);
             Tenant.Context.ExecuteQueryRetry();
-            
+
             props.SharingCapability = sharingCapability;
             var op = props.Update();
             AdminContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
