@@ -35,23 +35,23 @@ This cmdlet removes user, group, or (Everyone in organization) permissions from 
 ```powershell
 Remove-PnPPowerAppPermission -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com
 ```
-Removes the specified user permission from the specified PowerApp located in the default environment
+Removes the specified user permission from the specified PowerApp located in the default environment using user's UPN
 
 ### Example 2
 ```powershell
 Remove-PnPPowerAppPermission -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User 6844c04a-8ee7-40ad-af66-28f6e948cd04
 ```
-Removes the specified user permission from the specified PowerApp located in the default environment
+Removes the specified user permission from the specified PowerApp located in the default environment using user's Id
 
 ### Example 3
 ```powershell
-Remove-PnPPowerAppPermission (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com -AsAdmin
+Remove-PnPPowerAppPermission -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment") -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com -AsAdmin
 ```
 Removes the specified user permission from the specified PowerApp as an admin in the specified environment
 
 ### Example 4
 ```powershell
-Remove-PnPPowerAppPermission (Get-PnPPowerPlatformEnvironment -Identity "myenvironment) -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com -AsAdmin -Force
+Remove-PnPPowerAppPermission -Environment (Get-PnPPowerPlatformEnvironment -Identity "myenvironment) -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com -AsAdmin -Force
 ```
 Removes the specified user permission from the specified PowerApp as admin, without asking for confirmation, in the specified environment
 
@@ -91,7 +91,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Name, Id or instance of the PowerApp to add the permissions to.
+The Name, Id or instance of the PowerApp to remove the permissions to.
 
 ```yaml
 Type: PowerPlatformPipeBind
