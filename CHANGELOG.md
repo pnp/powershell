@@ -54,7 +54,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `New-PnpAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer` made it language agnostic [#5137](https://github.com/pnp/powershell/issues/5137)
 - Fix `Register-PnPEntraIdApp` Allow to use CER file instead of PFX [#5129](https://github.com/pnp/powershell/issues/5129)
 - Fix `New-PnPTenantSite` cmdlet to properly handle timeout issues for classic sites. [#5185](https://github.com/pnp/powershell/pull/5185)
-- Added required permissions documentation to `Add-PnPMicrosoft365GroupToSite` cmdlet [#4848](https://github.com/pnp/powershell/issues/4848)
+- Fixed missing required permissions documentation for `Add-PnPMicrosoft365GroupToSite` cmdlet [#4848](https://github.com/pnp/powershell/issues/4848)
 
 ### Removed
 - Removed `-RemoveExisting` parameter from `Add-PnPAzureADGroupMember`, `Add-PnPAzureADGroupOwner`, `Add-PnPMicrosoft365GroupMember` and `Add-PnPMicrosoft365GroupOwner` cmdlets. It was never really implemented and without function. [#5153](https://github.com/pnp/powershell/pull/5153)
