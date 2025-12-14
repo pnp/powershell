@@ -24,6 +24,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-Force` parameter to `Remove-PnPTerm` cmdlet to remove terms without confirmation.
 - Added `Import-PnPFlow` cmdlet to import Power Automate in the tenant. [#4854](https://github.com/pnp/powershell/pull/4854)
 - Marked `-Force` as obsolete within Enable-PnPFeature cmdlet . [#5146](https://github.com/pnp/powershell/pull/5146)
+- Added `Remove-PnPPowerAppPermission` cmdlet to remove Power Apps permissions. [#5168](https://github.com/pnp/powershell/pull/5168)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
@@ -75,6 +76,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - James Epp [jamesaepp]
 - Sven Boll [svenboll]
 - Joshua Hendersson [JoshuaSHenderson]
+- Siddharth Vaghasia [siddharth-vaghasia]
 
 ## [3.1.0]
 
