@@ -72,15 +72,7 @@ namespace PnP.PowerShell.Commands
 
                 if (newSiteId != Guid.Empty && Wait && SharingCapability.HasValue)
                 {
-                    var props = Tenant.GetSitePropertiesByUrl(Url, true);
-                    Tenant.Context.Load(props);
-                    Tenant.Context.ExecuteQueryRetry();
-
-                    props.SharingCapability = SharingCapability.Value;
-
-                    var op = props.Update();
-                    AdminContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                    AdminContext.ExecuteQueryRetry();
+                    SetSharingCapability(Url, SharingCapability.Value);
                 }
             }
             else
@@ -111,8 +103,9 @@ namespace PnP.PowerShell.Commands
                         {
                             throw new TimeoutException("Wait for site creation operation to complete has timed out.");
                         }
-                        Task.Delay(TimeSpan.FromMilliseconds(spoOperation.PollingInterval)).GetAwaiter().GetResult();                        
+                        Task.Delay(TimeSpan.FromMilliseconds(spoOperation.PollingInterval)).GetAwaiter().GetResult();
                         spoOperation.RefreshLoad();
+                        
                         if (((Cmdlet)this).Stopping)
                         {
                             ((Cmdlet)this).WriteWarning("Cmdlet execution interrupted by user, stopping wait for site creation operation to complete.");
@@ -123,19 +116,23 @@ namespace PnP.PowerShell.Commands
                     }
                 }
 
-                if (SharingCapability.HasValue)
+                if (Wait && SharingCapability.HasValue)
                 {
-                    var props = Tenant.GetSitePropertiesByUrl(Url, true);
-                    Tenant.Context.Load(props);
-                    Tenant.Context.ExecuteQueryRetry();
-
-                    props.SharingCapability = SharingCapability.Value;
-
-                    var op = props.Update();
-                    AdminContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                    AdminContext.ExecuteQueryRetry();
+                    SetSharingCapability(Url, SharingCapability.Value);
                 }
             }
+        }
+
+        private void SetSharingCapability(string url, SharingCapabilities sharingCapability)
+        {
+            var props = Tenant.GetSitePropertiesByUrl(url, true);
+            Tenant.Context.Load(props);
+            Tenant.Context.ExecuteQueryRetry();
+            
+            props.SharingCapability = sharingCapability;
+            var op = props.Update();
+            AdminContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+            AdminContext.ExecuteQueryRetry();
         }
 
         private bool TimeoutFunction(TenantOperationMessage message)
