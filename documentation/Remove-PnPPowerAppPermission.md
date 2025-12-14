@@ -91,7 +91,7 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Name, Id or instance of the PowerApp to remove the permissions to.
+The Name, Id or instance of the PowerApp to remove the permissions from.
 
 ```yaml
 Type: PowerPlatformPipeBind
