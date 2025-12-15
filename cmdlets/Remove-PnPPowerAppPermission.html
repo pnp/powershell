@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Add-PnPPageSection | PnP PowerShell </title>
+    <title>Remove-PnPPowerAppPermission | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Add-PnPPageSection | PnP PowerShell ">
+    <meta name="title" content="Remove-PnPPowerAppPermission | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,89 +77,72 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="add-pnppagesection">Add-PnPPageSection</h1>
+  <h1 id="remove-pnppowerapppermission">Remove-PnPPowerAppPermission</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Adds a new section to a page.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Azure: management.azure.com</li>
+<li>PowerApps: service.powerapps.com</li>
+<li>Microsoft Graph: User.Read.All, Group.Read.All</li>
+</ul>
+<p>Removes user, group and (Everyone in organization) permissions from a Power App</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Add-PnPPageSection [-Page] &lt;PagePipeBind&gt; -SectionTemplate &lt;CanvasSectionTemplate&gt;
- [-Order &lt;Int32&gt;] [-ZoneEmphasis &lt;Int32&gt;] [-VerticalZoneEmphasis &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
- 
+<pre><code class="lang-powershell">Remove-PnPPowerAppPermission [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] -Identity &lt;PowerPlatformPipeBind&gt; [-User &lt;String&gt;] [-Group &lt;String&gt;] [-Tenant] [-AsAdmin] [-Force] [-Verbose]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>Allows to add a new section to a page.</p>
+<p>This cmdlet removes user, group, or (Everyone in organization) permissions from a PowerApp using the -User, -Group, or -Tenant parameter. Only one of these parameters can be specified at a time, and at least one must be provided.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPPageSection -Page &quot;MyPage&quot; -SectionTemplate OneColumn
+<h3 id="example-1">Example 1</h3>
+<pre><code class="lang-powershell">Remove-PnPPowerAppPermission -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com
 </code></pre>
-<p>Adds a new one-column section to the page 'MyPage'</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Add-PnPPageSection -Page &quot;MyPage&quot; -SectionTemplate ThreeColumn -Order 10
+<p>Removes the specified user permission from the specified PowerApp located in the default environment using user's UPN</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Remove-PnPPowerAppPermission -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User 6844c04a-8ee7-40ad-af66-28f6e948cd04
 </code></pre>
-<p>Adds a new Three columns section to the page 'MyPage' with an order index of 10.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">$page = Add-PnPPage -Name &quot;MyPage&quot;
-Add-PnPPageSection -Page $page -SectionTemplate OneColumn
+<p>Removes the specified user permission from the specified PowerApp located in the default environment using user's Id</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="lang-powershell">Remove-PnPPowerAppPermission -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com -AsAdmin
 </code></pre>
-<p>Adds a new one column section to the page 'MyPage'.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">$page = Add-PnPPage -Name &quot;MyPage&quot;
-Add-PnPPageSection -Page $page -SectionTemplate OneColumn -ZoneEmphasis 2
+<p>Removes the specified user permission from the specified PowerApp as an admin in the specified environment</p>
+<h3 id="example-4">Example 4</h3>
+<pre><code class="lang-powershell">Remove-PnPPowerAppPermission -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment) -Identity 9b2f87e6-4c3d-48c0-a2b6-c1b4e3e57f0f -User username@tenant.onmicrosoft.com -AsAdmin -Force
 </code></pre>
-<p>Adds a new one column section to the page 'MyPage' and sets the background to 2 (0 is no background, 3 is highest emphasis).</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">$page = Add-PnPPage -Name &quot;MyPage&quot;
-Add-PnPPageSection -Page $page -SectionTemplate OneColumnVerticalSection -Order 1 -ZoneEmphasis 2 -VerticalZoneEmphasis 3
+<p>Removes the specified user permission from the specified PowerApp as admin, without asking for confirmation, in the specified environment</p>
+<h3 id="example-5">Example 5</h3>
+<pre><code class="lang-powershell">Remove-PnPPowerAppPermission -Identity &quot;3f4a2c1d-0e9d-4c1e-8b55-9e3c7f0ba7e2&quot; -Group &quot;c6c4b4e0-cd72-4d64-8ec2-cfbd0388ec16&quot; -Force
 </code></pre>
-<p>Adds a new one column with one vertical section to the page 'MyPage' and sets the zone emphasis to 2 for one column and vertical zone emphasis to 3 for the vertical column.</p>
-<h3 id="example-6">EXAMPLE 6</h3>
-<pre><code class="lang-powershell">$page = Add-PnPPage -Name &quot;MyPage&quot;
-Add-PnPPageSection -Page $page -SectionTemplate FlexibleLayoutSection -Order 1 -ZoneReflowStrategy LeftToRight
+<p>Removes the specified group's permission for the PowerApp without prompting using group id</p>
+<h3 id="example-6">Example 6</h3>
+<pre><code class="lang-powershell">Remove-PnPPowerAppPermission -Identity &quot;3f4a2c1d-0e9d-4c1e-8b55-9e3c7f0ba7e2&quot; -Group &quot;Finance Team&quot;
 </code></pre>
-<p>Adds a flexible layout section to the page 'MyPage' and sets the zone reflow strategy to LeftToRight. Note: <code>-ZoneReflowStrategy</code> only applies to flexible layout section templates (for example <code>FlexibleLayoutSection</code> and <code>FlexibleLayoutVerticalSection</code>).</p>
+<p>Removes the specified group's permission for the PowerApp using group's display name</p>
+<h3 id="example-7">Example 7</h3>
+<pre><code class="lang-powershell">Remove-PnPPowerAppPermission -Identity &quot;3f4a2c1d-0e9d-4c1e-8b55-9e3c7f0ba7e2&quot; -Tenant
+</code></pre>
+<p>Removes the (Everyone in organization) permission for the PowerApp using -Tenant parameter</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-environment">-Environment</h3>
+<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
 Parameter Sets: (All)
+Aliases:
 
 Required: False
 Position: Named
-Default value: None
-Accept pipeline input: False
+Default value: The default environment
+Accept pipeline input: True
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-order">-Order</h3>
-<p>Sets the order of the section. (Default = 1)</p>
-<pre><code class="lang-yaml">Type: Int32
+<h3 id="-identity">-Identity</h3>
+<p>The Name, Id or instance of the PowerApp to remove the permissions from.</p>
+<pre><code class="lang-yaml">Type: PowerPlatformPipeBind
 Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-page">-Page</h3>
-<p>The name of the page or the page object.</p>
-<pre><code class="lang-yaml">Type: PagePipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: 0
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-sectiontemplate">-SectionTemplate</h3>
-<p>Specifies the columns template to use for the section.</p>
-<pre><code class="lang-yaml">Type: CanvasSectionTemplate
-Parameter Sets: (All)
-Accepted values: OneColumn, OneColumnFullWidth, TwoColumn, ThreeColumn, TwoColumnLeft, TwoColumnRight, OneColumnVerticalSection, TwoColumnVerticalSection, ThreeColumnVerticalSection, TwoColumnLeftVerticalSection, TwoColumnRightVerticalSection
+Aliases:
 
 Required: True
 Position: Named
@@ -167,9 +150,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-zoneemphasis">-ZoneEmphasis</h3>
-<p>Sets the background of the section (default = 0).</p>
-<pre><code class="lang-yaml">Type: Int32
+<h3 id="-user">-User</h3>
+<p>The user principal name or Id of the user to remove its permissions from the PowerApp.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -178,22 +161,43 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-verticalzoneemphasis">-VerticalZoneEmphasis</h3>
-<p>Sets the background of the vertical section (default = 0).
-Works only for vertical column layouts, will be ignored for other layouts.</p>
-<h3 id="-zonereflowstrategy">-ZoneReflowStrategy</h3>
-<p>Controls how zones are reflowed when rendering flexible layout sections. This parameter only applies to flexible layout section templates (for example <code>FlexibleLayoutSection</code> and <code>FlexibleLayoutVerticalSection</code>). If not provided, the default is <code>TopToDown</code>.</p>
-<pre><code class="lang-yaml">Type: ZoneReflowStrategy
+<h3 id="-group">-Group</h3>
+<p>The group display name or Id of the group to remove its permissions from the PowerApp.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Accepted values: TopToDown, LeftToRight
 
 Required: False
 Position: Named
-Default value: TopToDown
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<pre><code class="lang-yaml">Type: Int32
+<h3 id="-tenant">-Tenant</h3>
+<p>The (Everyone in organization) permission to remove from the PowerApp</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-asadmin">-AsAdmin</h3>
+<p>If specified, the permission will be removed as an admin. If not specified only the Apps to which the current user already has access can be modified.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>Providing the Force parameter will skip the confirmation question.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False

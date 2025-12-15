@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -86,7 +86,9 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>SharePoint: Access to the SharePoint Tenant Administration site</li>
+<li>SharePoint: Access to the SharePoint Tenant Administration site + SharePoint site collection admin</li>
+<li>SharePoint permissions: <code>Sites.FullControl.All</code> (application) or <code>AllSites.FullControl</code> (delegated)</li>
+<li>Ensure the user/account is allowed to create Microsoft 365 Groups (tenant policy), has access to SharePoint admin site and is site collection admin of the site to be groupified.</li>
 </ul>
 <p>Groupifies a classic team site by creating a Microsoft 365 group for it and connecting the site with the newly created group.</p>
 <h2 id="syntax">SYNTAX</h2>
