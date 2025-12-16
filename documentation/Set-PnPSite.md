@@ -52,6 +52,7 @@ Set-PnPSite
  [-ListsShowHeaderAndNavigation <Boolean>]
  [-RestrictContentOrgWideSearch <Boolean>]
  [-CanSyncHubSitePermissions <SwitchParameter>]
+ [-ClearGroupId]
  [-HidePeoplePreviewingFiles <Boolean>]
  [-HidePeopleWhoHaveListsOpen <Boolean>]
  [-RestrictedAccessControl <Boolean>]
@@ -681,6 +682,20 @@ Accept wildcard characters: False
 
 ### -CanSyncHubSitePermissions
 Sets value if syncing hub site permissions to this associated site is allowed.
+
+```yaml
+Type: Switch Parameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClearGroupId
+This parameter allows you to remove the assigned Microsoft 365 group ID on a site, when the group is permanently deleted.
 
 ```yaml
 Type: Switch Parameter
