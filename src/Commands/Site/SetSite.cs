@@ -140,6 +140,9 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter ReadOnlyForBlockDownloadPolicy;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter ClearGroupId;
+
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
 
@@ -458,6 +461,12 @@ namespace PnP.PowerShell.Commands.Site
                     executeQueryRequired = true;
                 }
 
+                if (ParameterSpecified(nameof(ClearGroupId)) && ClearGroupId.IsPresent)
+                {
+                    siteProperties.ClearGroupId = ClearGroupId.ToBool();
+                    executeQueryRequired = true;
+                }
+
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();
@@ -515,8 +524,9 @@ namespace PnP.PowerShell.Commands.Site
                 ParameterSpecified(nameof(ExcludedBlockDownloadGroupIds)) ||
                 ListsShowHeaderAndNavigation.HasValue ||
                 HidePeoplePreviewingFiles.HasValue ||
-                HidePeopleWhoHaveListsOpen.HasValue || 
-                ParameterSpecified(nameof(ExcludeBlockDownloadSharePointGroups)) || 
-                ReadOnlyForBlockDownloadPolicy.IsPresent;
+                HidePeopleWhoHaveListsOpen.HasValue ||
+                ParameterSpecified(nameof(ExcludeBlockDownloadSharePointGroups)) ||
+                ReadOnlyForBlockDownloadPolicy.IsPresent ||
+                ClearGroupId.IsPresent;
     }
 }
