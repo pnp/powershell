@@ -116,6 +116,7 @@
  [-RestrictedAccessControl &lt;Boolean&gt;] [-ClearRestrictedAccessControl &lt;SwitchParameter&gt;] [-RestrictedAccessControlGroups &lt;Guid[]&gt;]
  [-AddRestrictedAccessControlGroups &lt;Guid[]&gt;] [-RemoveRestrictedAccessControlGroups &lt;Guid[]&gt;][-InheritVersionPolicyFromTenant &lt;SwitchParameter&gt;]
  [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled &lt;Boolean&gt;]
+ [-ClearGroupId]
  [-Wait] 
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
@@ -700,6 +701,17 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-clearrestrictedaccesscontrol">-ClearRestrictedAccessControl</h3>
 <p>To reset restricted access control configuration for a site.</p>
+<pre><code class="lang-yaml">Type: Switch Parameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-cleargroupid">-ClearGroupId</h3>
+<p>This parameter allows you to remove the assigned Microsoft 365 group ID on a site, when the group is permanently deleted.</p>
 <pre><code class="lang-yaml">Type: Switch Parameter
 Parameter Sets: Set Properties
 
