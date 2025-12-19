@@ -1,4 +1,5 @@
-﻿using Microsoft.Online.SharePoint.TenantManagement;
+﻿using Microsoft.Online.SharePoint.TenantAdministration;
+using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using PnP.Framework;
 using PnP.PowerShell.Commands.Base;
@@ -59,24 +60,62 @@ namespace PnP.PowerShell.Commands
                 Uri uri = BaseUri;
                 Url = $"{uri.ToString().TrimEnd('/')}/{Url.TrimStart('/')}";
             }
-            Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
-            Guid newSiteId = Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota,
-                (int)StorageQuotaWarningLevel, TimeZone, (int)ResourceQuota, (int)ResourceQuotaWarningLevel, Lcid,
-                RemoveDeletedSite, Wait, Wait == true ? timeoutFunction : null);
-
-            if (newSiteId != Guid.Empty && Wait && SharingCapability.HasValue)
+            if (ParameterSpecified(nameof(RemoveDeletedSite)))
             {
-                var props = Tenant.GetSitePropertiesByUrl(Url, true);
-                Tenant.Context.Load(props);
-                Tenant.Context.ExecuteQueryRetry();
+                Func<TenantOperationMessage, bool> timeoutFunction = TimeoutFunction;
 
-                props.SharingCapability = SharingCapability.Value;
+                Guid newSiteId = Tenant.CreateSiteCollection(Url, Title, Owner, Template, (int)StorageQuota,
+                    (int)StorageQuotaWarningLevel, TimeZone, (int)ResourceQuota, (int)ResourceQuotaWarningLevel, Lcid,
+                    RemoveDeletedSite, Wait, Wait == true ? timeoutFunction : null);
 
-                var op = props.Update();
-                AdminContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
-                AdminContext.ExecuteQueryRetry();
+                if (newSiteId != Guid.Empty && Wait && SharingCapability.HasValue)
+                {
+                    SetSharingCapability(Url, SharingCapability.Value);
+                }
             }
+            else
+            {
+                SiteCreationProperties siteCreationProperties = new SiteCreationProperties
+                {
+                    Url = Url,
+                    Owner = Owner,
+                    Title = Title,
+                    Template = Template,
+                    StorageMaximumLevel = StorageQuota,
+                    StorageWarningLevel = StorageQuotaWarningLevel,
+                    TimeZoneId = TimeZone,
+                    UserCodeMaximumLevel = ResourceQuota,
+                    UserCodeWarningLevel = ResourceQuotaWarningLevel,
+                    Lcid = Lcid
+                };
+
+                SpoOperation spoOperation = Tenant.CreateSite(siteCreationProperties);
+                AdminContext.Load(spoOperation, s => s.IsComplete, s => s.PollingInterval, s => s.HasTimedout);
+                AdminContext.ExecuteQueryRetry();
+
+                if (Wait)
+                {
+                    PollOperation(spoOperation);
+                }
+
+                if (Wait && SharingCapability.HasValue)
+                {
+                    SetSharingCapability(Url, SharingCapability.Value);
+                }
+            }
+        }
+
+        private void SetSharingCapability(string url, SharingCapabilities sharingCapability)
+        {
+            var props = Tenant.GetSitePropertiesByUrl(url, true);
+            Tenant.Context.Load(props);
+            Tenant.Context.ExecuteQueryRetry();
+
+            props.SharingCapability = sharingCapability;
+            var op = props.Update();
+            AdminContext.Load(op, i => i.IsComplete, i => i.PollingInterval);
+            AdminContext.ExecuteQueryRetry();
         }
 
         private bool TimeoutFunction(TenantOperationMessage message)

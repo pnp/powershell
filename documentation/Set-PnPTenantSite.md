@@ -46,6 +46,7 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-RestrictedAccessControl <Boolean>] [-ClearRestrictedAccessControl <SwitchParameter>] [-RestrictedAccessControlGroups <Guid[]>]
  [-AddRestrictedAccessControlGroups <Guid[]>] [-RemoveRestrictedAccessControlGroups <Guid[]>][-InheritVersionPolicyFromTenant <SwitchParameter>]
  [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>]
+ [-ClearGroupId]
  [-Wait] 
  [-Connection <PnPConnection>] 
 ```
@@ -804,6 +805,20 @@ Accept wildcard characters: False
 
 ### -ClearRestrictedAccessControl
 To reset restricted access control configuration for a site.
+
+```yaml
+Type: Switch Parameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClearGroupId
+This parameter allows you to remove the assigned Microsoft 365 group ID on a site, when the group is permanently deleted.
 
 ```yaml
 Type: Switch Parameter
