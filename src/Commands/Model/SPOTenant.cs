@@ -3,6 +3,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Administration;
 using Microsoft.SharePoint.Client.Sharing;
+using Microsoft.SharePoint.Client.Utilities;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using System;
@@ -328,7 +329,184 @@ namespace PnP.PowerShell.Commands.Model
         public List<string> WhoCanShareAuthenticatedGuestAllowList { private set; get; }
         public bool? EnableSensitivityLabelForOneNote { private set; get; }
         public bool? EnableSensitivityLabelForVideoFiles { private set; get; }
+        public string[] KnowledgeAgentSelectedSitesList { private set; get; }
+        public bool? KnowledgeAgentEnabled { get; set; }
+        public bool? AllowClassicPublishingSiteCreation { get; private set; }
+        public bool? AllowLimitedAccessOnUnmanagedDevices { get; private set; }
+        public string AmplifyAdminSettings { get; private set; }
+        public bool? AppOnlyBypassPeoplePickerPolicies { get; private set; }
+        public string ArchiveRedirectUrl { get; private set; }
+        public bool? AutofillColumnsCustomModelEnabled { get; private set; }
+        public bool? AutofillColumnsEnabled { get; private set; }
+        public bool? BlockAccessOnUnmanagedDevices { get; private set; }
+        public bool? BlockAppAccessWithAuthenticationContext { get; private set; }
+        public bool? ClassicPagesRestrictMode { get; private set; }
+        public string ConditionalAccessPolicyErrorHelpLink { get; private set; }
+        public bool? ContentSecurityPolicyConfigSynced { get; private set; }
 
+        public bool? CoreDefaultLinkToExistingAccess { get; private set; }
+
+        public string CustomizedExternalSharingServiceUrl { get; private set; }
+
+        public bool? CustomScriptsRestrictMode { get; private set; }
+
+        public bool? DelayDenyAddAndCustomizePagesEnforcement { get; private set; }
+
+        public bool? DelayContentSecurityPolicyEnforcement { get; private set; }
+
+        public bool? DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites { get; private set; }
+
+        public bool? DisableBackToClassic { get; private set; }
+
+        public bool? DisableReportProblemDialog { get; private set; }
+
+        public bool? DisableSharePointStoreAccess { get; private set; }
+
+        public bool? DocumentUnderstandingEnabled { get; private set; }
+
+        public bool? EmailAttestationEnabled { get; private set; }
+
+        public bool? EnableAutoNewsDigest { get; private set; }
+
+        public bool? EnableDirectToCustomerBilling { get; private set; }
+
+        public bool? EnableMinimumVersionRequirement { get; private set; }
+
+        public bool? EnableMipSiteLabel { get; private set; }
+
+        public bool? EnablePromotedFileHandlers { get; private set; }
+
+        public bool? EnableTenantRestrictionsInsights { get; private set; }
+
+        public bool? ExemptNativeUsersFromTenantLevelRestricedAccessControl { get; private set; }
+        public Role? AddressbarLinkPermission { get; private set; }
+
+        public string AIBuilderDefaultPowerAppsEnvironment { get; private set; }
+
+        public bool? AllowCommentsTextOnEmailEnabled { get; private set; }
+
+        public bool? AllowGuestUserShareToUsersNotInSiteCollection { get; private set; }
+
+        public bool? AllowLegacyAuthProtocolsEnabledSetting { get; private set; }
+
+        public bool? AllowLegacyBrowserAuthProtocolsEnabledSetting { get; private set; }
+        public bool? BlockDownloadOfAllFilesForGuests { get; private set; }
+
+        public bool? BlockDownloadOfAllFilesOnUnmanagedDevices { get; private set; }
+
+        public bool? BlockDownloadOfViewableFilesForGuests { get; private set; }
+
+        public bool? BlockDownloadOfViewableFilesOnUnmanagedDevices { get; private set; }
+
+        public bool? BlockMacSync { get; private set; }
+
+        public bool? BlockSendLabelMismatchEmail { get; private set; }
+
+        public string BlockUserInfoVisibility { get; private set; }
+
+        public long? BonusStorageQuotaMB { get; private set; }
+
+        public bool? CommentsOnFilesDisabled { get; private set; }
+
+        public bool? CommentsOnListItemsDisabled { get; private set; }
+
+        public SharingState? CoreBlockGuestsAsSiteAdmin { get; private set; }
+
+        public int? CoreOrganizationSharingLinkMaxExpirationInDays { get; private set; }
+
+        public int? CoreOrganizationSharingLinkRecommendedExpirationInDays { get; private set; }
+
+        public bool? DataverseUsageConsentEnabled { get; private set; }
+
+        public SiteInfoForSitePicker DefaultContentCenterSite { get; private set; }
+
+        public bool? DelegateRestrictedAccessControlConfiguration { get; private set; }
+
+        public bool? DelegateRestrictedContentDiscoveryConfiguration { get; private set; }
+
+        public bool? DisableOutlookPSTVersionTrimming { get; private set; }
+
+        public SyntexSiteScopeContentCenterMode? DocumentUnderstandingEnabledInContentCenter { get; private set; }
+
+        public string GuestSharingGroupAllowListInTenant { private set; get; }
+
+        public bool? HasIntelligentContentServicesCapability { private set; get; }
+
+        public bool? HasTopicExperiencesCapability { private set; get; }
+        public ImageTaggingChoice? ImageTaggingOption { private set; get; }
+
+        public bool? IncludeAtAGlanceInShareEmails { private set; get; }
+
+        public bool? IsAppBarTemporarilyDisabled { private set; get; }
+
+        public bool? IsHubSitesMultiGeoFlightEnabled { private set; get; }
+
+        public bool? IsMnAFlightEnabled { private set; get; }
+        public bool? IsMultiGeo { private set; get; }
+        public bool? IsMultipleHomeSitesFlightEnabled { private set; get; }
+
+        public bool? IsMultipleVivaConnectionsFlightEnabled { private set; get; }
+
+        public bool? IsUnmanagedSyncClientForTenantRestricted { private set; get; }
+
+        public bool? IsUnmanagedSyncClientRestrictionFlightEnabled { private set; get; }
+
+        public bool? IsVivaHomeFlightEnabled { private set; get; }
+
+        public bool? IsVivaHomeGAFlightEnabled { private set; get; }
+
+        public bool? IsWBFluidEnabled { private set; get; }
+
+        public KnowledgeAgentScopeMode? KnowledgeAgentScopeMode { private set; get; }
+
+        public string LabelMismatchEmailHelpLink { private set; get; }
+
+        public SPOLimitedAccessFileType? LimitedAccessFileType { private set; get; }
+
+        public bool? MachineLearningCaptureEnabled { private set; get; }
+
+        public bool? MarkAllFilesAsSensitiveByDefault { private set; get; }
+
+        public bool? MassDeleteNotificationDisabled { private set; get; }
+
+        public bool? MassDeleteNotificationDisabledForODB { private set; get; }
+
+        public bool? MassDeleteNotificationDisabledForSPO { private set; get; }
+
+        public MediaTranscriptionPolicyType? MediaTranscription { private set; get; }
+
+        public MediaTranscriptionAutomaticFeaturesPolicyType? MediaTranscriptionAutomaticFeatures { private set; get; }
+
+        public bool? MobileFriendlyUrlEnabledInTenant { private set; get; }
+
+        public string OrgNewsSiteUrl { private set; get; }
+
+        public bool? PrebuiltEnabled { private set; get; }
+
+        public SyntexSiteScopeContentCenterMode? PrebuiltEnabledInContentCenter { private set; get; }
+
+        public string RestrictedAccessControlForOneDriveErrorHelpLink { private set; get; }
+
+        public bool? RestrictedOneDriveLicense { private set; get; }
+
+        public bool? RestrictedSharePointLicense { private set; get; }
+        public bool? RestrictExternalSharingForAgents { private set; get; }
+        public bool? RestrictResourceAccountAccess { private set; get; }
+        public string RootSiteUrl { private set; get; }
+
+        public bool? SharePointAddInsBlocked { private set; get; }
+
+        public bool? ShowOpenInDesktopOptionForSyncedFiles { private set; get; }
+
+        public bool? SiteOwnersCanAccessMissingContent { private set; get; }
+
+        public bool? StopAlerts { private set; get; }
+
+        public bool? StopNew2010Workflows { private set; get; }
+
+        public bool? TaxonomyTaggingEnabled { private set; get; }
+
+        public bool? TranslationEnabled { private set; get; }
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext, BasePSCmdlet cmdlet)
