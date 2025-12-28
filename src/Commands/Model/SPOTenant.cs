@@ -330,7 +330,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool? EnableSensitivityLabelForOneNote { private set; get; }
         public bool? EnableSensitivityLabelForVideoFiles { private set; get; }
         public string[] KnowledgeAgentSelectedSitesList { private set; get; }
-        public bool? KnowledgeAgentEnabled { get; set; }
+        public bool? KnowledgeAgentEnabled { get; private set; }
         public bool? AllowClassicPublishingSiteCreation { get; private set; }
         public bool? AllowLimitedAccessOnUnmanagedDevices { get; private set; }
         public string AmplifyAdminSettings { get; private set; }
@@ -378,7 +378,7 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? EnableTenantRestrictionsInsights { get; private set; }
 
-        public bool? ExemptNativeUsersFromTenantLevelRestricedAccessControl { get; private set; }
+        public bool? ExemptNativeUsersFromTenantLevelRestrictedAccessControl { get; private set; }
         public Role? AddressbarLinkPermission { get; private set; }
 
         public string AIBuilderDefaultPowerAppsEnvironment { get; private set; }
