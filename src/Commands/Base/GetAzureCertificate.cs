@@ -88,7 +88,7 @@ namespace PnP.PowerShell.Commands.Base
                 certificate: CertificateHelper.CertificateToBase64(certificate),
                 privateKey: CertificateHelper.PrivateKeyToBase64(certificate),
                 sanNames: certificate.Extensions.Cast<X509Extension>()
-                                                .Where(n => n.Oid.FriendlyName == "Subject Alternative Name")
+                                                .Where(n => n.Oid.Value == "2.5.29.17")
                                                 .Select(n => new AsnEncodedData(n.Oid, n.RawData))
                                                 .Select(n => n.Format(false))
                                                 .FirstOrDefault().Split(',', StringSplitOptions.TrimEntries)

@@ -188,8 +188,10 @@ Accept wildcard characters: False
 Specifies the update type to use when updating the listitem. Possible values are "Update", "SystemUpdate", "UpdateOverwriteVersion".
 
 * **Update**: Sets field values and creates a new version if versioning is enabled for the list. The "Modified By" and "Modified" fields will be updated to reflect the time of the update and the user who made the change.
-* **SystemUpdate**: Sets field values and does not create a new version. Any events on the list will trigger. The "Modified By" and "Modified" fields are not updated and can not be set.
-* **UpdateOverwriteVersion**: Sets field values and does not create a new version. No events on the list will trigger. The "Modified By" and "Modified" fields are not updated but can be set by passing the field values in the update. HINT: use 'Editor' to set the "Modified By" field.
+* **SystemUpdate**: Sets field values and does not create a new version. Changes are appended to the last version. Any events on the list will trigger. The "Modified By" and "Modified" fields are not updated and can not be set.
+  >_Note: Power Automate Flows are not triggered_
+* **UpdateOverwriteVersion**: Sets field values and does not create a new version. The last version's modified date is updated and the changes are appended. The "Modified By" and "Modified" fields are not updated but can be set by passing the field values in the update. HINT: use 'Editor' to set the "Modified By" field.
+  >_Note: Power Automate Flows ARE triggered_
 
 ```yaml
 Type: SwitchParameter

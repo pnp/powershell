@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement
+namespace PnP.PowerShell.Commands.Model.PrivilegedIdentityManagement
 {
     /// <summary>
     /// Information about a schedule used within role assignment requests in Privileged Identity Management

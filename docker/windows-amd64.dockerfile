@@ -4,7 +4,7 @@ RUN mkdir C:\\pwsh
 WORKDIR C:\\pwsh
 
 # Download and install PowerShell 7
-RUN curl.exe -L -o pwsh.zip https://github.com/PowerShell/PowerShell/releases/download/v7.5.2/PowerShell-7.5.2-win-x64.zip
+RUN curl.exe -L -o pwsh.zip https://github.com/PowerShell/PowerShell/releases/download/v7.5.4/PowerShell-7.5.4-win-x64.zip
 RUN tar -xf pwsh.zip -C C:\pwsh
 RUN del pwsh.zip
 
@@ -19,6 +19,7 @@ RUN Install-Module -Name PnP.PowerShell -RequiredVersion $env:PNP_VERSION -Force
 
 # Start PowerShell
 CMD ["pwsh"]
+
 
 
 

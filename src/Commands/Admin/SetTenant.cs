@@ -430,6 +430,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? AIBuilderEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
+        public bool? KnowledgeAgentEnabled { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? AllowSensitivityLabelOnRecords { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -463,70 +466,73 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? IsSharePointAddInsDisabled { get; set; }
 
         [Parameter(Mandatory = false)]
-        public SharingScope? CoreDefaultShareLinkScope { private set; get; }
+        public SharingScope? CoreDefaultShareLinkScope { set; get; }
 
         [Parameter(Mandatory = false)]
-        public Role? CoreDefaultShareLinkRole { private set; get; }
+        public Role? CoreDefaultShareLinkRole { set; get; }
 
         [Parameter(Mandatory = false)]
-        public SharingCapabilities? OneDriveSharingCapability { private set; get; }
+        public SharingCapabilities? OneDriveSharingCapability { set; get; }
 
         [Parameter(Mandatory = false)]
-        public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
+        public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { private set; get; }
+        public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? SelfServiceSiteCreationDisabled { private set; get; }
+        public bool? SelfServiceSiteCreationDisabled { set; get; }
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter SyncAadB2BManagementPolicy { private set; get; }
+        public SwitchParameter SyncAadB2BManagementPolicy { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? ExtendPermissionsToUnprotectedFiles { private set; get; }
+        public bool? ExtendPermissionsToUnprotectedFiles { set; get; }
 
         [Parameter(Mandatory = false)]
-        public string WhoCanShareAllowListInTenant { private set; get; }
+        public string WhoCanShareAllowListInTenant { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? LegacyBrowserAuthProtocolsEnabled { private set; get; }
+        public bool? LegacyBrowserAuthProtocolsEnabled { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? EnableDiscoverableByOrganizationForVideos { private set; get; }
+        public bool? EnableDiscoverableByOrganizationForVideos { set; get; }
 
         [Parameter(Mandatory = false)]
-        public string RestrictedAccessControlforSitesErrorHelpLink { private set; get; }
+        public string RestrictedAccessControlforSitesErrorHelpLink { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? Workflow2010Disabled { private set; get; }
+        public bool? Workflow2010Disabled { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? AllowSharingOutsideRestrictedAccessControlGroups { private set; get; }
+        public bool? AllowSharingOutsideRestrictedAccessControlGroups { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? HideSyncButtonOnDocLib { private set; get; }
+        public bool? HideSyncButtonOnDocLib { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? HideSyncButtonOnODB { private set; get; }
+        public bool? HideSyncButtonOnODB { set; get; }
 
         [Parameter(Mandatory = false)]
-        public int? StreamLaunchConfig { private set; get; }
+        public int? StreamLaunchConfig { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? EnableMediaReactions { private set; get; }
+        public bool? EnableMediaReactions { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? ContentSecurityPolicyEnforcement { private set; get; }
+        public bool? ContentSecurityPolicyEnforcement { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? DisableSpacesActivation { private set; get; }
+        public bool? DisableSpacesActivation { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? AllowClassicPublishingSiteCreation { private set; get; }
+        public bool? AllowClassicPublishingSiteCreation { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites { private set; get; }
+        public bool? DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites { set; get; }
+
+        [Parameter(Mandatory = false)]
+        public string[] KnowledgeAgentSelectedSitesList { set; get; }
 
         protected override void ExecuteCmdlet()
         {
@@ -1667,6 +1673,58 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 Tenant.DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites = DelayDenyAddAndCustomizePagesEnforcementOnClassicPublishingSites.Value;
                 modified = true;
+            }
+            if (KnowledgeAgentEnabled.HasValue)
+            {
+                Tenant.KnowledgeAgentEnabled = KnowledgeAgentEnabled.Value;
+                modified = true;
+            }
+            if (KnowledgeAgentSelectedSitesList != null)
+            {
+                if (KnowledgeAgentSelectedSitesList.Length == 0)
+                {
+                    // Explicit empty array passed - clear configured Knowledge Agent sites
+                    Tenant.KnowledgeAgentSiteList = [];
+                    modified = true;
+                }
+                else
+                {
+                    // Build a GUID array by resolving each provided site URL to its SiteProperties and extracting the Id
+                    var siteIdList = new List<Guid>(KnowledgeAgentSelectedSitesList.Length);
+                    var tenantForLookup = new Tenant(AdminContext);
+
+                    foreach (var siteUrl in KnowledgeAgentSelectedSitesList)
+                    {
+                        if (string.IsNullOrWhiteSpace(siteUrl))
+                        {
+                            continue;
+                        }
+
+                        try
+                        {
+                            // The GetSitePropertiesByUrl call requires the tenant admin context
+                            var siteProps = tenantForLookup.GetSitePropertiesByUrl(siteUrl, includeDetail: false);
+                            tenantForLookup.Context.Load(siteProps, sp => sp.SiteId);
+                            tenantForLookup.Context.ExecuteQueryRetry();
+                            if (siteProps != null && siteProps.SiteId != Guid.Empty)
+                            {
+                                siteIdList.Add(siteProps.SiteId);
+                            }
+                            else
+                            {
+                                LogWarning($"Unable to resolve site URL '{siteUrl}' to a site id. It will be skipped.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Don't fail the whole cmdlet for one bad URL; log warning and continue
+                            LogWarning($"Error resolving site URL '{siteUrl}': {ex.Message}. It will be skipped.");
+                        }
+                    }
+
+                    Tenant.KnowledgeAgentSiteList = siteIdList.ToArray();
+                    modified = true;
+                }
             }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)
             {

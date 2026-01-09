@@ -1,9 +1,9 @@
 using System;
 
-namespace PnP.PowerShell.Commands.Model.PriviledgedIdentityManagement
+namespace PnP.PowerShell.Commands.Model.PrivilegedIdentityManagement
 {
     /// <summary>
-    /// An elibible role in Entra ID Priviledged Identity Management
+    /// An eligible role in Entra ID Privileged Identity Management
     /// </summary>
     public class RoleEligibilitySchedule
     {

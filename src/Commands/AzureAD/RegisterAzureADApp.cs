@@ -460,7 +460,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 // Ensure a file exists at the provided CertificatePath
                 if (!File.Exists(CertificatePath))
                 {
-                    throw new PSArgumentException(string.Format(Resources.CertificateNotFoundAtPath, CertificatePath), nameof(CertificatePath));
+                    throw new PSArgumentException($"Certificate not found at path: {CertificatePath}", nameof(CertificatePath));
                 }
 
                 try
@@ -469,13 +469,7 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 catch (CryptographicException e) when (e.Message.Contains("The specified password is not correct"))
                 {
-                    throw new PSArgumentNullException(nameof(CertificatePassword), string.Format(Resources.PrivateKeyCertificateImportFailedPasswordIncorrect, nameof(CertificatePassword)));
-                }
-
-                // Ensure the certificate at the provided CertificatePath holds a private key
-                if (!cert.HasPrivateKey)
-                {
-                    throw new PSArgumentException(string.Format(Resources.CertificateAtPathHasNoPrivateKey, CertificatePath), nameof(CertificatePath));
+                    throw new PSArgumentNullException(nameof(CertificatePassword), $"Failed to import private key certificate. Ensure the correct password is provided for parameter: {nameof(CertificatePassword)}");
                 }
             }
             else

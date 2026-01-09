@@ -36,6 +36,8 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-MediaTranscription <MediaTranscriptionPolicyType>] 
  [-BlockDownloadPolicy <Boolean>] [-ExcludeBlockDownloadPolicySiteOwners <Boolean>]
  [-ExcludedBlockDownloadGroupIds <Guid[]>]
+ [-ExcludeBlockDownloadSharePointGroups <String[]>]
+ [-ReadOnlyForBlockDownloadPolicy]
  [-ListsShowHeaderAndNavigation <Boolean>]
  [-DefaultLinkToExistingAccessReset <SwitchParameter>] [-DefaultShareLinkRole <Role>]
  [-DefaultShareLinkScope <SharingScope>] [-LoopDefaultSharingLinkRole <Role>]
@@ -44,6 +46,7 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-RestrictedAccessControl <Boolean>] [-ClearRestrictedAccessControl <SwitchParameter>] [-RestrictedAccessControlGroups <Guid[]>]
  [-AddRestrictedAccessControlGroups <Guid[]>] [-RemoveRestrictedAccessControlGroups <Guid[]>][-InheritVersionPolicyFromTenant <SwitchParameter>]
  [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>]
+ [-ClearGroupId]
  [-Wait] 
  [-Connection <PnPConnection>] 
 ```
@@ -744,6 +747,34 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ExcludeBlockDownloadSharePointGroups
+Exempts users from the specified SharePoint groups from the block download policy. Users in these groups can fully download any content for the site.
+
+```yaml
+Type: String[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReadOnlyForBlockDownloadPolicy
+When enabled in combination with BlockDownloadPolicy, users will only be able to view the content in read-only mode but will not be able to download or sync files.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ListsShowHeaderAndNavigation
 Set a property on a site collection to make all lists always load with the site elements intact.
 
@@ -774,6 +805,20 @@ Accept wildcard characters: False
 
 ### -ClearRestrictedAccessControl
 To reset restricted access control configuration for a site.
+
+```yaml
+Type: Switch Parameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ClearGroupId
+This parameter allows you to remove the assigned Microsoft 365 group ID on a site, when the group is permanently deleted.
 
 ```yaml
 Type: Switch Parameter
