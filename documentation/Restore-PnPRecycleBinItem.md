@@ -32,14 +32,14 @@ This cmdlet restores the specified item or set of items from the recycle bin to 
 Restore-PnPRecycleBinItem -Identity 72e4d749-d750-4989-b727-523d6726e442
 ```
 
-Restores the recycle bin item with Id 72e4d749-d750-4989-b727-523d6726e442 to its original location.
+Restores the recycle bin item with Id 72e4d749-d750-4989-b727-523d6726e442 to its original location asking for confirmation to do so.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPRecycleBinItem | ? -Property LeafName -like "*.docx" | Restore-PnPRecycleBinItem
 ```
 
-Restores all the items of which the filename ends with the .docx extension from the first and second stage recycle bins to their original location. 
+Restores all the items of which the filename ends with the .docx extension from the first and second stage recycle bins to their original location asking for confirmation to do so.
 
 ### EXAMPLE 3
 ```powershell
@@ -129,4 +129,3 @@ Accept wildcard characters: False
 ## RELATED LINKS
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
-
