@@ -225,7 +225,7 @@ namespace PnP.PowerShell.Commands.Utilities
             }
             else if (OperatingSystem.IsMacOS())
             {
-                Process.Start("/usr/bin/open", url);
+                Process.Start("/usr/bin/open", $"\"{url}\"");
             }
             else
             {
