@@ -286,7 +286,7 @@ namespace PnP.PowerShell.Commands.Base
         public SwitchParameter PersistLogin;
 
         private static readonly string[] sourceArray = ["stop", "ignore", "silentlycontinue"];
-        X509Certificate2 certificate;
+        X509Certificate2 _certificate;
 
         protected override void ProcessRecord()
         {
@@ -343,7 +343,7 @@ namespace PnP.PowerShell.Commands.Base
                 // Reuse some parameters of the passed in connection
                 LogDebug("Reusing some of the connection parameters from passed in connection");
                 ClientId = Connection.ClientId;
-                certificate = Connection.Certificate;
+                _certificate = Connection.Certificate;
             }
 
             if (AzureEnvironment == AzureEnvironment.Custom)
@@ -616,7 +616,7 @@ namespace PnP.PowerShell.Commands.Base
                         X509KeyStorageFlags.PersistKeySet;
                 }
 
-                certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
+                _certificate = CertificateHelper.GetCertificateFromPath(this, CertificatePath, CertificatePassword, X509KeyStorageFlags);
                 if (Connection?.ClientId == ClientId &&
                     Connection?.Tenant == Tenant &&
                     Connection?.Certificate?.Thumbprint == certificate.Thumbprint)
@@ -648,7 +648,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else if (ParameterSpecified(nameof(Thumbprint)))
             {
-                certificate = CertificateHelper.GetCertificateFromStore(Thumbprint);
+                _certificate = CertificateHelper.GetCertificateFromStore(Thumbprint);
 
                 if (certificate == null)
                 {
