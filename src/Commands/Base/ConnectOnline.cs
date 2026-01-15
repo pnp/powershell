@@ -648,7 +648,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             else if (ParameterSpecified(nameof(Thumbprint)))
             {
-                _certificate = CertificateHelper.GetCertificateFromStore(Thumbprint);
+                certificate = CertificateHelper.GetCertificateFromStore(Thumbprint);
 
                 if (certificate == null)
                 {
