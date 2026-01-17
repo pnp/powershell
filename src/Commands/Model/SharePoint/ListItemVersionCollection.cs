@@ -19,5 +19,6 @@ namespace PnP.PowerShell.Commands.Model.SharePoint
 
         public object Values { get; set; }
         public string VersionLabel { get; set; }
+        public DateTime? ExpirationDate { get; set; }
     }
 }
