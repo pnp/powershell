@@ -88,7 +88,7 @@ See [this article](persistedlogin.md) on how to use the persisted login feature 
 
 ## Idea 5: Use a script to dynamically fetch the correct ClientId for the tenant you're connecting to
 
-[Tobias Maestrini](https://gist.github.com/tmaestrini) has created [a script)(https://gist.github.com/tmaestrini/d1110a325f079d66a3498e303aeca078) that leverages the Azure CLI to dynamically look up in the tenant you're connecting to, if it has a PnP PowerShell application registration already and if so, leverages that. This allows you to have one single way to connect to any tenant. It does add a dependency on the Azure CLI though.
+[Tobias Maestrini](https://gist.github.com/tmaestrini) has created [a script](https://gist.github.com/tmaestrini/d1110a325f079d66a3498e303aeca078) that leverages the Azure CLI to dynamically look up in the tenant you're connecting to, if it has a PnP PowerShell application registration already and if so, leverages that. This allows you to have one single way to connect to any tenant. It does add a dependency on the Azure CLI though.
 
 ## Other ideas?
 
