@@ -1,6 +1,8 @@
+using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
+using PnP.PowerShell.Commands.Enums;
 using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
 using System.Collections.Generic;
@@ -27,7 +29,11 @@ namespace PnP.PowerShell.Commands.Apps
         public ServicePrincipalAssignedAppRoleBind Identity;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterSet_BYAPPROLENAME)]
-        public string AppRoleName;
+        [ValidateNotNull]
+        public ServicePrincipalAvailableAppRoleBind AppRoleName;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYAPPROLENAME)]
+        public ServicePrincipalBuiltInType BuiltInType;
 
         protected override void ExecuteCmdlet()
         {
@@ -56,7 +62,22 @@ namespace PnP.PowerShell.Commands.Apps
                 }
                 else
                 {
-                    ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, principal, AppRoleName);
+                    if (!ParameterSpecified(nameof(BuiltInType)))
+                    {
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, principal, AppRoleName.ToString());
+                    }
+                    else
+                    {
+                        var resource = ServicePrincipalUtility.GetServicePrincipalByBuiltInType(GraphRequestHelper, BuiltInType);
+                        AzureADServicePrincipalAppRole appRole = AppRoleName.GetAvailableAppRole(Connection, AccessToken, resource);
+
+                        if (appRole == null)
+                        {
+                            throw new PSArgumentException("AppRole not found", nameof(AppRoleName));
+                        }
+                        LogDebug($"Removing app role {appRole.Value}: {appRole.DisplayName}");
+                        ServicePrincipalUtility.RemoveServicePrincipalRoleAssignment(GraphRequestHelper, principal, appRole);
+                    }
                 }
             }
             else
