@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Management.Automation;
+using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Core.QueryModel;
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
-using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
 namespace PnP.PowerShell.Commands.Lists
 {
@@ -77,27 +77,18 @@ namespace PnP.PowerShell.Commands.Lists
                 ? $"{{ \"expirationDate\": \"{ExpirationDate.Value.ToString("o")}\" }}"
                 : "{ \"expirationDate\": null }";
 
-            // Call REST API using PowerShell
-            var result = InvokePnPSPRestMethod(expirationUrl, expirationPayload);
+            // Use PnPHttpClient and RestHelper.Post for the REST call
+            var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(Connection.Context);
+            var accessToken = Connection.Context.GetAccessToken();
+
+            var response = Utilities.REST.RestHelper.Post(
+                httpClient,
+                expirationUrl,
+                expirationPayload,
+                accessToken);
 
             LogDebug($"Updated expiration date for version {version.VersionLabel} of list item {item.Id} in list {list.Title}");
         }
 
-        // Helper method to invoke REST API
-        private object InvokePnPSPRestMethod(string url, string payload)
-        {
-            var ps = System.Management.Automation.PowerShell.Create();
-            ps.AddCommand("Invoke-PnPSPRestMethod")
-              .AddParameter("Url", url)
-              .AddParameter("Method", "Post")
-              .AddParameter("Content", payload);
-
-            var results = ps.Invoke();
-            if (ps.Streams.Error.Count > 0)
-            {
-                throw new Exception(ps.Streams.Error[0].ToString());
-            }
-            return results;
-        }
     }
 }
