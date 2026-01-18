@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Search.Administration; //DocumentCrawlLog 
+using Microsoft.SharePoint.Client.Search.Administration; 
 using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Search
@@ -38,7 +38,7 @@ namespace PnP.PowerShell.Commands.Search
         public string DatabaseName { get; set; }
     }
 
-    [Cmdlet(VerbsCommon.Get, "PnPSearchCrawlLog", DefaultParameterSetName = "Xml")]
+    [Cmdlet(VerbsCommon.Get, "PnPSearchCrawlLog")]
     [ApiNotAvailableUnderApplicationPermissions]
     public class GetSearchCrawlLog : PnPWebCmdlet
     {
@@ -124,7 +124,6 @@ namespace PnP.PowerShell.Commands.Search
                 bool countOnly= GetCountOnly ? true: false;
 
                 var logEntries = crawlLog.GetCrawledUrls(countOnly, RowLimit, Filter, true, contentSourceId, (int)LogLevel, -1, StartDate, EndDate);
-                var unsuccesfull = crawlLog.GetUnsuccesfulCrawledUrls(Filter, StartDate, EndDate);
                 ClientContext.ExecuteQueryRetry();
 
                 if (RawFormat)
