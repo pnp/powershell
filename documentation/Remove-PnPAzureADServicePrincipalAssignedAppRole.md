@@ -32,7 +32,7 @@ Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPip
 
 ### By app role name
 ```powershell
-Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> -AppRoleName <String> [-Connection <PnPConnection>]
+Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> -AppRoleName <String> [-BuiltInType <ServicePrincipalBuiltInType>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -133,10 +133,10 @@ Accept wildcard characters: False
 The built in application type to use for the app role. This can be MicrosoftGraph or SharePointOnline.
 
 ```yaml
-Type: ServicePrincipalAppRoleBind
+Type: ServicePrincipalBuiltInType
 Parameter Sets: By app role name
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
