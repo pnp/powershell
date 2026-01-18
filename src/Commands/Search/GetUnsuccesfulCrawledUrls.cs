@@ -8,6 +8,17 @@ using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Search
 {
+    public class UnsuccesfullCrawlEntry
+    {
+        public string Url { get; set; }
+        public DateTime CrawlTime { get; set; }
+        public DateTime ItemTime { get; set; }
+        public string Status { get; set; }
+        public int ErrorCode { get; set; }
+        public int ItemId { get; set; }
+        public DateTime LastTouchedTime { get; set; }
+        public string DatabaseName { get; set; }
+    }
 
     [Cmdlet(VerbsCommon.Get, "PnPGetUnsuccesfulCrawledUrls")]
     [ApiNotAvailableUnderApplicationPermissions]
@@ -79,7 +90,7 @@ namespace PnP.PowerShell.Commands.Search
                 }
                 else
                 {
-                    var entries = new List<CrawlEntry>(logEntries.Value.Rows.Count);
+                    var entries = new List<UnsuccesfullCrawlEntry>(logEntries.Value.Rows.Count);
                     foreach (var dictionary in logEntries.Value.Rows)
                     {
                         var entry = MapCrawlLogEntry(dictionary);
@@ -132,34 +143,26 @@ namespace PnP.PowerShell.Commands.Search
             return -1;
         }
 
-        private static CrawlEntry MapCrawlLogEntry(Dictionary<string, object> dictionary)
+        private static UnsuccesfullCrawlEntry MapCrawlLogEntry(Dictionary<string, object> dictionary)
         {
-            var entry = new CrawlEntry
+            var entry = new UnsuccesfullCrawlEntry
             {
                 ItemId = (int)dictionary["DocID"],
-                ContentSourceId = -1,
                 Url = dictionary["FullUrl"].ToString(),
                 CrawlTime = (DateTime)dictionary["TimeStamp"],
                 LastTouchedTime= (DateTime)dictionary["LastTouchedTime"],
                 DatabaseName= (string)dictionary["DatabaseName"]
             };
-            long.TryParse(dictionary["LastRepositoryModifiedTime"] + "", out long ticks);
+            var time=dictionary["SPItemModifiedTime"]+"" ?? dictionary["LastModifiedTime"]+"" ??"";
+            long.TryParse(time,  out long ticks);
             if (ticks != 0)
             {
                 var itemDate = DateTime.FromFileTimeUtc(ticks);
                 entry.ItemTime = itemDate;
             }
-            entry.LogLevel =
-                (LogLevel)Enum.Parse(typeof(LogLevel), dictionary["ErrorLevel"].ToString());
 
-
-            entry.Status = dictionary["StatusMessage"] + "";
-            entry.Status += dictionary["ErrorDesc"] + "";
-            var errorCode = int.Parse(dictionary["ErrorCode"]+"");
-            if (!string.IsNullOrWhiteSpace(entry.Status) || errorCode != 0)
-            {
-                entry.LogLevel = LogLevel.Warning;
-            }
+            entry.Status =  (dictionary["ErrorDesc"]??"").ToString();
+            entry.ErrorCode = int.Parse(dictionary["ErrorCode"]+"");
             return entry;
         }
 
