@@ -10,16 +10,16 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
-- Added `Start-PnPUserAndContentMove` cmdlet to start user and content move jobs in SharePoint Multi-Geo environments
-- Added `Get-PnPUserAndContentMoveState` cmdlet to retrieve status and details of user and content move operations in SharePoint Multi-Geo environments
-- Added `Get-PnPGeoMoveCrossCompatibilityStatus` cmdlet to check cross-compatibility status for geo move operations between different data locations in SharePoint Multi-Geo tenants
-- Added `Get-PnPSiteContentMoveState` cmdlet to retrieve status and details of site content move operations in SharePoint Multi-Geo environments
-- Added `Start-PnPSiteContentMove` cmdlet to start site content move jobs in SharePoint Multi-Geo environments
-- Added `Get-PnPUnifiedGroup` cmdlet to retrieve information about Microsoft 365 Groups in SharePoint Multi-Geo environments
-- Added `Set-PnPUnifiedGroup` cmdlet to set the preferred data location for Microsoft 365 Groups in SharePoint Multi-Geo environments
-- Added `Get-PnPUnifiedGroupMoveState` cmdlet to retrieve status and details of Microsoft 365 Group move operations in SharePoint Multi-Geo environments
-- Added `Start-PnPUnifiedGroupMove` cmdlet to start Microsoft 365 Group move jobs in SharePoint Multi-Geo environments
-- Added `Set-PnPMultiGeoExperience` cmdlet to upgrade the multi-geo experience in SharePoint Multi-Geo tenants
+- Added `Start-PnPUserAndContentMove` cmdlet to start user and content move jobs in SharePoint Multi-Geo environments [#5215](https://github.com/pnp/powershell/pull/5215)
+- Added `Get-PnPUserAndContentMoveState` cmdlet to retrieve status and details of user and content move operations in SharePoint Multi-Geo environments [#5215](https://github.com/pnp/powershell/pull/5215)
+- Added `Get-PnPGeoMoveCrossCompatibilityStatus` cmdlet to check cross-compatibility status for geo move operations between different data locations in SharePoint Multi-Geo tenants [#5215](https://github.com/pnp/powershell/pull/5215)
+- Added `Get-PnPSiteContentMoveState` cmdlet to retrieve status and details of site content move operations in SharePoint Multi-Geo environments [#5215](https://github.com/pnp/powershell/pull/5215)
+- Added `Start-PnPSiteContentMove` cmdlet to start site content move jobs in SharePoint Multi-Geo environments [#5215](https://github.com/pnp/powershell/pull/5215)
+- Added `Get-PnPUnifiedGroup` cmdlet to retrieve information about Microsoft 365 Groups in SharePoint Multi-Geo environments [#5215](https://github.com/pnp/powershell/pull/5215)
+- Added `Set-PnPUnifiedGroup` cmdlet to set the preferred data location for Microsoft 365 Groups in SharePoint Multi-Geo environments [#5215](https://github.com/pnp/powershell/pull/5215)
+- Added `Get-PnPUnifiedGroupMoveState` cmdlet to retrieve status and details of Microsoft 365 Group move operations in SharePoint Multi-Geo environments [#5215](https://github.com/pnp/powershell/pull/5215)
+- Added `Start-PnPUnifiedGroupMove` cmdlet to start Microsoft 365 Group move jobs in SharePoint Multi-Geo environments [#5215](https://github.com/pnp/powershell/pull/5215)
+- Added `Set-PnPMultiGeoExperience` cmdlet to upgrade the multi-geo experience in SharePoint Multi-Geo tenants [#5215](https://github.com/pnp/powershell/pull/5215)
 - Added `Copy-PnPFileMetadata` to copy Metadata fields (Created, Modified, Author, Editor) between items [#5072](https://github.com/pnp/powershell/pull5072)
 - Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
 - Added `-User` parameter to `Get-PnPTeamsTeam` cmdlet to allow fetching list of teams a user has access to.
