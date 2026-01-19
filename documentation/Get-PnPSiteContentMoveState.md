@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSiteContentMoveState.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPSiteContentMoveState
+---
+  
 # Get-PnPSiteContentMoveState
 
-## Description
+## SYNOPSIS
+Gets the status of a site content move job in a SharePoint Multi-Geo tenant.
+
+## DESCRIPTION
 Gets the status and details of site content move operations in a SharePoint Multi-Geo tenant. This cmdlet allows you to monitor the progress of site move jobs, check their current state, and retrieve historical site move operation data.
 
 ## Syntax

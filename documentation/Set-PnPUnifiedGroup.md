@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPUnifiedGroup.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPUnifiedGroup
+---
+  
 # Set-PnPUnifiedGroup
 
-## Description
+## SYNOPSIS
+Updates properties of a Microsoft 365 Group (Unified Group) in a SharePoint Multi-Geo tenant.
+
+## DESCRIPTION
 Sets the preferred data location for a Microsoft 365 Group (Unified Group) in a SharePoint Multi-Geo tenant. This cmdlet allows you to specify where the group's content should be stored geographically.
 
 ## Syntax

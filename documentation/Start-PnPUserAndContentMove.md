@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Start-PnPUserAndContentMove.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Start-PnPUserAndContentMove
+---
+  
 # Start-PnPUserAndContentMove
 
-## Description
+## SYNOPSIS
+Starts a user and content move job in a SharePoint Multi-Geo tenant.
+
+## DESCRIPTION
 Starts a user and content move job in a SharePoint Multi-Geo tenant. This cmdlet allows you to move a user's OneDrive for Business content and associated data from one geo location to another within a multi-geo tenant.
 
 ## Syntax

@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Start-PnPSiteContentMove.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Start-PnPSiteContentMove
+---
+  
 # Start-PnPSiteContentMove
 
-## Description
+## SYNOPSIS
+Starts a site content move job in a SharePoint Multi-Geo tenant.
+
+## DESCRIPTION
 Starts a site content move job in a SharePoint Multi-Geo tenant. This cmdlet allows you to move SharePoint sites from one geo location to another within a multi-geo tenant.
 
 ## Syntax

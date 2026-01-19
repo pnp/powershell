@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPGeoMoveCrossCompatibilityStatus.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPGeoMoveCrossCompatibilityStatus
+---
+  
 # Get-PnPGeoMoveCrossCompatibilityStatus
 
-## Description
+## SYNOPSIS
+Gets the geo move cross-compatibility status for geo locations in a SharePoint Multi-Geo tenant.
+
+## DESCRIPTION
 Gets the cross-compatibility status for geo move operations between different data locations in a SharePoint Multi-Geo tenant. This cmdlet helps determine which geo locations are compatible for user and content moves.
 
 ## Syntax

@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUnifiedGroupMoveState.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPUnifiedGroupMoveState
+---
+  
 # Get-PnPUnifiedGroupMoveState
 
-## Description
+## SYNOPSIS
+Gets the status of a Microsoft 365 Group move job in a SharePoint Multi-Geo tenant.
+
+## DESCRIPTION
 Gets the status and details of a Microsoft 365 Group (Unified Group) move operation in a SharePoint Multi-Geo tenant. This cmdlet allows you to monitor the progress of group move jobs and check their current state.
 
 ## Syntax

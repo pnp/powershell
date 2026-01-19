@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUnifiedGroup.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPUnifiedGroup
+---
+  
 # Get-PnPUnifiedGroup
 
-## Description
+## SYNOPSIS
+Gets information about a Microsoft 365 Group (Unified Group) in a SharePoint Multi-Geo tenant.
+
+## DESCRIPTION
 Gets information about a Microsoft 365 Group (Unified Group) in a SharePoint Multi-Geo tenant. This cmdlet retrieves detailed information about a specific group including its geo location, members, and configuration.
 
 ## Syntax

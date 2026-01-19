@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Start-PnPUnifiedGroupMove.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Start-PnPUnifiedGroupMove
+---
+  
 # Start-PnPUnifiedGroupMove
 
-## Description
+## SYNOPSIS
+Starts a Microsoft 365 Group move job in a SharePoint Multi-Geo tenant.
+
+## DESCRIPTION
 Starts a Microsoft 365 Group (Unified Group) move job in a SharePoint Multi-Geo tenant. This cmdlet allows you to move a Microsoft 365 Group and its associated content from one geo location to another within a multi-geo tenant.
 
 ## Syntax

@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPUserAndContentMoveState.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Get-PnPUserAndContentMoveState
+---
+  
 # Get-PnPUserAndContentMoveState
 
-## Description
+## SYNOPSIS
+Gets the status of a user and content move job in a SharePoint Multi-Geo tenant.
+
+## DESCRIPTION
 Gets the status and details of user and content move operations in a SharePoint Multi-Geo tenant. This cmdlet allows you to monitor the progress of move jobs, check their current state, and retrieve historical move operation data.
 
 ## Syntax

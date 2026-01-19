@@ -1,6 +1,18 @@
+---
+Module Name: PnP.PowerShell
+schema: 2.0.0
+applicable: SharePoint Online
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPMultiGeoExperience.html
+external help file: PnP.PowerShell.dll-Help.xml
+title: Set-PnPMultiGeoExperience
+---
+  
 # Set-PnPMultiGeoExperience
 
-## Description
+## SYNOPSIS
+Configures the Multi-Geo experience for a SharePoint tenant.
+
+## DESCRIPTION
 Upgrades the multi-geo experience in a SharePoint Multi-Geo tenant. This cmdlet enables enhanced multi-geo capabilities and features across geo locations.
 
 ## Syntax
