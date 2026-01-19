@@ -35,6 +35,10 @@ namespace PnP.PowerShell.Commands.Files
         [Parameter(Mandatory = false, ParameterSetName = "Group")]
         public SwitchParameter ClearExisting;
 
+        [Parameter(Mandatory = false, ParameterSetName = "User")]
+        [Parameter(Mandatory = false, ParameterSetName = "Group")]
+        public bool ClearSubscopes = true;
+
         [Parameter(Mandatory = false, ParameterSetName = "Inherit")]
         public SwitchParameter InheritPermissions;
 
@@ -81,12 +85,12 @@ namespace PnP.PowerShell.Commands.Files
                 }
                 else if (!item.HasUniqueRoleAssignments)
                 {
-                    item.BreakRoleInheritance(!ClearExisting.IsPresent, true);
+                    item.BreakRoleInheritance(!ClearExisting.IsPresent, ClearSubscopes);
                 }
                 else if (ClearExisting.IsPresent)
                 {
                     item.ResetRoleInheritance();
-                    item.BreakRoleInheritance(!ClearExisting.IsPresent, true);
+                    item.BreakRoleInheritance(!ClearExisting.IsPresent, ClearSubscopes);
                 }
 
                 if (SystemUpdate.IsPresent)
