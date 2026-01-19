@@ -80,18 +80,21 @@ The new expiration date for the version. If not specified, the expiration date w
 | Accept pipeline input | False |
 | Accept wildcard characters | False |
 
-### -Connection
 
+### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
 
-| | |
-| --- | --- |
-| Type | PnPConnection |
-| Aliases | |
-| Position | Named |
-| Required | False |
-| Accept pipeline input | False |
-| Accept wildcard characters | False |
+```yaml
+Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ## Outputs
 

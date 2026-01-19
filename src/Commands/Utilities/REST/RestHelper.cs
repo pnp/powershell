@@ -231,6 +231,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             if (payload != null)
             {
                 var content = new StringContent(JsonSerializer.Serialize(payload, new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull }));
+                
+                
                 content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 message = GetMessage(url, HttpMethod.Post, accessToken, accept, content);
             }
