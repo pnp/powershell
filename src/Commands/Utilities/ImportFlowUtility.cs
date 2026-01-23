@@ -93,14 +93,42 @@ namespace PnP.PowerShell.Commands.Utilities
 
         public static JsonElement GetImportOperations(HttpClient httpClient, string accessToken, string importOperationsUrl)
         {
-            var listImportOperations = RestHelper.Get(
-                httpClient,
-                importOperationsUrl,
-                accessToken,
-                accept: "application/json"
-            );
-            Log.Debug("ImportFlowUtility", "Import operations retrieved");
-            return JsonSerializer.Deserialize<JsonElement>(listImportOperations);
+            const int maxRetries = 10;
+            const int delayMs = 2500;
+            int retryCount = 0;
+            JsonElement importOperationsData = default;
+
+            while (retryCount < maxRetries)
+            {
+                var listImportOperations = RestHelper.Get(
+                    httpClient,
+                    importOperationsUrl,
+                    accessToken,
+                    accept: "application/json"
+                );
+                importOperationsData = JsonSerializer.Deserialize<JsonElement>(listImportOperations);
+
+                if (importOperationsData.TryGetProperty("properties", out JsonElement propertiesElement))
+                {
+                    bool hasStatus = propertiesElement.TryGetProperty("status", out _);
+                    bool hasPackageLink = propertiesElement.TryGetProperty("packageLink", out _);
+                    bool hasDetails = propertiesElement.TryGetProperty("details", out _);
+                    bool hasResources = propertiesElement.TryGetProperty("resources", out _);
+
+                    if (hasStatus && hasPackageLink && hasDetails && hasResources)
+                    {
+                        Log.Debug("ImportFlowUtility", "Import operations retrieved with all required properties");
+                        return importOperationsData;
+                    }
+                }
+
+                retryCount++;
+                Log.Debug("ImportFlowUtility", $"Import operations not ready yet. Retry {retryCount}/{maxRetries}...");
+                Thread.Sleep(delayMs);
+            }
+
+            Log.Debug("ImportFlowUtility", "Import operations retrieved (max retries reached)");
+            return importOperationsData;
         }
 
         public static JsonElement GetPropertiesElement(JsonElement importOperationsData)
@@ -121,7 +149,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (!(hasStatus && hasPackageLink && hasDetails && hasResources))
             {
-                throw new Exception("Import failed: One or more required fields are missing in 'properties'.");
+                throw new Exception("Import failed: One or more required fields are missing in 'properties'. The API may still be processing the request.");
             }
             if (!propertiesElement.TryGetProperty("resources", out JsonElement resourcesElement))
             {
