@@ -33,7 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - **PnP PowerShell now requires PowerShell 7.4.0 or newer**
 - Improved `Connect-PnPOnline` with `-DeviceLogin` flow, now we don't require users to specify `-Tenant` parameter, it will be automatically added if not specified.
 - Improved `Restore-PnPRecycleBinItem` cmdlet to better handle throttling.
-- Logging in using `Connect-PnPOnline -PersistentLogin` no longer throwing a warning
+- Logging in using `Connect-PnPOnline -PersistentLogin` no longer throwing a warning [#5082](https://github.com/pnp/powershell/pull/5082)
 
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
