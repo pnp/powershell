@@ -32,7 +32,7 @@ Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPip
 
 ### By app role name
 ```powershell
-Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> -AppRoleName <String> [-Connection <PnPConnection>]
+Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> -AppRoleName <String> [-BuiltInType <ServicePrincipalBuiltInType>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -75,6 +75,15 @@ Get-PnPAzureADServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Rem
 ```
 
 Removes all app roles from the application registration with the app Id/Client Id fd885e69-86dc-4f3b-851e-ad04920031cf
+
+### EXAMPLE 6
+
+```powershell
+Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal "My application" -AppRoleName "Sites.FullControl.All" -BuiltInType SharePointOnline
+```
+
+Removes the "Sites.FullControl.All" app role assignment only from the SharePointOnline for the application registration named "My application".
+
 
 ## PARAMETERS
 
@@ -119,6 +128,21 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### -BuiltInType
+The built in application type to use for the app role. This can be MicrosoftGraph or SharePointOnline.
+
+```yaml
+Type: ServicePrincipalBuiltInType
+Parameter Sets: By app role name
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.
