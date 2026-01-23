@@ -97,6 +97,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ClearSubScopes
+If a permission inheritance break is needed or forced with -ClearExisting, the unique permissions are cleared from child objects and they can inherit role assignments from this object.
+
+```yaml
+Type: Boolean
+Parameter Sets: User, Group
+
+Required: False
+Position: Named
+Default value: True
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Group
 The ID, name or instance of a SharePoint Group to add or remove permissions to/from.
 
