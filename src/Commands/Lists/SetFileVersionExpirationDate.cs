@@ -13,7 +13,7 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Lists
 {
-    [Cmdlet(VerbsCommon.Set, "PnPListItemVersion")]
+    [Cmdlet(VerbsCommon.Set, "PnPFileVersionExpirationDate")]
     public class SetListItemVersion : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true, Position = 0)]
@@ -86,24 +86,23 @@ protected override void ExecuteCmdlet()
             var expirationPayload = ExpirationDate.HasValue
                 ? $"{{ \"expirationDate\": \"{ExpirationDate.Value.ToString("o")}\" }}"
                 : "{ \"expirationDate\": null }";
-                       
-            // Use SharePointRequestHelper to make the REST call
+
+            var stringContent = new StringContent(expirationPayload);
+
             try
             {
-                var response = SharePointRequestHelper.PostHttpContent(
-                    expirationUrl,
-                    new StringContent(
-                        JsonSerializer.Serialize(expirationPayload, new JsonSerializerOptions() { ReferenceHandler = ReferenceHandler.IgnoreCycles, WriteIndented = true }),
-                        System.Text.Encoding.UTF8,
-                        "application/json"
-                    )
+                var httpClient = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient(Connection.Context);
+                var accessToken = Connection.Context.GetAccessToken();
+
+                var payload = new { expirationDate = ExpirationDate.HasValue ? ExpirationDate.Value.ToString("o") : null };
+
+                var responseString = Utilities.REST.RestHelper.Post(
+                    httpClient,
+                    expirationUrl,    // The full REST API URL
+                    accessToken,
+                    payload           // Pass as an object, not a string
                 );
 
-                if (!response.IsSuccessStatusCode)
-                {
-                    var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                    throw new Exception($"Failed to set expiration date. Status: {response.StatusCode}, Content: {errorContent}");
-                }
 
                 LogDebug($"Updated expiration date for version {version.VersionLabel} of list item {item.Id} in list {list.Title}");
             }
