@@ -9,9 +9,9 @@ using PnP.PowerShell.Commands.Model;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAzureADAppSitePermission", DefaultParameterSetName = ParameterSet_ALL)]
+    [Cmdlet(VerbsCommon.Get, "PnPEntraIDAppSitePermission", DefaultParameterSetName = ParameterSet_ALL)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Sites.FullControl.All")]
-    [Alias("Get-PnPEntraIDAppSitePermission")]
+    [Alias("Get-PnPAzureADAppSitePermission")]
     public class GetPnPAzureADAppSitePermission : PnPGraphCmdlet
     {
         private const string ParameterSet_ALL = "All Permissions";

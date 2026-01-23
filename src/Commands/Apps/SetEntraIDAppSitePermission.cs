@@ -10,9 +10,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Set, "PnPAzureADAppSitePermission")]
+    [Cmdlet(VerbsCommon.Set, "PnPEntraIDAppSitePermission")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Sites.FullControl.All")]
-    [Alias("Set-PnPEntraIDAppSitePermission")]
+    [Alias("Set-PnPAzureADAppSitePermission")]
     public class SetPnPAzureADAppSitePermission : PnPGraphCmdlet
     {
 

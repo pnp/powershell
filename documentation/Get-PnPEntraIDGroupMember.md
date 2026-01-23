@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADGroupMember.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDGroupMember.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAzureADGroupMember
+title: Get-PnPEntraIDGroupMember
 ---
   
-# Get-PnPAzureADGroupMember
+# Get-PnPEntraIDGroupMember
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Gets members of a particular Entra ID group. This can be a security, distributio
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> [-Connection <PnPConnection>] [-Transitive]
+Get-PnPEntraIDGroupMember -Identity <EntraIDGroupPipeBind> [-Connection <PnPConnection>] [-Transitive]
 ```
 
 ## DESCRIPTION
@@ -31,21 +31,21 @@ Allows to list members from given Entra ID group. This can be a security, distri
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAzureADGroupMember -Identity $groupId
+Get-PnPEntraIDGroupMember -Identity $groupId
 ```
 
 Retrieves all the direct members of a specific Entra ID group based on its ID.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADGroupMember -Identity $group
+Get-PnPEntraIDGroupMember -Identity $group
 ```
 
 Retrieves all the direct members of a specific Entra ID group based on the group's object instance.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAzureADGroupMember -Identity $group -Transitive
+Get-PnPEntraIDGroupMember -Identity $group -Transitive
 ```
 
 Retrieves all the direct and transitive members (members of groups inside groups) of a specific Entra ID group based on the group's object instance.
@@ -56,7 +56,7 @@ Retrieves all the direct and transitive members (members of groups inside groups
 The Identity of the Entra ID group.
 
 ```yaml
-Type: AzureADGroupPipeBind
+Type: EntraIDGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

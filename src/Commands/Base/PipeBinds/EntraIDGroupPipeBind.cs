@@ -7,22 +7,22 @@ using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
-    public class AzureADGroupPipeBind
+    public class EntraIDGroupPipeBind
     {
         private readonly AzureADGroup _group;
         private readonly string _groupId;
         private readonly string _displayName;
 
-        public AzureADGroupPipeBind()
+        public EntraIDGroupPipeBind()
         {
         }
 
-        public AzureADGroupPipeBind(AzureADGroup group)
+        public EntraIDGroupPipeBind(AzureADGroup group)
         {
             _group = group;
         }
 
-        public AzureADGroupPipeBind(string input)
+        public EntraIDGroupPipeBind(string input)
         {
             Guid idValue;
             if (Guid.TryParse(input, out idValue))

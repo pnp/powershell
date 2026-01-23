@@ -10,9 +10,9 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsSecurity.Grant, "PnPAzureADAppSitePermission")]
+    [Cmdlet(VerbsSecurity.Grant, "PnPEntraIDAppSitePermission")]
     [RequiredApiDelegatedPermissions("graph/Sites.FullControl.All")]
-    [Alias("Grant-PnPEntraIDAppSitePermission")]
+    [Alias("Grant-PnPAzureADAppSitePermission")]
     [OutputType(typeof(AzureADAppPermissionInternal))]
     public class GrantPnPAzureADAppSitePermission : PnPGraphCmdlet
     {

@@ -20,7 +20,7 @@ Remove the profile picture of a user.
 ## SYNTAX
 
 ```powershell
-Remove-PnPUserProfilePhoto -Identity <AzureADUserPipeBind> [-Connection <PnPConnection>] 
+Remove-PnPUserProfilePhoto -Identity <EntraIDUserPipeBind> [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -54,7 +54,7 @@ Accept wildcard characters: False
 The identity of the user to remove. This can be the UPN, the GUID or an instance of the user.
 
 ```yaml
-Type: AzureADUserPipeBind
+Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 
 Required: True

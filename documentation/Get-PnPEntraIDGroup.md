@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADGroup.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDGroup.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAzureADGroup
+title: Get-PnPEntraIDGroup
 ---
   
-# Get-PnPAzureADGroup
+# Get-PnPEntraIDGroup
 
 ## SYNOPSIS
 
@@ -15,54 +15,54 @@ title: Get-PnPAzureADGroup
 
   * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, Group.Read.All, Group.ReadWrite.All, GroupMember.Read.All, GroupMember.ReadWrite.All
 
-Gets one Azure Active Directory group or a list of Azure Active Directory groups. This can be a security, distribution or Microsoft 365 group.
+Gets one Entra ID group or a list of Entra ID groups. This can be a security, distribution or Microsoft 365 group.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADGroup [-Identity <AzureADGroupPipeBind>] [-Connection <PnPConnection>]
+Get-PnPEntraIDGroup [-Identity <EntraIDGroupPipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to retrieve a list of Azure Active Directory groups. Those can be a security, distribution or Microsoft 365 group. By specifying `Identity` option it is possible to get a single group.
+Allows to retrieve a list of Entra ID groups. Those can be a security, distribution or Microsoft 365 group. By specifying `Identity` option it is possible to get a single group.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAzureADGroup
+Get-PnPEntraIDGroup
 ```
 
-Retrieves all the Azure Active Directory groups.
+Retrieves all the Entra ID groups.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADGroup -Identity $groupId
+Get-PnPEntraIDGroup -Identity $groupId
 ```
 
-Retrieves a specific Azure Active Directory group based on its ID.
+Retrieves a specific Entra ID group based on its ID.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAzureADGroup -Identity $groupDisplayName
+Get-PnPEntraIDGroup -Identity $groupDisplayName
 ```
 
-Retrieves a specific Azure Active Directory group that has the given DisplayName.
+Retrieves a specific Entra ID group that has the given DisplayName.
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPAzureADGroup -Identity $groupSiteMailNickName
+Get-PnPEntraIDGroup -Identity $groupSiteMailNickName
 ```
 
-Retrieves a specific Azure Active Directory group for which the email address equals the provided mail nickName.
+Retrieves a specific Entra ID group for which the email address equals the provided mail nickName.
 
 ### EXAMPLE 5
 ```powershell
-Get-PnPAzureADGroup -Identity $group
+Get-PnPEntraIDGroup -Identity $group
 ```
 
-Retrieves a specific Azure Active Directory group based on its group object instance.
+Retrieves a specific Entra ID group based on its group object instance.
 
 ## PARAMETERS
 
@@ -81,10 +81,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The identity of the Azure Active Directory group. Either specify an id, a display name, email address, or a group object.
+The identity of the Entra ID group. Either specify an id, a display name, email address, or a group object.
 
 ```yaml
-Type: AzureADGroupPipeBind
+Type: EntraIDGroupPipeBind
 Parameter Sets: (All)
 
 Required: False

@@ -1,13 +1,13 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAzureADApp.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPEntraIDApp.html
 schema: 2.0.0
 applicable: SharePoint Online
-title: Remove-PnPAzureADApp
+title: Remove-PnPEntraIDApp
 ---
 
-# Remove-PnPAzureADApp
+# Remove-PnPEntraIDApp
 
 ## SYNOPSIS
 
@@ -15,29 +15,29 @@ title: Remove-PnPAzureADApp
 
   * Microsoft Graph API: Application.ReadWrite.All
 
-Removes an Azure AD App registration.
+Removes an Entra ID App registration.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPAzureADApp [-Identity] <AzureADAppPipeBind> [-Force]
+Remove-PnPEntraIDApp [-Identity] <EntraIDAppPipeBind> [-Force]
 ```
 
 ## DESCRIPTION
-This cmdlet removes an Azure AD App registration.
+This cmdlet removes an Entra ID App registration.
 
 ## EXAMPLES
 
 ### Example 1
 ```powershell
-Remove-PnPAzureADApp -Identity MyApp
+Remove-PnPEntraIDApp -Identity MyApp
 ```
 
 Removes the specified app.
 
 ### Example 2
 ```powershell
-Remove-PnPAzureADApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
+Remove-PnPEntraIDApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
 ```
 
 Removes the specified app.
@@ -64,7 +64,7 @@ Accept wildcard characters: False
 Specify the name, id or app id for the app to remove.
 
 ```yaml
-Type: AzureADAppPipeBind
+Type: EntraIDAppPipeBind
 Parameter Sets: (All)
 Aliases:
 

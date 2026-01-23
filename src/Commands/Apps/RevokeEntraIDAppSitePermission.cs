@@ -6,9 +6,9 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsSecurity.Revoke, "PnPAzureADAppSitePermission")]
+    [Cmdlet(VerbsSecurity.Revoke, "PnPEntraIDAppSitePermission")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Sites.FullControl.All")]
-    [Alias("Revoke-PnPEntraIDAppSitePermission")]
+    [Alias("Revoke-PnPAzureADAppSitePermission")]
     public class RevokePnPAzureADAppSitePermission : PnPGraphCmdlet
     {
 

@@ -11,16 +11,24 @@ using System.IO;
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
+using System.Security;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 using TextCopy;
 using OperatingSystem = PnP.PowerShell.Commands.Utilities.OperatingSystem;
+using Resources = PnP.PowerShell.Commands.Properties.Resources;
 
-namespace PnP.PowerShell.Commands.AzureAD
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsLifecycle.Register, "PnPEntraIDAppForInteractiveLogin", DefaultParameterSetName = "Interactive")]
-    public class RegisterEntraIDAppForInteractiveLogin : BasePSCmdlet, IDynamicParameters
+    [Cmdlet(VerbsLifecycle.Register, "PnPEntraIDApp")]
+    [Alias("Register-PnPAzureADApp")]
+    public class RegisterAzureADApp : BasePSCmdlet, IDynamicParameters
     {
+        private const string ParameterSet_EXISTINGCERT = "Existing Certificate";
+        private const string ParameterSet_NEWCERT = "Generate Certificate";
+
         private CancellationTokenSource cancellationTokenSource;
 
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
@@ -29,14 +37,51 @@ namespace PnP.PowerShell.Commands.AzureAD
         [Parameter(Mandatory = true, ParameterSetName = ParameterAttribute.AllParameterSets)]
         public string Tenant;
 
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_EXISTINGCERT)]
+        public string CertificatePath;
+
+        [Parameter(Mandatory = false, Position = 0, ParameterSetName = ParameterSet_NEWCERT)]
+        public string CommonName;
+
+        [Parameter(Mandatory = false, Position = 1, ParameterSetName = ParameterSet_NEWCERT)]
+        public string Country = String.Empty;
+
+        [Parameter(Mandatory = false, Position = 2, ParameterSetName = ParameterSet_NEWCERT)]
+        public string State = string.Empty;
+
+        [Parameter(Mandatory = false, Position = 3, ParameterSetName = ParameterSet_NEWCERT)]
+        public string Locality = string.Empty;
+
+        [Parameter(Mandatory = false, Position = 4, ParameterSetName = ParameterSet_NEWCERT)]
+        public string Organization = string.Empty;
+
+        [Parameter(Mandatory = false, Position = 5, ParameterSetName = ParameterSet_NEWCERT)]
+        public string OrganizationUnit = string.Empty;
+
+        [Parameter(Mandatory = false, Position = 7, ParameterSetName = ParameterSet_NEWCERT)]
+        public int ValidYears = 10;
+
+        [Parameter(Mandatory = false, Position = 8, ParameterSetName = ParameterSet_NEWCERT)]
+        [Parameter(Mandatory = false, Position = 8, ParameterSetName = ParameterSet_EXISTINGCERT)]
+        public SecureString CertificatePassword;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWCERT)]
+        public string OutPath;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_NEWCERT)]
+        public StoreLocation Store;
+
         [Parameter(Mandatory = false)]
         public AzureEnvironment AzureEnvironment = AzureEnvironment.Production;
 
-        [Parameter(Mandatory = true, ParameterSetName = "DeviceLogin")]
+        [Parameter(Mandatory = false)]
         public SwitchParameter DeviceLogin;
 
         [Parameter(Mandatory = false)]
         public string LogoFilePath;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter SkipCertCreation;
 
         [Parameter(Mandatory = false)]
         public string MicrosoftGraphEndPoint;
@@ -49,6 +94,23 @@ namespace PnP.PowerShell.Commands.AzureAD
 
         protected override void ProcessRecord()
         {
+            if (ParameterSpecified(nameof(Store)) && !OperatingSystem.IsWindows())
+            {
+                throw new PSArgumentException("The Store parameter is only supported on Microsoft Windows");
+            }
+
+            if (!string.IsNullOrWhiteSpace(OutPath))
+            {
+                if (!Path.IsPathRooted(OutPath))
+                {
+                    OutPath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, OutPath);
+                }
+            }
+            else
+            {
+                OutPath = SessionState.Path.CurrentFileSystemLocation.Path;
+            }
+
             var redirectUri = "http://localhost";
             // if (ParameterSpecified(nameof(DeviceLogin)) || OperatingSystem.IsMacOS())
             if (ParameterSpecified(nameof(DeviceLogin)) || OperatingSystem.IsMacOS())
@@ -123,11 +185,11 @@ namespace PnP.PowerShell.Commands.AzureAD
             if (!scopes.Any())
             {
                 messageWriter.LogWarning("No permissions specified, using default permissions");
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "TermStore.ReadWrite.All", "Scope")); // Delegate
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "AllSites.FullControl", "Scope")); // Delegate
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "Group.ReadWrite.All", "Scope")); // Delegate
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "User.ReadWrite.All", "Scope")); // Delegate
-                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "User.ReadWrite.All", "Scope")); // Delegate
+                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "Sites.FullControl.All", "Role")); // AppOnly
+                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "AllSites.FullControl", "Scope")); // AppOnly
+                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "Group.ReadWrite.All", "Role")); // AppOnly
+                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_SPO, "User.ReadWrite.All", "Role")); // AppOnly
+                scopes.Add(permissionScopes.GetScope(PermissionScopes.ResourceAppId_Graph, "User.ReadWrite.All", "Role")); // AppOnly
             }
             var record = new PSObject();
 
@@ -135,14 +197,25 @@ namespace PnP.PowerShell.Commands.AzureAD
 
             if (!string.IsNullOrEmpty(token))
             {
+                X509Certificate2 cert = null;
+                if (!SkipCertCreation)
+                {
+                    cert = GetCertificate(record);
+                }
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
                 if (!AppExists(ApplicationName, httpClient, token))
                 {
-                    var azureApp = CreateApp(loginEndPoint, httpClient, token, redirectUri, scopes);
+                    var azureApp = CreateApp(loginEndPoint, httpClient, token, cert, redirectUri, scopes);
 
                     record.Properties.Add(new PSVariableProperty(new PSVariable("AzureAppId/ClientId", azureApp.AppId)));
-
+                    if (cert != null)
+                    {
+                        record.Properties.Add(new PSVariableProperty(new PSVariable("Certificate Thumbprint", cert.GetCertHashString())));
+                        byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
+                        var base64String = Convert.ToBase64String(certPfxData);
+                        record.Properties.Add(new PSVariableProperty(new PSVariable("Base64Encoded", base64String)));
+                    }
                     StartConsentFlow(loginEndPoint, azureApp, redirectUri, token, httpClient, record, messageWriter, scopes);
 
                     if (ParameterSpecified(nameof(LogoFilePath)) && !string.IsNullOrEmpty(LogoFilePath))
@@ -371,7 +444,71 @@ namespace PnP.PowerShell.Commands.AzureAD
                 messageWriter.Start();
             }
 
+
             return token;
+        }
+
+        private X509Certificate2 GetCertificate(PSObject record)
+        {
+            X509Certificate2 cert = null;
+            if (ParameterSetName == ParameterSet_EXISTINGCERT)
+            {
+                if (!Path.IsPathRooted(CertificatePath))
+                {
+                    CertificatePath = Path.Combine(SessionState.Path.CurrentFileSystemLocation.Path, CertificatePath);
+                }
+                // Ensure a file exists at the provided CertificatePath
+                if (!File.Exists(CertificatePath))
+                {
+                    throw new PSArgumentException($"Certificate not found at path: {CertificatePath}", nameof(CertificatePath));
+                }
+
+                try
+                {
+                    cert = new X509Certificate2(CertificatePath, CertificatePassword, X509KeyStorageFlags.Exportable | X509KeyStorageFlags.UserKeySet | X509KeyStorageFlags.PersistKeySet);
+                }
+                catch (CryptographicException e) when (e.Message.Contains("The specified password is not correct"))
+                {
+                    throw new PSArgumentNullException(nameof(CertificatePassword), $"Failed to import private key certificate. Ensure the correct password is provided for parameter: {nameof(CertificatePassword)}");
+                }
+            }
+            else
+            {
+                if (!MyInvocation.BoundParameters.ContainsKey("CommonName"))
+                {
+                    CommonName = ApplicationName;
+                }
+                DateTime validFrom = DateTime.Today;
+                DateTime validTo = validFrom.AddYears(ValidYears);
+                cert = CertificateHelper.CreateSelfSignedCertificate(CommonName, Country, State, Locality, Organization, OrganizationUnit, CertificatePassword, CommonName, validFrom, validTo, Array.Empty<string>());
+
+                if (Directory.Exists(OutPath))
+                {
+                    string pfxPath = Path.Combine(OutPath, $"{ApplicationName}.pfx");
+                    string cerPath = Path.Combine(OutPath, $"{ApplicationName}.cer");
+                    byte[] certPfxData = cert.Export(X509ContentType.Pfx, CertificatePassword);
+                    File.WriteAllBytes(pfxPath, certPfxData);
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Pfx file", pfxPath)));
+
+                    byte[] certCerData = cert.Export(X509ContentType.Cert);
+                    File.WriteAllBytes(cerPath, certCerData);
+                    record.Properties.Add(new PSVariableProperty(new PSVariable("Cer file", cerPath)));
+                }
+                if (ParameterSpecified(nameof(Store)))
+                {
+                    if (OperatingSystem.IsWindows())
+                    {
+                        using (var store = new X509Store("My", Store))
+                        {
+                            store.Open(OpenFlags.ReadWrite);
+                            store.Add(cert);
+                            store.Close();
+                        }
+                        Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, "Certificate added to store");
+                    }
+                }
+            }
+            return cert;
         }
 
         private bool AppExists(string appName, HttpClient httpClient, string token)
@@ -394,7 +531,7 @@ namespace PnP.PowerShell.Commands.AzureAD
             return false;
         }
 
-        private AzureADApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, string redirectUri, List<PermissionScope> scopes)
+        private AzureADApp CreateApp(string loginEndPoint, HttpClient httpClient, string token, X509Certificate2 cert, string redirectUri, List<PermissionScope> scopes)
         {
             var scopesPayload = GetScopesPayload(scopes);
             var redirectUris = new List<string>() { $"{loginEndPoint}/common/oauth2/nativeclient", redirectUri };
@@ -415,6 +552,24 @@ namespace PnP.PowerShell.Commands.AzureAD
             payload.signInAudience = audience;
             payload.publicClient = new { redirectUris = redirectUris.ToArray() };
             payload.requiredResourceAccess = scopesPayload;
+
+            if (cert != null)
+            {
+                var expirationDate = cert.NotAfter.ToUniversalTime();
+                var startDate = cert.NotBefore.ToUniversalTime();
+                payload.keyCredentials = new[] {
+                    new {
+                        customKeyIdentifier = cert.GetCertHashString(),
+                        endDateTime = expirationDate,
+                        keyId = Guid.NewGuid().ToString(),
+                        startDateTime = startDate,
+                        type= "AsymmetricX509Cert",
+                        usage= "Verify",
+                        key = Convert.ToBase64String(cert.GetRawCertData()),
+                        displayName = cert.Subject,
+                    }
+                };
+            }
 
             var graphEndpoint = $"https://{AuthenticationManager.GetGraphEndPoint(AzureEnvironment)}";
             if (AzureEnvironment == AzureEnvironment.Custom)
@@ -492,8 +647,6 @@ namespace PnP.PowerShell.Commands.AzureAD
             progressRecord.RecordType = ProgressRecordType.Completed;
             WriteProgress(progressRecord);
 
-            //    ? if (OperatingSystem.IsWindows())
-            // {
             if (!Stopping)
             {
                 if (ParameterSpecified(nameof(DeviceLogin)))
@@ -525,39 +678,18 @@ namespace PnP.PowerShell.Commands.AzureAD
                 }
                 else
                 {
-                    // Interactive
                     using (var authManager = AuthenticationManager.CreateWithInteractiveWebBrowserLogin(azureApp.AppId, (url, port) =>
-                     {
-                         BrowserHelper.OpenBrowserForInteractiveLogin(url, port, cancellationTokenSource);
-                     }, Tenant, htmlMessageConsentSuccess, htmlMessageConsentFailed, azureEnvironment: AzureEnvironment, useWAM: false))
+                    {
+                        BrowserHelper.OpenBrowserForInteractiveLogin(url, port, cancellationTokenSource);
+                    }, Tenant, htmlMessageConsentSuccess, htmlMessageConsentFailed, azureEnvironment: AzureEnvironment, useWAM: false))
                     {
                         authManager.ClearTokenCache();
                         authManager.GetAccessToken(resource, Microsoft.Identity.Client.Prompt.Consent);
                     }
                 }
-                // Write results
-
-                WriteObject($"App created. You can now connect to your tenant using Connect-PnPOnline -Url <yourtenanturl> -ClientId {azureApp.AppId}");
-                WriteObject(record);
-
             }
-            // else
-            // {
-            //     if (OperatingSystem.IsMacOS())
-            //     {
-            //         Process.Start("open", consentUrl);
-            //     }
-            //     else if (OperatingSystem.IsLinux())
-            //     {
-            //         Process.Start("xdg-open", consentUrl);
-            //     }
-            //     else
-            //     {
-            //         Host.UI.WriteLine(ConsoleColor.Yellow, Host.UI.RawUI.BackgroundColor, $"Open the following URL in a browser window to provide consent. This consent is required in order to use this application.\n\n{consentUrl}");
-            //     }
-            //     WriteObject($"App created. You can now connect to your tenant using Connect-PnPOnline -Url <yourtenanturl> -ClientId {azureApp.AppId}");
-            //     WriteObject(record);
-            // }
+
+            WriteObject(record);
         }
 
         private void SetLogo(AzureADApp azureApp, string token)

@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: New-PnPAzureADGroup
+title: New-PnPEntraIDGroup
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/New-PnPAzureADGroup.html
+online version: https://pnp.github.io/powershell/cmdlets/New-PnPEntraIDGroup.html
 ---
  
-# New-PnPAzureADGroup
+# New-PnPEntraIDGroup
 
 ## SYNOPSIS
 
@@ -15,45 +15,45 @@ online version: https://pnp.github.io/powershell/cmdlets/New-PnPAzureADGroup.htm
 
   * Microsoft Graph API : One of Directory.ReadWrite.All, Group.Create, Group.ReadWrite.All
 
-Creates a new Azure Active Directory group. This can be a security or distribution group.
+Creates a new Entra ID group. This can be a security or distribution group.
 
 ## SYNTAX
 
 ```powershell
-New-PnPAzureADGroup -DisplayName <String> -Description <String> -MailNickname <String> [-Owners <String[]>] [-Members <String[]>] [-IsSecurityEnabled <SwitchParameter>] [-IsMailEnabled <SwitchParameter>] [-Force] 
+New-PnPEntraIDGroup -DisplayName <String> -Description <String> -MailNickname <String> [-Owners <String[]>] [-Members <String[]>] [-IsSecurityEnabled <SwitchParameter>] [-IsMailEnabled <SwitchParameter>] [-Force] 
 ```
 
 ## DESCRIPTION
 
-Allows to create an Azure Active Directory group. This can be either security or distribution group.
+Allows to create an Entra ID group. This can be either security or distribution group.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-New-PnPAzureADGroup -DisplayName $displayName -Description $description -MailNickname $nickname
+New-PnPEntraIDGroup -DisplayName $displayName -Description $description -MailNickname $nickname
 ```
 
-Creates an Azure Active Directory group with all the required properties
+Creates an Entra ID group with all the required properties
 
 ### EXAMPLE 2
 ```powershell
-New-PnPAzureADGroup -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers
+New-PnPEntraIDGroup -DisplayName $displayName -Description $description -MailNickname $nickname -Owners $arrayOfOwners -Members $arrayOfMembers
 ```
 
-Creates a new Azure Active Directory group with all the required properties, and with a custom list of Owners and a custom list of Members
+Creates a new Entra ID group with all the required properties, and with a custom list of Owners and a custom list of Members
 
 ### EXAMPLE 3
 ```powershell
-New-PnPAzureADGroup -DisplayName $displayName -Description $description -MailNickname $nickname -IsSecurityEnabled -IsMailEnabled
+New-PnPEntraIDGroup -DisplayName $displayName -Description $description -MailNickname $nickname -IsSecurityEnabled -IsMailEnabled
 ```
 
-Creates a new Azure Active Directory group which is mail and security enabled
+Creates a new Entra ID group which is mail and security enabled
 
 ## PARAMETERS
 
 ### -Description
-The Description of the Azure Active Directory group
+The Description of the Entra ID group
 
 ```yaml
 Type: String
@@ -67,7 +67,7 @@ Accept wildcard characters: False
 ```
 
 ### -DisplayName
-The Display Name of the Azure Active Directory group
+The Display Name of the Entra ID group
 
 ```yaml
 Type: String
@@ -81,7 +81,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsSecurityEnabled
-Creates an Azure Active Directory group which can be used to set permissions
+Creates an Entra ID group which can be used to set permissions
 
 ```yaml
 Type: SwitchParameter
@@ -95,7 +95,7 @@ Accept wildcard characters: False
 ```
 
 ### -IsMailEnabled
-Creates an Azure Active Directory group which can be used to send e-mail to
+Creates an Entra ID group which can be used to send e-mail to
 
 ```yaml
 Type: SwitchParameter
@@ -123,7 +123,7 @@ Accept wildcard characters: False
 ```
 
 ### -MailNickname
-The Mail Nickname of the Azure Active Directory group. Cannot contain spaces.
+The Mail Nickname of the Entra ID group. Cannot contain spaces.
 
 ```yaml
 Type: String

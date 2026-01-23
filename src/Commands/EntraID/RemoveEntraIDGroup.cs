@@ -5,15 +5,15 @@ using PnP.PowerShell.Commands.Utilities;
 using System.Management.Automation;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPAzureADGroup")]
+    [Cmdlet(VerbsCommon.Remove, "PnPEntraIDGroup")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
-    [Alias("Remove-PnPEntraIDGroup")]
+    [Alias("Remove-PnPAzureADGroup")]
     public class RemoveAzureADGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AzureADGroupPipeBind Identity;
+        public EntraIDGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {

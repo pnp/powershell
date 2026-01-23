@@ -5,18 +5,18 @@ using PnP.PowerShell.Commands.Model;
 using System.Collections.Generic;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.AzureAD
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAzureADApp", DefaultParameterSetName = ParameterSet_Identity)]
+    [Cmdlet(VerbsCommon.Get, "PnPEntraIDApp", DefaultParameterSetName = ParameterSet_Identity)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
-    [Alias("Get-PnPEntraIDApp")]
+    [Alias("Get-PnPAzureADApp")]
     public class GetAzureADApp : PnPGraphCmdlet
     {
         private const string ParameterSet_Identity = "Identity";
         private const string ParameterSet_Filter = "Filter";
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Identity)]
-        public AzureADAppPipeBind Identity;
+        public EntraIDAppPipeBind Identity;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_Filter)]
         public string Filter = null;

@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADUser.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDUser.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAzureADUser
+title: Get-PnPEntraIDUser
 ---
   
-# Get-PnPAzureADUser
+# Get-PnPEntraIDUser
 
 ## SYNOPSIS
 
@@ -15,100 +15,100 @@ title: Get-PnPAzureADUser
 
   * Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, User.Read.All, User.ReadWrite.All
 
-Retrieves users from Azure Active Directory. By default the following properties will be loaded: BusinessPhones, DisplayName, GivenName, JobTitle, Mail, MobilePhone, OfficeLocation, PreferredLanguage, Surname, UserPrincipalName, Id, AccountEnabled 
+Retrieves users from Entra ID. By default the following properties will be loaded: BusinessPhones, DisplayName, GivenName, JobTitle, Mail, MobilePhone, OfficeLocation, PreferredLanguage, Surname, UserPrincipalName, Id, AccountEnabled 
 
 ## SYNTAX
 
 ### Return a list (Default)
 ```powershell
-Get-PnPAzureADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-StartIndex <Int32>] [-EndIndex<Int32>] [-Connection <PnPConnection>]
+Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-StartIndex <Int32>] [-EndIndex<Int32>] [-Connection <PnPConnection>]
 ```
 
 ### Return by specific ID
 ```powershell
-Get-PnPAzureADUser [-Identity <String>] [-Select <String[]>] [-Connection <PnPConnection>]
+Get-PnPEntraIDUser [-Identity <String>] [-Select <String[]>] [-Connection <PnPConnection>]
 ```
 
 ### Return the delta
 ```powershell
-Get-PnPAzureADUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [-StartIndex <Int32>] [-EndIndex<Int32>] [-Connection <PnPConnection>]
+Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [-StartIndex <Int32>] [-EndIndex<Int32>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to retrieve a single user or a list of users from Azure Active Directory.
+Allows to retrieve a single user or a list of users from Entra ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAzureADUser
+Get-PnPEntraIDUser
 ```
 
-Retrieves all users from Azure Active Directory.
+Retrieves all users from Entra ID.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADUser -EndIndex 50
+Get-PnPEntraIDUser -EndIndex 50
 ```
 
-Retrieves the first 50 users from Azure Active Directory. Notice that you have no control over who will be in this batch of 50 unless you combine it with the `-Filter` and/or `-OrderBy` parameters.
+Retrieves the first 50 users from Entra ID. Notice that you have no control over who will be in this batch of 50 unless you combine it with the `-Filter` and/or `-OrderBy` parameters.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAzureADUser -Identity 328c7693-5524-44ac-a946-73e02d6b0f98
+Get-PnPEntraIDUser -Identity 328c7693-5524-44ac-a946-73e02d6b0f98
 ```
 
-Retrieves the user from Azure Active Directory with the id 328c7693-5524-44ac-a946-73e02d6b0f98
+Retrieves the user from Entra ID with the id 328c7693-5524-44ac-a946-73e02d6b0f98
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPAzureADUser -Identity john@contoso.com
+Get-PnPEntraIDUser -Identity john@contoso.com
 ```
 
-Retrieves the user from Azure Active Directory with the user principal name john@contoso.com.
+Retrieves the user from Entra ID with the user principal name john@contoso.com.
 
 ### EXAMPLE 5
 ```powershell
-Get-PnPAzureADUser -Identity john@contoso.com -Select "DisplayName","extension_3721d05137db455ad81aa442e3c2d4f9_extensionAttribute1"
+Get-PnPEntraIDUser -Identity john@contoso.com -Select "DisplayName","extension_3721d05137db455ad81aa442e3c2d4f9_extensionAttribute1"
 ```
 
-Retrieves only the DisplayName and extensionAttribute1 properties of the user from Azure Active Directory which has the user principal name john@contoso.com.
+Retrieves only the DisplayName and extensionAttribute1 properties of the user from Entra ID which has the user principal name john@contoso.com.
 
 ### EXAMPLE 6
 ```powershell
-Get-PnPAzureADUser -Filter "accountEnabled eq false"
+Get-PnPEntraIDUser -Filter "accountEnabled eq false"
 ```
 
-Retrieves all the disabled users from Azure Active Directory.
+Retrieves all the disabled users from Entra ID.
 
 ### EXAMPLE 7
 ```powershell
-Get-PnPAzureADUser -Filter "startswith(DisplayName, 'John')" -OrderBy "DisplayName"
+Get-PnPEntraIDUser -Filter "startswith(DisplayName, 'John')" -OrderBy "DisplayName"
 ```
 
-Retrieves all the users from Azure Active Directory of which their DisplayName starts with 'John' and sort the results by the DisplayName.
+Retrieves all the users from Entra ID of which their DisplayName starts with 'John' and sort the results by the DisplayName.
 
 ### EXAMPLE 8
 ```powershell
-Get-PnPAzureADUser -Delta
+Get-PnPEntraIDUser -Delta
 ```
 
-Retrieves all the users from Azure Active Directory and includes a delta DeltaToken which can be used by providing -DeltaToken `<token>` to query for changes to users in Active Directory since this run.
+Retrieves all the users from Entra ID and includes a delta DeltaToken which can be used by providing -DeltaToken `<token>` to query for changes to users in Entra ID since this run.
 
 ### EXAMPLE 9
 ```powershell
-Get-PnPAzureADUser -Delta -DeltaToken abcdef
+Get-PnPEntraIDUser -Delta -DeltaToken abcdef
 ```
 
-Retrieves all the users from Azure Active Directory which have had changes since the provided DeltaToken was given out.
+Retrieves all the users from Entra ID which have had changes since the provided DeltaToken was given out.
 
 ### EXAMPLE 10
 ```powershell
-Get-PnPAzureADUser -StartIndex 10 -EndIndex 20
+Get-PnPEntraIDUser -StartIndex 10 -EndIndex 20
 ```
 
-Retrieves the 10th through the 20th user from Azure Active Directory. Notice that you have no control over which users will be in this batch of 10 users.
+Retrieves the 10th through the 20th user from Entra ID. Notice that you have no control over which users will be in this batch of 10 users.
 
 ## PARAMETERS
 
@@ -129,7 +129,7 @@ Accept wildcard characters: False
 ```
 
 ### -DeltaToken
-The change token provided during the previous run with -Delta to query for the changes to user objects made in Azure Active Directory since that run.
+The change token provided during the previous run with -Delta to query for the changes to user objects made in Entra ID since that run.
 
 ```yaml
 Type: String
@@ -213,7 +213,7 @@ Accept wildcard characters: False
 ```
 
 ### -EndIndex
-Allows defining the last result to return. Useful for i.e. pagination. If omitted, it will return all available users from Azure Active Directory.
+Allows defining the last result to return. Useful for i.e. pagination. If omitted, it will return all available users from Entra ID.
 
 ```yaml
 Type: Int32

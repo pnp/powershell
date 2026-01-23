@@ -5,15 +5,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.New, "PnPAzureADUserTemporaryAccessPass")]
+    [Cmdlet(VerbsCommon.New, "PnPEntraIDUserTemporaryAccessPass")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/UserAuthenticationMethod.ReadWrite.All")]
-    [Alias("New-PnPEntraIDUserTemporaryAccessPass")]
+    [Alias("New-PnPAzureADUserTemporaryAccessPass")]
     public class NewAzureADUserTemporaryAccessPass : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AzureADUserPipeBind Identity;
+        public EntraIDUserPipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public DateTime? StartDateTime;

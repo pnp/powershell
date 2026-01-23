@@ -1,13 +1,13 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADApp.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDApp.html
 schema: 2.0.0
 applicable: SharePoint Online
-title: Get-PnPAzureADApp
+title: Get-PnPEntraIDApp
 ---
 
-# Get-PnPAzureADApp
+# Get-PnPEntraIDApp
 
 ## SYNOPSIS
 
@@ -15,18 +15,18 @@ title: Get-PnPAzureADApp
 
   * Microsoft Graph API: Application.Read.All
 
-Returns Azure AD App registrations.
+Returns Entra ID App registrations.
 
 ## SYNTAX
 
 ### Identity (Default)
 ```powershell
-Get-PnPAzureADApp [-Identity <AzureADAppPipeBind>] [-Connection <PnPConnection>]
+Get-PnPEntraIDApp [-Identity <EntraIDAppPipeBind>] [-Connection <PnPConnection>]
 ```
 
 ### Filter
 ```powershell
-Get-PnPAzureADApp -Filter <string> [-Connection <PnPConnection>]
+Get-PnPEntraIDApp -Filter <string> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -36,31 +36,31 @@ This cmdlets returns all app registrations, a specific one or ones matching a pr
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAzureADApp
+Get-PnPEntraIDApp
 ```
 
-This returns all Azure AD App registrations.
+This returns all Entra ID App registrations.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADApp -Identity MyApp
+Get-PnPEntraIDApp -Identity MyApp
 ```
 
-This returns the Azure AD App registration with the display name as 'MyApp'.
+This returns the Entra ID App registration with the display name as 'MyApp'.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAzureADApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
+Get-PnPEntraIDApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
 ```
 
-This returns the Azure AD App registration with the app id specified or the id specified.
+This returns the Entra ID App registration with the app id specified or the id specified.
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPAzureADApp -Filter "startswith(description, 'contoso')"
+Get-PnPEntraIDApp -Filter "startswith(description, 'contoso')"
 ```
 
-This returns the Azure AD App registrations with the description starting with "contoso". This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties)
+This returns the Entra ID App registrations with the description starting with "contoso". This example demonstrates using Advanced Query capabilities (see: https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties)
 
 ## PARAMETERS
 
@@ -68,7 +68,7 @@ This returns the Azure AD App registrations with the description starting with "
 Specify the display name, id or app id.
 
 ```yaml
-Type: AzureADAppPipeBind
+Type: EntraIDAppPipeBind
 Parameter Sets: Identity
 Aliases:
 

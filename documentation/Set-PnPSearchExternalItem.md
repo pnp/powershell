@@ -20,7 +20,7 @@ Adds or updates an external item in Microsoft Search
 ## SYNTAX
 
 ```powershell
-Set-PnPSearchExternalItem -ItemId <String> -ConnectionId <SearchExternalConnectionPipeBind> -Properties <Hashtable> [-ContentValue <String>] [-ContentType <SearchExternalItemContentType>] [-GrantUsers <AzureADUserPipeBind[]>] [-GrantGroups <AzureADGroupPipeBind[]>] [-DenyUsers <AzureADUserPipeBind[]>] [-DenyGroups <AzureADGroupPipeBind[]>] [-GrantExternalGroups <String[]>] [-DenyExternalGroups <String[]>] [-GrantEveryone <SwitchParameter>] [-Verbose] [-Connection <PnPConnection>] 
+Set-PnPSearchExternalItem -ItemId <String> -ConnectionId <SearchExternalConnectionPipeBind> -Properties <Hashtable> [-ContentValue <String>] [-ContentType <SearchExternalItemContentType>] [-GrantUsers <EntraIDUserPipeBind[]>] [-GrantGroups <EntraIDGroupPipeBind[]>] [-DenyUsers <EntraIDUserPipeBind[]>] [-DenyGroups <EntraIDGroupPipeBind[]>] [-GrantExternalGroups <String[]>] [-DenyExternalGroups <String[]>] [-GrantEveryone <SwitchParameter>] [-Verbose] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -124,10 +124,10 @@ Accept wildcard characters: False
 ```
 
 ### -GrantUsers
-When provided, the external item will only be shown to the users provided through this parameter. It can contain one or multiple users by providing AzureADUser objects, user principal names or Entra user IDs.
+When provided, the external item will only be shown to the users provided through this parameter. It can contain one or multiple users by providing EntraIDUser objects, user principal names or Entra user IDs.
 
 ```yaml
-Type: AzureADUserPipeBind[]
+Type: EntraIDUserPipeBind[]
 Parameter Sets: (All)
 Required: False
 Position: Named
@@ -137,10 +137,10 @@ Accept wildcard characters: False
 ```
 
 ### -GrantGroups
-When provided, the external item will only be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing AzureADGroup objects, group names or Entra group IDs.
+When provided, the external item will only be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing EntraIDGroup objects, group names or Entra group IDs.
 
 ```yaml
-Type: AzureADGroupPipeBind[]
+Type: EntraIDGroupPipeBind[]
 Parameter Sets: (All)
 Required: False
 Position: Named
@@ -150,10 +150,10 @@ Accept wildcard characters: False
 ```
 
 ### -DenyUsers
-When provided, the external item not be shown to the users provided through this parameter. It can contain one or multiple users by providing AzureADUser objects, user principal names or Entra user IDs.
+When provided, the external item not be shown to the users provided through this parameter. It can contain one or multiple users by providing EntraIDUser objects, user principal names or Entra user IDs.
 
 ```yaml
-Type: AzureADUserPipeBind[]
+Type: EntraIDUserPipeBind[]
 Parameter Sets: (All)
 Required: False
 Position: Named
@@ -163,10 +163,10 @@ Accept wildcard characters: False
 ```
 
 ### -DenyGroups
-When provided, the external item will not be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing AzureADGroup objects, group names or Entra group IDs.
+When provided, the external item will not be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing EntraIDGroup objects, group names or Entra group IDs.
 
 ```yaml
-Type: AzureADGroupPipeBind[]
+Type: EntraIDGroupPipeBind[]
 Parameter Sets: (All)
 Required: False
 Position: Named

@@ -6,15 +6,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.AzureAD
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAzureADAppPermission")]
+    [Cmdlet(VerbsCommon.Get, "PnPEntraIDAppPermission")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
-    [Alias("Get-PnPEntraIDAppPermission")]
+    [Alias("Get-PnPAzureADAppPermission")]
     public class GetAzureADAppPermission : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
-        public AzureADAppPipeBind Identity;
+        public EntraIDAppPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {

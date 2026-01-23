@@ -7,10 +7,10 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAzureADServicePrincipalAvailableAppRole")]
+    [Cmdlet(VerbsCommon.Get, "PnPEntraIDServicePrincipalAvailableAppRole")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRole>))]
-    [Alias("Get-PnPEntraIDServicePrincipalAvailableAppRole")]
+    [Alias("Get-PnPAzureADServicePrincipalAvailableAppRole")]
     public class GetAzureADServicePrincipalAvailableAppRole : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]

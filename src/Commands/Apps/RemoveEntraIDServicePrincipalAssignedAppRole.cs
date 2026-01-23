@@ -8,10 +8,10 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPAzureADServicePrincipalAssignedAppRole")]
+    [Cmdlet(VerbsCommon.Remove, "PnPEntraIDServicePrincipalAssignedAppRole")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRole>))]
-    [Alias("Remove-PnPEntraIDServicePrincipalAssignedAppRole")]
+    [Alias("Remove-PnPAzureADServicePrincipalAssignedAppRole")]
     public class RemoveAzureADServicePrincipalAssignedAppRole : PnPGraphCmdlet
     {
         private const string ParameterSet_BYINSTANCE = "By instance";

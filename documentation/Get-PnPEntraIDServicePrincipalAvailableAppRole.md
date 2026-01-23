@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADServicePrincipalAvailableAppRole.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDServicePrincipalAvailableAppRole.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAzureADServicePrincipalAvailableAppRole
+title: Get-PnPEntraIDServicePrincipalAvailableAppRole
 ---
   
-# Get-PnPAzureADServicePrincipalAvailableAppRole
+# Get-PnPEntraIDServicePrincipalAvailableAppRole
 
 ## SYNOPSIS
 
@@ -15,44 +15,44 @@ title: Get-PnPAzureADServicePrincipalAvailableAppRole
 
   *  Microsoft Graph API: Any of Application.Read.All, Directory.Read.All, Application.ReadWrite.All, Directory.ReadWrite.All
 
-Gets the available app roles available on a service principal/application registration in Azure Active Directory.
+Gets the available app roles available on a service principal/application registration in Entra ID.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADServicePrincipalAvailableAppRole -Principal <ServicePrincipalPipeBind> [-Identity <ServicePrincipalAppRoleBind>] [-Connection <PnPConnection>]
+Get-PnPEntraIDServicePrincipalAvailableAppRole -Principal <ServicePrincipalPipeBind> [-Identity <ServicePrincipalAppRoleBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows retrieval of all available app roles of a specific service principals/app registration in Azure Active Directory. To retrieve the app roles currently assigned to a specific service principal/application registration, use [Get-PnPAzureADServicePrincipalAssignedAppRole](Get-PnPAzureADServicePrincipalAssignedAppRole.md) instead.
+Allows retrieval of all available app roles of a specific service principals/app registration in Entra ID. To retrieve the app roles currently assigned to a specific service principal/application registration, use [Get-PnPEntraIDServicePrincipalAssignedAppRole](Get-PnPEntraIDServicePrincipalAssignedAppRole.md) instead.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAzureADServicePrincipalAvailableAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933
+Get-PnPEntraIDServicePrincipalAvailableAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933
 ```
 
 Retrieves all app roles of the application registration with the object Id 797ee8a7-a950-4eb8-945d-7f10cc68a933
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADServicePrincipalAvailableAppRole -Principal "My application"
+Get-PnPEntraIDServicePrincipalAvailableAppRole -Principal "My application"
 ```
 
 Retrieves all app roles of the application registration with the name "My application".
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAzureADServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Get-PnPAzureADServicePrincipalAvailableAppRole
+Get-PnPEntraIDServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Get-PnPEntraIDServicePrincipalAvailableAppRole
 ```
 
 Retrieves all app roles of the application registration with the app Id/Client Id fd885e69-86dc-4f3b-851e-ad04920031cf
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPAzureADServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPAzureADServicePrincipalAvailableAppRole -Identity "User.ReadWrite.All"
+Get-PnPEntraIDServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPEntraIDServicePrincipalAvailableAppRole -Identity "User.ReadWrite.All"
 ```
 
 Retrieves the app role details of the role "User.ReadWrite.All" of the built in Microsoft Graph application registration.

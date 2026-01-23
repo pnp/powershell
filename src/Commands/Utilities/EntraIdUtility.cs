@@ -8,14 +8,14 @@ using PnP.PowerShell.Commands.Model.AzureAD;
 namespace PnP.PowerShell.Commands.Utilities
 {
     /// <summary>
-    /// Contains functionality towards Azure Active Directory
+    /// Contains functionality towards Entra ID
     /// </summary>
-    internal static class AzureAdUtility
+    internal static class EntraIdUtility
     {
         #region Users
 
         /// <summary>
-        /// Returns users from Azure Active Directory with a Delta Token which can be used to retrieve only those users who have had changes done to them since the delta token was given out
+        /// Returns users from Entra ID with a Delta Token which can be used to retrieve only those users who have had changes done to them since the delta token was given out
         /// </summary>
         /// <param name="accessToken">Access Token which allows requests to be made</param>
         /// <param name="deltaToken">A delta token to query for changes done since the delta token was given out</param>
@@ -56,10 +56,10 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Returns the user with the provided <paramref name="userId"/> from Azure Active Directory
+        /// Returns the user with the provided <paramref name="userId"/> from Entra ID
         /// </summary>
         /// <param name="accessToken">The OAuth 2.0 Access Token to use for invoking the Microsoft Graph</param>
-        /// <param name="userId">The unique identifier of the user in Azure Active Directory to return</param>    
+        /// <param name="userId">The unique identifier of the user in Entra ID to return</param>    
         /// <param name="selectProperties">Allows providing the names of properties to return regarding the users. If not provided, the standard properties will be returned.</param>
         /// <param name="ignoreDefaultProperties">If set to true, only the properties provided through selectProperties will be loaded. The default properties will not be. Optional. Default is that the default properties will always be retrieved.</param>
         /// <param name="startIndex">First item in the results returned by Microsoft Graph to return</param>
@@ -72,10 +72,10 @@ namespace PnP.PowerShell.Commands.Utilities
         }
 
         /// <summary>
-        /// Returns the user with the provided <paramref name="userPrincipalName"/> from Azure Active Directory
+        /// Returns the user with the provided <paramref name="userPrincipalName"/> from Entra ID
         /// </summary>
         /// <param name="accessToken">The OAuth 2.0 Access Token to use for invoking the Microsoft Graph</param>
-        /// <param name="userPrincipalName">The User Principal Name of the user in Azure Active Directory to return</param>
+        /// <param name="userPrincipalName">The User Principal Name of the user in Entra ID to return</param>
         /// <param name="selectProperties">Allows providing the names of properties to return regarding the users. If not provided, the standard properties will be returned.</param>
         /// <param name="ignoreDefaultProperties">If set to true, only the properties provided through selectProperties will be loaded. The default properties will not be. Optional. Default is that the default properties will always be retrieved.</param>
         /// <param name="startIndex">First item in the results returned by Microsoft Graph to return</param>

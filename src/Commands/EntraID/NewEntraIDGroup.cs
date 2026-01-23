@@ -9,11 +9,11 @@ using System.Net.Http;
 using System.Text.Json;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.New, "PnPAzureADGroup")]
+    [Cmdlet(VerbsCommon.New, "PnPEntraIDGroup")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
-    [Alias("New-PnPEntraIDGroup")]
+    [Alias("New-PnPAzureADGroup")]
     public class NewAzureADGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true)]

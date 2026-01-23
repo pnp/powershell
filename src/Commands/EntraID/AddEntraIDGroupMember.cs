@@ -7,15 +7,15 @@ using System.Linq;
 using System.Management.Automation;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
-namespace PnP.PowerShell.Commands.AzureAD
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.Add, "PnPAzureADGroupMember")]
+    [Cmdlet(VerbsCommon.Add, "PnPEntraIDGroupMember")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
-    [Alias("Add-PnPEntraIDGroupMember")]
+    [Alias("Add-PnPAzureADGroupMember")]
     public class AddAzureADGroupMember : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AzureADGroupPipeBind Identity;
+        public EntraIDGroupPipeBind Identity;
 
         [Parameter(Mandatory = true)]
         public string[] Users;

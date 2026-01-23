@@ -2,21 +2,21 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Register-PnPAzureADApp.html
+online version: https://pnp.github.io/powershell/cmdlets/Register-PnPEntraIDApp.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Register-PnPAzureADApp
+title: Register-PnPEntraIDApp
 ---
  
-# Register-PnPAzureADApp
+# Register-PnPEntraIDApp
 
 ## SYNOPSIS
-Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration.
+Registers an Entra ID App and optionally creates a new self-signed certificate to use with the application registration.
 
 ## SYNTAX 
 
 ### Generate Certificate
 ```powershell
-Register-PnPAzureADApp -ApplicationName <String>
+Register-PnPEntraIDApp -ApplicationName <String>
                                        -Tenant <String>
                                        [-DeviceLogin]
                                        [-CommonName <String>]
@@ -41,7 +41,7 @@ Register-PnPAzureADApp -ApplicationName <String>
 
 ### Existing Certificate
 ```powershell
-Register-PnPAzureADApp  -CertificatePath <String>
+Register-PnPEntraIDApp  -CertificatePath <String>
                         -ApplicationName <String>
                         -Tenant <String>
                         [-DeviceLogin]
@@ -54,7 +54,7 @@ Register-PnPAzureADApp  -CertificatePath <String>
 ```
 
 ## DESCRIPTION
-Registers an Azure AD App and optionally creates a new self-signed certificate to use with the application registration. 
+Registers an Entra ID App and optionally creates a new self-signed certificate to use with the application registration. 
 
 Note: if you want to use the newly created app to authenticate with username/password. Use `Register-PnPEntraIDAppForInteractiveLogin` to create an app that allows users to login with.
 
@@ -62,59 +62,59 @@ Note: if you want to use the newly created app to authenticate with username/pas
 
 ### EXAMPLE 1
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser
+Register-PnPEntraIDApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser
 ```
 
-Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. A browser window will be shown allowing you to authenticate.
+Creates a new Entra ID Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. A browser window will be shown allowing you to authenticate.
 
 ### EXAMPLE 2
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force)
+Register-PnPEntraIDApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force)
 ```
 
-Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. A browser window will be shown allowing you to authenticate.
+Creates a new Entra ID Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. A browser window will be shown allowing you to authenticate.
 
 ### EXAMPLE 3
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -GraphApplicationPermissions "User.Read.All" -SharePointApplicationPermissions "Sites.Read.All"
+Register-PnPEntraIDApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -Store CurrentUser -GraphApplicationPermissions "User.Read.All" -SharePointApplicationPermissions "Sites.Read.All"
 ```
 
-Creates a new Azure AD Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.Read.All, User.Read.All. A browser window will be shown allowing you to authenticate.
+Creates a new Entra ID Application registration, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.Read.All, User.Read.All. A browser window will be shown allowing you to authenticate.
 
 ### EXAMPLE 4
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -OutPath c:\ -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force)
+Register-PnPEntraIDApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -OutPath c:\ -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force)
 ```
 
-Creates a new Azure AD Application registration, creates a new self signed certificate, and stores the public and private key certificates in c:\. The private key certificate will be locked with the password "password". It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. A browser window will be shown allowing you to authenticate.
+Creates a new Entra ID Application registration, creates a new self signed certificate, and stores the public and private key certificates in c:\. The private key certificate will be locked with the password "password". It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. A browser window will be shown allowing you to authenticate.
 
 ### EXAMPLE 5
 ```powershell
-Register-PnPAzureADApp -DeviceLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) 
+Register-PnPEntraIDApp -DeviceLogin -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) 
 ```
 
-Creates a new Azure AD Application registration and asks you to authenticate using device login methods, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All
+Creates a new Entra ID Application registration and asks you to authenticate using device login methods, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All
 
 ### EXAMPLE 6
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) 
+Register-PnPEntraIDApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) 
 ```
 
-Creates a new Azure AD Application registration and asks you to authenticate using username and password, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All
+Creates a new Entra ID Application registration and asks you to authenticate using username and password, creates a new self signed certificate, and adds it to the local certificate store. It will upload the certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All
 
 ### EXAMPLE 7
 ```powershell
-Register-PnPAzureADApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) -LogoFilePath c:\logo.png
+Register-PnPEntraIDApp -ApplicationName TestApp -Tenant yourtenant.onmicrosoft.com -CertificatePath c:\certificate.pfx -CertificatePassword (ConvertTo-SecureString -String "password" -AsPlainText -Force) -LogoFilePath c:\logo.png
 ```
 
-Creates a new Azure AD Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. It will also set the `logo.png` file as the logo for the Azure AD app.
+Creates a new Entra ID Application registration which will use the existing private key certificate at the provided path to allow access. It will upload the provided private key certificate to the azure app registration and it will request the following permissions: Sites.FullControl.All, Group.ReadWrite.All, User.Read.All. It will also set the `logo.png` file as the logo for the Entra ID app.
 
 ### EXAMPLE 8
 ```powershell
-Register-PnPAzureADApp -ApplicationName "ACS App" -Tenant yourtenant.onmicrosoft.com -OutPath c:\temp -GraphApplicationPermissions "User.Read.All" -GraphDelegatePermissions "Sites.Read.All" -SharePointApplicationPermissions "Sites.Read.All" -SharePointDelegatePermissions "AllSites.Read"
+Register-PnPEntraIDApp -ApplicationName "ACS App" -Tenant yourtenant.onmicrosoft.com -OutPath c:\temp -GraphApplicationPermissions "User.Read.All" -GraphDelegatePermissions "Sites.Read.All" -SharePointApplicationPermissions "Sites.Read.All" -SharePointDelegatePermissions "AllSites.Read"
 ```
 
-Creates a new Azure AD Application registration, creates a new self signed certificate, writes it to the c:\temp folder. It will upload the certificate to the azure app registration and it will request the shown permissions. A browser window will be shown allowing you to authenticate.
+Creates a new Entra ID Application registration, creates a new self signed certificate, writes it to the c:\temp folder. It will upload the certificate to the azure app registration and it will request the shown permissions. A browser window will be shown allowing you to authenticate.
 
 ## PARAMETERS
 
@@ -131,7 +131,7 @@ Accept pipeline input: False
 ```
 
 ### -ApplicationName
-The name of the Azure AD Application to create.
+The name of the Entra ID Application to create.
 
 ```yaml
 Type: String
@@ -352,7 +352,7 @@ Accept wildcard characters: False
 
 ### -LogoFilePath
 
-Sets the logo for the Azure AD application. Provide a full path to a local image file on your disk which you want to use as the logo.
+Sets the logo for the Entra ID application. Provide a full path to a local image file on your disk which you want to use as the logo.
 
 ```yaml
 Type: String

@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPAzureADAppSitePermission.html
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPEntraIDAppSitePermission.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Set-PnPAzureADAppSitePermission
+title: Set-PnPEntraIDAppSitePermission
 ---
   
-# Set-PnPAzureADAppSitePermission
+# Set-PnPEntraIDAppSitePermission
 
 ## SYNOPSIS
 
@@ -15,33 +15,33 @@ title: Set-PnPAzureADAppSitePermission
 
   * Microsoft Graph API: Sites.FullControl.All
 
-Updates permissions for a given Azure Active Directory application registration.
+Updates permissions for a given Entra ID application registration.
 
 ## SYNTAX
 
 ```powershell
-Set-PnPAzureADAppSitePermission -PermissionId <String> -Permissions <Read|Write|Manage|FullControl> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
+Set-PnPEntraIDAppSitePermission -PermissionId <String> -Permissions <Read|Write|Manage|FullControl> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-This cmdlet updates permissions for a given Azure Active Directory application registration in a site collection. It is used in conjunction with the Azure Active Directory SharePoint application permission Sites.Selected. 
+This cmdlet updates permissions for a given Entra ID application registration in a site collection. It is used in conjunction with the Entra ID SharePoint application permission Sites.Selected. 
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions Read
+Set-PnPEntraIDAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions Read
 ```
 
-Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'Read' access for the currently connected site collection.
+Updates the Entra ID application registration with the specific permission id and sets the rights to 'Read' access for the currently connected site collection.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions FullControl -Site https://contoso.microsoft.com/sites/projects
+Set-PnPEntraIDAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa -Permissions FullControl -Site https://contoso.microsoft.com/sites/projects
 ```
 
-Updates the Azure Active Directory application registration with the specific permission id and sets the rights to 'FullControl' access for the site collection at the provided URL.
+Updates the Entra ID application registration with the specific permission id and sets the rights to 'FullControl' access for the site collection at the provided URL.
 
 ## PARAMETERS
 
@@ -60,7 +60,7 @@ Accept wildcard characters: False
 ```
 
 ### -PermissionId
-The permission with the specified id will be updated. Use [Get-PnPAzureADAppSitePermission](Get-PnPAzureADAppSitePermission.md) to discover currently set permissions which can be updated.
+The permission with the specified id will be updated. Use [Get-PnPEntraIDAppSitePermission](Get-PnPEntraIDAppSitePermission.md) to discover currently set permissions which can be updated.
 
 ```yaml
 Type: String
@@ -74,7 +74,7 @@ Accept wildcard characters: False
 ```
 
 ### -Permissions
-Specifies the permissions to set for the Azure Active Directory application registration which can either be Read, Write, Manage or FullControl.
+Specifies the permissions to set for the Entra ID application registration which can either be Read, Write, Manage or FullControl.
 
 ```yaml
 Type: String

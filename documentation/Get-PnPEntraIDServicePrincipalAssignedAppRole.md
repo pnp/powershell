@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADServicePrincipalAssignedAppRole.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDServicePrincipalAssignedAppRole.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAzureADServicePrincipalAssignedAppRole
+title: Get-PnPEntraIDServicePrincipalAssignedAppRole
 ---
   
-# Get-PnPAzureADServicePrincipalAssignedAppRole
+# Get-PnPEntraIDServicePrincipalAssignedAppRole
 
 ## SYNOPSIS
 
@@ -15,37 +15,37 @@ title: Get-PnPAzureADServicePrincipalAssignedAppRole
 
   *  Microsoft Graph API: Any of Application.Read.All, Directory.Read.All, Application.ReadWrite.All, Directory.ReadWrite.All
 
-Gets the app roles currently assigned to a service principal/application registration in Azure Active Directory.
+Gets the app roles currently assigned to a service principal/application registration in Entra ID.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> [-Identity <ServicePrincipalAppRoleBind>] [-Connection <PnPConnection>]
+Get-PnPEntraIDServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> [-Identity <ServicePrincipalAppRoleBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows retrieval of currently assigned app roles of a specific service principals/app registration in Azure Active Directory.
+Allows retrieval of currently assigned app roles of a specific service principals/app registration in Entra ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAzureADServicePrincipalAssignedAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933
+Get-PnPEntraIDServicePrincipalAssignedAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933
 ```
 
 Retrieves all app roles currently assigned to the application registration with the object Id 797ee8a7-a950-4eb8-945d-7f10cc68a933
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADServicePrincipalAssignedAppRole -Principal "My application"
+Get-PnPEntraIDServicePrincipalAssignedAppRole -Principal "My application"
 ```
 
 Retrieves all app roles currently assigned to the application registration with the name "My application".
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAzureADServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Get-PnPAzureADServicePrincipalAssignedAppRole
+Get-PnPEntraIDServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Get-PnPEntraIDServicePrincipalAssignedAppRole
 ```
 
 Retrieves all app roles currently assigned to the application registration with the app Id/Client Id fd885e69-86dc-4f3b-851e-ad04920031cf

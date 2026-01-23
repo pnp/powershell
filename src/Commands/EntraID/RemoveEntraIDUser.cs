@@ -4,15 +4,15 @@ using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Model.AzureAD;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPAzureADUser")]
+    [Cmdlet(VerbsCommon.Remove, "PnPEntraIDUser")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/User.ReadWrite.All")]
-    [Alias("Remove-PnPEntraIDUser")]
+    [Alias("Remove-PnPAzureADUser")]
     public class RemoveAzureADUser : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AzureADUserPipeBind Identity;
+        public EntraIDUserPipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter WhatIf;

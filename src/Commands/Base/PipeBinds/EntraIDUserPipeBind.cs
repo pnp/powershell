@@ -6,24 +6,24 @@ using System.Net;
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
     /// <summary>
-    /// Allows passing an Azure Active Directory User from one cmdlet to another
+    /// Allows passing an Entra ID User from one cmdlet to another
     /// </summary>
-    public class AzureADUserPipeBind
+    public class EntraIDUserPipeBind
     {
         private readonly User _user;
         private readonly Guid? _userId;
         private readonly string _upn;
 
-        public AzureADUserPipeBind()
+        public EntraIDUserPipeBind()
         {
         }
 
-        public AzureADUserPipeBind(User user)
+        public EntraIDUserPipeBind(User user)
         {
             _user = user;
         }
 
-        public AzureADUserPipeBind(string input)
+        public EntraIDUserPipeBind(string input)
         {
             Guid idValue;
             if (Guid.TryParse(input, out idValue))
@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         }
 
         /// <summary>
-        /// Instance of an Azure Active Directory User
+        /// Instance of an Entra ID User
         /// </summary>
         public User User => _user;
 

@@ -1,13 +1,13 @@
 ---
 external help file: PnP.PowerShell.dll-Help.xml
 Module Name: PnP.PowerShell
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADAppPermission.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDAppPermission.html
 schema: 2.0.0
 applicable: SharePoint Online
-title: Get-PnPAzureADAppPermission
+title: Get-PnPEntraIDAppPermission
 ---
 
-# Get-PnPAzureADAppPermission
+# Get-PnPEntraIDAppPermission
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Returns app permissions for Microsoft SharePoint and Microsoft Graph.
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADAppPermission [-Identity <AzureADAppPipeBind>] [-Connection <PnPConnection>]
+Get-PnPEntraIDAppPermission [-Identity <EntraIDAppPipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -30,21 +30,21 @@ This cmdlet returns the appid, displayname and permissions set for Microsoft Sha
 
 ### Example 1
 ```powershell
-Get-PnPAzureADAppPermission
+Get-PnPEntraIDAppPermission
 ```
 
 Returns all apps with all permissions.
 
 ### Example 2
 ```powershell
-Get-PnPAzureADAppPermission -Identity MyApp
+Get-PnPEntraIDAppPermission -Identity MyApp
 ```
 
 Returns permissions for the specified app.
 
 ### Example 2
 ```powershell
-Get-PnPAzureADAppPermission -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
+Get-PnPEntraIDAppPermission -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
 ```
 
 Returns permissions for the specified app.
@@ -55,7 +55,7 @@ Returns permissions for the specified app.
 Specify the display name, id or app id.
 
 ```yaml
-Type: AzureADAppPipeBind
+Type: EntraIDAppPipeBind
 Parameter Sets: (All)
 Aliases:
 

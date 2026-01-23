@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPAzureADGroup
+title: Set-PnPEntraIDGroup
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPAzureADGroup.html
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPEntraIDGroup.html
 ---
  
-# Set-PnPAzureADGroup
+# Set-PnPEntraIDGroup
 
 ## SYNOPSIS
 
@@ -15,39 +15,39 @@ online version: https://pnp.github.io/powershell/cmdlets/Set-PnPAzureADGroup.htm
 
   * Microsoft Graph API: Group.ReadWrite.All
 
-Sets the properties of a specific Azure Active Directory group.
+Sets the properties of a specific Entra ID group.
 
 ## SYNTAX
 
 ```powershell
-Set-PnPAzureADGroup -Identity <AzureADGroupPipeBind> [-DisplayName <String>] [-Description <String>]
+Set-PnPEntraIDGroup -Identity <EntraIDGroupPipeBind> [-DisplayName <String>] [-Description <String>]
  [-Owners <String[]>] [-Members <String[]>] [-SecurityEnabled] [-MailEnabled] 
  [-HideFromAddressLists <Boolean>] [-HideFromOutlookClients <Boolean>] 
  
 ```
 
 ## DESCRIPTION
-This cmdlet sets the properties of a specific Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+This cmdlet sets the properties of a specific Entra ID group. This can be a security, distribution or Microsoft 365 group.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Set-PnPAzureADGroup -Identity $group -DisplayName "My DisplayName"
+Set-PnPEntraIDGroup -Identity $group -DisplayName "My DisplayName"
 ```
 
 Sets the display name of the group where $group is a Group entity.
 
 ### EXAMPLE 2
 ```powershell
-Set-PnPAzureADGroup -Identity $groupId -Description "My Description" -DisplayName "My DisplayName"
+Set-PnPEntraIDGroup -Identity $groupId -Description "My Description" -DisplayName "My DisplayName"
 ```
 
 Sets the display name and description of a group based upon its ID.
 
 ### EXAMPLE 3
 ```powershell
-Set-PnPAzureADGroup -Identity $group -Owners demo@contoso.com
+Set-PnPEntraIDGroup -Identity $group -Owners demo@contoso.com
 ```
 
 Sets demo@contoso.com as the owner of the group.
@@ -55,7 +55,7 @@ Sets demo@contoso.com as the owner of the group.
 ## PARAMETERS
 
 ### -SecurityEnabled
-Sets the Azure Active Directory group to be allowed to be used for setting permissions.
+Sets the Entra ID group to be allowed to be used for setting permissions.
 
 ```yaml
 Type: SwitchParameter
@@ -69,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -MailEnabled
-Sets the Azure Active Directory group to be allowed to be used for receiving e-mail.
+Sets the Entra ID group to be allowed to be used for receiving e-mail.
 
 ```yaml
 Type: SwitchParameter
@@ -139,10 +139,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The identity of the Azure Active Directory group.
+The identity of the Entra ID group.
 
 ```yaml
-Type: AzureADGroupPipeBind
+Type: EntraIDGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

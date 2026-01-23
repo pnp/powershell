@@ -6,15 +6,15 @@ using System.Linq;
 using System.Management.Automation;
 using Group = PnP.PowerShell.Commands.Model.Graph.Group;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.Clear, "PnPAzureADGroupMember")]
+    [Cmdlet(VerbsCommon.Clear, "PnPEntraIDGroupOwner")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
-    [Alias("Clear-PnPEntraIDGroupMember")]
-    public class ClearAzureADGroupMember : PnPGraphCmdlet
+    [Alias("Clear-PnPAzureADGroupOwner")]
+    public class ClearAzureADGroupOwner : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, ValueFromPipeline = true)]
-        public AzureADGroupPipeBind Identity;
+        public EntraIDGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {
@@ -27,11 +27,11 @@ namespace PnP.PowerShell.Commands.Graph
 
             if (group != null)
             {
-                var members = Microsoft365GroupsUtility.GetMembers(GraphRequestHelper, new System.Guid(group.Id));
+                var owners = Microsoft365GroupsUtility.GetOwners(GraphRequestHelper, new System.Guid(group.Id));
 
-                var membersToBeRemoved = members?.Select(p => p.UserPrincipalName).ToArray();
+                var ownersToBeRemoved = owners?.Select(p => p.UserPrincipalName).ToArray();
 
-                Microsoft365GroupsUtility.RemoveMembers(GraphRequestHelper, new System.Guid(group.Id), membersToBeRemoved);
+                Microsoft365GroupsUtility.RemoveOwners(GraphRequestHelper, new System.Guid(group.Id), ownersToBeRemoved);
             }
         }
     }

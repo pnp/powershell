@@ -5,16 +5,16 @@ using PnP.PowerShell.Commands.Utilities;
 using System.Linq;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.Graph
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAzureADGroup")]
+    [Cmdlet(VerbsCommon.Get, "PnPEntraIDGroup")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
-    [Alias("Get-PnPEntraIDGroup")]
+    [Alias("Get-PnPAzureADGroup")]
     public class GetAzureADGroup : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]
-        public AzureADGroupPipeBind Identity;
+        public EntraIDGroupPipeBind Identity;
 
         protected override void ExecuteCmdlet()
         {

@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAzureADServicePrincipalAssignedAppRole.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPEntraIDServicePrincipalAssignedAppRole.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Remove-PnPAzureADServicePrincipalAssignedAppRole
+title: Remove-PnPEntraIDServicePrincipalAssignedAppRole
 ---
   
-# Remove-PnPAzureADServicePrincipalAssignedAppRole
+# Remove-PnPEntraIDServicePrincipalAssignedAppRole
 
 ## SYNOPSIS
 
@@ -15,63 +15,63 @@ title: Remove-PnPAzureADServicePrincipalAssignedAppRole
 
   *  Microsoft Graph API: AppRoleAssignment.ReadWrite.All
 
-Removes app roles configured on a service principal/application registration in Azure Active Directory.
+Removes app roles configured on a service principal/application registration in Entra ID.
 
 ## SYNTAX
 
 
 ### By instance
 ```powershell
-Remove-PnPAzureADServicePrincipalAssignedAppRole -Identity <ServicePrincipalAssignedAppRoleBind> [-Connection <PnPConnection>]
+Remove-PnPEntraIDServicePrincipalAssignedAppRole -Identity <ServicePrincipalAssignedAppRoleBind> [-Connection <PnPConnection>]
 ```
 
 ### By assigned app role
 ```powershell
-Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> [-Identity <ServicePrincipalAssignedAppRoleBind>] [-Connection <PnPConnection>]
+Remove-PnPEntraIDServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> [-Identity <ServicePrincipalAssignedAppRoleBind>] [-Connection <PnPConnection>]
 ```
 
 ### By app role name
 ```powershell
-Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> -AppRoleName <String> [-Connection <PnPConnection>]
+Remove-PnPEntraIDServicePrincipalAssignedAppRole -Principal <ServicePrincipalPipeBind> -AppRoleName <String> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows removal of one or more assigned app roles on a specific service principals/app registration in Azure Active Directory.
+Allows removal of one or more assigned app roles on a specific service principals/app registration in Entra ID.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933 -AppRoleName "User.ReadWrite.All"
+Remove-PnPEntraIDServicePrincipalAssignedAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933 -AppRoleName "User.ReadWrite.All"
 ```
 
 Removes the app role "User.ReadWrite.All" from the application registration with the object Id 797ee8a7-a950-4eb8-945d-7f10cc68a933
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal "My application" -AppRoleName "Group.ReadWrite.All"
+Remove-PnPEntraIDServicePrincipalAssignedAppRole -Principal "My application" -AppRoleName "Group.ReadWrite.All"
 ```
 
 Removes the app role "Group.ReadWrite.All" from the application registration with the name "My application"
 
 ### EXAMPLE 3
 ```powershell
-Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933
+Remove-PnPEntraIDServicePrincipalAssignedAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933
 ```
 
 Removes all app roles from the application registration with the object Id 797ee8a7-a950-4eb8-945d-7f10cc68a933
 
 ### EXAMPLE 4
 ```powershell
-Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal "My application"
+Remove-PnPEntraIDServicePrincipalAssignedAppRole -Principal "My application"
 ```
 
 Removes all app roles from the application registration with the name "My application"
 
 ### EXAMPLE 5
 ```powershell
-Get-PnPAzureADServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Remove-PnPAzureADServicePrincipalAssignedAppRole
+Get-PnPEntraIDServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Remove-PnPEntraIDServicePrincipalAssignedAppRole
 ```
 
 Removes all app roles from the application registration with the app Id/Client Id fd885e69-86dc-4f3b-851e-ad04920031cf

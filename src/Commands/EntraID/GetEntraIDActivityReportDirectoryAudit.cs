@@ -2,11 +2,11 @@
 using PnP.PowerShell.Commands.Base;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.AzureAD
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAzureADActivityReportDirectoryAudit")]
+    [Cmdlet(VerbsCommon.Get, "PnPEntraIDActivityReportDirectoryAudit")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/AuditLog.Read.All")]
-    [Alias("Get-PnPEntraIDActivityReportDirectoryAudit")]
+    [Alias("Get-PnPAzureADActivityReportDirectoryAudit")]
     public class GetAzureADActivityReportDirectoryAudit : PnPGraphCmdlet
     {
         [Parameter(Mandatory = false)]

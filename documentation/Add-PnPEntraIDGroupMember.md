@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPAzureADGroupMember.html
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPEntraIDGroupMember.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Add-PnPAzureADGroupMember
+title: Add-PnPEntraIDGroupMember
 ---
   
-# Add-PnPAzureADGroupMember
+# Add-PnPEntraIDGroupMember
 
 ## SYNOPSIS
 
@@ -15,33 +15,33 @@ title: Add-PnPAzureADGroupMember
 
   *  Microsoft Graph API: All of Group.ReadWrite.All, User.ReadWrite.All
 
-Adds members to a particular Azure Active Directory Group. This can be a security, distribution or Microsoft 365 group.
+Adds members to a particular Entra ID Group. This can be a security, distribution or Microsoft 365 group.
 
 ## SYNTAX
 
 ```powershell
-Add-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> -Users <String[]> [-Connection <PnPConnection>]
+Add-PnPEntraIDGroupMember -Identity <EntraIDGroupPipeBind> -Users <String[]> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to add users to Azure Active Directory Group. This can be a security, distribution or Microsoft 365 group.
+Allows to add users to Entra ID Group. This can be a security, distribution or Microsoft 365 group.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPAzureADGroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
+Add-PnPEntraIDGroupMember -Identity "Project Team" -Users "john@contoso.onmicrosoft.com","jane@contoso.onmicrosoft.com"
 ```
 
-Adds the provided two users as additional members to the Azure Active Directory Group named "Project Team".
+Adds the provided two users as additional members to the Entra ID Group named "Project Team".
 
 ### EXAMPLE 2
 ```powershell
-Add-PnPAzureADGroupMember -Identity "Project Team" -Users "125eaa87-7b54-41fd-b30f-2adfa68c4afe"
+Add-PnPEntraIDGroupMember -Identity "Project Team" -Users "125eaa87-7b54-41fd-b30f-2adfa68c4afe"
 ```
 
-Sets the provided security group as a member of the Azure Active Directory group name "Project Team".
+Sets the provided security group as a member of the Entra ID group name "Project Team".
 
 ## PARAMETERS
 
@@ -59,10 +59,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Identity of the Azure Active Directory group to add members to.
+The Identity of the Entra ID group to add members to.
 
 ```yaml
-Type: AzureADGroupPipeBind
+Type: EntraIDGroupPipeBind
 Parameter Sets: (All)
 
 Required: True
@@ -73,7 +73,7 @@ Accept wildcard characters: False
 ```
 
 ### -Users
-The UPN(s) of the user(s) to add to the Azure Active Directory group as a member.
+The UPN(s) of the user(s) to add to the Entra ID group as a member.
 
 ```yaml
 Type: String[]

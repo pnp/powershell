@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Add-PnPAzureADServicePrincipalAppRole.html
+online version: https://pnp.github.io/powershell/cmdlets/Add-PnPEntraIDServicePrincipalAppRole.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Add-PnPAzureADServicePrincipalAppRole
+title: Add-PnPEntraIDServicePrincipalAppRole
 ---
   
-# Add-PnPAzureADServicePrincipalAppRole
+# Add-PnPEntraIDServicePrincipalAppRole
 
 ## SYNOPSIS
 
@@ -15,52 +15,52 @@ title: Add-PnPAzureADServicePrincipalAppRole
 
   *  Microsoft Graph API: AppRoleAssignment.ReadWrite.All and Application.Read.All or AppRoleAssignment.ReadWrite.All and Directory.Read.All
 
-Adds an app role to a service principal/application registration in Azure Active Directory.
+Adds an app role to a service principal/application registration in Entra ID.
 
 ## SYNTAX
 
 ### By built in type
 
 ```powershell
-Add-PnPAzureADServicePrincipalAppRole -Principal <ServicePrincipalPipeBind> -AppRole <ServicePrincipalAppRoleBind> -BuiltInType <ServicePrincipalBuiltInType> [-Connection <PnPConnection>]
+Add-PnPEntraIDServicePrincipalAppRole -Principal <ServicePrincipalPipeBind> -AppRole <ServicePrincipalAppRoleBind> -BuiltInType <ServicePrincipalBuiltInType> [-Connection <PnPConnection>]
 ```
 
 ### By resource 
 
 ```powershell
-Add-PnPAzureADServicePrincipalAppRole -Principal <ServicePrincipalPipeBind> -AppRole <ServicePrincipalAppRoleBind> -Resource <ServicePrincipalPipeBind> [-Connection <PnPConnection>]
+Add-PnPEntraIDServicePrincipalAppRole -Principal <ServicePrincipalPipeBind> -AppRole <ServicePrincipalAppRoleBind> -Resource <ServicePrincipalPipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows adding of an app role such as Sites.FullControl.All to a service principal/application registration in Azure Active Directory. This can be used to grant permissions to a service principal/application registration, such as a Managed Identity.
+Allows adding of an app role such as Sites.FullControl.All to a service principal/application registration in Entra ID. This can be used to grant permissions to a service principal/application registration, such as a Managed Identity.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Add-PnPAzureADServicePrincipalAppRole -Principal "62614f96-cb78-4534-bf12-1f6693e8237c" -AppRole "Directory.Read.All" -BuiltInType MicrosoftGraph
+Add-PnPEntraIDServicePrincipalAppRole -Principal "62614f96-cb78-4534-bf12-1f6693e8237c" -AppRole "Directory.Read.All" -BuiltInType MicrosoftGraph
 ```
 
 Adds the permission Directory.Read.All for Microsoft Graph to the service principal with the object id 62614f96-cb78-4534-bf12-1f6693e8237c
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADServicePrincipal -BuiltInType SharePointOnline | Get-PnPAzureADServicePrincipalAvailableAppRole -Identity "Sites.FullControl.All" | Add-PnPAzureADServicePrincipalAppRole -Principal "62614f96-cb78-4534-bf12-1f6693e8237c"
+Get-PnPEntraIDServicePrincipal -BuiltInType SharePointOnline | Get-PnPEntraIDServicePrincipalAvailableAppRole -Identity "Sites.FullControl.All" | Add-PnPEntraIDServicePrincipalAppRole -Principal "62614f96-cb78-4534-bf12-1f6693e8237c"
 ```
 
 Adds the permission Site.FullControl.All for SharePoint Online to the service principal with the object id 62614f96-cb78-4534-bf12-1f6693e8237c
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAzureADServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPAzureADServicePrincipalAvailableAppRole -Identity "Group.ReadWrite.All" | Add-PnPAzureADServicePrincipalAppRole -Principal "mymanagedidentity"
+Get-PnPEntraIDServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPEntraIDServicePrincipalAvailableAppRole -Identity "Group.ReadWrite.All" | Add-PnPEntraIDServicePrincipalAppRole -Principal "mymanagedidentity"
 ```
 
 Adds the permission Group.ReadWrite.All for Microsoft Graph to the service principal with the name mymanagedidentity.
 
 ### EXAMPLE 4
 ```powershell
-Add-PnPAzureADServicePrincipalAppRole -Principal "62614f96-cb78-4534-bf12-1f6693e8237c" -AppRole "MyApplication.Read" -Resource "b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e"
+Add-PnPEntraIDServicePrincipalAppRole -Principal "62614f96-cb78-4534-bf12-1f6693e8237c" -AppRole "MyApplication.Read" -Resource "b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e"
 ```
 
 Adds the permission MyApplication.Read for the application registration with object id b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e to the service principal with the object id 62614f96-cb78-4534-bf12-1f6693e8237c

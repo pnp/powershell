@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Revoke-PnPAzureADAppSitePermission.html
+online version: https://pnp.github.io/powershell/cmdlets/Revoke-PnPEntraIDAppSitePermission.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Revoke-PnPAzureADAppSitePermission
+title: Revoke-PnPEntraIDAppSitePermission
 ---
   
-# Revoke-PnPAzureADAppSitePermission
+# Revoke-PnPEntraIDAppSitePermission
 
 ## SYNOPSIS
 
@@ -20,7 +20,7 @@ Revokes permissions for a given app.
 ## SYNTAX
 
 ```powershell
-Revoke-PnPAzureADAppSitePermission -PermissionId <String> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
+Revoke-PnPEntraIDAppSitePermission -PermissionId <String> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -31,7 +31,7 @@ This cmdlets revokes permissions for a given app in a site.
 
 ### EXAMPLE 1
 ```powershell
-Revoke-PnPAzureADAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa 
+Revoke-PnPEntraIDAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa 
 ```
 
 Revoke permission specified with the Id.

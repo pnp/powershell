@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPAzureADGroupOwner.html
+online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPEntraIDGroupOwner.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Clear-PnPAzureADGroupOwner
+title: Clear-PnPEntraIDGroupOwner
 ---
   
-# Clear-PnPAzureADGroupOwner
+# Clear-PnPEntraIDGroupOwner
 
 ## SYNOPSIS
 
@@ -15,26 +15,26 @@ title: Clear-PnPAzureADGroupOwner
 
   * Microsoft Graph API : One of Directory.ReadWrite.All, Group.ReadWrite.All
 
-Removes all current owners from a particular Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Removes all current owners from a particular Entra ID group. This can be a security, distribution or Microsoft 365 group.
 
 ## SYNTAX
 
 ```powershell
-Clear-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [-Connection <PnPConnection>]
+Clear-PnPEntraIDGroupOwner -Identity <EntraIDGroupPipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to remove all current owners from specified Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Allows to remove all current owners from specified Entra ID group. This can be a security, distribution or Microsoft 365 group.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Clear-PnPAzureADGroupOwner -Identity "Project Team"
+Clear-PnPEntraIDGroupOwner -Identity "Project Team"
 ```
 
-Removes all the current owners from the Azure Active Directory group named "Project Team".
+Removes all the current owners from the Entra ID group named "Project Team".
 
 ## PARAMETERS
 
@@ -53,10 +53,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Identity of the Azure Active Directory group to remove all owners from.
+The Identity of the Entra ID group to remove all owners from.
 
 ```yaml
-Type: AzureADGroupPipeBind
+Type: EntraIDGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

@@ -8,11 +8,11 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Add, "PnPAzureADServicePrincipalAppRole")]
+    [Cmdlet(VerbsCommon.Add, "PnPEntraIDServicePrincipalAppRole")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
-    [Alias("Add-PnPEntraIDServicePrincipalAppRole")]
+    [Alias("Add-PnPAzureADServicePrincipalAppRole")]
     public class AddAzureADServicePrincipalAppRole : PnPGraphCmdlet
     {
         private const string ParameterSet_BYRESOURCE = "By resource";

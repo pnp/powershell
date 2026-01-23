@@ -6,17 +6,17 @@ using PnP.PowerShell.Commands.Utilities.REST;
 
 namespace PnP.PowerShell.Commands.Base.PipeBinds
 {
-    public class AzureADAppPipeBind
+    public class EntraIDAppPipeBind
     {
         private Guid _id;
         private string _name;
 
-        public AzureADAppPipeBind(Guid id)
+        public EntraIDAppPipeBind(Guid id)
         {
             _id = id;
         }
 
-        public AzureADAppPipeBind(string name)
+        public EntraIDAppPipeBind(string name)
         {
             if (Guid.TryParse(name, out Guid guid))
             {

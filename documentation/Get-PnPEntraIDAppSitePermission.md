@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADAppSitePermission.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDAppSitePermission.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAzureADAppSitePermission
+title: Get-PnPEntraIDAppSitePermission
 ---
   
-# Get-PnPAzureADAppSitePermission
+# Get-PnPEntraIDAppSitePermission
 
 ## SYNOPSIS
 
@@ -15,23 +15,23 @@ title: Get-PnPAzureADAppSitePermission
 
   * Microsoft Graph API: Sites.FullControl.All
 
-Returns Azure AD App permissions for a site.
+Returns Entra ID App permissions for a site.
 
 ## SYNTAX
 
 ### All Permissions
 ```powershell
-Get-PnPAzureADAppSitePermission [-PermissionId <String>] [-Site <SitePipeBind>] [-Connection <PnPConnection>]
+Get-PnPEntraIDAppSitePermission [-PermissionId <String>] [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ### By Permission Id
 ```powershell
-Get-PnPAzureADAppSitePermission -PermissionId <String> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
+Get-PnPEntraIDAppSitePermission -PermissionId <String> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ### By App Display Name or App Id
 ```powershell
-Get-PnPAzureADAppSitePermission -AppIdentity <String> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
+Get-PnPEntraIDAppSitePermission -AppIdentity <String> [-Site <SitePipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -42,35 +42,35 @@ This cmdlet returns app permissions for either the current or a given site.
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAzureADAppSitePermission
+Get-PnPEntraIDAppSitePermission
 ```
 
 Returns the apps that have permissions for the currently connected site. Note that if PermissionId is not specified then the Roles property is not populated. This is a current API limitation.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADAppSitePermission -Site https://contoso.sharepoint.com/sites/projects
+Get-PnPEntraIDAppSitePermission -Site https://contoso.sharepoint.com/sites/projects
 ```
 
 Returns the apps that have permissions for the site specified. Note that you are required to have the SharePoint Administrator role in your tenant to be able to use this command.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPAzureADAppSitePermission -PermissionId TowaS50fG1zLnNwLmV4dHwxYxNmI0OTI1
+Get-PnPEntraIDAppSitePermission -PermissionId TowaS50fG1zLnNwLmV4dHwxYxNmI0OTI1
 ```
 
 Returns the specific app permission details for the given permission id for the current site.
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPAzureADAppSitePermission -AppIdentity "Test App"
+Get-PnPEntraIDAppSitePermission -AppIdentity "Test App"
 ```
 
 Returns the specific app permission details for the app with the provided name.
 
 ### EXAMPLE 5
 ```powershell
-Get-PnPAzureADAppSitePermission -AppIdentity "14effc36-dc8b-4f68-8919-f6beb7d847b3"
+Get-PnPEntraIDAppSitePermission -AppIdentity "14effc36-dc8b-4f68-8919-f6beb7d847b3"
 ```
 
 Returns the specific app permission details for the app with the provided Id.

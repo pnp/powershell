@@ -3,15 +3,15 @@ using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System.Management.Automation;
 
-namespace PnP.PowerShell.Commands.AzureAD
+namespace PnP.PowerShell.Commands.EntraID
 {
-    [Cmdlet(VerbsCommon.Remove, "PnPAzureADApp")]
+    [Cmdlet(VerbsCommon.Remove, "PnPEntraIDApp")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
-    [Alias("Remove-PnPEntraIDApp")]
+    [Alias("Remove-PnPAzureADApp")]
     public class RemoveAzureADApp : PnPGraphCmdlet
     {
         [Parameter(Mandatory = true, Position = 0)]
-        public AzureADAppPipeBind Identity;
+        public EntraIDAppPipeBind Identity;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Force;

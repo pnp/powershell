@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPAzureADUser.html
+online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPEntraIDUser.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Remove-PnPAzureADUser
+title: Remove-PnPEntraIDUser
 ---
   
-# Remove-PnPAzureADUser
+# Remove-PnPEntraIDUser
 
 ## SYNOPSIS
 
@@ -15,47 +15,47 @@ title: Remove-PnPAzureADUser
 
   * Microsoft Graph API: User.ReadWrite.All
 
-Removes a user from Azure Active Directory / Microsoft Entra ID.
+Removes a user from Entra ID.
 
 ## SYNTAX
 
 ```powershell
-Remove-PnPAzureADUser -Identity <AzureADUserPipeBind> [-WhatIf] [-Connection <PnPConnection>] [-Verbose]
+Remove-PnPEntraIDUser -Identity <EntraIDUserPipeBind> [-WhatIf] [-Connection <PnPConnection>] [-Verbose]
 ```
 
 ## DESCRIPTION
 
-Allows a user to be removed from Azure Active Directory / Microsoft Entra ID. When the user is deleted, the user will be moved to the recycle bin and can be restored within 30 days. After 30 days the user will be permanently deleted.
+Allows a user to be removed from Entra ID. When the user is deleted, the user will be moved to the recycle bin and can be restored within 30 days. After 30 days the user will be permanently deleted.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Remove-PnPAzureADUser -Identity johndoe@contoso.onmicrosoft.com
+Remove-PnPEntraIDUser -Identity johndoe@contoso.onmicrosoft.com
 ```
 
-The user with the provided UPN will be removed from Azure Active Directory.
+The user with the provided UPN will be removed from Entra ID.
 
 ### EXAMPLE 2
 ```powershell
-Remove-PnPAzureADUser -Identity 5a4c547a-1440-4f64-9952-a0c6f1c9e7ea
+Remove-PnPEntraIDUser -Identity 5a4c547a-1440-4f64-9952-a0c6f1c9e7ea
 ```
 
-The user with the provided guid will be removed from Azure Active Directory.
+The user with the provided guid will be removed from Entra ID.
 
 ### EXAMPLE 3
 ```powershell
-Get-PnPEntraIDUser | Where-Object { $_.OfficeLocation -eq "London" } | Remove-PnPAzureADUser
+Get-PnPEntraIDUser | Where-Object { $_.OfficeLocation -eq "London" } | Remove-PnPEntraIDUser
 ```
 
-Removes all users that have their OfficeLocation set to London from Azure Active Directory.
+Removes all users that have their OfficeLocation set to London from Entra ID.
 
 ### EXAMPLE 4
 ```powershell
-Get-PnPEntraIDUser -Filter "accountEnabled eq false" | Remove-PnPAzureADUser
+Get-PnPEntraIDUser -Filter "accountEnabled eq false" | Remove-PnPEntraIDUser
 ```
 
-Removes all disabled user accounts from Azure Active Directory.
+Removes all disabled user accounts from Entra ID.
 
 ## PARAMETERS
 
@@ -77,7 +77,7 @@ Accept wildcard characters: False
 The identity of the user to remove. This can be the UPN, the GUID or an instance of the user.
 
 ```yaml
-Type: AzureADUserPipeBind
+Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 
 Required: True

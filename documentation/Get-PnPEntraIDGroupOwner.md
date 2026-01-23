@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Get-PnPAzureADGroupOwner.html
+online version: https://pnp.github.io/powershell/cmdlets/Get-PnPEntraIDGroupOwner.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Get-PnPAzureADGroupOwner
+title: Get-PnPEntraIDGroupOwner
 ---
   
-# Get-PnPAzureADGroupOwner
+# Get-PnPEntraIDGroupOwner
 
 ## SYNOPSIS
 
@@ -15,41 +15,41 @@ title: Get-PnPAzureADGroupOwner
 
   * Microsoft Graph API : One of Group.Read.All, Group.ReadWrite.All, User.Read.All, User.ReadWrite.All
 
-Gets owners of a particular Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Gets owners of a particular Entra ID group. This can be a security, distribution or Microsoft 365 group.
 
 ## SYNTAX
 
 ```powershell
-Get-PnPAzureADGroupOwner -Identity <AzureADGroupPipeBind> [-Connection <PnPConnection>]
+Get-PnPEntraIDGroupOwner -Identity <EntraIDGroupPipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to list owners from a given Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Allows to list owners from a given Entra ID group. This can be a security, distribution or Microsoft 365 group.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Get-PnPAzureADGroupOwner -Identity $groupId
+Get-PnPEntraIDGroupOwner -Identity $groupId
 ```
 
-Retrieves all the owners of a specific Azure Active Directory group based on its ID.
+Retrieves all the owners of a specific Entra ID group based on its ID.
 
 ### EXAMPLE 2
 ```powershell
-Get-PnPAzureADGroupOwner -Identity $group
+Get-PnPEntraIDGroupOwner -Identity $group
 ```
 
-Retrieves all the owners of a specific Azure Active Directory group based on the group's object instance.
+Retrieves all the owners of a specific Entra ID group based on the group's object instance.
 
 ## PARAMETERS
 
 ### -Identity
-The identity of the Azure Active Directory group.
+The identity of the Entra ID group.
 
 ```yaml
-Type: AzureADGroupPipeBind
+Type: EntraIDGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

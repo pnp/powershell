@@ -2,12 +2,12 @@
 Module Name: PnP.PowerShell
 schema: 2.0.0
 applicable: SharePoint Online
-online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPAzureADGroupMember.html
+online version: https://pnp.github.io/powershell/cmdlets/Clear-PnPEntraIDGroupMember.html
 external help file: PnP.PowerShell.dll-Help.xml
-title: Clear-PnPAzureADGroupMember
+title: Clear-PnPEntraIDGroupMember
 ---
   
-# Clear-PnPAzureADGroupMember
+# Clear-PnPEntraIDGroupMember
 
 ## SYNOPSIS
 
@@ -15,26 +15,26 @@ title: Clear-PnPAzureADGroupMember
 
   * Microsoft Graph API : One of Directory.ReadWrite.All, Group.ReadWrite.All, GroupMember.ReadWrite.All
 
-Removes all current members from a particular Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Removes all current members from a particular Entra ID group. This can be a security, distribution or Microsoft 365 group.
 
 ## SYNTAX
 
 ```powershell
-Clear-PnPAzureADGroupMember -Identity <AzureADGroupPipeBind> [-Connection <PnPConnection>]
+Clear-PnPEntraIDGroupMember -Identity <EntraIDGroupPipeBind> [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
 
-Allows to remove all current members from specified Azure Active Directory group. This can be a security, distribution or Microsoft 365 group.
+Allows to remove all current members from specified Entra ID group. This can be a security, distribution or Microsoft 365 group.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```powershell
-Clear-PnPAzureADGroupMember -Identity "Project Team"
+Clear-PnPEntraIDGroupMember -Identity "Project Team"
 ```
 
-Removes all the current members from the Azure Active Directory group named "Project Team".
+Removes all the current members from the Entra ID group named "Project Team".
 
 ## PARAMETERS
 
@@ -53,10 +53,10 @@ Accept wildcard characters: False
 ```
 
 ### -Identity
-The Identity of the Azure Active Directory group to remove all members from.
+The Identity of the Entra ID group to remove all members from.
 
 ```yaml
-Type: AzureADGroupPipeBind
+Type: EntraIDGroupPipeBind
 Parameter Sets: (All)
 
 Required: True

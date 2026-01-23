@@ -9,11 +9,11 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-    [Cmdlet(VerbsCommon.Get, "PnPAzureADServicePrincipal", DefaultParameterSetName = ParameterSet_ALL)]
+    [Cmdlet(VerbsCommon.Get, "PnPEntraIDServicePrincipal", DefaultParameterSetName = ParameterSet_ALL)]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
     [OutputType(typeof(List<AzureADServicePrincipal>))]
-    [Alias("Get-PnPEntraIDServicePrincipal")]
+    [Alias("Get-PnPAzureADServicePrincipal")]
     public class GetAzureADServicePrincipal : PnPGraphCmdlet
     {
         private const string ParameterSet_ALL = "All";
