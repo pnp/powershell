@@ -20,7 +20,7 @@ namespace PnP.PowerShell.Commands.Search
         public string DatabaseName { get; set; }
     }
 
-    [Cmdlet(VerbsCommon.Get, "PnPGetUnsuccesfulCrawledUrls")]
+    [Cmdlet(VerbsCommon.Get, "PnPUnsuccesfulCrawledUrls")]
     [ApiNotAvailableUnderApplicationPermissions]
     public class GetUnsuccesfulCrawledUrls : PnPWebCmdlet
     {
