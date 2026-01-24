@@ -20,7 +20,7 @@ Gets one Todo list or all Todo lists.
 ## SYNTAX
 
 ```powershell
-Get-PnPTodoList [[-Identity] <String>] [-[User] <AzureADUserPipeBind>]
+Get-PnPTodoList [[-Identity] <String>] [-[User] <EntraIDUserPipeBind>]
 ```
 
 ## DESCRIPTION
@@ -73,10 +73,10 @@ Accept wildcard characters: False
 ```
 
 ### -User
-The UPN, Id or instance of an Azure AD user for which you would like to retrieve the todo list available to this user
+The UPN, Id or instance of an Entra ID user for which you would like to retrieve the todo list available to this user
 
 ```yaml
-Type: AzureADUserPipeBind
+Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 
 Required: False

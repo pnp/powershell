@@ -75,7 +75,7 @@ Accept pipeline input: False
 ```
 
 ### -ApplicationName
-The name of the Azure AD Application to create.
+The name of the Entra ID Application to create.
 
 ```yaml
 Type: String
@@ -164,7 +164,7 @@ Accept wildcard characters: False
 
 ### -LogoFilePath
 
-Sets the logo for the Azure AD application. Provide a full path to a local image file on your disk which you want to use as the logo.
+Sets the logo for the Entra ID application. Provide a full path to a local image file on your disk which you want to use as the logo.
 
 ```yaml
 Type: String
