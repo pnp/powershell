@@ -23,7 +23,7 @@ Set-PnPList -Identity <ListPipeBind> [-EnableContentTypes <Boolean>] [-BreakRole
  [-EnableModeration <Boolean>] [-DraftVersionVisibility <DraftVisibilityType>] [-ReadSecurity <ListReadSecurity>] [-WriteSecurity <ListWriteSecurity>]
  [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles <Boolean>] [-DisableGridEditing <Boolean>] [-DisableCommenting <Boolean>] 
  [-EnableAutoExpirationVersionTrim <Boolean>] [-ExpireVersionsAfterDays <UInt32>]
- [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>] [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Color <ListColor>] [-Icon <ListIcon>] [-Connection <PnPConnection>]
+ [-DefaultSensitivityLabelForLibrary <SensitivityLabelPipeBind>] [-Path <String>] [-OpenDocumentsMode <DocumentLibraryOpenDocumentsInMode>] [-Color <ListColor>] [-Icon <ListIcon>]  [-ParserDisabled] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -419,6 +419,19 @@ Allows configuring the "Opening Documents in the Browser" advanced setting on do
 Type: DocumentLibraryOpenDocumentsInMode
 Parameter Sets: (All)
 Accepted values: ClientApplication, Browser
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+### -ParserDisabled
+Disable document property promotion for Office documents. This ensures that the documents uploaded to SharePoint are not changed by a background process, which copies document properties into library columns and vice-versa. 
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named
