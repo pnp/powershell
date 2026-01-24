@@ -20,7 +20,7 @@ Sets the profile picture of a user.
 ## SYNTAX
 
 ```powershell
-Set-PnPUserProfilePhoto -Identity <AzureADUserPipeBind> -Path <String>  [-Connection <PnPConnection>] 
+Set-PnPUserProfilePhoto -Identity <EntraIDUserPipeBind> -Path <String>  [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION
@@ -68,7 +68,7 @@ Accept wildcard characters: False
 The identity of the user to remove. This can be the UPN, the GUID or an instance of the user.
 
 ```yaml
-Type: AzureADUserPipeBind
+Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 
 Required: True

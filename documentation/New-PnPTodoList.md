@@ -20,7 +20,7 @@ Creates a new todo list.
 ## SYNTAX
 
 ```powershell
-New-PnPTodoList [[-DisplayName] <String>] [-[User] <AzureADUserPipeBind>]
+New-PnPTodoList [[-DisplayName] <String>] [-[User] <EntraIDUserPipeBind>]
 ```
 
 ## DESCRIPTION
@@ -59,10 +59,10 @@ Accept wildcard characters: False
 ```
 
 ### -User
-The UPN, Id or instance of an Azure AD user for which you would like to create the todo list.
+The UPN, Id or instance of an Entra ID user for which you would like to create the todo list.
 
 ```yaml
-Type: AzureADUserPipeBind
+Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 
 Required: False

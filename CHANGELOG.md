@@ -27,12 +27,15 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Remove-PnPPowerAppPermission` cmdlet to remove Power Apps permissions. [#5168](https://github.com/pnp/powershell/pull/5168)
 - Added support for `-ClearGroupId` parameter in `Set-PnPSite` and `Set-PnPTenantSite` cmdlets. [#5192](https://github.com/pnp/powershell/pull/5192)
 - Added support for batch restoring items from the recycle bin using `Restore-PnPRecycleBinItem -ListIds` [#4705](https://github.com/pnp/powershell/pull/4705)
+- Added optional `-ClearSubScopes` flag to `Set-PnPFolderPermission` and `Set-PnPListItemPermission` cmdlets to clear unique permissions on child items/folders when breaking permission inheritance [#5213](https://github.com/pnp/powershell/pull/5213)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
 - **PnP PowerShell now requires PowerShell 7.4.0 or newer**
 - Improved `Connect-PnPOnline` with `-DeviceLogin` flow, now we don't require users to specify `-Tenant` parameter, it will be automatically added if not specified.
 - Improved `Restore-PnPRecycleBinItem` cmdlet to better handle throttling.
+- Logging in using `Connect-PnPOnline -PersistentLogin` no longer throwing a warning [#5082](https://github.com/pnp/powershell/pull/5082)
+- All cmdlets with `AzureAD` in their name have been renamed to use `EntraID` instead, to reflect the rebranding of Azure Active Directory to Entra ID. Aliases have been added for backward compatibility. [#5221](https://github.com/pnp/powershell/pull/5221)
 
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
@@ -56,6 +59,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fixed issue with `New-PnpAzureCertificate -OutPfx pnp.pfx -OutCert pnp.cer` made it language agnostic [#5137](https://github.com/pnp/powershell/issues/5137)
 - Fix `Register-PnPEntraIdApp` Allow to use CER file instead of PFX [#5129](https://github.com/pnp/powershell/issues/5129)
 - Fix `New-PnPTenantSite` cmdlet to properly handle timeout issues for classic sites. [#5185](https://github.com/pnp/powershell/pull/5185)
+- Fix `Set-PnPBuiltInSiteTemplateSettings` cmdlet to reference up to date Template IDs. [#5202](https://github.com/pnp/powershell/pull/5202)
+- Fix `Connect-PnPOnline` cmdlet to allow reuse of connection created using certificate. [#5203](https://github.com/pnp/powershell/pull/5203)
+- Add optional parameter Force to cmdlet remove-pnpsitegroup. [#5214](https://github.com/pnp/powershell/pull/5214)
 
 ### Removed
 - Removed `-RemoveExisting` parameter from `Add-PnPAzureADGroupMember`, `Add-PnPAzureADGroupOwner`, `Add-PnPMicrosoft365GroupMember` and `Add-PnPMicrosoft365GroupOwner` cmdlets. It was never really implemented and without function. [#5153](https://github.com/pnp/powershell/pull/5153)
@@ -80,6 +86,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Sven Boll [svenboll]
 - Joshua Hendersson [JoshuaSHenderson]
 - Siddharth Vaghasia [siddharth-vaghasia]
+- David Schenk [davidschenkUPG]
 
 ## [3.1.0]
 
