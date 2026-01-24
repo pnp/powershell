@@ -83,7 +83,7 @@ Connect-PnPOnline -Url https://<tenant>-admin.sharepoint.com/ -Interactive -Clie
 
 Get-PnPSearchCrawlLog -Filter "https://contoso-my.sharepoint.com/sites/Intranet" -IncreaseRequestTimeout
 ```
-
+Increases the request timeout allowing the call to last up to 3 minutes. The `ClientRuntimeContext` enforces a three-minute limit; when increasing the timeout to its maximum of three minutes, this threshold may still be exceeded.
 
 ## PARAMETERS
 
@@ -145,6 +145,7 @@ Accept wildcard characters: False
 ```
 
 ### -IncreaseRequestTimeout
+Extend the request timeout to permit command execution for up to 3 minutes.
 
 ```yaml
 Type: Switch
