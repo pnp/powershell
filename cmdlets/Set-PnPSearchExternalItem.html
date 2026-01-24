@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -90,7 +90,7 @@
 </ul>
 <p>Adds or updates an external item in Microsoft Search</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ItemId &lt;String&gt; -ConnectionId &lt;SearchExternalConnectionPipeBind&gt; -Properties &lt;Hashtable&gt; [-ContentValue &lt;String&gt;] [-ContentType &lt;SearchExternalItemContentType&gt;] [-GrantUsers &lt;AzureADUserPipeBind[]&gt;] [-GrantGroups &lt;AzureADGroupPipeBind[]&gt;] [-DenyUsers &lt;AzureADUserPipeBind[]&gt;] [-DenyGroups &lt;AzureADGroupPipeBind[]&gt;] [-GrantExternalGroups &lt;String[]&gt;] [-DenyExternalGroups &lt;String[]&gt;] [-GrantEveryone &lt;SwitchParameter&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Set-PnPSearchExternalItem -ItemId &lt;String&gt; -ConnectionId &lt;SearchExternalConnectionPipeBind&gt; -Properties &lt;Hashtable&gt; [-ContentValue &lt;String&gt;] [-ContentType &lt;SearchExternalItemContentType&gt;] [-GrantUsers &lt;EntraIDUserPipeBind[]&gt;] [-GrantGroups &lt;EntraIDGroupPipeBind[]&gt;] [-DenyUsers &lt;EntraIDUserPipeBind[]&gt;] [-DenyGroups &lt;EntraIDGroupPipeBind[]&gt;] [-GrantExternalGroups &lt;String[]&gt;] [-DenyExternalGroups &lt;String[]&gt;] [-GrantEveryone &lt;SwitchParameter&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet can be used to add or update an external item in Microsoft Search on custom connectors. The cmdlet will create a new external item if the item does not exist yet. If the item already exists, it will be updated.</p>
@@ -165,8 +165,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-grantusers">-GrantUsers</h3>
-<p>When provided, the external item will only be shown to the users provided through this parameter. It can contain one or multiple users by providing AzureADUser objects, user principal names or Entra user IDs.</p>
-<pre><code class="lang-yaml">Type: AzureADUserPipeBind[]
+<p>When provided, the external item will only be shown to the users provided through this parameter. It can contain one or multiple users by providing EntraIDUser objects, user principal names or Entra user IDs.</p>
+<pre><code class="lang-yaml">Type: EntraIDUserPipeBind[]
 Parameter Sets: (All)
 Required: False
 Position: Named
@@ -175,8 +175,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-grantgroups">-GrantGroups</h3>
-<p>When provided, the external item will only be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing AzureADGroup objects, group names or Entra group IDs.</p>
-<pre><code class="lang-yaml">Type: AzureADGroupPipeBind[]
+<p>When provided, the external item will only be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing EntraIDGroup objects, group names or Entra group IDs.</p>
+<pre><code class="lang-yaml">Type: EntraIDGroupPipeBind[]
 Parameter Sets: (All)
 Required: False
 Position: Named
@@ -185,8 +185,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-denyusers">-DenyUsers</h3>
-<p>When provided, the external item not be shown to the users provided through this parameter. It can contain one or multiple users by providing AzureADUser objects, user principal names or Entra user IDs.</p>
-<pre><code class="lang-yaml">Type: AzureADUserPipeBind[]
+<p>When provided, the external item not be shown to the users provided through this parameter. It can contain one or multiple users by providing EntraIDUser objects, user principal names or Entra user IDs.</p>
+<pre><code class="lang-yaml">Type: EntraIDUserPipeBind[]
 Parameter Sets: (All)
 Required: False
 Position: Named
@@ -195,8 +195,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-denygroups">-DenyGroups</h3>
-<p>When provided, the external item will not be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing AzureADGroup objects, group names or Entra group IDs.</p>
-<pre><code class="lang-yaml">Type: AzureADGroupPipeBind[]
+<p>When provided, the external item will not be shown to the users which are members of the groups provided through this parameter. It can contain one or multiple groups by providing EntraIDGroup objects, group names or Entra group IDs.</p>
+<pre><code class="lang-yaml">Type: EntraIDGroupPipeBind[]
 Parameter Sets: (All)
 Required: False
 Position: Named

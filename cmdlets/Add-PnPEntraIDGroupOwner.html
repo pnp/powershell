@@ -77,16 +77,68 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
   <h1 id="add-pnpentraidgroupowner">Add-PnPEntraIDGroupOwner</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Add-PnPAzureADGroupOwner.html">Add-PnPAzureADGroupOwner</a>.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: All of Group.ReadWrite.All, User.ReadWrite.All</li>
+</ul>
+<p>Adds users to the owners of an Entra ID group. This can be a security or Microsoft 365 group. Distribution lists are not currently supported by Graph API.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Add-PnPEntraIDGroupOwner -Identity &lt;EntraIDGroupPipeBind&gt; -Users &lt;String[]&gt; [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Allows to add users to owners of an Entra ID Group. This can be a security, distribution or Microsoft 365 group.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Add-PnPEntraIDGroupOwner -Identity &quot;Project Team&quot; -Users &quot;john@contoso.onmicrosoft.com&quot;,&quot;jane@contoso.onmicrosoft.com&quot;
+</code></pre>
+<p>Adds the provided two users as additional owners to the Entra ID group named &quot;Project Team&quot;.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Add-PnPEntraIDGroupOwner -Identity &quot;Project Team&quot; -Users &quot;125eaa87-7b54-41fd-b30f-2adfa68c4afe&quot;
+</code></pre>
+<p>Sets the provided security group as owner of the Entra ID group name &quot;Project Team&quot;.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The Identity of the Entra ID group to add owners to.</p>
+<pre><code class="lang-yaml">Type: EntraIDGroupPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-users">-Users</h3>
+<p>The UPN(s) of the user(s) to add to the Entra ID group as a member.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/graph/api/group-post-members">Microsoft Graph documentation</a></p>
 
 </article>
           </div>

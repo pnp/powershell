@@ -77,16 +77,73 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
   <h1 id="get-pnpentraidserviceprincipalassignedapprole">Get-PnPEntraIDServicePrincipalAssignedAppRole</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Get-PnPAzureADServicePrincipalAssignedAppRole.html">Get-PnPAzureADServicePrincipalAssignedAppRole</a>.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Any of Application.Read.All, Directory.Read.All, Application.ReadWrite.All, Directory.ReadWrite.All</li>
+</ul>
+<p>Gets the app roles currently assigned to a service principal/application registration in Entra ID.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Get-PnPEntraIDServicePrincipalAssignedAppRole -Principal &lt;ServicePrincipalPipeBind&gt; [-Identity &lt;ServicePrincipalAppRoleBind&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Allows retrieval of currently assigned app roles of a specific service principals/app registration in Entra ID.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDServicePrincipalAssignedAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933
+</code></pre>
+<p>Retrieves all app roles currently assigned to the application registration with the object Id 797ee8a7-a950-4eb8-945d-7f10cc68a933</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDServicePrincipalAssignedAppRole -Principal &quot;My application&quot;
+</code></pre>
+<p>Retrieves all app roles currently assigned to the application registration with the name &quot;My application&quot;.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Get-PnPEntraIDServicePrincipalAssignedAppRole
+</code></pre>
+<p>Retrieves all app roles currently assigned to the application registration with the app Id/Client Id fd885e69-86dc-4f3b-851e-ad04920031cf</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-principal">-Principal</h3>
+<p>The object id, name or instance of the service principal/application registration to list the currently assigned to app roles for.</p>
+<pre><code class="lang-yaml">Type: ServicePrincipalPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The object id, name or instance of the application role to retrieve from the currently assigned app roles of the service principal/application registration. If nothing returns, it means this specific role is currently not assigned to the service principal/application registration.</p>
+<pre><code class="lang-yaml">Type: ServicePrincipalAppRoleBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/graph/api/serviceprincipal-list-approleassignments">Microsoft Graph documentation</a></p>
 
 </article>
           </div>

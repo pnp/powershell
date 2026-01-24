@@ -77,16 +77,142 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
   <h1 id="set-pnpentraidgroup">Set-PnPEntraIDGroup</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Set-PnPAzureADGroup.html">Set-PnPAzureADGroup</a>.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Group.ReadWrite.All</li>
+</ul>
+<p>Sets the properties of a specific Entra ID group.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Set-PnPEntraIDGroup -Identity &lt;EntraIDGroupPipeBind&gt; [-DisplayName &lt;String&gt;] [-Description &lt;String&gt;]
+ [-Owners &lt;String[]&gt;] [-Members &lt;String[]&gt;] [-SecurityEnabled] [-MailEnabled] 
+ [-HideFromAddressLists &lt;Boolean&gt;] [-HideFromOutlookClients &lt;Boolean&gt;] 
+ 
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet sets the properties of a specific Entra ID group. This can be a security, distribution or Microsoft 365 group.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Set-PnPEntraIDGroup -Identity $group -DisplayName &quot;My DisplayName&quot;
+</code></pre>
+<p>Sets the display name of the group where $group is a Group entity.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPEntraIDGroup -Identity $groupId -Description &quot;My Description&quot; -DisplayName &quot;My DisplayName&quot;
+</code></pre>
+<p>Sets the display name and description of a group based upon its ID.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Set-PnPEntraIDGroup -Identity $group -Owners demo@contoso.com
+</code></pre>
+<p>Sets demo@contoso.com as the owner of the group.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-securityenabled">-SecurityEnabled</h3>
+<p>Sets the Entra ID group to be allowed to be used for setting permissions.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-mailenabled">-MailEnabled</h3>
+<p>Sets the Entra ID group to be allowed to be used for receiving e-mail.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-description">-Description</h3>
+<p>The description of the group to set.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-displayname">-DisplayName</h3>
+<p>The display name of the group to set.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-hidefromaddresslists">-HideFromAddressLists</h3>
+<p>Controls whether the group is hidden or shown in the Global Address List (GAL).</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-hidefromoutlookclients">-HideFromOutlookClients</h3>
+<p>Controls whether the group shows in the Outlook left-hand navigation.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The identity of the Entra ID group.</p>
+<pre><code class="lang-yaml">Type: EntraIDGroupPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-members">-Members</h3>
+<p>The array UPN values of members to set to the group. Note: Will replace members.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-owners">-Owners</h3>
+<p>The array UPN values of owners to set to the group. Note: Will replace owners.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/graph/api/group-update">Microsoft Graph documentation</a></p>
 
 </article>
           </div>

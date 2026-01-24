@@ -77,14 +77,57 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
   <h1 id="remove-pnpentraidapp">Remove-PnPEntraIDApp</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Remove-PnPAzureADApp.html">Remove-PnPAzureADApp</a>.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Application.ReadWrite.All</li>
+</ul>
+<p>Removes an Entra ID App registration.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Remove-PnPEntraIDApp [-Identity] &lt;EntraIDAppPipeBind&gt; [-Force]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet removes an Entra ID App registration.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">Example 1</h3>
+<pre><code class="lang-powershell">Remove-PnPEntraIDApp -Identity MyApp
+</code></pre>
+<p>Removes the specified app.</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Remove-PnPEntraIDApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
+</code></pre>
+<p>Removes the specified app.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-force">-Force</h3>
+<p>If specified the confirmation question will be skipped.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>Specify the name, id or app id for the app to remove.</p>
+<pre><code class="lang-yaml">Type: EntraIDAppPipeBind
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

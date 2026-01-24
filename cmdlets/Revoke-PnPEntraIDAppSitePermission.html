@@ -77,14 +77,62 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
   <h1 id="revoke-pnpentraidappsitepermission">Revoke-PnPEntraIDAppSitePermission</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Revoke-PnPAzureADAppSitePermission.html">Revoke-PnPAzureADAppSitePermission</a>.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Sites.FullControl.All</li>
+</ul>
+<p>Revokes permissions for a given app.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Revoke-PnPEntraIDAppSitePermission -PermissionId &lt;String&gt; [-Site &lt;SitePipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlets revokes permissions for a given app in a site.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Revoke-PnPEntraIDAppSitePermission -PermissionId ABSDFefsdfef33fsdFSvsadf3e3fsdaffsa 
+</code></pre>
+<p>Revoke permission specified with the Id.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-permissionid">-PermissionId</h3>
+<p>Specify the permission id that should be revoked.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-site">-Site</h3>
+<p>Optional url to a site to set the permissions for. Defaults to the current site.</p>
+<pre><code class="lang-yaml">Type: SitePipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

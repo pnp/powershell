@@ -77,16 +77,54 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
   <h1 id="clear-pnpentraidgroupmember">Clear-PnPEntraIDGroupMember</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Clear-PnPAzureADGroupMember.html">Clear-PnPAzureADGroupMember</a>.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API : One of Directory.ReadWrite.All, Group.ReadWrite.All, GroupMember.ReadWrite.All</li>
+</ul>
+<p>Removes all current members from a particular Entra ID group. This can be a security, distribution or Microsoft 365 group.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Clear-PnPEntraIDGroupMember -Identity &lt;EntraIDGroupPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Allows to remove all current members from specified Entra ID group. This can be a security, distribution or Microsoft 365 group.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Clear-PnPEntraIDGroupMember -Identity &quot;Project Team&quot;
+</code></pre>
+<p>Removes all the current members from the Entra ID group named &quot;Project Team&quot;.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The Identity of the Entra ID group to remove all members from.</p>
+<pre><code class="lang-yaml">Type: EntraIDGroupPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/graph/api/group-delete-members">Microsoft Graph documentation</a></p>
 
 </article>
           </div>

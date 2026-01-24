@@ -77,14 +77,79 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
   <h1 id="get-pnpentraidapp">Get-PnPEntraIDApp</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Get-PnPAzureADApp.html">Get-PnPAzureADApp</a>.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Application.Read.All</li>
+</ul>
+<p>Returns Entra ID App registrations.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="identity-default">Identity (Default)</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDApp [-Identity &lt;EntraIDAppPipeBind&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="filter">Filter</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDApp -Filter &lt;string&gt; [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlets returns all app registrations, a specific one or ones matching a provided filter.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDApp
+</code></pre>
+<p>This returns all Entra ID App registrations.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDApp -Identity MyApp
+</code></pre>
+<p>This returns the Entra ID App registration with the display name as 'MyApp'.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDApp -Identity 93a9772d-d0af-4ed8-9821-17282b64690e
+</code></pre>
+<p>This returns the Entra ID App registration with the app id specified or the id specified.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDApp -Filter &quot;startswith(description, 'contoso')&quot;
+</code></pre>
+<p>This returns the Entra ID App registrations with the description starting with &quot;contoso&quot;. This example demonstrates using Advanced Query capabilities (see: <a href="https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties">https://learn.microsoft.com/graph/aad-advanced-queries?tabs=http#group-properties</a>)</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>Specify the display name, id or app id.</p>
+<pre><code class="lang-yaml">Type: EntraIDAppPipeBind
+Parameter Sets: Identity
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-filter">-Filter</h3>
+<p>Specify the query to pass to Graph API in $filter.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Filter
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

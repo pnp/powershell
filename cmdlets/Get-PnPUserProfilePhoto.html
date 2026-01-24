@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -90,7 +90,7 @@
 </ul>
 <p>Gets the profile picture of a user.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPUserProfilePhoto -Identity &lt;AzureADUserPipeBind&gt; [-Filename &lt;String&gt;]  [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPUserProfilePhoto -Identity &lt;EntraIDUserPipeBind&gt; [-Filename &lt;String&gt;]  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet downloads the user profile photo to the specified path and filename. If no filename has been specified it will default to the Display Name of the user with the either the extension .png or .jpeg depending on the format of the file.</p>
@@ -128,7 +128,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
 <p>The identity of the user to remove. This can be the UPN, the GUID or an instance of the user.</p>
-<pre><code class="lang-yaml">Type: AzureADUserPipeBind
+<pre><code class="lang-yaml">Type: EntraIDUserPipeBind
 Parameter Sets: (All)
 
 Required: True

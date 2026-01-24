@@ -94,7 +94,7 @@
 <pre><code class="lang-powershell">Enable-PnPPrivilegedIdentityManagement -Role &lt;PrivilegedIdentityManagementRolePipeBind&gt; [-PrincipalId &lt;Guid&gt;] [-Justification &lt;string&gt;] [-StartAt &lt;DateTime&gt;] [-ExpireInHours &lt;short&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="by-role-name-and-user">By Role Name And User</h3>
-<pre><code class="lang-powershell">Enable-PnPPrivilegedIdentityManagement -Role &lt;PrivilegedIdentityManagementRolePipeBind&gt; -User &lt;AzureADUserPipeBind&gt; [-Justification &lt;string&gt;] [-StartAt &lt;DateTime&gt;] [-ExpireInHours &lt;short&gt;] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Enable-PnPPrivilegedIdentityManagement -Role &lt;PrivilegedIdentityManagementRolePipeBind&gt; -User &lt;EntraIDUserPipeBind&gt; [-Justification &lt;string&gt;] [-StartAt &lt;DateTime&gt;] [-ExpireInHours &lt;short&gt;] [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h3 id="by-eligible-role-assignment">By Eligible Role Assignment</h3>
 <pre><code class="lang-powershell">Enable-PnPPrivilegedIdentityManagement -EligibleAssignment &lt;PrivilegedIdentityManagementRolePipeBind&gt; [-Justification &lt;string&gt;] [-StartAt &lt;DateTime&gt;] [-ExpireInHours &lt;short&gt;] [-Connection &lt;PnPConnection&gt;] 
@@ -194,7 +194,7 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-user">-User</h3>
 <p>The Id, username or instance of a user which needs to be elevated</p>
-<pre><code class="lang-yaml">Type: AzureADUserPipeBind
+<pre><code class="lang-yaml">Type: EntraIDUserPipeBind
 Parameter Sets: By Role Name And User
 Aliases:
 

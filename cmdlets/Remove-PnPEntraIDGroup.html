@@ -77,14 +77,44 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
   <h1 id="remove-pnpentraidgroup">Remove-PnPEntraIDGroup</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>This is an alias for <a href="Remove-PnPAzureADGroup.html">Remove-PnPAzureADGroup</a>.</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: Group.ReadWrite.All</li>
+</ul>
+<p>Removes one Entra ID group. This can be a security or Microsoft 365 group. Distribution lists are not currently supported by Graph API.</p>
+<h2 id="syntax">SYNTAX</h2>
+<pre><code class="lang-powershell">Remove-PnPEntraIDGroup -Identity &lt;EntraIDGroupPipeBind&gt;  
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Allows to remove Entra ID group.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Remove-PnPEntraIDGroup -Identity $groupId
+</code></pre>
+<p>Removes an Entra ID group based on its ID</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Remove-PnPEntraIDGroup -Identity $group
+</code></pre>
+<p>Removes the provided Entra ID group</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>The Identity of the Entra ID group</p>
+<pre><code class="lang-yaml">Type: EntraIDGroupPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
