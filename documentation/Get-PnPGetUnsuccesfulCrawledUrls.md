@@ -27,29 +27,28 @@ Get-PnPGetUnsuccesfulCrawledUrls [-Filter <String>]  [-StartDate <DateTime>] [-E
 
 Enables retrieval of items that failed to be indexed during a search crawl. This is particularly useful when processing large lists or libraries and encountering request timeouts. By focusing exclusively on errors, you can reliably identify issues without additional effort to narrow the query scope.
 
-> This command relies on `DocumentCrawlLog.GetUnsuccesfulCrawledUrls` undocumented method. 
-
 ### EXAMPLE 1
 ```powershell
 Get-PnPGetUnsuccesfulCrawledUrls
 ```
 
-Returns all (?) crawl log errors for site content. During tests, more than 3000 items were returned.
+Returns all crawler log warnings and errors for site content. The amount of returned entries is limited by the request timeout.
 
 ### EXAMPLE 2
 ```powershell
 Get-PnPGetUnsuccesfulCrawledUrls -Filter "https://contoso-my.sharepoint.com/sites/Intranet"
 ```
-Returns all (?) crawl log errors for the specified site.
+Returns crawl log warnings and errors for the specified site.  The amount of returned entries is limited by the request timeout.
 
 ### EXAMPLE 3
 ```powershell
 Get-PnPGetUnsuccesfulCrawledUrls -StartDate (Get-Date).AddDays(-10)
 ```
 
-Returns all (?) crawl log errors, starting from 10 days ago. 
+Returns crawler log warnings and errors, starting from 10 days ago. 
 
-> Based on the author's test results and Copilot's input 😉, the `DocumentCrawlLog` methods don't respect the time component in `StartDate` and `EndDate`. They only use the date portion for filtering. Internally, the crawl log is grouped by crawl day, so any hour/minute you provide is ignored. The CSOM API (GetCrawledUrls) accepts DateTime values, but the backend partitions data by date, not timestamp.
+> Based on the author's test results and Copilot's input 😉, the `DocumentCrawlLog` methods don't respect the __time__ component in `StartDate` and `EndDate`. They only __use the date__ portion for filtering. Internally, the crawl log is grouped by crawl day, so any hour/minute you provide is ignored. 
+The CSOM API (GetCrawledUrls) accepts DateTime values, but the backend partitions data by date, not timestamp.
 
 ### EXAMPLE 4
 ```powershell
@@ -58,10 +57,10 @@ $env:SharePointPnPHttpTimeout = -1 #👈
 
 Connect-PnPOnline -Url https://<tenant>-admin.sharepoint.com/ -Interactive -ClientId $ClientID -ErrorAction Stop # 👈
 
-Get-PnPGetUnsuccesfulCrawledUrls -Filter "https://contoso-my.sharepoint.com/sites/Intranet"
+Get-PnPGetUnsuccesfulCrawledUrls -Filter "https://contoso-my.sharepoint.com/sites/Intranet" -IncreaseRequestTimeout
 ```
 
-Increases the Request Timeout allowing the call to last up to 3 minutes. The `ClientRuntimeContext` enforces a three-minute limit; when increasing the timeout to its maximum of three minutes, this threshold may still be exceeded.
+Increases the request timeout allowing the call to last up to 3 minutes. The `ClientRuntimeContext` enforces a three-minute limit; when increasing the timeout to its maximum of three minutes, this threshold may still be exceeded.
 
 
 ## PARAMETERS
@@ -82,7 +81,7 @@ Accept wildcard characters: False
 
 
 ### -EndDate
-End date to stop getting entries from. Default to current time.
+End date to stop getting entries from. Defaults to current time.
 
 ```yaml
 Type: DateTime
@@ -109,6 +108,18 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -IncreaseRequestTimeout
+
+```yaml
+Type: Switch
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -RawFormat
 Show raw crawl log data
@@ -139,18 +150,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -IncreaseRequestTimeout
 
-```yaml
-Type: Switch
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 Increases timeout to maximum 3 minutes.
 The `ClientRuntimeContext` enforces a three-minute limit; when increasing the timeout to its maximum of three minutes, this threshold may still be exceeded.
