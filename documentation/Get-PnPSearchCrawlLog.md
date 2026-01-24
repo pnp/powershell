@@ -16,7 +16,7 @@ Returns entries from the SharePoint search crawl log. Make sure you are granted 
 
 ```powershell
 Get-PnPSearchCrawlLog [-LogLevel <LogLevel>] [-RowLimit <Int32>] [-Filter <String>]
- [-ContentSource <ContentSource>] [-StartDate <DateTime>] [-EndDate <DateTime>] [-RawFormat]
+ [-ContentSource <ContentSource>] [-StartDate <DateTime>] [-EndDate <DateTime>] [-RawFormat] [-IncreaseRequestTimeout]
  [-Connection <PnPConnection>] 
 ```
 
@@ -75,6 +75,16 @@ Get-PnPSearchCrawlLog -RowLimit 3 -RawFormat
 
 Returns the last 3 crawl log entries showing the raw crawl log data.
 
+### EXAMPLE 8
+```powershell
+$ClientID= "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+$env:SharePointPnPHttpTimeout = -1 #👈
+Connect-PnPOnline -Url https://<tenant>-admin.sharepoint.com/ -Interactive -ClientId $ClientID -ErrorAction Stop # 👈
+
+Get-PnPSearchCrawlLog -Filter "https://contoso-my.sharepoint.com/sites/Intranet" -IncreaseRequestTimeout
+```
+
+
 ## PARAMETERS
 
 ### -Connection
@@ -125,6 +135,19 @@ Filter to limit what is being returned. Has to be a URL prefix for SharePoint co
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncreaseRequestTimeout
+
+```yaml
+Type: Switch
 Parameter Sets: (All)
 
 Required: False
