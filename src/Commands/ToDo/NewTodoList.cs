@@ -15,7 +15,7 @@ namespace PnP.PowerShell.Commands.ToDo
         public string DisplayName;
 
         [Parameter(Mandatory = false)]
-        public AzureADUserPipeBind User;
+        public EntraIDUserPipeBind User;
         protected override void ExecuteCmdlet()
         {
             string url = "/v1.0/me/todo/lists";

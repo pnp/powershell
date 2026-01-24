@@ -20,7 +20,7 @@ Gets one Microsoft Teams Team or a list of Teams.
 ## SYNTAX
 
 ```powershell
-Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>] [-Filter <String>]  [-User <AzureADUserPipeBind>]
+Get-PnPTeamsTeam [-Identity <TeamsTeamPipeBind>] [-Filter <String>]  [-User <EntraIDUserPipeBind>]
 ```
 
 ## DESCRIPTION
@@ -105,7 +105,7 @@ Accept wildcard characters: False
 Specify the name of the user to fetch the list of teams user as access to.
 
 ```yaml
-Type: AzureADUserPipeBind
+Type: EntraIDUserPipeBind
 Parameter Sets: User
 
 Required: False

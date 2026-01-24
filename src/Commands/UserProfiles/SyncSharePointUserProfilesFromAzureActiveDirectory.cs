@@ -73,7 +73,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
                 LogDebug("Retrieving users from Azure Active Directory");
 
                 // Retrieve all the users from Azure Active Directory
-                aadUsers = PnP.PowerShell.Commands.Utilities.AzureAdUtility.ListUsers(GraphAccessToken, null, null, allAadPropertiesList.ToArray(), endIndex: null, azureEnvironment: Connection.AzureEnvironment);
+                aadUsers = PnP.PowerShell.Commands.Utilities.EntraIdUtility.ListUsers(GraphAccessToken, null, null, allAadPropertiesList.ToArray(), endIndex: null, azureEnvironment: Connection.AzureEnvironment);
 
                 LogDebug($"{aadUsers.Count} user{(aadUsers.Count != 1 ? "s have" : " has")} been retrieved from Azure Active Directory");
 
