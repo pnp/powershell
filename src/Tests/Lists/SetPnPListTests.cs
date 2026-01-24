@@ -121,9 +121,7 @@ namespace PnP.PowerShell.Tests.Lists
 					new CommandParameter("MajorVersions", majorVersions),
 					new CommandParameter("MinorVersions", minorVersions),
 					new CommandParameter("EnableModeration", enableModeration),
-					new CommandParameter("ParserDisabled", enableModeration)
-                    
-                    );
+					new CommandParameter("ParserDisabled", enableModeration));
                 
                 Assert.IsNotNull(results);
             }
