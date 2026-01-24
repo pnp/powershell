@@ -15,6 +15,8 @@ namespace PnP.PowerShell.Commands.Principals
         [Parameter(Mandatory = true)]
         public string Identity;
 
+        [Parameter(Mandatory = false, HelpMessage = "If specified, do not prompt for confirmation.")]
+        public SwitchParameter Force;
 
         protected override void ExecuteCmdlet()
         {
@@ -24,7 +26,7 @@ namespace PnP.PowerShell.Commands.Principals
                 url = Site.Url;
             }
             var site = Tenant.GetSiteByUrl(url);
-            if (ShouldContinue($"Deletes group {Identity} from the site {url}", Properties.Resources.Confirm))
+            if (Force || ShouldContinue($"Deletes group {Identity} from the site {url}", Properties.Resources.Confirm))
             {
                 var siteGroups = site.RootWeb.SiteGroups;
                 siteGroups.RemoveByLoginName(Identity);
@@ -33,7 +35,4 @@ namespace PnP.PowerShell.Commands.Principals
             }
         }
     }
-
-
-
 }
