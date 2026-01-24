@@ -115,6 +115,18 @@ Set-PnPList -Identity "Demo List" -Color Green -Icon "Plane"
 
 Changes the icon of the list to a plane, and the background color of the icon to green.
 
+### EXAMPLE 13
+```powershell
+Set-PnPList -Identity "Demo List" -ParserDisabled $true
+```
+
+Disables document property promotion/demotion.
+
+Property promotion is the process of extracting values from a document’s properties and writing them to the corresponding columns in the list or document library where the document resides. Property demotion performs the reverse operation, reading values from list columns and updating the document’s properties accordingly.
+
+Although the [Document Property Promotion and Demotion](https://learn.microsoft.com/en-us/previous-versions/office/developer/sharepoint-2010/aa543341(v=office.14)) article applies to SharePoint Foundation 2010, the process is still used in SharePoint Online.
+
+
 ## PARAMETERS
 
 ### -BreakRoleInheritance
@@ -430,7 +442,7 @@ Accept wildcard characters: False
 Disable document property promotion for Office documents. This ensures that the documents uploaded to SharePoint are not changed by a background process, which copies document properties into library columns and vice-versa. 
 
 ```yaml
-Type: SwitchParameter
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False

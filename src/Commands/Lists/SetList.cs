@@ -118,7 +118,7 @@ namespace PnP.PowerShell.Commands.Lists
         public ListIcon Icon;
 
         [Parameter(Mandatory = false)]
-        public SwitchParameter ParserDisabled;
+        public bool ParserDisabled;
 
         protected override void ExecuteCmdlet()
         {
@@ -467,9 +467,9 @@ namespace PnP.PowerShell.Commands.Lists
                 updateRequired = true;
             }
 
-            if(ParserDisabled)
+            if (ParameterSpecified(nameof(ParserDisabled)))
             {
-                list.ParserDisabled= true;
+                list.ParserDisabled = ParserDisabled;
                 updateRequired = true;
             }
 
