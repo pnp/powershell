@@ -259,7 +259,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection CreateWithDeviceLogin(string clientId, string url, string tenantId, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting = null)
+        internal static PnPConnection CreateWithDeviceLogin(Cmdlet cmdlet, string clientId, string url, string tenantId, CmdletMessageWriter messageWriter, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting = null)
         {
             if (persistLogin)
             {
@@ -269,7 +269,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    WriteCacheEnabledMessage(host);
+                    WriteCacheEnabledMessage(cmdlet);
                 }
             }
             var connectionUri = new Uri(url);
@@ -472,7 +472,7 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, bool persistLogin, System.Management.Automation.Host.PSHost host, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials, string ErrorActionSetting = null)
+        internal static PnPConnection CreateWithCredentials(Cmdlet cmdlet, Uri url, PSCredential credentials, bool currentCredentials, string tenantAdminUrl, bool persistLogin, AzureEnvironment azureEnvironment = AzureEnvironment.Production, string clientId = null, string redirectUrl = null, bool onPrem = false, InitializationType initializationType = InitializationType.Credentials, string ErrorActionSetting = null)
         {
             if (persistLogin)
             {
@@ -482,7 +482,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    WriteCacheEnabledMessage(host);
+                    WriteCacheEnabledMessage(cmdlet);
                 }
             }
             var context = new PnPClientContext(url.AbsoluteUri)
@@ -595,7 +595,7 @@ namespace PnP.PowerShell.Commands.Base
             return spoConnection;
         }
 
-        internal static PnPConnection CreateWithInteractiveLogin(Uri uri, string clientId, string tenantAdminUrl, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant, bool enableLoginWithWAM, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting)
+        internal static PnPConnection CreateWithInteractiveLogin(Cmdlet cmdlet, Uri uri, string clientId, string tenantAdminUrl, AzureEnvironment azureEnvironment, CancellationTokenSource cancellationTokenSource, bool forceAuthentication, string tenant, bool enableLoginWithWAM, bool persistLogin, System.Management.Automation.Host.PSHost host, string ErrorActionSetting)
         {
             if (persistLogin)
             {
@@ -605,7 +605,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    WriteCacheEnabledMessage(host);
+                    WriteCacheEnabledMessage(cmdlet);
                 }
             }
 
@@ -1129,9 +1129,9 @@ namespace PnP.PowerShell.Commands.Base
             Settings.Current.Save();
         }
 
-        private static void WriteCacheEnabledMessage(PSHost host)
+        private static void WriteCacheEnabledMessage(Cmdlet cmdlet)
         {
-            host.UI.WriteWarningLine("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
+            cmdlet.WriteVerbose("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
         }
 
         internal static void ClearCache(PnPConnection connection)
