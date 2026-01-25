@@ -84,63 +84,7 @@
   <h1 id="get-pnpazureadgroupmember">Get-PnPAzureADGroupMember</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API : One of Directory.Read.All, Directory.ReadWrite.All, Group.Read.All, Group.ReadWrite.All, GroupMember.Read.All, GroupMember.ReadWrite.All, User.Read.All, User.ReadWrite.All</li>
-</ul>
-<p>Gets members of a particular Entra ID group. This can be a security, distribution or Microsoft 365 group.</p>
-<h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Get-PnPAzureADGroupMember -Identity &lt;AzureADGroupPipeBind&gt; [-Connection &lt;PnPConnection&gt;] [-Transitive]
-</code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<p>Allows to list members from given Entra ID group. This can be a security, distribution or Microsoft 365 group.</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADGroupMember -Identity $groupId
-</code></pre>
-<p>Retrieves all the direct members of a specific Entra ID group based on its ID.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADGroupMember -Identity $group
-</code></pre>
-<p>Retrieves all the direct members of a specific Entra ID group based on the group's object instance.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADGroupMember -Identity $group -Transitive
-</code></pre>
-<p>Retrieves all the direct and transitive members (members of groups inside groups) of a specific Entra ID group based on the group's object instance.</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-identity">-Identity</h3>
-<p>The Identity of the Entra ID group.</p>
-<pre><code class="lang-yaml">Type: AzureADGroupPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-transitive">-Transitive</h3>
-<p>If provided, the direct and transitive members (members of groups in the group) of a group will be returned. If not provided, only the members directly assigned to the group will be returned.</p>
-<pre><code class="lang-yaml">Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
+<p>This is an alias for <a href="Get-PnPEntraIDGroupMember.html">Get-PnPEntraIDGroupMember</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

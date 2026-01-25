@@ -84,92 +84,9 @@
   <h1 id="remove-pnpazureadserviceprincipalassignedapprole">Remove-PnPAzureADServicePrincipalAssignedAppRole</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API: AppRoleAssignment.ReadWrite.All</li>
-</ul>
-<p>Removes app roles configured on a service principal/application registration in Azure Active Directory.</p>
-<h2 id="syntax">SYNTAX</h2>
-<h3 id="by-instance">By instance</h3>
-<pre><code class="lang-powershell">Remove-PnPAzureADServicePrincipalAssignedAppRole -Identity &lt;ServicePrincipalAssignedAppRoleBind&gt; [-Connection &lt;PnPConnection&gt;]
-</code></pre>
-<h3 id="by-assigned-app-role">By assigned app role</h3>
-<pre><code class="lang-powershell">Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal &lt;ServicePrincipalPipeBind&gt; [-Identity &lt;ServicePrincipalAssignedAppRoleBind&gt;] [-Connection &lt;PnPConnection&gt;]
-</code></pre>
-<h3 id="by-app-role-name">By app role name</h3>
-<pre><code class="lang-powershell">Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal &lt;ServicePrincipalPipeBind&gt; -AppRoleName &lt;String&gt; [-Connection &lt;PnPConnection&gt;]
-</code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<p>Allows removal of one or more assigned app roles on a specific service principals/app registration in Azure Active Directory.</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933 -AppRoleName &quot;User.ReadWrite.All&quot;
-</code></pre>
-<p>Removes the app role &quot;User.ReadWrite.All&quot; from the application registration with the object Id 797ee8a7-a950-4eb8-945d-7f10cc68a933</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal &quot;My application&quot; -AppRoleName &quot;Group.ReadWrite.All&quot;
-</code></pre>
-<p>Removes the app role &quot;Group.ReadWrite.All&quot; from the application registration with the name &quot;My application&quot;</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal 797ee8a7-a950-4eb8-945d-7f10cc68a933
-</code></pre>
-<p>Removes all app roles from the application registration with the object Id 797ee8a7-a950-4eb8-945d-7f10cc68a933</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Remove-PnPAzureADServicePrincipalAssignedAppRole -Principal &quot;My application&quot;
-</code></pre>
-<p>Removes all app roles from the application registration with the name &quot;My application&quot;</p>
-<h3 id="example-5">EXAMPLE 5</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -AppId fd885e69-86dc-4f3b-851e-ad04920031cf | Remove-PnPAzureADServicePrincipalAssignedAppRole
-</code></pre>
-<p>Removes all app roles from the application registration with the app Id/Client Id fd885e69-86dc-4f3b-851e-ad04920031cf</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-principal">-Principal</h3>
-<p>The object id, name or instance of the service principal/application registration to remove app roles for</p>
-<pre><code class="lang-yaml">Type: ServicePrincipalPipeBind
-Parameter Sets: By assigned app role, By app role name
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The object id, name or instance of the application role to remove from the service principal/application registration</p>
-<pre><code class="lang-yaml">Type: ServicePrincipalAssignedAppRoleBind
-Parameter Sets: By assigned app role, By instance
-
-Required: True (By instance), False (By assigned app role)
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-approlename">-AppRoleName</h3>
-<p>The name of the permission to remove, i.e. Sites.Read.All</p>
-<pre><code class="lang-yaml">Type: ServicePrincipalAssignedAppRoleBind
-Parameter Sets: By app role name
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
+<p>This is an alias for <a href="Remove-PnPEntraIDServicePrincipalAssignedAppRole.html">Remove-PnPEntraIDServicePrincipalAssignedAppRole</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
-<a href="https://learn.microsoft.com/graph/api/serviceprincipal-delete-approleassignments">Microsoft Graph documentation</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>
           </div>

@@ -84,96 +84,9 @@
   <h1 id="add-pnpazureadserviceprincipalapprole">Add-PnPAzureADServicePrincipalAppRole</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Microsoft Graph API: AppRoleAssignment.ReadWrite.All and Application.Read.All or AppRoleAssignment.ReadWrite.All and Directory.Read.All</li>
-</ul>
-<p>Adds an app role to a service principal/application registration in Azure Active Directory.</p>
-<h2 id="syntax">SYNTAX</h2>
-<h3 id="by-built-in-type">By built in type</h3>
-<pre><code class="lang-powershell">Add-PnPAzureADServicePrincipalAppRole -Principal &lt;ServicePrincipalPipeBind&gt; -AppRole &lt;ServicePrincipalAppRoleBind&gt; -BuiltInType &lt;ServicePrincipalBuiltInType&gt; [-Connection &lt;PnPConnection&gt;]
-</code></pre>
-<h3 id="by-resource">By resource</h3>
-<pre><code class="lang-powershell">Add-PnPAzureADServicePrincipalAppRole -Principal &lt;ServicePrincipalPipeBind&gt; -AppRole &lt;ServicePrincipalAppRoleBind&gt; -Resource &lt;ServicePrincipalPipeBind&gt; [-Connection &lt;PnPConnection&gt;]
-</code></pre>
-<h2 id="description">DESCRIPTION</h2>
-<p>Allows adding of an app role such as Sites.FullControl.All to a service principal/application registration in Azure Active Directory. This can be used to grant permissions to a service principal/application registration, such as a Managed Identity.</p>
-<h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Add-PnPAzureADServicePrincipalAppRole -Principal &quot;62614f96-cb78-4534-bf12-1f6693e8237c&quot; -AppRole &quot;Directory.Read.All&quot; -BuiltInType MicrosoftGraph
-</code></pre>
-<p>Adds the permission Directory.Read.All for Microsoft Graph to the service principal with the object id 62614f96-cb78-4534-bf12-1f6693e8237c</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -BuiltInType SharePointOnline | Get-PnPAzureADServicePrincipalAvailableAppRole -Identity &quot;Sites.FullControl.All&quot; | Add-PnPAzureADServicePrincipalAppRole -Principal &quot;62614f96-cb78-4534-bf12-1f6693e8237c&quot;
-</code></pre>
-<p>Adds the permission Site.FullControl.All for SharePoint Online to the service principal with the object id 62614f96-cb78-4534-bf12-1f6693e8237c</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPAzureADServicePrincipal -BuiltInType MicrosoftGraph | Get-PnPAzureADServicePrincipalAvailableAppRole -Identity &quot;Group.ReadWrite.All&quot; | Add-PnPAzureADServicePrincipalAppRole -Principal &quot;mymanagedidentity&quot;
-</code></pre>
-<p>Adds the permission Group.ReadWrite.All for Microsoft Graph to the service principal with the name mymanagedidentity.</p>
-<h3 id="example-4">EXAMPLE 4</h3>
-<pre><code class="lang-powershell">Add-PnPAzureADServicePrincipalAppRole -Principal &quot;62614f96-cb78-4534-bf12-1f6693e8237c&quot; -AppRole &quot;MyApplication.Read&quot; -Resource &quot;b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e&quot;
-</code></pre>
-<p>Adds the permission MyApplication.Read for the application registration with object id b8c2a8aa-33a0-43f4-a9d3-fe2851c5293e to the service principal with the object id 62614f96-cb78-4534-bf12-1f6693e8237c</p>
-<h2 id="parameters">PARAMETERS</h2>
-<h3 id="-principal">-Principal</h3>
-<p>The object id, name or instance of the service principal/application registration to add the app role to.</p>
-<pre><code class="lang-yaml">Type: ServicePrincipalPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-approle">-AppRole</h3>
-<p>The object id, name or instance of the application role to add to the service principal/application registration.</p>
-<pre><code class="lang-yaml">Type: ServicePrincipalAppRoleBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-builtintype">-BuiltInType</h3>
-<p>The built in application type to use for the app role. This can be MicrosoftGraph or SharePointOnline.</p>
-<pre><code class="lang-yaml">Type: ServicePrincipalAppRoleBind
-Parameter Sets: By built in type
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-resource">-Resource</h3>
-<p>The object id, name or instance of the application to which the role belongs you wish to add to the service principal/application registration. If omitted, it will try to define the owning service principal from the passed in AppRole.</p>
-<pre><code class="lang-yaml">Type: ServicePrincipalAppRoleBind
-Parameter Sets: By resource
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: True
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
+<p>This is an alias for <a href="Add-PnPEntraIDServicePrincipalAppRole.html">Add-PnPEntraIDServicePrincipalAppRole</a>.</p>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
-<a href="https://learn.microsoft.com/graph/api/serviceprincipal-post-approleassignments">Microsoft Graph documentation</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>
           </div>
