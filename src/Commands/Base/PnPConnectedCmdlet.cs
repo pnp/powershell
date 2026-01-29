@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Base
                 // If the ErrorAction is not set to Stop, Ignore or SilentlyContinue throw an exception, otherwise just continue
                 if (!(new[] { "stop", "ignore", "silentlycontinue" }.Contains(ErrorActionSetting.ToLowerInvariant())))
                 {
-                    throw new PSInvalidOperationException(errorMessage);
+                    throw new PSInvalidOperationException(errorMessage, ex);
                 }
 
                 if (Connection.Context.Url != Connection.Url)
