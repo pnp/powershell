@@ -10,7 +10,7 @@ using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands
 {
-    [Cmdlet(VerbsCommon.Get, "PnPWebAlert")]
+    [Cmdlet(VerbsCommon.Get, "PnPWebAlert", DefaultParameterSetName = ParameterSet_All)]
     [OutputType(typeof(WebAlert))]
     public class GetWebAlert : PnPWebCmdlet
     {
