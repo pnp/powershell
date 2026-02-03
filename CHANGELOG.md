@@ -65,6 +65,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Removed
 - Removed `-RemoveExisting` parameter from `Add-PnPAzureADGroupMember`, `Add-PnPAzureADGroupOwner`, `Add-PnPMicrosoft365GroupMember` and `Add-PnPMicrosoft365GroupOwner` cmdlets. It was never really implemented and without function. [#5153](https://github.com/pnp/powershell/pull/5153)
+- Deprecated `Get-PnPSearchCrawlLog` cmdlet as the underlying API has been deprecated by Microsoft and no longer returns results. The cmdlet now throws a `NotSupportedException` and will be removed in a future version.
 
 ### Contributors
 

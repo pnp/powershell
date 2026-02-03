@@ -4356,48 +4356,6 @@
     "Rank": 8
   },
   {
-    "CommandName": "Get-PnPSearchCrawlLog",
-    "Command": "Get-PnPSearchCrawlLog",
-    "Id": 727,
-    "Rank": 1
-  },
-  {
-    "CommandName": "Get-PnPSearchCrawlLog",
-    "Command": "Get-PnPSearchCrawlLog -Filter \"https://contoso-my.sharepoint.com/personal\"",
-    "Id": 728,
-    "Rank": 2
-  },
-  {
-    "CommandName": "Get-PnPSearchCrawlLog",
-    "Command": "Get-PnPSearchCrawlLog -ContentSource UserProfiles",
-    "Id": 729,
-    "Rank": 3
-  },
-  {
-    "CommandName": "Get-PnPSearchCrawlLog",
-    "Command": "Get-PnPSearchCrawlLog -ContentSource UserProfiles -Filter \"mikael\"",
-    "Id": 730,
-    "Rank": 4
-  },
-  {
-    "CommandName": "Get-PnPSearchCrawlLog",
-    "Command": "Get-PnPSearchCrawlLog -ContentSource Sites -LogLevel Error -RowLimit 10",
-    "Id": 731,
-    "Rank": 5
-  },
-  {
-    "CommandName": "Get-PnPSearchCrawlLog",
-    "Command": "Get-PnPSearchCrawlLog -EndDate (Get-Date).AddDays(-100)",
-    "Id": 732,
-    "Rank": 6
-  },
-  {
-    "CommandName": "Get-PnPSearchCrawlLog",
-    "Command": "Get-PnPSearchCrawlLog -RowLimit 3 -RawFormat",
-    "Id": 733,
-    "Rank": 7
-  },
-  {
     "CommandName": "Get-PnPSearchExternalConnection",
     "Command": "Get-PnPSearchExternalConnection",
     "Id": 734,
