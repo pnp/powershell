@@ -1,14 +1,27 @@
+---
+Module Name: PnP.PowerShell
+title: Set-PnPFileVersionExpirationDate
+schema: 2.0.0
+applicable: SharePoint Online
+external help file: PnP.PowerShell.dll-Help.xml
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPFileVersionExpirationDate.html
+---
+
 # Set-PnPFileVersionExpirationDate
 
-## Description
+## SYNOPSIS
 
-Sets the properties of a specific version of a list item, including the ability to set or clear the expiration date.
+Keeps the file version with option to set an expiry date.
 
 ## Syntax
 
 ```powershell
 Set-PnPFileVersionExpirationDate [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Version] <ListItemVersionPipeBind> [[-ExpirationDate] <DateTime>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
+
+## DESCRIPTION
+
+This cmdlet keeps the file version with option to set an expiry date.
 
 ## Examples
 
@@ -17,20 +30,20 @@ Set-PnPFileVersionExpirationDate [-List] <ListPipeBind> [-Identity] <ListItemPip
 Set-PnPFileVersionExpirationDate -List "Documents" -Identity 1 -Version "1.0" -ExpirationDate "2025-12-31"
 ```
 
-Sets the expiration date for version 1.0 of list item with ID 1 in the Documents list to December 31, 2025.
+Sets the expiration date for version 1.0 of list item with ID 1 in the Documents library to December 31, 2025.
 
 ### Example 2
 ```powershell
 Set-PnPFileVersionExpirationDate -List "Documents" -Identity 1 -Version "1.0"
 ```
 
-Clears the expiration date for version 1.0 of list item with ID 1 in the Documents list, making the version permanent.
+Clears the expiration date for version 1.0 of list item with ID 1 in the Documents library, setting the version to `Never expires`.
 
 ## Parameters
 
 ### -List
 
-The list to retrieve the item from.
+The library to retrieve the file from.
 
 ```yaml
 Type: ListPipeBind
@@ -45,7 +58,7 @@ Accept wildcard characters: False
 
 ### -Identity
 
-The ID of the list item to update.
+The ID of the file to update.
 
 ```yaml
 Type: ListItemPipeBind
@@ -61,7 +74,7 @@ Accept wildcard characters: False
 
 ### -Version
 
-The version of the list item to modify. This can be specified by version label (e.g. "1.0") or version ID.
+The version of the file to modify. This can be specified by version label (e.g. "1.0") or version ID.
 
 ```yaml
 Type: ListItemVersionPipeBind
@@ -102,7 +115,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
 
 ## Outputs
 
