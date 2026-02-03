@@ -71,12 +71,12 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerApps
                 if (Guid.TryParse(User, out Guid userGuid))
                 {
                     LogDebug($"Looking up user through Microsoft Graph by user id {userGuid}");
-                    graphUser = Utilities.AzureAdUtility.GetUser(graphAccessToken, userGuid, azureEnvironment: Connection.AzureEnvironment);
+                    graphUser = Utilities.EntraIdUtility.GetUser(graphAccessToken, userGuid, azureEnvironment: Connection.AzureEnvironment);
                 }
                 else
                 {
                     LogDebug($"Looking up user through Microsoft Graph by user principal name {User}");
-                    graphUser = Utilities.AzureAdUtility.GetUser(graphAccessToken, User, azureEnvironment: Connection.AzureEnvironment);
+                    graphUser = Utilities.EntraIdUtility.GetUser(graphAccessToken, User, azureEnvironment: Connection.AzureEnvironment);
                 }
 
                 if (graphUser == null)
