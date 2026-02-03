@@ -2,9 +2,6 @@
 using System.Linq;
 using System.Management.Automation;
 using System.Net.Http;
-using AngleSharp.Io;
-using System.Text.Json.Serialization;
-using System.Text.Json;
 using Microsoft.SharePoint.Client;
 using PnP.Core.Model.SharePoint;
 using PnP.Core.QueryModel;
