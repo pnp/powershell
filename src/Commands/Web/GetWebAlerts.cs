@@ -37,7 +37,6 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            // Validate that userName and userId are not both specified
             if (ParameterSpecified(nameof(UserName)) && ParameterSpecified(nameof(UserId)))
             {
                 throw new PSArgumentException("Specify either UserName or UserId, but not both.");
@@ -45,13 +44,11 @@ namespace PnP.PowerShell.Commands
 
             var webUrl = CurrentWeb.EnsureProperty(w => w.Url);
 
-            // Build the REST API URL to get alerts
             var requestUrl = $"{webUrl}/_api/web/alerts?$expand=List,User,List/Rootfolder,Item&$select=*,List/Id,List/Title,List/Rootfolder/ServerRelativeUrl,Item/ID,Item/FileRef,Item/Guid";
 
             var filters = new List<string>();
             Guid? listIdValue = null;
 
-            // Determine the list ID based on the provided parameter
             if (ParameterSpecified(nameof(ListId)) && ListId != Guid.Empty)
             {
                 listIdValue = ListId;
@@ -82,22 +79,20 @@ namespace PnP.PowerShell.Commands
                 filters.Add($"List/Id eq guid'{listIdValue}'");
             }
 
-            // User filtering
+
             if (ParameterSpecified(nameof(UserName)) && !string.IsNullOrEmpty(UserName))
             {
                 filters.Add($"User/UserPrincipalName eq '{Uri.EscapeDataString(UserName)}'");
             }
             else if (ParameterSpecified(nameof(UserId)) && UserId != Guid.Empty)
             {
-                // Get user principal name from user ID
                 var userPrincipalName = GetUserPrincipalNameByUserId(UserId);
-                if (!string.IsNullOrEmpty(userPrincipalName))
+                if (!string.IsNullOrEmpty(userPrincipalName.ToLower()))
                 {
                     filters.Add($"User/UserPrincipalName eq '{Uri.EscapeDataString(userPrincipalName)}'");
                 }
             }
 
-            // Add filters to the request URL if any
             if (filters.Any())
             {
                 requestUrl += $"&$filter={string.Join(" and ", filters)}";
@@ -128,11 +123,10 @@ namespace PnP.PowerShell.Commands
         {
             try
             {
-                // Use Graph API to get user principal name by user ID
                 var result = RestHelper.Get(
                     Connection.HttpClient,
                     $"https://{Connection.GraphEndPoint}/v1.0/users/{userId}?$select=userPrincipalName",
-                    AccessToken);
+                    GraphAccessToken);  
 
                 if (!string.IsNullOrEmpty(result))
                 {
