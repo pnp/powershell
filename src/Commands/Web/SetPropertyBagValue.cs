@@ -1,7 +1,7 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.SharePoint.Client;
 using PnP.Framework.Utilities;
-using PnP.PowerShell.Commands.Base;
+using PnP.PowerShell.Commands.Utilities;
 using System;
 using System.Linq;
 using System.Management.Automation;
@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands
     [Cmdlet(VerbsCommon.Set, "PnPPropertyBagValue")]
     [Alias("Add-PnPPropertyBagValue")]
     [OutputType(typeof(void))]
-    public class SetPropertyBagValue : PnPSharePointOnlineAdminCmdlet
+    public class SetPropertyBagValue : PnPWebCmdlet
     {
         [Parameter(Mandatory = true, ParameterSetName = "Web")]
         [Parameter(Mandatory = true, ParameterSetName = "Folder")]
@@ -33,79 +33,107 @@ namespace PnP.PowerShell.Commands
 
         protected override void ExecuteCmdlet()
         {
-            bool isScriptSettingUpdated = false;
             try
             {
-                LogDebug("Checking if AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled is set to true at the tenant level");
-                var tenant = new Tenant(AdminContext);
-                AdminContext.Load(tenant);
-                AdminContext.Load(tenant, t => t.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled);
-                AdminContext.ExecuteQueryRetry();
-               
-                var web = ClientContext.Web;
-                if (!tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled)
+                SetPropertyBagValueInternal();
+            }
+            catch (Exception ex)
+            {
+                if (ex is ServerUnauthorizedAccessException)
                 {
-                    LogDebug("Checking if the site is a no-script site");
-                    
-                    web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
-
-                    if (web.IsNoScriptSite())
+                    if (Force || ShouldContinue("This is a no-script site. You need SharePoint admin permissions to allow scripts to set property bag values. Do you want to enable scripting on it temporarily?", Properties.Resources.Confirm))
                     {
-                        if (Force || ShouldContinue("The current site is a no-script site. Do you want to temporarily enable scripting on it to allow setting property bag value?", Properties.Resources.Confirm))
+                        var tenantUrl = Connection.TenantAdminUrl ?? UrlUtilities.GetTenantAdministrationUrl(ClientContext.Url);
+                        using var tenantContext = ClientContext.Clone(tenantUrl);
+
+                        LogDebug("Checking if AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled is set to true at the tenant level");
+                        var tenant = new Tenant(tenantContext);
+                        tenantContext.Load(tenant);
+                        tenantContext.Load(tenant, t => t.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled);
+                        tenantContext.ExecuteQueryRetry();
+
+                        if (!tenant.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled)
                         {
                             LogDebug("Temporarily enabling scripting on the site");
-                            tenant.SetSiteProperties(web.Url, noScriptSite: false);
-                            isScriptSettingUpdated = true;
+                            bool isScriptSettingUpdated = false;
+                            var site = ClientContext.Site;
+                            if (site.IsNoScriptSite())
+                            {
+                                try
+                                {
+                                    tenant.SetSiteProperties(ClientContext.Url, noScriptSite: false);
+                                    isScriptSettingUpdated = true;
+
+                                    SetPropertyBagValueInternal();
+                                }
+                                catch (Exception innerEx)
+                                {
+                                    LogError(innerEx);
+                                    return;
+                                }
+                                finally
+                                {
+                                    if (isScriptSettingUpdated)
+                                    {
+                                        LogDebug("Reverting scripting setting on the site back to no-script");
+                                        tenant.SetSiteProperties(ClientContext.Url, noScriptSite: true);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                SetPropertyBagValueInternal();
+                            }
                         }
                         else
                         {
-                            ThrowTerminatingError(new ErrorRecord(new Exception($"Site has NoScript enabled, this prevents setting some property bag values."), "NoScriptEnabled", ErrorCategory.InvalidOperation, this));
-                            return;
+                            SetPropertyBagValueInternal();
                         }
-                    }
-                }
-                if (!ParameterSpecified(nameof(Folder)))
-                {
-                    if (!Indexed)
-                    {
-                        // If it is already an indexed property we still have to add it back to the indexed properties
-                        Indexed = !string.IsNullOrEmpty(web.GetIndexedPropertyBagKeys().FirstOrDefault(k => k == Key));
-                    }
-
-                    web.SetPropertyBagValue(Key, Value);
-                    if (Indexed)
-                    {
-                        web.AddIndexedPropertyBagKey(Key);
                     }
                     else
                     {
-                        web.RemoveIndexedPropertyBagKey(Key);
+                        throw;
                     }
                 }
                 else
                 {
-                    var folderUrl = UrlUtility.Combine(web.ServerRelativeUrl, Folder);
-                    var folder = web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
-
-                    folder.EnsureProperty(f => f.Properties);
-
-                    folder.Properties[Key] = Value;
-                    folder.Update();
-                    ClientContext.ExecuteQueryRetry();
+                    throw;
                 }
             }
-            catch
+        }
+
+        private void SetPropertyBagValueInternal()
+        {
+            var web = ClientContext.Web;
+            web.EnsureProperties(w => w.Url, w => w.ServerRelativeUrl);
+            if (!ParameterSpecified(nameof(Folder)))
             {
-                throw;
-            }
-            finally
-            {
-                if (isScriptSettingUpdated)
+                if (!Indexed)
                 {
-                    LogDebug("Disabling scripting on the site");
-                    var tenant = new Tenant(AdminContext);
-                    tenant.SetSiteProperties(ClientContext.Web.Url, noScriptSite: true);
+                    // If it is already an indexed property we still have to add it back to the indexed properties
+                    Indexed = !string.IsNullOrEmpty(web.GetIndexedPropertyBagKeys().FirstOrDefault(k => k == Key));
                 }
+
+                web.SetPropertyBagValue(Key, Value);
+                if (Indexed)
+                {
+                    web.AddIndexedPropertyBagKey(Key);
+                }
+                else
+                {
+                    web.RemoveIndexedPropertyBagKey(Key);
+                }
+            }
+            else
+            {
+                var folderUrl = UrlUtility.Combine(web.ServerRelativeUrl, Folder);
+                var folder = web.GetFolderByServerRelativePath(ResourcePath.FromDecodedUrl(folderUrl));
+
+                folder.EnsureProperty(f => f.Properties);
+
+                folder.Properties[Key] = Value;
+                folder.Update();
+                ClientContext.ExecuteQueryRetry();
             }
         }
     }

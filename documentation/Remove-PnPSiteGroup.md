@@ -16,7 +16,7 @@ Removes a group from a web.
 
 ```powershell
 Remove-PnPSiteGroup -Identity <String> [-Site <SitePipeBind>]    
-    [-Confirm]
+    [-Force]
 ```
 
 ## DESCRIPTION
@@ -67,7 +67,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Confirm
+### -Force
 Prompts you for confirmation before running the cmdlet.
 
 ```yaml

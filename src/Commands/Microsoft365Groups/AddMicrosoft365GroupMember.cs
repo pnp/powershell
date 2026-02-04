@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Utilities;
+using System;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Microsoft365Groups
@@ -16,12 +17,13 @@ namespace PnP.PowerShell.Commands.Microsoft365Groups
         [Parameter(Mandatory = true)]
         public string[] Users;
 
+        [Obsolete("The parameter is obsolete and will be removed in future versions. You can use Clear-PnPMicrosoft365GroupMember instead.")]
         [Parameter(Mandatory = false)]
         public SwitchParameter RemoveExisting;
 
         protected override void ExecuteCmdlet()
         {
-            Microsoft365GroupsUtility.AddMembers(GraphRequestHelper, Identity.GetGroupId(GraphRequestHelper), Users, RemoveExisting);
+            Microsoft365GroupsUtility.AddMembers(GraphRequestHelper, Identity.GetGroupId(GraphRequestHelper), Users);
         }
     }
 }

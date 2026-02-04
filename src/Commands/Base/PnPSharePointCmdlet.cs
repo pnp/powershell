@@ -186,8 +186,8 @@ namespace PnP.PowerShell.Commands
                 }
 
                 LogDebug("Checking for operation status");
-                ClientContext.Load(spoOperation);
-                ClientContext.ExecuteQueryRetry();
+                spoOperation.Context.Load(spoOperation, s => s.IsComplete, s => s.HasTimedout, s => s.PollingInterval);
+                spoOperation.Context.ExecuteQueryRetry();
             }
             LogWarning("SharePoint Operation Wait Interrupted");
         }

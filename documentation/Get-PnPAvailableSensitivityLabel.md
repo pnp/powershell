@@ -10,12 +10,17 @@ title: Get-PnPAvailableSensitivityLabel
 # Get-PnPAvailableSensitivityLabel
 
 ## SYNOPSIS
+
+**Required Permissions**
+
+  * Microsoft Graph API : One of InformationProtectionPolicy.Read (Delegated), InformationProtectionPolicy.Read.All (Application)
+
 Gets the Microsoft Purview sensitivity labels that are available within the tenant
 
 ## SYNTAX
 
 ```powershell
-Get-PnPAvailableSensitivityLabel [-Identity <Guid>] [-User <AzureADUserPipeBind>] [-Connection <PnPConnection>] 
+Get-PnPAvailableSensitivityLabel [-Identity <Guid>] [-User <EntraIDUserPipeBind>] [-Connection <PnPConnection>] 
 ```
 
 ## DESCRIPTION

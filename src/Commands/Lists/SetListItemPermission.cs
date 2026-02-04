@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Base.Completers;
@@ -38,6 +39,10 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USER)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GROUP)]
         public SwitchParameter ClearExisting;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GROUP)]
+        public bool ClearSubscopes = true;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_INHERIT)]
         public SwitchParameter InheritPermissions;
@@ -91,12 +96,12 @@ namespace PnP.PowerShell.Commands.Lists
             {
                 if (!item.HasUniqueRoleAssignments)
                 {
-                    item.BreakRoleInheritance(!ClearExisting.IsPresent, true);
+                    item.BreakRoleInheritance(!ClearExisting.IsPresent, ClearSubscopes);
                 }
                 else if (ClearExisting.IsPresent)
                 {
                     item.ResetRoleInheritance();
-                    item.BreakRoleInheritance(!ClearExisting.IsPresent, true);
+                    item.BreakRoleInheritance(!ClearExisting.IsPresent, ClearSubscopes);
                 }
 
                 if (SystemUpdate.IsPresent)
