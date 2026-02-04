@@ -70,29 +70,40 @@ Shows by the default all the built-in SharePoint Online site templates, except t
 Id of the built-in site template to configure. You can hide all templates by specifying an empty ID of "00000000-0000-0000-0000-000000000000". Settings specified for a specific template will take precedence over the "all templates" setting. You can hide all templates and then selectively make specific templates visible. All site templates are displayed by default.
 
 | Team site templates  | Template ID                 |  Internal name |
-| :------------------- | :------------------- | :------------------- |
-| Event planning  | 9522236e-6802-4972-a10d-e98dc74b3344 | EventPlanning | 
-| Project management              | f0a3abf4-afe8-4409-b7f3-484113dee93e| ProjectManagement |
-| Training and courses        | 695e52c9-8af7-4bd3-b7a5-46aca95e1c7e  | TrainingAndCourses |
-| Training and development team     | 64aaa31e-7a1e-4337-b646-0b700aa9a52c | TrainingAndDevelopmentTeam |
-| Team collaboration     | 6b96e7b1-035f-430b-92ca-31511c51ca72  | TeamCollaboration |
-| Retail management     | e4ec393e-da09-4816-b6b2-195393656edd  | RetailManagement |
+| :------------------- | :------------------------- | :------------------- |
+| Event planning       | 9522236e-6802-4972-a10d-e98dc74b3344 | EventPlanning | 
+| Project management   | f0a3abf4-afe8-4409-b7f3-484113dee93e | ProjectManagement |
+| Training and courses | 695e52c9-8af7-4bd3-b7a5-46aca95e1c7e | TrainingAndCourses |
+| Training and development team | 64aaa31e-7a1e-4337-b646-0b700aa9a52c | TrainingAndDevelopmentTeam |
+| Retail management    | e4ec393e-da09-4816-b6b2-195393656edd | RetailManagement |
+| Employee onboarding team | af9037eb-09ef-4217-80fe-465d37511b33 | EmployeeOnboardingTeam |
+| Set up your home page | 33537eba-a7d6-4d76-96cc-ee1930bd3907 | SetUpYourHomePage |
+| Crisis communication team | fb513aef-c06f-4dc3-b08c-963a2d2360c1 | CrisisCommunicationTeam |
+| IT help desk         | 71308406-f31d-445f-85c7-b31942d1508c | ITHelpDesk |
+| Contracts management | 2a7dd756-75f6-4f0f-a06a-a672939ea2a3 | ContractsManagement |
+| Accounts payable     | 403ffe4e-12d4-41a2-8153-208069eaf2b8 | AccountsPayable |
+| Standard team        | c8b3137a-ca4c-48a9-b356-a8e7987dd693 | StandardTeam |
 
 <br>
 
 | Communication site templates | Template ID                 |   Internal name |
-| :------------------- | :------------------- | :------------------- |
-| Crisis management  | 905bb0b4-01e8-4f55-b73c-f07f08aee3a4 | CrisisManagement |
-| Department  | 73495f08-0140-499b-8927-dd26a546f26a   | Department |
-| Leadership connection    | cd4c26b2-b231-419a-8bb4-9b1d9b83aef6 | LeadershipConnection |
-| Learning central       | b8ef3134-92a2-4c9d-bca6-c2f14e79fe98  | LearningCentral |
-| New employee onboarding      | 2a23fa44-52b0-4814-baba-06fef1ab931e   | NewEmployeeOnboarding |
-| Showcase  | 89f21161-0892-497a-91cb-5783eeb1f5f2   | Showcase | 
-| Healthcare  | 5215c092-152f-4912-a12a-7e1efdcc6878   | Healthcare |
-| Store collaboration  | 811ecf9a-b33f-44e6-81bd-da77729906dc   | StoreCollaboration |
-| Volunteer center  | b6e04a41-1535-4313-a856-6f3515d31999   | VolunteerCenter |
-| Topic     | a30fef54-a4e5-4beb-a8b5-962c528d753a   | Topic |
-| Blank    | 665da395-e0f9-4c92-b35c-773d8c292f2d  | Blank |
+| :-------------------------- | :------------------------- | :------------------- |
+| Crisis management           | 951190b8-8541-4f8c-8e8a-10a17c466c94 | CrisisManagement |
+| Department                  | 73495f08-0140-499b-8927-dd26a546f26a | Department |
+| Leadership connection       | cd4c26b2-b231-419a-8bb4-9b1d9b83aef6 | LeadershipConnection |
+| Learning central            | b8ef3134-92a2-4c9d-bca6-c2f14e79fe98 | LearningCentral |
+| New employee onboarding     | 2a23fa44-52b0-4814-baba-06fef1ab931e | NewEmployeeOnboarding |
+| Showcase                    | 6142d2a0-63a5-4ba0-aede-d9fefca2c767 | Showcase |
+| Store collaboration         | 811ecf9a-b33f-44e6-81bd-da77729906dc | StoreCollaboration |
+| Volunteer center            | 34a39504-194c-4605-87be-d48d00070c67 | VolunteerCenter |
+| Brand central               | f2c6bb0c-9234-40c2-9ec3-ee86a70330fb | BrandCentral |
+| Standard communication      | 96c933ac-3698-44c7-9f4a-5fd17d71af9e | StandardCommunication |
+| Event                       | 3d5ef50b-88a0-42a7-9fb2-8036009f6f42 | Event |
+| Human resources             | c298ddc9-628d-48bf-b1e5-5939a1962fb1 | HumanResources |
+| Organization home           | 30eebaf6-48ea-4af9-a564-a5c50297c826 | OrganizationHome |
+| Copilot Campaign            | 94e24f52-dfaf-40e4-b629-df2c85570adc | CopilotCampaign |
+| Viva Campaign               | da99c5d9-baad-4e81-81f6-03a061972d49 | VivaCampaign |
+| Blank                       | f6cc5403-0d63-442e-96c0-285923709ffc | Blank |
 
 ```yaml
 Type: Guid

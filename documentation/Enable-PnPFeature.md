@@ -34,13 +34,6 @@ This will enable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe"
 
 ### EXAMPLE 2
 ```powershell
-Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Force
-```
-
-This will enable the feature with the id "99a00f6e-fb81-4dc7-8eac-e09c6f9132fe" with force.
-
-### EXAMPLE 3
-```powershell
 Enable-PnPFeature -Identity 99a00f6e-fb81-4dc7-8eac-e09c6f9132fe -Scope Web
 ```
 
@@ -53,20 +46,6 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Force
-Specifies whether to overwrite an existing feature with the same feature identifier. This parameter is ignored if there are no errors.
-
-```yaml
-Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
@@ -90,20 +69,6 @@ Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
 
-### -Sandboxed
-Specify this parameter if the feature you're trying to activate is part of a sandboxed solution.
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Scope
 Specify the scope of the feature to activate, either Web or Site. Defaults to Web.
 
@@ -118,8 +83,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
-
 
 ## RELATED LINKS
 
