@@ -99,6 +99,8 @@ namespace PnP.PowerShell.Tests.Lists
 				var minorVersions = "";
 				// From Cmdlet Help: Enable or disable whether content approval is enabled for the list. Set to $true to enable, $false to disable.
 				var enableModeration = "";
+                // Disable doument property promotion/demotion
+                var parserDisabled = "";
 
                 var results = scope.ExecuteCommand("Set-PnPList",
 					new CommandParameter("Identity", identity),
@@ -118,7 +120,8 @@ namespace PnP.PowerShell.Tests.Lists
 					new CommandParameter("EnableMinorVersions", enableMinorVersions),
 					new CommandParameter("MajorVersions", majorVersions),
 					new CommandParameter("MinorVersions", minorVersions),
-					new CommandParameter("EnableModeration", enableModeration));
+					new CommandParameter("EnableModeration", enableModeration),
+					new CommandParameter("ParserDisabled", enableModeration));
                 
                 Assert.IsNotNull(results);
             }

@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for `-ClearGroupId` parameter in `Set-PnPSite` and `Set-PnPTenantSite` cmdlets. [#5192](https://github.com/pnp/powershell/pull/5192)
 - Added support for batch restoring items from the recycle bin using `Restore-PnPRecycleBinItem -ListIds` [#4705](https://github.com/pnp/powershell/pull/4705)
 - Added optional `-ClearSubScopes` flag to `Set-PnPFolderPermission` and `Set-PnPListItemPermission` cmdlets to clear unique permissions on child items/folders when breaking permission inheritance [#5213](https://github.com/pnp/powershell/pull/5213)
+- Added `-ParserDisabled` to `Set-PnPList` to allow disabling of the list item column parsing into Word documents [#5224](https://github.com/pnp/powershell/pull/5224)
 - Added `Get-PnPWebAlert` and `Remove-PnPWebAlert` cmdlets to get and remove SharePoint list alerts [#5218](https://github.com/pnp/powershell/pull/5218)
 
 ### Changed
@@ -70,6 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Kinga [kkazala]
 - Noel Tautges [NoelTautges]
 - Nishkalank Bezawada [NishkalankBezawada]
 - Irving [irvcov]

@@ -117,6 +117,9 @@ namespace PnP.PowerShell.Commands.Lists
         [Parameter(Mandatory = false)]
         public ListIcon Icon;
 
+        [Parameter(Mandatory = false)]
+        public bool ParserDisabled;
+
         protected override void ExecuteCmdlet()
         {
             var list = Identity.GetList(CurrentWeb);
@@ -461,6 +464,12 @@ namespace PnP.PowerShell.Commands.Lists
                         list.DefaultItemOpenInBrowser = false;
                         break;
                 }
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(ParserDisabled)))
+            {
+                list.ParserDisabled = ParserDisabled;
                 updateRequired = true;
             }
 
