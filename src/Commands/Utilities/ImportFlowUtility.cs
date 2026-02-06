@@ -13,13 +13,16 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class ImportFlowUtility
     {
-        public static ImportFlowResult ExecuteImportFlow(HttpClient httpClient, string accessToken, string baseUrl, string environmentName, string packagePath, string name)
+        private const int DefaultImportOperationsMaxRetries = 10;
+        private const int DefaultImportOperationsDelayMs = 5000;
+
+        public static ImportFlowResult ExecuteImportFlow(HttpClient httpClient, string accessToken, string baseUrl, string environmentName, string packagePath, string name, int? maxRetries = null, int? delayMs = null)
         {
             var sasUrl = GenerateSasUrl(httpClient, accessToken, baseUrl, environmentName);
             var blobUri = BuildBlobUri(sasUrl, packagePath);
             UploadPackageToBlob(blobUri, packagePath);
             var importParametersResponse = GetImportParameters(httpClient, accessToken, baseUrl, environmentName, blobUri);
-            var importOperationsData = GetImportOperations(httpClient, accessToken, importParametersResponse.Location.ToString());
+            var importOperationsData = GetImportOperations(httpClient, accessToken, importParametersResponse.Location.ToString(), maxRetries, delayMs);
             var propertiesElement = GetPropertiesElement(importOperationsData);
             ValidateProperties(propertiesElement);
             var resourcesObject = ParseResources(propertiesElement);
@@ -91,14 +94,14 @@ namespace PnP.PowerShell.Commands.Utilities
             return response;
         }
 
-        public static JsonElement GetImportOperations(HttpClient httpClient, string accessToken, string importOperationsUrl)
+        public static JsonElement GetImportOperations(HttpClient httpClient, string accessToken, string importOperationsUrl, int? maxRetries = null, int? delayMs = null)
         {
-            const int maxRetries = 10;
-            const int delayMs = 2500;
+            int resolvedMaxRetries = maxRetries ?? DefaultImportOperationsMaxRetries;
+            int resolvedDelayMs = delayMs ?? DefaultImportOperationsDelayMs;
             int retryCount = 0;
             JsonElement importOperationsData = default;
 
-            while (retryCount < maxRetries)
+            while (retryCount < resolvedMaxRetries)
             {
                 var listImportOperations = RestHelper.Get(
                     httpClient,
@@ -123,8 +126,8 @@ namespace PnP.PowerShell.Commands.Utilities
                 }
 
                 retryCount++;
-                Log.Debug("ImportFlowUtility", $"Import operations not ready yet. Retry {retryCount}/{maxRetries}...");
-                Thread.Sleep(delayMs);
+                Log.Debug("ImportFlowUtility", $"Import operations not ready yet. Retry {retryCount}/{resolvedMaxRetries}...");
+                Thread.Sleep(resolvedDelayMs);
             }
 
             Log.Debug("ImportFlowUtility", "Import operations retrieved (max retries reached)");

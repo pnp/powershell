@@ -36,7 +36,7 @@ namespace PnP.PowerShell.Commands.PowerPlatform.PowerAutomate
         {
             var environmentName = GetEnvironmentName();
             string baseUrl = PowerPlatformUtility.GetBapEndpoint(Connection.AzureEnvironment);
-            var importStatus = ImportFlowUtility.ExecuteImportFlow(Connection.HttpClient,AccessToken,baseUrl,environmentName,PackagePath,Name);
+            var importStatus = ImportFlowUtility.ExecuteImportFlow(Connection.HttpClient, AccessToken, baseUrl, environmentName, PackagePath, Name, RetryCount, Delay);
             WriteObject(importStatus);
         }
 
