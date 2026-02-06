@@ -13,13 +13,16 @@ namespace PnP.PowerShell.Commands.Utilities
 {
     internal static class ImportFlowUtility
     {
-        public static ImportFlowResult ExecuteImportFlow(HttpClient httpClient, string accessToken, string baseUrl, string environmentName, string packagePath, string name)
+        private const int DefaultImportOperationsMaxRetries = 10;
+        private const int DefaultImportOperationsDelayMs = 5000;
+
+        public static ImportFlowResult ExecuteImportFlow(HttpClient httpClient, string accessToken, string baseUrl, string environmentName, string packagePath, string name, int? maxRetries = null, int? delayMs = null)
         {
             var sasUrl = GenerateSasUrl(httpClient, accessToken, baseUrl, environmentName);
             var blobUri = BuildBlobUri(sasUrl, packagePath);
             UploadPackageToBlob(blobUri, packagePath);
             var importParametersResponse = GetImportParameters(httpClient, accessToken, baseUrl, environmentName, blobUri);
-            var importOperationsData = GetImportOperations(httpClient, accessToken, importParametersResponse.Location.ToString());
+            var importOperationsData = GetImportOperations(httpClient, accessToken, importParametersResponse.Location.ToString(), maxRetries, delayMs);
             var propertiesElement = GetPropertiesElement(importOperationsData);
             ValidateProperties(propertiesElement);
             var resourcesObject = ParseResources(propertiesElement);
@@ -91,16 +94,44 @@ namespace PnP.PowerShell.Commands.Utilities
             return response;
         }
 
-        public static JsonElement GetImportOperations(HttpClient httpClient, string accessToken, string importOperationsUrl)
+        public static JsonElement GetImportOperations(HttpClient httpClient, string accessToken, string importOperationsUrl, int? maxRetries = null, int? delayMs = null)
         {
-            var listImportOperations = RestHelper.Get(
-                httpClient,
-                importOperationsUrl,
-                accessToken,
-                accept: "application/json"
-            );
-            Log.Debug("ImportFlowUtility", "Import operations retrieved");
-            return JsonSerializer.Deserialize<JsonElement>(listImportOperations);
+            int resolvedMaxRetries = maxRetries ?? DefaultImportOperationsMaxRetries;
+            int resolvedDelayMs = delayMs ?? DefaultImportOperationsDelayMs;
+            int retryCount = 0;
+            JsonElement importOperationsData = default;
+
+            while (retryCount < resolvedMaxRetries)
+            {
+                var listImportOperations = RestHelper.Get(
+                    httpClient,
+                    importOperationsUrl,
+                    accessToken,
+                    accept: "application/json"
+                );
+                importOperationsData = JsonSerializer.Deserialize<JsonElement>(listImportOperations);
+
+                if (importOperationsData.TryGetProperty("properties", out JsonElement propertiesElement))
+                {
+                    bool hasStatus = propertiesElement.TryGetProperty("status", out _);
+                    bool hasPackageLink = propertiesElement.TryGetProperty("packageLink", out _);
+                    bool hasDetails = propertiesElement.TryGetProperty("details", out _);
+                    bool hasResources = propertiesElement.TryGetProperty("resources", out _);
+
+                    if (hasStatus && hasPackageLink && hasDetails && hasResources)
+                    {
+                        Log.Debug("ImportFlowUtility", "Import operations retrieved with all required properties");
+                        return importOperationsData;
+                    }
+                }
+
+                retryCount++;
+                Log.Debug("ImportFlowUtility", $"Import operations not ready yet. Retry {retryCount}/{resolvedMaxRetries}...");
+                Thread.Sleep(resolvedDelayMs);
+            }
+
+            Log.Debug("ImportFlowUtility", "Import operations retrieved (max retries reached)");
+            return importOperationsData;
         }
 
         public static JsonElement GetPropertiesElement(JsonElement importOperationsData)
@@ -121,7 +152,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
             if (!(hasStatus && hasPackageLink && hasDetails && hasResources))
             {
-                throw new Exception("Import failed: One or more required fields are missing in 'properties'.");
+                throw new Exception("Import failed: One or more required fields are missing in 'properties'. The API may still be processing the request.");
             }
             if (!propertiesElement.TryGetProperty("resources", out JsonElement resourcesElement))
             {

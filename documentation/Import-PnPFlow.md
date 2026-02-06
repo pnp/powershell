@@ -21,7 +21,7 @@ Imports a Microsoft Power Automate Flow.
 
 ### With Zip Package
 ```powershell
-Import-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] [-PackagePath <String>] [-Name <String>] [-Connection <PnPConnection>]
+Import-PnPFlow [-Environment <PowerAutomateEnvironmentPipeBind>] [-PackagePath <String>] [-Name <String>] [-RetryCount <Int32>] [-Delay <Int32>] [-Connection <PnPConnection>]
  
 ```
 
@@ -59,6 +59,13 @@ Import-PnPFlow -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name
 ```
 
 This will Import a flow to the default environment. The flow will be imported as a zip package. The name of the flow will be set to NewFlowName. With the -Verbose flag, any errors that occur during the import process will be displayed in the console.
+
+### Example 5
+```powershell
+Import-PnPFlow -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName -RetryCount 15 -Delay 3000
+```
+
+This will Import a flow to the default environment with a custom retry count and delay between polling attempts.
 
 ## PARAMETERS
 
@@ -117,6 +124,36 @@ Parameter Sets: (All)
 Aliases:
 
 Required: true
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RetryCount
+Number of times to poll for import operations to become available. If omitted, the cmdlet uses its default retry policy which is 10.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Delay
+Delay in milliseconds between polling attempts. If omitted, the cmdlet uses its default delay policy which is 5000ms.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
