@@ -71,6 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Kinga [kkazala]
 - Noel Tautges [NoelTautges]
 - Nishkalank Bezawada [NishkalankBezawada]
 - Irving [irvcov]
