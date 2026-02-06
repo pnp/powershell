@@ -29,6 +29,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for batch restoring items from the recycle bin using `Restore-PnPRecycleBinItem -ListIds` [#4705](https://github.com/pnp/powershell/pull/4705)
 - Added optional `-ClearSubScopes` flag to `Set-PnPFolderPermission` and `Set-PnPListItemPermission` cmdlets to clear unique permissions on child items/folders when breaking permission inheritance [#5213](https://github.com/pnp/powershell/pull/5213)
 - Added `-ParserDisabled` to `Set-PnPList` to allow disabling of the list item column parsing into Word documents [#5224](https://github.com/pnp/powershell/pull/5224)
+- Added `Get-PnPWebAlert` and `Remove-PnPWebAlert` cmdlets to get and remove SharePoint list alerts [#5218](https://github.com/pnp/powershell/pull/5218)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
@@ -37,6 +38,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Restore-PnPRecycleBinItem` cmdlet to better handle throttling.
 - Logging in using `Connect-PnPOnline -PersistentLogin` no longer throwing a warning [#5082](https://github.com/pnp/powershell/pull/5082)
 - All cmdlets with `AzureAD` in their name have been renamed to use `EntraID` instead, to reflect the rebranding of Azure Active Directory to Entra ID. Aliases have been added for backward compatibility. [#5221](https://github.com/pnp/powershell/pull/5221)
+- Improved `Import-PnPFlow` cmdlet to handle the retry logic between internal api calls, Introduced two new optional parameters [#5233](https://github.com/pnp/powershell/pull/5233)
 
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
@@ -69,6 +71,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Noel Tautges [NoelTautges]
 - Nishkalank Bezawada [NishkalankBezawada]
 - Irving [irvcov]
 - Koen Zomers [koenzomers]
