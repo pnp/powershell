@@ -68,6 +68,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Contributors
 
+- Noel Tautges [NoelTautges]
 - Nishkalank Bezawada [NishkalankBezawada]
 - Irving [irvcov]
 - Koen Zomers [koenzomers]
