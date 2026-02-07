@@ -4524,6 +4524,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPWebAlert.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPWebAlert.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPWebHeader.md",
       "output": {
         ".html": {
@@ -6658,6 +6668,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPWeb.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPWebAlert.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPWebAlert.html"
         }
       },
       "version": ""

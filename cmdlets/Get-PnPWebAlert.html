@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Import-PnPFlow | PnP PowerShell </title>
+    <title>Get-PnPWebAlert | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Import-PnPFlow | PnP PowerShell ">
+    <meta name="title" content="Get-PnPWebAlert | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -81,50 +81,47 @@
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="import-pnpflow">Import-PnPFlow</h1>
+  <h1 id="get-pnpwebalert">Get-PnPWebAlert</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p><strong>Required Permissions</strong></p>
-<ul>
-<li>Azure: management.azure.com</li>
-</ul>
-<p>Imports a Microsoft Power Automate Flow.</p>
+<p>Returns alerts from the current web, optionally filtered by list and user.</p>
 <h2 id="syntax">SYNTAX</h2>
-<h3 id="with-zip-package">With Zip Package</h3>
-<pre><code class="lang-powershell">Import-PnPFlow [-Environment &lt;PowerAutomateEnvironmentPipeBind&gt;] [-PackagePath &lt;String&gt;] [-Name &lt;String&gt;] [-RetryCount &lt;Int32&gt;] [-Delay &lt;Int32&gt;] [-Connection &lt;PnPConnection&gt;]
- 
+<h3 id="all">All</h3>
+<pre><code class="lang-powershell">Get-PnPWebAlert [-UserName &lt;String&gt;] [-UserId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="by-list-id">By List Id</h3>
+<pre><code class="lang-powershell">Get-PnPWebAlert -ListId &lt;Guid&gt; [-UserName &lt;String&gt;] [-UserId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="by-list-url">By List Url</h3>
+<pre><code class="lang-powershell">Get-PnPWebAlert -ListUrl &lt;String&gt; [-UserName &lt;String&gt;] [-UserId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="by-list-title">By List Title</h3>
+<pre><code class="lang-powershell">Get-PnPWebAlert -ListTitle &lt;String&gt; [-UserName &lt;String&gt;] [-UserId &lt;Guid&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet imports a Microsoft Power Automate Flow from a ZIP package. At present, only flows originating from the same tenant are supported.</p>
-<p>Many times Importing a Microsoft Power Automate Flow will not be possible due to various reasons such as connections having gone stale, SharePoint sites referenced no longer existing or other configuration errors in the Flow. To display these errors when trying to Import a Flow, provide the -Verbose flag with your Import request. If not provided, these errors will silently be ignored.</p>
+<p>Retrieves alerts from the current web using the REST API. You can optionally filter by list (ID, URL, or title) and by user. Specify either UserName or UserId, but not both.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">Example 1</h3>
-<pre><code class="lang-powershell">Import-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -Identity &quot;myenvironment&quot;) -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Get-PnPWebAlert
 </code></pre>
-<p>This will Import the specified Microsoft Power Automate Flow from the specified Power Platform environment as an output to the current output of PowerShell</p>
-<h3 id="example-2">Example 2</h3>
-<pre><code class="lang-powershell">Import-PnPFlow -Environment (Get-PnPPowerPlatformEnvironment -IsDefault) -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName
+<p>Returns all alerts for the current web.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPWebAlert -ListTitle &quot;Documents&quot;
 </code></pre>
-<p>This will Import the specified Microsoft Power Automate Flow from the default Power Platform environment as an output to the current output of PowerShell</p>
-<h3 id="example-3">Example 3</h3>
-<pre><code class="lang-powershell">Import-PnPFlow -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName
+<p>Returns alerts for the list with title &quot;Documents&quot;.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPWebAlert -ListUrl &quot;Lists/Tasks&quot; -UserName &quot;alex.wilber@contoso.com&quot;
 </code></pre>
-<p>This will Import a flow to the default environment. The flow will be imported as a zip package. The name of the flow will be set to NewFlowName.</p>
-<h3 id="example-4">Example 4</h3>
-<pre><code class="lang-powershell">Import-PnPFlow -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName -Verbose
+<p>Returns alerts for the list at the specified URL and for the specified user.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPWebAlert -UserId 12345678-90ab-cdef-1234-567890abcdef
 </code></pre>
-<p>This will Import a flow to the default environment. The flow will be imported as a zip package. The name of the flow will be set to NewFlowName. With the -Verbose flag, any errors that occur during the import process will be displayed in the console.</p>
-<h3 id="example-5">Example 5</h3>
-<pre><code class="lang-powershell">Import-PnPFlow -PackagePath C:\Temp\Export-ReEnableFlow_20250414140636.zip -Name NewFlowName -RetryCount 15 -Delay 3000
-</code></pre>
-<p>This will Import a flow to the default environment with a custom retry count and delay between polling attempts.</p>
+<p>Returns alerts for the specified user ID.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet.
-Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
 <pre><code class="lang-yaml">Type: PnPConnection
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -132,47 +129,54 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-environment">-Environment</h3>
-<p>The name of the Power Platform environment or an Environment instance. If omitted, the default environment will be used.</p>
-<pre><code class="lang-yaml">Type: PowerPlatformEnvironmentPipeBind
+<h3 id="-listid">-ListId</h3>
+<p>The ID of the list to filter alerts by.</p>
+<pre><code class="lang-yaml">Type: Guid
+Parameter Sets: By List Id
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listurl">-ListUrl</h3>
+<p>The server-relative URL of the list to filter alerts by.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By List Url
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-listtitle">-ListTitle</h3>
+<p>The title of the list to filter alerts by.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: By List Title
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-userid">-UserId</h3>
+<p>The user ID (GUID) to filter alerts by. Do not specify together with UserName.</p>
+<pre><code class="lang-yaml">Type: Guid
 Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
-Default value: The default environment
-Accept pipeline input: True
+Default value: None
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-packagepath">-PackagePath</h3>
-<p>Local path of the .zip package to import. The path must be a valid path on the local file system.</p>
+<h3 id="-username">-UserName</h3>
+<p>The user principal name to filter alerts by. Do not specify together with UserId.</p>
 <pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Aliases:
-
-Required: true
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-name">-Name</h3>
-<p>The new name of the flow.</p>
-<pre><code class="lang-yaml">Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: true
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
-<h3 id="-retrycount">-RetryCount</h3>
-<p>Number of times to poll for import operations to become available. If omitted, the cmdlet uses its default retry policy which is 10.</p>
-<pre><code class="lang-yaml">Type: Int32
-Parameter Sets: (All)
-Aliases:
 
 Required: False
 Position: Named
@@ -180,18 +184,9 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-delay">-Delay</h3>
-<p>Delay in milliseconds between polling attempts. If omitted, the cmdlet uses its default delay policy which is 5000ms.</p>
-<pre><code class="lang-yaml">Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-</code></pre>
+<h2 id="outputs">OUTPUTS</h2>
+<h3 id="type">Type</h3>
+<p>PnP.PowerShell.Commands.Model.SharePoint.WebAlert</p>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 

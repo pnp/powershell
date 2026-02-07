@@ -94,7 +94,8 @@
  [-EnableModeration &lt;Boolean&gt;] [-DraftVersionVisibility &lt;DraftVisibilityType&gt;] [-ReadSecurity &lt;ListReadSecurity&gt;] [-WriteSecurity &lt;ListWriteSecurity&gt;]
  [-NoCrawl] [-ExemptFromBlockDownloadOfNonViewableFiles &lt;Boolean&gt;] [-DisableGridEditing &lt;Boolean&gt;] [-DisableCommenting &lt;Boolean&gt;] 
  [-EnableAutoExpirationVersionTrim &lt;Boolean&gt;] [-ExpireVersionsAfterDays &lt;UInt32&gt;]
- [-DefaultSensitivityLabelForLibrary &lt;SensitivityLabelPipeBind&gt;] [-Path &lt;String&gt;] [-OpenDocumentsMode &lt;DocumentLibraryOpenDocumentsInMode&gt;] [-Color &lt;ListColor&gt;] [-Icon &lt;ListIcon&gt;] [-Connection &lt;PnPConnection&gt;]
+ [-DefaultSensitivityLabelForLibrary &lt;SensitivityLabelPipeBind&gt;] [-Path &lt;String&gt;] [-OpenDocumentsMode &lt;DocumentLibraryOpenDocumentsInMode&gt;]
+ [-Color &lt;ListColor&gt;] [-Icon &lt;ListIcon&gt;] [-ParserDisabled &lt;Boolean&gt;] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows the configuration of a specific SharePoint Online list to be set.</p>
@@ -147,6 +148,12 @@
 <pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -Color Green -Icon &quot;Plane&quot;
 </code></pre>
 <p>Changes the icon of the list to a plane, and the background color of the icon to green.</p>
+<h3 id="example-13">EXAMPLE 13</h3>
+<pre><code class="lang-powershell">Set-PnPList -Identity &quot;Demo List&quot; -ParserDisabled $true
+</code></pre>
+<p>Disables document property promotion/demotion.</p>
+<p>Property promotion is the process of extracting values from a document’s properties and writing them to the corresponding columns in the list or document library where the document resides. Property demotion performs the reverse operation, reading values from list columns and updating the document’s properties accordingly.</p>
+<p>Although the <a href="https://learn.microsoft.com/previous-versions/office/developer/sharepoint-2010/aa543341(v=office.14)">Document Property Promotion and Demotion</a> article applies to SharePoint Foundation 2010, the process is still used in SharePoint Online.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-breakroleinheritance">-BreakRoleInheritance</h3>
 <p>If used, the security inheritance is broken for this list from its parent, the web in which it resides. Permissions can be added using <a href="Set-PnPListPermission.html">Set-PnPListPermission</a>.</p>
@@ -385,6 +392,17 @@ Accept wildcard characters: False
 <pre><code class="lang-yaml">Type: DocumentLibraryOpenDocumentsInMode
 Parameter Sets: (All)
 Accepted values: ClientApplication, Browser
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-parserdisabled">-ParserDisabled</h3>
+<p>Disable document property promotion for Office documents. This ensures that the documents uploaded to SharePoint are not changed by a background process, which copies document properties into library columns and vice-versa.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
 
 Required: False
 Position: Named
