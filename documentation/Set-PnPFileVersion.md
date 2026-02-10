@@ -1,13 +1,13 @@
 ---
 Module Name: PnP.PowerShell
-title: Set-PnPFileVersionExpirationDate
+title: Set-PnPFileVersion
 schema: 2.0.0
 applicable: SharePoint Online
 external help file: PnP.PowerShell.dll-Help.xml
-online version: https://pnp.github.io/powershell/cmdlets/Set-PnPFileVersionExpirationDate.html
+online version: https://pnp.github.io/powershell/cmdlets/Set-PnPFileVersion.html
 ---
 
-# Set-PnPFileVersionExpirationDate
+# Set-PnPFileVersion
 
 ## SYNOPSIS
 
@@ -16,7 +16,7 @@ Keeps the file version with option to set an expiry date.
 ## Syntax
 
 ```powershell
-Set-PnPFileVersionExpirationDate [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Version] <ListItemVersionPipeBind> [[-ExpirationDate] <DateTime>] [-Connection <PnPConnection>] [<CommonParameters>]
+Set-PnPFileVersion [-List] <ListPipeBind> [-Identity] <ListItemPipeBind> [-Version] <ListItemVersionPipeBind> [[-ExpirationDate] <DateTime>] [-Connection <PnPConnection>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -27,14 +27,14 @@ This cmdlet keeps the file version with option to set an expiry date.
 
 ### Example 1
 ```powershell
-Set-PnPFileVersionExpirationDate -List "Documents" -Identity 1 -Version "1.0" -ExpirationDate "2025-12-31"
+Set-PnPFileVersion -List "Documents" -Identity 1 -Version "1.0" -ExpirationDate "2025-12-31"
 ```
 
 Sets the expiration date for version 1.0 of list item with ID 1 in the Documents library to December 31, 2025.
 
 ### Example 2
 ```powershell
-Set-PnPFileVersionExpirationDate -List "Documents" -Identity 1 -Version "1.0"
+Set-PnPFileVersion -List "Documents" -Identity 1 -Version "1.0" -ExpirationDate $null
 ```
 
 Clears the expiration date for version 1.0 of list item with ID 1 in the Documents library, setting the version to `Never expires`.
