@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added optional `-ClearSubScopes` flag to `Set-PnPFolderPermission` and `Set-PnPListItemPermission` cmdlets to clear unique permissions on child items/folders when breaking permission inheritance [#5213](https://github.com/pnp/powershell/pull/5213)
 - Added `-ParserDisabled` to `Set-PnPList` to allow disabling of the list item column parsing into Word documents [#5224](https://github.com/pnp/powershell/pull/5224)
 - Added `Get-PnPWebAlert` and `Remove-PnPWebAlert` cmdlets to get and remove SharePoint list alerts [#5218](https://github.com/pnp/powershell/pull/5218)
+- Added `Set-PnPFileVersion` cmdlet to update expiration date of file version [#5230](https://github.com/pnp/powershell/pull/5230)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
