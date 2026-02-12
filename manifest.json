@@ -7294,6 +7294,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPFileVersion.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPFileVersion.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPFolderPermission.md",
       "output": {
         ".html": {
