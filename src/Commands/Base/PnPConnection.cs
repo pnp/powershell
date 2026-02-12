@@ -411,8 +411,9 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="userAssignedManagedIdentityObjectId">The Object/Principal ID of the User Assigned Managed Identity to use (optional)</param>
         /// <param name="userAssignedManagedIdentityClientId">The Client ID of the User Assigned Managed Identity to use (optional)</param>
         /// <param name="userAssignedManagedIdentityAzureResourceId">The Azure Resource ID of the User Assigned Managed Identity to use (optional)</param>
+        /// <param name="azureEnvironment">Type of Azure cloud to connect to</param>
         /// <returns>Instantiated PnPConnection</returns>
-        internal static PnPConnection CreateWithManagedIdentity(string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
+        internal static PnPConnection CreateWithManagedIdentity(string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             // Define the type of Managed Identity that will be used
             ManagedIdentityType managedIdentityType = ManagedIdentityType.SystemAssigned;
