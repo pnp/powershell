@@ -127,6 +127,20 @@ Get-PnPListItem -List Tasks -Id 1 -IncludeContentType
 
 Retrieves the list item with ID 1 from the Tasks list along with its content type information.
 
+### EXAMPLE 12
+```powershell
+$Data = @()
+$batchSize = 5000
+do {
+    $batch = Get-PnPListItem -List "LargeList" -Fields "ID","Title" -PageSize $batchSize -ScriptBlock { param($items) $items | Sort-Object -Property ID -Descending }
+    if ($batch) {
+        $Data += $batch
+    }
+} while ($batch.Count -eq $batchSize)
+```
+
+Retrieves all items from a large list avoiding SharePoint's list view threshold limit.
+
 ## PARAMETERS
 
 ### -Connection
