@@ -69,6 +69,9 @@ namespace PnP.PowerShell.Commands.Base
                     case ResourceTypeName.AzureManagementApi:
                         accessTokenValue = TokenHandler.GetAccessToken($"{Endpoints.GetArmEndpoint(Connection)}/.default", Connection);
                         break;
+                    case ResourceTypeName.Gcs:
+                        accessTokenValue = TokenHandler.GetAccessToken("https://gcs.office.com/.default", Connection);
+                        break;
                 }
             }
             else if (ParameterSetName == ParameterSet_ResourceUrl || ParameterSetName == ParameterSet_ResourceUrlDecoded)
