@@ -411,8 +411,9 @@ namespace PnP.PowerShell.Commands.Base
         /// <param name="userAssignedManagedIdentityObjectId">The Object/Principal ID of the User Assigned Managed Identity to use (optional)</param>
         /// <param name="userAssignedManagedIdentityClientId">The Client ID of the User Assigned Managed Identity to use (optional)</param>
         /// <param name="userAssignedManagedIdentityAzureResourceId">The Azure Resource ID of the User Assigned Managed Identity to use (optional)</param>
+        /// <param name="azureEnvironment">Type of Azure cloud to connect to</param>
         /// <returns>Instantiated PnPConnection</returns>
-        internal static PnPConnection CreateWithManagedIdentity(string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null)
+        internal static PnPConnection CreateWithManagedIdentity(string url, string tenantAdminUrl, string userAssignedManagedIdentityObjectId = null, string userAssignedManagedIdentityClientId = null, string userAssignedManagedIdentityAzureResourceId = null, AzureEnvironment azureEnvironment = AzureEnvironment.Production)
         {
             // Define the type of Managed Identity that will be used
             ManagedIdentityType managedIdentityType = ManagedIdentityType.SystemAssigned;
@@ -441,7 +442,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Set up the AuthenticationManager in PnP Framework to use a Managed Identity context
-            using (var authManager = Framework.AuthenticationManager.CreateWithManagedIdentity(null, null, managedIdentityType, managedIdentityUserAssignedIdentifier))
+            using (var authManager = Framework.AuthenticationManager.CreateWithManagedIdentity(null, null, managedIdentityType, managedIdentityUserAssignedIdentifier, azureEnvironment: azureEnvironment))
             {
                 PnPClientContext context = null;
                 ConnectionType connectionType = ConnectionType.O365;
