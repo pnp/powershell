@@ -442,7 +442,7 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             // Set up the AuthenticationManager in PnP Framework to use a Managed Identity context
-            using (var authManager = Framework.AuthenticationManager.CreateWithManagedIdentity(null, null, managedIdentityType, managedIdentityUserAssignedIdentifier))
+            using (var authManager = Framework.AuthenticationManager.CreateWithManagedIdentity(null, null, managedIdentityType, managedIdentityUserAssignedIdentifier, azureEnvironment: azureEnvironment))
             {
                 PnPClientContext context = null;
                 ConnectionType connectionType = ConnectionType.O365;
