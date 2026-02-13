@@ -31,6 +31,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `-ParserDisabled` to `Set-PnPList` to allow disabling of the list item column parsing into Word documents [#5224](https://github.com/pnp/powershell/pull/5224)
 - Added `Get-PnPWebAlert` and `Remove-PnPWebAlert` cmdlets to get and remove SharePoint list alerts [#5218](https://github.com/pnp/powershell/pull/5218)
 - Added `Set-PnPFileVersion` cmdlet to update expiration date of file version [#5230](https://github.com/pnp/powershell/pull/5230)
+- Add optional parameter `-Force` to cmdlet `Remove-PnPSiteGroup`. [#5214](https://github.com/pnp/powershell/pull/5214)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
@@ -39,7 +40,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Improved `Restore-PnPRecycleBinItem` cmdlet to better handle throttling.
 - Logging in using `Connect-PnPOnline -PersistentLogin` no longer throwing a warning [#5082](https://github.com/pnp/powershell/pull/5082)
 - All cmdlets with `AzureAD` in their name have been renamed to use `EntraID` instead, to reflect the rebranding of Azure Active Directory to Entra ID. Aliases have been added for backward compatibility. [#5221](https://github.com/pnp/powershell/pull/5221)
-- Improved `Import-PnPFlow` cmdlet to handle the retry logic between internal api calls, Introduced two new optional parameters [#5233](https://github.com/pnp/powershell/pull/5233)
+- Improved `Import-PnPFlow` cmdlet to better handle the retry logic between internal API calls, introduced two new optional parameters [#5233](https://github.com/pnp/powershell/pull/5233)
 
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
@@ -65,7 +66,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `New-PnPTenantSite` cmdlet to properly handle timeout issues for classic sites. [#5185](https://github.com/pnp/powershell/pull/5185)
 - Fix `Set-PnPBuiltInSiteTemplateSettings` cmdlet to reference up to date Template IDs. [#5202](https://github.com/pnp/powershell/pull/5202)
 - Fix `Connect-PnPOnline` cmdlet to allow reuse of connection created using certificate. [#5203](https://github.com/pnp/powershell/pull/5203)
-- Add optional parameter Force to cmdlet remove-pnpsitegroup. [#5214](https://github.com/pnp/powershell/pull/5214)
+- Fix `Connect-PnPOnline` cmdlet with Managed Identity to support non-commercial clouds. [#5239](https://github.com/pnp/powershell/pull/5239)
+
 
 ### Removed
 - Removed `-RemoveExisting` parameter from `Add-PnPAzureADGroupMember`, `Add-PnPAzureADGroupOwner`, `Add-PnPMicrosoft365GroupMember` and `Add-PnPMicrosoft365GroupOwner` cmdlets. It was never really implemented and without function. [#5153](https://github.com/pnp/powershell/pull/5153)
