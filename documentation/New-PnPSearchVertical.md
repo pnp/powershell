@@ -35,6 +35,9 @@ New-PnPSearchVertical [-Identity <String>] [-Scope <SearchVerticalScope>] -Paylo
 
 This cmdlet creates a new custom Microsoft Search vertical on the site you are currently connected to, or at the organization (tenant) level when using `-Scope Organization`. By default it creates a SharePoint content vertical. Use `-ContentSources` to create verticals for external connector content — pass connection IDs (strings), `SearchSiteConnection` objects from `Get-PnPSearchSiteConnection`, or `"SharePoint"` for SharePoint content. The entity type is automatically inferred from the content sources (`File` for SharePoint, `External` for connectors). For full control over the vertical configuration, use the `-Payload` parameter. It uses the Graph Connector Service (GCS) API at gcs.office.com.
 
+> [!WARNING]
+> This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.
+
 ### Prerequisites
 
 Your Entra app registration must have the `ExternalConnection.ReadWrite.All` delegated permission from the Graph Connector Service (GCS) API. To add this permission using Azure CLI:

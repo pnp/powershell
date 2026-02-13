@@ -29,6 +29,9 @@ Get-PnPSearchResultType [-Identity <String>] [-Scope <SearchVerticalScope>] [-Ve
 
 This cmdlet retrieves the Microsoft Search result types configured for the site you are currently connected to, or at the organization (tenant) level when using `-Scope Organization`. Result types define how search results are displayed using Adaptive Card templates. They can be configured for SharePoint content or external connector content. It uses the Graph Connector Service (GCS) API at gcs.office.com.
 
+> [!WARNING]
+> This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.
+
 ### Prerequisites
 
 Your Entra app registration must have the `ExternalConnection.ReadWrite.All` delegated permission from the Graph Connector Service (GCS) API. To add this permission using Azure CLI:

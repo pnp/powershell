@@ -33,6 +33,9 @@ This cmdlet reorders custom Microsoft Search verticals by deleting and recreatin
 
 > **Tip:** Use `-Verbose` to see detailed progress of each delete and create operation. Use `-WhatIf` to preview the operation without making changes.
 
+> [!WARNING]
+> This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.
+
 ### Prerequisites
 
 Your Entra app registration must have the `ExternalConnection.ReadWrite.All` delegated permission from the Graph Connector Service (GCS) API. To add this permission using Azure CLI:

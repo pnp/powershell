@@ -35,6 +35,9 @@ New-PnPSearchResultType [-Scope <SearchVerticalScope>] -Payload <SearchResultTyp
 
 This cmdlet creates a new Microsoft Search result type on the site you are currently connected to, or at the organization (tenant) level when using `-Scope Organization`. Result types define how search results matching certain rules are displayed using Adaptive Card templates. By default it creates a SharePoint content result type with the default display template. Use `-ContentSource` for external connector content, `-Rules` for matching conditions, and `-DisplayTemplate` for custom Adaptive Card layouts. For full control, use the `-Payload` parameter. It uses the Graph Connector Service (GCS) API at gcs.office.com.
 
+> [!WARNING]
+> This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.
+
 ### Prerequisites
 
 Your Entra app registration must have the `ExternalConnection.ReadWrite.All` delegated permission from the Graph Connector Service (GCS) API. To add this permission using Azure CLI:

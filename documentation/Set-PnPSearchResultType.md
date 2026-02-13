@@ -35,6 +35,9 @@ Set-PnPSearchResultType -Identity <String> [-Scope <SearchVerticalScope>] -Paylo
 
 This cmdlet updates a Microsoft Search result type on the site you are currently connected to, or at the organization (tenant) level when using `-Scope Organization`. When using individual parameters (Properties parameter set), the cmdlet retrieves the current configuration, merges in your changes, and performs a full update. For complete control over rules, content source, and display template, use the `-Payload` parameter. It uses the Graph Connector Service (GCS) API at gcs.office.com.
 
+> [!WARNING]
+> This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.
+
 ### Prerequisites
 
 Your Entra app registration must have the `ExternalConnection.ReadWrite.All` delegated permission from the Graph Connector Service (GCS) API. To add this permission using Azure CLI:

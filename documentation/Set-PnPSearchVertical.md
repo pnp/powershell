@@ -35,6 +35,9 @@ Set-PnPSearchVertical -Identity <String> [-Scope <SearchVerticalScope>] -Payload
 
 This cmdlet updates a Microsoft Search vertical on the site you are currently connected to, or at the organization (tenant) level when using `-Scope Organization`. When using individual parameters (Properties parameter set), the cmdlet retrieves the current vertical configuration, merges in your changes, and performs a full update. For complete control, use the `-Payload` parameter to provide the full payload object. It uses the Graph Connector Service (GCS) API at gcs.office.com.
 
+> [!WARNING]
+> This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.
+
 ### Prerequisites
 
 Your Entra app registration must have the `ExternalConnection.ReadWrite.All` delegated permission from the Graph Connector Service (GCS) API. To add this permission using Azure CLI:

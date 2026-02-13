@@ -27,6 +27,11 @@ namespace PnP.PowerShell.Commands.Base
 		private static readonly Dictionary<string, Guid> _siteIdCache = new Dictionary<string, Guid>(StringComparer.OrdinalIgnoreCase);
 
 		/// <summary>
+		/// Tracks whether the unsupported API disclaimer has been shown in this session.
+		/// </summary>
+		private static bool _apiDisclaimerShown;
+
+		/// <summary>
 		/// Reference to the SharePoint context on the current connection. If NULL it means there is no SharePoint context available on the current connection.
 		/// </summary>
 		public ClientContext ClientContext => Connection?.Context;
@@ -38,6 +43,12 @@ namespace PnP.PowerShell.Commands.Base
 		protected override void BeginProcessing()
 		{
 			base.BeginProcessing();
+
+			if (!_apiDisclaimerShown)
+			{
+				WriteWarning("This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.");
+				_apiDisclaimerShown = true;
+			}
 
 			if (Connection?.Context != null)
 			{
