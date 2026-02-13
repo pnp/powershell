@@ -13,7 +13,7 @@ title: Get-PnPSearchExternalConnection
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of ExternalConnection.ReadWrite.OwnedBy, ExternalConnection.Read.All,	ExternalConnection.ReadWrite.All
+  * Microsoft Graph API: ExternalConnection.ReadWrite.OwnedBy, ExternalConnection.Read.All, or ExternalConnection.ReadWrite.All
 
 Retrieves all connections to external datasources belonging to Microsoft Search
 
@@ -86,5 +86,7 @@ Accept wildcard characters: False
 ```
 
 ## RELATED LINKS
+
+[Get-PnPSearchSiteConnection](Get-PnPSearchSiteConnection.md) - Retrieves external connections via the GCS API with detailed configuration (schema, crawl settings, identity configuration). Only returns published connections available for the connected site. Use this when you need connection details for configuring search verticals with [New-PnPSearchVertical](New-PnPSearchVertical.md).
 
 [Microsoft 365 Patterns and Practices](https://aka.ms/m365pnp)
