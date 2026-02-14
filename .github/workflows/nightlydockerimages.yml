@@ -10,13 +10,14 @@ permissions: read-all
 jobs:
 
   publish-docker-windows-amd64:
-    runs-on: windows-2025
+    runs-on: windows-2022
     steps:
       - uses: actions/checkout@v4
 
       - name: Build Windows image
+        shell: pwsh
         run: |
-          $VERSION="$(cat ./version.txt)-nightly"
+          $VERSION = "$(Get-Content ./version.txt)-nightly"
           docker build `
             --platform windows/amd64 `
             -f ./docker/windows-amd64.dockerfile `
@@ -24,9 +25,10 @@ jobs:
             ./docker
 
       - name: Push Windows image
+        shell: pwsh
         run: |
-          $VERSION="$(cat ./version.txt)-nightly"
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
+          $VERSION = "$(Get-Content ./version.txt)-nightly"
+          docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
           docker push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
 
 
@@ -38,21 +40,23 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build linux/arm64 image (single-image)
+      - name: Build linux/arm64 image (single image)
+        shell: bash
         run: |
           VERSION="$(cat ./version.txt)-nightly"
           docker buildx build \
             --platform linux/arm64 \
             --load \
             -f ./docker/linux-arm64.dockerfile \
-            -t ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
+            -t ${{ secrets.DOCKER_ORG }}/powershell:${VERSION}-linux-arm64 \
             ./docker
 
       - name: Push linux/arm64 image
+        shell: bash
         run: |
           VERSION="$(cat ./version.txt)-nightly"
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push ${{ secrets.DOCKER_ORG }}/powershell:${VERSION}-linux-arm64
 
 
   publish-docker-linux-amd64:
@@ -63,48 +67,31 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build linux/amd64 image (single-image)
+      - name: Build linux/amd64 image (single image)
+        shell: bash
         run: |
           VERSION="$(cat ./version.txt)-nightly"
           docker buildx build \
             --platform linux/amd64 \
             --load \
             -f ./docker/linux-amd64.dockerfile \
-            -t ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
+            -t ${{ secrets.DOCKER_ORG }}/powershell:${VERSION}-linux-amd64 \
             ./docker
 
       - name: Push linux/amd64 image
+        shell: bash
         run: |
           VERSION="$(cat ./version.txt)-nightly"
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-          docker push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+          docker push ${{ secrets.DOCKER_ORG }}/powershell:${VERSION}-linux-amd64
 
 
   publish-docker-manifest:
     runs-on: ubuntu-latest
     needs:
+      - publish-docker-windows-amd64
       - publish-docker-linux-arm64
       - publish-docker-linux-amd64
-      - publish-docker-windows-amd64
     steps:
       - uses: actions/checkout@v4
 
-      - name: Publish multi-arch manifest
-        run: |
-          VERSION="$(cat ./version.txt)-nightly"
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-
-          docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:$VERSION \
-            --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
-            --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
-            --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
-
-          docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION
-
-          docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:nightly \
-            --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
-            --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
-            --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
-
-          docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:nightly
-``
