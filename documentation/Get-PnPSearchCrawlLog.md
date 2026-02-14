@@ -9,6 +9,9 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPSearchCrawlLog.h
  
 # Get-PnPSearchCrawlLog
 
+> [!CAUTION]
+> **This cmdlet has been deprecated.** The underlying API has been deprecated by Microsoft and no longer returns results. This cmdlet will be removed in a future version of PnP PowerShell.
+
 ## SYNOPSIS
 Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.
 
