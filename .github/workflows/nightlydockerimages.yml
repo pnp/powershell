@@ -96,31 +96,33 @@ jobs:
           push: true
           tags: ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-amd64
 
-  # Keep disabled arm32 job as-is (flip `if` when ready)
-  publish-docker-linux-arm32:
+  publish-docker-linux-arm32v7:
     runs-on: ubuntu-latest
-    if: false
     needs: compute-version
     steps:
       - uses: actions/checkout@v4
-      - name: Define version
-        run: |
-          echo "VERSION=${{ needs.compute-version.outputs.VERSION }}" >> $GITHUB_ENV
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
+  
+      - name: Set up Docker Buildx
+      # Buildx v3 is fine; QEMU is preinstalled on GH-hosted Ubuntu runners
+        uses: docker/setup-buildx-action@v3
+  
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      - name: Build & push (Linux arm/v7)
+  
+      - name: Build & push (Linux arm32/v7 - RPi2/Raspbian)
         uses: docker/build-push-action@v6
         with:
           context: ./docker
           file: ./docker/linux-arm32.dockerfile
-          push: true
           platforms: linux/arm/v7
-          tags: ${{ env.IMAGE_NAME }}:${{ env.VERSION }}-linux-arm32
-          build-args: |
-            PNP_VERSION=${{ env.VERSION }}
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm32v7
+          # Optional: pass your own build args
+          # build-args: |
+          #   PNP_VERSION=${{ needs.compute-version.outputs.VERSION }}
 
   publish-docker-manifest:
     runs-on: ubuntu-latest
@@ -128,6 +130,7 @@ jobs:
       - compute-version
       - publish-docker-linux-arm64
       - publish-docker-linux-amd64
+      - publish-docker-linux-arm32v7
       - publish-docker-windows-amd64
     steps:
       - uses: docker/setup-buildx-action@v3
