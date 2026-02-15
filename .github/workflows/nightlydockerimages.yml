@@ -145,6 +145,7 @@ jobs:
             -t ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }} \
             ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-amd64 \
             ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm64 \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm32v7 \
             ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-windows-amd64
 
       - name: Update 'nightly' tag
@@ -153,4 +154,5 @@ jobs:
             -t ${{ env.IMAGE_NAME }}:nightly \
             ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-amd64 \
             ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm64 \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm32v7 \
             ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-windows-amd64
