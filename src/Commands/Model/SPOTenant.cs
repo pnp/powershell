@@ -571,7 +571,39 @@ namespace PnP.PowerShell.Commands.Model
             // KnowledgeAgentSelectedSitesList maps from KnowledgeAgentSiteList on Tenant and requires manual conversion
             try
             {
-                KnowledgeAgentSelectedSitesList = tenant.KnowledgeAgentSiteList?.Select(siteId => siteId.ToString()).ToArray();
+                if (tenant.KnowledgeAgentSiteList != null)
+                {
+                    var siteUrls = new List<string>();
+
+                    foreach (var siteId in tenant.KnowledgeAgentSiteList)
+                    {
+                        try
+                        {
+                            var siteProperties = tenant.GetSitePropertiesById(siteId, true);
+                            clientContext.ExecuteQueryRetry();
+
+                            if (!string.IsNullOrEmpty(siteProperties?.Url))
+                            {
+                                siteUrls.Add(siteProperties.Url);
+                            }
+                            else
+                            {
+                                cmdlet.LogDebug($"KnowledgeAgentSelectedSitesList: site id '{siteId}' resolved with no URL; skipping.");
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // Site might be deleted or otherwise not resolvable; log and continue with the next entry
+                            cmdlet.LogDebug($"KnowledgeAgentSelectedSitesList: failed to resolve site id '{siteId}' to URL due to error '{ex.Message}'; skipping.");
+                        }
+                    }
+
+                    KnowledgeAgentSelectedSitesList = siteUrls.ToArray();
+                }
+                else
+                {
+                    KnowledgeAgentSelectedSitesList = null;
+                }
             }
             catch (Exception e)
             {
