@@ -568,6 +568,17 @@ namespace PnP.PowerShell.Commands.Model
                 cmdlet.LogDebug($"Property DefaultOneDriveInformationBarrierMode not loaded due to error '{e.Message}'");
             }
 
+            // KnowledgeAgentSelectedSitesList maps from KnowledgeAgentSiteList on Tenant and requires manual conversion
+            try
+            {
+                KnowledgeAgentSelectedSitesList = tenant.KnowledgeAgentSiteList?.Select(siteId => siteId.ToString()).ToArray();
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property KnowledgeAgentSelectedSitesList not loaded due to error '{e.Message}'");
+            }
+
             // If one or more properties failed to load, show a warning
             if (failedProperties > 0)
             {
