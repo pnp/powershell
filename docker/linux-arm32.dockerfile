@@ -22,7 +22,7 @@ RUN set -eux; \
 ARG PNP_VERSION=3.1.306-nightly
 ENV PNP_VERSION=${PNP_VERSION} TZ=Etc/UTC
 
-# ---- Write entrypoint script via heredoc (no semicolon/backslash after <<'SH') ----
+# ---- Write entrypoint script via heredoc ----
 RUN set -eux; \
     install -d -m 0755 /usr/local/bin; \
     cat > /usr/local/bin/docker-entrypoint.sh <<'SH'
@@ -30,19 +30,21 @@ RUN set -eux; \
 set -eu
 
 # First-run install on real ARM32 (avoid QEMU build-time crashes)
-pwsh -NoLogo -NoProfile -Command "
-  $m = Get-Module -ListAvailable PnP.PowerShell -ErrorAction SilentlyContinue;
-  if (-not $m) {
-    Install-Module PnP.PowerShell -Scope AllUsers -Force -AllowPrerelease -SkipPublisherCheck -RequiredVersion $env:PNP_VERSION;
-    Write-Host 'PnP.PowerShell installed.';
-  } else {
-    Write-Host 'PnP.PowerShell already present.';
-  }"
+pwsh -NoLogo -NoProfile -NonInteractive -Command '
+  Install-Module PnP.PowerShell `
+    -Scope AllUsers `
+    -Force `
+    -AllowPrerelease `
+    -SkipPublisherCheck `
+    -RequiredVersion $env:PNP_VERSION;
+  Write-Host "PnP.PowerShell installed.";
+'
+
 # Hand off to PowerShell; forward all container args
 exec pwsh -NoLogo "$@"
 SH
 
-# mark executable in a separate RUN (simplest, avoids heredoc chaining quirks)
+# Mark executable
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 # Use exec-form ENTRYPOINT so signals are delivered to pwsh
