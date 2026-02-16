@@ -11,7 +11,7 @@ namespace PnP.PowerShell.Commands.Admin
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
-            AdminContext.Load(Tenant, t => t.HideDefaultThemes, t => t.KnowledgeAgentEnabled, t => t.KnowledgeAgentScopeMode, t => t.KnowledgeAgentSiteList);
+            AdminContext.Load(Tenant, t => t.HideDefaultThemes, t => t.KnowledgeAgentSiteList);
             AdminContext.ExecuteQueryRetry();
             WriteObject(new SPOTenant(Tenant, AdminContext, this));
         }
