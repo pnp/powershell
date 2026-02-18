@@ -5,6 +5,7 @@ using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Graph.MicrosoftSearch;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Management.Automation;
 using System.Net;
@@ -24,7 +25,7 @@ namespace PnP.PowerShell.Commands.Base
 		/// <summary>
 		/// Static cache of site IDs keyed by connection URL, persists across cmdlet invocations within the same session.
 		/// </summary>
-		private static readonly Dictionary<string, Guid> _siteIdCache = new Dictionary<string, Guid>(StringComparer.OrdinalIgnoreCase);
+		private static readonly ConcurrentDictionary<string, Guid> _siteIdCache = new ConcurrentDictionary<string, Guid>(StringComparer.OrdinalIgnoreCase);
 
 		/// <summary>
 		/// Tracks whether the unsupported API disclaimer has been shown in this session.
@@ -83,7 +84,7 @@ namespace PnP.PowerShell.Commands.Base
 			ClientContext.Site.EnsureProperties(s => s.Id);
 			var siteId = ClientContext.Site.Id;
 			if (url != null)
-				_siteIdCache[url] = siteId;
+				_siteIdCache.TryAdd(url, siteId);
 			return siteId;
 		}
 
@@ -92,9 +93,15 @@ namespace PnP.PowerShell.Commands.Base
 		/// </summary>
 		protected IDictionary<string, string> GetGcsHeaders()
 		{
+			var url = Connection?.Url;
+			if (string.IsNullOrEmpty(url))
+			{
+				throw new PSInvalidOperationException("No site URL available on the current connection. Connect to a specific SharePoint site before invoking this cmdlet.");
+			}
+
 			return new Dictionary<string, string>
 			{
-				{ "x-siteurl", Connection.Url }
+				{ "x-siteurl", url }
 			};
 		}
 
@@ -218,11 +225,10 @@ namespace PnP.PowerShell.Commands.Base
 		private static string GenerateRandomId(int length)
 		{
 			const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-			var random = new Random();
 			var result = new char[length];
 			for (int i = 0; i < length; i++)
 			{
-				result[i] = chars[random.Next(chars.Length)];
+				result[i] = chars[Random.Shared.Next(chars.Length)];
 			}
 			return new string(result);
 		}

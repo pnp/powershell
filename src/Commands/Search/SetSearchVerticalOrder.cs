@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading;
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Enums;
+using PnP.PowerShell.Commands.Model.Graph;
 using PnP.PowerShell.Commands.Model.Graph.MicrosoftSearch;
 
 namespace PnP.PowerShell.Commands.Search
@@ -80,8 +82,11 @@ namespace PnP.PowerShell.Commands.Search
 				throw new PSArgumentException($"All custom verticals must be included. Missing: {string.Join(", ", missing)}", nameof(Identity));
 			}
 
-			// 6. Check if order is actually different
-			var currentOrder = customVerticals.Keys.ToList();
+			// 6. Check if order is actually different (preserve API-returned order)
+			var currentOrder = allVerticals
+				.Where(v => v.Payload?.VerticalType == 1)
+				.Select(v => v.LogicalId)
+				.ToList();
 			var alreadyInOrder = currentOrder.SequenceEqual(Identity, StringComparer.OrdinalIgnoreCase);
 			if (alreadyInOrder)
 			{
@@ -151,9 +156,9 @@ namespace PnP.PowerShell.Commands.Search
 						GcsRequestHelper.Get<SearchVertical>(verticalUrl, additionalHeaders: headers);
 						return false; // Still exists
 					}
-					catch
+					catch (GraphException ex) when (ex.HttpResponse?.StatusCode == HttpStatusCode.NotFound)
 					{
-						return true; // Gone — delete succeeded
+						return true; // 404 = Gone
 					}
 				});
 
@@ -256,11 +261,16 @@ namespace PnP.PowerShell.Commands.Search
 					// Still exists - keep waiting
 					WriteVerbose($"Vertical '{logicalId}' still exists, waiting... ({i + 1}/{MaxVerifyAttempts})");
 				}
-				catch
+				catch (GraphException ex) when (ex.HttpResponse?.StatusCode == HttpStatusCode.NotFound)
 				{
-					// Error means the vertical is gone
+					// 404 means the vertical is gone
 					WriteVerbose($"Verified vertical '{logicalId}' deleted");
 					return;
+				}
+				catch (Exception ex)
+				{
+					// Non-404 error — log but keep retrying
+					WriteVerbose($"Unexpected error checking vertical '{logicalId}': {ex.Message}. Retrying... ({i + 1}/{MaxVerifyAttempts})");
 				}
 			}
 

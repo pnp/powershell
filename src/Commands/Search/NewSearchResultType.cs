@@ -111,8 +111,7 @@ namespace PnP.PowerShell.Commands.Search
 					RuleProperties = ruleProps,
 					DisplayTemplate = DisplayTemplate ?? GetDefaultDisplayTemplate(),
 					DisplayProperties = displayProps,
-					DisplaySampleData = "",
-					LastModifiedBy = ""
+					DisplaySampleData = ""
 				};
 			}
 

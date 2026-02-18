@@ -79,7 +79,16 @@ namespace PnP.PowerShell.Commands.Search
 					payload.QueryTemplate = NormalizeQueryTemplate(QueryTemplate);
 
 				if (ParameterSpecified(nameof(IncludeConnectorResults)))
-					payload.IncludeConnectorResults = IncludeConnectorResults;
+				{
+					if (payload.VerticalType == 1) // Custom vertical
+					{
+						WriteWarning("-IncludeConnectorResults only applies to built-in verticals (SITEALL/ALL). Ignoring for custom vertical.");
+					}
+					else
+					{
+						payload.IncludeConnectorResults = IncludeConnectorResults;
+					}
+				}
 
 				// Clear server-only fields that shouldn't be sent in the PUT
 				payload.LastModifiedBy = null;

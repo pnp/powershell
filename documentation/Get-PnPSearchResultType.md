@@ -158,7 +158,7 @@ The `Payload` object contains:
 |----------|------|-------------|
 | Name | String | Display name of the result type |
 | IsActive | Boolean | Whether the result type is active |
-| Priority | Int | Priority order (0 = highest) |
+| Priority | Int | Priority order (1 = highest; lower numbers indicate higher priority) |
 | ContentSourceId | Object | Content source with `ContentSourceApplication`, `Identity`, `SystemId` |
 | ContentSourceName | String | Display name of the content source |
 | Rules | List | Matching rules (see below) |

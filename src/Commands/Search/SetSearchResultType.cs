@@ -94,8 +94,8 @@ namespace PnP.PowerShell.Commands.Search
 			if (ParameterSpecified(nameof(Priority)))
 			{
 				var desiredPriority = Math.Max(1, Priority.Value);
-				ResequenceResultTypePriorities(logicalId, desiredPriority, siteId, headers);
-				payload.Priority = desiredPriority;
+				var actualPriority = ResequenceResultTypePriorities(logicalId, desiredPriority, siteId, headers);
+				payload.Priority = actualPriority;
 			}
 
 			var jsonOptions = new JsonSerializerOptions
@@ -125,7 +125,7 @@ namespace PnP.PowerShell.Commands.Search
 		/// Fetches all result types, removes the target, inserts at the desired position,
 		/// renumbers 1..N, and PUTs any that changed.
 		/// </summary>
-		private void ResequenceResultTypePriorities(string targetLogicalId, int desiredPriority, Guid? siteId, IDictionary<string, string> headers)
+		private int ResequenceResultTypePriorities(string targetLogicalId, int desiredPriority, Guid? siteId, IDictionary<string, string> headers)
 		{
 			string listUrl = Scope == SearchVerticalScope.Organization
 				? GetGcsOrgMrtUrl(null)
@@ -140,9 +140,10 @@ namespace PnP.PowerShell.Commands.Search
 				.OrderBy(rt => rt.Payload?.Priority ?? 0)
 				.ToList();
 
-			// Insert a placeholder for the target at the desired position
+			// Insert a placeholder for the target at the desired position (clamped to valid range)
 			var insertIdx = Math.Max(0, Math.Min(desiredPriority - 1, others.Count));
 			others.Insert(insertIdx, null);
+			var actualPriority = insertIdx + 1;
 
 			var jsonOptions = new JsonSerializerOptions
 			{
@@ -181,6 +182,8 @@ namespace PnP.PowerShell.Commands.Search
 					});
 				}
 			}
+
+			return actualPriority;
 		}
 
 	}
