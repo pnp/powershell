@@ -82,7 +82,7 @@ Set-PnPSearchResultType -Identity "1770839639348_FYXB8XQI5" -Payload $payload
 
 Changes a result type's content source from SharePoint to an external connector with new rules.
 
-### EXAMPLE 4
+### EXAMPLE 3
 ```powershell
 $rt = Get-PnPSearchResultType -Identity "1770839639348_FYXB8XQI5"
 $rt.Payload.Rules = @(
@@ -95,7 +95,7 @@ Set-PnPSearchResultType -Identity "1770839639348_FYXB8XQI5" -Payload $rt.Payload
 
 Updates the rules on an existing result type to match Office documents that are not list items.
 
-### EXAMPLE 5
+### EXAMPLE 4
 ```powershell
 $template = @'
 {
@@ -126,21 +126,21 @@ Set-PnPSearchResultType -Identity "1770839639348_FYXB8XQI5" -Payload $rt.Payload
 
 Updates the display template of an existing result type with a custom Adaptive Card layout. Use a here-string (`@'...'@`) for readability.
 
-### EXAMPLE 6
+### EXAMPLE 5
 ```powershell
 Set-PnPSearchResultType -Identity "1770839639348_FYXB8XQI5" -Priority 1
 ```
 
 Sets the result type to be first in display order.
 
-### EXAMPLE 7
+### EXAMPLE 6
 ```powershell
 Set-PnPSearchResultType -Identity "1770839639348_FYXB8XQI5" -Name "Updated Name" -Scope Organization
 ```
 
 Updates the name of an organization-level result type.
 
-### EXAMPLE 8
+### EXAMPLE 7
 ```powershell
 $rt = Get-PnPSearchResultType -Identity "1770839639348_FYXB8XQI5"
 $rt.Payload.Rules = @(
@@ -152,7 +152,7 @@ Set-PnPSearchResultType -Identity "1770839639348_FYXB8XQI5" -Payload $rt.Payload
 
 Updates the rules on a connector-based result type with property validation. The `-Validate` switch checks that `IconUrl` exists in the connector's schema. If a rule property does not exist, the cmdlet throws an error. Invalid display properties produce a warning.
 
-### EXAMPLE 9
+### EXAMPLE 8
 ```powershell
 Get-PnPSearchResultType -Identity "My Result Type" | Set-PnPSearchResultType -Name "Updated Name"
 ```
