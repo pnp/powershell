@@ -755,7 +755,7 @@ namespace PnP.PowerShell.Commands.Base
             LogDebug("Connecting using an Azure Managed Identity");
 
             LogDebug($"ClientID: {UserAssignedManagedIdentityClientId}");
-            return PnPConnection.CreateWithManagedIdentity(Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId);
+            return PnPConnection.CreateWithManagedIdentity(Url, TenantAdminUrl, UserAssignedManagedIdentityObjectId, UserAssignedManagedIdentityClientId, UserAssignedManagedIdentityAzureResourceId, AzureEnvironment);
         }
 
         private PnPConnection ConnectInteractive()

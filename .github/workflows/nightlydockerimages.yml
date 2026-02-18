@@ -3,108 +3,156 @@ name: Nightly Release to Docker Hub
 on:
   workflow_dispatch:
   schedule:
-  - cron: '0 4 * * *'
+    - cron: '0 4 * * *'
 
 permissions: read-all
 
+env:
+  IMAGE_NAME: ${{ secrets.DOCKER_ORG }}/powershell
+
 jobs:
+  # Compute version once and share across jobs
+  compute-version:
+    runs-on: ubuntu-latest
+    outputs:
+      VERSION: ${{ steps.v.outputs.VERSION }}
+      VERSION_NIGHTLY: ${{ steps.v.outputs.VERSION_NIGHTLY }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: v
+        run: |
+          V="$(cat ./version.txt)"
+          echo "VERSION=$V" >> "$GITHUB_OUTPUT"
+          echo "VERSION_NIGHTLY=${V}-nightly" >> "$GITHUB_OUTPUT"
+
   publish-docker-windows-amd64:
     runs-on: windows-2025
-    if: true
+    needs: compute-version
     steps:
-    - uses: actions/checkout@v4
-    - name: Build an image
-      run: |
-        $VERSION="$(cat ./version.txt)-nightly"
-        docker build --platform windows/amd64 ./docker -f ./docker/windows-amd64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
-    - name: Push the image
-      run: |
-        $VERSION="$(cat ./version.txt)-nightly"
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64"
-        
-  publish-docker-linux-arm32:
-    runs-on: ubuntu-latest
-    if: false
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-    - name: Define version
-      run: |
-        VERSION=$(cat ./version.txt)
-        echo "Using version: $VERSION"
-        echo "VERSION=$VERSION" >> $GITHUB_ENV
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+      # Avoids "no matching manifest ..." by pinning the arch-specific tag
+      - name: Pre-pull NanoServer base (amd64)
+        shell: pwsh
+        run: |
+          docker pull mcr.microsoft.com/windows/nanoserver:ltsc2025-amd64
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build (Windows amd64)
+        shell: pwsh
+        run: |
+          $tag = "${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-windows-amd64"
+          # If your Dockerfile supports BASE_TAG, uncomment the two lines below and add `ARG BASE_TAG` in the Dockerfile:
+          # $env:BASE_TAG = "ltsc2025-amd64"
+          # docker build --build-arg BASE_TAG=$env:BASE_TAG --file ./docker/windows-amd64.dockerfile --tag $tag ./docker
+          docker build --file ./docker/windows-amd64.dockerfile --tag $tag ./docker
 
-    - name: Build and push ARM32v7 image
-      uses: docker/build-push-action@v5
-      with:
-        context: ./docker
-        file: ./docker/linux-arm32.dockerfile
-        push: true
-        platforms: linux/arm/v7
-        tags: ${{ secrets.DOCKER_ORG }}/powershell:${{ env.VERSION }}-linux-arm32
-        build-args: |
-          PNP_VERSION=${{ env.VERSION }}
-          
+      - name: Push (Windows amd64)
+        shell: pwsh
+        run: |
+          $tag = "${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-windows-amd64"
+          docker push $tag
+
   publish-docker-linux-arm64:
     runs-on: ubuntu-24.04-arm
-    if: true
+    needs: compute-version
     steps:
-    - uses: actions/checkout@v4
-    - name: Build an image
-      run: |
-        VERSION="$(cat ./version.txt)-nightly"
-        docker build --platform linux/arm64/v8 ./docker -f ./docker/linux-arm64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64
-    - name: Push the image
-      run: |
-        VERSION="$(cat ./version.txt)-nightly"
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64"
-        
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build & push (Linux arm64)
+        uses: docker/build-push-action@v6
+        with:
+          context: ./docker
+          file: ./docker/linux-arm64.dockerfile
+          platforms: linux/arm64/v8
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm64
+
   publish-docker-linux-amd64:
     runs-on: ubuntu-latest
-    if: true
+    needs: compute-version
     steps:
-    - uses: actions/checkout@v4
-    - name: Build an image
-      run: |
-    - name: Build an image
-      run: |
-        VERSION="$(cat ./version.txt)-nightly"
-        docker build --platform linux/amd64 ./docker -f ./docker/linux-amd64.dockerfile --tag ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64
-    - name: Push the image
-      run: |
-        VERSION="$(cat ./version.txt)-nightly"
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p '${{ secrets.DOCKER_PASSWORD }}'
-        docker push "${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64"
-        
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Build & push (Linux amd64)
+        uses: docker/build-push-action@v6
+        with:
+          context: ./docker
+          file: ./docker/linux-amd64.dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-amd64
+
+  publish-docker-linux-arm32v7:
+    runs-on: ubuntu-latest
+    needs: compute-version
+    steps:
+      - uses: actions/checkout@v4
+  
+      - name: Set up Docker Buildx
+      # Buildx v3 is fine; QEMU is preinstalled on GH-hosted Ubuntu runners
+        uses: docker/setup-buildx-action@v3
+  
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+  
+      - name: Build & push (Linux arm32/v7 - RPi2/Raspbian)
+        uses: docker/build-push-action@v6
+        with:
+          context: ./docker
+          file: ./docker/linux-arm32.dockerfile
+          platforms: linux/arm/v7
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm32v7
+          # Optional: pass your own build args
+          # build-args: |
+          #   PNP_VERSION=${{ needs.compute-version.outputs.VERSION }}
+
   publish-docker-manifest:
     runs-on: ubuntu-latest
-    if: true
-    needs: [ publish-docker-linux-arm64, publish-docker-linux-amd64, publish-docker-windows-amd64 ]
+    needs:
+      - compute-version
+      - publish-docker-linux-arm64
+      - publish-docker-linux-amd64
+      - publish-docker-linux-arm32v7
+      - publish-docker-windows-amd64
     steps:
-    - uses: actions/checkout@v4
-    - name: Publish manifest
-      run: |
-        VERSION="$(cat ./version.txt)-nightly"
-        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
-        docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:$VERSION \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
-        docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:$VERSION
-        docker manifest create ${{ secrets.DOCKER_ORG }}/powershell:nightly \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-amd64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-linux-arm64 \
-          --amend ${{ secrets.DOCKER_ORG }}/powershell:$VERSION-windows-amd64
-        docker manifest push ${{ secrets.DOCKER_ORG }}/powershell:nightly
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Create multi-arch manifest (versioned)
+        run: |
+          docker buildx imagetools create \
+            -t ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }} \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-amd64 \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm64 \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm32v7 \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-windows-amd64
+
+      - name: Update 'nightly' tag
+        run: |
+          docker buildx imagetools create \
+            -t ${{ env.IMAGE_NAME }}:nightly \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-amd64 \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm64 \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-linux-arm32v7 \
+            ${{ env.IMAGE_NAME }}:${{ needs.compute-version.outputs.VERSION_NIGHTLY }}-windows-amd64
