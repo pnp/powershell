@@ -54,6 +54,10 @@ namespace PnP.PowerShell.Commands.Base
 			if (Connection?.Context != null)
 			{
 				var contextSettings = Connection.Context.GetContextSettings();
+				if (contextSettings?.Type == Framework.Utilities.Context.ClientContextType.AzureADCertificate)
+				{
+					throw new PSInvalidOperationException("This cmdlet requires a delegated (interactive) connection. App-only (certificate-based) connections are not supported by the GCS API.");
+				}
 				if (contextSettings?.Type == Framework.Utilities.Context.ClientContextType.Cookie || contextSettings?.Type == Framework.Utilities.Context.ClientContextType.SharePointACSAppOnly)
 				{
 					var typeString = contextSettings?.Type == Framework.Utilities.Context.ClientContextType.Cookie ? "WebLogin/Cookie" : "ACS";

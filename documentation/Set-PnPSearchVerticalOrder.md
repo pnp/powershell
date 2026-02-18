@@ -45,6 +45,9 @@ az ad app permission add --id <your-app-id> --api 56c1da01-2129-48f7-9355-af6d59
 az ad app permission admin-consent --id <your-app-id>
 ```
 
+> [!NOTE]
+> This cmdlet requires a **delegated (interactive)** connection. App-only (certificate-based) connections are not supported by the GCS API and will result in a 403 Forbidden error.
+
 ## EXAMPLES
 
 ### EXAMPLE 1
