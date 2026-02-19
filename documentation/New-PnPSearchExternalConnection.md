@@ -13,7 +13,7 @@ title: New-PnPSearchExternalConnection
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of ExternalConnection.ReadWrite.OwnedBy, 	ExternalConnection.ReadWrite.All
+  * Microsoft Graph API: ExternalConnection.ReadWrite.OwnedBy or ExternalConnection.ReadWrite.All
 
 Creates a new connection to an external datasource for Microsoft Search
 

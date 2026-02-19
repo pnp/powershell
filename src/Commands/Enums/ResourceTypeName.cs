@@ -52,6 +52,12 @@ namespace PnP.PowerShell.Commands.Enums
         /// Dynamics CRM
         /// </summary>
         [Description("Dynamics CRM")]
-        DynamicsCRM = 7
+        DynamicsCRM = 7,
+
+        /// <summary>
+        /// Graph Connector Service (Microsoft Search Admin)
+        /// </summary>
+        [Description("Graph Connector Service")]
+        Gcs = 8
     }
 }

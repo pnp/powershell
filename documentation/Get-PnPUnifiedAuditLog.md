@@ -34,6 +34,24 @@ Get-PnPUnifiedAuditLog [-ContentType <AuditContentType>] [-StartTime <DateTime>]
 
 Allows to retrieve unified audit logs from the Office 365 Management API.
 
+### Prerequisites
+
+Your Entra app registration must have one or more of the following delegated or application permissions from the Office 365 Management API. To add this permission using Azure CLI:
+
+```bash
+# ActivityFeed.Read - Read activity data for your organization
+az ad app permission add --id <your-app-id> --api c5393580-f805-4401-95e8-94b7a6ef2fc2 --api-permissions 594c1fb6-4f81-4475-ae41-0c394909246c=Scope
+az ad app permission admin-consent --id <your-app-id>
+```
+
+The API ID `c5393580-f805-4401-95e8-94b7a6ef2fc2` represents the Office 365 Management API. Depending on your content type requirements, you may need additional permissions:
+- **ActivityFeed.ReadDlp** - For DLP content
+- **ServiceHealth.Read** - For service health information
+- **ActivityReports.Read** - For activity reports
+- **ThreatIntelligence.Read** - For threat intelligence data
+
+For application (app-only) permissions, replace `=Scope` with `=Role` in the command above.
+
 ## EXAMPLES
 
 ### EXAMPLE 1

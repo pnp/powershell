@@ -98,6 +98,7 @@ namespace PnP.PowerShell.Commands.Base
                 "flow" or "service.flow.microsoft.com" => Enums.ResourceTypeName.PowerAutomate,
                 "powerapps" or "api.powerapps.com" => Enums.ResourceTypeName.PowerApps,
                 "dynamics" or "admin.services.crm.dynamics.com" or "api.crm.dynamics.com" => Enums.ResourceTypeName.DynamicsCRM,
+                "gcs" or "gcs.office.com" => Enums.ResourceTypeName.Gcs,
 
                 // We assume SharePoint as the default as vanity domains cause no fixed structure to be present in the audience name
                 _ => Enums.ResourceTypeName.SharePoint
