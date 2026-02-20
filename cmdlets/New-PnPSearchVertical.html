@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>New-PnPSearchVertical | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="New-PnPSearchVertical | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="new-pnpsearchvertical">New-PnPSearchVertical</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li><a href="#prerequisites">Graph Connector Service (GCS) API</a></li>
+<li>Site scope: Site Administrator</li>
+<li>Organization scope: Search Administrator or Global Administrator</li>
+</ul>
+<p>Creates a new Microsoft Search vertical on the currently connected site or at the organization level.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="default-default">Default (Default)</h3>
+<pre><code class="lang-powershell">New-PnPSearchVertical -DisplayName &lt;String&gt; [-Identity &lt;String&gt;] [-Scope &lt;SearchVerticalScope&gt;] [-Enabled &lt;Boolean&gt;] [-QueryTemplate &lt;String&gt;] [-ContentSources &lt;Object[]&gt;] [-IncludeConnectorResults &lt;Boolean&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="payload">Payload</h3>
+<pre><code class="lang-powershell">New-PnPSearchVertical [-Identity &lt;String&gt;] [-Scope &lt;SearchVerticalScope&gt;] -Payload &lt;SearchVerticalPayload&gt; [-Verbose] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet creates a new custom Microsoft Search vertical on the site you are currently connected to, or at the organization (tenant) level when using <code>-Scope Organization</code>. By default it creates a SharePoint content vertical. Use <code>-ContentSources</code> to create verticals for external connector content — pass connection IDs (strings), <code>SearchSiteConnection</code> objects from <code>Get-PnPSearchSiteConnection</code>, or <code>&quot;SharePoint&quot;</code> for SharePoint content. The entity type is automatically inferred from the content sources (<code>File</code> for SharePoint, <code>External</code> for connectors). For full control over the vertical configuration, use the <code>-Payload</code> parameter. It uses the Graph Connector Service (GCS) API at gcs.office.com.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.</p>
+</div>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Your Entra app registration must have the <code>ExternalConnection.ReadWrite.All</code> delegated permission from the Graph Connector Service (GCS) API. To add this permission using Azure CLI:</p>
+<pre><code class="lang-bash">az ad app permission add --id &lt;your-app-id&gt; --api 56c1da01-2129-48f7-9355-af6d59d42766 --api-permissions d44774bd-e26c-43b1-996d-51bb90a9078e=Scope
+az ad app permission admin-consent --id &lt;your-app-id&gt;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This cmdlet requires a <strong>delegated (interactive)</strong> connection. App-only (certificate-based) connections are not supported by the GCS API and will result in a 403 Forbidden error.</p>
+</div>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">New-PnPSearchVertical -DisplayName &quot;Contoso Tickets&quot;
+</code></pre>
+<p>Creates a new disabled search vertical named &quot;Contoso Tickets&quot; with default SharePoint content.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">New-PnPSearchVertical -DisplayName &quot;Contoso Tickets&quot; -Enabled $true
+</code></pre>
+<p>Creates a new enabled search vertical named &quot;Contoso Tickets&quot; with SharePoint content.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">New-PnPSearchVertical -DisplayName &quot;Contoso Tickets&quot; -Identity &quot;tickets&quot; -Enabled $true
+</code></pre>
+<p>Creates a vertical with a custom logical ID. The logical ID becomes part of the search URL (e.g. <code>/search.aspx/tickets</code>), similar to how built-in verticals have readable URLs like <code>/search.aspx/All</code> or <code>/search.aspx/Files</code>. If not specified, a generated ID like <code>1610383262385_H0RPZO96M</code> is used instead.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">New-PnPSearchVertical -DisplayName &quot;External Content&quot; -ContentSources &quot;techcrunch&quot;
+</code></pre>
+<p>Creates a new search vertical for a single external connector, specified by connection ID. The entity type is automatically set to External. Use <code>Get-PnPSearchSiteConnection</code> to discover available connection IDs.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">$conn = Get-PnPSearchSiteConnection -Identity &quot;techcrunch&quot;
+New-PnPSearchVertical -DisplayName &quot;External Content&quot; -ContentSources $conn -Enabled $true
+</code></pre>
+<p>Creates a new enabled search vertical by passing a <code>SearchSiteConnection</code> object from <code>Get-PnPSearchSiteConnection</code>.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">New-PnPSearchVertical -DisplayName &quot;External Content&quot; -ContentSources &quot;techcrunch&quot;, &quot;contosowiki&quot;
+</code></pre>
+<p>Creates a new search vertical that surfaces content from multiple external connectors.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">New-PnPSearchVertical -DisplayName &quot;SharePoint Docs&quot; -ContentSources &quot;SharePoint&quot; -Enabled $true
+</code></pre>
+<p>Creates a new enabled SharePoint content vertical. Passing <code>&quot;SharePoint&quot;</code> explicitly is equivalent to omitting <code>-ContentSources</code> (which defaults to SharePoint).</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">$payload = Get-PnPSearchVertical -Identity &quot;1610383262385_H0RPZO96M&quot; | Select-Object -ExpandProperty Payload
+$payload.DisplayName = &quot;Cloned Vertical&quot;
+New-PnPSearchVertical -Payload $payload
+</code></pre>
+<p>Creates a new search vertical by cloning the payload from an existing vertical.</p>
+<h3 id="example-9">EXAMPLE 9</h3>
+<pre><code class="lang-powershell">New-PnPSearchVertical -DisplayName &quot;Org Vertical&quot; -Enabled $true -Scope Organization
+</code></pre>
+<p>Creates a new enabled organization-level search vertical.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing <a href="Get-PnPConnection.html">Get-PnPConnection</a>.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-scope">-Scope</h3>
+<p>Specifies whether to create a site-level or organization-level vertical. Defaults to Site.</p>
+<pre><code class="lang-yaml">Type: SearchVerticalScope
+Parameter Sets: (All)
+Accepted values: Site, Organization
+Required: False
+Position: Named
+Default value: Site
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-displayname">-DisplayName</h3>
+<p>The display name for the new search vertical.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Default
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>A custom logical ID for the vertical. The logical ID becomes the URL segment in the search page (e.g. specifying <code>&quot;tickets&quot;</code> results in <code>/search.aspx/tickets</code>), similar to how built-in verticals have readable IDs like <code>SITEALL</code>, <code>SITEFILES</code>, etc. If not specified, a unique ID is generated automatically in the format <code>{timestamp}_{randomId}</code>.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enabled">-Enabled</h3>
+<p>Whether the vertical should be created in an enabled state. Defaults to <code>$false</code> (disabled).</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Default
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-querytemplate">-QueryTemplate</h3>
+<p>A KQL query template to filter results in the vertical. The <code>{searchTerms}</code> placeholder is automatically prepended if not included. For example, <code>-QueryTemplate &quot;IsDocument:1&quot;</code> becomes <code>{searchTerms} IsDocument:1</code>.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Default
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-contentsources">-ContentSources</h3>
+<p>The content sources for the vertical. Accepts one or more of the following: <code>&quot;SharePoint&quot;</code> for SharePoint content, a connection ID string for an external connector, or a <code>SearchSiteConnection</code> object from <a href="Get-PnPSearchSiteConnection.html">Get-PnPSearchSiteConnection</a>. If not specified, defaults to SharePoint. The entity type is automatically inferred: <code>File</code> for SharePoint, <code>External</code> for connectors.</p>
+<pre><code class="lang-yaml">Type: Object[]
+Parameter Sets: Default
+Required: False
+Position: Named
+Default value: SharePoint
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-includeconnectorresults">-IncludeConnectorResults</h3>
+<p>Whether to include connector results in the vertical. This parameter only applies to built-in verticals (SITEALL at site scope, ALL at organization scope). For custom verticals created with this cmdlet, a warning is shown and the value is ignored. Use <code>Set-PnPSearchVertical</code> to modify built-in verticals.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Default
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-payload">-Payload</h3>
+<p>A full SearchVerticalPayload object for complete control over the vertical configuration. Use this parameter set for advanced scenarios where the simple parameters are not sufficient.</p>
+<pre><code class="lang-yaml">Type: SearchVerticalPayload
+Parameter Sets: Payload
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>

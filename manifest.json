@@ -3584,10 +3584,40 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSearchResultType.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSearchResultType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPSearchSettings.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Get-PnPSearchSettings.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSearchSiteConnection.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSearchSiteConnection.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPSearchVertical.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPSearchVertical.html"
         }
       },
       "version": ""
@@ -5154,6 +5184,36 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPSearchResultType.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPSearchResultType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPSearchResultTypeRule.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPSearchResultTypeRule.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPSearchVertical.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPSearchVertical.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/New-PnPSite.md",
       "output": {
         ".html": {
@@ -6298,6 +6358,26 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Remove-PnPSearchExternalItem.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPSearchResultType.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPSearchResultType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Remove-PnPSearchVertical.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Remove-PnPSearchVertical.html"
         }
       },
       "version": ""
@@ -7784,10 +7864,40 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSearchResultType.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSearchResultType.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPSearchSettings.md",
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPSearchSettings.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSearchVertical.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSearchVertical.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPSearchVerticalOrder.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPSearchVerticalOrder.html"
         }
       },
       "version": ""

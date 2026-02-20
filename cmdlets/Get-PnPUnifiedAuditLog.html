@@ -98,6 +98,20 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Allows to retrieve unified audit logs from the Office 365 Management API.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Your Entra app registration must have one or more of the following delegated or application permissions from the Office 365 Management API. To add this permission using Azure CLI:</p>
+<pre><code class="lang-bash"># ActivityFeed.Read - Read activity data for your organization
+az ad app permission add --id &lt;your-app-id&gt; --api c5393580-f805-4401-95e8-94b7a6ef2fc2 --api-permissions 594c1fb6-4f81-4475-ae41-0c394909246c=Scope
+az ad app permission admin-consent --id &lt;your-app-id&gt;
+</code></pre>
+<p>The API ID <code>c5393580-f805-4401-95e8-94b7a6ef2fc2</code> represents the Office 365 Management API. Depending on your content type requirements, you may need additional permissions:</p>
+<ul>
+<li><strong>ActivityFeed.ReadDlp</strong> - For DLP content</li>
+<li><strong>ServiceHealth.Read</strong> - For service health information</li>
+<li><strong>ActivityReports.Read</strong> - For activity reports</li>
+<li><strong>ThreatIntelligence.Read</strong> - For threat intelligence data</li>
+</ul>
+<p>For application (app-only) permissions, replace <code>=Scope</code> with <code>=Role</code> in the command above.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPUnifiedAuditLog -ContentType SharePoint -StartTime (Get-Date -asUtc).AddDays(-2) -EndTime (Get-Date -asUtc).AddDays(-1)

@@ -102,6 +102,16 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>This cmdlet returns Power Automate Flows meeting the specified criteria.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Your Entra app registration must have the <code>user_impersonation</code> delegated permission from the Azure Service Management API. To add this permission using Azure CLI:</p>
+<pre><code class="lang-bash">az ad app permission add --id &lt;your-app-id&gt; --api 797f4846-ba00-4fd7-ba43-dac1f8f63013 --api-permissions 41094075-9dad-400e-a0bd-54e686782033=Scope
+az ad app permission admin-consent --id &lt;your-app-id&gt;
+</code></pre>
+<p>For full Power Platform access, you may also need to add permissions from:</p>
+<ul>
+<li><strong>Dynamics CRM API</strong> (<code>00000007-0000-0000-c000-000000000000</code>) - <code>user_impersonation</code> scope</li>
+<li><strong>PowerApps Service API</strong> - <code>User</code> scope (can be found under &quot;APIs my organization uses&quot; in Azure Portal)</li>
+</ul>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">Example 1</h3>
 <pre><code class="lang-powershell">Get-PnPFlow -AsAdmin

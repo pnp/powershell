@@ -1,0 +1,330 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>New-PnPSearchResultType | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="New-PnPSearchResultType | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="new-pnpsearchresulttype">New-PnPSearchResultType</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li><a href="#prerequisites">Graph Connector Service (GCS) API</a></li>
+<li>Site scope: Site Administrator</li>
+<li>Organization scope: Search Administrator or Global Administrator</li>
+</ul>
+<p>Creates a new Microsoft Search result type on the currently connected site or at the organization level.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="default-default">Default (Default)</h3>
+<pre><code class="lang-powershell">New-PnPSearchResultType -Name &lt;String&gt; [-Scope &lt;SearchVerticalScope&gt;] [-Rules &lt;SearchResultTypeRule[]&gt;] [-DisplayTemplate &lt;String&gt;] [-DisplayProperties &lt;String[]&gt;] [-ContentSource &lt;Object&gt;] [-Validate] [-Verbose] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="payload">Payload</h3>
+<pre><code class="lang-powershell">New-PnPSearchResultType [-Scope &lt;SearchVerticalScope&gt;] -Payload &lt;SearchResultTypePayload&gt; [-Validate] [-Verbose] [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>This cmdlet creates a new Microsoft Search result type on the site you are currently connected to, or at the organization (tenant) level when using <code>-Scope Organization</code>. Result types define how search results matching certain rules are displayed using Adaptive Card templates. By default it creates a SharePoint content result type with the default display template. Use <code>-ContentSource</code> for external connector content, <code>-Rules</code> for matching conditions, and <code>-DisplayTemplate</code> for custom Adaptive Card layouts. For full control, use the <code>-Payload</code> parameter. It uses the Graph Connector Service (GCS) API at gcs.office.com.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.</p>
+</div>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Your Entra app registration must have the <code>ExternalConnection.ReadWrite.All</code> delegated permission from the Graph Connector Service (GCS) API. To add this permission using Azure CLI:</p>
+<pre><code class="lang-bash">az ad app permission add --id &lt;your-app-id&gt; --api 56c1da01-2129-48f7-9355-af6d59d42766 --api-permissions d44774bd-e26c-43b1-996d-51bb90a9078e=Scope
+az ad app permission admin-consent --id &lt;your-app-id&gt;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This cmdlet requires a <strong>delegated (interactive)</strong> connection. App-only (certificate-based) connections are not supported by the GCS API and will result in a 403 Forbidden error.</p>
+</div>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">New-PnPSearchResultType -Name &quot;PDF Documents&quot;
+</code></pre>
+<p>Creates a new result type for SharePoint content with the default Adaptive Card template.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">$rule = New-PnPSearchResultTypeRule -PropertyName &quot;FileType&quot; -Operator Equals -Values &quot;pdf&quot;
+New-PnPSearchResultType -Name &quot;PDF Documents&quot; -Rules $rule
+</code></pre>
+<p>Creates a result type that matches PDF files using an Equals rule.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">$rules = @(
+    New-PnPSearchResultTypeRule -PropertyName &quot;FileType&quot; -Operator Equals -Values &quot;docx&quot;,&quot;xlsx&quot;,&quot;pptx&quot;
+    New-PnPSearchResultTypeRule -PropertyName &quot;IsListItem&quot; -Operator Equals -Values &quot;false&quot;
+)
+New-PnPSearchResultType -Name &quot;Office Documents (not list items)&quot; -Rules $rules
+</code></pre>
+<p>Creates a result type with multiple rules. All rules must match for a result to use this result type.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">New-PnPSearchResultType -Name &quot;TechCrunch Articles&quot; -ContentSource &quot;techcrunch&quot;
+</code></pre>
+<p>Creates a result type for an external connector content source. The connection ID is resolved automatically to retrieve the required system details.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">$connection = Get-PnPSearchSiteConnection -Identity &quot;techcrunch&quot;
+New-PnPSearchResultType -Name &quot;TechCrunch Articles&quot; -ContentSource $connection
+</code></pre>
+<p>Creates a result type by passing a site connection object directly.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">$template = @'
+{
+  &quot;type&quot;: &quot;AdaptiveCard&quot;,
+  &quot;version&quot;: &quot;1.3&quot;,
+  &quot;body&quot;: [
+    {
+      &quot;type&quot;: &quot;TextBlock&quot;,
+      &quot;text&quot;: &quot;[${title}](${titleUrl})&quot;,
+      &quot;weight&quot;: &quot;Bolder&quot;,
+      &quot;size&quot;: &quot;Medium&quot;,
+      &quot;color&quot;: &quot;Accent&quot;
+    },
+    {
+      &quot;type&quot;: &quot;TextBlock&quot;,
+      &quot;text&quot;: &quot;${description}&quot;,
+      &quot;wrap&quot;: true,
+      &quot;maxLines&quot;: 3
+    }
+  ],
+  &quot;$schema&quot;: &quot;http://adaptivecards.io/schemas/adaptive-card.json&quot;
+}
+'@
+New-PnPSearchResultType -Name &quot;Simple Layout&quot; -DisplayTemplate $template
+</code></pre>
+<p>Creates a result type with a custom Adaptive Card display template. Use a here-string (<code>@'...'@</code>) for readability. Template placeholders like <code>${title}</code> are replaced with search result properties at render time.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">New-PnPSearchResultType -Name &quot;Org Result Type&quot; -Scope Organization
+</code></pre>
+<p>Creates a new organization-level result type.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell"># Clone an existing result type
+$existing = Get-PnPSearchResultType -Identity &quot;1770839639348_FYXB8XQI5&quot;
+$existing.Payload.Name = &quot;Cloned Result Type&quot;
+New-PnPSearchResultType -Payload $existing.Payload
+</code></pre>
+<p>Creates a new result type by cloning the payload from an existing one.</p>
+<h3 id="example-9">EXAMPLE 9</h3>
+<pre><code class="lang-powershell">$rule = New-PnPSearchResultTypeRule -PropertyName &quot;IconUrl&quot; -Operator StartsWith -Values &quot;https://&quot;
+New-PnPSearchResultType -Name &quot;Connector Articles&quot; -ContentSource &quot;techcrunch&quot; -Rules $rule -Validate
+</code></pre>
+<p>Creates a result type for an external connector with property validation. The <code>-Validate</code> switch fetches the connector's schema and verifies that <code>IconUrl</code> exists as a property. If the property does not exist, the cmdlet throws an error listing the available connector properties. Invalid display properties produce a warning instead.</p>
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">$rule = New-PnPSearchResultTypeRule -PropertyName &quot;FyleType&quot; -Operator Equals -Values &quot;pdf&quot;
+New-PnPSearchResultType -Name &quot;PDF Documents&quot; -Rules $rule -Validate
+</code></pre>
+<p>Creates a SharePoint result type with property validation. The <code>-Validate</code> switch checks that <code>FyleType</code> is a known SharePoint managed property. Since it is misspelled (should be <code>FileType</code>), a warning is displayed. The result type is still created because custom managed properties may exist that are not in the default set.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing <a href="Get-PnPConnection.html">Get-PnPConnection</a>.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-scope">-Scope</h3>
+<p>Specifies whether to create a site-level or organization-level result type. Defaults to Site.</p>
+<pre><code class="lang-yaml">Type: SearchVerticalScope
+Parameter Sets: (All)
+Accepted values: Site, Organization
+Required: False
+Position: Named
+Default value: Site
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-name">-Name</h3>
+<p>The display name for the new result type.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Default
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-rules">-Rules</h3>
+<p>An array of SearchResultTypeRule objects defining the matching conditions. Use <a href="New-PnPSearchResultTypeRule.html">New-PnPSearchResultTypeRule</a> to create rule objects. If not specified, no rules are applied.</p>
+<pre><code class="lang-yaml">Type: SearchResultTypeRule[]
+Parameter Sets: Default
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-displaytemplate">-DisplayTemplate</h3>
+<p>An Adaptive Card JSON string defining how matching results are displayed. If not specified, a default template is used.</p>
+<pre><code class="lang-yaml">Type: String
+Parameter Sets: Default
+Required: False
+Position: Named
+Default value: Default Adaptive Card template
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-displayproperties">-DisplayProperties</h3>
+<p>An array of property names used in the display template. If not specified, defaults to title, titleUrl, modifiedBy, modifiedTime, description.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Default
+Required: False
+Position: Named
+Default value: title, titleUrl, modifiedBy, modifiedTime, description
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-contentsource">-ContentSource</h3>
+<p>The content source for the result type. Defaults to SharePoint when not specified. For external connectors, pass either a connection ID string (e.g., <code>&quot;techcrunch&quot;</code>) or a <code>SearchSiteConnection</code> object from <code>Get-PnPSearchSiteConnection</code>. When a string is provided, the connection is resolved automatically to retrieve the required system details.</p>
+<pre><code class="lang-yaml">Type: Object
+Parameter Sets: Default
+Required: False
+Position: Named
+Default value: SharePoint
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-payload">-Payload</h3>
+<p>A full SearchResultTypePayload object for complete control over the result type configuration.</p>
+<pre><code class="lang-yaml">Type: SearchResultTypePayload
+Parameter Sets: Payload
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-validate">-Validate</h3>
+<p>Validates rule and display property names before creating the result type. For <strong>external connector</strong> content sources, the connector's schema is fetched from the API: invalid rule properties cause an error (they would never match), invalid display properties produce a warning. For <strong>SharePoint</strong> content sources, property names are checked against the list of known default managed properties: unrecognized properties produce a warning (not an error) because customers may have custom managed properties, aliases, or autogenerated properties not in the default set. Standard search display properties (title, titleUrl, modifiedBy, modifiedTime, description) are always considered valid. Additionally, the display template is validated to be valid JSON with Adaptive Card version 1.3, which is the version supported by Microsoft Search.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-verbose">-Verbose</h3>
+<p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>

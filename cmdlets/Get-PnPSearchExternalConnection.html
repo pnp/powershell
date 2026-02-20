@@ -86,7 +86,7 @@
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API : One of ExternalConnection.ReadWrite.OwnedBy, ExternalConnection.Read.All,	ExternalConnection.ReadWrite.All</li>
+<li>Microsoft Graph API: ExternalConnection.ReadWrite.OwnedBy, ExternalConnection.Read.All, or ExternalConnection.ReadWrite.All</li>
 </ul>
 <p>Retrieves all connections to external datasources belonging to Microsoft Search</p>
 <h2 id="syntax">SYNTAX</h2>
@@ -136,6 +136,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
+<p><a href="Get-PnPSearchSiteConnection.html">Get-PnPSearchSiteConnection</a> - Retrieves external connections via the GCS API with detailed configuration (schema, crawl settings, identity configuration). Only returns published connections available for the connected site. Use this when you need connection details for configuring search verticals with <a href="New-PnPSearchVertical.html">New-PnPSearchVertical</a>.</p>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
 </article>

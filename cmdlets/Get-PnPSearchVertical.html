@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Remove-PnPSearchExternalConnection | PnP PowerShell </title>
+    <title>Get-PnPSearchVertical | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Remove-PnPSearchExternalConnection | PnP PowerShell ">
+    <meta name="title" content="Get-PnPSearchVertical | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,28 +77,63 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="remove-pnpsearchexternalconnection">Remove-PnPSearchExternalConnection</h1>
+  <h1 id="get-pnpsearchvertical">Get-PnPSearchVertical</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
 <p><strong>Required Permissions</strong></p>
 <ul>
-<li>Microsoft Graph API: ExternalConnection.ReadWrite.OwnedBy or ExternalConnection.ReadWrite.All</li>
+<li><a href="#prerequisites">Graph Connector Service (GCS) API</a></li>
+<li>Site scope: Site Administrator</li>
+<li>Organization scope: Search Administrator or Global Administrator</li>
 </ul>
-<p>Removes a specific connection to external datasources belonging to Microsoft Search</p>
+<p>Retrieves Microsoft Search verticals configured for the currently connected site or at the organization level.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPSearchExternalConnection -Identity &lt;SearchExternalConnectionPipeBind&gt; [-Verbose] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Get-PnPSearchVertical [-Identity &lt;String&gt;] [-Scope &lt;SearchVerticalScope&gt;] [-Verbose] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet can be used to remove a connection to an external datasource that is being indexed into Microsoft Search through a custom connector.</p>
+<p>This cmdlet retrieves the Microsoft Search verticals configured for the site you are currently connected to, or at the organization (tenant) level when using <code>-Scope Organization</code>. It returns both built-in (out-of-box) verticals such as All, Files, Sites, News, and Images, as well as any custom verticals. It uses the Graph Connector Service (GCS) API at gcs.office.com.</p>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>This cmdlet uses the Graph Connector Service (GCS) API, which is an internal Microsoft API that is not publicly documented or officially supported. It may change without notice.</p>
+</div>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Your Entra app registration must have the <code>ExternalConnection.ReadWrite.All</code> delegated permission from the Graph Connector Service (GCS) API. To add this permission using Azure CLI:</p>
+<pre><code class="lang-bash">az ad app permission add --id &lt;your-app-id&gt; --api 56c1da01-2129-48f7-9355-af6d59d42766 --api-permissions d44774bd-e26c-43b1-996d-51bb90a9078e=Scope
+az ad app permission admin-consent --id &lt;your-app-id&gt;
+</code></pre>
+<div class="NOTE">
+<h5>Note</h5>
+<p>This cmdlet requires a <strong>delegated (interactive)</strong> connection. App-only (certificate-based) connections are not supported by the GCS API and will result in a 403 Forbidden error.</p>
+</div>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPSearchExternalConnection -Identity &quot;pnppowershell&quot;
+<pre><code class="lang-powershell">Get-PnPSearchVertical
 </code></pre>
-<p>This will remove the connection to the external datasource with the specified identity from Microsoft Search.</p>
+<p>Returns all search verticals (both built-in and custom) for the currently connected site.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Get-PnPSearchVertical -Identity &quot;SITEALL&quot;
+</code></pre>
+<p>Returns the built-in &quot;All&quot; search vertical for the currently connected site.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPSearchVertical -Identity &quot;1610383262385_H0RPZO96M&quot;
+</code></pre>
+<p>Returns the custom search vertical with the specified logical ID.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPSearchVertical -Scope Organization
+</code></pre>
+<p>Returns all organization-level search verticals (configured in the Microsoft 365 admin center).</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Get-PnPSearchVertical -Identity &quot;ALL&quot; -Scope Organization
+</code></pre>
+<p>Returns the built-in &quot;All&quot; organization-level search vertical.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Get-PnPSearchVertical | Where-Object { $_.Payload.VerticalType -eq 1 } | Set-PnPSearchVertical -Enabled $false
+</code></pre>
+<p>Disables all custom verticals on the current site. The <code>LogicalId</code> property from each piped object binds automatically to the <code>-Identity</code> parameter on <code>Set-PnPSearchVertical</code>.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing <a href="Get-PnPConnection.html">Get-PnPConnection</a>.</p>
@@ -111,26 +146,122 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-identity">-Identity</h3>
-<p>Unique identifier or an instance of the external connection in Microsoft Search that needs to be removed.</p>
-<pre><code class="lang-yaml">Type: SearchExternalConnectionPipeBind
+<p>The logical ID of the search vertical to retrieve. For site scope, built-in IDs include SITEALL, SITEFILES, SITESITES, SITENEWS, and SITEIMAGES. For organization scope, built-in IDs include ALL, FILES, SITES, NEWS, PEOPLE, IMAGES, MESSAGES, and MICROSOFTPOWERBI. Custom verticals have either a user-chosen ID or an auto-generated ID in the format <code>{timestamp}_{randomId}</code>. If not provided, all verticals will be returned.</p>
+<pre><code class="lang-yaml">Type: String
 Parameter Sets: (All)
-Required: True
-Position: Named
+Required: False
+Position: 0
 Default value: None
-Accept pipeline input: True
+Accept pipeline input: True (ByValue, ByPropertyName)
+Accept wildcard characters: False
+Aliases: LogicalId
+</code></pre>
+<h3 id="-scope">-Scope</h3>
+<p>Specifies whether to retrieve site-level or organization-level verticals. Defaults to Site.</p>
+<pre><code class="lang-yaml">Type: SearchVerticalScope
+Parameter Sets: (All)
+Accepted values: Site, Organization
+Required: False
+Position: Named
+Default value: Site
+Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-verbose">-Verbose</h3>
 <p>When provided, additional debug statements will be shown while executing the cmdlet.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
-
 Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h2 id="output">OUTPUT</h2>
+<p>Returns one or more <code>SearchVertical</code> objects with the following properties:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Path</td>
+<td>String</td>
+<td>Site path in the format <code>:GUID:</code></td>
+</tr>
+<tr>
+<td>LogicalId</td>
+<td>String</td>
+<td>Unique identifier (e.g. <code>SITEALL</code>, <code>1610383262385_H0RPZO96M</code>)</td>
+</tr>
+<tr>
+<td>LastModifiedDateTime</td>
+<td>String</td>
+<td>ISO 8601 timestamp of last modification</td>
+</tr>
+<tr>
+<td>Payload</td>
+<td>SearchVerticalPayload</td>
+<td>The vertical configuration (see below)</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>Payload</code> object contains:</p>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DisplayName</td>
+<td>String</td>
+<td>Display name of the vertical</td>
+</tr>
+<tr>
+<td>State</td>
+<td>Int</td>
+<td>0 = disabled, 1 = enabled</td>
+</tr>
+<tr>
+<td>VerticalType</td>
+<td>Int</td>
+<td>0 = built-in, 1 = custom</td>
+</tr>
+<tr>
+<td>QueryTemplate</td>
+<td>String</td>
+<td>KQL query template</td>
+</tr>
+<tr>
+<td>TemplateType</td>
+<td>String</td>
+<td>All, File, Sites, News, People, Images, Messages, Videos, Power BI, or Custom</td>
+</tr>
+<tr>
+<td>Entities</td>
+<td>List</td>
+<td>Content source entities (EntityType + ContentSources)</td>
+</tr>
+<tr>
+<td>Scope</td>
+<td>Int</td>
+<td>0 = organization, 1 = site</td>
+</tr>
+<tr>
+<td>IncludeConnectorResults</td>
+<td>Boolean</td>
+<td>Whether connector results are included</td>
+</tr>
+</tbody>
+</table>
 <h2 id="related-links">RELATED LINKS</h2>
 <p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
 
