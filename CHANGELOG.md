@@ -67,7 +67,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Set-PnPBuiltInSiteTemplateSettings` cmdlet to reference up to date Template IDs. [#5202](https://github.com/pnp/powershell/pull/5202)
 - Fix `Connect-PnPOnline` cmdlet to allow reuse of connection created using certificate. [#5203](https://github.com/pnp/powershell/pull/5203)
 - Fix `Connect-PnPOnline` cmdlet with Managed Identity to support non-commercial clouds. [#5239](https://github.com/pnp/powershell/pull/5239)
-
+- Fix `Get-PnPTenant` to return GuestSharingGroupAllowListInTenantByPrincipalIdentity. [#5246](https://github.com/pnp/powershell/pull/5246)
 
 ### Removed
 - Removed `-RemoveExisting` parameter from `Add-PnPAzureADGroupMember`, `Add-PnPAzureADGroupOwner`, `Add-PnPMicrosoft365GroupMember` and `Add-PnPMicrosoft365GroupOwner` cmdlets. It was never really implemented and without function. [#5153](https://github.com/pnp/powershell/pull/5153)

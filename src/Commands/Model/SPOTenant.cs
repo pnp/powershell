@@ -610,7 +610,16 @@ namespace PnP.PowerShell.Commands.Model
                 failedProperties++;
                 cmdlet.LogDebug($"Property KnowledgeAgentSelectedSitesList not loaded due to error '{e.Message}'");
             }
-
+            // GuestSharingGroupAllowListInTenantByPrincipalIdentity requires manual handling as it cannot be parsed directly from the Tenant object value
+            try
+            {
+                GuestSharingGroupAllowListInTenantByPrincipalIdentity = tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity.ToArray();
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property GuestSharingGroupAllowListInTenantByPrincipalIdentity not loaded due to error '{e.Message}'");
+            }            
             // If one or more properties failed to load, show a warning
             if (failedProperties > 0)
             {

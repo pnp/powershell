@@ -13,7 +13,7 @@ title: Remove-PnPSearchExternalConnection
 
 **Required Permissions**
 
-  * Microsoft Graph API : One of ExternalConnection.ReadWrite.OwnedBy, ExternalConnection.ReadWrite.All
+  * Microsoft Graph API: ExternalConnection.ReadWrite.OwnedBy or ExternalConnection.ReadWrite.All
 
 Removes a specific connection to external datasources belonging to Microsoft Search
 
