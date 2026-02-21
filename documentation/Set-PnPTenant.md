@@ -2584,6 +2584,30 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -KnowledgeAgentScope
+
+Allows administrators to control which SharePoint sites the Knowledge Agent feature is available on.
+
+Valid values:
+
+- InclusionList: Knowledge Agent is available only on sites specified in KnowledgeAgentSelectedSitesList 
+
+- ExclusionList: Knowledge Agent is available on all sites except those specified in KnowledgeAgentSelectedSitesList.
+
+- None: Knowledge Agent isn't available on any sites.
+
+
+```yaml
+Type: KnowledgeAgentScopeMode
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -KnowledgeAgentSelectedSitesList
 
 Specifies a list of site collection URLs that should be selected for the tenant Knowledge Agent. Each entry must be a full site URL (for example: "https://contoso.sharepoint.com/sites/team1"). The cmdlet will resolve each URL to the corresponding site id and configure the tenant Knowledge Agent to target those sites.

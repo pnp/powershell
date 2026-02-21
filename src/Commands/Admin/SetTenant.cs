@@ -3,6 +3,7 @@ using Microsoft.Online.SharePoint.TenantManagement;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Administration;
 using Microsoft.SharePoint.Client.Sharing;
+using Microsoft.SharePoint.Client.Utilities;
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
@@ -533,6 +534,9 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public string[] KnowledgeAgentSelectedSitesList { set; get; }
+
+        [Parameter(Mandatory = false)]
+        public KnowledgeAgentScopeMode? KnowledgeAgentScope { set; get; }
 
         protected override void ExecuteCmdlet()
         {
@@ -1677,6 +1681,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (KnowledgeAgentEnabled.HasValue)
             {
                 Tenant.KnowledgeAgentEnabled = KnowledgeAgentEnabled.Value;
+                modified = true;
+            }
+            if (KnowledgeAgentScope.HasValue)
+            {
+                Tenant.KnowledgeAgentScopeMode = KnowledgeAgentScope.Value;
                 modified = true;
             }
             if (KnowledgeAgentSelectedSitesList != null)
