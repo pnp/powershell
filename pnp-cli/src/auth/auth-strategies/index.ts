@@ -1,0 +1,10 @@
+export { connectInteractive } from './interactive.js';
+export { connectDeviceCode } from './device-code.js';
+export { connectWithCertificate } from './client-certificate.js';
+export { connectWithClientSecret } from './client-secret.js';
+export { connectWithAccessToken } from './access-token.js';
+export { connectWithCredentials } from './credentials.js';
+export { connectWithManagedIdentity } from './managed-identity.js';
+export { connectWithEnvironmentVariable } from './environment-variable.js';
+export { connectWithWorkloadIdentity } from './workload-identity.js';
+export { connectWithFederatedIdentity } from './federated-identity.js';

@@ -1,0 +1,63 @@
+{
+  "name": "@pnp/cli",
+  "version": "1.0.0",
+  "description": "PnP CLI - Microsoft 365 administration and automation from the command line",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "pnp": "./dist/bin/pnp.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "dev": "tsx bin/pnp.ts",
+    "lint": "eslint 'src/**/*.ts' 'bin/**/*.ts'",
+    "lint:fix": "eslint 'src/**/*.ts' 'bin/**/*.ts' --fix",
+    "format": "prettier --write 'src/**/*.ts' 'bin/**/*.ts'",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "test:integration": "jest --config jest.integration.config.ts",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "keywords": [
+    "microsoft365",
+    "sharepoint",
+    "teams",
+    "graph",
+    "entra",
+    "cli",
+    "pnp"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@azure/identity": "^4.6.0",
+    "@azure/msal-node": "^2.16.0",
+    "chalk": "^5.4.1",
+    "cli-table3": "^0.6.5",
+    "commander": "^12.1.0",
+    "csv-stringify": "^6.5.2",
+    "jsonwebtoken": "^9.0.2",
+    "open": "^10.1.0",
+    "ora": "^8.1.1",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.7",
+    "@types/node": "^20.17.0",
+    "@types/uuid": "^10.0.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "nock": "^13.5.6",
+    "prettier": "^3.4.2",
+    "ts-jest": "^29.2.5",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.0"
+  }
+}
