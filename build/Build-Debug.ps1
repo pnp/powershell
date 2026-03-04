@@ -95,12 +95,11 @@ Write-Host "Executing $buildCmd" -ForegroundColor Yellow
 Invoke-Expression $buildCmd
 
 if ($LASTEXITCODE -eq 0) {
-	$documentsFolder = [environment]::getfolderpath("mydocuments")
-
 	if ($IsLinux -or $IsMacOS) {
 		$destinationFolder = "$HOME/.local/share/powershell/Modules/PnP.PowerShell"
 	}
 	else {
+		$documentsFolder = [environment]::getfolderpath("mydocuments")
 		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 	}
 
