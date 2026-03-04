@@ -47,13 +47,13 @@ if ($runPublish -eq $true) {
 	$versionFileContents = Get-Content "$PSScriptRoot/../version.json" -Raw | ConvertFrom-Json
 
 	if ($versionFileContents.Version.Contains("%")) {
-		$versionString = $versionFileContents.Version.Replace("%", "0");
+		$versionString = $versionFileContents.Version.Replace("%", "0")
 		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
-		$buildVersion = $versionObject.Patch;
+		$buildVersion = $versionObject.Patch
 	}
 	else {	
 		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents.Version)
-		$buildVersion = $versionObject.Patch + 1;
+		$buildVersion = $versionObject.Patch + 1
 	}
 
 	$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
@@ -72,7 +72,7 @@ if ($runPublish -eq $true) {
 
 	dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
 
-	$documentsFolder = [environment]::getfolderpath("mydocuments");
+	$documentsFolder = [environment]::getfolderpath("mydocuments")
 
 	if ($IsLinux) {
 		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
@@ -94,7 +94,7 @@ if ($runPublish -eq $true) {
 	$coreRuntimePathx86 = "$destinationFolder/Core/runtimes/win-x86/native"
 	$coreRuntimePathLinx64 = "$destinationFolder/Core/runtimes/linux-x64/native"
 
-	$assemblyExceptions = @("System.Memory.dll");
+	$assemblyExceptions = @("System.Memory.dll")
 
 	Try {
         # Module folder there?
@@ -168,7 +168,7 @@ if ($runPublish -eq $true) {
 		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
 		# Load the Module in a new PowerShell session
 		$scriptBlock = {
-			$documentsFolder = [environment]::getfolderpath("mydocuments");
+			$documentsFolder = [environment]::getfolderpath("mydocuments")
 
 			if ($IsLinux) {
 				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
