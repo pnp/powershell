@@ -27,24 +27,24 @@ $env:PnPFrameworkPath = ""
 $versionFileContents = Get-Content "$PSScriptRoot/../version.json" -Raw | ConvertFrom-Json
 
 if ($versionFileContents.Version.Contains("%")) {
-	$versionString = $versionFileContents.Version.Replace("%", "0");
+	$versionString = $versionFileContents.Version.Replace("%", "0")
 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
-	$buildVersion = $versionObject.Patch;
+	$buildVersion = $versionObject.Patch
 }
 else {	
 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents.Version)
-	$buildVersion = $versionObject.Patch + 1;
+	$buildVersion = $versionObject.Patch + 1
 }
 
 # $versionFileContents = Get-Content "$PSScriptRoot/../version.txt" -Raw
 # if ($versionFileContents.Contains("%")) {
-# 	$versionString = $versionFileContents.Replace("%", "0");
+# 	$versionString = $versionFileContents.Replace("%", "0")
 # 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
-# 	$buildVersion = $versionObject.Patch;
+# 	$buildVersion = $versionObject.Patch
 # }
 # else {	
 # 	$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents)
-# 	$buildVersion = $versionObject.Patch + 1;
+# 	$buildVersion = $versionObject.Patch + 1
 # }
 
 $configuration = "net8.0"
@@ -53,9 +53,9 @@ $version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
 
 Write-Host "Building PnP.PowerShell version $version-debug" -ForegroundColor Yellow
 
-$buildCmd = "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`" --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug";
+$buildCmd = "dotnet build `"$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj`" --nologo --configuration Debug -p:VersionPrefix=$version -p:VersionSuffix=debug"
 if ($NoIncremental) {
-	$buildCmd += " --no-incremental";
+	$buildCmd += " --no-incremental"
 }
 if ($Force) {
 	$buildCmd += " --force"
@@ -95,7 +95,7 @@ Write-Host "Executing $buildCmd" -ForegroundColor Yellow
 Invoke-Expression $buildCmd
 
 if ($LASTEXITCODE -eq 0) {
-	$documentsFolder = [environment]::getfolderpath("mydocuments");
+	$documentsFolder = [environment]::getfolderpath("mydocuments")
 
 	if ($IsLinux -or $IsMacOS) {
 		$destinationFolder = "$HOME/.local/share/powershell/Modules/PnP.PowerShell"
@@ -107,7 +107,7 @@ if ($LASTEXITCODE -eq 0) {
 	$corePath = "$destinationFolder/Core"
 	$commonPath = "$destinationFolder/Common"
 
-	$assemblyExceptions = @("System.Memory.dll");
+	$assemblyExceptions = @("System.Memory.dll")
 	
 	Try {
 		# Module folder there?
@@ -146,7 +146,7 @@ if ($LASTEXITCODE -eq 0) {
 		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
 		# Load the Module in a new PowerShell session
 		$scriptBlock = {
-			$documentsFolder = [environment]::getfolderpath("mydocuments");
+			$documentsFolder = [environment]::getfolderpath("mydocuments")
 			
 			if ($IsLinux) {
 				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
