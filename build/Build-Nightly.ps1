@@ -72,17 +72,12 @@ if ($runPublish -eq $true) {
 
 	dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
 
-	$documentsFolder = [environment]::getfolderpath("mydocuments")
-
-	if ($IsLinux) {
-		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-		$helpfileDestinationFolder = "$documentsFolder/.local/share/powershell/Modules"
-	}
-	elseif ($IsMacOS) {
+	if ($IsLinux -or $IsMacOS) {
 		$destinationFolder = "$HOME/.local/share/powershell/Modules/PnP.PowerShell"
 		$helpfileDestinationFolder = "$HOME/.local/share/powershell/Modules"
 	}
 	else {
+		$documentsFolder = [environment]::getfolderpath("mydocuments")
 		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 		$helpfileDestinationFolder = "$documentsFolder/PowerShell/Modules"
 	}
@@ -168,19 +163,8 @@ if ($runPublish -eq $true) {
 		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
 		# Load the Module in a new PowerShell session
 		$scriptBlock = {
-			$documentsFolder = [environment]::getfolderpath("mydocuments")
-
-			if ($IsLinux) {
-				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-			}
-			elseif ($IsMacOS) {
-				$destinationFolder = "~/.local/share/powershell/Modules/PnP.PowerShell"
-			}
-			else {
-				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
-			}
 			Write-Host "Importing dotnet core version of assembly" -ForegroundColor Yellow
-			Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
+			Import-Module -Name "$using:destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
 
 			Write-Host "Getting cmdlet info" -ForegroundColor Yellow
 			$cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
