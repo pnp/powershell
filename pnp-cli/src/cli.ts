@@ -11,12 +11,109 @@ import { GetContextCommand } from './commands/base/get-context.js';
 import { InvokeSPRestMethodCommand } from './commands/base/invoke-sp-rest-method.js';
 import { InvokeGraphRequestCommand } from './commands/base/invoke-graph-request.js';
 
+// List commands
+import {
+  GetListCommand,
+  GetListItemCommand,
+  AddListItemCommand,
+  SetListItemCommand,
+  RemoveListCommand,
+  RemoveListItemCommand,
+  NewListCommand,
+  SetListCommand,
+  GetViewCommand,
+} from './commands/lists/index.js';
+
+// Teams commands
+import {
+  GetTeamsTeamCommand,
+  NewTeamsTeamCommand,
+  RemoveTeamsTeamCommand,
+  GetTeamsChannelCommand,
+  NewTeamsChannelCommand,
+  GetTeamsUserCommand,
+} from './commands/teams/index.js';
+
+// Microsoft 365 Groups commands
+import {
+  GetM365GroupCommand,
+  NewM365GroupCommand,
+  RemoveM365GroupCommand,
+  GetM365GroupMemberCommand,
+} from './commands/groups/index.js';
+
+// Entra ID commands
+import {
+  GetEntraUserCommand,
+  GetEntraGroupCommand,
+  GetEntraAppCommand,
+} from './commands/entra/index.js';
+
+// File commands
+import {
+  GetFileCommand,
+  AddFileCommand,
+  RemoveFileCommand,
+  CopyFileCommand,
+  MoveFileCommand,
+  GetFolderCommand,
+  AddFolderCommand,
+  RemoveFolderCommand,
+  GetFolderItemCommand,
+  FindFileCommand,
+} from './commands/files/index.js';
+
+// Site commands
+import {
+  GetSiteCommand,
+  SetSiteCommand,
+  RemoveSiteCommand,
+  GetSiteDesignCommand,
+} from './commands/sites/index.js';
+
+// Web commands
+import {
+  GetWebCommand,
+  SetWebCommand,
+  NewWebCommand,
+  RemoveWebCommand,
+  GetSubwebsCommand,
+  GetPropertyBagCommand,
+} from './commands/webs/index.js';
+
+// Field commands
+import {
+  GetFieldCommand,
+  AddFieldCommand,
+  RemoveFieldCommand,
+  SetFieldCommand,
+} from './commands/fields/index.js';
+
+// Content type commands
+import {
+  GetContentTypeCommand,
+  AddContentTypeCommand,
+  RemoveContentTypeCommand,
+  AddContentTypeToListCommand,
+} from './commands/content-types/index.js';
+
+// Principals commands
+import {
+  GetSPUserCommand,
+  GetSPGroupCommand,
+  GetGroupMemberCommand,
+  NewSPGroupCommand,
+  AddGroupMemberCommand,
+  RemoveGroupMemberCommand,
+} from './commands/principals/index.js';
+
 const pkg = { version: '1.0.0', name: '@pnp/cli' };
 
 /**
  * All registered command classes. New commands should be added here.
  */
 const COMMAND_CLASSES: Array<new () => BaseCommand> = [
+  // Base commands
   ConnectCommand,
   DisconnectCommand,
   GetConnectionCommand,
@@ -24,6 +121,72 @@ const COMMAND_CLASSES: Array<new () => BaseCommand> = [
   GetContextCommand,
   InvokeSPRestMethodCommand,
   InvokeGraphRequestCommand,
+  // List commands
+  GetListCommand,
+  GetListItemCommand,
+  AddListItemCommand,
+  SetListItemCommand,
+  RemoveListCommand,
+  RemoveListItemCommand,
+  NewListCommand,
+  SetListCommand,
+  GetViewCommand,
+  // Teams commands
+  GetTeamsTeamCommand,
+  NewTeamsTeamCommand,
+  RemoveTeamsTeamCommand,
+  GetTeamsChannelCommand,
+  NewTeamsChannelCommand,
+  GetTeamsUserCommand,
+  // Microsoft 365 Groups commands
+  GetM365GroupCommand,
+  NewM365GroupCommand,
+  RemoveM365GroupCommand,
+  GetM365GroupMemberCommand,
+  // Entra ID commands
+  GetEntraUserCommand,
+  GetEntraGroupCommand,
+  GetEntraAppCommand,
+  // File commands
+  GetFileCommand,
+  AddFileCommand,
+  RemoveFileCommand,
+  CopyFileCommand,
+  MoveFileCommand,
+  GetFolderCommand,
+  AddFolderCommand,
+  RemoveFolderCommand,
+  GetFolderItemCommand,
+  FindFileCommand,
+  // Site commands
+  GetSiteCommand,
+  SetSiteCommand,
+  RemoveSiteCommand,
+  GetSiteDesignCommand,
+  // Web commands
+  GetWebCommand,
+  SetWebCommand,
+  NewWebCommand,
+  RemoveWebCommand,
+  GetSubwebsCommand,
+  GetPropertyBagCommand,
+  // Field commands
+  GetFieldCommand,
+  AddFieldCommand,
+  RemoveFieldCommand,
+  SetFieldCommand,
+  // Content type commands
+  GetContentTypeCommand,
+  AddContentTypeCommand,
+  RemoveContentTypeCommand,
+  AddContentTypeToListCommand,
+  // Principals commands
+  GetSPUserCommand,
+  GetSPGroupCommand,
+  GetGroupMemberCommand,
+  NewSPGroupCommand,
+  AddGroupMemberCommand,
+  RemoveGroupMemberCommand,
 ];
 
 export function buildCli(): Command {
