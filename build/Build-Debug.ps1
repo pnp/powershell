@@ -146,19 +146,8 @@ if ($LASTEXITCODE -eq 0) {
 		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
 		# Load the Module in a new PowerShell session
 		$scriptBlock = {
-			$documentsFolder = [environment]::getfolderpath("mydocuments")
-			
-			if ($IsLinux) {
-				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-			}
-			elseif ($IsMacOS) {
-				$destinationFolder = "~/.local/share/powershell/Modules/PnP.PowerShell"
-			}
-			else {
-				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
-			}
 			Write-Host "Importing dotnet core version of assembly"
-			Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
+			Import-Module -Name "$using:destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
 			$cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
 		}
