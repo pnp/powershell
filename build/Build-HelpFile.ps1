@@ -1,5 +1,5 @@
 $documentsFolder = [environment]::getfolderpath("mydocuments")
-if($IsLinux -or $isMacOS)
+if($IsLinux -or $IsMacOS)
 {
 	$destinationFolder = "$HOME/.local/share/powershell/Modules"
 } else {

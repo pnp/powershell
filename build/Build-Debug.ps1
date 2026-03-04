@@ -97,7 +97,7 @@ Invoke-Expression $buildCmd
 if ($LASTEXITCODE -eq 0) {
 	$documentsFolder = [environment]::getfolderpath("mydocuments");
 
-	if ($IsLinux -or $isMacOS) {
+	if ($IsLinux -or $IsMacOS) {
 		$destinationFolder = "$HOME/.local/share/powershell/Modules/PnP.PowerShell"
 	}
 	else {
