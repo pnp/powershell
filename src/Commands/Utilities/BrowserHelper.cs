@@ -249,7 +249,7 @@ namespace PnP.PowerShell.Commands.Utilities
 
         internal static void OpenLinuxBrowser(string openToolPath, string url)
         {
-            ProcessStartInfo psi = new ProcessStartInfo(openToolPath, url)
+            ProcessStartInfo psi = new ProcessStartInfo(openToolPath, [url])
             {
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
