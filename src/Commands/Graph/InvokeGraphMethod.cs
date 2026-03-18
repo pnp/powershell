@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -352,22 +353,12 @@ namespace PnP.PowerShell.Commands.Base
             extraHeaders.Add("Content-Type", ContentType);
 
             ApiRequestType apiRequestType = ApiRequestType.Graph;
-            if (requestUrl.IndexOf("/beta/", StringComparison.InvariantCultureIgnoreCase) > -1)
+            if (requestUrl.IndexOf("/beta/", StringComparison.InvariantCultureIgnoreCase) > -1 || requestUrl.StartsWith("beta/", StringComparison.InvariantCultureIgnoreCase))
             {
                 apiRequestType = ApiRequestType.GraphBeta;
             }
 
-            if (requestUrl.StartsWith("https://", StringComparison.InvariantCultureIgnoreCase))
-            {
-                if (requestUrl.IndexOf("/v1.0/", StringComparison.InvariantCultureIgnoreCase) > -1)
-                {
-                    requestUrl = requestUrl.Replace($"https://{Connection.GraphEndPoint}/v1.0/", "", StringComparison.InvariantCultureIgnoreCase);
-                }
-                else if (requestUrl.IndexOf("/beta/", StringComparison.InvariantCultureIgnoreCase) > -1)
-                {
-                    requestUrl = requestUrl.Replace($"https://{Connection.GraphEndPoint}/beta/", "", StringComparison.InvariantCultureIgnoreCase);
-                }
-            }
+            requestUrl = Regex.Replace(requestUrl, $"^(https://{Connection.GraphEndPoint})*/*(v1.0|beta)/", "", RegexOptions.IgnoreCase);
 
             web.WithHeaders(extraHeaders).ExecuteRequestBatch(Batch.Batch, new ApiRequest(method, apiRequestType, requestUrl, contentString));
         }
