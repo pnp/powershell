@@ -1,0 +1,211 @@
+name: Signed Release
+
+on:
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  build:
+    name: Build and sign module
+    runs-on: windows-latest
+    environment:
+      name: gh_releases
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.x
+
+      - name: Determine version
+        id: version
+        shell: pwsh
+        run: |
+          $version = "1.0.0.0"
+          Write-Host "Version: $version"
+          "VERSION=$version" | Out-File $env:GITHUB_OUTPUT -Append
+
+      - name: Build module
+        shell: pwsh
+        run: |
+          dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --no-incremental --force --configuration Release -p:VersionPrefix=${{ steps.version.outputs.VERSION }}
+
+      - name: Package module
+        id: package
+        shell: pwsh
+        run: |
+          $version = "${{ steps.version.outputs.VERSION }}"
+          $moduleDir = "./module/PnP.PowerShell"
+          $corePath = "$moduleDir/Core"
+          $commonPath = "$moduleDir/Common"
+
+          New-Item -Path $moduleDir -ItemType Directory -Force | Out-Null
+          New-Item -Path $corePath -ItemType Directory -Force | Out-Null
+          New-Item -Path $commonPath -ItemType Directory -Force | Out-Null
+
+          # Copy format file
+          Copy-Item -Path "./resources/*.ps1xml" -Destination $moduleDir
+
+          # Copy ALC (Common) assemblies
+          $assemblyExceptions = @("System.Memory.dll")
+          $commonFiles = [System.Collections.Generic.Hashset[string]]::new()
+          Get-ChildItem -Path "./src/ALC/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' } | ForEach-Object {
+            if (!$assemblyExceptions.Contains($_.Name)) { [void]$commonFiles.Add($_.Name) }
+            Copy-Item -LiteralPath $_.FullName -Destination $commonPath
+          }
+
+          # Copy Commands (Core) assemblies
+          Get-ChildItem -Path "./src/Commands/bin/Release/net8.0" | Where-Object { $_.Extension -in '.dll', '.pdb' -and -not $commonFiles.Contains($_.Name) } | ForEach-Object {
+            Copy-Item -LiteralPath $_.FullName -Destination $corePath
+          }
+
+          # Copy runtime folders if they exist
+          $sourceRuntimeBase = "./src/Commands/bin/Release/net8.0/runtimes"
+          if (Test-Path $sourceRuntimeBase) {
+            $runtimeDirs = @("win-x64/native", "win-arm64/native", "win-x86/native", "linux-x64/native")
+            foreach ($rd in $runtimeDirs) {
+              $src = Join-Path $sourceRuntimeBase $rd
+              if (Test-Path $src) {
+                $dest = Join-Path $corePath "runtimes/$rd"
+                New-Item -Path $dest -ItemType Directory -Force | Out-Null
+                Get-ChildItem -Path $src -Recurse | Where-Object { $_.Extension -in '.dll', '.pdb', '.so' -and -not $commonFiles.Contains($_.Name) } | ForEach-Object {
+                  Copy-Item -LiteralPath $_.FullName -Destination $dest
+                }
+              }
+            }
+          }
+
+          # Generate module manifest
+          $scriptBlock = {
+            param($modulePath)
+            Import-Module -Name "$modulePath/Core/PnP.PowerShell.dll" -DisableNameChecking
+            $cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
+            $cmdlets -Join ","
+          }
+          $cmdletsString = Start-ThreadJob -ScriptBlock $scriptBlock -ArgumentList (Resolve-Path $moduleDir).Path | Receive-Job -Wait
+
+          $manifest = "@{
+            NestedModules =  'Core/PnP.PowerShell.dll'
+            ModuleVersion = '$version'
+            Description = 'Microsoft 365 Patterns and Practices PowerShell Cmdlets'
+            GUID = '0b0430ce-d799-4f3b-a565-f0dca1f31e17'
+            Author = 'Microsoft 365 Patterns and Practices'
+            CompanyName = 'Microsoft 365 Patterns and Practices'
+            CompatiblePSEditions = @('Core')
+            PowerShellVersion = '7.4.0'
+            ProcessorArchitecture = 'None'
+            FunctionsToExport = '*'
+            CmdletsToExport = @($cmdletsString)
+            VariablesToExport = '*'
+            AliasesToExport = '*'
+            FormatsToProcess = 'PnP.PowerShell.Format.ps1xml'
+            PrivateData = @{
+              PSData = @{
+                Tags = 'SharePoint','PnP','Teams','Planner'
+                ProjectUri = 'https://aka.ms/sppnp'
+                IconUri = 'https://raw.githubusercontent.com/pnp/media/40e7cd8952a9347ea44e5572bb0e49622a102a12/parker/ms/300w/parker-ms-300.png'
+              }
+            }
+          }"
+          $manifest | Out-File "$moduleDir/PnP.PowerShell.psd1" -Force
+
+          # Generate external help
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module -Name Microsoft.PowerShell.PlatyPS -AllowPrerelease -RequiredVersion 1.0.0-preview1
+          $mdFiles = Measure-PlatyPSMarkdown -Path ./documentation/*.md
+          $mdFiles | Import-MarkdownCommandHelp -Path {$_.FilePath} | Export-MamlCommandHelp -OutputFolder ./module -Force
+
+          Write-Host "Module packaged at $moduleDir"
+
+      - name: Install Sign CLI tool
+        run: dotnet tool install --tool-path . sign --version 0.9.1-beta.25181.2
+
+      - name: Azure CLI Login
+        uses: azure/login@a457da9ea143d694b1b9c7c869ebb04ebe844ef5 # v2.3.0
+        with:
+          client-id: ${{ secrets.SIGNING_CLIENT_ID }}
+          tenant-id: ${{ secrets.SIGNING_TENANTID }}
+          allow-no-subscriptions: true
+
+      - name: Sign module assemblies
+        shell: pwsh
+        run: >
+          ./sign code azure-key-vault
+          ./module/PnP.PowerShell/Core/PnP.PowerShell.dll
+          --publisher-name "Microsoft 365 Patterns and Practices"
+          --description "PnP PowerShell Module"
+          --description-url "https://pnp.github.io/powershell/"
+          --azure-key-vault-tenant-id "${{ secrets.SIGNING_TENANTID }}"
+          --azure-key-vault-client-id "${{ secrets.SIGNING_CLIENT_ID }}"
+          --azure-key-vault-certificate "${{ secrets.SIGNING_CERTNAME }}"
+          --azure-key-vault-url "${{ secrets.SIGNING_VAULTURL }}"
+          --timestamp-url http://timestamp.digicert.com
+          --verbosity Debug
+
+      - name: Archive module
+        uses: thedoctor0/zip-release@master
+        with:
+          filename: 'PnP.PowerShell-${{ steps.version.outputs.VERSION }}.zip'
+          directory: './module/PnP.PowerShell'
+
+      - name: SHA256 hash
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash ./module/PnP.PowerShell/PnP.PowerShell-${{ steps.version.outputs.VERSION }}.zip -Algorithm SHA256).Hash
+          Write-Host "SHA256: $hash"
+          "SHA256=$hash" | Out-File $env:GITHUB_OUTPUT -Append
+        id: hash
+
+      - name: Upload module artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PnP.PowerShell-${{ steps.version.outputs.VERSION }}
+          path: ./module/PnP.PowerShell/PnP.PowerShell-${{ steps.version.outputs.VERSION }}.zip
+
+      - name: Upload module folder artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: PnP.PowerShell-Module
+          path: ./module/PnP.PowerShell/
+
+  create_release:
+    name: Create GitHub Release
+    if: false # Disabled for now
+    needs: [build]
+    runs-on: windows-latest
+    environment:
+      name: master
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: output
+
+      - name: Determine version from tag
+        id: version
+        shell: pwsh
+        run: |
+          $tag = "${{ github.ref_name }}"
+          $version = $tag.TrimStart('v')
+          "VERSION=$version" | Out-File $env:GITHUB_OUTPUT -Append
+
+      - name: Release
+        uses: anton-yurchenko/git-release@v6
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DRAFT_RELEASE: "false"
+          PRE_RELEASE: "false"
+          CHANGELOG_FILE: "CHANGELOG.md"
+          ALLOW_EMPTY_CHANGELOG: "true"
+        with:
+          args: |
+              output/PnP.PowerShell-${{ steps.version.outputs.VERSION }}/*.zip
