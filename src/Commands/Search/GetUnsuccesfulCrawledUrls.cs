@@ -1,0 +1,183 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Management.Automation;
+using Microsoft.SharePoint.Client;
+using Microsoft.SharePoint.Client.Search.Administration;  
+using PnP.PowerShell.Commands.Attributes;
+
+namespace PnP.PowerShell.Commands.Search
+{
+    public class UnsuccesfullCrawlEntry
+    {
+        public string Url { get; set; }
+        public DateTime CrawlTime { get; set; }
+        public DateTime ItemTime { get; set; }
+        public string Status { get; set; }
+        public int ErrorCode { get; set; }
+        public int ItemId { get; set; }
+        public DateTime LastTouchedTime { get; set; }
+        public string DatabaseName { get; set; }
+    }
+
+    [Cmdlet(VerbsCommon.Get, "PnPUnsuccesfulCrawledUrls")]
+    [ApiNotAvailableUnderApplicationPermissions]
+    public class GetUnsuccesfulCrawledUrls : PnPWebCmdlet
+    {
+        [Parameter(Mandatory = false)]
+        public string Filter;
+
+        [Parameter(Mandatory = false)]
+        //DateOnly used
+        public DateTime StartDate = DateTime.MinValue;  
+
+        [Parameter(Mandatory = false)]
+        //DateOnly used
+        public DateTime EndDate = DateTime.UtcNow.AddDays(1);
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter RawFormat;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IncreaseRequestTimeout;  
+
+
+        private const int MaxRows = 100000;
+
+        protected override void ExecuteCmdlet()
+        {
+            try
+            {
+                if(IncreaseRequestTimeout)
+                {
+                    string timeoutValue = Environment.GetEnvironmentVariable("SharePointPnPHttpTimeout");
+                    if (string.IsNullOrEmpty(timeoutValue))
+                    {
+                        LogWarning("The timeout may be only increased if the SharePointPnPHttpTimeout environment variable is set to 180000 or -1.");
+                        LogWarning("Use  $env:SharePointPnPHttpTimeout = -1 command and then, establish new connection with Connect-PnPOnline.");
+                        return;
+                    }
+                    else
+                    {
+                        //Max 3 minutes, because Default CSOM timeout is 180,000 ms
+                        ClientContext.RequestTimeout=3*60*1000;
+                    }
+                }
+                var crawlLog = new DocumentCrawlLog(ClientContext, ClientContext.Site);
+                ClientContext.Load(crawlLog);
+
+
+                string postFilter = string.Empty;
+                if (string.IsNullOrWhiteSpace(Filter))
+                {
+                    Filter = $"https://{GetHostName()}.sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(Connection.AzureEnvironment)}";
+                }
+
+                var logEntries = crawlLog.GetUnsuccesfulCrawledUrls(Filter, StartDate, EndDate);
+                ClientContext.ExecuteQueryRetry();
+
+                if (RawFormat)
+                {
+                    var entries = new List<object>();
+                    foreach (var dictionary in logEntries.Value.Rows)
+                    {
+                        string url = System.Net.WebUtility.UrlDecode(dictionary["FullUrl"].ToString());
+                        if (string.IsNullOrWhiteSpace(postFilter) || url.Contains(postFilter))
+                        {
+                            entries.Add(ConvertToPSObject(dictionary));
+                        }
+                    }
+                }
+                else
+                {
+                    var entries = new List<UnsuccesfullCrawlEntry>(logEntries.Value.Rows.Count);
+                    foreach (var dictionary in logEntries.Value.Rows)
+                    {
+                        var entry = MapCrawlLogEntry(dictionary);
+                        if (string.IsNullOrWhiteSpace(postFilter) || entry.Url.Contains(postFilter))
+                        {
+                            entries.Add(entry);
+                        }
+                    }
+
+                    WriteObject(entries.OrderByDescending(i => i.CrawlTime).ToList(), true);
+                }
+            }
+            catch (Exception e)
+            {
+                if(e.Message=="The operation has timed out." )
+                {
+                    
+                    LogError($"Error: {e.Message}.  Default CSOM timeout is 180,000 ms (≈3 minutes). If you are querying large crawl logs or broad ranges, the server may take longer than that. ");
+                    
+                }
+                else
+                {
+                    LogError($"Error: {e.Message}. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx");
+                }
+            }
+        }
+
+#region Helper functions
+
+        private string GetHostName()
+        {
+            return new Uri(ClientContext.Url).Host.Replace("-admin", "").Replace("-public", "").Replace("-my", "").Replace($".sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(Connection.AzureEnvironment)}", "");
+        }
+
+        private int GetContentSourceIdForSites(DocumentCrawlLog crawlLog)
+        {
+            var hostName = GetHostName();
+            var spContent = crawlLog.GetCrawledUrls(false, 10, $"https://{hostName}.sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(Connection.AzureEnvironment)}/sites", true, -1, (int)LogLevel.All, -1, DateTime.Now.AddDays(-100), DateTime.Now.AddDays(1));
+            ClientContext.ExecuteQueryRetry();
+            if (spContent.Value.Rows.Count > 0) return (int)spContent.Value.Rows.First()["ContentSourceID"];
+            return -1;
+        }
+
+        private int GetContentSourceIdForUserProfiles(DocumentCrawlLog crawlLog)
+        {
+            var hostName = GetHostName();
+            var peopleContent = crawlLog.GetCrawledUrls(false, 100, $"sps3s://{hostName}-my.sharepoint.{PnP.Framework.AuthenticationManager.GetSharePointDomainSuffix(Connection.AzureEnvironment)}", true, -1, (int)LogLevel.All, -1, DateTime.Now.AddDays(-100), DateTime.Now.AddDays(1));
+            ClientContext.ExecuteQueryRetry();
+            if (peopleContent.Value.Rows.Count > 0) return (int)peopleContent.Value.Rows.First()["ContentSourceID"];
+            return -1;
+        }
+
+        private static UnsuccesfullCrawlEntry MapCrawlLogEntry(Dictionary<string, object> dictionary)
+        {
+            var entry = new UnsuccesfullCrawlEntry
+            {
+                ItemId = (int)dictionary["DocID"],
+                Url = dictionary["FullUrl"].ToString(),
+                CrawlTime = (DateTime)dictionary["TimeStamp"],
+                LastTouchedTime= (DateTime)dictionary["LastTouchedTime"],
+                DatabaseName= (string)dictionary["DatabaseName"]
+            };
+            var time=dictionary["SPItemModifiedTime"]+"" ?? dictionary["LastModifiedTime"]+"" ??"";
+            long.TryParse(time,  out long ticks);
+            if (ticks != 0)
+            {
+                var itemDate = DateTime.FromFileTimeUtc(ticks);
+                entry.ItemTime = itemDate;
+            }
+
+            entry.Status =  (dictionary["ErrorDesc"]??"").ToString();
+            entry.ErrorCode = int.Parse(dictionary["ErrorCode"]+"");
+            return entry;
+        }
+
+        private object ConvertToPSObject(IDictionary<string, object> r)
+        {
+            PSObject res = new PSObject();
+            if (r != null)
+            {
+                foreach (var kvp in r)
+                {
+                    res.Properties.Add(new PSNoteProperty(kvp.Key, kvp.Value));
+                }
+            }
+            return res;
+        }
+#endregion
+    }
+}
