@@ -134,7 +134,10 @@ jobs:
       - name: Inspect Key Vault certificate
         shell: pwsh
         run: |
-          az keyvault certificate show --vault-name "${{ secrets.SIGNING_VAULTURL }}" --name "${{ secrets.SIGNING_CERTNAME }}" --query "{issuer: policy.issuerParameters, subject: policy.x509CertificateProperties.subject, keyType: policy.keyProperties.keyType, keySize: policy.keyProperties.keySize, ekus: policy.x509CertificateProperties.ekus}" -o json
+          $vaultUrl = "${{ secrets.SIGNING_VAULTURL }}"
+          $vaultName = ([Uri]$vaultUrl).Host.Split('.')[0]
+          Write-Host "Vault name: $vaultName"
+          az keyvault certificate show --vault-name "$vaultName" --name "${{ secrets.SIGNING_CERTNAME }}" --query "{issuer: policy.issuerParameters, subject: policy.x509CertificateProperties.subject, keyType: policy.keyProperties.keyType, keySize: policy.keyProperties.keySize, ekus: policy.x509CertificateProperties.ekus}" -o json
           
       - name: Sign module assemblies
         shell: pwsh
