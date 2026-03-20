@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
 using Microsoft.SharePoint.Client;
-using Microsoft.SharePoint.Client.Search.Administration;
+using Microsoft.SharePoint.Client.Search.Administration; 
 using PnP.PowerShell.Commands.Attributes;
 
 namespace PnP.PowerShell.Commands.Search
@@ -13,7 +13,9 @@ namespace PnP.PowerShell.Commands.Search
         All = -1,
         Success = 0,
         Warning = 1,
-        Error = 2
+        Error = 2,
+        Deleted = 3,
+        TopLEvel =4
     }
 
     public enum ContentSource
@@ -26,14 +28,17 @@ namespace PnP.PowerShell.Commands.Search
     {
         public string Url { get; set; }
         public DateTime CrawlTime { get; set; }
+        public DateTime LastTouchedTime { get; set; }
         public DateTime ItemTime { get; set; }
         public LogLevel LogLevel { get; set; }
         public string Status { get; set; }
         public int ItemId { get; set; }
         public int ContentSourceId { get; set; }
+
+        public string DatabaseName { get; set; }
     }
 
-    [Cmdlet(VerbsCommon.Get, "PnPSearchCrawlLog", DefaultParameterSetName = "Xml")]
+    [Cmdlet(VerbsCommon.Get, "PnPSearchCrawlLog")]
     [ApiNotAvailableUnderApplicationPermissions]
     public class GetSearchCrawlLog : PnPWebCmdlet
     {
@@ -58,12 +63,34 @@ namespace PnP.PowerShell.Commands.Search
         [Parameter(Mandatory = false)]
         public SwitchParameter RawFormat;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter GetCountOnly;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IncreaseRequestTimeout;  
+
+
         private const int MaxRows = 100000;
 
         protected override void ExecuteCmdlet()
         {
             try
             {
+                if(IncreaseRequestTimeout)
+                {
+                    string timeoutValue = Environment.GetEnvironmentVariable("SharePointPnPHttpTimeout");
+                    if (string.IsNullOrEmpty(timeoutValue))
+                    {
+                        LogWarning("The timeout may be only increased if the SharePointPnPHttpTimeout environment variable is set to 180000 or -1.");
+                        LogWarning("Use  $env:SharePointPnPHttpTimeout = -1 command and then, establish new connection with Connect-PnPOnline.");
+                        return;
+                    }
+                    else
+                    {
+                        //Max 3 minutes, because Default CSOM timeout is 180,000 ms
+                        ClientContext.RequestTimeout=3*60*1000;
+                    }
+                }
                 var crawlLog = new DocumentCrawlLog(ClientContext, ClientContext.Site);
                 ClientContext.Load(crawlLog);
 
@@ -94,7 +121,9 @@ namespace PnP.PowerShell.Commands.Search
                     RowLimit = MaxRows;
                 }
 
-                var logEntries = crawlLog.GetCrawledUrls(false, RowLimit, Filter, true, contentSourceId, (int)LogLevel, -1, StartDate, EndDate);
+                bool countOnly= GetCountOnly ? true: false;
+
+                var logEntries = crawlLog.GetCrawledUrls(countOnly, RowLimit, Filter, true, contentSourceId, (int)LogLevel, -1, StartDate, EndDate);
                 ClientContext.ExecuteQueryRetry();
 
                 if (RawFormat)
@@ -139,7 +168,16 @@ namespace PnP.PowerShell.Commands.Search
             }
             catch (Exception e)
             {
-                LogError($"Error: {e.Message}. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx");
+                if(e.Message=="The operation has timed out." )
+                {
+                    
+                    LogError($"Error: {e.Message}.  Default CSOM timeout is 180,000 ms (≈3 minutes). If you are querying large crawl logs or broad ranges, the server may take longer than that. ");
+                    
+                }
+                else
+                {
+                    LogError($"Error: {e.Message}. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx");
+                }
             }
         }
 
@@ -175,7 +213,9 @@ namespace PnP.PowerShell.Commands.Search
                 ItemId = (int)dictionary["URLID"],
                 ContentSourceId = (int)dictionary["ContentSourceID"],
                 Url = dictionary["FullUrl"].ToString(),
-                CrawlTime = (DateTime)dictionary["TimeStampUtc"]
+                CrawlTime = (DateTime)dictionary["TimeStampUtc"],
+                LastTouchedTime= (DateTime)dictionary["LastTouchedTime"],
+                DatabaseName= (string)dictionary["DatabaseName"]
             };
             long.TryParse(dictionary["LastRepositoryModifiedTime"] + "", out long ticks);
             if (ticks != 0)
