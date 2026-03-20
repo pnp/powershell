@@ -10,7 +10,7 @@ jobs:
     name: Build and sign module
     runs-on: windows-latest
     environment:
-      name: main
+      name: master
     permissions:
       id-token: write
       contents: read
@@ -180,7 +180,7 @@ jobs:
     needs: [build]
     runs-on: windows-latest
     environment:
-      name: main
+      name: master
     permissions:
       contents: write
     steps:
