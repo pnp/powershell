@@ -180,7 +180,7 @@ jobs:
     needs: [build]
     runs-on: windows-latest
     environment:
-      name: master
+      name: gh_releases
     permissions:
       contents: write
     steps:
