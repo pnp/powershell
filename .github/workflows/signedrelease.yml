@@ -143,8 +143,9 @@ jobs:
           --azure-key-vault-client-id "${{ secrets.SIGNING_CLIENT_ID }}"
           --azure-key-vault-certificate "${{ secrets.SIGNING_CERTNAME }}"
           --azure-key-vault-url "${{ secrets.SIGNING_VAULTURL }}"
+          --azure-key-vault-managed-identity false
           --timestamp-url http://timestamp.digicert.com
-          --verbosity Debug
+          --verbosity Information
 
       - name: Archive module
         uses: thedoctor0/zip-release@master
