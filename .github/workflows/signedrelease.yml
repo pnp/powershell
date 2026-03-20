@@ -23,12 +23,11 @@ jobs:
         with:
           dotnet-version: 8.x
 
-      - name: Determine version from tag
+      - name: Determine version
         id: version
         shell: pwsh
         run: |
-          $tag = "${{ github.ref_name }}"
-          $version = $tag.TrimStart('v')
+          $version = "1.0.0.0"
           Write-Host "Version: $version"
           "VERSION=$version" | Out-File $env:GITHUB_OUTPUT -Append
 
