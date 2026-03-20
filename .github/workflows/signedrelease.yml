@@ -131,7 +131,7 @@ jobs:
         with:
           client-id: ${{ secrets.SIGNING_CLIENT_ID }}
           tenant-id: ${{ secrets.SIGNING_TENANTID }}
-          subscription-id: ${{ secrets.SIGNING_SUBID }}
+          allow-no-subscriptions: true
 
       - name: Sign module assemblies
         shell: pwsh
