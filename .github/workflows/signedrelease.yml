@@ -122,8 +122,15 @@ jobs:
           Write-Host "Module packaged at $moduleDir"
 
       - name: Install Sign CLI tool
-        run: dotnet tool install --tool-path . --prerelease sign      
-
+        run: dotnet tool install --tool-path . --prerelease sign
+        
+      - name: Azure CLI Login
+        uses: azure/login@v3 # v3.0.0
+        with:          
+          client-id: ${{ secrets.SIGNING_CLIENT_ID }}
+          tenant-id: ${{ secrets.SIGNING_TENANTID }}
+          allow-no-subscriptions: true
+          
       - name: Sign module assemblies
         shell: pwsh
         run: >
