@@ -14,10 +14,10 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: 8.x
 
@@ -147,13 +147,11 @@ jobs:
           --publisher-name "Microsoft 365 Patterns and Practices"
           --description "PnP PowerShell Module"
           --description-url "https://pnp.github.io/powershell/"
-          --azure-key-vault-tenant-id "${{ secrets.SIGNING_TENANTID }}"
-          --azure-key-vault-client-id "${{ secrets.SIGNING_CLIENT_ID }}"
+          --azure-credential-type "azure-cli"
           --azure-key-vault-certificate "${{ secrets.SIGNING_CERTNAME }}"
-          --azure-key-vault-url "${{ secrets.SIGNING_VAULTURL }}"
-          --azure-key-vault-managed-identity false
+          --azure-key-vault-url "${{ secrets.SIGNING_VAULTURL }}"          
           --timestamp-url http://timestamp.digicert.com
-          --verbosity Information
+          --verbosity Debug
 
       - name: Archive module
         uses: thedoctor0/zip-release@master
@@ -170,13 +168,13 @@ jobs:
         id: hash
 
       - name: Upload module artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: PnP.PowerShell-${{ steps.version.outputs.VERSION }}
           path: ./module/PnP.PowerShell/PnP.PowerShell-${{ steps.version.outputs.VERSION }}.zip
 
       - name: Upload module folder artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: PnP.PowerShell-Module
           path: ./module/PnP.PowerShell/
