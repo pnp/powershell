@@ -394,15 +394,11 @@ namespace PnP.PowerShell.Commands.Files
                         {
                             if (sourceValue is FieldUserValue userValue && userValue.LookupId > 0)
                             {
-                                var mapped = MapUserToTarget(userValue, sourceContext, targetContext);
-                                if (mapped != null)
+                                var current = targetItem[fieldName] as FieldUserValue;
+                                if (current == null || current.Email != userValue.Email)
                                 {
-                                    var current = targetItem[fieldName] as FieldUserValue;
-                                    if (current == null || current.LookupId != mapped.LookupId)
-                                    {
-                                        valuesToSet[fieldName] = mapped; // set FieldUserValue directly
-                                        metadataUpdated = true;
-                                    }
+                                    valuesToSet[fieldName] = userValue.Email;
+                                    metadataUpdated = true;
                                 }
                             }
                         }
@@ -584,7 +580,7 @@ namespace PnP.PowerShell.Commands.Files
                         if (!_targetUserIdByIdentity.TryGetValue(identity, out int id))
                         {
                             var ensured = targetContext.Web.EnsureUser(identity);
-                            targetContext.Load(ensured, u => u.Id);
+                            targetContext.Load(ensured, u => u.Id, u => u.Email, u => u.LoginName);
                             targetContext.ExecuteQueryRetry();
                             id = ensured.Id;
                             _targetUserIdByIdentity[identity] = id;
