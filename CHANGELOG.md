@@ -32,6 +32,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPWebAlert` and `Remove-PnPWebAlert` cmdlets to get and remove SharePoint list alerts [#5218](https://github.com/pnp/powershell/pull/5218)
 - Added `Set-PnPFileVersion` cmdlet to update expiration date of file version [#5230](https://github.com/pnp/powershell/pull/5230)
 - Add optional parameter `-Force` to cmdlet `Remove-PnPSiteGroup`. [#5214](https://github.com/pnp/powershell/pull/5214)
+- `Invoke-PnPGraphMethod` cmdlet now supports relative URLs. [#5255](https://github.com/pnp/powershell/pull/5255)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
@@ -95,6 +96,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Joshua Hendersson [JoshuaSHenderson]
 - Siddharth Vaghasia [siddharth-vaghasia]
 - David Schenk [davidschenkUPG]
+- [reusto]
 
 ## [3.1.0]
 
