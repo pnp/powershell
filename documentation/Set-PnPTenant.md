@@ -99,6 +99,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-LabelMismatchEmailHelpLink <String>]
  [-DisableDocumentLibraryDefaultLabeling <Boolean>]
  [-IsEnableAppAuthPopUpEnabled <Boolean>]
+ [-FileTypesForVersionExpiration <String[]>]
  [-ExpireVersionsAfterDays <Int32>]
  [-MajorVersionLimit <Int32>]
  [-EnableAutoExpirationVersionTrim <Boolean>]
@@ -2110,6 +2111,23 @@ Parameter `ExpireVersionsAfterDays` is required when `EnableAutoExpirationVersio
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FileTypesForVersionExpiration
+
+Specifies one or more file types for which to apply the file type version policy override.
+
+Use this parameter together with `EnableAutoExpirationVersionTrim` or with both `ExpireVersionsAfterDays` and `MajorVersionLimit`.
+
+```yaml
+Type: String[]
 Parameter Sets: (All)
 
 Required: False

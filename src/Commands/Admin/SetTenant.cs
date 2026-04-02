@@ -538,6 +538,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public KnowledgeAgentScopeMode? KnowledgeAgentScope { set; get; }
 
+        [Parameter(Mandatory = false)]
+        public string[] FileTypesForVersionExpiration { set; get; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1873,10 +1876,36 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 modified = true;
             }
+
+			bool fileTypeVersionPolicyModified = false;
+			if (FileTypesForVersionExpiration != null)
+			{
+				if (FileTypesForVersionExpiration.Length == 0 || FileTypesForVersionExpiration.Any(string.IsNullOrWhiteSpace))
+				{
+					throw new PSArgumentException($"The parameter {nameof(FileTypesForVersionExpiration)} must contain one or more non-empty file types.", nameof(FileTypesForVersionExpiration));
+				}
+
+				FileTypesForVersionExpiration = FileTypesForVersionExpiration
+					.Distinct(StringComparer.OrdinalIgnoreCase)
+					.ToArray();
+
+				if (!modified)
+				{
+					throw new PSArgumentException($"The parameter {nameof(FileTypesForVersionExpiration)} must be combined with {nameof(EnableAutoExpirationVersionTrim)} or with both {nameof(ExpireVersionsAfterDays)} and {nameof(MajorVersionLimit)}.", nameof(FileTypesForVersionExpiration));
+				}
+
+				fileTypeVersionPolicyModified = true;
+			}
             if (modified)
             {
                 bool isAutoTrimEnabled = (EnableAutoExpirationVersionTrim.HasValue ? EnableAutoExpirationVersionTrim.Value : Tenant.EnableAutoExpirationVersionTrim);
                 Tenant.SetFileVersionPolicy(isAutoTrimEnabled, MajorVersionLimit ?? (-1), ExpireVersionsAfterDays ?? (-1));
+                AdminContext.ExecuteQueryRetry();
+            }
+            if (fileTypeVersionPolicyModified)
+            {
+                bool isAutoTrimEnabled = (EnableAutoExpirationVersionTrim.HasValue ? EnableAutoExpirationVersionTrim.Value : Tenant.EnableAutoExpirationVersionTrim);
+                Tenant.SetFileTypeVersionPolicy(FileTypesForVersionExpiration, isAutoTrimEnabled, MajorVersionLimit ?? (-1), ExpireVersionsAfterDays ?? (-1));
                 AdminContext.ExecuteQueryRetry();
             }
         }
