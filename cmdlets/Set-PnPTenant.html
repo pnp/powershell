@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -169,6 +169,7 @@
  [-LabelMismatchEmailHelpLink &lt;String&gt;]
  [-DisableDocumentLibraryDefaultLabeling &lt;Boolean&gt;]
  [-IsEnableAppAuthPopUpEnabled &lt;Boolean&gt;]
+ [-FileTypesForVersionExpiration &lt;String[]&gt;]
  [-ExpireVersionsAfterDays &lt;Int32&gt;]
  [-MajorVersionLimit &lt;Int32&gt;]
  [-EnableAutoExpirationVersionTrim &lt;Boolean&gt;]
@@ -1730,6 +1731,18 @@ Accept wildcard characters: False
 <p>Enable or disable AutoExpiration version trim for the document library. Set to <code>$true</code> to enable, <code>$false</code> to disable.</p>
 <p>Parameter <code>ExpireVersionsAfterDays</code> is required when <code>EnableAutoExpirationVersionTrim</code> is false. Set <code>ExpireVersionsAfterDays</code> to 0 for NoExpiration, set it to greater or equal 30 for ExpireAfter.</p>
 <pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-filetypesforversionexpiration">-FileTypesForVersionExpiration</h3>
+<p>Specifies one or more file types for which to apply the file type version policy override.</p>
+<p>Use this parameter together with <code>EnableAutoExpirationVersionTrim</code> or with both <code>ExpireVersionsAfterDays</code> and <code>MajorVersionLimit</code>.</p>
+<pre><code class="lang-yaml">Type: String[]
 Parameter Sets: (All)
 
 Required: False
