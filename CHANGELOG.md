@@ -42,7 +42,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Logging in using `Connect-PnPOnline -PersistentLogin` no longer throwing a warning [#5082](https://github.com/pnp/powershell/pull/5082)
 - All cmdlets with `AzureAD` in their name have been renamed to use `EntraID` instead, to reflect the rebranding of Azure Active Directory to Entra ID. Aliases have been added for backward compatibility. [#5221](https://github.com/pnp/powershell/pull/5221)
 - Improved `Import-PnPFlow` cmdlet to better handle the retry logic between internal API calls, introduced two new optional parameters [#5233](https://github.com/pnp/powershell/pull/5233)
-
+- Update `registerapplication.md` documentation with latest UIs and update wordings. [#5265](https://github.com/pnp/powershell/pull/5265)
+  
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
 - Fix `-CreateDrive` parameter not working correctly in `Connect-PnPOnline`. [#4869](https://github.com/pnp/powershell/pull/4869)
@@ -97,6 +98,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Siddharth Vaghasia [siddharth-vaghasia]
 - David Schenk [davidschenkUPG]
 - [reusto]
+- [gaiking-uk]
 
 ## [3.1.0]
 
