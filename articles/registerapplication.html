@@ -103,20 +103,24 @@
 <ol>
 <li><p><a href="https://entra.microsoft.com">Navigate to the Entra ID portal</a> and authenticate with an account that has permissions to create application registrations</p>
 </li>
-<li><p>Using the menu on the left, go to <em>Identity</em> &gt; <em>Applications</em> &gt; <em>App registrations</em></p>
+<li><p>Using the menu on the left, go to <em>Entra ID</em> &gt; <em>App registrations</em></p>
 <p><img src="../images/registerapplication/entraid_navigate_to_app_registrations.png" alt="image"></p>
 </li>
 <li><p>At the top, click on <em>New registration</em></p>
 <p><img src="../images/registerapplication/entraid_new_app_registration.png" alt="image"></p>
 </li>
-<li><p>In the <em>Name</em> field, enter any name you would like which indicates to you what the purpose of this script is. Leave the rest of the fields as they are and click on <em>Register</em> at the bottom of the page.</p>
+<li><p>In the <em>Name</em> field, enter any name you would like which indicates to you what the purpose of this script is. (We recommend <em>PnP.PowerShell</em> so the name matches the module.) Leave the rest of the fields as they are and click on <em>Register</em> at the bottom of the page.</p>
 <p><img src="../images/registerapplication/entraid_new_app_registration_enter_name.png" alt="image"></p>
 </li>
-<li><p>Take note of the <em>Application (client) ID</em> value, as you will use this to connect to PnP PowerShell using the application registration you have just created</p>
+<li><p>Take note of the <em>Application (client) ID</em> value, as you will use this to connect to PnP.PowerShell using the application registration you have just created</p>
 <p><img src="../images/registerapplication/entraid_new_app_clientid.png" alt="image"></p>
 </li>
-<li><p>In the menu, look for <em>Manage</em> and click on <em>Authentication</em></p>
+<li><p>In the menu, look for <em>Manage</em> and click on <em>Authentication</em>. You may see <em>Authentication (Preview)</em>, as things are in flux as of March 2026.</p>
 <p><img src="../images/registerapplication/entraid_new_app_authentication_menu.png" alt="image"></p>
+<ul>
+<li>If you see an option to switch to the old expereience, click the link.
+<img src="../images/registerapplication/entraid_new_app_authentication_menu_switch.png" alt="image"></li>
+</ul>
 </li>
 <li><p>Under <em>Platform configurations</em> on the page, click on <em>Add a platform</em></p>
 <p><img src="../images/registerapplication/entraid_new_app_authentication_add_platform.png" alt="image"></p>
@@ -126,39 +130,40 @@
 </li>
 <li><p>Leave the three boxes shown in the panel on the right unchecked and in the <em>Custom redirect URIs</em> field, enter:</p>
 <p>http://localhost</p>
-<p>Note that this should really be http and not https</p>
+<p>Note that this should really be <code>http</code> and NOT <code>https</code></p>
 <p>Click on <em>Configure</em> at the bottom</p>
 <p><img src="../images/registerapplication/entraid_new_app_authentication_add_platform_desktop_redirecturis.png" alt="image"></p>
 </li>
 <li><p>Under <em>Manage</em> go to <em>API permissions</em></p>
 <p><img src="../images/registerapplication/entraid_new_app_apipermissions_menu.png" alt="image"></p>
 </li>
-<li><p>In the <em>Configured permissions</em> section, click on the three dots in the line that reads <em>Microsoft Graph (1)</em> and click on <em>Remove all permissions</em> and click on <em>Yes, remove</em> in the confirmation dialog that will show up.</p>
+<li><p>In the <em>Configured permissions</em> section, click on the three dots in the line that reads <em>Microsoft Graph (1)</em> and click on <em>Remove all permissions</em> and click on <em>Yes, remove</em> in the confirmation dialog that will show up. This lets us start with a clean set of permissions.</p>
 <p><img src="../images/registerapplication/entraid_new_app_apipermissions_removedefault.png" alt="image"></p>
 </li>
 <li><p>In the <em>Configured permissions</em> section, click on <em>Add a permission</em></p>
 <p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission.png" alt="image"></p>
 </li>
-<li><p>In the panel on the right, stay in the <em>Microsoft APIs</em> category and scroll down to <em>SharePoint</em> and click on it</p>
+<li><p>In the panel on the right, stay in the <em>Microsoft APIs</em> / <em>Commonly used Microsoft APIs</em> category and scroll down to <em>SharePoint</em> and click on it</p>
 <p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint.png" alt="image"></p>
 </li>
 <li><p>Click on <em>Delegated permissions</em></p>
 <p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint_delegated.png" alt="image"></p>
 </li>
-<li><p>Expand <em>AllSites</em> and check the box for <em>AllSites.Read</em> or any other permission you wish to use with your application registration and click on <em>Add permissions</em> at the bottom</p>
+<li><p>Expand <em>AllSites</em> and check the box for <em>AllSites.Read</em> or any other permission you wish to use with your application registration and click on <em>Add permissions</em> at the bottom. It's important to note here that <em>Delegated Permissions</em> means that adding a permission level here does not mean that anyone gets those permissions. Any user running scripts must have the permissions they are trying to use. The App Registration effectively acts as a broker between the user's permissions and the permissions the App Registration allows. The permissions you'll want to grant here will vary based on the work you need people to be able to do. The article <a href="https://pkbullock.com/blog/2024/permissions-for-pnp-management-shell-app">What permissions the PnP Management Shell app had in the past?</a> from <a href="https://www.linkedin.com/in/pkbullock/">Paul Bullock, MVP and PnP Team Member</a> is a great primer on what you might want to add.</p>
 <p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_sharepoint_delegated_allsites_read.png" alt="image"></p>
 </li>
 <li><p>Under <em>Configured permissions</em> click on <em>Grant admin consent for -organization name-</em></p>
 <p>If this button is greyed out, it means you do not have the proper permissions to provide the consent. Log in using an account or ask someone having the Global Administrator role to perform this step for you if this is the case.</p>
 <p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent.png" alt="image"></p>
 </li>
-<li><p>In the panel on the right, select <em>No, remove other granted permissions</em> and click on <em>Grant admin consent</em> at the bottom. In the confirmation dialog that appears, click <em>Yes</em>.</p>
+<li><p>If you had previously granted permissions to this App Registration and are making changes, you may see the <em>Grant admin consent panel</em>. If not, skip to the next step. In the panel on the right, select <em>No, remove other granted permissions</em> and click on <em>Grant admin consent</em> at the bottom. In the confirmation dialog that appears, click <em>Yes</em>.</p>
 <p><img src="../images/registerapplication/entraid_new_app_apipermissions_addpermission_grant_admin_consent_remove_other.png" alt="image"></p>
 </li>
 <li><p>The <em>Configured permissions</em> section should now look similar to the screenshot below. You can now use this application to <a href="authentication.html">connect to PnP PowerShell</a> or <a href="determinepermissions.html">add additional permissions</a> to this application registration as necessary.</p>
 <p><img src="../images/registerapplication/entraid_new_app_apipermissions_minimal.png" alt="image"></p>
 </li>
 </ol>
+<p>If you plan to use App Registration access only, then you can stop here.</p>
 <h2 id="setting-up-access-to-your-own-entra-id-app-for-app-only-access">Setting up access to your own Entra ID App for App Only Access</h2>
 <p>If you're looking to register an application in Entra ID to use PnP PowerShell with a script that will run without requiring user interaction, App Only described in this section is what you want to go with.</p>
 <p>PnP PowerShell has a cmdlet that allows you to register a new Entra ID App, and optionally generate the certificates for you to use to login with that app.</p>
