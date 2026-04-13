@@ -440,6 +440,12 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? AnyoneLinkTrackUsers { get; set; }
 
         [Parameter(Mandatory = false)]
+        public bool? AllowFileArchive { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? AllowFileArchiveOnNewSitesByDefault { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? EnableSiteArchive { get; set; }
 
         [Parameter(Mandatory = false)]
@@ -1529,6 +1535,16 @@ namespace PnP.PowerShell.Commands.Admin
             if (AnyoneLinkTrackUsers.HasValue)
             {
                 Tenant.AnyoneLinkTrackUsers = AnyoneLinkTrackUsers.Value;
+                modified = true;
+            }
+            if (AllowFileArchive.HasValue)
+            {
+                Tenant.AllowFileArchive = AllowFileArchive.Value;
+                modified = true;
+            }
+            if (AllowFileArchiveOnNewSitesByDefault.HasValue)
+            {
+                Tenant.AllowFileArchiveOnNewSitesByDefault = AllowFileArchiveOnNewSitesByDefault.Value;
                 modified = true;
             }
             if (EnableSiteArchive.HasValue)

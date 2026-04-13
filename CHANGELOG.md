@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPFileVersion` cmdlet to update expiration date of file version [#5230](https://github.com/pnp/powershell/pull/5230)
 - Add optional parameter `-Force` to cmdlet `Remove-PnPSiteGroup`. [#5214](https://github.com/pnp/powershell/pull/5214)
 - `Invoke-PnPGraphMethod` cmdlet now supports relative URLs. [#5255](https://github.com/pnp/powershell/pull/5255)
+- Added support for `-AllowFileArchive` and `-AllowFileArchiveOnNewSitesByDefault` on `Set-PnPTenant`, `-AllowFileArchive` on `Set-PnPTenantSite`, and `ArchivedFileDiskUsed` on `Get-PnPTenantSite` to configure and inspect file-level archiving. [#5283](https://github.com/pnp/powershell/pull/5283)
 - Added `Set-PnPFileArchiveState` cmdlet to archive and reactivate SharePoint files through the Microsoft Graph beta archive APIs. [#5283](https://github.com/pnp/powershell/pull/5283)
 - Added `Set-PnPFolderArchiveState` cmdlet to archive and reactivate SharePoint folders through the Microsoft Graph beta archive APIs. [#5283](https://github.com/pnp/powershell/pull/5283)
 
@@ -51,6 +52,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
 - Fix `-CreateDrive` parameter not working correctly in `Connect-PnPOnline`. [#4869](https://github.com/pnp/powershell/pull/4869)
 - Fix `Get/Remove/Restore-PnPFileVersion` cmdlets to properly handle file names which have encoded values.
+- Fix `Get-PnPTenant` to load `AutofillColumnsCustomModelEnabled`, `AddressbarLinkPermission` and `GuestSharingGroupAllowListInTenantByPrincipalIdentity` without verbose mapping warnings. [#5285](https://github.com/pnp/powershell/pull/5285)
 - Fixed Teams related cmdlets to properly handle quotes in the display name of Teams team.
 - Fix `Set-PnPListItem` cmdlet to properly handle multi-choice fields when used with batch parameter.
 - Fix `Get-PnPCopilotAgent` cmdlet to properly handle pagination in large lists.

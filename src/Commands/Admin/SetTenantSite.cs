@@ -224,6 +224,9 @@ namespace PnP.PowerShell.Commands
         public bool RequestFilesLinkEnabled;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool AllowFileArchive;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -677,6 +680,12 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(RequestFilesLinkEnabled)))
             {
                 props.RequestFilesLinkEnabled = RequestFilesLinkEnabled;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(AllowFileArchive)))
+            {
+                props.AllowFileArchive = AllowFileArchive;
                 updateRequired = true;
             }
 

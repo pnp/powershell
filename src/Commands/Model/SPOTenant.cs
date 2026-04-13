@@ -233,6 +233,10 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? AnyoneLinkTrackUsers { private set; get; }
 
+        public bool? AllowFileArchive { private set; get; }
+
+        public bool? AllowFileArchiveOnNewSitesByDefault { private set; get; }
+
         public bool? EnableSiteArchive { private set; get; }
 
         public bool? ESignatureEnabled { private set; get; }
@@ -276,6 +280,7 @@ namespace PnP.PowerShell.Commands.Model
         [CsomToModelConverter("ODBSharingCapability")]
         public SharingCapabilities? OneDriveSharingCapability { private set; get; }
 
+        [CsomToModelConverter(Skip = true)]
         public string[] GuestSharingGroupAllowListInTenantByPrincipalIdentity { private set; get; }
 
         public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { private set; get; }
@@ -336,7 +341,10 @@ namespace PnP.PowerShell.Commands.Model
         public string AmplifyAdminSettings { get; private set; }
         public bool? AppOnlyBypassPeoplePickerPolicies { get; private set; }
         public string ArchiveRedirectUrl { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
         public bool? AutofillColumnsCustomModelEnabled { get; private set; }
+
         public bool? AutofillColumnsEnabled { get; private set; }
         public bool? BlockAccessOnUnmanagedDevices { get; private set; }
         public bool? BlockAppAccessWithAuthenticationContext { get; private set; }
@@ -379,6 +387,8 @@ namespace PnP.PowerShell.Commands.Model
         public bool? EnableTenantRestrictionsInsights { get; private set; }
 
         public bool? ExemptNativeUsersFromTenantLevelRestrictedAccessControl { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
         public Role? AddressbarLinkPermission { get; private set; }
 
         public string AIBuilderDefaultPowerAppsEnvironment { get; private set; }
@@ -610,10 +620,37 @@ namespace PnP.PowerShell.Commands.Model
                 failedProperties++;
                 cmdlet.LogDebug($"Property KnowledgeAgentSelectedSitesList not loaded due to error '{e.Message}'");
             }
+
+            try
+            {
+                clientContext.Load(tenant, t => t.AutofillColumnsCustomModelEnabled);
+                clientContext.ExecuteQueryRetry();
+                AutofillColumnsCustomModelEnabled = tenant.AutofillColumnsCustomModelEnabled;
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property AutofillColumnsCustomModelEnabled not loaded due to error '{e.Message}'");
+            }
+
+            try
+            {
+                clientContext.Load(tenant, t => t.AddressbarLinkPermission);
+                clientContext.ExecuteQueryRetry();
+                AddressbarLinkPermission = tenant.AddressbarLinkPermission;
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property AddressbarLinkPermission not loaded due to error '{e.Message}'");
+            }
+
             // GuestSharingGroupAllowListInTenantByPrincipalIdentity requires manual handling as it cannot be parsed directly from the Tenant object value
             try
             {
-                GuestSharingGroupAllowListInTenantByPrincipalIdentity = tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity.ToArray();
+                clientContext.Load(tenant, t => t.GuestSharingGroupAllowListInTenantByPrincipalIdentity);
+                clientContext.ExecuteQueryRetry();
+                GuestSharingGroupAllowListInTenantByPrincipalIdentity = tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity?.ToArray();
             }
             catch (Exception e)
             {
