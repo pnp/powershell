@@ -10,7 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
-- Added `Copy-PnPFileMetadata` to copy Metadata fields (Created, Modified, Author, Editor) between items [#5072](https://github.com/pnp/powershell/pull5072)
+- Added `Copy-PnPFileMetadata` to copy Metadata fields (Created, Modified, Author, Editor) between items [#5072](https://github.com/pnp/powershell/pull/5072)
 - Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
 - Added `-User` parameter to `Get-PnPTeamsTeam` cmdlet to allow fetching list of teams a user has access to.
 - Added `Get-PnPBrandCenterFont` cmdlet to retrieve the available fonts in the Brand Center [#4970](https://github.com/pnp/powershell/pull/4970)
@@ -33,6 +33,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Set-PnPFileVersion` cmdlet to update expiration date of file version [#5230](https://github.com/pnp/powershell/pull/5230)
 - Add optional parameter `-Force` to cmdlet `Remove-PnPSiteGroup`. [#5214](https://github.com/pnp/powershell/pull/5214)
 - `Invoke-PnPGraphMethod` cmdlet now supports relative URLs. [#5255](https://github.com/pnp/powershell/pull/5255)
+- Added `Set-PnPFileArchiveState` cmdlet to archive and reactivate SharePoint files through the Microsoft Graph beta archive APIs.
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
