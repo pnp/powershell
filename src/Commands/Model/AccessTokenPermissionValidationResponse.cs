@@ -39,7 +39,7 @@ namespace PnP.PowerShell.Commands.Model
         /// <summary>
         /// Extracts the oAuth JWT token to compare the permissions in it (roles) with the required permissions for the cmdlet provided through an attribute
         /// </summary>
-        /// <param name="cmdlet">The cmdlet that will be executed. Used to check for the permissions attribute.</param>
+        /// <param name="cmdletType">The type of the cmdlet that will be executed. Used to check for the permissions attribute.</param>
         /// <param name="decodedToken">The decoded oAuth JWT token that needs to be validated for its roles</param>
         /// <param name="audience">The audience for which the permissions should be validated, i.e. Microsoft Graph</param>
         /// <param name="tokenType">The type of token that is being validated (delegate or app-only)</param>
