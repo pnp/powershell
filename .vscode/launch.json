@@ -5,6 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
+      "name": "PnP.PowerShell (pwsh + import)",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "C:/Program Files/PowerShell/7/pwsh.exe",
+      "args": [
+        "-NoLogo",
+        "-NoProfile",
+        "-ExecutionPolicy", "Bypass",
+        "-Command",
+        "Import-Module \"$PWD/build/debug/PnP.PowerShell/PnP.PowerShell.psd1\" -Force; 'Ready: Import complete'; Read-Host 'Press Enter to exit'"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "externalTerminal",
+      "justMyCode": true
+    }
+,
+        {
             "name": "Debug with nugets in new PowerShell session",
             "type": "coreclr",
             "request": "launch",
