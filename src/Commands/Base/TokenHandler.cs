@@ -229,9 +229,37 @@ namespace PnP.PowerShell.Commands.Base
             var tenantID = Environment.GetEnvironmentVariable("AZURE_TENANT_ID");
             var host = Environment.GetEnvironmentVariable("AZURE_AUTHORITY_HOST");
 
+            var missingEnvironmentVariables = new List<string>();
+            if (string.IsNullOrWhiteSpace(clientID)) missingEnvironmentVariables.Add("AZURE_CLIENT_ID");
+            if (string.IsNullOrWhiteSpace(tokenPath)) missingEnvironmentVariables.Add("AZURE_FEDERATED_TOKEN_FILE");
+            if (string.IsNullOrWhiteSpace(tenantID)) missingEnvironmentVariables.Add("AZURE_TENANT_ID");
+            if (string.IsNullOrWhiteSpace(host)) missingEnvironmentVariables.Add("AZURE_AUTHORITY_HOST");
+
+            if (missingEnvironmentVariables.Count > 0)
+            {
+                var message = $"Azure AD Workload Identity expects Azure workload identity environment variables to be available. Missing: {string.Join(", ", missingEnvironmentVariables)}.";                
+
+                throw new PSInvalidOperationException(message);
+            }
+
+            if (!System.IO.File.Exists(tokenPath))
+            {
+                throw new PSInvalidOperationException($"Azure AD Workload Identity expects AZURE_FEDERATED_TOKEN_FILE to point to an existing token file. Current value: '{tokenPath}'.");
+            }
+
+            string federatedToken;
+            try
+            {
+                federatedToken = System.IO.File.ReadAllText(tokenPath);
+            }
+            catch (Exception ex) when (ex is System.IO.IOException || ex is UnauthorizedAccessException || ex is ArgumentException || ex is NotSupportedException)
+            {
+                throw new PSInvalidOperationException($"Failed to read the Azure AD Workload Identity token file configured through AZURE_FEDERATED_TOKEN_FILE ('{tokenPath}'). {ex.Message}", ex);
+            }
+
             var _confidentialClientApp = ConfidentialClientApplicationBuilder.Create(clientID)
                 .WithAuthority(host, tenantID)
-                .WithClientAssertion(() => System.IO.File.ReadAllText(tokenPath))
+                .WithClientAssertion(() => federatedToken)
                 .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
                 .Build();
 
