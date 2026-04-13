@@ -13,7 +13,7 @@ title: Set-PnPFileArchiveState
 
 **Required Permissions**
 
-  * Microsoft Graph API (Delegated only): Files.ReadWrite or Files.ReadWrite.All to archive files, and Files.Read or Files.Read.All to reactivate files
+  * Microsoft Graph API (Delegated only): Files.ReadWrite, Files.Read, Files.Read.All, or Files.ReadWrite.All to archive files, and Files.Read or Files.Read.All to reactivate files
 
 Archives or reactivates a SharePoint file using the Microsoft Graph beta archive APIs.
 

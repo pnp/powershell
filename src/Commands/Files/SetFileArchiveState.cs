@@ -14,7 +14,7 @@ namespace PnP.PowerShell.Commands.Files
 {
 	[Cmdlet(VerbsCommon.Set, "PnPFileArchiveState")]
 	[OutputType(typeof(FileArchiveStateResult))]
-	[TokenType(TokenType = TokenType.Delegate)]
+	[ApiNotAvailableUnderApplicationPermissions]
 	[RequiredApiDelegatedPermissions("graph/Files.Read")]
 	[RequiredApiDelegatedPermissions("graph/Files.Read.All")]
 	[RequiredApiDelegatedPermissions("graph/Files.ReadWrite")]
@@ -69,14 +69,20 @@ namespace PnP.PowerShell.Commands.Files
 
 		private void EnsureRequiredFileArchivePermissions(FileArchiveState requestedState)
 		{
-			var availableScopes = TokenHandler.ReturnScopes(AccessToken)
+			var graphAccessToken = AccessToken;
+			if (string.IsNullOrWhiteSpace(graphAccessToken))
+			{
+				throw new PSInvalidOperationException("Unable to acquire a Microsoft Graph access token required to validate file archive state permissions.");
+			}
+
+			var availableScopes = TokenHandler.ReturnScopes(graphAccessToken)
 				.Where(scope => scope.ResourceType == ResourceTypeName.Graph)
 				.Select(scope => scope.Scope)
 				.ToArray();
 
 			var requiredScopes = requestedState == FileArchiveState.Archived
-				? new[] { "Files.ReadWrite", "Files.ReadWrite.All" }
-				: new[] { "Files.Read", "Files.Read.All", "Files.ReadWrite", "Files.ReadWrite.All" };
+				? new[] { "Files.ReadWrite", "Files.Read", "Files.Read.All", "Files.ReadWrite.All" }
+				: new[] { "Files.Read", "Files.Read.All" };
 
 			if (!availableScopes.Any(scope => requiredScopes.Contains(scope, StringComparer.InvariantCultureIgnoreCase)))
 			{
