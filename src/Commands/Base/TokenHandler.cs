@@ -237,7 +237,7 @@ namespace PnP.PowerShell.Commands.Base
 
             if (missingEnvironmentVariables.Count > 0)
             {
-                var message = $"Azure AD Workload Identity expects Azure workload identity environment variables to be available. Missing: {string.Join(", ", missingEnvironmentVariables)}.";                
+                var message = $"Azure AD Workload Identity expects Azure workload identity environment variables to be available. Missing: {string.Join(", ", missingEnvironmentVariables)}.";
 
                 throw new PSInvalidOperationException(message);
             }
