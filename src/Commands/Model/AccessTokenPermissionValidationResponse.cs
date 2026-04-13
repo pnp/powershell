@@ -1,4 +1,5 @@
-﻿using PnP.PowerShell.Commands.Attributes;
+﻿using Microsoft.IdentityModel.JsonWebTokens;
+using PnP.PowerShell.Commands.Attributes;
 using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
@@ -39,17 +40,15 @@ namespace PnP.PowerShell.Commands.Model
         /// Extracts the oAuth JWT token to compare the permissions in it (roles) with the required permissions for the cmdlet provided through an attribute
         /// </summary>
         /// <param name="cmdlet">The cmdlet that will be executed. Used to check for the permissions attribute.</param>
-        /// <param name="accessToken">The oAuth JWT token that needs to be validated for its roles</param>
+        /// <param name="decodedToken">The decoded oAuth JWT token that needs to be validated for its roles</param>
         /// <param name="audience">The audience for which the permissions should be validated, i.e. Microsoft Graph</param>
         /// <param name="tokenType">The type of token that is being validated (delegate or app-only)</param>
         /// <returns><see cref="AccessTokenPermissionValidationResponse[]"/> instance containing the results of the evaluation of each of the permission attributes on the cmdlet or NULL if the permission validation failed</returns>
-        internal static AccessTokenPermissionValidationResponse[] EvaluatePermissions(Type cmdletType, string accessToken, Enums.ResourceTypeName audience, Enums.IdType tokenType)
+        internal static AccessTokenPermissionValidationResponse[] EvaluatePermissions(Type cmdletType, JsonWebToken decodedToken, Enums.ResourceTypeName audience, Enums.IdType tokenType)
         {
             Log.Debug("AccessTokenPermissionValidationResponse",$"Evaluating {tokenType.GetDescription()} permissions in access token for audience {audience.GetDescription()}");
-            //cmdlet.LogDebug($"Evaluating {tokenType.GetDescription()} permissions in access token for audience {audience.GetDescription()}");
 
-            // Retrieve the scopes we have in our AccessToken
-            var scopes = TokenHandler.ReturnScopes(accessToken);
+            var scopes = TokenHandler.ReturnScopes(decodedToken);
 
             if (scopes.Length == 0)
             {
@@ -64,7 +63,8 @@ namespace PnP.PowerShell.Commands.Model
             if((Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderDelegatedPermissions)) && tokenType == Enums.IdType.Delegate) ||
                (Attribute.IsDefined(cmdletType, typeof(ApiNotAvailableUnderApplicationPermissions)) && tokenType == Enums.IdType.Application))
             {
-                Log.Debug("AccessTokenPermissionValidationResponse",$"This cmdlet is not available under {tokenType.GetDescription()} permissions");
+                var message = $"This cmdlet is not available under {tokenType.GetDescription()} permissions.";
+                Log.Debug("AccessTokenPermissionValidationResponse", message);
                 return null;
             }
 
@@ -97,7 +97,9 @@ namespace PnP.PowerShell.Commands.Model
             {
                 if (requiredScopesAttribute != null)
                 {
-                    requiredScopes = requiredScopesAttribute.PermissionScopes.Where(ps => ps.ResourceType == audience).ToArray();
+                    requiredScopes = requiredScopesAttribute.PermissionScopes?
+                        .Where(ps => ps != null && ps.ResourceType == audience)
+                        .ToArray() ?? Array.Empty<RequiredApiPermission>();
                 }
 
                 // Ensure there are permission attributes present on the cmdlet, otherwise we have nothing to compare it against

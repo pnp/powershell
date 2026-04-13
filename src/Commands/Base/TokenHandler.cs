@@ -1,4 +1,6 @@
 ﻿using Microsoft.Identity.Client;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
@@ -10,7 +12,6 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace PnP.PowerShell.Commands.Base
 {
@@ -19,6 +20,11 @@ namespace PnP.PowerShell.Commands.Base
     /// </summary>
     internal static class TokenHandler
     {
+        private const string IdTypeClaimType = "idtyp";
+        private const string ObjectIdClaimType = "oid";
+        private const string RolesClaimType = "roles";
+        private const string ScopeClaimType = "scp";
+
         /// <summary>
         /// Returns the type of oAuth JWT token being passed in (Delegate/AppOnly)
         /// </summary>
@@ -26,16 +32,27 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>Enum indicating the type of oAuth JWT token</returns>
         internal static Enums.IdType RetrieveTokenType(string accessToken)
         {
-            var decodedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
+            var decodedToken = new JsonWebToken(accessToken);
 
-            // The idType is stored in the token as a claim
-            var idType = decodedToken.Claims.FirstOrDefault(c => c.Type == "idtyp");
+            var idType = GetClaimValue(decodedToken, IdTypeClaimType);
 
-            // Check if the token contains an idType
-            if (idType == null) return Enums.IdType.Unknown;
+            if (string.IsNullOrWhiteSpace(idType)) return Enums.IdType.Unknown;
 
-            // Parse the idType to the corresponding enum value
-            return idType.Value.ToLowerInvariant() switch
+            return idType.ToLowerInvariant() switch
+            {
+                "user" => Enums.IdType.Delegate,
+                "app" => Enums.IdType.Application,
+                _ => Enums.IdType.Unknown
+            };
+        }
+
+        private static Enums.IdType RetrieveTokenType(JsonWebToken decodedToken)
+        {
+            var idType = GetClaimValue(decodedToken, IdTypeClaimType);
+
+            if (string.IsNullOrWhiteSpace(idType)) return Enums.IdType.Unknown;
+
+            return idType.ToLowerInvariant() switch
             {
                 "user" => Enums.IdType.Delegate,
                 "app" => Enums.IdType.Application,
@@ -50,13 +67,14 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>The userId of the user for which the passed in delegate token is for</returns>
         internal static Guid? RetrieveTokenUser(string accessToken)
         {
-            var decodedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
+            var decodedToken = new JsonWebToken(accessToken);
+            return RetrieveTokenUser(decodedToken);
+        }
 
-            // The objectId is stored in the token as a claim
-            var objectId = decodedToken.Claims.FirstOrDefault(c => c.Type == "oid");
-
-            // Check if the token contains an objectId and if its a valid Guid
-            return objectId == null || !Guid.TryParse(objectId.Value, out Guid objectIdGuid) ? null : objectIdGuid;
+        private static Guid? RetrieveTokenUser(JsonWebToken decodedToken)
+        {
+            var objectId = GetClaimValue(decodedToken, ObjectIdClaimType);
+            return Guid.TryParse(objectId, out Guid objectIdGuid) ? objectIdGuid : null;
         }
 
         /// <summary>
@@ -66,15 +84,19 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns><see cref="RequiredApiPermission"/> array containing the scopes</returns>
         internal static RequiredApiPermission[] ReturnScopes(string accessToken)
         {
-            var decodedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
+            var decodedToken = new JsonWebToken(accessToken);
+            return ReturnScopes(decodedToken);
+        }
 
-            // Retrieve the audience the token was issued for
+        internal static RequiredApiPermission[] ReturnScopes(JsonWebToken decodedToken)
+        {
             var audience = decodedToken.Audiences.FirstOrDefault();
             var resourceType = DefineResourceTypeFromAudience(audience);
 
-            // The scopes can either be stored in the roles or scp claim, so we examine both
-            var scopes = decodedToken.Claims.Where(c => c.Type == "roles" || c.Type == "scp").SelectMany(r => r.Value.Split(" ").Select(r => new RequiredApiPermission(resourceType, r))).ToArray();
-            return scopes;
+            return decodedToken.Claims
+                .Where(c => string.Equals(c.Type, RolesClaimType, StringComparison.OrdinalIgnoreCase) || string.Equals(c.Type, ScopeClaimType, StringComparison.OrdinalIgnoreCase))
+                .SelectMany(c => c.Value.Split(' ').Select(scope => new RequiredApiPermission(resourceType, scope)))
+                .ToArray();
         }
 
         /// <summary>
@@ -84,16 +106,17 @@ namespace PnP.PowerShell.Commands.Base
         /// <returns>Type of resource it represents</returns>
         internal static Enums.ResourceTypeName DefineResourceTypeFromAudience(string audience)
         {
-            // Clean up the audience to only leave the main part which allows our switch below to be cleaner and more readable
-            var sanitizedAudience = audience?.TrimEnd('/').ToLowerInvariant();
-            if (sanitizedAudience.StartsWith("http://")) sanitizedAudience = sanitizedAudience.Substring(7);
-            if (sanitizedAudience.StartsWith("https://")) sanitizedAudience = sanitizedAudience.Substring(8);
+            var sanitizedAudience = SanitizeAudience(audience);
+            if (string.IsNullOrWhiteSpace(sanitizedAudience))
+            {
+                return Enums.ResourceTypeName.Unknown;
+            }
 
             // TODO: Extend with all options
             Enums.ResourceTypeName resource = sanitizedAudience switch
             {
                 "graph" or "graph.microsoft.com" or "graph.microsoft.us" or "graph.microsoft.de" or "microsoftgraph.chinacloudapi.cn" or "dod-graph.microsoft.us" or "00000003-0000-0000-c000-000000000000" => Enums.ResourceTypeName.Graph,
-                "azure" or "management.azure.com" or "management.chinacloudapi.cn" or "management.usgovcloudapi.net" or "management.usgovcloudapi.net" or "management.usgovcloudapi.net" => Enums.ResourceTypeName.AzureManagementApi,
+                "azure" or "management.azure.com" or "management.chinacloudapi.cn" or "management.usgovcloudapi.net" => Enums.ResourceTypeName.AzureManagementApi,
                 "exchangeonline" or "outlook.office.com" or "outlook.office365.com" => Enums.ResourceTypeName.ExchangeOnline,
                 "flow" or "service.flow.microsoft.com" => Enums.ResourceTypeName.PowerAutomate,
                 "powerapps" or "api.powerapps.com" => Enums.ResourceTypeName.PowerApps,
@@ -114,29 +137,34 @@ namespace PnP.PowerShell.Commands.Base
         /// <exception cref="PSArgumentException">Thrown if the permissions set through the permissions attribute do not match the roles in the JWT token</exception>
         internal static void EnsureRequiredPermissionsAvailableInAccessTokenAudience(Type cmdletType, string accessToken)
         {
-            // Decode the JWT token
-            var decodedToken = new Microsoft.IdentityModel.JsonWebTokens.JsonWebToken(accessToken);
+            if (!TryReadToken(accessToken, out var decodedToken))
+            {
+                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", "Unable to validate access token permissions because the provided access token was null, empty, or not a valid JWT.");
+                return;
+            }
 
-            // Retrieve the audience the token was issued for
             var audience = decodedToken.Audiences.FirstOrDefault();
+            if (string.IsNullOrWhiteSpace(audience))
+            {
+                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", "Unable to validate access token permissions because the access token does not contain an audience claim.");
+                return;
+            }
+
             var resourceType = DefineResourceTypeFromAudience(audience);
 
-            // Determine the type of token (delegate or app-only)
-            var tokenType = RetrieveTokenType(accessToken);
+            var tokenType = RetrieveTokenType(decodedToken);
+            if (tokenType == Enums.IdType.Unknown)
+            {
+                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", "Unable to validate access token permissions because the access token type could not be determined.");
+                return;
+            }
 
-            // Validate the permissions in the access token against the permissions required for the cmdlet through the attributes provided at the class level of the cmdlet
-            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdletType, accessToken, resourceType, tokenType);
+            var permissionEvaluationResponses = AccessTokenPermissionValidationResponse.EvaluatePermissions(cmdletType, decodedToken, resourceType, tokenType);
 
-            // If the permission evaluation returns null, it was unable to determine the permissions and it should stop
             if (permissionEvaluationResponses == null) return;
 
-            // If any of the permission evaluations has the required permissions present, we can return and are good to go permission-wise
             if (permissionEvaluationResponses.Any(p => p.RequiredPermissionsPresent)) return;
 
-            // Retrieve the scopes we have in our AccessToken
-            var scopes = ReturnScopes(accessToken);
-
-            // None of the permission attributes matched the permissions in the access token, so we throw an exception
             var exceptionTextBuilder = new StringBuilder();
             exceptionTextBuilder.AppendLine($"Current access token lacks {(permissionEvaluationResponses.Length != 1 ? "one of " : "")}the following required {tokenType.GetDescription()} permission scope{(permissionEvaluationResponses.Length != 1 ? "s" : "")} on the resource {resourceType.GetDescription()}:");
 
@@ -150,9 +178,8 @@ namespace PnP.PowerShell.Commands.Base
                 }
             }
 
-            // Log a warning that the permission check failed. Deliberately not throwing an exception here, as the permission attributes might be wrong, thus will try to execute anyway.
+            // Log an error that the permission check failed. Deliberately not throwing an exception here, as the permission attributes might be wrong, thus will try to execute anyway.
             PnP.Framework.Diagnostics.Log.Error("TokenHandler", exceptionTextBuilder.ToString().Replace(Environment.NewLine, " "));
-            //cmdlet.LogWarning(exceptionTextBuilder.ToString());
         }
 
         /// <summary>
@@ -166,19 +193,23 @@ namespace PnP.PowerShell.Commands.Base
         internal static string GetAccessToken(string audience, PnPConnection connection)
         {
             if (connection == null) return null;
+            if (string.IsNullOrWhiteSpace(audience))
+            {
+                throw new PSInvalidOperationException("An audience must be provided to acquire an access token.");
+            }
+
+            var requestedAudience = audience.TrimEnd('/');
 
             string accessToken = null;
             if (connection.ConnectionMethod == ConnectionMethod.AzureADWorkloadIdentity)
             {
-                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Acquiring token for resource {connection.GraphEndPoint} using Azure AD Workload Identity");
-                //cmdlet.LogDebug("Acquiring token for resource " + connection.GraphEndPoint + " using Azure AD Workload Identity");
-                accessToken = GetAzureADWorkloadIdentityTokenAsync($"{audience.TrimEnd('/')}").GetAwaiter().GetResult();
+                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Acquiring token for resource {requestedAudience} using Azure AD Workload Identity");
+                accessToken = GetAzureADWorkloadIdentityTokenAsync(requestedAudience).GetAwaiter().GetResult();
             }
             else if (connection.ConnectionMethod == ConnectionMethod.FederatedIdentity)
             {
-                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Acquiring token for resource {connection.GraphEndPoint} using Federated Identity");
-                //cmdlet.LogDebug("Acquiring token for resource " + connection.GraphEndPoint + " using Federated Identity");
-                accessToken = GetFederatedIdentityTokenAsync(connection.ClientId, connection.Tenant, $"{audience.TrimEnd('/')}").GetAwaiter().GetResult();
+                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Acquiring token for resource {requestedAudience} using Federated Identity");
+                accessToken = GetFederatedIdentityTokenAsync(connection.ClientId, connection.Tenant, requestedAudience).GetAwaiter().GetResult();
             }
             else
             {
@@ -200,8 +231,7 @@ namespace PnP.PowerShell.Commands.Base
             }
             if (string.IsNullOrEmpty(accessToken))
             {
-                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Unable to acquire token for resource {connection.GraphEndPoint}");
-                //cmdlet.LogDebug($"Unable to acquire token for resource {connection.GraphEndPoint}");
+                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Unable to acquire token for resource {audience}");
                 return null;
             }
 
@@ -218,6 +248,11 @@ namespace PnP.PowerShell.Commands.Base
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
         internal static async Task<string> GetAzureADWorkloadIdentityTokenAsync(string requiredScope)
         {
+            if (string.IsNullOrWhiteSpace(requiredScope))
+            {
+                throw new PSInvalidOperationException("A required scope must be provided to acquire an access token using Azure AD Workload Identity.");
+            }
+
             // <authentication>
             // Azure AD Workload Identity webhook will inject the following env vars
             // 	AZURE_CLIENT_ID with the clientID set in the service account annotation
@@ -257,7 +292,7 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSInvalidOperationException($"Failed to read the Azure AD Workload Identity token file configured through AZURE_FEDERATED_TOKEN_FILE ('{tokenPath}'). {ex.Message}", ex);
             }
 
-            var _confidentialClientApp = ConfidentialClientApplicationBuilder.Create(clientID)
+            var confidentialClientApp = ConfidentialClientApplicationBuilder.Create(clientID)
                 .WithAuthority(host, tenantID)
                 .WithClientAssertion(() => federatedToken)
                 .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
@@ -266,28 +301,32 @@ namespace PnP.PowerShell.Commands.Base
             AuthenticationResult result = null;
             try
             {
-                result = await _confidentialClientApp
+                result = await confidentialClientApp
                             .AcquireTokenForClient(new string[] { requiredScope })
                             .ExecuteAsync();
             }
             catch (MsalUiRequiredException ex)
             {
-                // The application doesn't have sufficient permissions.
-                // - Did you declare enough app permissions during app creation?
-                // - Did the tenant admin grant permissions to the application?
-                throw new PSInvalidOperationException(ex.Message);
+                throw new PSInvalidOperationException(FormatMsalErrorMessage("Unable to acquire an Azure AD Workload Identity access token because the application does not have sufficient permissions", ex), ex);
             }
-            catch (MsalServiceException ex) when (ex.Message.Contains("AADSTS70011"))
+            catch (MsalServiceException ex) when (ex.Message.Contains("AADSTS70011", StringComparison.OrdinalIgnoreCase) || string.Equals(ex.ErrorCode, "invalid_scope", StringComparison.OrdinalIgnoreCase))
             {
-                // Invalid scope. The scope has to be in the form "https://resourceurl/.default"
-                // Mitigation: Change the scope to be as expected.
-                throw new PSInvalidOperationException(ex.Message);
+                throw new PSInvalidOperationException($"Unable to acquire an Azure AD Workload Identity access token because the requested scope '{requiredScope}' is invalid. The scope must be in the form 'https://resourceurl/.default'. {ex.Message}", ex);
             }
             catch (MsalServiceException ex)
             {
-                // Some other generic exception
-                throw new PSInvalidOperationException(ex.Message);
+                throw new PSInvalidOperationException(FormatMsalErrorMessage("Unable to acquire an Azure AD Workload Identity access token", ex), ex);
             }
+            catch (MsalClientException ex)
+            {
+                throw new PSInvalidOperationException(FormatMsalErrorMessage("Unable to acquire an Azure AD Workload Identity access token", ex), ex);
+            }
+
+            if (string.IsNullOrWhiteSpace(result?.AccessToken))
+            {
+                throw new PSInvalidOperationException("Unable to acquire an Azure AD Workload Identity access token because the identity provider response did not contain an access token.");
+            }
+
             return result.AccessToken;
         }
 
@@ -301,11 +340,16 @@ namespace PnP.PowerShell.Commands.Base
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
         internal static async Task<string> GetFederatedIdentityTokenAsync(string clientId, string tenant, string requiredScope)
         {
+            if (string.IsNullOrWhiteSpace(requiredScope))
+            {
+                throw new PSInvalidOperationException("A required scope must be provided to acquire an access token using Federated Identity.");
+            }
+
             var actionsIdTokenRequestUrl = Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL");
             var actionsIdTokenRequestToken = Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN");
             var systemOidcRequestUri = Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI");
 
-            if (!string.IsNullOrEmpty(actionsIdTokenRequestUrl) && !string.IsNullOrEmpty(actionsIdTokenRequestToken))
+            if (!string.IsNullOrWhiteSpace(actionsIdTokenRequestUrl) && !string.IsNullOrWhiteSpace(actionsIdTokenRequestToken))
             {
                 if (string.IsNullOrWhiteSpace(clientId) || string.IsNullOrWhiteSpace(tenant))
                 {
@@ -314,15 +358,15 @@ namespace PnP.PowerShell.Commands.Base
 
                 Framework.Diagnostics.Log.Debug("TokenHandler", "ACTIONS_ID_TOKEN_REQUEST_URL and ACTIONS_ID_TOKEN_REQUEST_TOKEN env variables found. The context is GitHub Actions...");
 
-                var federationToken = await GetFederationTokenFromGithubAsync();
+                var federationToken = await GetFederationTokenFromGithubAsync(actionsIdTokenRequestUrl, actionsIdTokenRequestToken);
                 return await GetAccessTokenWithFederatedTokenAsync(clientId, tenant, requiredScope, federationToken);
             }
-            else if (!string.IsNullOrEmpty(systemOidcRequestUri))
+            else if (!string.IsNullOrWhiteSpace(systemOidcRequestUri))
             {
                 Framework.Diagnostics.Log.Debug("TokenHandler", "SYSTEM_OIDCREQUESTURI env variable found. The context is Azure DevOps...");
 
                 var systemAccessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
-                if (string.IsNullOrEmpty(systemAccessToken))
+                if (string.IsNullOrWhiteSpace(systemAccessToken))
                 {
                     throw new PSInvalidOperationException("The SYSTEM_ACCESSTOKEN environment variable is not available. Please check the Azure DevOps pipeline task configuration. It should contain 'SYSTEM_ACCESSTOKEN: $(System.AccessToken)' in the env section.");
                 }
@@ -330,9 +374,9 @@ namespace PnP.PowerShell.Commands.Base
                 var serviceConnectionId = Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_SERVICE_CONNECTION_ID");
                 var serviceConnectionAppId = Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_CLIENT_ID");
                 var serviceConnectionTenantId = Environment.GetEnvironmentVariable("AZURESUBSCRIPTION_TENANT_ID");
-                var useServiceConnection = !string.IsNullOrEmpty(serviceConnectionId) &&
-                                          !string.IsNullOrEmpty(serviceConnectionAppId) &&
-                                          !string.IsNullOrEmpty(serviceConnectionTenantId);
+                var useServiceConnection = !string.IsNullOrWhiteSpace(serviceConnectionId) &&
+                                          !string.IsNullOrWhiteSpace(serviceConnectionAppId) &&
+                                          !string.IsNullOrWhiteSpace(serviceConnectionTenantId);
 
                 if (!useServiceConnection)
                 {
@@ -341,7 +385,7 @@ namespace PnP.PowerShell.Commands.Base
 
                 Framework.Diagnostics.Log.Debug("TokenHandler", $"Using service connection '{serviceConnectionId}' with app Id '{serviceConnectionAppId}' and tenant Id '{serviceConnectionTenantId}'...");
 
-                var federationToken = await GetFederationTokenFromAzureDevOpsAsync(serviceConnectionId);
+                var federationToken = await GetFederationTokenFromAzureDevOpsAsync(systemOidcRequestUri, systemAccessToken, serviceConnectionId);
                 return await GetAccessTokenWithFederatedTokenAsync(serviceConnectionAppId, serviceConnectionTenantId, requiredScope, federationToken);
             }
             else
@@ -350,22 +394,22 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private static async Task<string> GetFederationTokenFromGithubAsync()
+        private static async Task<string> GetFederationTokenFromGithubAsync(string requestUrlBase, string requestToken)
         {
             try
             {
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving GitHub federation token...");
 
-                var requestUrl = $"{Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_URL")}&audience={UrlUtilities.UrlEncode("api://AzureADTokenExchange")}";
+                var requestUrl = $"{requestUrlBase}&audience={UrlUtilities.UrlEncode("api://AzureADTokenExchange")}";
 
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
                 using var requestMessage = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-                requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("ACTIONS_ID_TOKEN_REQUEST_TOKEN"));
+                requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", requestToken);
                 requestMessage.Headers.Add("Accept", "application/json");
                 requestMessage.Headers.Add("x-anonymous", "true");
 
-                var response = await httpClient.SendAsync(requestMessage);
+                using var response = await httpClient.SendAsync(requestMessage);
                 var responseContent = await response.Content.ReadAsStringAsync();
 
                 if (!response.IsSuccessStatusCode)
@@ -375,9 +419,11 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved GitHub federation token...");
-                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
-
-                return tokenResponse["value"].ToString();
+                return GetRequiredJsonStringProperty(responseContent, "value", "GitHub federation token response");
+            }
+            catch (PSInvalidOperationException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -386,25 +432,25 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
-        private static async Task<string> GetFederationTokenFromAzureDevOpsAsync(string serviceConnectionId)
+        private static async Task<string> GetFederationTokenFromAzureDevOpsAsync(string requestUri, string systemAccessToken, string serviceConnectionId)
         {
             try
             {
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Azure DevOps federation token...");
 
-                var requestUrl = $"{Environment.GetEnvironmentVariable("SYSTEM_OIDCREQUESTURI")}?api-version=7.1&serviceConnectionId={serviceConnectionId}";
+                var requestUrl = $"{requestUri}?api-version=7.1&serviceConnectionId={serviceConnectionId}";
 
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
                 using var requestMessage = new HttpRequestMessage(HttpMethod.Post, requestUrl);
                 requestMessage.Content = new StringContent("", Encoding.UTF8, "application/json");
-                requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN"));
+                requestMessage.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", systemAccessToken);
                 requestMessage.Headers.Add("Accept", "application/json");
                 requestMessage.Headers.Add("x-anonymous", "true");
                 // Prevents the service from responding with a redirect HTTP status code (useful for automation).
                 requestMessage.Headers.Add("X-TFS-FedAuthRedirect", "Suppress");
 
-                var response = await httpClient.SendAsync(requestMessage);
+                using var response = await httpClient.SendAsync(requestMessage);
 
                 var responseContent = await response.Content.ReadAsStringAsync();
                 if (!response.IsSuccessStatusCode)
@@ -414,9 +460,11 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved Azure DevOps federation token...");
-                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
-
-                return tokenResponse["oidcToken"].ToString();
+                return GetRequiredJsonStringProperty(responseContent, "oidcToken", "Azure DevOps federation token response");
+            }
+            catch (PSInvalidOperationException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
@@ -429,27 +477,31 @@ namespace PnP.PowerShell.Commands.Base
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(clientId)) throw new PSInvalidOperationException("A client Id must be provided to acquire a federated access token.");
+                if (string.IsNullOrWhiteSpace(tenant)) throw new PSInvalidOperationException("A tenant Id must be provided to acquire a federated access token.");
+                if (string.IsNullOrWhiteSpace(resource)) throw new PSInvalidOperationException("A resource scope must be provided to acquire a federated access token.");
+                if (string.IsNullOrWhiteSpace(federatedToken)) throw new PSInvalidOperationException("A federation token must be provided to acquire a federated access token.");
+
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Retrieving Entra ID access token with federated token...");
                 var httpClient = Framework.Http.PnPHttpClient.Instance.GetHttpClient();
 
-                var queryParams = new List<string>
-    {
-        "grant_type=client_credentials",
-        $"scope={HttpUtility.UrlEncode(resource)}",
-        $"client_id={clientId}",
-        $"client_assertion_type={HttpUtility.UrlEncode("urn:ietf:params:oauth:client-assertion-type:jwt-bearer")}",
-        $"client_assertion={federatedToken}"
-    };
+                var requestData = new Dictionary<string, string>
+                {
+                    ["grant_type"] = "client_credentials",
+                    ["scope"] = resource,
+                    ["client_id"] = clientId,
+                    ["client_assertion_type"] = "urn:ietf:params:oauth:client-assertion-type:jwt-bearer",
+                    ["client_assertion"] = federatedToken
+                };
 
-                var requestData = string.Join("&", queryParams);
                 var requestUrl = $"https://login.microsoftonline.com/{tenant}/oauth2/v2.0/token";
 
                 using var request = new HttpRequestMessage(HttpMethod.Post, requestUrl);
-                request.Content = new StringContent(requestData, Encoding.UTF8, "application/x-www-form-urlencoded");
+                request.Content = new FormUrlEncodedContent(requestData);
                 request.Headers.Add("Accept", "application/json");
                 request.Headers.Add("x-anonymous", "true");
 
-                var response = await httpClient.SendAsync(request);
+                using var response = await httpClient.SendAsync(request);
 
                 var responseContent = await response.Content.ReadAsStringAsync();
                 if (!response.IsSuccessStatusCode)
@@ -459,15 +511,101 @@ namespace PnP.PowerShell.Commands.Base
                 }
 
                 Framework.Diagnostics.Log.Debug("TokenHandler", "Successfully retrieved federated access token...");
-                var tokenResponse = JsonSerializer.Deserialize<Dictionary<string, object>>(responseContent);
-
-                return tokenResponse["access_token"].ToString();
+                return GetRequiredJsonStringProperty(responseContent, "access_token", "Entra ID access token response");
+            }
+            catch (PSInvalidOperationException)
+            {
+                throw;
             }
             catch (Exception ex)
             {
                 Framework.Diagnostics.Log.Error("TokenHandler", ex.Message);
-                throw new PSInvalidOperationException(ex.Message, ex);
+                throw new PSInvalidOperationException($"Failed to retrieve federated access token: {ex.Message}", ex);
             }
+        }
+
+        private static string SanitizeAudience(string audience)
+        {
+            if (string.IsNullOrWhiteSpace(audience))
+            {
+                return null;
+            }
+
+            var sanitizedAudience = audience.Trim().TrimEnd('/').ToLowerInvariant();
+            if (sanitizedAudience.StartsWith("http://", StringComparison.Ordinal))
+            {
+                return sanitizedAudience["http://".Length..];
+            }
+
+            if (sanitizedAudience.StartsWith("https://", StringComparison.Ordinal))
+            {
+                return sanitizedAudience["https://".Length..];
+            }
+
+            return sanitizedAudience;
+        }
+
+        private static string GetClaimValue(JsonWebToken decodedToken, string claimType)
+        {
+            return decodedToken.Claims.FirstOrDefault(c => c.Type.Equals(claimType, StringComparison.OrdinalIgnoreCase))?.Value;
+        }
+
+        private static bool TryReadToken(string accessToken, out JsonWebToken decodedToken)
+        {
+            decodedToken = null;
+            if (string.IsNullOrWhiteSpace(accessToken))
+            {
+                return false;
+            }
+
+            try
+            {
+                decodedToken = new JsonWebToken(accessToken);
+                return true;
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+            catch (SecurityTokenException)
+            {
+                return false;
+            }
+        }
+
+        private static string GetRequiredJsonStringProperty(string responseContent, string propertyName, string responseDescription)
+        {
+            if (string.IsNullOrWhiteSpace(responseContent))
+            {
+                throw new PSInvalidOperationException($"Unable to parse the {responseDescription} because the response body was empty.");
+            }
+
+            try
+            {
+                using var jsonDocument = JsonDocument.Parse(responseContent);
+                if (!jsonDocument.RootElement.TryGetProperty(propertyName, out var propertyValue) || propertyValue.ValueKind != JsonValueKind.String)
+                {
+                    throw new PSInvalidOperationException($"Unable to parse the {responseDescription} because the '{propertyName}' property was missing.");
+                }
+
+                var value = propertyValue.GetString();
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new PSInvalidOperationException($"Unable to parse the {responseDescription} because the '{propertyName}' property was empty.");
+                }
+
+                return value;
+            }
+            catch (JsonException ex)
+            {
+                throw new PSInvalidOperationException($"Unable to parse the {responseDescription} because the response body was not valid JSON. {ex.Message}", ex);
+            }
+        }
+
+        private static string FormatMsalErrorMessage(string message, MsalException exception)
+        {
+            var errorCode = string.IsNullOrWhiteSpace(exception.ErrorCode) ? string.Empty : $" ({exception.ErrorCode})";
+            return $"{message}{errorCode}. {exception.Message}";
         }
     }
 }
