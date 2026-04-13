@@ -675,6 +675,9 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
+            // Acquire an initial token to validate the workload identity configuration and to use for
+            // the initial connection test (IsTenantAdminSite). The token is cached by MSAL so this
+            // does not cause an extra round-trip on the first CSOM request.
             var accessToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(defaultResource).GetAwaiter().GetResult();
 
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
@@ -686,9 +689,19 @@ namespace PnP.PowerShell.Commands.Base
                     context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
+
+                    // PnP.Framework's GetContext() registers an ExecutingWebRequest handler that injects
+                    // the static access token acquired above. That token expires after its Azure AD
+                    // lifetime (typically 1-2 hours). The handler below runs after PnP.Framework's and
+                    // overrides the Authorization header with a fresh token obtained from MSAL on every
+                    // CSOM request. MSAL caches the token and only contacts Azure AD when it is about to
+                    // expire, so this does not add a network round-trip on every call.
+                    var capturedDefaultResource = defaultResource;
                     context.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                        var freshToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(capturedDefaultResource).GetAwaiter().GetResult();
+                        e.WebRequestExecutor.RequestHeaders["Authorization"] = $"Bearer {freshToken}";
                     };
                     if (IsTenantAdminSite(context))
                     {

@@ -185,7 +185,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns an oAuth JWT access token
         /// </summary>
-        /// <param name="cmdlet">Cmdlet for which the token is requested</param>
         /// <param name="audience">Audience to retrieve the token for</param>
         /// <param name="connection">The connection to use to make the token calls</param>
         /// <returns>oAuth JWT token</returns>
@@ -225,13 +224,13 @@ namespace PnP.PowerShell.Commands.Base
                             throw new PSInvalidOperationException("Trying to get a token for a different endpoint while being connected through an ACS token is not possible. Please connect differently.");
                         }
 
-                        accessToken = authManager.GetAccessToken(audience);
+                        accessToken = authManager.GetAccessToken(requestedAudience);
                     }
                 }
             }
             if (string.IsNullOrEmpty(accessToken))
             {
-                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Unable to acquire token for resource {audience}");
+                PnP.Framework.Diagnostics.Log.Debug("TokenHandler", $"Unable to acquire token for resource {requestedAudience}");
                 return null;
             }
 
@@ -241,8 +240,6 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns an access token based on a Azure AD Workload Identity. Only works within Azure components supporting workload identities.
         /// </summary>
-        /// <param name="cmdlet">The cmdlet scope in which this code runs. Used to write logging to.</param>
-        /// <param name="httpClient">The HttpClient that will be reused to fetch the token to avoid port exhaustion</param>
         /// <param name="requiredScope">The permission scope to be requested, in the format https://<resource>/<scope>, i.e. https://graph.microsoft.com/Group.Read.All</param>
         /// <returns>Access token</returns>
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
@@ -294,7 +291,11 @@ namespace PnP.PowerShell.Commands.Base
 
             var confidentialClientApp = ConfidentialClientApplicationBuilder.Create(clientID)
                 .WithAuthority(host, tenantID)
-                .WithClientAssertion(() => federatedToken)
+                // Always read the token file fresh so that MSAL picks up the latest Kubernetes service
+                // account token when it needs to acquire or silently refresh an Azure AD access token.
+                // Kubernetes rotates the file before the current token expires; capturing the string
+                // value once would cause silent-refresh failures after the first rotation.
+                .WithClientAssertion(() => System.IO.File.ReadAllText(tokenPath))
                 .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
                 .Build();
 
@@ -333,8 +334,8 @@ namespace PnP.PowerShell.Commands.Base
         /// <summary>
         /// Returns an access token based on a Federated Identity. Only works within Azure components supporting federated identities like GitHub/AzureDevOps.
         /// </summary>
-        /// <param name="cmdlet">The cmdlet scope in which this code runs. Used to write logging to.</param>
-        /// <param name="httpClient">The HttpClient that will be reused to fetch the token to avoid port exhaustion</param>
+        /// <param name="clientId">The client Id of the Federated Identity application</param>
+        /// <param name="tenant">The tenant Id of the Federated Identity application</param>
         /// <param name="requiredScope">The permission scope to be requested, in the format https://<resource>/<scope>, i.e. https://graph.microsoft.com/Group.Read.All</param>
         /// <returns>Access token</returns>
         /// <exception cref="PSInvalidOperationException">Thrown if unable to retrieve an access token through a managed identity</exception>
