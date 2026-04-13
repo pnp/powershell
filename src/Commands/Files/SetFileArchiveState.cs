@@ -75,6 +75,11 @@ namespace PnP.PowerShell.Commands.Files
 				throw new PSInvalidOperationException("Unable to acquire a Microsoft Graph access token required to validate file archive state permissions.");
 			}
 
+			if (TokenHandler.RetrieveTokenType(graphAccessToken) != IdType.Delegate)
+			{
+				throw new PSInvalidOperationException("Changing the file archive state is only supported with a delegated Microsoft Graph access token.");
+			}
+
 			var availableScopes = TokenHandler.ReturnScopes(graphAccessToken)
 				.Where(scope => scope.ResourceType == ResourceTypeName.Graph)
 				.Select(scope => scope.Scope)
