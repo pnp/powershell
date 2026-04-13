@@ -104,6 +104,7 @@ namespace PnP.PowerShell.Commands.Model
         public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
         public bool OverrideSharingCapability { get; set; }
         public bool AllowFileArchive { get; set; }
+        public long ArchivedFileDiskUsed { get; set; }
         public bool AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { get; set; }
         public bool HidePeoplePreviewingFiles { get; set; }
         public bool HidePeopleWhoHaveListsOpen { get; set; }
@@ -205,6 +206,7 @@ namespace PnP.PowerShell.Commands.Model
             OverrideSharingCapability = props.OverrideSharingCapability;
             OverrideBlockUserInfoVisibility = props.OverrideBlockUserInfoVisibility;
             AllowFileArchive = props.AllowFileArchive;
+            ArchivedFileDiskUsed = props.ArchivedFileDiskUsed;
             AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = props.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
             HidePeoplePreviewingFiles = props.HidePeoplePreviewingFiles;
             HidePeopleWhoHaveListsOpen = props.HidePeopleWhoHaveListsOpen;
