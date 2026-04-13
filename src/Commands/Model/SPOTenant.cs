@@ -233,6 +233,10 @@ namespace PnP.PowerShell.Commands.Model
 
         public bool? AnyoneLinkTrackUsers { private set; get; }
 
+        public bool? AllowFileArchive { private set; get; }
+
+        public bool? AllowFileArchiveOnNewSitesByDefault { private set; get; }
+
         public bool? EnableSiteArchive { private set; get; }
 
         public bool? ESignatureEnabled { private set; get; }

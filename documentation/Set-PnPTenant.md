@@ -145,6 +145,8 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-AIBuilderEnabled <Boolean>]
  [-AllowSensitivityLabelOnRecords <Boolean>]
  [-AnyoneLinkTrackUsers <Boolean>]
+ [-AllowFileArchive <Boolean>]
+ [-AllowFileArchiveOnNewSitesByDefault <Boolean>]
  [-EnableSiteArchive <Boolean>]
  [-ESignatureEnabled <Boolean>]
  [-BlockUserInfoVisibilityInSharePoint <TenantBrowseUserInfoPolicyValue>]
@@ -227,6 +229,13 @@ Set-PnPTenant  -GuestSharingGroupAllowListInTenantByPrincipalIdentity {}
 ```
 
 This example clears the guest sharing group allow list in the tenant.
+
+### EXAMPLE 7
+```powershell
+Set-PnPTenant -AllowFileArchive $true -AllowFileArchiveOnNewSitesByDefault $true
+```
+
+This example enables file-level archiving for the tenant and makes new sites inherit the capability by default.
 
 ## PARAMETERS
 
@@ -2645,6 +2654,36 @@ Accept wildcard characters: False
 
 ### -AllowSensitivityLabelOnRecords
 Allows sensitivity label on records.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowFileArchive
+Enables or disables file-level archiving for SharePoint Online sites in the tenant.
+
+When set to $false, users can no longer archive files on any site even if the site-level setting is enabled. Existing archived files remain archived and can still be reactivated.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowFileArchiveOnNewSitesByDefault
+Controls whether newly created SharePoint Online sites have file-level archiving enabled by default.
+
+Use this together with `-AllowFileArchive $true` when you want new sites to inherit file archiving automatically instead of enabling it site by site.
 
 ```yaml
 Type: Boolean

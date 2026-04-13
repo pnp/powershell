@@ -29,6 +29,7 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-DefaultLinkPermission <SharingPermissionType>] [-DefaultSharingLinkType <SharingLinkType>] [-DefaultLinkToExistingAccess <Boolean>] [-ExternalUserExpirationInDays <Int32>]
  [-SharingAllowedDomainList <String>] [-SharingBlockedDomainList <String>] [-ShowPeoplePickerSuggestionsForGuestUsers <Boolean>] [-AllowDownloadingOfNonWebViewableFiles]
  [-LimitedAccessFileType <SPOLimitedAccessFileType>] [-AllowEditing <Boolean>]
+ [-AllowFileArchive <Boolean>]
  [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>] [-CommentsOnSitePagesDisabled]
  [-DisableAppViews <AppViewsPolicy>] [-DisableCompanyWideSharingLinks <CompanyWideSharingLinksPolicy>]
  [-DisableFlows <FlowsPolicy>] [-AnonymousLinkExpirationInDays <Int32>] [-SensitivityLabel <String>] [-RemoveLabel] [-AddInformationSegment <Guid[]>] [-RemoveInformationSegment <Guid[]>]
@@ -97,6 +98,13 @@ Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/sales" -DenyAd
 
 This will enable script support for the site 'https://contoso.sharepoint.com/sites/sales'
 
+### EXAMPLE 6
+```powershell
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/marketing" -AllowFileArchive $true
+```
+
+This will enable file-level archiving on the specified site. The tenant-level `Set-PnPTenant -AllowFileArchive $true` setting must also be enabled or the site setting will not take effect.
+
 ## PARAMETERS
 
 ### -AddInformationSegment
@@ -129,6 +137,22 @@ Accept wildcard characters: False
 
 ### -AllowEditing
 Prevents users from editing Office files in the browser and copying and pasting Office file contents out of the browser window.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowFileArchive
+Enables or disables file-level archiving for the site.
+
+This setting only takes effect when the tenant-level `AllowFileArchive` setting is enabled. If the tenant-level setting is disabled, users will not be able to archive files on the site even when this parameter is set to `$true`.
 
 ```yaml
 Type: Boolean
