@@ -45,6 +45,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - All cmdlets with `AzureAD` in their name have been renamed to use `EntraID` instead, to reflect the rebranding of Azure Active Directory to Entra ID. Aliases have been added for backward compatibility. [#5221](https://github.com/pnp/powershell/pull/5221)
 - Improved `Import-PnPFlow` cmdlet to better handle the retry logic between internal API calls, introduced two new optional parameters [#5233](https://github.com/pnp/powershell/pull/5233)
 - Update `registerapplication.md` documentation with latest UIs and update wordings. [#5265](https://github.com/pnp/powershell/pull/5265)
+- Added parameter IncreaseRequestTimeout to `Get-PnPSearchCrawlLog` cmdlet. [#5223](https://github.com/pnp/powershell/pull/5223)
   
 ### Fixed
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
