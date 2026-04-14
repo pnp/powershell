@@ -5,6 +5,7 @@ using Microsoft.SharePoint.Client;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
@@ -24,6 +25,11 @@ namespace PnP.PowerShell.Commands.Base
         private const string ObjectIdClaimType = "oid";
         private const string RolesClaimType = "roles";
         private const string ScopeClaimType = "scp";
+
+        // Keyed by "{clientId}:{tenantId}:{authorityHost}" — one app per workload-identity config.
+        // Reusing the same IConfidentialClientApplication lets MSAL's shared token cache do its job
+        // without rebuilding the HTTP client, authority metadata, and builder overhead on every call.
+        private static readonly ConcurrentDictionary<string, IConfidentialClientApplication> _confidentialClientAppCache = new();
 
         /// <summary>
         /// Returns the type of oAuth JWT token being passed in (Delegate/AppOnly)
@@ -289,15 +295,21 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSInvalidOperationException($"Failed to read the Azure AD Workload Identity token file configured through AZURE_FEDERATED_TOKEN_FILE ('{tokenPath}'). {ex.Message}", ex);
             }
 
-            var confidentialClientApp = ConfidentialClientApplicationBuilder.Create(clientID)
-                .WithAuthority(host, tenantID)
-                // Always read the token file fresh so that MSAL picks up the latest Kubernetes service
-                // account token when it needs to acquire or silently refresh an Azure AD access token.
-                // Kubernetes rotates the file before the current token expires; capturing the string
-                // value once would cause silent-refresh failures after the first rotation.
-                .WithClientAssertion(() => System.IO.File.ReadAllText(tokenPath))
-                .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
-                .Build();
+            // tokenPath is included in the key so that the cached app is invalidated if the path
+            // changes (e.g. in tests or multi-identity sessions). clientID/tenantID/host are stable
+            // per workload-identity configuration; tokenPath is also stable in production but may
+            // differ across runs in other contexts.
+            var cacheKey = $"{clientID}:{tenantID}:{host}:{tokenPath}";
+            var confidentialClientApp = _confidentialClientAppCache.GetOrAdd(cacheKey, _ =>
+                ConfidentialClientApplicationBuilder.Create(clientID)
+                    .WithAuthority(host, tenantID)
+                    // Always read the token file fresh so that MSAL picks up the latest Kubernetes
+                    // service account token when it needs to acquire or refresh an Azure AD token.
+                    // Kubernetes rotates the file before the current token expires; capturing the
+                    // string value once would cause silent-refresh failures after the first rotation.
+                    .WithClientAssertion(() => System.IO.File.ReadAllText(tokenPath))
+                    .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
+                    .Build());
 
             AuthenticationResult result = null;
             try
