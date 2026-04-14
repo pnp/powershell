@@ -101,7 +101,7 @@ namespace PnP.PowerShell.Commands.Base
 
             return decodedToken.Claims
                 .Where(c => string.Equals(c.Type, RolesClaimType, StringComparison.OrdinalIgnoreCase) || string.Equals(c.Type, ScopeClaimType, StringComparison.OrdinalIgnoreCase))
-                .SelectMany(c => c.Value.Split(' ').Select(scope => new RequiredApiPermission(resourceType, scope)))
+                .SelectMany(c => c.Value.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).Select(scope => new RequiredApiPermission(resourceType, scope)))
                 .ToArray();
         }
 
@@ -276,23 +276,12 @@ namespace PnP.PowerShell.Commands.Base
             if (missingEnvironmentVariables.Count > 0)
             {
                 var message = $"Azure AD Workload Identity expects Azure workload identity environment variables to be available. Missing: {string.Join(", ", missingEnvironmentVariables)}.";
-
                 throw new PSInvalidOperationException(message);
             }
 
             if (!System.IO.File.Exists(tokenPath))
             {
                 throw new PSInvalidOperationException($"Azure AD Workload Identity expects AZURE_FEDERATED_TOKEN_FILE to point to an existing token file. Current value: '{tokenPath}'.");
-            }
-
-            string federatedToken;
-            try
-            {
-                federatedToken = System.IO.File.ReadAllText(tokenPath);
-            }
-            catch (Exception ex) when (ex is System.IO.IOException || ex is UnauthorizedAccessException || ex is ArgumentException || ex is NotSupportedException)
-            {
-                throw new PSInvalidOperationException($"Failed to read the Azure AD Workload Identity token file configured through AZURE_FEDERATED_TOKEN_FILE ('{tokenPath}'). {ex.Message}", ex);
             }
 
             // tokenPath is included in the key so that the cached app is invalidated if the path
@@ -617,8 +606,8 @@ namespace PnP.PowerShell.Commands.Base
 
         private static string FormatMsalErrorMessage(string message, MsalException exception)
         {
-            var errorCode = string.IsNullOrWhiteSpace(exception.ErrorCode) ? string.Empty : $" ({exception.ErrorCode})";
-            return $"{message}{errorCode}. {exception.Message}";
+            var errorCode = string.IsNullOrWhiteSpace(exception?.ErrorCode) ? string.Empty : $" ({exception?.ErrorCode})";
+            return $"{message}{errorCode}. {exception?.Message}";
         }
     }
 }
