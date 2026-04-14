@@ -5,9 +5,9 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>Remove-PnPWeb | PnP PowerShell </title>
+    <title>Set-PnPFolderArchiveState | PnP PowerShell </title>
     <meta name="viewport" content="width=device-width">
-    <meta name="title" content="Remove-PnPWeb | PnP PowerShell ">
+    <meta name="title" content="Set-PnPFolderArchiveState | PnP PowerShell ">
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
@@ -77,47 +77,66 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
-  <h1 id="remove-pnpweb">Remove-PnPWeb</h1>
+  <h1 id="set-pnpfolderarchivestate">Set-PnPFolderArchiveState</h1>
 
 <h2 id="synopsis">SYNOPSIS</h2>
-<p>Removes a subsite.
-Important:The subsite is permanently deleted without being sent to the recycle bin, the action cannot be undone, and this cmdlet should be used with extreme caution</p>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API (Delegated only): Files.ReadWrite, Files.Read, Files.Read.All, or Files.ReadWrite.All to archive folders, and Files.Read or Files.Read.All to reactivate folders</li>
+</ul>
+<p>Archives or reactivates a folder in a document library in the current web by using the Microsoft Graph beta archive APIs.</p>
+<h2 id="outputs">OUTPUTS</h2>
+<h3 id="pnppowershellcommandsmodelsharepointfolderarchivestateresult">PnP.PowerShell.Commands.Model.SharePoint.FolderArchiveStateResult</h3>
+<p>Returns a result object containing the folder name, server relative URL, requested archive state, and the monitor URL returned by Microsoft Graph.</p>
 <h2 id="syntax">SYNTAX</h2>
-<pre><code class="lang-powershell">Remove-PnPWeb -Identity &lt;WebPipeBind&gt; [-Force] [-Connection &lt;PnPConnection&gt;] 
+<pre><code class="lang-powershell">Set-PnPFolderArchiveState -Identity &lt;FolderPipeBind&gt; -ArchiveState &lt;FolderArchiveState&gt; [-Force] [-Connection &lt;PnPConnection&gt;]
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
-<p>This cmdlet removes the specified subsite.</p>
+<p>The Set-PnPFolderArchiveState cmdlet archives or reactivates a folder in a document library in the current web through the Microsoft Graph beta driveItem archive endpoints.</p>
+<p>Folder archive and reactivation are asynchronous operations. Microsoft Graph requires the Prefer: respond-async header for folders and returns a monitor URL in the Location header so progress can be tracked until completion.</p>
+<p>Only folders in document libraries in the current web are supported.</p>
 <h2 id="examples">EXAMPLES</h2>
-<h3 id="example-1">EXAMPLE 1</h3>
-<pre><code class="lang-powershell">Remove-PnPWeb -Identity projectA
+<h3 id="example-1">Example 1</h3>
+<pre><code class="lang-powershell">Set-PnPFolderArchiveState -Identity &quot;/sites/Marketing/Shared Documents/QuarterlyReports&quot; -ArchiveState Archived
 </code></pre>
-<p>Removes the subsite called projectA and will ask for confirmation before doing so.</p>
-<h3 id="example-2">EXAMPLE 2</h3>
-<pre><code class="lang-powershell">Remove-PnPWeb -Identity 5fecaf67-6b9e-4691-a0ff-518fc9839aa0
+<p>This example archives the specified folder and returns the monitor URL for the asynchronous operation.</p>
+<h3 id="example-2">Example 2</h3>
+<pre><code class="lang-powershell">Set-PnPFolderArchiveState -Identity &quot;/sites/Marketing/Shared Documents/QuarterlyReports&quot; -ArchiveState Active
 </code></pre>
-<p>Removes the subsite with the provided Id and will ask for confirmation before doing so.</p>
-<h3 id="example-3">EXAMPLE 3</h3>
-<pre><code class="lang-powershell">Get-PnPSubWeb | Remove-PnPWeb -Force
+<p>This example reactivates the specified folder and returns the monitor URL for the asynchronous operation.</p>
+<h3 id="example-3">Example 3</h3>
+<pre><code class="lang-powershell">Get-PnPFolder -Url &quot;/sites/Marketing/Shared Documents/QuarterlyReports&quot; | Set-PnPFolderArchiveState -ArchiveState Archived -Force
 </code></pre>
-<p>Removes all subsites while not asking for confirmation to do so.</p>
+<p>This example archives the specified folder coming from the pipeline without prompting for confirmation.</p>
 <h2 id="parameters">PARAMETERS</h2>
-<h3 id="-connection">-Connection</h3>
-<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
-<pre><code class="lang-yaml">Type: PnPConnection
+<h3 id="-identity">-Identity</h3>
+<p>Specifies the server relative URL, Folder instance or Id of the folder in a document library in the current web for which to change the archive state.</p>
+<pre><code class="lang-yaml">Type: FolderPipeBind
 Parameter Sets: (All)
 
-Required: False
-Position: Named
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-archivestate">-ArchiveState</h3>
+<p>Specifies the desired archive state of the folder. Valid values are Archived and Active.</p>
+<pre><code class="lang-yaml">Type: FolderArchiveState
+Parameter Sets: (All)
+
+Required: True
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-force">-Force</h3>
-<p>Do not ask for confirmation to delete the subweb.</p>
+<p>If provided, no confirmation will be asked before changing the archive state.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: (All)
 
@@ -127,19 +146,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
-<h3 id="-identity">-Identity</h3>
-<p>The identifier of a subsite, the subsite instance or name of the subsite.</p>
-<pre><code class="lang-yaml">Type: WebPipeBind
-Parameter Sets: (All)
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: True (ByValue)
-Accept wildcard characters: False
-</code></pre>
 <h2 id="related-links">RELATED LINKS</h2>
-<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a></p>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/en-us/graph/api/driveitem-archive?view=graph-rest-beta&amp;tabs=http">Archive driveItem through Microsoft Graph beta</a>
+<a href="https://learn.microsoft.com/en-us/graph/api/driveitem-unarchive?view=graph-rest-beta&amp;tabs=http">Unarchive driveItem through Microsoft Graph beta</a></p>
 
 </article>
           </div>

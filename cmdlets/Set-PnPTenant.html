@@ -215,6 +215,8 @@
  [-AIBuilderEnabled &lt;Boolean&gt;]
  [-AllowSensitivityLabelOnRecords &lt;Boolean&gt;]
  [-AnyoneLinkTrackUsers &lt;Boolean&gt;]
+ [-AllowFileArchive &lt;Boolean&gt;]
+ [-AllowFileArchiveOnNewSitesByDefault &lt;Boolean&gt;]
  [-EnableSiteArchive &lt;Boolean&gt;]
  [-ESignatureEnabled &lt;Boolean&gt;]
  [-BlockUserInfoVisibilityInSharePoint &lt;TenantBrowseUserInfoPolicyValue&gt;]
@@ -276,6 +278,10 @@ Set-PnPTenant -NoAccessRedirectUrl &quot;http://www.contoso.com&quot;
 <pre><code class="lang-powershell">Set-PnPTenant  -GuestSharingGroupAllowListInTenantByPrincipalIdentity {}
 </code></pre>
 <p>This example clears the guest sharing group allow list in the tenant.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Set-PnPTenant -AllowFileArchive $true -AllowFileArchiveOnNewSitesByDefault $true
+</code></pre>
+<p>This example enables file-level archiving for the tenant and makes new sites inherit the capability by default.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowdownloadingnonwebviewablefiles">-AllowDownloadingNonWebViewableFiles</h3>
 <pre><code class="lang-yaml">Type: Boolean
@@ -2128,6 +2134,28 @@ Accept wildcard characters: False
 </code></pre>
 <h3 id="-allowsensitivitylabelonrecords">-AllowSensitivityLabelOnRecords</h3>
 <p>Allows sensitivity label on records.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowfilearchive">-AllowFileArchive</h3>
+<p>Enables or disables file-level archiving for SharePoint Online sites in the tenant.</p>
+<p>When set to $false, users can no longer archive files on any site even if the site-level setting is enabled. Existing archived files remain archived and can still be reactivated.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: (All)
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowfilearchiveonnewsitesbydefault">-AllowFileArchiveOnNewSitesByDefault</h3>
+<p>Controls whether newly created SharePoint Online sites have file-level archiving enabled by default.</p>
+<p>Use this together with <code>-AllowFileArchive $true</code> when you want new sites to inherit file archiving automatically instead of enabling it site by site.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
 Required: False

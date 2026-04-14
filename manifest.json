@@ -7344,6 +7344,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPFileArchiveState.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPFileArchiveState.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Set-PnPFileCheckedIn.md",
       "output": {
         ".html": {
@@ -7378,6 +7388,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPFileVersion.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPFolderArchiveState.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPFolderArchiveState.html"
         }
       },
       "version": ""

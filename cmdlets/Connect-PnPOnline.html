@@ -689,7 +689,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-azureadworkloadidentity">-AzureADWorkloadIdentity</h3>
-<p>Connects using the Azure AD Workload Identity.</p>
+<p>Connects using Azure AD Workload Identity in Azure workload identity environments where <code>AZURE_CLIENT_ID</code>, <code>AZURE_TENANT_ID</code>, <code>AZURE_AUTHORITY_HOST</code>, and <code>AZURE_FEDERATED_TOKEN_FILE</code> are available. For GitHub Actions and Azure DevOps pipelines, use <code>-FederatedIdentity</code> instead.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Azure AD Workload Identity
 
@@ -729,7 +729,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
 <h3 id="-federatedidentity">-FederatedIdentity</h3>
-<p>Connects using Federated Identity. For more information on this, you can visit <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest">this link</a>.</p>
+<p>Connects using Federated Identity. Use this option for GitHub Actions and Azure DevOps pipelines. For Azure workload identity environments that provide <code>AZURE_CLIENT_ID</code>, <code>AZURE_TENANT_ID</code>, <code>AZURE_AUTHORITY_HOST</code>, and <code>AZURE_FEDERATED_TOKEN_FILE</code>, use <code>-AzureADWorkloadIdentity</code> instead. For more information on this, you can visit <a href="https://learn.microsoft.com/en-us/entra/workload-id/workload-identity-federation-create-trust?pivots=identity-wif-apps-methods-rest">this link</a>.</p>
 <p>This option is available from version 3.1.51-nightly onwards.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
 Parameter Sets: Federated Identity

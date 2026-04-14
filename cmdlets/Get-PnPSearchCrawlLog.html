@@ -87,7 +87,7 @@
 <p>Returns entries from the SharePoint search crawl log. Make sure you are granted access to the crawl log via the SharePoint search admin center at https://<tenant>-admin.sharepoint.com/_layouts/15/searchadmin/crawllogreadpermission.aspx in order to run this cmdlet.</tenant></p>
 <h2 id="syntax">SYNTAX</h2>
 <pre><code class="lang-powershell">Get-PnPSearchCrawlLog [-LogLevel &lt;LogLevel&gt;] [-RowLimit &lt;Int32&gt;] [-Filter &lt;String&gt;]
- [-ContentSource &lt;ContentSource&gt;] [-StartDate &lt;DateTime&gt;] [-EndDate &lt;DateTime&gt;] [-RawFormat]
+ [-ContentSource &lt;ContentSource&gt;] [-StartDate &lt;DateTime&gt;] [-EndDate &lt;DateTime&gt;] [-RawFormat] [-IncreaseRequestTimeout]
  [-Connection &lt;PnPConnection&gt;] 
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
@@ -121,6 +121,14 @@
 <pre><code class="lang-powershell">Get-PnPSearchCrawlLog -RowLimit 3 -RawFormat
 </code></pre>
 <p>Returns the last 3 crawl log entries showing the raw crawl log data.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">$ClientID= &quot;xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx&quot;
+$env:SharePointPnPHttpTimeout = -1 #👈
+Connect-PnPOnline -Url https://&lt;tenant&gt;-admin.sharepoint.com/ -Interactive -ClientId $ClientID -ErrorAction Stop # 👈
+
+Get-PnPSearchCrawlLog -Filter &quot;https://contoso-my.sharepoint.com/sites/Intranet&quot; -IncreaseRequestTimeout
+</code></pre>
+<p>Increases the request timeout allowing the call to last up to 3 minutes. The <code>ClientRuntimeContext</code> enforces a three-minute limit; when increasing the timeout to its maximum of three minutes, this threshold may still be exceeded.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
@@ -159,6 +167,17 @@ Accept wildcard characters: False
 <h3 id="-filter">-Filter</h3>
 <p>Filter to limit what is being returned. Has to be a URL prefix for SharePoint content, and part of a user principal name for user profiles. Wildcard characters are not supported.</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-increaserequesttimeout">-IncreaseRequestTimeout</h3>
+<p>Extend the request timeout to permit command execution for up to 3 minutes.</p>
+<pre><code class="lang-yaml">Type: Switch
 Parameter Sets: (All)
 
 Required: False
