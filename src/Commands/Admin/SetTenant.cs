@@ -527,6 +527,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? EnableMediaReactions { set; get; }
 
         [Parameter(Mandatory = false)]
+        public bool? ResyncContentSecurityPolicyConfigurationEntries { set; get; }
+
+        [Parameter(Mandatory = false)]
         public bool? ContentSecurityPolicyEnforcement { set; get; }
 
         [Parameter(Mandatory = false)]
@@ -1678,6 +1681,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (EnableMediaReactions.HasValue)
             {
                 Tenant.EnableMediaReactions = EnableMediaReactions.Value;
+                modified = true;
+            }
+            if (ResyncContentSecurityPolicyConfigurationEntries.HasValue)
+            {
+                Tenant.ContentSecurityPolicyConfigSynced = !ResyncContentSecurityPolicyConfigurationEntries.Value;
                 modified = true;
             }
             if (ContentSecurityPolicyEnforcement.HasValue)

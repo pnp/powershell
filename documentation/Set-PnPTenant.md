@@ -175,6 +175,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-HideSyncButtonOnODB <Boolean>]
  [-StreamLaunchConfig <Int32>]
  [-EnableMediaReactions <Boolean>]
+ [-ResyncContentSecurityPolicyConfigurationEntries <Boolean>]
  [-ContentSecurityPolicyEnforcement <Boolean>]
  [-DisableSpacesActivation <Boolean>]
  [-DelayContentSecurityPolicyEnforcement <Boolean>]
@@ -244,6 +245,14 @@ Set-PnPTenant -DelayContentSecurityPolicyEnforcement $true
 ```
 
 This example will delay the Content security policy enforcement by 90 days, until June 1, 2026.
+
+### EXAMPLE 9
+```powershell
+Set-PnPTenant -ResyncContentSecurityPolicyConfigurationEntries $true
+(Get-PnPTenant).ResyncContentSecurityPolicyConfigurationEntries
+```
+
+This example requests a resync of Content Security Policy trusted script sources for SharePoint Framework solutions in the tenant app catalog and reads back whether the resync request is still pending.
 
 ## PARAMETERS
 
@@ -3131,6 +3140,20 @@ Accept wildcard characters: False
 
 ### -ContentSecurityPolicyEnforcement
 Controls whether content security policy is enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResyncContentSecurityPolicyConfigurationEntries
+When set to $true, requests a resync of Content Security Policy trusted script sources for SharePoint Framework solutions in the tenant app catalog. SharePoint adds missing sources derived from a solution's `cdnBasePath` configuration when needed. The corresponding property returned by `Get-PnPTenant` indicates whether the resync request is still pending. The sync can take up to 24 hours to complete and is scoped per geo in multi-geo tenants.
 
 ```yaml
 Type: Boolean

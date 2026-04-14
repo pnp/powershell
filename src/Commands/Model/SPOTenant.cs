@@ -350,6 +350,10 @@ namespace PnP.PowerShell.Commands.Model
         public bool? BlockAppAccessWithAuthenticationContext { get; private set; }
         public bool? ClassicPagesRestrictMode { get; private set; }
         public string ConditionalAccessPolicyErrorHelpLink { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
+        public bool? ResyncContentSecurityPolicyConfigurationEntries { get; private set; }
+
         public bool? ContentSecurityPolicyConfigSynced { get; private set; }
 
         public bool? CoreDefaultLinkToExistingAccess { get; private set; }
@@ -577,6 +581,10 @@ namespace PnP.PowerShell.Commands.Model
                 failedProperties++;
                 cmdlet.LogDebug($"Property DefaultOneDriveInformationBarrierMode not loaded due to error '{e.Message}'");
             }
+
+            ResyncContentSecurityPolicyConfigurationEntries = ContentSecurityPolicyConfigSynced.HasValue
+                ? !ContentSecurityPolicyConfigSynced.Value
+                : null;
 
             // KnowledgeAgentSelectedSitesList maps from KnowledgeAgentSiteList on Tenant and requires manual conversion
             try
