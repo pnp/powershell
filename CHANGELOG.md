@@ -36,6 +36,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added support for `-AllowFileArchive` and `-AllowFileArchiveOnNewSitesByDefault` on `Set-PnPTenant`, `-AllowFileArchive` on `Set-PnPTenantSite`, and `ArchivedFileDiskUsed` on `Get-PnPTenantSite` to configure and inspect file-level archiving. [#5283](https://github.com/pnp/powershell/pull/5283)
 - Added `Set-PnPFileArchiveState` cmdlet to archive and reactivate SharePoint files through the Microsoft Graph beta archive APIs. [#5283](https://github.com/pnp/powershell/pull/5283)
 - Added `Set-PnPFolderArchiveState` cmdlet to archive and reactivate SharePoint folders through the Microsoft Graph beta archive APIs. [#5283](https://github.com/pnp/powershell/pull/5283)
+- Added optional parameter `-DelayContentSecurityPolicyEnforcement` to cmdlet `Set-PnPTenant`. [#5288](https://github.com/pnp/powershell/pull/5288)
 
 ### Changed
 - Improved `Get-PnPTerm` cmdlet to show a better error message. [#4933](https://github.com/pnp/powershell/pull/4933)
