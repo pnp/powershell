@@ -547,6 +547,9 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string[] FileTypesForVersionExpiration { set; get; }
 
+        [Parameter(Mandatory = false)]
+        public bool? DelayContentSecurityPolicyEnforcement { set; get; }
+
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1767,6 +1770,11 @@ namespace PnP.PowerShell.Commands.Admin
                         Tenant.GuestSharingGroupAllowListInTenantByPrincipalIdentity = new string[0];
                     }
                 }
+                modified = true;
+            }
+            if (DelayContentSecurityPolicyEnforcement.HasValue)
+            {
+                Tenant.DelayContentSecurityPolicyEnforcement = DelayContentSecurityPolicyEnforcement.Value;
                 modified = true;
             }
             if (BlockDownloadFileTypePolicy.HasValue)
