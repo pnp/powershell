@@ -26,7 +26,7 @@ namespace PnP.PowerShell.Commands.Base
         private const string RolesClaimType = "roles";
         private const string ScopeClaimType = "scp";
 
-        // Keyed by "{clientId}:{tenantId}:{authorityHost}" — one app per workload-identity config.
+        // Keyed by "{clientId}:{tenantId}:{authorityHost}:{tokenPath}" — one app per workload-identity config and token file.
         // Reusing the same IConfidentialClientApplication lets MSAL's shared token cache do its job
         // without rebuilding the HTTP client, authority metadata, and builder overhead on every call.
         private static readonly ConcurrentDictionary<string, IConfidentialClientApplication> _confidentialClientAppCache = new();
@@ -284,6 +284,8 @@ namespace PnP.PowerShell.Commands.Base
                 throw new PSInvalidOperationException($"Azure AD Workload Identity expects AZURE_FEDERATED_TOKEN_FILE to point to an existing token file. Current value: '{tokenPath}'.");
             }
 
+            ReadWorkloadIdentityTokenFile(tokenPath);
+
             // tokenPath is included in the key so that the cached app is invalidated if the path
             // changes (e.g. in tests or multi-identity sessions). clientID/tenantID/host are stable
             // per workload-identity configuration; tokenPath is also stable in production but may
@@ -296,7 +298,7 @@ namespace PnP.PowerShell.Commands.Base
                     // service account token when it needs to acquire or refresh an Azure AD token.
                     // Kubernetes rotates the file before the current token expires; capturing the
                     // string value once would cause silent-refresh failures after the first rotation.
-                    .WithClientAssertion(() => System.IO.File.ReadAllText(tokenPath))
+                    .WithClientAssertion(() => ReadWorkloadIdentityTokenFile(tokenPath))
                     .WithCacheOptions(CacheOptions.EnableSharedCacheOptions)
                     .Build());
 
@@ -321,6 +323,12 @@ namespace PnP.PowerShell.Commands.Base
             }
             catch (MsalClientException ex)
             {
+                var innerPowerShellException = GetInnerException<PSInvalidOperationException>(ex);
+                if (innerPowerShellException != null)
+                {
+                    throw new PSInvalidOperationException(innerPowerShellException.Message, innerPowerShellException);
+                }
+
                 throw new PSInvalidOperationException(FormatMsalErrorMessage("Unable to acquire an Azure AD Workload Identity access token", ex), ex);
             }
 
@@ -585,9 +593,14 @@ namespace PnP.PowerShell.Commands.Base
             try
             {
                 using var jsonDocument = JsonDocument.Parse(responseContent);
-                if (!jsonDocument.RootElement.TryGetProperty(propertyName, out var propertyValue) || propertyValue.ValueKind != JsonValueKind.String)
+                if (!jsonDocument.RootElement.TryGetProperty(propertyName, out var propertyValue))
                 {
                     throw new PSInvalidOperationException($"Unable to parse the {responseDescription} because the '{propertyName}' property was missing.");
+                }
+
+                if (propertyValue.ValueKind != JsonValueKind.String)
+                {
+                    throw new PSInvalidOperationException($"Unable to parse the {responseDescription} because the '{propertyName}' property had JSON type '{propertyValue.ValueKind}' instead of 'String'.");
                 }
 
                 var value = propertyValue.GetString();
@@ -608,6 +621,34 @@ namespace PnP.PowerShell.Commands.Base
         {
             var errorCode = string.IsNullOrWhiteSpace(exception?.ErrorCode) ? string.Empty : $" ({exception?.ErrorCode})";
             return $"{message}{errorCode}. {exception?.Message}";
+        }
+
+        private static string ReadWorkloadIdentityTokenFile(string tokenPath)
+        {
+            try
+            {
+                return System.IO.File.ReadAllText(tokenPath);
+            }
+            catch (Exception ex) when (ex is System.IO.IOException || ex is UnauthorizedAccessException || ex is ArgumentException || ex is NotSupportedException)
+            {
+                throw new PSInvalidOperationException($"Failed to read the Azure AD Workload Identity token file configured through AZURE_FEDERATED_TOKEN_FILE ('{tokenPath}'). {ex.Message}", ex);
+            }
+        }
+
+        private static TException GetInnerException<TException>(Exception exception) where TException : Exception
+        {
+            var currentException = exception;
+            while (currentException != null)
+            {
+                if (currentException is TException typedException)
+                {
+                    return typedException;
+                }
+
+                currentException = currentException.InnerException;
+            }
+
+            return null;
         }
     }
 }

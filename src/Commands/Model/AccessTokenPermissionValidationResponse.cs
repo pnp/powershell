@@ -37,7 +37,7 @@ namespace PnP.PowerShell.Commands.Model
         #region Methods
 
         /// <summary>
-        /// Extracts the oAuth JWT token to compare the permissions in it (roles) with the required permissions for the cmdlet provided through an attribute
+        /// Validates the permissions in a decoded oAuth JWT token against the permissions required for the cmdlet through its attributes.
         /// </summary>
         /// <param name="cmdletType">The type of the cmdlet that will be executed. Used to check for the permissions attribute.</param>
         /// <param name="decodedToken">The decoded oAuth JWT token that needs to be validated for its roles</param>
