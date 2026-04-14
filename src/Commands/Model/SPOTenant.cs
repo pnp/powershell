@@ -1,5 +1,6 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
+using Microsoft.SharePoint.Administration;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Administration;
 using Microsoft.SharePoint.Client.Sharing;
@@ -521,6 +522,46 @@ namespace PnP.PowerShell.Commands.Model
         public bool? TaxonomyTaggingEnabled { private set; get; }
 
         public bool? TranslationEnabled { private set; get; }
+
+        public long? ArchivedFileStorageUsageMB { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
+        public Guid? AllOrganizationSecurityGroupId { get; private set; }
+
+        public bool? AllowAppsBypassOfUnmanagedDevicePolicy { get; private set; }
+
+        public SPResilienceModeType? AuthContextResilienceMode { get; private set; }
+
+        public bool? BlockDownloadFileTypePolicy { get; private set; }
+
+        [CsomToModelConverter(Skip = true)]
+        public string[] ContentTypeSyncSiteTemplatesList { get; private set; }
+
+        public Guid[] DisabledAdaptiveCardExtensionIds { get; private set; }
+
+        public bool? EnableNotificationsSubscriptions { get; private set; }
+
+        public bool? EnforceRequestDigest { get; private set; }
+
+        public bool? M365AdditionalStorageSPOEnabled { get; private set; }
+
+        public bool? M365SharePointStorageEnabled { get; private set; }
+
+        public int? OneDriveOrganizationSharingLinkMaxExpirationInDays { get; private set; }
+
+        public int? OneDriveOrganizationSharingLinkRecommendedExpirationInDays { get; private set; }
+
+        public bool? ReduceTempTokenLifetimeEnabled { get; private set; }
+
+        public int? ReduceTempTokenLifetimeValue { get; private set; }
+
+        public Guid[] RestrictExternalSharing { get; private set; }
+
+        public SPOTlsTokenBindingPolicyValue? TlsTokenBindingPolicyValue { get; private set; }
+
+        public SPOFileVersionFileTypePolicySettings[] VersionPolicyFileTypeOverride { get; private set; }
+
+        public bool? ViewersCanCommentOnMediaDisabled { get; private set; }
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext, BasePSCmdlet cmdlet)
@@ -580,6 +621,27 @@ namespace PnP.PowerShell.Commands.Model
             {
                 failedProperties++;
                 cmdlet.LogDebug($"Property DefaultOneDriveInformationBarrierMode not loaded due to error '{e.Message}'");
+            }
+
+            try
+            {
+                var allOrganizationSecurityGroupId = tenant.AllOrganizationSecurityGroupId;
+                AllOrganizationSecurityGroupId = allOrganizationSecurityGroupId == Guid.Empty ? null : allOrganizationSecurityGroupId;
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property AllOrganizationSecurityGroupId not loaded due to error '{e.Message}'");
+            }
+
+            try
+            {
+                ContentTypeSyncSiteTemplatesList = tenant.ContentTypeSyncSiteTemplatesList?.ToArray();
+            }
+            catch (Exception e)
+            {
+                failedProperties++;
+                cmdlet.LogDebug($"Property ContentTypeSyncSiteTemplatesList not loaded due to error '{e.Message}'");
             }
 
             ResyncContentSecurityPolicyConfigurationEntries = ContentSecurityPolicyConfigSynced.HasValue

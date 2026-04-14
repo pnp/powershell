@@ -1,5 +1,6 @@
 ﻿using Microsoft.Online.SharePoint.TenantAdministration;
 using Microsoft.Online.SharePoint.TenantManagement;
+using Microsoft.SharePoint.Administration;
 using Microsoft.SharePoint.Client;
 using Microsoft.SharePoint.Client.Administration;
 using Microsoft.SharePoint.Client.Sharing;
@@ -98,6 +99,12 @@ namespace PnP.PowerShell.Commands.Admin
         public long? OneDriveStorageQuota;
 
         [Parameter(Mandatory = false)]
+        public int? OneDriveOrganizationSharingLinkMaxExpirationInDays;
+
+        [Parameter(Mandatory = false)]
+        public int? OneDriveOrganizationSharingLinkRecommendedExpirationInDays;
+
+        [Parameter(Mandatory = false)]
         public bool? OneDriveForGuestsEnabled;
 
         [Parameter(Mandatory = false)]
@@ -176,6 +183,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? AllowEditing;
 
         [Parameter(Mandatory = false)]
+        public bool? AllowAppsBypassOfUnmanagedDevicePolicy;
+
+        [Parameter(Mandatory = false)]
         public bool? ApplyAppEnforcedRestrictionsToAdHocRecipients;
 
         [Parameter(Mandatory = false)]
@@ -192,6 +202,10 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public Guid[] DisabledWebPartIds;
+
+        [Parameter(Mandatory = false)]
+        [ValidateNotNull]
+        public Guid[] DisabledAdaptiveCardExtensionIds;
 
         [Parameter(Mandatory = false)]
         public bool? EnableAIPIntegration;
@@ -359,6 +373,9 @@ namespace PnP.PowerShell.Commands.Admin
         public Guid[] ExcludedBlockDownloadGroupIds { get; set; }
 
         [Parameter(Mandatory = false)]
+        public SPOTlsTokenBindingPolicyValue? TlsTokenBindingPolicyValue { get; set; }
+
+        [Parameter(Mandatory = false)]
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false)]
@@ -377,16 +394,28 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? SiteOwnerManageLegacyServicePrincipalEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
+        public SPResilienceModeType? AuthContextResilienceMode { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? ReduceTempTokenLifetimeEnabled { get; set; }
 
         [Parameter(Mandatory = false)]
         public int? ReduceTempTokenLifetimeValue;
 
         [Parameter(Mandatory = false)]
+        public bool? EnforceRequestDigest { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public bool? EnableNotificationsSubscriptions { get; set; }
+
+        [Parameter(Mandatory = false)]
         public bool? ViewersCanCommentOnMediaDisabled { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? AllowGuestUserShareToUsersNotInSiteCollection { get; set; }
+
+        [Parameter(Mandatory = false)]
+        public string[] ContentTypeSyncSiteTemplatesList { get; set; }
 
         [Parameter(Mandatory = false)]
         public string ConditionalAccessPolicyErrorHelpLink;
@@ -426,6 +455,10 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public bool? AllowEveryoneExceptExternalUsersClaimInPrivateSite { get; set; }
+
+        [Parameter(Mandatory = false)]
+        [ValidateNotNull]
+        public Guid[] RestrictExternalSharing { get; set; }
 
         [Parameter(Mandatory = false)]
         public bool? AIBuilderEnabled { get; set; }
@@ -506,6 +539,9 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? EnableDiscoverableByOrganizationForVideos { set; get; }
 
         [Parameter(Mandatory = false)]
+        public Guid? AllOrganizationSecurityGroupId { set; get; }
+
+        [Parameter(Mandatory = false)]
         public string RestrictedAccessControlforSitesErrorHelpLink { set; get; }
 
         [Parameter(Mandatory = false)]
@@ -527,7 +563,7 @@ namespace PnP.PowerShell.Commands.Admin
         public bool? EnableMediaReactions { set; get; }
 
         [Parameter(Mandatory = false)]
-        public bool? ResyncContentSecurityPolicyConfigurationEntries { set; get; }
+        public SwitchParameter ResyncContentSecurityPolicyConfigurationEntries { set; get; }
 
         [Parameter(Mandatory = false)]
         public bool? ContentSecurityPolicyEnforcement { set; get; }
@@ -832,6 +868,32 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.OneDriveStorageQuota = OneDriveStorageQuota.Value;
                 modified = true;
             }
+            if (OneDriveOrganizationSharingLinkMaxExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(OneDriveOrganizationSharingLinkMaxExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("OneDriveOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 720", nameof(OneDriveOrganizationSharingLinkMaxExpirationInDays));
+                }
+
+                Tenant.OneDriveOrganizationSharingLinkMaxExpirationInDays = OneDriveOrganizationSharingLinkMaxExpirationInDays.Value;
+                modified = true;
+            }
+            if (OneDriveOrganizationSharingLinkRecommendedExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(OneDriveOrganizationSharingLinkRecommendedExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("OneDriveOrganizationSharingLinkRecommendedExpirationInDays must have a value of 0 or between 7 and 720", nameof(OneDriveOrganizationSharingLinkRecommendedExpirationInDays));
+                }
+
+                var oneDriveOrganizationSharingLinkMaxExpirationInDays = OneDriveOrganizationSharingLinkMaxExpirationInDays ?? Tenant.EnsureProperty(t => t.OneDriveOrganizationSharingLinkMaxExpirationInDays);
+                if (OneDriveOrganizationSharingLinkRecommendedExpirationInDays.Value > oneDriveOrganizationSharingLinkMaxExpirationInDays)
+                {
+                    throw new PSArgumentException("OneDriveOrganizationSharingLinkRecommendedExpirationInDays must be less than or equal to OneDriveOrganizationSharingLinkMaxExpirationInDays", nameof(OneDriveOrganizationSharingLinkRecommendedExpirationInDays));
+                }
+
+                Tenant.OneDriveOrganizationSharingLinkRecommendedExpirationInDays = OneDriveOrganizationSharingLinkRecommendedExpirationInDays.Value;
+                modified = true;
+            }
             if (OneDriveForGuestsEnabled.HasValue)
             {
                 string message = OneDriveForGuestsEnabled.Value ? "This will enable all users, including guests, to create OneDrive for Business sites. You must first assign OneDrive for Business licenses to the guests before they can create their OneDrive for Business sites." : "Guests will no longer be able to create new OneDrive for Business sites. Existing sites won’t be impacted.";
@@ -1061,6 +1123,11 @@ namespace PnP.PowerShell.Commands.Admin
                     throw new InvalidOperationException("Setting the property AllowEditing is not supported by your version of the service");
                 }
             }
+            if (AllowAppsBypassOfUnmanagedDevicePolicy.HasValue)
+            {
+                Tenant.AllowAppsBypassOfUnmanagedDevicePolicy = AllowAppsBypassOfUnmanagedDevicePolicy.Value;
+                modified = true;
+            }
             if (ApplyAppEnforcedRestrictionsToAdHocRecipients.HasValue)
             {
                 try
@@ -1117,6 +1184,11 @@ namespace PnP.PowerShell.Commands.Admin
             if (DisabledWebPartIds != null)
             {
                 Tenant.DisabledWebPartIds = DisabledWebPartIds;
+                modified = true;
+            }
+            if (DisabledAdaptiveCardExtensionIds != null)
+            {
+                Tenant.DisabledAdaptiveCardExtensionIds = DisabledAdaptiveCardExtensionIds.Distinct().ToArray();
                 modified = true;
             }
             if (EnableAIPIntegration.HasValue)
@@ -1447,6 +1519,12 @@ namespace PnP.PowerShell.Commands.Admin
                 modified = true;
             }
 
+            if (AuthContextResilienceMode.HasValue)
+            {
+                Tenant.AuthContextResilienceMode = AuthContextResilienceMode.Value;
+                modified = true;
+            }
+
             if (ReduceTempTokenLifetimeEnabled.HasValue)
             {
                 Tenant.ReduceTempTokenLifetimeEnabled = ReduceTempTokenLifetimeEnabled.Value;
@@ -1462,6 +1540,15 @@ namespace PnP.PowerShell.Commands.Admin
             if (AllowGuestUserShareToUsersNotInSiteCollection.HasValue)
             {
                 Tenant.AllowGuestUserShareToUsersNotInSiteCollection = AllowGuestUserShareToUsersNotInSiteCollection.Value;
+                modified = true;
+            }
+
+            if (ContentTypeSyncSiteTemplatesList != null)
+            {
+                Tenant.ContentTypeSyncSiteTemplatesList = ContentTypeSyncSiteTemplatesList
+                    .Where(template => !string.IsNullOrWhiteSpace(template))
+                    .Distinct(StringComparer.OrdinalIgnoreCase)
+                    .ToArray();
                 modified = true;
             }
 
@@ -1526,6 +1613,14 @@ namespace PnP.PowerShell.Commands.Admin
             if (AllowEveryoneExceptExternalUsersClaimInPrivateSite.HasValue)
             {
                 Tenant.AllowEveryoneExceptExternalUsersClaimInPrivateSite = AllowEveryoneExceptExternalUsersClaimInPrivateSite.Value;
+                modified = true;
+            }
+            if (RestrictExternalSharing != null)
+            {
+                Tenant.RestrictExternalSharing = RestrictExternalSharing
+                    .Where(appId => appId != Guid.Empty)
+                    .Distinct()
+                    .ToArray();
                 modified = true;
             }
             if (AIBuilderEnabled.HasValue)
@@ -1648,6 +1743,11 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.EnableDiscoverableByOrganizationForVideos = EnableDiscoverableByOrganizationForVideos.Value;
                 modified = true;
             }
+            if (AllOrganizationSecurityGroupId.HasValue)
+            {
+                Tenant.AllOrganizationSecurityGroupId = AllOrganizationSecurityGroupId.Value;
+                modified = true;
+            }
             if (RestrictedAccessControlforSitesErrorHelpLink != null)
             {
                 Tenant.RestrictedAccessControlforSitesErrorHelpLink = RestrictedAccessControlforSitesErrorHelpLink;
@@ -1683,9 +1783,9 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.EnableMediaReactions = EnableMediaReactions.Value;
                 modified = true;
             }
-            if (ResyncContentSecurityPolicyConfigurationEntries.HasValue)
+            if (ResyncContentSecurityPolicyConfigurationEntries)
             {
-                Tenant.ContentSecurityPolicyConfigSynced = !ResyncContentSecurityPolicyConfigurationEntries.Value;
+                Tenant.ContentSecurityPolicyConfigSynced = false;
                 modified = true;
             }
             if (ContentSecurityPolicyEnforcement.HasValue)
@@ -1827,6 +1927,21 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.SetBlockDownloadFileTypePolicyExclusionList(ExcludedBlockDownloadGroupIds);
                 modified = true;
             }
+            if (TlsTokenBindingPolicyValue.HasValue)
+            {
+                Tenant.TlsTokenBindingPolicyValue = TlsTokenBindingPolicyValue.Value;
+                modified = true;
+            }
+            if (EnforceRequestDigest.HasValue)
+            {
+                Tenant.EnforceRequestDigest = EnforceRequestDigest.Value;
+                modified = true;
+            }
+            if (EnableNotificationsSubscriptions.HasValue)
+            {
+                Tenant.EnableNotificationsSubscriptions = EnableNotificationsSubscriptions.Value;
+                modified = true;
+            }
             if (modified)
             {
                 AdminContext.ExecuteQueryRetry();
@@ -1945,6 +2060,11 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.SetFileTypeVersionPolicy(FileTypesForVersionExpiration, isAutoTrimEnabled, MajorVersionLimit ?? (-1), ExpireVersionsAfterDays ?? (-1));
                 AdminContext.ExecuteQueryRetry();
             }
+        }
+
+        private static bool IsValidOrganizationSharingLinkExpirationInDays(int value)
+        {
+            return value == 0 || value >= 7 && value <= 720;
         }
     }
 }
