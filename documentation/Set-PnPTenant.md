@@ -44,6 +44,8 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-PublicCdnEnabled <Boolean>]
  [-PublicCdnAllowedFileTypes <String>]
  [-RequireAnonymousLinksExpireInDays <Int32>]
+ [-OneDriveOrganizationSharingLinkMaxExpirationInDays <Int32>]
+ [-OneDriveOrganizationSharingLinkRecommendedExpirationInDays <Int32>]
  [-SharingAllowedDomainList <String>]
  [-SharingBlockedDomainList <String>]
  [-SharingDomainRestrictionMode <SharingDomainRestrictionModes>]
@@ -73,12 +75,14 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ConditionalAccessPolicy <SPOConditionalAccessPolicyType>]
  [-AllowDownloadingNonWebViewableFiles <Boolean>]
  [-AllowEditing <Boolean>]
+ [-AllowAppsBypassOfUnmanagedDevicePolicy <Boolean>]
  [-ApplyAppEnforcedRestrictionsToAdHocRecipients <Boolean>]
  [-FilePickerExternalImageSearchEnabled <Boolean>]
  [-EmailAttestationRequired <Boolean>]
  [-EmailAttestationReAuthDays <Int32>]
  [-HideDefaultThemes <Boolean>]
  [-DisabledWebPartIds <Guid[]>]
+ [-DisabledAdaptiveCardExtensionIds <Guid[]>]
  [-EnableAIPIntegration <Boolean>]
  [-DisableCustomAppAuthentication <Boolean>] 
  [-EnableAutoNewsDigest <Boolean>]
@@ -119,9 +123,11 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-IBImplicitGroupBased <Boolean>]
  [-ShowOpenInDesktopOptionForSyncedFiles <Boolean>]
  [-ShowPeoplePickerGroupSuggestionsForIB <Boolean>]
+ [-AuthContextResilienceMode <SPResilienceModeType>]
  [-BlockDownloadFileTypePolicy <Boolean>]
  [-BlockDownloadFileTypeIds <SPBlockDownloadFileTypeId[]>]
  [-ExcludedBlockDownloadGroupIds <GUID[]>]
+ [-TlsTokenBindingPolicyValue <SPOTlsTokenBindingPolicyValue>]
  [-ArchiveRedirectUrl <String>]
  [-StopNew2013Workflows <Boolean>]
  [-MediaTranscription <MediaTranscriptionPolicyType>]
@@ -130,7 +136,9 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-ReduceTempTokenLifetimeEnabled <Boolean>]
  [-ReduceTempTokenLifetimeValue <Int32>]
  [-ViewersCanCommentOnMediaDisabled <Boolean>]
+ [-AllOrganizationSecurityGroupId <Guid>]
  [-AllowGuestUserShareToUsersNotInSiteCollection <Boolean>]
+ [-ContentTypeSyncSiteTemplatesList <String[]>]
  [-ConditionalAccessPolicyErrorHelpLink <String>]
  [-CustomizedExternalSharingServiceUrl <String>]
  [-IncludeAtAGlanceInShareEmails <Boolean>]
@@ -142,6 +150,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-BlockUserInfoVisibilityInOneDrive <TenantBrowseUserInfoPolicyValue>]
  [-AllowOverrideForBlockUserInfoVisibility <Boolean>]
  [-AllowEveryoneExceptExternalUsersClaimInPrivateSite <Boolean>]
+ [-RestrictExternalSharing <Guid[]>]
  [-AIBuilderEnabled <Boolean>]
  [-AllowSensitivityLabelOnRecords <Boolean>]
  [-AnyoneLinkTrackUsers <Boolean>]
@@ -175,8 +184,12 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-HideSyncButtonOnODB <Boolean>]
  [-StreamLaunchConfig <Int32>]
  [-EnableMediaReactions <Boolean>]
+ [-ResyncContentSecurityPolicyConfigurationEntries]
  [-ContentSecurityPolicyEnforcement <Boolean>]
  [-DisableSpacesActivation <Boolean>]
+ [-DelayContentSecurityPolicyEnforcement <Boolean>]
+ [-EnforceRequestDigest <Boolean>]
+ [-EnableNotificationsSubscriptions <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -237,6 +250,21 @@ Set-PnPTenant -AllowFileArchive $true -AllowFileArchiveOnNewSitesByDefault $true
 
 This example enables file-level archiving for the tenant and makes new sites inherit the capability by default.
 
+### EXAMPLE 8
+```powershell
+Set-PnPTenant -DelayContentSecurityPolicyEnforcement $true
+```
+
+This example will delay the Content security policy enforcement by 90 days, until June 1, 2026.
+
+### EXAMPLE 9
+```powershell
+Set-PnPTenant -ResyncContentSecurityPolicyConfigurationEntries
+(Get-PnPTenant).ResyncContentSecurityPolicyConfigurationEntries
+```
+
+This example requests a resync of Content Security Policy trusted script sources for SharePoint Framework solutions in the tenant app catalog and reads back whether the resync request is still pending.
+
 ## PARAMETERS
 
 ### -AllowDownloadingNonWebViewableFiles
@@ -257,6 +285,34 @@ Prevents users from editing Office files in the browser and copying and pasting 
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllowAppsBypassOfUnmanagedDevicePolicy
+Controls whether apps can bypass the unmanaged device policy.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllOrganizationSecurityGroupId
+Sets the All-Organization Security Group by object ID. This group is then used for other features, such as `EnableDiscoverableByOrganizationForVideos`, if enabled. If you change the group ID associated with the All-Organization Security Group, it will only be effective on new shares or permission events.
+
+```yaml
+Type: Guid
 Parameter Sets: (All)
 
 Required: False
@@ -299,6 +355,20 @@ Can be used to configure a custom page to show when a user is navigating to a Sh
 
 ```yaml
 Type: String
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AuthContextResilienceMode
+The authentication context resilience mode.
+
+```yaml
+Type: SPResilienceModeType
 Parameter Sets: (All)
 
 Required: False
@@ -440,6 +510,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -DelayContentSecurityPolicyEnforcement
+Delays the Content security policy enforcement by 90 days, until June 1, 2026.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -DefaultLinkPermission
 Sets the default permission of the link in the sharing dialog box in OneDrive for Business and SharePoint Online. This applies to anonymous access, internal and direct links.
 
@@ -514,6 +598,20 @@ Microsoft Bookings: d24a7165-c455-4d43-8bc8-fedb04d6c1b5
 Stream: 275c0095-a77e-4f6d-a2a0-6a7626911518
 
 To block one of them, simply pass in the GUID behind the parameter. To disable more than one, separate the GUIDs with a comma. To unblock web parts, just set this property leaving out the one(s) you wish to unblock, leaving the ones that you would like to remain blocked. To unblock all web parts, use `-DisabledWebPartIds @()`. To see which one(s) are currently blocked, use `Get-PnPTenant | Select DisabledWebPartIds`.
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisabledAdaptiveCardExtensionIds
+Allows administrators to prevent certain Adaptive Card Extensions from being added to pages or rendering on pages on which they were previously added. To re-enable all disabled Adaptive Card Extensions, use `-DisabledAdaptiveCardExtensionIds @()`.
 
 ```yaml
 Type: Guid[]
@@ -1007,6 +1105,42 @@ If the value is set larger than the Maximum allowed OneDrive for Business quota,
 
 ```yaml
 Type: Int64
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveOrganizationSharingLinkMaxExpirationInDays
+Specifies the maximum number of days before organization sharing links expire for all OneDrive sites. This is a tenant wide setting, and all geos will inherit the policy.
+
+The value can be from 7 to 720 days.
+
+To remove the expiration requirement, set the value to zero (0).
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OneDriveOrganizationSharingLinkRecommendedExpirationInDays
+Specifies the recommended number of days before organization sharing links expire for all OneDrive sites. This setting provides a suggested expiration period to users when they create sharing links. This is a tenant wide setting, and all geos will inherit the policy.
+
+The value can be from 7 to 720 days and must be less than or equal to the maximum expiration value set by `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
+
+When set to 0, the default value will be `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
+
+```yaml
+Type: Int32
 Parameter Sets: (All)
 
 Required: False
@@ -1743,6 +1877,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnableNotificationsSubscriptions
+This opt-in setting enables or disables writing SharePoint News and Announcement notification data to the `NewsNotificationList` in each user's My Site. Third-party solutions can then monitor that list through webhooks and process notification events.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -CoreRequestFilesLinkEnabled
 Enable or disable the Request files link on the core partition for all SharePoint sites (not including OneDrive sites). If this value is not set, Request files will only show for OneDrives with Anyone links enabled.
 
@@ -2249,6 +2397,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -TlsTokenBindingPolicyValue
+Sets the Transport Layer Security (TLS) token binding policy setting.
+
+```yaml
+Type: SPOTlsTokenBindingPolicyValue
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -StopNew2013Workflows
 
 This parameter allows disablement of creation of new SharePoint 2013 workflows in the tenant
@@ -2347,6 +2509,20 @@ Controls whether viewers commenting on media items is disabled or not.
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ContentTypeSyncSiteTemplatesList
+Sets the site templates that receive content type hub synchronization. To allow content types to be pushed to OneDrive for Business sites, include `MySites`. To clear the configured list, pass an empty array.
+
+```yaml
+Type: String[]
 Parameter Sets: (All)
 
 Required: False
@@ -3107,11 +3283,53 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -EnforceRequestDigest
+When set to `True`, a valid request digest is required on SOAP API calls that perform a state-changing operation.
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ContentSecurityPolicyEnforcement
 Controls whether content security policy is enabled.
 
 ```yaml
 Type: Boolean
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictExternalSharing
+Sets the list of agentic identities that are restricted from sharing content to external users. Pass the full set of GUIDs that should remain restricted, or `@()` to clear the list.
+
+```yaml
+Type: Guid[]
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResyncContentSecurityPolicyConfigurationEntries
+Requests a resync of Content Security Policy trusted script sources for SharePoint Framework solutions in the tenant app catalog. SharePoint adds missing sources derived from a solution's `cdnBasePath` configuration when needed. The corresponding property returned by `Get-PnPTenant` indicates whether the resync request is still pending. The sync can take up to 24 hours to complete and is scoped per geo in multi-geo tenants.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: (All)
 
 Required: False
