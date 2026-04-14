@@ -177,6 +177,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnableMediaReactions <Boolean>]
  [-ContentSecurityPolicyEnforcement <Boolean>]
  [-DisableSpacesActivation <Boolean>]
+ [-DelayContentSecurityPolicyEnforcement <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
 
@@ -236,6 +237,13 @@ Set-PnPTenant -AllowFileArchive $true -AllowFileArchiveOnNewSitesByDefault $true
 ```
 
 This example enables file-level archiving for the tenant and makes new sites inherit the capability by default.
+
+### EXAMPLE 8
+```powershell
+Set-PnPTenant -DelayContentSecurityPolicyEnforcement $true
+```
+
+This example will delay the Content security policy enforcement by 90 days, until June 1, 2026.
 
 ## PARAMETERS
 
@@ -431,6 +439,20 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DelayContentSecurityPolicyEnforcement
+Delays the Content security policy enforcement by 90 days, until June 1, 2026.
+
+```yaml
+Type: Boolean
 Parameter Sets: (All)
 
 Required: False
