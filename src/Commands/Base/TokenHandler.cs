@@ -286,11 +286,16 @@ namespace PnP.PowerShell.Commands.Base
 
             ReadWorkloadIdentityTokenFile(tokenPath);
 
+            var normalizedClientId = clientID.Trim().ToLowerInvariant();
+            var normalizedTenantId = tenantID.Trim().ToLowerInvariant();
+            var normalizedHost = host.Trim().TrimEnd('/').ToLowerInvariant();
+            var normalizedTokenPath = System.IO.Path.GetFullPath(tokenPath.Trim());
+
             // tokenPath is included in the key so that the cached app is invalidated if the path
             // changes (e.g. in tests or multi-identity sessions). clientID/tenantID/host are stable
             // per workload-identity configuration; tokenPath is also stable in production but may
             // differ across runs in other contexts.
-            var cacheKey = $"{clientID}:{tenantID}:{host}:{tokenPath}";
+            var cacheKey = $"{normalizedClientId}:{normalizedTenantId}:{normalizedHost}:{normalizedTokenPath}";
             var confidentialClientApp = _confidentialClientAppCache.GetOrAdd(cacheKey, _ =>
                 ConfidentialClientApplicationBuilder.Create(clientID)
                     .WithAuthority(host, tenantID)
