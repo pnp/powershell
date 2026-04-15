@@ -21,17 +21,17 @@ Retrieves users from Entra ID. By default the following properties will be loade
 
 ### Return a list (Default)
 ```powershell
-Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-StartIndex <Int32>] [-EndIndex<Int32>] [-Connection <PnPConnection>]
+Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-StartIndex <Int32>] [-EndIndex <Int32>] [-UseBeta] [-Connection <PnPConnection>]
 ```
 
 ### Return by specific ID
 ```powershell
-Get-PnPEntraIDUser [-Identity <String>] [-Select <String[]>] [-Connection <PnPConnection>]
+Get-PnPEntraIDUser [-Identity <String>] [-Select <String[]>] [-UseBeta] [-Connection <PnPConnection>]
 ```
 
 ### Return the delta
 ```powershell
-Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [-StartIndex <Int32>] [-EndIndex<Int32>] [-Connection <PnPConnection>]
+Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [-StartIndex <Int32>] [-EndIndex <Int32>] [-UseBeta] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -222,6 +222,20 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: $null
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -UseBeta
+Uses the Microsoft Graph beta endpoint instead of the v1.0 endpoint.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
