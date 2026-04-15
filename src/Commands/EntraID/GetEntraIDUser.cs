@@ -7,7 +7,10 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.EntraID
 {
     [Cmdlet(VerbsCommon.Get, "PnPEntraIDUser", DefaultParameterSetName = ParameterSet_LIST)]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/User.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/User.ReadWrite.All")]
     [Alias("Get-PnPAzureADUser")]
     public class GetAzureADUser : PnPGraphCmdlet
     {
@@ -49,6 +52,8 @@ namespace PnP.PowerShell.Commands.EntraID
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
         public SwitchParameter IgnoreDefaultProperties;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_BYID)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LIST)]
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_DELTA)]
         public SwitchParameter UseBeta;
 
@@ -64,7 +69,7 @@ namespace PnP.PowerShell.Commands.EntraID
                 PnP.PowerShell.Commands.Model.AzureAD.User user;
                 if (Guid.TryParse(Identity, out Guid identityGuid))
                 {
-                    user = Utilities.EntraIdUtility.GetUser(AccessToken, identityGuid, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);
+                    user = Utilities.EntraIdUtility.GetUser(AccessToken, identityGuid, Select, ignoreDefaultProperties: IgnoreDefaultProperties, useBetaEndPoint: UseBeta.IsPresent, azureEnvironment: Connection.AzureEnvironment);
                 }
                 else
                 {
