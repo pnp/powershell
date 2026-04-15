@@ -77,7 +77,7 @@
         <div class="article row grid-right">
           <div class="col-md-10">
             <article class="content wrap" id="_content" data-uid="">
-                
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
                   <div class="contribution-panel mobile-hide pull-right">
                       <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
                   </div>
@@ -94,13 +94,23 @@
 </code></pre>
 <h2 id="description">DESCRIPTION</h2>
 <p>Returns organization-level site collection properties such as StorageQuota, StorageQuotaAllocated, ResourceQuota,
-ResourceQuotaAllocated, and SiteCreationMode.</p>
+ResourceQuotaAllocated, and SiteCreationMode. The returned object also includes newer tenant settings and telemetry-backed values when available, such as OneDrive organization sharing link expiration settings, block download configuration, request digest enforcement, notification subscription support, content type sync templates, external sharing restrictions, and file version policy overrides.</p>
 <p>If one or more properties cannot be retrieved, such as when a property is not available yet on the tenant due to a new feature rollout, a warning will be shown. Use -Verbose to see detailed information on properties that could not be retrieved.</p>
 <h2 id="examples">EXAMPLES</h2>
 <h3 id="example-1">EXAMPLE 1</h3>
 <pre><code class="lang-powershell">Get-PnPTenant
 </code></pre>
 <p>This example returns all tenant settings</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">$tenant = Get-PnPTenant
+$tenant | Select-Object BlockDownloadFileTypePolicy, BlockDownloadFileTypeIds, ExcludedBlockDownloadGroupIds, ReduceTempTokenLifetimeEnabled, ReduceTempTokenLifetimeValue, ViewersCanCommentOnMediaDisabled, EnableNotificationsSubscriptions, EnforceRequestDigest
+</code></pre>
+<p>This example returns a focused view of recently surfaced tenant controls related to downloads, temporary URL lifetime, notifications, and request digest enforcement.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">$tenant = Get-PnPTenant
+$tenant | Select-Object OneDriveOrganizationSharingLinkMaxExpirationInDays, OneDriveOrganizationSharingLinkRecommendedExpirationInDays, ContentTypeSyncSiteTemplatesList, DisabledAdaptiveCardExtensionIds, RestrictExternalSharing, ArchivedFileStorageUsageMB, M365AdditionalStorageSPOEnabled, M365SharePointStorageEnabled, VersionPolicyFileTypeOverride
+</code></pre>
+<p>This example inspects OneDrive sharing link expiration settings together with list-based tenant restrictions and version policy overrides.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-connection">-Connection</h3>
 <p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
