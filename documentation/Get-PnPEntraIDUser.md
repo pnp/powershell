@@ -21,7 +21,7 @@ Retrieves users from Entra ID. By default the following properties will be loade
 
 ### Return a list (Default)
 ```powershell
-Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-StartIndex <Int32>] [-EndIndex<Int32>] [-UseBeta] [-Connection <PnPConnection>]
+Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-StartIndex <Int32>] [-EndIndex <Int32>] [-UseBeta] [-Connection <PnPConnection>]
 ```
 
 ### Return by specific ID
@@ -31,7 +31,7 @@ Get-PnPEntraIDUser [-Identity <String>] [-Select <String[]>] [-UseBeta] [-Connec
 
 ### Return the delta
 ```powershell
-Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [-StartIndex <Int32>] [-EndIndex<Int32>] [-UseBeta] [-Connection <PnPConnection>]
+Get-PnPEntraIDUser [-Filter <String>] [-OrderBy <String>] [-Select <String[]>] [-Delta] [-DeltaToken <String>] [-StartIndex <Int32>] [-EndIndex <Int32>] [-UseBeta] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
