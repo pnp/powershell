@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Pages
@@ -51,6 +52,8 @@ namespace PnP.PowerShell.Commands.Pages
 
             if (page != null)
             {
+                var existingSections = Collapsible ? page.Sections.ToList() : null;
+
                 if (SectionTemplate == CanvasSectionTemplate.FlexibleLayoutSection || SectionTemplate == CanvasSectionTemplate.FlexibleLayoutVerticalSection)
                 {
                     // Use the user-supplied ZoneReflowStrategy when adding flexible layout sections
@@ -61,9 +64,9 @@ namespace PnP.PowerShell.Commands.Pages
                     page.AddSection(SectionTemplate, Order, ZoneEmphasis, VerticalZoneEmphasis);
                 }
 
-                var addedSection = page.Sections[page.Sections.Count - 1];
                 if (Collapsible)
                 {
+                    var addedSection = page.Sections.Single(section => !existingSections.Contains(section));
                     addedSection.Collapsible = true;
                     if (ParameterSpecified(nameof(DisplayName)))
                     {
