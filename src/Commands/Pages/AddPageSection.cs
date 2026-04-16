@@ -31,8 +31,22 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public ZoneReflowStrategy ZoneReflowStrategy = ZoneReflowStrategy.TopToDown;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Collapsible;
+
+        [Parameter(Mandatory = false)]
+        public string DisplayName;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IsExpanded;
+
         protected override void ExecuteCmdlet()
         {
+            if ((ParameterSpecified(nameof(DisplayName)) || ParameterSpecified(nameof(IsExpanded))) && !Collapsible)
+            {
+                throw new PSArgumentException("DisplayName and IsExpanded can only be specified for collapsible sections. Use -Collapsible to create a collapsible section.");
+            }
+
             var page = Page?.GetPage(Connection);
 
             if (page != null)
@@ -46,6 +60,22 @@ namespace PnP.PowerShell.Commands.Pages
                 {
                     page.AddSection(SectionTemplate, Order, ZoneEmphasis, VerticalZoneEmphasis);
                 }
+
+                var addedSection = page.Sections[page.Sections.Count - 1];
+                if (Collapsible)
+                {
+                    addedSection.Collapsible = true;
+                    if (ParameterSpecified(nameof(DisplayName)))
+                    {
+                        addedSection.DisplayName = DisplayName;
+                    }
+
+                    if (ParameterSpecified(nameof(IsExpanded)))
+                    {
+                        addedSection.IsExpanded = IsExpanded;
+                    }
+                }
+
                 page.Save();
             }
             else
