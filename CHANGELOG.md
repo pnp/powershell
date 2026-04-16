@@ -20,6 +20,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added `Get-PnPPowerAppPermission` cmdlet to retrieve the permissions for a specific Power App [#5030](https://github.com/pnp/powershell/pull/5030)
 - Added `-Batch` parameter to `Add-PnPFileSensitivityLabel` cmdlet to allow bulk updates for file sensitivity labels.
 - Added `-ZoneReflowStrategy` parameter in `Add-PnPPageSection` cmdlet to support flexible layout behavior in mobile views.
+- Added `-Collapsible`, `-DisplayName`, and `-IsExpanded` parameters to `Add-PnPPageSection` to configure collapsible page sections [#5291](https://github.com/pnp/powershell/pull/5291)
 - Added `-KnowledgeAgentEnabled` and `-KnowledgeAgentSelectedSitesList` parameter to `Set-PnPTenant` cmdlets to support knowledge agents.
 - Added `-Force` parameter to `Remove-PnPTerm` cmdlet to remove terms without confirmation.
 - Added `Import-PnPFlow` cmdlet to import Power Automate in the tenant. [#4854](https://github.com/pnp/powershell/pull/4854)
