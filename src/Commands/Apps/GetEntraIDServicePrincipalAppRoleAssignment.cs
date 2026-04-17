@@ -15,10 +15,6 @@ namespace PnP.PowerShell.Commands.Apps
     [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.Read.All")]
     [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/User.Read.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/User.ReadWrite.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
     [OutputType(typeof(List<AzureADServicePrincipalAppRoleAssignment>))]
     [Alias("Get-PnPAzureADServicePrincipalAppRoleAssignment")]
     public class GetAzureADServicePrincipalAppRoleAssignment : PnPGraphCmdlet

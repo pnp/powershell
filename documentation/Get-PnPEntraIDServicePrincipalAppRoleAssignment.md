@@ -13,7 +13,7 @@ title: Get-PnPEntraIDServicePrincipalAppRoleAssignment
 
 **Required Permissions**
 
-  * Microsoft Graph API: permissions to read the enterprise application and the target principal, such as `Application.Read.All`, `Application.ReadWrite.All`, `Directory.Read.All`, `Directory.ReadWrite.All`, `User.Read.All`, `User.ReadWrite.All`, `Group.Read.All`, or `Group.ReadWrite.All`
+  * Microsoft Graph API: permissions to read the enterprise application, such as `Application.Read.All`, `Application.ReadWrite.All`, `Directory.Read.All`, or `Directory.ReadWrite.All`. Depending on how you identify the target principal, additional permissions such as `User.Read.All`, `User.ReadWrite.All`, `Group.Read.All`, or `Group.ReadWrite.All` can be required.
 
 Gets app role assignments configured on an enterprise application for a specific Entra ID user or group.
 

@@ -12,15 +12,10 @@ using GraphGroup = PnP.PowerShell.Commands.Model.Graph.Group;
 namespace PnP.PowerShell.Commands.Apps
 {
     [Cmdlet(VerbsCommon.Add, "PnPEntraIDServicePrincipalAppRoleAssignment", DefaultParameterSetName = ParameterSet_USER)]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.Read.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/User.Read.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/User.ReadWrite.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
-    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All", "graph/Application.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All", "graph/Application.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All", "graph/Directory.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/AppRoleAssignment.ReadWrite.All", "graph/Directory.ReadWrite.All")]
     [OutputType(typeof(AzureADServicePrincipalAppRoleAssignment))]
     [Alias("Add-PnPAzureADServicePrincipalAppRoleAssignment")]
     public class AddAzureADServicePrincipalAppRoleAssignment : PnPGraphCmdlet
