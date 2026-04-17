@@ -21,24 +21,24 @@ Removes app role assignments configured on an enterprise application for a speci
 
 ### By instance
 ```powershell
-Remove-PnPEntraIDServicePrincipalAppRoleAssignment -Identity <AzureADServicePrincipalAppRoleAssignment> [-Connection <PnPConnection>]
+Remove-PnPEntraIDServicePrincipalAppRoleAssignment -Identity <AzureADServicePrincipalAppRoleAssignment> [-Force] [-Connection <PnPConnection>] [-Confirm] [-WhatIf]
 ```
 
 ### User
 ```powershell
-Remove-PnPEntraIDServicePrincipalAppRoleAssignment -User <EntraIDUserPipeBind> [-AppRole <ServicePrincipalAvailableAppRoleBind>] [-Resource <ServicePrincipalPipeBind>] [-Connection <PnPConnection>]
+Remove-PnPEntraIDServicePrincipalAppRoleAssignment -User <EntraIDUserPipeBind> [-AppRole <ServicePrincipalAvailableAppRoleBind>] [-Resource <ServicePrincipalPipeBind>] [-Force] [-Connection <PnPConnection>] [-Confirm] [-WhatIf]
 ```
 
 ### Group
 ```powershell
-Remove-PnPEntraIDServicePrincipalAppRoleAssignment -Group <Object> [-AppRole <ServicePrincipalAvailableAppRoleBind>] [-Resource <ServicePrincipalPipeBind>] [-Connection <PnPConnection>]
+Remove-PnPEntraIDServicePrincipalAppRoleAssignment -Group <EntraIDGroupPipeBind> [-AppRole <ServicePrincipalAvailableAppRoleBind>] [-Resource <ServicePrincipalPipeBind>] [-Force] [-Connection <PnPConnection>] [-Confirm] [-WhatIf]
 ```
 
 ## DESCRIPTION
 
 Allows removal of one or more app role assignments for a specific Entra ID user or group on an enterprise application represented by a service principal.
 
-If `-AppRole` is omitted, all assignments for the selected user or group on the selected enterprise application are removed.
+If `-AppRole` is omitted, all assignments for the selected user or group on the selected enterprise application are removed. Because this is a potentially destructive operation, the cmdlet will prompt for confirmation unless `-Force` is specified.
 
 If you pipe in an app role instance retrieved through `Get-PnPEntraIDServicePrincipalAvailableAppRole`, the resource service principal is inferred automatically and you can omit `-Resource`.
 
@@ -106,7 +106,7 @@ Accept wildcard characters: False
 The id, display name, or group instance of the Entra ID group from which to remove enterprise application assignments. This can be a group object returned by `Get-PnPEntraIDGroup`.
 
 ```yaml
-Type: Object
+Type: EntraIDGroupPipeBind
 Parameter Sets: Group
 
 Required: True
@@ -144,6 +144,20 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Force
+Suppresses the confirmation prompt shown before any assignment is removed. Use with care: combining `-Force` with a `-User` or `-Group` value and no `-AppRole` removes every assignment the principal has on the selected enterprise application.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Connection
 Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying `-ReturnConnection` on `Connect-PnPOnline` or by executing `Get-PnPConnection`.
 
@@ -154,6 +168,36 @@ Parameter Sets: (All)
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before executing the command.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs. The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

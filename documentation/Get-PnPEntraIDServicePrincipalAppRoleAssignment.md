@@ -26,7 +26,7 @@ Get-PnPEntraIDServicePrincipalAppRoleAssignment -User <EntraIDUserPipeBind> [-Ap
 
 ### Group
 ```powershell
-Get-PnPEntraIDServicePrincipalAppRoleAssignment -Group <Object> [-AppRole <ServicePrincipalAvailableAppRoleBind>] [-Resource <ServicePrincipalPipeBind>] [-Connection <PnPConnection>]
+Get-PnPEntraIDServicePrincipalAppRoleAssignment -Group <EntraIDGroupPipeBind> [-AppRole <ServicePrincipalAvailableAppRoleBind>] [-Resource <ServicePrincipalPipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -78,7 +78,7 @@ Accept wildcard characters: False
 The id, display name, or group instance of the Entra ID group for which to retrieve enterprise application assignments. This can be a group object returned by `Get-PnPEntraIDGroup`.
 
 ```yaml
-Type: Object
+Type: EntraIDGroupPipeBind
 Parameter Sets: Group
 
 Required: True

@@ -7,185 +7,165 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Management.Automation;
-using AzureADGroup = PnP.PowerShell.Commands.Model.AzureAD.AzureADGroup;
-using GraphGroup = PnP.PowerShell.Commands.Model.Graph.Group;
 
 namespace PnP.PowerShell.Commands.Apps
 {
-	[Cmdlet(VerbsCommon.Get, "PnPEntraIDServicePrincipalAppRoleAssignment", DefaultParameterSetName = ParameterSet_USER)]
-	[RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
-	[RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
-	[RequiredApiDelegatedOrApplicationPermissions("graph/Directory.Read.All")]
-	[RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
-	[RequiredApiDelegatedOrApplicationPermissions("graph/User.Read.All")]
-	[RequiredApiDelegatedOrApplicationPermissions("graph/User.ReadWrite.All")]
-	[RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
-	[RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
-	[OutputType(typeof(List<AzureADServicePrincipalAppRoleAssignment>))]
-	[Alias("Get-PnPAzureADServicePrincipalAppRoleAssignment")]
-	public class GetAzureADServicePrincipalAppRoleAssignment : PnPGraphCmdlet
-	{
-		private const string ParameterSet_USER = "User";
-		private const string ParameterSet_GROUP = "Group";
+    [Cmdlet(VerbsCommon.Get, "PnPEntraIDServicePrincipalAppRoleAssignment", DefaultParameterSetName = ParameterSet_USER)]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Application.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Directory.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/User.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/User.ReadWrite.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.Read.All")]
+    [RequiredApiDelegatedOrApplicationPermissions("graph/Group.ReadWrite.All")]
+    [OutputType(typeof(List<AzureADServicePrincipalAppRoleAssignment>))]
+    [Alias("Get-PnPAzureADServicePrincipalAppRoleAssignment")]
+    public class GetAzureADServicePrincipalAppRoleAssignment : PnPGraphCmdlet
+    {
+        private const string ParameterSet_USER = "User";
+        private const string ParameterSet_GROUP = "Group";
 
-		[Parameter(Mandatory = true, ParameterSetName = ParameterSet_USER)]
-		[ValidateNotNull]
-		public EntraIDUserPipeBind User;
+        [Parameter(Mandatory = true, ParameterSetName = ParameterSet_USER)]
+        [ValidateNotNull]
+        public EntraIDUserPipeBind User;
 
-		[Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_GROUP)]
-		[ValidateNotNull]
-		public object Group;
+        [Parameter(Mandatory = true, ValueFromPipeline = true, ParameterSetName = ParameterSet_GROUP)]
+        [ValidateNotNull]
+        public EntraIDGroupPipeBind Group;
 
-		[Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_USER)]
-		[Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_GROUP)]
-		public ServicePrincipalAvailableAppRoleBind AppRole;
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_USER)]
+        [Parameter(Mandatory = false, ValueFromPipeline = true, ParameterSetName = ParameterSet_GROUP)]
+        public ServicePrincipalAvailableAppRoleBind AppRole;
 
-		[Parameter(Mandatory = false, ParameterSetName = ParameterSet_USER)]
-		[Parameter(Mandatory = false, ParameterSetName = ParameterSet_GROUP)]
-		public ServicePrincipalPipeBind Resource;
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_USER)]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_GROUP)]
+        public ServicePrincipalPipeBind Resource;
 
-		protected override void ExecuteCmdlet()
-		{
-			var resource = GetResourceServicePrincipal();
-			var appRole = ResolveAppRole(resource);
-			var principalId = ResolvePrincipalId();
+        protected override void ExecuteCmdlet()
+        {
+            var resource = GetResourceServicePrincipal();
+            var appRole = ResolveAppRole(resource);
+            var principalId = ResolvePrincipalId();
 
-			LogDebug($"Retrieving app role assignments on service principal {resource.DisplayName}");
+            LogDebug($"Retrieving app role assignments on service principal {resource.DisplayName}");
 
-			var assignments = ServicePrincipalUtility.GetServicePrincipalAppRoleAssignedToByServicePrincipalObjectId(GraphRequestHelper, resource.Id);
-			if (assignments == null)
-			{
-				throw new PSInvalidOperationException($"Unable to retrieve app role assignments for service principal {resource.DisplayName}. Ensure the current connection has the required Microsoft Graph permissions and try again.");
-			}
+            var assignments = ServicePrincipalUtility.GetServicePrincipalAppRoleAssignedToByServicePrincipalObjectId(GraphRequestHelper, resource.Id);
+            if (assignments == null)
+            {
+                throw new PSInvalidOperationException($"Unable to retrieve app role assignments for service principal {resource.DisplayName}. Ensure the current connection has the required Microsoft Graph permissions and try again.");
+            }
 
-			var matchingAssignments = assignments.Where(assignment => string.Equals(assignment.PrincipalId, principalId.ToString(), StringComparison.OrdinalIgnoreCase));
+            var matchingAssignments = assignments.Where(assignment => string.Equals(assignment.PrincipalId, principalId.ToString(), StringComparison.OrdinalIgnoreCase));
 
-			if (appRole != null)
-			{
-				matchingAssignments = matchingAssignments.Where(assignment => assignment.AppRoleId == appRole.Id.GetValueOrDefault());
-			}
+            if (appRole != null)
+            {
+                matchingAssignments = matchingAssignments.Where(assignment => assignment.AppRoleId == appRole.Id.GetValueOrDefault());
+            }
 
-			var results = matchingAssignments.ToList();
-			if (ParameterSpecified(nameof(AppRole)) && results.Count <= 1)
-			{
-				WriteObject(results.FirstOrDefault(), false);
-			}
-			else
-			{
-				WriteObject(results, true);
-			}
-		}
+            var results = matchingAssignments.ToList();
+            if (ParameterSpecified(nameof(AppRole)))
+            {
+                if (results.Count > 0)
+                {
+                    WriteObject(results[0], false);
+                }
+            }
+            else
+            {
+                WriteObject(results, true);
+            }
+        }
 
-		private AzureADServicePrincipal GetResourceServicePrincipal()
-		{
-			AzureADServicePrincipal resource = null;
+        private AzureADServicePrincipal GetResourceServicePrincipal()
+        {
+            AzureADServicePrincipal resource = null;
 
-			if (ParameterSpecified(nameof(Resource)))
-			{
-				resource = Resource.GetServicePrincipal(GraphRequestHelper);
-			}
+            if (ParameterSpecified(nameof(Resource)) && Resource != null)
+            {
+                resource = Resource.GetServicePrincipal(GraphRequestHelper);
+            }
 
-			if (AppRole?.AppRole?.ServicePrincipal != null)
-			{
-				if (resource != null && !string.Equals(resource.Id, AppRole.AppRole.ServicePrincipal.Id, StringComparison.OrdinalIgnoreCase))
-				{
-					throw new PSArgumentException("The provided Resource does not match the service principal associated with the AppRole", nameof(Resource));
-				}
+            if (AppRole?.AppRole?.ServicePrincipal != null)
+            {
+                if (resource != null && !string.Equals(resource.Id, AppRole.AppRole.ServicePrincipal.Id, StringComparison.OrdinalIgnoreCase))
+                {
+                    throw new PSArgumentException("The provided Resource does not match the service principal associated with the AppRole", nameof(Resource));
+                }
 
-				resource ??= AppRole.AppRole.ServicePrincipal;
-			}
+                resource ??= AppRole.AppRole.ServicePrincipal;
+            }
 
-			if (resource == null)
-			{
-				throw new PSArgumentException("Resource service principal not found. Provide Resource or pipe in an AppRole instance associated with a service principal", nameof(Resource));
-			}
+            if (resource == null)
+            {
+                throw new PSArgumentException("Resource service principal not found. Provide Resource or pipe in an AppRole instance associated with a service principal", nameof(Resource));
+            }
 
-			return resource;
-		}
+            return resource;
+        }
 
-		private AzureADServicePrincipalAppRole ResolveAppRole(AzureADServicePrincipal resource)
-		{
-			if (!ParameterSpecified(nameof(AppRole)))
-			{
-				return null;
-			}
+        private AzureADServicePrincipalAppRole ResolveAppRole(AzureADServicePrincipal resource)
+        {
+            if (!ParameterSpecified(nameof(AppRole)))
+            {
+                return null;
+            }
 
-			AzureADServicePrincipalAppRole appRole;
-			if (AppRole.AppRole != null)
-			{
-				appRole = AppRole.AppRole;
-				appRole.ServicePrincipal ??= resource;
-			}
-			else
-			{
-				appRole = AppRole.GetAvailableAppRole(Connection, AccessToken, resource);
-			}
+            AzureADServicePrincipalAppRole appRole;
+            if (AppRole.AppRole != null)
+            {
+                appRole = AppRole.AppRole;
+                appRole.ServicePrincipal ??= resource;
+            }
+            else
+            {
+                appRole = AppRole.GetAvailableAppRole(Connection, AccessToken, resource);
+            }
 
-			if (appRole == null)
-			{
-				throw new PSArgumentException("AppRole not found", nameof(AppRole));
-			}
+            if (appRole == null)
+            {
+                throw new PSArgumentException("AppRole not found", nameof(AppRole));
+            }
 
-			if (!IsUserTargetedAppRole(appRole))
-			{
-				throw new PSArgumentException("The provided AppRole cannot be assigned to a user or group", nameof(AppRole));
-			}
+            if (!IsUserTargetedAppRole(appRole))
+            {
+                throw new PSArgumentException("The provided AppRole cannot be assigned to a user or group", nameof(AppRole));
+            }
 
-			return appRole;
-		}
+            return appRole;
+        }
 
-		private Guid ResolvePrincipalId()
-		{
-			if (ParameterSetName == ParameterSet_USER)
-			{
-				var user = User.GetUser(AccessToken, Connection.AzureEnvironment);
+        private Guid ResolvePrincipalId()
+        {
+            if (ParameterSetName == ParameterSet_USER)
+            {
+                var user = User.GetUser(AccessToken, Connection.AzureEnvironment);
 
-				if (user?.Id == null)
-				{
-					throw new PSArgumentException("User not found", nameof(User));
-				}
+                if (user?.Id == null)
+                {
+                    throw new PSArgumentException("User not found", nameof(User));
+                }
 
-				return user.Id.Value;
-			}
+                return user.Id.Value;
+            }
 
-			var group = GetGroupInstance();
-			if (group == null)
-			{
-				throw new PSArgumentException("Group not found", nameof(Group));
-			}
+            var group = Group.GetGroup(GraphRequestHelper);
+            if (group == null)
+            {
+                throw new PSArgumentException("Group not found", nameof(Group));
+            }
 
-			if (!Guid.TryParse(group.Id, out var groupId))
-			{
-				throw new PSArgumentException("Group id is invalid", nameof(Group));
-			}
+            if (!Guid.TryParse(group.Id, out var groupId))
+            {
+                throw new PSArgumentException("Group id is invalid", nameof(Group));
+            }
 
-			return groupId;
-		}
+            return groupId;
+        }
 
-		private GraphGroup GetGroupInstance()
-		{
-			var groupInput = Group is PSObject psObject ? psObject.BaseObject : Group;
-
-			switch (groupInput)
-			{
-				case GraphGroup graphGroup:
-					return graphGroup;
-				case AzureADGroup azureADGroup when Guid.TryParse(azureADGroup.Id, out var azureADGroupId):
-					return AzureADGroupsUtility.GetGroup(GraphRequestHelper, azureADGroupId);
-				case EntraIDGroupPipeBind groupPipeBind:
-					return groupPipeBind.GetGroup(GraphRequestHelper);
-				case string groupValue when !string.IsNullOrWhiteSpace(groupValue):
-					return new EntraIDGroupPipeBind(groupValue).GetGroup(GraphRequestHelper);
-				case Guid groupId:
-					return AzureADGroupsUtility.GetGroup(GraphRequestHelper, groupId);
-				default:
-					throw new PSArgumentException("Group must be provided as an id, display name, or group instance", nameof(Group));
-			}
-		}
-
-		private static bool IsUserTargetedAppRole(AzureADServicePrincipalAppRole appRole)
-		{
-			return appRole?.AllowedMemberTypes?.Any(memberType => memberType.Equals("User", StringComparison.OrdinalIgnoreCase)) == true;
-		}
-	}
+        private static bool IsUserTargetedAppRole(AzureADServicePrincipalAppRole appRole)
+        {
+            return appRole?.AllowedMemberTypes?.Any(memberType => memberType.Equals("User", StringComparison.OrdinalIgnoreCase)) == true;
+        }
+    }
 }

@@ -28,7 +28,7 @@ Add-PnPEntraIDServicePrincipalAppRoleAssignment -User <EntraIDUserPipeBind> [-Ap
 ### Group
 
 ```powershell
-Add-PnPEntraIDServicePrincipalAppRoleAssignment -Group <Object> [-AppRole <ServicePrincipalAvailableAppRoleBind>] [-Resource <ServicePrincipalPipeBind>] [-Connection <PnPConnection>]
+Add-PnPEntraIDServicePrincipalAppRoleAssignment -Group <EntraIDGroupPipeBind> [-AppRole <ServicePrincipalAvailableAppRoleBind>] [-Resource <ServicePrincipalPipeBind>] [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
@@ -89,7 +89,7 @@ Accept wildcard characters: False
 The id, display name, or group instance of the Entra ID group to assign to the enterprise application. This can be a group object returned by `Get-PnPEntraIDGroup`.
 
 ```yaml
-Type: Object
+Type: EntraIDGroupPipeBind
 Parameter Sets: Group
 
 Required: True

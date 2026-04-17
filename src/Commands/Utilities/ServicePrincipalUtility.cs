@@ -203,10 +203,10 @@ namespace PnP.PowerShell.Commands.Utilities
                     // If we have a service principal, look for the app role and match its claim value to the app role assignment name
                     azureADServicePrincipalAppRoleAssignment.AppRoleName = servicePrincipal.AppRoles.FirstOrDefault(ar => ar.Id == azureADServicePrincipalAppRoleAssignment.AppRoleId.Value)?.Value;
 
-					if (string.IsNullOrEmpty(azureADServicePrincipalAppRoleAssignment.AppRoleName) && azureADServicePrincipalAppRoleAssignment.AppRoleId == Guid.Empty)
-					{
-						azureADServicePrincipalAppRoleAssignment.AppRoleName = "Default Access";
-					}
+                    if (string.IsNullOrEmpty(azureADServicePrincipalAppRoleAssignment.AppRoleName) && azureADServicePrincipalAppRoleAssignment.AppRoleId == Guid.Empty)
+                    {
+                        azureADServicePrincipalAppRoleAssignment.AppRoleName = "Default Access";
+                    }
                 }
             }
 
