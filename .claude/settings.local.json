@@ -3,7 +3,8 @@
     "allow": [
       "Bash(xargs grep:*)",
       "Bash(git diff:*)",
-      "Read(//tmp/**)"
+      "Read(//tmp/**)",
+      "Bash(dotnet build *)"
     ]
   }
 }

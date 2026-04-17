@@ -1,4 +1,4 @@
-﻿using PnP.PowerShell.Commands.Model.AzureAD;
+using PnP.PowerShell.Commands.Model.AzureAD;
 using PnP.PowerShell.Commands.Utilities;
 using PnP.PowerShell.Commands.Utilities.REST;
 using System;
@@ -10,6 +10,7 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
     public class EntraIDGroupPipeBind
     {
         private readonly AzureADGroup _group;
+        private readonly Group _graphGroup;
         private readonly string _groupId;
         private readonly string _displayName;
 
@@ -20,6 +21,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public EntraIDGroupPipeBind(AzureADGroup group)
         {
             _group = group;
+        }
+
+        public EntraIDGroupPipeBind(Group group)
+        {
+            _graphGroup = group;
         }
 
         public EntraIDGroupPipeBind(string input)
@@ -44,7 +50,11 @@ namespace PnP.PowerShell.Commands.Base.PipeBinds
         public Group GetGroup(ApiRequestHelper requestHelper)
         {
             Group group = null;
-            if (Group != null)
+            if (_graphGroup != null)
+            {
+                group = _graphGroup;
+            }
+            else if (Group != null)
             {
                 group = AzureADGroupsUtility.GetGroup(requestHelper, new Guid(Group.Id));
             }

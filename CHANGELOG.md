@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Add-PnPEntraIDServicePrincipalAppRoleAssignment`, `Get-PnPEntraIDServicePrincipalAppRoleAssignment`, and `Remove-PnPEntraIDServicePrincipalAppRoleAssignment` cmdlets to manage Entra ID user and group enterprise application assignments with app roles [#5292](https://github.com/pnp/powershell/pull/5292)
 - Added `Copy-PnPFileMetadata` to copy Metadata fields (Created, Modified, Author, Editor) between items [#5072](https://github.com/pnp/powershell/pull/5072)
 - Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
 - Added `-User` parameter to `Get-PnPTeamsTeam` cmdlet to allow fetching list of teams a user has access to.
