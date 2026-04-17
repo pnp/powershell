@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Text.Json;
 
 namespace PnP.PowerShell.Commands.Utilities
 {
@@ -240,7 +241,14 @@ namespace PnP.PowerShell.Commands.Utilities
         public static AzureADServicePrincipalAppRoleAssignment AddServicePrincipalAppRoleAssignment(ApiRequestHelper requestHelper, Guid principalId, AzureADServicePrincipal resource, AzureADServicePrincipalAppRole appRoleToAdd)
         {
             var appRoleId = appRoleToAdd.Id.GetValueOrDefault();
-            var content = new StringContent($"{{'principalId':'{principalId}','resourceId':'{resource.Id}','appRoleId':'{appRoleId}'}}");
+            var requestBody = JsonSerializer.Serialize(new
+            {
+                principalId,
+                resourceId = resource.Id,
+                appRoleId
+            });
+
+            var content = new StringContent(requestBody, System.Text.Encoding.UTF8);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
             var result = requestHelper.Post<AzureADServicePrincipalAppRoleAssignment>($"v1.0/servicePrincipals/{resource.Id}/appRoleAssignedTo", content);
             return result;
@@ -316,9 +324,14 @@ namespace PnP.PowerShell.Commands.Utilities
         /// </summary>
         public static void RemoveServicePrincipalAppRoleAssignment(ApiRequestHelper requestHelper, AzureADServicePrincipalAppRoleAssignment appRoleAssignmentToRemove)
         {
-            if (appRoleAssignmentToRemove?.ResourceId == null)
+            if (appRoleAssignmentToRemove == null)
             {
-                throw new ArgumentNullException(nameof(appRoleAssignmentToRemove), $"{nameof(appRoleAssignmentToRemove)} must contain a ResourceId");
+                throw new ArgumentNullException(nameof(appRoleAssignmentToRemove));
+            }
+
+            if (appRoleAssignmentToRemove.ResourceId == null)
+            {
+                throw new ArgumentException($"{nameof(appRoleAssignmentToRemove)} must contain a ResourceId", nameof(appRoleAssignmentToRemove));
             }
 
             requestHelper.Delete($"v1.0/servicePrincipals/{appRoleAssignmentToRemove.ResourceId}/appRoleAssignedTo/{appRoleAssignmentToRemove.Id}");
