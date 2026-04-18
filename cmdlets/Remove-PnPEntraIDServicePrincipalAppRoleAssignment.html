@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Remove-PnPEntraIDServicePrincipalAppRoleAssignment | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Remove-PnPEntraIDServicePrincipalAppRoleAssignment | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="remove-pnpentraidserviceprincipalapproleassignment">Remove-PnPEntraIDServicePrincipalAppRoleAssignment</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p><strong>Required Permissions</strong></p>
+<ul>
+<li>Microsoft Graph API: <code>AppRoleAssignment.ReadWrite.All</code>, plus permissions to read the enterprise application and the target principal such as <code>Application.Read.All</code>, <code>Application.ReadWrite.All</code>, <code>Directory.Read.All</code>, <code>Directory.ReadWrite.All</code>, <code>User.Read.All</code>, <code>User.ReadWrite.All</code>, <code>Group.Read.All</code>, or <code>Group.ReadWrite.All</code></li>
+</ul>
+<p>Removes app role assignments configured on an enterprise application for a specific Entra ID user or group.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="by-instance">By instance</h3>
+<pre><code class="lang-powershell">Remove-PnPEntraIDServicePrincipalAppRoleAssignment -Identity &lt;AzureADServicePrincipalAppRoleAssignment&gt; [-Force] [-Connection &lt;PnPConnection&gt;] [-Confirm] [-WhatIf]
+</code></pre>
+<h3 id="user">User</h3>
+<pre><code class="lang-powershell">Remove-PnPEntraIDServicePrincipalAppRoleAssignment -User &lt;EntraIDUserPipeBind&gt; [-AppRole &lt;ServicePrincipalAvailableAppRoleBind&gt;] [-Resource &lt;ServicePrincipalPipeBind&gt;] [-Force] [-Connection &lt;PnPConnection&gt;] [-Confirm] [-WhatIf]
+</code></pre>
+<h3 id="group">Group</h3>
+<pre><code class="lang-powershell">Remove-PnPEntraIDServicePrincipalAppRoleAssignment -Group &lt;EntraIDGroupPipeBind&gt; [-AppRole &lt;ServicePrincipalAvailableAppRoleBind&gt;] [-Resource &lt;ServicePrincipalPipeBind&gt;] [-Force] [-Connection &lt;PnPConnection&gt;] [-Confirm] [-WhatIf]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Allows removal of one or more app role assignments for a specific Entra ID user or group on an enterprise application represented by a service principal.</p>
+<p>If <code>-AppRole</code> is omitted, all assignments for the selected user or group on the selected enterprise application are removed. Because this is a potentially destructive operation, the cmdlet will prompt for confirmation unless <code>-Force</code> is specified.</p>
+<p>If you pipe in an app role instance retrieved through <code>Get-PnPEntraIDServicePrincipalAvailableAppRole</code>, the resource service principal is inferred automatically and you can omit <code>-Resource</code>.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Remove-PnPEntraIDServicePrincipalAppRoleAssignment -User &quot;john@contoso.com&quot; -Resource &quot;Contoso CRM&quot; -AppRole &quot;Reader&quot;
+</code></pre>
+<p>Removes the <code>Reader</code> enterprise app role assignment for the user <code>john@contoso.com</code> on the enterprise application <code>Contoso CRM</code>.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Remove-PnPEntraIDServicePrincipalAppRoleAssignment -Group &quot;Sales Team&quot; -Resource &quot;Contoso CRM&quot;
+</code></pre>
+<p>Removes all enterprise app role assignments for the group <code>Sales Team</code> on the enterprise application <code>Contoso CRM</code>.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDServicePrincipalAppRoleAssignment -User &quot;john@contoso.com&quot; -Resource &quot;Contoso CRM&quot; | Remove-PnPEntraIDServicePrincipalAppRoleAssignment
+</code></pre>
+<p>Removes the app role assignments returned from the pipeline.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Get-PnPEntraIDServicePrincipal -AppName &quot;Contoso CRM&quot; | Get-PnPEntraIDServicePrincipalAvailableAppRole -Identity &quot;Reader&quot; | Remove-PnPEntraIDServicePrincipalAppRoleAssignment -User &quot;john@contoso.com&quot;
+</code></pre>
+<p>Removes the <code>Reader</code> enterprise app role assignment for the user <code>john@contoso.com</code> on the <code>Contoso CRM</code> enterprise application.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-identity">-Identity</h3>
+<p>The app role assignment instance to remove. This parameter is typically supplied through the pipeline from <code>Get-PnPEntraIDServicePrincipalAppRoleAssignment</code>.</p>
+<pre><code class="lang-yaml">Type: AzureADServicePrincipalAppRoleAssignment
+Parameter Sets: By instance
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-user">-User</h3>
+<p>The id, user principal name, or instance of the Entra ID user from which to remove enterprise application assignments.</p>
+<pre><code class="lang-yaml">Type: EntraIDUserPipeBind
+Parameter Sets: User
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-group">-Group</h3>
+<p>The id, display name, or group instance of the Entra ID group from which to remove enterprise application assignments. This can be a group object returned by <code>Get-PnPEntraIDGroup</code>.</p>
+<pre><code class="lang-yaml">Type: EntraIDGroupPipeBind
+Parameter Sets: Group
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-approle">-AppRole</h3>
+<p>The object id, value, or instance of the application role to remove. When an app role instance is provided through the pipeline, the resource service principal is inferred automatically.</p>
+<pre><code class="lang-yaml">Type: ServicePrincipalAvailableAppRoleBind
+Parameter Sets: User, Group
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: True (ByValue)
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-resource">-Resource</h3>
+<p>The object id, name, or instance of the enterprise application service principal. This parameter can be omitted when an app role instance is provided through the pipeline.</p>
+<pre><code class="lang-yaml">Type: ServicePrincipalPipeBind
+Parameter Sets: User, Group
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>Suppresses the confirmation prompt shown before any assignment is removed. Use with care: combining <code>-Force</code> with a <code>-User</code> or <code>-Group</code> value and no <code>-AppRole</code> removes every assignment the principal has on the selected enterprise application.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying <code>-ReturnConnection</code> on <code>Connect-PnPOnline</code> or by executing <code>Get-PnPConnection</code>.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-confirm">-Confirm</h3>
+<p>Prompts you for confirmation before executing the command.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-whatif">-WhatIf</h3>
+<p>Shows what would happen if the cmdlet runs. The cmdlet is not run.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="https://aka.ms/m365pnp">Microsoft 365 Patterns and Practices</a>
+<a href="https://learn.microsoft.com/graph/api/serviceprincipal-delete-approleassignedto">Microsoft Graph documentation</a></p>
+
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>
