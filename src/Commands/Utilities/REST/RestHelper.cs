@@ -605,15 +605,17 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         private static string SendMessage(HttpClient httpClient, HttpRequestMessage message)
         {
             HttpResponseMessage response = null;
+            var retryAttempt = 0;
             try
             {
                 response = httpClient.SendAsync(message).GetAwaiter().GetResult();
                 while (response.StatusCode == (HttpStatusCode)429)
                 {
                     // throttled
-                    var retryAfter = response.Headers.RetryAfter;
+                    retryAttempt++;
+                    var retryDelay = GetRetryDelay(response, retryAttempt);
                     response.Dispose();
-                    Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
+                    Thread.Sleep(retryDelay);
                     using var retryMessage = CloneMessage(message);
                     response = httpClient.SendAsync(retryMessage).GetAwaiter().GetResult();
                 }
@@ -637,15 +639,17 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         private static byte[] SendMessageByteArray(HttpClient httpClient, HttpRequestMessage message)
         {
             HttpResponseMessage response = null;
+            var retryAttempt = 0;
             try
             {
                 response = httpClient.SendAsync(message).GetAwaiter().GetResult();
                 while (response.StatusCode == (HttpStatusCode)429)
                 {
                     // throttled
-                    var retryAfter = response.Headers.RetryAfter;
+                    retryAttempt++;
+                    var retryDelay = GetRetryDelay(response, retryAttempt);
                     response.Dispose();
-                    Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
+                    Thread.Sleep(retryDelay);
                     using var retryMessage = CloneMessage(message);
                     response = httpClient.SendAsync(retryMessage).GetAwaiter().GetResult();
                 }
@@ -669,15 +673,17 @@ namespace PnP.PowerShell.Commands.Utilities.REST
         private static System.Net.Http.Headers.HttpResponseHeaders SendMessageGetResponseHeader(HttpClient httpClient, HttpRequestMessage message)
         {
             HttpResponseMessage response = null;
+            var retryAttempt = 0;
             try
             {
                 response = httpClient.SendAsync(message).GetAwaiter().GetResult();
                 while (response.StatusCode == (HttpStatusCode)429)
                 {
                     // throttled
-                    var retryAfter = response.Headers.RetryAfter;
+                    retryAttempt++;
+                    var retryDelay = GetRetryDelay(response, retryAttempt);
                     response.Dispose();
-                    Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
+                    Thread.Sleep(retryDelay);
                     using var retryMessage = CloneMessage(message);
                     response = httpClient.SendAsync(retryMessage).GetAwaiter().GetResult();
                 }
@@ -709,11 +715,32 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return headerResponse.Headers;
         }
 
+        private static TimeSpan GetRetryDelay(HttpResponseMessage response, int retryAttempt)
+        {
+            var retryAfter = response.Headers.RetryAfter;
+            if (retryAfter?.Delta is TimeSpan delta && delta > TimeSpan.Zero)
+            {
+                return delta;
+            }
+
+            if (retryAfter?.Date is DateTimeOffset retryAfterDate)
+            {
+                var dateDelay = retryAfterDate - DateTimeOffset.UtcNow;
+                if (dateDelay > TimeSpan.Zero)
+                {
+                    return dateDelay;
+                }
+            }
+
+            var fallbackSeconds = Math.Min(Math.Pow(2, retryAttempt - 1), 30);
+            return TimeSpan.FromSeconds(fallbackSeconds);
+        }
+
         private static HttpRequestMessage CloneMessage(HttpRequestMessage req)
         {
             HttpRequestMessage clone = new HttpRequestMessage(req.Method, req.RequestUri);
 
-            clone.Content = req.Content;
+            clone.Content = CloneContent(req.Content);
             clone.Version = req.Version;
 
             foreach (KeyValuePair<string, object> prop in req.Options)
@@ -727,6 +754,24 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
 
             return clone;
+        }
+
+        private static HttpContent CloneContent(HttpContent content)
+        {
+            if (content == null)
+            {
+                return null;
+            }
+
+            var contentBytes = content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+            var contentClone = new ByteArrayContent(contentBytes);
+
+            foreach (var header in content.Headers)
+            {
+                contentClone.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
+
+            return contentClone;
         }
     }
 }
