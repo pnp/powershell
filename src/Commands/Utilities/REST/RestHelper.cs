@@ -604,65 +604,109 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private static string SendMessage(HttpClient httpClient, HttpRequestMessage message)
         {
-            var response = httpClient.SendAsync(message).GetAwaiter().GetResult();
-            while (response.StatusCode == (HttpStatusCode)429)
+            HttpResponseMessage response = null;
+            try
             {
-                // throttled
-                var retryAfter = response.Headers.RetryAfter;
-                Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
-                response = httpClient.Send(CloneMessage(message));
+                response = httpClient.SendAsync(message).GetAwaiter().GetResult();
+                while (response.StatusCode == (HttpStatusCode)429)
+                {
+                    // throttled
+                    var retryAfter = response.Headers.RetryAfter;
+                    response.Dispose();
+                    Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
+                    using var retryMessage = CloneMessage(message);
+                    response = httpClient.SendAsync(retryMessage).GetAwaiter().GetResult();
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                }
+                else
+                {
+                    var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    throw new HttpRequestException(errorContent);
+                }
             }
-            if (response.IsSuccessStatusCode)
+            finally
             {
-                return response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                throw new HttpRequestException(errorContent);
+                response?.Dispose();
+                message.Dispose();
             }
         }
 
         private static byte[] SendMessageByteArray(HttpClient httpClient, HttpRequestMessage message)
         {
-            var response = httpClient.Send(message);
-            while (response.StatusCode == (HttpStatusCode)429)
+            HttpResponseMessage response = null;
+            try
             {
-                // throttled
-                var retryAfter = response.Headers.RetryAfter;
-                Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
-                response = httpClient.Send(CloneMessage(message));
+                response = httpClient.SendAsync(message).GetAwaiter().GetResult();
+                while (response.StatusCode == (HttpStatusCode)429)
+                {
+                    // throttled
+                    var retryAfter = response.Headers.RetryAfter;
+                    response.Dispose();
+                    Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
+                    using var retryMessage = CloneMessage(message);
+                    response = httpClient.SendAsync(retryMessage).GetAwaiter().GetResult();
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                }
+                else
+                {
+                    var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    throw new HttpRequestException($"HTTP Error {response.StatusCode}: {errorContent}");
+                }
             }
-            if (response.IsSuccessStatusCode)
+            finally
             {
-                return response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                throw new HttpRequestException($"HTTP Error {response.StatusCode}: {errorContent}");
+                response?.Dispose();
+                message.Dispose();
             }
         }
 
         private static System.Net.Http.Headers.HttpResponseHeaders SendMessageGetResponseHeader(HttpClient httpClient, HttpRequestMessage message)
         {
-            var response = httpClient.SendAsync(message).GetAwaiter().GetResult();
-            while (response.StatusCode == (HttpStatusCode)429)
+            HttpResponseMessage response = null;
+            try
             {
-                // throttled
-                var retryAfter = response.Headers.RetryAfter;
-                Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
-                response = httpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
+                response = httpClient.SendAsync(message).GetAwaiter().GetResult();
+                while (response.StatusCode == (HttpStatusCode)429)
+                {
+                    // throttled
+                    var retryAfter = response.Headers.RetryAfter;
+                    response.Dispose();
+                    Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
+                    using var retryMessage = CloneMessage(message);
+                    response = httpClient.SendAsync(retryMessage).GetAwaiter().GetResult();
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return CloneResponseHeaders(response);
+                }
+                else
+                {
+                    var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    throw new HttpRequestException(errorContent);
+                }
             }
-            if (response.IsSuccessStatusCode)
+            finally
             {
-                return response.Headers;
+                response?.Dispose();
+                message.Dispose();
             }
-            else
+        }
+
+        private static System.Net.Http.Headers.HttpResponseHeaders CloneResponseHeaders(HttpResponseMessage response)
+        {
+            var headerResponse = new HttpResponseMessage(response.StatusCode);
+            foreach (var header in response.Headers)
             {
-                var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                throw new HttpRequestException(errorContent);
+                headerResponse.Headers.TryAddWithoutValidation(header.Key, header.Value);
             }
+
+            return headerResponse.Headers;
         }
 
         private static HttpRequestMessage CloneMessage(HttpRequestMessage req)
