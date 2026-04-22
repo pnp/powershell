@@ -268,28 +268,28 @@ namespace PnP.PowerShell.Commands.Base
         private void PostRequest()
         {
             LogDebug($"Sending HTTP POST to {Url}");
-            var response = GraphRequestHelper.PostHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            using var response = GraphRequestHelper.PostHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PutRequest()
         {
             LogDebug($"Sending HTTP PUT to {Url}");
-            var response = GraphRequestHelper.PutHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            using var response = GraphRequestHelper.PutHttpContent(Url, GetHttpContent(), AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void PatchRequest()
         {
             LogDebug($"Sending HTTP PATCH to {Url}");
-            var response = GraphRequestHelper.Patch(GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            using var response = GraphRequestHelper.Patch(GetHttpContent(), Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 
         private void DeleteRequest()
         {
             LogDebug($"Sending HTTP DELETE to {Url}");
-            var response = GraphRequestHelper.Delete(Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
+            using var response = GraphRequestHelper.Delete(Url, AdditionalHeaders?.GetHeaders(ConsistencyLevelEventual.IsPresent));
             HandleResponse(response);
         }
 

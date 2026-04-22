@@ -14,12 +14,14 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 {
     internal static class RestHelper
     {
+        private static readonly JsonSerializerOptions CamelCaseSerializerOptions = new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
+
         #region GET
         public static T ExecuteGetRequest<T>(ClientContext context, string url, string select = null, string filter = null, string expand = null, uint? top = null)
         {
             var returnValue = ExecuteGetRequest(context, url, select, filter, expand, top);
 
-            var returnObject = JsonSerializer.Deserialize<T>(returnValue, new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            var returnObject = JsonSerializer.Deserialize<T>(returnValue, CamelCaseSerializerOptions);
             return returnObject;
         }
 
@@ -52,22 +54,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 url += $"?{string.Join("&", restparams)}";
             }
             var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
-
-            var authManager = context.GetContextSettings().AuthenticationManager;
-            if (authManager.CookieContainer != null)
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (var cookie in authManager.CookieContainer.GetCookies(new Uri(url)))
-                {
-                    sb.Append($"{cookie}; ");
-                }
-                client.DefaultRequestHeaders.Add("Cookie", sb.ToString());
-            }
-            var returnValue = client.GetStringAsync(url).GetAwaiter().GetResult();
-            return returnValue;
+            var message = GetMessage(url, HttpMethod.Get, context);
+            return SendMessage(client, message);
         }
 
         public static T ExecutePostRequest<T>(ClientContext context, string url, string content, string select = null, string filter = null, string expand = null, Dictionary<string, string> additionalHeaders = null, string contentType = "application/json", uint? top = null)
@@ -82,8 +70,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 }
             }
 
-            var returnValue = ExecutePostRequestInternal(context, url, stringContent, select, filter, expand, additionalHeaders, top);
-            return JsonSerializer.Deserialize<T>(returnValue.Content.ReadAsStringAsync().GetAwaiter().GetResult(), new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            using var returnValue = ExecutePostRequestInternal(context, url, stringContent, select, filter, expand, additionalHeaders, top);
+            return JsonSerializer.Deserialize<T>(returnValue.Content.ReadAsStringAsync().GetAwaiter().GetResult(), CamelCaseSerializerOptions);
         }
 
         public static HttpResponseMessage ExecutePostRequest(ClientContext context, string endPointUrl, string content, string select = null, string filter = null, string expand = null, Dictionary<string, string> additionalHeaders = null, string contentType = "application/json", uint? top = null)
@@ -130,19 +118,10 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
 
             var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
-            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
-
-            if (additionalHeaders != null)
-            {
-                foreach (var key in additionalHeaders.Keys)
-                {
-                    client.DefaultRequestHeaders.Add(key, additionalHeaders[key]);
-                }
-            }
-            var returnValue = client.PostAsync(url, content).GetAwaiter().GetResult();
+            using var message = GetMessage(url, HttpMethod.Post, context, content: content);
+            message.Headers.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
+            AddHeaders(message, additionalHeaders);
+            var returnValue = client.SendAsync(message).GetAwaiter().GetResult();
             returnValue.EnsureSuccessStatusCode();
             return returnValue;
         }
@@ -295,7 +274,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
-        public static System.Net.Http.Headers.HttpResponseHeaders PostGetResponseHeader<T>(HttpClient httpClient, string url, string accessToken, object payload, bool camlCasePolicy = true, string accept = "application/json")
+        public static Uri PostGetResponseLocation<T>(HttpClient httpClient, string url, string accessToken, object payload, bool camlCasePolicy = true, string accept = "application/json")
         {
             HttpRequestMessage message = null;
             if (payload != null)
@@ -308,7 +287,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 message = GetMessage(url, HttpMethod.Post, accessToken, accept);
             }
-            return SendMessageGetResponseHeader(httpClient, message);
+            return SendMessageGetResponseLocation(httpClient, message);
         }
 
         public static T Post<T>(HttpClient httpClient, string url, ClientContext clientContext, object payload, bool camlCasePolicy = true)
@@ -384,8 +363,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 stringContent.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(contentType);
             }
 
-            var returnValue = ExecutePutRequestInternal(context, url, stringContent, select, filter, expand);
-            return JsonSerializer.Deserialize<T>(returnValue.Content.ReadAsStringAsync().GetAwaiter().GetResult(), new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            using var returnValue = ExecutePutRequestInternal(context, url, stringContent, select, filter, expand);
+            return JsonSerializer.Deserialize<T>(returnValue.Content.ReadAsStringAsync().GetAwaiter().GetResult(), CamelCaseSerializerOptions);
         }
 
         public static HttpResponseMessage ExecutePutRequest(ClientContext context, string endPointUrl, string content, string select = null, string filter = null, string expand = null, Dictionary<string, string> additionalHeaders = null, string contentType = null)
@@ -424,19 +403,10 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
 
             var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
-            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
-
-            if (additionalHeaders != null)
-            {
-                foreach (var key in additionalHeaders.Keys)
-                {
-                    client.DefaultRequestHeaders.Add(key, additionalHeaders[key]);
-                }
-            }
-            var returnValue = client.PutAsync(url, content).GetAwaiter().GetResult();
+            using var message = GetMessage(url, HttpMethod.Put, context, content: content);
+            message.Headers.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
+            AddHeaders(message, additionalHeaders);
+            var returnValue = client.SendAsync(message).GetAwaiter().GetResult();
             return returnValue;
         }
         #endregion
@@ -450,8 +420,8 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 stringContent.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(contentType);
             }
 
-            var returnValue = ExecuteMergeRequestInternal(context, url, stringContent, select, filter, expand);
-            return JsonSerializer.Deserialize<T>(returnValue.Content.ReadAsStringAsync().GetAwaiter().GetResult(), new JsonSerializerOptions() { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull, PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
+            using var returnValue = ExecuteMergeRequestInternal(context, url, stringContent, select, filter, expand);
+            return JsonSerializer.Deserialize<T>(returnValue.Content.ReadAsStringAsync().GetAwaiter().GetResult(), CamelCaseSerializerOptions);
         }
 
         public static HttpResponseMessage ExecuteMergeRequest(ClientContext context, string endPointUrl, string content, string select = null, string filter = null, string expand = null, Dictionary<string, string> additionalHeaders = null, string contentType = null)
@@ -490,20 +460,12 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
 
             var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
-            client.DefaultRequestHeaders.Add("IF-MATCH", "*");
-            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
-            client.DefaultRequestHeaders.Add("X-HTTP-Method", "MERGE");
-            if (additionalHeaders != null)
-            {
-                foreach (var key in additionalHeaders.Keys)
-                {
-                    client.DefaultRequestHeaders.Add(key, additionalHeaders[key]);
-                }
-            }
-            var returnValue = client.PostAsync(url, content).GetAwaiter().GetResult();
+            using var message = GetMessage(url, HttpMethod.Post, context, content: content);
+            message.Headers.Add("IF-MATCH", "*");
+            message.Headers.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
+            message.Headers.Add("X-HTTP-Method", "MERGE");
+            AddHeaders(message, additionalHeaders);
+            var returnValue = client.SendAsync(message).GetAwaiter().GetResult();
             return returnValue;
         }
         #endregion
@@ -569,22 +531,27 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
 
             var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", context.GetAccessToken());
-            client.DefaultRequestHeaders.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
-            client.DefaultRequestHeaders.Add("X-HTTP-Method", "DELETE");
-            if (additionalHeaders != null)
-            {
-                foreach (var key in additionalHeaders.Keys)
-                {
-                    client.DefaultRequestHeaders.Add(key, additionalHeaders[key]);
-                }
-            }
-            var returnValue = client.DeleteAsync(url).GetAwaiter().GetResult();
+            using var message = GetMessage(url, HttpMethod.Delete, context);
+            message.Headers.Add("X-RequestDigest", context.GetRequestDigestAsync().GetAwaiter().GetResult());
+            message.Headers.Add("X-HTTP-Method", "DELETE");
+            AddHeaders(message, additionalHeaders);
+            var returnValue = client.SendAsync(message).GetAwaiter().GetResult();
             return returnValue;
         }
         #endregion
+
+        private static void AddHeaders(HttpRequestMessage message, Dictionary<string, string> additionalHeaders)
+        {
+            if (additionalHeaders == null)
+            {
+                return;
+            }
+
+            foreach (var key in additionalHeaders.Keys)
+            {
+                message.Headers.TryAddWithoutValidation(key, additionalHeaders[key]);
+            }
+        }
 
         private static HttpRequestMessage GetMessage(string url, HttpMethod method, string accessToken, string accept = "application/json", HttpContent content = null)
         {
@@ -637,72 +604,132 @@ namespace PnP.PowerShell.Commands.Utilities.REST
 
         private static string SendMessage(HttpClient httpClient, HttpRequestMessage message)
         {
-            var response = httpClient.SendAsync(message).GetAwaiter().GetResult();
-            while (response.StatusCode == (HttpStatusCode)429)
+            HttpResponseMessage response = null;
+            var retryAttempt = 0;
+            try
             {
-                // throttled
-                var retryAfter = response.Headers.RetryAfter;
-                Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
-                response = httpClient.Send(CloneMessage(message));
+                response = httpClient.SendAsync(message).GetAwaiter().GetResult();
+                while (response.StatusCode == (HttpStatusCode)429)
+                {
+                    // throttled
+                    retryAttempt++;
+                    var retryDelay = GetRetryDelay(response, retryAttempt);
+                    response.Dispose();
+                    Thread.Sleep(retryDelay);
+                    using var retryMessage = CloneMessage(message);
+                    response = httpClient.SendAsync(retryMessage).GetAwaiter().GetResult();
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                }
+                else
+                {
+                    var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    throw new HttpRequestException(errorContent);
+                }
             }
-            if (response.IsSuccessStatusCode)
+            finally
             {
-                return response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                throw new HttpRequestException(errorContent);
+                response?.Dispose();
+                message.Dispose();
             }
         }
 
         private static byte[] SendMessageByteArray(HttpClient httpClient, HttpRequestMessage message)
         {
-            var response = httpClient.Send(message);
-            while (response.StatusCode == (HttpStatusCode)429)
+            HttpResponseMessage response = null;
+            var retryAttempt = 0;
+            try
             {
-                // throttled
-                var retryAfter = response.Headers.RetryAfter;
-                Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
-                response = httpClient.Send(CloneMessage(message));
+                response = httpClient.SendAsync(message).GetAwaiter().GetResult();
+                while (response.StatusCode == (HttpStatusCode)429)
+                {
+                    // throttled
+                    retryAttempt++;
+                    var retryDelay = GetRetryDelay(response, retryAttempt);
+                    response.Dispose();
+                    Thread.Sleep(retryDelay);
+                    using var retryMessage = CloneMessage(message);
+                    response = httpClient.SendAsync(retryMessage).GetAwaiter().GetResult();
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+                }
+                else
+                {
+                    var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    throw new HttpRequestException($"HTTP Error {response.StatusCode}: {errorContent}");
+                }
             }
-            if (response.IsSuccessStatusCode)
+            finally
             {
-                return response.Content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
-            }
-            else
-            {
-                var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                throw new HttpRequestException($"HTTP Error {response.StatusCode}: {errorContent}");
+                response?.Dispose();
+                message.Dispose();
             }
         }
 
-        private static System.Net.Http.Headers.HttpResponseHeaders SendMessageGetResponseHeader(HttpClient httpClient, HttpRequestMessage message)
+        private static Uri SendMessageGetResponseLocation(HttpClient httpClient, HttpRequestMessage message)
         {
-            var response = httpClient.SendAsync(message).GetAwaiter().GetResult();
-            while (response.StatusCode == (HttpStatusCode)429)
+            HttpResponseMessage response = null;
+            var retryAttempt = 0;
+            try
             {
-                // throttled
-                var retryAfter = response.Headers.RetryAfter;
-                Thread.Sleep(retryAfter.Delta.Value.Seconds * 1000);
-                response = httpClient.SendAsync(CloneMessage(message)).GetAwaiter().GetResult();
+                response = httpClient.SendAsync(message, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
+                while (response.StatusCode == (HttpStatusCode)429)
+                {
+                    // throttled
+                    retryAttempt++;
+                    var retryDelay = GetRetryDelay(response, retryAttempt);
+                    response.Dispose();
+                    Thread.Sleep(retryDelay);
+                    using var retryMessage = CloneMessage(message);
+                    response = httpClient.SendAsync(retryMessage, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
+                }
+                if (response.IsSuccessStatusCode)
+                {
+                    return response.Headers.Location;
+                }
+                else
+                {
+                    var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                    throw new HttpRequestException(errorContent);
+                }
             }
-            if (response.IsSuccessStatusCode)
+            finally
             {
-                return response.Headers;
+                response?.Dispose();
+                message.Dispose();
             }
-            else
+        }
+
+        private static TimeSpan GetRetryDelay(HttpResponseMessage response, int retryAttempt)
+        {
+            var retryAfter = response.Headers.RetryAfter;
+            if (retryAfter?.Delta is TimeSpan delta && delta > TimeSpan.Zero)
             {
-                var errorContent = response.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                throw new HttpRequestException(errorContent);
+                return delta;
             }
+
+            if (retryAfter?.Date is DateTimeOffset retryAfterDate)
+            {
+                var dateDelay = retryAfterDate - DateTimeOffset.UtcNow;
+                if (dateDelay > TimeSpan.Zero)
+                {
+                    return dateDelay;
+                }
+            }
+
+            var fallbackSeconds = Math.Min(Math.Pow(2, retryAttempt - 1), 30);
+            return TimeSpan.FromSeconds(fallbackSeconds);
         }
 
         private static HttpRequestMessage CloneMessage(HttpRequestMessage req)
         {
             HttpRequestMessage clone = new HttpRequestMessage(req.Method, req.RequestUri);
 
-            clone.Content = req.Content;
+            clone.Content = CloneContent(req.Content);
             clone.Version = req.Version;
 
             foreach (KeyValuePair<string, object> prop in req.Options)
@@ -716,6 +743,24 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
 
             return clone;
+        }
+
+        private static HttpContent CloneContent(HttpContent content)
+        {
+            if (content == null)
+            {
+                return null;
+            }
+
+            var contentBytes = content.ReadAsByteArrayAsync().GetAwaiter().GetResult();
+            var contentClone = new ByteArrayContent(contentBytes);
+
+            foreach (var header in content.Headers)
+            {
+                contentClone.Headers.TryAddWithoutValidation(header.Key, header.Value);
+            }
+
+            return contentClone;
         }
     }
 }
