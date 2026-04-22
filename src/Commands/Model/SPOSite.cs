@@ -108,6 +108,7 @@ namespace PnP.PowerShell.Commands.Model
         public bool AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { get; set; }
         public bool HidePeoplePreviewingFiles { get; set; }
         public bool HidePeopleWhoHaveListsOpen { get; set; }
+        public SPOFileVersionFileTypePolicySettings[] VersionPolicyFileTypeOverride { get; set; }
 
         #endregion
 
@@ -210,6 +211,7 @@ namespace PnP.PowerShell.Commands.Model
             AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = props.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
             HidePeoplePreviewingFiles = props.HidePeoplePreviewingFiles;
             HidePeopleWhoHaveListsOpen = props.HidePeopleWhoHaveListsOpen;
+            VersionPolicyFileTypeOverride = props.VersionPolicyFileTypeOverride;
         }
     }
 }
