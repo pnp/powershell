@@ -108,11 +108,13 @@ namespace PnP.PowerShell.Commands.ManagementApi
                         var nextPageUri = subscriptionResponse.Headers.GetValues("NextPageUri").First();
                         subscriptionResponse.Dispose();
                         subscriptionResponse = RequestHelper.GetResponse(nextPageUri);
-                        if (subscriptionResponse.IsSuccessStatusCode)
+                        content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
+                        if (!subscriptionResponse.IsSuccessStatusCode)
                         {
-                            content = subscriptionResponse.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                            subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, serializerOptions) ?? []);
+                            throw new PSInvalidOperationException($"Service responded with HTTP {(int)subscriptionResponse.StatusCode} {subscriptionResponse.ReasonPhrase}: {content}");
                         }
+
+                        subscriptionContents.AddRange(collection: JsonSerializer.Deserialize<IEnumerable<ManagementApiSubscriptionContent>>(content, serializerOptions) ?? []);
                     }
                 }
                 else

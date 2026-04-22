@@ -54,7 +54,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 url += $"?{string.Join("&", restparams)}";
             }
             var client = PnP.Framework.Http.PnPHttpClient.Instance.GetHttpClient();
-            using var message = GetMessage(url, HttpMethod.Get, context);
+            var message = GetMessage(url, HttpMethod.Get, context);
             return SendMessage(client, message);
         }
 
@@ -274,7 +274,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             return default(T);
         }
 
-        public static System.Net.Http.Headers.HttpResponseHeaders PostGetResponseHeader<T>(HttpClient httpClient, string url, string accessToken, object payload, bool camlCasePolicy = true, string accept = "application/json")
+        public static Uri PostGetResponseLocation<T>(HttpClient httpClient, string url, string accessToken, object payload, bool camlCasePolicy = true, string accept = "application/json")
         {
             HttpRequestMessage message = null;
             if (payload != null)
@@ -287,7 +287,7 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             {
                 message = GetMessage(url, HttpMethod.Post, accessToken, accept);
             }
-            return SendMessageGetResponseHeader(httpClient, message);
+            return SendMessageGetResponseLocation(httpClient, message);
         }
 
         public static T Post<T>(HttpClient httpClient, string url, ClientContext clientContext, object payload, bool camlCasePolicy = true)
@@ -670,13 +670,13 @@ namespace PnP.PowerShell.Commands.Utilities.REST
             }
         }
 
-        private static System.Net.Http.Headers.HttpResponseHeaders SendMessageGetResponseHeader(HttpClient httpClient, HttpRequestMessage message)
+        private static Uri SendMessageGetResponseLocation(HttpClient httpClient, HttpRequestMessage message)
         {
             HttpResponseMessage response = null;
             var retryAttempt = 0;
             try
             {
-                response = httpClient.SendAsync(message).GetAwaiter().GetResult();
+                response = httpClient.SendAsync(message, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
                 while (response.StatusCode == (HttpStatusCode)429)
                 {
                     // throttled
@@ -685,11 +685,11 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                     response.Dispose();
                     Thread.Sleep(retryDelay);
                     using var retryMessage = CloneMessage(message);
-                    response = httpClient.SendAsync(retryMessage).GetAwaiter().GetResult();
+                    response = httpClient.SendAsync(retryMessage, HttpCompletionOption.ResponseHeadersRead).GetAwaiter().GetResult();
                 }
                 if (response.IsSuccessStatusCode)
                 {
-                    return CloneResponseHeaders(response);
+                    return response.Headers.Location;
                 }
                 else
                 {
@@ -702,17 +702,6 @@ namespace PnP.PowerShell.Commands.Utilities.REST
                 response?.Dispose();
                 message.Dispose();
             }
-        }
-
-        private static System.Net.Http.Headers.HttpResponseHeaders CloneResponseHeaders(HttpResponseMessage response)
-        {
-            var headerResponse = new HttpResponseMessage(response.StatusCode);
-            foreach (var header in response.Headers)
-            {
-                headerResponse.Headers.TryAddWithoutValidation(header.Key, header.Value);
-            }
-
-            return headerResponse.Headers;
         }
 
         private static TimeSpan GetRetryDelay(HttpResponseMessage response, int retryAttempt)
