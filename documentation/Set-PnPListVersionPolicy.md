@@ -25,6 +25,7 @@ Set-PnPListVersionPolicy
  [-MajorVersionLimit <Int32>]
  [-MajorWithMinorVersionsLimit <Int32>]
  [-FileTypes <String[]>]
+ [-NoWait]
  [-Connection <PnPConnection>]
 ```
 
@@ -37,6 +38,7 @@ Set-PnPListVersionPolicy
  -Sync
  [-FileTypes <String[]>]
  [-ExcludeDefaultPolicy]
+ [-NoWait]
  [-Connection <PnPConnection>]
 ```
 
@@ -47,11 +49,12 @@ Set-PnPListVersionPolicy
  -Identity <ListPipeBind>
  [-Site <SitePipeBind>]
  -RemoveVersionExpirationFileTypeOverride <String[]>
+ [-NoWait]
  [-Connection <PnPConnection>]
 ```
 
 ## DESCRIPTION
-Configures the versioning policy for a document library in the currently connected site. The cmdlet resolves the library from the active SharePoint connection and uses the SharePoint Online admin APIs to apply the requested library version policy action.
+Configures the versioning policy for a document library in the currently connected site. The cmdlet resolves the library from the active SharePoint connection and uses the SharePoint Online admin APIs to apply the requested library version policy action. By default it waits for the tenant operation to complete. Use `-NoWait` to return immediately after the operation has been queued.
 
 ## EXAMPLES
 
@@ -103,6 +106,13 @@ Set-PnPListVersionPolicy -Site "https://contoso.sharepoint.com/sites/project-x" 
 ```
 
 Enables automatic version expiration for a document library on a specific site.
+
+### EXAMPLE 8
+```powershell
+Set-PnPListVersionPolicy -Identity "Documents" -Sync -NoWait
+```
+
+Queues the library version policy synchronization request and returns immediately without waiting for the tenant operation to complete.
 
 ## PARAMETERS
 
@@ -210,6 +220,20 @@ The maximum number of major versions for which minor versions are retained. Spec
 ```yaml
 Type: Nullable`1[Int32]
 Parameter Sets: Set Policy
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -NoWait
+Queues the version policy operation and returns immediately instead of waiting for the SharePoint Online tenant operation to complete.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
 
 Required: False
 Position: Named

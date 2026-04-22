@@ -39,6 +39,9 @@ namespace PnP.PowerShell.Commands.Lists
 		[Parameter(Mandatory = false, ParameterSetName = SyncPolicyParameterSet)]
 		public SwitchParameter ExcludeDefaultPolicy;
 
+		[Parameter(Mandatory = false)]
+		public SwitchParameter NoWait;
+
 		[Parameter(Mandatory = true, ParameterSetName = RemovePolicyParameterSet)]
 		[ValidateNotNullOrEmpty]
 		public string[] RemoveVersionExpirationFileTypeOverride;
@@ -98,6 +101,11 @@ namespace PnP.PowerShell.Commands.Lists
 
 			AdminContext.Load(operation);
 			AdminContext.ExecuteQueryRetry();
+
+			if (!NoWait.ToBool())
+			{
+				PollOperation(operation);
+			}
 		}
 
 		private void ValidateSetPolicyParameters()
