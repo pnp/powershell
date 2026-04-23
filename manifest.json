@@ -3094,6 +3094,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Get-PnPListVersionPolicy.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Get-PnPListVersionPolicy.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Get-PnPManagedAppId.md",
       "output": {
         ".html": {
@@ -7658,6 +7668,16 @@
       "output": {
         ".html": {
           "relative_path": "cmdlets/Set-PnPListRecordDeclaration.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "cmdlets/Set-PnPListVersionPolicy.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Set-PnPListVersionPolicy.html"
         }
       },
       "version": ""

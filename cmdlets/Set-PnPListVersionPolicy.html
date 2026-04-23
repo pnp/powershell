@@ -1,0 +1,325 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Set-PnPListVersionPolicy | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Set-PnPListVersionPolicy | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+                <div class="pnp_tags">Available in the current Nightly Release only.</div>
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/documentation/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="set-pnplistversionpolicy">Set-PnPListVersionPolicy</h1>
+
+<h2 id="synopsis">SYNOPSIS</h2>
+<p>Sets, synchronizes, or removes file version policy settings on a SharePoint Online document library.</p>
+<h2 id="syntax">SYNTAX</h2>
+<h3 id="set-policy">Set Policy</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy
+ -Identity &lt;ListPipeBind&gt;
+ -EnableAutoExpirationVersionTrim &lt;Boolean&gt;
+ [-Site &lt;SitePipeBind&gt;]
+ [-ExpireVersionsAfterDays &lt;Int32&gt;]
+ [-MajorVersionLimit &lt;Int32&gt;]
+ [-MajorWithMinorVersionsLimit &lt;Int32&gt;]
+ [-FileTypes &lt;String[]&gt;]
+ [-NoWait]
+ [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="sync-policy">Sync Policy</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy
+ -Identity &lt;ListPipeBind&gt;
+ [-Site &lt;SitePipeBind&gt;]
+ -Sync
+ [-FileTypes &lt;String[]&gt;]
+ [-ExcludeDefaultPolicy]
+ [-NoWait]
+ [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h3 id="remove-file-type-overrides">Remove File Type Overrides</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy
+ -Identity &lt;ListPipeBind&gt;
+ [-Site &lt;SitePipeBind&gt;]
+ -RemoveVersionExpirationFileTypeOverride &lt;String[]&gt;
+ [-NoWait]
+ [-Connection &lt;PnPConnection&gt;]
+</code></pre>
+<h2 id="description">DESCRIPTION</h2>
+<p>Configures the versioning policy for a document library in the currently connected site. The cmdlet resolves the library from the active SharePoint connection and uses the SharePoint Online admin APIs to apply the requested library version policy action. By default it waits for the tenant operation to complete. Use <code>-NoWait</code> to return immediately after the operation has been queued.</p>
+<h2 id="examples">EXAMPLES</h2>
+<h3 id="example-1">EXAMPLE 1</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy -Identity &quot;Documents&quot; -EnableAutoExpirationVersionTrim $true
+</code></pre>
+<p>Enables automatic version expiration for the specified document library.</p>
+<h3 id="example-2">EXAMPLE 2</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy -Identity &quot;Documents&quot; -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 180 -MajorVersionLimit 100 -MajorWithMinorVersionsLimit 20
+</code></pre>
+<p>Sets a manual version policy for the specified document library.</p>
+<h3 id="example-3">EXAMPLE 3</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy -Identity &quot;Documents&quot; -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 180 -MajorVersionLimit 100 -MajorWithMinorVersionsLimit 20 -FileTypes &quot;pdf&quot;,&quot;docx&quot;
+</code></pre>
+<p>Sets a manual version policy override for the specified file types in the document library.</p>
+<h3 id="example-4">EXAMPLE 4</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy -Identity &quot;Documents&quot; -Sync -FileTypes &quot;pdf&quot;,&quot;docx&quot;
+</code></pre>
+<p>Synchronizes the version policy for the specified file types in the document library.</p>
+<h3 id="example-5">EXAMPLE 5</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy -Identity &quot;Documents&quot; -Sync -ExcludeDefaultPolicy
+</code></pre>
+<p>Synchronizes the document library version policy while excluding the default policy.</p>
+<h3 id="example-6">EXAMPLE 6</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy -Identity &quot;Documents&quot; -RemoveVersionExpirationFileTypeOverride &quot;pdf&quot;,&quot;docx&quot;
+</code></pre>
+<p>Removes version policy file type overrides from the specified document library.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy -Site &quot;https://contoso.sharepoint.com/sites/project-x&quot; -Identity &quot;Documents&quot; -EnableAutoExpirationVersionTrim $true
+</code></pre>
+<p>Enables automatic version expiration for a document library on a specific site.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Set-PnPListVersionPolicy -Identity &quot;Documents&quot; -Sync -NoWait
+</code></pre>
+<p>Queues the library version policy synchronization request and returns immediately without waiting for the tenant operation to complete.</p>
+<h2 id="parameters">PARAMETERS</h2>
+<h3 id="-connection">-Connection</h3>
+<p>Optional connection to be used by the cmdlet. Retrieve the value for this parameter by either specifying -ReturnConnection on Connect-PnPOnline or by executing Get-PnPConnection.</p>
+<pre><code class="lang-yaml">Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-enableautoexpirationversiontrim">-EnableAutoExpirationVersionTrim</h3>
+<p>Enables or disables AutoExpiration version trimming on the document library. When set to <code>$false</code>, you must also specify <code>ExpireVersionsAfterDays</code>, <code>MajorVersionLimit</code>, and <code>MajorWithMinorVersionsLimit</code>.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Policy
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-excludedefaultpolicy">-ExcludeDefaultPolicy</h3>
+<p>Excludes the default policy while synchronizing the document library version policy.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Sync Policy
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-expireversionsafterdays">-ExpireVersionsAfterDays</h3>
+<p>The number of days after which versions expire. Specify <code>0</code> for no expiration, or a value from <code>30</code> through <code>36500</code>.</p>
+<pre><code class="lang-yaml">Type: Nullable`1[Int32]
+Parameter Sets: Set Policy
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-filetypes">-FileTypes</h3>
+<p>The file types for which the library version policy should be applied or synchronized.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Set Policy, Sync Policy
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-identity">-Identity</h3>
+<p>The document library to update. You can provide the library title, id, url, or a list instance.</p>
+<pre><code class="lang-yaml">Type: ListPipeBind
+Parameter Sets: (All)
+
+Required: True
+Position: 0
+Default value: None
+Accept pipeline input: True
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-majorversionlimit">-MajorVersionLimit</h3>
+<p>The maximum number of major versions to keep. Specify a value from <code>1</code> through <code>50000</code>.</p>
+<pre><code class="lang-yaml">Type: Nullable`1[Int32]
+Parameter Sets: Set Policy
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-majorwithminorversionslimit">-MajorWithMinorVersionsLimit</h3>
+<p>The maximum number of major versions for which minor versions are retained. Specify a value from <code>0</code> through <code>50000</code>.</p>
+<pre><code class="lang-yaml">Type: Nullable`1[Int32]
+Parameter Sets: Set Policy
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-nowait">-NoWait</h3>
+<p>Queues the version policy operation and returns immediately instead of waiting for the SharePoint Online tenant operation to complete.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-site">-Site</h3>
+<p>Optional target site containing the document library. When omitted, the cmdlet uses the currently connected SharePoint site.</p>
+<pre><code class="lang-yaml">Type: SitePipeBind
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-removeversionexpirationfiletypeoverride">-RemoveVersionExpirationFileTypeOverride</h3>
+<p>Removes version expiration overrides for the specified file types from the document library.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Remove File Type Overrides
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-sync">-Sync</h3>
+<p>Synchronizes the document library version policy.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Sync Policy
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h2 id="related-links">RELATED LINKS</h2>
+<p><a href="Get-PnPListVersionPolicy.html">Get-PnPListVersionPolicy</a></p>
+
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>
