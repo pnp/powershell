@@ -11,6 +11,9 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ### Added
 - Added `Get-PnPListVersionPolicy` and `Set-PnPListVersionPolicy` cmdlets to inspect and manage SharePoint Online document library version policies. [#5299](https://github.com/pnp/powershell/pull/5299)
+- Added `New-PnPSiteManageVersionPolicyJob` cmdlet to queue site-level list version policy trim and sync jobs. [#5299](https://github.com/pnp/powershell/pull/5299)
+- Added site version policy parameters to `Set-PnPSite` and `Set-PnPTenantSite`, including support for inheriting tenant defaults, targeting new or existing document libraries, managing file type overrides, and bypassing confirmation with `-Force`. [#5299](https://github.com/pnp/powershell/pull/5299)
+- Added `DisableClassicPageBaselineSecurityMode`, `DisableSiteBranding`, `AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled`, `IsAuthoritative`, and `RestrictedContentDiscoveryforCopilotAndAgents` parameters to `Set-PnPSite` and `Set-PnPTenantSite`. [#5299](https://github.com/pnp/powershell/pull/5299)
 - Added `Add-PnPEntraIDServicePrincipalAppRoleAssignment`, `Get-PnPEntraIDServicePrincipalAppRoleAssignment`, and `Remove-PnPEntraIDServicePrincipalAppRoleAssignment` cmdlets to manage Entra ID user and group enterprise application assignments with app roles [#5292](https://github.com/pnp/powershell/pull/5292)
 - Added `Copy-PnPFileMetadata` to copy Metadata fields (Created, Modified, Author, Editor) between items [#5072](https://github.com/pnp/powershell/pull/5072)
 - Added `-NewFileName` parameter to `Convert-PnPFile` cmdlet to choose custom output file name.
