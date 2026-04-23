@@ -22,6 +22,7 @@ Updates settings of a site collection
 ### Set Properties
 ```powershell
 Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-AllowSelfServiceUpgrade]
+ [-DisableClassicPageBaselineSecurityMode <Boolean>] [-DisableSiteBranding <Boolean>]
  [-PrimarySiteCollectionAdmin <String>]
  [-Owners <String[]>] [-DenyAddAndCustomizePages]
  [-SharingCapability <SharingCapabilities>] [-StorageQuota <Int64>] [-StorageQuotaWarningLevel <Int64>] [-StorageQuotaReset] [-BlockDownloadLinksFileType <BlockDownloadLinksFileTypes>]
@@ -45,8 +46,11 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-LoopDefaultSharingLinkScope <SharingScope>] [-RestrictContentOrgWideSearch <Boolean>] [-ReadOnlyForUnmanagedDevices <Boolean>]
  [-RequestFilesLinkExpirationInDays <Int32>] [-RequestFilesLinkEnabled <Boolean>] [-OverrideSharingCapability <Boolean>]
  [-RestrictedAccessControl <Boolean>] [-ClearRestrictedAccessControl <SwitchParameter>] [-RestrictedAccessControlGroups <Guid[]>]
- [-AddRestrictedAccessControlGroups <Guid[]>] [-RemoveRestrictedAccessControlGroups <Guid[]>][-InheritVersionPolicyFromTenant <SwitchParameter>]
- [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>]
+ [-AddRestrictedAccessControlGroups <Guid[]>] [-RemoveRestrictedAccessControlGroups <Guid[]>] [-InheritVersionPolicyFromTenant]
+ [-EnableAutoExpirationVersionTrim <Boolean>] [-ExpireVersionsAfterDays <Int32>] [-MajorVersionLimit <Int32>]
+ [-MajorWithMinorVersionsLimit <Int32>] [-FileTypesForVersionExpiration <String[]>]
+ [-RemoveVersionExpirationFileTypeOverride <String[]>] [-ApplyToNewDocumentLibraries] [-ApplyToExistingDocumentLibraries] [-Force]
+ [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>] [-IsAuthoritative <Boolean>] [-RestrictedContentDiscoveryForCopilotAndAgents <Boolean>]
  [-ClearGroupId]
  [-Wait] 
  [-Connection <PnPConnection>] 
@@ -105,6 +109,34 @@ Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/marketing" -Al
 
 This will enable file-level archiving on the specified site. The tenant-level `Set-PnPTenant -AllowFileArchive $true` setting must also be enabled or the site setting will not take effect.
 
+### EXAMPLE 7
+```powershell
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/marketing" -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 180 -MajorVersionLimit 100 -MajorWithMinorVersionsLimit 10
+```
+
+This will set the site version policy for both new and existing document libraries to keep 100 major versions, 10 minor versions, and expire versions after 180 days.
+
+### EXAMPLE 8
+```powershell
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/marketing" -EnableAutoExpirationVersionTrim $true -ApplyToNewDocumentLibraries -FileTypesForVersionExpiration "pdf","docx"
+```
+
+This will set an automatic version trim policy for new document libraries only and limit the override to the specified file types.
+
+### EXAMPLE 9
+```powershell
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/marketing" -ApplyToNewDocumentLibraries -RemoveVersionExpirationFileTypeOverride "pdf","docx"
+```
+
+This will remove the specified file type version expiration overrides from the site policy for new document libraries.
+
+### EXAMPLE 10
+```powershell
+Set-PnPTenantSite -Identity "https://contoso.sharepoint.com/sites/marketing" -InheritVersionPolicyFromTenant
+```
+
+This will reset the site version policy so new document libraries inherit the tenant-level defaults.
+
 ## PARAMETERS
 
 ### -AddInformationSegment
@@ -126,6 +158,34 @@ Specifies if the site administrator can upgrade the site collection.
 
 ```yaml
 Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableClassicPageBaselineSecurityMode
+Enables or disables classic page baseline security mode for the site collection.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableSiteBranding
+Enables or disables site branding for the site collection.
+
+```yaml
+Type: Boolean
 Parameter Sets: Set Properties
 
 Required: False
@@ -172,6 +232,34 @@ To remove the expiration requirement, set the value to zero (0).
 
 ```yaml
 Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ApplyToExistingDocumentLibraries
+Applies the configured site version policy to existing document libraries. If neither this parameter nor `-ApplyToNewDocumentLibraries` is provided, the cmdlet targets both new and existing document libraries.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ApplyToNewDocumentLibraries
+Applies the configured site version policy to new document libraries. If neither this parameter nor `-ApplyToExistingDocumentLibraries` is provided, the cmdlet targets both new and existing document libraries.
+
+```yaml
+Type: SwitchParameter
 Parameter Sets: Set Properties
 
 Required: False
@@ -310,6 +398,62 @@ Determines whether the App Views feature is disabled in the site collection.
 Type: AppViewsPolicy
 Parameter Sets: Set Properties
 Accepted values: Unknown, Disabled, NotDisabled
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -EnableAutoExpirationVersionTrim
+Enables or disables automatic version trim for the site version policy. Set this to `$true` to use automatic trimming. Set it to `$false` to provide explicit values for `-ExpireVersionsAfterDays` and `-MajorVersionLimit`, and also `-MajorWithMinorVersionsLimit` when existing document libraries are included.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ExpireVersionsAfterDays
+Sets the number of days after which versions expire when `-EnableAutoExpirationVersionTrim` is `$false`. Use `0` to keep versions indefinitely. Allowed values are `0` or from `30` through `36500`.
+
+```yaml
+Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FileTypesForVersionExpiration
+Limits the site version policy override to the specified file types. This parameter can only be used when `-EnableAutoExpirationVersionTrim` is also provided and cannot be combined with `-ApplyToExistingDocumentLibraries`.
+
+```yaml
+Type: String[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Force
+Bypasses the confirmation prompt when applying site version policy changes that target new document libraries, existing document libraries, or both.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named
@@ -999,10 +1143,38 @@ Accept wildcard characters: False
 ```
 
 ### -InheritVersionPolicyFromTenant
-Clears the file version setting at site level.
+Resets the site version policy to inherit the default version policy from the tenant.
 
 ```yaml
-Type: Boolean
+Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MajorVersionLimit
+Sets the maximum number of major versions to retain when `-EnableAutoExpirationVersionTrim` is `$false`. Allowed values are from `1` through `50000`.
+
+```yaml
+Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MajorWithMinorVersionsLimit
+Sets the maximum number of major and minor versions to retain when `-EnableAutoExpirationVersionTrim` is `$false` and the policy applies to existing document libraries. Allowed values are from `0` through `50000`.
+
+```yaml
+Type: Int32
 Parameter Sets: Set Properties
 
 Required: False
@@ -1056,8 +1228,50 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -RemoveVersionExpirationFileTypeOverride
+Removes one or more file type version expiration overrides from the site policy for new document libraries. This parameter must be combined with `-ApplyToNewDocumentLibraries` and cannot be combined with the other version policy setting parameters.
+
+```yaml
+Type: String[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled
 Enables or disables adding and updating web property bag values when the DenyAddAndCustomizePages is enabled.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsAuthoritative
+Marks the site collection as authoritative or not authoritative.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -RestrictedContentDiscoveryForCopilotAndAgents
+Restricts content discovery for Copilot and agents on the site collection.
 
 ```yaml
 Type: Boolean

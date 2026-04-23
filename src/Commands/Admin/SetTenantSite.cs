@@ -12,6 +12,7 @@ using System.Threading;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using PnP.PowerShell.Commands.Enums;
 using Microsoft.SharePoint.Client.Sharing;
+using PnP.PowerShell.Commands.Utilities;
 
 namespace PnP.PowerShell.Commands
 {
@@ -33,6 +34,12 @@ namespace PnP.PowerShell.Commands
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter AllowSelfServiceUpgrade;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? DisableClassicPageBaselineSecurityMode;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? DisableSiteBranding;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public UserPipeBind PrimarySiteCollectionAdmin;
@@ -215,6 +222,34 @@ namespace PnP.PowerShell.Commands
         public SwitchParameter InheritVersionPolicyFromTenant;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? EnableAutoExpirationVersionTrim;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? ExpireVersionsAfterDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? MajorVersionLimit;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? MajorWithMinorVersionsLimit;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public string[] FileTypesForVersionExpiration;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        [ValidateNotNullOrEmpty]
+        public string[] RemoveVersionExpirationFileTypeOverride;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter ApplyToNewDocumentLibraries;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter ApplyToExistingDocumentLibraries;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter Force;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool OverrideSharingCapability;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -227,7 +262,14 @@ namespace PnP.PowerShell.Commands
         public bool AllowFileArchive;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public bool AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
+        public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? IsAuthoritative;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        [Alias("RestrictedContentDiscoveryforCopilotAndAgents")]
+        public bool? RestrictedContentDiscoveryForCopilotAndAgents;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string[] ExcludeBlockDownloadSharePointGroups;
@@ -287,6 +329,18 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(AllowSelfServiceUpgrade)))
             {
                 props.AllowSelfServiceUpgrade = AllowSelfServiceUpgrade;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(DisableClassicPageBaselineSecurityMode)) && DisableClassicPageBaselineSecurityMode.HasValue)
+            {
+                props.DisableClassicPageBaselineSecurityMode = DisableClassicPageBaselineSecurityMode.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(DisableSiteBranding)) && DisableSiteBranding.HasValue)
+            {
+                props.DisableSiteBranding = DisableSiteBranding.Value;
                 updateRequired = true;
             }
 
@@ -653,12 +707,6 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
-            if (ParameterSpecified(nameof(InheritVersionPolicyFromTenant)))
-            {
-                props.InheritVersionPolicyFromTenant = InheritVersionPolicyFromTenant;
-                updateRequired = true;
-            }
-
             if (ParameterSpecified(nameof(ReadOnlyForUnmanagedDevices)))
             {
                 props.ReadOnlyForUnmanagedDevices = ReadOnlyForUnmanagedDevices;
@@ -691,7 +739,22 @@ namespace PnP.PowerShell.Commands
 
             if (ParameterSpecified(nameof(AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled)))
             {
-                props.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
+                if (AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue)
+                {
+                    props.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.Value;
+                    updateRequired = true;
+                }
+            }
+
+            if (ParameterSpecified(nameof(IsAuthoritative)) && IsAuthoritative.HasValue)
+            {
+                props.IsAuthoritative = IsAuthoritative.Value;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(RestrictedContentDiscoveryForCopilotAndAgents)) && RestrictedContentDiscoveryForCopilotAndAgents.HasValue)
+            {
+                props.RestrictedContentDiscoveryforCopilotAndAgents = RestrictedContentDiscoveryForCopilotAndAgents.Value;
                 updateRequired = true;
             }
 
@@ -710,6 +773,11 @@ namespace PnP.PowerShell.Commands
             if (ParameterSpecified(nameof(ClearGroupId)))
             {
                 props.ClearGroupId = ClearGroupId;
+                updateRequired = true;
+            }
+
+            if (SiteVersionPolicyUtilities.ApplyToSiteProperties(props, GetSiteVersionPolicyOptions(), Identity.Url, prompt => Force || ShouldContinue(prompt, string.Empty)))
+            {
                 updateRequired = true;
             }
 
@@ -801,6 +869,19 @@ namespace PnP.PowerShell.Commands
         {
             return Tenant.GetSitePropertiesByUrl(url, true);
         }
+
+        private SiteVersionPolicyOptions GetSiteVersionPolicyOptions() => new SiteVersionPolicyOptions
+        {
+            InheritVersionPolicyFromTenant = InheritVersionPolicyFromTenant.IsPresent,
+            EnableAutoExpirationVersionTrim = EnableAutoExpirationVersionTrim,
+            ExpireVersionsAfterDays = ExpireVersionsAfterDays,
+            MajorVersionLimit = MajorVersionLimit,
+            MajorWithMinorVersionsLimit = MajorWithMinorVersionsLimit,
+            FileTypesForVersionExpiration = FileTypesForVersionExpiration,
+            RemoveVersionExpirationFileTypeOverride = RemoveVersionExpirationFileTypeOverride,
+            ApplyToNewDocumentLibraries = ApplyToNewDocumentLibraries.IsPresent,
+            ApplyToExistingDocumentLibraries = ApplyToExistingDocumentLibraries.IsPresent
+        };
 
         private bool TimeoutFunction(TenantOperationMessage message)
         {

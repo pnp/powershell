@@ -47,6 +47,12 @@ namespace PnP.PowerShell.Commands.Site
         public SwitchParameter? AllowSelfServiceUpgrade = null;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? DisableClassicPageBaselineSecurityMode;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? DisableSiteBranding;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         [Alias("DenyAndAddCustomizePages", "DenyAddAndCustomizePages")]
         public SwitchParameter? NoScriptSite;
 
@@ -105,6 +111,16 @@ namespace PnP.PowerShell.Commands.Site
         public int? RequestFilesLinkExpirationInDays;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? IsAuthoritative;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        [Alias("RestrictedContentDiscoveryforCopilotAndAgents")]
+        public bool? RestrictedContentDiscoveryForCopilotAndAgents;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string ScriptSafeDomainName;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
@@ -142,6 +158,37 @@ namespace PnP.PowerShell.Commands.Site
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter ClearGroupId;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter InheritVersionPolicyFromTenant;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? EnableAutoExpirationVersionTrim;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? ExpireVersionsAfterDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? MajorVersionLimit;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? MajorWithMinorVersionsLimit;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public string[] FileTypesForVersionExpiration;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        [ValidateNotNullOrEmpty]
+        public string[] RemoveVersionExpirationFileTypeOverride;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter ApplyToNewDocumentLibraries;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter ApplyToExistingDocumentLibraries;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public SwitchParameter Force;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
         public SwitchParameter Wait;
@@ -317,6 +364,16 @@ namespace PnP.PowerShell.Commands.Site
                     siteProperties.AllowSelfServiceUpgrade = AllowSelfServiceUpgrade.Value;
                     executeQueryRequired = true;
                 }
+                if (ParameterSpecified(nameof(DisableClassicPageBaselineSecurityMode)) && DisableClassicPageBaselineSecurityMode.HasValue)
+                {
+                    siteProperties.DisableClassicPageBaselineSecurityMode = DisableClassicPageBaselineSecurityMode.Value;
+                    executeQueryRequired = true;
+                }
+                if (ParameterSpecified(nameof(DisableSiteBranding)) && DisableSiteBranding.HasValue)
+                {
+                    siteProperties.DisableSiteBranding = DisableSiteBranding.Value;
+                    executeQueryRequired = true;
+                }
                 if (NoScriptSite.HasValue)
                 {
                     siteProperties.DenyAddAndCustomizePages = NoScriptSite == true ? DenyAddAndCustomizePagesStatus.Enabled : DenyAddAndCustomizePagesStatus.Disabled;
@@ -401,6 +458,24 @@ namespace PnP.PowerShell.Commands.Site
                     executeQueryRequired = true;
                 }
 
+                if (ParameterSpecified(nameof(AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled)) && AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue)
+                {
+                    siteProperties.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.Value;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(IsAuthoritative)) && IsAuthoritative.HasValue)
+                {
+                    siteProperties.IsAuthoritative = IsAuthoritative.Value;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(RestrictedContentDiscoveryForCopilotAndAgents)) && RestrictedContentDiscoveryForCopilotAndAgents.HasValue)
+                {
+                    siteProperties.RestrictedContentDiscoveryforCopilotAndAgents = RestrictedContentDiscoveryForCopilotAndAgents.Value;
+                    executeQueryRequired = true;
+                }
+
                 if (ParameterSpecified(nameof(RestrictedAccessControl)) && RestrictedAccessControl.HasValue)
                 {
                     siteProperties.RestrictedAccessControl = RestrictedAccessControl.Value;
@@ -467,6 +542,11 @@ namespace PnP.PowerShell.Commands.Site
                     executeQueryRequired = true;
                 }
 
+                if (SiteVersionPolicyUtilities.ApplyToSiteProperties(siteProperties, GetSiteVersionPolicyOptions(), siteUrl, prompt => Force || ShouldContinue(prompt, string.Empty)))
+                {
+                    executeQueryRequired = true;
+                }
+
                 if (executeQueryRequired)
                 {
                     siteProperties.Update();
@@ -484,6 +564,19 @@ namespace PnP.PowerShell.Commands.Site
             }
         }
 
+		private SiteVersionPolicyOptions GetSiteVersionPolicyOptions() => new SiteVersionPolicyOptions
+		{
+			InheritVersionPolicyFromTenant = InheritVersionPolicyFromTenant.IsPresent,
+			EnableAutoExpirationVersionTrim = EnableAutoExpirationVersionTrim,
+			ExpireVersionsAfterDays = ExpireVersionsAfterDays,
+			MajorVersionLimit = MajorVersionLimit,
+			MajorWithMinorVersionsLimit = MajorWithMinorVersionsLimit,
+			FileTypesForVersionExpiration = FileTypesForVersionExpiration,
+			RemoveVersionExpirationFileTypeOverride = RemoveVersionExpirationFileTypeOverride,
+			ApplyToNewDocumentLibraries = ApplyToNewDocumentLibraries.IsPresent,
+			ApplyToExistingDocumentLibraries = ApplyToExistingDocumentLibraries.IsPresent
+		};
+
         private bool TimeoutFunction(TenantOperationMessage message)
         {
             if (message == TenantOperationMessage.SettingSiteProperties || message == TenantOperationMessage.SettingSiteLockState)
@@ -500,6 +593,8 @@ namespace PnP.PowerShell.Commands.Site
                 StorageMaximumLevel.HasValue ||
                 StorageWarningLevel.HasValue ||
                 AllowSelfServiceUpgrade.HasValue ||
+                DisableClassicPageBaselineSecurityMode.HasValue ||
+                DisableSiteBranding.HasValue ||
                 NoScriptSite.HasValue ||
                 CommentsOnSitePagesDisabled.HasValue ||
                 DefaultLinkPermission.HasValue ||
@@ -516,6 +611,9 @@ namespace PnP.PowerShell.Commands.Site
                 ParameterSpecified(nameof(OverrideTenantAnonymousLinkExpirationPolicy)) ||
                 DisableCompanyWideSharingLinks.HasValue ||
                 MediaTranscription.HasValue ||
+                AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue ||
+                IsAuthoritative.HasValue ||
+                RestrictedContentDiscoveryForCopilotAndAgents.HasValue ||
                 RestrictedAccessControl.HasValue ||
                 RequestFilesLinkExpirationInDays.HasValue ||
                 RequestFilesLinkEnabled.HasValue ||
@@ -527,6 +625,7 @@ namespace PnP.PowerShell.Commands.Site
                 HidePeopleWhoHaveListsOpen.HasValue ||
                 ParameterSpecified(nameof(ExcludeBlockDownloadSharePointGroups)) ||
                 ReadOnlyForBlockDownloadPolicy.IsPresent ||
-                ClearGroupId.IsPresent;
+                ClearGroupId.IsPresent ||
+                SiteVersionPolicyUtilities.HasVersionPolicyParameters(GetSiteVersionPolicyOptions());
     }
 }
