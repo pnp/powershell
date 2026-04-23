@@ -50,7 +50,7 @@ Set-PnPTenantSite [-Identity] <String> [-Title <String>] [-LocaleId <UInt32>] [-
  [-EnableAutoExpirationVersionTrim <Boolean>] [-ExpireVersionsAfterDays <Int32>] [-MajorVersionLimit <Int32>]
  [-MajorWithMinorVersionsLimit <Int32>] [-FileTypesForVersionExpiration <String[]>]
  [-RemoveVersionExpirationFileTypeOverride <String[]>] [-ApplyToNewDocumentLibraries] [-ApplyToExistingDocumentLibraries] [-Force]
- [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>] [-IsAuthoritative <Boolean>] [-RestrictedContentDiscoveryforCopilotAndAgents <Boolean>]
+ [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>] [-IsAuthoritative <Boolean>] [-RestrictedContentDiscoveryForCopilotAndAgents <Boolean>]
  [-ClearGroupId]
  [-Wait] 
  [-Connection <PnPConnection>] 
@@ -1143,7 +1143,7 @@ Accept wildcard characters: False
 ```
 
 ### -InheritVersionPolicyFromTenant
-Clears the file version setting at site level.
+Resets the site version policy to inherit the default version policy from the tenant.
 
 ```yaml
 Type: SwitchParameter
@@ -1270,7 +1270,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RestrictedContentDiscoveryforCopilotAndAgents
+### -RestrictedContentDiscoveryForCopilotAndAgents
 Restricts content discovery for Copilot and agents on the site collection.
 
 ```yaml

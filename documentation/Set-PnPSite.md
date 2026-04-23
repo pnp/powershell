@@ -44,7 +44,7 @@ Set-PnPSite
  [-RequestFilesLinkExpirationInDays <Int32>]
  [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled <Boolean>]
  [-IsAuthoritative <Boolean>]
- [-RestrictedContentDiscoveryforCopilotAndAgents <Boolean>]
+ [-RestrictedContentDiscoveryForCopilotAndAgents <Boolean>]
  [-OverrideTenantAnonymousLinkExpirationPolicy]
  [-MediaTranscription <MediaTranscriptionPolicyType>]
  [-SensitivityLabel <Guid>]
@@ -287,7 +287,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -RestrictedContentDiscoveryforCopilotAndAgents
+### -RestrictedContentDiscoveryForCopilotAndAgents
 Restricts content discovery for Copilot and agents on the site collection.
 
 ```yaml

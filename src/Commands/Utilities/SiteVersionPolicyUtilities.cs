@@ -123,25 +123,9 @@ namespace PnP.PowerShell.Commands.Utilities
 			var applyToNewDocumentLibraries = options.ApplyToNewDocumentLibraries || !options.ApplyToExistingDocumentLibraries;
 			var applyToExistingDocumentLibraries = options.ApplyToExistingDocumentLibraries || !options.ApplyToNewDocumentLibraries;
 
-			if (!(confirmAction?.Invoke(GetConfirmationPrompt(siteUrl, applyToNewDocumentLibraries, applyToExistingDocumentLibraries)) ?? true))
-			{
-				return false;
-			}
-
 			if (applyToExistingDocumentLibraries && normalizedFileTypes != null)
 			{
 				throw new PSArgumentException($"The parameter {nameof(options.FileTypesForVersionExpiration)} can't be used when {nameof(options.ApplyToExistingDocumentLibraries)} is specified.", nameof(options.FileTypesForVersionExpiration));
-			}
-
-			siteProperties.InheritVersionPolicyFromTenant = false;
-			siteProperties.EnableAutoExpirationVersionTrim = options.EnableAutoExpirationVersionTrim.Value;
-			siteProperties.ApplyToNewDocumentLibraries = applyToNewDocumentLibraries;
-			siteProperties.ApplyToExistingDocumentLibraries = applyToExistingDocumentLibraries;
-			siteProperties.RemoveVersionExpirationFileTypeOverride = null;
-
-			if (normalizedFileTypes != null)
-			{
-				siteProperties.FileTypesForVersionExpiration = normalizedFileTypes;
 			}
 
 			if (options.EnableAutoExpirationVersionTrim.Value)
@@ -160,31 +144,69 @@ namespace PnP.PowerShell.Commands.Utilities
 				{
 					throw new PSArgumentException($"Don't specify {nameof(options.MajorWithMinorVersionsLimit)} when {nameof(options.EnableAutoExpirationVersionTrim)} is true.", nameof(options.MajorWithMinorVersionsLimit));
 				}
+			}
+			else
+			{
+				if (!options.ExpireVersionsAfterDays.HasValue)
+				{
+					throw new PSArgumentException($"You must specify {nameof(options.ExpireVersionsAfterDays)} when {nameof(options.EnableAutoExpirationVersionTrim)} is false.", nameof(options.ExpireVersionsAfterDays));
+				}
 
+				if (!options.MajorVersionLimit.HasValue)
+				{
+					throw new PSArgumentException($"You must specify {nameof(options.MajorVersionLimit)} when {nameof(options.EnableAutoExpirationVersionTrim)} is false.", nameof(options.MajorVersionLimit));
+				}
+
+				if (options.ExpireVersionsAfterDays.Value != 0 && (options.ExpireVersionsAfterDays.Value < 30 || options.ExpireVersionsAfterDays.Value > 36500))
+				{
+					throw new PSArgumentException($"{nameof(options.ExpireVersionsAfterDays)} must be 0 or between 30 and 36500.", nameof(options.ExpireVersionsAfterDays));
+				}
+
+				if (options.MajorVersionLimit.Value < 1 || options.MajorVersionLimit.Value > 50000)
+				{
+					throw new PSArgumentException($"{nameof(options.MajorVersionLimit)} must be between 1 and 50000.", nameof(options.MajorVersionLimit));
+				}
+
+				if (applyToExistingDocumentLibraries)
+				{
+					if (!options.MajorWithMinorVersionsLimit.HasValue)
+					{
+						throw new PSArgumentException($"You must specify {nameof(options.MajorWithMinorVersionsLimit)} when {nameof(options.ApplyToExistingDocumentLibraries)} is specified and {nameof(options.EnableAutoExpirationVersionTrim)} is false.", nameof(options.MajorWithMinorVersionsLimit));
+					}
+
+					if (options.MajorWithMinorVersionsLimit.Value < 0 || options.MajorWithMinorVersionsLimit.Value > 50000)
+					{
+						throw new PSArgumentException($"{nameof(options.MajorWithMinorVersionsLimit)} must be between 0 and 50000.", nameof(options.MajorWithMinorVersionsLimit));
+					}
+				}
+				else if (options.MajorWithMinorVersionsLimit.HasValue)
+				{
+					throw new PSArgumentException($"Don't specify {nameof(options.MajorWithMinorVersionsLimit)} when applying version policy to new document libraries only.", nameof(options.MajorWithMinorVersionsLimit));
+				}
+			}
+
+			if (!(confirmAction?.Invoke(GetConfirmationPrompt(siteUrl, applyToNewDocumentLibraries, applyToExistingDocumentLibraries)) ?? true))
+			{
+				return false;
+			}
+
+			siteProperties.InheritVersionPolicyFromTenant = false;
+			siteProperties.EnableAutoExpirationVersionTrim = options.EnableAutoExpirationVersionTrim.Value;
+			siteProperties.ApplyToNewDocumentLibraries = applyToNewDocumentLibraries;
+			siteProperties.ApplyToExistingDocumentLibraries = applyToExistingDocumentLibraries;
+			siteProperties.RemoveVersionExpirationFileTypeOverride = null;
+
+			if (normalizedFileTypes != null)
+			{
+				siteProperties.FileTypesForVersionExpiration = normalizedFileTypes;
+			}
+
+			if (options.EnableAutoExpirationVersionTrim.Value)
+			{
 				siteProperties.ExpireVersionsAfterDays = -1;
 				siteProperties.MajorVersionLimit = -1;
 				siteProperties.MajorWithMinorVersionsLimit = -1;
 				return true;
-			}
-
-			if (!options.ExpireVersionsAfterDays.HasValue)
-			{
-				throw new PSArgumentException($"You must specify {nameof(options.ExpireVersionsAfterDays)} when {nameof(options.EnableAutoExpirationVersionTrim)} is false.", nameof(options.ExpireVersionsAfterDays));
-			}
-
-			if (!options.MajorVersionLimit.HasValue)
-			{
-				throw new PSArgumentException($"You must specify {nameof(options.MajorVersionLimit)} when {nameof(options.EnableAutoExpirationVersionTrim)} is false.", nameof(options.MajorVersionLimit));
-			}
-
-			if (options.ExpireVersionsAfterDays.Value != 0 && (options.ExpireVersionsAfterDays.Value < 30 || options.ExpireVersionsAfterDays.Value > 36500))
-			{
-				throw new PSArgumentException($"{nameof(options.ExpireVersionsAfterDays)} must be 0 or between 30 and 36500.", nameof(options.ExpireVersionsAfterDays));
-			}
-
-			if (options.MajorVersionLimit.Value < 1 || options.MajorVersionLimit.Value > 50000)
-			{
-				throw new PSArgumentException($"{nameof(options.MajorVersionLimit)} must be between 1 and 50000.", nameof(options.MajorVersionLimit));
 			}
 
 			siteProperties.ExpireVersionsAfterDays = options.ExpireVersionsAfterDays.Value;
@@ -192,25 +214,10 @@ namespace PnP.PowerShell.Commands.Utilities
 
 			if (applyToExistingDocumentLibraries)
 			{
-				if (!options.MajorWithMinorVersionsLimit.HasValue)
-				{
-					throw new PSArgumentException($"You must specify {nameof(options.MajorWithMinorVersionsLimit)} when {nameof(options.ApplyToExistingDocumentLibraries)} is specified and {nameof(options.EnableAutoExpirationVersionTrim)} is false.", nameof(options.MajorWithMinorVersionsLimit));
-				}
-
-				if (options.MajorWithMinorVersionsLimit.Value < 0 || options.MajorWithMinorVersionsLimit.Value > 50000)
-				{
-					throw new PSArgumentException($"{nameof(options.MajorWithMinorVersionsLimit)} must be between 0 and 50000.", nameof(options.MajorWithMinorVersionsLimit));
-				}
-
 				siteProperties.MajorWithMinorVersionsLimit = options.MajorWithMinorVersionsLimit.Value;
 			}
 			else
 			{
-				if (options.MajorWithMinorVersionsLimit.HasValue)
-				{
-					throw new PSArgumentException($"Don't specify {nameof(options.MajorWithMinorVersionsLimit)} when applying version policy to new document libraries only.", nameof(options.MajorWithMinorVersionsLimit));
-				}
-
 				siteProperties.MajorWithMinorVersionsLimit = -1;
 			}
 

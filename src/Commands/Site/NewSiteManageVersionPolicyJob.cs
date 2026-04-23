@@ -46,11 +46,6 @@ namespace PnP.PowerShell.Commands.Sites
             var siteUrl = ResolveSiteUrl();
             var normalizedFileTypes = NormalizeFileTypes(FileTypes, nameof(FileTypes));
 
-            if (ExcludeDefaultPolicy.ToBool() && normalizedFileTypes != null && normalizedFileTypes.Length == 0)
-            {
-                throw new PSArgumentException($"The parameter {nameof(FileTypes)} must contain one or more non-empty file types when {nameof(ExcludeDefaultPolicy)} is specified.", nameof(FileTypes));
-            }
-
             if (TrimUseListPolicy && !(Force || ShouldContinue($"By executing this command, versions that are expired by the list version policies on {siteUrl} will be permanently deleted. These versions cannot be restored from the recycle bin. Are you sure you want to continue?", Resources.Confirm)))
             {
                 WriteObject("Cancelled. No site manage version policy job was created.");

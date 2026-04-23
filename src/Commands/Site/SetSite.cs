@@ -117,7 +117,8 @@ namespace PnP.PowerShell.Commands.Site
         public bool? IsAuthoritative;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public bool? RestrictedContentDiscoveryforCopilotAndAgents;
+        [Alias("RestrictedContentDiscoveryforCopilotAndAgents")]
+        public bool? RestrictedContentDiscoveryForCopilotAndAgents;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string ScriptSafeDomainName;
@@ -469,9 +470,9 @@ namespace PnP.PowerShell.Commands.Site
                     executeQueryRequired = true;
                 }
 
-                if (ParameterSpecified(nameof(RestrictedContentDiscoveryforCopilotAndAgents)) && RestrictedContentDiscoveryforCopilotAndAgents.HasValue)
+                if (ParameterSpecified(nameof(RestrictedContentDiscoveryForCopilotAndAgents)) && RestrictedContentDiscoveryForCopilotAndAgents.HasValue)
                 {
-                    siteProperties.RestrictedContentDiscoveryforCopilotAndAgents = RestrictedContentDiscoveryforCopilotAndAgents.Value;
+                    siteProperties.RestrictedContentDiscoveryforCopilotAndAgents = RestrictedContentDiscoveryForCopilotAndAgents.Value;
                     executeQueryRequired = true;
                 }
 
@@ -612,7 +613,7 @@ namespace PnP.PowerShell.Commands.Site
                 MediaTranscription.HasValue ||
                 AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled.HasValue ||
                 IsAuthoritative.HasValue ||
-                RestrictedContentDiscoveryforCopilotAndAgents.HasValue ||
+                RestrictedContentDiscoveryForCopilotAndAgents.HasValue ||
                 RestrictedAccessControl.HasValue ||
                 RequestFilesLinkExpirationInDays.HasValue ||
                 RequestFilesLinkEnabled.HasValue ||

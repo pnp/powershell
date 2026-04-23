@@ -268,7 +268,8 @@ namespace PnP.PowerShell.Commands
         public bool? IsAuthoritative;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public bool? RestrictedContentDiscoveryforCopilotAndAgents;
+        [Alias("RestrictedContentDiscoveryforCopilotAndAgents")]
+        public bool? RestrictedContentDiscoveryForCopilotAndAgents;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public string[] ExcludeBlockDownloadSharePointGroups;
@@ -751,9 +752,9 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
-            if (ParameterSpecified(nameof(RestrictedContentDiscoveryforCopilotAndAgents)) && RestrictedContentDiscoveryforCopilotAndAgents.HasValue)
+            if (ParameterSpecified(nameof(RestrictedContentDiscoveryForCopilotAndAgents)) && RestrictedContentDiscoveryForCopilotAndAgents.HasValue)
             {
-                props.RestrictedContentDiscoveryforCopilotAndAgents = RestrictedContentDiscoveryforCopilotAndAgents.Value;
+                props.RestrictedContentDiscoveryforCopilotAndAgents = RestrictedContentDiscoveryForCopilotAndAgents.Value;
                 updateRequired = true;
             }
 
