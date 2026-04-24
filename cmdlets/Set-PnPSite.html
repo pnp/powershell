@@ -96,6 +96,8 @@
  [-StorageMaximumLevel &lt;Int64&gt;]
  [-StorageWarningLevel &lt;Int64&gt;]
  [-AllowSelfServiceUpgrade]
+ [-DisableClassicPageBaselineSecurityMode &lt;Boolean&gt;]
+ [-DisableSiteBranding &lt;Boolean&gt;]
  [-NoScriptSite]
  [-Owners &lt;System.Collections.Generic.List&lt;[System.String]&gt;]
  [-CommentsOnSitePagesDisabled]
@@ -111,6 +113,9 @@
  [-SocialBarOnSitePagesDisabled]
  [-AnonymousLinkExpirationInDays &lt;Int32&gt;]
  [-RequestFilesLinkExpirationInDays &lt;Int32&gt;]
+ [-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled &lt;Boolean&gt;]
+ [-IsAuthoritative &lt;Boolean&gt;]
+ [-RestrictedContentDiscoveryForCopilotAndAgents &lt;Boolean&gt;]
  [-OverrideTenantAnonymousLinkExpirationPolicy]
  [-MediaTranscription &lt;MediaTranscriptionPolicyType&gt;]
  [-SensitivityLabel &lt;Guid&gt;]
@@ -124,6 +129,16 @@
  [-RestrictContentOrgWideSearch &lt;Boolean&gt;]
  [-CanSyncHubSitePermissions &lt;SwitchParameter&gt;]
  [-ClearGroupId]
+ [-InheritVersionPolicyFromTenant]
+ [-EnableAutoExpirationVersionTrim &lt;Boolean&gt;]
+ [-ExpireVersionsAfterDays &lt;Int32&gt;]
+ [-MajorVersionLimit &lt;Int32&gt;]
+ [-MajorWithMinorVersionsLimit &lt;Int32&gt;]
+ [-FileTypesForVersionExpiration &lt;String[]&gt;]
+ [-RemoveVersionExpirationFileTypeOverride &lt;String[]&gt;]
+ [-ApplyToNewDocumentLibraries]
+ [-ApplyToExistingDocumentLibraries]
+ [-Force]
  [-HidePeoplePreviewingFiles &lt;Boolean&gt;]
  [-HidePeopleWhoHaveListsOpen &lt;Boolean&gt;]
  [-RestrictedAccessControl &lt;Boolean&gt;]
@@ -159,10 +174,48 @@
 <pre><code class="lang-powershell">Set-PnPSite -NoScriptSite $false
 </code></pre>
 <p>Allows custom script on a specific site. See <a href="https://learn.microsoft.com/sharepoint/allow-or-prevent-custom-script">Allow or prevent custom script</a> for more information.</p>
+<h3 id="example-7">EXAMPLE 7</h3>
+<pre><code class="lang-powershell">Set-PnPSite -EnableAutoExpirationVersionTrim $false -ExpireVersionsAfterDays 180 -MajorVersionLimit 100 -MajorWithMinorVersionsLimit 10
+</code></pre>
+<p>Sets the site version policy for both new and existing document libraries to keep 100 major versions, 10 minor versions, and expire versions after 180 days.</p>
+<h3 id="example-8">EXAMPLE 8</h3>
+<pre><code class="lang-powershell">Set-PnPSite -EnableAutoExpirationVersionTrim $true -ApplyToNewDocumentLibraries -FileTypesForVersionExpiration &quot;pdf&quot;,&quot;docx&quot;
+</code></pre>
+<p>Sets an automatic version trim policy for new document libraries only and limits the override to the specified file types.</p>
+<h3 id="example-9">EXAMPLE 9</h3>
+<pre><code class="lang-powershell">Set-PnPSite -ApplyToNewDocumentLibraries -RemoveVersionExpirationFileTypeOverride &quot;pdf&quot;,&quot;docx&quot;
+</code></pre>
+<p>Removes the specified file type version expiration overrides from the site policy for new document libraries.</p>
+<h3 id="example-10">EXAMPLE 10</h3>
+<pre><code class="lang-powershell">Set-PnPSite -InheritVersionPolicyFromTenant
+</code></pre>
+<p>Resets the site version policy so new document libraries inherit the tenant-level defaults.</p>
 <h2 id="parameters">PARAMETERS</h2>
 <h3 id="-allowselfserviceupgrade">-AllowSelfServiceUpgrade</h3>
 <p>Specifies if the site administrator can upgrade the site collection.</p>
 <pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disableclassicpagebaselinesecuritymode">-DisableClassicPageBaselineSecurityMode</h3>
+<p>Enables or disables classic page baseline security mode for the site collection.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-disablesitebranding">-DisableSiteBranding</h3>
+<p>Enables or disables site branding for the site collection.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: Set Properties
 
 Required: False
@@ -183,10 +236,65 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-applytoexistingdocumentlibraries">-ApplyToExistingDocumentLibraries</h3>
+<p>Applies the configured site version policy to existing document libraries. If neither this parameter nor <code>-ApplyToNewDocumentLibraries</code> is provided, the cmdlet targets both new and existing document libraries.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-applytonewdocumentlibraries">-ApplyToNewDocumentLibraries</h3>
+<p>Applies the configured site version policy to new document libraries. If neither this parameter nor <code>-ApplyToExistingDocumentLibraries</code> is provided, the cmdlet targets both new and existing document libraries.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-requestfileslinkexpirationindays">-RequestFilesLinkExpirationInDays</h3>
 <p>Specifies the number of days before a Request Files link expires for the site.</p>
 <p>The value can be from 0 to 730 days.</p>
 <pre><code class="lang-yaml">Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-allowwebpropertybagupdatewhendenyaddandcustomizepagesisenabled">-AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled</h3>
+<p>Enables or disables adding and updating web property bag values when DenyAddAndCustomizePages is enabled.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-isauthoritative">-IsAuthoritative</h3>
+<p>Marks the site collection as authoritative or not authoritative.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-restrictedcontentdiscoveryforcopilotandagents">-RestrictedContentDiscoveryForCopilotAndAgents</h3>
+<p>Restricts content discovery for Copilot and agents on the site collection.</p>
+<pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: Set Properties
 
 Required: False
@@ -320,6 +428,50 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-enableautoexpirationversiontrim">-EnableAutoExpirationVersionTrim</h3>
+<p>Enables or disables automatic version trim for the site version policy. Set this to <code>$true</code> to use automatic trimming. Set it to <code>$false</code> to provide explicit values for <code>-ExpireVersionsAfterDays</code> and <code>-MajorVersionLimit</code>, and also <code>-MajorWithMinorVersionsLimit</code> when existing document libraries are included.</p>
+<pre><code class="lang-yaml">Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-expireversionsafterdays">-ExpireVersionsAfterDays</h3>
+<p>Sets the number of days after which versions expire when <code>-EnableAutoExpirationVersionTrim</code> is <code>$false</code>. Use <code>0</code> to keep versions indefinitely. Allowed values are <code>0</code> or from <code>30</code> through <code>36500</code>.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-filetypesforversionexpiration">-FileTypesForVersionExpiration</h3>
+<p>Limits the site version policy override to the specified file types. This parameter can only be used when <code>-EnableAutoExpirationVersionTrim</code> is also provided and cannot be combined with <code>-ApplyToExistingDocumentLibraries</code>.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-force">-Force</h3>
+<p>Bypasses the confirmation prompt when applying site version policy changes that target new document libraries, existing document libraries, or both.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-hidepeoplepreviewingfiles">-HidePeoplePreviewingFiles</h3>
 <p>Allows hiding of the presence indicators of users simultaneously editing files.</p>
 <pre><code class="lang-yaml">Type: String
@@ -356,6 +508,17 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 </code></pre>
+<h3 id="-inheritversionpolicyfromtenant">-InheritVersionPolicyFromTenant</h3>
+<p>Resets the site version policy so new document libraries inherit the tenant-level version policy settings.</p>
+<pre><code class="lang-yaml">Type: SwitchParameter
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
 <h3 id="-localeid">-LocaleId</h3>
 <p>Specifies the language of this site collection.</p>
 <pre><code class="lang-yaml">Type: UInt32
@@ -384,6 +547,28 @@ Accept wildcard characters: False
 <p>If you want to set the logo for a classic site, use <a href="https://pnp.github.io/powershell/cmdlets/Set-PnPWeb.html#-sitelogourl">Set-PnPWeb -SiteLogoUrl</a> instead.</p>
 <p>If the modern site has a Microsoft 365 Group behind it, use <a href="https://pnp.github.io/powershell/cmdlets/Set-PnPWebHeader.html#-sitelogourl">Set-PnPWebHeader -SiteLogoUrl</a> instead.</p>
 <pre><code class="lang-yaml">Type: String
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-majorversionlimit">-MajorVersionLimit</h3>
+<p>Sets the maximum number of major versions to retain when <code>-EnableAutoExpirationVersionTrim</code> is <code>$false</code>. Allowed values are from <code>1</code> through <code>50000</code>.</p>
+<pre><code class="lang-yaml">Type: Int32
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-majorwithminorversionslimit">-MajorWithMinorVersionsLimit</h3>
+<p>Sets the maximum number of major and minor versions to retain when <code>-EnableAutoExpirationVersionTrim</code> is <code>$false</code> and the policy applies to existing document libraries. Allowed values are from <code>0</code> through <code>50000</code>.</p>
+<pre><code class="lang-yaml">Type: Int32
 Parameter Sets: Set Properties
 
 Required: False
@@ -499,6 +684,17 @@ Accept wildcard characters: False
 <p>Allows configuring whether users will be able to create anonymous requests for people to upload files regardless of the Share with anyone link configuration setting for this particular site collection.</p>
 <pre><code class="lang-yaml">Type: Boolean
 Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+</code></pre>
+<h3 id="-removeversionexpirationfiletypeoverride">-RemoveVersionExpirationFileTypeOverride</h3>
+<p>Removes one or more file type version expiration overrides from the site policy for new document libraries. This parameter must be combined with <code>-ApplyToNewDocumentLibraries</code> and cannot be combined with the other version policy setting parameters.</p>
+<pre><code class="lang-yaml">Type: String[]
+Parameter Sets: Set Properties
 
 Required: False
 Position: Named

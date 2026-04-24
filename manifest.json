@@ -5314,6 +5314,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/New-PnPSiteManageVersionPolicyJob.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/New-PnPSiteManageVersionPolicyJob.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/New-PnPSiteTemplate.md",
       "output": {
         ".html": {
