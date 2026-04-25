@@ -10,6 +10,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Start-PnPTenantRename` cmdlet to schedule SharePoint Online tenant domain rename jobs. [#5304](https://github.com/pnp/powershell/pull/5304)
 - Added `Get-PnPListVersionPolicy` and `Set-PnPListVersionPolicy` cmdlets to inspect and manage SharePoint Online document library version policies. [#5300](https://github.com/pnp/powershell/pull/5300)
 - Added `New-PnPSiteManageVersionPolicyJob` cmdlet to queue site-level list version policy trim and sync jobs. [#5300](https://github.com/pnp/powershell/pull/5300)
 - Added site version policy parameters to `Set-PnPSite` and `Set-PnPTenantSite`, including support for inheriting tenant defaults, targeting new or existing document libraries, managing file type overrides, and bypassing confirmation with `-Force`. [#5300](https://github.com/pnp/powershell/pull/5300)
