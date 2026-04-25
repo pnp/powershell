@@ -1,6 +1,7 @@
 using PnP.PowerShell.Commands.Base;
 using PnP.PowerShell.Commands.Model;
 using PnP.PowerShell.Commands.Utilities.MultiGeo;
+using PnP.PowerShell.Commands.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Management.Automation;
@@ -8,6 +9,8 @@ using System.Management.Automation;
 namespace PnP.PowerShell.Commands.Admin
 {
 	[Cmdlet(VerbsLifecycle.Start, "PnPTenantRename", DefaultParameterSetName = ParameterSetFullRename, SupportsShouldProcess = true, ConfirmImpact = ConfirmImpact.High)]
+	[RequiredApiApplicationPermissions("sharepoint/Sites.FullControl.All")]
+	[RequiredApiDelegatedPermissions("sharepoint/AllSites.FullControl")]
 	[OutputType(typeof(string))]
 	public class StartTenantRename : PnPSharePointOnlineAdminCmdlet
 	{
@@ -52,10 +55,18 @@ namespace PnP.PowerShell.Commands.Admin
 		private static DateTime GetValidatedScheduledDateTimeInUtc(DateTime scheduledDateTime)
 		{
 			var scheduledDateTimeInUtc = scheduledDateTime.ToUniversalTime();
+			var utcNow = DateTime.UtcNow;
+			var minimumScheduledDateTimeInUtc = utcNow.AddHours(24);
+			var maximumScheduledDateTimeInUtc = utcNow.AddDays(30);
 
-			if (scheduledDateTimeInUtc < DateTime.UtcNow)
+			if (scheduledDateTimeInUtc < minimumScheduledDateTimeInUtc)
 			{
-				throw new PSArgumentException("ScheduledDateTime must be in the future.", nameof(ScheduledDateTime));
+				throw new PSArgumentException("ScheduledDateTime must be at least 24 hours in the future.", nameof(ScheduledDateTime));
+			}
+
+			if (scheduledDateTimeInUtc > maximumScheduledDateTimeInUtc)
+			{
+				throw new PSArgumentException("ScheduledDateTime must be no more than 30 days in the future.", nameof(ScheduledDateTime));
 			}
 
 			return scheduledDateTimeInUtc;

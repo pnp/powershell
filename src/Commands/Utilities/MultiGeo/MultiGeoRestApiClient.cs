@@ -187,7 +187,7 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 
 		private static string GetErrorMessage(HttpStatusCode statusCode, string responseText)
 		{
-			var statusMessage = $"SharePoint Online multi-geo REST API request failed with status {(int)statusCode} ({statusCode}).";
+			var statusMessage = $"SharePoint Online REST request failed with status {(int)statusCode} ({statusCode}).";
 			if (string.IsNullOrWhiteSpace(responseText))
 			{
 				return statusMessage;

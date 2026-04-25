@@ -23,7 +23,7 @@ Schedules a tenant rename job to change the SharePoint Online domain name for th
 
 The new domain name must already have been added successfully to Microsoft Entra ID. Specify only the domain prefix, without `.sharepoint.com` or `.onmicrosoft.com`.
 
-The scheduled date and time must be in the future. SharePoint Online requires the selected time to be at least 24 hours in the future and no more than 30 days in the future. Tenant rename can take several hours to days depending on the number of SharePoint sites and OneDrive accounts in the tenant.
+The scheduled date and time must be at least 24 hours in the future and no more than 30 days in the future. Tenant rename can take several hours to days depending on the number of SharePoint sites and OneDrive accounts in the tenant.
 
 ## EXAMPLES
 
