@@ -8534,6 +8534,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "cmdlets/Start-PnPTenantRename.md",
+      "output": {
+        ".html": {
+          "relative_path": "cmdlets/Start-PnPTenantRename.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "cmdlets/Start-PnPTraceLog.md",
       "output": {
         ".html": {
