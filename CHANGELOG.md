@@ -59,7 +59,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 - Added parameter IncreaseRequestTimeout to `Get-PnPSearchCrawlLog` cmdlet. [#5223](https://github.com/pnp/powershell/pull/5223)
   
 ### Fixed
-- Fix `Get-PnPUserOneDriveQuota` hanging in some tenants by retrieving the resolved OneDrive site directly instead of using a filtered tenant site query. [#4543](https://github.com/pnp/powershell/issues/4543)
+- Fix `Get-PnPUserOneDriveQuota` hanging in some tenants by retrieving the resolved OneDrive site directly instead of using a filtered tenant site query. [#5306](https://github.com/pnp/powershell/pull/5306)
 - Fix `Get-PnPEntraIDUser` to align supported Graph permission metadata, preserve `-Select` for GUID-based identity lookups, and expose `-UseBeta` consistently across parameter sets. [#5290](https://github.com/pnp/powershell/pull/5290)
 - Fix `Set-PnPView -Aggregations` parameter not showing aggregations in SharePoint online. [#4868](https://github.com/pnp/powershell/pull/4868)
 - Fix `-CreateDrive` parameter not working correctly in `Connect-PnPOnline`. [#4869](https://github.com/pnp/powershell/pull/4869)

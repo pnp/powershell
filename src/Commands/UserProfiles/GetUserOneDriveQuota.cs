@@ -29,7 +29,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             var personalSiteUrl = properties.PersonalUrl?.TrimEnd('/');
             if (string.IsNullOrWhiteSpace(personalSiteUrl))
             {
-                LogWarning($"Couldn't find onedrive quota for the account: {Account} ");
+                LogWarning($"Couldn't find OneDrive quota for the account: {Account}");
                 return;
             }
 
@@ -43,7 +43,7 @@ namespace PnP.PowerShell.Commands.UserProfiles
             }
             catch (ServerException e) when (string.Equals(e.ServerErrorTypeName, "Microsoft.Online.SharePoint.Common.SpoNoSiteException", StringComparison.InvariantCultureIgnoreCase))
             {
-                LogWarning($"Couldn't find onedrive quota for the account: {Account} ");
+                LogWarning($"Couldn't find OneDrive quota for the account: {Account}");
             }
         }
     }
