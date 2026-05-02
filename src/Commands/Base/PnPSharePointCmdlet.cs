@@ -22,6 +22,10 @@ namespace PnP.PowerShell.Commands
         /// </summary>
         public ClientContext ClientContext => Connection?.Context;
 
+        /// <summary>
+        /// Controls whether a cmdlet should replace the current SharePoint context when it already contains pending CSOM requests before the cmdlet starts.
+        /// Override this for cmdlets that intentionally execute caller-created pending requests.
+        /// </summary>
         protected virtual bool ShouldRefreshContextWithPendingRequest => true;
 
         /// <summary>
