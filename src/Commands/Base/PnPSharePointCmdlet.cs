@@ -22,6 +22,8 @@ namespace PnP.PowerShell.Commands
         /// </summary>
         public ClientContext ClientContext => Connection?.Context;
 
+        protected virtual bool ShouldRefreshContextWithPendingRequest => true;
+
         /// <summary>
         /// Reference the the PnP context on the current connection. If NULL it means there is no PnP context available on the current connection.
         /// </summary>
@@ -128,6 +130,12 @@ namespace PnP.PowerShell.Commands
                     throw new InvalidOperationException(Resources.NoDefaultSharePointConnection);
                 }
             }
+
+            if (ShouldRefreshContextWithPendingRequest && Connection.RefreshContextIfHasPendingRequest())
+            {
+                LogDebug("Refreshing the SharePoint context because it contained pending CSOM requests before cmdlet execution.");
+            }
+
             var resourceUri = new Uri(Connection.Url);
             var defaultResource = $"{resourceUri.Scheme}://{resourceUri.Authority}/.default";
             SharePointRequestHelper = new ApiRequestHelper(GetType(), Connection, defaultResource);

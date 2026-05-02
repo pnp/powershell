@@ -836,14 +836,59 @@ namespace PnP.PowerShell.Commands.Base
             }
         }
 
+        internal bool RefreshContextIfHasPendingRequest()
+        {
+            if (Context?.HasPendingRequest != true)
+            {
+                return false;
+            }
+
+            RefreshContext();
+            return true;
+        }
+
+        internal void RefreshContext()
+        {
+            if (Context == null)
+            {
+                return;
+            }
+
+            var context = Context.Clone(Context.Url);
+            ReplaceCachedContext(context);
+
+            Context = context;
+            _pnpContext = null;
+        }
+
+        private static void ReplaceCachedContext(ClientContext context)
+        {
+            ContextCache ??= new List<ClientContext>();
+
+            var contextIndex = ContextCache.FindIndex(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(context.Url).AbsoluteUri);
+            if (contextIndex >= 0)
+            {
+                ContextCache[contextIndex] = context;
+            }
+            else
+            {
+                ContextCache.Add(context);
+            }
+        }
+
         internal ClientContext CloneContext(string url)
         {
-            var context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
+            var context = ContextCache.FirstOrDefault(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             if (context == null)
             {
                 context = Context.Clone(url);
                 context.ExecuteQueryRetry();
                 ContextCache.Add(context);
+            }
+            else if (context.HasPendingRequest)
+            {
+                context = context.Clone(context.Url);
+                ReplaceCachedContext(context);
             }
             _pnpContext = null;
             return context;
