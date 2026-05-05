@@ -7,6 +7,8 @@ namespace PnP.PowerShell.Commands.Base
     [OutputType(typeof(void))]
     public class InvokeQuery : PnPSharePointCmdlet
     {
+        protected override bool ShouldRefreshContextWithPendingRequest => false;
+
         [Parameter(Mandatory = false)]
         public int RetryCount = 10;
 
