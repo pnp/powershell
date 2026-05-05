@@ -2,10 +2,10 @@ $runPublish = $false
 
 $dependencies = Invoke-RestMethod -Method Get -Uri https://raw.githubusercontent.com/pnp/powershell/dev/dependencies.json
 
-$pnppowershell_hash = git ls-files -s ./src | git hash-object --stdin
-#$existing_pnppowershell_hash = Get-Content ./pnppowershell_hash.txt -Raw -ErrorAction SilentlyContinue
+$pnppowershell_hash = git ls-files -s "$PSScriptRoot/../src" | git hash-object --stdin
+#$existing_pnppowershell_hash = Get-Content "$PSScriptRoot/../pnppowershell_hash.txt" -Raw -ErrorAction SilentlyContinue
 
-#$existing_pnpframework_hash = Get-Content ./pnpframework_hash.txt -Raw -ErrorAction SilentlyContinue
+#$existing_pnpframework_hash = Get-Content "$PSScriptRoot/../pnpframework_hash.txt" -Raw -ErrorAction SilentlyContinue
 $pnpframework_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpframework/branches/dev" -SkipHttpErrorCheck
 if ($null -ne $pnpframework_response) {
 	if ($null -ne $pnpframework_response.commit) {
@@ -13,7 +13,7 @@ if ($null -ne $pnpframework_response) {
 	}
 }
 
-#$existing_pnpcoresdk_hash = Get-Content ./pnpcoresdk_hash.txt -Raw -ErrorAction SilentlyContinue
+#$existing_pnpcoresdk_hash = Get-Content "$PSScriptRoot/../pnpcoresdk_hash.txt" -Raw -ErrorAction SilentlyContinue
 $pnpcoresdk_response = Invoke-RestMethod -Method Get -Uri "$($env:GITHUB_API_URL)/repos/pnp/pnpcore/branches/dev" -SkipHttpErrorCheck
 if ($null -ne $pnpcoresdk_response) {
 	if ($null -ne $pnpcoresdk_response.commit) {
@@ -42,18 +42,18 @@ if ($runPublish -eq $true) {
 	$dependencies.PnPFramework = $pnpframework_hash
 	$dependencies.PnPPowershell = $pnppowershell_hash
 
-	Set-Content ./dependencies.json -Value $(ConvertTo-Json $dependencies) -Force
+	Set-Content "$PSScriptRoot/../dependencies.json" -Value $(ConvertTo-Json $dependencies) -Force
 
 	$versionFileContents = Get-Content "$PSScriptRoot/../version.json" -Raw | ConvertFrom-Json
 
 	if ($versionFileContents.Version.Contains("%")) {
-		$versionString = $versionFileContents.Version.Replace("%", "0");
+		$versionString = $versionFileContents.Version.Replace("%", "0")
 		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionString)
-		$buildVersion = $versionObject.Patch;
+		$buildVersion = $versionObject.Patch
 	}
 	else {	
 		$versionObject = [System.Management.Automation.SemanticVersion]::Parse($versionFileContents.Version)
-		$buildVersion = $versionObject.Patch + 1;
+		$buildVersion = $versionObject.Patch + 1
 	}
 
 	$version = "$($versionObject.Major).$($versionObject.Minor).$buildVersion"
@@ -70,19 +70,14 @@ if ($runPublish -eq $true) {
 		exit 1# Do not proceed.
 	}
 
-	dotnet build ./src/Commands/PnP.PowerShell.csproj --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
+	dotnet build "$PSScriptRoot/../src/Commands/PnP.PowerShell.csproj" --nologo --configuration Release --no-incremental -p:VersionPrefix=$version -p:VersionSuffix=nightly
 
-	$documentsFolder = [environment]::getfolderpath("mydocuments");
-
-	if ($IsLinux) {
-		$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-		$helpfileDestinationFolder = "$documentsFolder/.local/share/powershell/Modules"
-	}
-	elseif ($IsMacOS) {
+	if ($IsLinux -or $IsMacOS) {
 		$destinationFolder = "$HOME/.local/share/powershell/Modules/PnP.PowerShell"
 		$helpfileDestinationFolder = "$HOME/.local/share/powershell/Modules"
 	}
 	else {
+		$documentsFolder = [environment]::getfolderpath("mydocuments")
 		$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
 		$helpfileDestinationFolder = "$documentsFolder/PowerShell/Modules"
 	}
@@ -94,7 +89,7 @@ if ($runPublish -eq $true) {
 	$coreRuntimePathx86 = "$destinationFolder/Core/runtimes/win-x86/native"
 	$coreRuntimePathLinx64 = "$destinationFolder/Core/runtimes/linux-x64/native"
 
-	$assemblyExceptions = @("System.Memory.dll");
+	$assemblyExceptions = @("System.Memory.dll")
 
 	Try {
         # Module folder there?
@@ -168,19 +163,8 @@ if ($runPublish -eq $true) {
 		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
 		# Load the Module in a new PowerShell session
 		$scriptBlock = {
-			$documentsFolder = [environment]::getfolderpath("mydocuments");
-
-			if ($IsLinux) {
-				$destinationFolder = "$documentsFolder/.local/share/powershell/Modules/PnP.PowerShell"
-			}
-			elseif ($IsMacOS) {
-				$destinationFolder = "~/.local/share/powershell/Modules/PnP.PowerShell"
-			}
-			else {
-				$destinationFolder = "$documentsFolder/PowerShell/Modules/PnP.PowerShell"
-			}
 			Write-Host "Importing dotnet core version of assembly" -ForegroundColor Yellow
-			Import-Module -Name "$destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
+			Import-Module -Name "$using:destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
 
 			Write-Host "Getting cmdlet info" -ForegroundColor Yellow
 			$cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
@@ -223,16 +207,16 @@ if ($runPublish -eq $true) {
 	}
 
 	# Generate predictor commands
-	./build/Generate-PredictorCommands.ps1 -Version "nightly"
+	Generate-PredictorCommands.ps1 -Version "nightly"
 
 	Write-Host "Generating Documentation" -ForegroundColor Yellow
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
 	Install-Module -Name Microsoft.PowerShell.PlatyPS -AllowPrerelease -RequiredVersion 1.0.0-preview1
 	Write-Host "Generating external help"
-	$mdFiles = Measure-PlatyPSMarkdown -Path ./documentation/*.md
+	$mdFiles = Measure-PlatyPSMarkdown -Path "$PSScriptRoot/../documentation/*.md"
 	$mdFiles | Import-MarkdownCommandHelp -Path {$_.FilePath} | Export-MamlCommandHelp -OutputFolder $helpfileDestinationFolder -Force
 	# Install-Module Microsoft.PlatyPS -ErrorAction Stop
-	# New-ExternalHelp -Path ./documentation -OutputPath $destinationFolder -Force
+	# New-ExternalHelp -Path "$PSScriptRoot/../documentation" -OutputPath $destinationFolder -Force
 
 	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 
@@ -241,11 +225,11 @@ if ($runPublish -eq $true) {
 	Publish-Module -Name PnP.PowerShell -AllowPrerelease -NuGetApiKey $apiKey
 
 	# Write version back to version
-	Set-Content ./version.txt -Value $version -Force -NoNewline
+	Set-Content "$PSScriptRoot/../version.txt" -Value $version -Force -NoNewline
 
 	# Write version back to version.json
 	$json = @{Version = "$version"; Message = "" } | ConvertTo-Json
-	Set-Content ./version.json -Value $json -Force -NoNewline
+	Set-Content "$PSScriptRoot/../version.json" -Value $json -Force -NoNewline
 }
 else {
 	Write-Host "No changes in PnP PowerShell, PnP Framework or PnP Core SDK. Exiting." -ForegroundColor Green
