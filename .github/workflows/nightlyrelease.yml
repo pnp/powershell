@@ -28,7 +28,7 @@ jobs:
         ref: dev
         token: ${{ secrets.PAT }}
     - name: Install Sign CLI tool
-      run: dotnet tool install --tool-path . --prerelease sign
+      run: dotnet tool install sign --tool-path . --version 0.9.1-beta.25181.2
       
     - name: Azure CLI Login
       uses: azure/login@v3 # v3.0.0
