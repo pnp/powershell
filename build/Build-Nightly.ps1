@@ -162,18 +162,28 @@ if ($true) {
 
 	Try {
 		Write-Host "Generating PnP.PowerShell.psd1" -ForegroundColor Yellow
-		# Load the Module in a new PowerShell session
+		# Load the Module in a new PowerShell process so the DLL is released before signing
 		$scriptBlock = {
-			Write-Host "Importing dotnet core version of assembly" -ForegroundColor Yellow
-			Import-Module -Name "$using:destinationFolder/Core/PnP.PowerShell.dll" -DisableNameChecking
+			param([string] $modulePath)
 
-			Write-Host "Getting cmdlet info" -ForegroundColor Yellow
+			$moduleAssemblyPath = Join-Path $modulePath "Core/PnP.PowerShell.dll"
+			Import-Module -Name $moduleAssemblyPath -DisableNameChecking
+
 			$cmdlets = Get-Command -Module PnP.PowerShell | ForEach-Object { "`"$_`"" }
 			$cmdlets -Join ","
 		}
 
 		Write-Host "Starting job to retrieve cmdlet names" -ForegroundColor Yellow
-		$cmdletsString = Start-ThreadJob -ScriptBlock $scriptBlock | Receive-Job -Wait
+		$cmdletJob = Start-Job -ScriptBlock $scriptBlock -ArgumentList (Resolve-Path -LiteralPath $destinationFolder).Path
+		try {
+			$cmdletsString = Receive-Job -Job $cmdletJob -Wait -ErrorAction Stop
+			if ($cmdletJob.State -ne "Completed") {
+				throw "Failed to retrieve cmdlet names. Job state: $($cmdletJob.State)"
+			}
+		}
+		finally {
+			Remove-Job -Job $cmdletJob -Force -ErrorAction SilentlyContinue
+		}
 
 		Write-Host "Writing PSD1" -ForegroundColor Yellow
 		$manifest = "@{
