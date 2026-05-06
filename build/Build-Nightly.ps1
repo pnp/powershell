@@ -220,28 +220,46 @@ if ($true) {
 	# New-ExternalHelp -Path "$PSScriptRoot/../documentation" -OutputPath $destinationFolder -Force
 
     # Sign all required DLLs
+    function Invoke-ModuleFileSigning {
+		param(
+			[Parameter(Mandatory = $true)]
+			[System.IO.FileInfo] $File
+		)
+
+		Write-Host "Signing $($File.FullName)"
+		& "$PSScriptRoot/../sign" code azure-key-vault $File.FullName `
+			--publisher-name "Microsoft 365 Patterns and Practices" `
+			--description "PnP PowerShell Module" `
+			--description-url "https://pnp.github.io/powershell/" `
+			--azure-key-vault-tenant-id $("$env:SIGNING_TENANTID") `
+			--azure-key-vault-client-id $("$env:SIGNING_CLIENT_ID") `
+			--azure-key-vault-certificate $("$env:SIGNING_CERTNAME") `
+			--azure-key-vault-url $("$env:SIGNING_VAULTURL") `
+			--timestamp-url "http://timestamp.digicert.com" `
+			--verbosity Debug
+
+		if ($LASTEXITCODE -ne 0) {
+			throw "Signing failed for $($File.FullName)"
+		}
+	}
+
     Write-Host "Sign module assemblies"
-    $filesToBeSigned = @(
-      "$corePath/PnP.PowerShell.dll",
-	  "$corePath/PnP.Core.dll",
-	  "$corePath/PnP.Framework.dll",
-	  "$commonPath/PnP.PowerShell.ALC.dll",
-	  "$destinationFolder/PnP.PowerShell.Format.ps1xml",
-	  "$destinationFolder/PnP.PowerShell.psd1"
+    $assembliesToBeSigned = @(
+		Get-Item -LiteralPath "$corePath/PnP.PowerShell.dll"
+		Get-Item -LiteralPath "$corePath/PnP.Core.dll"
+		Get-Item -LiteralPath "$corePath/PnP.Framework.dll"
+		Get-Item -LiteralPath "$commonPath/PnP.PowerShell.ALC.dll"
     )
 
-	foreach ($fileToBeSigned in $filesToBeSigned) {
-	  Write-Host "Signing $fileToBeSigned"
-	  ./sign code azure-key-vault $fileToBeSigned `
-	     --publisher-name "Microsoft 365 Patterns and Practices" `
-		 --description "PnP PowerShell Module" `
-		 --description-url "https://pnp.github.io/powershell/" `
-		 --azure-key-vault-tenant-id $("$env:SIGNING_TENANTID") `
-		 --azure-key-vault-client-id $("$env:SIGNING_CLIENT_ID") `
-		 --azure-key-vault-certificate $("$env:SIGNING_CERTNAME") `
-		 --azure-key-vault-url $("$env:SIGNING_VAULTURL") `
-		 --timestamp-url "http://timestamp.digicert.com" `
-		 --verbosity Debug
+	foreach ($assemblyToBeSigned in $assembliesToBeSigned) {
+		Invoke-ModuleFileSigning -File $assemblyToBeSigned
+	}
+
+	Write-Host "Sign PowerShell module files"
+	$powerShellFilesToBeSigned = Get-ChildItem -LiteralPath $destinationFolder -Recurse -File | Where-Object { $_.Extension -in '.ps1', '.psm1', '.ps1xml', '.psd1' }
+
+	foreach ($powerShellFileToBeSigned in $powerShellFilesToBeSigned) {
+		Invoke-ModuleFileSigning -File $powerShellFileToBeSigned
 	}
 
 	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
