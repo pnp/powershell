@@ -232,17 +232,7 @@ if ($true) {
 
 	foreach ($fileToBeSigned in $filesToBeSigned) {
 	  Write-Host "Signing $fileToBeSigned"
-
-	  ./sign code azure-key-vault $fileToBeSigned `
-	    --publisher-name "Microsoft 365 Patterns and Practices" `
-	    --description "PnP PowerShell Module" `
-	    --description-url "https://pnp.github.io/powershell/" `
-	    --azure-key-vault-tenant-id $("$env:SIGNING_TENANTID") `
-	    --azure-key-vault-client-id $("$env:SIGNING_CLIENT_ID") `
-	    --azure-key-vault-certificate $("$env:SIGNING_CERTNAME") `
-	    --azure-key-vault-url $("$env:SIGNING_VAULTURL") `
-	    --timestamp-url http://timestamp.digicert.com `
-	    --verbosity Debug
+	  ./sign code azure-key-vault $fileToBeSigned --publisher-name "Microsoft 365 Patterns and Practices" --description "PnP PowerShell Module" --description-url "https://pnp.github.io/powershell/" --azure-key-vault-tenant-id $("$env:SIGNING_TENANTID") --azure-key-vault-client-id $("$env:SIGNING_CLIENT_ID") --azure-key-vault-certificate $("$env:SIGNING_CERTNAME") --azure-key-vault-url $("$env:SIGNING_VAULTURL") --timestamp-url "http://timestamp.digicert.com" --verbosity Debug
 	}
 
 	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
