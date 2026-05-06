@@ -122,7 +122,11 @@ jobs:
           Write-Host "Module packaged at $moduleDir"
 
       - name: Install Sign CLI tool
-        run: dotnet tool install --tool-path . --prerelease sign
+        shell: pwsh
+        run: |
+          $signToolPath = Join-Path $env:RUNNER_TEMP "sign"
+          dotnet tool install sign --tool-path $signToolPath --version 0.9.1-beta.25181.2
+          "SIGN_CLI_PATH=$(Join-Path $signToolPath 'sign.exe')" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
         
       - name: Azure CLI Login
         uses: azure/login@v3 # v3.0.0
@@ -145,7 +149,7 @@ jobs:
           foreach ($dll in $dlls) {
             Write-Host "Signing $dll"
 
-            ./sign code azure-key-vault $dll `
+            & $env:SIGN_CLI_PATH code azure-key-vault $dll `
               --publisher-name "Microsoft 365 Patterns and Practices" `
               --description "PnP PowerShell Module" `
               --description-url "https://pnp.github.io/powershell/" `
@@ -166,7 +170,7 @@ jobs:
           foreach ($file in $files) {
             Write-Host "Signing $($file.FullName)"
 
-            ./sign code azure-key-vault $file.FullName `
+            & $env:SIGN_CLI_PATH code azure-key-vault $file.FullName `
               --publisher-name "Microsoft 365 Patterns and Practices" `
               --description "PnP PowerShell Module" `
               --description-url "https://pnp.github.io/powershell/" `

@@ -237,7 +237,19 @@ if ($true) {
 		)
 
 		Write-Host "Signing $($File.FullName)"
-		& "$PSScriptRoot/../sign" code azure-key-vault $File.FullName `
+		$signCliPath = $env:SIGN_CLI_PATH
+		if ([string]::IsNullOrWhiteSpace($signCliPath)) {
+			$signCliPath = Join-Path $PSScriptRoot "../sign"
+			if ($IsWindows -and !(Test-Path -LiteralPath $signCliPath) -and (Test-Path -LiteralPath "$signCliPath.exe")) {
+				$signCliPath = "$signCliPath.exe"
+			}
+		}
+
+		if (!(Test-Path -LiteralPath $signCliPath)) {
+			throw "Sign CLI not found at $signCliPath"
+		}
+
+		& $signCliPath code azure-key-vault $File.FullName `
 			--publisher-name "Microsoft 365 Patterns and Practices" `
 			--description "PnP PowerShell Module" `
 			--description-url "https://pnp.github.io/powershell/" `

@@ -28,7 +28,11 @@ jobs:
         ref: dev
         token: ${{ secrets.PAT }}
     - name: Install Sign CLI tool
-      run: dotnet tool install sign --tool-path . --version 0.9.1-beta.25181.2
+      shell: pwsh
+      run: |
+        $signToolPath = Join-Path $env:RUNNER_TEMP "sign"
+        dotnet tool install sign --tool-path $signToolPath --version 0.9.1-beta.25181.2
+        "SIGN_CLI_PATH=$(Join-Path $signToolPath 'sign.exe')" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
       
     - name: Azure CLI Login
       uses: azure/login@v3 # v3.0.0
