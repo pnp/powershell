@@ -207,7 +207,7 @@ if ($runPublish -eq $true) {
 	}
 
 	# Generate predictor commands
-	Generate-PredictorCommands.ps1 -Version "nightly"
+	"$PSScriptRoot/../build/Generate-PredictorCommands.ps1" -Version "nightly"
 
 	Write-Host "Generating Documentation" -ForegroundColor Yellow
 	Set-PSRepository PSGallery -InstallationPolicy Trusted
