@@ -236,10 +236,10 @@ if ($runPublish -eq $true) {
 	    --publisher-name "Microsoft 365 Patterns and Practices" `
 	    --description "PnP PowerShell Module" `
 	    --description-url "https://pnp.github.io/powershell/" `
-	    --azure-key-vault-tenant-id "${{ secrets.SIGNING_TENANTID }}" `
-	    --azure-key-vault-client-id "${{ secrets.SIGNING_CLIENT_ID }}" `
-	    --azure-key-vault-certificate "${{ secrets.SIGNING_CERTNAME }}" `
-	    --azure-key-vault-url "${{ secrets.SIGNING_VAULTURL }}" `
+	    --azure-key-vault-tenant-id $("$env:SIGNING_TENANTID") `
+	    --azure-key-vault-client-id $("$env:SIGNING_CLIENT_ID") `
+	    --azure-key-vault-certificate $("$env:SIGNING_CERTNAME") `
+	    --azure-key-vault-url $("$env:SIGNING_VAULTURL") `
 	    --timestamp-url http://timestamp.digicert.com `
 	    --verbosity Debug
 	}
