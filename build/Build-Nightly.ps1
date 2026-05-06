@@ -222,17 +222,26 @@ if ($true) {
     # Sign all required DLLs
     Write-Host "Sign module assemblies"
     $filesToBeSigned = @(
-      "./module/PnP.PowerShell/Core/PnP.PowerShell.dll",
-	  "./module/PnP.PowerShell/Core/PnP.Core.dll",
-	  "./module/PnP.PowerShell/Core/PnP.Framework.dll",
-	  "./module/PnP.PowerShell/Common/PnP.PowerShell.ALC.dll",
-	  "./module/PnP.PowerShell/PnP.PowerShell.Format.ps1xml",
-	  "./module/PnP.PowerShell/PnP.PowerShell.psd1"
+      "$corePath/PnP.PowerShell.dll",
+	  "$corePath/PnP.Core.dll",
+	  "$corePath/PnP.Framework.dll",
+	  "$commonPath/PnP.PowerShell.ALC.dll",
+	  "$destinationFolder/PnP.PowerShell.Format.ps1xml",
+	  "$destinationFolder/PnP.PowerShell.psd1"
     )
 
 	foreach ($fileToBeSigned in $filesToBeSigned) {
 	  Write-Host "Signing $fileToBeSigned"
-	  ./sign code azure-key-vault $fileToBeSigned --publisher-name "Microsoft 365 Patterns and Practices" --description "PnP PowerShell Module" --description-url "https://pnp.github.io/powershell/" --azure-key-vault-tenant-id $("$env:SIGNING_TENANTID") --azure-key-vault-client-id $("$env:SIGNING_CLIENT_ID") --azure-key-vault-certificate $("$env:SIGNING_CERTNAME") --azure-key-vault-url $("$env:SIGNING_VAULTURL") --timestamp-url "http://timestamp.digicert.com" --verbosity Debug
+	  ./sign code azure-key-vault $fileToBeSigned `
+	     --publisher-name "Microsoft 365 Patterns and Practices" `
+		 --description "PnP PowerShell Module" `
+		 --description-url "https://pnp.github.io/powershell/" `
+		 --azure-key-vault-tenant-id $("$env:SIGNING_TENANTID") `
+		 --azure-key-vault-client-id $("$env:SIGNING_CLIENT_ID") `
+		 --azure-key-vault-certificate $("$env:SIGNING_CERTNAME") `
+		 --azure-key-vault-url $("$env:SIGNING_VAULTURL") `
+		 --timestamp-url "http://timestamp.digicert.com" `
+		 --verbosity Debug
 	}
 
 	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
