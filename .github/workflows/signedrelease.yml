@@ -160,7 +160,7 @@ jobs:
       - name: Sign PowerShell script files
         shell: pwsh
         run: |
-          $files = Get-ChildItem ./module -Recurse -Include *.ps1, *.psm1
+          $files = Get-ChildItem ./module -Recurse -Include *.ps1, *.psm1, *.ps1xml, *.psd1, PnP.PowerShell-Help.xml
 
           foreach ($file in $files) {
             Write-Host "Signing $($file.FullName)"
