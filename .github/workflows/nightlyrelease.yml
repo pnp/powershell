@@ -8,9 +8,11 @@ permissions: read-all
 
 jobs:
   build:
-
     runs-on: windows-latest
-
+    permissions:
+      id-token: write
+      contents: write
+      
     steps:
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
