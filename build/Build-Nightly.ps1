@@ -218,6 +218,32 @@ if ($runPublish -eq $true) {
 	# Install-Module Microsoft.PlatyPS -ErrorAction Stop
 	# New-ExternalHelp -Path "$PSScriptRoot/../documentation" -OutputPath $destinationFolder -Force
 
+    # Sign all required DLLs
+    Write-Host "Sign module assemblies"
+    $filesToBeSigned = @(
+      "./module/PnP.PowerShell/Core/PnP.PowerShell.dll",
+	  "./module/PnP.PowerShell/Core/PnP.Core.dll",
+	  "./module/PnP.PowerShell/Core/PnP.Framework.dll",
+	  "./module/PnP.PowerShell/Common/PnP.PowerShell.ALC.dll",
+	  "./module/PnP.PowerShell/PnP.PowerShell.Format.ps1xml",
+	  "./module/PnP.PowerShell/PnP.PowerShell.psd1"
+    )
+
+	foreach ($fileToBeSigned in $filesToBeSigned) {
+	  Write-Host "Signing $fileToBeSigned"
+
+	  ./sign code azure-key-vault $fileToBeSigned `
+	    --publisher-name "Microsoft 365 Patterns and Practices" `
+	    --description "PnP PowerShell Module" `
+	    --description-url "https://pnp.github.io/powershell/" `
+	    --azure-key-vault-tenant-id "${{ secrets.SIGNING_TENANTID }}" `
+	    --azure-key-vault-client-id "${{ secrets.SIGNING_CLIENT_ID }}" `
+	    --azure-key-vault-certificate "${{ secrets.SIGNING_CERTNAME }}" `
+	    --azure-key-vault-url "${{ secrets.SIGNING_VAULTURL }}" `
+	    --timestamp-url http://timestamp.digicert.com `
+	    --verbosity Debug
+	}
+
 	$apiKey = $("$env:POWERSHELLGALLERY_API_KEY")
 
 	Write-Host "Publishing Module version $version" -ForegroundColor Yellow
