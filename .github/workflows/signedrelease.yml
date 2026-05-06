@@ -138,7 +138,8 @@ jobs:
           $dlls = @(
             "./module/PnP.PowerShell/Core/PnP.PowerShell.dll",
             "./module/PnP.PowerShell/Core/PnP.Core.dll",
-            "./module/PnP.PowerShell/Core/PnP.Framework.dll"
+            "./module/PnP.PowerShell/Core/PnP.Framework.dll",
+            "./module/PnP.PowerShell/Common/PnP.PowerShell.ALC.dll"
           )
 
           foreach ($dll in $dlls) {
@@ -160,7 +161,7 @@ jobs:
       - name: Sign PowerShell script files
         shell: pwsh
         run: |
-          $files = Get-ChildItem ./module -Recurse -Include *.ps1, *.psm1, *.ps1xml, *.psd1, PnP.PowerShell-Help.xml
+          $files = Get-ChildItem ./module -Recurse -Include *.ps1, *.psm1, *.ps1xml, *.psd1
 
           foreach ($file in $files) {
             Write-Host "Signing $($file.FullName)"
