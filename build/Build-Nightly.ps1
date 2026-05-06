@@ -36,7 +36,8 @@ if ($runPublish -eq $false -and $dependencies.PnPCore -ne $pnpcoresdk_hash) {
 	$runPublish = $true
 }
 
-if ($runPublish -eq $true) {
+#if ($runPublish -eq $true) {
+if ($true) {
 	$dependencies.Updated = Get-Date -Format "yyyyMMdd-HHmmss"
 	$dependencies.PnPCore = $pnpcoresdk_hash
 	$dependencies.PnPFramework = $pnpframework_hash
