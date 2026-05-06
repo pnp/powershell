@@ -9,6 +9,8 @@ permissions: read-all
 jobs:
   build:
     runs-on: windows-latest
+    environment:
+      name: gh_releases    
     permissions:
       id-token: write
       contents: write
