@@ -39,6 +39,10 @@ jobs:
     - name: Build and Publish Module
       env:
         POWERSHELLGALLERY_API_KEY: ${{ secrets.POWERSHELLGALLERY_API_KEY }}
+        SIGNING_TENANTID: ${{ secrets.SIGNING_TENANTID }}
+        SIGNING_CLIENT_ID: ${{ secrets.SIGNING_CLIENT_ID }}
+        SIGNING_CERTNAME: ${{ secrets.SIGNING_CERTNAME }}
+        SIGNING_VAULTURL: ${{ secrets.SIGNING_VAULTURL }}
       shell: pwsh
       run: |
         ./build/Build-Nightly.ps1
