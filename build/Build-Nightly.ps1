@@ -268,6 +268,8 @@ if ($runPublish -eq $true) {
     $assembliesToBeSigned = @(
 		Get-Item -LiteralPath "$corePath/PnP.PowerShell.dll"
 		Get-Item -LiteralPath "$corePath/PnP.Core.dll"
+		Get-Item -LiteralPath "$corePath/PnP.Core.Admin.dll"
+		Get-Item -LiteralPath "$corePath/PnP.Core.Auth.dll"
 		Get-Item -LiteralPath "$corePath/PnP.Framework.dll"
 		Get-Item -LiteralPath "$commonPath/PnP.PowerShell.ALC.dll"
     )
