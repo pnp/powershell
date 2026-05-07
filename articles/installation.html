@@ -84,30 +84,29 @@
   <h1 id="installing-pnp-powershell">Installing PnP PowerShell</h1>
 
 <p>You need PowerShell 7.4.0 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">installed through here</a>.</p>
+<p>Starting with version 3.1.379-nightly, all releases, including the nightly releases, will be fully digitally signed and will therefore work on machines restricted with the AllSigned PowerShell execution policy set. Major thanks to the <a href="https://dotnetfoundation.org">.NET Foundation</a> for providing us with the signing certificate to be able to do so.</p>
 <h2 id="stable-build">Stable build</h2>
-<p>You can run the following commands to install the latest stable PowerShell cmdlets for the current user:</p>
-<pre><code class="lang-powershell">Install-Module PnP.PowerShell -Scope CurrentUser
+<p>You can run the following commands to install the latest stable PowerShell cmdlets:</p>
+<pre><code class="lang-powershell">Install-Module PnP.PowerShell
 </code></pre>
 <h2 id="nightly-build">Nightly build</h2>
-<p>If you want to install the latest nightly build prerelease of PnP PowerShell for the current user, run:</p>
-<pre><code class="lang-powershell">Install-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -SkipPublisherCheck
+<p>If you want to install the latest nightly build prerelease of PnP PowerShell, run:</p>
+<pre><code class="lang-powershell">Install-Module PnP.PowerShell -AllowPrerelease
 </code></pre>
 <h2 id="use-in-docker">Use in Docker</h2>
-<p>To use PnP.PowerShell in a Windows container:</p>
-<pre><code class="lang-powershell">docker run -it m365pnp/powershell:2.12.0-nanoserver-1809
-</code></pre>
-<p>To use PnP.PowerShell in a Linux container:</p>
+<p>To use PnP.PowerShell in a Docker container:</p>
 <pre><code class="lang-powershell">docker run -it m365pnp/powershell
 </code></pre>
+<p>More information on it, <a href="docker.html">here</a></p>
 <h1 id="updating-pnp-powershell">Updating PnP PowerShell</h1>
 <p>If you already have PnP PowerShell installed and just want to update to the latest version you can follow these steps. If you're not sure if your version is already up to date, it does no harm to run it anyway. If there's no new version available, it will not do anything. You need PowerShell 7.4.0 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be <a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">installed through here</a>.</p>
 <h2 id="stable-build-1">Stable build</h2>
-<p>You can run the following commands to update to the latest stable PowerShell cmdlets for the current user:</p>
-<pre><code class="lang-powershell">Update-Module PnP.PowerShell -Scope CurrentUser
+<p>You can run the following commands to update to the latest stable PowerShell cmdlets:</p>
+<pre><code class="lang-powershell">Update-Module PnP.PowerShell
 </code></pre>
 <h2 id="nightly-build-1">Nightly build</h2>
-<p>If you want to update to the latest nightly built prerelease of PnP PowerShell for the current user, run:</p>
-<pre><code class="lang-powershell">Update-Module PnP.PowerShell -Scope CurrentUser -AllowPrerelease -Force
+<p>If you want to update to the latest nightly built prerelease of PnP PowerShell, run:</p>
+<pre><code class="lang-powershell">Update-Module PnP.PowerShell -AllowPrerelease -Force
 </code></pre>
 <h1 id="uninstalling-pnp-powershell">Uninstalling PnP PowerShell</h1>
 <p>In case you would like to remove PnP PowerShell, you can run:</p>
