@@ -116,8 +116,7 @@ namespace PnP.PowerShell.Commands.Site
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public bool? IsAuthoritative;
 
-        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        [Alias("RestrictedContentDiscoveryforCopilotAndAgents")]
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]        
         public bool? RestrictedContentDiscoveryForCopilotAndAgents;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
