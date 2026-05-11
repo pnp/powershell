@@ -1,0 +1,61 @@
+name: Major Release to PowerShell Gallery
+on:
+  workflow_dispatch:
+
+permissions: read-all
+
+jobs:
+  build:
+    runs-on: windows-latest
+    environment:
+      name: gh_releases    
+    permissions:
+      id-token: write
+      contents: write
+      
+    steps:
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |           
+          8.x
+          9.x
+          10.x
+    - uses: actions/checkout@v4
+      with:
+        ref: dev
+        token: ${{ secrets.PAT }}
+    - name: Install Sign CLI tool
+      shell: pwsh
+      run: |
+        $signToolPath = Join-Path $env:RUNNER_TEMP "sign"
+        dotnet tool install sign --tool-path $signToolPath --version 0.9.1-beta.25181.2
+        "SIGN_CLI_PATH=$(Join-Path $signToolPath 'sign.exe')" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
+      
+    - name: Azure CLI Login
+      uses: azure/login@v3 # v3.0.0
+      with:          
+        client-id: ${{ secrets.SIGNING_CLIENT_ID }}
+        tenant-id: ${{ secrets.SIGNING_TENANTID }}
+        allow-no-subscriptions: true        
+    - name: Build and Publish Module
+      env:
+        POWERSHELLGALLERY_API_KEY: ${{ secrets.POWERSHELLGALLERY_API_KEY }}
+        SIGNING_TENANTID: ${{ secrets.SIGNING_TENANTID }}
+        SIGNING_CLIENT_ID: ${{ secrets.SIGNING_CLIENT_ID }}
+        SIGNING_CERTNAME: ${{ secrets.SIGNING_CERTNAME }}
+        SIGNING_VAULTURL: ${{ secrets.SIGNING_VAULTURL }}
+      shell: pwsh
+      run: |
+        ./build/Build-Release.ps1
+    - name: Set variables
+      shell: pwsh
+      run: |
+          $version = Get-Content version.txt -raw
+          "BUILDVERSION=$version" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
+    - name: Add & Commit
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: 'Major release to PowerShell Gallery'
+        tag: '${{env.BUILDVERSION}} --force'
+        push: true
