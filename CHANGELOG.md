@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Current nightly]
 
+## [3.2.0]
+
 ### Added
 - Added `Start-PnPTenantRename` cmdlet to schedule SharePoint Online tenant domain rename jobs. [#5304](https://github.com/pnp/powershell/pull/5304)
 - Added `Get-PnPListVersionPolicy` and `Set-PnPListVersionPolicy` cmdlets to inspect and manage SharePoint Online document library version policies. [#5300](https://github.com/pnp/powershell/pull/5300)
