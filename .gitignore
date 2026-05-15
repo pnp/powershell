@@ -227,3 +227,5 @@ ModelManifest.xml
 .DS_Store
 
 #.vscode/
+src/Commands/PnP.PowerShell.csproj.lscache
+src/ALC/PnP.PowerShell.ALC.csproj.lscache
