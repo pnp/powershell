@@ -128,60 +128,55 @@ jobs:
             }
           }
 
-      - name: Create signed DLL zip files
+      - name: Pack signed NuGet packages
         shell: pwsh
         run: |
-          $assemblies = @(
-            @{ Name = "PnP.Core"; Root = "pnpcore/src/sdk/PnP.Core/bin/Release"; FileName = "PnP.Core.dll" },
-            @{ Name = "PnP.Core.Auth"; Root = "pnpcore/src/sdk/PnP.Core.Auth/bin/Release"; FileName = "PnP.Core.Auth.dll" },
-            @{ Name = "PnP.Core.Admin"; Root = "pnpcore/src/sdk/PnP.Core.Admin/bin/Release"; FileName = "PnP.Core.Admin.dll" }
+          $packageOutput = Join-Path $env:GITHUB_WORKSPACE "output/packages"
+          New-Item -Path $packageOutput -ItemType Directory -Force | Out-Null
+
+          $projects = @(
+            "pnpcore/src/sdk/PnP.Core/PnP.Core.csproj",
+            "pnpcore/src/sdk/PnP.Core.Auth/PnP.Core.Auth.csproj",
+            "pnpcore/src/sdk/PnP.Core.Admin/PnP.Core.Admin.csproj"
           )
 
-          $coreDlls = @($assemblies | ForEach-Object {
-            $assembly = $_
-            if (!(Test-Path -LiteralPath $assembly.Root)) {
-              throw "Output folder was not found for $($assembly.Name): $($assembly.Root)"
+          foreach ($project in $projects) {
+            dotnet pack $project --configuration Release --no-build --no-restore --output $packageOutput
+
+            if ($LASTEXITCODE -ne 0) {
+              throw "dotnet pack failed for $project"
             }
-
-            $assemblyDlls = @(Get-ChildItem -LiteralPath $assembly.Root -Directory | ForEach-Object {
-              $dllPath = Join-Path $_.FullName $assembly.FileName
-              if (Test-Path -LiteralPath $dllPath) {
-                Get-Item -LiteralPath $dllPath
-              }
-            })
-
-            if ($assemblyDlls.Count -eq 0) {
-              throw "No $($assembly.FileName) files were found to package."
-            }
-
-            $assemblyDlls
-          })
-          $stagingRoot = Join-Path $env:GITHUB_WORKSPACE "output/PnP.Core"
-          $zipRoot = Join-Path $env:GITHUB_WORKSPACE "output/zips"
-
-          New-Item -Path $stagingRoot -ItemType Directory -Force | Out-Null
-          New-Item -Path $zipRoot -ItemType Directory -Force | Out-Null
-
-          foreach ($coreDll in $coreDlls) {
-            $targetFramework = Split-Path $coreDll.DirectoryName -Leaf
-            $assemblyName = [System.IO.Path]::GetFileNameWithoutExtension($coreDll.Name)
-            $stagingFolder = Join-Path $stagingRoot "$assemblyName/$targetFramework"
-            $zipPath = Join-Path $zipRoot "$assemblyName-$targetFramework.zip"
-
-            New-Item -Path $stagingFolder -ItemType Directory -Force | Out-Null
-            Copy-Item -LiteralPath $coreDll.FullName -Destination (Join-Path $stagingFolder $coreDll.Name) -Force
-
-            if (Test-Path -LiteralPath $zipPath) {
-              Remove-Item -LiteralPath $zipPath -Force
-            }
-
-            Compress-Archive -Path (Join-Path $stagingFolder $coreDll.Name) -DestinationPath $zipPath -CompressionLevel Optimal
-            Write-Host "Created $zipPath"
           }
 
-      - name: Upload signed DLL zip files
+          $packages = @(Get-ChildItem -LiteralPath $packageOutput -File | Where-Object { $_.Extension -in ".nupkg", ".snupkg" })
+          if ($packages.Count -eq 0) {
+            throw "No NuGet packages were created."
+          }
+
+      - name: Create package zip file
+        shell: pwsh
+        run: |
+          $packageOutput = Join-Path $env:GITHUB_WORKSPACE "output/packages"
+          $zipRoot = Join-Path $env:GITHUB_WORKSPACE "output/zips"
+          $zipPath = Join-Path $zipRoot "PnP.Core-packages.zip"
+
+          New-Item -Path $zipRoot -ItemType Directory -Force | Out-Null
+
+          if (Test-Path -LiteralPath $zipPath) {
+            Remove-Item -LiteralPath $zipPath -Force
+          }
+
+          $packages = @(Get-ChildItem -LiteralPath $packageOutput -File | Where-Object { $_.Extension -in ".nupkg", ".snupkg" })
+          if ($packages.Count -eq 0) {
+            throw "No NuGet packages were found to zip."
+          }
+
+          Compress-Archive -Path $packages.FullName -DestinationPath $zipPath -CompressionLevel Optimal
+          Write-Host "Created $zipPath"
+
+      - name: Upload package zip file
         uses: actions/upload-artifact@v4
         with:
-          name: PnP.Core-signed-dlls
-          path: output/zips/*.zip
+          name: PnP.Core-packages
+          path: output/zips/PnP.Core-packages.zip
           if-no-files-found: error

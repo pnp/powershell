@@ -100,41 +100,47 @@ jobs:
             }
           }
 
-      - name: Create signed DLL zip files
+      - name: Pack signed NuGet package
         shell: pwsh
         run: |
-          $frameworkOutputRoot = "pnpframework/src/lib/PnP.Framework/bin/Release"
-          $frameworkDlls = @(Get-ChildItem -LiteralPath $frameworkOutputRoot -Directory | ForEach-Object {
-            $dllPath = Join-Path $_.FullName "PnP.Framework.dll"
-            if (Test-Path -LiteralPath $dllPath) {
-              Get-Item -LiteralPath $dllPath
-            }
-          })
-          $stagingRoot = Join-Path $env:GITHUB_WORKSPACE "output/PnP.Framework"
-          $zipRoot = Join-Path $env:GITHUB_WORKSPACE "output/zips"
+          $packageOutput = Join-Path $env:GITHUB_WORKSPACE "output/packages"
+          New-Item -Path $packageOutput -ItemType Directory -Force | Out-Null
 
-          New-Item -Path $stagingRoot -ItemType Directory -Force | Out-Null
-          New-Item -Path $zipRoot -ItemType Directory -Force | Out-Null
+          dotnet pack "pnpframework/src/lib/PnP.Framework/PnP.Framework.csproj" --configuration Release --no-build --no-restore --output $packageOutput
 
-          foreach ($frameworkDll in $frameworkDlls) {
-            $targetFramework = Split-Path $frameworkDll.DirectoryName -Leaf
-            $stagingFolder = Join-Path $stagingRoot $targetFramework
-            $zipPath = Join-Path $zipRoot "PnP.Framework-$targetFramework.zip"
-
-            New-Item -Path $stagingFolder -ItemType Directory -Force | Out-Null
-            Copy-Item -LiteralPath $frameworkDll.FullName -Destination (Join-Path $stagingFolder $frameworkDll.Name) -Force
-
-            if (Test-Path -LiteralPath $zipPath) {
-              Remove-Item -LiteralPath $zipPath -Force
-            }
-
-            Compress-Archive -Path (Join-Path $stagingFolder $frameworkDll.Name) -DestinationPath $zipPath -CompressionLevel Optimal
-            Write-Host "Created $zipPath"
+          if ($LASTEXITCODE -ne 0) {
+            throw "dotnet pack failed for PnP.Framework"
           }
 
-      - name: Upload signed DLL zip files
+          $packages = @(Get-ChildItem -LiteralPath $packageOutput -File | Where-Object { $_.Extension -in ".nupkg", ".snupkg" })
+          if ($packages.Count -eq 0) {
+            throw "No NuGet packages were created."
+          }
+
+      - name: Create package zip file
+        shell: pwsh
+        run: |
+          $packageOutput = Join-Path $env:GITHUB_WORKSPACE "output/packages"
+          $zipRoot = Join-Path $env:GITHUB_WORKSPACE "output/zips"
+          $zipPath = Join-Path $zipRoot "PnP.Framework-packages.zip"
+
+          New-Item -Path $zipRoot -ItemType Directory -Force | Out-Null
+
+          if (Test-Path -LiteralPath $zipPath) {
+            Remove-Item -LiteralPath $zipPath -Force
+          }
+
+          $packages = @(Get-ChildItem -LiteralPath $packageOutput -File | Where-Object { $_.Extension -in ".nupkg", ".snupkg" })
+          if ($packages.Count -eq 0) {
+            throw "No NuGet packages were found to zip."
+          }
+
+          Compress-Archive -Path $packages.FullName -DestinationPath $zipPath -CompressionLevel Optimal
+          Write-Host "Created $zipPath"
+
+      - name: Upload package zip file
         uses: actions/upload-artifact@v4
         with:
-          name: PnP.Framework-signed-dlls
-          path: output/zips/*.zip
+          name: PnP.Framework-packages
+          path: output/zips/PnP.Framework-packages.zip
           if-no-files-found: error
