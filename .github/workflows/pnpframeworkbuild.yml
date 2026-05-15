@@ -22,8 +22,11 @@ jobs:
       contents: read
 
     steps:
+      - name: Checkout PnP PowerShell
+        uses: actions/checkout@v6
+
       - name: Checkout PnP.Framework
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: pnp/pnpframework
           path: pnpframework
@@ -32,10 +35,7 @@ jobs:
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: |
-            8.x
-            9.x
-            10.x
+          dotnet-version: "10.0.x"
 
       - name: Install Sign CLI tool
         shell: pwsh
@@ -44,24 +44,15 @@ jobs:
           dotnet tool install sign --tool-path $signToolPath --version 0.9.1-beta.25181.2
           "SIGN_CLI_PATH=$(Join-Path $signToolPath 'sign.exe')" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
 
-      - name: Azure CLI Login
-        uses: azure/login@v3
-        with:
-          client-id: ${{ secrets.SIGNING_CLIENT_ID }}
-          tenant-id: ${{ secrets.SIGNING_TENANTID }}
-          allow-no-subscriptions: true
+# TODO: commented as this step would not work on my fork
+      # - name: Azure CLI Login
+      #   uses: azure/login@v3
+      #   with:
+      #     client-id: ${{ secrets.SIGNING_CLIENT_ID }}
+      #     tenant-id: ${{ secrets.SIGNING_TENANTID }}
+      #     allow-no-subscriptions: true
 
-      - name: Install PnP.Framework dependencies
-        shell: pwsh
-        run: dotnet restore
-        working-directory: pnpframework/src/lib
-
-      - name: Build PnP.Framework
-        shell: pwsh
-        run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
-        working-directory: pnpframework/src/lib/PnP.Framework
-
-      - name: Sign PnP.Framework DLLs
+      - name: Build, sign and pack PnP.Framework
         shell: pwsh
         env:
           SIGNING_TENANTID: ${{ secrets.SIGNING_TENANTID }}
@@ -69,74 +60,7 @@ jobs:
           SIGNING_CERTNAME: ${{ secrets.SIGNING_CERTNAME }}
           SIGNING_VAULTURL: ${{ secrets.SIGNING_VAULTURL }}
         run: |
-          $frameworkOutputRoot = "pnpframework/src/lib/PnP.Framework/bin/Release"
-          $frameworkDlls = @(Get-ChildItem -LiteralPath $frameworkOutputRoot -Directory | ForEach-Object {
-            $dllPath = Join-Path $_.FullName "PnP.Framework.dll"
-            if (Test-Path -LiteralPath $dllPath) {
-              Get-Item -LiteralPath $dllPath
-            }
-          })
-
-          if ($frameworkDlls.Count -eq 0) {
-            throw "No PnP.Framework.dll files were found to sign."
-          }
-
-          foreach ($frameworkDll in $frameworkDlls) {
-            Write-Host "Signing $($frameworkDll.FullName)"
-
-            & $env:SIGN_CLI_PATH code azure-key-vault $frameworkDll.FullName `
-              --publisher-name "Microsoft 365 Patterns and Practices" `
-              --description "PnP Framework" `
-              --description-url "https://pnp.github.io/pnpframework/" `
-              --azure-key-vault-tenant-id $env:SIGNING_TENANTID `
-              --azure-key-vault-client-id $env:SIGNING_CLIENT_ID `
-              --azure-key-vault-certificate $env:SIGNING_CERTNAME `
-              --azure-key-vault-url $env:SIGNING_VAULTURL `
-              --timestamp-url "http://timestamp.digicert.com" `
-              --verbosity Debug
-
-            if ($LASTEXITCODE -ne 0) {
-              throw "Signing failed for $($frameworkDll.FullName)"
-            }
-          }
-
-      - name: Pack signed NuGet package
-        shell: pwsh
-        run: |
-          $packageOutput = Join-Path $env:GITHUB_WORKSPACE "output/packages"
-          New-Item -Path $packageOutput -ItemType Directory -Force | Out-Null
-
-          dotnet pack "pnpframework/src/lib/PnP.Framework/PnP.Framework.csproj" --configuration Release --no-build --no-restore --output $packageOutput
-
-          if ($LASTEXITCODE -ne 0) {
-            throw "dotnet pack failed for PnP.Framework"
-          }
-
-          $packages = @(Get-ChildItem -LiteralPath $packageOutput -File | Where-Object { $_.Extension -in ".nupkg", ".snupkg" })
-          if ($packages.Count -eq 0) {
-            throw "No NuGet packages were created."
-          }
-
-      - name: Create package zip file
-        shell: pwsh
-        run: |
-          $packageOutput = Join-Path $env:GITHUB_WORKSPACE "output/packages"
-          $zipRoot = Join-Path $env:GITHUB_WORKSPACE "output/zips"
-          $zipPath = Join-Path $zipRoot "PnP.Framework-packages.zip"
-
-          New-Item -Path $zipRoot -ItemType Directory -Force | Out-Null
-
-          if (Test-Path -LiteralPath $zipPath) {
-            Remove-Item -LiteralPath $zipPath -Force
-          }
-
-          $packages = @(Get-ChildItem -LiteralPath $packageOutput -File | Where-Object { $_.Extension -in ".nupkg", ".snupkg" })
-          if ($packages.Count -eq 0) {
-            throw "No NuGet packages were found to zip."
-          }
-
-          Compress-Archive -Path $packages.FullName -DestinationPath $zipPath -CompressionLevel Optimal
-          Write-Host "Created $zipPath"
+          ./build/Build-Nightly-PnP-Framework.ps1
 
       - name: Upload package zip file
         uses: actions/upload-artifact@v4
@@ -144,3 +68,8 @@ jobs:
           name: PnP.Framework-packages
           path: output/zips/PnP.Framework-packages.zip
           if-no-files-found: error
+
+# TODO: 
+# 1. we should commit the zip to the PnP.Framework repo
+# 2. the commit should also bump the version of the version.debug.increment file so that we update the version for the next nightly build
+# 3. on the PnP.Framework side we should unzip the files and publish the nuget
