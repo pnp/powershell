@@ -8,6 +8,11 @@ on:
         required: true
         default: dev
         type: string
+      version_file:
+        description: Version file to use for incrementing the version (version.debug or version.release)
+        required: true
+        default: version.debug
+        type: string
 
 permissions: read-all
 
@@ -44,13 +49,12 @@ jobs:
           dotnet tool install sign --tool-path $signToolPath --version 0.9.1-beta.25181.2
           "SIGN_CLI_PATH=$(Join-Path $signToolPath 'sign.exe')" | Out-File $env:GITHUB_ENV -Encoding utf8 -Append
 
-# TODO: commented as this step would not work on my fork
-      # - name: Azure CLI Login
-      #   uses: azure/login@v3
-      #   with:
-      #     client-id: ${{ secrets.SIGNING_CLIENT_ID }}
-      #     tenant-id: ${{ secrets.SIGNING_TENANTID }}
-      #     allow-no-subscriptions: true
+      - name: Azure CLI Login
+        uses: azure/login@v3
+        with:
+          client-id: ${{ secrets.SIGNING_CLIENT_ID }}
+          tenant-id: ${{ secrets.SIGNING_TENANTID }}
+          allow-no-subscriptions: true
 
       - name: Build, sign and pack PnP.Framework
         shell: pwsh
@@ -60,7 +64,7 @@ jobs:
           SIGNING_CERTNAME: ${{ secrets.SIGNING_CERTNAME }}
           SIGNING_VAULTURL: ${{ secrets.SIGNING_VAULTURL }}
         run: |
-          ./build/Build-Nightly-PnP-Framework.ps1
+          ./build/Build-Nightly-PnP-Framework.ps1 -VersionFile '${{ inputs.version_file }}'
 
       - name: Upload package zip file
         uses: actions/upload-artifact@v4
