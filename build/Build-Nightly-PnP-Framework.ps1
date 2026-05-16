@@ -8,15 +8,17 @@ $ErrorActionPreference = "Stop"
 Set-StrictMode -Version 2.0
 
 if ($VersionFile -eq 'version.release') {
-	$versionIncrement = Get-Content "$PSScriptRoot\version.release.increment" -Raw
+	$incrementFilePath = "./pnpframework/build/version.release.increment"
+	$versionIncrement = Get-Content $incrementFilePath -Raw
 	$versionIncrement = $versionIncrement -as [int]
 	$versionIncrement++
 
-	$version = Get-Content "$PSScriptRoot\version.release" -Raw
+	$version = Get-Content ./pnpframework/build/version.release -Raw
 
 	$version = $version.Replace("{minorrelease}", $versionIncrement)
 } else {
-	$versionIncrement = Get-Content ./pnpframework/build/version.debug.increment -Raw
+	$incrementFilePath = "./pnpframework/build/version.debug.increment"
+	$versionIncrement = Get-Content $incrementFilePath -Raw
 	$versionIncrement = $versionIncrement -as [int]
 	$versionIncrement++
 
@@ -24,6 +26,8 @@ if ($VersionFile -eq 'version.release') {
 
 	$version = $version.Replace("{incremental}", $versionIncrement)
 }
+
+Set-Content -Path $incrementFilePath -Value $versionIncrement
 
 Write-Host "1. Building PnP.Framework version $version"
 dotnet build ./pnpframework/src/lib/PnP.Framework/PnP.Framework.csproj --configuration Release --no-incremental --force /p:Version=$version
@@ -82,3 +86,9 @@ if ($packages.Count -eq 0) {
 
 Compress-Archive -Path $packages.FullName -DestinationPath $zipPath -CompressionLevel Optimal
 Write-Host "Created $zipPath"
+
+Write-Host "5. Copying package to PnP.Framework repo"
+$frameworkPackageDir = "./pnpframework/build/package"
+New-Item -Path $frameworkPackageDir -ItemType Directory -Force | Out-Null
+Copy-Item -Path $zipPath -Destination (Join-Path $frameworkPackageDir "PnP.Framework-packages.zip") -Force
+Write-Host "Copied package to $frameworkPackageDir"
