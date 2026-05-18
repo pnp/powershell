@@ -1,12 +1,19 @@
 name: PnP Core Build
 
 on:
+  schedule:
+    - cron: '30 0 * * *'
   workflow_dispatch:
     inputs:
       pnpcore_ref:
         description: PnP.Core branch, tag, or SHA to build
         required: true
         default: dev
+        type: string
+      version_file:
+        description: Version file to use for incrementing the version (version.debug or version.release)
+        required: true
+        default: version.debug
         type: string
 
 permissions: read-all
@@ -22,20 +29,30 @@ jobs:
       contents: read
 
     steps:
+      - name: Checkout PnP PowerShell
+        uses: actions/checkout@v6
+
+      - name: Generate GitHub App token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.AUTOMATION_APP_ID }}
+          private-key: ${{ secrets.AUTOMATION_APP_PRIVATE_KEY }}
+          owner: pnp
+          repositories: pnpcore
+
       - name: Checkout PnP.Core
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: pnp/pnpcore
           path: pnpcore
-          ref: ${{ inputs.pnpcore_ref }}
+          ref: ${{ inputs.pnpcore_ref || 'dev' }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: |
-            8.x
-            9.x
-            10.x
+          dotnet-version: "10.0.x"
 
       - name: Install Sign CLI tool
         shell: pwsh
@@ -51,27 +68,7 @@ jobs:
           tenant-id: ${{ secrets.SIGNING_TENANTID }}
           allow-no-subscriptions: true
 
-      - name: Install PnP.Core dependencies
-        shell: pwsh
-        run: dotnet restore
-        working-directory: pnpcore/src/sdk
-
-      - name: Build PnP.Core
-        shell: pwsh
-        run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
-        working-directory: pnpcore/src/sdk/PnP.Core
-
-      - name: Build PnP.Core.Auth
-        shell: pwsh
-        run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
-        working-directory: pnpcore/src/sdk/PnP.Core.Auth
-
-      - name: Build PnP.Core.Admin
-        shell: pwsh
-        run: dotnet build --configuration Release --no-restore -p:WarningLevel=0
-        working-directory: pnpcore/src/sdk/PnP.Core.Admin
-
-      - name: Sign PnP.Core DLLs
+      - name: Build, sign and pack PnP.Core
         shell: pwsh
         env:
           SIGNING_TENANTID: ${{ secrets.SIGNING_TENANTID }}
@@ -79,104 +76,27 @@ jobs:
           SIGNING_CERTNAME: ${{ secrets.SIGNING_CERTNAME }}
           SIGNING_VAULTURL: ${{ secrets.SIGNING_VAULTURL }}
         run: |
-          $assemblies = @(
-            @{ Name = "PnP.Core"; Root = "pnpcore/src/sdk/PnP.Core/bin/Release"; FileName = "PnP.Core.dll" },
-            @{ Name = "PnP.Core.Auth"; Root = "pnpcore/src/sdk/PnP.Core.Auth/bin/Release"; FileName = "PnP.Core.Auth.dll" },
-            @{ Name = "PnP.Core.Admin"; Root = "pnpcore/src/sdk/PnP.Core.Admin/bin/Release"; FileName = "PnP.Core.Admin.dll" }
-          )
-
-          $coreDlls = @($assemblies | ForEach-Object {
-            $assembly = $_
-            if (!(Test-Path -LiteralPath $assembly.Root)) {
-              throw "Output folder was not found for $($assembly.Name): $($assembly.Root)"
-            }
-
-            $assemblyDlls = @(Get-ChildItem -LiteralPath $assembly.Root -Directory | ForEach-Object {
-              $dllPath = Join-Path $_.FullName $assembly.FileName
-              if (Test-Path -LiteralPath $dllPath) {
-                Get-Item -LiteralPath $dllPath
-              }
-            })
-
-            if ($assemblyDlls.Count -eq 0) {
-              throw "No $($assembly.FileName) files were found to sign."
-            }
-
-            $assemblyDlls
-          })
-
-          if ($coreDlls.Count -eq 0) {
-            throw "No PnP.Core DLL files were found to sign."
-          }
-
-          foreach ($coreDll in $coreDlls) {
-            Write-Host "Signing $($coreDll.FullName)"
-
-            & $env:SIGN_CLI_PATH code azure-key-vault $coreDll.FullName `
-              --publisher-name "Microsoft 365 Patterns and Practices" `
-              --description "PnP Core SDK" `
-              --description-url "https://pnp.github.io/pnpcore/" `
-              --azure-key-vault-tenant-id $env:SIGNING_TENANTID `
-              --azure-key-vault-client-id $env:SIGNING_CLIENT_ID `
-              --azure-key-vault-certificate $env:SIGNING_CERTNAME `
-              --azure-key-vault-url $env:SIGNING_VAULTURL `
-              --timestamp-url "http://timestamp.digicert.com" `
-              --verbosity Debug
-
-            if ($LASTEXITCODE -ne 0) {
-              throw "Signing failed for $($coreDll.FullName)"
-            }
-          }
-
-      - name: Pack signed NuGet packages
-        shell: pwsh
-        run: |
-          $packageOutput = Join-Path $env:GITHUB_WORKSPACE "output/packages"
-          New-Item -Path $packageOutput -ItemType Directory -Force | Out-Null
-
-          $projects = @(
-            "pnpcore/src/sdk/PnP.Core/PnP.Core.csproj",
-            "pnpcore/src/sdk/PnP.Core.Auth/PnP.Core.Auth.csproj",
-            "pnpcore/src/sdk/PnP.Core.Admin/PnP.Core.Admin.csproj"
-          )
-
-          foreach ($project in $projects) {
-            dotnet pack $project --configuration Release --no-build --no-restore --output $packageOutput
-
-            if ($LASTEXITCODE -ne 0) {
-              throw "dotnet pack failed for $project"
-            }
-          }
-
-          $packages = @(Get-ChildItem -LiteralPath $packageOutput -File | Where-Object { $_.Extension -in ".nupkg", ".snupkg" })
-          if ($packages.Count -eq 0) {
-            throw "No NuGet packages were created."
-          }
-
-      - name: Create package zip file
-        shell: pwsh
-        run: |
-          $packageOutput = Join-Path $env:GITHUB_WORKSPACE "output/packages"
-          $zipRoot = Join-Path $env:GITHUB_WORKSPACE "output/zips"
-          $zipPath = Join-Path $zipRoot "PnP.Core-packages.zip"
-
-          New-Item -Path $zipRoot -ItemType Directory -Force | Out-Null
-
-          if (Test-Path -LiteralPath $zipPath) {
-            Remove-Item -LiteralPath $zipPath -Force
-          }
-
-          $packages = @(Get-ChildItem -LiteralPath $packageOutput -File | Where-Object { $_.Extension -in ".nupkg", ".snupkg" })
-          if ($packages.Count -eq 0) {
-            throw "No NuGet packages were found to zip."
-          }
-
-          Compress-Archive -Path $packages.FullName -DestinationPath $zipPath -CompressionLevel Optimal
-          Write-Host "Created $zipPath"
+          ./build/Build-Nightly-PnP-Core.ps1 -VersionFile '${{ inputs.version_file || 'version.debug' }}'
 
       - name: Upload package zip file
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: PnP.Core-packages
           path: output/zips/PnP.Core-packages.zip
           if-no-files-found: error
+
+      - name: Commit version increment and package to PnP.Core
+        shell: pwsh
+        working-directory: pnpcore
+        run: |
+          git config user.name "${{ steps.app-token.outputs.app-slug }}[bot]"
+          git config user.email "${{ steps.app-token.outputs.installation-id }}+${{ steps.app-token.outputs.app-slug }}[bot]@users.noreply.github.com"
+          $incrementFile = if ('${{ inputs.version_file || 'version.debug' }}' -eq 'version.release') {
+            'build/version.release.increment'
+          } else {
+            'build/version.debug.increment'
+          }
+          git add $incrementFile
+          git add build/package/PnP.Core-packages.zip
+          git commit -m "Updates version increment and update package [skip ci]"
+          git push
