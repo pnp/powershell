@@ -269,7 +269,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    WriteCacheEnabledMessage(cmdlet);
+                    messageWriter.LogDebug("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
                 }
             }
             var connectionUri = new Uri(url);
