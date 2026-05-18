@@ -521,12 +521,13 @@ namespace PnP.PowerShell.Commands.Base
 
             var messageWriter = new CmdletMessageWriter(this);
             PnPConnection connection = null;
+            Exception connectionException = null;
             var uri = new Uri(Url);
             if ($"https://{uri.Host}".Equals(Url.ToLower()))
             {
                 Url += "/";
             }
-            var task = Task.Factory.StartNew(() =>
+            Task.Factory.StartNew(() =>
             {
                 try
                 {
@@ -580,11 +581,16 @@ namespace PnP.PowerShell.Commands.Base
                 }
                 catch (Exception ex)
                 {
+                    connectionException = ex;
                     messageWriter.LogWarning(ex.Message, false);
                     messageWriter.Finished = true;
                 }
             }, cancellationTokenSource.Token);
             messageWriter.Start();
+            if (connectionException != null)
+            {
+                throw connectionException;
+            }
             return connection;
         }
 
