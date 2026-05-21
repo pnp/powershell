@@ -18,7 +18,7 @@ jobs:
       VERSION: ${{ steps.v.outputs.VERSION }}
       VERSION_NIGHTLY: ${{ steps.v.outputs.VERSION_NIGHTLY }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - id: v
         run: |
           V="$(cat ./version.txt)"
@@ -29,10 +29,10 @@ jobs:
     runs-on: windows-2025
     needs: compute-version
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
@@ -62,9 +62,9 @@ jobs:
     runs-on: ubuntu-24.04-arm
     needs: compute-version
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
+      - uses: actions/checkout@v6
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
@@ -81,9 +81,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: compute-version
     steps:
-      - uses: actions/checkout@v4
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
+      - uses: actions/checkout@v6
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
@@ -100,20 +100,20 @@ jobs:
     runs-on: ubuntu-latest
     needs: compute-version
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
   
       - name: Set up Docker Buildx
-      # Buildx v3 is fine; QEMU is preinstalled on GH-hosted Ubuntu runners
-        uses: docker/setup-buildx-action@v3
+      # Buildx v4 is fine; QEMU is preinstalled on GH-hosted Ubuntu runners
+        uses: docker/setup-buildx-action@v4
   
       - name: Log in to Docker Hub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
   
       - name: Build & push (Linux arm32/v7 - RPi2/Raspbian)
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: ./docker
           file: ./docker/linux-arm32.dockerfile
@@ -133,8 +133,8 @@ jobs:
       - publish-docker-linux-arm32v7
       - publish-docker-windows-amd64
     steps:
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/login-action@v3
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/login-action@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
