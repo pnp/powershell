@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Building the documentation site locally | PnP PowerShell </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Building the documentation site locally | PnP PowerShell ">
+    <meta name="generator" content="docfx ">
+  <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
+    <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
+    <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+  
+  <meta property="docfx:rel" content="../">
+  <meta property="docfx:newtab" content="true">
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../images/logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <label class="glyphicon glyphicon-search" for="search-query"></label>
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div class="container body-content">
+
+        <div id="search-results">
+          <div class="search-list">Search Results for <span></span></div>
+          <div class="sr-items">
+            <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
+          </div>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
+        </div>
+      </div>
+      <div role="main" class="container body-content hide-when-search">
+
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="buildingdocumentation">
+                
+                  <div class="contribution-panel mobile-hide pull-right">
+                      <a href="https://github.com/pnp/powershell/blob/dev/pages/articles/buildingdocumentation.md/#L1" title="Edit this page" class="improve-doc-lg"><i class="glyphicon glyphicon-pencil"></i></a>
+                  </div>
+  <h1 id="building-the-documentation-site-locally">Building the documentation site locally</h1>
+
+<p>The documentation site is built with <a href="https://dotnet.github.io/docfx/">DocFX</a>. If you're changing articles, cmdlet documentation, the site template, or the documentation build scripts, it's worth building the site locally before you submit your pull request.</p>
+<p>There are two useful ways to test the site locally:</p>
+<ul>
+<li>A quick DocFX build from your current checkout. Use this when you changed articles, images, templates, styles, or <code>pages/docfx.json</code>.</li>
+<li>A full build that follows the same folder layout as the GitHub Actions workflow. Use this when you want to test <code>Build-Site.ps1</code>, cmdlet documentation copying, generated alias pages, or the final output that gets copied to the <code>gh-pages</code> branch.</li>
+</ul>
+<p>The GitHub Actions workflows use DocFX 2.78.5 and the .NET SDK 10. The commands below use the same DocFX version.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>Install the following tools first:</p>
+<ol>
+<li><a href="https://git-scm.com/downloads">Git</a></li>
+<li><a href="https://learn.microsoft.com/powershell/scripting/install/installing-powershell">PowerShell 7</a></li>
+<li><a href="https://dotnet.microsoft.com/download">.NET SDK 10</a></li>
+</ol>
+<p>You can validate your installation by running:</p>
+<pre><code class="lang-powershell">git --version
+pwsh --version
+dotnet --version
+</code></pre>
+<p>The full build also needs access to the PowerShell Gallery. During that build, <code>Build-Site.ps1</code> installs the latest prerelease version of PnP PowerShell in order to discover aliases and generate documentation pages for them.</p>
+<h2 id="quick-build-on-windows">Quick build on Windows</h2>
+<p>Open PowerShell 7 and navigate to your local clone of the repository.</p>
+<pre><code class="lang-powershell">cd C:\repos\powershell
+</code></pre>
+<p>Install DocFX into a local <code>.tools</code> folder. This keeps the version used for this repository separate from any globally installed DocFX version.</p>
+<pre><code class="lang-powershell">New-Item -ItemType Directory -Force .\.tools | Out-Null
+dotnet tool install docfx --tool-path .\.tools --version 2.78.5
+</code></pre>
+<p>If you already have DocFX installed in that folder and want to refresh it to the expected version, run:</p>
+<pre><code class="lang-powershell">dotnet tool update docfx --tool-path .\.tools --version 2.78.5
+</code></pre>
+<p>Build the documentation site:</p>
+<pre><code class="lang-powershell">.\.tools\docfx.exe build .\pages\docfx.json
+</code></pre>
+<p>Serve the generated site locally:</p>
+<pre><code class="lang-powershell">.\.tools\docfx.exe serve .\pages\_site --port 8080
+</code></pre>
+<p>Open http://localhost:8080 in your browser. If port 8080 is already in use, pick another port, for example <code>--port 8091</code>.</p>
+<p>When you're done, remove the generated output:</p>
+<pre><code class="lang-powershell">Remove-Item .\pages\_site, .\pages\obj -Recurse -Force -ErrorAction SilentlyContinue
+</code></pre>
+<h2 id="quick-build-on-macos-or-linux">Quick build on macOS or Linux</h2>
+<p>Open a terminal and navigate to your local clone of the repository.</p>
+<pre><code class="lang-bash">cd ~/repos/powershell
+</code></pre>
+<p>Install DocFX into a local <code>.tools</code> folder.</p>
+<pre><code class="lang-bash">mkdir -p .tools
+dotnet tool install docfx --tool-path ./.tools --version 2.78.5
+</code></pre>
+<p>If you already have DocFX installed in that folder and want to refresh it to the expected version, run:</p>
+<pre><code class="lang-bash">dotnet tool update docfx --tool-path ./.tools --version 2.78.5
+</code></pre>
+<p>Build the documentation site:</p>
+<pre><code class="lang-bash">./.tools/docfx build ./pages/docfx.json
+</code></pre>
+<p>Serve the generated site locally:</p>
+<pre><code class="lang-bash">./.tools/docfx serve ./pages/_site --port 8080
+</code></pre>
+<p>Open http://localhost:8080 in your browser. If port 8080 is already in use, pick another port, for example <code>--port 8091</code>.</p>
+<p>When you're done, remove the generated output:</p>
+<pre><code class="lang-bash">rm -rf ./pages/_site ./pages/obj
+</code></pre>
+<h2 id="full-build-on-windows">Full build on Windows</h2>
+<p>The documentation site workflow checks out three branches next to each other: <code>master</code>, <code>dev</code>, and <code>gh-pages</code>. The <code>Build-Site.ps1</code> script expects that layout and uses paths such as <code>./dev/pages</code> and <code>./gh-pages</code>.</p>
+<p>From your regular repository checkout, create a temporary worktree layout:</p>
+<pre><code class="lang-powershell">$repo = &quot;C:\repos\powershell&quot;
+$root = &quot;C:\repos\powershell-docs-local&quot;
+
+git -C $repo fetch origin
+New-Item -ItemType Directory -Force $root | Out-Null
+
+git -C $repo worktree add &quot;$root\dev&quot; HEAD
+git -C $repo worktree add &quot;$root\master&quot; origin/master
+git -C $repo worktree add &quot;$root\gh-pages&quot; origin/gh-pages
+</code></pre>
+<p>Install DocFX into the temporary build folder and add it to the current session path so <code>Build-Site.ps1</code> can call <code>docfx</code>:</p>
+<pre><code class="lang-powershell">Push-Location $root
+
+New-Item -ItemType Directory -Force .\.tools | Out-Null
+dotnet tool install docfx --tool-path .\.tools --version 2.78.5
+$env:PATH = &quot;$(Resolve-Path .\.tools);$env:PATH&quot;
+</code></pre>
+<p>Run the same build script used by the workflow:</p>
+<pre><code class="lang-powershell">.\dev\pages\Build-Site.ps1
+</code></pre>
+<p>Serve the generated site:</p>
+<pre><code class="lang-powershell">.\.tools\docfx.exe serve .\dev\pages\_site --port 8080
+</code></pre>
+<p>Open http://localhost:8080 in your browser and check the pages you changed. Press <code>CTRL+C</code> in the terminal when you're done serving the site.</p>
+<p>Clean up the worktrees from your original checkout:</p>
+<pre><code class="lang-powershell">Pop-Location
+
+git -C $repo worktree remove &quot;$root\dev&quot; --force
+git -C $repo worktree remove &quot;$root\master&quot; --force
+git -C $repo worktree remove &quot;$root\gh-pages&quot; --force
+Remove-Item $root -Recurse -Force -ErrorAction SilentlyContinue
+</code></pre>
+<h2 id="full-build-on-macos-or-linux">Full build on macOS or Linux</h2>
+<p>The same workflow layout can be created with Git worktrees on macOS or Linux.</p>
+<pre><code class="lang-bash">repo=~/repos/powershell
+root=~/repos/powershell-docs-local
+
+git -C &quot;$repo&quot; fetch origin
+mkdir -p &quot;$root&quot;
+
+git -C &quot;$repo&quot; worktree add &quot;$root/dev&quot; HEAD
+git -C &quot;$repo&quot; worktree add &quot;$root/master&quot; origin/master
+git -C &quot;$repo&quot; worktree add &quot;$root/gh-pages&quot; origin/gh-pages
+</code></pre>
+<p>Install DocFX into the temporary build folder and add it to the current session path:</p>
+<pre><code class="lang-bash">cd &quot;$root&quot;
+
+mkdir -p .tools
+dotnet tool install docfx --tool-path ./.tools --version 2.78.5
+export PATH=&quot;$(pwd)/.tools:$PATH&quot;
+</code></pre>
+<p>Run the same build script used by the workflow:</p>
+<pre><code class="lang-bash">pwsh ./dev/pages/Build-Site.ps1
+</code></pre>
+<p>Serve the generated site:</p>
+<pre><code class="lang-bash">./.tools/docfx serve ./dev/pages/_site --port 8080
+</code></pre>
+<p>Open http://localhost:8080 in your browser and check the pages you changed. Press <code>CTRL+C</code> in the terminal when you're done serving the site.</p>
+<p>Clean up the worktrees from your original checkout:</p>
+<pre><code class="lang-bash">git -C &quot;$repo&quot; worktree remove &quot;$root/dev&quot; --force
+git -C &quot;$repo&quot; worktree remove &quot;$root/master&quot; --force
+git -C &quot;$repo&quot; worktree remove &quot;$root/gh-pages&quot; --force
+rm -rf &quot;$root&quot;
+</code></pre>
+<h2 id="what-to-check-in-the-browser">What to check in the browser</h2>
+<p>At minimum, verify the following:</p>
+<ol>
+<li>The home page loads and is not blank.</li>
+<li>The navigation on the left opens the article or cmdlet page you changed.</li>
+<li>Search opens without JavaScript errors.</li>
+<li>The browser developer tools do not show 404 responses for <code>docfx.vendor.min.css</code> or <code>docfx.vendor.min.js</code>.</li>
+</ol>
+<p>DocFX 2.77 and newer emit the vendor assets as minified files. If the browser shows 404 responses for <code>docfx.vendor.css</code> or <code>docfx.vendor.js</code>, the template is still using the old asset names and the site can appear as a blank page.</p>
+<h2 id="build-warnings">Build warnings</h2>
+<p>DocFX can finish successfully while still reporting warnings. Treat warnings in files you touched as something to fix before submitting your pull request. Existing warnings elsewhere in the site should not block you from validating your local change, but do not introduce new ones.</p>
+<p>Common warnings are broken file links, broken bookmarks, or links to generated cmdlet pages that are not present in a quick build. If you need to verify generated cmdlet pages, use the full build.</p>
+
+</article>
+          </div>
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              </nav>
+            </div>
+          </div>        </div>
+      </div>
+
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+      
+      <span>Generated by <strong>DocFX</strong></span>
+            <img src="https://m365-visitor-stats.azurewebsites.net/@pnp.github.io/index/" alt="spacer">
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+    <script type="text/javascript">
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "ag6usxufyq");
+    </script>  </body>
+</html>

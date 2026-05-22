@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html lang="en">
 
@@ -11,7 +11,7 @@
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
@@ -63,7 +63,7 @@
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -99,7 +99,7 @@
 <p>An app only context is being used when your intend is to run a script that does not require any user intervention to connect and authenticate to your tenant. There are <a href="authentication.html">several ways</a> of connecting in this way. In this scenario, exactly those permissions you assign to your Entra ID Application Registration are the ones the script that runs will have. Therefore, be extra careful in this scenario not to set too high permissions.</p>
 <p>The lowest permission you can set on an app only scenario will be <code>Sites.Selected</code> on the application scope of SharePoint:</p>
 <p><img src="../images/determinepermissions/entraid_permissions_apponly_minimal.png" alt="image"></p>
-<p>When using the <code>Sites.Selected</code> permission, you still must assign permissions to one or more sites where the script will have access to. Ensure you will assign at least <code>Read</code> permissions on the site of which you will use the URL in your <code>Connect-PnPOnline &lt;url&gt;</code> statement in your script. You can easily do so by utilizing the PnP PowerShell cmdlet <a href="../cmdlets/Grant-PnPAzureADAppSitePermission.html">Grant-PnPAzureADAppSitePermission</a> as shown here:</p>
+<p>When using the <code>Sites.Selected</code> permission, you still must assign permissions to one or more sites where the script will have access to. Ensure you will assign at least <code>Read</code> permissions on the site of which you will use the URL in your <code>Connect-PnPOnline &lt;url&gt;</code> statement in your script. You can easily do so by utilizing the PnP PowerShell cmdlet <a href="../cmdlets/Grant-PnPAzureADAppSitePermission.md">Grant-PnPAzureADAppSitePermission</a> as shown here:</p>
 <pre><code class="lang-powershell">Grant-PnPAzureADAppSitePermission -AppId &quot;&lt;Client ID of your Entra ID applicarion registration&gt;&quot; -DisplayName &quot;PnP PowerShell&quot; -Permissions Read -Site &lt;url of the SharePoint Online site to which you will connect&gt;
 </code></pre>
 <p>In order to be able to run this cmdlet, you will need to connect to PnP PowerShell using preferably another Entra ID application registration which will have the <code>AllSites.FullControl</code> permission on the delegate scope on SharePoint set to it and being logged on with a Global Administrator or SharePoint Administrator privileged account.</p>
@@ -175,7 +175,7 @@
       </footer>
     </div>
 
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
     <script type="text/javascript" src="../styles/main.js"></script>
     <script type="text/javascript">

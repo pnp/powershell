@@ -1,6 +1,9 @@
 ### YamlMime:XRefMap
 sorted: true
 references:
+- uid: buildingdocumentation
+  name: Building the documentation site locally
+  href: articles/buildingdocumentation.html
 - uid: buildinglocalpnpbuild
   name: Running against a local copy of the PnP Framework
   href: articles/buildinglocalpnpbuild.html

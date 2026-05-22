@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <!--[if IE]><![endif]-->
 <html lang="en">
 
@@ -11,7 +11,7 @@
     <meta name="generator" content="docfx ">
   <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
     <link rel="shortcut icon" href="https://c.s-microsoft.com/favicon.ico?v2">
-    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.vendor.min.css">
     <link rel="stylesheet" href="../styles/docfx.css">
     <link rel="stylesheet" href="../styles/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
@@ -63,7 +63,7 @@
           <div class="sr-items">
             <p><i class="glyphicon glyphicon-refresh index-loading"></i></p>
           </div>
-          <ul id="pagination" data-first="First" data-prev="Previous" data-next="Next" data-last="Last"></ul>
+          <ul id="pagination" data-first=First data-prev=Previous data-next=Next data-last=Last></ul>
         </div>
       </div>
       <div role="main" class="container body-content hide-when-search">
@@ -89,7 +89,7 @@
 <h2 id="what-can-i-do-to-ensure-my-applications-remain-working">What can I do to ensure my applications remain working</h2>
 <p>Simple: replace them with a proper Entra ID Application Registration.</p>
 <p>If the <code>_layouts/apprenew.aspx</code> was done in December 2024 or later, it will already <a href="https://learn.microsoft.com/sharepoint/dev/sp-add-ins/add-ins-and-azure-acs-retirements-faq#when-i-use-appregnewaspx-the-created-acs-principals-show-up-in-entra">have created an Entra ID Application registration</a> for you. To validate this, simply take the Client ID/App Id of your application, go to <a href="https://entra.microsoft.com">Entra ID</a>, navigate to Identity &gt; Applications &gt; App registrations, click on the &quot;All applications&quot; tab and search for your Client ID/App ID. If it yields a result, it means your application also exists in Entra ID. If you go into the Entra ID Application registration and click on API permissions you will likely see no permissions being added to it. This is a clear indicator that this application registration has been done through <code>_layouts/appregnew.aspx</code> in or after December 2024, that it created an Entra ID Application registration counterpart, but that it still leverages ACS for its authentication. Add the required permissions here to ensure you can use this Entra ID Application registraton going forward.</p>
-<p>If you cannot find an entry in Entra ID with the same Client ID/App ID, it means the <code>_layouts/appregnew.aspx</code> operation has been done before December 2024 and no entry exists for it yet in Entra ID. You can <a href="registerapplication.html#manually-create-an-app-registration-for-interactive-login">manually create your own new Entra ID Application registration</a> or use <a href="../cmdlets/Register-PnPAzureADApp.html#example-7">Register-PnPAzureADApp</a> to create one for you.</p>
+<p>If you cannot find an entry in Entra ID with the same Client ID/App ID, it means the <code>_layouts/appregnew.aspx</code> operation has been done before December 2024 and no entry exists for it yet in Entra ID. You can <a href="registerapplication.html#manually-create-an-app-registration-for-interactive-login">manually create your own new Entra ID Application registration</a> or use <a href="../cmdlets/Register-PnPAzureADApp.md#example-7">Register-PnPAzureADApp</a> to create one for you.</p>
 <h2 id="how-to-i-find-out-about-which-acs-application-registrations-my-tenant-has">How to I find out about which ACS Application Registrations my tenant has</h2>
 <h3 id="using-the-microsoft-365-assessment-tool">Using the Microsoft 365 Assessment Tool</h3>
 <p>One way would be to <a href="https://pnp.github.io/pnpassessment/addinsacs/readme.html">use the Microsoft 365 Assessment Tool to have it generate an overview for you</a> which will list out where ACS application registrations are being used.</p>
@@ -116,7 +116,7 @@
 <ul>
 <li>Sites.Selected</li>
 </ul>
-<p>Use <a href="../cmdlets/Grant-PnPAzureADAppSitePermission.html">Grant-PnPAzureADAppSitePermission</a> to set FullControl permissions on it.</p>
+<p>Use <a href="../cmdlets/Grant-PnPAzureADAppSitePermission.md">Grant-PnPAzureADAppSitePermission</a> to set FullControl permissions on it.</p>
 <h2 id="what-do-i-need-to-change-in-my-code">What do I need to change in my code?</h2>
 <h3 id="pnp-powershell">PnP PowerShell</h3>
 <p>If you were connecting using PnP PowerShell, you will have to switch to using a certificate instead of a clientsecret and update your Connect-PnPOnline to something such as:</p>
@@ -200,7 +200,7 @@ class Program
       </footer>
     </div>
 
-    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.vendor.min.js"></script>
     <script type="text/javascript" src="../styles/docfx.js"></script>
     <script type="text/javascript" src="../styles/main.js"></script>
     <script type="text/javascript">
