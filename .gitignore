@@ -151,6 +151,7 @@ publish/
 
 # Local .NET tools installed by signing workflows
 /.store/
+/.tools/
 /sign
 /sign.exe
 
