@@ -180,7 +180,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-EnforceRequestDigest <Boolean>]
  [-RestrictExternalSharingForAgents <Boolean>]
  [-AllowFileArchive <Boolean>]
- [-AllowFileArchiveByDefault <Boolean>]
+ [-AllowFileArchiveOnNewSitesByDefault <Boolean>]
  [-EnableNotificationsSubscriptions <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
@@ -3129,8 +3129,8 @@ This parameter specifies the recommended number of days before organization shar
 
 The valid values :
 
-- Can be from 7 to 720 days and must be less than or equal to the maximum expiration value set by CoreOrganizationSharingLinkMaxExpirationInDays.
-- When set to 0, the default value will be CoreOrganizationSharingLinkMaxExpirationInDays.
+- Can be from 7 to 730 days and must be less than or equal to the maximum expiration value set by CoreOrganizationSharingLinkMaxExpirationInDays.
+- When set to 0 (default), the default value will be CoreOrganizationSharingLinkMaxExpirationInDays.
 
 ```yaml
 Type: Int32
@@ -3148,8 +3148,8 @@ This parameter specifies the maximum number of days that organization sharing li
 
 The valid values :
 
-- can be from 7 to 720 days.
-- `0` - No maximum expiration limit is enforced.
+- can be from 7 to 730 days.
+- `0` (default) - No maximum expiration limit is enforced.
 
 ```yaml
 Type: Int32
@@ -3186,7 +3186,7 @@ This parameter controls whether SharePoint enforces request digest validation fo
 
 The valid values are:
 
-- False (default) - a valid request digest is not required on SOAP API calls that perform a state-changing operation.
+- False - a valid request digest is not required on SOAP API calls that perform a state-changing operation.
 - True - A valid request digest is required on SOAP API calls that perform a state-changing operation.
 
 ```yaml
@@ -3238,7 +3238,7 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AllowFileArchiveByDefault
+### -AllowFileArchiveOnNewSitesByDefault
 This parameter controls whether file archiving is enabled by default.
 
 The valid values are:
@@ -3275,7 +3275,6 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
-
 
 ### -Force
 If provided, no confirmation will be requested and the action will be performed

@@ -550,7 +550,7 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public bool? AllowFileArchive { set; get; }
         [Parameter(Mandatory = false)]
-        public bool? AllowFileArchiveByDefault { set; get; }
+        public bool? AllowFileArchiveOnNewSitesByDefault { set; get; }
         [Parameter(Mandatory = false)]
         public bool? EnableNotificationsSubscriptions { set; get; }
         protected override void ExecuteCmdlet()
@@ -1780,9 +1780,9 @@ namespace PnP.PowerShell.Commands.Admin
                 Tenant.AllowFileArchive = AllowFileArchive.Value;
                 modified = true;
             }
-            if (AllowFileArchiveByDefault.HasValue)
+            if (AllowFileArchiveOnNewSitesByDefault.HasValue)
             {
-                Tenant.AllowFileArchiveOnNewSitesByDefault = AllowFileArchiveByDefault.Value;
+                Tenant.AllowFileArchiveOnNewSitesByDefault = AllowFileArchiveOnNewSitesByDefault.Value;
                 modified = true;
             }
             if (EnableNotificationsSubscriptions.HasValue)

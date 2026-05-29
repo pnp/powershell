@@ -513,7 +513,7 @@ namespace PnP.PowerShell.Commands.Model
         
         public bool? AllowFileArchive { private set; get; }
         
-        public bool? AllowFileArchiveByDefault { private set; get; }
+        public bool? AllowFileArchiveOnNewSitesByDefault { private set; get; }
         
         public bool? EnableNotificationsSubscriptions { set; get; }
         #endregion
