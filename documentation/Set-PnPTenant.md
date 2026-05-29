@@ -1124,7 +1124,7 @@ Accept wildcard characters: False
 ### -OneDriveOrganizationSharingLinkMaxExpirationInDays
 Specifies the maximum number of days before organization sharing links expire for all OneDrive sites. This is a tenant wide setting, and all geos will inherit the policy.
 
-The value can be from 7 to 720 days.
+The value can be from 7 to 730 days.
 
 To remove the expiration requirement, set the value to zero (0).
 
@@ -1142,7 +1142,7 @@ Accept wildcard characters: False
 ### -OneDriveOrganizationSharingLinkRecommendedExpirationInDays
 Specifies the recommended number of days before organization sharing links expire for all OneDrive sites. This setting provides a suggested expiration period to users when they create sharing links. This is a tenant wide setting, and all geos will inherit the policy.
 
-The value can be from 7 to 720 days and must be less than or equal to the maximum expiration value set by `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
+The value can be from 7 to 730 days and must be less than or equal to the maximum expiration value set by `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
 
 When set to 0, the default value will be `OneDriveOrganizationSharingLinkMaxExpirationInDays`.
 
