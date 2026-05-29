@@ -187,6 +187,15 @@ namespace PnP.PowerShell.Commands.Site
         public SwitchParameter ApplyToExistingDocumentLibraries;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? OverrideTenantOrganizationLinkExpirationPolicy;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? OrganizationLinkRecommendedExpirationInDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? OrganizationLinkMaxExpirationInDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter Force;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_LOCKSTATE)]
@@ -538,6 +547,24 @@ namespace PnP.PowerShell.Commands.Site
                 if (ParameterSpecified(nameof(ClearGroupId)) && ClearGroupId.IsPresent)
                 {
                     siteProperties.ClearGroupId = ClearGroupId.ToBool();
+                    executeQueryRequired = true;
+                }
+                
+                if (ParameterSpecified(nameof(OverrideTenantOrganizationLinkExpirationPolicy)) && OverrideTenantOrganizationLinkExpirationPolicy.HasValue)
+                {
+                    siteProperties.OverrideTenantOrganizationLinkExpirationPolicy = (bool)OverrideTenantOrganizationLinkExpirationPolicy;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(OrganizationLinkRecommendedExpirationInDays)) && OrganizationLinkRecommendedExpirationInDays.HasValue)
+                {
+                    siteProperties.OrganizationLinkRecommendedExpirationInDays = (int)OrganizationLinkRecommendedExpirationInDays;
+                    executeQueryRequired = true;
+                }
+
+                if (ParameterSpecified(nameof(OrganizationLinkMaxExpirationInDays)) && OrganizationLinkMaxExpirationInDays.HasValue)
+                {
+                    siteProperties.OrganizationLinkMaxExpirationInDays = (int)OrganizationLinkMaxExpirationInDays;
                     executeQueryRequired = true;
                 }
 
