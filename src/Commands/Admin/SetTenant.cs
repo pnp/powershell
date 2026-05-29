@@ -537,7 +537,22 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public KnowledgeAgentScopeMode? KnowledgeAgentScope { set; get; }
-
+        [Parameter(Mandatory = false)]
+        public int? CoreOrganizationSharingLinkRecommendedExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public int? CoreOrganizationSharingLinkMaxExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? RestrictResourceAccountAccess { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? EnforceRequestDigest { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? RestrictExternalSharingForAgents { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? AllowFileArchive { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? AllowFileArchiveByDefault { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? EnableNotificationsSubscriptions { set; get; }
         protected override void ExecuteCmdlet()
         {
             AdminContext.Load(Tenant);
@@ -1734,6 +1749,46 @@ namespace PnP.PowerShell.Commands.Admin
                     Tenant.KnowledgeAgentSiteList = siteIdList.ToArray();
                     modified = true;
                 }
+            }
+            if (CoreOrganizationSharingLinkMaxExpirationInDays.HasValue)
+            {
+                Tenant.CoreOrganizationSharingLinkMaxExpirationInDays = CoreOrganizationSharingLinkMaxExpirationInDays.Value;
+                modified = true;
+            }
+            if(CoreOrganizationSharingLinkRecommendedExpirationInDays.HasValue)
+            {
+                Tenant.CoreOrganizationSharingLinkRecommendedExpirationInDays = CoreOrganizationSharingLinkRecommendedExpirationInDays.Value;
+                modified = true;
+            }
+            if (EnforceRequestDigest.HasValue)
+            {
+                Tenant.EnforceRequestDigest = EnforceRequestDigest.Value;
+                modified = true;
+            }
+            if (RestrictResourceAccountAccess.HasValue)
+            {
+                Tenant.RestrictResourceAccountAccess = RestrictResourceAccountAccess.Value;
+                modified = true;
+            }
+            if (RestrictExternalSharingForAgents.HasValue)
+            {
+                Tenant.RestrictExternalSharingForAgents = RestrictExternalSharingForAgents.Value;
+                modified = true;
+            }
+            if (AllowFileArchive.HasValue)
+            {
+                Tenant.AllowFileArchive = AllowFileArchive.Value;
+                modified = true;
+            }
+            if (AllowFileArchiveByDefault.HasValue)
+            {
+                Tenant.AllowFileArchiveOnNewSitesByDefault = AllowFileArchiveByDefault.Value;
+                modified = true;
+            }
+            if (EnableNotificationsSubscriptions.HasValue)
+            {
+                Tenant.EnableNotificationsSubscriptions = EnableNotificationsSubscriptions.Value;
+                modified = true;
             }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)
             {

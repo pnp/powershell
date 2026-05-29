@@ -9,6 +9,7 @@ using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Model
@@ -507,6 +508,14 @@ namespace PnP.PowerShell.Commands.Model
         public bool? TaxonomyTaggingEnabled { private set; get; }
 
         public bool? TranslationEnabled { private set; get; }
+ 
+        public bool? EnforceRequestDigest { private set; get; }
+        
+        public bool? AllowFileArchive { private set; get; }
+        
+        public bool? AllowFileArchiveByDefault { private set; get; }
+        
+        public bool? EnableNotificationsSubscriptions { set; get; }
         #endregion
 
         public SPOTenant(Tenant tenant, ClientContext clientContext, BasePSCmdlet cmdlet)
