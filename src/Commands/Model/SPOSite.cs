@@ -109,7 +109,9 @@ namespace PnP.PowerShell.Commands.Model
         public bool HidePeoplePreviewingFiles { get; set; }
         public bool HidePeopleWhoHaveListsOpen { get; set; }
         public SPOFileVersionFileTypePolicySettings[] VersionPolicyFileTypeOverride { get; set; }
-
+        public int OrganizationLinkRecommendedExpirationInDays { get; set; }
+        public int OrganizationLinkMaxExpirationInDays { get; set; }
+        public bool OverrideTenantOrganizationLinkExpirationPolicy { get; set; }
         #endregion
 
 

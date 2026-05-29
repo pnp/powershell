@@ -279,6 +279,15 @@ namespace PnP.PowerShell.Commands
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter ClearGroupId;
 
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public bool? OverrideTenantOrganizationLinkExpirationPolicy;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? OrganizationLinkRecommendedExpirationInDays;
+
+        [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
+        public int? OrganizationLinkMaxExpirationInDays;
+
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
 
@@ -775,6 +784,39 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
+            if (ParameterSpecified(nameof(OverrideTenantOrganizationLinkExpirationPolicy)) && OverrideTenantOrganizationLinkExpirationPolicy.HasValue)
+            {
+                props.OverrideTenantOrganizationLinkExpirationPolicy = (bool)OverrideTenantOrganizationLinkExpirationPolicy;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(OrganizationLinkRecommendedExpirationInDays)) && OrganizationLinkRecommendedExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationLinkRecommendedExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("CoreOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationLinkRecommendedExpirationInDays));
+                }
+
+                var organizationLinkMaxExpirationInDays = OrganizationLinkMaxExpirationInDays ?? props.OrganizationLinkMaxExpirationInDays;
+                if (OrganizationLinkRecommendedExpirationInDays.Value > organizationLinkMaxExpirationInDays)
+                {
+                    throw new PSArgumentException("OrganizationSharingLinkRecommendedExpirationInDays must be less than or equal to OrganizationSharingLinkMaxExpirationInDays", nameof(OrganizationLinkRecommendedExpirationInDays));
+                }
+
+                props.OrganizationLinkRecommendedExpirationInDays = (int)OrganizationLinkRecommendedExpirationInDays;
+                updateRequired = true;
+            }
+
+            if (ParameterSpecified(nameof(OrganizationLinkMaxExpirationInDays)) && OrganizationLinkMaxExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationLinkMaxExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("OrganizationLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationLinkMaxExpirationInDays));
+                }
+                props.OrganizationLinkMaxExpirationInDays = (int)OrganizationLinkMaxExpirationInDays;
+                updateRequired = true;
+            }
+
             if (SiteVersionPolicyUtilities.ApplyToSiteProperties(props, GetSiteVersionPolicyOptions(), Identity.Url, prompt => Force || ShouldContinue(prompt, string.Empty)))
             {
                 updateRequired = true;
@@ -927,6 +969,10 @@ namespace PnP.PowerShell.Commands
                 return result.AbsolutePath.TrimEnd('/').Length == 0;
             }
             return false;
+        }
+        private static bool IsValidOrganizationSharingLinkExpirationInDays(int value)
+        {
+            return value == 0 || value >= 7 && value <= 730;
         }
     }
 }
