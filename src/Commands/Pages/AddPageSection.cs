@@ -2,6 +2,7 @@
 using PnP.PowerShell.Commands.Base.Completers;
 using PnP.PowerShell.Commands.Base.PipeBinds;
 using System;
+using System.Linq;
 using System.Management.Automation;
 
 namespace PnP.PowerShell.Commands.Pages
@@ -31,12 +32,28 @@ namespace PnP.PowerShell.Commands.Pages
         [Parameter(Mandatory = false)]
         public ZoneReflowStrategy ZoneReflowStrategy = ZoneReflowStrategy.TopToDown;
 
+        [Parameter(Mandatory = false)]
+        public SwitchParameter Collapsible;
+
+        [Parameter(Mandatory = false)]
+        public string DisplayName;
+
+        [Parameter(Mandatory = false)]
+        public SwitchParameter IsExpanded;
+
         protected override void ExecuteCmdlet()
         {
+            if ((ParameterSpecified(nameof(DisplayName)) || ParameterSpecified(nameof(IsExpanded))) && !Collapsible)
+            {
+                throw new PSArgumentException("DisplayName and IsExpanded can only be specified for collapsible sections. Use -Collapsible to create a collapsible section.");
+            }
+
             var page = Page?.GetPage(Connection);
 
             if (page != null)
             {
+                var existingSections = Collapsible ? page.Sections.ToList() : null;
+
                 if (SectionTemplate == CanvasSectionTemplate.FlexibleLayoutSection || SectionTemplate == CanvasSectionTemplate.FlexibleLayoutVerticalSection)
                 {
                     // Use the user-supplied ZoneReflowStrategy when adding flexible layout sections
@@ -46,6 +63,22 @@ namespace PnP.PowerShell.Commands.Pages
                 {
                     page.AddSection(SectionTemplate, Order, ZoneEmphasis, VerticalZoneEmphasis);
                 }
+
+                if (Collapsible)
+                {
+                    var addedSection = page.Sections.Single(section => !existingSections.Contains(section));
+                    addedSection.Collapsible = true;
+                    if (ParameterSpecified(nameof(DisplayName)))
+                    {
+                        addedSection.DisplayName = DisplayName;
+                    }
+
+                    if (ParameterSpecified(nameof(IsExpanded)))
+                    {
+                        addedSection.IsExpanded = IsExpanded;
+                    }
+                }
+
                 page.Save();
             }
             else

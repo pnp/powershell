@@ -19,12 +19,6 @@ Returns one or more items from the Recycle Bin.
 
 ## SYNTAX
 
-### All (Default)
-```powershell
-Get-PnPRecycleBinItem [-RowLimit <Int32>] [-Connection <PnPConnection>] [-Includes <String[]>]
- 
-```
-
 ### Identity
 ```powershell
 Get-PnPRecycleBinItem [-Identity <Guid>] [-Connection <PnPConnection>] [-Includes <String[]>]
@@ -53,35 +47,37 @@ This command will return all the items in the recycle bin for the SharePoint sit
 Get-PnPRecycleBinItem
 ```
 
-Returns all items in both the first and the second stage recycle bins in the current site collection.
+Returns all items in the first stage recycle bin in the current site collection.
+
 
 ### EXAMPLE 2
+```powershell
+Get-PnPRecycleBinItem -SecondStage
+```
+
+Returns all items in the second stage recycle bin in the current site collection.
+
+### EXAMPLE 3
+```powershell
+$AllRBItmes =  Get-PnPRecycleBinItem -FirstStage
+$AllRBItmes += Get-PnPRecycleBinItem -SecondStage
+```
+
+Populates `$AllRBItems` with all items in the first and the second stage recycle bins in the current site collection.
+
+### EXAMPLE 4
 ```powershell
 Get-PnPRecycleBinItem -Identity f3ef6195-9400-4121-9d1c-c997fb5b86c2
 ```
 
 Returns a specific recycle bin item by id.
 
-### EXAMPLE 3
-```powershell
-Get-PnPRecycleBinItem -FirstStage
-```
-
-Returns all items in only the first stage recycle bin in the current site collection.
-
-### EXAMPLE 4
-```powershell
-Get-PnPRecycleBinItem -SecondStage
-```
-
-Returns all items in only the second stage recycle bin in the current site collection.
-
 ### EXAMPLE 5
 ```powershell
 Get-PnPRecycleBinItem -RowLimit 10000
 ```
 
-Returns items in recycle bin limited by number of results.
+Returns upto 10,000 items from the first stage of the recycle bin in the current site collection.
 
 ## PARAMETERS
 
@@ -100,7 +96,9 @@ Accept wildcard characters: False
 ```
 
 ### -FirstStage
-Returns all items in the first stage recycle bin
+Returns all items in the first stage recycle bin.
+
+Note that the `-FirstStage` parameter is implied if neither the `-Identity` or the `-SecondStage` parameters are included.
 
 ```yaml
 Type: SwitchParameter
@@ -132,7 +130,7 @@ Limits returned results to specified amount
 
 ```yaml
 Type: Int32
-Parameter Sets: All, FirstStage, SecondStage
+Parameter Sets: FirstStage, SecondStage
 
 Required: False
 Position: Named

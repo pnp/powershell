@@ -269,7 +269,7 @@ namespace PnP.PowerShell.Commands.Base
             {
                 if (!errorActionSourceArray.Contains(ErrorActionSetting.ToLowerInvariant()))
                 {
-                    WriteCacheEnabledMessage(cmdlet);
+                    messageWriter.LogDebug("Connecting using token cache. See https://pnp.github.io/powershell/articles/persistedlogin.html for more information.");
                 }
             }
             var connectionUri = new Uri(url);
@@ -675,6 +675,9 @@ namespace PnP.PowerShell.Commands.Base
             }
 
             PnP.Framework.Diagnostics.Log.Debug("PnPConnection", "Acquiring token for resource " + defaultResource);
+            // Acquire an initial token to validate the workload identity configuration and to use for
+            // the initial connection test (IsTenantAdminSite). The token is cached by MSAL so this
+            // does not cause an extra round-trip on the first CSOM request.
             var accessToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(defaultResource).GetAwaiter().GetResult();
 
             using (var authManager = new PnP.Framework.AuthenticationManager(new System.Net.NetworkCredential("", accessToken).SecurePassword))
@@ -686,9 +689,19 @@ namespace PnP.PowerShell.Commands.Base
                     context = PnPClientContext.ConvertFrom(authManager.GetContext(url.ToString()));
                     context.ApplicationName = Resources.ApplicationName;
                     context.DisableReturnValueCache = true;
+
+                    // PnP.Framework's GetContext() registers an ExecutingWebRequest handler that injects
+                    // the static access token acquired above. That token expires after its Azure AD
+                    // lifetime (typically 1-2 hours). The handler below runs after PnP.Framework's and
+                    // overrides the Authorization header with a fresh token obtained from MSAL on every
+                    // CSOM request. MSAL caches the token and only contacts Azure AD when it is about to
+                    // expire, so this does not add a network round-trip on every call.
+                    var capturedDefaultResource = defaultResource;
                     context.ExecutingWebRequest += (sender, e) =>
                     {
                         e.WebRequestExecutor.WebRequest.UserAgent = $"NONISV|SharePointPnP|PnPPS/{((AssemblyFileVersionAttribute)Assembly.GetExecutingAssembly().GetCustomAttribute(typeof(AssemblyFileVersionAttribute))).Version} ({System.Environment.OSVersion.VersionString})";
+                        var freshToken = TokenHandler.GetAzureADWorkloadIdentityTokenAsync(capturedDefaultResource).GetAwaiter().GetResult();
+                        e.WebRequestExecutor.RequestHeaders["Authorization"] = $"Bearer {freshToken}";
                     };
                     if (IsTenantAdminSite(context))
                     {
@@ -794,7 +807,7 @@ namespace PnP.PowerShell.Commands.Base
 
             PSCredential = credential;
             PnPVersionTag = pnpVersionTag;
-            ContextCache = new List<ClientContext> { context };
+            ContextCache = context != null ? new List<ClientContext> { context } : new List<ClientContext>();
             if (!string.IsNullOrEmpty(url))
             {
                 Url = new Uri(url).AbsoluteUri;
@@ -808,7 +821,7 @@ namespace PnP.PowerShell.Commands.Base
         #region Methods
         internal void RestoreCachedContext(string url)
         {
-            Context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
+            Context = ContextCache.FirstOrDefault(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             _pnpContext = null;
         }
 
@@ -816,21 +829,67 @@ namespace PnP.PowerShell.Commands.Base
         {
             if (Context == null) return;
 
-            var c = ContextCache.FirstOrDefault(cc => new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
+            ContextCache ??= new List<ClientContext>();
+            var c = ContextCache.FirstOrDefault(cc => cc != null && new Uri(cc.Url).AbsoluteUri == new Uri(Context.Url).AbsoluteUri);
             if (c == null)
             {
                 ContextCache.Add(Context);
             }
         }
 
+        internal bool RefreshContextIfHasPendingRequest()
+        {
+            if (Context?.HasPendingRequest != true)
+            {
+                return false;
+            }
+
+            RefreshContext();
+            return true;
+        }
+
+        internal void RefreshContext()
+        {
+            if (Context == null)
+            {
+                return;
+            }
+
+            var context = Context.Clone(Context.Url);
+            ReplaceCachedContext(context);
+
+            Context = context;
+            _pnpContext = null;
+        }
+
+        private static void ReplaceCachedContext(ClientContext context)
+        {
+            ContextCache ??= new List<ClientContext>();
+
+            var contextIndex = ContextCache.FindIndex(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(context.Url).AbsoluteUri);
+            if (contextIndex >= 0)
+            {
+                ContextCache[contextIndex] = context;
+            }
+            else
+            {
+                ContextCache.Add(context);
+            }
+        }
+
         internal ClientContext CloneContext(string url)
         {
-            var context = ContextCache.FirstOrDefault(c => new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
+            var context = ContextCache.FirstOrDefault(c => c != null && new Uri(c.Url).AbsoluteUri == new Uri(url).AbsoluteUri);
             if (context == null)
             {
                 context = Context.Clone(url);
                 context.ExecuteQueryRetry();
                 ContextCache.Add(context);
+            }
+            else if (context.HasPendingRequest)
+            {
+                context = context.Clone(context.Url);
+                ReplaceCachedContext(context);
             }
             _pnpContext = null;
             return context;

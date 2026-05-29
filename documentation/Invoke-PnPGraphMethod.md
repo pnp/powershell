@@ -136,8 +136,8 @@ This example retrieves a Planner task to find the etag value which is required t
 ### EXAMPLE 9
 ```powershell
 $batch = New-PnPBatch -RetainRequests
-Invoke-PnPSPRestMethod -Method Get -Url "users" -Batch $batch
-Invoke-PnPSPRestMethod -Method Get -Url "groups" -Batch $batch
+Invoke-PnPGraphMethod -Method Get -Url "users" -Batch $batch
+Invoke-PnPGraphMethod -Method Get -Url "groups" -Batch $batch
 $response = Invoke-PnPBatch $batch -Details
 $response
 ```

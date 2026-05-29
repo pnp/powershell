@@ -103,9 +103,12 @@ namespace PnP.PowerShell.Commands.Model
         public bool ReadOnlyForUnmanagedDevices { get; set; }
         public SiteUserInfoVisibilityPolicyValue OverrideBlockUserInfoVisibility { get; set; }
         public bool OverrideSharingCapability { get; set; }
+        public bool AllowFileArchive { get; set; }
+        public long ArchivedFileDiskUsed { get; set; }
         public bool AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled { get; set; }
         public bool HidePeoplePreviewingFiles { get; set; }
         public bool HidePeopleWhoHaveListsOpen { get; set; }
+        public SPOFileVersionFileTypePolicySettings[] VersionPolicyFileTypeOverride { get; set; }
 
         #endregion
 
@@ -203,9 +206,12 @@ namespace PnP.PowerShell.Commands.Model
             ReadOnlyForUnmanagedDevices = props.ReadOnlyForUnmanagedDevices;
             OverrideSharingCapability = props.OverrideSharingCapability;
             OverrideBlockUserInfoVisibility = props.OverrideBlockUserInfoVisibility;
+            AllowFileArchive = props.AllowFileArchive;
+            ArchivedFileDiskUsed = props.ArchivedFileDiskUsed;
             AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled = props.AllowWebPropertyBagUpdateWhenDenyAddAndCustomizePagesIsEnabled;
             HidePeoplePreviewingFiles = props.HidePeoplePreviewingFiles;
             HidePeopleWhoHaveListsOpen = props.HidePeopleWhoHaveListsOpen;
+            VersionPolicyFileTypeOverride = props.VersionPolicyFileTypeOverride;
         }
     }
 }

@@ -16,7 +16,9 @@ Adds a new section to a page.
 
 ```powershell
 Add-PnPPageSection [-Page] <PagePipeBind> -SectionTemplate <CanvasSectionTemplate>
- [-Order <Int32>] [-ZoneEmphasis <Int32>] [-VerticalZoneEmphasis <Int32>] [-Connection <PnPConnection>]
+ [-Order <Int32>] [-ZoneEmphasis <Int32>] [-VerticalZoneEmphasis <Int32>]
+ [-ZoneReflowStrategy <ZoneReflowStrategy>] [-Collapsible] [-DisplayName <String>] [-IsExpanded]
+ [-Connection <PnPConnection>]
  
 ```
 
@@ -72,6 +74,14 @@ Add-PnPPageSection -Page $page -SectionTemplate FlexibleLayoutSection -Order 1 -
 
 Adds a flexible layout section to the page 'MyPage' and sets the zone reflow strategy to LeftToRight. Note: `-ZoneReflowStrategy` only applies to flexible layout section templates (for example `FlexibleLayoutSection` and `FlexibleLayoutVerticalSection`).
 
+### EXAMPLE 7
+```powershell
+$page = Add-PnPPage -Name "MyPage"
+Add-PnPPageSection -Page $page -SectionTemplate TwoColumn -Order 1 -Collapsible -DisplayName "My Collapsible Section" -IsExpanded
+```
+
+Adds a collapsible section to the page 'MyPage', sets its display name, and creates it expanded.
+
 
 ## PARAMETERS
 
@@ -80,6 +90,34 @@ Optional connection to be used by the cmdlet. Retrieve the value for this parame
 
 ```yaml
 Type: PnPConnection
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Collapsible
+Makes the new section collapsible.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisplayName
+Sets the display name of a collapsible section. Use together with `-Collapsible`.
+
+```yaml
+Type: String
 Parameter Sets: (All)
 
 Required: False
@@ -123,11 +161,25 @@ Specifies the columns template to use for the section.
 ```yaml
 Type: CanvasSectionTemplate
 Parameter Sets: (All)
-Accepted values: OneColumn, OneColumnFullWidth, TwoColumn, ThreeColumn, TwoColumnLeft, TwoColumnRight, OneColumnVerticalSection, TwoColumnVerticalSection, ThreeColumnVerticalSection, TwoColumnLeftVerticalSection, TwoColumnRightVerticalSection
+Accepted values: OneColumn, OneColumnFullWidth, TwoColumn, ThreeColumn, TwoColumnLeft, TwoColumnRight, OneColumnVerticalSection, TwoColumnVerticalSection, ThreeColumnVerticalSection, TwoColumnLeftVerticalSection, TwoColumnRightVerticalSection, FlexibleLayoutSection, FlexibleLayoutVerticalSection
 
 Required: True
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IsExpanded
+Creates the collapsible section in expanded state. Use together with `-Collapsible`. If omitted, the section is created collapsed.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -150,6 +202,17 @@ Accept wildcard characters: False
 Sets the background of the vertical section (default = 0).
 Works only for vertical column layouts, will be ignored for other layouts.
 
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -ZoneReflowStrategy
 Controls how zones are reflowed when rendering flexible layout sections. This parameter only applies to flexible layout section templates (for example `FlexibleLayoutSection` and `FlexibleLayoutVerticalSection`). If not provided, the default is `TopToDown`.
 
@@ -161,17 +224,6 @@ Accepted values: TopToDown, LeftToRight
 Required: False
 Position: Named
 Default value: TopToDown
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

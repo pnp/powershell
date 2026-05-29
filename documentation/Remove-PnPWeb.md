@@ -12,7 +12,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Remove-PnPWeb.html
 ## SYNOPSIS
 
 Removes a subsite.
-
+Important:The subsite is permanently deleted without being sent to the recycle bin, the action cannot be undone, and this cmdlet should be used with extreme caution
 ## SYNTAX
 
 ```powershell
