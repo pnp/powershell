@@ -20,6 +20,7 @@ Request-PnPReIndexWeb [-Connection <PnPConnection>]
 
 ## DESCRIPTION
 This cmdlet marks the web for full indexing during the next incremental crawl.
+Note: This cmdlet does not increase the `vti_searchversion` property bag value of the web (unlike manually triggering the search).
 
 ## EXAMPLES
 
