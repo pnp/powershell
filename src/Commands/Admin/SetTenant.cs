@@ -532,6 +532,17 @@ namespace PnP.PowerShell.Commands.Admin
         [Parameter(Mandatory = false)]
         public string WhoCanShareAllowListInTenant { set; get; }
 
+        /// <summary>
+        /// Principal identities allowed to share content at the tenant level.
+        /// </summary>
+        /// <example>
+        /// <code>
+        /// Set-Tenant -WhoCanShareAllowListInTenantByPrincipalIdentity @("c:0-.f|rolemanager|spo-grid-all-users/****")
+        /// </code>
+        /// </example>
+        [Parameter(Mandatory = false)]
+        public string[] WhoCanShareAllowListInTenantByPrincipalIdentity { set; get; }
+
         [Parameter(Mandatory = false)]
         public bool? LegacyBrowserAuthProtocolsEnabled { set; get; }
 
@@ -1922,6 +1933,23 @@ namespace PnP.PowerShell.Commands.Admin
                 }
                 modified = true;
             }
+
+
+            if (WhoCanShareAllowListInTenantByPrincipalIdentity != null)
+            {
+                var hasValidValue = WhoCanShareAllowListInTenantByPrincipalIdentity.Any(x => !string.IsNullOrEmpty(x));
+
+                if (hasValidValue)
+                {
+                    Tenant.WhoCanShareAllowListInTenantByPrincipalIdentity = WhoCanShareAllowListInTenantByPrincipalIdentity;
+                }
+                else
+                {
+                    Tenant.WhoCanShareAllowListInTenantByPrincipalIdentity = Array.Empty<string>();
+                }
+                modified = true;
+            }
+
             if (DelayContentSecurityPolicyEnforcement.HasValue)
             {
                 Tenant.DelayContentSecurityPolicyEnforcement = DelayContentSecurityPolicyEnforcement.Value;

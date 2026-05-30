@@ -291,6 +291,11 @@ namespace PnP.PowerShell.Commands.Model
 
         public string WhoCanShareAllowListInTenant { private set; get; }
 
+        /// <summary>
+        /// Gets: a list of PrincipalNames Example output: List of PrincipalNames. e.g. ["c:0-.f|rolemanager|contoso-all-users/35533f7d-4536-4c82-9dbc-352f9424578b"]
+        /// </summary>
+        public IList<string> WhoCanShareAllowListInTenantByPrincipalIdentity { private set; get; }
+
         public bool? ExtendPermissionsToUnprotectedFiles { private set; get; }
 
         public bool? LegacyBrowserAuthProtocolsEnabled { private set; get; }
