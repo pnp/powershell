@@ -19,7 +19,7 @@ Remove-PnPManagedAppId -Url <String> [-Force]
 ```
 
 ## DESCRIPTION
-Removes an App Id from the Credential Manager
+Removes an App Id from the Windows Credential Manager, Mac OS Key Chain Entry, Linux Secret Service, or a default SecretManagement vault.
 
 ## EXAMPLES
 
