@@ -1,3 +1,9 @@
+---
+uid: pnp.powershell.gettingstartedcontributing
+title: Contribution guidance
+description: Prepare a local development environment and start contributing to PnP PowerShell.
+---
+
 # Contribution guidance
 
 Sharing is caring! All contributions to this repository are very welcome. This guidance should help you getting started contributing to PnP PowerShell by just following some easy steps.
@@ -111,7 +117,7 @@ The next step is to download, or clone, your copy/fork of the repository to your
 
    It may be that it asks you to log on to GitHub. If so, do so and it will continue with the clone.
 
-1. You should now have a copy of the PnP PowerShell code on your local machine in the subfolder named similarly to your fork name, typically `powershell`. If you want to read up on an explanation what each of these folders are for, read the [folder structure](./buildingfolderstructure.md) article.
+1. You should now have a copy of the PnP PowerShell code on your local machine in the subfolder named similarly to your fork name, typically `powershell`. If you want to read up on an explanation what each of these folders are for, read the [folder structure](xref:buildingsourcecode) article.
 
    ![Local code](./../images/contributing/localcode.png)
 

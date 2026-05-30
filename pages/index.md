@@ -1,3 +1,9 @@
+---
+uid: pnp.powershell.home
+title: PnP PowerShell
+description: PnP PowerShell is a cross-platform PowerShell module for working with Microsoft 365 services.
+---
+
 # PnP PowerShell
 PnP PowerShell is a cross-platform PowerShell Module providing over 700 cmdlets that work with Microsoft 365 environments and products such as SharePoint Online, Microsoft Teams, Microsoft Planner, Microsoft Power Platform, Microsoft Entra, Microsoft Purview, Microsoft Search, and more. It runs on Windows, Linux and MacOS.
 
@@ -10,15 +16,15 @@ PnP PowerShell is a cross-platform PowerShell Module providing over 700 cmdlets 
 
 Starting to use PnP PowerShell consists out of 3 steps:
 
-1. [Installing the PnP.PowerShell module](./articles/installation.md)
+1. [Installing the PnP.PowerShell module](xref:pnp.powershell.installation)
    
-2. [Registering your own Entra ID Application](./articles/registerapplication.md)
+2. [Registering your own Entra ID Application](xref:pnp.powershell.registerapplication)
    
-3. [Connecting and authenticating](./articles/authentication.md)
+3. [Connecting and authenticating](xref:pnp.powershell.authentication)
 
-Once you're set up, check out the [cmdlets](/powershell/cmdlets) section to discover what you can do and how to use the cmdlets.
+Once you're set up, check out the [cmdlets](xref:pnp.powershell.cmdlets) section to discover what you can do and how to use the cmdlets.
 
-Have a look at the [articles](/powershell/articles) section covering various topics how to get the most out of using PnP PowerShell. 
+Have a look at the [articles](xref:pnp.powershell.articles) section covering various topics how to get the most out of using PnP PowerShell.
 
 ## I've found a bug, where do I need to log an issue or create a PR
 
@@ -30,7 +36,7 @@ Before you start to work on code change consider starting a discussion in the re
 
 ## Contributing to PnP PowerShell
 
-Follow the [getting started contributing](/powershell/articles/gettingstartedcontributing.html) guidelines to help out. Sharing is caring!
+Follow the [getting started contributing](xref:pnp.powershell.gettingstartedcontributing) guidelines to help out. Sharing is caring!
 
 ## Supportability and SLA
 
