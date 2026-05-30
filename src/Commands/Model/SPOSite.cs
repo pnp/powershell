@@ -109,9 +109,9 @@ namespace PnP.PowerShell.Commands.Model
         public bool HidePeoplePreviewingFiles { get; set; }
         public bool HidePeopleWhoHaveListsOpen { get; set; }
         public SPOFileVersionFileTypePolicySettings[] VersionPolicyFileTypeOverride { get; set; }
-        public int OrganizationLinkRecommendedExpirationInDays { get; set; }
-        public int OrganizationLinkMaxExpirationInDays { get; set; }
-        public bool OverrideTenantOrganizationLinkExpirationPolicy { get; set; }
+        public int OrganizationSharingLinkRecommendedExpirationInDays { get; set; }
+        public int OrganizationSharingLinkMaxExpirationInDays { get; set; }
+        public bool OverrideTenantOrganizationSharingLinkExpirationPolicy { get; set; }
         #endregion
 
 
@@ -214,6 +214,9 @@ namespace PnP.PowerShell.Commands.Model
             HidePeoplePreviewingFiles = props.HidePeoplePreviewingFiles;
             HidePeopleWhoHaveListsOpen = props.HidePeopleWhoHaveListsOpen;
             VersionPolicyFileTypeOverride = props.VersionPolicyFileTypeOverride;
+            OverrideTenantOrganizationSharingLinkExpirationPolicy = props.OverrideTenantOrganizationLinkExpirationPolicy;
+            OrganizationSharingLinkRecommendedExpirationInDays = props.OrganizationLinkRecommendedExpirationInDays;
+            OrganizationSharingLinkMaxExpirationInDays = props.OrganizationLinkMaxExpirationInDays;
         }
     }
 }

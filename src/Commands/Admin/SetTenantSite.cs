@@ -280,13 +280,13 @@ namespace PnP.PowerShell.Commands
         public SwitchParameter ClearGroupId;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public bool? OverrideTenantOrganizationLinkExpirationPolicy;
+        public bool? OverrideTenantOrganizationSharingLinkExpirationPolicy;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public int? OrganizationLinkRecommendedExpirationInDays;
+        public int? OrganizationSharingLinkRecommendedExpirationInDays;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public int? OrganizationLinkMaxExpirationInDays;
+        public int? OrganizationSharingLinkMaxExpirationInDays;
 
         [Parameter(Mandatory = false)]
         public SwitchParameter Wait;
@@ -784,36 +784,36 @@ namespace PnP.PowerShell.Commands
                 updateRequired = true;
             }
 
-            if (ParameterSpecified(nameof(OverrideTenantOrganizationLinkExpirationPolicy)) && OverrideTenantOrganizationLinkExpirationPolicy.HasValue)
+            if (ParameterSpecified(nameof(OverrideTenantOrganizationSharingLinkExpirationPolicy)) && OverrideTenantOrganizationSharingLinkExpirationPolicy.HasValue)
             {
-                props.OverrideTenantOrganizationLinkExpirationPolicy = (bool)OverrideTenantOrganizationLinkExpirationPolicy;
+                props.OverrideTenantOrganizationLinkExpirationPolicy = (bool)OverrideTenantOrganizationSharingLinkExpirationPolicy;
                 updateRequired = true;
             }
 
-            if (ParameterSpecified(nameof(OrganizationLinkRecommendedExpirationInDays)) && OrganizationLinkRecommendedExpirationInDays.HasValue)
+            if (ParameterSpecified(nameof(OrganizationSharingLinkRecommendedExpirationInDays)) && OrganizationSharingLinkRecommendedExpirationInDays.HasValue)
             {
-                if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationLinkRecommendedExpirationInDays.Value))
+                if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationSharingLinkRecommendedExpirationInDays.Value))
                 {
-                    throw new PSArgumentException("CoreOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationLinkRecommendedExpirationInDays));
+                    throw new PSArgumentException("CoreOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationSharingLinkRecommendedExpirationInDays));
                 }
 
-                var organizationLinkMaxExpirationInDays = OrganizationLinkMaxExpirationInDays ?? props.OrganizationLinkMaxExpirationInDays;
-                if (OrganizationLinkRecommendedExpirationInDays.Value > organizationLinkMaxExpirationInDays)
+                var organizationLinkMaxExpirationInDays = OrganizationSharingLinkMaxExpirationInDays ?? props.OrganizationLinkMaxExpirationInDays;
+                if (OrganizationSharingLinkRecommendedExpirationInDays.Value > organizationLinkMaxExpirationInDays)
                 {
-                    throw new PSArgumentException("OrganizationSharingLinkRecommendedExpirationInDays must be less than or equal to OrganizationSharingLinkMaxExpirationInDays", nameof(OrganizationLinkRecommendedExpirationInDays));
+                    throw new PSArgumentException("OrganizationSharingLinkRecommendedExpirationInDays must be less than or equal to OrganizationSharingLinkMaxExpirationInDays", nameof(OrganizationSharingLinkRecommendedExpirationInDays));
                 }
 
-                props.OrganizationLinkRecommendedExpirationInDays = (int)OrganizationLinkRecommendedExpirationInDays;
+                props.OrganizationLinkRecommendedExpirationInDays = (int)OrganizationSharingLinkRecommendedExpirationInDays;
                 updateRequired = true;
             }
 
-            if (ParameterSpecified(nameof(OrganizationLinkMaxExpirationInDays)) && OrganizationLinkMaxExpirationInDays.HasValue)
+            if (ParameterSpecified(nameof(OrganizationSharingLinkMaxExpirationInDays)) && OrganizationSharingLinkMaxExpirationInDays.HasValue)
             {
-                if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationLinkMaxExpirationInDays.Value))
+                if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationSharingLinkMaxExpirationInDays.Value))
                 {
-                    throw new PSArgumentException("OrganizationLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationLinkMaxExpirationInDays));
+                    throw new PSArgumentException("OrganizationLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationSharingLinkMaxExpirationInDays));
                 }
-                props.OrganizationLinkMaxExpirationInDays = (int)OrganizationLinkMaxExpirationInDays;
+                props.OrganizationLinkMaxExpirationInDays = (int)OrganizationSharingLinkMaxExpirationInDays;
                 updateRequired = true;
             }
 
