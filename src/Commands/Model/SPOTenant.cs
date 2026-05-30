@@ -10,6 +10,7 @@ using PnP.PowerShell.Commands.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
 using System.Reflection;
 
 namespace PnP.PowerShell.Commands.Model
@@ -522,6 +523,10 @@ namespace PnP.PowerShell.Commands.Model
         public bool? TaxonomyTaggingEnabled { private set; get; }
 
         public bool? TranslationEnabled { private set; get; }
+ 
+        public bool? EnforceRequestDigest { private set; get; }
+         
+        public bool? EnableNotificationsSubscriptions { set; get; }
 
         public long? ArchivedFileStorageUsageMB { get; private set; }
 
@@ -538,10 +543,6 @@ namespace PnP.PowerShell.Commands.Model
         public string[] ContentTypeSyncSiteTemplatesList { get; private set; }
 
         public Guid[] DisabledAdaptiveCardExtensionIds { get; private set; }
-
-        public bool? EnableNotificationsSubscriptions { get; private set; }
-
-        public bool? EnforceRequestDigest { get; private set; }
 
         public bool? M365AdditionalStorageSPOEnabled { get; private set; }
 
