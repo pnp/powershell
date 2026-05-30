@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
       <title>Authentication | PnP PowerShell </title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <meta name="title" content="Authentication | PnP PowerShell ">
       <meta name="description" content="PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.">
-      
+      <meta name="description" content="Authentication options for connecting to Microsoft 365 with PnP PowerShell.">
       <link rel="icon" href="../https://c.s-microsoft.com/favicon.ico?v2">
       <link rel="stylesheet" href="../public/docfx.min.css">
       <link rel="stylesheet" href="../public/main.css">
@@ -84,10 +84,10 @@
           <nav id="breadcrumb"></nav>
         </div>
 
-        <article data-uid="">
+        <article data-uid="pnp.powershell.authentication">
 <h1 id="authentication">Authentication</h1>
 
-<p>Before you can authenticate using PnP PowerShell, you need to ensure you have <a href="registerapplication.html">created your own application registration</a> first and that you have <a href="determinepermissions.html">set the proper permissions</a> on the application registration.</p>
+<p>Before you can authenticate using PnP PowerShell, you need to ensure you have <a class="xref" href="registerapplication.html">created your own application registration</a> first and that you have <a href="determinepermissions.html">set the proper permissions</a> on the application registration.</p>
 <p>PnP PowerShell offers many different ways to authenticate to your tenant. Based on what you would like to achieve, pick the method that best suits your needs below.</p>
 <p>Instead of having to provide <code>-ClientId</code> on every connect, you can also opt to <a href="defaultclientid.html">configure a default Client ID</a> that will be used if <code>-ClientID</code> is not being specified in your <code>Connect-PnPOnline</code>.</p>
 <h2 id="interactive-authentication">Interactive Authentication</h2>
@@ -95,7 +95,7 @@
 <p>Connecting can be done using:</p>
 <pre><code class="lang-powershell">Connect-PnPOnline [yourtenant].sharepoint.com -Interactive -ClientId &lt;client id of your Entra ID Application Registration&gt;
 </code></pre>
-<p>This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow. Ensure you provide <a href="registerapplication.html">the Client ID of your own Entra ID Application Registration</a> with the <code>-ClientId</code> parameter.</p>
+<p>This will show a popup window which will allow to authenticate and step through the multi-factor authentication flow. Ensure you provide <a class="xref" href="registerapplication.html">the Client ID of your own Entra ID Application Registration</a> with the <code>-ClientId</code> parameter.</p>
 <h2 id="authenticating-from-another-device-or-specific-browser">Authenticating from another device or specific browser</h2>
 <p>In some scenarios it can happen that you need to authenticate to PnP PowerShell from a different device or through a specific browser. In these cases you can use the <code>-DeviceLogin</code> method to connect. A sample scenario could for example be when running PnP PowerShell scripts on a Raspberry Pi without a desktop environment installed on it. In this case there is no browser to authenticate through on the device itself.</p>
 <p>Connecting can be done using:</p>
@@ -138,7 +138,7 @@ $encodedPfx = [System.Convert]::ToBase64String($bytes)
 <p>Connecting can be done using:</p>
 <pre><code class="lang-powershell">Connect-PnPOnline [yourtenant].sharepoint.com -ClientId &lt;client id of your Entra ID Application Registration&gt; -Credentials (Get-Credential)
 </code></pre>
-<p>and you will be prompted for credentials. Ensure you provide <a href="registerapplication.html">the Client ID of your own Entra ID Application Registration</a> with the <code>-ClientId</code> parameter.</p>
+<p>and you will be prompted for credentials. Ensure you provide <a class="xref" href="registerapplication.html">the Client ID of your own Entra ID Application Registration</a> with the <code>-ClientId</code> parameter.</p>
 <h2 id="authenticating-with-pre-stored-credentials-using-the-windows-credential-manager-windows-only">Authenticating with pre-stored credentials using the Windows Credential Manager (Windows only)</h2>
 <p>This method can be used if you just intend to use PnP PowerShell on a Windows device, you want to use just a username and password for an account that does not require multi factor authentication, and you wish to store these credentials in the Windows Credential Manager so you don't have to enter them every time you connect. As this will not work with multi factor authentication, this method is less recommended.</p>
 <p>Adding your credentials to the Windows Credential Manager, which is a one time operation, can be done using:</p>

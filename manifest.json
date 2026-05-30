@@ -1,4 +1,36 @@
 {
+  "sitemap": {
+    "fileOptions": {
+      "articles/**.md": {
+        "baseUrl": "https://pnp.github.io/powershell/",
+        "changefreq": "monthly",
+        "priority": 0.7
+      },
+      "cmdlets/**.md": {
+        "baseUrl": "https://pnp.github.io/powershell/",
+        "changefreq": "weekly",
+        "priority": 0.6
+      },
+      "articles/index.md": {
+        "baseUrl": "https://pnp.github.io/powershell/",
+        "changefreq": "weekly",
+        "priority": 0.8
+      },
+      "cmdlets/index.md": {
+        "baseUrl": "https://pnp.github.io/powershell/",
+        "changefreq": "weekly",
+        "priority": 0.9
+      },
+      "index.md": {
+        "baseUrl": "https://pnp.github.io/powershell/",
+        "changefreq": "weekly",
+        "priority": 1
+      }
+    },
+    "baseUrl": "https://pnp.github.io/powershell/",
+    "changefreq": "weekly",
+    "priority": 0.5
+  },
   "source_base_path": "/home/runner/work/powershell/powershell/dev/pages",
   "xrefmap": "xrefmap.yml",
   "files": [
@@ -10722,6 +10754,16 @@
       "output": {
         ".html": {
           "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "llms.txt",
+      "output": {
+        "resource": {
+          "relative_path": "llms.txt"
         }
       },
       "version": ""

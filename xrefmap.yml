@@ -10,3 +10,24 @@ references:
 - uid: buildingsourcecode
   name: Folder Structure
   href: articles/buildingfolderstructure.html
+- uid: pnp.powershell.articles
+  name: PnP PowerShell articles
+  href: articles/index.html
+- uid: pnp.powershell.authentication
+  name: Authentication
+  href: articles/authentication.html
+- uid: pnp.powershell.cmdlets
+  name: PnP PowerShell cmdlets
+  href: cmdlets/index.html
+- uid: pnp.powershell.gettingstartedcontributing
+  name: Contribution guidance
+  href: articles/gettingstartedcontributing.html
+- uid: pnp.powershell.home
+  name: PnP PowerShell
+  href: index.html
+- uid: pnp.powershell.installation
+  name: Installing PnP PowerShell
+  href: articles/installation.html
+- uid: pnp.powershell.registerapplication
+  name: Register an Entra ID Application to use with PnP PowerShell
+  href: articles/registerapplication.html
