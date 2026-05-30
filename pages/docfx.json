@@ -30,7 +30,8 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "templates/material"
+      "modern",
+      "templates/pnp-modern"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",
@@ -40,6 +41,7 @@
     "disableGitFeatures": false,
     "globalMetadata": {
       "_appTitle": "PnP PowerShell",
+      "_appName": "PnP PowerShell",
       "_gitContribute": {
         "repo": "https://github.com/pnp/powershell",
         "branch": "dev"
