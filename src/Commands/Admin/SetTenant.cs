@@ -593,10 +593,16 @@ namespace PnP.PowerShell.Commands.Admin
 
         [Parameter(Mandatory = false)]
         public KnowledgeAgentScopeMode? KnowledgeAgentScope { set; get; }
-
+        [Parameter(Mandatory = false)]
+        public int? CoreOrganizationSharingLinkRecommendedExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public int? CoreOrganizationSharingLinkMaxExpirationInDays { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? RestrictResourceAccountAccess { set; get; }
+        [Parameter(Mandatory = false)]
+        public bool? RestrictExternalSharingForAgents { set; get; }
         [Parameter(Mandatory = false)]
         public string[] FileTypesForVersionExpiration { set; get; }
-
         [Parameter(Mandatory = false)]
         public bool? DelayContentSecurityPolicyEnforcement { set; get; }
 
@@ -883,7 +889,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (!IsValidOrganizationSharingLinkExpirationInDays(OneDriveOrganizationSharingLinkMaxExpirationInDays.Value))
                 {
-                    throw new PSArgumentException("OneDriveOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 720", nameof(OneDriveOrganizationSharingLinkMaxExpirationInDays));
+                    throw new PSArgumentException("OneDriveOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OneDriveOrganizationSharingLinkMaxExpirationInDays));
                 }
 
                 Tenant.OneDriveOrganizationSharingLinkMaxExpirationInDays = OneDriveOrganizationSharingLinkMaxExpirationInDays.Value;
@@ -893,7 +899,7 @@ namespace PnP.PowerShell.Commands.Admin
             {
                 if (!IsValidOrganizationSharingLinkExpirationInDays(OneDriveOrganizationSharingLinkRecommendedExpirationInDays.Value))
                 {
-                    throw new PSArgumentException("OneDriveOrganizationSharingLinkRecommendedExpirationInDays must have a value of 0 or between 7 and 720", nameof(OneDriveOrganizationSharingLinkRecommendedExpirationInDays));
+                    throw new PSArgumentException("OneDriveOrganizationSharingLinkRecommendedExpirationInDays must have a value of 0 or between 7 and 730", nameof(OneDriveOrganizationSharingLinkRecommendedExpirationInDays));
                 }
 
                 var oneDriveOrganizationSharingLinkMaxExpirationInDays = OneDriveOrganizationSharingLinkMaxExpirationInDays ?? Tenant.EnsureProperty(t => t.OneDriveOrganizationSharingLinkMaxExpirationInDays);
@@ -1876,6 +1882,42 @@ namespace PnP.PowerShell.Commands.Admin
                     modified = true;
                 }
             }
+            if (CoreOrganizationSharingLinkMaxExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(CoreOrganizationSharingLinkMaxExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("CoreOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(CoreOrganizationSharingLinkMaxExpirationInDays));
+                }
+
+                Tenant.CoreOrganizationSharingLinkMaxExpirationInDays = CoreOrganizationSharingLinkMaxExpirationInDays.Value;
+                modified = true;
+            }
+            if (CoreOrganizationSharingLinkRecommendedExpirationInDays.HasValue)
+            {
+                if (!IsValidOrganizationSharingLinkExpirationInDays(CoreOrganizationSharingLinkRecommendedExpirationInDays.Value))
+                {
+                    throw new PSArgumentException("CoreOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(CoreOrganizationSharingLinkRecommendedExpirationInDays));
+                }
+
+                var coreOrganizationSharingLinkMaxExpirationInDays = CoreOrganizationSharingLinkMaxExpirationInDays ?? Tenant.EnsureProperty(t => t.CoreOrganizationSharingLinkMaxExpirationInDays);
+                if (CoreOrganizationSharingLinkRecommendedExpirationInDays.Value > coreOrganizationSharingLinkMaxExpirationInDays)
+                {
+                    throw new PSArgumentException("CoreOrganizationSharingLinkRecommendedExpirationInDays must be less than or equal to CoreOrganizationSharingLinkMaxExpirationInDays", nameof(CoreOrganizationSharingLinkRecommendedExpirationInDays));
+                }
+
+                Tenant.CoreOrganizationSharingLinkRecommendedExpirationInDays = CoreOrganizationSharingLinkRecommendedExpirationInDays.Value;
+                modified = true;
+            }
+            if (RestrictResourceAccountAccess.HasValue)
+            {
+                Tenant.RestrictResourceAccountAccess = RestrictResourceAccountAccess.Value;
+                modified = true;
+            }
+            if (RestrictExternalSharingForAgents.HasValue)
+            {
+                Tenant.RestrictExternalSharingForAgents = RestrictExternalSharingForAgents.Value;
+                modified = true;
+            }
             if (GuestSharingGroupAllowListInTenantByPrincipalIdentity != null)
             {
                 if (GuestSharingGroupAllowListInTenantByPrincipalIdentity.Length > 0)
@@ -2092,7 +2134,7 @@ namespace PnP.PowerShell.Commands.Admin
 
         private static bool IsValidOrganizationSharingLinkExpirationInDays(int value)
         {
-            return value == 0 || value >= 7 && value <= 720;
+            return value == 0 || value >= 7 && value <= 730;
         }
     }
 }
