@@ -1,3 +1,9 @@
+---
+uid: pnp.powershell.installation
+title: Installing PnP PowerShell
+description: Install, update, and uninstall the PnP PowerShell module.
+---
+
 # Installing PnP PowerShell
 
 You need PowerShell 7.4.0 or later to use PnP PowerShell. It is available for Windows, Linux and Mac and can be [installed through here](https://learn.microsoft.com/powershell/scripting/install/installing-powershell).
