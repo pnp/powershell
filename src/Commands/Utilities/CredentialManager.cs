@@ -546,9 +546,16 @@ namespace PnP.PowerShell.Commands.Utilities
 
         private static void WriteLinuxAppIdEntry(string name, string appId)
         {
-            var storage = CreateLinuxManagedAppIdStorage(name);
-            storage.VerifyPersistence();
-            storage.WriteData(Encoding.UTF8.GetBytes(appId));
+            try
+            {
+                var storage = CreateLinuxManagedAppIdStorage(name);
+                storage.VerifyPersistence();
+                storage.WriteData(Encoding.UTF8.GetBytes(appId));
+            }
+            catch (MsalCachePersistenceException ex)
+            {
+                throw new InvalidOperationException("Unable to store the managed App Id in Linux Secret Service. Ensure a Secret Service provider such as GNOME Keyring or KWallet is installed and unlocked, or configure a default vault through Microsoft.PowerShell.SecretManagement.", ex);
+            }
         }
 
         private static string ReadLinuxAppIdEntry(string name)

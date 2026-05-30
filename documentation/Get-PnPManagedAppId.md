@@ -10,7 +10,7 @@ online version: https://pnp.github.io/powershell/cmdlets/Get-PnPManagedAppId.htm
 # Get-PnPManagedAppId
 
 ## SYNOPSIS
-Retrieve an App Id associated with a Url from the Windows Credential Manager, MacOS Key chain, Linux Secret Service, or if you use the Microsoft.PowerShell.SecretManagement module, a default vault.
+Retrieve an App Id associated with a URL from the Windows Credential Manager, macOS Keychain, Linux Secret Service, or a default vault configured through Microsoft.PowerShell.SecretManagement.
 
 ## SYNTAX
 
@@ -19,7 +19,7 @@ Get-PnPManagedAppId -Url <String>
 ```
 
 ## DESCRIPTION
-Returns an associated App Id from the Windows Credential Manager, Mac OS Key Chain Entry, Linux Secret Service, or a default SecretManagement vault.
+Returns an associated App Id from the Windows Credential Manager, macOS Keychain, Linux Secret Service, or a default vault configured through Microsoft.PowerShell.SecretManagement.
 
 ## EXAMPLES
 
