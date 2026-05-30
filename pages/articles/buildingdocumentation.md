@@ -4,12 +4,11 @@ uid: buildingdocumentation
 
 # Building the documentation site locally
 
-The documentation site is built with [DocFX](https://dotnet.github.io/docfx/). If you're changing articles, cmdlet documentation, the site template, or the documentation build scripts, it's worth building the site locally before you submit your pull request.
+The documentation site is built with [DocFX](https://dotnet.github.io/docfx/). If you're changing articles, cmdlet documentation, the site template, or the documentation build scripts, build the site locally before you submit your pull request.
 
-There are two useful ways to test the site locally:
+Do not run `docfx build ./pages/docfx.json` directly when you want to check the site as users will see it. That only builds the files that already exist under `pages` and skips the generated cmdlet pages. The result is a partial site where the home page can load, but the cmdlets section and parts of the navigation will be missing.
 
-- A quick DocFX build from your current checkout. Use this when you changed articles, images, templates, styles, or `pages/docfx.json`.
-- A full build that follows the same folder layout as the GitHub Actions workflow. Use this when you want to test `Build-Site.ps1`, cmdlet documentation copying, generated alias pages, or the final output that gets copied to the `gh-pages` branch.
+Use `pages/Build-Site.ps1` instead. It copies the cmdlet markdown files from `documentation` into `pages/cmdlets`, generates the cmdlets table of contents and index page, runs DocFX, and then cleans the generated source files again. The generated site remains available under `pages/_site` for local preview.
 
 The GitHub Actions workflows use DocFX 2.78.5 and the .NET SDK 10. The commands below use the same DocFX version.
 
@@ -29,9 +28,9 @@ pwsh --version
 dotnet --version
 ```
 
-The full build also needs access to the PowerShell Gallery. During that build, `Build-Site.ps1` installs the latest prerelease version of PnP PowerShell in order to discover aliases and generate documentation pages for them.
+The build also needs access to the PowerShell Gallery. During the build, `Build-Site.ps1` installs the latest prerelease version of PnP PowerShell in order to discover aliases and generate documentation pages for them.
 
-## Quick build on Windows
+## Build on Windows
 
 Open PowerShell 7 and navigate to your local clone of the repository.
 
@@ -52,10 +51,16 @@ If you already have DocFX installed in that folder and want to refresh it to the
 dotnet tool update docfx --tool-path .\.tools --version 2.78.5
 ```
 
+Add the local tools folder to the current PowerShell session path so the build script can call `docfx`:
+
+```powershell
+$env:PATH = "$(Resolve-Path .\.tools);$env:PATH"
+```
+
 Build the documentation site:
 
 ```powershell
-.\.tools\docfx.exe build .\pages\docfx.json
+.\pages\Build-Site.ps1 -SkipPublish
 ```
 
 Serve the generated site locally:
@@ -72,7 +77,7 @@ When you're done, remove the generated output:
 Remove-Item .\pages\_site, .\pages\obj -Recurse -Force -ErrorAction SilentlyContinue
 ```
 
-## Quick build on macOS or Linux
+## Build on macOS or Linux
 
 Open a terminal and navigate to your local clone of the repository.
 
@@ -93,10 +98,16 @@ If you already have DocFX installed in that folder and want to refresh it to the
 dotnet tool update docfx --tool-path ./.tools --version 2.78.5
 ```
 
+Add the local tools folder to the current shell path so the build script can call `docfx`:
+
+```bash
+export PATH="$(pwd)/.tools:$PATH"
+```
+
 Build the documentation site:
 
 ```bash
-./.tools/docfx build ./pages/docfx.json
+pwsh ./pages/Build-Site.ps1 -SkipPublish
 ```
 
 Serve the generated site locally:
@@ -113,11 +124,11 @@ When you're done, remove the generated output:
 rm -rf ./pages/_site ./pages/obj
 ```
 
-## Full build on Windows
+## Testing the workflow layout
 
-The documentation site workflow checks out three branches next to each other: `master`, `dev`, and `gh-pages`. The `Build-Site.ps1` script expects that layout and uses paths such as `./dev/pages` and `./gh-pages`.
+The normal local build above is enough for most documentation changes. If you want to test the same folder layout used by the GitHub Actions workflow, create worktrees for `master`, `dev`, and `gh-pages` next to each other.
 
-From your regular repository checkout, create a temporary worktree layout:
+### Windows
 
 ```powershell
 $repo = "C:\repos\powershell"
@@ -131,7 +142,7 @@ git -C $repo worktree add "$root\master" origin/master
 git -C $repo worktree add "$root\gh-pages" origin/gh-pages
 ```
 
-Install DocFX into the temporary build folder and add it to the current session path so `Build-Site.ps1` can call `docfx`:
+Install DocFX in the temporary build folder and run the workflow build:
 
 ```powershell
 Push-Location $root
@@ -139,11 +150,7 @@ Push-Location $root
 New-Item -ItemType Directory -Force .\.tools | Out-Null
 dotnet tool install docfx --tool-path .\.tools --version 2.78.5
 $env:PATH = "$(Resolve-Path .\.tools);$env:PATH"
-```
 
-Run the same build script used by the workflow:
-
-```powershell
 .\dev\pages\Build-Site.ps1
 ```
 
@@ -166,9 +173,7 @@ git -C $repo worktree remove "$root\gh-pages" --force
 Remove-Item $root -Recurse -Force -ErrorAction SilentlyContinue
 ```
 
-## Full build on macOS or Linux
-
-The same workflow layout can be created with Git worktrees on macOS or Linux.
+### macOS or Linux
 
 ```bash
 repo=~/repos/powershell
@@ -182,7 +187,7 @@ git -C "$repo" worktree add "$root/master" origin/master
 git -C "$repo" worktree add "$root/gh-pages" origin/gh-pages
 ```
 
-Install DocFX into the temporary build folder and add it to the current session path:
+Install DocFX in the temporary build folder and run the workflow build:
 
 ```bash
 cd "$root"
@@ -190,16 +195,11 @@ cd "$root"
 mkdir -p .tools
 dotnet tool install docfx --tool-path ./.tools --version 2.78.5
 export PATH="$(pwd)/.tools:$PATH"
-```
 
-Run the same build script used by the workflow:
-
-```bash
 pwsh ./dev/pages/Build-Site.ps1
 ```
 
 Serve the generated site:
-
 
 ```bash
 ./.tools/docfx serve ./dev/pages/_site --port 8080
@@ -221,7 +221,9 @@ rm -rf "$root"
 At minimum, verify the following:
 
 1. The home page loads and is not blank.
-1. The navigation on the left opens the article or cmdlet page you changed.
+1. The top navigation contains Articles and Cmdlets.
+1. The Articles link opens the articles section and shows the article table of contents.
+1. The Cmdlets link opens the cmdlets index and shows cmdlet pages in the table of contents.
 1. Search opens without JavaScript errors.
 1. The browser developer tools do not show 404 responses for `docfx.vendor.min.css` or `docfx.vendor.min.js`.
 
@@ -231,4 +233,4 @@ DocFX 2.77 and newer emit the vendor assets as minified files. If the browser sh
 
 DocFX can finish successfully while still reporting warnings. Treat warnings in files you touched as something to fix before submitting your pull request. Existing warnings elsewhere in the site should not block you from validating your local change, but do not introduce new ones.
 
-Common warnings are broken file links, broken bookmarks, or links to generated cmdlet pages that are not present in a quick build. If you need to verify generated cmdlet pages, use the full build.
+Common warnings are broken file links or broken bookmarks. If you see a warning for a file you changed, fix it before you submit the pull request.
