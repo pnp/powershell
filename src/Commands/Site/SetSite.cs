@@ -187,13 +187,13 @@ namespace PnP.PowerShell.Commands.Site
         public SwitchParameter ApplyToExistingDocumentLibraries;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public bool? OverrideTenantOrganizationLinkExpirationPolicy;
+        public bool? OverrideTenantOrganizationSharingLinkExpirationPolicy;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public int? OrganizationLinkRecommendedExpirationInDays;
+        public int? OrganizationSharingLinkRecommendedExpirationInDays;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
-        public int? OrganizationLinkMaxExpirationInDays;
+        public int? OrganizationSharingLinkMaxExpirationInDays;
 
         [Parameter(Mandatory = false, ParameterSetName = ParameterSet_PROPERTIES)]
         public SwitchParameter Force;
@@ -550,36 +550,36 @@ namespace PnP.PowerShell.Commands.Site
                     executeQueryRequired = true;
                 }
 
-                if (ParameterSpecified(nameof(OverrideTenantOrganizationLinkExpirationPolicy)) && OverrideTenantOrganizationLinkExpirationPolicy.HasValue)
+                if (ParameterSpecified(nameof(OverrideTenantOrganizationSharingLinkExpirationPolicy)) && OverrideTenantOrganizationSharingLinkExpirationPolicy.HasValue)
                 {
-                    siteProperties.OverrideTenantOrganizationLinkExpirationPolicy = (bool)OverrideTenantOrganizationLinkExpirationPolicy;
+                    siteProperties.OverrideTenantOrganizationLinkExpirationPolicy = (bool)OverrideTenantOrganizationSharingLinkExpirationPolicy;
                     executeQueryRequired = true;
                 }
 
-                if (ParameterSpecified(nameof(OrganizationLinkRecommendedExpirationInDays)) && OrganizationLinkRecommendedExpirationInDays.HasValue)
+                if (ParameterSpecified(nameof(OrganizationSharingLinkRecommendedExpirationInDays)) && OrganizationSharingLinkRecommendedExpirationInDays.HasValue)
                 {
-                    if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationLinkRecommendedExpirationInDays.Value))
+                    if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationSharingLinkRecommendedExpirationInDays.Value))
                     {
-                        throw new PSArgumentException("CoreOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationLinkRecommendedExpirationInDays));
+                        throw new PSArgumentException("CoreOrganizationSharingLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationSharingLinkRecommendedExpirationInDays));
                     }
 
-                    var organizationLinkMaxExpirationInDays = OrganizationLinkMaxExpirationInDays ?? siteProperties.OrganizationLinkMaxExpirationInDays;
-                    if (OrganizationLinkRecommendedExpirationInDays.Value > organizationLinkMaxExpirationInDays)
+                    var organizationLinkMaxExpirationInDays = OrganizationSharingLinkMaxExpirationInDays ?? siteProperties.OrganizationLinkMaxExpirationInDays;
+                    if (OrganizationSharingLinkRecommendedExpirationInDays.Value > organizationLinkMaxExpirationInDays)
                     {
-                        throw new PSArgumentException("OrganizationSharingLinkRecommendedExpirationInDays must be less than or equal to OrganizationSharingLinkMaxExpirationInDays", nameof(OrganizationLinkRecommendedExpirationInDays));
+                        throw new PSArgumentException("OrganizationSharingLinkRecommendedExpirationInDays must be less than or equal to OrganizationSharingLinkMaxExpirationInDays", nameof(OrganizationSharingLinkRecommendedExpirationInDays));
                     }
 
-                    siteProperties.OrganizationLinkRecommendedExpirationInDays = (int)OrganizationLinkRecommendedExpirationInDays;
+                    siteProperties.OrganizationLinkRecommendedExpirationInDays = (int)OrganizationSharingLinkRecommendedExpirationInDays;
                     executeQueryRequired = true;
                 }
 
-                if (ParameterSpecified(nameof(OrganizationLinkMaxExpirationInDays)) && OrganizationLinkMaxExpirationInDays.HasValue)
+                if (ParameterSpecified(nameof(OrganizationSharingLinkMaxExpirationInDays)) && OrganizationSharingLinkMaxExpirationInDays.HasValue)
                 {
-                    if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationLinkMaxExpirationInDays.Value))
+                    if (!IsValidOrganizationSharingLinkExpirationInDays(OrganizationSharingLinkMaxExpirationInDays.Value))
                     {
-                        throw new PSArgumentException("OrganizationLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationLinkMaxExpirationInDays));
+                        throw new PSArgumentException("OrganizationLinkMaxExpirationInDays must have a value of 0 or between 7 and 730", nameof(OrganizationSharingLinkMaxExpirationInDays));
                     }
-                    siteProperties.OrganizationLinkMaxExpirationInDays = (int)OrganizationLinkMaxExpirationInDays;
+                    siteProperties.OrganizationLinkMaxExpirationInDays = (int)OrganizationSharingLinkMaxExpirationInDays;
                     executeQueryRequired = true;
                 }
 
@@ -668,9 +668,9 @@ namespace PnP.PowerShell.Commands.Site
                 ReadOnlyForBlockDownloadPolicy.IsPresent ||
                 ClearGroupId.IsPresent ||
                 SiteVersionPolicyUtilities.HasVersionPolicyParameters(GetSiteVersionPolicyOptions()) ||
-                OrganizationLinkRecommendedExpirationInDays.HasValue ||
-                OrganizationLinkMaxExpirationInDays.HasValue ||
-                OverrideTenantOrganizationLinkExpirationPolicy.HasValue;
+                OrganizationSharingLinkRecommendedExpirationInDays.HasValue ||
+                OrganizationSharingLinkMaxExpirationInDays.HasValue ||
+                OverrideTenantOrganizationSharingLinkExpirationPolicy.HasValue;
 
         private static bool IsValidOrganizationSharingLinkExpirationInDays(int value)
         {
