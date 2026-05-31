@@ -9,6 +9,7 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 ## [Current nightly]
 
 ### Added
+- Added `Get-PnPUserAndContentMoveState` cmdlet to retrieve SharePoint Online user and OneDrive content move states.
 - Added `Get-PnPMultiGeoCompanyAllowedDataLocation` cmdlet to retrieve SharePoint Online multi-geo allowed data locations. [#5336](https://github.com/pnp/powershell/pull/5336)
 - Added `Get-PnPGeoMoveCrossCompatibilityStatus` cmdlet to retrieve SharePoint Online multi-geo move compatibility statuses.
 

@@ -3,6 +3,7 @@ using PnP.Framework.Http;
 using PnP.PowerShell.Commands.Model;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -27,6 +28,12 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		private const string GeoMoveCompatibilityChecksPath = "GeoMoveCompatibilityChecks";
 		private const string AllowedDataLocationsApiVersion = "1.3.11";
 		private const string AllowedDataLocationsPath = "AllowedDataLocations";
+		private const string UserMoveJobsApiVersion = "1.0";
+		private const string UserMoveJobsByMoveIdApiVersion = "1.2.2";
+		private const string UserMoveJobsReportApiVersion = "1.3.2";
+		private const string UserMoveJobPathByUpn = "UserMoveJobs(upn='{0}')";
+		private const string UserMoveJobPathByMoveId = "UserMoveJobs/GetByMoveId(odbMoveId='{0}')";
+		private const string UserMoveJobsPathForMoveReport = "UserMoveJobs/GetMoveReport(moveState={0},moveDirection={1},startTime='{2:u}',endTime='{3:u}',limit='{4}')";
 		private const int MaximumPagination = 10;
 		private static readonly TimeSpan CreateTenantRenameJobTimeout = TimeSpan.FromSeconds(300);
 		private static readonly JsonSerializerOptions SerializerOptions = new()
@@ -71,6 +78,24 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 		internal IEnumerable<MultiGeoCompanyAllowedDataLocation> GetAllowedDataLocations()
 		{
 			return GetFeed<MultiGeoCompanyAllowedDataLocation>(AllowedDataLocationsPath, AllowedDataLocationsApiVersion);
+		}
+
+		internal UserAndContentMoveState GetUserAndContentMoveState(string userPrincipalName)
+		{
+			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobPathByUpn, ProcessSpecialChars(userPrincipalName));
+			return Get<UserAndContentMoveState>(path, UserMoveJobsApiVersion);
+		}
+
+		internal UserAndContentMoveState GetUserAndContentMoveState(Guid odbMoveId)
+		{
+			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobPathByMoveId, odbMoveId);
+			return Get<UserAndContentMoveState>(path, UserMoveJobsByMoveIdApiVersion);
+		}
+
+		internal IEnumerable<UserAndContentMoveState> GetUserAndContentMoveStates(MoveState moveState, MoveDirection moveDirection, DateTime startTime, DateTime endTime, uint limit)
+		{
+			var path = string.Format(CultureInfo.InvariantCulture, UserMoveJobsPathForMoveReport, (int)moveState, (int)moveDirection, startTime, endTime, limit);
+			return GetFeed<UserAndContentMoveState>(path, UserMoveJobsReportApiVersion);
 		}
 
 		internal void CancelTenantRenameJob()
@@ -279,6 +304,11 @@ namespace PnP.PowerShell.Commands.Utilities.MultiGeo
 			}
 
 			return null;
+		}
+
+		private static string ProcessSpecialChars(string value)
+		{
+			return WebUtility.UrlEncode(value.Replace("/", "#", StringComparison.Ordinal).Replace("'", "|", StringComparison.Ordinal))?.Replace("+", "%20", StringComparison.Ordinal);
 		}
 
 		private static JsonElement UnwrapODataResponse(JsonElement responseElement)
