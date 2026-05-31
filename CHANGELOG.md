@@ -8,13 +8,19 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/).
 
 ## [Current nightly]
 
+### Added
+- Added `Get-PnPMultiGeoCompanyAllowedDataLocation` cmdlet to retrieve SharePoint Online multi-geo allowed data locations. [#5336](https://github.com/pnp/powershell/pull/5336)
+
 ### Changed
-- Added properties `CoreOrganizationSharingLinkRecommendedExpirationInDays`, `CoreOrganizationSharingLinkMaxExpirationInDays`,`RestrictResourceAccountAccess`, `RestrictExternalSharingForAgents` to Set-pnptenant and Get-pnptenant cmdlet. [#5330](https://github.com/pnp/powershell/pull/5330)
-- Added properties OrganizationSharingLinkRecommendedExpirationInDays, OrganizationSharingLinkMaxExpirationInDays, OverrideTenantOrganizationSharingLinkExpirationPolicy to set-pnpsite, set-pnptenantsite cmdlets. [#5333](https://github.com/pnp/powershell/pull/5333)
+- Added properties `CoreOrganizationSharingLinkRecommendedExpirationInDays`, `CoreOrganizationSharingLinkMaxExpirationInDays`,`RestrictResourceAccountAccess`, `RestrictExternalSharingForAgents` to `Set-PnPTenant` and `Get-PnPTenant` cmdlet. [#5330](https://github.com/pnp/powershell/pull/5330)
+- Added properties `OrganizationSharingLinkRecommendedExpirationInDays`, `OrganizationSharingLinkMaxExpirationInDays`, `OverrideTenantOrganizationSharingLinkExpirationPolicy` to `Set-PnPSite`, `Set-PnPTenantsite` cmdlets. [#5333](https://github.com/pnp/powershell/pull/5333)
+- Added `WhoCanShareAllowListInTenantByPrincipalIdentity` property to `Set-PnPTenant` cmdlet. [#5322](https://github.com/pnp/powershell/pull/5322)
 
 ### Contributors
 
 - Reshmee Auckloo [reshmee011]
+- [Tetronic]
+- Vasco Azevedo [vascoazevedo08]
 
 ## [3.2.0]
 
