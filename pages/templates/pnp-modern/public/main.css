@@ -157,6 +157,173 @@ article h4 {
 	--bs-alert-link-color: var(--bs-primary-text-emphasis);
 }
 
+.content > .actionbar {
+	gap: .5rem;
+}
+
+.content > .actionbar > .pnp-page-actions {
+	align-items: center;
+	display: flex;
+	gap: .5rem;
+	margin-left: auto;
+}
+
+.pnp-copy-markdown-group {
+	filter: drop-shadow(0 6px 18px rgba(0, 0, 0, .08));
+	position: relative;
+}
+
+.pnp-copy-markdown,
+.pnp-copy-markdown-toggle {
+	align-items: center;
+	background: var(--bs-body-bg);
+	border-color: rgba(var(--pnp-header-bg-rgb), .28) !important;
+	color: var(--bs-body-color);
+	display: inline-flex;
+	font-weight: 600;
+	min-height: 2.25rem;
+	white-space: nowrap;
+}
+
+.pnp-copy-markdown {
+	border-bottom-left-radius: 999px;
+	border-top-left-radius: 999px;
+	gap: .45rem;
+	padding-inline: .75rem;
+}
+
+.pnp-copy-markdown-toggle {
+	border-bottom-right-radius: 999px;
+	border-left-color: rgba(var(--pnp-header-bg-rgb), .18) !important;
+	border-top-right-radius: 999px;
+	justify-content: center;
+	min-width: 2.35rem;
+	padding-inline: .55rem;
+}
+
+.pnp-copy-markdown:hover,
+.pnp-copy-markdown:focus,
+.pnp-copy-markdown:focus-visible,
+.pnp-copy-markdown-toggle:hover,
+.pnp-copy-markdown-toggle:focus,
+.pnp-copy-markdown-toggle:focus-visible,
+.pnp-copy-markdown-group.show .pnp-copy-markdown-toggle {
+	background: var(--pnp-header-bg);
+	border-color: var(--pnp-highlight) !important;
+	color: var(--pnp-header-fg);
+	text-decoration: none;
+}
+
+.pnp-copy-markdown[data-copy-state="copied"] {
+	background: #198754;
+	border-color: #198754 !important;
+	color: #fff;
+}
+
+.pnp-copy-markdown[data-copy-state="failed"] {
+	background: #B02A37;
+	border-color: #B02A37 !important;
+	color: #fff;
+}
+
+.pnp-copy-markdown .bi,
+.pnp-copy-markdown-toggle .bi {
+	font-size: 1rem;
+	line-height: 1;
+}
+
+.pnp-copy-markdown-menu {
+	--bs-dropdown-min-width: 17rem;
+	border-color: rgba(var(--pnp-header-bg-rgb), .16);
+	border-radius: .75rem;
+	box-shadow: 0 14px 36px rgba(0, 0, 0, .16);
+	left: auto;
+	max-width: calc(100vw - 1.5rem);
+	padding: .45rem;
+	right: 0;
+	top: calc(100% + .45rem);
+}
+
+.pnp-copy-markdown-menu.show {
+	display: block;
+}
+
+.pnp-copy-markdown-menu-item {
+	align-items: center;
+	border-radius: .5rem;
+	display: flex;
+	gap: .7rem;
+	padding: .6rem .65rem;
+	white-space: normal;
+}
+
+.pnp-copy-markdown-menu-icon {
+	align-items: center;
+	border: 1px solid rgba(var(--pnp-header-bg-rgb), .18);
+	border-radius: .5rem;
+	color: var(--bs-link-color);
+	display: inline-flex;
+	flex: 0 0 2rem;
+	height: 2rem;
+	justify-content: center;
+	width: 2rem;
+}
+
+.pnp-copy-markdown-menu-text {
+	display: block;
+	min-width: 0;
+}
+
+.pnp-copy-markdown-menu-label {
+	align-items: center;
+	display: flex;
+	font-weight: 700;
+	gap: .35rem;
+	line-height: 1.2;
+}
+
+.pnp-copy-markdown-menu-description {
+	color: var(--bs-secondary-color);
+	display: block;
+	font-size: .875rem;
+	line-height: 1.25;
+	margin-top: .15rem;
+}
+
+.pnp-copy-markdown-menu-item:hover .pnp-copy-markdown-menu-icon,
+.pnp-copy-markdown-menu-item:focus .pnp-copy-markdown-menu-icon {
+	background: rgba(var(--pnp-highlight-rgb), .16);
+	border-color: rgba(var(--pnp-highlight-rgb), .5);
+}
+
+[data-bs-theme="dark"] .pnp-copy-markdown,
+[data-bs-theme="dark"] .pnp-copy-markdown-toggle {
+	background: #202A33;
+	border-color: rgba(var(--pnp-highlight-rgb), .35) !important;
+	color: #E8F5FF;
+}
+
+[data-bs-theme="dark"] .pnp-copy-markdown:hover,
+[data-bs-theme="dark"] .pnp-copy-markdown:focus,
+[data-bs-theme="dark"] .pnp-copy-markdown:focus-visible,
+[data-bs-theme="dark"] .pnp-copy-markdown-toggle:hover,
+[data-bs-theme="dark"] .pnp-copy-markdown-toggle:focus,
+[data-bs-theme="dark"] .pnp-copy-markdown-toggle:focus-visible,
+[data-bs-theme="dark"] .pnp-copy-markdown-group.show .pnp-copy-markdown-toggle {
+	background: var(--pnp-highlight);
+	color: #06131C;
+}
+
+[data-bs-theme="dark"] .pnp-copy-markdown-menu {
+	background: #151D24;
+	border-color: rgba(var(--pnp-highlight-rgb), .26);
+}
+
+[data-bs-theme="dark"] .pnp-copy-markdown-menu-icon {
+	border-color: rgba(var(--pnp-highlight-rgb), .28);
+	color: #B9E0FF;
+}
+
 pre {
 	position: relative;
 }
@@ -249,6 +416,10 @@ pre > .code-action .bi {
 	pre > .code-action::after {
 		content: "";
 		margin: 0;
+	}
+
+	.pnp-copy-markdown > span {
+		display: none;
 	}
 }
 

@@ -47,7 +47,7 @@
         "repo": "https://github.com/pnp/powershell",
         "branch": "dev"
       },
-      "_appFaviconPath": "https://c.s-microsoft.com/favicon.ico?v2",
+      "_appFaviconPath": "images/favicon-pnp.svg",
       "_description": "PnP PowerShell is an open source, community driven, PowerShell Module designed to work with Microsoft 365.",
       "_appLogoPath": "images/logo.svg",
       "_enableSearch": true,
