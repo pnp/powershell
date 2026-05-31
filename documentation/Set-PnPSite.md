@@ -71,6 +71,9 @@ Set-PnPSite
  [-HidePeoplePreviewingFiles <Boolean>]
  [-HidePeopleWhoHaveListsOpen <Boolean>]
  [-RestrictedAccessControl <Boolean>]
+ [-OverrideTenantOrganizationSharingLinkExpirationPolicy <Boolean>]
+ [-OrganizationSharingLinkRecommendedExpirationInDays <int>] 
+ [-OrganizationSharingLinkMaxExpirationInDays <int>]
  [-Connection <PnPConnection>]
 ```
 
@@ -953,6 +956,58 @@ This parameter allows you to remove the assigned Microsoft 365 group ID on a sit
 ```yaml
 Type: Switch Parameter
 Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OverrideTenantOrganizationSharingLinkExpirationPolicy
+Allows to set organization sharing link expiration policy for this SharePoint site, which will override the tenant-level policy when set to true. When this is set to true, you can configure the organization sharing link expiration policy for this site collection using the OrganizationSharingLinkRecommendedExpirationInDays and OrganizationSharingLinkMaxExpirationInDays parameters.
+
+```yaml
+Type: Boolean
+Parameter Sets: Set Properties
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationSharingLinkRecommendedExpirationInDays
+This parameter specifies the recommended number of days before organization sharing links expire in the SharePoint site. Users can still choose a different expiration period if permitted by policy, but this value is presented as the recommended default.
+
+The valid values :
+
+- Can be from 7 to 730 days and must be less than or equal to the maximum expiration value set by OrganizationSharingLinkMaxExpirationInDays.
+- When set to 0 (default), the default value will be OrganizationSharingLinkMaxExpirationInDays.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OrganizationSharingLinkMaxExpirationInDays
+This parameter specifies the maximum number of days that organization sharing links can remain active before they expire for the SharePoint site.
+
+The valid values :
+
+- can be from 7 to 730 days.
+- `0` (default) - No maximum expiration limit is enforced.
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
 
 Required: False
 Position: Named

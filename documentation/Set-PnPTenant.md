@@ -192,10 +192,7 @@ Set-PnPTenant [-SpecialCharactersStateInFileFolderNames <SpecialCharactersState>
  [-RestrictResourceAccountAccess <Boolean>]
  [-EnforceRequestDigest <Boolean>]
  [-RestrictExternalSharingForAgents <Boolean>]
- [-AllowFileArchive <Boolean>]
- [-AllowFileArchiveOnNewSitesByDefault <Boolean>]
  [-DelayContentSecurityPolicyEnforcement <Boolean>]
- [-EnforceRequestDigest <Boolean>]
  [-EnableNotificationsSubscriptions <Boolean>]
  [-Force] [-Connection <PnPConnection>]
 ```
@@ -3455,25 +3452,6 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -EnforceRequestDigest
-This parameter controls whether SharePoint enforces request digest validation for client requests.
-
-The valid values are:
-
-- False - a valid request digest is not required on SOAP API calls that perform a state-changing operation.
-- True - A valid request digest is required on SOAP API calls that perform a state-changing operation.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -RestrictExternalSharingForAgents
 This parameter controls whether external sharing is restricted for agents.
 
@@ -3481,63 +3459,6 @@ The valid values are:
 
 - False (default) - Agents can share content externally according to existing sharing policies.
 - True - External sharing for agents is restricted.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -AllowFileArchive
-Controls whether file-level archiving is allowed at the tenant level. This setting can be overridden for specific sites by the site-level flag of the same name and has no effect unless Microsoft 365 Archive is enabled for your organization.
-
-The valid values are:
-
-- False (default) - Blocks manual archiving for all files, regardless of the site-level setting. Admin-defined policies can still archive files automatically.
-- True - Allows users to manually archive files on sites where file-level archiving is also enabled. Manual archiving is limited to internal users with write access to the file.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -AllowFileArchiveOnNewSitesByDefault
-This parameter controls whether file archiving is enabled by default.
-
-The valid values are:
-
-- False (default) - File archiving is not enabled by default.
-- True - File archiving is enabled by default where supported.
-
-```yaml
-Type: Boolean
-Parameter Sets: (All)
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -EnableNotificationsSubscriptions
-This is an opt-in setting that enables or disables writing SharePoint News and Announcement notification data to a list (NewsNotificationList) in the My Site of every user. When enabled, SharePoint Online emits notification events to this list. Third-party solutions must create and manage webhook solutions to receive change notifications and then read the list to process new entries for triggering their own notifications for the user. 
-
-The valid values are:
-
-- False (default) - Disables writing SharePoint News and Announcement notification data to a list (NewsNotificationList) in the My Site of every user.
-- True - Enables or disables writing SharePoint News and Announcement notification data to a list (NewsNotificationList) in the My Site of every user.
 
 ```yaml
 Type: Boolean
